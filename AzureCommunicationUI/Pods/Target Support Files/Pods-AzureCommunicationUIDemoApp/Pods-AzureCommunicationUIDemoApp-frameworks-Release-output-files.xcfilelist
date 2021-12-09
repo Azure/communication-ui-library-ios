@@ -1,0 +1,3 @@
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AzureCommunicationCommon.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FluentUI.framework
+${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AzureCommunicationCalling.framework

@@ -1,0 +1,6 @@
+framework module FluentUI {
+  umbrella header "MicrosoftFluentUI-umbrella.h"
+
+  export *
+  module * { export * }
+}

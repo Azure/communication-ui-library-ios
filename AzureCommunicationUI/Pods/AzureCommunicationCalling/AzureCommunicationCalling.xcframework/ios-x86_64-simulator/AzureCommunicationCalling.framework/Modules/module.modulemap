@@ -1,0 +1,11 @@
+framework module AzureCommunicationCalling {
+  umbrella header "AzureCommunicationCalling.h"
+
+  export *
+  module * { export * }
+}
+
+module AzureCommunicationCalling.Swift {
+    header "AzureCommunicationCalling-Swift.h"
+    requires objc
+}
