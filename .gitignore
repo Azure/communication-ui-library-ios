@@ -55,6 +55,7 @@ playground.xcworkspace
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
 # Pods/
+AzureCommunicationUI/Pods/
 #
 # Add this line if you want to avoid checking in source code from the Xcode workspace
 # *.xcworkspace
@@ -88,3 +89,10 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+
+# Mac
+.DS_Store
+
+#AppCode
+AzureCommunicationUI/.idea
+AzureCommunicationUI/AzureCommunicationUIDemoApp/EnvConfig.xcconfig

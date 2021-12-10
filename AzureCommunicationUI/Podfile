@@ -1,0 +1,42 @@
+platform :ios, '13.0'
+
+workspace 'AzureCommunicationUI'
+
+project 'AzureCommunicationUI.xcodeproj'
+project 'AzureCommunicationUIDemoApp.xcodeproj'
+
+target 'AzureCommunicationUI' do
+  project 'AzureCommunicationUI.xcodeproj'
+  use_frameworks!
+  pod 'AzureCommunicationCalling', '2.2.0-beta.1'
+  pod 'MicrosoftFluentUI/Avatar_ios', '0.3.5'
+  pod 'MicrosoftFluentUI/BottomSheet_ios', '0.3.5'
+  pod 'MicrosoftFluentUI/Button_ios', '0.3.5'
+  pod 'MicrosoftFluentUI/PopupMenu_ios', '0.3.5'
+  pod 'SwiftLint', '0.42.0'
+
+  target 'AzureCommunicationUITests' do
+    # Pods for testing
+    pod 'SwiftLint', '0.42.0'
+  end
+end
+
+target 'AzureCommunicationUIDemoApp' do
+  project 'AzureCommunicationUIDemoApp.xcodeproj'
+  use_frameworks!
+  pod 'AzureCommunicationCalling', '2.2.0-beta.1'
+  pod 'MicrosoftFluentUI/Avatar_ios', '0.3.5'
+  pod 'MicrosoftFluentUI/BottomSheet_ios', '0.3.5'
+  pod 'MicrosoftFluentUI/Button_ios', '0.3.5'
+  pod 'MicrosoftFluentUI/PopupMenu_ios', '0.3.5'
+end
+
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    if target.name == 'SwiftLint'
+      target.build_configurations.each do |config|
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+      end
+    end
+  end
+end
