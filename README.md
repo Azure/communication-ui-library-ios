@@ -2,7 +2,7 @@
 
 # Azure Communication UI Mobile Library for iOS
 
-![Cocoapods](https://img.shields.io/cocoapods/l/AzureCommunicationUI)
+![Cocoapods]
 ![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AzureCommunicationUI)
 ![Cocoapods platforms](https://img.shields.io/cocoapods/p/AzureCommunicationUI)
 
