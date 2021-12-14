@@ -233,7 +233,7 @@ class ACSCallingSDKWrapper: NSObject, CallingSDKWrapper {
 extension ACSCallingSDKWrapper {
     private func setupCallClientAndDeviceManager() -> Future<Void, Error> {
         Future { promise in
-            self.callClient = self.makeCallClient()
+            self.callClient = CallClient()
             self.callClient!.getDeviceManager(completionHandler: { [weak self] (deviceManager, error) in
                 guard let self = self else {
                     return
@@ -276,15 +276,6 @@ extension ACSCallingSDKWrapper {
                 return promise(.success(()))
             }
         }
-    }
-
-    private func makeCallClient() -> CallClient {
-        let clientOptions = CallClientOptions()
-        let appendingTag = self.callConfiguration.diagnosticConfig.tags
-        let diagnostics = clientOptions.diagnostics ?? DiagnosticOptions()
-        diagnostics.tags.append(contentsOf: appendingTag)
-        clientOptions.diagnostics = diagnostics
-        return CallClient(options: clientOptions)
     }
 
     private func startCallVideoStream(_ videoStream: LocalVideoStream) -> Future<String, Error> {

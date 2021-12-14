@@ -1,5 +1,5 @@
 PODS:
-  - AzureCommunicationCalling (2.2.0-beta.1):
+  - AzureCommunicationCalling (2.0.0):
     - AzureCommunicationCommon (~> 1.0.2)
   - AzureCommunicationCommon (1.0.2)
   - MicrosoftFluentUI/Avatar_ios (0.3.5):
@@ -36,7 +36,7 @@ PODS:
   - SwiftLint (0.42.0)
 
 DEPENDENCIES:
-  - AzureCommunicationCalling (= 2.2.0-beta.1)
+  - AzureCommunicationCalling (= 2.0.0)
   - MicrosoftFluentUI/Avatar_ios (= 0.3.5)
   - MicrosoftFluentUI/BottomSheet_ios (= 0.3.5)
   - MicrosoftFluentUI/Button_ios (= 0.3.5)
@@ -51,11 +51,11 @@ SPEC REPOS:
     - SwiftLint
 
 SPEC CHECKSUMS:
-  AzureCommunicationCalling: df1fdad2fc9bbeabfeff93b0975df3487dc6978e
+  AzureCommunicationCalling: 3dd866dceb4318b74383b30b1749700fa069a674
   AzureCommunicationCommon: 743009b95ca5de0b32fb5327b1105c6239b7d15d
   MicrosoftFluentUI: 017bdf8d40b7d453c094252e2b5534eb7bfafae4
   SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
 
-PODFILE CHECKSUM: 247bd153645756dd0c868caaffc40fcf1d4563d2
+PODFILE CHECKSUM: 9769f62b2ae7b90b6d36c7007749b2c2e81894bd
 
 COCOAPODS: 1.11.2

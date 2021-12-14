@@ -8,7 +8,7 @@ project 'AzureCommunicationUIDemoApp.xcodeproj'
 target 'AzureCommunicationUI' do
   project 'AzureCommunicationUI.xcodeproj'
   use_frameworks!
-  pod 'AzureCommunicationCalling', '2.2.0-beta.1'
+  pod 'AzureCommunicationCalling', '2.0.0'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.3.5'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.3.5'
   pod 'MicrosoftFluentUI/Button_ios', '0.3.5'
@@ -24,7 +24,7 @@ end
 target 'AzureCommunicationUIDemoApp' do
   project 'AzureCommunicationUIDemoApp.xcodeproj'
   use_frameworks!
-  pod 'AzureCommunicationCalling', '2.2.0-beta.1'
+  pod 'AzureCommunicationCalling', '2.0.0'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.3.5'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.3.5'
   pod 'MicrosoftFluentUI/Button_ios', '0.3.5'
