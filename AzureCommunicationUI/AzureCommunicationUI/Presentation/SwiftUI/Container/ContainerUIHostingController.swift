@@ -56,9 +56,21 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
             .dropFirst()
             .sink(receiveValue: { orientation in
                 if orientation == .portrait || orientation == .landscape {
-                    UIDevice.current.endGeneratingDeviceOrientationNotifications()
+                    if orientation == .portrait &&
+                        (UIDevice.current.orientation.isLandscape
+                         || UIDevice.current.orientation.isFlat
+                         || UIDevice.current.orientation == .unknown
+                        ) {
+
+                        // Apply a delay here to allow the previous orientation change to finish,
+                        // then reset orientations
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            UIDevice.current.rotateTo(oritation: UIInterfaceOrientation.portrait)
+                            UIDevice.current.endGeneratingDeviceOrientationNotifications()
+                        }
+                    }
                 } else if (orientation == .all || orientation == .allButUpsideDown)
-                    && !UIDevice.current.isGeneratingDeviceOrientationNotifications {
+                            && !UIDevice.current.isGeneratingDeviceOrientationNotifications {
                     UIDevice.current.beginGeneratingDeviceOrientationNotifications()
                 }
             }).store(in: cancelBag)
