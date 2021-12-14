@@ -2,6 +2,10 @@
 
 ## 1.0.0-beta.2 (Upcoming)
 
+### New Features
+
+### Breaking Changes
+
 ### Bug Fixes
 - Updating logic to check against the error first before checking the call object
 
