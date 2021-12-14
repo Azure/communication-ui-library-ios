@@ -44,12 +44,11 @@ class AppPermissionsManager: PermissionsManager {
         switch state {
         case .unknown:
             let state = resolveStatus(for: permission)
-            let setPermission = PermissionAction.generateAction(permission: permission, state: state)
-            store.dispatch(action: setPermission)
+            self.setPermissionState(permission: permission, state: state)
         case .requesting:
             request(permission)
                 .sink(receiveValue: { [weak self] state in
-                    guard let self = self  else {
+                    guard let self = self else {
                         return
                     }
 
