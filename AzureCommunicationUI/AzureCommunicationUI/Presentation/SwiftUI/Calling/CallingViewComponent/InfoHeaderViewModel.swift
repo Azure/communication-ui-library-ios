@@ -38,7 +38,9 @@ class InfoHeaderViewModel: ObservableObject {
 
     func showParticipantListButtonButtonTapped() {
         logger.debug("Show participant list button tapped")
-        self.infoHeaderDismissTimer?.invalidate()
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            self.infoHeaderDismissTimer?.invalidate()
+        }
         self.displayParticipantsList()
     }
 

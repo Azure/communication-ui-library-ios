@@ -16,30 +16,32 @@ struct InfoHeaderView: View {
     let hStackHorizontalPadding: CGFloat = 20.0
 
     var body: some View {
-        if viewModel.isInfoHeaderDisplayed {
-            HStack {
-                Text(viewModel.infoLabel)
-                    .padding(EdgeInsets(top: infoLabelHorizontalPadding,
-                                        leading: 0,
-                                        bottom: infoLabelHorizontalPadding,
-                                        trailing: 0))
-                    .foregroundColor(foregroundColor)
-                    .font(Fonts.caption1.font)
-                Spacer()
-                participantListButton
+        ZStack {
+            if viewModel.isInfoHeaderDisplayed {
+                HStack {
+                    Text(viewModel.infoLabel)
+                        .padding(EdgeInsets(top: infoLabelHorizontalPadding,
+                                            leading: 0,
+                                            bottom: infoLabelHorizontalPadding,
+                                            trailing: 0))
+                        .foregroundColor(foregroundColor)
+                        .font(Fonts.caption1.font)
+                    Spacer()
+                    participantListButton
+                }
+                .padding(EdgeInsets(top: 0,
+                                    leading: hStackHorizontalPadding,
+                                    bottom: 0,
+                                    trailing: hStackHorizontalPadding / 2.0))
+                .background(Color(StyleProvider.color.surfaceDarkColor))
+                .clipShape(RoundedRectangle(cornerRadius: shapeCornerRadius))
+            } else {
+                EmptyView()
             }
-            .padding(EdgeInsets(top: 0,
-                                leading: hStackHorizontalPadding,
-                                bottom: 0,
-                                trailing: hStackHorizontalPadding / 2.0))
-            .background(Color(StyleProvider.color.surfaceDarkColor))
-            .clipShape(RoundedRectangle(cornerRadius: shapeCornerRadius))
-            .modifier(PopupModalView(isPresented: viewModel.isParticipantsListDisplayed) {
-                participantsListView
-            })
-        } else {
-            EmptyView()
         }
+        .modifier(PopupModalView(isPresented: viewModel.isParticipantsListDisplayed) {
+            participantsListView
+        })
     }
 
     var participantListButton: some View {
