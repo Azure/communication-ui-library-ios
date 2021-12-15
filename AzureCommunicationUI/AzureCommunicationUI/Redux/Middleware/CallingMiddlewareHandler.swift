@@ -46,8 +46,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 case .failure(let error):
                     self.handle(error: error, errorCode: CallCompositeErrorCode.callJoin, dispatch: dispatch)
                 case .finished:
-                    if state.permissionState.cameraPermission == .granted,
-                       state.localUserState.cameraState.operation == .off {
+                    if state.permissionState.cameraPermission == .granted {
                         dispatch(LocalUserAction.CameraPreviewOnTriggered())
                     }
                 }
