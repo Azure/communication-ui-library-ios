@@ -94,9 +94,7 @@ class ACSCallingSDKWrapper: NSObject, CallingSDKWrapper {
             }
 
             self.callAgent?.join(with: joinLocator, joinCallOptions: joinCallOptions) { [weak self] (call, error) in
-                guard let self = self,
-                      let call = call else {
-                    self?.logger.error( "Join call failed")
+                guard let self = self else {
                     return promise(.failure(CompositeError.invalidSDKWrapper))
                 }
 
@@ -104,6 +102,12 @@ class ACSCallingSDKWrapper: NSObject, CallingSDKWrapper {
                     self.logger.error( "Join call failed with error")
                     return promise(.failure(error))
                 }
+
+                guard let call = call else {
+                    self.logger.error( "Join call failed")
+                    return promise(.failure(CompositeError.invalidSDKWrapper))
+                }
+
                 call.delegate = self.callingEventsHandler
                 self.call = call
                 self.setupCallRecordingAndTranscriptionFeature()
