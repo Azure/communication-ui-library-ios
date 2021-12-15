@@ -18,30 +18,37 @@ struct InfoHeaderView: View {
     var body: some View {
         ZStack {
             if viewModel.isInfoHeaderDisplayed {
-                HStack {
-                    Text(viewModel.infoLabel)
-                        .padding(EdgeInsets(top: infoLabelHorizontalPadding,
-                                            leading: 0,
-                                            bottom: infoLabelHorizontalPadding,
-                                            trailing: 0))
-                        .foregroundColor(foregroundColor)
-                        .font(Fonts.caption1.font)
-                    Spacer()
-                    participantListButton
-                }
-                .padding(EdgeInsets(top: 0,
-                                    leading: hStackHorizontalPadding,
-                                    bottom: 0,
-                                    trailing: hStackHorizontalPadding / 2.0))
-                .background(Color(StyleProvider.color.surfaceDarkColor))
-                .clipShape(RoundedRectangle(cornerRadius: shapeCornerRadius))
+                infoHeader
             } else {
                 EmptyView()
             }
         }
+        .onAppear(perform: {
+            viewModel.isPad = UIDevice.current.userInterfaceIdiom == .pad
+        })
         .modifier(PopupModalView(isPresented: viewModel.isParticipantsListDisplayed) {
             participantsListView
         })
+    }
+
+    var infoHeader: some View {
+        HStack {
+            Text(viewModel.infoLabel)
+                .padding(EdgeInsets(top: infoLabelHorizontalPadding,
+                                    leading: 0,
+                                    bottom: infoLabelHorizontalPadding,
+                                    trailing: 0))
+                .foregroundColor(foregroundColor)
+                .font(Fonts.caption1.font)
+            Spacer()
+            participantListButton
+        }
+        .padding(EdgeInsets(top: 0,
+                            leading: hStackHorizontalPadding,
+                            bottom: 0,
+                            trailing: hStackHorizontalPadding / 2.0))
+        .background(Color(StyleProvider.color.surfaceDarkColor))
+        .clipShape(RoundedRectangle(cornerRadius: shapeCornerRadius))
     }
 
     var participantListButton: some View {

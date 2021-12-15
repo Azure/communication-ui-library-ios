@@ -3,7 +3,6 @@
 //  Licensed under the MIT License.
 //
 
-import SwiftUI
 import Foundation
 import Combine
 
@@ -17,6 +16,7 @@ class InfoHeaderViewModel: ObservableObject {
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
+    var isPad: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
@@ -38,7 +38,7 @@ class InfoHeaderViewModel: ObservableObject {
 
     func showParticipantListButtonButtonTapped() {
         logger.debug("Show participant list button tapped")
-        if UIDevice.current.userInterfaceIdiom == .pad {
+        if isPad {
             self.infoHeaderDismissTimer?.invalidate()
         }
         self.displayParticipantsList()
