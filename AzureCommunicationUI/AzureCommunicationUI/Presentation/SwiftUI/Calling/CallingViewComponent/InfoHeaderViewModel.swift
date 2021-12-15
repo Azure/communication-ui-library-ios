@@ -22,7 +22,7 @@ class InfoHeaderViewModel: ObservableObject {
          logger: Logger,
          localUserState: LocalUserState) {
         self.logger = logger
-        participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
+        self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
             localUserState: localUserState)
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,
@@ -31,12 +31,12 @@ class InfoHeaderViewModel: ObservableObject {
                 guard let self = self else {
                     return
                 }
-                self.showParticipantListButtonButtonTapped()
+                self.showParticipantListButtonTapped()
         }
         resetTimer()
     }
 
-    func showParticipantListButtonButtonTapped() {
+    func showParticipantListButtonTapped() {
         logger.debug("Show participant list button tapped")
         self.infoHeaderDismissTimer?.invalidate()
         self.displayParticipantsList()
