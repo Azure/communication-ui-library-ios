@@ -59,7 +59,6 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
                     // Apply a delay here to allow the previous orientation change to finish,
                     // then reset orientations
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-
                         let rotateOrientation: UIInterfaceOrientation = orientation == .portrait ?
                             .portrait : (orientation == .landscapeLeft ? .landscapeLeft : .landscapeRight)
                         UIDevice.current.rotateTo(oritation: rotateOrientation)
@@ -83,9 +82,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
         UIApplication.shared.isIdleTimerDisabled = false
         UIDevice.current.toggleProximityMonitoringStatus(isEnabled: false)
 
-        if (environmentProperties.supportedOrientations == .all
-            || environmentProperties.supportedOrientations == .allButUpsideDown)
-            && !UIDevice.current.isGeneratingDeviceOrientationNotifications {
+        if !UIDevice.current.isGeneratingDeviceOrientationNotifications {
             UIDevice.current.beginGeneratingDeviceOrientationNotifications()
         }
     }
