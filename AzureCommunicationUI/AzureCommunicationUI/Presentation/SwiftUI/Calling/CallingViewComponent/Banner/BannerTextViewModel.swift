@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 class BannerTextViewModel: ObservableObject {
     var title: String = ""
