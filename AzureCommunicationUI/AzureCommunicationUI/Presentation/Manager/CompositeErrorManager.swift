@@ -33,8 +33,10 @@ class CompositeErrorManager: ErrorManager {
             case .fatal:
                 update(error: error)
                 respondToFatalError(code: error.code)
+                store.dispatch(action: CallingAction.CleanupCallStates())
             case .callState:
                 update(error: error)
+                store.dispatch(action: CallingAction.CleanupCallStates())
             case .none:
                 break
             }

@@ -15,6 +15,9 @@ struct CallingReducer: Reducer {
         var isRecordingActive = callingState.isRecordingActive
         var isTranscriptionActive = callingState.isTranscriptionActive
         switch action {
+        case _ as CallingAction.CleanupCallStates:
+            isRecordingActive = false
+            isTranscriptionActive = false
         case let action as CallingAction.StateUpdated:
             coreStatus = action.status
         case let action as CallingAction.RecordingStateUpdated:

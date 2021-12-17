@@ -25,6 +25,8 @@ struct CallingAction {
     struct TranscriptionStateUpdated: Action {
         let isTranscriptionActive: Bool
     }
+
+    struct CleanupCallStates: Action {}
 }
 
 struct ParticipantListUpdated: Action {
@@ -45,5 +47,4 @@ struct ErrorAction: Action {
 
 struct CompositeExitAction: Action {}
 
-struct CallingViewLaunched: Action {
-}
+struct CallingViewLaunched: Action {}
