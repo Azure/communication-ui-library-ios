@@ -79,7 +79,6 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         for participant in remoteParticipants {
             if let userIdentifier = participant.identifier.stringValue {
                 self.remoteParticipants.removeValue(forKey: userIdentifier)?.delegate = nil
-
             }
         }
         removeRemoteParticipantsInfoModel(remoteParticipants)

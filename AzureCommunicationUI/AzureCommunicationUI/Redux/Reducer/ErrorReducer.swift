@@ -18,11 +18,11 @@ struct ErrorReducer: Reducer {
         switch action {
         case let action as ErrorAction.FatalErrorUpdated:
             error = action.error
-            errorCode = action.errorCode
+            errorCode = action.error.code
             errorCategory = .fatal
         case let action as ErrorAction.CallStateErrorUpdated:
             error = action.error
-            errorCode = action.errorCode
+            errorCode = action.error.code
             errorCategory = .callState
         default:
             return state
