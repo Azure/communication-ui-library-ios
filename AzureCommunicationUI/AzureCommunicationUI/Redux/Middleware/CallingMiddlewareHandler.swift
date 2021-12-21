@@ -259,9 +259,9 @@ extension CallingMiddlewareHandler {
                     let action: Action
                     let error = ErrorEvent(code: errorCode, error: nil)
                     if errorCode == CallCompositeErrorCode.tokenExpired {
-                        action = ErrorAction.FatalErrorUpdated(error: error, errorCode: errorCode)
+                        action = ErrorAction.FatalErrorUpdated(error: error)
                     } else {
-                        action = ErrorAction.CallStateErrorUpdated(error: error, errorCode: errorCode)
+                        action = ErrorAction.CallStateErrorUpdated(error: error)
                     }
 
                     dispatch(action)
