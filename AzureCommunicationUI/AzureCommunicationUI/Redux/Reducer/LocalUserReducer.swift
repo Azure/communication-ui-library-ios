@@ -21,6 +21,7 @@ struct LocalUserReducer: Reducer {
         switch action {
         case _ as LocalUserAction.CameraPreviewOnTriggered:
             cameraTransmissionStatus = .local
+            cameraStatus = .pending
         case _ as LocalUserAction.CameraOnTriggered:
             cameraTransmissionStatus = .remote
             cameraStatus = .pending
