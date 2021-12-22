@@ -26,6 +26,8 @@ class CompositeParticipantsListCell: TableViewCell {
 
         if isNameEmpty {
             setTitleLabelTextColor(color: UIColor.compositeColor(CompositeColor.mute))
+        } else {
+            setTitleLabelTextColor(color: UIColor.compositeColor(CompositeColor.onWarning))
         }
 
         setup(title: isNameEmpty ? "Unnamed Participant" : displayName,
