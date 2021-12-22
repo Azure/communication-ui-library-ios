@@ -14,7 +14,8 @@ class ParticipantsListCellViewModel {
     }
 
     init(localUserState: LocalUserState) {
-        if let displayName = localUserState.displayName {
+        if let displayName = localUserState.displayName,
+           !displayName.trimmingCharacters(in: .whitespaces).isEmpty {
             self.displayName = "\(displayName) \(Constants.localParticipantNamePostfix)"
         } else {
             self.displayName = "\(Constants.localParticipantNamePostfix)"
