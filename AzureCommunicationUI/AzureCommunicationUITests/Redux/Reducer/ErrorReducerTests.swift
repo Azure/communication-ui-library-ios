@@ -13,8 +13,7 @@ class ErrorReducerTests: XCTestCase {
     func test_handleErrorReducer_reduce_when_notErrorState_then_return() {
         let state = StateMocking()
         let action = ErrorAction.FatalErrorUpdated(error: ErrorEvent(code: "",
-                                                                     error: nil),
-                                                   errorCode: "")
+                                                                     error: nil))
         let sut = getSUT()
 
         let resultState = sut.reduce(state, action)
@@ -25,8 +24,7 @@ class ErrorReducerTests: XCTestCase {
         let state = ErrorState(error: nil, errorCode: CallCompositeErrorCode.callJoin, errorCategory: .callState)
         let error = ErrorEvent(code: CallCompositeErrorCode.callJoin, error: nil)
 
-        let action = ErrorAction.FatalErrorUpdated(error: error,
-                                                   errorCode: CallCompositeErrorCode.callJoin)
+        let action = ErrorAction.FatalErrorUpdated(error: error)
         let sut = getSUT()
 
         let resultState = sut.reduce(state, action)
