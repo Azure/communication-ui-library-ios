@@ -14,28 +14,19 @@ class AppAudioSessionManager: AudioSessionManager {
     private let logger: Logger
     private let store: Store<AppState>
     var cancellables = Set<AnyCancellable>()
-    var isSpeakerphoneOn: Bool = false
 
     init(store: Store<AppState>,
          logger: Logger) {
         self.store = store
         self.logger = logger
-        initializeAudioDeviceState()
+        let currentAudioDevice = getCurrentAudioDevice()
         self.setupAudioSession()
+        store.dispatch(action: LocalUserAction.AudioDeviceChangeRequested(device: currentAudioDevice))
         store.$state
             .sink { [weak self] state in
                 self?.receive(state: state)
             }.store(in: &cancellables)
 
-    }
-
-    private func initializeAudioDeviceState() {
-        isSpeakerphoneOn = getCurrentAudioDevice() == .speaker
-        if isSpeakerphoneOn {
-             store.dispatch(action: LocalUserAction.AudioDeviceChangeSucceeded(device: .speaker))
-        } else {
-             store.dispatch(action: LocalUserAction.AudioDeviceChangeSucceeded(device: .receiver))
-        }
     }
 
     private func receive(state: AppState) {
@@ -62,7 +53,6 @@ class AppAudioSessionManager: AudioSessionManager {
                                                            .interruptSpokenAudioAndMixWithOthers,
                                                            .allowBluetoothA2DP]
             try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: options)
-            try audioSession.overrideOutputAudioPort(isSpeakerphoneOn ? .speaker : .none)
             try audioSession.setActive(true)
         } catch let error {
             logger.error("Failed to set audio session category:\(error.localizedDescription)")
@@ -97,12 +87,10 @@ class AppAudioSessionManager: AudioSessionManager {
         do {
             try audioSession.setActive(true)
             try audioSession.overrideOutputAudioPort(audioPort)
-            isSpeakerphoneOn = audioPort == .speaker
             store.dispatch(action: LocalUserAction.AudioDeviceChangeSucceeded(device: selectedAudioDevice))
         } catch let error {
             logger.error("Failed to select audio device, reason:\(error.localizedDescription)")
             store.dispatch(action: LocalUserAction.AudioDeviceChangeFailed(error: error))
-            isSpeakerphoneOn = false
         }
     }
 
