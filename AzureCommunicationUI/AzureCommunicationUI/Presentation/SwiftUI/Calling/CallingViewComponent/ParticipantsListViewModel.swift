@@ -11,6 +11,7 @@ class ParticipantsListViewModel: ObservableObject {
     @Published var participantsList: [ParticipantsListCellViewModel] = []
     @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
 
+    let defaultEmptyName: String = "Unnamed Participant"
     var lastUpdateTimeStamp = Date()
 
     init(localUserState: LocalUserState) {
@@ -36,9 +37,9 @@ class ParticipantsListViewModel: ObservableObject {
         // alphabetical order
         return ([localParticipantsListCellViewModel] + participantsList).sorted {
             let name = $0.displayName.trimmingCharacters(in: .whitespaces).isEmpty ?
-                "Unnamed Participant" : $0.displayName
+                defaultEmptyName : $0.displayName
             let nextName = $1.displayName.trimmingCharacters(in: .whitespaces).isEmpty ?
-                "Unnamed Participant" : $1.displayName
+                defaultEmptyName : $1.displayName
             return name.localizedCaseInsensitiveCompare(nextName) == .orderedAscending
         }
     }
