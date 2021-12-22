@@ -8,6 +8,7 @@ import FluentUI
 
 class CompositeParticipantsListCell: TableViewCell {
     func setup(displayName: String, isMuted: Bool, accessoryType: TableViewCellAccessoryType = .none) {
+        let isNameEmpty = displayName.trimmingCharacters(in: .whitespaces).isEmpty
         let avatar = MSFAvatar(style: .accent, size: .medium)
         avatar.state.primaryText = displayName
         let avatarView = avatar.view
@@ -23,7 +24,11 @@ class CompositeParticipantsListCell: TableViewCell {
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
 
-        setup(title: displayName,
+        if isNameEmpty {
+            setTitleLabelTextColor(color: UIColor.compositeColor(CompositeColor.mute))
+        }
+
+        setup(title: isNameEmpty ? "Unnamed Participant" : displayName,
               customView: avatarView,
               customAccessoryView: micImageView)
     }

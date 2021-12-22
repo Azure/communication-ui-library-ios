@@ -35,7 +35,11 @@ class ParticipantsListViewModel: ObservableObject {
     func sortedParticipants() -> [ParticipantsListCellViewModel] {
         // alphabetical order
         return ([localParticipantsListCellViewModel] + participantsList).sorted {
-            return $0.displayName.localizedCaseInsensitiveCompare($1.displayName) == .orderedAscending
+            let name = $0.displayName.trimmingCharacters(in: .whitespaces).isEmpty ?
+                "Unnamed Participant" : $0.displayName
+            let nextName = $1.displayName.trimmingCharacters(in: .whitespaces).isEmpty ?
+                "Unnamed Participant" : $1.displayName
+            return name.localizedCaseInsensitiveCompare(nextName) == .orderedAscending
         }
     }
 }
