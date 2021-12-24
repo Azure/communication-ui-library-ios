@@ -22,4 +22,9 @@ extension UIDevice {
     func toggleProximityMonitoringStatus(isEnabled: Bool) {
         UIDevice.current.isProximityMonitoringEnabled = isEnabled
     }
+
+    func rotateTo(oritation: UIInterfaceOrientation) {
+        UIDevice.current.setValue(oritation.rawValue, forKey: "orientation")
+        UIViewController.attemptRotationToDeviceOrientation()
+    }
 }
