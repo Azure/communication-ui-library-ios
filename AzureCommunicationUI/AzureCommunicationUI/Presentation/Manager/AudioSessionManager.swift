@@ -26,7 +26,6 @@ class AppAudioSessionManager: AudioSessionManager {
             .sink { [weak self] state in
                 self?.receive(state: state)
             }.store(in: &cancellables)
-
     }
 
     private func receive(state: AppState) {
