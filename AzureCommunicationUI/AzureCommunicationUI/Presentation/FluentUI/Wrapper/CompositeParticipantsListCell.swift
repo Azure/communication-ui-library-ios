@@ -30,7 +30,7 @@ class CompositeParticipantsListCell: TableViewCell {
             setTitleLabelTextColor(color: UIColor.compositeColor(CompositeColor.onWarning))
         }
 
-        setup(title: isNameEmpty ? "Unnamed Participant" : displayName,
+        setup(title: isNameEmpty ? StringConstants.defaultEmptyName : displayName,
               customView: avatarView,
               customAccessoryView: micImageView)
     }
