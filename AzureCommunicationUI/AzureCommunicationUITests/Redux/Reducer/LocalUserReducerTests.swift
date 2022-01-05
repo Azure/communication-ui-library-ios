@@ -167,6 +167,41 @@ class LocalUserReducerTests: XCTestCase {
         XCTAssertEqual(resultState.audioState.device, expectedAudioDeviceStatus)
     }
 
+    func test_localUserReducer_reduce_when_localUserActionCameraPreviewOnTriggered_then_cameraTransmissionStatusIsLocal_cameraStatusIsPending() {
+        let state = LocalUserState()
+        let expectedCameraTransmissionStatus = LocalUserState.CameraTransmissionStatus.local
+        let expectedCameraStatus = LocalUserState.CameraOperationalStatus.pending
+        let action = LocalUserAction.CameraPreviewOnTriggered()
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action) as! LocalUserState
+
+        XCTAssertEqual(resultState.cameraState.transmission, expectedCameraTransmissionStatus)
+        XCTAssertEqual(resultState.cameraState.operation, expectedCameraStatus)
+
+    }
+
+    func test_localUserReducer_reduce_when_localUserActionCameraOnTriggered_then_cameraTransmissionStatusIsRemote_cameraStatusIsPending() {
+        let state = LocalUserState()
+        let expectedCameraTransmissionStatus = LocalUserState.CameraTransmissionStatus.remote
+        let expectedCameraStatus = LocalUserState.CameraOperationalStatus.pending
+        let action = LocalUserAction.CameraOnTriggered()
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action) as! LocalUserState
+
+        XCTAssertEqual(resultState.cameraState.transmission, expectedCameraTransmissionStatus)
+        XCTAssertEqual(resultState.cameraState.operation, expectedCameraStatus)
+    }
+
+    func test_localUserReducer_reduce_when_localUserActionCameraOffTriggered_then_cameraStatusIsPending() {
+        let state = LocalUserState()
+        let expectedCameraStatus = LocalUserState.CameraOperationalStatus.pending
+        let action = LocalUserAction.CameraOffTriggered()
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action) as! LocalUserState
+
+        XCTAssertEqual(resultState.cameraState.operation, expectedCameraStatus)
+    }
+
     func test_localUserReducer_reduce_when_mockingAction_then_stateNotUpdate() {
         let expectedVideoId = "expected"
 
