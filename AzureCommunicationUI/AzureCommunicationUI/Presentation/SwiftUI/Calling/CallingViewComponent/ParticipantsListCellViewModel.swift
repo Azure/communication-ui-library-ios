@@ -9,15 +9,12 @@ class ParticipantsListCellViewModel {
     let displayName: String
     let isMuted: Bool
 
-    struct Constants {
-        static let localParticipantNamePostfix: String = "(You)"
-    }
-
     init(localUserState: LocalUserState) {
-        if let displayName = localUserState.displayName {
-            self.displayName = "\(displayName) \(Constants.localParticipantNamePostfix)"
+        if let displayName = localUserState.displayName,
+           !displayName.trimmingCharacters(in: .whitespaces).isEmpty {
+            self.displayName = "\(displayName) \(StringConstants.localParticipantNamePostfix)"
         } else {
-            self.displayName = "\(Constants.localParticipantNamePostfix)"
+            self.displayName = "\(StringConstants.localParticipantNamePostfix)"
         }
 
         self.isMuted = localUserState.audioState.operation != .on
