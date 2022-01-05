@@ -62,7 +62,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
                   let userIdentifier = remoteParticipant.identifier.stringValue else {
                 return
             }
-            let updateSpeakingStamp = remoteParticipant.isSpeaking ? true : false
+            let updateSpeakingStamp = remoteParticipant.isSpeaking
             self.updateRemoteParticipant(userIdentifier: userIdentifier, updateSpeakingStamp: updateSpeakingStamp)
         }
 
@@ -114,29 +114,20 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         participantsInfoListSubject.send(remoteParticipantsInfoList)
     }
 
-    private func updateRemoteParticipantInfoList() {
-        var remoteParticipantsInfoList = [ParticipantInfoModel]()
-        remoteParticipants.forEach {
-            let infoModel = $0.toParticipantInfoModel(recentSpeakingStamp: Date(timeIntervalSince1970: 0))
-            remoteParticipantsInfoList.append(infoModel)
-        }
-        participantsInfoListSubject.send(remoteParticipantsInfoList)
-    }
-
     private func updateRemoteParticipant(userIdentifier: String,
                                          updateSpeakingStamp: Bool) {
         var remoteParticipantsInfoList = participantsInfoListSubject.value
-        if let index = remoteParticipantsInfoList.firstIndex(where: {
-            $0.userIdentifier == userIdentifier
-        }),
-            let remoteParticipant = remoteParticipants.value(forKey: userIdentifier) {
+        if let remoteParticipant = remoteParticipants.value(forKey: userIdentifier),
+           let index = remoteParticipantsInfoList.firstIndex(where: {
+               $0.userIdentifier == userIdentifier
+           }) {
             let speakingStamp = remoteParticipantsInfoList[index].recentSpeakingStamp
             let timeStamp = updateSpeakingStamp ? Date() : speakingStamp
             let newInfoModel = remoteParticipant.toParticipantInfoModel(recentSpeakingStamp: timeStamp)
             remoteParticipantsInfoList[index] = newInfoModel
-        }
 
-        participantsInfoListSubject.send(remoteParticipantsInfoList)
+            participantsInfoListSubject.send(remoteParticipantsInfoList)
+        }
     }
 }
 
