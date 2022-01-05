@@ -34,12 +34,10 @@ struct ParticipantListUpdated: Action {
 struct ErrorAction: Action {
     struct FatalErrorUpdated: Action {
         let error: ErrorEvent
-        let errorCode: String
     }
 
     struct CallStateErrorUpdated: Action {
         let error: ErrorEvent
-        let errorCode: String
     }
 }
 
