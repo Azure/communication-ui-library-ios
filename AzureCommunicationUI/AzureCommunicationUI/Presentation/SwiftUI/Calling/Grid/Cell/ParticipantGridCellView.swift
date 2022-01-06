@@ -84,7 +84,8 @@ struct ParticipantTitleView: View {
 
     var body: some View {
         HStack(alignment: .center, spacing: hSpace, content: {
-            if let displayName = displayName {
+            if let displayName = displayName,
+               !displayName.trimmingCharacters(in: .whitespaces).isEmpty {
                 Text(displayName)
                     .font(titleFont)
                     .lineLimit(1)
