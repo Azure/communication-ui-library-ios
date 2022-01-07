@@ -7,10 +7,10 @@
 ### Breaking Changes
 
 ### Bug Fixes
-- Fix the order of CompositeError throwing in joining a call
-- Fix for info header doesn't disappear when bottom drawer is displayed
-- Fix for the local video rotation in setup view when device orientation is locked
-- Fix the display of the participant with empty name in the participant list. 
+- Fix the order of CompositeError throwing in joining a call.
+- Fix for info header doesn't disappear when bottom drawer is displayed.
+- Fix for the local video rotation in setup view when device orientation is locked.
+- Fix the display of the participant with an empty name in the participant list. 
 - Fix the default audio selection when the UI Composite is launched. 
 
 ## 1.0.0-beta.1 (2021-12-09)
