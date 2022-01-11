@@ -13,13 +13,21 @@ struct ParticipantGridCellVideoView: View {
     @Binding var displayName: String?
     @Binding var isMuted: Bool
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
+    @State private var scale: CGFloat = 1.0
 
     let borderColor = Color(StyleProvider.color.primaryColor)
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             VStack(alignment: .center, spacing: 0) {
-                VideoRendererView(rendererView: rendererView)
+                ZoomableVideoRenderView(rendererView: self.rendererView, scale: $scale)
+                    .gesture(TapGesture(count: 2).onEnded({
+                        if scale != 1.0 {
+                            scale = 1.0
+                        } else {
+                            scale = 2.0
+                        }
+                    }) )
             }
 
             ParticipantTitleView(displayName: $displayName,
