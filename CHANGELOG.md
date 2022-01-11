@@ -13,7 +13,7 @@
 - Fix the display of the participant with an empty name in the participant list. [#24](https://github.com/Azure/communication-ui-library-ios/pull/24)
 - Fix the default audio selection when the UI Composite is launched. [#21](https://github.com/Azure/communication-ui-library-ios/pull/21)
 
-### Project improvements
+### Other Changes
 - Update Redux State when initializing the local video preview in the setup view. [#23](https://github.com/Azure/communication-ui-library-ios/pull/23)
 - Code cleanup and refactoring.
 
