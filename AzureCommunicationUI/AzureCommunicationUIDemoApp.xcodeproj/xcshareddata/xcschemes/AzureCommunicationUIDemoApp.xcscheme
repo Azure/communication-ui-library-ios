@@ -28,6 +28,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "1F8881B927909E08001427F0"
+               BuildableName = "AzureCommunicationUIDemoAppUITests.xctest"
+               BlueprintName = "AzureCommunicationUIDemoAppUITests"
+               ReferencedContainer = "container:AzureCommunicationUIDemoApp.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
