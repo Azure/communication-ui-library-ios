@@ -8,9 +8,10 @@ import Foundation
 struct DiagnosticConfig {
     var tags = [String]()
     private let callCompositeTagPrefix: String = "aci110"
-    private let semVersionString: String = "1.0.0-alpha.2"
     private var callCompositeTag: String {
-        return "\(callCompositeTagPrefix)/\(semVersionString)"
+        let version = Bundle(for: CallComposite.self).infoDictionary?["CompositeSemVersion"]
+        let versionStr = version as? String ?? "unknown"
+        return "\(callCompositeTagPrefix)/\(versionStr)"
     }
 
     init() {
