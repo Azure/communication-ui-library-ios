@@ -30,9 +30,14 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     func update(participantModel: ParticipantInfoModel) {
         self.participantIdentifier = participantModel.userIdentifier
         let videoIdentifier = getDisplayingVideoStreamId(participantModel)
+        let videoStreamType = getDisplayingVideoStreamType(participantModel)
 
         if self.videoStreamId != videoIdentifier {
             self.videoStreamId = videoIdentifier
+        }
+
+        if self.videoStreamType != videoStreamType {
+            self.videoStreamType = videoStreamType
         }
 
         if self.displayName != participantModel.displayName {
