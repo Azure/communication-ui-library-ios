@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bug Fixes
+- Cleaning up Calling State and Call Error when joining or returning to a call from error. [#28](https://github.com/Azure/communication-ui-library-ios/pull/28)
 - Fix the order of CompositeError throwing in joining a call. [#11](https://github.com/Azure/communication-ui-library-ios/pull/11)
 - Fix for info header doesn't disappear when bottom drawer is displayed. [#12](https://github.com/Azure/communication-ui-library-ios/pull/12)
 - Fix for the local video rotation in setup view when device orientation is locked. [#13](https://github.com/Azure/communication-ui-library-ios/pull/13)
