@@ -7,7 +7,16 @@
 ### Breaking Changes
 
 ### Bug Fixes
-- Updating logic to check against the error first before checking the call object
+- Fix the order of CompositeError throwing in joining a call. [#11](https://github.com/Azure/communication-ui-library-ios/pull/11)
+- Fix for info header doesn't disappear when bottom drawer is displayed. [#12](https://github.com/Azure/communication-ui-library-ios/pull/12)
+- Fix for the local video rotation in setup view when device orientation is locked. [#13](https://github.com/Azure/communication-ui-library-ios/pull/13)
+- Fix the display of the participant with an empty name in the participant list. [#24](https://github.com/Azure/communication-ui-library-ios/pull/24)
+- Fix the default audio selection when the UI Composite is launched. [#21](https://github.com/Azure/communication-ui-library-ios/pull/21)
+
+### Other Changes
+- Update Redux State when initializing the local video preview in the setup view. [#23](https://github.com/Azure/communication-ui-library-ios/pull/23)
+- Code cleanup and refactoring.
+
 
 ## 1.0.0-beta.1 (2021-12-09)
 This is the initial release of Azure Communication UI Library. For more information, please see the [README](README.md) and [QuickStart](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/ui-library/get-started-call?tabs=kotlin&pivots=platform-ios).
