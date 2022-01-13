@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.swift */; };
 		1F8881BF27909E08001427F0 /* AzureCommunicationUIDemoAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881BE27909E08001427F0 /* AzureCommunicationUIDemoAppUITestsLaunchTests.swift */; };
+		1F8881C72790DF9A001427F0 /* XCUIElementExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881C62790DF9A001427F0 /* XCUIElementExtension.swift */; };
 		3507F9550C99D777E493AA92 /* Pods_AzureCommunicationUIDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 747FFD0380FFBF53EC331032 /* Pods_AzureCommunicationUIDemoApp.framework */; };
 		9885A0E0274C6F470015E37F /* AzureCommunicationUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9885A0DF274C6F470015E37F /* AzureCommunicationUI.framework */; };
 		9885A0E1274C6F470015E37F /* AzureCommunicationUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9885A0DF274C6F470015E37F /* AzureCommunicationUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -56,6 +57,7 @@
 		1F8881BA27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzureCommunicationUIDemoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppUITests.swift; sourceTree = "<group>"; };
 		1F8881BE27909E08001427F0 /* AzureCommunicationUIDemoAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		1F8881C62790DF9A001427F0 /* XCUIElementExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUIElementExtension.swift; sourceTree = "<group>"; };
 		1FEC635827588B5600EA746B /* AppConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = AppConfig.xcconfig; sourceTree = "<group>"; };
 		747FFD0380FFBF53EC331032 /* Pods_AzureCommunicationUIDemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIDemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9885A0DF274C6F470015E37F /* AzureCommunicationUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AzureCommunicationUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,10 +102,19 @@
 		1F8881BB27909E08001427F0 /* AzureCommunicationUIDemoAppUITests */ = {
 			isa = PBXGroup;
 			children = (
+				1F8881C52790DF68001427F0 /* Utilities */,
 				1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.swift */,
 				1F8881BE27909E08001427F0 /* AzureCommunicationUIDemoAppUITestsLaunchTests.swift */,
 			);
 			path = AzureCommunicationUIDemoAppUITests;
+			sourceTree = "<group>";
+		};
+		1F8881C52790DF68001427F0 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				1F8881C62790DF9A001427F0 /* XCUIElementExtension.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		43E518C93ADEBB986A8388BE /* Pods */ = {
@@ -322,6 +333,7 @@
 			files = (
 				1F8881BF27909E08001427F0 /* AzureCommunicationUIDemoAppUITestsLaunchTests.swift in Sources */,
 				1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.swift in Sources */,
+				1F8881C72790DF9A001427F0 /* XCUIElementExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
