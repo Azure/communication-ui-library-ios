@@ -59,6 +59,8 @@ class ACSCallingSDKWrapper: NSObject, CallingSDKWrapper {
     }
 
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) -> AnyPublisher<Void, Error> {
+        logger.debug("Reset Subjects in callingEventsHandler")
+        callingEventsHandler.resetSubjects()
         self.logger.debug( "Starting call")
         return setupCallAgent()
             .flatMap { [weak self] _ -> AnyPublisher<Void, Error> in
