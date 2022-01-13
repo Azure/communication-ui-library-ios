@@ -8,6 +8,7 @@ import SwiftUI
 struct ParticipantGridLayoutView: View {
     var cellViewModels: [ParticipantGridCellViewModel]
     let getRemoteParticipantRendererView: (RemoteParticipantVideoViewId) -> UIView?
+    let getRemoteParticipantRenderViewStreamSize: (RemoteParticipantVideoViewId) -> CGSize?
     let screenSize: ScreenSizeClassType
     let gridsMargin: CGFloat = 3
 
@@ -54,7 +55,8 @@ struct ParticipantGridLayoutView: View {
     func getRowView(cellsViewModel: [ParticipantGridCellViewModel]) -> some View {
         return ForEach(cellsViewModel) { vm in
             ParticipantGridCellView(viewModel: vm,
-                                    getRemoteParticipantRendererView: getRemoteParticipantRendererView)
+                                    getRemoteParticipantRendererView: getRemoteParticipantRendererView,
+                                    getRemoteParticipantRenderViewStreamSize: getRemoteParticipantRenderViewStreamSize)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color(StyleProvider.color.surface))
                 .clipShape(RoundedRectangle(cornerRadius: 4))

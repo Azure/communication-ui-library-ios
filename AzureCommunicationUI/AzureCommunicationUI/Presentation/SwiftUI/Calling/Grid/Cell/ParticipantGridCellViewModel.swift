@@ -5,11 +5,13 @@
 
 import Foundation
 import Combine
+import AzureCommunicationCalling
 
 class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     let id = UUID()
 
     @Published var videoStreamId: String?
+    @Published var videoStreamType: VideoStreamInfoModel.MediaStreamType?
     @Published var displayName: String?
     @Published var isSpeaking: Bool
     @Published var isMuted: Bool
@@ -22,6 +24,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         self.participantIdentifier = participantModel.userIdentifier
         self.isMuted = participantModel.isMuted
         self.videoStreamId = getDisplayingVideoStreamId(participantModel)
+        self.videoStreamType = getDisplayingVideoStreamType(participantModel)
     }
 
     func update(participantModel: ParticipantInfoModel) {
@@ -49,5 +52,12 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         let screenShareVideoStreamIdentifier = participantModel.screenShareVideoStreamModel?.videoStreamIdentifier
         let cameraVideoStreamIdentifier = participantModel.cameraVideoStreamModel?.videoStreamIdentifier
         return screenShareVideoStreamIdentifier ?? cameraVideoStreamIdentifier
+    }
+
+    private func getDisplayingVideoStreamType(
+        _ participantModel: ParticipantInfoModel) -> VideoStreamInfoModel.MediaStreamType? {
+        let screenShareVideoStreamType = participantModel.screenShareVideoStreamModel?.mediaStreamType
+        let cameraVideoStreamType = participantModel.cameraVideoStreamModel?.mediaStreamType
+        return screenShareVideoStreamType ?? cameraVideoStreamType
     }
 }

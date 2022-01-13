@@ -10,6 +10,7 @@ import Combine
 struct ParticipantGridCellView: View {
     @ObservedObject var viewModel: ParticipantGridCellViewModel
     let getRemoteParticipantRendererView: (RemoteParticipantVideoViewId) -> UIView?
+    let getRemoteParticipantRenderViewStreamSize: (RemoteParticipantVideoViewId) -> CGSize?
     @State var displayedVideoStreamId: String?
     @State var isVideoChanging: Bool = false
     let avatarSize: CGFloat = 56
@@ -21,6 +22,8 @@ struct ParticipantGridCellView: View {
                     EmptyView()
                 } else if let rendererView = getRendererView() {
                     ParticipantGridCellVideoView(rendererView: rendererView,
+                                                 getRendererViewStreamSize: getRendererViewStreamSize,
+                                                 zoomable: viewModel.videoStreamType == .screenSharing,
                                                  isSpeaking: $viewModel.isSpeaking,
                                                  displayName: $viewModel.displayName,
                                                  isMuted: $viewModel.isMuted)
@@ -58,6 +61,18 @@ struct ParticipantGridCellView: View {
                                                                         videoStreamIdentifier: videoStreamId)
 
         return getRemoteParticipantRendererView(remoteParticipantVideoViewId)
+    }
+
+    func getRendererViewStreamSize() -> CGSize? {
+        guard let videoStreamId = viewModel.videoStreamId,
+              !videoStreamId.isEmpty else {
+            return nil
+        }
+        let userId = viewModel.participantIdentifier
+        let remoteParticipantVideoViewId = RemoteParticipantVideoViewId(userIdentifier: userId,
+                                                                        videoStreamIdentifier: videoStreamId)
+
+        return getRemoteParticipantRenderViewStreamSize(remoteParticipantVideoViewId)
     }
 
     var avatarView: some View {

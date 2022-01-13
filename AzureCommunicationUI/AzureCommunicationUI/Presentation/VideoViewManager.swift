@@ -113,6 +113,19 @@ class VideoViewManager {
 
     }
 
+    func getRemoteParticipantVideoRendererViewSize(_ videoViewId: RemoteParticipantVideoViewId) -> CGSize? {
+        let videoStreamId = videoViewId.videoStreamIdentifier
+        let cacheKey = generateCacheKey(userIdentifier: videoViewId.userIdentifier,
+                                        videoStreamId: videoStreamId)
+
+        if let videoStreamCache = displayedRemoteParticipantsRendererView.value(forKey: cacheKey) {
+            return CGSize(width: Int(videoStreamCache.renderer.size.width),
+                          height: Int(videoStreamCache.renderer.size.height))
+        }
+
+        return nil
+    }
+
     private func disposeViews() {
         displayedRemoteParticipantsRendererView.makeKeyIterator().forEach { key in
             self.disposeRemoteParticipantVideoRendererView(key)

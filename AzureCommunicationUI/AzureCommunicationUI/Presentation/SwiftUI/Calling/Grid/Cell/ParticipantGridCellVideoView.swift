@@ -9,6 +9,8 @@ import Combine
 
 struct ParticipantGridCellVideoView: View {
     let rendererView: UIView
+    let getRendererViewStreamSize: () -> CGSize?
+    let zoomable: Bool
     @Binding var isSpeaking: Bool
     @Binding var displayName: String?
     @Binding var isMuted: Bool
@@ -20,14 +22,11 @@ struct ParticipantGridCellVideoView: View {
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             VStack(alignment: .center, spacing: 0) {
-                ZoomableVideoRenderView(rendererView: self.rendererView, scale: $scale)
-                    .gesture(TapGesture(count: 2).onEnded({
-                        if scale != 1.0 {
-                            scale = 1.0
-                        } else {
-                            scale = 2.0
-                        }
-                    }) )
+                if zoomable {
+                    zoomableVideoRenderView
+                } else {
+                    videoRenderView
+                }
             }
 
             ParticipantTitleView(displayName: $displayName,
@@ -45,6 +44,23 @@ struct ParticipantGridCellVideoView: View {
         }.overlay(
             isSpeaking && !isMuted ? RoundedRectangle(cornerRadius: 4).strokeBorder(borderColor, lineWidth: 4) : nil
         ).animation(.default)
+    }
+
+    var videoRenderView: some View {
+        VideoRendererView(rendererView: self.rendererView)
+    }
+
+    var zoomableVideoRenderView: some View {
+        ZoomableVideoRenderView(getRendererViewStreamSize: getRendererViewStreamSize,
+                                rendererView: self.rendererView,
+                                scale: $scale)
+            .gesture(TapGesture(count: 2).onEnded({
+                if scale != 1.0 {
+                    scale = 1.0
+                } else {
+                    scale = 2.0
+                }
+            }))
     }
 
 }
