@@ -26,14 +26,46 @@ class AzureCommunicationUIDemoAppUITests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
 
-        app.buttons["Swift UI"].tap()
+        app.buttons["UI Kit"].tap()
 
-        app.buttons["Start Experience"].tap()
+        let startButton = app.buttons["Start Experience"]
+        waitEnabled(for: startButton)
 
-        app.buttons["Join Call"].tap()
+        startButton.tap()
+
+        let joinButton = app.buttons["Join Call"]
+        wait(for: joinButton)
+        joinButton.tap()
     }
 
-    
+    func testCallCompositeWithExpiredToken() throws {
+        // UI tests must launch the application that they test.
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["Swift UI"].tap()
+
+        let groupCallIdTextField = app.textFields["Group Call Id"]
+        groupCallIdTextField.setText(text:"e76996b0-f58e-11eb-a16f-8db7a6fdcc6c", application: app)
+
+        let displayNameTextField = app.textFields["Display Name"]
+        displayNameTextField.tap()
+        displayNameTextField.tap()
+        displayNameTextField.typeText("UI Tester")
+
+        let acsTokenTextField = app.textFields["ACS Token"]
+        acsTokenTextField.setText(text: getExpiredToken(), application: app)
+
+        let startButton = app.buttons["Start Experience"]
+        waitEnabled(for: startButton)
+
+        startButton.tap()
+
+        let joinButton = app.buttons["Join Call"]
+        wait(for: joinButton)
+        joinButton.tap()
+    }
+
 
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
