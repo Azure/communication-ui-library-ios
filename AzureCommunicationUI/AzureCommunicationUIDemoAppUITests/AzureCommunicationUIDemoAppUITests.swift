@@ -28,21 +28,9 @@ class AzureCommunicationUIDemoAppUITests: XCTestCase {
 
         app.buttons["Swift UI"].tap()
 
-
-        let groupCallIdTextField = app.textFields["Group Call Id"]
-        groupCallIdTextField.setText(text:"e76996b0-f58e-11eb-a16f-8db7a6fdcc6c", application: app)
         app.buttons["Start Experience"].tap()
 
-        let displayNameTextField = app.textFields["Display Name"]
-        displayNameTextField.tap()
-        displayNameTextField.typeText("UI Tester")
-
-        let acsTokenTextField = app.textFields["ACS Token"]
-        acsTokenTextField.setText(text: getExpiredToken(), application: app)
-
         app.buttons["Join Call"].tap()
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
 
     
