@@ -14,6 +14,15 @@ extension XCUIElement {
         }
         application.menuItems.element(boundBy: 0).tap()
     }
+
+    func resetText(text: String?, application: XCUIApplication) {
+        tap()
+        UIPasteboard.general.string = text
+        while application.menuItems.count == 0 {
+            tap(withNumberOfTaps: 3, numberOfTouches: 1)
+        }
+        application.menuItems["Paste"].tap()
+    }
 }
 
 extension XCTestCase {

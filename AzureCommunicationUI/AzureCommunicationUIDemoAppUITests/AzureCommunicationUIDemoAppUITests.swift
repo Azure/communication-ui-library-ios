@@ -45,16 +45,9 @@ class AzureCommunicationUIDemoAppUITests: XCTestCase {
 
         app.buttons["Swift UI"].tap()
 
-        let groupCallIdTextField = app.textFields["Group Call Id"]
-        groupCallIdTextField.setText(text:"e76996b0-f58e-11eb-a16f-8db7a6fdcc6c", application: app)
-
-        let displayNameTextField = app.textFields["Display Name"]
-        displayNameTextField.tap()
-        displayNameTextField.tap()
-        displayNameTextField.typeText("UI Tester")
-
         let acsTokenTextField = app.textFields["ACS Token"]
-        acsTokenTextField.setText(text: getExpiredToken(), application: app)
+
+        acsTokenTextField.resetText(text: getExpiredToken(), application: app)
 
         let startButton = app.buttons["Start Experience"]
         waitEnabled(for: startButton)
