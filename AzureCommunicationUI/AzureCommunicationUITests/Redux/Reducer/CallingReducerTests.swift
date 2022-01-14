@@ -115,6 +115,24 @@ class CallingReducerTests: XCTestCase {
         }
         XCTAssertEqual(resultState, expectedState)
     }
+
+    func test_callingReducer_reduce_when_callingViewLaunched_then_cleanup() {
+        let expectedState = CallingState(status: .none,
+                                         isRecordingActive: false,
+                                         isTranscriptionActive: false)
+        let state = CallingState(status: .connected,
+                                 isRecordingActive: true,
+                                 isTranscriptionActive: true)
+        let action = CallingViewLaunched()
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+
+        guard let resultState = resultState as? CallingState else {
+            XCTFail()
+            return
+        }
+        XCTAssertEqual(resultState, expectedState)
+    }
 }
 
 extension CallingReducerTests {

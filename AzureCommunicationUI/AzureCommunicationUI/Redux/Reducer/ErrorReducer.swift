@@ -24,6 +24,10 @@ struct ErrorReducer: Reducer {
             error = action.error
             errorCode = action.error.code
             errorCategory = .callState
+        case _ as CallingViewLaunched:
+            error = nil
+            errorCode = ""
+            errorCategory = .none
         default:
             return state
         }
