@@ -2,6 +2,19 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.azure.ios.communication.ui.meetings.AzureCommunicationUIDemoApp</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>acsui</string>
+			</array>
+		</dict>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -25,19 +38,15 @@
 	<array>
 		<string>audio</string>
 	</array>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>This is required for calling.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>This is required for calling.</string>
-    <key>acsToken</key>
-    <string>${acsToken}</string>
-    <key>acsTokenUrl</key>
-    <string>${acsTokenUrl}</string>
-    <key>displayName</key>
-    <string>${displayName}</string>
-    <key>groupCallId</key>
-    <string>${groupCallId}</string>
-    <key>teamsMeetingLink</key>
-    <string>${teamsMeetingLink}</string>
+	<key>acsToken</key>
+	<string>${acsToken}</string>
+	<key>acsTokenUrl</key>
+	<string>${acsTokenUrl}</string>
+	<key>displayName</key>
+	<string>${displayName}</string>
+	<key>groupCallId</key>
+	<string>${groupCallId}</string>
+	<key>teamsMeetingLink</key>
+	<string>${teamsMeetingLink}</string>
 </dict>
 </plist>

@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -44,4 +45,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
     }
 
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+
+        // Group call = acsui://calling?acstoken={}&name={}&groupid={}
+        // Teams call = acsui://calling?acstoken={}&name={}&teamsurl={}
+        let queryDict = URLContexts.first?.url.queryDictionary ?? [:]
+        var swiftUiDemoView = SwiftUIDemoView()
+        swiftUiDemoView.universalLinkValues = queryDict
+
+        guard let windowScene = scene as? UIWindowScene else { return }
+        let window = UIWindow(windowScene: windowScene)
+        window.rootViewController = UIHostingController(rootView: swiftUiDemoView)
+        self.window = window
+        window.makeKeyAndVisible()
+    }
 }

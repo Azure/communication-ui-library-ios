@@ -18,6 +18,7 @@ struct SwiftUIDemoView: View {
     @State var isErrorDisplayed: Bool = false
     @State var errorMessage: String = ""
 
+    var universalLinkValues: [String:String] = [:]
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
 
@@ -38,6 +39,9 @@ struct SwiftUIDemoView: View {
                 message: Text(errorMessage),
                 dismissButton: .default(Text("Dismiss")))
         }
+        .onAppear(perform: {
+            applyDeepLinkValues()
+        })
     }
 
     var acsTokenSelector: some View {
@@ -163,6 +167,28 @@ extension SwiftUIDemoView {
         }
     }
 
+    func applyDeepLinkValues() {
+        if let token = universalLinkValues["acstoken"],
+           !token.isEmpty {
+            self.selectedAcsTokenType = .token
+            self.acsToken = token
+        }
+        if let name = universalLinkValues["name"],
+           !name.isEmpty {
+            self.displayName = name
+        }
+        if let groupCallId = universalLinkValues["groupid"],
+           !groupCallId.isEmpty {
+            self.selectedMeetingType = .groupCall
+            self.groupCallId = groupCallId
+        }
+        if let teamsMeetingLink = universalLinkValues["teamsurl"],
+           !teamsMeetingLink.isEmpty {
+            self.selectedMeetingType = .teamsMeeting
+            self.teamsMeetingLink = teamsMeetingLink
+        }
+    }
+
     private func getTokenCredential() throws -> CommunicationTokenCredential {
         switch selectedAcsTokenType {
         case .token:
@@ -205,5 +231,18 @@ extension SwiftUIDemoView {
         print("SwiftUIDemoView::getEventsHandler::didFail \(error)")
         print("SwiftUIDemoView error.code \(error.code)")
         showError(for: error.code)
+    }
+}
+
+extension URL {
+    var queryDictionary: [String: String] {
+        guard let query = self.query else { return [:]}
+        var queryStrings = [String: String]()
+        for pair in query.components(separatedBy: "&") {
+            let key = pair.components(separatedBy: "=")[0]
+            let value = pair.components(separatedBy:"=")[1]
+            queryStrings[key.lowercased()] = value
+        }
+        return queryStrings
     }
 }
