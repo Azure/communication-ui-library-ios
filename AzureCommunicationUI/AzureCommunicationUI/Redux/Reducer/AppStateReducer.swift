@@ -67,6 +67,8 @@ struct AppStateReducer: Reducer {
         switch action {
         case let action as ParticipantListUpdated:
             remoteParticipantState = RemoteParticipantsState(participantInfoList: action.participantsInfoList)
+        case _ as CallingViewLaunched:
+            remoteParticipantState = RemoteParticipantsState(participantInfoList: [])
         default:
             break
         }

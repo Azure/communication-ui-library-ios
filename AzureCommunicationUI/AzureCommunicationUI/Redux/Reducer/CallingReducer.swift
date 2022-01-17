@@ -21,6 +21,10 @@ struct CallingReducer: Reducer {
             isRecordingActive = action.isRecordingActive
         case let action as CallingAction.TranscriptionStateUpdated:
             isTranscriptionActive = action.isTranscriptionActive
+        case _ as CallingViewLaunched:
+            coreStatus = .none
+            isRecordingActive = false
+            isTranscriptionActive = false
         default:
             return state
         }
