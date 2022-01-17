@@ -15,6 +15,10 @@
 			</array>
 		</dict>
 	</array>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This is required for calling.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>This is required for calling.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
