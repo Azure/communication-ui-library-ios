@@ -18,7 +18,7 @@ struct SwiftUIDemoView: View {
     @State var isErrorDisplayed: Bool = false
     @State var errorMessage: String = ""
 
-    var universalLinkValues: [String:String] = [:]
+    var deepLinkValues: [String:String] = [:]
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
 
@@ -168,21 +168,21 @@ extension SwiftUIDemoView {
     }
 
     func applyDeepLinkValues() {
-        if let token = universalLinkValues["acstoken"],
+        if let token = deepLinkValues["acstoken"],
            !token.isEmpty {
             self.selectedAcsTokenType = .token
             self.acsToken = token
         }
-        if let name = universalLinkValues["name"],
+        if let name = deepLinkValues["name"],
            !name.isEmpty {
             self.displayName = name
         }
-        if let groupCallId = universalLinkValues["groupid"],
+        if let groupCallId = deepLinkValues["groupid"],
            !groupCallId.isEmpty {
             self.selectedMeetingType = .groupCall
             self.groupCallId = groupCallId
         }
-        if let teamsMeetingLink = universalLinkValues["teamsurl"],
+        if let teamsMeetingLink = deepLinkValues["teamsurl"],
            !teamsMeetingLink.isEmpty {
             self.selectedMeetingType = .teamsMeeting
             self.teamsMeetingLink = teamsMeetingLink

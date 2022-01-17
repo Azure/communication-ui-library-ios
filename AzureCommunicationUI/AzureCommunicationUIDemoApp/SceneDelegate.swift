@@ -51,7 +51,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Teams call = acsui://calling?acstoken={}&name={}&teamsurl={}
         let queryDict = URLContexts.first?.url.queryDictionary ?? [:]
         var swiftUiDemoView = SwiftUIDemoView()
-        swiftUiDemoView.universalLinkValues = queryDict
+        swiftUiDemoView.deepLinkValues = queryDict
 
         guard let windowScene = scene as? UIWindowScene else { return }
         let window = UIWindow(windowScene: windowScene)
