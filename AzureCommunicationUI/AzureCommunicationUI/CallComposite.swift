@@ -8,6 +8,7 @@ import SwiftUI
 import FluentUI
 import AzureCommunicationCalling
 
+/// The main class representing the entry point for the Call Composite.
 public class CallComposite {
     private var logger: Logger?
     private let themeConfiguration: ThemeConfiguration?
@@ -17,10 +18,14 @@ public class CallComposite {
     private var permissionManager: AppPermissionsManager?
     private var audioSessionManager: AppAudioSessionManager?
 
+    /// Create an instance of CallComposite with options.
+    /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions) {
         themeConfiguration = options.themeConfiguration
     }
 
+    /// Assign an action to perform when an error occurs.
+    /// - Parameter action: The closure on subscribing the error thrown from Call Composite.
     public func setTarget(didFail action: ((ErrorEvent) -> Void)?) {
         callCompositeEventsHandler.didFail = action
     }
@@ -46,6 +51,8 @@ public class CallComposite {
         present(toolkitHostingController)
     }
 
+    /// Start call composite experience with joining a group call.
+    /// - Parameter options: The GroupCallOptions used to locate the group call.
     public func launch(with options: GroupCallOptions) {
         let callConfiguration = CallConfiguration(
             communicationTokenCredential: options.communicationTokenCredential,
@@ -55,6 +62,8 @@ public class CallComposite {
         launch(callConfiguration)
     }
 
+    /// Start call composite experience with joining a Teams meeting..
+    /// - Parameter options: The TeamsMeetingOptions used to locate the Teams meetings.
     public func launch(with options: TeamsMeetingOptions) {
         let callConfiguration = CallConfiguration(
             communicationTokenCredential: options.communicationTokenCredential,

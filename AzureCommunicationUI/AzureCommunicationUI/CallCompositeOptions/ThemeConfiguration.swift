@@ -6,7 +6,10 @@
 import Foundation
 import UIKit
 
+/// A protocol to allow customizing the theme.
 public protocol ThemeConfiguration {
+
+    /// Provide a getter to return a custom primary color.
     var primaryColor: UIColor { get }
 }
 
