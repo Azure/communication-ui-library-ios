@@ -45,9 +45,12 @@ class AzureCommunicationUIDemoAppUITests: XCTestCase {
 
         app.buttons["Swift UI"].tap()
 
-        let acsTokenTextField = app.textFields["ACS Token"]
 
-        acsTokenTextField.resetText(text: getExpiredToken(), application: app)
+        let deleteTokenButton = app.buttons["textFieldClearButton"]
+        deleteTokenButton.tap()
+
+        let acsTokenTextField = app.textFields["ACS Token"]
+        acsTokenTextField.setText(text: getExpiredToken(), application: app)
 
         let startButton = app.buttons["Start Experience"]
         waitEnabled(for: startButton)

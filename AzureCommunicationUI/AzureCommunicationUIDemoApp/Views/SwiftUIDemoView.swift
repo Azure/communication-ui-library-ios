@@ -54,6 +54,7 @@ struct SwiftUIDemoView: View {
                     .textFieldStyle(.roundedBorder)
             case .token:
                 TextField("ACS Token", text: $acsToken)
+                    .modifier(TextFieldClearButton(text: $acsToken))
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
                     .textFieldStyle(.roundedBorder)
