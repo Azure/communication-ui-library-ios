@@ -50,7 +50,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     }
 
     func setupProperties() {
-        participantsInfoListSubject = .init([])
+        participantsInfoListSubject.value.removeAll()
         recordingCallFeature = nil
         transcriptionCallFeature = nil
         remoteParticipants = MappedSequence<String, RemoteParticipant>()
