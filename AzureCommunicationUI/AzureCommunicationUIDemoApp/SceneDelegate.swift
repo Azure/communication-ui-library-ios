@@ -50,13 +50,29 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Group call = acsui://calling?acstoken={}&name={}&groupid={}
         // Teams call = acsui://calling?acstoken={}&name={}&teamsurl={}
         let queryDict = URLContexts.first?.url.queryDictionary ?? [:]
-        var swiftUiDemoView = SwiftUIDemoView()
-        swiftUiDemoView.deepLinkValues = queryDict
-
+        lazy var deepLinkCoordinator = DeepLinkData()
+        let swiftUiDemoView = SwiftUIDemoView()
+            .environment(\.deepLinkCoordinator, deepLinkCoordinator)
+        deepLinkCoordinator.deepLinkValues = queryDict
         guard let windowScene = scene as? UIWindowScene else { return }
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = UIHostingController(rootView: swiftUiDemoView)
         self.window = window
         window.makeKeyAndVisible()
+    }
+}
+
+class DeepLinkData {
+    @Published var deepLinkValues: [String:String] = [:]
+}
+
+struct DeepLinkKey: EnvironmentKey {
+    static let defaultValue: DeepLinkData = DeepLinkData()
+}
+
+extension EnvironmentValues {
+    var deepLinkCoordinator: DeepLinkData {
+        get { self[DeepLinkKey.self] }
+        set { self[DeepLinkKey.self] = newValue }
     }
 }

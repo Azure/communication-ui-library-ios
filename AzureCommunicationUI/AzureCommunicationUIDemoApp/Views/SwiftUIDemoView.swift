@@ -8,6 +8,7 @@ import AzureCommunicationUI
 import AzureCommunicationCalling
 
 struct SwiftUIDemoView: View {
+    @Environment(\.deepLinkCoordinator) var deepLinkCoordinator: DeepLinkData
     @State var acsToken: String = EnvConfig.acsToken.value()
     @State var acsTokenUrl: String = EnvConfig.acsTokenUrl.value()
     @State var displayName: String = EnvConfig.displayName.value()
@@ -18,7 +19,6 @@ struct SwiftUIDemoView: View {
     @State var isErrorDisplayed: Bool = false
     @State var errorMessage: String = ""
 
-    var deepLinkValues: [String:String] = [:]
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
 
@@ -39,9 +39,9 @@ struct SwiftUIDemoView: View {
                 message: Text(errorMessage),
                 dismissButton: .default(Text("Dismiss")))
         }
-        .onAppear(perform: {
-            applyDeepLinkValues()
-        })
+        .onReceive(deepLinkCoordinator.$deepLinkValues) {
+            applyDeepLinkValues($0)
+        }
     }
 
     var acsTokenSelector: some View {
@@ -167,22 +167,22 @@ extension SwiftUIDemoView {
         }
     }
 
-    func applyDeepLinkValues() {
-        if let token = deepLinkValues["acstoken"],
+    func applyDeepLinkValues(_ queryParams: [String:String]=[:]) {
+        if let token = queryParams["acstoken"],
            !token.isEmpty {
             self.selectedAcsTokenType = .token
             self.acsToken = token
         }
-        if let name = deepLinkValues["name"],
+        if let name = queryParams["name"],
            !name.isEmpty {
             self.displayName = name
         }
-        if let groupCallId = deepLinkValues["groupid"],
+        if let groupCallId = queryParams["groupid"],
            !groupCallId.isEmpty {
             self.selectedMeetingType = .groupCall
             self.groupCallId = groupCallId
         }
-        if let teamsMeetingLink = deepLinkValues["teamsurl"],
+        if let teamsMeetingLink = queryParams["teamsurl"],
            !teamsMeetingLink.isEmpty {
             self.selectedMeetingType = .teamsMeeting
             self.teamsMeetingLink = teamsMeetingLink
