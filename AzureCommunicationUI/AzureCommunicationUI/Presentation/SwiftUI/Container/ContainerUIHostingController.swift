@@ -55,12 +55,14 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
             .receive(on: RunLoop.main)
             .removeDuplicates()
             .sink(receiveValue: { orientation in
-                if orientation == .portrait || orientation == .landscape {
+                let portrait = orientation == .portrait
+                let landscape = orientation == .landscapeLeft || orientation == .landscapeRight
+                if  portrait || landscape {
                     // Apply a delay here to allow the previous orientation change to finish,
                     // then reset orientations
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         let rotateOrientation: UIInterfaceOrientation = orientation == .portrait ?
-                            .portrait : (orientation == .landscapeLeft ? .landscapeLeft : .landscapeRight)
+                            .portrait : (orientation == .landscapeLeft ? .landscapeRight : .landscapeLeft)
                         UIDevice.current.rotateTo(oritation: rotateOrientation)
                         UIDevice.current.endGeneratingDeviceOrientationNotifications()
                     }
