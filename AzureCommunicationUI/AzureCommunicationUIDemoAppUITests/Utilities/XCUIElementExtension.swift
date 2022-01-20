@@ -9,10 +9,15 @@ extension XCUIElement {
     func setText(text: String?, application: XCUIApplication) {
         tap()
         UIPasteboard.general.string = text
+        guard UIPasteboard.general.hasStrings else {
+            typeText(text ?? "")
+            return
+        }
+
         while application.menuItems.count == 0 {
             doubleTap()
         }
-        application.menuItems.element(boundBy: 0).tap()
+        application.menuItems["Paste"].tap()
     }
 
     func resetText(text: String?, application: XCUIApplication) {
