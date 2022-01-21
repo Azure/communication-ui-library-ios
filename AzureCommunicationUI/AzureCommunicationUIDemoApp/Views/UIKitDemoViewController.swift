@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import Combine
 import SwiftUI
 import AzureCommunicationUI
 import AzureCommunicationCalling
@@ -37,6 +38,9 @@ class UIKitDemoViewController: UIViewController {
     private var userIsEditing: Bool = false
     private var isKeyboardShowing: Bool = false
 
+    private var cancellable: AnyCancellable?
+    private var envConfigSubject: EnvConfigSubject
+
     private lazy var contentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -64,6 +68,15 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
+    init(envConfigSubject: EnvConfigSubject) {
+        self.envConfigSubject = envConfigSubject
+        combineEnvConfigSubject()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -78,6 +91,12 @@ class UIKitDemoViewController: UIViewController {
         let emptySpace = stackView.customSpacing(after: stackView.arrangedSubviews.first!)
         let spaceToFill = (scrollView.frame.height - (stackView.frame.height - emptySpace)) / 2
         stackView.setCustomSpacing(spaceToFill + Constants.viewVerticalSpacing, after: stackView.arrangedSubviews.first!)
+    }
+
+    func combineEnvConfigSubject() {
+        cancellable = envConfigSubject.objectWillChange.sink(receiveValue: { _ in
+              ("UIkitDemoView::------envConfigSubject.sink")
+        })
     }
 
     func didFail(_ error: ErrorEvent) {

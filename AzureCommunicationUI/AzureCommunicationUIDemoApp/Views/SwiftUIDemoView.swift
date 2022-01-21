@@ -234,15 +234,4 @@ extension SwiftUIDemoView {
     }
 }
 
-extension URL {
-    var queryDictionary: [String: String] {
-        guard let query = self.query else { return [:]}
-        var queryStrings = [String: String]()
-        for pair in query.components(separatedBy: "&") {
-            let key = pair.components(separatedBy: "=")[0]
-            let value = String(pair.dropFirst(key.count+1))
-            queryStrings[key.lowercased()] = value
-        }
-        return queryStrings
-    }
-}
+

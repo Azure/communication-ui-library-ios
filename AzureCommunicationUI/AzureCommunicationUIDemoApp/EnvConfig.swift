@@ -21,3 +21,7 @@ enum EnvConfig: String {
     }
 
 }
+
+class EnvConfigSubject: ObservableObject {
+    @Published var acsToken: String = EnvConfig.acsToken.value()
+}
