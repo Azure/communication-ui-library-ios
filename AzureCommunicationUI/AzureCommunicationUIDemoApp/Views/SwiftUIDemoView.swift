@@ -8,8 +8,6 @@ import AzureCommunicationUI
 import AzureCommunicationCalling
 
 struct SwiftUIDemoView: View {
-    @State var selectedAcsTokenType: ACSTokenType = .token
-    @State var selectedMeetingType: MeetingType = .groupCall
     @State var isErrorDisplayed: Bool = false
     @State var errorMessage: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
@@ -38,11 +36,11 @@ struct SwiftUIDemoView: View {
 
     var acsTokenSelector: some View {
         Group {
-            Picker("Token Type", selection: $selectedAcsTokenType) {
+            Picker("Token Type", selection: $envConfigSubject.selectedAcsTokenType) {
                 Text("Token URL").tag(ACSTokenType.tokenUrl)
                 Text("Token").tag(ACSTokenType.token)
             }.pickerStyle(.segmented)
-            switch selectedAcsTokenType {
+            switch envConfigSubject.selectedAcsTokenType {
             case .tokenUrl:
                 TextField("ACS Token URL", text: $envConfigSubject.acsTokenUrl)
                     .disableAutocorrection(true)
@@ -69,11 +67,11 @@ struct SwiftUIDemoView: View {
 
     var meetingSelector: some View {
         Group {
-            Picker("Call Type", selection: $selectedMeetingType) {
+            Picker("Call Type", selection: $envConfigSubject.selectedMeetingType) {
                 Text("Group Call").tag(MeetingType.groupCall)
                 Text("Teams Meeting").tag(MeetingType.teamsMeeting)
             }.pickerStyle(.segmented)
-            switch selectedMeetingType {
+            switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 TextField(
                     "Group Call Id",
@@ -103,13 +101,13 @@ struct SwiftUIDemoView: View {
     }
 
     var isStartExperienceDisabled: Bool {
-        if (selectedAcsTokenType == .token && envConfigSubject.acsToken.isEmpty)
-            || selectedAcsTokenType == .tokenUrl && envConfigSubject.acsTokenUrl.isEmpty {
+        if (envConfigSubject.selectedAcsTokenType == .token && envConfigSubject.acsToken.isEmpty)
+            || envConfigSubject.selectedAcsTokenType == .tokenUrl && envConfigSubject.acsTokenUrl.isEmpty {
             return true
         }
 
-        if (selectedMeetingType == .groupCall && envConfigSubject.groupCallId.isEmpty)
-            || selectedMeetingType == .teamsMeeting && envConfigSubject.teamsMeetingLink.isEmpty {
+        if (envConfigSubject.selectedMeetingType == .groupCall && envConfigSubject.groupCallId.isEmpty)
+            || envConfigSubject.selectedMeetingType == .teamsMeeting && envConfigSubject.teamsMeetingLink.isEmpty {
             return true
         }
 
@@ -126,7 +124,7 @@ extension SwiftUIDemoView {
         callComposite.setTarget(didFail: didFail)
 
         if let communicationTokenCredential = try? getTokenCredential() {
-            switch selectedMeetingType {
+            switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
                 if envConfigSubject.displayName.isEmpty {
@@ -154,7 +152,7 @@ extension SwiftUIDemoView {
     }
 
     private func getTokenCredential() throws -> CommunicationTokenCredential {
-        switch selectedAcsTokenType {
+        switch envConfigSubject.selectedAcsTokenType {
         case .token:
             if let communicationTokenCredential = try? CommunicationTokenCredential(token: envConfigSubject.acsToken) {
                 return communicationTokenCredential
@@ -173,7 +171,7 @@ extension SwiftUIDemoView {
     }
 
     private func getMeetingLink() -> String {
-        switch selectedMeetingType {
+        switch envConfigSubject.selectedMeetingType {
         case .groupCall:
             return envConfigSubject.groupCallId
         case .teamsMeeting:

@@ -19,11 +19,20 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.rootViewController = rootNavController
         self.window = window
         window.makeKeyAndVisible()
+
+        //Handle deep link jump from re-launch
+        let urlContexts = connectionOptions.urlContexts
+        if let queryDict = urlContexts.first?.url.toEnvConfigureDictionary() {
+            print("------------------scene openURL")
+            envConfigSubject.update(from: queryDict)
+        }
+
     }
 
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
 
         if let queryDict = URLContexts.first?.url.toEnvConfigureDictionary() {
+            print("------------------scene openURL")
             envConfigSubject.update(from: queryDict)
         }
     }
