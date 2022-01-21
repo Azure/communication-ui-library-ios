@@ -5,8 +5,12 @@
 
 import Foundation
 extension URL {
-    var queryDictionary: [String: String] {
-        guard let query = self.query else { return [:]}
+    func toEnvConfigureDictionary() -> [String: String] {
+
+        // Group call = acsui://calling?acstoken={}&name={}&groupid={}
+        // Teams call = acsui://calling?acstoken={}&name={}&teamsurl={}
+        guard let query = self.query else { return [:]
+        }
         var queryStrings = [String: String]()
         for pair in query.components(separatedBy: "&") {
             let key = pair.components(separatedBy: "=")[0]

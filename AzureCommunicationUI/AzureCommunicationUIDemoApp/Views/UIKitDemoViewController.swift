@@ -38,7 +38,7 @@ class UIKitDemoViewController: UIViewController {
     private var userIsEditing: Bool = false
     private var isKeyboardShowing: Bool = false
 
-    private var cancellable: AnyCancellable?
+    private var cancellable = Set<AnyCancellable>()
     private var envConfigSubject: EnvConfigSubject
 
     private lazy var contentView: UIView = {
@@ -70,7 +70,8 @@ class UIKitDemoViewController: UIViewController {
 
     init(envConfigSubject: EnvConfigSubject) {
         self.envConfigSubject = envConfigSubject
-        combineEnvConfigSubject()
+        super.init(nibName: nil, bundle: nil)
+        self.combineEnvConfigSubject()
     }
 
     required init?(coder: NSCoder) {
@@ -94,9 +95,10 @@ class UIKitDemoViewController: UIViewController {
     }
 
     func combineEnvConfigSubject() {
-        cancellable = envConfigSubject.objectWillChange.sink(receiveValue: { _ in
-              ("UIkitDemoView::------envConfigSubject.sink")
-        })
+        envConfigSubject.objectWillChange
+            .throttle(for: 0.5, scheduler: DispatchQueue.main, latest: true).sink(receiveValue: { _ in
+            print("UIkitDemoView::------envConfigSubject.sink")
+        }).store(in: &cancellable)
     }
 
     func didFail(_ error: ErrorEvent) {

@@ -24,4 +24,28 @@ enum EnvConfig: String {
 
 class EnvConfigSubject: ObservableObject {
     @Published var acsToken: String = EnvConfig.acsToken.value()
+    @Published var acsTokenUrl: String = EnvConfig.acsTokenUrl.value()
+    @Published var displayName: String = EnvConfig.displayName.value()
+    @Published var groupCallId: String = EnvConfig.groupCallId.value()
+    @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
+
+    func update(from dic:[String:String]) {
+        if let token = dic["acstoken"],
+           !token.isEmpty {
+            self.acsToken = token
+        }
+        if let name = dic["name"],
+           !name.isEmpty {
+            self.displayName = name
+        }
+        if let groupCallId = dic["groupid"],
+           !groupCallId.isEmpty {
+            self.groupCallId = groupCallId
+        }
+
+        if let teamsMeetingLink = dic["teamsurl"],
+           !teamsMeetingLink.isEmpty {
+            self.teamsMeetingLink = teamsMeetingLink
+        }
+    }
 }

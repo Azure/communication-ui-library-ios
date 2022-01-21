@@ -8,16 +8,11 @@ import AzureCommunicationUI
 import AzureCommunicationCalling
 
 struct SwiftUIDemoView: View {
-    @Environment(\.deepLinkCoordinator) var deepLinkCoordinator: DeepLinkData
-    @State var acsToken: String = EnvConfig.acsToken.value()
-    @State var acsTokenUrl: String = EnvConfig.acsTokenUrl.value()
-    @State var displayName: String = EnvConfig.displayName.value()
-    @State var groupCallId: String = EnvConfig.groupCallId.value()
-    @State var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
     @State var selectedAcsTokenType: ACSTokenType = .token
     @State var selectedMeetingType: MeetingType = .groupCall
     @State var isErrorDisplayed: Bool = false
     @State var errorMessage: String = ""
+    @ObservedObject var envConfigSubject: EnvConfigSubject
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
@@ -39,9 +34,6 @@ struct SwiftUIDemoView: View {
                 message: Text(errorMessage),
                 dismissButton: .default(Text("Dismiss")))
         }
-        .onReceive(deepLinkCoordinator.$deepLinkValues) {
-            applyDeepLinkValues($0)
-        }
     }
 
     var acsTokenSelector: some View {
@@ -52,12 +44,12 @@ struct SwiftUIDemoView: View {
             }.pickerStyle(.segmented)
             switch selectedAcsTokenType {
             case .tokenUrl:
-                TextField("ACS Token URL", text: $acsTokenUrl)
+                TextField("ACS Token URL", text: $envConfigSubject.acsTokenUrl)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
                     .textFieldStyle(.roundedBorder)
             case .token:
-                TextField("ACS Token", text: $acsToken)
+                TextField("ACS Token", text: $envConfigSubject.acsToken)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
                     .textFieldStyle(.roundedBorder)
@@ -68,7 +60,7 @@ struct SwiftUIDemoView: View {
     }
 
     var displayNameTextField: some View {
-        TextField("Display Name", text: $displayName)
+        TextField("Display Name", text: $envConfigSubject.displayName)
             .disableAutocorrection(true)
             .padding(.vertical, verticalPadding)
             .padding(.horizontal, horizontalPadding)
@@ -85,14 +77,14 @@ struct SwiftUIDemoView: View {
             case .groupCall:
                 TextField(
                     "Group Call Id",
-                    text: $groupCallId)
+                    text: $envConfigSubject.groupCallId)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .textFieldStyle(.roundedBorder)
             case .teamsMeeting:
                 TextField(
                     "Team Meeting",
-                    text: $teamsMeetingLink)
+                    text: $envConfigSubject.teamsMeetingLink)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .textFieldStyle(.roundedBorder)
@@ -111,23 +103,17 @@ struct SwiftUIDemoView: View {
     }
 
     var isStartExperienceDisabled: Bool {
-        if (selectedAcsTokenType == .token && acsToken.isEmpty)
-            || selectedAcsTokenType == .tokenUrl && acsTokenUrl.isEmpty {
+        if (selectedAcsTokenType == .token && envConfigSubject.acsToken.isEmpty)
+            || selectedAcsTokenType == .tokenUrl && envConfigSubject.acsTokenUrl.isEmpty {
             return true
         }
 
-        if (selectedMeetingType == .groupCall && groupCallId.isEmpty)
-            || selectedMeetingType == .teamsMeeting && teamsMeetingLink.isEmpty {
+        if (selectedMeetingType == .groupCall && envConfigSubject.groupCallId.isEmpty)
+            || selectedMeetingType == .teamsMeeting && envConfigSubject.teamsMeetingLink.isEmpty {
             return true
         }
 
         return false
-    }
-}
-
-struct SwiftUIDemoView_Previews: PreviewProvider {
-    static var previews: some View {
-        SwiftUIDemoView()
     }
 }
 
@@ -143,22 +129,22 @@ extension SwiftUIDemoView {
             switch selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
-                if displayName.isEmpty {
+                if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(with: GroupCallOptions(communicationTokenCredential: communicationTokenCredential,
                                                                 groupId: uuid))
                 } else {
                     callComposite.launch(with: GroupCallOptions(communicationTokenCredential: communicationTokenCredential,
                                                                 groupId: uuid,
-                                                                displayName: displayName))
+                                                                displayName: envConfigSubject.displayName))
                 }
             case .teamsMeeting:
-                if displayName.isEmpty {
+                if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(with: TeamsMeetingOptions(communicationTokenCredential: communicationTokenCredential,
                                                                    meetingLink: link))
                 } else {
                     callComposite.launch(with: TeamsMeetingOptions(communicationTokenCredential: communicationTokenCredential,
                                                                    meetingLink: link,
-                                                                   displayName: displayName))
+                                                                   displayName: envConfigSubject.displayName))
                 }
             }
         } else {
@@ -167,38 +153,16 @@ extension SwiftUIDemoView {
         }
     }
 
-    func applyDeepLinkValues(_ queryParams: [String:String]=[:]) {
-        if let token = queryParams["acstoken"],
-           !token.isEmpty {
-            self.selectedAcsTokenType = .token
-            self.acsToken = token
-        }
-        if let name = queryParams["name"],
-           !name.isEmpty {
-            self.displayName = name
-        }
-        if let groupCallId = queryParams["groupid"],
-           !groupCallId.isEmpty {
-            self.selectedMeetingType = .groupCall
-            self.groupCallId = groupCallId
-        }
-        if let teamsMeetingLink = queryParams["teamsurl"],
-           !teamsMeetingLink.isEmpty {
-            self.selectedMeetingType = .teamsMeeting
-            self.teamsMeetingLink = teamsMeetingLink
-        }
-    }
-
     private func getTokenCredential() throws -> CommunicationTokenCredential {
         switch selectedAcsTokenType {
         case .token:
-            if let communicationTokenCredential = try? CommunicationTokenCredential(token: acsToken) {
+            if let communicationTokenCredential = try? CommunicationTokenCredential(token: envConfigSubject.acsToken) {
                 return communicationTokenCredential
             } else {
                 throw DemoError.invalidToken
             }
         case .tokenUrl:
-            if let url = URL(string: acsTokenUrl) {
+            if let url = URL(string: envConfigSubject.acsTokenUrl) {
                 let communicationTokenRefreshOptions = CommunicationTokenRefreshOptions(initialToken: nil, refreshProactively: true, tokenRefresher: AuthenticationHelper.getCommunicationToken(tokenUrl: url))
                 if let communicationTokenCredential = try? CommunicationTokenCredential(withOptions: communicationTokenRefreshOptions) {
                     return communicationTokenCredential
@@ -211,9 +175,9 @@ extension SwiftUIDemoView {
     private func getMeetingLink() -> String {
         switch selectedMeetingType {
         case .groupCall:
-            return groupCallId
+            return envConfigSubject.groupCallId
         case .teamsMeeting:
-            return teamsMeetingLink
+            return envConfigSubject.teamsMeetingLink
         }
     }
 
