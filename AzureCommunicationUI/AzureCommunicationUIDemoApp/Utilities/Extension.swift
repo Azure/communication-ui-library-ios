@@ -5,7 +5,7 @@
 
 import Foundation
 extension URL {
-    func toEnvConfigureDictionary() -> [String: String] {
+    func toQueryDictionary() -> [String: String] {
 
         // Group call = acsui://calling?acstoken={}&name={}&groupid={}
         // Teams call = acsui://calling?acstoken={}&name={}&teamsurl={}

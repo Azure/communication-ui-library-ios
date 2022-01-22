@@ -98,7 +98,6 @@ class UIKitDemoViewController: UIViewController {
     func combineEnvConfigSubject() {
         envConfigSubject.objectWillChange
             .throttle(for: 0.5, scheduler: DispatchQueue.main, latest: true).sink(receiveValue: { [weak self] _ in
-                print("UIkitDemoView::------envConfigSubject.sink")
                 self?.updateFromEnvConfig()
             }).store(in: &cancellable)
     }
