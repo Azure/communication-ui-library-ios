@@ -23,7 +23,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         //Handle deep link jump from re-launch
         let urlContexts = connectionOptions.urlContexts
         if let queryDict = urlContexts.first?.url.toEnvConfigureDictionary() {
-            print("------------------scene openURL")
             envConfigSubject.update(from: queryDict)
         }
 
@@ -32,7 +31,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
 
         if let queryDict = URLContexts.first?.url.toEnvConfigureDictionary() {
-            print("------------------scene openURL")
             envConfigSubject.update(from: queryDict)
         }
     }

@@ -9,7 +9,8 @@ extension URL {
 
         // Group call = acsui://calling?acstoken={}&name={}&groupid={}
         // Teams call = acsui://calling?acstoken={}&name={}&teamsurl={}
-        guard let query = self.query else { return [:]
+        guard let query = self.query else {
+            return [:]
         }
         var queryStrings = [String: String]()
         for pair in query.components(separatedBy: "&") {
