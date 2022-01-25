@@ -57,6 +57,7 @@ struct ControlBarView: View {
 
     var hangUpButton: some View {
         IconButton(viewModel: viewModel.hangUpButtonViewModel)
+            .accessibility(identifier: "HangUpButton")
     }
 
     var audioDeviceSelectionListView: some View {

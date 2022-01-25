@@ -38,6 +38,34 @@ class AzureCommunicationUIDemoAppUITests: XCTestCase {
         joinButton.tap()
     }
 
+    func testCallCompositeExit() throws {
+        // UI tests must launch the application that they test.
+        let app = XCUIApplication()
+        app.launch()
+
+        app.buttons["UI Kit"].tap()
+
+        let startButton = app.buttons["Start Experience"]
+        waitEnabled(for: startButton)
+
+        startButton.tap()
+
+        let joinButton = app.buttons["Join Call"]
+        wait(for: joinButton)
+        joinButton.tap()
+
+        let hangUpButton = app.buttons["HangUpButton"]
+        wait(for: hangUpButton)
+        hangUpButton.tap()
+
+        let leaveCallButton = app.buttons["Leave call"]
+        wait(for: leaveCallButton)
+        leaveCallButton.tap()
+
+        wait(for:startButton)
+
+    }
+
     func testCallCompositeWithExpiredToken() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
