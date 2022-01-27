@@ -5,14 +5,26 @@
 
 import UIKit
 
+/// Call Composite runtime error types.
 public struct CallCompositeErrorCode {
+
+    /// Error when local user fails to join a call.
     public static let callJoin: String = "callJoin"
+
+    /// Error when a call disconnects unexpectedly or fails on ending.
     public static let callEnd: String = "callEnd"
+
+    /// Error when the input token is expired.
     public static let tokenExpired: String = "tokenExpired"
 }
 
+/// The error thrown after Call Composite launching.
 public struct ErrorEvent {
+
+    /// The string representing the CallCompositeErrorCode.
     public let code: String
+
+    /// The NSError returned from Azure Communication SDK.
     public var error: Error?
 }
 
