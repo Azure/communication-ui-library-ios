@@ -46,12 +46,12 @@ Replace `<GROUP_CALL_ID>` with your group id for your call, `<DISPLAY_NAME>` wit
 
 ```swift
 let callCompositeOptions = CallCompositeOptions()
-callComposite = CallComposite(withOptions: callCompositeOptions)
+let callComposite = CallComposite(withOptions: callCompositeOptions)
 let communicationTokenCredential = try! CommunicationTokenCredential(token: "<USER_ACCESS_TOKEN>")
 let options = GroupCallOptions(communicationTokenCredential: communicationTokenCredential,
                                groupId: UUID("<GROUP_CALL_ID>")!,
                                displayName: "<DISPLAY_NAME>")
-callComposite?.launch(with: options)
+callComposite.launch(with: options)
 ```
 
 For more details on Mobile UI Library functionalities visit the [API Reference Documentation](docs/api/CallComposite/Reference.md).
