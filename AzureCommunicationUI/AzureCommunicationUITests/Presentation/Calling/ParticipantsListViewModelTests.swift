@@ -160,7 +160,7 @@ class ParticipantsListViewModelTests: XCTestCase {
         participantsListViewModel.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
         XCTAssertEqual(participantsListViewModel.participantsList.count, 1)
-        XCTAssertEqual(localParticipant.displayName, "(You)")
+        XCTAssertEqual(localParticipant.displayName, "Unnamed participant (me)")
         XCTAssertEqual(participantsListViewModel.sortedParticipants().first?.displayName, localParticipant.displayName)
         XCTAssertEqual(participantsListViewModel.sortedParticipants().last?.displayName, remoteParticipantsState.participantInfoList.first!.displayName)
         wait(for: [expectation], timeout: 1)

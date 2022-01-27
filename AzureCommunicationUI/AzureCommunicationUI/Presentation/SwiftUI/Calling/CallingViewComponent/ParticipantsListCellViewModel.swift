@@ -14,7 +14,7 @@ class ParticipantsListCellViewModel {
            !displayName.trimmingCharacters(in: .whitespaces).isEmpty {
             self.displayName = "\(displayName) \(StringConstants.localParticipantNamePostfix)"
         } else {
-            self.displayName = "\(StringConstants.localParticipantNamePostfix)"
+            self.displayName = "\(StringConstants.defaultEmptyName) \(StringConstants.localParticipantNamePostfix)"
         }
 
         self.isMuted = localUserState.audioState.operation != .on
