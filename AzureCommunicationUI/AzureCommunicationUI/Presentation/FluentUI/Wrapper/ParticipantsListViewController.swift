@@ -101,7 +101,10 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
             return UITableViewCell()
         }
         let participant = self.items[indexPath.row]
-        cell.setup(displayName: participant.displayName, isMuted: participant.isMuted)
+
+        cell.setup(displayName: participant.displayName,
+                   isMuted: participant.isMuted,
+                   partipantHasEmptyName: participant.isParticipantNameEmpty)
         return cell
     }
 }

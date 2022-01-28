@@ -7,11 +7,14 @@ import Foundation
 import FluentUI
 
 class CompositeParticipantsListCell: TableViewCell {
-    func setup(displayName: String, isMuted: Bool, accessoryType: TableViewCellAccessoryType = .none) {
+    func setup(displayName: String,
+               isMuted: Bool,
+               partipantHasEmptyName: Bool,
+               accessoryType: TableViewCellAccessoryType = .none) {
         let isNameEmpty = displayName.trimmingCharacters(in: .whitespaces).isEmpty
         let avatar = MSFAvatar(style: .accent, size: .medium)
-        let isDisplayNameUnnamed = displayName.contains(StringConstants.defaultEmptyName)
-        avatar.state.primaryText = !isDisplayNameUnnamed ? displayName : nil
+
+        avatar.state.primaryText = !partipantHasEmptyName ? displayName : nil
         let avatarView = avatar.view
 
         var micImageView: UIImageView?
@@ -25,7 +28,7 @@ class CompositeParticipantsListCell: TableViewCell {
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
 
-        if isNameEmpty || isDisplayNameUnnamed {
+        if isNameEmpty || partipantHasEmptyName {
             setTitleLabelTextColor(color: UIColor.compositeColor(CompositeColor.mute))
         } else {
             setTitleLabelTextColor(color: UIColor.compositeColor(CompositeColor.onSurface))
