@@ -100,11 +100,9 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
                   for: indexPath) as? CompositeParticipantsListCell else {
             return UITableViewCell()
         }
-        let participant = self.items[indexPath.row]
+        let participantViewModel = self.items[indexPath.row]
 
-        cell.setup(displayName: participant.displayName,
-                   isMuted: participant.isMuted,
-                   partipantHasEmptyName: participant.isParticipantNameEmpty)
+        cell.setup(viewModel: participantViewModel)
         return cell
     }
 }

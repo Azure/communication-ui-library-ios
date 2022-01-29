@@ -9,23 +9,16 @@ import FluentUI
 class CompositeParticipantsListCell: TableViewCell {
 
     /// Set up the participant list item  in the participant list
-    /// - Parameters:
-    ///   - displayName: The display name shown on the participant list cell
-    ///   - isMuted: tells whether this participant is muted
-    ///   - partipantHasEmptyName: tells whether this participant had an empty name when joined the call
-    ///   - accessoryType: accessory type
-    func setup(displayName: String,
-               isMuted: Bool,
-               partipantHasEmptyName: Bool,
-               accessoryType: TableViewCellAccessoryType = .none) {
-        let isNameEmpty = displayName.trimmingCharacters(in: .whitespaces).isEmpty
-        let avatar = MSFAvatar(style: partipantHasEmptyName ? .outlined : .accent, size: .medium)
+    /// - Parameter viewModel: the participant view model needed to set up participant list cell
+    func setup(viewModel: ParticipantsListCellViewModel) {
+        let isNameEmpty = viewModel.displayName.trimmingCharacters(in: .whitespaces).isEmpty
 
-        avatar.state.primaryText = !partipantHasEmptyName ? displayName : nil
+        let avatar = MSFAvatar(style: isNameEmpty ? .outlined : .accent, size: .medium)
+        avatar.state.primaryText = !isNameEmpty ? viewModel.displayName : nil
         let avatarView = avatar.view
 
         var micImageView: UIImageView?
-        if isMuted {
+        if viewModel.isMuted {
             let micImage = StyleProvider.icon.getUIImage(for: .micOffRegular)?
                 .withTintColor(StyleProvider.color.mute, renderingMode: .alwaysOriginal)
             micImageView = UIImageView(image: micImage)
@@ -35,16 +28,28 @@ class CompositeParticipantsListCell: TableViewCell {
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
 
-        let isAnonymousUser = isNameEmpty || partipantHasEmptyName
+        setTitleLabelTextColor(color: isNameEmpty ?
+                                UIColor.compositeColor(CompositeColor.mute)
+                               :
+                                UIColor.compositeColor(CompositeColor.onSurface))
 
-        if isAnonymousUser {
-            setTitleLabelTextColor(color: UIColor.compositeColor(CompositeColor.mute))
-        } else {
-            setTitleLabelTextColor(color: UIColor.compositeColor(CompositeColor.onSurface))
-        }
-
-        setup(title: isAnonymousUser ? StringConstants.defaultEmptyName : displayName,
+        setup(title: displayName(displayName: viewModel.displayName,
+                                 isLocalParticipant: viewModel.isLocalParticipant),
               customView: avatarView,
               customAccessoryView: micImageView)
+    }
+
+    private func displayName(displayName: String, isLocalParticipant: Bool) -> String {
+        let isNameEmpty = displayName.trimmingCharacters(in: .whitespaces).isEmpty
+        if isLocalParticipant {
+            return isNameEmpty ?
+            "\(StringConstants.defaultEmptyName) \(StringConstants.localParticipantNamePostfix)"
+            :
+            "\(displayName) \(StringConstants.localParticipantNamePostfix)"
+        } else {
+            return isNameEmpty ? "\(StringConstants.defaultEmptyName)"
+            :
+            displayName
+        }
     }
 }
