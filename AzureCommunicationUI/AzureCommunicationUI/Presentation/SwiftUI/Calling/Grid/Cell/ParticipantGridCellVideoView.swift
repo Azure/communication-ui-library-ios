@@ -6,10 +6,11 @@
 import SwiftUI
 import FluentUI
 import Combine
+import AzureCommunicationCalling
 
 struct ParticipantGridCellVideoView: View {
     let rendererView: UIView
-    let getRendererViewStreamSize: () -> CGSize?
+    let getRemoteParticipantScreenShareVideoStreamRenderer: () -> VideoStreamRenderer?
     let zoomable: Bool
     @Binding var isSpeaking: Bool
     @Binding var displayName: String?
@@ -51,16 +52,9 @@ struct ParticipantGridCellVideoView: View {
     }
 
     var zoomableVideoRenderView: some View {
-        ZoomableVideoRenderView(getRendererViewStreamSize: getRendererViewStreamSize,
+        ZoomableVideoRenderView(getRemoteParticipantScreenShareVideoStreamRenderer:
+                                    getRemoteParticipantScreenShareVideoStreamRenderer,
                                 rendererView: self.rendererView,
-                                scale: $scale)
-            .gesture(TapGesture(count: 2).onEnded({
-                if scale != 1.0 {
-                    scale = 1.0
-                } else {
-                    scale = 2.0
-                }
-            }))
+                                scale: $scale).gesture(TapGesture(count: 2).onEnded({}))
     }
-
 }

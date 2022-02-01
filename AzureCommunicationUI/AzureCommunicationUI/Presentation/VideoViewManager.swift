@@ -113,6 +113,13 @@ class VideoViewManager {
 
     }
 
+    func getScreenShareVideoStreamRenderer(_ videoViewId: RemoteParticipantVideoViewId) -> VideoStreamRenderer? {
+        let videoStreamId = videoViewId.videoStreamIdentifier
+        let cacheKey = generateCacheKey(userIdentifier: videoViewId.userIdentifier,
+                                        videoStreamId: videoStreamId)
+        return displayedRemoteParticipantsRendererView.value(forKey: cacheKey)?.renderer
+    }
+
     func getRemoteParticipantVideoRendererViewSize(_ videoViewId: RemoteParticipantVideoViewId) -> CGSize? {
         let videoStreamId = videoViewId.videoStreamIdentifier
         let cacheKey = generateCacheKey(userIdentifier: videoViewId.userIdentifier,

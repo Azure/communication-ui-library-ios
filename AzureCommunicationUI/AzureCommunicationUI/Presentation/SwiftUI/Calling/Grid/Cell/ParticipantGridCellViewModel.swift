@@ -5,7 +5,6 @@
 
 import Foundation
 import Combine
-import AzureCommunicationCalling
 
 class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     let id = UUID()

@@ -6,11 +6,12 @@
 import SwiftUI
 import FluentUI
 import Combine
+import AzureCommunicationCalling
 
 struct ParticipantGridCellView: View {
     @ObservedObject var viewModel: ParticipantGridCellViewModel
     let getRemoteParticipantRendererView: (RemoteParticipantVideoViewId) -> UIView?
-    let getRemoteParticipantRenderViewStreamSize: (RemoteParticipantVideoViewId) -> CGSize?
+    let getRemoteParticipantScreenShareVideoStreamRenderer: (RemoteParticipantVideoViewId) -> VideoStreamRenderer?
     @State var displayedVideoStreamId: String?
     @State var isVideoChanging: Bool = false
     let avatarSize: CGFloat = 56
@@ -22,7 +23,8 @@ struct ParticipantGridCellView: View {
                     EmptyView()
                 } else if let rendererView = getRendererView() {
                     ParticipantGridCellVideoView(rendererView: rendererView,
-                                                 getRendererViewStreamSize: getRendererViewStreamSize,
+                                                 getRemoteParticipantScreenShareVideoStreamRenderer:
+                                                    getRendererViewStreamRenderer,
                                                  zoomable: viewModel.videoStreamType == .screenSharing,
                                                  isSpeaking: $viewModel.isSpeaking,
                                                  displayName: $viewModel.displayName,
@@ -52,27 +54,28 @@ struct ParticipantGridCellView: View {
     }
 
     func getRendererView() -> UIView? {
-        guard let videoStreamId = viewModel.videoStreamId,
-              !videoStreamId.isEmpty else {
+        guard let remoteParticipantVideoViewId = getRemoteParticipantVideoViewId() else {
             return nil
         }
-        let userId = viewModel.participantIdentifier
-        let remoteParticipantVideoViewId = RemoteParticipantVideoViewId(userIdentifier: userId,
-                                                                        videoStreamIdentifier: videoStreamId)
 
         return getRemoteParticipantRendererView(remoteParticipantVideoViewId)
     }
 
-    func getRendererViewStreamSize() -> CGSize? {
+    func getRendererViewStreamRenderer() -> VideoStreamRenderer? {
+        guard let remoteParticipantVideoViewId = getRemoteParticipantVideoViewId() else {
+            return nil
+        }
+        return getRemoteParticipantScreenShareVideoStreamRenderer(remoteParticipantVideoViewId)
+    }
+
+    private func getRemoteParticipantVideoViewId() -> RemoteParticipantVideoViewId? {
         guard let videoStreamId = viewModel.videoStreamId,
               !videoStreamId.isEmpty else {
             return nil
         }
         let userId = viewModel.participantIdentifier
-        let remoteParticipantVideoViewId = RemoteParticipantVideoViewId(userIdentifier: userId,
-                                                                        videoStreamIdentifier: videoStreamId)
-
-        return getRemoteParticipantRenderViewStreamSize(remoteParticipantVideoViewId)
+        return RemoteParticipantVideoViewId(userIdentifier: userId,
+                                            videoStreamIdentifier: videoStreamId)
     }
 
     var avatarView: some View {
