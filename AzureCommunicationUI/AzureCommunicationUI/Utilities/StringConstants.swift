@@ -6,6 +6,6 @@
 import Foundation
 
 struct StringConstants {
-    static let defaultEmptyName: String = "Unnamed Participant"
-    static let localParticipantNamePostfix: String = "(You)"
+    static let defaultEmptyName: String = "Unnamed participant"
+    static let localParticipantNamePostfix: String = "(me)"
 }
