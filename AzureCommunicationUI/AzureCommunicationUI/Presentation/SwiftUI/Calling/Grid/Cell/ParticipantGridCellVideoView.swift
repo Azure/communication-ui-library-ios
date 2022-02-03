@@ -9,6 +9,12 @@ import Combine
 import AzureCommunicationCalling
 
 struct ParticipantGridCellVideoView: View {
+
+    private struct Constants {
+        static let homebarHeight: CGFloat = 22
+        static let borderColor = Color(StyleProvider.color.primaryColor)
+    }
+
     let rendererView: UIView
     let getRemoteParticipantScreenShareVideoStreamRenderer: () -> VideoStreamRenderer?
     let zoomable: Bool
@@ -18,15 +24,20 @@ struct ParticipantGridCellVideoView: View {
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
     @State private var scale: CGFloat = 1.0
 
-    let borderColor = Color(StyleProvider.color.primaryColor)
-
     var body: some View {
+        let lanscapeHasHomeBar = (screenSizeClass == .iphoneLandscapeScreenSize
+                                  && UIDevice.current.hasHomeBar)
         ZStack(alignment: .bottomLeading) {
             VStack(alignment: .center, spacing: 0) {
-                if zoomable {
-                    zoomableVideoRenderView
-                } else {
-                    videoRenderView
+                GeometryReader { geometry in
+                    if zoomable {
+                        zoomableVideoRenderView
+                            .frame(width: geometry.size.width - 0,
+                                   height: geometry.size.height - (lanscapeHasHomeBar ? Constants.homebarHeight : 0),
+                                   alignment: .center)
+                    } else {
+                        videoRenderView
+                    }
                 }
             }
 
@@ -43,7 +54,7 @@ struct ParticipantGridCellVideoView: View {
                     && UIDevice.current.hasHomeBar ? 16 : 4)
 
         }.overlay(
-            isSpeaking && !isMuted ? RoundedRectangle(cornerRadius: 4).strokeBorder(borderColor, lineWidth: 4) : nil
+            isSpeaking && !isMuted ? RoundedRectangle(cornerRadius: 4).strokeBorder(Constants.borderColor, lineWidth: 4) : nil
         ).animation(.default)
     }
 

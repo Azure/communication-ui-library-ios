@@ -55,8 +55,9 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     mutating func zoomScrollView(basedOn point: CGPoint, scale: CGFloat) {
         // Normalize current content size back to content scale of 1.0
         var contentSize = CGSize()
-        contentSize.width = (self.scrollView.contentSize.width / self.scrollView.zoomScale)
-        contentSize.height = (self.scrollView.contentSize.height / self.scrollView.zoomScale)
+
+        contentSize.width = (self.scrollView.frame.width / self.scrollView.zoomScale)
+        contentSize.height = (self.scrollView.frame.height / self.scrollView.zoomScale)
 
         // translate the zoom point to relative to the content rect
         var zoomPoint = CGPoint()
@@ -65,8 +66,8 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
 
         // derive the size of the region to zoom to
         var zoomSize = CGSize()
-        zoomSize.width = self.scrollView.bounds.size.width / scale // or 2.0
-        zoomSize.height = self.scrollView.bounds.size.height / scale // or 2.0
+        zoomSize.width = self.scrollView.bounds.size.width / scale
+        zoomSize.height = self.scrollView.bounds.size.height / scale
 
         // offset the zoom rect so the actual zoom point is in the middle of the rectangle
         var zoomRect = CGRect()
@@ -77,7 +78,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         zoomToRect = zoomRect
 
         if scale == self.scrollView.maximumZoomScale {
-            scrollView.zoom(to: zoomRect, animated: true) // turn off for testing
+            scrollView.zoom(to: zoomRect, animated: true)
         } else {
             scrollView.setZoomScale(1.0, animated: true)
         }
@@ -166,7 +167,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
             let finalScale = (currentScale == minScale) ? toScale : minScale
             newScale = finalScale
 
-            rendererView.zoomScrollView(basedOn: point, scale: finalScale) // was newScale
+            rendererView.zoomScrollView(basedOn: point, scale: finalScale)
         }
 
         // MARK: RendererDelegate
