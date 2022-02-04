@@ -10,10 +10,12 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
     class EnvironmentProperty {
         @Published var supportedOrientations: UIInterfaceOrientationMask
         @Published var isProximitySensorOn: Bool
+        @Published var prefersHomeIndicatorAutoHidden: Bool
 
         init() {
             self.supportedOrientations = UIDevice.current.userInterfaceIdiom == .pad ? .all : .allButUpsideDown
             self.isProximitySensorOn = false
+            self.prefersHomeIndicatorAutoHidden = false
         }
     }
 
@@ -78,6 +80,13 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
             .sink(receiveValue: { isEnable in
                 UIDevice.current.toggleProximityMonitoringStatus(isEnabled: isEnable)
             }).store(in: cancelBag)
+
+        environmentProperties
+            .$prefersHomeIndicatorAutoHidden
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { shouldHide in
+                self._prefersHomeIndicatorAutoHidden = shouldHide
+            }).store(in: cancelBag)
     }
 
     private func resetUIDeviceSetup() {
@@ -102,6 +111,18 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
                 .onPreferenceChange(ProximitySensorPreferenceKey.self) {
                     self.environmentProperties.isProximitySensorOn = $0
                 }
+                .onPreferenceChange(PrefersHomeIndicatorAutoHiddenPreferenceKey.self) {
+                    self.environmentProperties.prefersHomeIndicatorAutoHidden = $0
+                }
         }
+    }
+
+    // MARK: Prefers Home Indicator Auto Hidden
+
+    private var _prefersHomeIndicatorAutoHidden: Bool = false {
+        didSet { setNeedsUpdateOfHomeIndicatorAutoHidden() }
+    }
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        _prefersHomeIndicatorAutoHidden
     }
 }

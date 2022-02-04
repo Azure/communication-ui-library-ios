@@ -35,6 +35,7 @@ struct ParticipantGridCellVideoView: View {
                             .frame(width: geometry.size.width,
                                    height: geometry.size.height - (lanscapeHasHomeBar ? Constants.homebarHeight : 0),
                                    alignment: .center)
+                            .prefersHomeIndicatorAutoHidden(UIDevice.current.hasHomeBar)
                     } else {
                         videoRenderView
                     }
