@@ -8,15 +8,9 @@ import AzureCommunicationUI
 import AzureCommunicationCalling
 
 struct SwiftUIDemoView: View {
-    @State var acsToken: String = EnvConfig.acsToken.value()
-    @State var acsTokenUrl: String = EnvConfig.acsTokenUrl.value()
-    @State var displayName: String = EnvConfig.displayName.value()
-    @State var groupCallId: String = EnvConfig.groupCallId.value()
-    @State var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
-    @State var selectedAcsTokenType: ACSTokenType = .token
-    @State var selectedMeetingType: MeetingType = .groupCall
     @State var isErrorDisplayed: Bool = false
     @State var errorMessage: String = ""
+    @ObservedObject var envConfigSubject: EnvConfigSubject
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
@@ -42,19 +36,19 @@ struct SwiftUIDemoView: View {
 
     var acsTokenSelector: some View {
         Group {
-            Picker("Token Type", selection: $selectedAcsTokenType) {
+            Picker("Token Type", selection: $envConfigSubject.selectedAcsTokenType) {
                 Text("Token URL").tag(ACSTokenType.tokenUrl)
                 Text("Token").tag(ACSTokenType.token)
             }.pickerStyle(.segmented)
-            switch selectedAcsTokenType {
+            switch envConfigSubject.selectedAcsTokenType {
             case .tokenUrl:
-                TextField("ACS Token URL", text: $acsTokenUrl)
+                TextField("ACS Token URL", text: $envConfigSubject.acsTokenUrl)
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
                     .textFieldStyle(.roundedBorder)
             case .token:
-                TextField("ACS Token", text: $acsToken)
-                    .modifier(TextFieldClearButton(text: $acsToken))
+                TextField("ACS Token", text: $envConfigSubject.acsToken)
+                    .modifier(TextFieldClearButton(text: $envConfigSubject.acsToken))
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
                     .textFieldStyle(.roundedBorder)
@@ -65,7 +59,7 @@ struct SwiftUIDemoView: View {
     }
 
     var displayNameTextField: some View {
-        TextField("Display Name", text: $displayName)
+        TextField("Display Name", text: $envConfigSubject.displayName)
             .disableAutocorrection(true)
             .padding(.vertical, verticalPadding)
             .padding(.horizontal, horizontalPadding)
@@ -74,22 +68,22 @@ struct SwiftUIDemoView: View {
 
     var meetingSelector: some View {
         Group {
-            Picker("Call Type", selection: $selectedMeetingType) {
+            Picker("Call Type", selection: $envConfigSubject.selectedMeetingType) {
                 Text("Group Call").tag(MeetingType.groupCall)
                 Text("Teams Meeting").tag(MeetingType.teamsMeeting)
             }.pickerStyle(.segmented)
-            switch selectedMeetingType {
+            switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 TextField(
                     "Group Call Id",
-                    text: $groupCallId)
+                    text: $envConfigSubject.groupCallId)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .textFieldStyle(.roundedBorder)
             case .teamsMeeting:
                 TextField(
                     "Team Meeting",
-                    text: $teamsMeetingLink)
+                    text: $envConfigSubject.teamsMeetingLink)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .textFieldStyle(.roundedBorder)
@@ -108,23 +102,17 @@ struct SwiftUIDemoView: View {
     }
 
     var isStartExperienceDisabled: Bool {
-        if (selectedAcsTokenType == .token && acsToken.isEmpty)
-            || selectedAcsTokenType == .tokenUrl && acsTokenUrl.isEmpty {
+        if (envConfigSubject.selectedAcsTokenType == .token && envConfigSubject.acsToken.isEmpty)
+            || envConfigSubject.selectedAcsTokenType == .tokenUrl && envConfigSubject.acsTokenUrl.isEmpty {
             return true
         }
 
-        if (selectedMeetingType == .groupCall && groupCallId.isEmpty)
-            || selectedMeetingType == .teamsMeeting && teamsMeetingLink.isEmpty {
+        if (envConfigSubject.selectedMeetingType == .groupCall && envConfigSubject.groupCallId.isEmpty)
+            || envConfigSubject.selectedMeetingType == .teamsMeeting && envConfigSubject.teamsMeetingLink.isEmpty {
             return true
         }
 
         return false
-    }
-}
-
-struct SwiftUIDemoView_Previews: PreviewProvider {
-    static var previews: some View {
-        SwiftUIDemoView()
     }
 }
 
@@ -137,25 +125,25 @@ extension SwiftUIDemoView {
         callComposite.setTarget(didFail: didFail)
 
         if let communicationTokenCredential = try? getTokenCredential() {
-            switch selectedMeetingType {
+            switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
-                if displayName.isEmpty {
+                if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(with: GroupCallOptions(communicationTokenCredential: communicationTokenCredential,
                                                                 groupId: uuid))
                 } else {
                     callComposite.launch(with: GroupCallOptions(communicationTokenCredential: communicationTokenCredential,
                                                                 groupId: uuid,
-                                                                displayName: displayName))
+                                                                displayName: envConfigSubject.displayName))
                 }
             case .teamsMeeting:
-                if displayName.isEmpty {
+                if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(with: TeamsMeetingOptions(communicationTokenCredential: communicationTokenCredential,
                                                                    meetingLink: link))
                 } else {
                     callComposite.launch(with: TeamsMeetingOptions(communicationTokenCredential: communicationTokenCredential,
                                                                    meetingLink: link,
-                                                                   displayName: displayName))
+                                                                   displayName: envConfigSubject.displayName))
                 }
             }
         } else {
@@ -165,15 +153,15 @@ extension SwiftUIDemoView {
     }
 
     private func getTokenCredential() throws -> CommunicationTokenCredential {
-        switch selectedAcsTokenType {
+        switch envConfigSubject.selectedAcsTokenType {
         case .token:
-            if let communicationTokenCredential = try? CommunicationTokenCredential(token: acsToken) {
+            if let communicationTokenCredential = try? CommunicationTokenCredential(token: envConfigSubject.acsToken) {
                 return communicationTokenCredential
             } else {
                 throw DemoError.invalidToken
             }
         case .tokenUrl:
-            if let url = URL(string: acsTokenUrl) {
+            if let url = URL(string: envConfigSubject.acsTokenUrl) {
                 let communicationTokenRefreshOptions = CommunicationTokenRefreshOptions(initialToken: nil, refreshProactively: true, tokenRefresher: AuthenticationHelper.getCommunicationToken(tokenUrl: url))
                 if let communicationTokenCredential = try? CommunicationTokenCredential(withOptions: communicationTokenRefreshOptions) {
                     return communicationTokenCredential
@@ -184,11 +172,11 @@ extension SwiftUIDemoView {
     }
 
     private func getMeetingLink() -> String {
-        switch selectedMeetingType {
+        switch envConfigSubject.selectedMeetingType {
         case .groupCall:
-            return groupCallId
+            return envConfigSubject.groupCallId
         case .teamsMeeting:
-            return teamsMeetingLink
+            return envConfigSubject.teamsMeetingLink
         }
     }
 
@@ -208,3 +196,5 @@ extension SwiftUIDemoView {
         showError(for: error.code)
     }
 }
+
+

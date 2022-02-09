@@ -10,6 +10,7 @@ import AzureCommunicationCalling
 protocol CallingSDKEventsHandling: CallDelegate {
     func assign(_ recordingCallFeature: RecordingCallFeature)
     func assign(_ transcriptionCallFeature: TranscriptionCallFeature)
+    func setupProperties()
 
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> { get }
     var callInfoSubject: PassthroughSubject<CallInfoModel, Never> { get }
@@ -46,6 +47,14 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     func assign(_ transcriptionCallFeature: TranscriptionCallFeature) {
         self.transcriptionCallFeature = transcriptionCallFeature
         transcriptionCallFeature.delegate = self
+    }
+
+    func setupProperties() {
+        participantsInfoListSubject.value.removeAll()
+        recordingCallFeature = nil
+        transcriptionCallFeature = nil
+        remoteParticipants = MappedSequence<String, RemoteParticipant>()
+        previousCallingStatus = .none
     }
 
     private func setupRemoteParticipantEventsAdapter() {
