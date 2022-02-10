@@ -47,8 +47,6 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
         wait(for: leaveCallButton)
         leaveCallButton.tap()
 
-        wait(for: startButton)
-
     }
 
     func testCallCompositeWithExpiredToken() throws {
@@ -87,6 +85,10 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
 
 extension AzureCommunicationUIDemoAppUITests {
     private func getExpiredToken() -> String {
-        return "eyJhbGciOiJSUzI1NiIsImtpZCI6IjEwMyIsIng1dCI6Ikc5WVVVTFMwdlpLQTJUNjFGM1dzYWdCdmFMbyIsInR5cCI6IkpXVCJ9.eyJza3lwZWlkIjoiYWNzOjcxZWM1OTBiLWNiYWQtNDkwYy05OWM1LWI1NzhiZGFjZGU1NF8wMDAwMDAwZS01ZmRhLWQ0ZTQtMjhmNC0zNDNhMGQwMDdmYTMiLCJzY3AiOjE3OTIsImNzaSI6IjE2Mzk2MDMzMTkiLCJleHAiOjE2Mzk2ODk3MTksImFjc1Njb3BlIjoidm9pcCIsInJlc291cmNlSWQiOiI3MWVjNTkwYi1jYmFkLTQ5MGMtOTljNS1iNTc4YmRhY2RlNTQiLCJpYXQiOjE2Mzk2MDMzMTl9.j-S73eJp_vruYcGmJNWGO6ydW2G3vLmPV562lRkv1lb-mkzfOtRpPpTHpFUyCE53T6ddNE1GJRacsE9wVw3_5bVkiTpkPLSzly4NP06V8PWJ63l81JewKaABcIYwHfIWFBe3SxKGoCA-dRuAf59bgiSNl1NCIARYWW2jselKeXIQ6oOkGq4UTfCAx02swNnpR-Eo9DnmU6XRoQ5-9ZZ-E8Ckteb5ukxb55LNA7-MT9JrgzIIPYbMO4uOv7mNptuaiRHprXui9ve_R-hTRMCQ9i7vPbsRQl3mYHfo8ooidkydcUybnP-vTdQvE1KXGZ7WogSGg1EuLYrT1o1iXpHn2g"
+        guard let infoDict = Bundle(for: AzureCommunicationUIDemoAppUITests.self).infoDictionary,
+              let value = infoDict["expiredAcsToken"] as? String else {
+            return ""
+        }
+        return value
     }
 }
