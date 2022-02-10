@@ -21,7 +21,6 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     var rendererView: UIView!
     var scrollView = UIScrollView()
     var zoomToRect: CGRect = .zero
-    @Binding var scale: CGFloat
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     func makeUIView(context: Context) -> UIScrollView {
@@ -34,7 +33,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.decelerationRate = .fast
-        scrollView.zoomScale = scale
+        scrollView.zoomScale = isiPhonePortraitScreen() ? Constants.minScale : Constants.minScaleLands
 
         rendererView!.translatesAutoresizingMaskIntoConstraints = true
         rendererView!.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -52,13 +51,14 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(self, scale: $scale, shouldShowPortraitScale: isiPhonePortraitScreen())
+        Coordinator(self, shouldShowPortraitScale: isiPhonePortraitScreen())
     }
 
     func updateUIView(_ uiView: UIScrollView, context: Context) {
         // Set zoom scale per each orientation to fix the zoom issue (blury screen upon orientation change)
-        if uiView.zoomScale != scale {
-            uiView.setZoomScale(1.0, animated: true)
+        let orientationChangeZoomScale = isiPhonePortraitScreen() ? Constants.minScale : Constants.minScaleLands
+        if uiView.zoomScale != orientationChangeZoomScale {
+            uiView.setZoomScale(orientationChangeZoomScale, animated: true)
         }
     }
 
@@ -106,6 +106,11 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
                                            height: scrollViewFrame.height * (1 / adjustedScale)))
         self.rendererView.frame = newFrame
         self.scrollView.setZoomScale(adjustedScale, animated: false)
+        self.scrollView.contentSize = CGSize(width: scrollViewFrame.width, height: scrollViewFrame.height)
+    }
+
+    func getCurrentZoomScale() -> CGFloat {
+        return scrollView.zoomScale
     }
 
     private func isiPhonePortraitScreen() -> Bool {
@@ -116,16 +121,12 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
 
     class Coordinator: NSObject, UIScrollViewDelegate, UIGestureRecognizerDelegate, RendererDelegate {
 
-        @Binding private var newScale: CGFloat
         private var streamSize: CGSize = .zero
         private var rendererView: ZoomableVideoRenderView
         private var shouldShowPortraitScale: Bool
 
-        init(_ rendererView: ZoomableVideoRenderView,
-             scale: Binding<CGFloat>,
-             shouldShowPortraitScale: Bool) {
+        init(_ rendererView: ZoomableVideoRenderView, shouldShowPortraitScale: Bool) {
             self.rendererView = rendererView
-            _newScale = scale
             self.shouldShowPortraitScale = shouldShowPortraitScale
         }
 
@@ -134,7 +135,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         }
 
         func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
-            newScale = scale
+            // TBD
         }
 
         func scrollViewWillBeginZooming(_ scrollView: UIScrollView, with view: UIView?) {
@@ -147,7 +148,6 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
             let boundedZoomScale = min(scrollView.zoomScale, scrollView.maximumZoomScale) * (1 / adjustedScale)
 
             if boundedZoomScale > 1 {
-
                 let aspectRatioVideoStream = self.streamSize != .zero ?
                 self.streamSize.width / self.streamSize.height : Constants.defaultAspectRatio
 
@@ -189,7 +189,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         @objc func doubleTapped(gesture: UITapGestureRecognizer) {
             let point = gesture.location(in: gesture.view)
 
-            let currentScale = newScale
+            let currentScale = rendererView.getCurrentZoomScale()
             let minScale = shouldShowPortraitScale ? Constants.minScale : Constants.minScaleLands
             let maxScale = shouldShowPortraitScale ? Constants.maxScale : Constants.maxScaleLands
 
@@ -200,7 +200,6 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
 
             let toScale = maxScale
             let finalScale = (currentScale == minScale) ? toScale : minScale
-            newScale = finalScale
 
             rendererView.zoomScrollView(basedOn: point, scale: finalScale)
         }
@@ -215,7 +214,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         }
 
         func videoStreamRenderer(didFailToStart renderer: VideoStreamRenderer) {
-            // TBD
+            // TBD (error handling)
         }
     }
 }

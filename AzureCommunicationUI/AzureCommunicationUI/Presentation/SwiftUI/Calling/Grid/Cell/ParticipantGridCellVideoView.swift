@@ -66,7 +66,6 @@ struct ParticipantGridCellVideoView: View {
     var zoomableVideoRenderView: some View {
         ZoomableVideoRenderView(getRemoteParticipantScreenShareVideoStreamRenderer:
                                     getRemoteParticipantScreenShareVideoStreamRenderer,
-                                rendererView: self.rendererView,
-                                scale: $scale).gesture(TapGesture(count: 2).onEnded({}))
+                                rendererView: self.rendererView).gesture(TapGesture(count: 2).onEnded({}))
     }
 }
