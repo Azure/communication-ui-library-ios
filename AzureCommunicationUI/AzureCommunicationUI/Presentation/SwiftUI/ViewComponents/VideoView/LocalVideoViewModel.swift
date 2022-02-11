@@ -31,6 +31,7 @@ class LocalVideoViewModel: ObservableObject {
                 }
                 self.toggleCameraSwitchTapped()
         }
+        self.cameraSwitchButtonPipViewModel.accessibilityLabel = "Switch camera"
         self.cameraSwitchButtonFullViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .cameraSwitch,
             buttonType: .cameraSwitchButtonFull,
@@ -40,6 +41,7 @@ class LocalVideoViewModel: ObservableObject {
                 }
                 self.toggleCameraSwitchTapped()
         }
+        self.cameraSwitchButtonFullViewModel.accessibilityLabel = "Switch camera"
     }
 
     func toggleCameraSwitchTapped() {

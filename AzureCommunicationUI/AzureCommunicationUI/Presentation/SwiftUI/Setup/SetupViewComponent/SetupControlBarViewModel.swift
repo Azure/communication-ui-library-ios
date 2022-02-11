@@ -120,11 +120,13 @@ class SetupControlBarViewModel: ObservableObject {
          buttonLabel: "Mic is \(self.micStatus == .on ? "on" : "off")")
       self.micButtonViewModel.update(accessibilityLabel: self.micStatus == .on ? "Mute" : "Unmute")
 
+      let audioDeviceStatus = localUserState.audioState.device
       self.audioDeviceButtonViewModel.update(
-         iconName: deviceIconFor(audioDeviceStatus: localUserState.audioState.device),
-         buttonLabel: deviceLabelFor(audioDeviceStatus: localUserState.audioState.device))
+         iconName: audioDeviceStatus.icon(fallbackIcon: audioDeviceButtonViewModel.iconName),
+         buttonLabel: audioDeviceStatus.label(fallBackLabel: audioDeviceButtonViewModel.buttonLabel))
       self.audioDeviceButtonViewModel.update(
-         accessibilityValue: deviceLabelFor(audioDeviceStatus: localUserState.audioState.device))
+         accessibilityValue: audioDeviceStatus.label(
+            fallBackLabel: audioDeviceButtonViewModel.accessibilityValue ?? ""))
 
       if self.localVideoStreamId != localUserState.localVideoStreamIdentifier {
          self.localVideoStreamId = localUserState.localVideoStreamIdentifier
@@ -136,27 +138,5 @@ class SetupControlBarViewModel: ObservableObject {
       }
 
       audioDeviceListViewModel.update(audioDeviceStatus: localUserState.audioState.device)
-   }
-
-   private func deviceIconFor(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> CompositeIcon {
-      switch audioDeviceStatus {
-      case .receiverSelected:
-         return .speakerRegular
-      case .speakerSelected:
-         return .speakerFilled
-      default:
-         return self.audioDeviceButtonViewModel.iconName
-      }
-   }
-
-   private func deviceLabelFor(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> String {
-      switch audioDeviceStatus {
-      case .receiverSelected:
-         return AudioDeviceType.receiver.name
-      case .speakerSelected:
-         return AudioDeviceType.speaker.name
-      default:
-         return self.audioDeviceButtonViewModel.buttonLabel
-      }
    }
 }
