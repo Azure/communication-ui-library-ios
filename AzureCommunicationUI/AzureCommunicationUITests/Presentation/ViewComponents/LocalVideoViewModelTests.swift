@@ -13,6 +13,7 @@ class LocalVideoViewModelTests: XCTestCase {
     var localVideoViewModel: LocalVideoViewModel!
 
     override func setUp() {
+        super.setUp()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
 

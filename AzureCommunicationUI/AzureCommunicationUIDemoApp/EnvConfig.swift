@@ -32,7 +32,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var selectedAcsTokenType: ACSTokenType = .token
     @Published var selectedMeetingType: MeetingType = .groupCall
 
-    func update(from dic: [String:String]) {
+    func update(from dic: [String: String]) {
         if let token = dic["acstoken"],
            !token.isEmpty {
             acsToken = token

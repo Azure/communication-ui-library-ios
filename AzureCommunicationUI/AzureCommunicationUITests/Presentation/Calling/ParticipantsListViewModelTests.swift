@@ -12,6 +12,7 @@ class ParticipantsListViewModelTests: XCTestCase {
     var participantsListViewModel: ParticipantsListViewModel!
 
     override func setUp() {
+        super.setUp()
         cancellable = CancelBag()
         participantsListViewModel = ParticipantsListViewModel(localUserState: LocalUserState())
     }

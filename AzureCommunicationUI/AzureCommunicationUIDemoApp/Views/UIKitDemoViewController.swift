@@ -210,8 +210,7 @@ class UIKitDemoViewController: UIViewController {
     private func updateUIBasedOnUserInterfaceStyle() {
         if UITraitCollection.current.userInterfaceStyle == .dark {
             view.backgroundColor = .black
-        }
-        else {
+        } else {
             view.backgroundColor = .white
         }
     }
@@ -375,7 +374,6 @@ class UIKitDemoViewController: UIViewController {
         startExperienceButton.translatesAutoresizingMaskIntoConstraints = false
         startExperienceButton.addTarget(self, action: #selector(onStartExperienceBtnPressed), for: .touchUpInside)
 
-
         // horizontal stack view for the startExperienceButton
 
         let hSpacer1 = UIView()
@@ -448,7 +446,7 @@ class UIKitDemoViewController: UIViewController {
                 let contentInsets = UIEdgeInsets(top: 0, left: 0, bottom: offset, right: 0)
                 scrollView.contentInset = contentInsets
                 scrollView.scrollIndicatorInsets = contentInsets
-                scrollView.setContentOffset(CGPoint(x: 0, y: offset) , animated: true)
+                scrollView.setContentOffset(CGPoint(x: 0, y: offset), animated: true)
             } else {
                 scrollView.contentInset = .zero
                 scrollView.scrollIndicatorInsets = .zero

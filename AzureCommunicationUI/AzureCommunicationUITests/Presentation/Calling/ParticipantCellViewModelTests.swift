@@ -59,7 +59,7 @@ class ParticipantCellViewModelTests: XCTestCase {
         sut.$videoStreamId
             .dropFirst()
             .sink { _ in
-                XCTFail()
+                XCTFail("Failed with videoStreamId publish")
                 expectation.fulfill()
             }.store(in: cancellable)
 
@@ -99,7 +99,7 @@ class ParticipantCellViewModelTests: XCTestCase {
         sut.$displayName
             .dropFirst()
             .sink { _ in
-                XCTFail()
+                XCTFail("Failed with videoStreamId publish")
                 expectation.fulfill()
             }.store(in: cancellable)
 
@@ -137,7 +137,7 @@ class ParticipantCellViewModelTests: XCTestCase {
         sut.$isSpeaking
             .dropFirst()
             .sink { _ in
-                XCTFail()
+                XCTFail("Failed with videoStreamId publish")
                 expectation.fulfill()
             }.store(in: cancellable)
 
@@ -175,7 +175,7 @@ class ParticipantCellViewModelTests: XCTestCase {
         sut.$isMuted
             .dropFirst()
             .sink { _ in
-                XCTFail()
+                XCTFail("Failed with videoStreamId publish")
                 expectation.fulfill()
             }.store(in: cancellable)
 

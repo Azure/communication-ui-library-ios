@@ -20,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window = window
         window.makeKeyAndVisible()
 
-        //Handle deep link jump from re-launch
+        // Handle deep link jump from re-launch
         let urlContexts = connectionOptions.urlContexts
         if let queryDict = urlContexts.first?.url.toQueryDictionary() {
             envConfigSubject.update(from: queryDict)

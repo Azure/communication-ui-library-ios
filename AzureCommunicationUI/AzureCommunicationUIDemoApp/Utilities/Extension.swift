@@ -15,7 +15,7 @@ extension URL {
         var queryStrings = [String: String]()
         for pair in query.components(separatedBy: "&") {
             let key = pair.components(separatedBy: "=")[0]
-            let value = String(pair.dropFirst(key.count+1)).removingPercentEncoding ?? ""
+            let value = String(pair.dropFirst(key.count + 1)).removingPercentEncoding ?? ""
             queryStrings[key.lowercased()] = value
         }
         return queryStrings
