@@ -12,8 +12,8 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     private struct Constants {
         static let maxScale: CGFloat = 1.0
         static let minScale: CGFloat = 0.25
-        static let maxScaleLands: CGFloat = 4.0
-        static let minScaleLands: CGFloat = 1.0
+        static let maxScaleLands: CGFloat = 2
+        static let minScaleLands: CGFloat = 0.5
         static let defaultAspectRatio: CGFloat = 1.6 // 16: 10 aspect ratio
     }
 
@@ -208,9 +208,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
 
         func videoStreamRenderer(didRenderFirstFrame renderer: VideoStreamRenderer) {
             streamSize = CGSize(width: Int(renderer.size.width), height: Int(renderer.size.height))
-            if shouldShowPortraitScale {
-                rendererView.setNewRendererViewDimension()
-            }
+            rendererView.setNewRendererViewDimension()
         }
 
         func videoStreamRenderer(didFailToStart renderer: VideoStreamRenderer) {
