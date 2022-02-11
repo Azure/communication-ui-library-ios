@@ -16,7 +16,7 @@ extension CallingMiddlewareHandler {
         if errorCode == CallCompositeErrorCode.tokenExpired {
             action = ErrorAction.FatalErrorUpdated(error: error)
         } else {
-            action = ErrorAction.CallStateErrorUpdated(error: error)
+            action = ErrorAction.StatusErrorAndCallReset(error: error)
         }
 
         dispatch(action)
@@ -25,7 +25,6 @@ extension CallingMiddlewareHandler {
 
     func handleInfo(callingStatus: CallingStatus, dispatch: @escaping ActionDispatch) {
         let action = CallingAction.StateUpdated(status: callingStatus)
-        dispatch(action)
         switch callingStatus {
         case .none,
             .earlyMedia,
@@ -33,14 +32,14 @@ extension CallingMiddlewareHandler {
             .ringing,
             .localHold,
             .disconnecting,
-            .remoteHold:
+            .remoteHold,
+            .disconnected:
             break
         case .connected,
              .inLobby:
             dispatch(CallingViewLaunched())
-        case .disconnected:
-            dispatch(CompositeExitAction())
         }
+        dispatch(action)
 
     }
 }

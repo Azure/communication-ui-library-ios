@@ -20,7 +20,7 @@ struct ErrorReducer: Reducer {
             error = action.error
             errorCode = action.error.code
             errorCategory = .fatal
-        case let action as ErrorAction.CallStateErrorUpdated:
+        case let action as ErrorAction.StatusErrorAndCallReset:
             error = action.error
             errorCode = action.error.code
             errorCategory = .callState

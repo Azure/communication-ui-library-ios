@@ -261,12 +261,14 @@ extension CallingMiddlewareHandler {
 
                 if errorCode != "" {
                     self.handleInfo(errorCode: errorCode, dispatch: dispatch)
-                    self.logger.debug("Subscription cancelled with Error Code: \(errorCode) ")
+                    self.logger.debug("-------Subscription cancelled with Error Code: \(errorCode) ")
                     self.subscription.cancel()
                 } else if status == .disconnected {
                     self.logger.debug("Subscription cancel happy path")
+                    dispatch(CompositeExitAction())
                     self.subscription.cancel()
                 }
+
                 self.logger.debug("Dispatch State Update: \(status)")
                 self.handleInfo(callingStatus: status, dispatch: dispatch)
             }.store(in: subscription)

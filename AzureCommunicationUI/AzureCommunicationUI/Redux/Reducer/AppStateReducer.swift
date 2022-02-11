@@ -67,7 +67,7 @@ struct AppStateReducer: Reducer {
         switch action {
         case let action as ParticipantListUpdated:
             remoteParticipantState = RemoteParticipantsState(participantInfoList: action.participantsInfoList)
-        case _ as CallingAction.CallStartRequested:
+        case _ as ErrorAction.StatusErrorAndCallReset:
             print("-----------------empty remoteParticipantState")
             remoteParticipantState = RemoteParticipantsState(participantInfoList: [])
         default:
