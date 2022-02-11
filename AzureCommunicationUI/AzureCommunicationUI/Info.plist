@@ -18,10 +18,6 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>NSCameraUsageDescription</key>
-	<string>RequireCamera</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>This is required for calling.</string>
 	<key>UILibrarySemVersion</key>
 	<string>1.0.0-alpha.2</string>
 </dict>
