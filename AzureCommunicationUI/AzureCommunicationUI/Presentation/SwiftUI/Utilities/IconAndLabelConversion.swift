@@ -28,3 +28,16 @@ extension LocalUserState.AudioDeviceSelectionStatus {
        }
     }
 }
+
+extension LocalUserState.CameraDeviceSelectionStatus {
+    func label(fallBackLabel: String) -> String {
+       switch self {
+       case .front:
+           return "Front"
+       case .back:
+           return "Back"
+       default:
+          return fallBackLabel
+       }
+    }
+}
