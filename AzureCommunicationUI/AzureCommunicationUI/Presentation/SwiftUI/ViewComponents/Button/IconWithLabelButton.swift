@@ -38,5 +38,7 @@ struct IconWithLabelButton: View {
         .disabled(viewModel.isDisabled)
         .foregroundColor(viewModel.isDisabled ? buttonDisabledColor : buttonForegroundColor)
         .frame(width: width, height: height, alignment: .center)
+        .accessibility(label: Text(viewModel.accessibilityLabel ?? ""))
+        .accessibility(value: Text(viewModel.accessibilityValue ?? ""))
     }
 }

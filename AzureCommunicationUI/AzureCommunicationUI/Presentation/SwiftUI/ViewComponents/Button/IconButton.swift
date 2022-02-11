@@ -121,6 +121,7 @@ struct IconButton: View {
             .frame(width: width, height: height, alignment: .center)
             .background(buttonBackgroundColor)
             .clipShape(RoundedCornersShape(radius: shapeCornerRadius, corners: roundedCorners))
+            .accessibility(label: Text(viewModel.accessibilityLabel ?? ""))
         }
         .frame(width: tappableWidth,
                height: tappableHeight,

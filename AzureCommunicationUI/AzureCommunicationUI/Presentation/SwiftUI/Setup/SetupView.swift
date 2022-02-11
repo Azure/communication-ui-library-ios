@@ -65,17 +65,8 @@ struct SetupTitleView: View {
     var iconButtonViewModel: IconButtonViewModel
 
     var body: some View {
-        VStack(spacing: verticalSpacing) {
-            ZStack(alignment: .leading) {
-                IconButton(viewModel: iconButtonViewModel)
-                HStack {
-                    Spacer()
-                    Text(title)
-                        .font(Fonts.headline.font)
-                        .foregroundColor(Color(StyleProvider.color.onBackground))
-                    Spacer()
-                }
-            }.frame(height: viewHeight)
+        VStack(alignment: .leading, spacing: verticalSpacing) {
+            IconButton(viewModel: iconButtonViewModel).frame(height: viewHeight)
             Divider()
         }
     }

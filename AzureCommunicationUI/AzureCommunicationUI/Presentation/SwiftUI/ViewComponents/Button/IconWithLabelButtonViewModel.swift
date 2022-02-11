@@ -15,6 +15,8 @@ class IconWithLabelButtonViewModel: ObservableObject {
     @Published var iconName: CompositeIcon
     @Published var buttonTypeColor: ButtonTypeColor
     @Published var buttonLabel: String
+    @Published var accessibilityLabel: String?
+    @Published var accessibilityValue: String?
     @Published var isDisabled: Bool
     var action: (() -> Void)
 
@@ -36,6 +38,18 @@ class IconWithLabelButtonViewModel: ObservableObject {
         }
         if self.buttonLabel != buttonLabel {
             self.buttonLabel = buttonLabel
+        }
+    }
+
+    func update(accessibilityLabel: String) {
+        if self.accessibilityLabel != accessibilityLabel {
+            self.accessibilityLabel = accessibilityLabel
+        }
+    }
+
+    func update(accessibilityValue: String) {
+        if self.accessibilityValue != accessibilityValue {
+            self.accessibilityValue = accessibilityValue
         }
     }
 
