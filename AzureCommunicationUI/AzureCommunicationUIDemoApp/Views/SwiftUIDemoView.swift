@@ -123,24 +123,24 @@ extension SwiftUIDemoView {
         let callComposite = CallComposite(withOptions: callCompositeOptions)
         callComposite.setTarget(didFail: didFail)
 
-        if let communicationTokenCredential = try? getTokenCredential() {
+        if let credential = try? getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
                 if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(with: GroupCallOptions(communicationTokenCredential: communicationTokenCredential,
+                    callComposite.launch(with: GroupCallOptions(communicationTokenCredential: credential,
                                                                 groupId: uuid))
                 } else {
-                    callComposite.launch(with: GroupCallOptions(communicationTokenCredential: communicationTokenCredential,
+                    callComposite.launch(with: GroupCallOptions(communicationTokenCredential: credential,
                                                                 groupId: uuid,
                                                                 displayName: envConfigSubject.displayName))
                 }
             case .teamsMeeting:
                 if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(with: TeamsMeetingOptions(communicationTokenCredential: communicationTokenCredential,
+                    callComposite.launch(with: TeamsMeetingOptions(communicationTokenCredential: credential,
                                                                    meetingLink: link))
                 } else {
-                    callComposite.launch(with: TeamsMeetingOptions(communicationTokenCredential: communicationTokenCredential,
+                    callComposite.launch(with: TeamsMeetingOptions(communicationTokenCredential: credential,
                                                                    meetingLink: link,
                                                                    displayName: envConfigSubject.displayName))
                 }
@@ -161,9 +161,12 @@ extension SwiftUIDemoView {
             }
         case .tokenUrl:
             if let url = URL(string: envConfigSubject.acsTokenUrl) {
-                let communicationTokenRefreshOptions = CommunicationTokenRefreshOptions(initialToken: nil, refreshProactively: true, tokenRefresher: AuthenticationHelper.getCommunicationToken(tokenUrl: url))
-                if let communicationTokenCredential = try? CommunicationTokenCredential(withOptions: communicationTokenRefreshOptions) {
-                    return communicationTokenCredential
+                let tokenRefresher = AuthenticationHelper.getCommunicationToken(tokenUrl: url)
+                let communicationTokenRefreshOptions = CommunicationTokenRefreshOptions(initialToken: nil,
+                                                                                        refreshProactively: true,
+                                                                                        tokenRefresher: tokenRefresher)
+                if let credential = try? CommunicationTokenCredential(withOptions: communicationTokenRefreshOptions) {
+                    return credential
                 }
             }
             throw DemoError.invalidToken

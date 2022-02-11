@@ -87,12 +87,15 @@ class UIKitDemoViewController: UIViewController {
 
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        guard !userIsEditing else { return }
+        guard !userIsEditing else {
+            return
+        }
         scrollView.setNeedsLayout()
         scrollView.layoutIfNeeded()
         let emptySpace = stackView.customSpacing(after: stackView.arrangedSubviews.first!)
         let spaceToFill = (scrollView.frame.height - (stackView.frame.height - emptySpace)) / 2
-        stackView.setCustomSpacing(spaceToFill + Constants.viewVerticalSpacing, after: stackView.arrangedSubviews.first!)
+        stackView.setCustomSpacing(spaceToFill + Constants.viewVerticalSpacing,
+                                   after: stackView.arrangedSubviews.first!)
     }
 
     func combineEnvConfigSubject() {
@@ -164,9 +167,11 @@ class UIKitDemoViewController: UIViewController {
             }
         case .tokenUrl:
             if let url = URL(string: acsTokenUrlTextField.text!) {
-                let communicationTokenRefreshOptions = CommunicationTokenRefreshOptions(initialToken: nil, refreshProactively: true, tokenRefresher: AuthenticationHelper.getCommunicationToken(tokenUrl: url))
-                if let communicationTokenCredential = try? CommunicationTokenCredential(withOptions: communicationTokenRefreshOptions) {
-                    return communicationTokenCredential
+                let tokenRefresher = AuthenticationHelper.getCommunicationToken(tokenUrl: url)
+                let refreshOptions = CommunicationTokenRefreshOptions(initialToken: nil, refreshProactively: true,
+                                                                                        tokenRefresher: tokenRefresher)
+                if let credential = try? CommunicationTokenCredential(withOptions: refreshOptions) {
+                    return credential
                 }
             }
             throw DemoError.invalidToken
@@ -203,8 +208,14 @@ class UIKitDemoViewController: UIViewController {
 
     private func registerNotifications() {
         let notificationCenter = NotificationCenter.default
-        notificationCenter.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
-        notificationCenter.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        notificationCenter.addObserver(self,
+                                       selector: #selector(keyboardWillHide),
+                                       name: UIResponder.keyboardWillHideNotification,
+                                       object: nil)
+        notificationCenter.addObserver(self,
+                                       selector: #selector(keyboardWillShow),
+                                       name: UIResponder.keyboardWillShowNotification,
+                                       object: nil)
     }
 
     private func updateUIBasedOnUserInterfaceStyle() {
@@ -240,7 +251,9 @@ class UIKitDemoViewController: UIViewController {
         updateStartExperieceButton()
     }
 
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
         userIsEditing = true
         return true
     }
@@ -300,7 +313,8 @@ class UIKitDemoViewController: UIViewController {
         titleLabel.sizeToFit()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
-        titleLabelConstraint = titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor, constant: Constants.stackViewInterItemSpacingPortrait)
+        titleLabelConstraint = titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor,
+                                                               constant: Constants.stackViewInterItemSpacingPortrait)
         titleLabelConstraint.isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor).isActive = true
 
@@ -311,7 +325,9 @@ class UIKitDemoViewController: UIViewController {
         acsTokenUrlTextField.sizeToFit()
         acsTokenUrlTextField.translatesAutoresizingMaskIntoConstraints = false
         acsTokenUrlTextField.borderStyle = .roundedRect
-        acsTokenUrlTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
+        acsTokenUrlTextField.addTarget(self,
+                                       action: #selector(textFieldEditingDidChange),
+                                       for: .editingChanged)
 
         acsTokenTextField = UITextField()
         acsTokenTextField.placeholder = "ACS Token"
@@ -325,7 +341,9 @@ class UIKitDemoViewController: UIViewController {
         acsTokenTypeSegmentedControl = UISegmentedControl(items: ["Token URL", "Token"])
         acsTokenTypeSegmentedControl.selectedSegmentIndex = envConfigSubject.selectedAcsTokenType.rawValue
         acsTokenTypeSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        acsTokenTypeSegmentedControl.addTarget(self, action: #selector(onAcsTokenTypeValueChanged(_:)), for: .valueChanged)
+        acsTokenTypeSegmentedControl.addTarget(self,
+                                               action: #selector(onAcsTokenTypeValueChanged(_:)),
+                                               for: .valueChanged)
         selectedAcsTokenType = envConfigSubject.selectedAcsTokenType
 
         displayNameTextField = UITextField()
@@ -357,7 +375,9 @@ class UIKitDemoViewController: UIViewController {
         meetingTypeSegmentedControl = UISegmentedControl(items: ["Group Call", "Teams Meeting"])
         meetingTypeSegmentedControl.selectedSegmentIndex = envConfigSubject.selectedMeetingType.rawValue
         meetingTypeSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        meetingTypeSegmentedControl.addTarget(self, action: #selector(onMeetingTypeValueChanged(_:)), for: .valueChanged)
+        meetingTypeSegmentedControl.addTarget(self,
+                                              action: #selector(onMeetingTypeValueChanged(_:)),
+                                              for: .valueChanged)
         selectedMeetingType = envConfigSubject.selectedMeetingType
 
         startExperienceButton = UIButton()
