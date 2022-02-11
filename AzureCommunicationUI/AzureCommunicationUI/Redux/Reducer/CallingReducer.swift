@@ -21,7 +21,8 @@ struct CallingReducer: Reducer {
             isRecordingActive = action.isRecordingActive
         case let action as CallingAction.TranscriptionStateUpdated:
             isTranscriptionActive = action.isTranscriptionActive
-        case _ as CallingViewLaunched:
+        case _ as CallingAction.CallStartRequested:
+            print("-----------------empty callingState")
             coreStatus = .none
             isRecordingActive = false
             isTranscriptionActive = false

@@ -81,6 +81,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
     func endCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
         callingService.endCall()
             .sink(receiveCompletion: { [weak self] completion in
+                print("---------endCall callback")
                 guard let self = self else {
                     return
                 }
@@ -242,7 +243,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
 extension CallingMiddlewareHandler {
     private func subscription(dispatch: @escaping ActionDispatch) {
-        logger.debug("Subscribe to calling service subjects")
+        logger.debug("-----------Subscribe to calling service subjects")
         callingService.participantsInfoListSubject
             .throttle(for: 1.25, scheduler: DispatchQueue.main, latest: true)
             .sink { list in
@@ -252,34 +253,22 @@ extension CallingMiddlewareHandler {
 
         callingService.callInfoSubject
             .sink { [weak self] callInfoModel in
+                guard let self = self else {
+                    return
+                }
                 let errorCode = callInfoModel.errorCode
                 let status = callInfoModel.status
 
-                self?.logger.debug("Dispatch State Update: \(status)")
                 if errorCode != "" {
-                    self?.logger.debug("Dispatch Error Code Update: \(errorCode)")
-                    let action: Action
-                    let error = ErrorEvent(code: errorCode, error: nil)
-                    if errorCode == CallCompositeErrorCode.tokenExpired {
-                        action = ErrorAction.FatalErrorUpdated(error: error)
-                    } else {
-                        action = ErrorAction.CallStateErrorUpdated(error: error)
-                    }
-
-                    dispatch(action)
-                    self?.logger.debug("Subscription cancel error path")
-                    self?.subscription.cancel()
+                    self.handleInfo(errorCode: errorCode, dispatch: dispatch)
+                    self.logger.debug("Subscription cancelled with Error Code: \(errorCode) ")
+                    self.subscription.cancel()
+                } else if status == .disconnected {
+                    self.logger.debug("Subscription cancel happy path")
+                    self.subscription.cancel()
                 }
-
-                let action = CallingAction.StateUpdated(status: status)
-                dispatch(action)
-
-                if status == .disconnected,
-                   errorCode == "" {
-                    dispatch(CompositeExitAction())
-                    self?.logger.debug("Subscription cancel happy path")
-                    self?.subscription.cancel()
-                }
+                self.logger.debug("Dispatch State Update: \(status)")
+                self.handleInfo(callingStatus: status, dispatch: dispatch)
             }.store(in: subscription)
 
         callingService.isRecordingActiveSubject

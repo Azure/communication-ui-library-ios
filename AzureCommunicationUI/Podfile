@@ -13,6 +13,7 @@ target 'AzureCommunicationUI' do
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.3.5'
   pod 'MicrosoftFluentUI/Button_ios', '0.3.5'
   pod 'MicrosoftFluentUI/PopupMenu_ios', '0.3.5'
+  pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.3.5'
   pod 'SwiftLint', '0.42.0'
 
   target 'AzureCommunicationUITests' do
@@ -29,6 +30,7 @@ target 'AzureCommunicationUIDemoApp' do
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.3.5'
   pod 'MicrosoftFluentUI/Button_ios', '0.3.5'
   pod 'MicrosoftFluentUI/PopupMenu_ios', '0.3.5'
+  pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.3.5'
 end
 
 post_install do |installer|

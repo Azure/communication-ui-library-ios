@@ -24,7 +24,8 @@ struct ErrorReducer: Reducer {
             error = action.error
             errorCode = action.error.code
             errorCategory = .callState
-        case _ as CallingViewLaunched:
+        case _ as CallingAction.CallStartRequested:
+            print("-----------------empty errorCpde")
             error = nil
             errorCode = ""
             errorCategory = .none

@@ -11,24 +11,22 @@ class SetupViewModel: ObservableObject {
     private let store: Store<AppState>
     var cancellables = Set<AnyCancellable>()
 
+    @Published var isJoinRequested: Bool = false
+
     let previewAreaViewModel: PreviewAreaViewModel
-    let dismissButtonViewModel: IconButtonViewModel
     var errorInfoViewModel: ErrorInfoViewModel
+    var dismissButtonViewModel: IconButtonViewModel!
     var startCallButtonViewModel: PrimaryButtonViewModel!
     var setupControlBarViewModel: SetupControlBarViewModel!
+    var callingStatus: CallingStatus = .none
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
          store: Store<AppState>) {
+        print("--------------initalize SetupView")
         self.store = store
         self.logger = logger
         self.previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
-        self.dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
-            iconName: .leftArrow,
-            buttonType: .controlButton,
-            isDisabled: false) {
-                store.dispatch(action: CallingAction.DismissSetup())
-        }
         self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
         self.startCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
@@ -38,7 +36,17 @@ class SetupViewModel: ObservableObject {
                 guard let self = self else {
                     return
                 }
-                self.startCallButtonTapped()
+                self.joinCallButtonTapped()
+        }
+
+        self.dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
+            iconName: .leftArrow,
+            buttonType: .controlButton,
+            isDisabled: false) { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.dismissButtonTapped()
         }
         self.setupControlBarViewModel = compositeViewModelFactory
             .makeSetupControlBarViewModel(dispatchAction: store.dispatch,
@@ -61,18 +69,28 @@ class SetupViewModel: ObservableObject {
         store.dispatch(action: CallingAction.SetupCall())
     }
 
-    func startCallButtonTapped() {
-        store.dispatch(action: CallingViewLaunched())
+    func joinCallButtonTapped() {
+        store.dispatch(action: CallingAction.CallStartRequested())
+        isJoinRequested = true
+    }
+
+    func dismissButtonTapped() {
+        let isJoining = callingStatus != .none
+        let action: Action = isJoining ? CallingAction.CallEndRequested() : CompositeExitAction()
+        store.dispatch(action: action)
     }
 
     func receive(_ state: AppState) {
+        callingStatus = state.callingState.status
+
         let localUserState = state.localUserState
         let permissionState = state.permissionState
-
+        let callingState = state.callingState
         previewAreaViewModel.update(localUserState: localUserState,
                                     permissionState: permissionState)
         setupControlBarViewModel.update(localUserState: localUserState,
-                                        permissionState: permissionState)
+                                        permissionState: permissionState,
+                                        callingState: callingState)
         startCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
 
         errorInfoViewModel.update(errorState: state.errorState)
