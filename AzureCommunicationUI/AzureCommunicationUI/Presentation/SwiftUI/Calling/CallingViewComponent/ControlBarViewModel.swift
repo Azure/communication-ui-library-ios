@@ -54,7 +54,7 @@ class ControlBarViewModel: ObservableObject {
                 guard let self = self else {
                     return
                 }
-                self.logger.debug("Toggle microphone button tapped")
+                self.logger.debug("-----Toggle microphone button tapped")
                 self.microphoneButtonTapped()
         }
         self.audioDeviceButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(

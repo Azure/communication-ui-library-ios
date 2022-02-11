@@ -73,11 +73,11 @@ class SetupControlBarViewModel: ObservableObject {
         let isPreview = callingStatus == .none
         let isCameraOn = cameraStatus == .on
         switch (isCameraOn, isPreview) {
-        case (true, true):
+        case (false, true):
             dispatch(LocalUserAction.CameraPreviewOnTriggered())
-        case (true, false):
+        case (false, false):
             dispatch(LocalUserAction.CameraOnTriggered())
-        case (false, _):
+        case (true, _):
             dispatch(LocalUserAction.CameraOffTriggered())
         }
     }
@@ -86,13 +86,13 @@ class SetupControlBarViewModel: ObservableObject {
         let isPreview = callingStatus == .none
         let isMicOn = micStatus == .on
         switch (isMicOn, isPreview) {
-        case (true, true):
-            dispatch(LocalUserAction.CameraPreviewOnTriggered())
-        case (true, false):
-            dispatch(LocalUserAction.MicrophoneOnTriggered())
         case (false, true):
-            dispatch(LocalUserAction.MicrophonePreviewOff())
+            dispatch(LocalUserAction.MicrophonePreviewOn())
         case (false, false):
+            dispatch(LocalUserAction.MicrophoneOnTriggered())
+        case (true, true):
+            dispatch(LocalUserAction.MicrophonePreviewOff())
+        case (true, false):
             dispatch(LocalUserAction.MicrophoneOffTriggered())
         }
     }
