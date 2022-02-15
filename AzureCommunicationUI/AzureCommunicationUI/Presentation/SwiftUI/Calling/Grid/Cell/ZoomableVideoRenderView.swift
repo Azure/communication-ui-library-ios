@@ -10,10 +10,12 @@ import AzureCommunicationCalling
 struct ZoomableVideoRenderView: UIViewRepresentable {
 
     private struct Constants {
-        static let maxScale: CGFloat = 1.0
-        static let minScale: CGFloat = 0.25
+        static let maxScale: CGFloat = 2.0
+        static let minScale: CGFloat = 0.5
         static let maxScaleLands: CGFloat = 2
         static let minScaleLands: CGFloat = 0.5
+        static let maxScaleiPad: CGFloat = 4.0
+        static let minScaleiPad: CGFloat = 1.0
         static let defaultAspectRatio: CGFloat = 1.6 // 16: 10 aspect ratio
     }
 
@@ -27,13 +29,16 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         getRemoteParticipantScreenShareVideoStreamRenderer()?.delegate = context.coordinator
 
         scrollView.delegate = context.coordinator
-        scrollView.maximumZoomScale = isiPhonePortraitScreen() ? Constants.maxScale : Constants.maxScaleLands
-        scrollView.minimumZoomScale = isiPhonePortraitScreen() ? Constants.minScale : Constants.minScaleLands
+        scrollView.maximumZoomScale = isiPadScreen() ? Constants.maxScaleiPad :
+                                      (isiPhonePortraitScreen() ? Constants.maxScale : Constants.maxScaleLands)
+        scrollView.minimumZoomScale = isiPadScreen() ? Constants.minScaleiPad :
+                                      (isiPhonePortraitScreen() ? Constants.minScale : Constants.minScaleLands)
         scrollView.bouncesZoom = true
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.decelerationRate = .fast
-        scrollView.zoomScale = isiPhonePortraitScreen() ? Constants.minScale : Constants.minScaleLands
+        scrollView.zoomScale = isiPadScreen() ? Constants.minScaleiPad :
+                               (isiPhonePortraitScreen() ? Constants.minScale : Constants.minScaleLands)
 
         rendererView!.translatesAutoresizingMaskIntoConstraints = true
         rendererView!.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -51,7 +56,9 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     }
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(self, shouldShowPortraitScale: isiPhonePortraitScreen())
+        Coordinator(self,
+                    shouldShowPortraitScale: isiPhonePortraitScreen(),
+                    shouldShowScaleForiPad: isiPadScreen())
     }
 
     func updateUIView(_ uiView: UIScrollView, context: Context) {
@@ -90,7 +97,8 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         if scale == self.scrollView.maximumZoomScale {
             scrollView.zoom(to: zoomRect, animated: true)
         } else {
-            scrollView.setZoomScale(isiPhonePortraitScreen() ? Constants.minScale : Constants.minScaleLands,
+            scrollView.setZoomScale(isiPadScreen() ? Constants.minScaleiPad :
+                                        (isiPhonePortraitScreen() ? Constants.minScale : Constants.minScaleLands),
                                     animated: true)
         }
     }
@@ -100,7 +108,8 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
             return
         }
         let scrollViewFrame = scrollView.frame
-        let adjustedScale = isiPhonePortraitScreen() ? Constants.minScale : Constants.minScaleLands
+        let adjustedScale = isiPadScreen() ? Constants.minScaleiPad :
+                            (isiPhonePortraitScreen() ? Constants.minScale : Constants.minScaleLands)
         let newFrame = CGRect(origin: scrollViewFrame.origin,
                               size: CGSize(width: scrollViewFrame.width * (1 / adjustedScale),
                                            height: scrollViewFrame.height * (1 / adjustedScale)))
@@ -117,6 +126,10 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         return screenSizeClass == .iphonePortraitScreenSize
     }
 
+    private func isiPadScreen() -> Bool {
+        return screenSizeClass == .ipadScreenSize
+    }
+
     // MARK: - Coordinator
 
     class Coordinator: NSObject, UIScrollViewDelegate, UIGestureRecognizerDelegate, RendererDelegate {
@@ -124,10 +137,12 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         private var streamSize: CGSize = .zero
         private var rendererView: ZoomableVideoRenderView
         private var shouldShowPortraitScale: Bool
+        private var shouldShowScaleForiPad: Bool
 
-        init(_ rendererView: ZoomableVideoRenderView, shouldShowPortraitScale: Bool) {
+        init(_ rendererView: ZoomableVideoRenderView, shouldShowPortraitScale: Bool, shouldShowScaleForiPad: Bool) {
             self.rendererView = rendererView
             self.shouldShowPortraitScale = shouldShowPortraitScale
+            self.shouldShowScaleForiPad = shouldShowScaleForiPad
         }
 
         func viewForZooming(in scrollView: UIScrollView) -> UIView? {
@@ -144,7 +159,8 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
 
         func scrollViewDidZoom(_ scrollView: UIScrollView) {
             debugPrint("test::: scrollView.zoomScale = \(scrollView.zoomScale)")
-            let adjustedScale = shouldShowPortraitScale ? Constants.minScale : Constants.minScaleLands
+            let adjustedScale = shouldShowScaleForiPad ? Constants.minScaleiPad :
+                                (shouldShowPortraitScale ? Constants.minScale : Constants.minScaleLands)
             let boundedZoomScale = min(scrollView.zoomScale, scrollView.maximumZoomScale) * (1 / adjustedScale)
 
             if boundedZoomScale > 1 {
@@ -190,8 +206,10 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
             let point = gesture.location(in: gesture.view)
 
             let currentScale = rendererView.getCurrentZoomScale()
-            let minScale = shouldShowPortraitScale ? Constants.minScale : Constants.minScaleLands
-            let maxScale = shouldShowPortraitScale ? Constants.maxScale : Constants.maxScaleLands
+            let minScale = shouldShowScaleForiPad ? Constants.minScaleiPad :
+                           (shouldShowPortraitScale ? Constants.minScale : Constants.minScaleLands)
+            let maxScale = shouldShowScaleForiPad ? Constants.maxScaleiPad:
+                           (shouldShowPortraitScale ? Constants.maxScale : Constants.maxScaleLands)
 
             let adjustedMinScale = shouldShowPortraitScale ? Constants.minScale : Constants.minScaleLands
             if minScale == maxScale && minScale > adjustedMinScale {
