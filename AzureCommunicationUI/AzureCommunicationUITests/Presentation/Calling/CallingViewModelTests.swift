@@ -16,6 +16,7 @@ class CallingViewModelTests: XCTestCase {
     private let timeout: TimeInterval = 10.0
 
     override func setUp() {
+        super.setUp()
         cancellable = CancelBag()
 
         storeFactory = StoreFactoryMocking()

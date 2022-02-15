@@ -22,7 +22,10 @@ class PermissionReducerTests: XCTestCase {
         let state = PermissionState()
         let action = PermissionAction.AudioPermissionGranted()
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! PermissionState
+        guard let resultState = sut.reduce(state, action) as? PermissionState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.audioPermission, .granted)
     }
@@ -31,7 +34,10 @@ class PermissionReducerTests: XCTestCase {
         let state = PermissionState()
         let action = PermissionAction.AudioPermissionRequested()
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! PermissionState
+        guard let resultState = sut.reduce(state, action) as? PermissionState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.audioPermission, .requesting)
     }
@@ -40,7 +46,10 @@ class PermissionReducerTests: XCTestCase {
         let state = PermissionState()
         let action = PermissionAction.AudioPermissionNotAsked()
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! PermissionState
+        guard let resultState = sut.reduce(state, action) as? PermissionState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.audioPermission, .notAsked)
     }
@@ -49,7 +58,10 @@ class PermissionReducerTests: XCTestCase {
         let state = PermissionState()
         let action = PermissionAction.CameraPermissionGranted()
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! PermissionState
+        guard let resultState = sut.reduce(state, action) as? PermissionState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.cameraPermission, .granted)
     }
@@ -59,7 +71,10 @@ class PermissionReducerTests: XCTestCase {
         let action = PermissionAction.CameraPermissionRequested()
 
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! PermissionState
+        guard let resultState = sut.reduce(state, action) as? PermissionState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.cameraPermission, .requesting)
     }
@@ -69,7 +84,10 @@ class PermissionReducerTests: XCTestCase {
         let action = PermissionAction.CameraPermissionNotAsked()
 
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! PermissionState
+        guard let resultState = sut.reduce(state, action) as? PermissionState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.cameraPermission, .notAsked)
     }
@@ -82,7 +100,7 @@ class PermissionReducerTests: XCTestCase {
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
         guard let resultState = resultState as? PermissionState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(resultState.cameraPermission, expectedState)

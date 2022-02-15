@@ -1182,7 +1182,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint lint --strict --config .swiftlint.yml\n";
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint lint --strict --config .swiftlint.yml --path AzureCommunicationUI\n";
 		};
 		2C50E025613BA6060BA2CE42 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1217,7 +1217,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint lint --strict --config .swiftlint.yml\n";
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint lint --strict --path AzureCommunicationUITests\n";
 		};
 		60E5253384799BD37404EE5C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

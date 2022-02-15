@@ -29,11 +29,13 @@ target 'AzureCommunicationUIDemoApp' do
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.3.5'
   pod 'MicrosoftFluentUI/Button_ios', '0.3.5'
   pod 'MicrosoftFluentUI/PopupMenu_ios', '0.3.5'
-
+  pod 'SwiftLint', '0.42.0'
+  
   target 'AzureCommunicationUIDemoAppUITests' do
     # Pods for testing
     pod 'SwiftLint', '0.42.0'
   end
+
 end
 
 post_install do |installer|

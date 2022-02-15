@@ -18,6 +18,7 @@ class CompositeErrorManagerTests: XCTestCase {
     var expectedError: ErrorEvent?
 
     override func setUp() {
+        super.setUp()
         cancellable = CancelBag()
         compositeManager = CompositeErrorManager(store: mockStoreFactory.store,
                                                  callCompositeEventsHandler: getEventsHandler())
