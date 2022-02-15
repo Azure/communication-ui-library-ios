@@ -19,7 +19,9 @@ class AppAudioSessionManager: AudioSessionManager {
          logger: Logger) {
         self.store = store
         self.logger = logger
+        let currentAudioDevice = getCurrentAudioDevice()
         self.setupAudioSession()
+        store.dispatch(action: LocalUserAction.AudioDeviceChangeRequested(device: currentAudioDevice))
         store.$state
             .sink { [weak self] state in
                 self?.receive(state: state)

@@ -10,7 +10,6 @@ class ParticipantsListViewModel: ObservableObject {
 
     @Published var participantsList: [ParticipantsListCellViewModel] = []
     @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
-
     var lastUpdateTimeStamp = Date()
 
     init(localUserState: LocalUserState) {
@@ -35,7 +34,11 @@ class ParticipantsListViewModel: ObservableObject {
     func sortedParticipants() -> [ParticipantsListCellViewModel] {
         // alphabetical order
         return ([localParticipantsListCellViewModel] + participantsList).sorted {
-            return $0.displayName.localizedCaseInsensitiveCompare($1.displayName) == .orderedAscending
+            let name = $0.displayName.trimmingCharacters(in: .whitespaces).isEmpty ?
+                StringConstants.defaultEmptyName : $0.displayName
+            let nextName = $1.displayName.trimmingCharacters(in: .whitespaces).isEmpty ?
+                StringConstants.defaultEmptyName : $1.displayName
+            return name.localizedCaseInsensitiveCompare(nextName) == .orderedAscending
         }
     }
 }

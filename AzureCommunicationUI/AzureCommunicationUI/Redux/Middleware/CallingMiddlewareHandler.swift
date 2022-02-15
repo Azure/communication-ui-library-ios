@@ -41,17 +41,18 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 guard let self = self else {
                     return
                 }
-
                 switch completion {
                 case .failure(let error):
                     self.handle(error: error, errorCode: CallCompositeErrorCode.callJoin, dispatch: dispatch)
                 case .finished:
-                    if state.permissionState.cameraPermission == .granted,
-                       state.localUserState.cameraState.operation == .off {
-                        dispatch(LocalUserAction.CameraPreviewOnTriggered())
-                    }
+                    break
                 }
-            }, receiveValue: { _ in })
+            }, receiveValue: {
+                if state.permissionState.cameraPermission == .granted,
+                   state.localUserState.cameraState.operation == .off {
+                    dispatch(LocalUserAction.CameraPreviewOnTriggered())
+                }
+            })
             .store(in: cancelBag)
     }
 
@@ -227,7 +228,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
     }
 
     func onCameraPermissionIsSet(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        if let state = state as? AppState {
+        if let state = state as? AppState,
+           state.permissionState.cameraPermission == .requesting {
             switch state.localUserState.cameraState.transmission {
             case .local:
                 dispatch(LocalUserAction.CameraPreviewOnTriggered())
@@ -259,9 +261,9 @@ extension CallingMiddlewareHandler {
                     let action: Action
                     let error = ErrorEvent(code: errorCode, error: nil)
                     if errorCode == CallCompositeErrorCode.tokenExpired {
-                        action = ErrorAction.FatalErrorUpdated(error: error, errorCode: errorCode)
+                        action = ErrorAction.FatalErrorUpdated(error: error)
                     } else {
-                        action = ErrorAction.CallStateErrorUpdated(error: error, errorCode: errorCode)
+                        action = ErrorAction.CallStateErrorUpdated(error: error)
                     }
 
                     dispatch(action)

@@ -30,7 +30,7 @@ class ParticipantGridsViewModelTests: XCTestCase {
         sut.update(remoteParticipantsState: state)
         guard let firstUserIdentifier = sut.participantsCellViewModelArr.first?.participantIdentifier,
               let expectedId = inputInfoModelArr.last?.userIdentifier else {
-            XCTFail()
+            XCTFail("Failed with empty userIdentifier")
             return
         }
         XCTAssertEqual(firstUserIdentifier, expectedId)
@@ -63,7 +63,7 @@ class ParticipantGridsViewModelTests: XCTestCase {
                                              lastUpdateTimeStamp: Date())
         sut.update(remoteParticipantsState: state2)
         guard let firstUserIdentifier = sut.participantsCellViewModelArr.first?.participantIdentifier else {
-            XCTFail()
+            XCTFail("Failed with empty participantIdentifier")
             return
         }
         XCTAssertEqual(firstUserIdentifier, expectedUserId)
@@ -99,11 +99,11 @@ class ParticipantGridsViewModelTests: XCTestCase {
                                              lastUpdateTimeStamp: Date())
         sut.update(remoteParticipantsState: state2)
         guard let firstUserIsSpeaking = sut.participantsCellViewModelArr.first?.isSpeaking else {
-            XCTFail()
+            XCTFail("Failed with empty participantIdentifier")
             return
         }
         guard let secondUserIsSpeaking = sut.participantsCellViewModelArr.first?.isSpeaking else {
-            XCTFail()
+            XCTFail("Failed with empty participantIdentifier")
             return
         }
         XCTAssertEqual(firstUserIsSpeaking, expectedIsSpeaking)

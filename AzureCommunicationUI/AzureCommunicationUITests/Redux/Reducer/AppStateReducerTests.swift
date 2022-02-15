@@ -28,7 +28,7 @@ class AppStateReducerTests: XCTestCase {
         let sut = getSUT(permissionReducer: mockSubReducer)
         let result = sut.reduce(state, ActionMocking())
         guard let result = result as? AppState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(result.permissionState.cameraPermission, expectedPermissionState)
@@ -68,7 +68,7 @@ class AppStateReducerTests: XCTestCase {
         let sut = getSUT(localUserReducer: mockSubReducer)
         let result = sut.reduce(state, ActionMocking())
         guard let result = result as? AppState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(result.localUserState.cameraState.operation, expectedCameraStatus)
@@ -91,7 +91,7 @@ class AppStateReducerTests: XCTestCase {
         let sut = getSUT(lifeCycleReducer: mockSubReducer)
         let result = sut.reduce(state, ActionMocking())
         guard let result = result as? AppState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(result.lifeCycleState.currentStatus, expectedState)
@@ -111,7 +111,7 @@ class AppStateReducerTests: XCTestCase {
         let sut = getSUT(callingReducer: mockSubReducer)
         let result = sut.reduce(state, ActionMocking())
         guard let result = result as? AppState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(result.callingState.status, expectedState)
@@ -130,7 +130,7 @@ class AppStateReducerTests: XCTestCase {
         let sut = getSUT(navigationReducer: mockSubReducer)
         let result = sut.reduce(state, ActionMocking())
         guard let result = result as? AppState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(result.navigationState, expectedState)
@@ -150,7 +150,7 @@ class AppStateReducerTests: XCTestCase {
         let result = sut.reduce(state, ActionMocking())
 
         guard let result = result as? AppState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
 
@@ -170,11 +170,33 @@ class AppStateReducerTests: XCTestCase {
         let state = getAppState()
         let result = sut.reduce(state, action)
         guard let result = result as? AppState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(result.remoteParticipantsState.participantInfoList.count, 1)
         XCTAssertEqual(result.remoteParticipantsState.participantInfoList.first?.userIdentifier, userId)
+    }
+
+    func test_appStateReducer_reduce_when_CallingViewLaunched_then_remoteParticipantStateCleanup() {
+        let userId = UUID().uuidString
+        let action = CallingViewLaunched()
+        let sut = getSUT()
+        let participant = ParticipantInfoModel(displayName: "displayname",
+                                               isSpeaking: false,
+                                               isMuted: true,
+                                               isRemoteUser: false,
+                                               userIdentifier: userId,
+                                               recentSpeakingStamp: Date(),
+                                               screenShareVideoStreamModel: nil,
+                                               cameraVideoStreamModel: nil)
+        let remoteParticipantsState = RemoteParticipantsState(participantInfoList: [participant])
+        let state = getAppState(remoteParticipantsState: remoteParticipantsState)
+        let result = sut.reduce(state, action)
+        guard let result = result as? AppState else {
+            XCTFail("Failed with state validation")
+            return
+        }
+        XCTAssertEqual(result.remoteParticipantsState.participantInfoList.count, 0)
     }
 }
 

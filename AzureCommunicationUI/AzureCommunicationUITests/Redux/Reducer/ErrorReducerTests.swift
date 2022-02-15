@@ -8,13 +8,14 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class ErrorReducerTests: XCTestCase {
-    override func setUp() { }
+    override func setUp() {
+        super.setUp()
+    }
 
     func test_handleErrorReducer_reduce_when_notErrorState_then_return() {
         let state = StateMocking()
         let action = ErrorAction.FatalErrorUpdated(error: ErrorEvent(code: "",
-                                                                     error: nil),
-                                                   errorCode: "")
+                                                                     error: nil))
         let sut = getSUT()
 
         let resultState = sut.reduce(state, action)
@@ -25,18 +26,37 @@ class ErrorReducerTests: XCTestCase {
         let state = ErrorState(error: nil, errorCode: CallCompositeErrorCode.callJoin, errorCategory: .callState)
         let error = ErrorEvent(code: CallCompositeErrorCode.callJoin, error: nil)
 
-        let action = ErrorAction.FatalErrorUpdated(error: error,
-                                                   errorCode: CallCompositeErrorCode.callJoin)
+        let action = ErrorAction.FatalErrorUpdated(error: error)
         let sut = getSUT()
 
         let resultState = sut.reduce(state, action)
         XCTAssertTrue(resultState is ErrorState)
         guard let errorState = resultState as? ErrorState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
 
         XCTAssertEqual(errorState.errorCode, CallCompositeErrorCode.callJoin)
+    }
+
+    func test_handleErrorReducer_reduce_when_callingViewLaunched_then_cleanup() {
+        let error = ErrorEvent(code: CallCompositeErrorCode.callJoin, error: nil)
+        let state = ErrorState(error: error, errorCode: CallCompositeErrorCode.callJoin, errorCategory: .callState)
+
+        let action = CallingViewLaunched()
+        let sut = getSUT()
+
+        let resultState = sut.reduce(state, action)
+        XCTAssertTrue(resultState is ErrorState)
+        guard let errorState = resultState as? ErrorState else {
+            XCTFail("Failed with state validation")
+            return
+        }
+
+        XCTAssertEqual(errorState.error, nil)
+        XCTAssertEqual(errorState.errorCode, "")
+        XCTAssertEqual(errorState.errorCategory, .none)
+
     }
 }
 

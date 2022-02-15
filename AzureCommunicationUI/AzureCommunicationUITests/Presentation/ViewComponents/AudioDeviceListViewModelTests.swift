@@ -12,6 +12,7 @@ class AudioDeviceListViewModelTests: XCTestCase {
     var audioDeviceListViewModel: AudioDeviceListViewModel!
 
     override func setUp() {
+        super.setUp()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
 

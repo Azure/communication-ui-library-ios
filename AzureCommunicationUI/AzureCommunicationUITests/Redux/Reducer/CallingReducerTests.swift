@@ -25,7 +25,7 @@ class CallingReducerTests: XCTestCase {
         let resultState = sut.reduce(state, action)
 
         guard let resultState = resultState as? CallingState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(resultState.status, expectedState)
@@ -38,7 +38,7 @@ class CallingReducerTests: XCTestCase {
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
         guard let resultState = resultState as? CallingState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(resultState.status, expectedState)
@@ -56,7 +56,7 @@ class CallingReducerTests: XCTestCase {
         let resultState = sut.reduce(state, action)
 
         guard let resultState = resultState as? CallingState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(resultState, expectedState)
@@ -74,7 +74,7 @@ class CallingReducerTests: XCTestCase {
         let resultState = sut.reduce(state, action)
 
         guard let resultState = resultState as? CallingState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(resultState, expectedState)
@@ -92,7 +92,7 @@ class CallingReducerTests: XCTestCase {
         let resultState = sut.reduce(state, action)
 
         guard let resultState = resultState as? CallingState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(resultState, expectedState)
@@ -110,7 +110,25 @@ class CallingReducerTests: XCTestCase {
         let resultState = sut.reduce(state, action)
 
         guard let resultState = resultState as? CallingState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
+            return
+        }
+        XCTAssertEqual(resultState, expectedState)
+    }
+
+    func test_callingReducer_reduce_when_callingViewLaunched_then_cleanup() {
+        let expectedState = CallingState(status: .none,
+                                         isRecordingActive: false,
+                                         isTranscriptionActive: false)
+        let state = CallingState(status: .connected,
+                                 isRecordingActive: true,
+                                 isTranscriptionActive: true)
+        let action = CallingViewLaunched()
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+
+        guard let resultState = resultState as? CallingState else {
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(resultState, expectedState)

@@ -16,6 +16,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     var mockCallingService: CallingServiceMocking!
 
     override func setUp() {
+        super.setUp()
         mockCallingService = CallingServiceMocking()
         mockLogger = LoggerMocking()
         callingMiddlewareHandler = CallingMiddlewareHandler(callingService: mockCallingService, logger: mockLogger)
@@ -56,10 +57,13 @@ class CallingMiddlewareHandlerTests: XCTestCase {
             XCTAssertTrue(action is PermissionAction.CameraPermissionRequested)
             expectation.fulfill()
         }
-        let state: AppState = getState(callingState: .connected,
+        guard let state: AppState = getState(callingState: .connected,
                                        cameraStatus: .off,
                                        cameraDeviceStatus: .front,
-                                       cameraPermission: .notAsked) as! AppState
+                                             cameraPermission: .notAsked) as? AppState else {
+            XCTFail("Failed with state validation")
+            return
+        }
         callingMiddlewareHandler.requestCameraOn(state: state, dispatch: dispatch)
         wait(for: [expectation], timeout: 1)
     }
@@ -414,6 +418,33 @@ class CallingMiddlewareHandlerTests: XCTestCase {
                                                                  cameraDeviceStatus: .front),
                                                  dispatch: dispatch)
     }
+
+    func test_callingMiddlewareHandler_onCameraPermissionIsSet_when_callTransmissionLocal_cameraPermissionRequesting_then_updateCameraPreviewOnTriggered() {
+        func dispatch(action: Action) {
+            XCTAssertTrue(action is LocalUserAction.CameraPreviewOnTriggered)
+        }
+        callingMiddlewareHandler.onCameraPermissionIsSet(state: getState(cameraPermission: .requesting,
+                                                                         cameraTransmissionStatus: .local),
+                                                 dispatch: dispatch)
+    }
+
+    func test_callingMiddlewareHandler_onCameraPermissionIsSet_when_callTransmissionRemote_cameraPermissionRequesting_then_updateCameraOnTriggered() {
+        func dispatch(action: Action) {
+            XCTAssertTrue(action is LocalUserAction.CameraOnTriggered)
+        }
+        callingMiddlewareHandler.onCameraPermissionIsSet(state: getState(cameraPermission: .requesting,
+                                                                         cameraTransmissionStatus: .remote),
+                                                 dispatch: dispatch)
+    }
+
+    func test_callingMiddlewareHandler_onCameraPermissionIsSet_when_callTransmissionRemote_cameraPermissionNotRequesting_then_updateCameraOnTriggered() {
+        func dispatch(action: Action) {
+            XCTFail("Failed with unknown action dispatched")
+        }
+        callingMiddlewareHandler.onCameraPermissionIsSet(state: getState(cameraPermission: .granted,
+                                                                         cameraTransmissionStatus: .remote),
+                                                 dispatch: dispatch)
+    }
 }
 
 extension CallingMiddlewareHandlerTests {
@@ -422,14 +453,15 @@ extension CallingMiddlewareHandlerTests {
         return AppState()
     }
 
-    private func getState(callingState: CallingStatus,
-                          cameraStatus: LocalUserState.CameraOperationalStatus,
-                          cameraDeviceStatus: LocalUserState.CameraDeviceSelectionStatus,
-                          cameraPermission: AppPermission.Status = .unknown) -> ReduxState {
+    private func getState(callingState: CallingStatus = .none,
+                          cameraStatus: LocalUserState.CameraOperationalStatus = .on,
+                          cameraDeviceStatus: LocalUserState.CameraDeviceSelectionStatus = .front,
+                          cameraPermission: AppPermission.Status = .unknown,
+                          cameraTransmissionStatus: LocalUserState.CameraTransmissionStatus = .local) -> ReduxState {
         let callState = CallingState(status: callingState)
         let cameraState = LocalUserState.CameraState(operation: cameraStatus,
                                                      device: cameraDeviceStatus,
-                                                     transmission: .local)
+                                                     transmission: cameraTransmissionStatus)
         let audioState = LocalUserState.AudioState(operation: .off,
                                                    device: .receiverSelected)
         let localState = LocalUserState(cameraState: cameraState,

@@ -8,23 +8,17 @@ import Foundation
 class ParticipantsListCellViewModel {
     let displayName: String
     let isMuted: Bool
-
-    struct Constants {
-        static let localParticipantNamePostfix: String = "(You)"
-    }
+    let isLocalParticipant: Bool
 
     init(localUserState: LocalUserState) {
-        if let displayName = localUserState.displayName {
-            self.displayName = "\(displayName) \(Constants.localParticipantNamePostfix)"
-        } else {
-            self.displayName = "\(Constants.localParticipantNamePostfix)"
-        }
-
+        self.displayName = localUserState.displayName ?? ""
         self.isMuted = localUserState.audioState.operation != .on
+        self.isLocalParticipant = true
     }
 
     init(participantInfoModel: ParticipantInfoModel) {
         self.displayName = participantInfoModel.displayName
         self.isMuted = participantInfoModel.isMuted
+        self.isLocalParticipant = false
     }
 }
