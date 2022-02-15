@@ -349,7 +349,7 @@
 		985DF373269D096000CFDA55 /* SetupControlBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupControlBarView.swift; sourceTree = "<group>"; };
 		985DF375269E07E700CFDA55 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
 		985DF377269E07F400CFDA55 /* PrimaryButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonViewModel.swift; sourceTree = "<group>"; };
-		9885BA0626A2116200CC514B /* SetupControlBarViewModel.swift */ = {isa = PBXFileReference; indentWidth = 3; lastKnownFileType = sourcecode.swift; path = SetupControlBarViewModel.swift; sourceTree = "<group>"; };
+		9885BA0626A2116200CC514B /* SetupControlBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupControlBarViewModel.swift; sourceTree = "<group>"; };
 		988799902745EABE00AA3759 /* SourceViewSpace.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceViewSpace.swift; sourceTree = "<group>"; };
 		988799922746CDEC00AA3759 /* LockPhoneOrientation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockPhoneOrientation.swift; sourceTree = "<group>"; };
 		98966FE226A5E58D00069857 /* SetupControlBarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupControlBarViewModelTests.swift; sourceTree = "<group>"; };
