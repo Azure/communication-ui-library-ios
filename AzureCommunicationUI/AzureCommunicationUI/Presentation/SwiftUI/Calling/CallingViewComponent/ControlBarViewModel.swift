@@ -129,7 +129,7 @@ class ControlBarViewModel: ObservableObject {
             iconName: audioDeviceState.icon(fallbackIcon: audioDeviceButtonViewModel.iconName))
         audioDeviceButtonViewModel.update(
             accessibilityValue: audioDeviceState.label(
-                fallBackLabel: audioDeviceButtonViewModel.accessibilityValue ?? ""))
+                fallbackLabel: audioDeviceButtonViewModel.accessibilityValue ?? ""))
 
         audioDeviceListViewModel.update(audioDeviceStatus: audioDeviceState)
     }

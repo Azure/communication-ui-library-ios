@@ -44,7 +44,7 @@ class SetupControlBarViewModel: ObservableObject {
                 }
                 self.logger.debug("Toggle camera button tapped")
                 self.videoButtonTapped()
-            }
+        }
         self.cameraButtonViewModel.accessibilityLabel = "Turn camera on"
 
         self.micButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
@@ -57,7 +57,7 @@ class SetupControlBarViewModel: ObservableObject {
                 }
                 self.logger.debug("Toggle microphone button tapped")
                 self.microphoneButtonTapped()
-            }
+        }
         self.micButtonViewModel.accessibilityLabel = "Unmute"
 
         self.audioDeviceButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
@@ -70,7 +70,7 @@ class SetupControlBarViewModel: ObservableObject {
                 }
                 self.logger.debug("Select audio device button tapped")
                 self.selectAudioDeviceButtonTapped()
-            }
+        }
         self.audioDeviceButtonViewModel.accessibilityLabel = "Audio device"
         self.audioDeviceButtonViewModel.accessibilityValue = "Speaker"
     }
@@ -123,10 +123,10 @@ class SetupControlBarViewModel: ObservableObject {
         let audioDeviceStatus = localUserState.audioState.device
         self.audioDeviceButtonViewModel.update(
             iconName: audioDeviceStatus.icon(fallbackIcon: audioDeviceButtonViewModel.iconName),
-            buttonLabel: audioDeviceStatus.label(fallBackLabel: audioDeviceButtonViewModel.buttonLabel))
+            buttonLabel: audioDeviceStatus.label(fallbackLabel: audioDeviceButtonViewModel.buttonLabel))
         self.audioDeviceButtonViewModel.update(
             accessibilityValue: audioDeviceStatus.label(
-                fallBackLabel: audioDeviceButtonViewModel.accessibilityValue ?? ""))
+                fallbackLabel: audioDeviceButtonViewModel.accessibilityValue ?? ""))
 
         if self.localVideoStreamId != localUserState.localVideoStreamIdentifier {
             self.localVideoStreamId = localUserState.localVideoStreamIdentifier

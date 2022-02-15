@@ -17,27 +17,27 @@ extension LocalUserState.AudioDeviceSelectionStatus {
        }
     }
 
-    func label(fallBackLabel: String) -> String {
+    func label(fallbackLabel: String) -> String {
        switch self {
        case .receiverSelected:
           return AudioDeviceType.receiver.name
        case .speakerSelected:
           return AudioDeviceType.speaker.name
        default:
-          return fallBackLabel
+          return fallbackLabel
        }
     }
 }
 
 extension LocalUserState.CameraDeviceSelectionStatus {
-    func label(fallBackLabel: String) -> String {
+    func label(fallbackLabel: String) -> String {
        switch self {
        case .front:
-           return "Front"
+           return "Switch to back camera"
        case .back:
-           return "Back"
+           return "Switch to front camera"
        default:
-          return fallBackLabel
+          return fallbackLabel
        }
     }
 }

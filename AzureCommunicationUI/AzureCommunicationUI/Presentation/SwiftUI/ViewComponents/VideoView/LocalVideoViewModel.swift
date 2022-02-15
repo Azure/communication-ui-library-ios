@@ -31,7 +31,6 @@ class LocalVideoViewModel: ObservableObject {
                 }
                 self.toggleCameraSwitchTapped()
         }
-        self.cameraSwitchButtonPipViewModel.accessibilityLabel = "Switch camera"
         self.cameraSwitchButtonFullViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .cameraSwitch,
             buttonType: .cameraSwitchButtonFull,
@@ -41,7 +40,6 @@ class LocalVideoViewModel: ObservableObject {
                 }
                 self.toggleCameraSwitchTapped()
         }
-        self.cameraSwitchButtonFullViewModel.accessibilityLabel = "Switch camera"
     }
 
     func toggleCameraSwitchTapped() {
@@ -60,13 +58,13 @@ class LocalVideoViewModel: ObservableObject {
 
         self.cameraSwitchButtonPipViewModel.update(isDisabled: localUserState.cameraState.device == .switching)
         self.cameraSwitchButtonPipViewModel.update(
-            accessibilityValue: localUserState.cameraState.device.label(
-                fallBackLabel: self.cameraSwitchButtonPipViewModel.accessibilityValue ?? ""))
+            accessibilityLabel: localUserState.cameraState.device.label(
+                fallbackLabel: self.cameraSwitchButtonPipViewModel.accessibilityValue ?? ""))
 
         self.cameraSwitchButtonFullViewModel.update(isDisabled: localUserState.cameraState.device == .switching)
         self.cameraSwitchButtonFullViewModel.update(
-            accessibilityValue: localUserState.cameraState.device.label(
-                fallBackLabel: self.cameraSwitchButtonFullViewModel.accessibilityValue ?? ""))
+            accessibilityLabel: localUserState.cameraState.device.label(
+                fallbackLabel: self.cameraSwitchButtonFullViewModel.accessibilityValue ?? ""))
 
         let showMuted = localUserState.audioState.operation != .on
         if self.isMuted != showMuted {
