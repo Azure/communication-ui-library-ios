@@ -39,7 +39,7 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
         wait(for: joinButton)
         joinButton.tap()
 
-        let hangUpButton = app.buttons["HangUpButton"]
+        let hangUpButton = app.buttons["AzureCommunicationUI.CallingView.ControlButton.HangUp"]
         wait(for: hangUpButton)
         hangUpButton.tap()
 

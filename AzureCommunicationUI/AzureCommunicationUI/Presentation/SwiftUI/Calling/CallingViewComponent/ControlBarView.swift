@@ -57,7 +57,7 @@ struct ControlBarView: View {
 
     var hangUpButton: some View {
         IconButton(viewModel: viewModel.hangUpButtonViewModel)
-            .accessibility(identifier: "HangUpButton")
+            .accessibility(identifier: "AzureCommunicationUI.CallingView.ControlButton.HangUp")
     }
 
     var audioDeviceSelectionListView: some View {
