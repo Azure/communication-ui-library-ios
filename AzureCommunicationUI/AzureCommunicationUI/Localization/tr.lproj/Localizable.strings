@@ -5,62 +5,62 @@
 
 /* Devices */
 "AzureCommunicationUI.AudioDevice.iOS"="iOS";
-"AzureCommunicationUI.AudioDevice.Speaker"="Speaker";
+"AzureCommunicationUI.AudioDevice.Speaker"="Hoparlör";
 "AzureCommunicationUI.AudioDevice.iPhone"="iPhone";
 "AzureCommunicationUI.AudioDevice.iPad"="iPad";
 
 /* SetupView */
-"AzureCommunicationUI.SetupView.JoinCall"="Join call";
-"AzureCommunicationUI.SetupView.VideoOff"="Video off";
-"AzureCommunicationUI.SetupView.VideoOn"="Video on";
-"AzureCommunicationUI.SetupView.MicOff"="Mic off";
-"AzureCommunicationUI.SetupView.MicOn"="Mic on";
-"AzureCommunicationUI.SetupView.Device"="Device";
-"AzureCommunicationUI.SetupView.AudioGrantedCameraDisabled"="Your camera is disabled. To enable, please go to Settings to allow access.";
-"AzureCommunicationUI.SetupView.AudioDisabledCameraDenied"="Your camera and audio are disabled. To enable, please go to Settings to allow access. You must enable audio to start this call.";
-"AzureCommunicationUI.SetupView.AudioDisabled"="Your audio is disabled. To enable, please go to Settings to allow access. You must enable audio to start this call.";
+"AzureCommunicationUI.SetupView.JoinCall"="Aramaya katıl";
+"AzureCommunicationUI.SetupView.VideoOff"="Görüntü kapalı";
+"AzureCommunicationUI.SetupView.VideoOn"="Görüntü açık";
+"AzureCommunicationUI.SetupView.MicOff"="Mikrofon kapalı";
+"AzureCommunicationUI.SetupView.MicOn"="Mikrofon açık";
+"AzureCommunicationUI.SetupView.Device"="Cihaz";
+"AzureCommunicationUI.SetupView.AudioGrantedCameraDisabled"="Kameranız devre dışı bırakıldı. Etkinleştirmek için, erişime izin vermek için lütfen Ayarlar'a gidin.";
+"AzureCommunicationUI.SetupView.AudioDisabledCameraDenied"="Kameranız ve sesiniz devre dışı bırakıldı. Etkinleştirmek için, erişime izin vermek için lütfen Ayarlar'a gidin. Bu aramayı başlatmak için sesi etkinleştirmeniz gerekir.";
+"AzureCommunicationUI.SetupView.AudioDisabled"="Sesiniz devre dışı bırakıldı. Etkinleştirmek için, erişime izin vermek için lütfen Ayarlar'a gidin. Bu aramayı başlatmak için sesi etkinleştirmeniz gerekir.";
 
 
 /* LobbyView */
-"AzureCommunicationUI.LobbyView.WaitingForHost"="Waiting for host";
-"AzureCommunicationUI.LobbyView.WaitingDetails"="Someone in the meeting will let you in soon";
+"AzureCommunicationUI.LobbyView.WaitingForHost"="Konak bekleniyor";
+"AzureCommunicationUI.LobbyView.WaitingDetails"="Toplantıdaki biri sizi kısa süre içinde toplantıya alacak";
 
 /* CallingView */
-"AzureCommunicationUI.CallingView.WaitingForOthersToJoin"="Waiting for others to join";
-"AzureCommunicationUI.CallingView.CallWith1Person"="Call with 1 person";
-"AzureCommunicationUI.CallingView.CallWithNPeople"="Call with %d people"; // %d is for number of people in call
+"AzureCommunicationUI.CallingView.WaitingForOthersToJoin"="Diğerlerinin katılması bekleniyor";
+"AzureCommunicationUI.CallingView.CallWith1Person"="1 kişi ile ara";
+"AzureCommunicationUI.CallingView.CallWithNPeople"="Diğer kişilerle %d ara"; // %d is for number of people in call
 
-"AzureCommunicationUI.CallingView.Unnamed"="Unnamed Participant";
-"AzureCommunicationUI.CallingView.DrawerLocalParticipant"="%@ (You)"; // %@ is local participant name
+"AzureCommunicationUI.CallingView.Unnamed"="Adsız Katılımcı";
+"AzureCommunicationUI.CallingView.DrawerLocalParticipant"="%@ (Siz)"; // %@ is local participant name
 
-"AzureCommunicationUI.CallingView.LeaveCall"="Leave call";
-"AzureCommunicationUI.CallingView.Cancel"="Cancel";
+"AzureCommunicationUI.CallingView.LeaveCall"="Aramadan ayrıl";
+"AzureCommunicationUI.CallingView.Cancel"="İptal";
 
 /* ComplienceBanner title */
-"AzureCommunicationUI.CallingView.RecordingAndTranscribingStarted"="Recording and transcription have started. ";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="Recording has started. ";
-"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Transcription has stopped. ";
-"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStarted"="Transcription has started. ";
-"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStopped"="Transcription is being saved. ";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="Recording has stopped. ";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="Recording is being saved. ";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="Recording and transcription are being saved. ";
+"AzureCommunicationUI.CallingView.RecordingAndTranscribingStarted"="Kayıt ve döküm başlatıldı.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="Kayıt başladı.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Döküm durduruldu.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStarted"="Döküm başlatıldı.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStopped"="Döküm kaydediliyor.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="Kayıt durduruldu.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="Kayıt kaydediliyor.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="Kayıt ve döküm kaydediliyor.";
 
 /* ComplienceBanner body */
-"AzureCommunicationUI.CallingView.BannerBody.Consent"="By joining, you are giving consent for this meeting to be transcribed. ";
-"AzureCommunicationUI.CallingView.BannerBody.Recording"="You are now only recording this meeting. ";
-"AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="Transcription has stopped. ";
-"AzureCommunicationUI.CallingView.BannerBody.OnlyTranscribing"="You are now only transcribing this meeting. ";
-"AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="Recording has stopped. ";
-"AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Recording and transcription have stopped. ";
+"AzureCommunicationUI.CallingView.BannerBody.Consent"="Katılarak bu toplantının dökümünün çıkarılmasına onay verirsiniz.";
+"AzureCommunicationUI.CallingView.BannerBody.Recording"="Şu anda yalnızca bu toplantıyı kaydediyorsunuz.";
+"AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="Döküm durduruldu.";
+"AzureCommunicationUI.CallingView.BannerBody.OnlyTranscribing"="Şu anda yalnızca bu toplantının dökümünü oluşturuyorsunuz.";
+"AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="Kayıt durduruldu.";
+"AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Kayıt ve döküm durduruldu.";
 
 /* ComplienceBanner display link */
-"AzureCommunicationUI.CallingView.BannerDisplayLink.PrivacyPolicy"="Privacy policy";
-"AzureCommunicationUI.CallingView.BannerDisplayLink.LearnMore"="Learn more";
+"AzureCommunicationUI.CallingView.BannerDisplayLink.PrivacyPolicy"="Gizlilik ilkesi";
+"AzureCommunicationUI.CallingView.BannerDisplayLink.LearnMore"="Daha fazla bilgi edinin";
 
 /* PopUp warning */
-"AzureCommunicationUI.SnackBar.Dismiss"="Dismiss";
-"AzureCommunicationUI.CallState.ErrorCallJoin"="Unable to join the call due to an error.";
-"AzureCommunicationUI.CallState.ErrorCallEnd"="You were removed from the call due to an error.";
-"AzureCommunicationUI.CallState.Error"="There was an error.";
-"AzureCommunicationUI.ServiceNotificationMessage"="Tap to return to the call";
+"AzureCommunicationUI.SnackBar.Dismiss"="Kapat";
+"AzureCommunicationUI.CallState.ErrorCallJoin"="Bir hata nedeniyle aramaya katılınamıyor.";
+"AzureCommunicationUI.CallState.ErrorCallEnd"="Bir hata nedeniyle aramadan çıkarıldınız.";
+"AzureCommunicationUI.CallState.Error"="Bir hata oluştu";
+"AzureCommunicationUI.ServiceNotificationMessage"="Aramaya dönmek için dokunun";

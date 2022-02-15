@@ -5,62 +5,62 @@
 
 /* Devices */
 "AzureCommunicationUI.AudioDevice.iOS"="iOS";
-"AzureCommunicationUI.AudioDevice.Speaker"="Speaker";
+"AzureCommunicationUI.AudioDevice.Speaker"="Luidspreker";
 "AzureCommunicationUI.AudioDevice.iPhone"="iPhone";
 "AzureCommunicationUI.AudioDevice.iPad"="iPad";
 
 /* SetupView */
-"AzureCommunicationUI.SetupView.JoinCall"="Join call";
-"AzureCommunicationUI.SetupView.VideoOff"="Video off";
-"AzureCommunicationUI.SetupView.VideoOn"="Video on";
-"AzureCommunicationUI.SetupView.MicOff"="Mic off";
-"AzureCommunicationUI.SetupView.MicOn"="Mic on";
-"AzureCommunicationUI.SetupView.Device"="Device";
-"AzureCommunicationUI.SetupView.AudioGrantedCameraDisabled"="Your camera is disabled. To enable, please go to Settings to allow access.";
-"AzureCommunicationUI.SetupView.AudioDisabledCameraDenied"="Your camera and audio are disabled. To enable, please go to Settings to allow access. You must enable audio to start this call.";
-"AzureCommunicationUI.SetupView.AudioDisabled"="Your audio is disabled. To enable, please go to Settings to allow access. You must enable audio to start this call.";
+"AzureCommunicationUI.SetupView.JoinCall"="Deelnemen aan gesprek";
+"AzureCommunicationUI.SetupView.VideoOff"="Video uit";
+"AzureCommunicationUI.SetupView.VideoOn"="Video aan";
+"AzureCommunicationUI.SetupView.MicOff"="Microfoon uit";
+"AzureCommunicationUI.SetupView.MicOn"="Microfoon aan";
+"AzureCommunicationUI.SetupView.Device"="Apparaat";
+"AzureCommunicationUI.SetupView.AudioGrantedCameraDisabled"="Uw camera is uitgeschakeld. Als u deze functie wilt inschakelen, gaat u naar Instellingen om toegang toe te staan.";
+"AzureCommunicationUI.SetupView.AudioDisabledCameraDenied"="Uw camera en audio zijn uitgeschakeld. Als u deze functie wilt inschakelen, gaat u naar Instellingen om toegang toe te staan. U moet audio inschakelen om dit gesprek te starten.";
+"AzureCommunicationUI.SetupView.AudioDisabled"="Uw audio is uitgeschakeld. Als u deze functie wilt inschakelen, gaat u naar Instellingen om toegang toe te staan. U moet audio inschakelen om dit gesprek te starten.";
 
 
 /* LobbyView */
-"AzureCommunicationUI.LobbyView.WaitingForHost"="Waiting for host";
-"AzureCommunicationUI.LobbyView.WaitingDetails"="Someone in the meeting will let you in soon";
+"AzureCommunicationUI.LobbyView.WaitingForHost"="Wachten op host";
+"AzureCommunicationUI.LobbyView.WaitingDetails"="Iemand in de vergadering geeft u binnenkort toegang";
 
 /* CallingView */
-"AzureCommunicationUI.CallingView.WaitingForOthersToJoin"="Waiting for others to join";
-"AzureCommunicationUI.CallingView.CallWith1Person"="Call with 1 person";
-"AzureCommunicationUI.CallingView.CallWithNPeople"="Call with %d people"; // %d is for number of people in call
+"AzureCommunicationUI.CallingView.WaitingForOthersToJoin"="Wachten tot anderen deelnemen";
+"AzureCommunicationUI.CallingView.CallWith1Person"="Gesprek met 1 persoon";
+"AzureCommunicationUI.CallingView.CallWithNPeople"="Bellen met %d personen"; // %d is for number of people in call
 
-"AzureCommunicationUI.CallingView.Unnamed"="Unnamed Participant";
-"AzureCommunicationUI.CallingView.DrawerLocalParticipant"="%@ (You)"; // %@ is local participant name
+"AzureCommunicationUI.CallingView.Unnamed"="Naamloze deelnemer";
+"AzureCommunicationUI.CallingView.DrawerLocalParticipant"="%@ (u)"; // %@ is local participant name
 
-"AzureCommunicationUI.CallingView.LeaveCall"="Leave call";
-"AzureCommunicationUI.CallingView.Cancel"="Cancel";
+"AzureCommunicationUI.CallingView.LeaveCall"="Gesprek verlaten";
+"AzureCommunicationUI.CallingView.Cancel"="Annuleren";
 
 /* ComplienceBanner title */
-"AzureCommunicationUI.CallingView.RecordingAndTranscribingStarted"="Recording and transcription have started. ";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="Recording has started. ";
-"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Transcription has stopped. ";
-"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStarted"="Transcription has started. ";
-"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStopped"="Transcription is being saved. ";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="Recording has stopped. ";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="Recording is being saved. ";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="Recording and transcription are being saved. ";
+"AzureCommunicationUI.CallingView.RecordingAndTranscribingStarted"="Opname en transcriptie zijn gestart.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="De opname is gestart";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Transcriptie is gestopt.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStarted"="Transcriptie is gestart.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStopped"="Transcriptie wordt opgeslagen.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="De opname is gestopt.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="De opname wordt opgeslagen.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="Opname en transcriptie worden opgeslagen.";
 
 /* ComplienceBanner body */
-"AzureCommunicationUI.CallingView.BannerBody.Consent"="By joining, you are giving consent for this meeting to be transcribed. ";
-"AzureCommunicationUI.CallingView.BannerBody.Recording"="You are now only recording this meeting. ";
-"AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="Transcription has stopped. ";
-"AzureCommunicationUI.CallingView.BannerBody.OnlyTranscribing"="You are now only transcribing this meeting. ";
-"AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="Recording has stopped. ";
-"AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Recording and transcription have stopped. ";
+"AzureCommunicationUI.CallingView.BannerBody.Consent"="Door deel te nemen, geeft u toestemming voor het transcriberen van deze vergadering.";
+"AzureCommunicationUI.CallingView.BannerBody.Recording"="U bent nu alleen deze vergadering aan het opnemen.";
+"AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="Transcriptie is gestopt.";
+"AzureCommunicationUI.CallingView.BannerBody.OnlyTranscribing"="U bent nu alleen deze vergadering aan het transcriberen.";
+"AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="De opname is gestopt.";
+"AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Opname en transcriptie zijn gestopt.";
 
 /* ComplienceBanner display link */
-"AzureCommunicationUI.CallingView.BannerDisplayLink.PrivacyPolicy"="Privacy policy";
-"AzureCommunicationUI.CallingView.BannerDisplayLink.LearnMore"="Learn more";
+"AzureCommunicationUI.CallingView.BannerDisplayLink.PrivacyPolicy"="Privacybeleid";
+"AzureCommunicationUI.CallingView.BannerDisplayLink.LearnMore"="Meer informatie";
 
 /* PopUp warning */
-"AzureCommunicationUI.SnackBar.Dismiss"="Dismiss";
-"AzureCommunicationUI.CallState.ErrorCallJoin"="Unable to join the call due to an error.";
-"AzureCommunicationUI.CallState.ErrorCallEnd"="You were removed from the call due to an error.";
-"AzureCommunicationUI.CallState.Error"="There was an error.";
-"AzureCommunicationUI.ServiceNotificationMessage"="Tap to return to the call";
+"AzureCommunicationUI.SnackBar.Dismiss"="Negeren";
+"AzureCommunicationUI.CallState.ErrorCallJoin"="Kan niet deelnemen aan de oproep vanwege een fout.";
+"AzureCommunicationUI.CallState.ErrorCallEnd"="U bent uit de oproep verwijderd vanwege een fout.";
+"AzureCommunicationUI.CallState.Error"="Er is een fout opgetreden";
+"AzureCommunicationUI.ServiceNotificationMessage"="Tik om terug te gaan naar het gesprek";
