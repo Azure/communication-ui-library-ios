@@ -8,7 +8,9 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class ErrorReducerTests: XCTestCase {
-    override func setUp() { }
+    override func setUp() {
+        super.setUp()
+    }
 
     func test_handleErrorReducer_reduce_when_notErrorState_then_return() {
         let state = StateMocking()
@@ -30,7 +32,7 @@ class ErrorReducerTests: XCTestCase {
         let resultState = sut.reduce(state, action)
         XCTAssertTrue(resultState is ErrorState)
         guard let errorState = resultState as? ErrorState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
 
@@ -47,7 +49,7 @@ class ErrorReducerTests: XCTestCase {
         let resultState = sut.reduce(state, action)
         XCTAssertTrue(resultState is ErrorState)
         guard let errorState = resultState as? ErrorState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
 

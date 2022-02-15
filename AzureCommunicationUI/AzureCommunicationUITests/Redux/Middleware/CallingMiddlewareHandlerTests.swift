@@ -16,6 +16,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     var mockCallingService: CallingServiceMocking!
 
     override func setUp() {
+        super.setUp()
         mockCallingService = CallingServiceMocking()
         mockLogger = LoggerMocking()
         callingMiddlewareHandler = CallingMiddlewareHandler(callingService: mockCallingService, logger: mockLogger)
@@ -56,10 +57,13 @@ class CallingMiddlewareHandlerTests: XCTestCase {
             XCTAssertTrue(action is PermissionAction.CameraPermissionRequested)
             expectation.fulfill()
         }
-        let state: AppState = getState(callingState: .connected,
+        guard let state: AppState = getState(callingState: .connected,
                                        cameraStatus: .off,
                                        cameraDeviceStatus: .front,
-                                       cameraPermission: .notAsked) as! AppState
+                                             cameraPermission: .notAsked) as? AppState else {
+            XCTFail("Failed with state validation")
+            return
+        }
         callingMiddlewareHandler.requestCameraOn(state: state, dispatch: dispatch)
         wait(for: [expectation], timeout: 1)
     }
@@ -435,7 +439,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
     func test_callingMiddlewareHandler_onCameraPermissionIsSet_when_callTransmissionRemote_cameraPermissionNotRequesting_then_updateCameraOnTriggered() {
         func dispatch(action: Action) {
-            XCTFail()
+            XCTFail("Failed with unknown action dispatched")
         }
         callingMiddlewareHandler.onCameraPermissionIsSet(state: getState(cameraPermission: .granted,
                                                                          cameraTransmissionStatus: .remote),

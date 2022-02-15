@@ -12,6 +12,7 @@ class PreviewAreaViewModelTests: XCTestCase {
     var previewAreaViewModel: PreviewAreaViewModel!
 
     override func setUp() {
+        super.setUp()
         storeFactory = StoreFactoryMocking()
 
         func dispatch(action: Action) {
