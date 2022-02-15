@@ -6,7 +6,7 @@
 import XCTest
 
 class AzureCommunicationUIDemoAppUITests: XCUITestBase {
-    func testCallCompositeLaunch() throws {
+    func testCallCompositeLaunch() {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()
@@ -23,7 +23,7 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
         joinButton.tap()
     }
 
-    func testCallCompositeExit() throws {
+    func testCallCompositeExit() {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()
@@ -49,7 +49,7 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
 
     }
 
-    func testCallCompositeWithExpiredToken() throws {
+    func testCallCompositeWithExpiredToken() {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
         app.launch()

@@ -6,7 +6,7 @@
 import XCTest
 
 class AzureCommunicationUIDemoAppUITestsLaunchTests: XCUITestBase {
-    func testLaunch() throws {
+    func testLaunch() {
         let app = XCUIApplication()
         app.launch()
 
