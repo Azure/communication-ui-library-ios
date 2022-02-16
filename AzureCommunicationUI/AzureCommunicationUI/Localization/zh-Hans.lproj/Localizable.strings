@@ -4,40 +4,39 @@
 //
 
 /* Devices */
-"AzureCommunicationUI.AudioDevice.iOS"="iOS";
-"AzureCommunicationUI.AudioDevice.Speaker"="扬声器";
-"AzureCommunicationUI.AudioDevice.iPhone"="iPhone";
-"AzureCommunicationUI.AudioDevice.iPad"="iPad";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.iOS"="iOS";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="Speaker";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.iPhone"="iPhone";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.iPad"="iPad";
 
 /* SetupView */
-"AzureCommunicationUI.SetupView.JoinCall"="加入通话";
-"AzureCommunicationUI.SetupView.VideoOff"="视频关闭";
-"AzureCommunicationUI.SetupView.VideoOn"="视频开启";
-"AzureCommunicationUI.SetupView.MicOff"="关闭麦克风";
-"AzureCommunicationUI.SetupView.MicOn"="打开麦克风";
-"AzureCommunicationUI.SetupView.Device"="设备";
-"AzureCommunicationUI.SetupView.AudioGrantedCameraDisabled"="你的照相机已禁用。若要启用，请转到\"设置\"以允许访问。";
-"AzureCommunicationUI.SetupView.AudioDisabledCameraDenied"="你的相机和音频已禁用。若要启用，请转到\"设置\"以允许访问。必须启用音频才能开始此通话。";
-"AzureCommunicationUI.SetupView.AudioDisabled"="你的音频已禁用。若要启用，请转到\"设置\"以允许访问。必须启用音频才能开始此通话。";
-
+"AzureCommunicationUI.SetupView.Button.JoinCall"="Join call";
+"AzureCommunicationUI.SetupView.Button.VideoOff"="Video off";
+"AzureCommunicationUI.SetupView.Button.VideoOn"="Video on";
+"AzureCommunicationUI.SetupView.Button.MicOff"="Mic off";
+"AzureCommunicationUI.SetupView.Button.MicOn"="Mic on";
+"AzureCommunicationUI.SetupView.Button.Device"="Device";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Your camera is disabled. To enable, please go to Settings to allow access.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="Your camera and audio are disabled. To enable, please go to Settings to allow access. You must enable audio to start this call.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="Your audio is disabled. To enable, please go to Settings to allow access. You must enable audio to start this call.";
 
 /* LobbyView */
-"AzureCommunicationUI.LobbyView.WaitingForHost"="正在等待主机";
-"AzureCommunicationUI.LobbyView.WaitingDetails"="会议中有人将很快允许你加入";
+"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="Waiting for host";
+"AzureCommunicationUI.LobbyView.Text.WaitingDetails"="Someone in the meeting will let you in soon";
 
 /* CallingView */
-"AzureCommunicationUI.CallingView.WaitingForOthersToJoin"="正在等待其他人加入";
-"AzureCommunicationUI.CallingView.CallWith1Person"="与 1 人通话";
-"AzureCommunicationUI.CallingView.CallWithNPeople"="与%d人通话"; // %d is for number of people in call
+"AzureCommunicationUI.CallingView.InfoHeader.WaitingForOthersToJoin"="Waiting for others to join";
+"AzureCommunicationUI.CallingView.InfoHeader.CallWith1Person"="Call with 1 person";
+"AzureCommunicationUI.CallingView.InfoHeader.CallWithNPeople"="Call with %d people"; // %d is for number of people in call
 
-"AzureCommunicationUI.CallingView.Unnamed"="未命名的参与者";
-"AzureCommunicationUI.CallingView.DrawerLocalParticipant"="%@ (你)"; // %@ is local participant name
+"AzureCommunicationUI.CallingView.ParticipantDrawer.Unnamed"="Unnamed Participant";
+"AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"="%@ (You)"; // %@ is local participant name
 
-"AzureCommunicationUI.CallingView.LeaveCall"="离开通话";
-"AzureCommunicationUI.CallingView.Cancel"="取消";
+"AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Leave call";
+"AzureCommunicationUI.CallingView.Overlay.Cancel"="Cancel";
 
 /* ComplienceBanner title */
-"AzureCommunicationUI.CallingView.RecordingAndTranscribingStarted"="录制和听录已开始。";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Recording and transcription have started.";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="已开始录制";
 "AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="听录已停止。";
 "AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStarted"="听录已开始。";
@@ -55,12 +54,11 @@
 "AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="录制和听录已停止。";
 
 /* ComplienceBanner display link */
-"AzureCommunicationUI.CallingView.BannerDisplayLink.PrivacyPolicy"="隐私策略";
-"AzureCommunicationUI.CallingView.BannerDisplayLink.LearnMore"="了解详细信息";
+"AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"="Privacy policy";
+"AzureCommunicationUI.CallingView.BannerLink.LearnMore"="Learn more";
 
 /* PopUp warning */
-"AzureCommunicationUI.SnackBar.Dismiss"="关闭";
-"AzureCommunicationUI.CallState.ErrorCallJoin"="由于出现错误，无法加入呼叫。";
-"AzureCommunicationUI.CallState.ErrorCallEnd"="由于出现错误，您已从通话中删除。";
-"AzureCommunicationUI.CallState.Error"="出现错误";
-"AzureCommunicationUI.ServiceNotificationMessage"="点击此处以返回到通话";
+"AzureCommunicationUI.SnackBar.Button.Dismiss"="Dismiss";
+"AzureCommunicationUI.SnackBar.Text.ErrorCallJoin"="Unable to join the call due to an error.";
+"AzureCommunicationUI.SnackBar.Text.ErrorCallEnd"="You were removed from the call due to an error.";
+"AzureCommunicationUI.SnackBar.Text.Error"="There was an error.";
