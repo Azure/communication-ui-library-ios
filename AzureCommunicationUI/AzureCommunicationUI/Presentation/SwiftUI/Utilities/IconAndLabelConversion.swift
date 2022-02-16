@@ -6,38 +6,38 @@
 import Foundation
 
 extension LocalUserState.AudioDeviceSelectionStatus {
-    func icon(fallbackIcon: CompositeIcon) -> CompositeIcon {
+    func icon() -> CompositeIcon? {
        switch self {
        case .receiverSelected:
           return .speakerRegular
        case .speakerSelected:
           return .speakerFilled
        default:
-          return fallbackIcon
+          return nil
        }
     }
 
-    func label(fallbackLabel: String) -> String {
+    func label() -> String? {
        switch self {
        case .receiverSelected:
           return AudioDeviceType.receiver.name
        case .speakerSelected:
           return AudioDeviceType.speaker.name
        default:
-          return fallbackLabel
+          return nil
        }
     }
 }
 
 extension LocalUserState.CameraDeviceSelectionStatus {
-    func label(fallbackLabel: String) -> String {
+    func label() -> String? {
        switch self {
        case .front:
            return "Switch to back camera"
        case .back:
            return "Switch to front camera"
        default:
-          return fallbackLabel
+          return nil
        }
     }
 }

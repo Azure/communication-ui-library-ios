@@ -122,11 +122,9 @@ class SetupControlBarViewModel: ObservableObject {
 
         let audioDeviceStatus = localUserState.audioState.device
         self.audioDeviceButtonViewModel.update(
-            iconName: audioDeviceStatus.icon(fallbackIcon: audioDeviceButtonViewModel.iconName),
-            buttonLabel: audioDeviceStatus.label(fallbackLabel: audioDeviceButtonViewModel.buttonLabel))
-        self.audioDeviceButtonViewModel.update(
-            accessibilityValue: audioDeviceStatus.label(
-                fallbackLabel: audioDeviceButtonViewModel.accessibilityValue ?? ""))
+            iconName: audioDeviceStatus.icon(),
+            buttonLabel: audioDeviceStatus.label())
+        self.audioDeviceButtonViewModel.update(accessibilityValue: audioDeviceStatus.label())
 
         if self.localVideoStreamId != localUserState.localVideoStreamIdentifier {
             self.localVideoStreamId = localUserState.localVideoStreamIdentifier
