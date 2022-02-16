@@ -6,7 +6,7 @@
 import Foundation
 
 extension LocalUserState.AudioDeviceSelectionStatus {
-    func icon() -> CompositeIcon? {
+    var icon: CompositeIcon? {
        switch self {
        case .receiverSelected:
           return .speakerRegular
@@ -17,7 +17,7 @@ extension LocalUserState.AudioDeviceSelectionStatus {
        }
     }
 
-    func label() -> String? {
+    var label: String? {
        switch self {
        case .receiverSelected:
           return AudioDeviceType.receiver.name
@@ -30,7 +30,7 @@ extension LocalUserState.AudioDeviceSelectionStatus {
 }
 
 extension LocalUserState.CameraDeviceSelectionStatus {
-    func label() -> String? {
+    var label: String? {
        switch self {
        case .front:
            return "Switch to back camera"

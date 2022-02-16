@@ -125,8 +125,8 @@ class ControlBarViewModel: ObservableObject {
         micButtonViewModel.update(isDisabled: isMicDisabled())
 
         let audioDeviceState = localUserState.audioState.device
-        audioDeviceButtonViewModel.update(iconName: audioDeviceState.icon())
-        audioDeviceButtonViewModel.update(accessibilityValue: audioDeviceState.label())
+        audioDeviceButtonViewModel.update(iconName: audioDeviceState.icon)
+        audioDeviceButtonViewModel.update(accessibilityValue: audioDeviceState.label)
 
         audioDeviceListViewModel.update(audioDeviceStatus: audioDeviceState)
     }
