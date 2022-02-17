@@ -102,7 +102,6 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
         BannerViewModel(compositeViewModelFactory: self)
     }
 
-
     func makeBannerTextViewModel() -> BannerTextViewModel {
         return bannerTextViewModel ??
             BannerTextViewModel()

@@ -263,6 +263,11 @@ extension CallingMiddlewareHandler {
                     self.handleInfo(errorCode: errorCode, dispatch: dispatch)
                     self.logger.debug("-------Subscription cancelled with Error Code: \(errorCode) ")
                     self.subscription.cancel()
+
+                    // Error doesn't need callingStatus Update
+                    // Fatal Error would exit composite
+                    // Error Status Update would reset callingStatus to .none
+                    return
                 } else if status == .disconnected {
                     self.logger.debug("Subscription cancel happy path")
                     dispatch(CompositeExitAction())
