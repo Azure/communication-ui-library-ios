@@ -23,7 +23,6 @@ extension CallingMiddlewareHandler {
     }
 
     func handleInfo(callingStatus: CallingStatus, dispatch: @escaping ActionDispatch) {
-        let action = CallingAction.StateUpdated(status: callingStatus)
         switch callingStatus {
         case .none,
             .earlyMedia,
@@ -38,7 +37,6 @@ extension CallingMiddlewareHandler {
              .inLobby:
             dispatch(CallingViewLaunched())
         }
-        dispatch(action)
 
     }
 }

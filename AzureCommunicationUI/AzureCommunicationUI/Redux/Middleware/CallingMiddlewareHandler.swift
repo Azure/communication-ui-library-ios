@@ -257,25 +257,21 @@ extension CallingMiddlewareHandler {
                     return
                 }
                 let errorCode = callInfoModel.errorCode
-                let status = callInfoModel.status
+                let callStatus = callInfoModel.status
+                dispatch(CallingAction.StateUpdated(status: callStatus))
+
+                self.logger.debug("Dispatch State Update: \(callStatus)")
+                self.handleInfo(callingStatus: callStatus, dispatch: dispatch)
 
                 if errorCode != "" {
                     self.handleInfo(errorCode: errorCode, dispatch: dispatch)
                     self.logger.debug("-------Subscription cancelled with Error Code: \(errorCode) ")
                     self.subscription.cancel()
-
-                    // Error doesn't need callingStatus Update
-                    // Fatal Error would exit composite
-                    // Error Status Update would reset callingStatus to .none
-                    return
-                } else if status == .disconnected {
+                } else if callStatus == .disconnected {
                     self.logger.debug("Subscription cancel happy path")
                     dispatch(CompositeExitAction())
                     self.subscription.cancel()
                 }
-
-                self.logger.debug("Dispatch State Update: \(status)")
-                self.handleInfo(callingStatus: status, dispatch: dispatch)
             }.store(in: subscription)
 
         callingService.isRecordingActiveSubject
