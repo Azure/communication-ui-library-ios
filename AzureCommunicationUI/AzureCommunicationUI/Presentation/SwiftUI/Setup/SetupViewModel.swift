@@ -81,8 +81,13 @@ class SetupViewModel: ObservableObject {
     }
 
     func receive(_ state: AppState) {
-        callingStatus = state.callingState.status
+        let newCallingStatus = state.callingState.status
+        if callingStatus != newCallingStatus,
+           newCallingStatus == .none {
+            isJoinRequested = false
+        }
 
+        callingStatus = newCallingStatus
         let localUserState = state.localUserState
         let permissionState = state.permissionState
         let callingState = state.callingState
