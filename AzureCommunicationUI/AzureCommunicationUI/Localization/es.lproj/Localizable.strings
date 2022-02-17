@@ -1,0 +1,64 @@
+//
+//  Copyright (c) Microsoft Corporation. All rights reserved.
+//  Licensed under the MIT License.
+//
+
+/* Devices */
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.iOS"="iOS";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="Altavoz";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.iPhone"="iPhone";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.iPad"="iPad";
+
+/* SetupView */
+"AzureCommunicationUI.SetupView.Button.JoinCall"="Unirse a la llamada";
+"AzureCommunicationUI.SetupView.Button.VideoOff"="Vídeo desactivado";
+"AzureCommunicationUI.SetupView.Button.VideoOn"="Vídeo activado";
+"AzureCommunicationUI.SetupView.Button.MicOff"="Micro desactivado";
+"AzureCommunicationUI.SetupView.Button.MicOn"="Micro activado";
+"AzureCommunicationUI.SetupView.Button.Device"="Dispositivo";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="La cámara está deshabilitada. Para habilitarla, ve a Configuración para permitir el acceso.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="La cámara y el audio están deshabilitados. Para habilitarla, ve a Configuración para permitir el acceso. Debe habilitar el audio para iniciar esta llamada.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="El audio está deshabilitado. Para habilitarla, ve a Configuración para permitir el acceso. Debe habilitar el audio para iniciar esta llamada.";
+
+/* LobbyView */
+"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="Esperando al host";
+"AzureCommunicationUI.LobbyView.Text.WaitingDetails"="Alguien en la reunión le permitirá entrar pronto";
+
+/* CallingView */
+"AzureCommunicationUI.CallingView.InfoHeader.WaitingForOthersToJoin"="Esperando a que se unan otros usuarios";
+"AzureCommunicationUI.CallingView.InfoHeader.CallWith1Person"="Llamar con 1 persona";
+"AzureCommunicationUI.CallingView.InfoHeader.CallWithNPeople"="Llamar con %d personas"; // %d is for number of people in call
+
+"AzureCommunicationUI.CallingView.ParticipantDrawer.Unnamed"="Participante sin nombre";
+"AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"="%@ (tú)"; // %@ is local participant name
+
+"AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Abandonar llamada";
+"AzureCommunicationUI.CallingView.Overlay.Cancel"="Cancelar";
+
+/* ComplienceBanner title */
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Se han iniciado la grabación y la transcripción.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="Se ha iniciado la grabación.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="La transcripción se ha detenido.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStarted"="La transcripción se ha iniciado.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStopped"="Se está guardando la transcripción.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="La grabación se ha detenido.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="La grabación se está guardando.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="Se están guardando la grabación y la transcripción.";
+
+/* ComplienceBanner body */
+"AzureCommunicationUI.CallingView.BannerBody.Consent"="Al unirse, da su consentimiento para que se transcriba esta reunión.";
+"AzureCommunicationUI.CallingView.BannerBody.Recording"="Solo está grabando esta reunión.";
+"AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="La transcripción se ha detenido.";
+"AzureCommunicationUI.CallingView.BannerBody.OnlyTranscribing"="Solo está transcribiendo esta reunión.";
+"AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="La grabación se ha detenido.";
+"AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Se han detenido la grabación y la transcripción.";
+
+/* ComplienceBanner display link */
+"AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"="Directiva de privacidad";
+"AzureCommunicationUI.CallingView.BannerLink.LearnMore"="Más información";
+
+/* PopUp warning */
+"AzureCommunicationUI.SnackBar.Button.Dismiss"="Descartar";
+"AzureCommunicationUI.SnackBar.Text.ErrorCallJoin"="No se puede unir a la llamada debido a un error.";
+"AzureCommunicationUI.SnackBar.Text.ErrorCallEnd"="Se le ha quitado de la llamada debido a un error.";
+"AzureCommunicationUI.SnackBar.Text.Error"="Se ha producido un error.";

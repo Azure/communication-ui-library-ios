@@ -1,0 +1,64 @@
+//
+//  Copyright (c) Microsoft Corporation. All rights reserved.
+//  Licensed under the MIT License.
+//
+
+/* Devices */
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.iOS"="iOS";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="Динамик";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.iPhone"="iPhone";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.iPad"="iPad";
+
+/* SetupView */
+"AzureCommunicationUI.SetupView.Button.JoinCall"="Присоединиться к звонку";
+"AzureCommunicationUI.SetupView.Button.VideoOff"="Видео отключено";
+"AzureCommunicationUI.SetupView.Button.VideoOn"="Видео включено";
+"AzureCommunicationUI.SetupView.Button.MicOff"="Микрофон выключен";
+"AzureCommunicationUI.SetupView.Button.MicOn"="Микрофон включен";
+"AzureCommunicationUI.SetupView.Button.Device"="Устройство";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Камера отключена. Для включения перейдите в раздел \"Параметры\", чтобы разрешить доступ.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="Камера и звук отключены. Для включения перейдите в раздел \"Параметры\", чтобы разрешить доступ. Чтобы начать этот звонок, включите звук.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="Звук отключен. Для включения перейдите в раздел \"Параметры\", чтобы разрешить доступ. Чтобы начать этот звонок, включите звук.";
+
+/* LobbyView */
+"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="Ожидание организатора";
+"AzureCommunicationUI.LobbyView.Text.WaitingDetails"="Кто-то из участников собрания скоро вас подключит";
+
+/* CallingView */
+"AzureCommunicationUI.CallingView.InfoHeader.WaitingForOthersToJoin"="Ожидание присоединения других участников";
+"AzureCommunicationUI.CallingView.InfoHeader.CallWith1Person"="Звонок с 1 пользователем";
+"AzureCommunicationUI.CallingView.InfoHeader.CallWithNPeople"="Звонок с несколькими (%d) людьми"; // %d is for number of people in call
+
+"AzureCommunicationUI.CallingView.ParticipantDrawer.Unnamed"="Участник без имени";
+"AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"="%@ (вы)"; // %@ is local participant name
+
+"AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Покинуть звонок";
+"AzureCommunicationUI.CallingView.Overlay.Cancel"="Отмена";
+
+/* ComplienceBanner title */
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Начата запись и транскрибирование.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="Запись начата.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Транскрибирование остановлено.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStarted"="Транскрибирование запущено.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStopped"="Сохранение транскрибирования.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="Запись остановлена.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="Сохранение записи.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="Сохранение записи и транскрибирования.";
+
+/* ComplienceBanner body */
+"AzureCommunicationUI.CallingView.BannerBody.Consent"="Присоединяясь, вы даете согласие на транскрибирование этого собрания.";
+"AzureCommunicationUI.CallingView.BannerBody.Recording"="Сейчас для этого собрания ведется только запись.";
+"AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="Транскрибирование остановлено.";
+"AzureCommunicationUI.CallingView.BannerBody.OnlyTranscribing"="Сейчас для этого собрания ведется только транскрибирование.";
+"AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="Запись остановлена.";
+"AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Запись и транскрибирование остановлены.";
+
+/* ComplienceBanner display link */
+"AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"="Политика конфиденциальности";
+"AzureCommunicationUI.CallingView.BannerLink.LearnMore"="Подробнее";
+
+/* PopUp warning */
+"AzureCommunicationUI.SnackBar.Button.Dismiss"="Закрыть";
+"AzureCommunicationUI.SnackBar.Text.ErrorCallJoin"="Не удалось присоединиться к звонку из-за ошибки.";
+"AzureCommunicationUI.SnackBar.Text.ErrorCallEnd"="Вы были удалены из звонка из-за ошибки.";
+"AzureCommunicationUI.SnackBar.Text.Error"="Произошла ошибка";
