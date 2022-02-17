@@ -22,7 +22,6 @@ struct ParticipantGridCellVideoView: View {
     @Binding var displayName: String?
     @Binding var isMuted: Bool
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
-    @State private var scale: CGFloat = 1.0
 
     var body: some View {
         let lanscapeHasHomeBar = (screenSizeClass == .iphoneLandscapeScreenSize
@@ -31,6 +30,8 @@ struct ParticipantGridCellVideoView: View {
             VStack(alignment: .center, spacing: 0) {
                 GeometryReader { geometry in
                     if zoomable {
+                        // reduce height as work-around to resolve the double tap issue, when lanscapeHasHomeBar is true
+                        // To be improved in the next PR
                         zoomableVideoRenderView
                             .frame(width: geometry.size.width - 0,
                                    height: geometry.size.height - (lanscapeHasHomeBar ? Constants.homebarHeight : 0),
@@ -67,5 +68,8 @@ struct ParticipantGridCellVideoView: View {
         ZoomableVideoRenderView(getRemoteParticipantScreenShareVideoStreamRenderer:
                                     getRemoteParticipantScreenShareVideoStreamRenderer,
                                 rendererView: self.rendererView).gesture(TapGesture(count: 2).onEnded({}))
+        // The double tap action does nothing. This is a work around to resolve the double tap
+        // interference issue with single tap action from Calling view.
+        // To be improved in the next PR.
     }
 }
