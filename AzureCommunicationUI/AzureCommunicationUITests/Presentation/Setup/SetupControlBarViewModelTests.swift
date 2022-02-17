@@ -15,6 +15,7 @@ class SetupControlBarViewModelTests: XCTestCase {
     private let timeout: TimeInterval = 10.0
 
     override func setUp() {
+        super.setUp()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
         let logger = LoggerMocking()

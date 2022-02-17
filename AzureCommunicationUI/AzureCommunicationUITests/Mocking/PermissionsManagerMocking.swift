@@ -11,8 +11,8 @@ class PermissionsManagerMocking: PermissionsManager {
     private var requestWasCalled: Bool = false
     private var requestWasCalledWithPermission: AppPermission?
 
-    var didResolveStatus = false
-    var didRequestPermission = false
+    var didResolveStatus: Bool = false
+    var didRequestPermission: Bool = false
 
     func resolveStatus(for permission: AppPermission) -> AppPermission.Status {
         return .granted

@@ -12,6 +12,7 @@ class ParticipantsListViewModelTests: XCTestCase {
     var participantsListViewModel: ParticipantsListViewModel!
 
     override func setUp() {
+        super.setUp()
         cancellable = CancelBag()
         participantsListViewModel = ParticipantsListViewModel(localUserState: LocalUserState())
     }
@@ -160,7 +161,8 @@ class ParticipantsListViewModelTests: XCTestCase {
         participantsListViewModel.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
         XCTAssertEqual(participantsListViewModel.participantsList.count, 1)
-        XCTAssertEqual(localParticipant.displayName, "(You)")
+        XCTAssertEqual(localParticipant.displayName, "")
+        XCTAssertEqual(localParticipant.isLocalParticipant, true)
         XCTAssertEqual(participantsListViewModel.sortedParticipants().first?.displayName, localParticipant.displayName)
         XCTAssertEqual(participantsListViewModel.sortedParticipants().last?.displayName, remoteParticipantsState.participantInfoList.first!.displayName)
         wait(for: [expectation], timeout: 1)

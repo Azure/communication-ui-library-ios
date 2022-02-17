@@ -13,6 +13,7 @@ class LocalVideoViewModelTests: XCTestCase {
     var localVideoViewModel: LocalVideoViewModel!
 
     override func setUp() {
+        super.setUp()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
 
@@ -45,7 +46,6 @@ class LocalVideoViewModelTests: XCTestCase {
     // MARK: Camera switch tests
     func test_localVideoVideModel_toggleCameraSwitch_when_cameraStatusOn_then_shouldRequestCameraOnTriggered() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
-        localVideoViewModel.toggleCameraSwitchTapped()
 
         storeFactory.store.$state
             .dropFirst(1)
@@ -53,6 +53,8 @@ class LocalVideoViewModelTests: XCTestCase {
                 XCTAssertTrue(self?.storeFactory.actions.first is LocalUserAction.CameraSwitchTriggered)
                 expectation.fulfill()
             }.store(in: cancellable)
+
+        localVideoViewModel.toggleCameraSwitchTapped()
         wait(for: [expectation], timeout: 1)
     }
 }

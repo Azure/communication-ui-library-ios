@@ -14,6 +14,7 @@ class CompositeViewModelFactoryTests: XCTestCase {
     var compositeViewModelFactory: ACSCompositeViewModelFactory!
 
     override func setUp() {
+        super.setUp()
         logger = LoggerMocking()
         compositeViewModelFactory = ACSCompositeViewModelFactory(
             logger: logger, store: mockStoreFactory.store)
