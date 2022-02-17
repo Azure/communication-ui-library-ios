@@ -71,8 +71,6 @@ struct ParticipantGridCellView: View {
                                  titleFont: Fonts.button1.font,
                                  mutedIconSize: 16)
         }
-//        .accessibilityElement(children: .ignore)
-//        .accessibility(label: Text(viewModel.displayName ?? ""))
     }
 
 }
