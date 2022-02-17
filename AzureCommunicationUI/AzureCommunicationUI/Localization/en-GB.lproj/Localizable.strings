@@ -37,21 +37,21 @@
 
 /* ComplienceBanner title */
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Recording and transcription have started.";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="Recording has started. ";
-"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Transcription has stopped. ";
-"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStarted"="Transcription has started. ";
-"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStopped"="Transcription is being saved. ";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="Recording has stopped. ";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="Recording is being saved. ";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="Recording and transcription are being saved. ";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="Recording has started.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Transcription has stopped.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStarted"="Transcription has started.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStopped"="Transcription is being saved.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="Recording has stopped.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="Recording is being saved.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="Recording and transcription are being saved.";
 
 /* ComplienceBanner body */
-"AzureCommunicationUI.CallingView.BannerBody.Consent"="By joining, you are giving consent for this meeting to be transcribed. ";
-"AzureCommunicationUI.CallingView.BannerBody.Recording"="You are now only recording this meeting. ";
-"AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="Transcription has stopped. ";
-"AzureCommunicationUI.CallingView.BannerBody.OnlyTranscribing"="You are now only transcribing this meeting. ";
-"AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="Recording has stopped. ";
-"AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Recording and transcription have stopped. ";
+"AzureCommunicationUI.CallingView.BannerBody.Consent"="By joining, you are giving consent for this meeting to be transcribed.";
+"AzureCommunicationUI.CallingView.BannerBody.Recording"="You are now only recording this meeting.";
+"AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="Transcription has stopped.";
+"AzureCommunicationUI.CallingView.BannerBody.OnlyTranscribing"="You are now only transcribing this meeting.";
+"AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="Recording has stopped.";
+"AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Recording and transcription have stopped.";
 
 /* ComplienceBanner display link */
 "AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"="Privacy policy";
