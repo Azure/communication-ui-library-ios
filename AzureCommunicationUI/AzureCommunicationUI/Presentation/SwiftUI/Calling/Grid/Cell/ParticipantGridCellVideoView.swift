@@ -15,9 +15,6 @@ struct ParticipantGridCellVideoView: View {
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     let borderColor = Color(StyleProvider.color.primaryColor)
-    var isTitleViewEmpty: Bool {
-        return !isMuted && displayName?.trimmingCharacters(in: .whitespaces).isEmpty == true
-    }
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
@@ -30,8 +27,7 @@ struct ParticipantGridCellVideoView: View {
                                  titleFont: Fonts.caption1.font,
                                  mutedIconSize: 14)
                 .padding(.vertical, 2)
-                .padding(.horizontal, 4)
-                .background(isTitleViewEmpty ? .clear : Color(StyleProvider.color.overlay))
+                .background(Color(StyleProvider.color.overlay))
                 .clipShape(RoundedRectangle(cornerRadius: 3))
                 .padding(.leading, 4)
                 .padding(.bottom, screenSizeClass == .iphoneLandscapeScreenSize
