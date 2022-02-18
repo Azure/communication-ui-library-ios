@@ -13,14 +13,14 @@ class ErrorInfoViewModel: ObservableObject {
     private var previousErrorType: String = ""
 
     func update(errorState: ErrorState) {
-        guard errorState.errorCode != "",
-              errorState.errorCode != previousErrorType else {
+        guard errorState.error?.code != "",
+              errorState.error?.code != previousErrorType else {
                   return
               }
 
         isDisplayed = true
-        previousErrorType = errorState.errorCode
-        switch errorState.errorCode {
+        previousErrorType = errorState.error?.code ?? ""
+        switch errorState.error?.code {
         case CallCompositeErrorCode.callJoin:
             message = "Unable to join the call due to an error."
         case CallCompositeErrorCode.callEnd:
