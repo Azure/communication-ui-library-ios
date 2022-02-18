@@ -9,6 +9,7 @@ import Combine
 class SetupViewModel: ObservableObject {
     private let logger: Logger
     private let store: Store<AppState>
+    private var callingStatus: CallingStatus = .none
     var cancellables = Set<AnyCancellable>()
 
     @Published var isJoinRequested: Bool = false
@@ -16,9 +17,8 @@ class SetupViewModel: ObservableObject {
     let previewAreaViewModel: PreviewAreaViewModel
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
-    var startCallButtonViewModel: PrimaryButtonViewModel!
+    var joinCallButtonViewModel: PrimaryButtonViewModel!
     var setupControlBarViewModel: SetupControlBarViewModel!
-    var callingStatus: CallingStatus = .none
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
@@ -28,7 +28,7 @@ class SetupViewModel: ObservableObject {
         self.logger = logger
         self.previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
         self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
-        self.startCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
+        self.joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: "Join Call",
             iconName: .meetNow,
@@ -96,7 +96,7 @@ class SetupViewModel: ObservableObject {
         setupControlBarViewModel.update(localUserState: localUserState,
                                         permissionState: permissionState,
                                         callingState: callingState)
-        startCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
+        joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
 
         errorInfoViewModel.update(errorState: state.errorState)
     }

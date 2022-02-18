@@ -46,7 +46,7 @@ struct SetupView: View {
             if viewModel.isJoinRequested {
                 SetupJoiningView()
             } else {
-                PrimaryButton(viewModel: viewModel.startCallButtonViewModel)
+                PrimaryButton(viewModel: viewModel.joinCallButtonViewModel)
             }
         }
     }
