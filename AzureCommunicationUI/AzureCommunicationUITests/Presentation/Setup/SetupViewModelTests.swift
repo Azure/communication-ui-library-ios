@@ -91,7 +91,7 @@ class SetupViewModelTests: XCTestCase {
 
     }
 
-    func test_jsetupViewModel_when_callingStateUpdateToNone_then_isJoinRequestedFalse() {
+    func test_setupViewModel_when_callingStateUpdateToNone_then_isJoinRequestedFalse() {
         setupViewModel.joinCallButtonTapped()
 
         let callingState = getCallingState(CallingStatus.connecting)
@@ -105,7 +105,7 @@ class SetupViewModelTests: XCTestCase {
         XCTAssertFalse(setupViewModel.isJoinRequested)
     }
 
-    func test_jsetupViewModel_when_callingStateUpdateToConnecting_then_isJoinRequestedTrue() {
+    func test_setupViewModel_when_callingStateUpdateToConnecting_then_isJoinRequestedTrue() {
 
             setupViewModel.joinCallButtonTapped()
 

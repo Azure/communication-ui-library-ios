@@ -17,7 +17,7 @@ class ErrorInfoViewModel: ObservableObject {
         guard errorType != previousErrorType else {
                   return
         }
-        
+
         previousErrorType = errorState.error?.code ?? ""
         guard !errorType.isEmpty else {
             isDisplayed = false
