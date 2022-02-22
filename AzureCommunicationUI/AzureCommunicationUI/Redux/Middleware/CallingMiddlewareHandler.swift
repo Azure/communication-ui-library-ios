@@ -81,7 +81,6 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
     func endCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
         callingService.endCall()
             .sink(receiveCompletion: { [weak self] completion in
-                print("---------endCall callback")
                 guard let self = self else {
                     return
                 }
@@ -243,7 +242,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
 extension CallingMiddlewareHandler {
     private func subscription(dispatch: @escaping ActionDispatch) {
-        logger.debug("-----------Subscribe to calling service subjects")
+        logger.debug("Subscribe to calling service subjects")
         callingService.participantsInfoListSubject
             .throttle(for: 1.25, scheduler: DispatchQueue.main, latest: true)
             .sink { list in
@@ -265,7 +264,7 @@ extension CallingMiddlewareHandler {
 
                 if errorCode != "" {
                     self.handleInfo(errorCode: errorCode, dispatch: dispatch)
-                    self.logger.debug("-------Subscription cancelled with Error Code: \(errorCode) ")
+                    self.logger.debug("Subscription cancelled with Error Code: \(errorCode) ")
                     self.subscription.cancel()
                 } else if callStatus == .disconnected {
                     self.logger.debug("Subscription cancel happy path")

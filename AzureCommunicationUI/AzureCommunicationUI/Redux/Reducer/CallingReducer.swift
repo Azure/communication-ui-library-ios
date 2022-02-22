@@ -22,7 +22,6 @@ struct CallingReducer: Reducer {
         case let action as CallingAction.TranscriptionStateUpdated:
             isTranscriptionActive = action.isTranscriptionActive
         case _ as ErrorAction.StatusErrorAndCallReset:
-            print("-----------------empty callingState")
             callingStatus = .none
             isRecordingActive = false
             isTranscriptionActive = false
