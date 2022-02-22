@@ -188,6 +188,11 @@
 		A88CDFBC27505A410004E2F5 /* ErrorInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88CDFBB27505A410004E2F5 /* ErrorInfoViewModel.swift */; };
 		A8ED232D2645C637008A26B2 /* CallingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ED232C2645C637008A26B2 /* CallingServiceTests.swift */; };
 		A8ED23302649EA61008A26B2 /* NavigationRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */; };
+		FA7D47E927C0706B0039C418 /* ControlBarViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7D47E827C0706B0039C418 /* ControlBarViewModelMocking.swift */; };
+		FAA0EA3C27C557DD007D93E5 /* InfoHeaderViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA0EA3B27C557DD007D93E5 /* InfoHeaderViewModelMocking.swift */; };
+		FAA0EA3E27C57E9C007D93E5 /* LocalVideoViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA0EA3D27C57E9C007D93E5 /* LocalVideoViewModelMocking.swift */; };
+		FAA0EA4027C58345007D93E5 /* ParticipantGridViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA0EA3F27C58345007D93E5 /* ParticipantGridViewModelMocking.swift */; };
+		FAA0EA4227C585D2007D93E5 /* BannerViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA0EA4127C585D2007D93E5 /* BannerViewModelMocking.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -390,6 +395,11 @@
 		A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouterTests.swift; sourceTree = "<group>"; };
 		AEF91CC2CFA3B351A6C90172 /* Pods_AzureCommunicationUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D02090EE8283A8254134AA10 /* Pods_AzureCommunicationUI_AzureCommunicationUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUI_AzureCommunicationUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA7D47E827C0706B0039C418 /* ControlBarViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlBarViewModelMocking.swift; sourceTree = "<group>"; };
+		FAA0EA3B27C557DD007D93E5 /* InfoHeaderViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHeaderViewModelMocking.swift; sourceTree = "<group>"; };
+		FAA0EA3D27C57E9C007D93E5 /* LocalVideoViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalVideoViewModelMocking.swift; sourceTree = "<group>"; };
+		FAA0EA3F27C58345007D93E5 /* ParticipantGridViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantGridViewModelMocking.swift; sourceTree = "<group>"; };
+		FAA0EA4127C585D2007D93E5 /* BannerViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewModelMocking.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -664,6 +674,11 @@
 			isa = PBXGroup;
 			children = (
 				1F7BF43D2707D86000974139 /* BannerTextViewModelMocking.swift */,
+				FA7D47E827C0706B0039C418 /* ControlBarViewModelMocking.swift */,
+				FAA0EA3B27C557DD007D93E5 /* InfoHeaderViewModelMocking.swift */,
+				FAA0EA3D27C57E9C007D93E5 /* LocalVideoViewModelMocking.swift */,
+				FAA0EA3F27C58345007D93E5 /* ParticipantGridViewModelMocking.swift */,
+				FAA0EA4127C585D2007D93E5 /* BannerViewModelMocking.swift */,
 			);
 			name = ViewModels;
 			sourceTree = "<group>";
@@ -1271,11 +1286,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				A830C317264D8A0C00766E3D /* ContainerViewModelTests.swift in Sources */,
+				FAA0EA4227C585D2007D93E5 /* BannerViewModelMocking.swift in Sources */,
 				A8ED23302649EA61008A26B2 /* NavigationRouterTests.swift in Sources */,
 				A869A63D26546A2E003CC4F2 /* ReducerMocking.swift in Sources */,
 				503E361C26CC2D0900158CB4 /* CompositeViewModelFactoryTests.swift in Sources */,
 				503300FC2706763800289BB5 /* BannerViewModelTests.swift in Sources */,
 				A869A63F26546A2E003CC4F2 /* VideoViewManagerMocking.swift in Sources */,
+				FAA0EA3C27C557DD007D93E5 /* InfoHeaderViewModelMocking.swift in Sources */,
 				A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */,
 				1F4B0EFA269BD3D000E87014 /* CallCompositeMocking.swift in Sources */,
 				985DF36C269650C900CFDA55 /* PreviewAreaViewModelTests.swift in Sources */,
@@ -1287,6 +1304,8 @@
 				A869A63C26546A2E003CC4F2 /* StateMocking.swift in Sources */,
 				1F09A11326BA484000BACED7 /* ParticipantCellViewModelTests.swift in Sources */,
 				50FA46182696214D001844AC /* CallingMiddlewareHandlerTests.swift in Sources */,
+				FAA0EA4027C58345007D93E5 /* ParticipantGridViewModelMocking.swift in Sources */,
+				FAA0EA3E27C57E9C007D93E5 /* LocalVideoViewModelMocking.swift in Sources */,
 				50E2D68926D9495B006B0EF4 /* InfoHeaderViewModelTests.swift in Sources */,
 				98E8564826FA609D00ECA304 /* AudioDeviceListViewModelTests.swift in Sources */,
 				1F48B40327496E2800B6E5F9 /* DiagnosticConfigTests.swift in Sources */,
@@ -1312,6 +1331,7 @@
 				A869A63926546A2E003CC4F2 /* LoggerMocking.swift in Sources */,
 				1F9184B626B4A3340049EF5B /* NavigationReducerTests.swift in Sources */,
 				5A31416F1C27AA7C96202B17 /* TeamsMeetingOptionsTests.swift in Sources */,
+				FA7D47E927C0706B0039C418 /* ControlBarViewModelMocking.swift in Sources */,
 				5A314750E50CDF6A6F4577E5 /* GroupCallOptionsTests.swift in Sources */,
 				5A31429C377C213B53F19163 /* DependencyContainerTests.swift in Sources */,
 				1F09A10426BA472A00BACED7 /* ParticipantInfoModelBuilder.swift in Sources */,
