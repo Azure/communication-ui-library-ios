@@ -5,16 +5,41 @@
 
 import Foundation
 import UIKit
+import FluentUI
 
 /// A protocol to allow customizing the theme.
+///
+/// Join Call Button - Background - Highlighted - Light Mode - Tint10
+/// Join Call Button - Background - Highlighted - Dark Mode - Tint20
+/// Join Call Button - Border - Normal - Light/Dark Mode - Tint10
+/// Join Call Button - Border - Highlighted - Light/Dark Mode - Tint30
+///
 public protocol ThemeConfiguration {
 
     /// Provide a getter to return a custom primary color.
     var primaryColor: UIColor { get }
+
+    /// Provide a getter to return a custom primary color tint10.
+    var primaryColorTint10: UIColor { get }
+
+    /// Provide a getter to return a custom primary color tint20.
+    var primaryColorTint20: UIColor { get }
+
+    /// Provide a getter to return a custom primary color tint30.
+    var primaryColorTint30: UIColor { get }
 }
 
 public extension ThemeConfiguration {
     var primaryColor: UIColor {
-        return UIColor.compositeColor(.primary)
+        return Colors.Palette.communicationBlue.color
+    }
+    var primaryColorTint10: UIColor {
+        return Colors.Palette.communicationBlueTint10.color
+    }
+    var primaryColorTint20: UIColor {
+        return Colors.Palette.communicationBlueTint20.color
+    }
+    var primaryColorTint30: UIColor {
+        return Colors.Palette.communicationBlueTint30.color
     }
 }

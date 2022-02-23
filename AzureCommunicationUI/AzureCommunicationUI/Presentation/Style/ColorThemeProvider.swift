@@ -8,6 +8,10 @@ import FluentUI
 
 class ColorThemeProvider: ColorProviding {
     let primaryColor: UIColor
+    let primaryColorTint10: UIColor
+    let primaryColorTint20: UIColor
+    let primaryColorTint30: UIColor
+
     let backgroundColor = UIColor.compositeColor(.background)
     let gridLayoutBackground = UIColor.compositeColor(.gridLayoutBackground)
     let onSurfaceColor = UIColor.compositeColor(.onSurface)
@@ -33,7 +37,10 @@ class ColorThemeProvider: ColorProviding {
     let overlay = UIColor.compositeColor(.overlay)
 
     init(themeConfiguration: ThemeConfiguration?) {
-        self.primaryColor = themeConfiguration?.primaryColor ?? UIColor.compositeColor(.primary)
+        self.primaryColor = themeConfiguration?.primaryColor ?? Colors.Palette.communicationBlue.color
+        self.primaryColorTint10 = themeConfiguration?.primaryColorTint10 ?? Colors.Palette.communicationBlueTint10.color
+        self.primaryColorTint20 = themeConfiguration?.primaryColorTint20 ?? Colors.Palette.communicationBlueTint20.color
+        self.primaryColorTint30 = themeConfiguration?.primaryColorTint30 ?? Colors.Palette.communicationBlueTint30.color
     }
 
     func primaryColor(for window: UIWindow) -> UIColor? {
@@ -41,15 +48,15 @@ class ColorThemeProvider: ColorProviding {
     }
 
     func primaryTint10Color(for window: UIWindow) -> UIColor? {
-        return primaryColor
+        return primaryColorTint10
     }
 
     func primaryTint20Color(for window: UIWindow) -> UIColor? {
-        return primaryColor
+        return primaryColorTint20
     }
 
     func primaryTint30Color(for window: UIWindow) -> UIColor? {
-        return primaryColor
+        return primaryColorTint30
     }
 
     func primaryTint40Color(for window: UIWindow) -> UIColor? {
