@@ -210,6 +210,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
 
         // MARK: VideoScreenShareDelegate
 
+        func videoStreamRenderer(didRenderFirstFrameWithSize size: CGSize) {
             streamSize = size
             rendererView.updateRendererViewSize()
         }
