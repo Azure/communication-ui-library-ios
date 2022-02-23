@@ -7,7 +7,7 @@ import Foundation
 import XCTest
 @testable import AzureCommunicationUI
 
-class ParticipantGridsViewModelTests: XCTestCase {
+class ParticipantGridViewModelTests: XCTestCase {
     var cancellable = CancelBag()
 
     // MARK: Sorting participant
@@ -59,9 +59,9 @@ class ParticipantGridsViewModelTests: XCTestCase {
         let updatedStampInfoModel1 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid1,
                                                                      recentSpeakingStamp: Date())
 
-        let state2 = RemoteParticipantsState(participantInfoList: [updatedStampInfoModel1, infoModel2],
-                                             lastUpdateTimeStamp: Date())
-        sut.update(remoteParticipantsState: state2)
+        let updatedState = RemoteParticipantsState(participantInfoList: [updatedStampInfoModel1, infoModel2],
+                                                   lastUpdateTimeStamp: Date())
+        sut.update(remoteParticipantsState: updatedState)
         guard let firstUserIdentifier = sut.participantsCellViewModelArr.first?.participantIdentifier else {
             XCTFail("Failed with empty participantIdentifier")
             return
@@ -89,7 +89,7 @@ class ParticipantGridsViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Participants list updated expectation")
         expectation.expectedFulfillmentCount = 2
         expectation.assertForOverFulfill = true
-        let sut = makeSUT {
+        let sut = makeSUT { _ in
             expectation.fulfill()
         }
         sut.update(remoteParticipantsState: state)
@@ -100,9 +100,9 @@ class ParticipantGridsViewModelTests: XCTestCase {
         let updatedStampInfoModel2 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid2,
                                                                      isSpeaking: expectedIsSpeaking, recentSpeakingStamp: previousDate2)
 
-        let state2 = RemoteParticipantsState(participantInfoList: [updatedStampInfoModel1, updatedStampInfoModel2],
-                                             lastUpdateTimeStamp: Date())
-        sut.update(remoteParticipantsState: state2)
+        let updatedState = RemoteParticipantsState(participantInfoList: [updatedStampInfoModel1, updatedStampInfoModel2],
+                                                   lastUpdateTimeStamp: Date())
+        sut.update(remoteParticipantsState: updatedState)
         wait(for: [expectation], timeout: 1)
     }
 
@@ -131,7 +131,10 @@ class ParticipantGridsViewModelTests: XCTestCase {
         let state = makeRemoteParticipantState(date: date)
         let expectation = XCTestExpectation(description: "Participants list updated expectation")
         expectation.assertForOverFulfill = true
-        let sut = makeSUT {
+        let expectedUpdatedInfoModel = ParticipantInfoModelBuilder.get(participantIdentifier: state.participantInfoList.first!.userIdentifier,
+                                                                       isMuted: !state.participantInfoList.first!.isMuted)
+        let sut = makeSUT { infoModel in
+            XCTAssertEqual(expectedUpdatedInfoModel, infoModel)
             expectation.fulfill()
         }
         sut.update(remoteParticipantsState: state)
@@ -139,9 +142,7 @@ class ParticipantGridsViewModelTests: XCTestCase {
             XCTFail("Failed with empty participantsCellViewModelArr")
             return
         }
-        let isMuted = !participant.isMuted
-        let updatedParticipantInfoList = [ParticipantInfoModelBuilder.get(participantIdentifier: participant.participantIdentifier,
-                                                                          isMuted: isMuted)]
+        let updatedParticipantInfoList = [expectedUpdatedInfoModel]
         let updatedState = RemoteParticipantsState(participantInfoList: updatedParticipantInfoList)
         sut.update(remoteParticipantsState: updatedState)
         guard let updatedParticipant = sut.participantsCellViewModelArr.first else {
@@ -160,7 +161,7 @@ class ParticipantGridsViewModelTests: XCTestCase {
         let state = makeRemoteParticipantState(date: date)
         let expectation = XCTestExpectation(description: "Participants list updated expectation")
         expectation.assertForOverFulfill = true
-        let sut = makeSUT {
+        let sut = makeSUT { _ in
             expectation.fulfill()
         }
         sut.update(remoteParticipantsState: state)
@@ -381,8 +382,8 @@ class ParticipantGridsViewModelTests: XCTestCase {
 
 }
 
-extension ParticipantGridsViewModelTests {
-    func makeSUT(participantGridCellViewUpdateCompletion: (() -> Void)? = nil) -> ParticipantGridViewModel {
+extension ParticipantGridViewModelTests {
+    func makeSUT(participantGridCellViewUpdateCompletion: ((ParticipantInfoModel) -> Void)? = nil) -> ParticipantGridViewModel {
         let storeFactory = StoreFactoryMocking()
 
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)

@@ -7,17 +7,17 @@ import Foundation
 @testable import AzureCommunicationUI
 
 class ParticipantGridCellViewModelMocking: ParticipantGridCellViewModel {
-    private let updateParticipantModelCompletion: (() -> Void)?
+    private let updateParticipantModelCompletion: ((ParticipantInfoModel) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          participantModel: ParticipantInfoModel,
-         updateParticipantModelCompletion: (() -> Void)?) {
+         updateParticipantModelCompletion: ((ParticipantInfoModel) -> Void)?) {
         self.updateParticipantModelCompletion = updateParticipantModelCompletion
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    participantModel: participantModel)
     }
 
     override func update(participantModel: ParticipantInfoModel) {
-        updateParticipantModelCompletion?()
+        updateParticipantModelCompletion?(participantModel)
     }
 }
