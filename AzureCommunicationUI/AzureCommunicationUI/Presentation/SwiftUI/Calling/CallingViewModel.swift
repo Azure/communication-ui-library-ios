@@ -92,10 +92,6 @@ class CallingViewModel: ObservableObject {
         self.isConfirmLeaveOverlayDisplayed = false
     }
 
-    func startCall() {
-        store.dispatch(action: CallingAction.CallStartRequested())
-    }
-
     func endCall() {
         store.dispatch(action: CallingAction.CallEndRequested())
         dismissConfirmLeaveOverlay()

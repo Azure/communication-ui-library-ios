@@ -44,7 +44,6 @@ class SetupViewModelTests: XCTestCase {
 
     func test_setupViewModel_when_setupViewLoaded_then_shouldSetupCall() {
         let expectation = XCTestExpectation(description: "Verify Last Action is SetupCall")
-        setupViewModel.setupCall()
 
         storeFactory.store.$state
             .dropFirst()
@@ -54,40 +53,74 @@ class SetupViewModelTests: XCTestCase {
 
                 expectation.fulfill()
             }.store(in: cancellable)
+        setupViewModel.setupCall()
 
         wait(for: [expectation], timeout: timeout)
     }
 
-    func test_setupViewModel_when_startCallButtonTapped_then_shouldCallingViewLaunched() {
+    func test_setupViewModel_when_joinCallButtonTapped_then_shouldCallStartRequest_isJoinRequestedTrue() {
         let expectation = XCTestExpectation(description: "Verify Last Action is Calling View Launched")
-        setupViewModel.startCallButtonTapped()
 
         storeFactory.store.$state
             .dropFirst()
             .sink { [weak self] _ in
                 XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.last is CallingViewLaunched)
+                XCTAssertTrue(self?.storeFactory.actions.last is CallingAction.CallStartRequested)
 
                 expectation.fulfill()
             }.store(in: cancellable)
-
+        setupViewModel.joinCallButtonTapped()
+        XCTAssertTrue(setupViewModel.isJoinRequested)
         wait(for: [expectation], timeout: timeout)
     }
 
-    func test_startCallButtonViewModel_when_audioPermissionDenied_then_shouldDisableStartCallButton() {
+    func test_joinCallButtonViewModel_when_audioPermissionDenied_then_shouldDisablejoinCallButton() {
         let permissionState = PermissionState(audioPermission: .denied,
                                               cameraPermission: .notAsked)
-        setupViewModel.startCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
+        setupViewModel.joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
 
-        XCTAssertTrue(setupViewModel.startCallButtonViewModel.isDisabled)
+        XCTAssertTrue(setupViewModel.joinCallButtonViewModel.isDisabled)
     }
 
-    func test_startCallButtonViewModel_when_audioPermissionGranted_then_shouldEnableStartCallButton() {
+    func test_joinCallButtonViewModel_when_audioPermissionGranted_then_shouldEnablejoinCallButton() {
         let permissionState = PermissionState(audioPermission: .granted,
                                               cameraPermission: .denied)
-        setupViewModel.startCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
+        setupViewModel.joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
 
-        XCTAssertFalse(setupViewModel.startCallButtonViewModel.isDisabled)
+        XCTAssertFalse(setupViewModel.joinCallButtonViewModel.isDisabled)
 
+    }
+
+    func test_setupViewModel_when_callingStateUpdateToNone_then_isJoinRequestedFalse() {
+        setupViewModel.joinCallButtonTapped()
+
+        let callingState = getCallingState(CallingStatus.connecting)
+        let appState = AppState(callingState: callingState)
+        setupViewModel.receive(appState)
+
+        let updatedCallingState = getCallingState(CallingStatus.none)
+        let updatedAppState = AppState(callingState: updatedCallingState)
+        setupViewModel.receive(updatedAppState)
+
+        XCTAssertFalse(setupViewModel.isJoinRequested)
+    }
+
+    func test_setupViewModel_when_callingStateUpdateToConnecting_then_isJoinRequestedTrue() {
+
+            setupViewModel.joinCallButtonTapped()
+
+        let updatedCallingState = getCallingState(CallingStatus.connecting)
+        let updatedAppState = AppState(callingState: updatedCallingState)
+        setupViewModel.receive(updatedAppState)
+
+        XCTAssertTrue(setupViewModel.isJoinRequested)
+    }
+}
+
+extension SetupViewModelTests {
+    func getCallingState(_ statue: CallingStatus = .none) -> CallingState {
+        return CallingState(status: statue,
+                            isRecordingActive: false,
+                            isTranscriptionActive: false)
     }
 }
