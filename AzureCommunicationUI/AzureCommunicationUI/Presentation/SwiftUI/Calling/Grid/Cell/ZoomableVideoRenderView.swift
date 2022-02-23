@@ -5,7 +5,6 @@
 
 import Foundation
 import SwiftUI
-import AzureCommunicationCalling
 
 struct ZoomableVideoRenderView: UIViewRepresentable {
 
@@ -17,15 +16,13 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         static let defaultAspectRatio: CGFloat = 1.6 // 16: 10 aspect ratio
         static let maxTapRequired: Int = 2
     }
-
-    let getRemoteParticipantScreenShareVideoStreamRenderer: () -> VideoStreamRenderer?
+    let videoViewManager: VideoViewManager!
     var rendererView: UIView!
     var scrollView = UIScrollView()
     var zoomToRect: CGRect = .zero
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     func makeUIView(context: Context) -> UIScrollView {
-        getRemoteParticipantScreenShareVideoStreamRenderer()?.delegate = context.coordinator
 
         // Setup scrollview and renderview
         scrollView.delegate = context.coordinator
@@ -47,6 +44,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
                                                       action: #selector(Coordinator.doubleTapped))
         doubleTapGesture.numberOfTapsRequired = Constants.maxTapRequired
         doubleTapGesture.delegate = context.coordinator
+        videoViewManager.videoScreenShareDelegate = context.coordinator
         scrollView.addGestureRecognizer(doubleTapGesture)
         return scrollView
     }
@@ -138,7 +136,8 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
 
     // MARK: - Coordinator
 
-    class Coordinator: NSObject, UIScrollViewDelegate, UIGestureRecognizerDelegate, RendererDelegate {
+    class Coordinator: NSObject, UIScrollViewDelegate, UIGestureRecognizerDelegate,
+                        VideoScreenShareDelegate {
 
         private var streamSize: CGSize = .zero
         private var rendererView: ZoomableVideoRenderView
@@ -209,14 +208,13 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
             rendererView.zoomScrollView(basedOn: point, scale: finalScale)
         }
 
-        // MARK: RendererDelegate
+        // MARK: VideoScreenShareDelegate
 
-        func videoStreamRenderer(didRenderFirstFrame renderer: VideoStreamRenderer) {
-            streamSize = CGSize(width: Int(renderer.size.width), height: Int(renderer.size.height))
+            streamSize = size
             rendererView.updateRendererViewSize()
         }
 
-        func videoStreamRenderer(didFailToStart renderer: VideoStreamRenderer) {
+        func videoStreamRendererDidFailToStart() {
             rendererView.resetRendererView()
         }
     }

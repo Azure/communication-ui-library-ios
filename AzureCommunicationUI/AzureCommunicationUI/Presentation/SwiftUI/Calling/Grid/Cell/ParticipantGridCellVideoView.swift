@@ -6,7 +6,6 @@
 import SwiftUI
 import FluentUI
 import Combine
-import AzureCommunicationCalling
 
 struct ParticipantGridCellVideoView: View {
 
@@ -16,7 +15,7 @@ struct ParticipantGridCellVideoView: View {
     }
 
     let rendererView: UIView
-    let getRemoteParticipantScreenShareVideoStreamRenderer: () -> VideoStreamRenderer?
+    let videoViewManager: VideoViewManager
     let zoomable: Bool
     @Binding var isSpeaking: Bool
     @Binding var displayName: String?
@@ -65,8 +64,7 @@ struct ParticipantGridCellVideoView: View {
     }
 
     var zoomableVideoRenderView: some View {
-        ZoomableVideoRenderView(getRemoteParticipantScreenShareVideoStreamRenderer:
-                                    getRemoteParticipantScreenShareVideoStreamRenderer,
+        ZoomableVideoRenderView(videoViewManager: videoViewManager,
                                 rendererView: self.rendererView).gesture(TapGesture(count: 2).onEnded({}))
         // The double tap action does nothing. This is a work around to resolve the double tap
         // interference issue with single tap action from Calling view.

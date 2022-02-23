@@ -4,14 +4,13 @@
 //
 
 import SwiftUI
-import AzureCommunicationCalling
 
 struct ParticipantGridLayoutView: View {
     var cellViewModels: [ParticipantGridCellViewModel]
     let getRemoteParticipantRendererView: (RemoteParticipantVideoViewId) -> UIView?
-    let getRemoteParticipantScreenShareVideoStreamRenderer: (RemoteParticipantVideoViewId) -> VideoStreamRenderer?
     let screenSize: ScreenSizeClassType
     let gridsMargin: CGFloat = 3
+    let videoViewManager: VideoViewManager
 
     var body: some View {
         Group {
@@ -57,8 +56,7 @@ struct ParticipantGridLayoutView: View {
         return ForEach(cellsViewModel) { vm in
             ParticipantGridCellView(viewModel: vm,
                                     getRemoteParticipantRendererView: getRemoteParticipantRendererView,
-                                    getRemoteParticipantScreenShareVideoStreamRenderer:
-                                        getRemoteParticipantScreenShareVideoStreamRenderer)
+                                    videoViewManager: videoViewManager)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color(StyleProvider.color.surface))
                 .clipShape(RoundedRectangle(cornerRadius: 4))

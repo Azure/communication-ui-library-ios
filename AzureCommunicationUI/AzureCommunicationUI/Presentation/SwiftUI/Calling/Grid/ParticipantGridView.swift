@@ -4,21 +4,19 @@
 //
 
 import SwiftUI
-import AzureCommunicationCalling
 
 struct ParticipantGridView: View {
     let viewModel: ParticipantGridViewModel
     let videoViewManager: VideoViewManager
     let screenSize: ScreenSizeClassType
-    @State var gridsCount: Int = 0
+    @State var gridsCount: Int = 0 // might want to add a state variable here listens to ParticipantGridViewModel
 
     var body: some View {
         return Group {
             ParticipantGridLayoutView(cellViewModels: viewModel.participantsCellViewModelArr,
                                       getRemoteParticipantRendererView: getRemoteParticipantRendererView(videoViewId:),
-                                      getRemoteParticipantScreenShareVideoStreamRenderer:
-                                        getRemoteParticipantScreenShareVideoStreamRenderer(videoViewId:),
-                                      screenSize: screenSize)
+                                      screenSize: screenSize,
+                                      videoViewManager: videoViewManager)
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
             .id(gridsCount)
             .onReceive(viewModel.$gridsCount) {
@@ -31,11 +29,6 @@ struct ParticipantGridView: View {
 
     func getRemoteParticipantRendererView(videoViewId: RemoteParticipantVideoViewId) -> UIView? {
         return videoViewManager.getRemoteParticipantVideoRendererView(videoViewId)
-    }
-
-    func getRemoteParticipantScreenShareVideoStreamRenderer(
-        videoViewId: RemoteParticipantVideoViewId) -> VideoStreamRenderer? {
-        return videoViewManager.getScreenShareVideoStreamRenderer(videoViewId)
     }
 
     func updateVideoViewManager(displayedRemoteInfoModelArr: [ParticipantInfoModel]) {

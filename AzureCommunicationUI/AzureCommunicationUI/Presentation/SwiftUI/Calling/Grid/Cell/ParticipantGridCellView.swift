@@ -6,15 +6,14 @@
 import SwiftUI
 import FluentUI
 import Combine
-import AzureCommunicationCalling
 
 struct ParticipantGridCellView: View {
     @ObservedObject var viewModel: ParticipantGridCellViewModel
     let getRemoteParticipantRendererView: (RemoteParticipantVideoViewId) -> UIView?
-    let getRemoteParticipantScreenShareVideoStreamRenderer: (RemoteParticipantVideoViewId) -> VideoStreamRenderer?
     @State var displayedVideoStreamId: String?
     @State var isVideoChanging: Bool = false
     let avatarSize: CGFloat = 56
+    let videoViewManager: VideoViewManager
 
     var body: some View {
         Group {
@@ -23,8 +22,7 @@ struct ParticipantGridCellView: View {
                     EmptyView()
                 } else if let rendererView = getRendererView() {
                     ParticipantGridCellVideoView(rendererView: rendererView,
-                                                 getRemoteParticipantScreenShareVideoStreamRenderer:
-                                                    getRendererViewStreamRenderer,
+                                                 videoViewManager: videoViewManager,
                                                  zoomable: viewModel.videoStreamType == .screenSharing,
                                                  isSpeaking: $viewModel.isSpeaking,
                                                  displayName: $viewModel.displayName,
@@ -59,13 +57,6 @@ struct ParticipantGridCellView: View {
         }
 
         return getRemoteParticipantRendererView(remoteParticipantVideoViewId)
-    }
-
-    func getRendererViewStreamRenderer() -> VideoStreamRenderer? {
-        guard let remoteParticipantVideoViewId = getRemoteParticipantVideoViewId() else {
-            return nil
-        }
-        return getRemoteParticipantScreenShareVideoStreamRenderer(remoteParticipantVideoViewId)
     }
 
     private func getRemoteParticipantVideoViewId() -> RemoteParticipantVideoViewId? {
