@@ -123,7 +123,7 @@ class ParticipantGridViewModelTests: XCTestCase {
     }
 
     // MARK: Updating participants list
-    func test_participantGridsViewModel_updateParticipantsState_when_participantViewModelStateChanges_then_participantViewModelsUpdated() {
+    func test_participantGridsViewModel_updateParticipantsState_when_participantViewModelStateChanges_then_participantViewModelUpdated() {
         let date = Calendar.current.date(
             byAdding: .minute,
             value: -1,
@@ -138,6 +138,24 @@ class ParticipantGridViewModelTests: XCTestCase {
             expectation.fulfill()
         }
         sut.update(remoteParticipantsState: state)
+        let updatedParticipantInfoList = [expectedUpdatedInfoModel]
+        let updatedState = RemoteParticipantsState(participantInfoList: updatedParticipantInfoList)
+        sut.update(remoteParticipantsState: updatedState)
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_participantGridsViewModel_updateParticipantsState_when_participantViewModelStateChanges_then_participantViewModelsStaysTheSame() {
+        let date = Calendar.current.date(
+            byAdding: .minute,
+            value: -1,
+            to: Date())!
+        let state = makeRemoteParticipantState(date: date)
+        let expectation = XCTestExpectation(description: "Participants list updated expectation")
+        expectation.assertForOverFulfill = true
+        let expectedUpdatedInfoModel = ParticipantInfoModelBuilder.get(participantIdentifier: state.participantInfoList.first!.userIdentifier,
+                                                                       isMuted: !state.participantInfoList.first!.isMuted)
+        let sut = makeSUT()
+        sut.update(remoteParticipantsState: state)
         guard let participant = sut.participantsCellViewModelArr.first else {
             XCTFail("Failed with empty participantsCellViewModelArr")
             return
@@ -150,10 +168,9 @@ class ParticipantGridViewModelTests: XCTestCase {
             return
         }
         XCTAssertIdentical(updatedParticipant, participant)
-        wait(for: [expectation], timeout: 1)
     }
 
-    func test_participantGridsViewModel_updateParticipantsState_when_participantsListUpdated_then_participantViewModelsUpdated() {
+    func test_participantGridsViewModel_updateParticipantsState_when_newParticipantAdded_then_participantViewModelAddedToList() {
         let date = Calendar.current.date(
             byAdding: .minute,
             value: -1,
@@ -169,24 +186,20 @@ class ParticipantGridViewModelTests: XCTestCase {
             XCTFail("Failed with empty participantsCellViewModelArr")
             return
         }
-        let isMuted = !participant.isMuted
         let newParticipantInfoModel = ParticipantInfoModelBuilder.get()
-        let updatedParticipantInfoList = [ParticipantInfoModelBuilder.get(participantIdentifier: participant.participantIdentifier,
-                                                                          isMuted: isMuted),
+        let updatedParticipantInfoList = [state.participantInfoList.first!,
                                           newParticipantInfoModel]
         let updatedState = RemoteParticipantsState(participantInfoList: updatedParticipantInfoList)
         sut.update(remoteParticipantsState: updatedState)
-        guard let updatedParticipant = sut.participantsCellViewModelArr.first(where: { $0.participantIdentifier == participant.participantIdentifier }),
-            let newParticipant = sut.participantsCellViewModelArr.first(where: { $0.participantIdentifier != participant.participantIdentifier }) else {
+        guard let newParticipant = sut.participantsCellViewModelArr.first(where: { $0.participantIdentifier != participant.participantIdentifier }) else {
             XCTFail("Failed to find ParticipantGridCellViewModel with the same participantIdentifier")
             return
         }
-        XCTAssertIdentical(updatedParticipant, participant)
         XCTAssertEqual(newParticipant.participantIdentifier, newParticipantInfoModel.userIdentifier)
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_participantGridsViewModel_updateParticipantsState_when_someParticipantsChanged_then_participantViewModelsUpdated() {
+    func test_participantGridsViewModel_updateParticipantsState_when_someParticipantsChanged_then_participantViewModelsListUpdated() {
         let participantsInfoListCount = 3
         let state = makeRemoteParticipantState(count: participantsInfoListCount)
         let sut = makeSUT()
