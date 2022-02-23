@@ -5,7 +5,6 @@
 
 import Foundation
 import UIKit
-import FluentUI
 
 enum CompositeColor: String {
     case primary = "ACSPrimaryColor"
