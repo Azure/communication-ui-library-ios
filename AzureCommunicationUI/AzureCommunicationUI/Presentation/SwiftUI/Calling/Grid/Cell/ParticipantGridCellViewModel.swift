@@ -22,14 +22,14 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         self.isSpeaking = participantModel.isSpeaking
         self.participantIdentifier = participantModel.userIdentifier
         self.isMuted = participantModel.isMuted
-        self.videoStreamId = getDisplayingVideoStreamId(participantModel)
-        self.videoStreamType = getDisplayingVideoStreamType(participantModel)
+        self.videoStreamId = getDisplayingVideoStreamIdAndType(participantModel).0
+        self.videoStreamType = getDisplayingVideoStreamIdAndType(participantModel).1
     }
 
     func update(participantModel: ParticipantInfoModel) {
         self.participantIdentifier = participantModel.userIdentifier
-        let videoIdentifier = getDisplayingVideoStreamId(participantModel)
-        let videoStreamType = getDisplayingVideoStreamType(participantModel)
+        let videoIdentifier = getDisplayingVideoStreamIdAndType(participantModel).0
+        let videoStreamType = getDisplayingVideoStreamIdAndType(participantModel).1
 
         if self.videoStreamId != videoIdentifier {
             self.videoStreamId = videoIdentifier
@@ -52,16 +52,14 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         }
     }
 
-    private func getDisplayingVideoStreamId(_ participantModel: ParticipantInfoModel) -> String? {
+    private func getDisplayingVideoStreamIdAndType(_ participantModel: ParticipantInfoModel) ->
+                                           (String?, VideoStreamInfoModel.MediaStreamType?) {
         let screenShareVideoStreamIdentifier = participantModel.screenShareVideoStreamModel?.videoStreamIdentifier
         let cameraVideoStreamIdentifier = participantModel.cameraVideoStreamModel?.videoStreamIdentifier
-        return screenShareVideoStreamIdentifier ?? cameraVideoStreamIdentifier
-    }
-
-    private func getDisplayingVideoStreamType(
-        _ participantModel: ParticipantInfoModel) -> VideoStreamInfoModel.MediaStreamType? {
         let screenShareVideoStreamType = participantModel.screenShareVideoStreamModel?.mediaStreamType
         let cameraVideoStreamType = participantModel.cameraVideoStreamModel?.mediaStreamType
-        return screenShareVideoStreamType ?? cameraVideoStreamType
+        let cameraVideoPair = (cameraVideoStreamIdentifier, cameraVideoStreamType)
+        let screenShareVideoPair = (screenShareVideoStreamIdentifier, screenShareVideoStreamType)
+        return screenShareVideoStreamIdentifier != nil ? screenShareVideoPair : cameraVideoPair
     }
 }

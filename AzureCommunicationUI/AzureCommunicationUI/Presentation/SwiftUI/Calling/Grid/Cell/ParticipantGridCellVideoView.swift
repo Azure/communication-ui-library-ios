@@ -32,7 +32,7 @@ struct ParticipantGridCellVideoView: View {
                         // reduce height as work-around to resolve the double tap issue, when lanscapeHasHomeBar is true
                         // To be improved in the next PR
                         zoomableVideoRenderView
-                            .frame(width: geometry.size.width - 0,
+                            .frame(width: geometry.size.width,
                                    height: geometry.size.height - (lanscapeHasHomeBar ? Constants.homebarHeight : 0),
                                    alignment: .center)
                     } else {
