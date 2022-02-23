@@ -6,7 +6,7 @@
 import SwiftUI
 import FluentUI
 
-struct SetupJoiningView: View {
+struct JoiningCallActivityView: View {
     let title: String = "Joining calling..."
     let containerHeight: CGFloat = 52
 

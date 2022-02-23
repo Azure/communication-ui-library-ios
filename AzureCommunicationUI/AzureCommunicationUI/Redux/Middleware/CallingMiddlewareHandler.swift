@@ -256,17 +256,18 @@ extension CallingMiddlewareHandler {
                     return
                 }
                 let errorCode = callInfoModel.errorCode
-                let callStatus = callInfoModel.status
-                dispatch(CallingAction.StateUpdated(status: callStatus))
+                let callingStatus = callInfoModel.status
 
-                self.logger.debug("Dispatch State Update: \(callStatus)")
-                self.handleInfo(callingStatus: callStatus, dispatch: dispatch)
+                self.handle(callingStatus: callingStatus, dispatch: dispatch)
+                self.logger.debug("Dispatch State Update: \(callingStatus)")
 
-                if errorCode != "" {
-                    self.handleInfo(errorCode: errorCode, dispatch: dispatch)
+                self.handle(errorCode: errorCode, dispatch: dispatch) {
                     self.logger.debug("Subscription cancelled with Error Code: \(errorCode) ")
                     self.subscription.cancel()
-                } else if callStatus == .disconnected {
+                }
+
+                if callingStatus == .disconnected,
+                   errorCode.isEmpty {
                     self.logger.debug("Subscription cancel happy path")
                     dispatch(CompositeExitAction())
                     self.subscription.cancel()

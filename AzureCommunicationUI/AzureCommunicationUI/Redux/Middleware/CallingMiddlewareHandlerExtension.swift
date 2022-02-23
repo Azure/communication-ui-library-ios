@@ -9,7 +9,10 @@ extension CallingMiddlewareHandler {
         dispatch(action)
     }
 
-    func handleInfo(errorCode: String, dispatch: @escaping ActionDispatch) {
+    func handle(errorCode: String, dispatch: @escaping ActionDispatch, completion: (() -> Void)? = nil ) {
+        guard !errorCode.isEmpty else {
+            return
+        }
         let action: Action
         let error = ErrorEvent(code: errorCode, error: nil)
         if errorCode == CallCompositeErrorCode.tokenExpired {
@@ -19,10 +22,12 @@ extension CallingMiddlewareHandler {
         }
 
         dispatch(action)
-
+        completion?()
     }
 
-    func handleInfo(callingStatus: CallingStatus, dispatch: @escaping ActionDispatch) {
+    func handle(callingStatus: CallingStatus, dispatch: @escaping ActionDispatch) {
+        dispatch(CallingAction.StateUpdated(status: callingStatus))
+
         switch callingStatus {
         case .none,
             .earlyMedia,

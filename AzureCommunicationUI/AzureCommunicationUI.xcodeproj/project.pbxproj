@@ -85,7 +85,7 @@
 		1FD299642723345B0084B9ED /* DefaultLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD299632723345B0084B9ED /* DefaultLogger.swift */; };
 		1FD299662728B72B0084B9ED /* CallingSDKEventsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD299652728B72B0084B9ED /* CallingSDKEventsHandler.swift */; };
 		1FE1BE7F26FE38C9000A8D18 /* CompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1BE7E26FE38C9000A8D18 /* CompositeError.swift */; };
-		1FF252D627B6F29A006A113E /* SetupJoiningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF252D527B6F29A006A113E /* SetupJoiningView.swift */; };
+		1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */; };
 		1FFEA01426A68D0D00E90816 /* UIFontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEA01326A68D0D00E90816 /* UIFontExtension.swift */; };
 		4EFDD23E634871B55C951638 /* Pods_AzureCommunicationUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF91CC2CFA3B351A6C90172 /* Pods_AzureCommunicationUI.framework */; };
 		50137D0426A245E100AB843E /* ConfirmLeaveOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50137D0326A245E100AB843E /* ConfirmLeaveOverlayView.swift */; };
@@ -130,7 +130,7 @@
 		5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */; };
 		883D12DA2784F0B1005021E2 /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 883D12D92784F0B1005021E2 /* StringConstants.swift */; };
 		88701EB42742D54C00660EAB /* ErrorReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88701EB32742D54C00660EAB /* ErrorReducerTests.swift */; };
-		88701EB8274C29C600660EAB /* CallingMiddlewareInfoHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88701EB7274C29C600660EAB /* CallingMiddlewareInfoHandler.swift */; };
+		88701EB8274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88701EB7274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift */; };
 		88A70180270E50D100F817B8 /* PopupModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7017F270E50D100F817B8 /* PopupModalView.swift */; };
 		88B87C572755911B00290DD1 /* CallInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B87C562755911B00290DD1 /* CallInfoModel.swift */; };
 		88F6EE1A2735F5CB001AD3E9 /* ErrorReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F6EE192735F5CB001AD3E9 /* ErrorReducer.swift */; };
@@ -283,7 +283,7 @@
 		1FD299632723345B0084B9ED /* DefaultLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultLogger.swift; sourceTree = "<group>"; };
 		1FD299652728B72B0084B9ED /* CallingSDKEventsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKEventsHandler.swift; sourceTree = "<group>"; };
 		1FE1BE7E26FE38C9000A8D18 /* CompositeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeError.swift; sourceTree = "<group>"; };
-		1FF252D527B6F29A006A113E /* SetupJoiningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupJoiningView.swift; sourceTree = "<group>"; };
+		1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoiningCallActivityView.swift; sourceTree = "<group>"; };
 		1FFEA01326A68D0D00E90816 /* UIFontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontExtension.swift; sourceTree = "<group>"; };
 		50137D0326A245E100AB843E /* ConfirmLeaveOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLeaveOverlayView.swift; sourceTree = "<group>"; };
 		50137D0526A7479C00AB843E /* EnvironmentValuesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentValuesExtension.swift; sourceTree = "<group>"; };
@@ -329,7 +329,7 @@
 		5CFD410F47A7F36849928867 /* Pods-AzureCommunicationUI-AzureCommunicationUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUI-AzureCommunicationUITests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUI-AzureCommunicationUITests/Pods-AzureCommunicationUI-AzureCommunicationUITests.release.xcconfig"; sourceTree = "<group>"; };
 		883D12D92784F0B1005021E2 /* StringConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		88701EB32742D54C00660EAB /* ErrorReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReducerTests.swift; sourceTree = "<group>"; };
-		88701EB7274C29C600660EAB /* CallingMiddlewareInfoHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingMiddlewareInfoHandler.swift; sourceTree = "<group>"; };
+		88701EB7274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingMiddlewareHandlerExtension.swift; sourceTree = "<group>"; };
 		88A7017F270E50D100F817B8 /* PopupModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupModalView.swift; sourceTree = "<group>"; };
 		88B87C562755911B00290DD1 /* CallInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallInfoModel.swift; sourceTree = "<group>"; };
 		88F6EE192735F5CB001AD3E9 /* ErrorReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorReducer.swift; sourceTree = "<group>"; };
@@ -501,7 +501,7 @@
 				9885BA0626A2116200CC514B /* SetupControlBarViewModel.swift */,
 				9823AB4826A13F220006266D /* PreviewAreaView.swift */,
 				9823AB4A26A13F4B0006266D /* PreviewAreaViewModel.swift */,
-				1FF252D527B6F29A006A113E /* SetupJoiningView.swift */,
+				1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */,
 			);
 			path = SetupViewComponent;
 			sourceTree = "<group>";
@@ -699,7 +699,7 @@
 				1F8E0B712684EBC100DDD18E /* CallingMiddlewareHandler.swift */,
 				1F2BEDA4263252E100D98266 /* Middleware.swift */,
 				1F11D2BC2640BD9700D33838 /* CallingMiddleware.swift */,
-				88701EB7274C29C600660EAB /* CallingMiddlewareInfoHandler.swift */,
+				88701EB7274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift */,
 			);
 			path = Middleware;
 			sourceTree = "<group>";
@@ -1329,7 +1329,7 @@
 			files = (
 				1FBCB6B6264BA8A200F57EEA /* ParticipantGridCellViewModel.swift in Sources */,
 				1F03D3CE2638A6AE0055C456 /* CallingView.swift in Sources */,
-				1FF252D627B6F29A006A113E /* SetupJoiningView.swift in Sources */,
+				1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */,
 				1B79BD50273F2D87002D5A36 /* UIViewControllerExtension.swift in Sources */,
 				503F4B692704EDD100C17DA6 /* BannerViewModel.swift in Sources */,
 				982C2835267D15AF00427246 /* CompositeAvatar.swift in Sources */,
@@ -1361,7 +1361,7 @@
 				503F4B6D2705065700C17DA6 /* BannerTextView.swift in Sources */,
 				1F94DAF326772B3C00691D1E /* UIWindowExtension.swift in Sources */,
 				1F94DAE12673EA9500691D1E /* CallCompositeEventsHandler.swift in Sources */,
-				88701EB8274C29C600660EAB /* CallingMiddlewareInfoHandler.swift in Sources */,
+				88701EB8274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
 				1B70D52827191073007CC933 /* DeviceExtension.swift in Sources */,
