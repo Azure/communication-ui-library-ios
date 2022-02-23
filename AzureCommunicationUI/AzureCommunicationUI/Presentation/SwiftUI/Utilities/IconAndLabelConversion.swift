@@ -13,31 +13,31 @@ extension LocalUserState.AudioDeviceSelectionStatus {
        case .speakerSelected:
           return .speakerFilled
        default:
-          return nil
+           return nil
        }
     }
 
-    var label: String? {
+    var label: String {
        switch self {
        case .receiverSelected:
           return AudioDeviceType.receiver.name
        case .speakerSelected:
           return AudioDeviceType.speaker.name
        default:
-          return nil
+          return ""
        }
     }
 }
 
 extension LocalUserState.CameraDeviceSelectionStatus {
-    var label: String? {
+    var label: String {
        switch self {
        case .front:
            return "Switch to back camera"
        case .back:
            return "Switch to front camera"
        default:
-          return nil
+          return ""
        }
     }
 }

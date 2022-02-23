@@ -41,14 +41,14 @@ class IconWithLabelButtonViewModel: ObservableObject {
         }
     }
 
-    func update(accessibilityLabel: String?) {
-        if accessibilityLabel != nil && self.accessibilityLabel != accessibilityLabel {
+    func update(accessibilityLabel: String) {
+        if self.accessibilityLabel != accessibilityLabel {
             self.accessibilityLabel = accessibilityLabel
         }
     }
 
-    func update(accessibilityValue: String?) {
-        if accessibilityValue != nil && self.accessibilityValue != accessibilityValue {
+    func update(accessibilityValue: String) {
+        if self.accessibilityValue != accessibilityValue {
             self.accessibilityValue = accessibilityValue
         }
     }
