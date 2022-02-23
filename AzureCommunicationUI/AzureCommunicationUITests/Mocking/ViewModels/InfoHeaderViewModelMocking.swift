@@ -7,7 +7,7 @@ import Foundation
 @testable import AzureCommunicationUI
 
 class InfoHeaderViewModelMocking: InfoHeaderViewModel {
-    private(set) var updateState: ((LocalUserState, RemoteParticipantsState) -> Void)?
+    private let updateState: ((LocalUserState, RemoteParticipantsState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,

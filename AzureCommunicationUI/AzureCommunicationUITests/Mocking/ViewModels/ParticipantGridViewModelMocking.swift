@@ -7,7 +7,7 @@ import Foundation
 @testable import AzureCommunicationUI
 
 class ParticipantGridViewModelMocking: ParticipantGridViewModel {
-    private(set) var updateState: ((RemoteParticipantsState) -> Void)?
+    private let updateState: ((RemoteParticipantsState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          updateState: ((RemoteParticipantsState) -> Void)? = nil) {
