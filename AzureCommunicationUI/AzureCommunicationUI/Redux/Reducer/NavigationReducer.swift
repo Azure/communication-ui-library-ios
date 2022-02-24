@@ -17,7 +17,7 @@ struct NavigationReducer: Reducer {
         case _ as CallingAction.DismissSetup,
              _ as CompositeExitAction:
             navigationStatus = .exit
-        case _ as ErrorAction.CallStateErrorUpdated:
+        case _ as ErrorAction.StatusErrorAndCallReset:
             navigationStatus = .setup
         default:
             return state

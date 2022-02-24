@@ -45,22 +45,6 @@ class CallingViewModelTests: XCTestCase {
         XCTAssertFalse(sut.isConfirmLeaveOverlayDisplayed)
     }
 
-    func test_callingViewModel_startCall_when_currentCallingStateIsNone_shouldStartCall() {
-        let storeFactory = StoreFactoryMocking()
-        let sut = makeSUT(storeFactory: storeFactory)
-        let expectation = XCTestExpectation(description: "Verify Call Start is Requested")
-        storeFactory.store.$state
-            .dropFirst(1)
-            .sink { [weak storeFactory] _ in
-                XCTAssertEqual(storeFactory?.actions.count, 1)
-                XCTAssertTrue(storeFactory?.actions.first is CallingAction.CallStartRequested)
-
-                expectation.fulfill()
-            }.store(in: cancellable)
-        sut.startCall()
-        wait(for: [expectation], timeout: timeout)
-    }
-
     func test_callingViewModel_endCall_when_confirmLeaveOverlayIsDisplayed_shouldEndCall() {
         let storeFactory = StoreFactoryMocking()
         let sut = makeSUT(storeFactory: storeFactory)

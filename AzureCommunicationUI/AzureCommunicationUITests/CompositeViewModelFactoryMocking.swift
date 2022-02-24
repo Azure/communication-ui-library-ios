@@ -18,6 +18,8 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     var participantGridViewModel: ParticipantGridViewModel?
     var bannerViewModel: BannerViewModel?
 
+    var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
+
     init(logger: Logger,
          store: Store<AppState>) {
         self.logger = logger
@@ -71,11 +73,13 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
                                isDisabled: isDisabled,
                                action: action)
     }
+
     func makeAudioDeviceListViewModel(dispatchAction: @escaping ActionDispatch,
                                       localUserState: LocalUserState) -> AudioDeviceListViewModel {
         AudioDeviceListViewModel(dispatchAction: dispatchAction,
                                  localUserState: localUserState)
     }
+
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
         ErrorInfoViewModel()
     }
@@ -96,18 +100,24 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
                                                           logger: logger,
                                                           localUserState: localUserState)
     }
+
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
-        ParticipantGridCellViewModel(compositeViewModelFactory: self, participantModel: participantModel)
+        return createMockParticipantGridCellViewModel?(participantModel) ?? ParticipantGridCellViewModel(compositeViewModelFactory: self,
+                                                                                                         participantModel: participantModel)
     }
+
     func makeParticipantGridsViewModel() -> ParticipantGridViewModel {
         return participantGridViewModel ?? ParticipantGridViewModel(compositeViewModelFactory: self)
     }
+
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
         ParticipantsListViewModel(localUserState: localUserState)
     }
+
     func makeBannerViewModel() -> BannerViewModel {
         return bannerViewModel ?? BannerViewModel(compositeViewModelFactory: self)
     }
+
     func makeBannerTextViewModel() -> BannerTextViewModel {
         return bannerTextViewModel ??
             BannerTextViewModel()
