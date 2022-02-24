@@ -9,7 +9,7 @@ import Combine
 class CallingViewModel: ObservableObject {
     @Published var isLobbyOverlayDisplayed: Bool = false
     @Published var isConfirmLeaveOverlayDisplayed: Bool = false
-    @Published var isParticipantGridDisplayed: Bool = false
+    @Published var isParticipantGridDisplayed: Bool
 
     private let compositeViewModelFactory: CompositeViewModelFactory
     private let logger: Logger
@@ -35,7 +35,9 @@ class CallingViewModel: ObservableObject {
 
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
-
+        let isCallConnected = store.state.callingState.status == .connected
+        let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
+        isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
                 guard let self = self else {
