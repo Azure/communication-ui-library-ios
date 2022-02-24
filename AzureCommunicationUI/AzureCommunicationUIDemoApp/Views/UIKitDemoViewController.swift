@@ -126,8 +126,8 @@ class UIKitDemoViewController: UIViewController {
     }
 
     func didFail(_ error: ErrorEvent) {
-        print("UIkitDemoView::getEventsHandler::didFail \(error)")
-        print("UIkitDemoView error.code \(error.code)")
+        print("::::UIkitDemoView::getEventsHandler::didFail \(error)")
+        print("::::UIkitDemoView error.code \(error.code)")
     }
 
     func startExperience(with link: String) {

@@ -252,33 +252,25 @@ extension CallingMiddlewareHandler {
 
         callingService.callInfoSubject
             .sink { [weak self] callInfoModel in
+                guard let self = self else {
+                    return
+                }
                 let errorCode = callInfoModel.errorCode
-                let status = callInfoModel.status
+                let callingStatus = callInfoModel.status
 
-                self?.logger.debug("Dispatch State Update: \(status)")
-                if errorCode != "" {
-                    self?.logger.debug("Dispatch Error Code Update: \(errorCode)")
-                    let action: Action
-                    let error = ErrorEvent(code: errorCode, error: nil)
-                    if errorCode == CallCompositeErrorCode.tokenExpired {
-                        action = ErrorAction.FatalErrorUpdated(error: error)
-                    } else {
-                        action = ErrorAction.CallStateErrorUpdated(error: error)
-                    }
+                self.handle(callingStatus: callingStatus, dispatch: dispatch)
+                self.logger.debug("Dispatch State Update: \(callingStatus)")
 
-                    dispatch(action)
-                    self?.logger.debug("Subscription cancel error path")
-                    self?.subscription.cancel()
+                self.handle(errorCode: errorCode, dispatch: dispatch) {
+                    self.logger.debug("Subscription cancelled with Error Code: \(errorCode) ")
+                    self.subscription.cancel()
                 }
 
-                let action = CallingAction.StateUpdated(status: status)
-                dispatch(action)
-
-                if status == .disconnected,
-                   errorCode == "" {
+                if callingStatus == .disconnected,
+                   errorCode.isEmpty {
+                    self.logger.debug("Subscription cancel happy path")
                     dispatch(CompositeExitAction())
-                    self?.logger.debug("Subscription cancel happy path")
-                    self?.subscription.cancel()
+                    self.subscription.cancel()
                 }
             }.store(in: subscription)
 

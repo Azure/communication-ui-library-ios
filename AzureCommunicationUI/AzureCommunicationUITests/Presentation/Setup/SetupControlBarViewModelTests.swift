@@ -34,7 +34,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         storeFactory.store.state = AppState(permissionState: PermissionState(cameraPermission: .granted),
                                             localUserState: LocalUserState(cameraState: cameraState))
         setupControlBarViewModel.update(localUserState: storeFactory.store.state.localUserState,
-                                        permissionState: storeFactory.store.state.permissionState)
+                                        permissionState: storeFactory.store.state.permissionState,
+                                        callingState: CallingState())
 
         storeFactory.store.$state
             .dropFirst()
@@ -58,7 +59,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         storeFactory.store.state = AppState(permissionState: PermissionState(cameraPermission: .granted),
                                             localUserState: LocalUserState(cameraState: cameraState))
         setupControlBarViewModel.update(localUserState: storeFactory.store.state.localUserState,
-                                        permissionState: storeFactory.store.state.permissionState)
+                                        permissionState: storeFactory.store.state.permissionState,
+                                        callingState: CallingState())
 
         storeFactory.store.$state
             .dropFirst()
@@ -81,7 +83,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         storeFactory.store.state = AppState(permissionState: PermissionState(audioPermission: .granted),
                                             localUserState: LocalUserState(audioState: audioState))
         setupControlBarViewModel.update(localUserState: storeFactory.store.state.localUserState,
-                                        permissionState: storeFactory.store.state.permissionState)
+                                        permissionState: storeFactory.store.state.permissionState,
+                                        callingState: CallingState.init())
 
         storeFactory.store.$state
             .dropFirst()
@@ -104,7 +107,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         storeFactory.store.state = AppState(permissionState: PermissionState(audioPermission: .granted),
                                             localUserState: LocalUserState(audioState: audioState))
         setupControlBarViewModel.update(localUserState: storeFactory.store.state.localUserState,
-                                        permissionState: storeFactory.store.state.permissionState)
+                                        permissionState: storeFactory.store.state.permissionState,
+                                        callingState: CallingState())
 
         storeFactory.store.$state
             .dropFirst()
@@ -134,7 +138,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                                                              cameraPermission: .granted),
                                             localUserState: LocalUserState(cameraState: cameraState))
         setupControlBarViewModel.update(localUserState: storeFactory.store.state.localUserState,
-                                        permissionState: storeFactory.store.state.permissionState)
+                                        permissionState: storeFactory.store.state.permissionState,
+                                        callingState: CallingState())
 
         XCTAssertTrue(setupControlBarViewModel.isAudioDisabled())
         XCTAssertFalse(setupControlBarViewModel.isCameraDisabled())
@@ -148,7 +153,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                                                              cameraPermission: .denied),
                                             localUserState: LocalUserState(cameraState: cameraState))
         setupControlBarViewModel.update(localUserState: storeFactory.store.state.localUserState,
-                                        permissionState: storeFactory.store.state.permissionState)
+                                        permissionState: storeFactory.store.state.permissionState,
+                                        callingState: CallingState())
 
         XCTAssertFalse(setupControlBarViewModel.isAudioDisabled())
         XCTAssertTrue(setupControlBarViewModel.isCameraDisabled())
@@ -158,7 +164,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         storeFactory.store.state = AppState(permissionState: PermissionState(audioPermission: .granted),
                                             localUserState: LocalUserState())
         setupControlBarViewModel.update(localUserState: storeFactory.store.state.localUserState,
-                                        permissionState: storeFactory.store.state.permissionState)
+                                        permissionState: storeFactory.store.state.permissionState,
+                                        callingState: CallingState())
 
         XCTAssertEqual(setupControlBarViewModel.micStatus, .off)
     }

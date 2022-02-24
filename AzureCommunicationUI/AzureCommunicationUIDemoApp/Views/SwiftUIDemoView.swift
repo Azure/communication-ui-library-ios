@@ -194,8 +194,8 @@ extension SwiftUIDemoView {
     }
 
     func didFail(_ error: ErrorEvent) {
-        print("SwiftUIDemoView::getEventsHandler::didFail \(error)")
-        print("SwiftUIDemoView error.code \(error.code)")
+        print("::::SwiftUIDemoView::getEventsHandler::didFail \(error)")
+        print("::::SwiftUIDemoView error.code \(error.code)")
         showError(for: error.code)
     }
 }

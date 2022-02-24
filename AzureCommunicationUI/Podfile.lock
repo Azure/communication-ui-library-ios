@@ -2,45 +2,48 @@ PODS:
   - AzureCommunicationCalling (2.2.0-beta.1):
     - AzureCommunicationCommon (~> 1.0.2)
   - AzureCommunicationCommon (1.0.2)
-  - MicrosoftFluentUI/Avatar_ios (0.3.5):
+  - MicrosoftFluentUI/ActivityIndicator_ios (0.3.9):
     - MicrosoftFluentUI/Core_ios
-  - MicrosoftFluentUI/BottomSheet_ios (0.3.5):
+  - MicrosoftFluentUI/Avatar_ios (0.3.9):
+    - MicrosoftFluentUI/Core_ios
+  - MicrosoftFluentUI/BottomSheet_ios (0.3.9):
     - MicrosoftFluentUI/Obscurable_ios
     - MicrosoftFluentUI/ResizingHandleView_ios
-  - MicrosoftFluentUI/Button_ios (0.3.5):
+  - MicrosoftFluentUI/Button_ios (0.3.9):
     - MicrosoftFluentUI/Core_ios
-  - MicrosoftFluentUI/Core_ios (0.3.5)
-  - MicrosoftFluentUI/Drawer_ios (0.3.5):
+  - MicrosoftFluentUI/Core_ios (0.3.9)
+  - MicrosoftFluentUI/Drawer_ios (0.3.9):
     - MicrosoftFluentUI/Obscurable_ios
     - MicrosoftFluentUI/ResizingHandleView_ios
     - MicrosoftFluentUI/Separator_ios
     - MicrosoftFluentUI/TouchForwardingView_ios
-  - MicrosoftFluentUI/Label_ios (0.3.5):
+  - MicrosoftFluentUI/Label_ios (0.3.9):
     - MicrosoftFluentUI/Core_ios
-  - MicrosoftFluentUI/Obscurable_ios (0.3.5):
+  - MicrosoftFluentUI/Obscurable_ios (0.3.9):
     - MicrosoftFluentUI/Core_ios
-  - MicrosoftFluentUI/PopupMenu_ios (0.3.5):
+  - MicrosoftFluentUI/PopupMenu_ios (0.3.9):
     - MicrosoftFluentUI/Drawer_ios
     - MicrosoftFluentUI/Label_ios
     - MicrosoftFluentUI/Separator_ios
     - MicrosoftFluentUI/TableView_ios
-  - MicrosoftFluentUI/ResizingHandleView_ios (0.3.5):
+  - MicrosoftFluentUI/ResizingHandleView_ios (0.3.9):
     - MicrosoftFluentUI/Core_ios
-  - MicrosoftFluentUI/Separator_ios (0.3.5):
+  - MicrosoftFluentUI/Separator_ios (0.3.9):
     - MicrosoftFluentUI/Core_ios
-  - MicrosoftFluentUI/TableView_ios (0.3.5):
+  - MicrosoftFluentUI/TableView_ios (0.3.9):
     - MicrosoftFluentUI/Label_ios
     - MicrosoftFluentUI/Separator_ios
-  - MicrosoftFluentUI/TouchForwardingView_ios (0.3.5):
+  - MicrosoftFluentUI/TouchForwardingView_ios (0.3.9):
     - MicrosoftFluentUI/Core_ios
   - SwiftLint (0.42.0)
 
 DEPENDENCIES:
   - AzureCommunicationCalling (= 2.2.0-beta.1)
-  - MicrosoftFluentUI/Avatar_ios (= 0.3.5)
-  - MicrosoftFluentUI/BottomSheet_ios (= 0.3.5)
-  - MicrosoftFluentUI/Button_ios (= 0.3.5)
-  - MicrosoftFluentUI/PopupMenu_ios (= 0.3.5)
+  - MicrosoftFluentUI/ActivityIndicator_ios (= 0.3.9)
+  - MicrosoftFluentUI/Avatar_ios (= 0.3.9)
+  - MicrosoftFluentUI/BottomSheet_ios (= 0.3.9)
+  - MicrosoftFluentUI/Button_ios (= 0.3.9)
+  - MicrosoftFluentUI/PopupMenu_ios (= 0.3.9)
   - SwiftLint (= 0.42.0)
 
 SPEC REPOS:
@@ -53,9 +56,9 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   AzureCommunicationCalling: df1fdad2fc9bbeabfeff93b0975df3487dc6978e
   AzureCommunicationCommon: 743009b95ca5de0b32fb5327b1105c6239b7d15d
-  MicrosoftFluentUI: 017bdf8d40b7d453c094252e2b5534eb7bfafae4
+  MicrosoftFluentUI: a1e8f35e43e615a3522c53492f1bc52e9d2a191e
   SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
 
-PODFILE CHECKSUM: 2ca4ab27f4e0fa95b52ff26c3f364a381b4fb63f
+PODFILE CHECKSUM: da3e4007e74fa32fa16edb3391f84d2ea8745a0d
 
 COCOAPODS: 1.11.2
