@@ -26,7 +26,7 @@ struct ParticipantGridView: View {
             }
     }
 
-    func getRemoteParticipantRendererView(videoViewId: RemoteParticipantVideoViewId) -> VideoRendererViewInfo? {
+    func getRemoteParticipantRendererView(videoViewId: RemoteParticipantVideoViewId) -> ParticipantRendererViewInfo? {
         return videoViewManager.getRemoteParticipantVideoRendererView(videoViewId)
     }
 

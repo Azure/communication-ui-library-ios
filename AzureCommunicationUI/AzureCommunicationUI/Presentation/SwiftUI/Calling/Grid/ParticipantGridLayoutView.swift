@@ -7,7 +7,7 @@ import SwiftUI
 
 struct ParticipantGridLayoutView: View {
     var cellViewModels: [ParticipantGridCellViewModel]
-    let getRemoteParticipantRendererView: (RemoteParticipantVideoViewId) -> VideoRendererViewInfo?
+    let getRemoteParticipantRendererView: (RemoteParticipantVideoViewId) -> ParticipantRendererViewInfo?
     let screenSize: ScreenSizeClassType
     let gridsMargin: CGFloat = 3
 

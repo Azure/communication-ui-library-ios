@@ -16,13 +16,13 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         static let defaultAspectRatio: CGFloat = 1.6 // 16: 10 aspect ratio
         static let maxTapRequired: Int = 2
     }
-    var videoRendererViewInfo: VideoRendererViewInfo!
+    var videoRendererViewInfo: ParticipantRendererViewInfo!
     private var rendererView: UIView!
     private var scrollView = UIScrollView()
     private var zoomToRect: CGRect = .zero
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
-    init(videoRendererViewInfo: VideoRendererViewInfo) {
+    init(videoRendererViewInfo: ParticipantRendererViewInfo) {
         self.videoRendererViewInfo = videoRendererViewInfo
         self.rendererView = videoRendererViewInfo.rendererView
     }

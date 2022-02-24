@@ -9,7 +9,7 @@ import Combine
 
 struct ParticipantGridCellView: View {
     @ObservedObject var viewModel: ParticipantGridCellViewModel
-    let getRemoteParticipantRendererView: (RemoteParticipantVideoViewId) -> VideoRendererViewInfo?
+    let getRemoteParticipantRendererView: (RemoteParticipantVideoViewId) -> ParticipantRendererViewInfo?
     @State var displayedVideoStreamId: String?
     @State var isVideoChanging: Bool = false
     let avatarSize: CGFloat = 56
@@ -49,7 +49,7 @@ struct ParticipantGridCellView: View {
         }
     }
 
-    func getRendererViewInfo() -> VideoRendererViewInfo? {
+    func getRendererViewInfo() -> ParticipantRendererViewInfo? {
         guard let remoteParticipantVideoViewId = getRemoteParticipantVideoViewId() else {
             return nil
         }

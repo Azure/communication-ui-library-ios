@@ -14,7 +14,7 @@ struct ParticipantGridCellVideoView: View {
         static let borderColor = Color(StyleProvider.color.primaryColor)
     }
 
-    var videoRendererViewInfo: VideoRendererViewInfo!
+    var videoRendererViewInfo: ParticipantRendererViewInfo!
     let zoomable: Bool
     @Binding var isSpeaking: Bool
     @Binding var displayName: String?

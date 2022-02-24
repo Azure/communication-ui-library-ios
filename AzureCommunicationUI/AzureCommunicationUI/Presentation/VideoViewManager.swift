@@ -11,7 +11,7 @@ struct RemoteParticipantVideoViewId {
     let videoStreamIdentifier: String
 }
 
-class VideoRendererViewInfo {
+class ParticipantRendererViewInfo {
     let rendererView: UIView
     weak var delegate: VideoScreenShareDelegate?
 
@@ -95,13 +95,14 @@ class VideoViewManager: NSObject, RendererDelegate {
 
     }
 
-    func getRemoteParticipantVideoRendererView(_ videoViewId: RemoteParticipantVideoViewId) -> VideoRendererViewInfo? {
+    func getRemoteParticipantVideoRendererView(_ videoViewId: RemoteParticipantVideoViewId)
+                                                                -> ParticipantRendererViewInfo? {
         let videoStreamId = videoViewId.videoStreamIdentifier
         let userIdentifier = videoViewId.userIdentifier
         let cacheKey = generateCacheKey(userIdentifier: videoViewId.userIdentifier,
                                         videoStreamId: videoStreamId)
         if let videoStreamCache = displayedRemoteParticipantsRendererView.value(forKey: cacheKey) {
-            return VideoRendererViewInfo(rendererView: videoStreamCache.rendererView,
+            return ParticipantRendererViewInfo(rendererView: videoStreamCache.rendererView,
                                          delegate: videoScreenShareDelegate)
         }
 
@@ -126,20 +127,13 @@ class VideoViewManager: NSObject, RendererDelegate {
                 newRenderer.delegate = self
             }
 
-            return VideoRendererViewInfo(rendererView: newRendererView,
+            return ParticipantRendererViewInfo(rendererView: newRendererView,
                                          delegate: videoScreenShareDelegate)
         } catch let error {
             logger.error("Failed to render remote video, reason:\(error.localizedDescription)")
             return nil
         }
 
-    }
-
-    func getScreenShareVideoStreamRenderer(_ videoViewId: RemoteParticipantVideoViewId) -> VideoStreamRenderer? {
-        let videoStreamId = videoViewId.videoStreamIdentifier
-        let cacheKey = generateCacheKey(userIdentifier: videoViewId.userIdentifier,
-                                        videoStreamId: videoStreamId)
-        return displayedRemoteParticipantsRendererView.value(forKey: cacheKey)?.renderer
     }
 
     private func disposeViews() {
