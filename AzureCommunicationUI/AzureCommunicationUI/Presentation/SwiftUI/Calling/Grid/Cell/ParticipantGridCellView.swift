@@ -88,6 +88,9 @@ struct ParticipantTitleView: View {
     let titleFont: Font
     let mutedIconSize: CGFloat
     private let hSpace: CGFloat = 4
+    private var isEmpty: Bool {
+        return !isMuted && displayName?.trimmingCharacters(in: .whitespaces).isEmpty == true
+    }
 
     var body: some View {
         HStack(alignment: .center, spacing: hSpace, content: {
@@ -102,6 +105,7 @@ struct ParticipantTitleView: View {
                 Icon(name: .micOff, size: mutedIconSize)
             }
         })
+        .padding(.horizontal, isEmpty ? 0 : 4)
         .animation(.default)
     }
 }
