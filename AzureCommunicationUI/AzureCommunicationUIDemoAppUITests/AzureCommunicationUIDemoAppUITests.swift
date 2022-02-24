@@ -6,10 +6,19 @@
 import XCTest
 
 class AzureCommunicationUIDemoAppUITests: XCUITestBase {
+    private var app: XCUIApplication?
+
+    override func setUp() {
+        super.setUp()
+        app = XCUIApplication()
+        app?.launch()
+    }
+
     func testCallCompositeLaunch() {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
+        guard let app = app else {
+            XCTFail("No App launch")
+            return
+        }
 
         app.buttons["UI Kit"].tap()
 
@@ -24,9 +33,10 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
     }
 
     func testCallCompositeExit() {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
+        guard let app = app else {
+            XCTFail("No App launch")
+            return
+        }
 
         app.buttons["UI Kit"].tap()
 
@@ -51,8 +61,10 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
 
     func testCallCompositeWithExpiredToken() {
         // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
+        guard let app = app else {
+            XCTFail("No App launch")
+            return
+        }
 
         app.buttons["Swift UI"].tap()
 
