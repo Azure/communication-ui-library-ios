@@ -16,11 +16,16 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         static let defaultAspectRatio: CGFloat = 1.6 // 16: 10 aspect ratio
         static let maxTapRequired: Int = 2
     }
-    let videoViewManager: VideoViewManager!
-    var rendererView: UIView!
-    var scrollView = UIScrollView()
-    var zoomToRect: CGRect = .zero
+    var videoRendererViewInfo: VideoRendererViewInfo!
+    private var rendererView: UIView!
+    private var scrollView = UIScrollView()
+    private var zoomToRect: CGRect = .zero
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
+
+    init(videoRendererViewInfo: VideoRendererViewInfo) {
+        self.videoRendererViewInfo = videoRendererViewInfo
+        self.rendererView = videoRendererViewInfo.rendererView
+    }
 
     func makeUIView(context: Context) -> UIScrollView {
 
@@ -44,7 +49,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
                                                       action: #selector(Coordinator.doubleTapped))
         doubleTapGesture.numberOfTapsRequired = Constants.maxTapRequired
         doubleTapGesture.delegate = context.coordinator
-        videoViewManager.videoScreenShareDelegate = context.coordinator
+        videoRendererViewInfo.delegate = context.coordinator
         scrollView.addGestureRecognizer(doubleTapGesture)
         return scrollView
     }

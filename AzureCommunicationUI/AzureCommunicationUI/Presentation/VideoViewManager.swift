@@ -11,6 +11,16 @@ struct RemoteParticipantVideoViewId {
     let videoStreamIdentifier: String
 }
 
+class VideoRendererViewInfo {
+    let rendererView: UIView
+    weak var delegate: VideoScreenShareDelegate?
+
+    init(rendererView: UIView, delegate: VideoScreenShareDelegate? = nil) {
+        self.rendererView = rendererView
+        self.delegate = delegate
+    }
+}
+
 protocol VideoScreenShareDelegate: AnyObject {
     func videoStreamRenderer(didRenderFirstFrameWithSize size: CGSize)
     func videoStreamRendererDidFailToStart()
@@ -85,13 +95,14 @@ class VideoViewManager: NSObject, RendererDelegate {
 
     }
 
-    func getRemoteParticipantVideoRendererView(_ videoViewId: RemoteParticipantVideoViewId) -> UIView? {
+    func getRemoteParticipantVideoRendererView(_ videoViewId: RemoteParticipantVideoViewId) -> VideoRendererViewInfo? {
         let videoStreamId = videoViewId.videoStreamIdentifier
         let userIdentifier = videoViewId.userIdentifier
         let cacheKey = generateCacheKey(userIdentifier: videoViewId.userIdentifier,
                                         videoStreamId: videoStreamId)
         if let videoStreamCache = displayedRemoteParticipantsRendererView.value(forKey: cacheKey) {
-            return videoStreamCache.rendererView
+            return VideoRendererViewInfo(rendererView: videoStreamCache.rendererView,
+                                         delegate: videoScreenShareDelegate)
         }
 
         guard let participant = callingSDKWrapper.getRemoteParticipant(userIdentifier),
@@ -115,7 +126,8 @@ class VideoViewManager: NSObject, RendererDelegate {
                 newRenderer.delegate = self
             }
 
-            return newRendererView
+            return VideoRendererViewInfo(rendererView: newRendererView,
+                                         delegate: videoScreenShareDelegate)
         } catch let error {
             logger.error("Failed to render remote video, reason:\(error.localizedDescription)")
             return nil
@@ -160,11 +172,11 @@ class VideoViewManager: NSObject, RendererDelegate {
 
     func videoStreamRenderer(didRenderFirstFrame renderer: VideoStreamRenderer) {
         let size = CGSize(width: Int(renderer.size.width), height: Int(renderer.size.height))
-        debugPrint("test::: size = \(size)")
         videoScreenShareDelegate?.videoStreamRenderer(didRenderFirstFrameWithSize: size)
     }
 
     func videoStreamRenderer(didFailToStart renderer: VideoStreamRenderer) {
+        logger.error("Failed to render remote screenshare video. \(renderer)")
         videoScreenShareDelegate?.videoStreamRendererDidFailToStart()
     }
 }

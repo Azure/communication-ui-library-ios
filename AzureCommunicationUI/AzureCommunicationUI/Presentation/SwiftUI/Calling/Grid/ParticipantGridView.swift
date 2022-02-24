@@ -15,8 +15,7 @@ struct ParticipantGridView: View {
         return Group {
             ParticipantGridLayoutView(cellViewModels: viewModel.participantsCellViewModelArr,
                                       getRemoteParticipantRendererView: getRemoteParticipantRendererView(videoViewId:),
-                                      screenSize: screenSize,
-                                      videoViewManager: videoViewManager)
+                                      screenSize: screenSize)
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
             .id(gridsCount)
             .onReceive(viewModel.$gridsCount) {
@@ -27,7 +26,7 @@ struct ParticipantGridView: View {
             }
     }
 
-    func getRemoteParticipantRendererView(videoViewId: RemoteParticipantVideoViewId) -> UIView? {
+    func getRemoteParticipantRendererView(videoViewId: RemoteParticipantVideoViewId) -> VideoRendererViewInfo? {
         return videoViewManager.getRemoteParticipantVideoRendererView(videoViewId)
     }
 
