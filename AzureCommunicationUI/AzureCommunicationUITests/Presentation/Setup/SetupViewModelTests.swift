@@ -198,12 +198,4 @@ extension SetupViewModelTests {
                                         logger: LoggerMocking(),
                                         store: storeFactory.store)
     }
-
-    func makeSUT(updateErrorInfoViewModel: @escaping ((ErrorState) -> Void)) -> SetupViewModel {
-        let storeFactory = StoreFactoryMocking()
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
-        return SetupViewModel(compositeViewModelFactory: factoryMocking,
-                              logger: logger,
-                              store: storeFactory.store)
-    }
 }
