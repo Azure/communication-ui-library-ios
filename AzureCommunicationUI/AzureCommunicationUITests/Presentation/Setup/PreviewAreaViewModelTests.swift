@@ -131,9 +131,9 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted,
                                                                  cameraPermission: .granted),
                                 localUserState: LocalUserState(cameraState: cameraState))
+        let sut = makeSUT()
         sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
 
-        XCTAssertFalse(sut.showPermissionWarning())
     }
 }
 
