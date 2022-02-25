@@ -12,7 +12,23 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     var store: Store<AppState>
 
     var bannerTextViewModel: BannerTextViewModel?
+    var controlBarViewModel: ControlBarViewModel?
+    var infoHeaderViewModel: InfoHeaderViewModel?
+    var localVideoViewModel: LocalVideoViewModel?
+    var participantGridViewModel: ParticipantGridViewModel?
+    var participantsListViewModel: ParticipantsListViewModel?
+    var bannerViewModel: BannerViewModel?
+    var previewAreaViewModel: PreviewAreaViewModel?
+    var setupControlBarViewModel: SetupControlBarViewModel?
+    var errorInfoViewModel: ErrorInfoViewModel?
+    var audioDeviceListViewModel: AudioDeviceListViewModel?
+    var primaryButtonViewModel: PrimaryButtonViewModel?
+    var iconButtonViewModel: IconButtonViewModel?
+    var setupViewModel: SetupViewModel?
+    var callingViewModel: CallingViewModel?
+
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
+    var createIconWithLabelButtonViewModel: ((CompositeIcon) -> IconWithLabelButtonViewModel?)?
 
     init(logger: Logger,
          store: Store<AppState>) {
@@ -21,21 +37,25 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     }
 
     func getSetupViewModel() -> SetupViewModel {
-        return SetupViewModel(compositeViewModelFactory: self, logger: logger, store: store)
+        return setupViewModel ?? SetupViewModel(compositeViewModelFactory: self,
+                                                logger: logger,
+                                                store: store)
     }
 
     func getCallingViewModel() -> CallingViewModel {
-        return CallingViewModel(compositeViewModelFactory: self, logger: logger, store: store)
+        return callingViewModel ?? CallingViewModel(compositeViewModelFactory: self,
+                                                    logger: logger,
+                                                    store: store)
     }
 
     func makeIconButtonViewModel(iconName: CompositeIcon,
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel {
-        IconButtonViewModel(iconName: iconName,
-                            buttonType: buttonType,
-                            isDisabled: isDisabled,
-                            action: action)
+        return iconButtonViewModel ?? IconButtonViewModel(iconName: iconName,
+                                                          buttonType: buttonType,
+                                                          isDisabled: isDisabled,
+                                                          action: action)
     }
 
     func makeIconWithLabelButtonViewModel(iconName: CompositeIcon,
@@ -43,11 +63,11 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
                                           buttonLabel: String,
                                           isDisabled: Bool,
                                           action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel {
-        IconWithLabelButtonViewModel(iconName: iconName,
-                                     buttonTypeColor: buttonTypeColor,
-                                     buttonLabel: buttonLabel,
-                                     isDisabled: isDisabled,
-                                     action: action)
+        return createIconWithLabelButtonViewModel?(iconName) ?? IconWithLabelButtonViewModel(iconName: iconName,
+                                                                                             buttonTypeColor: buttonTypeColor,
+                                                                                             buttonLabel: buttonLabel,
+                                                                                             isDisabled: isDisabled,
+                                                                                             action: action)
     }
 
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel {
@@ -59,21 +79,21 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
                                     iconName: CompositeIcon?,
                                     isDisabled: Bool,
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel {
-        PrimaryButtonViewModel(buttonStyle: buttonStyle,
-                               buttonLabel: buttonLabel,
-                               iconName: iconName,
-                               isDisabled: isDisabled,
-                               action: action)
+        return primaryButtonViewModel ?? PrimaryButtonViewModel(buttonStyle: buttonStyle,
+                                                                buttonLabel: buttonLabel,
+                                                                iconName: iconName,
+                                                                isDisabled: isDisabled,
+                                                                action: action)
     }
 
     func makeAudioDeviceListViewModel(dispatchAction: @escaping ActionDispatch,
                                       localUserState: LocalUserState) -> AudioDeviceListViewModel {
-        AudioDeviceListViewModel(dispatchAction: dispatchAction,
-                                 localUserState: localUserState)
+        return audioDeviceListViewModel ?? AudioDeviceListViewModel(dispatchAction: dispatchAction,
+                                                                    localUserState: localUserState)
     }
 
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
-        ErrorInfoViewModel()
+        return errorInfoViewModel ?? ErrorInfoViewModel()
     }
 
     // MARK: CallingViewModels
@@ -103,7 +123,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
-        ParticipantsListViewModel(localUserState: localUserState)
+        return participantsListViewModel ?? ParticipantsListViewModel(localUserState: localUserState)
     }
 
     func makeBannerViewModel() -> BannerViewModel {
@@ -117,14 +137,14 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
 
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel {
-        PreviewAreaViewModel(compositeViewModelFactory: self, dispatchAction: dispatchAction)
+        return previewAreaViewModel ?? PreviewAreaViewModel(compositeViewModelFactory: self, dispatchAction: dispatchAction)
     }
 
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                       localUserState: LocalUserState) -> SetupControlBarViewModel {
-        SetupControlBarViewModel(compositeViewModelFactory: self,
-                                 logger: logger,
-                                 dispatchAction: dispatchAction,
-                                 localUserState: localUserState)
+        return setupControlBarViewModel ?? SetupControlBarViewModel(compositeViewModelFactory: self,
+                                                                    logger: logger,
+                                                                    dispatchAction: dispatchAction,
+                                                                    localUserState: localUserState)
     }
 }
