@@ -12,6 +12,12 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     var store: Store<AppState>
 
     var bannerTextViewModel: BannerTextViewModel?
+    var controlBarViewModel: ControlBarViewModel?
+    var infoHeaderViewModel: InfoHeaderViewModel?
+    var localVideoViewModel: LocalVideoViewModel?
+    var participantGridViewModel: ParticipantGridViewModel?
+    var bannerViewModel: BannerViewModel?
+
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
 
     init(logger: Logger,
@@ -51,7 +57,9 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     }
 
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel {
-        LocalVideoViewModel(compositeViewModelFactory: self, logger: logger, dispatchAction: dispatchAction)
+        return localVideoViewModel ?? LocalVideoViewModel(compositeViewModelFactory: self,
+                                                          logger: logger,
+                                                          dispatchAction: dispatchAction)
     }
 
     func makePrimaryButtonViewModel(buttonStyle: ButtonStyle,
@@ -80,17 +88,17 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel {
-        ControlBarViewModel(compositeViewModelFactory: self,
-                            logger: logger,
-                            dispatchAction: dispatchAction,
-                            endCallConfirm: endCallConfirm,
-                            localUserState: localUserState)
+        return controlBarViewModel ?? ControlBarViewModel(compositeViewModelFactory: self,
+                                                          logger: logger,
+                                                          dispatchAction: dispatchAction,
+                                                          endCallConfirm: endCallConfirm,
+                                                          localUserState: localUserState)
     }
 
     func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel {
-        InfoHeaderViewModel(compositeViewModelFactory: self,
-                            logger: logger,
-                            localUserState: localUserState)
+        return infoHeaderViewModel ?? InfoHeaderViewModel(compositeViewModelFactory: self,
+                                                          logger: logger,
+                                                          localUserState: localUserState)
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
@@ -99,7 +107,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     }
 
     func makeParticipantGridsViewModel() -> ParticipantGridViewModel {
-        ParticipantGridViewModel(compositeViewModelFactory: self)
+        return participantGridViewModel ?? ParticipantGridViewModel(compositeViewModelFactory: self)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
@@ -107,7 +115,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     }
 
     func makeBannerViewModel() -> BannerViewModel {
-        BannerViewModel(compositeViewModelFactory: self)
+        return bannerViewModel ?? BannerViewModel(compositeViewModelFactory: self)
     }
 
     func makeBannerTextViewModel() -> BannerTextViewModel {
