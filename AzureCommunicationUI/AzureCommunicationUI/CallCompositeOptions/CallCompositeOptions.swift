@@ -8,8 +8,8 @@ import UIKit
 
 /// User-configurable options for creating CallComposite.
 public struct CallCompositeOptions {
-    var themeConfiguration: ThemeConfiguration?
-    var localizationConfiguration: LocalizationConfiguration?
+    private(set) var themeConfiguration: ThemeConfiguration?
+    private(set) var localizationConfiguration: LocalizationConfiguration?
 
     /// Creates an instance of CallCompositeOptions with related options.
     /// - Parameter themeConfiguration: ThemeConfiguration for changing color pattern
