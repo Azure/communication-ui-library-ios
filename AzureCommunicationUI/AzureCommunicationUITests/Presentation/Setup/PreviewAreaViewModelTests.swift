@@ -10,11 +10,13 @@ import XCTest
 class PreviewAreaViewModelTests: XCTestCase {
     fileprivate var storeFactory: StoreFactoryMocking!
     fileprivate var factoryMocking: CompositeViewModelFactoryMocking!
+    private var logger: LoggerMocking!
 
     override func setUp() {
         super.setUp()
         storeFactory = StoreFactoryMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
+        logger = LoggerMocking()
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
                                                           store: storeFactory.store)
     }
 
@@ -125,15 +127,18 @@ class PreviewAreaViewModelTests: XCTestCase {
     }
 
     func test_previewAreaViewModel_update_when_statesUpdated_then_localVideoViewModelUpdated() {
-        let cameraState = LocalUserState.CameraState(operation: .on,
-                                                     device: .front,
-                                                     transmission: .local)
-        let appState = AppState(permissionState: PermissionState(audioPermission: .granted,
-                                                                 cameraPermission: .granted),
-                                localUserState: LocalUserState(cameraState: cameraState))
+        let expectation = XCTestExpectation(description: "LocalVideoViewModel is updated")
+        let localUserState = LocalUserState(displayName: "UpdatedDisplayName")
+        factoryMocking.localVideoViewModel = LocalVideoViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                        logger: logger,
+                                                                        dispatchAction: storeFactory.store.dispatch,
+                                                                        updateState: { localState in
+            XCTAssertEqual(localUserState.displayName, localState.displayName)
+            expectation.fulfill()
+        })
         let sut = makeSUT()
-        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
-
+        sut.update(localUserState: localUserState, permissionState: PermissionState())
+        wait(for: [expectation], timeout: 1.0)
     }
 }
 
