@@ -142,8 +142,8 @@ public class CallComposite {
 
     private func setupLocalization() {
         if let localizationConfiguration = localizationConfiguration {
-            LocalizationProvider
-                .applyLocalizationConfiguration(localizationConfiguration)
+            let localizationProvider = LocalizationProvider(logger: logger)
+            localizationProvider.applyLocalizationConfiguration(localizationConfiguration)
         }
     }
 
