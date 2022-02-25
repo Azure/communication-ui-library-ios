@@ -10,7 +10,10 @@ class SetupControlBarViewModel: ObservableObject {
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var audioPermission: AppPermission.Status = .unknown
     @Published var isAudioDeviceSelectionDisplayed: Bool = false
+
     private let logger: Logger
+    private let dispatch: ActionDispatch
+
     let audioDeviceListViewModel: AudioDeviceListViewModel
     var cameraButtonViewModel: IconWithLabelButtonViewModel!
     var micButtonViewModel: IconWithLabelButtonViewModel!
@@ -19,8 +22,6 @@ class SetupControlBarViewModel: ObservableObject {
     var cameraStatus: LocalUserState.CameraOperationalStatus = .off
     var micStatus: LocalUserState.AudioOperationalStatus = .off
     var localVideoStreamId: String?
-
-    private let dispatch: ActionDispatch
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
@@ -32,6 +33,7 @@ class SetupControlBarViewModel: ObservableObject {
         self.audioDeviceListViewModel = compositeViewModelFactory.makeAudioDeviceListViewModel(
             dispatchAction: dispatchAction,
             localUserState: localUserState)
+
         self.cameraButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
             iconName: .videoOff,
             buttonTypeColor: .colorThemedWhite,
@@ -43,6 +45,8 @@ class SetupControlBarViewModel: ObservableObject {
                 self.logger.debug("Toggle camera button tapped")
                 self.videoButtonTapped()
         }
+        self.cameraButtonViewModel.accessibilityLabel = "Turn camera on"
+
         self.micButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
             iconName: .micOff,
             buttonTypeColor: .colorThemedWhite,
@@ -54,6 +58,8 @@ class SetupControlBarViewModel: ObservableObject {
                 self.logger.debug("Toggle microphone button tapped")
                 self.microphoneButtonTapped()
         }
+        self.micButtonViewModel.accessibilityLabel = "Unmute"
+
         self.audioDeviceButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
             iconName: .speakerFilled,
             buttonTypeColor: .colorThemedWhite,
@@ -65,17 +71,19 @@ class SetupControlBarViewModel: ObservableObject {
                 self.logger.debug("Select audio device button tapped")
                 self.selectAudioDeviceButtonTapped()
         }
+        self.audioDeviceButtonViewModel.accessibilityLabel = "Audio device"
+        self.audioDeviceButtonViewModel.accessibilityValue = "Speaker"
     }
 
     func videoButtonTapped() {
         let action: Action = self.cameraStatus == .on ?
-            LocalUserAction.CameraOffTriggered() : LocalUserAction.CameraPreviewOnTriggered()
+        LocalUserAction.CameraOffTriggered() : LocalUserAction.CameraPreviewOnTriggered()
         dispatch(action)
     }
 
     func microphoneButtonTapped() {
         let action: Action = self.micStatus == .on ?
-            LocalUserAction.MicrophonePreviewOff() : LocalUserAction.MicrophonePreviewOn()
+        LocalUserAction.MicrophonePreviewOff() : LocalUserAction.MicrophonePreviewOn()
         dispatch(action)
     }
 
@@ -100,48 +108,33 @@ class SetupControlBarViewModel: ObservableObject {
         }
 
         self.cameraStatus = localUserState.cameraState.operation
-        self.micStatus = localUserState.audioState.operation
         self.cameraButtonViewModel.update(
             iconName: self.cameraStatus == .on ? .videoOn : .videoOff,
             buttonLabel: "Video is \(self.cameraStatus == .on ? "on" : "off")")
+        self.cameraButtonViewModel.update(accessibilityLabel: "Turn camera \(self.cameraStatus == .on ? "off" : "on")")
         self.cameraButtonViewModel.update(isDisabled: isCameraDisabled())
+
+        self.micStatus = localUserState.audioState.operation
         self.micButtonViewModel.update(
             iconName: self.micStatus == .on ? .micOn : .micOff,
             buttonLabel: "Mic is \(self.micStatus == .on ? "on" : "off")")
+        self.micButtonViewModel.update(accessibilityLabel: self.micStatus == .on ? "Mute" : "Unmute")
+
+        let audioDeviceStatus = localUserState.audioState.device
         self.audioDeviceButtonViewModel.update(
-            iconName: deviceIconFor(audioDeviceStatus: localUserState.audioState.device),
-            buttonLabel: deviceLabelFor(audioDeviceStatus: localUserState.audioState.device))
+            iconName: audioDeviceStatus.icon,
+            buttonLabel: audioDeviceStatus.label)
+        self.audioDeviceButtonViewModel.update(accessibilityValue: audioDeviceStatus.label)
 
         if self.localVideoStreamId != localUserState.localVideoStreamIdentifier {
             self.localVideoStreamId = localUserState.localVideoStreamIdentifier
             let buttonTypeColor: IconWithLabelButtonViewModel.ButtonTypeColor
-                = localVideoStreamId == nil ? .colorThemedWhite : .white
+            = localVideoStreamId == nil ? .colorThemedWhite : .white
             cameraButtonViewModel.update(buttonTypeColor: buttonTypeColor)
             micButtonViewModel.update(buttonTypeColor: buttonTypeColor)
             audioDeviceButtonViewModel.update(buttonTypeColor: buttonTypeColor)
         }
+
         audioDeviceListViewModel.update(audioDeviceStatus: localUserState.audioState.device)
-    }
-
-    private func deviceIconFor(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> CompositeIcon {
-        switch audioDeviceStatus {
-        case .receiverSelected:
-            return .speakerRegular
-        case .speakerSelected:
-            return .speakerFilled
-        default:
-            return self.audioDeviceButtonViewModel.iconName
-        }
-    }
-
-    private func deviceLabelFor(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> String {
-        switch audioDeviceStatus {
-        case .receiverSelected:
-            return AudioDeviceType.receiver.name
-        case .speakerSelected:
-            return AudioDeviceType.speaker.name
-        default:
-            return self.audioDeviceButtonViewModel.buttonLabel
-        }
     }
 }

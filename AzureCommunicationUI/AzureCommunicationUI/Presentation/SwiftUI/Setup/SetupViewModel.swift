@@ -22,14 +22,19 @@ class SetupViewModel: ObservableObject {
          store: Store<AppState>) {
         self.store = store
         self.logger = logger
+
         self.previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
+
         self.dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .leftArrow,
             buttonType: .controlButton,
             isDisabled: false) {
                 store.dispatch(action: CallingAction.DismissSetup())
         }
+        self.dismissButtonViewModel.accessibilityLabel = "Back"
+
         self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
+
         self.startCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: "Join Call",
@@ -40,6 +45,7 @@ class SetupViewModel: ObservableObject {
                 }
                 self.startCallButtonTapped()
         }
+
         self.setupControlBarViewModel = compositeViewModelFactory
             .makeSetupControlBarViewModel(dispatchAction: store.dispatch,
                                           localUserState: store.state.localUserState)
@@ -74,7 +80,6 @@ class SetupViewModel: ObservableObject {
         setupControlBarViewModel.update(localUserState: localUserState,
                                         permissionState: permissionState)
         startCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
-
         errorInfoViewModel.update(errorState: state.errorState)
     }
 }

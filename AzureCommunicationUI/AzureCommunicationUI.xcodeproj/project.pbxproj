@@ -168,6 +168,7 @@
 		A837397A261CE9FF00D46787 /* DependancyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8373979261CE9FF00D46787 /* DependancyContainer.swift */; };
 		A837397E261CEA4300D46787 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A837397D261CEA4300D46787 /* Logger.swift */; };
 		A8373994261F9D7600D46787 /* CallCompositeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8373993261F9D7600D46787 /* CallCompositeOptions.swift */; };
+		A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A865AF0827B7116B008347B4 /* IconAndLabelConversion.swift */; };
 		A869A63826546A2E003CC4F2 /* CallingServiceMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A869A62F26546A2D003CC4F2 /* CallingServiceMocking.swift */; };
 		A869A63926546A2E003CC4F2 /* LoggerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A869A63026546A2D003CC4F2 /* LoggerMocking.swift */; };
 		A869A63A26546A2E003CC4F2 /* MiddlewareMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A869A63126546A2D003CC4F2 /* MiddlewareMocking.swift */; };
@@ -368,6 +369,7 @@
 		A8373993261F9D7600D46787 /* CallCompositeOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeOptions.swift; sourceTree = "<group>"; };
 		A8659FC52602A22000C807DE /* AzureCommunicationUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AzureCommunicationUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8659FC92602A22000C807DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A865AF0827B7116B008347B4 /* IconAndLabelConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconAndLabelConversion.swift; sourceTree = "<group>"; };
 		A869A62F26546A2D003CC4F2 /* CallingServiceMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallingServiceMocking.swift; path = Mocking/CallingServiceMocking.swift; sourceTree = "<group>"; };
 		A869A63026546A2D003CC4F2 /* LoggerMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggerMocking.swift; path = Mocking/LoggerMocking.swift; sourceTree = "<group>"; };
 		A869A63126546A2D003CC4F2 /* MiddlewareMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MiddlewareMocking.swift; path = Mocking/MiddlewareMocking.swift; sourceTree = "<group>"; };
@@ -464,6 +466,7 @@
 				985DF371269D065400CFDA55 /* ViewExtension.swift */,
 				98FFD82726CC5FD900655398 /* PreferenceKey.swift */,
 				1FFEA01326A68D0D00E90816 /* UIFontExtension.swift */,
+				A865AF0827B7116B008347B4 /* IconAndLabelConversion.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1429,6 +1432,7 @@
 				9852C2D326EFCF3D00435252 /* PopupMenuViewController.swift in Sources */,
 				88F6EE1A2735F5CB001AD3E9 /* ErrorReducer.swift in Sources */,
 				A874EDC626616728003C7D92 /* AppLifeCycleState.swift in Sources */,
+				A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */,
 				1F13D36C26A8B83300E31666 /* RemoteParticipantsState.swift in Sources */,
 				1FFEA01426A68D0D00E90816 /* UIFontExtension.swift in Sources */,
 				1FBCB666264519DA00F57EEA /* VideoViewManager.swift in Sources */,

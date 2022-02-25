@@ -48,6 +48,7 @@ struct PermissionWarningView: View {
                     .foregroundColor(Color(StyleProvider.color.onSurface))
             }.frame(width: geometry.size.width,
                     height: geometry.size.height)
+            .accessibilityElement(children: .combine)
         }
     }
 }
