@@ -75,11 +75,11 @@ enum BannerInfoType: Equatable {
              .transcriptionStoppedStillRecording,
              .transcriptionStarted,
              .recordingStoppedStillTranscribing:
-            return "https://privacy.microsoft.com/en-US/privacystatement#mainnoticetoendusersmodule"
+            return "https://privacy.microsoft.com/privacystatement#mainnoticetoendusersmodule"
         case .transcriptionStoppedAndSaved,
              .recordingStopped,
              .recordingAndTranscriptionStopped:
-            return ("https://support.microsoft.com/en-us/office/"
+            return ("https://support.microsoft.com/office/"
                 + "record-a-meeting-in-teams-34dfbe7f-b07d-4a27-b4c6-de62f1348c24")
         }
     }

@@ -12,6 +12,7 @@ import AzureCommunicationCalling
 public class CallComposite {
     private var logger: Logger?
     private let themeConfiguration: ThemeConfiguration?
+    private let localizationConfiguration: LocalizationConfiguration?
     private let callCompositeEventsHandler = CallCompositeEventsHandler()
     private var errorManager: ErrorManager?
     private var lifeCycleManager: UIKitAppLifeCycleManager?
@@ -22,6 +23,7 @@ public class CallComposite {
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions) {
         themeConfiguration = options.themeConfiguration
+        localizationConfiguration = options.localizationConfiguration
     }
 
     /// Assign closure to execute when an error occurs inside Call Composite.
@@ -42,6 +44,7 @@ public class CallComposite {
         dependencyContainer.registerDependencies(callConfiguration)
 
         setupColorTheming()
+        setupLocalization()
         let toolkitHostingController = makeToolkitHostingController(router: dependencyContainer.resolve(),
                                                                     logger: dependencyContainer.resolve(),
                                                                     viewFactory: dependencyContainer.resolve())
@@ -134,6 +137,13 @@ public class CallComposite {
             if let window = UIWindow.keyWindow {
                 Colors.setProvider(provider: colorProvider, for: window)
             }
+        }
+    }
+
+    private func setupLocalization() {
+        if let localizationConfiguration = localizationConfiguration {
+            LocalizationProvider
+                .applyLocalizationConfiguration(localizationConfiguration)
         }
     }
 
