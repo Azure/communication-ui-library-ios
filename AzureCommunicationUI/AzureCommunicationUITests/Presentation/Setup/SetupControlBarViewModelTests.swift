@@ -8,10 +8,10 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class SetupControlBarViewModelTests: XCTestCase {
-    fileprivate var storeFactory: StoreFactoryMocking!
-    fileprivate var factoryMocking: CompositeViewModelFactoryMocking!
-    fileprivate var cancellable: CancelBag!
-    fileprivate var logger: LoggerMocking!
+    private var storeFactory: StoreFactoryMocking!
+    private var factoryMocking: CompositeViewModelFactoryMocking!
+    private var cancellable: CancelBag!
+    private var logger: LoggerMocking!
 
     private let timeout: TimeInterval = 10.0
 

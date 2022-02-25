@@ -8,8 +8,8 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class PreviewAreaViewModelTests: XCTestCase {
-    fileprivate var storeFactory: StoreFactoryMocking!
-    fileprivate var factoryMocking: CompositeViewModelFactoryMocking!
+    private var storeFactory: StoreFactoryMocking!
+    private var factoryMocking: CompositeViewModelFactoryMocking!
     private var logger: LoggerMocking!
 
     override func setUp() {
