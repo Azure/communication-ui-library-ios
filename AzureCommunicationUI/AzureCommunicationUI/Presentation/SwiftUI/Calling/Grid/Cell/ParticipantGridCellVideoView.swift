@@ -16,6 +16,7 @@ struct ParticipantGridCellVideoView: View {
 
     var videoRendererViewInfo: ParticipantRendererViewInfo!
     let zoomable: Bool
+    @Binding var isAppInForeground: Bool
     @Binding var isSpeaking: Bool
     @Binding var displayName: String?
     @Binding var isMuted: Bool
@@ -62,7 +63,8 @@ struct ParticipantGridCellVideoView: View {
     }
 
     var zoomableVideoRenderView: some View {
-        ZoomableVideoRenderView(videoRendererViewInfo: videoRendererViewInfo)
+        ZoomableVideoRenderView(videoRendererViewInfo: videoRendererViewInfo,
+                                isAppInForeground: $isAppInForeground)
                                 .gesture(TapGesture(count: 2).onEnded({}))
         // The double tap action does nothing. This is a work around to resolve the double tap
         // interference issue with single tap action from Calling view.

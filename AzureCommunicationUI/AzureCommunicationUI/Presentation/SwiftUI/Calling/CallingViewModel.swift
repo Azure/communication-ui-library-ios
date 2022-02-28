@@ -101,6 +101,10 @@ class CallingViewModel: ObservableObject {
 
     func receive(_ state: AppState) {
         guard state.lifeCycleState.currentStatus == .foreground else {
+            if state.lifeCycleState.currentStatus == .background {
+                participantGridsViewModel.update(remoteParticipantsState: state.remoteParticipantsState,
+                                                 lifeCycleState: state.lifeCycleState)
+            }
             return
         }
 
@@ -109,7 +113,8 @@ class CallingViewModel: ObservableObject {
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState)
         localVideoViewModel.update(localUserState: state.localUserState)
-        participantGridsViewModel.update(remoteParticipantsState: state.remoteParticipantsState)
+        participantGridsViewModel.update(remoteParticipantsState: state.remoteParticipantsState,
+                                         lifeCycleState: state.lifeCycleState)
         bannerViewModel.update(callingState: state.callingState)
         let isCallConnected = state.callingState.status == .connected
         let hasRemoteParticipants = state.remoteParticipantsState.participantInfoList.count > 0

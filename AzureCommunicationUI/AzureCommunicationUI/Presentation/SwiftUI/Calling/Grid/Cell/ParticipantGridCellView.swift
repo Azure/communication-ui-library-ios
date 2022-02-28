@@ -13,6 +13,7 @@ struct ParticipantGridCellView: View {
     @State var displayedVideoStreamId: String?
     @State var isVideoChanging: Bool = false
     let avatarSize: CGFloat = 56
+    @Binding var isAppInForeground: Bool
 
     var body: some View {
         Group {
@@ -22,6 +23,7 @@ struct ParticipantGridCellView: View {
                 } else if let rendererViewInfo = getRendererViewInfo() {
                     ParticipantGridCellVideoView(videoRendererViewInfo: rendererViewInfo,
                                                  zoomable: viewModel.videoStreamType == .screenSharing,
+                                                 isAppInForeground: $isAppInForeground,
                                                  isSpeaking: $viewModel.isSpeaking,
                                                  displayName: $viewModel.displayName,
                                                  isMuted: $viewModel.isMuted)

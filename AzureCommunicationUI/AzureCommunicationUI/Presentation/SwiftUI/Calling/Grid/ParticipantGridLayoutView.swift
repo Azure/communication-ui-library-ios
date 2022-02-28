@@ -10,6 +10,7 @@ struct ParticipantGridLayoutView: View {
     let getRemoteParticipantRendererView: (RemoteParticipantVideoViewId) -> ParticipantRendererViewInfo?
     let screenSize: ScreenSizeClassType
     let gridsMargin: CGFloat = 3
+    @Binding var isAppInForeground: Bool
 
     var body: some View {
         Group {
@@ -54,7 +55,8 @@ struct ParticipantGridLayoutView: View {
     func getRowView(cellsViewModel: [ParticipantGridCellViewModel]) -> some View {
         return ForEach(cellsViewModel) { vm in
             ParticipantGridCellView(viewModel: vm,
-                                    getRemoteParticipantRendererView: getRemoteParticipantRendererView)
+                                    getRemoteParticipantRendererView: getRemoteParticipantRendererView,
+                                    isAppInForeground: $isAppInForeground)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color(StyleProvider.color.surface))
                 .clipShape(RoundedRectangle(cornerRadius: 4))
