@@ -10,7 +10,7 @@ class ParticipantGridViewModelMocking: ParticipantGridViewModel {
     private let updateState: ((RemoteParticipantsState, LifeCycleState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
-         updateState: ((RemoteParticipantsState) -> Void)? = nil) {
+         updateState: ((RemoteParticipantsState, LifeCycleState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory)
     }
