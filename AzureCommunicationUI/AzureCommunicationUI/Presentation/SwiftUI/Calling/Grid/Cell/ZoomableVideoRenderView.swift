@@ -179,6 +179,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         init(_ rendererView: ZoomableVideoRenderView, shouldShowScaleForiPad: Bool) {
             self.rendererView = rendererView
             self.shouldShowScaleForiPad = shouldShowScaleForiPad
+            super.init()
         }
 
         func viewForZooming(in scrollView: UIScrollView) -> UIView? {

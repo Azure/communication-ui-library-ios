@@ -66,8 +66,9 @@ struct ParticipantGridCellVideoView: View {
         ZoomableVideoRenderView(videoRendererViewInfo: videoRendererViewInfo,
                                 isAppInForeground: $isAppInForeground)
                                 .gesture(TapGesture(count: 2).onEnded({}))
-        // The double tap action does nothing. This is a work around to resolve the double tap
-        // interference issue with single tap action from Calling view.
-        // To be improved in the next PR.
+        // The double tap action does nothing. This is a work around to
+        // prevent the single-tap gesture (in CallingView) from being recognized
+        // until after the double-tap gesture  recognizer (in ZoomableVideoRenderView) explicitly
+        // reaches the failed state, which happens when the touch sequence contains only one tap.
     }
 }
