@@ -7,7 +7,7 @@ import Foundation
 @testable import AzureCommunicationUI
 
 class ParticipantGridViewModelMocking: ParticipantGridViewModel {
-    private let updateState: ((RemoteParticipantsState) -> Void)?
+    private let updateState: ((RemoteParticipantsState, LifeCycleState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          updateState: ((RemoteParticipantsState) -> Void)? = nil) {
@@ -15,7 +15,7 @@ class ParticipantGridViewModelMocking: ParticipantGridViewModel {
         super.init(compositeViewModelFactory: compositeViewModelFactory)
     }
 
-    override func update(remoteParticipantsState: RemoteParticipantsState) {
-        updateState?(remoteParticipantsState)
+    override func update(remoteParticipantsState: RemoteParticipantsState, lifeCycleState: LifeCycleState) {
+        updateState?(remoteParticipantsState, lifeCycleState)
     }
 }

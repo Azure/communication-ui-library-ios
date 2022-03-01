@@ -157,7 +157,7 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_receive_when_statusUpdated_then_participantGridViewModelUpdated() {
         let expectation = XCTestExpectation(description: "ParticipantGridViewModel is updated")
         let appState = AppState()
-        let sut = makeSUT(updateParticipantGridViewModel: { remoteParticipantsState in
+        let sut = makeSUT(updateParticipantGridViewModel: { remoteParticipantsState, _ in
             XCTAssertEqual(appState.remoteParticipantsState.lastUpdateTimeStamp, remoteParticipantsState.lastUpdateTimeStamp)
             expectation.fulfill()
         })
@@ -223,7 +223,7 @@ extension CallingViewModelTests {
                                 store: storeFactory.store)
     }
 
-    func makeSUT(updateParticipantGridViewModel: @escaping ((RemoteParticipantsState) -> Void)) -> CallingViewModel {
+    func makeSUT(updateParticipantGridViewModel: @escaping ((RemoteParticipantsState, LifeCycleState) -> Void)) -> CallingViewModel {
         let storeFactory = StoreFactoryMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         factoryMocking.participantGridViewModel = ParticipantGridViewModelMocking(compositeViewModelFactory: factoryMocking,
