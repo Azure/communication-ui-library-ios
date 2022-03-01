@@ -89,6 +89,10 @@ class LocalUserState: ReduxState {
         case speakerRequested
         case receiverSelected
         case receiverRequested
+        case bluetoothSelected
+        case bluetoothRequested
+        case headphonesSelected
+        case headphonesRequested
         case error(Error)
 
         static func == (lhs: LocalUserState.AudioDeviceSelectionStatus,
@@ -98,6 +102,10 @@ class LocalUserState: ReduxState {
                  (.speakerRequested, .speakerRequested),
                  (.receiverSelected, receiverSelected),
                  (.receiverRequested, .receiverRequested),
+                 (.bluetoothSelected, bluetoothSelected),
+                 (.bluetoothRequested, .bluetoothRequested),
+                 (.headphonesSelected, headphonesSelected),
+                 (.headphonesRequested, .headphonesRequested),
                  (.error, .error):
                 return true
             default:

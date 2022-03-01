@@ -42,8 +42,8 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         }
     }
 
-    func dismissDrawer() {
-        drawerController?.dismiss(animated: false)
+    func dismissDrawer(animated: Bool = false) {
+        drawerController?.dismiss(animated: animated)
     }
 
     func showDrawerView() {

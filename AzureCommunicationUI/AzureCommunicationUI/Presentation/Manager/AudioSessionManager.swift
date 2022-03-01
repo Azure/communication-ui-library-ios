@@ -39,6 +39,10 @@ class AppAudioSessionManager: AudioSessionManager {
             switchAudioDevice(to: .speaker)
         case .receiverRequested:
             switchAudioDevice(to: .receiver)
+        case .bluetoothRequested:
+            switchAudioDevice(to: .bluetooth)
+        case .headphonesRequested:
+            switchAudioDevice(to: .headphones)
         default:
             break
         }
@@ -66,8 +70,21 @@ class AppAudioSessionManager: AudioSessionManager {
     private func getCurrentAudioDevice() -> AudioDeviceType {
         let audioSession = AVAudioSession.sharedInstance()
 
-        for output in audioSession.currentRoute.outputs where output.portType == .builtInSpeaker {
-            return .speaker
+        if let output = audioSession.currentRoute.outputs.first {
+            switch output.portType {
+            case .bluetoothA2DP:
+                return .bluetooth
+            case .bluetoothLE:
+                return .bluetooth
+            case .bluetoothHFP:
+                return .bluetooth
+            case .headphones:
+                return .headphones
+            case .builtInSpeaker:
+                return .speaker
+            default:
+                return .receiver
+            }
         }
         return .receiver
     }
@@ -77,10 +94,10 @@ class AppAudioSessionManager: AudioSessionManager {
 
         let audioPort: AVAudioSession.PortOverride
         switch selectedAudioDevice {
-        case .receiver:
-            audioPort = .none
         case .speaker:
             audioPort = .speaker
+        default:
+            audioPort = .none
         }
 
         do {
