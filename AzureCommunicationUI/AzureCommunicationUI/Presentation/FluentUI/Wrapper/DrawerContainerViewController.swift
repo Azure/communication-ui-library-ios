@@ -6,14 +6,18 @@
 import FluentUI
 
 class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelegate {
-    var items: [T] = []
-    let sourceView: UIView
-
-    var drawerController: DrawerController? {
-        return nil
-    }
-
     weak var delegate: DrawerControllerDelegate?
+    lazy var drawerTableView: UITableView? = nil
+    let backgroundColor: UIColor = UIDevice.current.userInterfaceIdiom == .pad
+        ? StyleProvider.color.popoverColor
+        : StyleProvider.color.drawerColor
+    var items: [T] = []
+    private let sourceView: UIView
+    private let drawerResizeBarHeight: CGFloat = 25
+    private var halfScreenHeight: CGFloat {
+        UIScreen.main.bounds.height / 2
+    }
+    private weak var controller: DrawerController?
 
     init(items: [T], sourceView: UIView) {
         self.items = items
@@ -42,11 +46,21 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         }
     }
 
-    func dismissDrawer(animated: Bool = false) {
-        drawerController?.dismiss(animated: animated)
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        resizeDrawer()
     }
 
-    func showDrawerView() {
+    func dismissDrawer(animated: Bool = false) {
+        self.controller?.dismiss(animated: animated)
+    }
+
+    func updateDrawerList(items: [T]) {
+        self.items = items
+        resizeDrawer()
+    }
+
+    private func showDrawerView() {
         DispatchQueue.main.async {
             guard let topViewController = UIWindow.keyWindow?.topViewController,
                   let topView = topViewController.view else {
@@ -65,11 +79,42 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         }
     }
 
-    func updateDrawerList(items: [T]) {
-        self.items = items
+    private func getDrawerController(from sourceView: UIView) -> DrawerController? {
+        let controller = DrawerController(
+            sourceView: sourceView,
+            sourceRect: sourceView.bounds,
+            presentationDirection: .up)
+        controller.delegate = self.delegate
+        controller.contentView = drawerTableView
+        controller.resizingBehavior = .dismiss
+        controller.backgroundColor = backgroundColor
+
+        self.controller = controller
+        resizeDrawer()
+        return controller
     }
 
-    func getDrawerController(from sourceView: UIView) -> DrawerController? {
-        return nil
+    private func resizeDrawer() {
+        let isiPhoneLayout = UIDevice.current.userInterfaceIdiom == .phone
+        var isScrollEnabled = !isiPhoneLayout
+        var drawerHeight = CGFloat(self.items.count * 44)
+
+        if isiPhoneLayout {
+            // workaround to adjust cell divider height for drawer resize
+            let tableCellsDividerOffsetHeight = CGFloat(self.items.count * 3)
+            drawerHeight += tableCellsDividerOffsetHeight + self.drawerResizeBarHeight
+        } else {
+            drawerHeight = CGFloat(self.items.count) * 48.5
+        }
+        if drawerHeight > self.halfScreenHeight {
+            drawerHeight = self.halfScreenHeight
+            isScrollEnabled = true
+        }
+
+        DispatchQueue.main.async {
+            self.drawerTableView?.reloadData()
+            self.drawerTableView?.isScrollEnabled = isScrollEnabled
+            self.controller?.preferredContentSize = CGSize(width: 400, height: drawerHeight)
+        }
     }
 }

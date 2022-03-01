@@ -6,21 +6,7 @@
 import FluentUI
 
 class AudioDevicesListViewController: DrawerContainerViewController<AudioDevicesListCellViewModel> {
-    private weak var controller: DrawerController?
-    override var drawerController: DrawerController? {
-        return controller
-    }
-
-    var halfScreenHeight: CGFloat {
-        UIScreen.main.bounds.height / 2
-    }
-
-    let drawerResizeBarHeight: CGFloat = 25
-    let backgroundColor: UIColor = UIDevice.current.userInterfaceIdiom == .pad
-        ? StyleProvider.color.popoverColor
-        : StyleProvider.color.drawerColor
-
-    lazy var audioDevicesListTableView: UITableView = {
+    private lazy var audioDevicesListTableView: UITableView? = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = backgroundColor
         tableView.sectionHeaderHeight = 0
@@ -33,54 +19,9 @@ class AudioDevicesListViewController: DrawerContainerViewController<AudioDevices
         return tableView
     }()
 
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        resizeAudioDevicesListDrawer()
-    }
-
-    override func updateDrawerList(items: [AudioDevicesListCellViewModel]) {
-        super.updateDrawerList(items: items)
-        resizeAudioDevicesListDrawer()
-    }
-
-    override func getDrawerController(from sourceView: UIView) -> DrawerController {
-        let controller = DrawerController(
-            sourceView: sourceView,
-            sourceRect: sourceView.bounds,
-            presentationDirection: .up)
-        controller.delegate = self.delegate
-        let contentView = audioDevicesListTableView
-        controller.contentView = contentView
-        controller.resizingBehavior = .dismiss
-        controller.backgroundColor = backgroundColor
-
-        self.controller = controller
-        resizeAudioDevicesListDrawer()
-        return controller
-    }
-
-    private func resizeAudioDevicesListDrawer() {
-        let isiPhoneLayout = UIDevice.current.userInterfaceIdiom == .phone
-        var isScrollEnabled = !isiPhoneLayout
-        var drawerHeight = CGFloat(self.items.count * 44)
-
-        if isiPhoneLayout {
-            // workaround to adjust cell divider height for drawer resize
-            let tableCellsDividerOffsetHeight = CGFloat(self.items.count * 3)
-            drawerHeight += tableCellsDividerOffsetHeight + self.drawerResizeBarHeight
-        } else {
-            drawerHeight = CGFloat(self.items.count) * 48.5
-        }
-        if drawerHeight > self.halfScreenHeight {
-            drawerHeight = self.halfScreenHeight
-            isScrollEnabled = true
-        }
-
-        DispatchQueue.main.async {
-            self.audioDevicesListTableView.reloadData()
-            self.audioDevicesListTableView.isScrollEnabled = isScrollEnabled
-            self.controller?.preferredContentSize = CGSize(width: 400, height: drawerHeight)
-        }
+    override var drawerTableView: UITableView? {
+        get { return audioDevicesListTableView }
+        set { audioDevicesListTableView = newValue }
     }
 }
 
