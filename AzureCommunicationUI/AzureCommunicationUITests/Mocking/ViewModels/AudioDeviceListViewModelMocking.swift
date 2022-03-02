@@ -6,7 +6,7 @@
 import Foundation
 @testable import AzureCommunicationUI
 
-class AudioDeviceListViewModelMocking: AudioDeviceListViewModel {
+class AudioDevicesListViewModelMocking: AudioDevicesListViewModel {
     var updateState: ((LocalUserState.AudioDeviceSelectionStatus) -> Void)?
 
     override func update(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) {
