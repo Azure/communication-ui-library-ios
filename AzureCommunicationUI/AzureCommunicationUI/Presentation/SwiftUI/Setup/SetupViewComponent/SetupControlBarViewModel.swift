@@ -11,16 +11,16 @@ class SetupControlBarViewModel: ObservableObject {
     @Published var audioPermission: AppPermission.Status = .unknown
     @Published var isAudioDeviceSelectionDisplayed: Bool = false
     private let logger: Logger
+    private(set) var cameraButtonViewModel: IconWithLabelButtonViewModel!
+    private(set) var micButtonViewModel: IconWithLabelButtonViewModel!
+    private(set) var audioDeviceButtonViewModel: IconWithLabelButtonViewModel!
     let audioDevicesListViewModel: AudioDevicesListViewModel
-    var cameraButtonViewModel: IconWithLabelButtonViewModel!
-    var micButtonViewModel: IconWithLabelButtonViewModel!
-    var audioDeviceButtonViewModel: IconWithLabelButtonViewModel!
 
-    var callingStatus: CallingStatus = .none
-    var cameraStatus: LocalUserState.CameraOperationalStatus = .off
-    var micStatus: LocalUserState.AudioOperationalStatus = .off
+    private var callingStatus: CallingStatus = .none
+    private var cameraStatus: LocalUserState.CameraOperationalStatus = .off
+    private(set) var micStatus: LocalUserState.AudioOperationalStatus = .off
 
-    var localVideoStreamId: String?
+    private var localVideoStreamId: String?
 
     private let dispatch: ActionDispatch
 

@@ -8,24 +8,23 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class SetupViewModelTests: XCTestCase {
-
-    var storeFactory: StoreFactoryMocking!
-    var cancellable: CancelBag!
-    var setupViewModel: SetupViewModel!
+    private var storeFactory: StoreFactoryMocking!
+    private var factoryMocking: CompositeViewModelFactoryMocking!
+    private var cancellable: CancelBag!
+    private var logger: LoggerMocking!
     private let timeout: TimeInterval = 10.0
 
     override func setUp() {
         super.setUp()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
-
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
-        setupViewModel = SetupViewModel(compositeViewModelFactory: factoryMocking,
-                                        logger: LoggerMocking(),
-                                        store: storeFactory.store)
+        logger = LoggerMocking()
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
+                                                          store: storeFactory.store)
     }
 
     func test_setupViewModel_when_setupViewLoaded_then_shouldAskAudioPermission() {
+        let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Verify Last Action is Request Audio")
         storeFactory.store.$state
             .dropFirst(2)
@@ -36,13 +35,14 @@ class SetupViewModelTests: XCTestCase {
                 expectation.fulfill()
             }.store(in: cancellable)
         storeFactory.store.state = AppState(permissionState: PermissionState(audioPermission: .notAsked))
-        setupViewModel.receive(storeFactory.store.state)
-        setupViewModel.setupAudioPermissions()
+        sut.receive(storeFactory.store.state)
+        sut.setupAudioPermissions()
 
         wait(for: [expectation], timeout: timeout)
     }
 
     func test_setupViewModel_when_setupViewLoaded_then_shouldSetupCall() {
+        let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Verify Last Action is SetupCall")
 
         storeFactory.store.$state
@@ -53,67 +53,136 @@ class SetupViewModelTests: XCTestCase {
 
                 expectation.fulfill()
             }.store(in: cancellable)
-        setupViewModel.setupCall()
+        sut.setupCall()
 
         wait(for: [expectation], timeout: timeout)
     }
 
     func test_setupViewModel_when_joinCallButtonTapped_then_shouldCallStartRequest_isJoinRequestedTrue() {
         let expectation = XCTestExpectation(description: "Verify Last Action is Calling View Launched")
+        let sut = makeSUT()
 
         storeFactory.store.$state
             .dropFirst()
             .sink { [weak self] _ in
                 XCTAssertEqual(self?.storeFactory.actions.count, 1)
                 XCTAssertTrue(self?.storeFactory.actions.last is CallingAction.CallStartRequested)
-
                 expectation.fulfill()
             }.store(in: cancellable)
-        setupViewModel.joinCallButtonTapped()
-        XCTAssertTrue(setupViewModel.isJoinRequested)
+        sut.joinCallButtonTapped()
+        XCTAssertTrue(sut.isJoinRequested)
         wait(for: [expectation], timeout: timeout)
     }
 
     func test_joinCallButtonViewModel_when_audioPermissionDenied_then_shouldDisablejoinCallButton() {
+        let sut = makeSUT()
         let permissionState = PermissionState(audioPermission: .denied,
                                               cameraPermission: .notAsked)
-        setupViewModel.joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
+        sut.joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
 
-        XCTAssertTrue(setupViewModel.joinCallButtonViewModel.isDisabled)
+        XCTAssertTrue(sut.joinCallButtonViewModel.isDisabled)
     }
 
     func test_joinCallButtonViewModel_when_audioPermissionGranted_then_shouldEnablejoinCallButton() {
+        let sut = makeSUT()
         let permissionState = PermissionState(audioPermission: .granted,
                                               cameraPermission: .denied)
-        setupViewModel.joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
+        sut.joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
 
-        XCTAssertFalse(setupViewModel.joinCallButtonViewModel.isDisabled)
+        XCTAssertFalse(sut.joinCallButtonViewModel.isDisabled)
 
     }
 
     func test_setupViewModel_when_callingStateUpdateToNone_then_isJoinRequestedFalse() {
-        setupViewModel.joinCallButtonTapped()
+        let sut = makeSUT()
+        sut.joinCallButtonTapped()
 
         let callingState = getCallingState(CallingStatus.connecting)
         let appState = AppState(callingState: callingState)
-        setupViewModel.receive(appState)
+        sut.receive(appState)
 
         let updatedCallingState = getCallingState(CallingStatus.none)
         let updatedAppState = AppState(callingState: updatedCallingState)
-        setupViewModel.receive(updatedAppState)
+        sut.receive(updatedAppState)
 
-        XCTAssertFalse(setupViewModel.isJoinRequested)
+        XCTAssertFalse(sut.isJoinRequested)
     }
 
     func test_setupViewModel_when_callingStateUpdateToConnecting_then_isJoinRequestedTrue() {
-
-            setupViewModel.joinCallButtonTapped()
+        let sut = makeSUT()
+        sut.joinCallButtonTapped()
 
         let updatedCallingState = getCallingState(CallingStatus.connecting)
         let updatedAppState = AppState(callingState: updatedCallingState)
-        setupViewModel.receive(updatedAppState)
+        sut.receive(updatedAppState)
 
-        XCTAssertTrue(setupViewModel.isJoinRequested)
+        XCTAssertTrue(sut.isJoinRequested)
+    }
+
+    func test_setupViewModel_receive_when_appStateUpdated_then_reviewAreaViewModelUpdated() {
+        let appState = AppState(permissionState: PermissionState(audioPermission: .granted),
+                                localUserState: LocalUserState(displayName: "DisplayName"))
+        let expectation = XCTestExpectation(description: "PreviewAreaViewModel is updated")
+        let updatePreviewAreaViewModel: ((LocalUserState, PermissionState) -> Void) = { userState, permissionsState in
+            XCTAssertEqual(userState.displayName, appState.localUserState.displayName)
+            XCTAssertEqual(permissionsState.audioPermission, appState.permissionState.audioPermission)
+            expectation.fulfill()
+        }
+        factoryMocking.previewAreaViewModel = PreviewAreaViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                          dispatchAction: storeFactory.store.dispatch,
+                                                                          updateState: updatePreviewAreaViewModel)
+        let sut = makeSUT()
+        sut.receive(appState)
+        wait(for: [expectation], timeout: timeout)
+    }
+
+    func test_setupViewModel_receive_when_appStateUpdated_then_setupControlBarViewModelUpdated() {
+        let appState = AppState(callingState: CallingState(status: .connected),
+                                permissionState: PermissionState(audioPermission: .granted),
+                                localUserState: LocalUserState(displayName: "DisplayName"))
+        let expectation = XCTestExpectation(description: "SetupControlBarViewModel is updated")
+        let updateSetupControlBarViewModel: ((LocalUserState, PermissionState, CallingState) -> Void) = { userState, permissionsState, callingState in
+            XCTAssertEqual(userState.displayName, appState.localUserState.displayName)
+            XCTAssertEqual(permissionsState.audioPermission, appState.permissionState.audioPermission)
+            XCTAssertEqual(callingState, appState.callingState)
+            expectation.fulfill()
+        }
+        factoryMocking.setupControlBarViewModel = SetupControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                                  logger: logger,
+                                                                                  dispatchAction: storeFactory.store.dispatch,
+                                                                                  localUserState: LocalUserState(),
+                                                                                  updateState: updateSetupControlBarViewModel)
+        let sut = makeSUT()
+        sut.receive(appState)
+        wait(for: [expectation], timeout: timeout)
+    }
+
+    func test_setupViewModel_receive_when_appStateUpdated_then_joinCallButtonViewModelUpdated() {
+        let appState = AppState()
+        let expectation = XCTestExpectation(description: "JoinCallButtonViewModel is updated")
+        let updateJoinCallButtonViewModel: ((Bool) -> Void) = { isDisabled in
+            XCTAssertEqual(isDisabled, appState.permissionState.audioPermission == .denied)
+            expectation.fulfill()
+        }
+        factoryMocking.primaryButtonViewModel = PrimaryButtonViewModelMocking(buttonStyle: .primaryFilled,
+                                                                              buttonLabel: "buttonLabel",
+                                                                              updateState: updateJoinCallButtonViewModel)
+        let sut = makeSUT()
+        sut.receive(appState)
+        wait(for: [expectation], timeout: timeout)
+    }
+
+    func test_setupViewModel_receive_when_appStateUpdated_then_errorInfoViewModelUpdated() {
+        let appState = AppState()
+        let expectation = XCTestExpectation(description: "ErrorInfoViewModel is updated")
+        let updateErrorInfoViewModel: ((ErrorState) -> Void) = { errorState in
+            XCTAssertEqual(errorState, appState.errorState)
+            expectation.fulfill()
+        }
+        factoryMocking.errorInfoViewModel = ErrorInfoViewModelMocking(updateState: updateErrorInfoViewModel)
+        let sut = makeSUT()
+        sut.receive(appState)
+        wait(for: [expectation], timeout: timeout)
     }
 }
 
@@ -122,5 +191,11 @@ extension SetupViewModelTests {
         return CallingState(status: statue,
                             isRecordingActive: false,
                             isTranscriptionActive: false)
+    }
+
+    func makeSUT() -> SetupViewModel {
+        return SetupViewModel(compositeViewModelFactory: factoryMocking,
+                                        logger: logger,
+                                        store: storeFactory.store)
     }
 }
