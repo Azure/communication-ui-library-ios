@@ -180,6 +180,9 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
             self.rendererView = rendererView
             self.shouldShowScaleForiPad = shouldShowScaleForiPad
             super.init()
+
+            streamSize = rendererView.videoRendererViewInfo
+                .videoManager?.getRemoteParticipantVideoRendererViewSize() ?? .zero
         }
 
         func viewForZooming(in scrollView: UIScrollView) -> UIView? {
