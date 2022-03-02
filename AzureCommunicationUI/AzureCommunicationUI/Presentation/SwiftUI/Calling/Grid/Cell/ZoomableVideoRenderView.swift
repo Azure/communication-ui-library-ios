@@ -52,6 +52,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         doubleTapGesture.numberOfTapsRequired = Constants.maxTapRequired
         doubleTapGesture.delegate = context.coordinator
         videoRendererViewInfo.delegate = context.coordinator
+        videoRendererViewInfo.videoManager?.videoScreenShareDelegate = context.coordinator
         scrollView.addGestureRecognizer(doubleTapGesture)
         return scrollView
     }
