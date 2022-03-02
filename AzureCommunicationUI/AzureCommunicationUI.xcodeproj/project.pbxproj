@@ -157,7 +157,7 @@
 		98B1869F27C858F500B837E6 /* AudioDevicesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B1869E27C858F500B837E6 /* AudioDevicesListViewController.swift */; };
 		98B186A127C85F9800B837E6 /* AudioDevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B186A027C85F9800B837E6 /* AudioDevicesListViewModel.swift */; };
 		98B186A327C85FAD00B837E6 /* AudioDevicesListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B186A227C85FAD00B837E6 /* AudioDevicesListCellViewModel.swift */; };
-		98E8564826FA609D00ECA304 /* AudioDeviceListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E8564726FA609D00ECA304 /* AudioDeviceListViewModelTests.swift */; };
+		98E8564826FA609D00ECA304 /* AudioDevicesListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */; };
 		98FFD82826CC5FD900655398 /* PreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FFD82726CC5FD900655398 /* PreferenceKey.swift */; };
 		A8100385269E1B370015C26E /* GroupCallOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8100384269E1B370015C26E /* GroupCallOptions.swift */; };
 		A8100387269F9DA70015C26E /* TeamsMeetingOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8100386269F9DA70015C26E /* TeamsMeetingOptions.swift */; };
@@ -363,7 +363,7 @@
 		98B1869E27C858F500B837E6 /* AudioDevicesListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevicesListViewController.swift; sourceTree = "<group>"; };
 		98B186A027C85F9800B837E6 /* AudioDevicesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevicesListViewModel.swift; sourceTree = "<group>"; };
 		98B186A227C85FAD00B837E6 /* AudioDevicesListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevicesListCellViewModel.swift; sourceTree = "<group>"; };
-		98E8564726FA609D00ECA304 /* AudioDeviceListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDeviceListViewModelTests.swift; sourceTree = "<group>"; };
+		98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevicesListViewModelTests.swift; sourceTree = "<group>"; };
 		98FFD82726CC5FD900655398 /* PreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceKey.swift; sourceTree = "<group>"; };
 		A8100384269E1B370015C26E /* GroupCallOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCallOptions.swift; sourceTree = "<group>"; };
 		A8100386269F9DA70015C26E /* TeamsMeetingOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsMeetingOptions.swift; sourceTree = "<group>"; };
@@ -846,7 +846,7 @@
 			isa = PBXGroup;
 			children = (
 				5A3141390FEFB58AD2A2E22F /* LocalVideoViewModelTests.swift */,
-				98E8564726FA609D00ECA304 /* AudioDeviceListViewModelTests.swift */,
+				98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */,
 			);
 			path = ViewComponents;
 			sourceTree = "<group>";
@@ -1314,7 +1314,7 @@
 				1F09A11326BA484000BACED7 /* ParticipantCellViewModelTests.swift in Sources */,
 				50FA46182696214D001844AC /* CallingMiddlewareHandlerTests.swift in Sources */,
 				50E2D68926D9495B006B0EF4 /* InfoHeaderViewModelTests.swift in Sources */,
-				98E8564826FA609D00ECA304 /* AudioDeviceListViewModelTests.swift in Sources */,
+				98E8564826FA609D00ECA304 /* AudioDevicesListViewModelTests.swift in Sources */,
 				FAA0EA4B27C5B4C9007D93E5 /* ParticipantGridViewModelMocking.swift in Sources */,
 				1F48B40327496E2800B6E5F9 /* DiagnosticConfigTests.swift in Sources */,
 				1F9184AD26B491840049EF5B /* LifeCycleReducerTests.swift in Sources */,

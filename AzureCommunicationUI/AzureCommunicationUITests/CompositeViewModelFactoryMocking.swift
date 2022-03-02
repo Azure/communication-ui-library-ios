@@ -74,10 +74,10 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
                                action: action)
     }
 
-    func makeAudioDeviceListViewModel(dispatchAction: @escaping ActionDispatch,
-                                      localUserState: LocalUserState) -> AudioDeviceListViewModel {
-        AudioDeviceListViewModel(dispatchAction: dispatchAction,
-                                 localUserState: localUserState)
+    func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
+                                       localUserState: LocalUserState) -> AudioDevicesListViewModel {
+        AudioDevicesListViewModel(dispatchAction: dispatchAction,
+                                  localUserState: localUserState)
     }
 
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
