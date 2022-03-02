@@ -21,9 +21,10 @@ class ParticipantGridViewModel: ObservableObject {
     }
 
     func update(remoteParticipantsState: RemoteParticipantsState, lifeCycleState: LifeCycleState) {
-        guard (lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp) ||
-            isAppInForeground != (lifeCycleState.currentStatus == .foreground)
-            else {
+        guard lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp else {
+            if isAppInForeground != (lifeCycleState.currentStatus == .foreground) {
+                isAppInForeground = lifeCycleState.currentStatus == .foreground
+            }
             return
         }
         lastUpdateTimeStamp = remoteParticipantsState.lastUpdateTimeStamp

@@ -26,7 +26,9 @@ struct ParticipantGridView: View {
                 updateVideoViewManager(displayedRemoteInfoModelArr: $0)
             }
             .onReceive(viewModel.$isAppInForeground) {
-                isAppInForeground = $0
+                if $0 == true {
+                    isAppInForeground = $0
+                }
             }
     }
 
