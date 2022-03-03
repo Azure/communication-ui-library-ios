@@ -54,6 +54,8 @@ struct SetupView: View {
                                     bottom: startCallButtonHeight + layoutSpacing,
                                     trailing: errorHorizontalPadding)
                 )
+                .accessibilityElement(children: .contain)
+                .accessibility(addTraits: .isModal)
         }
     }
 }

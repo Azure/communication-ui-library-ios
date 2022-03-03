@@ -30,6 +30,8 @@ struct CallingView: View {
         .onAppear(perform: viewModel.startCall)
         .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveOverlayDisplayed) {
             ConfirmLeaveOverlayView(viewModel: viewModel)
+                .accessibilityElement(children: .contain)
+                .accessibility(addTraits: .isModal)
         })
     }
 
