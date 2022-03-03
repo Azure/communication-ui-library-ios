@@ -6,9 +6,9 @@ import Foundation
 import SwiftUI
 
 public struct LocalizationConfiguration {
-    let customStrings: [String: String]
     let locale: String
     let localizableFilename: String
+    let customStrings: [String: String]
     let isRightToLeft: Bool
 
     /// Create an instance of LocalizationConfiguration to customize localization.
@@ -22,25 +22,25 @@ public struct LocalizationConfiguration {
     public init(locale: String,
                 localizableFilename: String = "",
                 isRightToLeft: Bool = false) {
-        self.customStrings = [:]
         self.locale = locale
         self.localizableFilename = localizableFilename
+        self.customStrings = [:]
         self.isRightToLeft = isRightToLeft
     }
 
     /// Create an instance of LocalizationConfiguration to customize localization.
+    /// - Parameter locale: Name of the language locale.
     /// - Parameter customStrings: A dictionary of key-value pairs to override override
     ///  predefined Call Composite's localization string. The key of the string should be matched
     ///  with the one in AzureCommunicationUI.
-    /// - Parameter locale: Name of the language locale.
     /// - Parameter isRightToLeft: Boolean for mirroring layout for right-to-left.
     ///  Default value is `false`.
-    public init(customStrings: [String: String],
-                locale: String,
+    public init(locale: String,
+                customStrings: [String: String],
                 isRightToLeft: Bool = false) {
-        self.customStrings = customStrings
         self.locale = locale
         self.localizableFilename = ""
+        self.customStrings = customStrings
         self.isRightToLeft = isRightToLeft
     }
 
