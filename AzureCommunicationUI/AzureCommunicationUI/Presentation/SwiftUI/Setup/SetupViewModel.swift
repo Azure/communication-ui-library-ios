@@ -12,13 +12,17 @@ class SetupViewModel: ObservableObject {
     private var callingStatus: CallingStatus = .none
     var cancellables = Set<AnyCancellable>()
 
-    @Published var isJoinRequested: Bool = false
-
     let previewAreaViewModel: PreviewAreaViewModel
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
     var joinCallButtonViewModel: PrimaryButtonViewModel!
     var setupControlBarViewModel: SetupControlBarViewModel!
+
+    @Published var isJoinRequested: Bool = false {
+        didSet {
+            setupControlBarViewModel.update(isJoinRequested: isJoinRequested)
+        }
+    }
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
