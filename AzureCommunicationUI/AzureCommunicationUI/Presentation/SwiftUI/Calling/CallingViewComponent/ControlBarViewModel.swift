@@ -127,6 +127,10 @@ class ControlBarViewModel: ObservableObject {
 
     private func deviceIconFor(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> CompositeIcon {
         switch audioDeviceStatus {
+        case .bluetoothSelected:
+            return .speakerBluetooth
+        case .headphonesSelected:
+            return .speakerRegular
         case .receiverSelected:
             return .speakerRegular
         case .speakerSelected:

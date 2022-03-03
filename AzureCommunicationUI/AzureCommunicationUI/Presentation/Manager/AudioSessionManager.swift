@@ -72,13 +72,9 @@ class AppAudioSessionManager: AudioSessionManager {
 
         if let output = audioSession.currentRoute.outputs.first {
             switch output.portType {
-            case .bluetoothA2DP:
+            case .bluetoothA2DP, .bluetoothLE, .bluetoothHFP:
                 return .bluetooth
-            case .bluetoothLE:
-                return .bluetooth
-            case .bluetoothHFP:
-                return .bluetooth
-            case .headphones:
+            case .headphones, .headsetMic:
                 return .headphones
             case .builtInSpeaker:
                 return .speaker

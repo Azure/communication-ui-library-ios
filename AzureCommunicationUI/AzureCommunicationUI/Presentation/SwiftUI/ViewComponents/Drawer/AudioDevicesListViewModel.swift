@@ -4,11 +4,13 @@
 //
 
 import Foundation
+import AVFoundation
 
 class AudioDevicesListViewModel: ObservableObject {
     @Published var audioDevicesList: [AudioDevicesListCellViewModel] = []
 
     private var audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus
+    private var previousConnectedDevice: AudioDeviceType?
     private let dispatch: ActionDispatch
 
     init(dispatchAction: @escaping ActionDispatch, localUserState: LocalUserState) {
@@ -18,7 +20,7 @@ class AudioDevicesListViewModel: ObservableObject {
 
     func update(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) {
         if audioDeviceStatus != self.audioDeviceStatus || audioDevicesList.isEmpty,
-           [.bluetoothSelected, .headphonesSelected, .receiverSelected, .speakerSelected].contains(audioDeviceStatus) {
+           LocalUserState.AudioDeviceSelectionStatus.isSelected(for: audioDeviceStatus) {
             self.audioDeviceStatus = audioDeviceStatus
             self.audioDevicesList = getAvailableAudioDevices(audioDeviceStatus: audioDeviceStatus)
         }
@@ -26,20 +28,40 @@ class AudioDevicesListViewModel: ObservableObject {
 
     private func getAvailableAudioDevices(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus)
     -> [AudioDevicesListCellViewModel] {
-        var audioDeviceOptions = [AudioDevicesListCellViewModel]()
-
-        let audioDeviceType: AudioDeviceType
+        let systemDefaultAudio: AudioDeviceType
         switch audioDeviceStatus {
         case .bluetoothSelected:
-            audioDeviceType = .bluetooth
+            systemDefaultAudio = .bluetooth
         case .headphonesSelected:
-            audioDeviceType = .headphones
+            systemDefaultAudio = .headphones
+        case .receiverSelected:
+            systemDefaultAudio = .receiver
         default:
-            audioDeviceType = .receiver
-        }
-        audioDeviceOptions.append(getAudioDeviceOption(for: audioDeviceType))
-        audioDeviceOptions.append(getAudioDeviceOption(for: .speaker))
+            if let availableInputs = AVAudioSession.sharedInstance().availableInputs {
+                let availableInputPorts = Set(availableInputs.map({ $0.portType }))
+                let isBluetoothConnected = !availableInputPorts.isDisjoint(with: bluetoothAudioPorts)
+                let isHeadphonesConnected = !availableInputPorts.isDisjoint(with: headphonesAudioPorts)
 
+                if isBluetoothConnected,
+                   isHeadphonesConnected,
+                   let previousConnectedDevice = previousConnectedDevice {
+                    systemDefaultAudio = previousConnectedDevice
+                } else if isBluetoothConnected {
+                    systemDefaultAudio = .bluetooth
+                } else if isHeadphonesConnected {
+                    systemDefaultAudio = .headphones
+                } else {
+                    systemDefaultAudio = .receiver
+                }
+            } else {
+                systemDefaultAudio = .receiver
+            }
+        }
+        previousConnectedDevice = systemDefaultAudio
+
+        var audioDeviceOptions = [AudioDevicesListCellViewModel]()
+        audioDeviceOptions.append(getAudioDeviceOption(for: systemDefaultAudio))
+        audioDeviceOptions.append(getAudioDeviceOption(for: .speaker))
         return audioDeviceOptions
     }
 

@@ -112,6 +112,15 @@ class LocalUserState: ReduxState {
                 return false
             }
         }
+
+        static func isSelected(for audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> Bool {
+            switch audioDeviceStatus {
+            case .speakerSelected, .receiverSelected, .bluetoothSelected, .headphonesSelected:
+                return true
+            default:
+                return false
+            }
+        }
     }
 
     struct CameraState {

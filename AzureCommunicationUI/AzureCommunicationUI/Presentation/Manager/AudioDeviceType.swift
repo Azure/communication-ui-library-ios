@@ -6,7 +6,10 @@
 import UIKit
 import AVFoundation
 
-enum AudioDeviceType: String, CaseIterable {
+let bluetoothAudioPorts: Set<AVAudioSession.Port> = [.bluetoothA2DP, .bluetoothLE, .bluetoothHFP]
+let headphonesAudioPorts: Set<AVAudioSession.Port> = [.headphones, .headsetMic]
+
+enum AudioDeviceType: String {
     case bluetooth = "Bluetooth"
     case headphones = "Headphones"
     case receiver = "iOS"
@@ -16,7 +19,8 @@ enum AudioDeviceType: String, CaseIterable {
         switch self {
         case .bluetooth:
             if let output = AVAudioSession.sharedInstance().currentRoute.outputs.first,
-               [.bluetoothA2DP, .bluetoothLE, .bluetoothHFP].contains(output.portType) {
+               bluetoothAudioPorts.contains(output.portType),
+               !output.portName.isEmpty {
                 return output.portName
             }
             return self.rawValue
