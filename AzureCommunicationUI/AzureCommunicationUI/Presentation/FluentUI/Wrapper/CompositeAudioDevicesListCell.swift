@@ -22,6 +22,7 @@ class CompositeAudioDevicesListCell: TableViewCell {
             checkmarkImageView = UIImageView(image: checkmarkImage)
         }
 
+        selectionStyle = .none
         backgroundColor = UIDevice.current.userInterfaceIdiom == .pad
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
