@@ -33,11 +33,10 @@ public struct LocalizationConfiguration {
     ///  predefined Call Composite's localization string. The key of the string should be matched
     ///  with the one in AzureCommunicationUI.
     /// - Parameter locale: Name of the language locale.
-    ///  Default value is "en" (English).
     /// - Parameter isRightToLeft: Boolean for mirroring layout for right-to-left.
     ///  Default value is `false`.
     public init(customStrings: [String: String],
-                locale: String = "en",
+                locale: String,
                 isRightToLeft: Bool = false) {
         self.customStrings = customStrings
         self.locale = locale
