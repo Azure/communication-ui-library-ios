@@ -8,37 +8,41 @@ import SwiftUI
 public struct LocalizationConfiguration {
     let customStrings: [String: String]
     let locale: String
-    let customLocalizableName: String
+    let localizableFilename: String
     let isRightToLeft: Bool
+
+    /// Create an instance of LocalizationConfiguration to customize localization.
+    /// - Parameter locale: Name of the language locale.
+    ///  Default value is "en" (English).
+    /// - Parameter localizableFilename:Name of the localizable strings file to override
+    ///  predefined Call Composite's localization string or to provide localization for an unsupported
+    ///  language.  The key of the string should be matched with the one in AzureCommunicationUI.
+    ///  Default value is "" (empty strings).
+    /// - Parameter isRightToLeft: Boolean for mirroring layout for right-to-left.
+    ///  Default value is `false`.
+    public init(locale: String = "en",
+                localizableFilename: String = "",
+                isRightToLeft: Bool = false) {
+        self.customStrings = [:]
+        self.locale = locale
+        self.localizableFilename = localizableFilename
+        self.isRightToLeft = isRightToLeft
+    }
 
     /// Create an instance of LocalizationConfiguration to customize localization.
     /// - Parameter customStrings: A dictionary of key-value pairs to override override
     ///  predefined Call Composite's localization string. The key of the string should be matched
     ///  with the one in AzureCommunicationUI.
+    /// - Parameter locale: Name of the language locale.
+    ///  Default value is "en" (English).
     /// - Parameter isRightToLeft: Boolean for mirroring layout for right-to-left.
     ///  Default value is `false`.
-    public init(customStrings: [String: String] = [:],
+    public init(customStrings: [String: String],
+                locale: String = "en",
                 isRightToLeft: Bool = false) {
         self.customStrings = customStrings
-        self.locale = "en"
-        self.customLocalizableName = "Localizable"
-        self.isRightToLeft = isRightToLeft
-    }
-
-    /// Create an instance of LocalizationConfiguration to customize localization.
-    /// - Parameter locale: Name of the language locale. Default value is "en" (English).
-    /// - Parameter customLocalizableName:Name of the localizable strings file to override
-    ///  predefined Call Composite's localization string or to provide localization for an unsupported
-    ///  language.  The key of the string should be matched with the one in AzureCommunicationUI.
-    ///  Default value is "Localizable".
-    /// - Parameter isRightToLeft: Boolean for mirroring layout for right-to-left.
-    /// Default value is `false`.
-    public init(locale: String = "en",
-                customLocalizableName: String = "Localizable",
-                isRightToLeft: Bool = false) {
-        self.customStrings = [:]
         self.locale = locale
-        self.customLocalizableName = customLocalizableName
+        self.localizableFilename = ""
         self.isRightToLeft = isRightToLeft
     }
 
