@@ -8,11 +8,12 @@ import FluentUI
 
 struct PreviewAreaView: View {
     @ObservedObject var viewModel: PreviewAreaViewModel
+    @Binding var isPermissionsDenied: Bool
     let viewManager: VideoViewManager
 
     var body: some View {
         Group {
-            if viewModel.showPermissionWarning() {
+            if isPermissionsDenied {
                 PermissionWarningView(displayIcon: viewModel.getPermissionWarningIcon(),
                                       displayText: viewModel.getPermissionWarningText())
             } else {

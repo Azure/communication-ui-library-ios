@@ -18,11 +18,8 @@ class SetupViewModel: ObservableObject {
     var joinCallButtonViewModel: PrimaryButtonViewModel!
     var setupControlBarViewModel: SetupControlBarViewModel!
 
-    @Published var isJoinRequested: Bool = false {
-        didSet {
-            setupControlBarViewModel.update(isJoinRequested: isJoinRequested)
-        }
-    }
+    @Published var isJoinRequested: Bool = false
+    @Published var isPermissionsDenied: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
@@ -60,6 +57,10 @@ class SetupViewModel: ObservableObject {
             .sink { [weak self] state in
                 self?.receive(state)
             }.store(in: &cancellables)
+
+        $isJoinRequested.sink { [weak self] value in
+            self?.setupControlBarViewModel.update(isJoinRequested: value)
+        }.store(in: &cancellables)
     }
 
     func setupAudioPermissions() {
@@ -94,6 +95,7 @@ class SetupViewModel: ObservableObject {
         let localUserState = state.localUserState
         let permissionState = state.permissionState
         let callingState = state.callingState
+        update(permissionState: permissionState)
         previewAreaViewModel.update(localUserState: localUserState,
                                     permissionState: permissionState)
         setupControlBarViewModel.update(localUserState: localUserState,
@@ -103,4 +105,14 @@ class SetupViewModel: ObservableObject {
 
         errorInfoViewModel.update(errorState: state.errorState)
     }
+
+    private func update(permissionState: PermissionState) {
+        let cameraPermission = permissionState.cameraPermission
+        let audioPermission = permissionState.audioPermission
+        let isPermissionDenied = cameraPermission == .denied || audioPermission == .denied
+        if isPermissionDenied != self.isPermissionsDenied {
+            self.isPermissionsDenied = isPermissionDenied
+        }
+    }
+
 }

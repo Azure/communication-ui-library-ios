@@ -22,7 +22,7 @@ class SetupControlBarViewModel: ObservableObject {
     private var localVideoStreamId: String?
 
     private let dispatch: ActionDispatch
-    var isJoinRequested: Bool = false
+    private var isJoinRequested: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
@@ -103,19 +103,15 @@ class SetupControlBarViewModel: ObservableObject {
 
     func isCameraDisabled() -> Bool {
         guard !isJoinRequested else {
-            print("---------isCameraDisabled true")
             return true
         }
-        print("---------isCameraDisabled \(cameraPermission == .denied)")
         return cameraPermission == .denied
     }
 
     func isAudioDisabled() -> Bool {
         guard !isJoinRequested else {
-            print("---------isAudioDisabled true")
             return true
         }
-        print("---------isAudioDisabled \(audioPermission == .denied)")
         return audioPermission == .denied
     }
 

@@ -23,8 +23,10 @@ struct SetupView: View {
                 VStack(spacing: layoutSpacing) {
                     ZStack(alignment: .bottom) {
                         PreviewAreaView(viewModel: viewModel.previewAreaViewModel,
+                                        isPermissionsDenied: $viewModel.isPermissionsDenied,
                                         viewManager: viewManager)
-                        SetupControlBarView(viewModel: viewModel.setupControlBarViewModel)
+                        SetupControlBarView(viewModel: viewModel.setupControlBarViewModel,
+                                            isPermissionsDenied: $viewModel.isPermissionsDenied)
                     }
                     .background(Color(StyleProvider.color.surface))
                     .cornerRadius(4)

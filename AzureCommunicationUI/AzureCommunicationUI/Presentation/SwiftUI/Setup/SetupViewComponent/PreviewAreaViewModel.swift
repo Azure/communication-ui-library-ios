@@ -8,8 +8,9 @@ import Combine
 
 class PreviewAreaViewModel: ObservableObject {
     @Published var cameraStatus: LocalUserState.CameraOperationalStatus = .off
-    @Published var cameraPermission: AppPermission.Status = .unknown
-    @Published var audioPermission: AppPermission.Status = .unknown
+
+    private var cameraPermission: AppPermission.Status = .unknown
+    private var audioPermission: AppPermission.Status = .unknown
 
     let localVideoViewModel: LocalVideoViewModel!
 
@@ -46,10 +47,6 @@ class PreviewAreaViewModel: ObservableObject {
         }
 
         return displayText
-    }
-
-    func showPermissionWarning() -> Bool {
-        self.cameraPermission == .denied || self.audioPermission == .denied
     }
 
     func update(localUserState: LocalUserState, permissionState: PermissionState) {
