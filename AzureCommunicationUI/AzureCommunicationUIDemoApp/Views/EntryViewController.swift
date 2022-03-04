@@ -27,6 +27,7 @@ class EntryViewController: UIViewController {
 
     private func setupUI() {
         let margin: CGFloat = 32.0
+        let headerMargin: CGFloat = 16.0
         let margins = view.safeAreaLayoutGuide
 
         view.backgroundColor = .systemBackground
@@ -57,6 +58,14 @@ class EntryViewController: UIViewController {
         startUiKitButton.addTarget(self, action: #selector(onUIKitPressed), for: .touchUpInside)
         view.addSubview(startUiKitButton)
 
+        let settingsUiKitButton = UIButton()
+        settingsUiKitButton.contentEdgeInsets = UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)
+        settingsUiKitButton.setTitle("Settings", for: .normal)
+        settingsUiKitButton.setTitleColor(.systemBlue, for: .normal)
+        settingsUiKitButton.translatesAutoresizingMaskIntoConstraints = false
+        settingsUiKitButton.addTarget(self, action: #selector(onSettingsPressed), for: .touchUpInside)
+        view.addSubview(settingsUiKitButton)
+
         let stackView = UIStackView(arrangedSubviews: [startSwiftUIButton,
                                                        startUiKitButton])
         stackView.spacing = margin
@@ -73,7 +82,10 @@ class EntryViewController: UIViewController {
             stackView.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: margins.centerYAnchor),
             stackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: margin),
-            stackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -margin)
+            stackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -margin),
+
+            settingsUiKitButton.topAnchor.constraint(equalTo: margins.topAnchor, constant: -margin),
+            settingsUiKitButton.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -headerMargin)
         ]
         NSLayoutConstraint.activate(constraints)
     }
@@ -89,5 +101,14 @@ class EntryViewController: UIViewController {
         let uiKitDemoViewController = UIKitDemoViewController(envConfigSubject: envConfigSubject)
         uiKitDemoViewController.modalPresentationStyle = .fullScreen
         present(uiKitDemoViewController, animated: true, completion: nil)
+    }
+
+    @objc func onSettingsPressed() {
+        let settingsView = SettingsView(envConfigSubject: envConfigSubject, dismissAction: {
+            self.dismiss(animated: true, completion: nil)
+        })
+        let settingsViewHostingController = UIHostingController(rootView: settingsView)
+        settingsViewHostingController.modalPresentationStyle = .fullScreen
+        present(settingsViewHostingController, animated: true, completion: nil)
     }
 }

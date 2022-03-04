@@ -19,7 +19,6 @@ enum EnvConfig: String {
         }
         return value
     }
-
 }
 
 class EnvConfigSubject: ObservableObject {
@@ -31,6 +30,8 @@ class EnvConfigSubject: ObservableObject {
 
     @Published var selectedAcsTokenType: ACSTokenType = .token
     @Published var selectedMeetingType: MeetingType = .groupCall
+    @Published var locale: String = "en"
+    @Published var isRightToLeft: Bool = false
 
     func update(from dic: [String: String]) {
         if let token = dic["acstoken"],

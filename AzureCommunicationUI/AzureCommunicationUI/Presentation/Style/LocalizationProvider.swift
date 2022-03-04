@@ -9,6 +9,9 @@ import SwiftUI
 struct LocalizationProvider {
     let logger: Logger?
     static var locale: String = "en"
+    static var localizableFilename: String = ""
+    static var customStrings: [String: String] = [:]
+    static var isRightToLeft: Bool = false
     static var supportedLocales: [String] = Bundle(for: CallComposite.self).localizations
 
     func applyLocalizationConfiguration(_ localeConfig: LocalizationConfiguration) {
@@ -46,5 +49,48 @@ struct LocalizationProvider {
         }
 
         return predefinedLocaleStrings
+    }
+
+    static func getLocalizedString(_ key: String) -> String {
+        if let customString = customStrings[key] {
+            return customString
+        }
+
+        if let path = Bundle.main
+            .path(forResource: locale, ofType: "lproj"),
+           let bundle = Bundle(path: path) {
+            let customLocalizableString = NSLocalizedString(key,
+                                                            tableName: localizableFilename,
+                                                            bundle: bundle,
+                                                            value: "localize_key_not_found",
+                                                            comment: key)
+            if customLocalizableString != "localize_key_not_found" {
+                return customLocalizableString
+            }
+        }
+        return getPredefinedLocalizedString(key)
+    }
+
+    static func getLocalizedString(_ key: String, _ args: CVarArg...) -> String {
+        var stringFormat = getLocalizedString(key)
+
+        // check if more placeholder than arguments
+        if stringFormat.components(separatedBy: "%").count - 1 > args.count {
+            stringFormat = getPredefinedLocalizedString(key)
+        }
+        return String(format: stringFormat, arguments: args)
+    }
+
+    private static func getPredefinedLocalizedString(_ key: String) -> String {
+        if let path = Bundle(for: CallComposite.self)
+            .path(forResource: locale, ofType: "lproj"),
+           let bundle = Bundle(path: path) {
+            return NSLocalizedString(key, bundle: bundle, comment: key)
+        }
+
+        return NSLocalizedString(key,
+                                 bundle: Bundle(for: CallComposite.self),
+                                 value: key,
+                                 comment: key)
     }
 }
