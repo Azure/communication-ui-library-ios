@@ -21,8 +21,9 @@ struct ParticipantGridCellView: View {
                 if isVideoChanging {
                     EmptyView()
                 } else if let rendererViewInfo = getRendererViewInfo() {
+                    let zoomable = viewModel.videoViewModel?.videoStreamType == .screenSharing
                     ParticipantGridCellVideoView(videoRendererViewInfo: rendererViewInfo,
-                                                 zoomable: viewModel.videoStreamType == .screenSharing,
+                                                 zoomable: zoomable,
                                                  isAppInForeground: $isAppInForeground,
                                                  isSpeaking: $viewModel.isSpeaking,
                                                  displayName: $viewModel.displayName,
@@ -34,14 +35,14 @@ struct ParticipantGridCellView: View {
                 }
             }
         }
-        .onReceive(viewModel.$videoStreamId) { videoStreamId in
+        .onReceive(viewModel.$videoViewModel) { model in
             let cachedVideoStreamId = displayedVideoStreamId
-            if videoStreamId != displayedVideoStreamId {
-                displayedVideoStreamId = videoStreamId
+            if model?.videoStreamId != displayedVideoStreamId {
+                displayedVideoStreamId = model?.videoStreamId
             }
 
-            if videoStreamId != cachedVideoStreamId,
-               videoStreamId != nil {
+            if model?.videoStreamId != cachedVideoStreamId,
+               model?.videoStreamId != nil {
                 // workaround to force rendererView being recreated
                 isVideoChanging = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -60,7 +61,7 @@ struct ParticipantGridCellView: View {
     }
 
     private func getRemoteParticipantVideoViewId() -> RemoteParticipantVideoViewId? {
-        guard let videoStreamId = viewModel.videoStreamId,
+        guard let videoStreamId = viewModel.videoViewModel?.videoStreamId,
               !videoStreamId.isEmpty else {
             return nil
         }

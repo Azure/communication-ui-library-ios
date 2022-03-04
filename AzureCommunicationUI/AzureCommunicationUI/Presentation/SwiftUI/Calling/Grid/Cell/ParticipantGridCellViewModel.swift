@@ -6,11 +6,20 @@
 import Foundation
 import Combine
 
+class VideoViewModel {
+    var videoStreamType: VideoStreamInfoModel.MediaStreamType?
+    var videoStreamId: String?
+
+    init(videoStreamType: VideoStreamInfoModel.MediaStreamType?, videoStreamId: String?) {
+        self.videoStreamId = videoStreamId
+        self.videoStreamType = videoStreamType
+    }
+}
+
 class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     let id = UUID()
 
-    @Published var videoStreamId: String?
-    @Published var videoStreamType: VideoStreamInfoModel.MediaStreamType?
+    @Published var videoViewModel: VideoViewModel?
     @Published var displayName: String?
     @Published var isSpeaking: Bool
     @Published var isMuted: Bool
@@ -22,21 +31,17 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         self.isSpeaking = participantModel.isSpeaking
         self.participantIdentifier = participantModel.userIdentifier
         self.isMuted = participantModel.isMuted
-        self.videoStreamId = getDisplayingVideoStreamIdAndType(participantModel).0
-        self.videoStreamType = getDisplayingVideoStreamIdAndType(participantModel).1
+        self.videoViewModel = getDisplayingVideoStreamModel(participantModel)
     }
 
     func update(participantModel: ParticipantInfoModel) {
         self.participantIdentifier = participantModel.userIdentifier
-        let videoIdentifier = getDisplayingVideoStreamIdAndType(participantModel).0
-        let videoStreamType = getDisplayingVideoStreamIdAndType(participantModel).1
+        let videoViewModel = getDisplayingVideoStreamModel(participantModel)
 
-        if self.videoStreamId != videoIdentifier {
-            self.videoStreamId = videoIdentifier
-        }
-
-        if self.videoStreamType != videoStreamType {
-            self.videoStreamType = videoStreamType
+        if self.videoViewModel?.videoStreamId != videoViewModel.videoStreamId ||
+            self.videoViewModel?.videoStreamType != videoViewModel.videoStreamType {
+            self.videoViewModel = VideoViewModel(videoStreamType: videoViewModel.videoStreamType,
+                                                 videoStreamId: videoViewModel.videoStreamId)
         }
 
         if self.displayName != participantModel.displayName {
@@ -52,14 +57,14 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         }
     }
 
-    private func getDisplayingVideoStreamIdAndType(_ participantModel: ParticipantInfoModel) ->
-                                           (String?, VideoStreamInfoModel.MediaStreamType?) {
+    private func getDisplayingVideoStreamModel(_ participantModel: ParticipantInfoModel) -> VideoViewModel {
         let screenShareVideoStreamIdentifier = participantModel.screenShareVideoStreamModel?.videoStreamIdentifier
         let cameraVideoStreamIdentifier = participantModel.cameraVideoStreamModel?.videoStreamIdentifier
         let screenShareVideoStreamType = participantModel.screenShareVideoStreamModel?.mediaStreamType
         let cameraVideoStreamType = participantModel.cameraVideoStreamModel?.mediaStreamType
-        let cameraVideoPair = (cameraVideoStreamIdentifier, cameraVideoStreamType)
-        let screenShareVideoPair = (screenShareVideoStreamIdentifier, screenShareVideoStreamType)
-        return screenShareVideoStreamIdentifier != nil ? screenShareVideoPair : cameraVideoPair
+
+        return screenShareVideoStreamIdentifier != nil ?
+        VideoViewModel(videoStreamType: screenShareVideoStreamType, videoStreamId: screenShareVideoStreamIdentifier) :
+        VideoViewModel(videoStreamType: cameraVideoStreamType, videoStreamId: cameraVideoStreamIdentifier)
     }
 }
