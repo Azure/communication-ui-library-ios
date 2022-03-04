@@ -157,6 +157,24 @@ class SetupViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: timeout)
     }
 
+    func test_setupViewModel_receive_when_isJoinRequestedTrue_then_setupControlBarViewModelUpdatedTrue() {
+        let expectation = XCTestExpectation(description: "SetupControlBarViewModel is updated")
+
+        let setupControlBarViewModel = SetupControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                                  logger: logger,
+                                                                                  dispatchAction: storeFactory.store.dispatch,
+                                                                                  localUserState: LocalUserState())
+        factoryMocking.setupControlBarViewModel = setupControlBarViewModel
+        let sut = makeSUT()
+        let updateIsJoinRequested: ((Bool) -> Void) = { isJoinRequested in
+            XCTAssertTrue(isJoinRequested)
+            expectation.fulfill()
+        }
+        setupControlBarViewModel.updateIsJoinRequested = updateIsJoinRequested
+        sut.isJoinRequested = true
+        wait(for: [expectation], timeout: timeout)
+    }
+
     func test_setupViewModel_receive_when_appStateUpdated_then_joinCallButtonViewModelUpdated() {
         let appState = AppState()
         let expectation = XCTestExpectation(description: "JoinCallButtonViewModel is updated")

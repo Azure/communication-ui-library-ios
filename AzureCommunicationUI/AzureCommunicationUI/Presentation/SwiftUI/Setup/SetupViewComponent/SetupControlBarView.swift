@@ -31,7 +31,7 @@ struct SetupControlBarView: View {
                        height: controlHeight)
                 .padding(.horizontal, getHorizontalPadding(from: geometry))
                 .padding(.vertical, verticalPadding)
-                .hidden(viewModel.audioPermission == .denied)
+                .hidden(viewModel.isControlBarHidden())
             }
         }
         .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {

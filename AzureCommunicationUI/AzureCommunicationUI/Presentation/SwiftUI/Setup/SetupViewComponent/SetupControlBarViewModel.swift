@@ -115,6 +115,10 @@ class SetupControlBarViewModel: ObservableObject {
         return audioPermission == .denied
     }
 
+    func isControlBarHidden() -> Bool {
+        return audioPermission == .denied
+    }
+
     func update(localUserState: LocalUserState,
                 permissionState: PermissionState,
                 callingState: CallingState) {
@@ -138,10 +142,10 @@ class SetupControlBarViewModel: ObservableObject {
     }
 
     func update(isJoinRequested: Bool) {
-        cameraButtonViewModel.update(isDisabled: isJoinRequested)
-        micButtonViewModel.update(isDisabled: isJoinRequested)
-        audioDeviceButtonViewModel.update(isDisabled: isJoinRequested)
         self.isJoinRequested = isJoinRequested
+        cameraButtonViewModel.update(isDisabled: isCameraDisabled())
+        micButtonViewModel.update(isDisabled: isAudioDisabled())
+        audioDeviceButtonViewModel.update(isDisabled: isJoinRequested)
     }
 
     private func updateButtonViewModel(localUserState: LocalUserState) {
