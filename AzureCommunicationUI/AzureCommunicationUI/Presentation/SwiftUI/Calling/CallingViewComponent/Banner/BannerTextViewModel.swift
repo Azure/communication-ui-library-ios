@@ -28,7 +28,7 @@ class BannerTextViewModel: ObservableObject {
         }
         accessibilityLabel = title + body + linkDisplay
         // UIKit workaround to update accessibility when focus should be changed and isModal shouldn't be set
-        // this code should be replaced with @AccessibilityFocusState when min supported version is iOS 15+
+        // for a consistent behaviour @AccessibilityFocusState should be used when min supported version is iOS 15+
         UIAccessibility.post(notification: .screenChanged,
                              argument: nil)
         objectWillChange.send()
