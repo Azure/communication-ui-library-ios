@@ -7,7 +7,6 @@ import SwiftUI
 
 struct SetupControlBarView: View {
     @ObservedObject var viewModel: SetupControlBarViewModel
-    @Binding var isPermissionsDenied: Bool
     let audioDeviceButtonSourceView = UIView()
     let layoutSpacing: CGFloat = 0
     let controlWidth: CGFloat = 315
@@ -32,7 +31,7 @@ struct SetupControlBarView: View {
                        height: controlHeight)
                 .padding(.horizontal, getHorizontalPadding(from: geometry))
                 .padding(.vertical, verticalPadding)
-                .hidden(isPermissionsDenied)
+                .hidden(viewModel.audioPermission == .denied)
             }
         }
         .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
