@@ -21,9 +21,9 @@ public class CallComposite {
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
-    public init(withOptions options: CallCompositeOptions) {
-        themeConfiguration = options.themeConfiguration
-        localizationConfiguration = options.localizationConfiguration
+    public init(withOptions options: CallCompositeOptions? = nil) {
+        themeConfiguration = options?.themeConfiguration
+        localizationConfiguration = options?.localizationConfiguration
     }
 
     /// Assign closure to execute when an error occurs inside Call Composite.

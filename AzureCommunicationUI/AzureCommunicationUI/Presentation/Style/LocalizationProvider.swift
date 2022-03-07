@@ -26,25 +26,4 @@ struct LocalizationProvider {
     static func getSupportedLanguages() -> [String] {
         return supportedLocales
     }
-
-    static func getLocaleDictionary(locale: String) -> [String: String] {
-        var predefinedLocaleStrings: [String: String] = [:]
-        guard let path = Bundle(for: CallComposite.self)
-                .url(forResource: "Localizable",
-                     withExtension: "strings",
-                     subdirectory: nil,
-                     localization: locale),
-              let localizableStrings = NSDictionary(contentsOf: path) else {
-            return predefinedLocaleStrings
-        }
-
-        for key in localizableStrings.allKeys {
-            if let stringKey = key as? String,
-               let stringValue = localizableStrings.value(forKey: stringKey) {
-                predefinedLocaleStrings[stringKey] = stringValue as? String
-            }
-        }
-
-        return predefinedLocaleStrings
-    }
 }
