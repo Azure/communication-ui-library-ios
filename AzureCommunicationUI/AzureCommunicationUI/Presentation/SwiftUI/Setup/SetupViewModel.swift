@@ -19,7 +19,6 @@ class SetupViewModel: ObservableObject {
     var setupControlBarViewModel: SetupControlBarViewModel!
 
     @Published var isJoinRequested: Bool = false
-    @Published var isPermissionsDenied: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,

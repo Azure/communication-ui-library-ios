@@ -102,17 +102,11 @@ class SetupControlBarViewModel: ObservableObject {
     }
 
     func isCameraDisabled() -> Bool {
-        guard !isJoinRequested else {
-            return true
-        }
-        return cameraPermission == .denied
+        return isJoinRequested || cameraPermission == .denied
     }
 
     func isAudioDisabled() -> Bool {
-        guard !isJoinRequested else {
-            return true
-        }
-        return audioPermission == .denied
+        return isJoinRequested || audioPermission == .denied
     }
 
     func isControlBarHidden() -> Bool {
