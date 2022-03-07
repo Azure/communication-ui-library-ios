@@ -10,11 +10,10 @@ class ParticipantGridViewModel: ObservableObject {
     private let maximumParticipantsDisplayed: Int = 6
     private var lastUpdateTimeStamp = Date()
     private let compositeViewModelFactory: CompositeViewModelFactory
+    private(set) var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
 
     @Published var gridsCount: Int = 0
     @Published var displayedParticipantInfoModelArr: [ParticipantInfoModel] = []
-
-    var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
 
     init(compositeViewModelFactory: CompositeViewModelFactory) {
         self.compositeViewModelFactory = compositeViewModelFactory

@@ -48,6 +48,7 @@ struct SwiftUIDemoView: View {
                     .textFieldStyle(.roundedBorder)
             case .token:
                 TextField("ACS Token", text: $envConfigSubject.acsToken)
+                    .modifier(TextFieldClearButton(text: $envConfigSubject.acsToken))
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
                     .textFieldStyle(.roundedBorder)
@@ -196,8 +197,8 @@ extension SwiftUIDemoView {
     }
 
     func didFail(_ error: ErrorEvent) {
-        print("SwiftUIDemoView::getEventsHandler::didFail \(error)")
-        print("SwiftUIDemoView error.code \(error.code)")
+        print("::::SwiftUIDemoView::getEventsHandler::didFail \(error)")
+        print("::::SwiftUIDemoView error.code \(error.code)")
         showError(for: error.code)
     }
 }
