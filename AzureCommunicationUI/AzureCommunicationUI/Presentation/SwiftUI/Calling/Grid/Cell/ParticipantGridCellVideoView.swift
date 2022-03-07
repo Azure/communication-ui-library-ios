@@ -27,7 +27,6 @@ struct ParticipantGridCellVideoView: View {
                                  titleFont: Fonts.caption1.font,
                                  mutedIconSize: 14)
                 .padding(.vertical, 2)
-                .padding(.horizontal, 4)
                 .background(Color(StyleProvider.color.overlay))
                 .clipShape(RoundedRectangle(cornerRadius: 3))
                 .padding(.leading, 4)
