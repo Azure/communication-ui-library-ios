@@ -10,7 +10,7 @@ struct LocalizationProvider {
     let logger: Logger?
     static var locale: String = "en"
     static var localizableFilename: String = ""
-    static var customStrings: [String: String] = [:]
+    static var customTranslations: [String: String] = [:]
     static var isRightToLeft: Bool = false
     static var supportedLocales: [String] = Bundle(for: CallComposite.self).localizations
 
@@ -52,8 +52,8 @@ struct LocalizationProvider {
     }
 
     static func getLocalizedString(_ key: String) -> String {
-        if let customString = customStrings[key] {
-            return customString
+        if let customTranslation = customTranslations[key] {
+            return customTranslation
         }
 
         if let path = Bundle.main

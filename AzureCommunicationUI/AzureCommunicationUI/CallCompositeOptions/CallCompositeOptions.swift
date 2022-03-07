@@ -20,6 +20,4 @@ public struct CallCompositeOptions {
         self.themeConfiguration = themeConfiguration
         self.localizationConfiguration = localizationConfiguration
     }
-
-    public init() { }
 }
