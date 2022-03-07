@@ -13,7 +13,7 @@ public struct LocalizationConfiguration {
 
     /// Create an instance of LocalizationConfiguration to customize localization.
     /// - Parameter locale: String representing the locale code (ie. en, fr,  zh-Hant, zh-Hans, ...).
-    /// - Parameter localizableFilename:Name of the localizable strings file to override
+    /// - Parameter localizableFilename: Name of the localizable strings file to override
     ///  predefined Call Composite's localization string or to provide localization for an unsupported
     ///  language.  The key of the string should be matched with the one in AzureCommunicationUI.
     ///  Default value is "" (empty strings).
