@@ -12,6 +12,7 @@ struct LocalizationProvider {
     static var localizableFilename: String = ""
     static var customTranslations: [String: String] = [:]
     static var isRightToLeft: Bool = false
+
     static var supportedLocales: [String] = Bundle(for: CallComposite.self).localizations
 
     func applyLocalizationConfiguration(_ localeConfig: LocalizationConfiguration) {
@@ -24,6 +25,8 @@ struct LocalizationProvider {
         }
 
         LocalizationProvider.locale = localeConfig.locale
+        LocalizationProvider.localizableFilename = localeConfig.localizableFilename
+        LocalizationProvider.customTranslations = localeConfig.customTranslations
     }
 
     static func getSupportedLanguages() -> [String] {
@@ -47,7 +50,6 @@ struct LocalizationProvider {
                 predefinedLocaleStrings[stringKey] = stringValue as? String
             }
         }
-
         return predefinedLocaleStrings
     }
 
@@ -87,7 +89,6 @@ struct LocalizationProvider {
            let bundle = Bundle(path: path) {
             return NSLocalizedString(key, bundle: bundle, comment: key)
         }
-
         return NSLocalizedString(key,
                                  bundle: Bundle(for: CallComposite.self),
                                  value: key,
