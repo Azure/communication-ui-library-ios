@@ -6,14 +6,9 @@
 import Foundation
 import Combine
 
-class VideoViewModel {
-    var videoStreamType: VideoStreamInfoModel.MediaStreamType?
-    var videoStreamId: String?
-
-    init(videoStreamType: VideoStreamInfoModel.MediaStreamType?, videoStreamId: String?) {
-        self.videoStreamId = videoStreamId
-        self.videoStreamType = videoStreamType
-    }
+struct VideoViewModel {
+    let videoStreamType: VideoStreamInfoModel.MediaStreamType?
+    let videoStreamId: String?
 }
 
 class ParticipantGridCellViewModel: ObservableObject, Identifiable {

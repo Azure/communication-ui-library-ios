@@ -101,10 +101,8 @@ class CallingViewModel: ObservableObject {
 
     func receive(_ state: AppState) {
         guard state.lifeCycleState.currentStatus == .foreground else {
-            if state.lifeCycleState.currentStatus == .background {
-                participantGridsViewModel.update(remoteParticipantsState: state.remoteParticipantsState,
-                                                 lifeCycleState: state.lifeCycleState)
-            }
+            participantGridsViewModel.update(remoteParticipantsState: state.remoteParticipantsState,
+                                             lifeCycleState: state.lifeCycleState)
             return
         }
 
