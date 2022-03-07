@@ -97,6 +97,8 @@
 		503F4B6B2704EE6800C17DA6 /* BannerTextViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503F4B6A2704EE6800C17DA6 /* BannerTextViewModel.swift */; };
 		503F4B6D2705065700C17DA6 /* BannerTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503F4B6C2705065700C17DA6 /* BannerTextView.swift */; };
 		505460EE27BAC72100040467 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 505460F027BAC72100040467 /* Localizable.strings */; };
+		5054610227C5977A00040467 /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054610127C5977A00040467 /* LocalizationProvider.swift */; };
+		5054610427C59AD700040467 /* LocalizationConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054610327C59AD700040467 /* LocalizationConfiguration.swift */; };
 		50C6DECC270E48BE0085D04B /* BannerInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C6DECB270E48BE0085D04B /* BannerInfoType.swift */; };
 		50C6DECF270E4F020085D04B /* BannerInfoTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C6DECE270E4F020085D04B /* BannerInfoTypeTests.swift */; };
 		50E2D68926D9495B006B0EF4 /* InfoHeaderViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */; };
@@ -307,6 +309,8 @@
 		505460FC27BACA7800040467 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		505460FD27BACA7F00040467 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		505460FE27BC166C00040467 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5054610127C5977A00040467 /* LocalizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProvider.swift; sourceTree = "<group>"; };
+		5054610327C59AD700040467 /* LocalizationConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationConfiguration.swift; sourceTree = "<group>"; };
 		50C6DECB270E48BE0085D04B /* BannerInfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerInfoType.swift; sourceTree = "<group>"; };
 		50C6DECE270E4F020085D04B /* BannerInfoTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerInfoTypeTests.swift; sourceTree = "<group>"; };
 		50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHeaderViewModelTests.swift; sourceTree = "<group>"; };
@@ -689,6 +693,7 @@
 				1FCB056A2671D8BE00126A4E /* StyleProvider.swift */,
 				1FA24BAC2666F0CC00B4A080 /* ColorThemeProvider.swift */,
 				981ACABB2685459400CD6A40 /* IconProvider.swift */,
+				5054610127C5977A00040467 /* LocalizationProvider.swift */,
 			);
 			path = Style;
 			sourceTree = "<group>";
@@ -957,6 +962,7 @@
 				A8100386269F9DA70015C26E /* TeamsMeetingOptions.swift */,
 				A810038A26A0C1740015C26E /* CallConfiguration.swift */,
 				1F48B400274879F000B6E5F9 /* DiagnosticConfig.swift */,
+				5054610327C59AD700040467 /* LocalizationConfiguration.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1378,6 +1384,7 @@
 				1F2BED64262F86E600D98266 /* SetupView.swift in Sources */,
 				A874EDCC2666DF07003C7D92 /* ContainerUIHostingController.swift in Sources */,
 				A8810CD8263CC46500C88545 /* NavigationRouter.swift in Sources */,
+				5054610227C5977A00040467 /* LocalizationProvider.swift in Sources */,
 				A8100385269E1B370015C26E /* GroupCallOptions.swift in Sources */,
 				982C282E267C0C7500427246 /* Icon.swift in Sources */,
 				50FA461D2698DCEC001844AC /* IconButton.swift in Sources */,
@@ -1404,6 +1411,7 @@
 				88A70180270E50D100F817B8 /* PopupModalView.swift in Sources */,
 				A88CDFBC27505A410004E2F5 /* ErrorInfoViewModel.swift in Sources */,
 				A88CDFB9274FF9C10004E2F5 /* ErrorInfoView.swift in Sources */,
+				5054610427C59AD700040467 /* LocalizationConfiguration.swift in Sources */,
 				50E2D69526EACB74006B0EF4 /* ParticipantsListViewModel.swift in Sources */,
 				50FA45FC26813FB8001844AC /* ParticipantGridView.swift in Sources */,
 				1F2BEDD126329E7C00D98266 /* CallingAction.swift in Sources */,
