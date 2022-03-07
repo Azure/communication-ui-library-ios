@@ -161,9 +161,9 @@ class SetupViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "SetupControlBarViewModel is updated")
 
         let setupControlBarViewModel = SetupControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                                  logger: logger,
-                                                                                  dispatchAction: storeFactory.store.dispatch,
-                                                                                  localUserState: LocalUserState())
+                                                                       logger: logger,
+                                                                       dispatchAction: storeFactory.store.dispatch,
+                                                                       localUserState: LocalUserState())
         factoryMocking.setupControlBarViewModel = setupControlBarViewModel
         let sut = makeSUT()
         let updateIsJoinRequested: ((Bool) -> Void) = { isJoinRequested in
@@ -213,7 +213,7 @@ extension SetupViewModelTests {
 
     func makeSUT() -> SetupViewModel {
         return SetupViewModel(compositeViewModelFactory: factoryMocking,
-                                        logger: logger,
-                                        store: storeFactory.store)
+                              logger: logger,
+                              store: storeFactory.store)
     }
 }
