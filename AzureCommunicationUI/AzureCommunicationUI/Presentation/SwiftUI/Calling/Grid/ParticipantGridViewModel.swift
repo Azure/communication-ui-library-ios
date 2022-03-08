@@ -29,11 +29,11 @@ class ParticipantGridViewModel: ObservableObject {
 
         let remoteParticipants = remoteParticipantsState.participantInfoList
         let newDisplayedInfoModelArr = getDisplayedInfoViewModels(remoteParticipants)
-        var removedModels: [ParticipantInfoModel] = []
-        var addedModels: [ParticipantInfoModel] = []
+        var removedModels = getRemovedInfoModels(for: newDisplayedInfoModelArr)
+        var addedModels = getAddedInfoModels(for: newDisplayedInfoModelArr)
         let orderedInfoModelArr = sortDisplayedInfoModels(newDisplayedInfoModelArr,
-                                                          removedModels: &removedModels,
-                                                          addedModels: &addedModels)
+                                                          removedModels: removedModels,
+                                                          addedModels: addedModels)
         updateCellViewModel(for: orderedInfoModelArr)
 
         displayedParticipantInfoModelArr = orderedInfoModelArr
@@ -64,20 +64,26 @@ class ParticipantGridViewModel: ObservableObject {
         return Array(newDisplayRemoteParticipant)
     }
 
-    private func sortDisplayedInfoModels(_ newInfoModels: [ParticipantInfoModel],
-                                         removedModels: inout [ParticipantInfoModel],
-                                         addedModels: inout [ParticipantInfoModel]) -> [ParticipantInfoModel] {
-        var localCacheInfoModelArr = displayedParticipantInfoModelArr
-        removedModels = localCacheInfoModelArr.filter { old in
+    private func getRemovedInfoModels(for newInfoModels: [ParticipantInfoModel]) -> [ParticipantInfoModel] {
+        return displayedParticipantInfoModelArr.filter { old in
             !newInfoModels.contains(where: { new in
                 new.userIdentifier == old.userIdentifier
             })
         }
-        addedModels = newInfoModels.filter { new in
-            !localCacheInfoModelArr.contains(where: { old in
+    }
+
+    private func getAddedInfoModels(for newInfoModels: [ParticipantInfoModel]) -> [ParticipantInfoModel] {
+        return newInfoModels.filter { new in
+            !displayedParticipantInfoModelArr.contains(where: { old in
                 new.userIdentifier == old.userIdentifier
             })
         }
+    }
+
+    private func sortDisplayedInfoModels(_ newInfoModels: [ParticipantInfoModel],
+                                         removedModels: [ParticipantInfoModel],
+                                         addedModels: [ParticipantInfoModel]) -> [ParticipantInfoModel] {
+        var localCacheInfoModelArr = displayedParticipantInfoModelArr
         guard removedModels.count == addedModels.count else {
             // when there is a gridType change
             // we just directly update the order based on the latest sorting
