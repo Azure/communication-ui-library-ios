@@ -64,14 +64,6 @@ class EntryViewController: UIViewController {
         settingsUiKitButton.addTarget(self, action: #selector(onSettingsPressed), for: .touchUpInside)
         view.addSubview(settingsUiKitButton)
 
-        let settingsUiKitButton = UIButton()
-        settingsUiKitButton.contentEdgeInsets = UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)
-        settingsUiKitButton.setTitle("Settings", for: .normal)
-        settingsUiKitButton.setTitleColor(.systemBlue, for: .normal)
-        settingsUiKitButton.translatesAutoresizingMaskIntoConstraints = false
-        settingsUiKitButton.addTarget(self, action: #selector(onSettingsPressed), for: .touchUpInside)
-        view.addSubview(settingsUiKitButton)
-
         let stackView = UIStackView(arrangedSubviews: [startSwiftUIButton,
                                                        startUiKitButton])
         stackView.spacing = margin
