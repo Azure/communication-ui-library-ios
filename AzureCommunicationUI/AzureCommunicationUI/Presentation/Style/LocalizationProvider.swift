@@ -15,6 +15,13 @@ struct LocalizationProvider {
 
     static var supportedLocales: [String] = Bundle(for: CallComposite.self).localizations
 
+    static var layoutDirection: LayoutDirection {
+        isRightToLeft ? .rightToLeft : .leftToRight
+    }
+    static var layoutDirectionUIKit: UISemanticContentAttribute {
+        isRightToLeft ? .forceRightToLeft : .forceLeftToRight
+    }
+
     func applyLocalizationConfiguration(_ localeConfig: LocalizationConfiguration) {
         if !LocalizationProvider.supportedLocales.contains(localeConfig.locale) {
             let warningMessage = "Locale not supported by default for " +
@@ -27,6 +34,7 @@ struct LocalizationProvider {
         LocalizationProvider.locale = localeConfig.locale
         LocalizationProvider.localizableFilename = localeConfig.localizableFilename
         LocalizationProvider.customTranslations = localeConfig.customTranslations
+        LocalizationProvider.isRightToLeft = localeConfig.isRightToLeft
     }
 
     static func getSupportedLanguages() -> [String] {

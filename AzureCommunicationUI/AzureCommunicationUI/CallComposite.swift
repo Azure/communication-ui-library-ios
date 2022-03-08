@@ -51,6 +51,7 @@ public class CallComposite {
         setupManagers(store: dependencyContainer.resolve(),
                       containerHostingController: toolkitHostingController,
                       logger: dependencyContainer.resolve())
+        UIView.appearance().semanticContentAttribute = LocalizationProvider.layoutDirectionUIKit
         present(toolkitHostingController)
     }
 
