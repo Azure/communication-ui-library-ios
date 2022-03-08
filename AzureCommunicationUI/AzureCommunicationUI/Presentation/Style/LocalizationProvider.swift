@@ -41,26 +41,6 @@ struct LocalizationProvider {
         return supportedLocales
     }
 
-    static func getLocaleDictionary(locale: String) -> [String: String] {
-        var predefinedLocaleStrings: [String: String] = [:]
-        guard let path = Bundle(for: CallComposite.self)
-                .url(forResource: "Localizable",
-                     withExtension: "strings",
-                     subdirectory: nil,
-                     localization: locale),
-              let localizableStrings = NSDictionary(contentsOf: path) else {
-            return predefinedLocaleStrings
-        }
-
-        for key in localizableStrings.allKeys {
-            if let stringKey = key as? String,
-               let stringValue = localizableStrings.value(forKey: stringKey) {
-                predefinedLocaleStrings[stringKey] = stringValue as? String
-            }
-        }
-        return predefinedLocaleStrings
-    }
-
     static func getLocalizedString(_ key: String) -> String {
         if let customTranslation = customTranslations[key] {
             return customTranslation
@@ -82,12 +62,7 @@ struct LocalizationProvider {
     }
 
     static func getLocalizedString(_ key: String, _ args: CVarArg...) -> String {
-        var stringFormat = getLocalizedString(key)
-
-        // check if more placeholder than arguments
-        if stringFormat.components(separatedBy: "%").count - 1 > args.count {
-            stringFormat = getPredefinedLocalizedString(key)
-        }
+        let stringFormat = getLocalizedString(key)
         return String(format: stringFormat, arguments: args)
     }
 

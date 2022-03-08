@@ -46,7 +46,6 @@ class EntryViewController: UIViewController {
         startSwiftUIButton.sizeToFit()
         startSwiftUIButton.translatesAutoresizingMaskIntoConstraints = false
         startSwiftUIButton.addTarget(self, action: #selector(onSwiftUIPressed), for: .touchUpInside)
-        view.addSubview(startSwiftUIButton)
 
         let startUiKitButton = UIButton()
         startUiKitButton.backgroundColor = .systemBlue
@@ -56,7 +55,14 @@ class EntryViewController: UIViewController {
         startUiKitButton.sizeToFit()
         startUiKitButton.translatesAutoresizingMaskIntoConstraints = false
         startUiKitButton.addTarget(self, action: #selector(onUIKitPressed), for: .touchUpInside)
-        view.addSubview(startUiKitButton)
+
+        let settingsUiKitButton = UIButton()
+        settingsUiKitButton.contentEdgeInsets = UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)
+        settingsUiKitButton.setTitle("Settings", for: .normal)
+        settingsUiKitButton.setTitleColor(.systemBlue, for: .normal)
+        settingsUiKitButton.translatesAutoresizingMaskIntoConstraints = false
+        settingsUiKitButton.addTarget(self, action: #selector(onSettingsPressed), for: .touchUpInside)
+        view.addSubview(settingsUiKitButton)
 
         let settingsUiKitButton = UIButton()
         settingsUiKitButton.contentEdgeInsets = UIEdgeInsets.init(top: 20, left: 20, bottom: 20, right: 20)
