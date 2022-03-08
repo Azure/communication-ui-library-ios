@@ -5,11 +5,11 @@
 
 import Foundation
 
-class PopupMenuViewModel {
+class AudioDevicesListCellViewModel {
     let icon: CompositeIcon
     let title: String
     let isSelected: Bool
-    let onSelected: (() -> Void)
+    let switchAudioDevice: (() -> Void)
 
     init(icon: CompositeIcon,
          title: String,
@@ -18,6 +18,6 @@ class PopupMenuViewModel {
         self.icon = icon
         self.title = title
         self.isSelected = isSelected
-        self.onSelected = onSelected
+        self.switchAudioDevice = onSelected
     }
 }
