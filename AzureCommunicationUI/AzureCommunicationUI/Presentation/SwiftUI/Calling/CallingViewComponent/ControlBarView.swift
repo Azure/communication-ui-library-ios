@@ -61,9 +61,9 @@ struct ControlBarView: View {
     }
 
     var audioDeviceSelectionListView: some View {
-        CompositePopupMenu(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
-                           viewModel: viewModel.audioDeviceListViewModel,
-                           sourceView: audioDeviceButtonSourceView)
+        CompositeAudioDevicesList(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
+                                  viewModel: viewModel.audioDevicesListViewModel,
+                                  sourceView: audioDeviceButtonSourceView)
             .modifier(LockPhoneOrientation())
     }
 }

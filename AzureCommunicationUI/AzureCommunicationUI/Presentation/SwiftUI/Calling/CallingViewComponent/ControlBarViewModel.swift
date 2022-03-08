@@ -10,7 +10,7 @@ class ControlBarViewModel: ObservableObject {
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var isAudioDeviceSelectionDisplayed: Bool = false
 
-    let audioDeviceListViewModel: AudioDeviceListViewModel
+    let audioDevicesListViewModel: AudioDevicesListViewModel
     var cameraButtonViewModel: IconButtonViewModel!
     var micButtonViewModel: IconButtonViewModel!
     var audioDeviceButtonViewModel: IconButtonViewModel!
@@ -34,7 +34,7 @@ class ControlBarViewModel: ObservableObject {
         self.logger = logger
         self.dispatch = dispatchAction
         self.displayEndCallConfirm = endCallConfirm
-        self.audioDeviceListViewModel = compositeViewModelFactory.makeAudioDeviceListViewModel(
+        self.audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
             localUserState: localUserState)
         self.cameraButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
@@ -122,11 +122,15 @@ class ControlBarViewModel: ObservableObject {
         audioDeviceButtonViewModel.update(
             iconName: deviceIconFor(audioDeviceStatus: localUserState.audioState.device)
         )
-        audioDeviceListViewModel.update(audioDeviceStatus: localUserState.audioState.device)
+        audioDevicesListViewModel.update(audioDeviceStatus: localUserState.audioState.device)
     }
 
     private func deviceIconFor(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> CompositeIcon {
         switch audioDeviceStatus {
+        case .bluetoothSelected:
+            return .speakerBluetooth
+        case .headphonesSelected:
+            return .speakerRegular
         case .receiverSelected:
             return .speakerRegular
         case .speakerSelected:

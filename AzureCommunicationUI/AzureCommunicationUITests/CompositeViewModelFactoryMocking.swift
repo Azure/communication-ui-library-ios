@@ -21,7 +21,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     var previewAreaViewModel: PreviewAreaViewModel?
     var setupControlBarViewModel: SetupControlBarViewModel?
     var errorInfoViewModel: ErrorInfoViewModel?
-    var audioDeviceListViewModel: AudioDeviceListViewModel?
+    var audioDevicesListViewModel: AudioDevicesListViewModel?
     var primaryButtonViewModel: PrimaryButtonViewModel?
     var iconButtonViewModel: IconButtonViewModel?
     var setupViewModel: SetupViewModel?
@@ -88,10 +88,10 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
                                                                 action: action)
     }
 
-    func makeAudioDeviceListViewModel(dispatchAction: @escaping ActionDispatch,
-                                      localUserState: LocalUserState) -> AudioDeviceListViewModel {
-        return audioDeviceListViewModel ?? AudioDeviceListViewModel(dispatchAction: dispatchAction,
-                                                                    localUserState: localUserState)
+    func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
+                                       localUserState: LocalUserState) -> AudioDevicesListViewModel {
+        return audioDevicesListViewModel ?? AudioDevicesListViewModel(dispatchAction: dispatchAction,
+                                                                      localUserState: localUserState)
     }
 
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
