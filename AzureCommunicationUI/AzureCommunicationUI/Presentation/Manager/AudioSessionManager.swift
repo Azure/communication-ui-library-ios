@@ -92,7 +92,7 @@ class AppAudioSessionManager: AudioSessionManager {
         switch selectedAudioDevice {
         case .speaker:
             audioPort = .speaker
-        default:
+        case .receiver, .headphones, .bluetooth:
             audioPort = .none
         }
 
