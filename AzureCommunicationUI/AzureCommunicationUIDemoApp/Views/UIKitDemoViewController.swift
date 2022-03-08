@@ -131,7 +131,11 @@ class UIKitDemoViewController: UIViewController {
     }
 
     func startExperience(with link: String) {
-        let callCompositeOptions = CallCompositeOptions(themeConfiguration: TeamsBrandConfig())
+        let localizationConfig = LocalizationConfiguration(locale: envConfigSubject.locale,
+                                                           isRightToLeft: envConfigSubject.isRightToLeft)
+
+        let callCompositeOptions = CallCompositeOptions(themeConfiguration: TeamsBrandConfig(),
+                                                        localizationConfiguration: localizationConfig)
 
         let callComposite = CallComposite(withOptions: callCompositeOptions)
 
