@@ -145,8 +145,7 @@ class SetupControlBarViewModelTests: XCTestCase {
                    permissionState: storeFactory.store.state.permissionState,
                    callingState: CallingState())
 
-        XCTAssertTrue(sut.isAudioDisabled())
-        XCTAssertFalse(sut.isCameraDisabled())
+        XCTAssertTrue(sut.isControlBarHidden())
     }
 
     func test_setupControlBarViewModel_when_cameraPermissionDenied_then_disableCameraButton() {
@@ -163,6 +162,68 @@ class SetupControlBarViewModelTests: XCTestCase {
 
         XCTAssertFalse(sut.isAudioDisabled())
         XCTAssertTrue(sut.isCameraDisabled())
+    }
+
+    func test_setupControlBarViewModel_when_updateJoinRequestedTrue_then_buttonViewModelsUpdateDisabled() {
+        let expectation = XCTestExpectation(description: "CameraButtonViewModel disabled state is updated")
+        storeFactory.store.state = AppState(permissionState: PermissionState(audioPermission: .granted,
+                                                                             cameraPermission: .granted),
+                                            localUserState: LocalUserState())
+        let updateDisabledStateCompletion: ((Bool) -> Void) = { isDisabled in
+            XCTAssertEqual(isDisabled, true)
+            expectation.fulfill()
+        }
+        factoryMocking.createIconWithLabelButtonViewModel = { icon in
+            guard icon == .videoOff
+            else { return nil }
+
+            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(iconName: .clock,
+                                                                                   buttonTypeColor: .colorThemedWhite,
+                                                                                   buttonLabel: "buttonLabel")
+            iconWithLabelButtonViewModel.updateDisabledState = updateDisabledStateCompletion
+            return iconWithLabelButtonViewModel
+        }
+        let sut = makeSUT()
+        sut.update(isJoinRequested: true)
+        wait(for: [expectation], timeout: timeout)
+    }
+
+    func test_setupControlBarViewModel_when_updateJoinRequestedTure_then_audioAndVideoAreDisabled() {
+        let cameraState = LocalUserState.CameraState(operation: .off,
+                                                     device: .front,
+                                                     transmission: .local)
+        let sut = makeSUT()
+        storeFactory.store.state = AppState(permissionState: PermissionState(audioPermission: .denied,
+                                                                             cameraPermission: .granted),
+                                            localUserState: LocalUserState(cameraState: cameraState))
+        sut.update(isJoinRequested: true)
+
+        XCTAssertTrue(sut.isCameraDisabled())
+        XCTAssertTrue(sut.isAudioDisabled())
+    }
+
+    func test_setupControlBarViewModel_when_updateJoinRequestedFalse_AudiAndVideoAreDenied_then_audioAndVideoAreDisabled() {
+        let sut = makeSUT()
+        sut.update(localUserState: LocalUserState(),
+                   permissionState: PermissionState(audioPermission: .denied,
+                                                    cameraPermission: .denied),
+                   callingState: CallingState())
+        sut.update(isJoinRequested: false)
+
+        XCTAssertTrue(sut.isCameraDisabled())
+        XCTAssertTrue(sut.isAudioDisabled())
+    }
+
+    func test_setupControlBarViewModel_when_updateJoinRequestedFalse_AudiAndVideoAreGranted_then_audioAndVideoAreDisabled() {
+        let sut = makeSUT()
+        sut.update(localUserState: LocalUserState(),
+                   permissionState: PermissionState(audioPermission: .granted,
+                                                    cameraPermission: .granted),
+                   callingState: CallingState())
+        sut.update(isJoinRequested: false)
+
+        XCTAssertFalse(sut.isCameraDisabled())
+        XCTAssertFalse(sut.isAudioDisabled())
     }
 
     func test_setupControlBarViewModel_when_microphoneDefaultState_then_defaultToOff() {
