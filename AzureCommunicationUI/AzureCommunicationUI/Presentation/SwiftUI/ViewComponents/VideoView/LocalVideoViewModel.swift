@@ -51,11 +51,16 @@ class LocalVideoViewModel: ObservableObject {
         if localVideoStreamId != localUserState.localVideoStreamIdentifier {
             localVideoStreamId = localUserState.localVideoStreamIdentifier
         }
+
         if displayName != localUserState.displayName {
             displayName = localUserState.displayName
         }
-        self.cameraSwitchButtonPipViewModel.isDisabled = localUserState.cameraState.device == .switching
-        self.cameraSwitchButtonFullViewModel.isDisabled = localUserState.cameraState.device == .switching
+
+        self.cameraSwitchButtonPipViewModel.update(isDisabled: localUserState.cameraState.device == .switching)
+        self.cameraSwitchButtonPipViewModel.update(accessibilityLabel: localUserState.cameraState.device.label)
+
+        self.cameraSwitchButtonFullViewModel.update(isDisabled: localUserState.cameraState.device == .switching)
+        self.cameraSwitchButtonFullViewModel.update(accessibilityLabel: localUserState.cameraState.device.label)
 
         let showMuted = localUserState.audioState.operation != .on
         if self.isMuted != showMuted {

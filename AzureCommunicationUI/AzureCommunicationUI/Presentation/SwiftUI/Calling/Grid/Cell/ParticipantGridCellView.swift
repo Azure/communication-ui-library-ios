@@ -96,5 +96,7 @@ struct ParticipantTitleView: View {
             }
         })
         .animation(.default)
+        .accessibilityElement(children: .ignore)
+        .accessibility(label: Text(displayName ?? ""))
     }
 }

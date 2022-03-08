@@ -27,7 +27,8 @@ class ParticipantGridsViewModelTests: XCTestCase {
         let state = RemoteParticipantsState(participantInfoList: inputInfoModelArr,
                                             lastUpdateTimeStamp: lastUpdateTimeStamp)
         let sut = makeSUT()
-        sut.update(remoteParticipantsState: state)
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: state)
         guard let firstUserIdentifier = sut.participantsCellViewModelArr.first?.participantIdentifier,
               let expectedId = inputInfoModelArr.last?.userIdentifier else {
             XCTFail()
@@ -54,14 +55,16 @@ class ParticipantGridsViewModelTests: XCTestCase {
         let state = RemoteParticipantsState(participantInfoList: [infoModel1, infoModel2],
                                             lastUpdateTimeStamp: previousDate2)
         let sut = makeSUT()
-        sut.update(remoteParticipantsState: state)
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: state)
         let expectedUserId = sut.participantsCellViewModelArr.first?.participantIdentifier
         let updatedStampInfoModel1 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid1,
                                                                      recentSpeakingStamp: Date())
 
         let state2 = RemoteParticipantsState(participantInfoList: [updatedStampInfoModel1, infoModel2],
                                              lastUpdateTimeStamp: Date())
-        sut.update(remoteParticipantsState: state2)
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: state2)
         guard let firstUserIdentifier = sut.participantsCellViewModelArr.first?.participantIdentifier else {
             XCTFail()
             return
@@ -87,7 +90,8 @@ class ParticipantGridsViewModelTests: XCTestCase {
         let state = RemoteParticipantsState(participantInfoList: [infoModel1, infoModel2],
                                             lastUpdateTimeStamp: previousDate2)
         let sut = makeSUT()
-        sut.update(remoteParticipantsState: state)
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: state)
 
         let expectedIsSpeaking = true
         let updatedStampInfoModel1 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid1,
@@ -97,7 +101,8 @@ class ParticipantGridsViewModelTests: XCTestCase {
 
         let state2 = RemoteParticipantsState(participantInfoList: [updatedStampInfoModel1, updatedStampInfoModel2],
                                              lastUpdateTimeStamp: Date())
-        sut.update(remoteParticipantsState: state2)
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: state2)
         guard let firstUserIsSpeaking = sut.participantsCellViewModelArr.first?.isSpeaking else {
             XCTFail()
             return
@@ -120,7 +125,8 @@ class ParticipantGridsViewModelTests: XCTestCase {
         let state = RemoteParticipantsState(participantInfoList: [screenShareInfoModel, infoModel2],
                                             lastUpdateTimeStamp: Date())
         let sut = makeSUT()
-        sut.update(remoteParticipantsState: state)
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: state)
         XCTAssertEqual(sut.displayedParticipantInfoModelArr.count, 1)
         XCTAssertEqual(sut.displayedParticipantInfoModelArr.first!.userIdentifier, uuid1)
         XCTAssertEqual(sut.displayedParticipantInfoModelArr.first!.screenShareVideoStreamModel?.videoStreamIdentifier, expectedVideoStreamId)
@@ -137,8 +143,10 @@ class ParticipantGridsViewModelTests: XCTestCase {
         let expectedCount = 2
         let currentState = makeRemoteParticipantState(count: expectedCount, date: currentDate)
         let sut = makeSUT()
-        sut.update(remoteParticipantsState: firstState)
-        sut.update(remoteParticipantsState: currentState)
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: firstState)
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: currentState)
         XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
     }
 
@@ -152,8 +160,10 @@ class ParticipantGridsViewModelTests: XCTestCase {
         let firstState = makeRemoteParticipantState(count: expectedCount, date: date!)
         let currentState = makeRemoteParticipantState(count: 2, date: date!)
         let sut = makeSUT()
-        sut.update(remoteParticipantsState: firstState)
-        sut.update(remoteParticipantsState: currentState)
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: firstState)
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: currentState)
         XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
     }
 
@@ -168,7 +178,8 @@ class ParticipantGridsViewModelTests: XCTestCase {
                 XCTAssertEqual(expectedGridCount, value)
                 expectation.fulfill()
             }.store(in: cancellable)
-        sut.update(remoteParticipantsState: RemoteParticipantsState())
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: RemoteParticipantsState())
         wait(for: [expectation], timeout: 1)
 
     }
@@ -185,7 +196,8 @@ class ParticipantGridsViewModelTests: XCTestCase {
                 XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
                 expectation.fulfill()
             }.store(in: cancellable)
-        sut.update(remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -201,7 +213,8 @@ class ParticipantGridsViewModelTests: XCTestCase {
                 XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
                 expectation.fulfill()
             }.store(in: cancellable)
-        sut.update(remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -217,7 +230,8 @@ class ParticipantGridsViewModelTests: XCTestCase {
                 XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
                 expectation.fulfill()
             }.store(in: cancellable)
-        sut.update(remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -233,7 +247,8 @@ class ParticipantGridsViewModelTests: XCTestCase {
                 XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
                 expectation.fulfill()
             }.store(in: cancellable)
-        sut.update(remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -249,7 +264,8 @@ class ParticipantGridsViewModelTests: XCTestCase {
                 XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
                 expectation.fulfill()
             }.store(in: cancellable)
-        sut.update(remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -265,7 +281,8 @@ class ParticipantGridsViewModelTests: XCTestCase {
                 XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
                 expectation.fulfill()
             }.store(in: cancellable)
-        sut.update(remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: makeRemoteParticipantState(count: expectedCount))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -281,10 +298,10 @@ class ParticipantGridsViewModelTests: XCTestCase {
                 XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
                 expectation.fulfill()
             }.store(in: cancellable)
-        sut.update(remoteParticipantsState: makeRemoteParticipantState(count: 7))
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: makeRemoteParticipantState(count: 7))
         wait(for: [expectation], timeout: 1)
     }
-
 }
 
 extension ParticipantGridsViewModelTests {
