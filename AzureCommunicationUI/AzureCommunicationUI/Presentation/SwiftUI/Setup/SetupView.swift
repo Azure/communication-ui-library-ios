@@ -38,6 +38,7 @@ struct SetupView: View {
         .onAppear {
             viewModel.setupAudioPermissions()
             viewModel.setupCall()
+            UIAccessibility.post(notification: .screenChanged, argument: "Setup") // Replace with contextual title
         }
     }
 
