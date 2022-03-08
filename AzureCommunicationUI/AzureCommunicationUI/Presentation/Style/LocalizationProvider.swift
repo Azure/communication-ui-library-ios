@@ -54,12 +54,7 @@ struct LocalizationProvider {
     }
 
     static func getLocalizedString(_ key: String, _ args: CVarArg...) -> String {
-        var stringFormat = getLocalizedString(key)
-
-        // guard if more placeholder than arguments, use predefined string
-        if stringFormat.components(separatedBy: "%").count - 1 > args.count {
-            stringFormat = getPredefinedLocalizedString(key)
-        }
+        let stringFormat = getLocalizedString(key)
         return String(format: stringFormat, arguments: args)
     }
 
