@@ -14,7 +14,7 @@ class SetupControlBarViewModel: ObservableObject {
     private(set) var cameraButtonViewModel: IconWithLabelButtonViewModel!
     private(set) var micButtonViewModel: IconWithLabelButtonViewModel!
     private(set) var audioDeviceButtonViewModel: IconWithLabelButtonViewModel!
-    let audioDeviceListViewModel: AudioDeviceListViewModel
+    let audioDevicesListViewModel: AudioDevicesListViewModel
 
     private var callingStatus: CallingStatus = .none
     private var cameraStatus: LocalUserState.CameraOperationalStatus = .off
@@ -31,7 +31,7 @@ class SetupControlBarViewModel: ObservableObject {
         self.logger = logger
         self.dispatch = dispatchAction
 
-        self.audioDeviceListViewModel = compositeViewModelFactory.makeAudioDeviceListViewModel(
+        self.audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatchAction,
             localUserState: localUserState)
         self.cameraButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
@@ -132,7 +132,7 @@ class SetupControlBarViewModel: ObservableObject {
             localVideoStreamId = localUserState.localVideoStreamIdentifier
             updateButtonTypeColor(isLocalVideoOff: localVideoStreamId == nil)
         }
-        audioDeviceListViewModel.update(audioDeviceStatus: localUserState.audioState.device)
+        audioDevicesListViewModel.update(audioDeviceStatus: localUserState.audioState.device)
     }
 
     func update(isJoinRequested: Bool) {
@@ -166,6 +166,10 @@ class SetupControlBarViewModel: ObservableObject {
 
     private func deviceIconFor(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> CompositeIcon {
         switch audioDeviceStatus {
+        case .bluetoothSelected:
+            return .speakerBluetooth
+        case .headphonesSelected:
+            return .speakerRegular
         case .receiverSelected:
             return .speakerRegular
         case .speakerSelected:
@@ -177,6 +181,10 @@ class SetupControlBarViewModel: ObservableObject {
 
     private func deviceLabelFor(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> String {
         switch audioDeviceStatus {
+        case .bluetoothSelected:
+            return AudioDeviceType.bluetooth.rawValue
+        case .headphonesSelected:
+            return AudioDeviceType.headphones.name
         case .receiverSelected:
             return AudioDeviceType.receiver.name
         case .speakerSelected:

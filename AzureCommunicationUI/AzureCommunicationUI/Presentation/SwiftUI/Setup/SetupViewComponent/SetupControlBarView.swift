@@ -53,9 +53,9 @@ struct SetupControlBarView: View {
     }
 
     var audioDeviceSelectionListView: some View {
-        CompositePopupMenu(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
-                           viewModel: viewModel.audioDeviceListViewModel,
-                           sourceView: audioDeviceButtonSourceView)
+        CompositeAudioDevicesList(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
+                                  viewModel: viewModel.audioDevicesListViewModel,
+                                  sourceView: audioDeviceButtonSourceView)
     }
 
     private func getWidth(from geometry: GeometryProxy) -> CGFloat {

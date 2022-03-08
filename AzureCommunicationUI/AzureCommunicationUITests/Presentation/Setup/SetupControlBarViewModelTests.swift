@@ -339,15 +339,15 @@ class SetupControlBarViewModelTests: XCTestCase {
     }
 
     func test_setupControlBarViewModel_updateStates_when_stateUpdated_then_audioDeviceListViewModelUpdated() {
-        let expectation = XCTestExpectation(description: "AudioDeviceListViewModel is updated")
+        let expectation = XCTestExpectation(description: "AudioDevicesListViewModel is updated")
         let localUserState = LocalUserState(audioState: LocalUserState.AudioState(operation: .on, device: .speakerSelected))
-        let audioDeviceListViewModel = AudioDeviceListViewModelMocking(dispatchAction: storeFactory.store.dispatch,
-                                                                       localUserState: localUserState)
-        audioDeviceListViewModel.updateState = { status in
+        let audioDevicesListViewModel = AudioDevicesListViewModelMocking(dispatchAction: storeFactory.store.dispatch,
+                                                                         localUserState: localUserState)
+        audioDevicesListViewModel.updateState = { status in
             XCTAssertEqual(status, localUserState.audioState.device)
             expectation.fulfill()
         }
-        factoryMocking.audioDeviceListViewModel = audioDeviceListViewModel
+        factoryMocking.audioDevicesListViewModel = audioDevicesListViewModel
         let sut = makeSUT()
         sut.update(localUserState: localUserState,
                    permissionState: PermissionState(),
