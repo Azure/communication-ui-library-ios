@@ -15,6 +15,7 @@ struct ParticipantGridCellVideoView: View {
     }
 
     var videoRendererViewInfo: ParticipantRendererViewInfo!
+    let rendererViewManager: RendererViewManager?
     let zoomable: Bool
     @Binding var isAppInForeground: Bool
     @Binding var isSpeaking: Bool
@@ -65,6 +66,7 @@ struct ParticipantGridCellVideoView: View {
 
     var zoomableVideoRenderView: some View {
         ZoomableVideoRenderView(videoRendererViewInfo: videoRendererViewInfo,
+                                rendererViewManager: rendererViewManager,
                                 isAppInForeground: $isAppInForeground)
                                 .gesture(TapGesture(count: 2).onEnded({}))
         // The double tap action does nothing. This is a work around to

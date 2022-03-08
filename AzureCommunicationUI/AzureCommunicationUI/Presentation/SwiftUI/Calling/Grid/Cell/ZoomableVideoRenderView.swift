@@ -16,17 +16,21 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         static let defaultAspectRatio: CGFloat = 1.6 // 16: 10 aspect ratio
         static let maxTapRequired: Int = 2
     }
-    var videoRendererViewInfo: ParticipantRendererViewInfo!
+    let videoRendererViewInfo: ParticipantRendererViewInfo!
+    let rendererViewManager: RendererViewManager?
     private var rendererView: UIView!
     private var scrollView = UIScrollView()
     private var zoomToRect: CGRect = .zero
     @Binding var isAppInForeground: Bool
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
-    init(videoRendererViewInfo: ParticipantRendererViewInfo, isAppInForeground: Binding<Bool>) {
+    init(videoRendererViewInfo: ParticipantRendererViewInfo,
+         rendererViewManager: RendererViewManager?,
+         isAppInForeground: Binding<Bool>) {
         self.videoRendererViewInfo = videoRendererViewInfo
         self.rendererView = videoRendererViewInfo.rendererView
         _isAppInForeground = isAppInForeground
+        self.rendererViewManager = rendererViewManager
     }
 
     func makeUIView(context: Context) -> UIScrollView {
@@ -51,7 +55,8 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
                                                       action: #selector(Coordinator.doubleTapped))
         doubleTapGesture.numberOfTapsRequired = Constants.maxTapRequired
         doubleTapGesture.delegate = context.coordinator
-        videoRendererViewInfo.videoManager?.videoScreenShareDelegate = context.coordinator
+        rendererViewManager?.didRenderFirstFrame = context.coordinator.videoStreamRenderer(didRenderFirstFrameWithSize:)
+
         scrollView.addGestureRecognizer(doubleTapGesture)
         return scrollView
     }
@@ -169,8 +174,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
 
     // MARK: - Coordinator
 
-    class Coordinator: NSObject, UIScrollViewDelegate, UIGestureRecognizerDelegate,
-                        VideoScreenShareDelegate {
+    class Coordinator: NSObject, UIScrollViewDelegate, UIGestureRecognizerDelegate {
 
         private var streamSize: CGSize = .zero
         private var rendererView: ZoomableVideoRenderView
@@ -180,9 +184,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
             self.rendererView = rendererView
             self.shouldShowScaleForiPad = shouldShowScaleForiPad
             super.init()
-
-            streamSize = rendererView.videoRendererViewInfo
-                .videoManager?.getRemoteParticipantVideoRendererViewSize() ?? .zero
+            streamSize = rendererView.videoRendererViewInfo.streamSize
         }
 
         func viewForZooming(in scrollView: UIScrollView) -> UIView? {
@@ -268,15 +270,9 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
             rendererView.zoomScrollView(basedOn: point, scale: finalScale)
         }
 
-        // MARK: VideoScreenShareDelegate
-
         func videoStreamRenderer(didRenderFirstFrameWithSize size: CGSize) {
             streamSize = size
             updateRendererViewSize()
-        }
-
-        func videoStreamRendererDidFailToStart() {
-            rendererView.resetRendererView()
         }
     }
 }

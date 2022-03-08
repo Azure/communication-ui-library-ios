@@ -11,26 +11,21 @@ struct RemoteParticipantVideoViewId {
     let videoStreamIdentifier: String
 }
 
-class ParticipantRendererViewInfo {
+struct ParticipantRendererViewInfo {
     let rendererView: UIView
-    var streamSize: CGSize
-    weak var videoManager: VideoViewManager?
-
-    init(rendererView: UIView,
-         videoManager: VideoViewManager? = nil,
-         streamSize: CGSize = .zero) {
-        self.rendererView = rendererView
-        self.videoManager = videoManager
-        self.streamSize = streamSize
-    }
+    let streamSize: CGSize
 }
 
-protocol VideoScreenShareDelegate: AnyObject {
-    func videoStreamRenderer(didRenderFirstFrameWithSize size: CGSize)
-    func videoStreamRendererDidFailToStart()
+protocol RendererViewManager: AnyObject {
+    var didRenderFirstFrame: ((CGSize) -> Void)? { get set }
+
+    func getRemoteParticipantVideoRendererView
+    (_ videoViewId: RemoteParticipantVideoViewId) -> ParticipantRendererViewInfo?
+    func getRemoteParticipantVideoRendererViewSize() -> CGSize?
 }
 
-class VideoViewManager: NSObject, RendererDelegate {
+class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
+
     struct VideoStreamCache {
         var renderer: VideoStreamRenderer
         var rendererView: RendererView
@@ -42,7 +37,6 @@ class VideoViewManager: NSObject, RendererDelegate {
     private var localRendererViews = MappedSequence<String, VideoStreamCache>()
 
     private let callingSDKWrapper: CallingSDKWrapper
-    weak var videoScreenShareDelegate: VideoScreenShareDelegate?
 
     init(callingSDKWrapper: CallingSDKWrapper,
          logger: Logger) {
@@ -101,6 +95,10 @@ class VideoViewManager: NSObject, RendererDelegate {
 
     }
 
+    // MARK: ParticipantRendererViewManager
+
+    var didRenderFirstFrame: ((CGSize) -> Void)?
+
     func getRemoteParticipantVideoRendererView(_ videoViewId: RemoteParticipantVideoViewId)
                                                                 -> ParticipantRendererViewInfo? {
         let videoStreamId = videoViewId.videoStreamIdentifier
@@ -111,7 +109,7 @@ class VideoViewManager: NSObject, RendererDelegate {
             let streamSize = CGSize(width: Int(videoStreamCache.renderer.size.width),
                               height: Int(videoStreamCache.renderer.size.height))
             return ParticipantRendererViewInfo(rendererView: videoStreamCache.rendererView,
-                                               videoManager: self, streamSize: streamSize)
+                                               streamSize: streamSize)
         }
 
         guard let participant = callingSDKWrapper.getRemoteParticipant(userIdentifier),
@@ -136,9 +134,7 @@ class VideoViewManager: NSObject, RendererDelegate {
                 newRenderer.delegate = self
             }
 
-            return ParticipantRendererViewInfo(rendererView: newRendererView,
-                                               videoManager: self,
-                                               streamSize: .zero)
+            return ParticipantRendererViewInfo(rendererView: newRendererView, streamSize: .zero)
         } catch let error {
             logger.error("Failed to render remote video, reason:\(error.localizedDescription)")
             return nil
@@ -154,6 +150,8 @@ class VideoViewManager: NSObject, RendererDelegate {
 
         return nil
     }
+
+    // MARK: Helper functions
 
     private func disposeViews() {
         displayedRemoteParticipantsRendererView.makeKeyIterator().forEach { key in
@@ -185,11 +183,10 @@ class VideoViewManager: NSObject, RendererDelegate {
 
     func videoStreamRenderer(didRenderFirstFrame renderer: VideoStreamRenderer) {
         let size = CGSize(width: Int(renderer.size.width), height: Int(renderer.size.height))
-        videoScreenShareDelegate?.videoStreamRenderer(didRenderFirstFrameWithSize: size)
+        didRenderFirstFrame?(size)
     }
 
     func videoStreamRenderer(didFailToStart renderer: VideoStreamRenderer) {
         logger.error("Failed to render remote screenshare video. \(renderer)")
-        videoScreenShareDelegate?.videoStreamRendererDidFailToStart()
     }
 }
