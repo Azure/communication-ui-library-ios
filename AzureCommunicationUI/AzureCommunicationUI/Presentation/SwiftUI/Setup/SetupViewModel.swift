@@ -33,7 +33,7 @@ class SetupViewModel: ObservableObject {
         self.joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: self.localizationProvider
-                .getLocalizedString("AzureCommunicationUI.SetupView.Button.JoinCall"),
+                .getLocalizedString(.joinCall),
             iconName: .meetNow,
             isDisabled: false) { [weak self] in
                 guard let self = self else {

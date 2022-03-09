@@ -16,12 +16,12 @@ struct LocalizationProviderMocking: LocalizationProvider {
         return ["en"]
     }
 
-    func getLocalizedString(_ key: String) -> String {
+    func getLocalizedString(_ key: StringKey) -> String {
         // return hard coded string
         return "ABC"
     }
 
-    func getLocalizedString(_ key: String, _ args: CVarArg...) -> String {
+    func getLocalizedString(_ key: StringKey, _ args: CVarArg...) -> String {
         // return hard coded string
         return "XYZ"
     }

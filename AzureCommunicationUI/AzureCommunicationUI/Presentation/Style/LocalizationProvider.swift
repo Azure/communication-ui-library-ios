@@ -9,8 +9,8 @@ import SwiftUI
 protocol LocalizationProvider {
     func applyLocalizationConfiguration(_ localeConfig: LocalizationConfiguration)
     func getSupportedLanguages() -> [String]
-    func getLocalizedString(_ key: String) -> String
-    func getLocalizedString(_ key: String, _ args: CVarArg...) -> String
+    func getLocalizedString(_ key: StringKey) -> String
+    func getLocalizedString(_ key: StringKey, _ args: CVarArg...) -> String
 }
 
 class AppLocalizationProvider: LocalizationProvider {
@@ -44,27 +44,27 @@ class AppLocalizationProvider: LocalizationProvider {
         return supportedLocales
     }
 
-    func getLocalizedString(_ key: String) -> String {
-        if let customTranslation = customTranslations[key] {
+    func getLocalizedString(_ key: StringKey) -> String {
+        if let customTranslation = customTranslations[key.rawValue] {
             return customTranslation
         }
 
         if let path = Bundle.main
             .path(forResource: locale, ofType: "lproj"),
            let bundle = Bundle(path: path) {
-            let customLocalizableString = NSLocalizedString(key,
+            let customLocalizableString = NSLocalizedString(key.rawValue,
                                                             tableName: localizableFilename,
                                                             bundle: bundle,
                                                             value: "localize_key_not_found",
-                                                            comment: key)
+                                                            comment: key.rawValue)
             if customLocalizableString != "localize_key_not_found" {
                 return customLocalizableString
             }
         }
-        return getPredefinedLocalizedString(key)
+        return getPredefinedLocalizedString(key.rawValue)
     }
 
-    func getLocalizedString(_ key: String, _ args: CVarArg...) -> String {
+    func getLocalizedString(_ key: StringKey, _ args: CVarArg...) -> String {
         let stringFormat = getLocalizedString(key)
         return String(format: stringFormat, arguments: args)
     }
