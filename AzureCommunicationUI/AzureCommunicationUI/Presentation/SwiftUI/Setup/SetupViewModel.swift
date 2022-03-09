@@ -57,6 +57,10 @@ class SetupViewModel: ObservableObject {
             }.store(in: &cancellables)
     }
 
+    func getTitle() -> String {
+        return "Setup" // Replace with contextual title
+    }
+
     func setupAudioPermissions() {
         if store.state.permissionState.audioPermission == .notAsked {
             store.dispatch(action: PermissionAction.AudioPermissionRequested())

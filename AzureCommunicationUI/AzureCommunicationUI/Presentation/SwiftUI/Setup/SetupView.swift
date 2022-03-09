@@ -19,7 +19,7 @@ struct SetupView: View {
     var body: some View {
         ZStack {
             VStack(spacing: layoutSpacing) {
-                SetupTitleView(iconButtonViewModel: viewModel.dismissButtonViewModel)
+                SetupTitleView(viewModel: viewModel)
                 VStack(spacing: layoutSpacing) {
                     ZStack(alignment: .bottom) {
                         PreviewAreaView(viewModel: viewModel.previewAreaViewModel,
@@ -38,7 +38,7 @@ struct SetupView: View {
         .onAppear {
             viewModel.setupAudioPermissions()
             viewModel.setupCall()
-            UIAccessibility.post(notification: .screenChanged, argument: "Setup") // Replace with contextual title
+//            UIAccessibility.post(notification: .screenChanged, argument: "Setup") // Replace with contextual title
         }
     }
 
@@ -62,18 +62,18 @@ struct SetupView: View {
 struct SetupTitleView: View {
     let viewHeight: CGFloat = 44
     let verticalSpacing: CGFloat = 0
-    var title: String = ""
-    var iconButtonViewModel: IconButtonViewModel
+    var viewModel: SetupViewModel
 
     var body: some View {
         VStack(spacing: verticalSpacing) {
             ZStack(alignment: .leading) {
-                IconButton(viewModel: iconButtonViewModel)
+                IconButton(viewModel: viewModel.dismissButtonViewModel)
                 HStack {
                     Spacer()
-                    Text(title)
+                    Text(viewModel.getTitle())
                         .font(Fonts.headline.font)
                         .foregroundColor(Color(StyleProvider.color.onBackground))
+                        .accessibility(addTraits: .isHeader)
                     Spacer()
                 }
             }.frame(height: viewHeight)
