@@ -7,6 +7,9 @@ import Foundation
 @testable import AzureCommunicationUI
 
 struct LocalizationProviderMocking: LocalizationProvider {
+    var isRightToLeft: Bool {
+        return false
+    }
 
     func apply(localeConfig: LocalizationConfiguration) {
         return

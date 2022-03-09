@@ -15,6 +15,26 @@ class LocalizationProviderTests: XCTestCase {
         logger = LoggerMocking()
     }
 
+    func test_localizationProvider_isRightToLeft_when_applyRTLTrue_then_shouldRTLReturnTrue() {
+        let sut = makeSUT()
+        let locale = "en"
+        let isRTL = true
+        let localeConfig = LocalizationConfiguration(locale: locale,
+                                                     isRightToLeft: isRTL)
+        sut.apply(localeConfig: localeConfig)
+        XCTAssertTrue(sut.isRightToLeft)
+    }
+
+    func test_localizationProvider_isRightToLeft_when_applyRTLFalse_then_shouldRTLReturnFalse() {
+        let sut = makeSUT()
+        let locale = "en"
+        let isRTL = false
+        let localeConfig = LocalizationConfiguration(locale: locale,
+                                                     isRightToLeft: isRTL)
+        sut.apply(localeConfig: localeConfig)
+        XCTAssertFalse(sut.isRightToLeft)
+    }
+
     func test_localizationProvider_getSupportedLanguages_then_shouldReturnLanguages() {
         let sut = makeSUT()
         XCTAssertNotEqual(sut.getSupportedLanguages().count, 0)

@@ -22,7 +22,6 @@ struct ContainerView: View {
                 callingView.proximitySensorEnabled(true)
             }
         }
-        .environment(\.layoutDirection, LocalizationProvider.layoutDirection)
     }
 
     var setupView: SetupView {

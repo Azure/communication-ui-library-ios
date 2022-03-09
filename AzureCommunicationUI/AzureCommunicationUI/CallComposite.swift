@@ -42,16 +42,17 @@ public class CallComposite {
         logger?.debug("launch composite experience")
 
         dependencyContainer.registerDependencies(callConfiguration)
-
+        let localizationProvider = dependencyContainer.resolve() as LocalizationProvider
         setupColorTheming()
-        setupLocalization(with: dependencyContainer.resolve())
+        setupLocalization(with: localizationProvider)
         let toolkitHostingController = makeToolkitHostingController(router: dependencyContainer.resolve(),
                                                                     logger: dependencyContainer.resolve(),
                                                                     viewFactory: dependencyContainer.resolve())
         setupManagers(store: dependencyContainer.resolve(),
                       containerHostingController: toolkitHostingController,
                       logger: dependencyContainer.resolve())
-        UIView.appearance().semanticContentAttribute = LocalizationProvider.layoutDirectionUIKit
+        UIView.appearance().semanticContentAttribute = localizationProvider.isRightToLeft ?
+            .forceRightToLeft : .forceLeftToRight
         present(toolkitHostingController)
     }
 

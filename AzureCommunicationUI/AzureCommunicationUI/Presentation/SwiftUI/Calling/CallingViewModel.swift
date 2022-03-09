@@ -10,6 +10,7 @@ class CallingViewModel: ObservableObject {
     @Published var isLobbyOverlayDisplayed: Bool = false
     @Published var isConfirmLeaveOverlayDisplayed: Bool = false
     @Published var isParticipantGridDisplayed: Bool
+    let isRightToLeft: Bool
 
     private let compositeViewModelFactory: CompositeViewModelFactory
     private let logger: Logger
@@ -31,6 +32,7 @@ class CallingViewModel: ObservableObject {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.store = store
         self.localizationProvider = localizationProvider
+        self.isRightToLeft = localizationProvider.isRightToLeft
         let actionDispatch: ActionDispatch = store.dispatch
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel()
