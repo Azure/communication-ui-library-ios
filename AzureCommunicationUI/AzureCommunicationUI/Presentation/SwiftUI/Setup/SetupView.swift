@@ -68,6 +68,7 @@ struct SetupTitleView: View {
         VStack(spacing: verticalSpacing) {
             ZStack(alignment: .leading) {
                 IconButton(viewModel: viewModel.dismissButtonViewModel)
+                    .accessibility(sortPriority: 0 )
                 HStack {
                     Spacer()
                     Text(viewModel.getTitle())
@@ -75,7 +76,7 @@ struct SetupTitleView: View {
                         .foregroundColor(Color(StyleProvider.color.onBackground))
                         .accessibility(addTraits: .isHeader)
                     Spacer()
-                }
+                }.accessibility(sortPriority: 1)
             }.frame(height: viewHeight)
             Divider()
         }
