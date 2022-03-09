@@ -14,15 +14,15 @@ class SetupControlBarViewModel: ObservableObject {
     private(set) var cameraButtonViewModel: IconWithLabelButtonViewModel!
     private(set) var micButtonViewModel: IconWithLabelButtonViewModel!
     private(set) var audioDeviceButtonViewModel: IconWithLabelButtonViewModel!
-    let audioDeviceListViewModel: AudioDeviceListViewModel
+    let audioDevicesListViewModel: AudioDevicesListViewModel
 
     private var callingStatus: CallingStatus = .none
     private var cameraStatus: LocalUserState.CameraOperationalStatus = .off
     private(set) var micStatus: LocalUserState.AudioOperationalStatus = .off
-
     private var localVideoStreamId: String?
 
     private let dispatch: ActionDispatch
+    private var isJoinRequested: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
@@ -31,7 +31,7 @@ class SetupControlBarViewModel: ObservableObject {
         self.logger = logger
         self.dispatch = dispatchAction
 
-        self.audioDeviceListViewModel = compositeViewModelFactory.makeAudioDeviceListViewModel(
+        self.audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatchAction,
             localUserState: localUserState)
         self.cameraButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
@@ -102,11 +102,15 @@ class SetupControlBarViewModel: ObservableObject {
     }
 
     func isCameraDisabled() -> Bool {
-        cameraPermission == .denied
+        return isJoinRequested || cameraPermission == .denied
     }
 
     func isAudioDisabled() -> Bool {
-        audioPermission == .denied
+        return isJoinRequested || audioPermission == .denied
+    }
+
+    func isControlBarHidden() -> Bool {
+        return audioPermission == .denied
     }
 
     func update(localUserState: LocalUserState,
@@ -128,7 +132,14 @@ class SetupControlBarViewModel: ObservableObject {
             localVideoStreamId = localUserState.localVideoStreamIdentifier
             updateButtonTypeColor(isLocalVideoOff: localVideoStreamId == nil)
         }
-        audioDeviceListViewModel.update(audioDeviceStatus: localUserState.audioState.device)
+        audioDevicesListViewModel.update(audioDeviceStatus: localUserState.audioState.device)
+    }
+
+    func update(isJoinRequested: Bool) {
+        self.isJoinRequested = isJoinRequested
+        cameraButtonViewModel.update(isDisabled: isCameraDisabled())
+        micButtonViewModel.update(isDisabled: isAudioDisabled())
+        audioDeviceButtonViewModel.update(isDisabled: isJoinRequested)
     }
 
     private func updateButtonViewModel(localUserState: LocalUserState) {
@@ -139,6 +150,7 @@ class SetupControlBarViewModel: ObservableObject {
         micButtonViewModel.update(
             iconName: self.micStatus == .on ? .micOn : .micOff,
             buttonLabel: "Mic is \(self.micStatus == .on ? "on" : "off")")
+        micButtonViewModel.update(isDisabled: isAudioDisabled())
         audioDeviceButtonViewModel.update(
             iconName: deviceIconFor(audioDeviceStatus: localUserState.audioState.device),
             buttonLabel: deviceLabelFor(audioDeviceStatus: localUserState.audioState.device))
@@ -154,6 +166,10 @@ class SetupControlBarViewModel: ObservableObject {
 
     private func deviceIconFor(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> CompositeIcon {
         switch audioDeviceStatus {
+        case .bluetoothSelected:
+            return .speakerBluetooth
+        case .headphonesSelected:
+            return .speakerRegular
         case .receiverSelected:
             return .speakerRegular
         case .speakerSelected:
@@ -165,6 +181,10 @@ class SetupControlBarViewModel: ObservableObject {
 
     private func deviceLabelFor(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> String {
         switch audioDeviceStatus {
+        case .bluetoothSelected:
+            return AudioDeviceType.bluetooth.rawValue
+        case .headphonesSelected:
+            return AudioDeviceType.headphones.name
         case .receiverSelected:
             return AudioDeviceType.receiver.name
         case .speakerSelected:

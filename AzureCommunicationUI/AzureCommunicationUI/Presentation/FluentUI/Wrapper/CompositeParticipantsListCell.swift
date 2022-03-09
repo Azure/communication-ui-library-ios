@@ -24,6 +24,7 @@ class CompositeParticipantsListCell: TableViewCell {
             micImageView = UIImageView(image: micImage)
         }
 
+        selectionStyle = .none
         backgroundColor = UIDevice.current.userInterfaceIdiom == .pad
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
