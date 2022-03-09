@@ -35,7 +35,7 @@
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Покинуть звонок";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="Отмена";
 
-/* ComplienceBanner title */
+/* ComplianceBanner title */
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Начата запись и транскрибирование.";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="Запись начата.";
 "AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Транскрибирование остановлено.";
@@ -45,7 +45,7 @@
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="Сохранение записи.";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="Сохранение записи и транскрибирования.";
 
-/* ComplienceBanner body */
+/* ComplianceBanner body */
 "AzureCommunicationUI.CallingView.BannerBody.Consent"="Присоединяясь, вы даете согласие на транскрибирование этого собрания.";
 "AzureCommunicationUI.CallingView.BannerBody.Recording"="Сейчас для этого собрания ведется только запись.";
 "AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="Транскрибирование остановлено.";
@@ -53,7 +53,7 @@
 "AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="Запись остановлена.";
 "AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Запись и транскрибирование остановлены.";
 
-/* ComplienceBanner display link */
+/* ComplianceBanner display link */
 "AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"="Политика конфиденциальности";
 "AzureCommunicationUI.CallingView.BannerLink.LearnMore"="Подробнее";
 

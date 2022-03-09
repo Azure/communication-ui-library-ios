@@ -44,7 +44,7 @@ public class CallComposite {
         dependencyContainer.registerDependencies(callConfiguration)
 
         setupColorTheming()
-        setupLocalization()
+        setupLocalization(with: dependencyContainer.resolve())
         let toolkitHostingController = makeToolkitHostingController(router: dependencyContainer.resolve(),
                                                                     logger: dependencyContainer.resolve(),
                                                                     viewFactory: dependencyContainer.resolve())
@@ -140,10 +140,9 @@ public class CallComposite {
         }
     }
 
-    private func setupLocalization() {
+    private func setupLocalization(with provider: LocalizationProvider) {
         if let localizationConfiguration = localizationConfiguration {
-            let localizationProvider = LocalizationProvider(logger: logger)
-            localizationProvider.applyLocalizationConfiguration(localizationConfiguration)
+            provider.apply(localeConfig: localizationConfiguration)
         }
     }
 

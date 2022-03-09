@@ -35,7 +35,7 @@
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="離開通話";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="取消";
 
-/* ComplienceBanner title */
+/* ComplianceBanner title */
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"="已開始錄製並進行轉錄。";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="已開始錄製。";
 "AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="已停止轉錄。";
@@ -45,7 +45,7 @@
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="正在儲存錄製內容。";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="正在儲存錄製和轉錄。";
 
-/* ComplienceBanner body */
+/* ComplianceBanner body */
 "AzureCommunicationUI.CallingView.BannerBody.Consent"="一旦加入，即表示您同意轉譯此會議。";
 "AzureCommunicationUI.CallingView.BannerBody.Recording"="您現在只會錄製此會議。";
 "AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="已停止轉錄。";
@@ -53,7 +53,7 @@
 "AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="已停止錄製。";
 "AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="已停止錄製與轉錄。";
 
-/* ComplienceBanner display link */
+/* ComplianceBanner display link */
 "AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"="隱私權原則";
 "AzureCommunicationUI.CallingView.BannerLink.LearnMore"="深入了解";
 

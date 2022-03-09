@@ -35,7 +35,7 @@
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Gesprek verlaten";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="Annuleren";
 
-/* ComplienceBanner title */
+/* ComplianceBanner title */
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Opname en transcriptie zijn gestart.";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="De opname is gestart.";
 "AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Transcriptie is gestopt.";
@@ -45,7 +45,7 @@
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="De opname wordt opgeslagen.";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="Opname en transcriptie worden opgeslagen.";
 
-/* ComplienceBanner body */
+/* ComplianceBanner body */
 "AzureCommunicationUI.CallingView.BannerBody.Consent"="Door deel te nemen, geeft u toestemming voor het transcriberen van deze vergadering.";
 "AzureCommunicationUI.CallingView.BannerBody.Recording"="U bent nu alleen deze vergadering aan het opnemen.";
 "AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="Transcriptie is gestopt.";
@@ -53,7 +53,7 @@
 "AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="De opname is gestopt.";
 "AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Opname en transcriptie zijn gestopt.";
 
-/* ComplienceBanner display link */
+/* ComplianceBanner display link */
 "AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"="Privacybeleid";
 "AzureCommunicationUI.CallingView.BannerLink.LearnMore"="Meer informatie";
 

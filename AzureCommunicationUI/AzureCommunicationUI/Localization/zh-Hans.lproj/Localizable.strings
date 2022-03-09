@@ -35,7 +35,7 @@
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="离开通话";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="取消";
 
-/* ComplienceBanner title */
+/* ComplianceBanner title */
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"="录制和听录已开始。";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="录制已开始。";
 "AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="听录已停止。";
@@ -45,7 +45,7 @@
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="正在保存录制。";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="正在保存录制和听录。";
 
-/* ComplienceBanner body */
+/* ComplianceBanner body */
 "AzureCommunicationUI.CallingView.BannerBody.Consent"="加入即表示你同意转录此会议。";
 "AzureCommunicationUI.CallingView.BannerBody.Recording"="现在仅录制此会议。";
 "AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="听录已停止。";
@@ -53,7 +53,7 @@
 "AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="录制已停止。";
 "AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="录制和听录已停止。";
 
-/* ComplienceBanner display link */
+/* ComplianceBanner display link */
 "AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"="隐私策略";
 "AzureCommunicationUI.CallingView.BannerLink.LearnMore"="了解详细信息";
 
