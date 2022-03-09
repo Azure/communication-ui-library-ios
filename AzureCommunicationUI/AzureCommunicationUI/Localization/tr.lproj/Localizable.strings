@@ -35,7 +35,7 @@
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Aramadan ayrıl";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="İptal";
 
-/* ComplienceBanner title */
+/* ComplianceBanner title */
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Kayıt ve döküm başlatıldı.";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="Kayıt başladı.";
 "AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Döküm durduruldu.";
@@ -45,7 +45,7 @@
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="Kayıt kaydediliyor.";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="Kayıt ve döküm kaydediliyor.";
 
-/* ComplienceBanner body */
+/* ComplianceBanner body */
 "AzureCommunicationUI.CallingView.BannerBody.Consent"="Katılarak bu toplantının dökümünün çıkarılmasına onay verirsiniz.";
 "AzureCommunicationUI.CallingView.BannerBody.Recording"="Şu anda yalnızca bu toplantıyı kaydediyorsunuz.";
 "AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="Döküm durduruldu.";
@@ -53,7 +53,7 @@
 "AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="Kayıt durduruldu.";
 "AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Kayıt ve döküm durduruldu.";
 
-/* ComplienceBanner display link */
+/* ComplianceBanner display link */
 "AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"="Gizlilik ilkesi";
 "AzureCommunicationUI.CallingView.BannerLink.LearnMore"="Daha fazla bilgi edinin";
 

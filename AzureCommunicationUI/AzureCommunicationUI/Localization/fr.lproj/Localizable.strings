@@ -35,7 +35,7 @@
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Quitter l'appel";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="Annuler";
 
-/* ComplienceBanner title */
+/* ComplianceBanner title */
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Démarrage de l’enregistrement et de la transcription.";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="Démarrage de l’enregistrement.";
 "AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Arrêt de la transcription.";
@@ -45,7 +45,7 @@
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="Enregistrement en cours de sauvegarde.";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="L’enregistrement et la transcription sont en cours de sauvegarde.";
 
-/* ComplienceBanner body */
+/* ComplianceBanner body */
 "AzureCommunicationUI.CallingView.BannerBody.Consent"="En participant, vous autorisez la transcription de cette réunion.";
 "AzureCommunicationUI.CallingView.BannerBody.Recording"="Cette réunion est désormais enregistrée uniquement.";
 "AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="Arrêt de la transcription.";
@@ -53,7 +53,7 @@
 "AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="Arrêt de l’enregistrement.";
 "AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Arrêt de l’enregistrement et de la transcription.";
 
-/* ComplienceBanner display link */
+/* ComplianceBanner display link */
 "AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"="Politique de confidentialité";
 "AzureCommunicationUI.CallingView.BannerLink.LearnMore"="En savoir plus";
 

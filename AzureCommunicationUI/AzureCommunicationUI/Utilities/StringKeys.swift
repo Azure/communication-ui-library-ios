@@ -43,7 +43,7 @@ enum StringKey: String {
     case leaveCall = "AzureCommunicationUI.CallingView.Overlay.LeaveCall"
     case cancel = "AzureCommunicationUI.CallingView.Overlay.Cancel"
 
-    /* ComplienceBanner title */
+    /* ComplianceBanner title */
     case bannerTitleRecordingAndTranscriptionStarted =
             "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"
     case bannerTitleReordingStarted =
@@ -61,7 +61,7 @@ enum StringKey: String {
     case bannerTitleRecordingAndTranscriptionStopped =
             "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"
 
-    /* ComplienceBanner body */
+    /* ComplianceBanner body */
     case bannerBodyConsent = "AzureCommunicationUI.CallingView.BannerBody.Consent"
     case bannerBodyRecording = "AzureCommunicationUI.CallingView.BannerBody.Recording"
     case bannerBodyTranscriptionStopped = "AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"
@@ -70,7 +70,7 @@ enum StringKey: String {
     case bannerBodyRecordingAndTranscriptionStopped =
             "AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"
 
-    /* ComplienceBanner display link */
+    /* ComplianceBanner display link */
     case bannerDisplayLinkPrivacyPolicy = "AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"
     case bannerDisplayLinkLearnMore = "AzureCommunicationUI.CallingView.BannerLink.LearnMore"
 
