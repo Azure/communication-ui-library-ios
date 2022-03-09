@@ -4,7 +4,8 @@
 
 ### New Features
 - Update joining experience in setup view. [#44](https://github.com/Azure/communication-ui-library-ios/pull/44)
-
+- Update audio device selection list when connected to bluetooth/headphones. [#56](https://github.com/Azure/communication-ui-library-ios/pull/56)
+ 
 ### Breaking Changes
 
 ### Bug Fixes

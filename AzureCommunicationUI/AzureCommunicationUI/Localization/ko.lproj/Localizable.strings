@@ -35,7 +35,7 @@
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="통화 나가기";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="취소";
 
-/* ComplienceBanner title */
+/* ComplianceBanner title */
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"="녹음/녹화와 전사를 시작했습니다.";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="녹음/녹화를 시작했습니다.";
 "AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="전사를 중단했습니다.";
@@ -45,7 +45,7 @@
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="녹음/녹화를 저장하는 중입니다.";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="녹음/녹화와 전사를 저장하는 중입니다.";
 
-/* ComplienceBanner body */
+/* ComplianceBanner body */
 "AzureCommunicationUI.CallingView.BannerBody.Consent"="참가하면 이 모임이 전사되는 것에 동의하게 됩니다.";
 "AzureCommunicationUI.CallingView.BannerBody.Recording"="이제 이 모임의 녹음/녹화만 진행합니다.";
 "AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="전사를 중단했습니다.";
@@ -53,7 +53,7 @@
 "AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="녹음/녹화를 중단했습니다.";
 "AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="녹음/녹화와 전사를 중단했습니다.";
 
-/* ComplienceBanner display link */
+/* ComplianceBanner display link */
 "AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"="개인 정보 취급 방침";
 "AzureCommunicationUI.CallingView.BannerLink.LearnMore"="자세한 정보";
 

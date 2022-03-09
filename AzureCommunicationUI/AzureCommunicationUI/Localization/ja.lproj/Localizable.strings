@@ -35,7 +35,7 @@
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="通話から退出";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="キャンセル";
 
-/* ComplienceBanner title */
+/* ComplianceBanner title */
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"="レコーディングとトランスクリプトが開始されました。";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="レコーディングを開始しました。";
 "AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="トランスクリプトが停止しました。";
@@ -45,7 +45,7 @@
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="レコーディングを保存しています。";
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="レコーディングとトランスクリプトを保存されました。";
 
-/* ComplienceBanner body */
+/* ComplianceBanner body */
 "AzureCommunicationUI.CallingView.BannerBody.Consent"="参加すると、この会議のトランスクリプトの作成に同意したことになります。";
 "AzureCommunicationUI.CallingView.BannerBody.Recording"="今はこの会議の録画のみを行っています。";
 "AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="トランスクリプトが停止しました。";
@@ -53,7 +53,7 @@
 "AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="レコーディングを停止しました。";
 "AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="レコーディングとトランスクリプトを停止しました。";
 
-/* ComplienceBanner display link */
+/* ComplianceBanner display link */
 "AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"="プライバシー ポリシー";
 "AzureCommunicationUI.CallingView.BannerLink.LearnMore"="詳細情報";
 
