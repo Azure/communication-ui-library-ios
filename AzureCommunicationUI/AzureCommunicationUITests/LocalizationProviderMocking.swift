@@ -17,10 +17,12 @@ struct LocalizationProviderMocking: LocalizationProvider {
     }
 
     func getLocalizedString(_ key: String) -> String {
-        return key
+        // return hard coded string
+        return "ABC"
     }
 
     func getLocalizedString(_ key: String, _ args: CVarArg...) -> String {
-        return key
+        // return hard coded string
+        return "XYZ"
     }
 }
