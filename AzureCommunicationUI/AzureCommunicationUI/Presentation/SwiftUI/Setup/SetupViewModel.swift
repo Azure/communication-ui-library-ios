@@ -9,6 +9,7 @@ import Combine
 class SetupViewModel: ObservableObject {
     private let logger: Logger
     private let store: Store<AppState>
+    private let localizationProvider: LocalizationProvider
     private var callingStatus: CallingStatus = .none
     var cancellables = Set<AnyCancellable>()
 
@@ -22,14 +23,16 @@ class SetupViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
-         store: Store<AppState>) {
+         store: Store<AppState>,
+         localizationProvider: LocalizationProvider) {
         self.store = store
+        self.localizationProvider = localizationProvider
         self.logger = logger
         self.previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
         self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
         self.joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
-            buttonLabel: LocalizationProvider
+            buttonLabel: self.localizationProvider
                 .getLocalizedString("AzureCommunicationUI.SetupView.Button.JoinCall"),
             iconName: .meetNow,
             isDisabled: false) { [weak self] in

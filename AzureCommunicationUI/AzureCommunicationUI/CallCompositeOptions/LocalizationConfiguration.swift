@@ -47,6 +47,6 @@ public struct LocalizationConfiguration {
     /// Get supported languages the Call Composite is localized to.
     /// - Returns: A list of language names for the locale codes that has predefined localized strings for
     public static func getSupportedLanguages() -> [String] {
-        return LocalizationProvider.supportedLocales
+        return Bundle(for: CallComposite.self).localizations
     }
 }

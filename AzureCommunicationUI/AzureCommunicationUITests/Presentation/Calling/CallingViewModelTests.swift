@@ -182,7 +182,8 @@ extension CallingViewModelTests {
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
-                                store: storeFactory.store)
+                                store: storeFactory.store,
+                                localizationProvider: LocalizationProviderMocking())
     }
 
     func makeSUT(updateControlBarViewModel: @escaping ((LocalUserState, PermissionState) -> Void)) -> CallingViewModel {
@@ -196,7 +197,8 @@ extension CallingViewModelTests {
                                                                         updateState: updateControlBarViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
-                                store: storeFactory.store)
+                                store: storeFactory.store,
+                                localizationProvider: LocalizationProviderMocking())
     }
 
     func makeSUT(updateInfoHeaderViewModel: @escaping ((LocalUserState, RemoteParticipantsState) -> Void)) -> CallingViewModel {
@@ -208,7 +210,8 @@ extension CallingViewModelTests {
                                                                         updateState: updateInfoHeaderViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
-                                store: storeFactory.store)
+                                store: storeFactory.store,
+                                localizationProvider: LocalizationProviderMocking())
     }
 
     func makeSUT(updateLocalVideoViewModel: @escaping ((LocalUserState) -> Void)) -> CallingViewModel {
@@ -220,7 +223,8 @@ extension CallingViewModelTests {
                                                                         updateState: updateLocalVideoViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
-                                store: storeFactory.store)
+                                store: storeFactory.store,
+                                localizationProvider: LocalizationProviderMocking())
     }
 
     func makeSUT(updateParticipantGridViewModel: @escaping ((RemoteParticipantsState) -> Void)) -> CallingViewModel {
@@ -230,7 +234,8 @@ extension CallingViewModelTests {
                                                                                   updateState: updateParticipantGridViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
-                                store: storeFactory.store)
+                                store: storeFactory.store,
+                                localizationProvider: LocalizationProviderMocking())
     }
 
     func makeSUT(updateBannerViewModel: @escaping ((CallingState) -> Void)) -> CallingViewModel {
@@ -240,6 +245,7 @@ extension CallingViewModelTests {
                                                                 updateState: updateBannerViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
-                                store: storeFactory.store)
+                                store: storeFactory.store,
+                                localizationProvider: LocalizationProviderMocking())
     }
 }

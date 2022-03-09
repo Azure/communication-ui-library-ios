@@ -14,6 +14,7 @@ class CallingViewModel: ObservableObject {
     private let compositeViewModelFactory: CompositeViewModelFactory
     private let logger: Logger
     private let store: Store<AppState>
+    private let localizationProvider: LocalizationProvider
     private var cancellables = Set<AnyCancellable>()
 
     var controlBarViewModel: ControlBarViewModel!
@@ -24,10 +25,12 @@ class CallingViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
-         store: Store<AppState>) {
+         store: Store<AppState>,
+         localizationProvider: LocalizationProvider) {
         self.logger = logger
         self.compositeViewModelFactory = compositeViewModelFactory
         self.store = store
+        self.localizationProvider = localizationProvider
         let actionDispatch: ActionDispatch = store.dispatch
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel()

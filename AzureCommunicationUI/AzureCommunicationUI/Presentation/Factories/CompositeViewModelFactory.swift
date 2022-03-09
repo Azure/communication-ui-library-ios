@@ -51,14 +51,17 @@ protocol CompositeViewModelFactory {
 class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     private let logger: Logger
     private let store: Store<AppState>
+    private let localizationProvider: LocalizationProvider
 
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
 
     init(logger: Logger,
-         store: Store<AppState>) {
+         store: Store<AppState>,
+         localizationProvider: LocalizationProvider) {
         self.logger = logger
         self.store = store
+        self.localizationProvider = localizationProvider
     }
 
     // MARK: CompositeViewModels
@@ -66,7 +69,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
         guard let viewModel = self.setupViewModel else {
             let viewModel = SetupViewModel(compositeViewModelFactory: self,
                                            logger: logger,
-                                           store: store)
+                                           store: store,
+                                           localizationProvider: localizationProvider)
             self.setupViewModel = viewModel
             self.callingViewModel = nil
             return viewModel
@@ -78,7 +82,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
         guard let viewModel = self.callingViewModel else {
             let viewModel = CallingViewModel(compositeViewModelFactory: self,
                                              logger: logger,
-                                             store: store)
+                                             store: store,
+                                             localizationProvider: localizationProvider)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel

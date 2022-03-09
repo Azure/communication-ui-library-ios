@@ -39,13 +39,15 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     func getSetupViewModel() -> SetupViewModel {
         return setupViewModel ?? SetupViewModel(compositeViewModelFactory: self,
                                                 logger: logger,
-                                                store: store)
+                                                store: store,
+                                                localizationProvider: LocalizationProviderMocking())
     }
 
     func getCallingViewModel() -> CallingViewModel {
         return callingViewModel ?? CallingViewModel(compositeViewModelFactory: self,
                                                     logger: logger,
-                                                    store: store)
+                                                    store: store,
+                                                    localizationProvider: LocalizationProviderMocking())
     }
 
     func makeIconButtonViewModel(iconName: CompositeIcon,

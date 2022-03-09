@@ -98,6 +98,7 @@
 		505460EE27BAC72100040467 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 505460F027BAC72100040467 /* Localizable.strings */; };
 		5054610227C5977A00040467 /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054610127C5977A00040467 /* LocalizationProvider.swift */; };
 		5054610427C59AD700040467 /* LocalizationConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054610327C59AD700040467 /* LocalizationConfiguration.swift */; };
+		50B390D127D82D7E0010A2ED /* LocalizationProviderMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D027D82D7E0010A2ED /* LocalizationProviderMocking.swift */; };
 		50C6DECC270E48BE0085D04B /* BannerInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C6DECB270E48BE0085D04B /* BannerInfoType.swift */; };
 		50C6DECF270E4F020085D04B /* BannerInfoTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C6DECE270E4F020085D04B /* BannerInfoTypeTests.swift */; };
 		50E2D68926D9495B006B0EF4 /* InfoHeaderViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */; };
@@ -134,7 +135,7 @@
 		88701EB8274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88701EB7274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift */; };
 		88A70180270E50D100F817B8 /* PopupModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7017F270E50D100F817B8 /* PopupModalView.swift */; };
 		88B87C572755911B00290DD1 /* CallInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B87C562755911B00290DD1 /* CallInfoModel.swift */; };
-		88D8EFF6E3700EA13007CA9A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		88D8EFF6E3700EA13007CA9A /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		88F6EE1A2735F5CB001AD3E9 /* ErrorReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F6EE192735F5CB001AD3E9 /* ErrorReducer.swift */; };
 		88F6EE1C2735F8E8001AD3E9 /* ErrorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F6EE1B2735F8E8001AD3E9 /* ErrorState.swift */; };
 		981ACABC2685459400CD6A40 /* IconProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981ACABB2685459400CD6A40 /* IconProvider.swift */; };
@@ -327,6 +328,7 @@
 		505460FE27BC166C00040467 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5054610127C5977A00040467 /* LocalizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProvider.swift; sourceTree = "<group>"; };
 		5054610327C59AD700040467 /* LocalizationConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationConfiguration.swift; sourceTree = "<group>"; };
+		50B390D027D82D7E0010A2ED /* LocalizationProviderMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProviderMocking.swift; sourceTree = "<group>"; };
 		50C6DECB270E48BE0085D04B /* BannerInfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerInfoType.swift; sourceTree = "<group>"; };
 		50C6DECE270E4F020085D04B /* BannerInfoTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerInfoTypeTests.swift; sourceTree = "<group>"; };
 		50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHeaderViewModelTests.swift; sourceTree = "<group>"; };
@@ -446,7 +448,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FBCB69F2645285100F57EEA /* AzureCommunicationUI.framework in Frameworks */,
-				88D8EFF6E3700EA13007CA9A /* BuildFile in Frameworks */,
+				88D8EFF6E3700EA13007CA9A /* (null) in Frameworks */,
 				C3D37F3E7BB5430527382922 /* Pods_AzureCommunicationUI_AzureCommunicationUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1044,6 +1046,7 @@
 				1F4B0EF9269BD3D000E87014 /* CallCompositeMocking.swift */,
 				1F4A24BB26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift */,
 				5A3146B0B684264EB57EDA69 /* ErrorMocking.swift */,
+				50B390D027D82D7E0010A2ED /* LocalizationProviderMocking.swift */,
 			);
 			name = Mocking;
 			sourceTree = "<group>";
@@ -1391,6 +1394,7 @@
 				50E2D6A926FA52A3006B0EF4 /* ParticipantsListViewModelTests.swift in Sources */,
 				FA03CC8327C8189900986D4E /* SetupControlBarViewModelMocking.swift in Sources */,
 				1F09A11126BA484000BACED7 /* ControlBarViewModelTests.swift in Sources */,
+				50B390D127D82D7E0010A2ED /* LocalizationProviderMocking.swift in Sources */,
 				50FA4616268D13E9001844AC /* LocalUserReducerTests.swift in Sources */,
 				1F4A24BC26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift in Sources */,
 				503300FE27079FC900289BB5 /* BannerTextViewModelTests.swift in Sources */,
