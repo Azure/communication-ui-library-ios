@@ -7,7 +7,7 @@ import Foundation
 import SwiftUI
 
 protocol LocalizationProvider {
-    func applyLocalizationConfiguration(_ localeConfig: LocalizationConfiguration)
+    func apply(localeConfig: LocalizationConfiguration)
     func getSupportedLanguages() -> [String]
     func getLocalizedString(_ key: StringKey) -> String
     func getLocalizedString(_ key: StringKey, _ args: CVarArg...) -> String
@@ -26,7 +26,7 @@ class AppLocalizationProvider: LocalizationProvider {
         self.logger = logger
     }
 
-    func applyLocalizationConfiguration(_ localeConfig: LocalizationConfiguration) {
+    func apply(localeConfig: LocalizationConfiguration) {
         if !supportedLocales.contains(localeConfig.locale) {
             let warningMessage = "Locale not supported by default for " +
             "`\(localeConfig.locale)`, if string for AzureCommunicationUI " +

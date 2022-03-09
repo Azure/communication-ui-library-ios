@@ -8,7 +8,7 @@ import Foundation
 
 struct LocalizationProviderMocking: LocalizationProvider {
 
-    func applyLocalizationConfiguration(_ localeConfig: LocalizationConfiguration) {
+    func apply(localeConfig: LocalizationConfiguration) {
         return
     }
 
