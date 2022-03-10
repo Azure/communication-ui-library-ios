@@ -11,17 +11,20 @@ class AudioDevicesListViewModelTests: XCTestCase {
     var storeFactory: StoreFactoryMocking!
     var cancellable: CancelBag!
     var audioDevicesListViewModel: AudioDevicesListViewModel!
+    var localizationProvider: LocalizationProvider!
 
     override func setUp() {
         super.setUp()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
+        localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
 
         func dispatch(action: Action) {
             storeFactory.store.dispatch(action: action)
         }
         audioDevicesListViewModel = AudioDevicesListViewModel(dispatchAction: dispatch,
-                                                              localUserState: LocalUserState())
+                                                              localUserState: LocalUserState(),
+                                                              localizationProvider: localizationProvider)
     }
 
     func test_audioDevicesListViewModel_update_when_audioDevicesListFirstInitialized_then_shouldBePublished() {
@@ -51,14 +54,17 @@ class AudioDevicesListViewModelTests: XCTestCase {
 
         audioDevicesListViewModel.update(audioDeviceStatus: .receiverSelected)
         let initialSelection = audioDevicesListViewModel.audioDevicesList.first(where: { $0.isSelected })
-        XCTAssertEqual(initialSelection?.title, AudioDeviceType.receiver.name)
+        XCTAssertEqual(initialSelection?.title, AudioDeviceType.receiver
+                        .getName(self.localizationProvider))
         XCTAssertEqual(initialSelection?.icon, .speakerRegular)
 
         audioDevicesListViewModel.update(audioDeviceStatus: .speakerRequested)
         let requestedSelection = audioDevicesListViewModel.audioDevicesList.first(where: { $0.isSelected })
-        XCTAssertEqual(requestedSelection?.title, AudioDeviceType.receiver.name)
+        XCTAssertEqual(requestedSelection?.title, AudioDeviceType.receiver
+                        .getName(self.localizationProvider))
         XCTAssertEqual(requestedSelection?.icon, .speakerRegular)
-        XCTAssertNotEqual(requestedSelection?.title, AudioDeviceType.speaker.name)
+        XCTAssertNotEqual(requestedSelection?.title, AudioDeviceType.speaker
+                            .getName(self.localizationProvider))
         XCTAssertNotEqual(requestedSelection?.icon, .speakerFilled)
         wait(for: [expectation], timeout: 1)
     }
@@ -69,19 +75,22 @@ class AudioDevicesListViewModelTests: XCTestCase {
             .dropFirst()
             .sink(receiveValue: { audioDevicesList in
                 let updatedSelection = audioDevicesList.first(where: { $0.isSelected })
-                XCTAssertEqual(updatedSelection?.title, AudioDeviceType.bluetooth.name)
+                XCTAssertEqual(updatedSelection?.title, AudioDeviceType.bluetooth
+                                .getName(self.localizationProvider))
                 XCTAssertEqual(updatedSelection?.icon, .speakerBluetooth)
                 expectation.fulfill()
             }).store(in: cancellable)
 
         audioDevicesListViewModel.update(audioDeviceStatus: .bluetoothRequested)
         let requestedSelection = audioDevicesListViewModel.audioDevicesList.first(where: { $0.isSelected })
-        XCTAssertNotEqual(requestedSelection?.title, AudioDeviceType.bluetooth.name)
+        XCTAssertNotEqual(requestedSelection?.title, AudioDeviceType.bluetooth
+                            .getName(self.localizationProvider))
         XCTAssertNotEqual(requestedSelection?.icon, .speakerBluetooth)
 
         audioDevicesListViewModel.update(audioDeviceStatus: .bluetoothSelected)
         let updatedSelection = audioDevicesListViewModel.audioDevicesList.first(where: { $0.isSelected })
-        XCTAssertEqual(updatedSelection?.title, AudioDeviceType.bluetooth.name)
+        XCTAssertEqual(updatedSelection?.title, AudioDeviceType.bluetooth
+                        .getName(self.localizationProvider))
         XCTAssertEqual(updatedSelection?.icon, .speakerBluetooth)
         wait(for: [expectation], timeout: 1)
     }

@@ -16,6 +16,7 @@ class SetupViewModel: ObservableObject {
     @Published var isJoinRequested: Bool = false
     let isRightToLeft: Bool
 
+    let joiningCallAvtivityViewModel: JoiningCallActivityViewModel
     let previewAreaViewModel: PreviewAreaViewModel
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
@@ -30,6 +31,7 @@ class SetupViewModel: ObservableObject {
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
+        self.joiningCallAvtivityViewModel = compositeViewModelFactory.makeJoiningCallAvtivityViewModel()
         self.previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
         self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
         self.joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(

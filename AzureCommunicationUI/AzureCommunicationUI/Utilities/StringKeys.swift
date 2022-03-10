@@ -16,6 +16,7 @@ enum StringKey: String {
 
     /* SetupView */
     case joinCall = "AzureCommunicationUI.SetupView.Button.JoinCall"
+    case joiningCall = "AzureCommunicationUI.SetupView.Button.JoiningCall"
     case videoOff = "AzureCommunicationUI.SetupView.Button.VideoOff"
     case videoOn = "AzureCommunicationUI.SetupView.Button.VideoOn"
     case micOff = "AzureCommunicationUI.SetupView.Button.MicOff"

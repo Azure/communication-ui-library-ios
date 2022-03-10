@@ -18,7 +18,8 @@ class SetupControlBarViewModelMocking: SetupControlBarViewModel {
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
                    dispatchAction: dispatchAction,
-                   localUserState: localUserState)
+                   localUserState: localUserState,
+                   localizationProvider: LocalizationProviderMocking())
     }
 
     override func update(localUserState: LocalUserState,

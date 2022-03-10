@@ -9,13 +9,13 @@ import AVFoundation
 let bluetoothAudioPorts: Set<AVAudioSession.Port> = [.bluetoothA2DP, .bluetoothLE, .bluetoothHFP]
 let headphonesAudioPorts: Set<AVAudioSession.Port> = [.headphones, .headsetMic]
 
-enum AudioDeviceType: String {
-    case bluetooth = "Bluetooth"
-    case headphones = "Headphones"
-    case receiver = "iOS"
-    case speaker = "Speaker"
+enum AudioDeviceType {
+    case bluetooth
+    case headphones
+    case receiver
+    case speaker
 
-    var name: String {
+    func getName(_ localizationProvider: LocalizationProvider) -> String {
         switch self {
         case .bluetooth:
             if let output = AVAudioSession.sharedInstance().currentRoute.outputs.first,
@@ -23,18 +23,20 @@ enum AudioDeviceType: String {
                !output.portName.isEmpty {
                 return output.portName
             }
-            return self.rawValue
+            return localizationProvider.getLocalizedString(.bluetooth)
+        case .headphones:
+            return localizationProvider.getLocalizedString(.headphones)
         case .receiver:
             switch UIDevice.current.userInterfaceIdiom {
             case .phone:
-                return "iPhone"
+                return localizationProvider.getLocalizedString(.iPhone)
             case .pad:
-                return "iPad"
+                return localizationProvider.getLocalizedString(.iPad)
             default:
-                return self.rawValue
+                return localizationProvider.getLocalizedString(.iOS)
             }
-        default:
-            return self.rawValue
+        case .speaker:
+            return localizationProvider.getLocalizedString(.speaker)
         }
     }
 }

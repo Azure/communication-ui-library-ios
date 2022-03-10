@@ -29,6 +29,7 @@ protocol CompositeViewModelFactory {
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
+    func makeJoiningCallAvtivityViewModel() -> JoiningCallActivityViewModel
     func makeErrorInfoViewModel() -> ErrorInfoViewModel
 
     // MARK: CallingViewModels
@@ -131,7 +132,11 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel {
         AudioDevicesListViewModel(dispatchAction: dispatchAction,
-                                  localUserState: localUserState)
+                                  localUserState: localUserState,
+                                  localizationProvider: localizationProvider)
+    }
+    func makeJoiningCallAvtivityViewModel() -> JoiningCallActivityViewModel {
+        JoiningCallActivityViewModel(localizationProvider: localizationProvider)
     }
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
         ErrorInfoViewModel()
@@ -172,7 +177,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel {
         PreviewAreaViewModel(compositeViewModelFactory: self,
-                             dispatchAction: dispatchAction)
+                             dispatchAction: dispatchAction,
+                             localizationProvider: localizationProvider)
     }
 
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
@@ -180,6 +186,7 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
         SetupControlBarViewModel(compositeViewModelFactory: self,
                                  logger: logger,
                                  dispatchAction: dispatchAction,
-                                 localUserState: localUserState)
+                                 localUserState: localUserState,
+                                 localizationProvider: localizationProvider)
     }
 }
