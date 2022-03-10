@@ -52,14 +52,17 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         }
     }
 
-    private func getDisplayingVideoStreamModel(_ participantModel: ParticipantInfoModel) -> ParticipantVideoViewInfoModel {
+    private func getDisplayingVideoStreamModel(_ participantModel: ParticipantInfoModel)
+    -> ParticipantVideoViewInfoModel {
         let screenShareVideoStreamIdentifier = participantModel.screenShareVideoStreamModel?.videoStreamIdentifier
         let cameraVideoStreamIdentifier = participantModel.cameraVideoStreamModel?.videoStreamIdentifier
         let screenShareVideoStreamType = participantModel.screenShareVideoStreamModel?.mediaStreamType
         let cameraVideoStreamType = participantModel.cameraVideoStreamModel?.mediaStreamType
 
         return screenShareVideoStreamIdentifier != nil ?
-        ParticipantVideoViewInfoModel(videoStreamType: screenShareVideoStreamType, videoStreamId: screenShareVideoStreamIdentifier) :
-        ParticipantVideoViewInfoModel(videoStreamType: cameraVideoStreamType, videoStreamId: cameraVideoStreamIdentifier)
+        ParticipantVideoViewInfoModel(videoStreamType: screenShareVideoStreamType,
+                                      videoStreamId: screenShareVideoStreamIdentifier) :
+        ParticipantVideoViewInfoModel(videoStreamType: cameraVideoStreamType,
+                                      videoStreamId: cameraVideoStreamIdentifier)
     }
 }
