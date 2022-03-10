@@ -21,20 +21,17 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     private var rendererView: UIView!
     private var scrollView = UIScrollView()
     private var zoomToRect: CGRect = .zero
-    @Binding var isAppInForeground: Bool
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
+    @Environment(\.appPhase) var appPhase: AppStatus
 
     init(videoRendererViewInfo: ParticipantRendererViewInfo,
-         rendererViewManager: RendererViewManager?,
-         isAppInForeground: Binding<Bool>) {
+         rendererViewManager: RendererViewManager?) {
         self.videoRendererViewInfo = videoRendererViewInfo
         self.rendererView = videoRendererViewInfo.rendererView
-        _isAppInForeground = isAppInForeground
         self.rendererViewManager = rendererViewManager
     }
 
     func makeUIView(context: Context) -> UIScrollView {
-
         // Setup scrollview and renderview
         scrollView.delegate = context.coordinator
         scrollView.maximumZoomScale = isiPadScreen() ? Constants.maxScaleiPad : Constants.maxScaleiPhone
@@ -66,7 +63,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: UIScrollView, context: Context) {
-        guard isAppInForeground else {
+        guard appPhase == .foreground else {
             return
         }
         // Set zoom scale per each orientation to fix the zoom issue (blury screen upon orientation change)
@@ -81,7 +78,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
 
         if iPhoneOrientationChanged || iPadOrientationChanged {
             uiView.setZoomScale(orientationChangeZoomScale, animated: true)
-        } else if isAppInForeground {
+        } else if appPhase == .foreground {
             context.coordinator.restoreRendererViewZoomStatus()
         }
     }

@@ -14,7 +14,6 @@ class ParticipantGridViewModel: ObservableObject {
 
     @Published var gridsCount: Int = 0
     @Published var displayedParticipantInfoModelArr: [ParticipantInfoModel] = []
-    @Published var isAppInForeground: Bool = true
 
     init(compositeViewModelFactory: CompositeViewModelFactory) {
         self.compositeViewModelFactory = compositeViewModelFactory
@@ -22,9 +21,6 @@ class ParticipantGridViewModel: ObservableObject {
 
     func update(remoteParticipantsState: RemoteParticipantsState, lifeCycleState: LifeCycleState) {
         guard lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp else {
-            if isAppInForeground != (lifeCycleState.currentStatus == .foreground) {
-                isAppInForeground = lifeCycleState.currentStatus == .foreground
-            }
             return
         }
         lastUpdateTimeStamp = remoteParticipantsState.lastUpdateTimeStamp
@@ -39,8 +35,6 @@ class ParticipantGridViewModel: ObservableObject {
         if gridsCount != displayedParticipantInfoModelArr.count {
             gridsCount = displayedParticipantInfoModelArr.count
         }
-
-        isAppInForeground = lifeCycleState.currentStatus == .foreground
     }
 
     private func getDisplayedInfoViewModels(_ infoModels: [ParticipantInfoModel]) -> [ParticipantInfoModel] {

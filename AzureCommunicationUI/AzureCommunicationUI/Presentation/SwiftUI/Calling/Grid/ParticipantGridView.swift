@@ -10,14 +10,12 @@ struct ParticipantGridView: View {
     let videoViewManager: VideoViewManager
     let screenSize: ScreenSizeClassType
     @State var gridsCount: Int = 0
-    @State var isAppInForeground: Bool = true
     var body: some View {
         return Group {
             ParticipantGridLayoutView(cellViewModels: viewModel.participantsCellViewModelArr,
                                       getRemoteParticipantRendererView: getRemoteParticipantRendererView(videoViewId:),
                                       rendererViewManager: videoViewManager,
-                                      screenSize: screenSize,
-                                      isAppInForeground: $isAppInForeground)
+                                      screenSize: screenSize)
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
             .id(gridsCount)
             .onReceive(viewModel.$gridsCount) {
@@ -25,9 +23,6 @@ struct ParticipantGridView: View {
             }
             .onReceive(viewModel.$displayedParticipantInfoModelArr) {
                 updateVideoViewManager(displayedRemoteInfoModelArr: $0)
-            }
-            .onReceive(viewModel.$isAppInForeground) {
-                    isAppInForeground = $0
             }
     }
 

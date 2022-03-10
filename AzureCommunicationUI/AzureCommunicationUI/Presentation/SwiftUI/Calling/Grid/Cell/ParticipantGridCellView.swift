@@ -14,7 +14,6 @@ struct ParticipantGridCellView: View {
     @State var displayedVideoStreamId: String?
     @State var isVideoChanging: Bool = false
     let avatarSize: CGFloat = 56
-    @Binding var isAppInForeground: Bool
 
     var body: some View {
         Group {
@@ -26,7 +25,6 @@ struct ParticipantGridCellView: View {
                     ParticipantGridCellVideoView(videoRendererViewInfo: rendererViewInfo,
                                                  rendererViewManager: rendererViewManager,
                                                  zoomable: zoomable,
-                                                 isAppInForeground: $isAppInForeground,
                                                  isSpeaking: $viewModel.isSpeaking,
                                                  displayName: $viewModel.displayName,
                                                  isMuted: $viewModel.isMuted)

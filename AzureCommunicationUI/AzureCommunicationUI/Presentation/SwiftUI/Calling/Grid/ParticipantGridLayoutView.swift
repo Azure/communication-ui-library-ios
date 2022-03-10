@@ -11,7 +11,6 @@ struct ParticipantGridLayoutView: View {
     let rendererViewManager: RendererViewManager?
     let screenSize: ScreenSizeClassType
     let gridsMargin: CGFloat = 3
-    @Binding var isAppInForeground: Bool
 
     var body: some View {
         Group {
@@ -57,8 +56,7 @@ struct ParticipantGridLayoutView: View {
         return ForEach(cellsViewModel) { vm in
             ParticipantGridCellView(viewModel: vm,
                                     getRemoteParticipantRendererView: getRemoteParticipantRendererView,
-                                    rendererViewManager: rendererViewManager,
-                                    isAppInForeground: $isAppInForeground)
+                                    rendererViewManager: rendererViewManager)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color(StyleProvider.color.surface))
                 .clipShape(RoundedRectangle(cornerRadius: 4))

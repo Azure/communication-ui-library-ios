@@ -242,4 +242,21 @@ extension CallingViewModelTests {
                                 logger: logger,
                                 store: storeFactory.store)
     }
+
+    func test_callingViewModel_update_when_callStatusIsConnected_appStateForeground_then_switchToBackground_shouldBecomeBackground() {
+        let sut = makeSUT()
+        let appState = AppState(callingState: CallingState(status: .connected),
+                                lifeCycleState: LifeCycleState(currentStatus: .background))
+        sut.receive(appState)
+        XCTAssertEqual(sut.appState, .background)
+    }
+
+    func test_callingViewModel_update_when_callStatusIsConnected_appStateBackground_then_switchToForeground_shouldBecomeForeground() {
+        let sut = makeSUT()
+        let appState = AppState(callingState: CallingState(status: .connected),
+                                lifeCycleState: LifeCycleState(currentStatus: .foreground))
+        sut.receive(appState)
+        XCTAssertEqual(sut.appState, .foreground)
+    }
+
 }

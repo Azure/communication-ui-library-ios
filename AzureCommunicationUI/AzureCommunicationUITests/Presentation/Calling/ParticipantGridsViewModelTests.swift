@@ -327,21 +327,6 @@ class ParticipantGridViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_participantGridsViewModel_background_app_when_twoRemoteParticipant_in_call() {
-        let expectation = XCTestExpectation(description: "subscription expection")
-        let expectedValue = false
-        let sut = makeSUT()
-        sut.$isAppInForeground
-            .dropFirst()
-            .sink { value in
-                XCTAssertEqual(expectedValue, value)
-                expectation.fulfill()
-            }.store(in: cancellable)
-        sut.update(remoteParticipantsState: RemoteParticipantsState(),
-                   lifeCycleState: LifeCycleState(currentStatus: .background))
-        wait(for: [expectation], timeout: 1)
-    }
-
     func test_participantGridsViewModel_updateParticipantsState_when_threeRemoteParticipant_then_gridsCountThree_threePaticipantsCellViewModel() {
         let expectation = XCTestExpectation(description: "subscription expection")
         let expectedGridCount = 3
