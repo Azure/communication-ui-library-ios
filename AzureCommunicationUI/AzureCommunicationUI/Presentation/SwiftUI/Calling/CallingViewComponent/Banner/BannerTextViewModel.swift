@@ -6,17 +6,22 @@
 import Foundation
 
 class BannerTextViewModel: ObservableObject {
+    private let localizationProvider: LocalizationProvider
     var title: String = ""
     var body: String = ""
     var linkDisplay: String = ""
     var link: String = ""
 
+    init(localizationProvider: LocalizationProvider) {
+        self.localizationProvider = localizationProvider
+    }
+
     func update(bannerInfoType: BannerInfoType?) {
         if let bannerInfoType = bannerInfoType {
-            self.title = bannerInfoType.title
-            self.body = bannerInfoType.body
-            self.linkDisplay = bannerInfoType.linkDisplay
-            self.link = bannerInfoType.link
+            self.title = bannerInfoType.getTitle(localizationProvider)
+            self.body = bannerInfoType.getBody(localizationProvider)
+            self.linkDisplay = bannerInfoType.getLinkDisplay(localizationProvider)
+            self.link = bannerInfoType.getLink()
         } else {
             self.title = ""
             self.body = ""

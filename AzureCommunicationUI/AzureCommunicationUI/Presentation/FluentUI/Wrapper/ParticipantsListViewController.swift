@@ -6,6 +6,19 @@
 import FluentUI
 
 class ParticipantsListViewController: DrawerContainerViewController<ParticipantsListCellViewModel> {
+    private let localizationProvider: LocalizationProvider
+
+    init(items: [ParticipantsListCellViewModel],
+         sourceView: UIView,
+         localizationProvider: LocalizationProvider) {
+        self.localizationProvider = localizationProvider
+        super.init(items: items, sourceView: sourceView)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     private lazy var participantsListTableView: UITableView? = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = backgroundColor
@@ -43,7 +56,8 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
         }
         let participantViewModel = self.items[indexPath.row]
 
-        cell.setup(viewModel: participantViewModel)
+        cell.setup(viewModel: participantViewModel,
+                   localizationProvider: localizationProvider)
         return cell
     }
 }

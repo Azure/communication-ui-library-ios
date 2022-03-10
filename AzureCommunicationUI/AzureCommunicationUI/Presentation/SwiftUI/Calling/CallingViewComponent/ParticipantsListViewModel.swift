@@ -11,9 +11,12 @@ class ParticipantsListViewModel: ObservableObject {
     @Published var participantsList: [ParticipantsListCellViewModel] = []
     @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
     var lastUpdateTimeStamp = Date()
+    private let localizationProvider: LocalizationProvider
 
-    init(localUserState: LocalUserState) {
+    init(localUserState: LocalUserState,
+         localizationProvider: LocalizationProvider) {
         localParticipantsListCellViewModel = ParticipantsListCellViewModel(localUserState: localUserState)
+        self.localizationProvider = localizationProvider
     }
 
     func update(localUserState: LocalUserState,

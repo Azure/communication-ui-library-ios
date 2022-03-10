@@ -14,7 +14,8 @@ class ParticipantsListViewModelTests: XCTestCase {
     override func setUp() {
         super.setUp()
         cancellable = CancelBag()
-        participantsListViewModel = ParticipantsListViewModel(localUserState: LocalUserState())
+        participantsListViewModel = ParticipantsListViewModel(localUserState: LocalUserState(),
+                                                              localizationProvider: LocalizationProviderMocking())
     }
 
     // MARK: localParticipantsListCellViewModel test

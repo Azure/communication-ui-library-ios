@@ -13,74 +13,73 @@ enum BannerInfoType: Equatable {
     case recordingStopped
     case recordingAndTranscriptionStopped
 
-    var title: String {
+    func getTitle(_ localizationProvider: LocalizationProvider) -> String {
         switch self {
         case .recordingAndTranscriptionStarted:
-            return "Recording and transcription have started. "
+            return localizationProvider.getLocalizedString(.bannerTitleRecordingAndTranscriptionStarted)
         case .recordingStarted:
-            return "Recording has started. "
+            return localizationProvider.getLocalizedString(.bannerTitleReordingStarted)
         case .transcriptionStoppedStillRecording:
-            return "Transcription has stopped. "
+            return localizationProvider.getLocalizedString(.bannerTitleTranscriptionStoppedStillRecording)
         case .transcriptionStarted:
-            return "Transcription has started. "
+            return localizationProvider.getLocalizedString(.bannerTitleTranscriptionStarted)
         case .transcriptionStoppedAndSaved:
-            return "Transcription is being saved. "
+            return localizationProvider.getLocalizedString(.bannerTitleTranscriptionStopped)
         case .recordingStoppedStillTranscribing:
-            return "Recording has stopped. "
+            return localizationProvider.getLocalizedString(.bannerTitleRecordingStoppedStillTranscribing)
         case .recordingStopped:
-            return "Recording is being saved. "
+            return localizationProvider.getLocalizedString(.bannerTitleRecordingStopped)
         case .recordingAndTranscriptionStopped:
-            return "Recording and transcription are being saved. "
+            return localizationProvider.getLocalizedString(.bannerTitleRecordingAndTranscribingStopped)
         }
     }
 
-    var body: String {
+    func getBody(_ localizationProvider: LocalizationProvider) -> String {
         switch self {
         case .recordingAndTranscriptionStarted,
              .recordingStarted,
              .transcriptionStarted:
-            return "By joining, you are giving consent for this meeting to be transcribed. "
+            return localizationProvider.getLocalizedString(.bannerBodyConsent)
         case .transcriptionStoppedStillRecording:
-            return "You are now only recording this meeting. "
+            return localizationProvider.getLocalizedString(.bannerBodyRecording)
         case .transcriptionStoppedAndSaved:
-            return "Transcription has stopped. "
+            return localizationProvider.getLocalizedString(.bannerBodyTranscriptionStopped)
         case .recordingStoppedStillTranscribing:
-            return "You are now only transcribing this meeting. "
+            return localizationProvider.getLocalizedString(.bannerBodyOnlyTranscribing)
         case .recordingStopped:
-            return "Recording has stopped. "
+            return localizationProvider.getLocalizedString(.bannerBodyRecordingStopped)
         case .recordingAndTranscriptionStopped:
-            return "Recording and transcription have stopped. "
+            return localizationProvider.getLocalizedString(.bannerBodyRecordingAndTranscriptionStopped)
         }
     }
 
-    var linkDisplay: String {
+    func getLinkDisplay(_ localizationProvider: LocalizationProvider) -> String {
         switch self {
         case .recordingAndTranscriptionStarted,
              .recordingStarted,
              .transcriptionStoppedStillRecording,
              .transcriptionStarted,
              .recordingStoppedStillTranscribing:
-            return "Privacy policy"
+            return localizationProvider.getLocalizedString(.bannerDisplayLinkPrivacyPolicy)
         case .transcriptionStoppedAndSaved,
              .recordingStopped,
              .recordingAndTranscriptionStopped:
-            return "Learn more"
+            return localizationProvider.getLocalizedString(.bannerDisplayLinkLearnMore)
         }
     }
 
-    var link: String {
+    func getLink() -> String {
         switch self {
         case .recordingAndTranscriptionStarted,
              .recordingStarted,
              .transcriptionStoppedStillRecording,
              .transcriptionStarted,
              .recordingStoppedStillTranscribing:
-            return "https://privacy.microsoft.com/privacystatement#mainnoticetoendusersmodule"
+            return StringConstants.privacyPolicyLink
         case .transcriptionStoppedAndSaved,
              .recordingStopped,
              .recordingAndTranscriptionStopped:
-            return ("https://support.microsoft.com/office/"
-                + "record-a-meeting-in-teams-34dfbe7f-b07d-4a27-b4c6-de62f1348c24")
+            return StringConstants.learnMoreLink
         }
     }
 }

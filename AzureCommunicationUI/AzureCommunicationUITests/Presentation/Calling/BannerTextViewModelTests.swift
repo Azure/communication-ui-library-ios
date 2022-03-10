@@ -9,18 +9,20 @@ import XCTest
 
 class BannerTextViewModelTests: XCTestCase {
 
-    var bannerTextViewModel: BannerTextViewModel!
+    private var bannerTextViewModel: BannerTextViewModel!
+    private var localizationProvider: LocalizationProvider!
 
     override func setUp() {
         super.setUp()
-        bannerTextViewModel = BannerTextViewModel()
+        localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
+        bannerTextViewModel = BannerTextViewModel(localizationProvider: localizationProvider)
     }
 
     func test_bannerTextViewModel_update_when_withBannerInfoType_then_shouldBePublish() {
-        let expectedTitle = BannerInfoType.recordingAndTranscriptionStarted.title
-        let expectedBody = BannerInfoType.recordingAndTranscriptionStarted.body
-        let expectedLinkDisplay = BannerInfoType.recordingAndTranscriptionStarted.linkDisplay
-        let expectedLink = BannerInfoType.recordingAndTranscriptionStarted.link
+        let expectedTitle = BannerInfoType.recordingAndTranscriptionStarted.getTitle(localizationProvider)
+        let expectedBody = BannerInfoType.recordingAndTranscriptionStarted.getBody(localizationProvider)
+        let expectedLinkDisplay = BannerInfoType.recordingAndTranscriptionStarted.getLinkDisplay(localizationProvider)
+        let expectedLink = BannerInfoType.recordingAndTranscriptionStarted.getLink()
         let expectation = XCTestExpectation(description: "Should publish bannerTextViewModel")
         let cancel = bannerTextViewModel.objectWillChange
             .sink(receiveValue: {

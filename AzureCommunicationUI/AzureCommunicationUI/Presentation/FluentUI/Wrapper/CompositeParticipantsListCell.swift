@@ -10,7 +10,8 @@ class CompositeParticipantsListCell: TableViewCell {
 
     /// Set up the participant list item  in the participant list
     /// - Parameter viewModel: the participant view model needed to set up participant list cell
-    func setup(viewModel: ParticipantsListCellViewModel) {
+    func setup(viewModel: ParticipantsListCellViewModel,
+               localizationProvider: LocalizationProvider) {
         let isNameEmpty = viewModel.displayName.trimmingCharacters(in: .whitespaces).isEmpty
 
         let avatar = MSFAvatar(style: isNameEmpty ? .outlined : .accent, size: .medium)
@@ -35,22 +36,25 @@ class CompositeParticipantsListCell: TableViewCell {
                                 UIColor.compositeColor(CompositeColor.onSurface))
 
         setup(title: displayName(displayName: viewModel.displayName,
-                                 isLocalParticipant: viewModel.isLocalParticipant),
+                                 isLocalParticipant: viewModel.isLocalParticipant,
+                                 localizationProvider: localizationProvider),
               customView: avatarView,
               customAccessoryView: micImageView)
     }
 
-    private func displayName(displayName: String, isLocalParticipant: Bool) -> String {
+    private func displayName(displayName: String,
+                             isLocalParticipant: Bool,
+                             localizationProvider: LocalizationProvider) -> String {
         let isNameEmpty = displayName.trimmingCharacters(in: .whitespaces).isEmpty
         if isLocalParticipant {
-            return isNameEmpty ?
-            "\(StringConstants.defaultEmptyName) \(StringConstants.localParticipantNamePostfix)"
-            :
-            "\(displayName) \(StringConstants.localParticipantNamePostfix)"
+            let localDisplayName = isNameEmpty
+            ? localizationProvider.getLocalizedString(.unnamedParticipant)
+            : displayName
+            return localizationProvider.getLocalizedString(.localeParticipantWithSuffix, localDisplayName)
         } else {
-            return isNameEmpty ? "\(StringConstants.defaultEmptyName)"
-            :
-            displayName
+            return isNameEmpty
+            ? localizationProvider.getLocalizedString(.unnamedParticipant)
+            : displayName
         }
     }
 }
