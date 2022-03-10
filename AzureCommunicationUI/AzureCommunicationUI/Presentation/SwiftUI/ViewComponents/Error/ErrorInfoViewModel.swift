@@ -5,7 +5,6 @@
 
 import Foundation
 import Combine
-import UIKit
 
 class ErrorInfoViewModel: ObservableObject {
     @Published var isDisplayed: Bool = false
