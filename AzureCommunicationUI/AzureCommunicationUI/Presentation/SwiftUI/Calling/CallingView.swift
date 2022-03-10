@@ -64,7 +64,8 @@ struct CallingView: View {
                 viewModel.infoHeaderViewModel.toggleDisplayInfoHeader()
             })
             .modifier(PopupModalView(isPresented: viewModel.isLobbyOverlayDisplayed) {
-                LobbyOverlayView()
+                let lobbyViewModel = viewModel.getLobbyOverlayViewModel()
+                LobbyOverlayView(viewModel: lobbyViewModel)
             })
         }
     }
