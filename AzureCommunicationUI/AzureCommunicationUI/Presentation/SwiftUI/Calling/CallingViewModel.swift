@@ -103,6 +103,7 @@ class CallingViewModel: ObservableObject {
 
     func receive(_ state: AppState) {
         if appState != state.lifeCycleState.currentStatus {
+            appState = state.lifeCycleState.currentStatus == .foreground ? .foreground : .background
         }
 
         guard state.lifeCycleState.currentStatus == .foreground else {
