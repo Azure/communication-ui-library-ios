@@ -6,7 +6,7 @@
 import Foundation
 import Combine
 
-struct VideoViewModel {
+struct ParticipantVideoViewInfoModel {
     let videoStreamType: VideoStreamInfoModel.MediaStreamType?
     let videoStreamId: String?
 }
@@ -14,7 +14,7 @@ struct VideoViewModel {
 class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     let id = UUID()
 
-    @Published var videoViewModel: VideoViewModel?
+    @Published var videoViewModel: ParticipantVideoViewInfoModel?
     @Published var displayName: String?
     @Published var isSpeaking: Bool
     @Published var isMuted: Bool
@@ -35,7 +35,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
 
         if self.videoViewModel?.videoStreamId != videoViewModel.videoStreamId ||
             self.videoViewModel?.videoStreamType != videoViewModel.videoStreamType {
-            self.videoViewModel = VideoViewModel(videoStreamType: videoViewModel.videoStreamType,
+            self.videoViewModel = ParticipantVideoViewInfoModel(videoStreamType: videoViewModel.videoStreamType,
                                                  videoStreamId: videoViewModel.videoStreamId)
         }
 
@@ -52,14 +52,14 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         }
     }
 
-    private func getDisplayingVideoStreamModel(_ participantModel: ParticipantInfoModel) -> VideoViewModel {
+    private func getDisplayingVideoStreamModel(_ participantModel: ParticipantInfoModel) -> ParticipantVideoViewInfoModel {
         let screenShareVideoStreamIdentifier = participantModel.screenShareVideoStreamModel?.videoStreamIdentifier
         let cameraVideoStreamIdentifier = participantModel.cameraVideoStreamModel?.videoStreamIdentifier
         let screenShareVideoStreamType = participantModel.screenShareVideoStreamModel?.mediaStreamType
         let cameraVideoStreamType = participantModel.cameraVideoStreamModel?.mediaStreamType
 
         return screenShareVideoStreamIdentifier != nil ?
-        VideoViewModel(videoStreamType: screenShareVideoStreamType, videoStreamId: screenShareVideoStreamIdentifier) :
-        VideoViewModel(videoStreamType: cameraVideoStreamType, videoStreamId: cameraVideoStreamIdentifier)
+        ParticipantVideoViewInfoModel(videoStreamType: screenShareVideoStreamType, videoStreamId: screenShareVideoStreamIdentifier) :
+        ParticipantVideoViewInfoModel(videoStreamType: cameraVideoStreamType, videoStreamId: cameraVideoStreamIdentifier)
     }
 }

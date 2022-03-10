@@ -39,7 +39,7 @@ class CallingViewModel: ObservableObject {
         let isCallConnected = store.state.callingState.status == .connected
         let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
         isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
-        appState = store.state.lifeCycleState.currentStatus == .foreground ? .foreground : .background
+        appState = store.state.lifeCycleState.currentStatus
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
                 guard let self = self else {
@@ -103,7 +103,7 @@ class CallingViewModel: ObservableObject {
 
     func receive(_ state: AppState) {
         if appState != state.lifeCycleState.currentStatus {
-            appState = state.lifeCycleState.currentStatus == .foreground ? .foreground : .background
+            appState = state.lifeCycleState.currentStatus
         }
 
         guard state.lifeCycleState.currentStatus == .foreground else {
