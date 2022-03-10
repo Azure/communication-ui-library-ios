@@ -14,6 +14,7 @@ class SetupViewModel: ObservableObject {
     var cancellables = Set<AnyCancellable>()
 
     @Published var isJoinRequested: Bool = false
+    let isRightToLeft: Bool
 
     let previewAreaViewModel: PreviewAreaViewModel
     var errorInfoViewModel: ErrorInfoViewModel
@@ -27,6 +28,7 @@ class SetupViewModel: ObservableObject {
          localizationProvider: LocalizationProvider) {
         self.store = store
         self.localizationProvider = localizationProvider
+        self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
         self.previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
         self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
