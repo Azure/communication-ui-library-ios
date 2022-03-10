@@ -45,7 +45,7 @@ struct SetupView: View {
     var joinCallView: some View {
         Group {
             if viewModel.isJoinRequested {
-                JoiningCallActivityView(viewModel: viewModel.joiningCallAvtivityViewModel)
+                JoiningCallActivityView(viewModel: viewModel.getJoiningCallActivityViewModel())
             } else {
                 PrimaryButton(viewModel: viewModel.joinCallButtonViewModel)
             }

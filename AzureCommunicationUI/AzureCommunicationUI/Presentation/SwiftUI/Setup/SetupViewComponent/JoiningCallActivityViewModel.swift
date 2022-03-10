@@ -5,12 +5,10 @@
 
 import Foundation
 
-class JoiningCallActivityViewModel {
-    let title: String
-    private let localizationProvider: LocalizationProvider
+struct JoiningCallActivityViewModel {
+    let localizationProvider: LocalizationProvider
 
-    init(localizationProvider: LocalizationProvider) {
-        self.localizationProvider = localizationProvider
-        self.title = localizationProvider.getLocalizedString(.joiningCall)
+    var title: String {
+        return localizationProvider.getLocalizedString(.joiningCall)
     }
 }

@@ -102,6 +102,7 @@
 		50B390D327D834FE0010A2ED /* StringKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D227D834FE0010A2ED /* StringKeys.swift */; };
 		50B390D627D915F00010A2ED /* LocalizationProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D527D915EF0010A2ED /* LocalizationProviderTests.swift */; };
 		50B390D827D976930010A2ED /* JoiningCallActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D727D976930010A2ED /* JoiningCallActivityViewModel.swift */; };
+		50B390DA27DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D927DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift */; };
 		50C6DECC270E48BE0085D04B /* BannerInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C6DECB270E48BE0085D04B /* BannerInfoType.swift */; };
 		50C6DECF270E4F020085D04B /* BannerInfoTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C6DECE270E4F020085D04B /* BannerInfoTypeTests.swift */; };
 		50E2D68926D9495B006B0EF4 /* InfoHeaderViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */; };
@@ -335,6 +336,7 @@
 		50B390D227D834FE0010A2ED /* StringKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringKeys.swift; sourceTree = "<group>"; };
 		50B390D527D915EF0010A2ED /* LocalizationProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProviderTests.swift; sourceTree = "<group>"; };
 		50B390D727D976930010A2ED /* JoiningCallActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoiningCallActivityViewModel.swift; sourceTree = "<group>"; };
+		50B390D927DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoiningCallActivityViewModelTests.swift; sourceTree = "<group>"; };
 		50C6DECB270E48BE0085D04B /* BannerInfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerInfoType.swift; sourceTree = "<group>"; };
 		50C6DECE270E4F020085D04B /* BannerInfoTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerInfoTypeTests.swift; sourceTree = "<group>"; };
 		50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHeaderViewModelTests.swift; sourceTree = "<group>"; };
@@ -936,6 +938,7 @@
 				1F09A10926BA47EC00BACED7 /* SetupViewModelTests.swift */,
 				98966FE226A5E58D00069857 /* SetupControlBarViewModelTests.swift */,
 				985DF36B269650C900CFDA55 /* PreviewAreaViewModelTests.swift */,
+				50B390D927DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift */,
 			);
 			path = Setup;
 			sourceTree = "<group>";
@@ -1381,6 +1384,7 @@
 			files = (
 				A830C317264D8A0C00766E3D /* ContainerViewModelTests.swift in Sources */,
 				A8ED23302649EA61008A26B2 /* NavigationRouterTests.swift in Sources */,
+				50B390DA27DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift in Sources */,
 				A869A63D26546A2E003CC4F2 /* ReducerMocking.swift in Sources */,
 				503E361C26CC2D0900158CB4 /* CompositeViewModelFactoryTests.swift in Sources */,
 				503300FC2706763800289BB5 /* BannerViewModelTests.swift in Sources */,

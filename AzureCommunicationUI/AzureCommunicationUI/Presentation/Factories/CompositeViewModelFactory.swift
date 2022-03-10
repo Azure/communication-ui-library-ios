@@ -29,7 +29,6 @@ protocol CompositeViewModelFactory {
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
-    func makeJoiningCallAvtivityViewModel() -> JoiningCallActivityViewModel
     func makeErrorInfoViewModel() -> ErrorInfoViewModel
 
     // MARK: CallingViewModels
@@ -134,9 +133,6 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
         AudioDevicesListViewModel(dispatchAction: dispatchAction,
                                   localUserState: localUserState,
                                   localizationProvider: localizationProvider)
-    }
-    func makeJoiningCallAvtivityViewModel() -> JoiningCallActivityViewModel {
-        JoiningCallActivityViewModel(localizationProvider: localizationProvider)
     }
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
         ErrorInfoViewModel()
