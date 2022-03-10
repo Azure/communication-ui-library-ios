@@ -111,7 +111,8 @@ class CallingViewModel: ObservableObject {
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState)
         localVideoViewModel.update(localUserState: state.localUserState)
-        participantGridsViewModel.update(remoteParticipantsState: state.remoteParticipantsState)
+        participantGridsViewModel.update(callingState: state.callingState,
+                                         remoteParticipantsState: state.remoteParticipantsState)
         bannerViewModel.update(callingState: state.callingState)
         let isCallConnected = state.callingState.status == .connected
         let hasRemoteParticipants = state.remoteParticipantsState.participantInfoList.count > 0
