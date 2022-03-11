@@ -54,17 +54,17 @@ class AudioDevicesListViewModelTests: XCTestCase {
 
         audioDevicesListViewModel.update(audioDeviceStatus: .receiverSelected)
         let initialSelection = audioDevicesListViewModel.audioDevicesList.first(where: { $0.isSelected })
-        XCTAssertEqual(initialSelection?.title, AudioDeviceType.receiver
-                        .getName(self.localizationProvider))
+        XCTAssertEqual(initialSelection?.title, self.localizationProvider
+                        .getLocalizedString(AudioDeviceType.receiver.name))
         XCTAssertEqual(initialSelection?.icon, .speakerRegular)
 
         audioDevicesListViewModel.update(audioDeviceStatus: .speakerRequested)
         let requestedSelection = audioDevicesListViewModel.audioDevicesList.first(where: { $0.isSelected })
-        XCTAssertEqual(requestedSelection?.title, AudioDeviceType.receiver
-                        .getName(self.localizationProvider))
+        XCTAssertEqual(requestedSelection?.title, self.localizationProvider
+                        .getLocalizedString(AudioDeviceType.receiver.name))
         XCTAssertEqual(requestedSelection?.icon, .speakerRegular)
-        XCTAssertNotEqual(requestedSelection?.title, AudioDeviceType.speaker
-                            .getName(self.localizationProvider))
+        XCTAssertNotEqual(requestedSelection?.title, self.localizationProvider
+                            .getLocalizedString(AudioDeviceType.speaker.name))
         XCTAssertNotEqual(requestedSelection?.icon, .speakerFilled)
         wait(for: [expectation], timeout: 1)
     }
@@ -75,22 +75,22 @@ class AudioDevicesListViewModelTests: XCTestCase {
             .dropFirst()
             .sink(receiveValue: { audioDevicesList in
                 let updatedSelection = audioDevicesList.first(where: { $0.isSelected })
-                XCTAssertEqual(updatedSelection?.title, AudioDeviceType.bluetooth
-                                .getName(self.localizationProvider))
+                XCTAssertEqual(updatedSelection?.title, self.localizationProvider
+                                .getLocalizedString(AudioDeviceType.bluetooth.name))
                 XCTAssertEqual(updatedSelection?.icon, .speakerBluetooth)
                 expectation.fulfill()
             }).store(in: cancellable)
 
         audioDevicesListViewModel.update(audioDeviceStatus: .bluetoothRequested)
         let requestedSelection = audioDevicesListViewModel.audioDevicesList.first(where: { $0.isSelected })
-        XCTAssertNotEqual(requestedSelection?.title, AudioDeviceType.bluetooth
-                            .getName(self.localizationProvider))
+        XCTAssertNotEqual(requestedSelection?.title, self.localizationProvider
+                            .getLocalizedString(AudioDeviceType.bluetooth.name))
         XCTAssertNotEqual(requestedSelection?.icon, .speakerBluetooth)
 
         audioDevicesListViewModel.update(audioDeviceStatus: .bluetoothSelected)
         let updatedSelection = audioDevicesListViewModel.audioDevicesList.first(where: { $0.isSelected })
-        XCTAssertEqual(updatedSelection?.title, AudioDeviceType.bluetooth
-                        .getName(self.localizationProvider))
+        XCTAssertEqual(updatedSelection?.title, self.localizationProvider
+                        .getLocalizedString(AudioDeviceType.bluetooth.name))
         XCTAssertEqual(updatedSelection?.icon, .speakerBluetooth)
         wait(for: [expectation], timeout: 1)
     }
