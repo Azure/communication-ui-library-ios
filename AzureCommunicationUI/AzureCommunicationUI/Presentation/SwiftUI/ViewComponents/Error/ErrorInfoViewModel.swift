@@ -13,7 +13,7 @@ class ErrorInfoViewModel: ObservableObject {
     private let localizationProvider: LocalizationProvider
     private var previousErrorType: String = ""
 
-    init(with localizationProvider: LocalizationProvider) {
+    init(localizationProvider: LocalizationProvider) {
         self.localizationProvider = localizationProvider
     }
 

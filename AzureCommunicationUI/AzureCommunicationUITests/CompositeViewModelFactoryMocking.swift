@@ -97,7 +97,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     }
 
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
-        return errorInfoViewModel ?? ErrorInfoViewModel(with: LocalizationProviderMocking())
+        return errorInfoViewModel ?? ErrorInfoViewModel(localizationProvider: LocalizationProviderMocking())
     }
 
     // MARK: CallingViewModels

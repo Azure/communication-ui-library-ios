@@ -134,7 +134,7 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
                                   localUserState: localUserState)
     }
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
-        ErrorInfoViewModel(with: localizationProvider)
+        ErrorInfoViewModel(localizationProvider: localizationProvider)
     }
 
     // MARK: CallingViewModels
