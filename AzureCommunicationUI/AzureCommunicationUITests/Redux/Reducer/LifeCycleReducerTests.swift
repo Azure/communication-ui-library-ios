@@ -18,7 +18,7 @@ class LifeCycleReducerTests: XCTestCase {
     }
 
     func test_lifeCycleReducer_reduce_when_foregroundEnteredAction_then_stateUpdated() {
-        let expectedState = LifeCycleState.AppStatus.foreground
+        let expectedState = AppStatus.foreground
         let state = LifeCycleState(currentStatus: .background)
         let action = LifecycleAction.ForegroundEntered()
         let sut = getSUT()
@@ -31,7 +31,7 @@ class LifeCycleReducerTests: XCTestCase {
     }
 
     func test_lifeCycleReducer_reduce_when_backgroundEnteredAction_then_stateUpdated() {
-        let expectedState = LifeCycleState.AppStatus.background
+        let expectedState = AppStatus.background
         let state = LifeCycleState(currentStatus: .foreground)
         let action = LifecycleAction.BackgroundEntered()
         let sut = getSUT()
@@ -44,7 +44,7 @@ class LifeCycleReducerTests: XCTestCase {
     }
 
     func test_lifeCycleReducer_reduce_when_mockingAction_then_stateNotUpdate() {
-        let expectedState = LifeCycleState.AppStatus.background
+        let expectedState = AppStatus.background
         let state = LifeCycleState(currentStatus: expectedState)
         let action = ActionMocking()
         let sut = getSUT()

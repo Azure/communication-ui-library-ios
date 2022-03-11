@@ -20,9 +20,18 @@ struct ScreenSizeClassKey: EnvironmentKey {
     static let defaultValue: ScreenSizeClassType = .iphonePortraitScreenSize
 }
 
+struct AppPhaseKey: EnvironmentKey {
+    static let defaultValue: AppStatus = .foreground
+}
+
 extension EnvironmentValues {
     var screenSizeClass: ScreenSizeClassType {
         get { self[ScreenSizeClassKey.self] }
         set { self[ScreenSizeClassKey.self] = newValue }
+    }
+
+    var appPhase: AppStatus {
+        get { self[AppPhaseKey.self] }
+        set { self[AppPhaseKey.self] = newValue }
     }
 }

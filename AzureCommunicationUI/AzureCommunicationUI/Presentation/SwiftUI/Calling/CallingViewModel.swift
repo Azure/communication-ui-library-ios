@@ -10,6 +10,7 @@ class CallingViewModel: ObservableObject {
     @Published var isLobbyOverlayDisplayed: Bool = false
     @Published var isConfirmLeaveOverlayDisplayed: Bool = false
     @Published var isParticipantGridDisplayed: Bool
+    @Published var appState: AppStatus = .foreground
 
     private let compositeViewModelFactory: CompositeViewModelFactory
     private let logger: Logger
@@ -38,6 +39,7 @@ class CallingViewModel: ObservableObject {
         let isCallConnected = store.state.callingState.status == .connected
         let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
         isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
+        appState = store.state.lifeCycleState.currentStatus
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
                 guard let self = self else {
@@ -100,6 +102,10 @@ class CallingViewModel: ObservableObject {
     }
 
     func receive(_ state: AppState) {
+        if appState != state.lifeCycleState.currentStatus {
+            appState = state.lifeCycleState.currentStatus
+        }
+
         guard state.lifeCycleState.currentStatus == .foreground else {
             return
         }
@@ -109,7 +115,8 @@ class CallingViewModel: ObservableObject {
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState)
         localVideoViewModel.update(localUserState: state.localUserState)
-        participantGridsViewModel.update(remoteParticipantsState: state.remoteParticipantsState)
+        participantGridsViewModel.update(remoteParticipantsState: state.remoteParticipantsState,
+                                         lifeCycleState: state.lifeCycleState)
         bannerViewModel.update(callingState: state.callingState)
         let isCallConnected = state.callingState.status == .connected
         let hasRemoteParticipants = state.remoteParticipantsState.participantInfoList.count > 0

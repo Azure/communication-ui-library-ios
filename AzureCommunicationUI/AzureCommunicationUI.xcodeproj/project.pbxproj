@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1B70D52827191073007CC933 /* DeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B70D52727191073007CC933 /* DeviceExtension.swift */; };
 		1B79BD50273F2D87002D5A36 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B79BD4F273F2D87002D5A36 /* UIViewControllerExtension.swift */; };
+		1B7ABF82278CFFC400D79DF7 /* ZoomableVideoRenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7ABF81278CFFC400D79DF7 /* ZoomableVideoRenderView.swift */; };
 		1F03D3CE2638A6AE0055C456 /* CallingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D3CD2638A6AE0055C456 /* CallingView.swift */; };
 		1F03D3D22638A6B70055C456 /* CallingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D3D12638A6B70055C456 /* CallingViewModel.swift */; };
 		1F09A10426BA472A00BACED7 /* ParticipantInfoModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09A10326BA472A00BACED7 /* ParticipantInfoModelBuilder.swift */; };
@@ -219,6 +220,7 @@
 		01D765D8184BB2E6A5879C73 /* Pods-AzureCommunicationUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUI.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUI/Pods-AzureCommunicationUI.release.xcconfig"; sourceTree = "<group>"; };
 		1B70D52727191073007CC933 /* DeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceExtension.swift; sourceTree = "<group>"; };
 		1B79BD4F273F2D87002D5A36 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		1B7ABF81278CFFC400D79DF7 /* ZoomableVideoRenderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomableVideoRenderView.swift; sourceTree = "<group>"; };
 		1DD8A6B167FDF205AD440568 /* Pods-AzureCommunicationUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUI.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUI/Pods-AzureCommunicationUI.debug.xcconfig"; sourceTree = "<group>"; };
 		1F03D3CD2638A6AE0055C456 /* CallingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingView.swift; sourceTree = "<group>"; };
 		1F03D3D12638A6B70055C456 /* CallingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingViewModel.swift; sourceTree = "<group>"; };
@@ -768,6 +770,7 @@
 				1FBCB6B8264BA90000F57EEA /* ParticipantGridCellVideoView.swift */,
 				1FBCB6B5264BA8A200F57EEA /* ParticipantGridCellViewModel.swift */,
 				50FA46012681409D001844AC /* ParticipantGridCellView.swift */,
+				1B7ABF81278CFFC400D79DF7 /* ZoomableVideoRenderView.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1388,6 +1391,7 @@
 				503F4B692704EDD100C17DA6 /* BannerViewModel.swift in Sources */,
 				982C2835267D15AF00427246 /* CompositeAvatar.swift in Sources */,
 				50FA460C26829162001844AC /* IconWithLabelButton.swift in Sources */,
+				1B7ABF82278CFFC400D79DF7 /* ZoomableVideoRenderView.swift in Sources */,
 				50FA4623269CA1D4001844AC /* IconButtonViewModel.swift in Sources */,
 				1F8E0B722684EBC100DDD18E /* CallingMiddlewareHandler.swift in Sources */,
 				1F2BEDA5263252E100D98266 /* Middleware.swift in Sources */,
