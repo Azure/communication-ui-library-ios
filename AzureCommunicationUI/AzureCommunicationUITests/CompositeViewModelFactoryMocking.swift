@@ -10,13 +10,16 @@ import FluentUI
 class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     var logger: Logger
     var store: Store<AppState>
+    let accessibilityProvider: AccessibilityProvider
 
     var bannerTextViewModel: BannerTextViewModel?
 
     init(logger: Logger,
-         store: Store<AppState>) {
+         store: Store<AppState>,
+         accessibilityProvider: AccessibilityProvider = AccessibilityProviderMocking()) {
         self.logger = logger
         self.store = store
+        self.accessibilityProvider = accessibilityProvider
     }
 
     func getSetupViewModel() -> SetupViewModel {
@@ -87,13 +90,14 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
-                            localUserState: localUserState)
+                            localUserState: localUserState,
+                            accessibilityProvider: accessibilityProvider)
     }
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
         ParticipantGridCellViewModel(compositeViewModelFactory: self, participantModel: participantModel)
     }
     func makeParticipantGridsViewModel() -> ParticipantGridViewModel {
-        ParticipantGridViewModel(compositeViewModelFactory: self)
+        ParticipantGridViewModel(compositeViewModelFactory: self, accessibilityProvider: accessibilityProvider)
     }
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
         ParticipantsListViewModel(localUserState: localUserState)

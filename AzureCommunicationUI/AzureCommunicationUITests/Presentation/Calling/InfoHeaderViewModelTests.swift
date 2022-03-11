@@ -21,10 +21,12 @@ class InfoHeaderViewModelTests: XCTestCase {
             storeFactory.store.dispatch(action: action)
         }
 
+        let accessibilityProvider = AccessibilityProviderMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
         infoHeaderViewModel = InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                                   logger: LoggerMocking(),
-                                                  localUserState: LocalUserState())
+                                                  localUserState: LocalUserState(),
+                                                  accessibilityProvider: accessibilityProvider)
     }
 
     func test_infoHeaderViewModel_update_when_participantInfoListCountSame_then_shouldNotBePublished() {
@@ -137,7 +139,7 @@ class InfoHeaderViewModelTests: XCTestCase {
 
         infoHeaderViewModel.isInfoHeaderDisplayed = false
         XCTAssertFalse(infoHeaderViewModel.isInfoHeaderDisplayed)
-        infoHeaderViewModel.toggleDisplayInfoHeader()
+        infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
         XCTAssertTrue(infoHeaderViewModel.isInfoHeaderDisplayed)
         cancel.cancel()
         wait(for: [expectation], timeout: 1)
@@ -154,7 +156,7 @@ class InfoHeaderViewModelTests: XCTestCase {
 
         infoHeaderViewModel.isInfoHeaderDisplayed = false
         XCTAssertFalse(infoHeaderViewModel.isInfoHeaderDisplayed)
-        infoHeaderViewModel.toggleDisplayInfoHeader()
+        infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
         XCTAssertTrue(infoHeaderViewModel.isInfoHeaderDisplayed)
         wait(for: [expectation], timeout: 5)
     }
@@ -170,7 +172,7 @@ class InfoHeaderViewModelTests: XCTestCase {
 
         infoHeaderViewModel.isInfoHeaderDisplayed = true
         XCTAssertTrue(infoHeaderViewModel.isInfoHeaderDisplayed)
-        infoHeaderViewModel.toggleDisplayInfoHeader()
+        infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
         XCTAssertFalse(infoHeaderViewModel.isInfoHeaderDisplayed)
         cancel.cancel()
         wait(for: [expectation], timeout: 1)

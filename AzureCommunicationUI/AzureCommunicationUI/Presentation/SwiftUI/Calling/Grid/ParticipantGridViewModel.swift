@@ -10,14 +10,17 @@ class ParticipantGridViewModel: ObservableObject {
     private let maximumParticipantsDisplayed: Int = 6
     private var lastUpdateTimeStamp = Date()
     private let compositeViewModelFactory: CompositeViewModelFactory
+    private let accessibilityProvider: AccessibilityProvider
 
     @Published var gridsCount: Int = 0
     @Published var displayedParticipantInfoModelArr: [ParticipantInfoModel] = []
 
     var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
 
-    init(compositeViewModelFactory: CompositeViewModelFactory) {
+    init(compositeViewModelFactory: CompositeViewModelFactory,
+         accessibilityProvider: AccessibilityProvider) {
         self.compositeViewModelFactory = compositeViewModelFactory
+        self.accessibilityProvider = accessibilityProvider
     }
 
     func update(callingState: CallingState,
@@ -29,8 +32,8 @@ class ParticipantGridViewModel: ObservableObject {
 
         let remoteParticipants = remoteParticipantsState.participantInfoList
         let newDisplayedInfoModelArr = getDisplayedInfoViewModels(remoteParticipants)
-        var removedModels = getRemovedInfoModels(for: newDisplayedInfoModelArr)
-        var addedModels = getAddedInfoModels(for: newDisplayedInfoModelArr)
+        let removedModels = getRemovedInfoModels(for: newDisplayedInfoModelArr)
+        let addedModels = getAddedInfoModels(for: newDisplayedInfoModelArr)
         let orderedInfoModelArr = sortDisplayedInfoModels(newDisplayedInfoModelArr,
                                                           removedModels: removedModels,
                                                           addedModels: addedModels)
@@ -152,16 +155,16 @@ class ParticipantGridViewModel: ObservableObject {
                                                                       addedModels: [ParticipantInfoModel]) {
         if !removedModels.isEmpty {
             if removedModels.count == 1 {
-                AccessibilityProvider.postQueuedAnnouncement("\(removedModels.first!.displayName) left the meeting")
+                accessibilityProvider.postQueuedAnnouncement("\(removedModels.first!.displayName) left the meeting")
             } else {
-                AccessibilityProvider.postQueuedAnnouncement("\(removedModels.count) participants left the meeting")
+                accessibilityProvider.postQueuedAnnouncement("\(removedModels.count) participants left the meeting")
             }
         }
         if !addedModels.isEmpty {
             if addedModels.count == 1 {
-                AccessibilityProvider.postQueuedAnnouncement("\(addedModels.first!.displayName) joined the meeting")
+                accessibilityProvider.postQueuedAnnouncement("\(addedModels.first!.displayName) joined the meeting")
             } else {
-                AccessibilityProvider.postQueuedAnnouncement("\(addedModels.count) participants joined the meeting")
+                accessibilityProvider.postQueuedAnnouncement("\(addedModels.count) participants joined the meeting")
             }
         }
     }

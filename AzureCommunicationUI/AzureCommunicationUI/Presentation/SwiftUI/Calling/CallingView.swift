@@ -61,7 +61,7 @@ struct CallingView: View {
             .contentShape(Rectangle())
             .animation(.linear(duration: 0.167))
             .onTapGesture(perform: {
-                viewModel.infoHeaderViewModel.toggleDisplayInfoHeader()
+                viewModel.infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
             })
             .modifier(PopupModalView(isPresented: viewModel.isLobbyOverlayDisplayed) {
                 LobbyOverlayView()

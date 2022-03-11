@@ -11,8 +11,12 @@ class InfoHeaderViewModel: ObservableObject {
     @Published var isInfoHeaderDisplayed: Bool = true
     @Published var isParticipantsListDisplayed: Bool = false
     private let logger: Logger
+    private let accessibilityProvider: AccessibilityProvider
     private var infoHeaderDismissTimer: Timer?
     private var participantsCount: Int = 0
+    private var isVoiceOverEnabled: Bool {
+        accessibilityProvider.isVoiceOverEnabled
+    }
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
@@ -20,8 +24,10 @@ class InfoHeaderViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
-         localUserState: LocalUserState) {
+         localUserState: LocalUserState,
+         accessibilityProvider: AccessibilityProvider) {
         self.logger = logger
+        self.accessibilityProvider = accessibilityProvider
         self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
             localUserState: localUserState)
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
@@ -33,7 +39,11 @@ class InfoHeaderViewModel: ObservableObject {
                 }
                 self.showParticipantListButtonTapped()
         }
-        resetTimer()
+        self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
+        // no need to hide the info view when VoiceOver is on
+        if !isVoiceOverEnabled {
+            resetTimer()
+        }
     }
 
     func showParticipantListButtonTapped() {
@@ -48,7 +58,10 @@ class InfoHeaderViewModel: ObservableObject {
         self.isParticipantsListDisplayed = true
     }
 
-    func toggleDisplayInfoHeader() {
+    func toggleDisplayInfoHeaderIfNeeded() {
+        guard !isVoiceOverEnabled else {
+            return
+        }
         self.isInfoHeaderDisplayed ? hideInfoHeader() : displayWithTimer()
     }
 
@@ -92,4 +105,15 @@ class InfoHeaderViewModel: ObservableObject {
                                                            repeats: false)
     }
 
+}
+
+extension InfoHeaderViewModel: AccessibilityProviderNotificationsObserver {
+    func didChangeVoiceOverStatus(_ notification: NSNotification) {
+        if self.isVoiceOverEnabled {
+            isInfoHeaderDisplayed = true
+        } else {
+            // info header is shown
+            resetTimer()
+        }
+    }
 }

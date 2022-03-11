@@ -51,14 +51,17 @@ protocol CompositeViewModelFactory {
 class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     private let logger: Logger
     private let store: Store<AppState>
+    private let accessibilityProvider: AccessibilityProvider
 
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
 
     init(logger: Logger,
-         store: Store<AppState>) {
+         store: Store<AppState>,
+         accessibilityProvider: AccessibilityProvider) {
         self.logger = logger
         self.store = store
+        self.accessibilityProvider = accessibilityProvider
     }
 
     // MARK: CompositeViewModels
@@ -145,13 +148,15 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
-                            localUserState: localUserState)
+                            localUserState: localUserState,
+                            accessibilityProvider: accessibilityProvider)
     }
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
         ParticipantGridCellViewModel(compositeViewModelFactory: self, participantModel: participantModel)
     }
     func makeParticipantGridsViewModel() -> ParticipantGridViewModel {
-        ParticipantGridViewModel(compositeViewModelFactory: self)
+        ParticipantGridViewModel(compositeViewModelFactory: self,
+                                 accessibilityProvider: accessibilityProvider)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {

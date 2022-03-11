@@ -41,8 +41,10 @@ final class DependencyContainer {
         register(makeStore(displayName: callConfiguration.displayName) as Store<AppState>)
         register(NavigationRouter(store: resolve(),
                                   logger: resolve()) as NavigationRouter)
+        register(AppAccessibilityProvider() as AccessibilityProvider)
         register(ACSCompositeViewModelFactory(logger: resolve(),
-                                              store: resolve()) as CompositeViewModelFactory)
+                                              store: resolve(),
+                                              accessibilityProvider: resolve()) as CompositeViewModelFactory)
         register(ACSCompositeViewFactory(logger: resolve(),
                                          videoViewManager: resolve(),
                                          compositeViewModelFactory: resolve()) as CompositeViewFactory)

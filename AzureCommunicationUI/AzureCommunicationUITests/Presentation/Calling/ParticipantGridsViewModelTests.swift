@@ -308,8 +308,12 @@ extension ParticipantGridsViewModelTests {
     func makeSUT() -> ParticipantGridViewModel {
         let storeFactory = StoreFactoryMocking()
 
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
-        return ParticipantGridViewModel(compositeViewModelFactory: factoryMocking)
+        let accessibilityProvider = AccessibilityProviderMocking()
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
+                                                              store: storeFactory.store,
+                                                              accessibilityProvider: accessibilityProvider)
+        return ParticipantGridViewModel(compositeViewModelFactory: factoryMocking,
+                                        accessibilityProvider: accessibilityProvider)
     }
 
     func makeRemoteParticipantState(count: Int = 1,
