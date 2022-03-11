@@ -61,9 +61,9 @@ struct LocalUserReducer: Reducer {
         case let action as LocalUserAction.MicrophoneOffFailed:
             microphoneStatus = .error(action.error)
         case let action as LocalUserAction.AudioDeviceChangeRequested:
-            audioDeviceStatus = action.device == .speaker ? .speakerRequested : .receiverRequested
+            audioDeviceStatus = getRequestedDeviceStatus(for: action.device)
         case let action as LocalUserAction.AudioDeviceChangeSucceeded:
-            audioDeviceStatus = action.device == .speaker ? .speakerSelected : .receiverSelected
+            audioDeviceStatus = getSelectedDeviceStatus(for: action.device)
         case let action as LocalUserAction.AudioDeviceChangeFailed:
             audioDeviceStatus = .error(action.error)
         default:
@@ -79,5 +79,33 @@ struct LocalUserReducer: Reducer {
                               audioState: audioState,
                               displayName: displayName,
                               localVideoStreamIdentifier: localVideoStreamIdentifier)
+    }
+
+    private func getRequestedDeviceStatus(for audioDeviceType: AudioDeviceType)
+    -> LocalUserState.AudioDeviceSelectionStatus {
+        switch audioDeviceType {
+        case .speaker:
+            return .speakerRequested
+        case .receiver:
+            return .receiverRequested
+        case .bluetooth:
+            return .bluetoothRequested
+        case .headphones:
+            return .headphonesRequested
+        }
+    }
+
+    private func getSelectedDeviceStatus(for audioDeviceType: AudioDeviceType)
+    -> LocalUserState.AudioDeviceSelectionStatus {
+        switch audioDeviceType {
+        case .speaker:
+            return .speakerSelected
+        case .receiver:
+            return .receiverSelected
+        case .bluetooth:
+            return .bluetoothSelected
+        case .headphones:
+            return .headphonesSelected
+        }
     }
 }

@@ -24,7 +24,7 @@ class NavigationReducerTests: XCTestCase {
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
         guard let resultState = resultState as? NavigationState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(resultState, expectedState)
@@ -37,7 +37,7 @@ class NavigationReducerTests: XCTestCase {
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
         guard let resultState = resultState as? NavigationState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(resultState, expectedState)
@@ -50,7 +50,7 @@ class NavigationReducerTests: XCTestCase {
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
         guard let resultState = resultState as? NavigationState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(resultState, expectedState)
@@ -62,7 +62,7 @@ class NavigationReducerTests: XCTestCase {
         let sut = getSUT()
         let resultState = sut.reduce(expectedState, action)
         guard let resultState = resultState as? NavigationState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(resultState, expectedState)

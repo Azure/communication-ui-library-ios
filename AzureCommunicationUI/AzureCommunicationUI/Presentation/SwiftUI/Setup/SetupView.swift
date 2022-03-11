@@ -28,7 +28,7 @@ struct SetupView: View {
                     }
                     .background(Color(StyleProvider.color.surface))
                     .cornerRadius(4)
-                    startCallButton
+                    joinCallView
                         .padding(.bottom)
                 }
                 .padding(.horizontal, horizontalPadding)
@@ -41,8 +41,14 @@ struct SetupView: View {
         }
     }
 
-    var startCallButton: some View {
-        PrimaryButton(viewModel: viewModel.startCallButtonViewModel)
+    var joinCallView: some View {
+        Group {
+            if viewModel.isJoinRequested {
+                JoiningCallActivityView()
+            } else {
+                PrimaryButton(viewModel: viewModel.joinCallButtonViewModel)
+            }
+        }
     }
 
     var errorInfoView: some View {

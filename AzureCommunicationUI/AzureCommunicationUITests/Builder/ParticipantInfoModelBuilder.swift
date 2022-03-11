@@ -18,7 +18,7 @@ struct ParticipantInfoModelBuilder {
         var screenShareIdInfoModel: VideoStreamInfoModel?
         if let screenShareId = screenShareStreamId {
             screenShareIdInfoModel = VideoStreamInfoModel(videoStreamIdentifier: screenShareId,
-                                                          mediaStreamType: .cameraVideo)
+                                                          mediaStreamType: .screenSharing)
         }
 
         if let cameraId = videoStreamId {
