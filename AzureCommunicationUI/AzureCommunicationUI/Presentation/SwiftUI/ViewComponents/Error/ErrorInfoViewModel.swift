@@ -10,14 +10,14 @@ class ErrorInfoViewModel: ObservableObject {
     @Published var isDisplayed: Bool = false
     @Published var message: String = ""
 
-    let localizationProvider: LocalizationProvider
+    private let localizationProvider: LocalizationProvider
     private var previousErrorType: String = ""
 
     init(with localizationProvider: LocalizationProvider) {
         self.localizationProvider = localizationProvider
     }
 
-    func getDismissContent() -> String {
+    var dismissContent: String {
         return localizationProvider.getLocalizedString(.snackBarDismiss)
     }
 
