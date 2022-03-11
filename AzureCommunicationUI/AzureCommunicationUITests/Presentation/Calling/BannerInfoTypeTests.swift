@@ -22,10 +22,10 @@ class BannerInfoTypeTests: XCTestCase {
         let expectedLinkDisplay = "Privacy policy"
         let expectedLink = "https://privacy.microsoft.com/privacystatement#mainnoticetoendusersmodule"
 
-        XCTAssertEqual(bannerInfoType.getTitle(localizationProvider), expectedTitle)
-        XCTAssertEqual(bannerInfoType.getBody(localizationProvider), expectedBody)
-        XCTAssertEqual(bannerInfoType.getLinkDisplay(localizationProvider), expectedLinkDisplay)
-        XCTAssertEqual(bannerInfoType.getLink(), expectedLink)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.title), expectedTitle)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.body), expectedBody)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.linkDisplay), expectedLinkDisplay)
+        XCTAssertEqual(bannerInfoType.link, expectedLink)
     }
 
     func test_bannerInfoType_when_recordingStarted_then_shouldEqualExpectedString() {
@@ -35,10 +35,10 @@ class BannerInfoTypeTests: XCTestCase {
         let expectedLinkDisplay = "Privacy policy"
         let expectedLink = "https://privacy.microsoft.com/privacystatement#mainnoticetoendusersmodule"
 
-        XCTAssertEqual(bannerInfoType.getTitle(localizationProvider), expectedTitle)
-        XCTAssertEqual(bannerInfoType.getBody(localizationProvider), expectedBody)
-        XCTAssertEqual(bannerInfoType.getLinkDisplay(localizationProvider), expectedLinkDisplay)
-        XCTAssertEqual(bannerInfoType.getLink(), expectedLink)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.title), expectedTitle)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.body), expectedBody)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.linkDisplay), expectedLinkDisplay)
+        XCTAssertEqual(bannerInfoType.link, expectedLink)
     }
 
     func test_bannerInfoType_when_transcriptionStoppedStillRecording_then_shouldEqualExpectedString() {
@@ -48,10 +48,10 @@ class BannerInfoTypeTests: XCTestCase {
         let expectedLinkDisplay = "Privacy policy"
         let expectedLink = "https://privacy.microsoft.com/privacystatement#mainnoticetoendusersmodule"
 
-        XCTAssertEqual(bannerInfoType.getTitle(localizationProvider), expectedTitle)
-        XCTAssertEqual(bannerInfoType.getBody(localizationProvider), expectedBody)
-        XCTAssertEqual(bannerInfoType.getLinkDisplay(localizationProvider), expectedLinkDisplay)
-        XCTAssertEqual(bannerInfoType.getLink(), expectedLink)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.title), expectedTitle)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.body), expectedBody)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.linkDisplay), expectedLinkDisplay)
+        XCTAssertEqual(bannerInfoType.link, expectedLink)
     }
 
     func test_bannerInfoType_when_transcriptionStarted_then_shouldEqualExpectedString() {
@@ -61,10 +61,10 @@ class BannerInfoTypeTests: XCTestCase {
         let expectedLinkDisplay = "Privacy policy"
         let expectedLink = "https://privacy.microsoft.com/privacystatement#mainnoticetoendusersmodule"
 
-        XCTAssertEqual(bannerInfoType.getTitle(localizationProvider), expectedTitle)
-        XCTAssertEqual(bannerInfoType.getBody(localizationProvider), expectedBody)
-        XCTAssertEqual(bannerInfoType.getLinkDisplay(localizationProvider), expectedLinkDisplay)
-        XCTAssertEqual(bannerInfoType.getLink(), expectedLink)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.title), expectedTitle)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.body), expectedBody)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.linkDisplay), expectedLinkDisplay)
+        XCTAssertEqual(bannerInfoType.link, expectedLink)
     }
 
     func test_bannerInfoType_when_transcriptionStoppedAndSaved_then_shouldEqualExpectedString() {
@@ -74,10 +74,10 @@ class BannerInfoTypeTests: XCTestCase {
         let expectedLinkDisplay = "Learn more"
         let expectedLink = "https://support.microsoft.com/office/record-a-meeting-in-teams-34dfbe7f-b07d-4a27-b4c6-de62f1348c24"
 
-        XCTAssertEqual(bannerInfoType.getTitle(localizationProvider), expectedTitle)
-        XCTAssertEqual(bannerInfoType.getBody(localizationProvider), expectedBody)
-        XCTAssertEqual(bannerInfoType.getLinkDisplay(localizationProvider), expectedLinkDisplay)
-        XCTAssertEqual(bannerInfoType.getLink(), expectedLink)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.title), expectedTitle)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.body), expectedBody)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.linkDisplay), expectedLinkDisplay)
+        XCTAssertEqual(bannerInfoType.link, expectedLink)
     }
 
     func test_bannerInfoType_when_recordingStoppedStillTranscribing_then_shouldEqualExpectedString() {
@@ -87,10 +87,10 @@ class BannerInfoTypeTests: XCTestCase {
         let expectedLinkDisplay = "Privacy policy"
         let expectedLink = "https://privacy.microsoft.com/privacystatement#mainnoticetoendusersmodule"
 
-        XCTAssertEqual(bannerInfoType.getTitle(localizationProvider), expectedTitle)
-        XCTAssertEqual(bannerInfoType.getBody(localizationProvider), expectedBody)
-        XCTAssertEqual(bannerInfoType.getLinkDisplay(localizationProvider), expectedLinkDisplay)
-        XCTAssertEqual(bannerInfoType.getLink(), expectedLink)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.title), expectedTitle)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.body), expectedBody)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.linkDisplay), expectedLinkDisplay)
+        XCTAssertEqual(bannerInfoType.link, expectedLink)
     }
 
     func test_bannerInfoType_when_recordingStopped_then_shouldEqualExpectedString() {
@@ -100,10 +100,10 @@ class BannerInfoTypeTests: XCTestCase {
         let expectedLinkDisplay = "Learn more"
         let expectedLink = "https://support.microsoft.com/office/record-a-meeting-in-teams-34dfbe7f-b07d-4a27-b4c6-de62f1348c24"
 
-        XCTAssertEqual(bannerInfoType.getTitle(localizationProvider), expectedTitle)
-        XCTAssertEqual(bannerInfoType.getBody(localizationProvider), expectedBody)
-        XCTAssertEqual(bannerInfoType.getLinkDisplay(localizationProvider), expectedLinkDisplay)
-        XCTAssertEqual(bannerInfoType.getLink(), expectedLink)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.title), expectedTitle)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.body), expectedBody)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.linkDisplay), expectedLinkDisplay)
+        XCTAssertEqual(bannerInfoType.link, expectedLink)
     }
 
     func test_bannerInfoType_when_recordingAndTranscriptionStopped_then_shouldEqualExpectedString() {
@@ -113,9 +113,9 @@ class BannerInfoTypeTests: XCTestCase {
         let expectedLinkDisplay = "Learn more"
         let expectedLink = "https://support.microsoft.com/office/record-a-meeting-in-teams-34dfbe7f-b07d-4a27-b4c6-de62f1348c24"
 
-        XCTAssertEqual(bannerInfoType.getTitle(localizationProvider), expectedTitle)
-        XCTAssertEqual(bannerInfoType.getBody(localizationProvider), expectedBody)
-        XCTAssertEqual(bannerInfoType.getLinkDisplay(localizationProvider), expectedLinkDisplay)
-        XCTAssertEqual(bannerInfoType.getLink(), expectedLink)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.title), expectedTitle)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.body), expectedBody)
+        XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.linkDisplay), expectedLinkDisplay)
+        XCTAssertEqual(bannerInfoType.link, expectedLink)
     }
 }

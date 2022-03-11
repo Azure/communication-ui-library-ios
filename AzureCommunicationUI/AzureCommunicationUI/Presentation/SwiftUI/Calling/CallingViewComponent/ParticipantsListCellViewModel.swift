@@ -21,4 +21,18 @@ class ParticipantsListCellViewModel {
         self.isMuted = participantInfoModel.isMuted
         self.isLocalParticipant = false
     }
+
+    func getCellDisplayName(localizationProvider: LocalizationProvider) -> String {
+        let isNameEmpty = displayName.trimmingCharacters(in: .whitespaces).isEmpty
+        if isLocalParticipant {
+            let localDisplayName = isNameEmpty
+            ? localizationProvider.getLocalizedString(.unnamedParticipant)
+            : displayName
+            return localizationProvider.getLocalizedString(.localeParticipantWithSuffix, localDisplayName)
+        } else {
+            return isNameEmpty
+            ? localizationProvider.getLocalizedString(.unnamedParticipant)
+            : displayName
+        }
+    }
 }

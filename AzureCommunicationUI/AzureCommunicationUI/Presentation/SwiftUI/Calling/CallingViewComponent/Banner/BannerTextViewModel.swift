@@ -18,10 +18,10 @@ class BannerTextViewModel: ObservableObject {
 
     func update(bannerInfoType: BannerInfoType?) {
         if let bannerInfoType = bannerInfoType {
-            self.title = bannerInfoType.getTitle(localizationProvider)
-            self.body = bannerInfoType.getBody(localizationProvider)
-            self.linkDisplay = bannerInfoType.getLinkDisplay(localizationProvider)
-            self.link = bannerInfoType.getLink()
+            self.title = localizationProvider.getLocalizedString(bannerInfoType.title)
+            self.body = localizationProvider.getLocalizedString(bannerInfoType.body)
+            self.linkDisplay = localizationProvider.getLocalizedString(bannerInfoType.linkDisplay)
+            self.link = bannerInfoType.link
         } else {
             self.title = ""
             self.body = ""

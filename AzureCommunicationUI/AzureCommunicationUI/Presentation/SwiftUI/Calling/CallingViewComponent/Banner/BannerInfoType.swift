@@ -13,62 +13,62 @@ enum BannerInfoType: Equatable {
     case recordingStopped
     case recordingAndTranscriptionStopped
 
-    func getTitle(_ localizationProvider: LocalizationProvider) -> String {
+    var title: StringKey {
         switch self {
         case .recordingAndTranscriptionStarted:
-            return localizationProvider.getLocalizedString(.bannerTitleRecordingAndTranscriptionStarted)
+            return .bannerTitleRecordingAndTranscriptionStarted
         case .recordingStarted:
-            return localizationProvider.getLocalizedString(.bannerTitleReordingStarted)
+            return .bannerTitleReordingStarted
         case .transcriptionStoppedStillRecording:
-            return localizationProvider.getLocalizedString(.bannerTitleTranscriptionStoppedStillRecording)
+            return .bannerTitleTranscriptionStoppedStillRecording
         case .transcriptionStarted:
-            return localizationProvider.getLocalizedString(.bannerTitleTranscriptionStarted)
+            return .bannerTitleTranscriptionStarted
         case .transcriptionStoppedAndSaved:
-            return localizationProvider.getLocalizedString(.bannerTitleTranscriptionStopped)
+            return .bannerTitleTranscriptionStopped
         case .recordingStoppedStillTranscribing:
-            return localizationProvider.getLocalizedString(.bannerTitleRecordingStoppedStillTranscribing)
+            return .bannerTitleRecordingStoppedStillTranscribing
         case .recordingStopped:
-            return localizationProvider.getLocalizedString(.bannerTitleRecordingStopped)
+            return .bannerTitleRecordingStopped
         case .recordingAndTranscriptionStopped:
-            return localizationProvider.getLocalizedString(.bannerTitleRecordingAndTranscribingStopped)
+            return .bannerTitleRecordingAndTranscribingStopped
         }
     }
 
-    func getBody(_ localizationProvider: LocalizationProvider) -> String {
+    var body: StringKey {
         switch self {
         case .recordingAndTranscriptionStarted,
              .recordingStarted,
              .transcriptionStarted:
-            return localizationProvider.getLocalizedString(.bannerBodyConsent)
+            return .bannerBodyConsent
         case .transcriptionStoppedStillRecording:
-            return localizationProvider.getLocalizedString(.bannerBodyRecording)
+            return .bannerBodyRecording
         case .transcriptionStoppedAndSaved:
-            return localizationProvider.getLocalizedString(.bannerBodyTranscriptionStopped)
+            return .bannerBodyTranscriptionStopped
         case .recordingStoppedStillTranscribing:
-            return localizationProvider.getLocalizedString(.bannerBodyOnlyTranscribing)
+            return .bannerBodyOnlyTranscribing
         case .recordingStopped:
-            return localizationProvider.getLocalizedString(.bannerBodyRecordingStopped)
+            return .bannerBodyRecordingStopped
         case .recordingAndTranscriptionStopped:
-            return localizationProvider.getLocalizedString(.bannerBodyRecordingAndTranscriptionStopped)
+            return .bannerBodyRecordingAndTranscriptionStopped
         }
     }
 
-    func getLinkDisplay(_ localizationProvider: LocalizationProvider) -> String {
+    var linkDisplay: StringKey {
         switch self {
         case .recordingAndTranscriptionStarted,
              .recordingStarted,
              .transcriptionStoppedStillRecording,
              .transcriptionStarted,
              .recordingStoppedStillTranscribing:
-            return localizationProvider.getLocalizedString(.bannerDisplayLinkPrivacyPolicy)
+            return .bannerDisplayLinkPrivacyPolicy
         case .transcriptionStoppedAndSaved,
              .recordingStopped,
              .recordingAndTranscriptionStopped:
-            return localizationProvider.getLocalizedString(.bannerDisplayLinkLearnMore)
+            return .bannerDisplayLinkLearnMore
         }
     }
 
-    func getLink() -> String {
+    var link: String {
         switch self {
         case .recordingAndTranscriptionStarted,
              .recordingStarted,
