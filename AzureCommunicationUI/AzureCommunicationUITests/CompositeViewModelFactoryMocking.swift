@@ -8,9 +8,9 @@ import FluentUI
 @testable import AzureCommunicationUI
 
 class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
-    var logger: Logger
-    var store: Store<AppState>
-    let accessibilityProvider: AccessibilityProvider
+    private let logger: Logger
+    private let store: Store<AppState>
+    private let accessibilityProvider: AccessibilityProvider
 
     var bannerTextViewModel: BannerTextViewModel?
 
