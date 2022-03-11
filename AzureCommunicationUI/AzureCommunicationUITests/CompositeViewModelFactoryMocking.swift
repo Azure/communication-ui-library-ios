@@ -154,4 +154,8 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
                                                                     localUserState: localUserState,
                                                                     localizationProvider: LocalizationProviderMocking())
     }
+
+    func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
+        JoiningCallActivityViewModel(localizationProvider: LocalizationProviderMocking())
+    }
 }

@@ -46,6 +46,7 @@ protocol CompositeViewModelFactory {
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                       localUserState: LocalUserState) -> SetupControlBarViewModel
+    func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel
 }
 
 class ACSCompositeViewModelFactory: CompositeViewModelFactory {
@@ -184,5 +185,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
                                  dispatchAction: dispatchAction,
                                  localUserState: localUserState,
                                  localizationProvider: localizationProvider)
+    }
+    func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
+        JoiningCallActivityViewModel(localizationProvider: localizationProvider)
     }
 }
