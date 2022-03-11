@@ -6,10 +6,15 @@
 import Foundation
 import Combine
 
+struct ParticipantVideoViewInfoModel {
+    let videoStreamType: VideoStreamInfoModel.MediaStreamType?
+    let videoStreamId: String?
+}
+
 class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     let id = UUID()
 
-    @Published var videoStreamId: String?
+    @Published var videoViewModel: ParticipantVideoViewInfoModel?
     @Published var displayName: String?
     @Published var isSpeaking: Bool
     @Published var isMuted: Bool
@@ -21,15 +26,17 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         self.isSpeaking = participantModel.isSpeaking
         self.participantIdentifier = participantModel.userIdentifier
         self.isMuted = participantModel.isMuted
-        self.videoStreamId = getDisplayingVideoStreamId(participantModel)
+        self.videoViewModel = getDisplayingVideoStreamModel(participantModel)
     }
 
     func update(participantModel: ParticipantInfoModel) {
         self.participantIdentifier = participantModel.userIdentifier
-        let videoIdentifier = getDisplayingVideoStreamId(participantModel)
+        let videoViewModel = getDisplayingVideoStreamModel(participantModel)
 
-        if self.videoStreamId != videoIdentifier {
-            self.videoStreamId = videoIdentifier
+        if self.videoViewModel?.videoStreamId != videoViewModel.videoStreamId ||
+            self.videoViewModel?.videoStreamType != videoViewModel.videoStreamType {
+            self.videoViewModel = ParticipantVideoViewInfoModel(videoStreamType: videoViewModel.videoStreamType,
+                                                 videoStreamId: videoViewModel.videoStreamId)
         }
 
         if self.displayName != participantModel.displayName {
@@ -45,9 +52,17 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         }
     }
 
-    private func getDisplayingVideoStreamId(_ participantModel: ParticipantInfoModel) -> String? {
+    private func getDisplayingVideoStreamModel(_ participantModel: ParticipantInfoModel)
+    -> ParticipantVideoViewInfoModel {
         let screenShareVideoStreamIdentifier = participantModel.screenShareVideoStreamModel?.videoStreamIdentifier
         let cameraVideoStreamIdentifier = participantModel.cameraVideoStreamModel?.videoStreamIdentifier
-        return screenShareVideoStreamIdentifier ?? cameraVideoStreamIdentifier
+        let screenShareVideoStreamType = participantModel.screenShareVideoStreamModel?.mediaStreamType
+        let cameraVideoStreamType = participantModel.cameraVideoStreamModel?.mediaStreamType
+
+        return screenShareVideoStreamIdentifier != nil ?
+        ParticipantVideoViewInfoModel(videoStreamType: screenShareVideoStreamType,
+                                      videoStreamId: screenShareVideoStreamIdentifier) :
+        ParticipantVideoViewInfoModel(videoStreamType: cameraVideoStreamType,
+                                      videoStreamId: cameraVideoStreamIdentifier)
     }
 }

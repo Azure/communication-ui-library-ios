@@ -12,6 +12,7 @@ class BannerTextViewModelTests: XCTestCase {
     var bannerTextViewModel: BannerTextViewModel!
 
     override func setUp() {
+        super.setUp()
         bannerTextViewModel = BannerTextViewModel()
     }
 

@@ -27,8 +27,8 @@ protocol CompositeViewModelFactory {
                                     iconName: CompositeIcon?,
                                     isDisabled: Bool,
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel
-    func makeAudioDeviceListViewModel(dispatchAction: @escaping ActionDispatch,
-                                      localUserState: LocalUserState) -> AudioDeviceListViewModel
+    func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
+                                       localUserState: LocalUserState) -> AudioDevicesListViewModel
     func makeErrorInfoViewModel() -> ErrorInfoViewModel
 
     // MARK: CallingViewModels
@@ -126,10 +126,10 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
                                isDisabled: isDisabled,
                                action: action)
     }
-    func makeAudioDeviceListViewModel(dispatchAction: @escaping ActionDispatch,
-                                      localUserState: LocalUserState) -> AudioDeviceListViewModel {
-        AudioDeviceListViewModel(dispatchAction: dispatchAction,
-                                 localUserState: localUserState)
+    func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
+                                       localUserState: LocalUserState) -> AudioDevicesListViewModel {
+        AudioDevicesListViewModel(dispatchAction: dispatchAction,
+                                  localUserState: localUserState)
     }
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
         ErrorInfoViewModel()

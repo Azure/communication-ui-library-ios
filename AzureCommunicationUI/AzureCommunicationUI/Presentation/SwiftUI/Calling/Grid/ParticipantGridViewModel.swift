@@ -11,11 +11,10 @@ class ParticipantGridViewModel: ObservableObject {
     private var lastUpdateTimeStamp = Date()
     private let compositeViewModelFactory: CompositeViewModelFactory
     private let accessibilityProvider: AccessibilityProvider
+    private(set) var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
 
     @Published var gridsCount: Int = 0
     @Published var displayedParticipantInfoModelArr: [ParticipantInfoModel] = []
-
-    var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          accessibilityProvider: AccessibilityProvider) {

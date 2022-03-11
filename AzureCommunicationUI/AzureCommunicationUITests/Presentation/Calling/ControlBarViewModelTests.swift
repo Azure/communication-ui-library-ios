@@ -14,9 +14,9 @@ class ControlBarViewModelTests: XCTestCase {
     var controlBarViewModel: ControlBarViewModel!
 
     override func setUp() {
+        super.setUp()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
-
 
         func dispatch(action: Action) {
             storeFactory.store.dispatch(action: action)

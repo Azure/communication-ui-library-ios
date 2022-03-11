@@ -23,7 +23,7 @@ class ParticipantCellViewModelTests: XCTestCase {
                           isMuted: expectedIsMuted)
 
         XCTAssertEqual(sut.displayName, expectedDisplayName)
-        XCTAssertEqual(sut.videoStreamId, expectedVideoStreamId)
+        XCTAssertEqual(sut.videoViewModel?.videoStreamId, expectedVideoStreamId)
         XCTAssertEqual(sut.isSpeaking, expectedIsSpeaking)
         XCTAssertEqual(sut.isMuted, expectedIsMuted)
 
@@ -43,7 +43,7 @@ class ParticipantCellViewModelTests: XCTestCase {
         sut.update(participantModel: infoModel)
 
         XCTAssertEqual(sut.displayName, expectedDisplayName)
-        XCTAssertEqual(sut.videoStreamId, expectedVideoStreamId)
+        XCTAssertEqual(sut.videoViewModel?.videoStreamId, expectedVideoStreamId)
         XCTAssertEqual(sut.isSpeaking, expectedIsSpeaking)
         XCTAssertEqual(sut.participantIdentifier, expectedParticipantIdentifier)
 
@@ -56,10 +56,10 @@ class ParticipantCellViewModelTests: XCTestCase {
         let videoStreamId = "expectedVideoStreamId"
         let sut = makeSUT(videoStreamId: videoStreamId)
 
-        sut.$videoStreamId
+        sut.$videoViewModel
             .dropFirst()
             .sink { _ in
-                XCTFail()
+                XCTFail("Failed with videoStreamId publish")
                 expectation.fulfill()
             }.store(in: cancellable)
 
@@ -76,10 +76,10 @@ class ParticipantCellViewModelTests: XCTestCase {
         let sut = makeSUT(videoStreamId: videoStreamId)
         let expectation = XCTestExpectation(description: "subscription exception")
 
-        sut.$videoStreamId
-            .dropFirst(1)
-            .sink { value in
-                XCTAssertEqual(diffVideoStreamId, value)
+        sut.$videoViewModel
+            .dropFirst()
+            .sink { model in
+                XCTAssertEqual(diffVideoStreamId, model?.videoStreamId)
                 expectation.fulfill()
             }.store(in: cancellable)
 
@@ -99,7 +99,7 @@ class ParticipantCellViewModelTests: XCTestCase {
         sut.$displayName
             .dropFirst()
             .sink { _ in
-                XCTFail()
+                XCTFail("Failed with videoStreamId publish")
                 expectation.fulfill()
             }.store(in: cancellable)
 
@@ -137,7 +137,7 @@ class ParticipantCellViewModelTests: XCTestCase {
         sut.$isSpeaking
             .dropFirst()
             .sink { _ in
-                XCTFail()
+                XCTFail("Failed with videoStreamId publish")
                 expectation.fulfill()
             }.store(in: cancellable)
 
@@ -175,7 +175,7 @@ class ParticipantCellViewModelTests: XCTestCase {
         sut.$isMuted
             .dropFirst()
             .sink { _ in
-                XCTFail()
+                XCTFail("Failed with videoStreamId publish")
                 expectation.fulfill()
             }.store(in: cancellable)
 
@@ -208,10 +208,10 @@ class ParticipantCellViewModelTests: XCTestCase {
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "subscription exception")
         let expectedVideoStream = "screenShare"
-        sut.$videoStreamId
+        sut.$videoViewModel
             .dropFirst()
-            .sink { id in
-                XCTAssertEqual(expectedVideoStream, id)
+            .sink { model in
+                XCTAssertEqual(expectedVideoStream, model?.videoStreamId)
                 expectation.fulfill()
             }.store(in: cancellable)
 
@@ -226,10 +226,10 @@ class ParticipantCellViewModelTests: XCTestCase {
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "subscription exception")
         let expectedVideoStream = "screenShare"
-        sut.$videoStreamId
+        sut.$videoViewModel
             .dropFirst()
-            .sink { id in
-                XCTAssertEqual(expectedVideoStream, id)
+            .sink { model in
+                XCTAssertEqual(expectedVideoStream, model?.videoStreamId)
                 expectation.fulfill()
             }.store(in: cancellable)
 
@@ -244,10 +244,10 @@ class ParticipantCellViewModelTests: XCTestCase {
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "subscription exception")
         let expectedVideoStream = "cameraVideoStreamId"
-        sut.$videoStreamId
+        sut.$videoViewModel
             .dropFirst()
-            .sink { id in
-                XCTAssertEqual(expectedVideoStream, id)
+            .sink { model in
+                XCTAssertEqual(expectedVideoStream, model?.videoStreamId)
                 expectation.fulfill()
             }.store(in: cancellable)
 

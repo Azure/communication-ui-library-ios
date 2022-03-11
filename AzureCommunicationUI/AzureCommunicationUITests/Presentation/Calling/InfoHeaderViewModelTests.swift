@@ -14,6 +14,7 @@ class InfoHeaderViewModelTests: XCTestCase {
     var infoHeaderViewModel: InfoHeaderViewModel!
 
     override func setUp() {
+        super.setUp()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
 

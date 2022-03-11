@@ -10,11 +10,11 @@ struct ParticipantGridView: View {
     let videoViewManager: VideoViewManager
     let screenSize: ScreenSizeClassType
     @State var gridsCount: Int = 0
-
     var body: some View {
         return Group {
             ParticipantGridLayoutView(cellViewModels: viewModel.participantsCellViewModelArr,
                                       getRemoteParticipantRendererView: getRemoteParticipantRendererView(videoViewId:),
+                                      rendererViewManager: videoViewManager,
                                       screenSize: screenSize)
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
             .id(gridsCount)
@@ -26,7 +26,7 @@ struct ParticipantGridView: View {
             }
     }
 
-    func getRemoteParticipantRendererView(videoViewId: RemoteParticipantVideoViewId) -> UIView? {
+    func getRemoteParticipantRendererView(videoViewId: RemoteParticipantVideoViewId) -> ParticipantRendererViewInfo? {
         return videoViewManager.getRemoteParticipantVideoRendererView(videoViewId)
     }
 
@@ -42,6 +42,5 @@ struct ParticipantGridView: View {
         }
 
         videoViewManager.updateDisplayedRemoteVideoStream(videoCacheIds)
-
     }
 }
