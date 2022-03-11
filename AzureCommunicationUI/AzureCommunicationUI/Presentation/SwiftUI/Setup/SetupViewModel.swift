@@ -58,7 +58,7 @@ class SetupViewModel: ObservableObject {
     }
 
     func getTitle() -> String {
-        return "Setup" // Replace with contextual title
+        return "Setup"
     }
 
     func setupAudioPermissions() {
