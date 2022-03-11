@@ -36,7 +36,7 @@ class CallingSDKWrapperMocking: CallingSDKWrapper {
 
     var muteLocalMicCalled: Bool = false
     var unmuteLocalMicCalled: Bool = false
-    var startPreviewVideoStreamCalled = false
+    var startPreviewVideoStreamCalled: Bool = false
 
     var isMuted: Bool?
     var isCameraPreferred: Bool?

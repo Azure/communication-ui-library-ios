@@ -10,7 +10,7 @@ class ControlBarViewModel: ObservableObject {
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var isAudioDeviceSelectionDisplayed: Bool = false
 
-    let audioDeviceListViewModel: AudioDeviceListViewModel
+    let audioDevicesListViewModel: AudioDevicesListViewModel
     var cameraButtonViewModel: IconButtonViewModel!
     var micButtonViewModel: IconButtonViewModel!
     var audioDeviceButtonViewModel: IconButtonViewModel!
@@ -34,7 +34,7 @@ class ControlBarViewModel: ObservableObject {
         self.logger = logger
         self.dispatch = dispatchAction
         self.displayEndCallConfirm = endCallConfirm
-        self.audioDeviceListViewModel = compositeViewModelFactory.makeAudioDeviceListViewModel(
+        self.audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
             localUserState: localUserState)
         self.cameraButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
@@ -123,11 +123,26 @@ class ControlBarViewModel: ObservableObject {
         micButtonViewModel.update(iconName: audioState.operation == .on ? .micOn : .micOff)
         micButtonViewModel.update(accessibilityLabel: audioState.operation == .on ? "Mute" : "Unmute")
         micButtonViewModel.update(isDisabled: isMicDisabled())
-
         let audioDeviceState = localUserState.audioState.device
-        audioDeviceButtonViewModel.update(iconName: audioDeviceState.icon)
+        audioDeviceButtonViewModel.update(
+            iconName: deviceIconFor(audioDeviceStatus: audioDeviceState)
+        )
         audioDeviceButtonViewModel.update(accessibilityValue: audioDeviceState.label)
+        audioDevicesListViewModel.update(audioDeviceStatus: audioDeviceState)
+    }
 
-        audioDeviceListViewModel.update(audioDeviceStatus: audioDeviceState)
+    private func deviceIconFor(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> CompositeIcon {
+        switch audioDeviceStatus {
+        case .bluetoothSelected:
+            return .speakerBluetooth
+        case .headphonesSelected:
+            return .speakerRegular
+        case .receiverSelected:
+            return .speakerRegular
+        case .speakerSelected:
+            return .speakerFilled
+        default:
+            return self.audioDeviceButtonViewModel.iconName
+        }
     }
 }

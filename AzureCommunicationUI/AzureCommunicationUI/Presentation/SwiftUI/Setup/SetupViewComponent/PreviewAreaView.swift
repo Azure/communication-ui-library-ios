@@ -12,7 +12,7 @@ struct PreviewAreaView: View {
 
     var body: some View {
         Group {
-            if viewModel.showPermissionWarning() {
+            if viewModel.isPermissionsDenied {
                 PermissionWarningView(displayIcon: viewModel.getPermissionWarningIcon(),
                                       displayText: viewModel.getPermissionWarningText())
             } else {

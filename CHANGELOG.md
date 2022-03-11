@@ -3,7 +3,9 @@
 ## 1.0.0-beta.2 (Upcoming)
 
 ### New Features
-
+- Update joining experience in setup view. [#44](https://github.com/Azure/communication-ui-library-ios/pull/44)
+- Support pinch & zoom, pan and double tap to zoom in screen share presentation. [#29](https://github.com/Azure/communication-ui-library-ios/pull/29)
+- Update audio device selection list when connected to bluetooth/headphones. [#56](https://github.com/Azure/communication-ui-library-ios/pull/56)
 ### Breaking Changes
 
 ### Bug Fixes
@@ -15,10 +17,12 @@
 - Fix the default audio selection when the UI Composite is launched. [#21](https://github.com/Azure/communication-ui-library-ios/pull/21)
 - Fixing consistency of unit test. [#35](https://github.com/Azure/communication-ui-library-ios/pull/35)
 - Fixed the UX inconsistencies in the participant list to match Android.
+- Fixed inconsistent display when dragging an opened participants list. [#49](https://github.com/Azure/communication-ui-library-ios/pull/49)
 
 ### Other Changes
 - Update Redux State when initializing the local video preview in the setup view. [#23](https://github.com/Azure/communication-ui-library-ios/pull/23)
 - Remove alphabet in CFBundleShortVersionString and add UILibrarySemVersion inside info.plist. [#27](https://github.com/Azure/communication-ui-library-ios/pull/27)
+- Update FluentUI version to 0.3.9 [#49](https://github.com/Azure/communication-ui-library-ios/pull/49)
 - Code cleanup and refactoring.
 
 

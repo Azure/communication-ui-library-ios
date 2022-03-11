@@ -57,12 +57,13 @@ struct ControlBarView: View {
 
     var hangUpButton: some View {
         IconButton(viewModel: viewModel.hangUpButtonViewModel)
+            .accessibility(identifier: "AzureCommunicationUI.CallingView.ControlButton.HangUp")
     }
 
     var audioDeviceSelectionListView: some View {
-        CompositePopupMenu(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
-                           viewModel: viewModel.audioDeviceListViewModel,
-                           sourceView: audioDeviceButtonSourceView)
+        CompositeAudioDevicesList(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
+                                  viewModel: viewModel.audioDevicesListViewModel,
+                                  sourceView: audioDeviceButtonSourceView)
             .modifier(LockPhoneOrientation())
     }
 }

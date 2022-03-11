@@ -9,7 +9,8 @@ import Combine
 
 struct ParticipantGridCellView: View {
     @ObservedObject var viewModel: ParticipantGridCellViewModel
-    let getRemoteParticipantRendererView: (RemoteParticipantVideoViewId) -> UIView?
+    let getRemoteParticipantRendererView: (RemoteParticipantVideoViewId) -> ParticipantRendererViewInfo?
+    let rendererViewManager: RendererViewManager?
     @State var displayedVideoStreamId: String?
     @State var isVideoChanging: Bool = false
     let avatarSize: CGFloat = 56
@@ -19,8 +20,11 @@ struct ParticipantGridCellView: View {
             GeometryReader { geometry in
                 if isVideoChanging {
                     EmptyView()
-                } else if let rendererView = getRendererView() {
-                    ParticipantGridCellVideoView(rendererView: rendererView,
+                } else if let rendererViewInfo = getRendererViewInfo() {
+                    let zoomable = viewModel.videoViewModel?.videoStreamType == .screenSharing
+                    ParticipantGridCellVideoView(videoRendererViewInfo: rendererViewInfo,
+                                                 rendererViewManager: rendererViewManager,
+                                                 zoomable: zoomable,
                                                  isSpeaking: $viewModel.isSpeaking,
                                                  displayName: $viewModel.displayName,
                                                  isMuted: $viewModel.isMuted)
@@ -31,14 +35,14 @@ struct ParticipantGridCellView: View {
                 }
             }
         }
-        .onReceive(viewModel.$videoStreamId) { videoStreamId in
+        .onReceive(viewModel.$videoViewModel) { model in
             let cachedVideoStreamId = displayedVideoStreamId
-            if videoStreamId != displayedVideoStreamId {
-                displayedVideoStreamId = videoStreamId
+            if model?.videoStreamId != displayedVideoStreamId {
+                displayedVideoStreamId = model?.videoStreamId
             }
 
-            if videoStreamId != cachedVideoStreamId,
-               videoStreamId != nil {
+            if model?.videoStreamId != cachedVideoStreamId,
+               model?.videoStreamId != nil {
                 // workaround to force rendererView being recreated
                 isVideoChanging = true
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -48,16 +52,22 @@ struct ParticipantGridCellView: View {
         }
     }
 
-    func getRendererView() -> UIView? {
-        guard let videoStreamId = viewModel.videoStreamId,
+    func getRendererViewInfo() -> ParticipantRendererViewInfo? {
+        guard let remoteParticipantVideoViewId = getRemoteParticipantVideoViewId() else {
+            return nil
+        }
+
+        return getRemoteParticipantRendererView(remoteParticipantVideoViewId)
+    }
+
+    private func getRemoteParticipantVideoViewId() -> RemoteParticipantVideoViewId? {
+        guard let videoStreamId = viewModel.videoViewModel?.videoStreamId,
               !videoStreamId.isEmpty else {
             return nil
         }
         let userId = viewModel.participantIdentifier
-        let remoteParticipantVideoViewId = RemoteParticipantVideoViewId(userIdentifier: userId,
-                                                                        videoStreamIdentifier: videoStreamId)
-
-        return getRemoteParticipantRendererView(remoteParticipantVideoViewId)
+        return RemoteParticipantVideoViewId(userIdentifier: userId,
+                                            videoStreamIdentifier: videoStreamId)
     }
 
     var avatarView: some View {
@@ -81,6 +91,9 @@ struct ParticipantTitleView: View {
     let titleFont: Font
     let mutedIconSize: CGFloat
     private let hSpace: CGFloat = 4
+    private var isEmpty: Bool {
+        return !isMuted && displayName?.trimmingCharacters(in: .whitespaces).isEmpty == true
+    }
 
     var body: some View {
         HStack(alignment: .center, spacing: hSpace, content: {
@@ -95,6 +108,7 @@ struct ParticipantTitleView: View {
                 Icon(name: .micOff, size: mutedIconSize)
             }
         })
+        .padding(.horizontal, isEmpty ? 0 : 4)
         .animation(.default)
         .accessibilityElement(children: .ignore)
         .accessibility(label: Text(displayName ?? ""))
