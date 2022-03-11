@@ -10,12 +10,14 @@ import XCTest
 class ParticipantsListViewModelTests: XCTestCase {
     var cancellable: CancelBag!
     var participantsListViewModel: ParticipantsListViewModel!
+    var localizationProvider: LocalizationProvider!
 
     override func setUp() {
         super.setUp()
         cancellable = CancelBag()
+        localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
         participantsListViewModel = ParticipantsListViewModel(localUserState: LocalUserState(),
-                                                              localizationProvider: LocalizationProviderMocking())
+                                                              localizationProvider: localizationProvider)
     }
 
     // MARK: localParticipantsListCellViewModel test
@@ -38,7 +40,8 @@ class ParticipantsListViewModelTests: XCTestCase {
         let audioStateOn = LocalUserState.AudioState(operation: .on,
                                                      device: .receiverSelected)
         participantsListViewModel.localParticipantsListCellViewModel = ParticipantsListCellViewModel(
-            localUserState: LocalUserState(audioState: audioStateOn))
+            localUserState: LocalUserState(audioState: audioStateOn),
+            localizationProvider: localizationProvider)
         XCTAssertFalse(participantsListViewModel.localParticipantsListCellViewModel.isMuted)
         participantsListViewModel.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
@@ -64,7 +67,8 @@ class ParticipantsListViewModelTests: XCTestCase {
             participantInfoList: participantInfoModel, lastUpdateTimeStamp: Date())
 
         participantsListViewModel.localParticipantsListCellViewModel = ParticipantsListCellViewModel(
-            localUserState: LocalUserState(audioState: audioStateOn))
+            localUserState: LocalUserState(audioState: audioStateOn),
+            localizationProvider: localizationProvider)
         XCTAssertFalse(participantsListViewModel.localParticipantsListCellViewModel.isMuted)
         participantsListViewModel.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
@@ -91,7 +95,8 @@ class ParticipantsListViewModelTests: XCTestCase {
         let audioStateOff = LocalUserState.AudioState(operation: .off,
                                                       device: .receiverSelected)
         participantsListViewModel.localParticipantsListCellViewModel = ParticipantsListCellViewModel(
-            localUserState: LocalUserState(audioState: audioStateOff))
+            localUserState: LocalUserState(audioState: audioStateOff),
+            localizationProvider: localizationProvider)
         XCTAssertTrue(participantsListViewModel.localParticipantsListCellViewModel.isMuted)
         participantsListViewModel.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
@@ -117,7 +122,8 @@ class ParticipantsListViewModelTests: XCTestCase {
             participantInfoList: participantInfoModel, lastUpdateTimeStamp: Date())
 
         participantsListViewModel.localParticipantsListCellViewModel = ParticipantsListCellViewModel(
-            localUserState: LocalUserState(audioState: audioStateOff))
+            localUserState: LocalUserState(audioState: audioStateOff),
+            localizationProvider: localizationProvider)
         XCTAssertTrue(participantsListViewModel.localParticipantsListCellViewModel.isMuted)
         participantsListViewModel.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
@@ -156,7 +162,8 @@ class ParticipantsListViewModelTests: XCTestCase {
                                                      device: .receiverSelected)
         participantsListViewModel.lastUpdateTimeStamp = timestamp
         let localParticipant = ParticipantsListCellViewModel(
-            localUserState: LocalUserState(audioState: audioStateOn))
+            localUserState: LocalUserState(audioState: audioStateOn),
+            localizationProvider: localizationProvider)
         participantsListViewModel.localParticipantsListCellViewModel = localParticipant
         XCTAssertEqual(participantsListViewModel.participantsList.count, 0)
         participantsListViewModel.update(localUserState: localUserState,
@@ -200,7 +207,8 @@ class ParticipantsListViewModelTests: XCTestCase {
                                                      device: .receiverSelected)
         participantsListViewModel.lastUpdateTimeStamp = timestamp
         participantsListViewModel.localParticipantsListCellViewModel = ParticipantsListCellViewModel(
-            localUserState: LocalUserState(audioState: audioStateOn))
+            localUserState: LocalUserState(audioState: audioStateOn),
+            localizationProvider: localizationProvider)
         XCTAssertEqual(participantsListViewModel.participantsList.count, 0)
         participantsListViewModel.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
