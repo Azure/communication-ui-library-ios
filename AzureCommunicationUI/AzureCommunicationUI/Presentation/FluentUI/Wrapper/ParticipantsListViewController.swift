@@ -56,7 +56,7 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
         }
         let participantViewModel = self.items[indexPath.row]
 
-        let displayName = participantViewModel.getCellDisplayName(localizationProvider: localizationProvider)
+        let displayName = participantViewModel.getCellDisplayName()
         cell.setup(viewModel: participantViewModel,
                    displayName: displayName)
         return cell
