@@ -179,13 +179,13 @@ class SetupControlBarViewModel: ObservableObject {
     private func deviceLabelFor(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> String {
         switch audioDeviceStatus {
         case .bluetoothSelected:
-            return localizationProvider.getLocalizedString(.bluetooth)
+            return localizationProvider.getLocalizedString(AudioDeviceType.bluetooth.name)
         case .headphonesSelected:
-            return AudioDeviceType.headphones.getName(localizationProvider)
+            return localizationProvider.getLocalizedString(AudioDeviceType.headphones.name)
         case .receiverSelected:
-            return AudioDeviceType.receiver.getName(localizationProvider)
+            return localizationProvider.getLocalizedString(AudioDeviceType.receiver.name)
         case .speakerSelected:
-            return AudioDeviceType.speaker.getName(localizationProvider)
+            return localizationProvider.getLocalizedString(AudioDeviceType.speaker.name)
         default:
             return audioDeviceButtonViewModel.buttonLabel
         }

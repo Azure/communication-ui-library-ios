@@ -15,28 +15,33 @@ enum AudioDeviceType {
     case receiver
     case speaker
 
-    func getName(_ localizationProvider: LocalizationProvider) -> String {
+    var name: StringKey {
         switch self {
         case .bluetooth:
-            if let output = AVAudioSession.sharedInstance().currentRoute.outputs.first,
-               bluetoothAudioPorts.contains(output.portType),
-               !output.portName.isEmpty {
-                return output.portName
-            }
-            return localizationProvider.getLocalizedString(.bluetooth)
+            return .bluetooth
         case .headphones:
-            return localizationProvider.getLocalizedString(.headphones)
+            return .headphones
         case .receiver:
             switch UIDevice.current.userInterfaceIdiom {
             case .phone:
-                return localizationProvider.getLocalizedString(.iPhone)
+                return .iPhone
             case .pad:
-                return localizationProvider.getLocalizedString(.iPad)
+                return .iPad
             default:
-                return localizationProvider.getLocalizedString(.iOS)
+                return .iOS
             }
         case .speaker:
-            return localizationProvider.getLocalizedString(.speaker)
+            return .speaker
+        }
+    }
+
+    func getBluetoothName() -> String? {
+        if let output = AVAudioSession.sharedInstance().currentRoute.outputs.first,
+           bluetoothAudioPorts.contains(output.portType),
+           !output.portName.isEmpty {
+            return output.portName
+        } else {
+            return nil
         }
     }
 }
