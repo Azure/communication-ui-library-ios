@@ -9,7 +9,8 @@ import Combine
 class CallingViewModel: ObservableObject {
     @Published var isLobbyOverlayDisplayed: Bool = false
     @Published var isConfirmLeaveOverlayDisplayed: Bool = false
-    @Published var isParticipantGridDisplayed: Bool = false
+    @Published var isParticipantGridDisplayed: Bool
+    @Published var appState: AppStatus = .foreground
 
     private let compositeViewModelFactory: CompositeViewModelFactory
     private let logger: Logger
@@ -35,7 +36,10 @@ class CallingViewModel: ObservableObject {
 
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
-
+        let isCallConnected = store.state.callingState.status == .connected
+        let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
+        isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
+        appState = store.state.lifeCycleState.currentStatus
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
                 guard let self = self else {
@@ -94,16 +98,16 @@ class CallingViewModel: ObservableObject {
         self.isConfirmLeaveOverlayDisplayed = false
     }
 
-    func startCall() {
-        store.dispatch(action: CallingAction.CallStartRequested())
-    }
-
     func endCall() {
         store.dispatch(action: CallingAction.CallEndRequested())
         dismissConfirmLeaveOverlay()
     }
 
     func receive(_ state: AppState) {
+        if appState != state.lifeCycleState.currentStatus {
+            appState = state.lifeCycleState.currentStatus
+        }
+
         guard state.lifeCycleState.currentStatus == .foreground else {
             return
         }

@@ -5,11 +5,12 @@
 
 import Foundation
 
+enum AppStatus {
+    case foreground
+    case background
+}
+
 class LifeCycleState: ReduxState {
-    enum AppStatus {
-        case foreground
-        case background
-    }
 
     let currentStatus: AppStatus
 

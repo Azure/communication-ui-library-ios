@@ -7,7 +7,6 @@ import SwiftUI
 
 struct SetupControlBarView: View {
     @ObservedObject var viewModel: SetupControlBarViewModel
-
     let audioDeviceButtonSourceView = UIView()
     let layoutSpacing: CGFloat = 0
     let controlWidth: CGFloat = 315
@@ -32,7 +31,7 @@ struct SetupControlBarView: View {
                        height: controlHeight)
                 .padding(.horizontal, getHorizontalPadding(from: geometry))
                 .padding(.vertical, verticalPadding)
-                .hidden(viewModel.isAudioDisabled())
+                .hidden(viewModel.isControlBarHidden())
             }
         }
         .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
@@ -54,9 +53,9 @@ struct SetupControlBarView: View {
     }
 
     var audioDeviceSelectionListView: some View {
-        CompositePopupMenu(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
-                           viewModel: viewModel.audioDeviceListViewModel,
-                           sourceView: audioDeviceButtonSourceView)
+        CompositeAudioDevicesList(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
+                                  viewModel: viewModel.audioDevicesListViewModel,
+                                  sourceView: audioDeviceButtonSourceView)
     }
 
     private func getWidth(from geometry: GeometryProxy) -> CGFloat {

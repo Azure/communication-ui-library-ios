@@ -10,11 +10,10 @@ class ParticipantGridViewModel: ObservableObject {
     private let maximumParticipantsDisplayed: Int = 6
     private var lastUpdateTimeStamp = Date()
     private let compositeViewModelFactory: CompositeViewModelFactory
+    private(set) var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
 
     @Published var gridsCount: Int = 0
     @Published var displayedParticipantInfoModelArr: [ParticipantInfoModel] = []
-
-    var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
 
     init(compositeViewModelFactory: CompositeViewModelFactory) {
         self.compositeViewModelFactory = compositeViewModelFactory
@@ -29,8 +28,8 @@ class ParticipantGridViewModel: ObservableObject {
 
         let remoteParticipants = remoteParticipantsState.participantInfoList
         let newDisplayedInfoModelArr = getDisplayedInfoViewModels(remoteParticipants)
-        var removedModels = getRemovedInfoModels(for: newDisplayedInfoModelArr)
-        var addedModels = getAddedInfoModels(for: newDisplayedInfoModelArr)
+        let removedModels = getRemovedInfoModels(for: newDisplayedInfoModelArr)
+        let addedModels = getAddedInfoModels(for: newDisplayedInfoModelArr)
         let orderedInfoModelArr = sortDisplayedInfoModels(newDisplayedInfoModelArr,
                                                           removedModels: removedModels,
                                                           addedModels: addedModels)

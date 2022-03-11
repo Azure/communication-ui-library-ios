@@ -7,19 +7,19 @@ import Foundation
 @testable import AzureCommunicationUI
 
 class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
-    var setupCallWasCalled = false
-    var startCallWasCalled = false
-    var endCallWasCalled = false
-    var enterBackgroundCalled = false
-    var enterForegroundCalled = false
-    var cameraPermissionSetCalled = false
-    var cameraPermissionGrantedCalled = false
-    var requestCameraPreviewOnCalled = false
-    var requestCameraOnCalled = false
-    var requestCameraOffCalled = false
-    var requestCameraSwitchCalled = false
-    var requestMicMuteCalled = false
-    var requestMicUnmuteCalled = false
+    var setupCallWasCalled: Bool = false
+    var startCallWasCalled: Bool = false
+    var endCallWasCalled: Bool = false
+    var enterBackgroundCalled: Bool = false
+    var enterForegroundCalled: Bool = false
+    var cameraPermissionSetCalled: Bool = false
+    var cameraPermissionGrantedCalled: Bool = false
+    var requestCameraPreviewOnCalled: Bool = false
+    var requestCameraOnCalled: Bool = false
+    var requestCameraOffCalled: Bool = false
+    var requestCameraSwitchCalled: Bool = false
+    var requestMicMuteCalled: Bool = false
+    var requestMicUnmuteCalled: Bool = false
 
     func setupCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
         setupCallWasCalled = true

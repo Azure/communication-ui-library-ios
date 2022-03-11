@@ -7,11 +7,14 @@ import Foundation
 import Combine
 
 class PreviewAreaViewModel: ObservableObject {
-    @Published var cameraStatus: LocalUserState.CameraOperationalStatus = .off
-    @Published var cameraPermission: AppPermission.Status = .unknown
-    @Published var audioPermission: AppPermission.Status = .unknown
+    private var cameraPermission: AppPermission.Status = .unknown
+    private var audioPermission: AppPermission.Status = .unknown
+
+    @Published var isPermissionsDenied: Bool = false
 
     let localVideoViewModel: LocalVideoViewModel!
+    private let goToSettingsText: String = "To enable, please go to Settings to allow access."
+    private let enableAudioToStartText: String = "You must enable audio to start this call."
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          dispatchAction: @escaping ActionDispatch) {
@@ -34,9 +37,6 @@ class PreviewAreaViewModel: ObservableObject {
 
     func getPermissionWarningText() -> String {
         let displayText: String
-        let goToSettingsText = "To enable, please go to Settings to allow access."
-        let enableAudioToStartText = "You must enable audio to start this call."
-
         if self.audioPermission == .granted {
             displayText = "Your camera is disabled. \(goToSettingsText)"
         } else if self.cameraPermission == .denied {
@@ -48,20 +48,17 @@ class PreviewAreaViewModel: ObservableObject {
         return displayText
     }
 
-    func showPermissionWarning() -> Bool {
-        self.cameraPermission == .denied || self.audioPermission == .denied
+    func update(localUserState: LocalUserState, permissionState: PermissionState) {
+        self.cameraPermission = permissionState.cameraPermission
+        self.audioPermission = permissionState.audioPermission
+        updatePermissionsState()
+        localVideoViewModel.update(localUserState: localUserState)
     }
 
-    func update(localUserState: LocalUserState, permissionState: PermissionState) {
-        if self.cameraStatus != localUserState.cameraState.operation {
-            self.cameraStatus = localUserState.cameraState.operation
+    private func updatePermissionsState() {
+        let isPermissionDenied = cameraPermission == .denied || audioPermission == .denied
+        if isPermissionDenied != self.isPermissionsDenied {
+            self.isPermissionsDenied = isPermissionDenied
         }
-        if self.cameraPermission != permissionState.cameraPermission {
-            self.cameraPermission = permissionState.cameraPermission
-        }
-        if self.audioPermission != permissionState.audioPermission {
-            self.audioPermission = permissionState.audioPermission
-        }
-        localVideoViewModel.update(localUserState: localUserState)
     }
 }
