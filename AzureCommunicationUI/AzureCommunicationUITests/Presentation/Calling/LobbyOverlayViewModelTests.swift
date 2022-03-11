@@ -8,26 +8,37 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class LobbyOverlayViewModelTests: XCTestCase {
-    private var localizationProvider: LocalizationProvider!
+    private var localizationProvider: LocalizationProviderMocking!
 
     override func setUp() {
         super.setUp()
         localizationProvider = LocalizationProviderMocking()
     }
 
-    func test_lobbyOverlayViewModel_displaysTitleAccordingToLocalizationProvided() {
+    func test_lobbyOverlayViewModel_displays_title_from_AppLocalization() {
         let sut = makeSUT()
-        XCTAssertEqual(sut.title, "ABC")
+        XCTAssertEqual(sut.title, "Waiting for host")
     }
 
-    func test_lobbyOverlayViewModel_displaysSubtitleAccordingToLocalizationProvided() {
+    func test_lobbyOverlayViewModel_displays_subtitle_from_AppLocalization() {
         let sut = makeSUT()
-        XCTAssertEqual(sut.subtitle, "ABC")
+        XCTAssertEqual(sut.subtitle, "Someone in the meeting will let you in soon")
+    }
+
+    func test_lobbyOverlayViewModel_displays_subtitle_from_LocalizationMocking() {
+        let sut = makeSUTLocalizationMocking()
+        XCTAssertEqual(sut.subtitle, "AzureCommunicationUI.LobbyView.Text.WaitingDetails")
+        XCTAssertTrue(localizationProvider.isGetLocalizedString)
     }
 }
 
 extension LobbyOverlayViewModelTests {
     func makeSUT() -> LobbyOverlayViewModel {
+        return LobbyOverlayViewModel(localizationProvider:
+                                        AppLocalizationProvider(logger: LoggerMocking()))
+    }
+
+    func makeSUTLocalizationMocking() -> LobbyOverlayViewModel {
         return LobbyOverlayViewModel(localizationProvider: localizationProvider)
     }
 }
