@@ -21,6 +21,15 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     private var rendererView: UIView!
     private var scrollView = UIScrollView()
     private var zoomToRect: CGRect = .zero
+
+    private var initialMinZoomScale: CGFloat {
+        isiPadScreen() ? Constants.minScaleiPad : Constants.minScaleiPhone
+    }
+
+    private var initialMaxZoomScale: CGFloat {
+        isiPadScreen() ? Constants.maxScaleiPad : Constants.maxScaleiPhone
+    }
+
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
     @Environment(\.appPhase) var appPhase: AppStatus
 
@@ -34,13 +43,13 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     func makeUIView(context: Context) -> UIScrollView {
         // Setup scrollview and renderview
         scrollView.delegate = context.coordinator
-        scrollView.maximumZoomScale = isiPadScreen() ? Constants.maxScaleiPad : Constants.maxScaleiPhone
-        scrollView.minimumZoomScale = isiPadScreen() ? Constants.minScaleiPad : Constants.minScaleiPhone
+        scrollView.maximumZoomScale = initialMaxZoomScale
+        scrollView.minimumZoomScale = initialMinZoomScale
         scrollView.bouncesZoom = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.decelerationRate = .fast
-        scrollView.zoomScale = isiPadScreen() ? Constants.minScaleiPad : Constants.minScaleiPhone
+        scrollView.zoomScale = initialMinZoomScale
         rendererView!.translatesAutoresizingMaskIntoConstraints = true
         rendererView!.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         rendererView!.frame = scrollView.bounds
@@ -67,7 +76,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
             return
         }
         // Set zoom scale per each orientation to fix the zoom issue (blury screen upon orientation change)
-        let orientationChangeZoomScale = isiPadScreen() ? Constants.minScaleiPad : Constants.minScaleiPhone
+        let orientationChangeZoomScale = initialMinZoomScale
         let iPhoneOrientationChanged = uiView.zoomScale != orientationChangeZoomScale
                                 && (uiView.contentSize == .zero)
         let isiPadLandscape = UIDevice.current.orientation.isLandscape && isiPadScreen()
@@ -112,7 +121,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         if scale == self.scrollView.maximumZoomScale {
             scrollView.zoom(to: zoomRect, animated: true)
         } else {
-            scrollView.setZoomScale(isiPadScreen() ? Constants.minScaleiPad : Constants.minScaleiPhone,
+            scrollView.setZoomScale(initialMinZoomScale,
                                     animated: true)
         }
     }
@@ -122,7 +131,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
             return
         }
         let scrollViewFrame = scrollView.frame
-        let adjustedScale = isiPadScreen() ? Constants.minScaleiPad : Constants.minScaleiPhone
+        let adjustedScale = initialMinZoomScale
         let newFrame = CGRect(origin: scrollViewFrame.origin,
                               size: CGSize(width: scrollViewFrame.width * (1 / adjustedScale),
                                            height: scrollViewFrame.height * (1 / adjustedScale)))
@@ -135,7 +144,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         guard scrollView.frame != .zero else {
             return
         }
-        let adjustedScale = isiPadScreen() ? Constants.minScaleiPad : Constants.minScaleiPhone
+        let adjustedScale = initialMinZoomScale
         let currentScale = scrollView.zoomScale
         guard adjustedScale != currentScale, zoomToRect != .zero else {
             return
