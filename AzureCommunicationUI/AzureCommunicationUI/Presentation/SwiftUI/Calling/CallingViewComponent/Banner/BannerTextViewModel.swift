@@ -4,8 +4,6 @@
 //
 
 import Foundation
-import UIKit
-import SwiftUI
 
 class BannerTextViewModel: ObservableObject {
     private(set) var title: String = ""
@@ -29,8 +27,7 @@ class BannerTextViewModel: ObservableObject {
         accessibilityLabel = title + body + linkDisplay
         // UIKit workaround to update accessibility when focus should be changed and isModal shouldn't be set
         // for a consistent behaviour @AccessibilityFocusState should be used when min supported version is iOS 15+
-        UIAccessibility.post(notification: .screenChanged,
-                             argument: nil)
+        AccessibilityProvider.moveFocusToFirstElement()
         objectWillChange.send()
     }
 }
