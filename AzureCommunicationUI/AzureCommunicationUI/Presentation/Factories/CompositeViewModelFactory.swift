@@ -46,6 +46,7 @@ protocol CompositeViewModelFactory {
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                       localUserState: LocalUserState) -> SetupControlBarViewModel
+    func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel
 }
 
 class ACSCompositeViewModelFactory: CompositeViewModelFactory {
@@ -131,7 +132,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel {
         AudioDevicesListViewModel(dispatchAction: dispatchAction,
-                                  localUserState: localUserState)
+                                  localUserState: localUserState,
+                                  localizationProvider: localizationProvider)
     }
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
         ErrorInfoViewModel(localizationProvider: localizationProvider)
@@ -172,7 +174,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel {
         PreviewAreaViewModel(compositeViewModelFactory: self,
-                             dispatchAction: dispatchAction)
+                             dispatchAction: dispatchAction,
+                             localizationProvider: localizationProvider)
     }
 
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
@@ -180,6 +183,10 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
         SetupControlBarViewModel(compositeViewModelFactory: self,
                                  logger: logger,
                                  dispatchAction: dispatchAction,
-                                 localUserState: localUserState)
+                                 localUserState: localUserState,
+                                 localizationProvider: localizationProvider)
+    }
+    func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
+        JoiningCallActivityViewModel(localizationProvider: localizationProvider)
     }
 }

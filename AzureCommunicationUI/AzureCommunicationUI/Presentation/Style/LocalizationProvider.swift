@@ -75,7 +75,13 @@ class AppLocalizationProvider: LocalizationProvider {
         if let path = Bundle(for: CallComposite.self)
             .path(forResource: locale, ofType: "lproj"),
            let bundle = Bundle(path: path) {
-            return NSLocalizedString(key, bundle: bundle, comment: key)
+            let predefinedTranslation = NSLocalizedString(key,
+                                                                bundle: bundle,
+                                                                value: "localize_key_not_found",
+                                                                comment: key)
+            if predefinedTranslation != "localize_key_not_found" {
+                return predefinedTranslation
+            }
         }
         return NSLocalizedString(key,
                                  bundle: Bundle(for: CallComposite.self),

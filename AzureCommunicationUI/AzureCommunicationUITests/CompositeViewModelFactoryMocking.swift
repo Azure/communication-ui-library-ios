@@ -93,7 +93,8 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel {
         return audioDevicesListViewModel ?? AudioDevicesListViewModel(dispatchAction: dispatchAction,
-                                                                      localUserState: localUserState)
+                                                                      localUserState: localUserState,
+                                                                      localizationProvider: LocalizationProviderMocking())
     }
 
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
@@ -140,7 +141,9 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
 
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel {
-        return previewAreaViewModel ?? PreviewAreaViewModel(compositeViewModelFactory: self, dispatchAction: dispatchAction)
+        return previewAreaViewModel ?? PreviewAreaViewModel(compositeViewModelFactory: self,
+                                                            dispatchAction: dispatchAction,
+                                                            localizationProvider: LocalizationProviderMocking())
     }
 
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
@@ -148,6 +151,11 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
         return setupControlBarViewModel ?? SetupControlBarViewModel(compositeViewModelFactory: self,
                                                                     logger: logger,
                                                                     dispatchAction: dispatchAction,
-                                                                    localUserState: localUserState)
+                                                                    localUserState: localUserState,
+                                                                    localizationProvider: LocalizationProviderMocking())
+    }
+
+    func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
+        JoiningCallActivityViewModel(localizationProvider: LocalizationProviderMocking())
     }
 }

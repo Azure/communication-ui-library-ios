@@ -8,9 +8,12 @@
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="Speaker";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPhone"="iPhone";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPad"="iPad";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Headphones"="Headphones";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
 
 /* SetupView */
 "AzureCommunicationUI.SetupView.Button.JoinCall"="Join call";
+"AzureCommunicationUI.SetupView.Button.JoiningCall"="Joining calling...";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="Video off";
 "AzureCommunicationUI.SetupView.Button.VideoOn"="Video on";
 "AzureCommunicationUI.SetupView.Button.MicOff"="Mic off";

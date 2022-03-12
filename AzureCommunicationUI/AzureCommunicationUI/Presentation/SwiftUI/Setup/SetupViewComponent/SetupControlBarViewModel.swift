@@ -11,6 +11,7 @@ class SetupControlBarViewModel: ObservableObject {
     @Published var audioPermission: AppPermission.Status = .unknown
     @Published var isAudioDeviceSelectionDisplayed: Bool = false
     private let logger: Logger
+    private let localizationProvider: LocalizationProvider
     private(set) var cameraButtonViewModel: IconWithLabelButtonViewModel!
     private(set) var micButtonViewModel: IconWithLabelButtonViewModel!
     private(set) var audioDeviceButtonViewModel: IconWithLabelButtonViewModel!
@@ -27,17 +28,19 @@ class SetupControlBarViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
          dispatchAction: @escaping ActionDispatch,
-         localUserState: LocalUserState) {
+         localUserState: LocalUserState,
+         localizationProvider: LocalizationProvider) {
         self.logger = logger
         self.dispatch = dispatchAction
-
+        self.localizationProvider = localizationProvider
         self.audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatchAction,
             localUserState: localUserState)
         self.cameraButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
             iconName: .videoOff,
             buttonTypeColor: .colorThemedWhite,
-            buttonLabel: "Video is off",
+            buttonLabel: self.localizationProvider
+                .getLocalizedString(.videoOff),
             isDisabled: false) { [weak self] in
                 guard let self = self else {
                     return
@@ -48,7 +51,8 @@ class SetupControlBarViewModel: ObservableObject {
         self.micButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
             iconName: .micOff,
             buttonTypeColor: .colorThemedWhite,
-            buttonLabel: "Mic is off",
+            buttonLabel: self.localizationProvider
+                .getLocalizedString(.micOff),
             isDisabled: false) { [weak self] in
                 guard let self = self else {
                     return
@@ -59,7 +63,8 @@ class SetupControlBarViewModel: ObservableObject {
         self.audioDeviceButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
             iconName: .speakerFilled,
             buttonTypeColor: .colorThemedWhite,
-            buttonLabel: "Device",
+            buttonLabel: self.localizationProvider
+                .getLocalizedString(.device),
             isDisabled: false) { [weak self] in
                 guard let self = self else {
                     return
@@ -134,11 +139,15 @@ class SetupControlBarViewModel: ObservableObject {
     private func updateButtonViewModel(localUserState: LocalUserState) {
         cameraButtonViewModel.update(
             iconName: self.cameraStatus == .on ? .videoOn : .videoOff,
-            buttonLabel: "Video is \(self.cameraStatus == .on ? "on" : "off")")
+            buttonLabel: self.cameraStatus == .on
+            ? self.localizationProvider.getLocalizedString(.videoOn)
+            : self.localizationProvider.getLocalizedString(.videoOff))
         cameraButtonViewModel.update(isDisabled: isCameraDisabled())
         micButtonViewModel.update(
             iconName: self.micStatus == .on ? .micOn : .micOff,
-            buttonLabel: "Mic is \(self.micStatus == .on ? "on" : "off")")
+            buttonLabel: self.micStatus == .on
+            ? self.localizationProvider.getLocalizedString(.micOn)
+            : self.localizationProvider.getLocalizedString(.micOff))
         audioDeviceButtonViewModel.update(
             iconName: deviceIconFor(audioDeviceStatus: localUserState.audioState.device),
             buttonLabel: deviceLabelFor(audioDeviceStatus: localUserState.audioState.device))
@@ -170,13 +179,13 @@ class SetupControlBarViewModel: ObservableObject {
     private func deviceLabelFor(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> String {
         switch audioDeviceStatus {
         case .bluetoothSelected:
-            return AudioDeviceType.bluetooth.rawValue
+            return localizationProvider.getLocalizedString(AudioDeviceType.bluetooth.name)
         case .headphonesSelected:
-            return AudioDeviceType.headphones.name
+            return localizationProvider.getLocalizedString(AudioDeviceType.headphones.name)
         case .receiverSelected:
-            return AudioDeviceType.receiver.name
+            return localizationProvider.getLocalizedString(AudioDeviceType.receiver.name)
         case .speakerSelected:
-            return AudioDeviceType.speaker.name
+            return localizationProvider.getLocalizedString(AudioDeviceType.speaker.name)
         default:
             return audioDeviceButtonViewModel.buttonLabel
         }

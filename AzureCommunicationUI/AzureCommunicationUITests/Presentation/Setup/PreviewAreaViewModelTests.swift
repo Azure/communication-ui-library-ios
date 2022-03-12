@@ -11,11 +11,13 @@ class PreviewAreaViewModelTests: XCTestCase {
     private var storeFactory: StoreFactoryMocking!
     private var factoryMocking: CompositeViewModelFactoryMocking!
     private var logger: LoggerMocking!
+    private var localizationProvider: LocalizationProvider!
 
     override func setUp() {
         super.setUp()
         storeFactory = StoreFactoryMocking()
         logger = LoggerMocking()
+        localizationProvider = AppLocalizationProvider(logger: logger)
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
                                                           store: storeFactory.store)
     }
@@ -145,6 +147,7 @@ class PreviewAreaViewModelTests: XCTestCase {
 extension PreviewAreaViewModelTests {
     func makeSUT() -> PreviewAreaViewModel {
         return PreviewAreaViewModel(compositeViewModelFactory: factoryMocking,
-                                    dispatchAction: storeFactory.store.dispatch)
+                                    dispatchAction: storeFactory.store.dispatch,
+                                    localizationProvider: localizationProvider)
     }
 }
