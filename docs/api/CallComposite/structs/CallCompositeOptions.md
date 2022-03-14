@@ -20,10 +20,13 @@ public init()
 ```
 
 ```swift
-public init(themeConfiguration: ThemeConfiguration)
+public init(
+    themeConfiguration: ThemeConfiguration? = nil,
+    localizationConfiguration: LocalizationConfiguration? = nil)
 ```
 
 
 
 ### Parameters
-* `themeConfiguration` - ThemeConfiguration for changing color pattern
+* `themeConfiguration` - ThemeConfiguration for changing color pattern. Default value is `nil`
+* `localizationConfiguration` - LocalizationConfiguration for specifying localization customization. Default value is `nil`
