@@ -73,7 +73,6 @@ struct SetupTitleView: View {
         VStack(spacing: verticalSpacing) {
             ZStack(alignment: .leading) {
                 IconButton(viewModel: viewModel.dismissButtonViewModel)
-                    .accessibility(sortPriority: 0 )
                 HStack {
                     Spacer()
                     Text(viewModel.title)
