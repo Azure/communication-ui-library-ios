@@ -8,16 +8,14 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class CallingViewModelTests: XCTestCase {
-    var cancellable: CancelBag!
-    var logger: LoggerMocking!
+    var cancellable = CancelBag()
+    var logger = LoggerMocking()
     var localizationProvider: LocalizationProviderMocking!
 
     private let timeout: TimeInterval = 10.0
 
     override func setUp() {
         super.setUp()
-        logger = LoggerMocking()
-        cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
     }
 
@@ -196,7 +194,6 @@ class CallingViewModelTests: XCTestCase {
 
 extension CallingViewModelTests {
     func makeSUT(storeFactory: StoreFactoryMocking = StoreFactoryMocking()) -> CallingViewModel {
-        let logger = LoggerMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
@@ -205,7 +202,6 @@ extension CallingViewModelTests {
     }
 
     func makeSUTLocalizationMocking(storeFactory: StoreFactoryMocking = StoreFactoryMocking()) -> CallingViewModel {
-        let logger = LoggerMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
