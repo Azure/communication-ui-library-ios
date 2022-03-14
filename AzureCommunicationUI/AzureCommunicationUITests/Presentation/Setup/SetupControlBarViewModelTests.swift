@@ -12,7 +12,7 @@ class SetupControlBarViewModelTests: XCTestCase {
     private var factoryMocking: CompositeViewModelFactoryMocking!
     private var cancellable: CancelBag!
     private var logger: LoggerMocking!
-    private var localizationProvider: LocalizationProvider!
+    private var localizationProvider: LocalizationProviderMocking!
 
     private let timeout: TimeInterval = 10.0
 
@@ -21,7 +21,7 @@ class SetupControlBarViewModelTests: XCTestCase {
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
         logger = LoggerMocking()
-        localizationProvider = AppLocalizationProvider(logger: logger)
+        localizationProvider = LocalizationProviderMocking()
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
                                                           store: storeFactory.store)
     }
@@ -358,10 +358,45 @@ class SetupControlBarViewModelTests: XCTestCase {
                    callingState: CallingState())
         wait(for: [expectation], timeout: timeout)
     }
+
+    func test_setupControlBarViewModel_display_videoButtonLabel__from_LocalizationMocking() {
+        let expectation = XCTestExpectation(description: "CameraButtonViewModel button info is updated")
+        let updateButtonInfoCompletion: ((CompositeIcon, String) -> Void) = { icon, label in
+            XCTAssertEqual(icon, .videoOn)
+            XCTAssertEqual(label, "AzureCommunicationUI.SetupView.Button.VideoOn")
+            expectation.fulfill()
+        }
+        factoryMocking.createIconWithLabelButtonViewModel = { icon in
+            guard icon == .videoOff
+            else { return nil }
+
+            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(iconName: .clock,
+                                                                                   buttonTypeColor: .colorThemedWhite,
+                                                                                   buttonLabel: "buttonLabel")
+            iconWithLabelButtonViewModel.updateButtonInfo = updateButtonInfoCompletion
+            return iconWithLabelButtonViewModel
+        }
+        let localUserState = LocalUserState(cameraState: LocalUserState.CameraState(operation: .on,
+                                                                                    device: .front,
+                                                                                    transmission: .local))
+        let sut = makeSUTLocalizationMocking()
+        sut.update(localUserState: localUserState,
+                   permissionState: PermissionState(),
+                   callingState: CallingState())
+        wait(for: [expectation], timeout: timeout)
+    }
 }
 
 extension SetupControlBarViewModelTests {
     func makeSUT() -> SetupControlBarViewModel {
+        return SetupControlBarViewModel(compositeViewModelFactory: factoryMocking,
+                                        logger: logger,
+                                        dispatchAction: storeFactory.store.dispatch,
+                                        localUserState: LocalUserState(),
+                                        localizationProvider: AppLocalizationProvider(logger: logger))
+    }
+
+    func makeSUTLocalizationMocking() -> SetupControlBarViewModel {
         return SetupControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                         logger: logger,
                                         dispatchAction: storeFactory.store.dispatch,

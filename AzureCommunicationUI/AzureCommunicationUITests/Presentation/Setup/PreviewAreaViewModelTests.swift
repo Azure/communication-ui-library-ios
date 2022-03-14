@@ -11,13 +11,13 @@ class PreviewAreaViewModelTests: XCTestCase {
     private var storeFactory: StoreFactoryMocking!
     private var factoryMocking: CompositeViewModelFactoryMocking!
     private var logger: LoggerMocking!
-    private var localizationProvider: LocalizationProvider!
+    private var localizationProvider: LocalizationProviderMocking!
 
     override func setUp() {
         super.setUp()
         storeFactory = StoreFactoryMocking()
         logger = LoggerMocking()
-        localizationProvider = AppLocalizationProvider(logger: logger)
+        localizationProvider = LocalizationProviderMocking()
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
                                                           store: storeFactory.store)
     }
@@ -142,10 +142,35 @@ class PreviewAreaViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState, permissionState: PermissionState())
         wait(for: [expectation], timeout: 1.0)
     }
+
+    func test_previewAreaViewModel_displays_previewAreaText_from_LocalizationMocking() {
+        let cameraState = LocalUserState.CameraState(operation: .off,
+                                                     device: .front,
+                                                     transmission: .local)
+        let appState = AppState(permissionState: PermissionState(audioPermission: .denied,
+                                                                 cameraPermission: .notAsked),
+                                localUserState: LocalUserState(cameraState: cameraState))
+        let sut = makeSUTLocalizationMocking()
+        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
+
+        let expectedIcon = CompositeIcon.micOff
+        let expectedTextKey = "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"
+
+        XCTAssertTrue(sut.isPermissionsDenied)
+        XCTAssertEqual(sut.getPermissionWarningIcon(), expectedIcon)
+        XCTAssertEqual(sut.getPermissionWarningText(), expectedTextKey)
+    }
+
 }
 
 extension PreviewAreaViewModelTests {
     func makeSUT() -> PreviewAreaViewModel {
+        return PreviewAreaViewModel(compositeViewModelFactory: factoryMocking,
+                                    dispatchAction: storeFactory.store.dispatch,
+                                    localizationProvider: AppLocalizationProvider(logger: logger))
+    }
+
+    func makeSUTLocalizationMocking() -> PreviewAreaViewModel {
         return PreviewAreaViewModel(compositeViewModelFactory: factoryMocking,
                                     dispatchAction: storeFactory.store.dispatch,
                                     localizationProvider: localizationProvider)

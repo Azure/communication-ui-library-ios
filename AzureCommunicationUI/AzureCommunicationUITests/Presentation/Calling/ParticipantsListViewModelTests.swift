@@ -9,21 +9,19 @@ import XCTest
 
 class ParticipantsListViewModelTests: XCTestCase {
     var cancellable: CancelBag!
-    var participantsListViewModel: ParticipantsListViewModel!
-    var localizationProvider: LocalizationProvider!
+    var localizationProvider: LocalizationProviderMocking!
 
     override func setUp() {
         super.setUp()
         cancellable = CancelBag()
-        localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
-        participantsListViewModel = ParticipantsListViewModel(localUserState: LocalUserState(),
-                                                              localizationProvider: localizationProvider)
+        localizationProvider = LocalizationProviderMocking()
     }
 
     // MARK: localParticipantsListCellViewModel test
     func test_participantsListViewModel_update_when_localUserStateMicOnAndUpdateWithMicOff_then_shouldBePublished() {
+        let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should publish localParticipantsListCellViewModel")
-        participantsListViewModel.$localParticipantsListCellViewModel
+        sut.$localParticipantsListCellViewModel
             .dropFirst(2)
             .sink(receiveValue: { participantsListCellViewModel in
                 XCTAssertTrue(participantsListCellViewModel.isMuted)
@@ -39,20 +37,21 @@ class ParticipantsListViewModelTests: XCTestCase {
 
         let audioStateOn = LocalUserState.AudioState(operation: .on,
                                                      device: .receiverSelected)
-        participantsListViewModel.localParticipantsListCellViewModel = ParticipantsListCellViewModel(
+        sut.localParticipantsListCellViewModel = ParticipantsListCellViewModel(
             localUserState: LocalUserState(audioState: audioStateOn),
             localizationProvider: localizationProvider)
-        XCTAssertFalse(participantsListViewModel.localParticipantsListCellViewModel.isMuted)
-        participantsListViewModel.update(localUserState: localUserState,
+        XCTAssertFalse(sut.localParticipantsListCellViewModel.isMuted)
+        sut.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
-        XCTAssertTrue(participantsListViewModel.localParticipantsListCellViewModel.isMuted)
+        XCTAssertTrue(sut.localParticipantsListCellViewModel.isMuted)
         wait(for: [expectation], timeout: 1)
     }
 
     func test_participantsListViewModel_update_when_localUserStateMicOnAndUpdateWithMicOn_then_shouldNotBePublished() {
+        let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should not publish localParticipantsListCellViewModel")
         expectation.isInverted = true
-        participantsListViewModel.$localParticipantsListCellViewModel
+        sut.$localParticipantsListCellViewModel
             .dropFirst(2)
             .sink(receiveValue: { _ in
                 expectation.fulfill()
@@ -66,19 +65,20 @@ class ParticipantsListViewModelTests: XCTestCase {
         let remoteParticipantsState = RemoteParticipantsState(
             participantInfoList: participantInfoModel, lastUpdateTimeStamp: Date())
 
-        participantsListViewModel.localParticipantsListCellViewModel = ParticipantsListCellViewModel(
+        sut.localParticipantsListCellViewModel = ParticipantsListCellViewModel(
             localUserState: LocalUserState(audioState: audioStateOn),
             localizationProvider: localizationProvider)
-        XCTAssertFalse(participantsListViewModel.localParticipantsListCellViewModel.isMuted)
-        participantsListViewModel.update(localUserState: localUserState,
+        XCTAssertFalse(sut.localParticipantsListCellViewModel.isMuted)
+        sut.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
-        XCTAssertFalse(participantsListViewModel.localParticipantsListCellViewModel.isMuted)
+        XCTAssertFalse(sut.localParticipantsListCellViewModel.isMuted)
         wait(for: [expectation], timeout: 1)
     }
 
     func test_participantsListViewModel_update_when_localUserStateMicOffAndUpdateWithMicOn_then_shouldBePublished() {
+        let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should publish localParticipantsListCellViewModel")
-        participantsListViewModel.$localParticipantsListCellViewModel
+        sut.$localParticipantsListCellViewModel
             .dropFirst(2)
             .sink(receiveValue: { participantsListCellViewModel in
                 XCTAssertFalse(participantsListCellViewModel.isMuted)
@@ -94,20 +94,21 @@ class ParticipantsListViewModelTests: XCTestCase {
 
         let audioStateOff = LocalUserState.AudioState(operation: .off,
                                                       device: .receiverSelected)
-        participantsListViewModel.localParticipantsListCellViewModel = ParticipantsListCellViewModel(
+        sut.localParticipantsListCellViewModel = ParticipantsListCellViewModel(
             localUserState: LocalUserState(audioState: audioStateOff),
             localizationProvider: localizationProvider)
-        XCTAssertTrue(participantsListViewModel.localParticipantsListCellViewModel.isMuted)
-        participantsListViewModel.update(localUserState: localUserState,
+        XCTAssertTrue(sut.localParticipantsListCellViewModel.isMuted)
+        sut.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
-        XCTAssertFalse(participantsListViewModel.localParticipantsListCellViewModel.isMuted)
+        XCTAssertFalse(sut.localParticipantsListCellViewModel.isMuted)
         wait(for: [expectation], timeout: 1)
     }
 
     func test_participantsListViewModel_update_when_localUserStateMicOffAndUpdateWithMicOff_then_shouldNotBePublished() {
+        let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should not publish localParticipantsListCellViewModel")
         expectation.isInverted = true
-        participantsListViewModel.$localParticipantsListCellViewModel
+        sut.$localParticipantsListCellViewModel
             .dropFirst(2)
             .sink(receiveValue: { _ in
                 expectation.fulfill()
@@ -121,20 +122,21 @@ class ParticipantsListViewModelTests: XCTestCase {
         let remoteParticipantsState = RemoteParticipantsState(
             participantInfoList: participantInfoModel, lastUpdateTimeStamp: Date())
 
-        participantsListViewModel.localParticipantsListCellViewModel = ParticipantsListCellViewModel(
+        sut.localParticipantsListCellViewModel = ParticipantsListCellViewModel(
             localUserState: LocalUserState(audioState: audioStateOff),
             localizationProvider: localizationProvider)
-        XCTAssertTrue(participantsListViewModel.localParticipantsListCellViewModel.isMuted)
-        participantsListViewModel.update(localUserState: localUserState,
+        XCTAssertTrue(sut.localParticipantsListCellViewModel.isMuted)
+        sut.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
-        XCTAssertTrue(participantsListViewModel.localParticipantsListCellViewModel.isMuted)
+        XCTAssertTrue(sut.localParticipantsListCellViewModel.isMuted)
         wait(for: [expectation], timeout: 1)
     }
 
     // MARK: participantsList test
     func test_participantsListViewModel_update_when_lastUpdateTimeStampChangedWithParticipantOrderCheck_then_shouldBePublished() {
+        let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should publish localParticipantsListCellViewModel")
-        participantsListViewModel.$participantsList
+        sut.$participantsList
             .dropFirst()
             .sink(receiveValue: { participantsList in
                 XCTAssertEqual(participantsList.count, 1)
@@ -160,26 +162,27 @@ class ParticipantsListViewModelTests: XCTestCase {
 
         let audioStateOn = LocalUserState.AudioState(operation: .on,
                                                      device: .receiverSelected)
-        participantsListViewModel.lastUpdateTimeStamp = timestamp
+        sut.lastUpdateTimeStamp = timestamp
         let localParticipant = ParticipantsListCellViewModel(
             localUserState: LocalUserState(audioState: audioStateOn),
             localizationProvider: localizationProvider)
-        participantsListViewModel.localParticipantsListCellViewModel = localParticipant
-        XCTAssertEqual(participantsListViewModel.participantsList.count, 0)
-        participantsListViewModel.update(localUserState: localUserState,
+        sut.localParticipantsListCellViewModel = localParticipant
+        XCTAssertEqual(sut.participantsList.count, 0)
+        sut.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
-        XCTAssertEqual(participantsListViewModel.participantsList.count, 1)
+        XCTAssertEqual(sut.participantsList.count, 1)
         XCTAssertEqual(localParticipant.displayName, "")
         XCTAssertEqual(localParticipant.isLocalParticipant, true)
-        XCTAssertEqual(participantsListViewModel.sortedParticipants().first?.displayName, localParticipant.displayName)
-        XCTAssertEqual(participantsListViewModel.sortedParticipants().last?.displayName, remoteParticipantsState.participantInfoList.first!.displayName)
+        XCTAssertEqual(sut.sortedParticipants().first?.displayName, localParticipant.displayName)
+        XCTAssertEqual(sut.sortedParticipants().last?.displayName, remoteParticipantsState.participantInfoList.first!.displayName)
         wait(for: [expectation], timeout: 1)
     }
 
     func test_participantsListViewModel_update_when_lastUpdateTimeStampNotChanged_then_shouldNotBePublished() {
+        let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should not publish participantsList")
         expectation.isInverted = true
-        participantsListViewModel.$participantsList
+        sut.$participantsList
             .dropFirst()
             .sink(receiveValue: { _ in
                 expectation.fulfill()
@@ -205,14 +208,21 @@ class ParticipantsListViewModelTests: XCTestCase {
 
         let audioStateOn = LocalUserState.AudioState(operation: .on,
                                                      device: .receiverSelected)
-        participantsListViewModel.lastUpdateTimeStamp = timestamp
-        participantsListViewModel.localParticipantsListCellViewModel = ParticipantsListCellViewModel(
+        sut.lastUpdateTimeStamp = timestamp
+        sut.localParticipantsListCellViewModel = ParticipantsListCellViewModel(
             localUserState: LocalUserState(audioState: audioStateOn),
             localizationProvider: localizationProvider)
-        XCTAssertEqual(participantsListViewModel.participantsList.count, 0)
-        participantsListViewModel.update(localUserState: localUserState,
+        XCTAssertEqual(sut.participantsList.count, 0)
+        sut.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
-        XCTAssertEqual(participantsListViewModel.participantsList.count, 0)
+        XCTAssertEqual(sut.participantsList.count, 0)
         wait(for: [expectation], timeout: 1)
+    }
+}
+
+extension ParticipantsListViewModelTests {
+    func makeSUT() -> ParticipantsListViewModel {
+        return ParticipantsListViewModel(localUserState: LocalUserState(),
+                                         localizationProvider: localizationProvider)
     }
 }
