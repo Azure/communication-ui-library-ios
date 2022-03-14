@@ -7,6 +7,8 @@ import Foundation
 import FluentUI
 
 class ColorThemeProvider: ColorProviding {
+    let colorSchemeOverride: UIUserInterfaceStyle
+
     let primaryColor: UIColor
     let primaryColorTint10: UIColor
     let primaryColorTint20: UIColor
@@ -37,6 +39,8 @@ class ColorThemeProvider: ColorProviding {
     let overlay = UIColor.compositeColor(.overlay)
 
     init(themeConfiguration: ThemeConfiguration?) {
+        self.colorSchemeOverride = themeConfiguration?.colorSchemeOverride ?? .unspecified
+        
         self.primaryColor = themeConfiguration?.primaryColor ?? Colors.Palette.communicationBlue.color
         self.primaryColorTint10 = themeConfiguration?.primaryColorTint10 ?? Colors.Palette.communicationBlueTint10.color
         self.primaryColorTint20 = themeConfiguration?.primaryColorTint20 ?? Colors.Palette.communicationBlueTint20.color

@@ -131,7 +131,7 @@ class UIKitDemoViewController: UIViewController {
     }
 
     func startExperience(with link: String) {
-        let callCompositeOptions = CallCompositeOptions(themeConfiguration: TeamsBrandConfig())
+        let callCompositeOptions = CallCompositeOptions(themeConfiguration: Theming())
 
         let callComposite = CallComposite(withOptions: callCompositeOptions)
 
