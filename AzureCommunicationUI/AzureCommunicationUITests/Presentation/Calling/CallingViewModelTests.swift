@@ -198,7 +198,7 @@ extension CallingViewModelTests {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
-                                localizationProvider: AppLocalizationProvider(logger: LoggerMocking()))
+                                localizationProvider: AppLocalizationProvider(logger: logger))
     }
 
     func makeSUTLocalizationMocking(storeFactory: StoreFactoryMocking = StoreFactoryMocking()) -> CallingViewModel {
