@@ -9,14 +9,17 @@ import Combine
 class SetupViewModel: ObservableObject {
     private let logger: Logger
     private let store: Store<AppState>
+
     private var callingStatus: CallingStatus = .none
-    var cancellables = Set<AnyCancellable>()
 
     let previewAreaViewModel: PreviewAreaViewModel
+    let title: String = "Setup"
+    
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
     var joinCallButtonViewModel: PrimaryButtonViewModel!
     var setupControlBarViewModel: SetupControlBarViewModel!
+    var cancellables = Set<AnyCancellable>()
 
     @Published var isJoinRequested: Bool = false
 
