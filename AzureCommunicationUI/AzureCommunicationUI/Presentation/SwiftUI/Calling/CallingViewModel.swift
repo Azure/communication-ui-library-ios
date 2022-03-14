@@ -66,7 +66,7 @@ class CallingViewModel: ObservableObject {
     func getLeaveCallButtonViewModel() -> PrimaryButtonViewModel {
         let leaveCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
-            buttonLabel: "Leave call",
+            buttonLabel: localizationProvider.getLocalizedString(.leaveCall),
             iconName: nil,
             isDisabled: false,
             action: { [weak self] in
@@ -82,7 +82,7 @@ class CallingViewModel: ObservableObject {
     func getCancelButtonViewModel() -> PrimaryButtonViewModel {
         let cancelButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryOutline,
-            buttonLabel: "Cancel",
+            buttonLabel: localizationProvider.getLocalizedString(.cancel),
             iconName: nil,
             isDisabled: false,
             action: { [weak self] in

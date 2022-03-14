@@ -12,11 +12,13 @@ class InfoHeaderViewModelTests: XCTestCase {
     var storeFactory: StoreFactoryMocking!
     var cancellable: CancelBag!
     var infoHeaderViewModel: InfoHeaderViewModel!
+    var localizationProvider: LocalizationProvider!
 
     override func setUp() {
         super.setUp()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
+        localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
 
         func dispatch(action: Action) {
             storeFactory.store.dispatch(action: action)
@@ -25,7 +27,8 @@ class InfoHeaderViewModelTests: XCTestCase {
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
         infoHeaderViewModel = InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                                   logger: LoggerMocking(),
-                                                  localUserState: LocalUserState())
+                                                  localUserState: LocalUserState(),
+                                                  localizationProvider: localizationProvider)
     }
 
     func test_infoHeaderViewModel_update_when_participantInfoListCountSame_then_shouldNotBePublished() {

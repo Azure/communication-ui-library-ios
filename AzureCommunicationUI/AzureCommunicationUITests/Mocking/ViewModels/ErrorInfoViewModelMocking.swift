@@ -11,7 +11,7 @@ class ErrorInfoViewModelMocking: ErrorInfoViewModel {
 
     init(updateState: ((ErrorState) -> Void)? = nil) {
         self.updateState = updateState
-        super.init()
+        super.init(localizationProvider: LocalizationProviderMocking())
     }
 
     override func update(errorState: ErrorState) {

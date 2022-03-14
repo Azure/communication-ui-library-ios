@@ -21,6 +21,7 @@ class SetupViewModel: ObservableObject {
     var dismissButtonViewModel: IconButtonViewModel!
     var joinCallButtonViewModel: PrimaryButtonViewModel!
     var setupControlBarViewModel: SetupControlBarViewModel!
+    var joiningCallActivityViewModel: JoiningCallActivityViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
@@ -31,6 +32,7 @@ class SetupViewModel: ObservableObject {
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
         self.previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
+        self.joiningCallActivityViewModel = compositeViewModelFactory.makeJoiningCallActivityViewModel()
         self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
         self.joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,

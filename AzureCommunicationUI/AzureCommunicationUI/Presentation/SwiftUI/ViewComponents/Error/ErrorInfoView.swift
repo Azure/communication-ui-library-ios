@@ -20,7 +20,7 @@ struct ErrorInfoView: View {
                     .foregroundColor(Color(StyleProvider.color.onWarning))
                 Spacer()
                 Button(action: dismissAction) {
-                    Text("Dismiss")
+                    Text(viewModel.dismissContent)
                         .font(Fonts.button1.font)
                         .foregroundColor(Color(StyleProvider.color.onWarning))
                 }

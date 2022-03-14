@@ -94,11 +94,12 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel {
         return audioDevicesListViewModel ?? AudioDevicesListViewModel(dispatchAction: dispatchAction,
-                                                                      localUserState: localUserState)
+                                                                      localUserState: localUserState,
+                                                                      localizationProvider: LocalizationProviderMocking())
     }
 
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
-        return errorInfoViewModel ?? ErrorInfoViewModel()
+        return errorInfoViewModel ?? ErrorInfoViewModel(localizationProvider: LocalizationProviderMocking())
     }
 
     // MARK: CallingViewModels
@@ -118,7 +119,8 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel {
         return infoHeaderViewModel ?? InfoHeaderViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
-                                                          localUserState: localUserState)
+                                                          localUserState: localUserState,
+                                                          localizationProvider: LocalizationProviderMocking())
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
@@ -131,7 +133,8 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
-        return participantsListViewModel ?? ParticipantsListViewModel(localUserState: localUserState)
+        return participantsListViewModel ?? ParticipantsListViewModel(localUserState: localUserState,
+                                                                      localizationProvider: LocalizationProviderMocking())
     }
 
     func makeBannerViewModel() -> BannerViewModel {
@@ -139,12 +142,14 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     }
 
     func makeBannerTextViewModel() -> BannerTextViewModel {
-        return bannerTextViewModel ?? BannerTextViewModel()
+        return bannerTextViewModel ?? BannerTextViewModel(localizationProvider: LocalizationProviderMocking())
     }
 
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel {
-        return previewAreaViewModel ?? PreviewAreaViewModel(compositeViewModelFactory: self, dispatchAction: dispatchAction)
+        return previewAreaViewModel ?? PreviewAreaViewModel(compositeViewModelFactory: self,
+                                                            dispatchAction: dispatchAction,
+                                                            localizationProvider: LocalizationProviderMocking())
     }
 
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
@@ -152,6 +157,11 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
         return setupControlBarViewModel ?? SetupControlBarViewModel(compositeViewModelFactory: self,
                                                                     logger: logger,
                                                                     dispatchAction: dispatchAction,
-                                                                    localUserState: localUserState)
+                                                                    localUserState: localUserState,
+                                                                    localizationProvider: LocalizationProviderMocking())
+    }
+
+    func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
+        JoiningCallActivityViewModel(localizationProvider: LocalizationProviderMocking())
     }
 }

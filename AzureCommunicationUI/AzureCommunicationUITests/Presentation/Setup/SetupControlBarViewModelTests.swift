@@ -12,6 +12,7 @@ class SetupControlBarViewModelTests: XCTestCase {
     private var factoryMocking: CompositeViewModelFactoryMocking!
     private var cancellable: CancelBag!
     private var logger: LoggerMocking!
+    private var localizationProvider: LocalizationProvider!
 
     private let timeout: TimeInterval = 10.0
 
@@ -20,6 +21,7 @@ class SetupControlBarViewModelTests: XCTestCase {
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
         logger = LoggerMocking()
+        localizationProvider = AppLocalizationProvider(logger: logger)
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
                                                           store: storeFactory.store)
     }
@@ -180,7 +182,7 @@ class SetupControlBarViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "CameraButtonViewModel button info is updated")
         let updateButtonInfoCompletion: ((CompositeIcon, String) -> Void) = { icon, label in
             XCTAssertEqual(icon, .videoOn)
-            XCTAssertEqual(label, "Video is on")
+            XCTAssertEqual(label, "Video on")
             expectation.fulfill()
         }
         factoryMocking.createIconWithLabelButtonViewModel = { icon in
@@ -231,7 +233,7 @@ class SetupControlBarViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "MicButtonViewModel button info is updated")
         let updateButtonInfoCompletion: ((CompositeIcon, String) -> Void) = { icon, label in
             XCTAssertEqual(icon, .micOn)
-            XCTAssertEqual(label, "Mic is on")
+            XCTAssertEqual(label, "Mic on")
             expectation.fulfill()
         }
         factoryMocking.createIconWithLabelButtonViewModel = { icon in
@@ -281,7 +283,9 @@ class SetupControlBarViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "AudioDevicesListViewModel is updated")
         let localUserState = LocalUserState(audioState: LocalUserState.AudioState(operation: .on, device: .speakerSelected))
         let audioDevicesListViewModel = AudioDevicesListViewModelMocking(dispatchAction: storeFactory.store.dispatch,
-                                                                         localUserState: localUserState)
+                                                                         localUserState: localUserState,
+                                                                         localizationProvider: LocalizationProviderMocking())
+
         audioDevicesListViewModel.updateState = { status in
             XCTAssertEqual(status, localUserState.audioState.device)
             expectation.fulfill()
@@ -300,6 +304,7 @@ extension SetupControlBarViewModelTests {
         return SetupControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                         logger: logger,
                                         dispatchAction: storeFactory.store.dispatch,
-                                        localUserState: LocalUserState())
+                                        localUserState: LocalUserState(),
+                                        localizationProvider: localizationProvider)
     }
 }
