@@ -166,7 +166,7 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
         BannerViewModel(compositeViewModelFactory: self)
     }
     func makeBannerTextViewModel() -> BannerTextViewModel {
-        BannerTextViewModel()
+        BannerTextViewModel(accessibilityProvider: accessibilityProvider)
     }
 
     // MARK: SetupViewModels

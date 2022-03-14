@@ -11,6 +11,11 @@ class BannerTextViewModel: ObservableObject {
     private(set) var linkDisplay: String = ""
     private(set) var link: String = ""
     private(set) var accessibilityLabel: String = ""
+    private let accessibilityProvider: AccessibilityProvider
+
+    init(accessibilityProvider: AccessibilityProvider) {
+        self.accessibilityProvider = accessibilityProvider
+    }
 
     func update(bannerInfoType: BannerInfoType?) {
         if let bannerInfoType = bannerInfoType {
@@ -27,7 +32,7 @@ class BannerTextViewModel: ObservableObject {
         accessibilityLabel = title + body + linkDisplay
         // UIKit workaround to update accessibility when focus should be changed and isModal shouldn't be set
         // for a consistent behaviour @AccessibilityFocusState should be used when min supported version is iOS 15+
-        AccessibilityProvider.moveFocusToFirstElement()
+        accessibilityProvider.moveFocusToFirstElement()
         objectWillChange.send()
     }
 }

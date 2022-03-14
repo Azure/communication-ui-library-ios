@@ -14,7 +14,7 @@ class SetupViewModel: ObservableObject {
 
     let previewAreaViewModel: PreviewAreaViewModel
     let title: String = "Setup"
-    
+
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
     var joinCallButtonViewModel: PrimaryButtonViewModel!
