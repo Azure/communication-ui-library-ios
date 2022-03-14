@@ -76,9 +76,9 @@ class AppLocalizationProvider: LocalizationProvider {
             .path(forResource: locale, ofType: "lproj"),
            let bundle = Bundle(path: path) {
             let predefinedTranslation = NSLocalizedString(key,
-                                                                bundle: bundle,
-                                                                value: "localize_key_not_found",
-                                                                comment: key)
+                                                          bundle: bundle,
+                                                          value: "localize_key_not_found",
+                                                          comment: key)
             if predefinedTranslation != "localize_key_not_found" {
                 return predefinedTranslation
             }

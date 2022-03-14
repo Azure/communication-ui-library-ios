@@ -157,7 +157,7 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_receive_when_statusUpdated_then_participantGridViewModelUpdated() {
         let expectation = XCTestExpectation(description: "ParticipantGridViewModel is updated")
         let appState = AppState()
-        let sut = makeSUT(updateParticipantGridViewModel: { remoteParticipantsState in
+        let sut = makeSUT(updateParticipantGridViewModel: { remoteParticipantsState, _ in
             XCTAssertEqual(appState.remoteParticipantsState.lastUpdateTimeStamp, remoteParticipantsState.lastUpdateTimeStamp)
             expectation.fulfill()
         })
@@ -228,7 +228,7 @@ extension CallingViewModelTests {
                                 localizationProvider: LocalizationProviderMocking())
     }
 
-    func makeSUT(updateParticipantGridViewModel: @escaping ((RemoteParticipantsState) -> Void)) -> CallingViewModel {
+    func makeSUT(updateParticipantGridViewModel: @escaping ((RemoteParticipantsState, LifeCycleState) -> Void)) -> CallingViewModel {
         let storeFactory = StoreFactoryMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         factoryMocking.participantGridViewModel = ParticipantGridViewModelMocking(compositeViewModelFactory: factoryMocking,
@@ -249,4 +249,21 @@ extension CallingViewModelTests {
                                 store: storeFactory.store,
                                 localizationProvider: LocalizationProviderMocking())
     }
+
+    func test_callingViewModel_update_when_callStatusIsConnected_appStateForeground_then_switchToBackground_shouldBecomeBackground() {
+        let sut = makeSUT()
+        let appState = AppState(callingState: CallingState(status: .connected),
+                                lifeCycleState: LifeCycleState(currentStatus: .background))
+        sut.receive(appState)
+        XCTAssertEqual(sut.appState, .background)
+    }
+
+    func test_callingViewModel_update_when_callStatusIsConnected_appStateBackground_then_switchToForeground_shouldBecomeForeground() {
+        let sut = makeSUT()
+        let appState = AppState(callingState: CallingState(status: .connected),
+                                lifeCycleState: LifeCycleState(currentStatus: .foreground))
+        sut.receive(appState)
+        XCTAssertEqual(sut.appState, .foreground)
+    }
+
 }

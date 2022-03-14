@@ -19,7 +19,7 @@ class ParticipantGridViewModel: ObservableObject {
         self.compositeViewModelFactory = compositeViewModelFactory
     }
 
-    func update(remoteParticipantsState: RemoteParticipantsState) {
+    func update(remoteParticipantsState: RemoteParticipantsState, lifeCycleState: LifeCycleState) {
         guard lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp else {
             return
         }

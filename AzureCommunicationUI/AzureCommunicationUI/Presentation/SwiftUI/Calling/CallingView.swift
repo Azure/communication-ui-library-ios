@@ -26,6 +26,7 @@ struct CallingView: View {
             }
         }
         .environment(\.screenSizeClass, getSizeClass())
+        .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
         .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveOverlayDisplayed) {
             ConfirmLeaveOverlayView(viewModel: viewModel)

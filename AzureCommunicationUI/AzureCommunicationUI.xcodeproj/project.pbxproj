@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1B70D52827191073007CC933 /* DeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B70D52727191073007CC933 /* DeviceExtension.swift */; };
 		1B79BD50273F2D87002D5A36 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B79BD4F273F2D87002D5A36 /* UIViewControllerExtension.swift */; };
+		1B7ABF82278CFFC400D79DF7 /* ZoomableVideoRenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7ABF81278CFFC400D79DF7 /* ZoomableVideoRenderView.swift */; };
 		1F03D3CE2638A6AE0055C456 /* CallingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D3CD2638A6AE0055C456 /* CallingView.swift */; };
 		1F03D3D22638A6B70055C456 /* CallingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D3D12638A6B70055C456 /* CallingViewModel.swift */; };
 		1F09A10426BA472A00BACED7 /* ParticipantInfoModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09A10326BA472A00BACED7 /* ParticipantInfoModelBuilder.swift */; };
@@ -103,6 +104,7 @@
 		50B390D627D915F00010A2ED /* LocalizationProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D527D915EF0010A2ED /* LocalizationProviderTests.swift */; };
 		50B390D827D976930010A2ED /* JoiningCallActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D727D976930010A2ED /* JoiningCallActivityViewModel.swift */; };
 		50B390DA27DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D927DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift */; };
+		5082C9CEF7CF0B6EAE66E0DB /* Pods_AzureCommunicationUI_AzureCommunicationUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEAA7B30BA59A234786A35F9 /* Pods_AzureCommunicationUI_AzureCommunicationUITests.framework */; };
 		50C6DECC270E48BE0085D04B /* BannerInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C6DECB270E48BE0085D04B /* BannerInfoType.swift */; };
 		50C6DECF270E4F020085D04B /* BannerInfoTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C6DECE270E4F020085D04B /* BannerInfoTypeTests.swift */; };
 		50E2D68926D9495B006B0EF4 /* InfoHeaderViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */; };
@@ -141,7 +143,7 @@
 		88701EB8274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88701EB7274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift */; };
 		88A70180270E50D100F817B8 /* PopupModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7017F270E50D100F817B8 /* PopupModalView.swift */; };
 		88B87C572755911B00290DD1 /* CallInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B87C562755911B00290DD1 /* CallInfoModel.swift */; };
-		88D8EFF6E3700EA13007CA9A /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		88D8EFF6E3700EA13007CA9A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 		88F6EE1A2735F5CB001AD3E9 /* ErrorReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F6EE192735F5CB001AD3E9 /* ErrorReducer.swift */; };
 		88F6EE1C2735F8E8001AD3E9 /* ErrorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F6EE1B2735F8E8001AD3E9 /* ErrorState.swift */; };
 		981ACABC2685459400CD6A40 /* IconProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981ACABB2685459400CD6A40 /* IconProvider.swift */; };
@@ -229,6 +231,7 @@
 		01D765D8184BB2E6A5879C73 /* Pods-AzureCommunicationUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUI.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUI/Pods-AzureCommunicationUI.release.xcconfig"; sourceTree = "<group>"; };
 		1B70D52727191073007CC933 /* DeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceExtension.swift; sourceTree = "<group>"; };
 		1B79BD4F273F2D87002D5A36 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
+		1B7ABF81278CFFC400D79DF7 /* ZoomableVideoRenderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomableVideoRenderView.swift; sourceTree = "<group>"; };
 		1DD8A6B167FDF205AD440568 /* Pods-AzureCommunicationUI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUI.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUI/Pods-AzureCommunicationUI.debug.xcconfig"; sourceTree = "<group>"; };
 		1F03D3CD2638A6AE0055C456 /* CallingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingView.swift; sourceTree = "<group>"; };
 		1F03D3D12638A6B70055C456 /* CallingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingViewModel.swift; sourceTree = "<group>"; };
@@ -438,7 +441,6 @@
 		A8ED232C2645C637008A26B2 /* CallingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingServiceTests.swift; sourceTree = "<group>"; };
 		A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouterTests.swift; sourceTree = "<group>"; };
 		AEF91CC2CFA3B351A6C90172 /* Pods_AzureCommunicationUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B990191A0C430DB278E1BCAE /* Pods_AzureCommunicationUI_AzureCommunicationUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUI_AzureCommunicationUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FA03CC7627C8189900986D4E /* PreviewAreaViewModelMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewAreaViewModelMocking.swift; sourceTree = "<group>"; };
 		FA03CC7827C8189900986D4E /* SetupControlBarViewModelMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetupControlBarViewModelMocking.swift; sourceTree = "<group>"; };
 		FA03CC7A27C8189900986D4E /* ErrorInfoViewModelMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInfoViewModelMocking.swift; sourceTree = "<group>"; };
@@ -452,6 +454,7 @@
 		FAC1FEC727C98FC200D95845 /* ParticipantGridViewModelMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantGridViewModelMocking.swift; sourceTree = "<group>"; };
 		FAC1FEC827C98FC200D95845 /* InfoHeaderViewModelMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoHeaderViewModelMocking.swift; sourceTree = "<group>"; };
 		FAC1FEC927C98FC200D95845 /* BannerTextViewModelMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerTextViewModelMocking.swift; sourceTree = "<group>"; };
+		FEAA7B30BA59A234786A35F9 /* Pods_AzureCommunicationUI_AzureCommunicationUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUI_AzureCommunicationUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -460,8 +463,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FBCB69F2645285100F57EEA /* AzureCommunicationUI.framework in Frameworks */,
-				88D8EFF6E3700EA13007CA9A /* (null) in Frameworks */,
-				C3D37F3E7BB5430527382922 /* Pods_AzureCommunicationUI_AzureCommunicationUITests.framework in Frameworks */,
+				88D8EFF6E3700EA13007CA9A /* BuildFile in Frameworks */,
+				5082C9CEF7CF0B6EAE66E0DB /* Pods_AzureCommunicationUI_AzureCommunicationUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -805,6 +808,7 @@
 				1FBCB6B8264BA90000F57EEA /* ParticipantGridCellVideoView.swift */,
 				1FBCB6B5264BA8A200F57EEA /* ParticipantGridCellViewModel.swift */,
 				50FA46012681409D001844AC /* ParticipantGridCellView.swift */,
+				1B7ABF81278CFFC400D79DF7 /* ZoomableVideoRenderView.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1134,7 +1138,7 @@
 			children = (
 				1FBCB682264522F200F57EEA /* XCTest.framework */,
 				AEF91CC2CFA3B351A6C90172 /* Pods_AzureCommunicationUI.framework */,
-				B990191A0C430DB278E1BCAE /* Pods_AzureCommunicationUI_AzureCommunicationUITests.framework */,
+				FEAA7B30BA59A234786A35F9 /* Pods_AzureCommunicationUI_AzureCommunicationUITests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1466,6 +1470,7 @@
 				503F4B692704EDD100C17DA6 /* BannerViewModel.swift in Sources */,
 				982C2835267D15AF00427246 /* CompositeAvatar.swift in Sources */,
 				50FA460C26829162001844AC /* IconWithLabelButton.swift in Sources */,
+				1B7ABF82278CFFC400D79DF7 /* ZoomableVideoRenderView.swift in Sources */,
 				50FA4623269CA1D4001844AC /* IconButtonViewModel.swift in Sources */,
 				1F8E0B722684EBC100DDD18E /* CallingMiddlewareHandler.swift in Sources */,
 				1F2BEDA5263252E100D98266 /* Middleware.swift in Sources */,

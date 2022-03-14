@@ -20,10 +20,10 @@ class SetupControlBarViewModel: ObservableObject {
     private var callingStatus: CallingStatus = .none
     private var cameraStatus: LocalUserState.CameraOperationalStatus = .off
     private(set) var micStatus: LocalUserState.AudioOperationalStatus = .off
-
     private var localVideoStreamId: String?
 
     private let dispatch: ActionDispatch
+    private var isJoinRequested: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
@@ -107,11 +107,15 @@ class SetupControlBarViewModel: ObservableObject {
     }
 
     func isCameraDisabled() -> Bool {
-        cameraPermission == .denied
+        return isJoinRequested || cameraPermission == .denied
     }
 
     func isAudioDisabled() -> Bool {
-        audioPermission == .denied
+        return isJoinRequested || audioPermission == .denied
+    }
+
+    func isControlBarHidden() -> Bool {
+        return audioPermission == .denied
     }
 
     func update(localUserState: LocalUserState,
@@ -136,6 +140,13 @@ class SetupControlBarViewModel: ObservableObject {
         audioDevicesListViewModel.update(audioDeviceStatus: localUserState.audioState.device)
     }
 
+    func update(isJoinRequested: Bool) {
+        self.isJoinRequested = isJoinRequested
+        cameraButtonViewModel.update(isDisabled: isCameraDisabled())
+        micButtonViewModel.update(isDisabled: isAudioDisabled())
+        audioDeviceButtonViewModel.update(isDisabled: isJoinRequested)
+    }
+
     private func updateButtonViewModel(localUserState: LocalUserState) {
         cameraButtonViewModel.update(
             iconName: self.cameraStatus == .on ? .videoOn : .videoOff,
@@ -148,6 +159,7 @@ class SetupControlBarViewModel: ObservableObject {
             buttonLabel: self.micStatus == .on
             ? self.localizationProvider.getLocalizedString(.micOn)
             : self.localizationProvider.getLocalizedString(.micOff))
+        micButtonViewModel.update(isDisabled: isAudioDisabled())
         audioDeviceButtonViewModel.update(
             iconName: deviceIconFor(audioDeviceStatus: localUserState.audioState.device),
             buttonLabel: deviceLabelFor(audioDeviceStatus: localUserState.audioState.device))

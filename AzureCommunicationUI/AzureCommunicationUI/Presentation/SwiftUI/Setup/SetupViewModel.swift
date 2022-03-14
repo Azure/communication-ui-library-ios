@@ -64,6 +64,10 @@ class SetupViewModel: ObservableObject {
             .sink { [weak self] state in
                 self?.receive(state)
             }.store(in: &cancellables)
+
+        $isJoinRequested.sink { [weak self] value in
+            self?.setupControlBarViewModel.update(isJoinRequested: value)
+        }.store(in: &cancellables)
     }
 
     func setupAudioPermissions() {

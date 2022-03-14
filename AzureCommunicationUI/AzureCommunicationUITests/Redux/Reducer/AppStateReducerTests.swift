@@ -82,7 +82,7 @@ class AppStateReducerTests: XCTestCase {
     func test_appStateReducer_reduceLifeCycleState_then_lifeCycleReducerCalled_stateUpdated() {
         let oldLifeCycleState = LifeCycleState(currentStatus: .background)
         let mockSubReducer = ReducerMocking()
-        let expectedState = LifeCycleState.AppStatus.foreground
+        let expectedState = AppStatus.foreground
 
         let newLifeCycleState = LifeCycleState(currentStatus: expectedState)
         mockSubReducer.outputState = newLifeCycleState
