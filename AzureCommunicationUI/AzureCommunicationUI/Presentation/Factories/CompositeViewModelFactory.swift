@@ -152,7 +152,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
-                            localUserState: localUserState)
+                            localUserState: localUserState,
+                            localizationProvider: localizationProvider)
     }
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
         ParticipantGridCellViewModel(compositeViewModelFactory: self, participantModel: participantModel)
@@ -162,13 +163,14 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
-        ParticipantsListViewModel(localUserState: localUserState)
+        ParticipantsListViewModel(localUserState: localUserState,
+                                  localizationProvider: localizationProvider)
     }
     func makeBannerViewModel() -> BannerViewModel {
         BannerViewModel(compositeViewModelFactory: self)
     }
     func makeBannerTextViewModel() -> BannerTextViewModel {
-        BannerTextViewModel()
+        BannerTextViewModel(localizationProvider: localizationProvider)
     }
 
     // MARK: SetupViewModels

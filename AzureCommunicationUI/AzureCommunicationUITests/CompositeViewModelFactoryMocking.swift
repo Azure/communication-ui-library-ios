@@ -115,7 +115,8 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel {
         return infoHeaderViewModel ?? InfoHeaderViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
-                                                          localUserState: localUserState)
+                                                          localUserState: localUserState,
+                                                          localizationProvider: LocalizationProviderMocking())
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
@@ -128,7 +129,8 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
-        return participantsListViewModel ?? ParticipantsListViewModel(localUserState: localUserState)
+        return participantsListViewModel ?? ParticipantsListViewModel(localUserState: localUserState,
+                                                                      localizationProvider: LocalizationProviderMocking())
     }
 
     func makeBannerViewModel() -> BannerViewModel {
@@ -136,7 +138,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     }
 
     func makeBannerTextViewModel() -> BannerTextViewModel {
-        return bannerTextViewModel ?? BannerTextViewModel()
+        return bannerTextViewModel ?? BannerTextViewModel(localizationProvider: LocalizationProviderMocking())
     }
 
     // MARK: SetupViewModels
