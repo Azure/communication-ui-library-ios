@@ -58,6 +58,10 @@ class CallingViewModel: ObservableObject {
             }.store(in: &cancellables)
     }
 
+    func getLobbyOverlayViewModel() -> LobbyOverlayViewModel {
+        return compositeViewModelFactory.makeLobbyOverlayViewModel()
+    }
+
     // MARK: ConfirmLeaveOverlay
     func getLeaveCallButtonViewModel() -> PrimaryButtonViewModel {
         let leaveCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(

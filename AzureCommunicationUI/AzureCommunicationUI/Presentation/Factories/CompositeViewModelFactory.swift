@@ -32,6 +32,7 @@ protocol CompositeViewModelFactory {
     func makeErrorInfoViewModel() -> ErrorInfoViewModel
 
     // MARK: CallingViewModels
+    func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel
@@ -140,6 +141,9 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     }
 
     // MARK: CallingViewModels
+    func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
+        return LobbyOverlayViewModel(localizationProvider: localizationProvider)
+    }
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel {

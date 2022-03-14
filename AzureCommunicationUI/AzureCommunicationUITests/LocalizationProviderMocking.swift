@@ -6,26 +6,32 @@
 import Foundation
 @testable import AzureCommunicationUI
 
-struct LocalizationProviderMocking: LocalizationProvider {
+class LocalizationProviderMocking: LocalizationProvider {
+    var isApplyCalled: Bool = false
+    var isGetSupportedLanguages: Bool = false
+    var isGetLocalizedString: Bool = false
+    var isGetLocalizedStringWithArgs: Bool = false
+
     var isRightToLeft: Bool {
         return false
     }
 
     func apply(localeConfig: LocalizationConfiguration) {
-        return
+        isApplyCalled = true
     }
 
     func getSupportedLanguages() -> [String] {
+        isGetSupportedLanguages = true
         return ["en"]
     }
 
     func getLocalizedString(_ key: StringKey) -> String {
-        // return hard coded string
-        return "ABC"
+        isGetLocalizedString = true
+        return key.rawValue
     }
 
     func getLocalizedString(_ key: StringKey, _ args: CVarArg...) -> String {
-        // return hard coded string
-        return "XYZ"
+        isGetLocalizedStringWithArgs = true
+        return key.rawValue
     }
 }
