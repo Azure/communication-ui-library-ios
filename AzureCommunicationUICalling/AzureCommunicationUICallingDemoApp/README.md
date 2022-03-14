@@ -14,9 +14,9 @@ The sample app is a native iOS application developed using both SwiftUI and UIKi
 
 ### Before running the sample for the first time
 
-1. After cloning the [Repo](https://github.com/Azure/azure-communication-ui-library-ios) in your local environment, `cd` to the `AzureCommunicationUI` folder in the root of the project directory.
+1. After cloning the [Repo](https://github.com/Azure/azure-communication-ui-library-ios) in your local environment, `cd` to the `AzureCommunicationUICalling` folder in the root of the project directory.
 2. Run `pod install`, this generates a `.xcworkspace` file.
-3. (Optional) `cd` to the `AzureCommunicationUIDemoApp` folder inside the project directory
+3. (Optional) `cd` to the `AzureCommunicationUICallingDemoApp` folder inside the project directory
 4. (Optional) Run `touch EnvConfig.xcconfig` via the Command Line. 
 5. (Optional) Add constants from following list to `EnvConfig.xcconfig` as the sample app's local configurations. 
    - `acsToken`: a generated Azure Communication Services token
@@ -28,12 +28,12 @@ The sample app is a native iOS application developed using both SwiftUI and UIKi
 
     ![EnvConfig](/docs/images/EnvConfig.png)
 
-    Note: The `EnvConfig.xcconfig` file is created strictly for developers convenience. Those configurations can be input once the `AzureCommunicationUIDemoApp` is running.
+    Note: The `EnvConfig.xcconfig` file is created strictly for developers convenience. Those configurations can be input once the `AzureCommunicationUICallingDemoApp` is running.
 
 ### Run Sample
 
-1. Open `AzureCommunicationUI.xcworkspace` file generated in the above step.
-2. Select `AzureCommunicationUIDemoApp` scheme and target at any iOS simulator.
+1. Open `AzureCommunicationUICalling.xcworkspace` file generated in the above step.
+2. Select `AzureCommunicationUICallingDemoApp` scheme and target at any iOS simulator.
 3. Hit `Run` or `⌘+R` to start running.
 
     ![SelectSimulator](/docs/images/SelectSimulator.png)
