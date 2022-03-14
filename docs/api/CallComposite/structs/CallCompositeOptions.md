@@ -28,5 +28,5 @@ public init(
 
 
 ### Parameters
-* `themeConfiguration` - ThemeConfiguration for changing color pattern. Default value is `nil`
-* `localizationConfiguration` - LocalizationConfiguration for specifying localization customization. Default value is `nil`
+* `themeConfiguration` - ThemeConfiguration for changing color pattern. Default value is `nil`.
+* `localizationConfiguration` - LocalizationConfiguration for specifying localization customization. Default value is `nil`.

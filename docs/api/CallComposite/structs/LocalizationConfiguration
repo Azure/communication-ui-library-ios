@@ -14,7 +14,7 @@ A configuration to allow customizing localization.
 
 ### `init`
 
-Creates an instance of `LocalizationConfiguration` with related parameters. Allow overriding strings of [localization keys](../../../../AzureCommunicationUI/AzureCommunicationUI/Localization/en.lproj/Localizable.strings) with Localizable.strings file or other lozalizable filename.
+Creates an instance of `LocalizationConfiguration` with related parameters. Allow overriding strings of [localization keys](../../../../AzureCommunicationUI/AzureCommunicationUI/Localization/en.lproj/Localizable.strings) with Localizable.strings file or other localizable filename.
 
 ```swift
 public init(
@@ -24,8 +24,8 @@ public init(
 ```
 
 ### Parameters
-* `language` - String representing the locale code (ie. en, fr,  zh-Hant, zh-Hans, ...)
-* `localizableFilename` - Name of the localizable strings file to override predefined Call Composite's localization string or to provide localization for an unsupported language. The [key](../../../../AzureCommunicationUI/AzureCommunicationUI/Localization/en.lproj/Localizable.strings) of the string should be matched with the one in AzureCommunicationUI. Default value is `""` (empty strings)
+* `language` - String representing the locale code (ie. en, fr,  zh-Hant, zh-Hans, ...).
+* `localizableFilename` - Filename of the `.strings` file to override predefined Call Composite's localization key or to provide translation for an custom language. The keys of the string should match with the keys from AzureCommunicationUI [localization keys](../../../../AzureCommunicationUI/AzureCommunicationUI/Localization/en.lproj/Localizable.strings). Default value is `""`.
 * `isRightToLeft` - Boolean for mirroring layout for right-to-left. Default value is `false`.
 
 ### `init`
@@ -39,16 +39,17 @@ public init(
 ```
 
 ### Parameters
-* `language` - String representing the locale code (ie. en, fr,  zh-Hant, zh-Hans, ...)
-* `customTranslations` - A dictionary of key-value pairs to override override predefined Call Composite's localization string. The [key](../../../../AzureCommunicationUI/AzureCommunicationUI/Localization/en.lproj/Localizable.strings) of the string should be matched with the one in AzureCommunicationUI
+* `language` - String representing the locale code (ie. en, fr,  zh-Hant, zh-Hans, ...).
+* `customTranslations` - A dictionary of key-value pairs to override predefined AzureCommunicationUICalling's localization string. The keys of the string should match with the keys from AzureCommunicationUI [localization keys](../../../../AzureCommunicationUI/AzureCommunicationUI/Localization/en.lproj/Localizable.strings).
 * `isRightToLeft` - Boolean for mirroring layout for right-to-left. Default value is `false`.
 
-### `init`
+### `getSupportedLanguages`
+
+Get supported languages the AzureCommunicationUICalling has predefined translations.
 
 ```swift
 public static func getSupportedLanguages() -> [String]
 ```
-Get supported languages the Call Composite is localized to.
 
 ### Returns
-*  A list of language names for the locale codes that has predefined localized strings for.
+*  A list of language names for the locale codes that has predefined translation strings.

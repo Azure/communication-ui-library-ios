@@ -17,9 +17,9 @@ class LocalizationProviderTests: XCTestCase {
 
     func test_localizationProvider_isRightToLeft_when_applyRTLTrue_then_shouldRTLReturnTrue() {
         let sut = makeSUT()
-        let locale = "en"
+        let language = "en"
         let isRTL = true
-        let localeConfig = LocalizationConfiguration(locale: locale,
+        let localeConfig = LocalizationConfiguration(language: language,
                                                      isRightToLeft: isRTL)
         sut.apply(localeConfig: localeConfig)
         XCTAssertTrue(sut.isRightToLeft)
@@ -27,9 +27,9 @@ class LocalizationProviderTests: XCTestCase {
 
     func test_localizationProvider_isRightToLeft_when_applyRTLFalse_then_shouldRTLReturnFalse() {
         let sut = makeSUT()
-        let locale = "en"
+        let language = "en"
         let isRTL = false
-        let localeConfig = LocalizationConfiguration(locale: locale,
+        let localeConfig = LocalizationConfiguration(language: language,
                                                      isRightToLeft: isRTL)
         sut.apply(localeConfig: localeConfig)
         XCTAssertFalse(sut.isRightToLeft)
@@ -55,8 +55,8 @@ class LocalizationProviderTests: XCTestCase {
         let joinCallEn = "Join call"
         XCTAssertEqual(sut.getLocalizedString(key), joinCallEn)
 
-        let locale = "fr"
-        let localeConfig = LocalizationConfiguration(locale: locale)
+        let language = "fr"
+        let localeConfig = LocalizationConfiguration(language: language)
         sut.apply(localeConfig: localeConfig)
 
         XCTAssertNotEqual(sut.getLocalizedString(key), joinCallEn)
@@ -73,12 +73,12 @@ class LocalizationProviderTests: XCTestCase {
         let speakerEn = "Speaker"
         XCTAssertEqual(sut.getLocalizedString(customKey), speakerEn)
 
-        let locale = "en"
+        let language = "en"
         let customText = "Custom Speaker"
         let customTranslations: [String: String] = [
             customKey.rawValue: customText
         ]
-        let localeConfig = LocalizationConfiguration(locale: locale,
+        let localeConfig = LocalizationConfiguration(language: language,
                                                      customTranslations: customTranslations)
         sut.apply(localeConfig: localeConfig)
         XCTAssertEqual(sut.getLocalizedString(key), joinCallEn)
