@@ -21,6 +21,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     var previewAreaViewModel: PreviewAreaViewModel?
     var setupControlBarViewModel: SetupControlBarViewModel?
     var errorInfoViewModel: ErrorInfoViewModel?
+    var lobbyOverlayViewModel: LobbyOverlayViewModel?
     var audioDevicesListViewModel: AudioDevicesListViewModel?
     var primaryButtonViewModel: PrimaryButtonViewModel?
     var iconButtonViewModel: IconButtonViewModel?
@@ -101,6 +102,9 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     }
 
     // MARK: CallingViewModels
+    func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
+        return lobbyOverlayViewModel ?? LobbyOverlayViewModel(localizationProvider: LocalizationProviderMocking())
+    }
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel {

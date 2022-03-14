@@ -59,7 +59,7 @@ class CallingViewModel: ObservableObject {
     }
 
     func getLobbyOverlayViewModel() -> LobbyOverlayViewModel {
-        return LobbyOverlayViewModel(localizationProvider: localizationProvider)
+        return compositeViewModelFactory.makeLobbyOverlayViewModel()
     }
 
     // MARK: ConfirmLeaveOverlay
