@@ -34,9 +34,11 @@ class SetupViewModel: ObservableObject {
             isDisabled: false) {
                 store.dispatch(action: CallingAction.DismissSetup())
         }
-        self.dismissButtonViewModel.accessibilityLabel = "Back"
+        self.dismissButtonViewModel.update(accessibilityLabel: "Back")
 
         self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
+        self.errorInfoViewModel.update(dismissButtonAccessibilityLabel: "Dismiss Banner")
+        self.errorInfoViewModel.update(dismissButtonAccessibilityHint: "Dismisses this notification")
 
         self.joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
