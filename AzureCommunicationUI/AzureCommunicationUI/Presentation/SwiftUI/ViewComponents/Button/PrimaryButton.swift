@@ -11,11 +11,15 @@ struct PrimaryButton: View {
     private let height: CGFloat = 52
 
     var body: some View {
+        // accessibilityElement(children: .combine) is required because
+        // the CompositeButton is represented as a superview with subviews
         CompositeButton(buttonStyle: viewModel.buttonStyle,
                         buttonLabel: viewModel.buttonLabel,
                         iconName: viewModel.iconName)
             .onTapGesture(perform: viewModel.action)
             .frame(height: height)
             .disabled(viewModel.isDisabled)
+            .accessibilityElement(children: .combine)
+            .accessibility(label: Text(viewModel.accessibilityLabel ?? ""))
     }
 }

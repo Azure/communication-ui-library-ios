@@ -123,6 +123,7 @@ struct IconButton: View {
             .clipShape(RoundedCornersShape(radius: shapeCornerRadius, corners: roundedCorners))
             .accessibility(label: Text(viewModel.accessibilityLabel ?? ""))
             .accessibility(value: Text(viewModel.accessibilityValue ?? ""))
+            .accessibility(hint: Text(viewModel.accessibilityHint ?? ""))
         }
         .frame(width: tappableWidth,
                height: tappableHeight,
