@@ -76,7 +76,7 @@ struct SetupTitleView: View {
                     .accessibility(sortPriority: 0 )
                 HStack {
                     Spacer()
-                    Text(viewModel.getTitle())
+                    Text(viewModel.title)
                         .font(Fonts.headline.font)
                         .foregroundColor(Color(StyleProvider.color.onBackground))
                         .accessibility(addTraits: .isHeader)
