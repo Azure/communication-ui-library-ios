@@ -11,10 +11,25 @@ struct RemoteParticipantVideoViewId {
     let videoStreamIdentifier: String
 }
 
-class VideoViewManager {
+struct ParticipantRendererViewInfo {
+    let rendererView: UIView
+    let streamSize: CGSize
+}
+
+protocol RendererViewManager: AnyObject {
+    var didRenderFirstFrame: ((CGSize) -> Void)? { get set }
+
+    func getRemoteParticipantVideoRendererView
+    (_ videoViewId: RemoteParticipantVideoViewId) -> ParticipantRendererViewInfo?
+    func getRemoteParticipantVideoRendererViewSize() -> CGSize?
+}
+
+class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
+
     struct VideoStreamCache {
         var renderer: VideoStreamRenderer
         var rendererView: RendererView
+        var mediaStreamType: MediaStreamType
     }
     private let logger: Logger
     private var displayedRemoteParticipantsRendererView = MappedSequence<String, VideoStreamCache>()
@@ -68,7 +83,8 @@ class VideoViewManager {
                 withOptions: CreateViewOptions(scalingMode: .crop))
 
             let cache = VideoStreamCache(renderer: newRenderer,
-                                         rendererView: newRendererView)
+                                         rendererView: newRendererView,
+                                         mediaStreamType: videoStream.mediaStreamType)
             localRendererViews.append(forKey: videoStreamId,
                                       value: cache)
             return newRendererView
@@ -79,13 +95,21 @@ class VideoViewManager {
 
     }
 
-    func getRemoteParticipantVideoRendererView(_ videoViewId: RemoteParticipantVideoViewId) -> UIView? {
+    // MARK: ParticipantRendererViewManager
+
+    var didRenderFirstFrame: ((CGSize) -> Void)?
+
+    func getRemoteParticipantVideoRendererView(_ videoViewId: RemoteParticipantVideoViewId)
+                                                                -> ParticipantRendererViewInfo? {
         let videoStreamId = videoViewId.videoStreamIdentifier
         let userIdentifier = videoViewId.userIdentifier
         let cacheKey = generateCacheKey(userIdentifier: videoViewId.userIdentifier,
                                         videoStreamId: videoStreamId)
         if let videoStreamCache = displayedRemoteParticipantsRendererView.value(forKey: cacheKey) {
-            return videoStreamCache.rendererView
+            let streamSize = CGSize(width: Int(videoStreamCache.renderer.size.width),
+                              height: Int(videoStreamCache.renderer.size.height))
+            return ParticipantRendererViewInfo(rendererView: videoStreamCache.rendererView,
+                                               streamSize: streamSize)
         }
 
         guard let participant = callingSDKWrapper.getRemoteParticipant(userIdentifier),
@@ -101,17 +125,33 @@ class VideoViewManager {
             let newRendererView: RendererView = try newRenderer.createView(withOptions: options)
 
             let cache = VideoStreamCache(renderer: newRenderer,
-                                         rendererView: newRendererView)
+                                         rendererView: newRendererView,
+                                         mediaStreamType: videoStream.mediaStreamType)
             displayedRemoteParticipantsRendererView.append(forKey: cacheKey,
                                                            value: cache)
 
-            return newRendererView
+            if videoStream.mediaStreamType == .screenSharing {
+                newRenderer.delegate = self
+            }
+
+            return ParticipantRendererViewInfo(rendererView: newRendererView, streamSize: .zero)
         } catch let error {
             logger.error("Failed to render remote video, reason:\(error.localizedDescription)")
             return nil
         }
-
     }
+
+    func getRemoteParticipantVideoRendererViewSize() -> CGSize? {
+        if let screenShare = displayedRemoteParticipantsRendererView.first(where: { cache in
+            cache.mediaStreamType == .screenSharing
+        }) {
+            return CGSize(width: Int(screenShare.renderer.size.width), height: Int(screenShare.renderer.size.height))
+        }
+
+        return nil
+    }
+
+    // MARK: Helper functions
 
     private func disposeViews() {
         displayedRemoteParticipantsRendererView.makeKeyIterator().forEach { key in
@@ -125,6 +165,7 @@ class VideoViewManager {
     private func disposeRemoteParticipantVideoRendererView(_ cacheId: String) {
         if let renderer = displayedRemoteParticipantsRendererView.removeValue(forKey: cacheId) {
             renderer.renderer.dispose()
+            renderer.renderer.delegate = nil
         }
     }
 
@@ -136,5 +177,16 @@ class VideoViewManager {
 
     private func generateCacheKey(userIdentifier: String, videoStreamId: String) -> String {
         return ("\(userIdentifier):\(videoStreamId)")
+    }
+
+    // MARK: RendererDelegate
+
+    func videoStreamRenderer(didRenderFirstFrame renderer: VideoStreamRenderer) {
+        let size = CGSize(width: Int(renderer.size.width), height: Int(renderer.size.height))
+        didRenderFirstFrame?(size)
+    }
+
+    func videoStreamRenderer(didFailToStart renderer: VideoStreamRenderer) {
+        logger.error("Failed to render remote screenshare video. \(renderer)")
     }
 }

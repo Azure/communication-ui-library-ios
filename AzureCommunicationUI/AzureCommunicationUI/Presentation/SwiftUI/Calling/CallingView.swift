@@ -26,6 +26,7 @@ struct CallingView: View {
             }
         }
         .environment(\.screenSizeClass, getSizeClass())
+        .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
         .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveOverlayDisplayed) {
             ConfirmLeaveOverlayView(viewModel: viewModel)
@@ -64,7 +65,7 @@ struct CallingView: View {
                 viewModel.infoHeaderViewModel.toggleDisplayInfoHeader()
             })
             .modifier(PopupModalView(isPresented: viewModel.isLobbyOverlayDisplayed) {
-                LobbyOverlayView()
+                LobbyOverlayView(viewModel: viewModel.getLobbyOverlayViewModel())
             })
         }
     }

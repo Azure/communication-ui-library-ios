@@ -11,11 +11,13 @@ class PreviewAreaViewModelTests: XCTestCase {
     private var storeFactory: StoreFactoryMocking!
     private var factoryMocking: CompositeViewModelFactoryMocking!
     private var logger: LoggerMocking!
+    private var localizationProvider: LocalizationProvider!
 
     override func setUp() {
         super.setUp()
         storeFactory = StoreFactoryMocking()
         logger = LoggerMocking()
+        localizationProvider = AppLocalizationProvider(logger: logger)
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
                                                           store: storeFactory.store)
     }
@@ -33,7 +35,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let expectedIcon = CompositeIcon.micOff
         let expectedText = "Your audio is disabled. To enable, please go to Settings to allow access. You must enable audio to start this call."
 
-        XCTAssertTrue(sut.showPermissionWarning())
+        XCTAssertTrue(sut.isPermissionsDenied)
         XCTAssertEqual(sut.getPermissionWarningIcon(), expectedIcon)
         XCTAssertEqual(sut.getPermissionWarningText(), expectedText)
     }
@@ -51,7 +53,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let expectedIcon = CompositeIcon.videoOff
         let expectedText = "Your camera is disabled. To enable, please go to Settings to allow access."
 
-        XCTAssertTrue(sut.showPermissionWarning())
+        XCTAssertTrue(sut.isPermissionsDenied)
         XCTAssertEqual(sut.getPermissionWarningIcon(), expectedIcon)
         XCTAssertEqual(sut.getPermissionWarningText(), expectedText)
     }
@@ -69,7 +71,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let expectedIcon = CompositeIcon.warning
         let expectedText = "Your camera and audio are disabled. To enable, please go to Settings to allow access. You must enable audio to start this call."
 
-        XCTAssertTrue(sut.showPermissionWarning())
+        XCTAssertTrue(sut.isPermissionsDenied)
         XCTAssertEqual(sut.getPermissionWarningIcon(), expectedIcon)
         XCTAssertEqual(sut.getPermissionWarningText(), expectedText)
     }
@@ -84,7 +86,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
 
-        XCTAssertFalse(sut.showPermissionWarning())
+        XCTAssertFalse(sut.isPermissionsDenied)
     }
 
     func test_previewAreaViewModel_when_cameraAndAudioPermissionsGranted_then_shouldHideWarning() {
@@ -97,7 +99,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
 
-        XCTAssertFalse(sut.showPermissionWarning())
+        XCTAssertFalse(sut.isPermissionsDenied)
     }
 
     func test_previewAreaViewModel_when_permissionWarningHidden_cameraOff_then_showAvatar() {
@@ -110,7 +112,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
 
-        XCTAssertFalse(sut.showPermissionWarning())
+        XCTAssertFalse(sut.isPermissionsDenied)
     }
 
     func test_previewAreaViewModel_when_permissionWarningHidden_cameraOn_then_showVideoRender() {
@@ -123,7 +125,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
 
-        XCTAssertFalse(sut.showPermissionWarning())
+        XCTAssertFalse(sut.isPermissionsDenied)
     }
 
     func test_previewAreaViewModel_update_when_statesUpdated_then_localVideoViewModelUpdated() {
@@ -145,6 +147,7 @@ class PreviewAreaViewModelTests: XCTestCase {
 extension PreviewAreaViewModelTests {
     func makeSUT() -> PreviewAreaViewModel {
         return PreviewAreaViewModel(compositeViewModelFactory: factoryMocking,
-                                    dispatchAction: storeFactory.store.dispatch)
+                                    dispatchAction: storeFactory.store.dispatch,
+                                    localizationProvider: localizationProvider)
     }
 }

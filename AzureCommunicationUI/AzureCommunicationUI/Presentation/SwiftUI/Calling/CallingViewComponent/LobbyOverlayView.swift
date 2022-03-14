@@ -8,8 +8,7 @@ import FluentUI
 import Combine
 
 struct LobbyOverlayView: View {
-    let title: String = "Waiting for host"
-    let subtitle: String = "Someone in the meeting will let you in soon"
+    let viewModel: LobbyOverlayViewModel
 
     private let layoutSpacing: CGFloat = 24
     private let iconImageSize: CGFloat = 24
@@ -19,9 +18,9 @@ struct LobbyOverlayView: View {
             .overlay(
                 VStack(spacing: layoutSpacing) {
                     Icon(name: .clock, size: iconImageSize)
-                    Text(title)
+                    Text(viewModel.title)
                         .font(Fonts.headline.font)
-                    Text(subtitle)
+                    Text(viewModel.subtitle)
                         .font(Fonts.subhead.font)
                 })
     }

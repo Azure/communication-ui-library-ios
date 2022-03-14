@@ -14,6 +14,7 @@ class BannerTextViewModelMocking: BannerTextViewModel {
 
     init(updateBannerInfoType: ((BannerInfoType?) -> Void)? = nil) {
         self.updateBannerInfoType = updateBannerInfoType
+        super.init(localizationProvider: LocalizationProviderMocking())
     }
 
     override func update(bannerInfoType: BannerInfoType?) {

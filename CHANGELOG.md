@@ -4,8 +4,9 @@
 
 ### New Features
 - Update joining experience in setup view. [#44](https://github.com/Azure/communication-ui-library-ios/pull/44)
+- Support pinch & zoom, pan and double tap to zoom in screen share presentation. [#29](https://github.com/Azure/communication-ui-library-ios/pull/29)
 - Update audio device selection list when connected to bluetooth/headphones. [#56](https://github.com/Azure/communication-ui-library-ios/pull/56)
-- Localization support 
+- Implemented Localization support for 13 languages and right-to-left mirror layout. [#73](https://github.com/Azure/communication-ui-library-ios/pull/73) 
  
 ### Breaking Changes
 

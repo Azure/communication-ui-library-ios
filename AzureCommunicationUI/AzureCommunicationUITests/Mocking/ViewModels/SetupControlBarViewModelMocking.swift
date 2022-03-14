@@ -8,6 +8,7 @@ import Foundation
 
 class SetupControlBarViewModelMocking: SetupControlBarViewModel {
     private let updateState: ((LocalUserState, PermissionState, CallingState) -> Void)?
+    var updateIsJoinRequested: ((Bool) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
@@ -18,12 +19,17 @@ class SetupControlBarViewModelMocking: SetupControlBarViewModel {
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
                    dispatchAction: dispatchAction,
-                   localUserState: localUserState)
+                   localUserState: localUserState,
+                   localizationProvider: LocalizationProviderMocking())
     }
 
     override func update(localUserState: LocalUserState,
                          permissionState: PermissionState,
                          callingState: CallingState) {
         updateState?(localUserState, permissionState, callingState)
+    }
+
+    override func update(isJoinRequested: Bool) {
+        updateIsJoinRequested?(isJoinRequested)
     }
 }

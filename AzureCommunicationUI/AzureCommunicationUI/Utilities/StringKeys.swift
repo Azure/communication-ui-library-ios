@@ -16,6 +16,7 @@ enum StringKey: String {
 
     /* SetupView */
     case joinCall = "AzureCommunicationUI.SetupView.Button.JoinCall"
+    case joiningCall = "AzureCommunicationUI.SetupView.Button.JoiningCall"
     case videoOff = "AzureCommunicationUI.SetupView.Button.VideoOff"
     case videoOn = "AzureCommunicationUI.SetupView.Button.VideoOn"
     case micOff = "AzureCommunicationUI.SetupView.Button.MicOff"
@@ -37,7 +38,7 @@ enum StringKey: String {
 
     case unnamedParticipant = "AzureCommunicationUI.CallingView.ParticipantDrawer.Unnamed"
     // %@ is local participant name
-    case localeParticipant =
+    case localeParticipantWithSuffix =
             "AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"
 
     case leaveCall = "AzureCommunicationUI.CallingView.Overlay.LeaveCall"
@@ -58,7 +59,7 @@ enum StringKey: String {
             "AzureCommunicationUI.CallingView.BannerTitle.RecordingStoppedStillTranscribing"
     case bannerTitleRecordingStopped =
             "AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"
-    case bannerTitleRecordingAndTranscriptionStopped =
+    case bannerTitleRecordingAndTranscribingStopped =
             "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"
 
     /* ComplianceBanner body */

@@ -14,7 +14,8 @@ class PreviewAreaViewModelMocking: PreviewAreaViewModel {
          updateState: ((LocalUserState, PermissionState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
-                   dispatchAction: dispatchAction)
+                   dispatchAction: dispatchAction,
+                   localizationProvider: LocalizationProviderMocking())
     }
 
     override func update(localUserState: LocalUserState, permissionState: PermissionState) {

@@ -12,10 +12,14 @@ class AudioDevicesListViewModel: ObservableObject {
     private var audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus
     private var previousConnectedDevice: AudioDeviceType?
     private let dispatch: ActionDispatch
+    private let localizationProvider: LocalizationProvider
 
-    init(dispatchAction: @escaping ActionDispatch, localUserState: LocalUserState) {
+    init(dispatchAction: @escaping ActionDispatch,
+         localUserState: LocalUserState,
+         localizationProvider: LocalizationProvider) {
         self.dispatch = dispatchAction
         self.audioDeviceStatus = localUserState.audioState.device
+        self.localizationProvider = localizationProvider
     }
 
     func update(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) {
@@ -70,10 +74,20 @@ class AudioDevicesListViewModel: ObservableObject {
         let action = LocalUserAction.AudioDeviceChangeRequested(device: audioDeviceType)
         let audioDeviceOption = AudioDevicesListCellViewModel(
             icon: getAudioDeviceIcon(audioDeviceType),
-            title: audioDeviceType.name,
+            title: getAudioDeviceTitle(audioDeviceType),
             isSelected: isSelected,
             onSelected: { [weak self] in self?.dispatch(action) })
         return audioDeviceOption
+    }
+
+    private func getAudioDeviceTitle(_ audioDeviceType: AudioDeviceType) -> String {
+        switch audioDeviceType {
+        case .bluetooth:
+            return audioDeviceType.getBluetoothName() ?? localizationProvider
+                .getLocalizedString(audioDeviceType.name)
+        default:
+            return localizationProvider.getLocalizedString(audioDeviceType.name)
+        }
     }
 
     private func getAudioDeviceIcon(_ audioDeviceType: AudioDeviceType) -> CompositeIcon {
