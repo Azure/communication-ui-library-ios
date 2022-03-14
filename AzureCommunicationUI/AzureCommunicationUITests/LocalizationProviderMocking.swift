@@ -8,9 +8,9 @@ import Foundation
 
 class LocalizationProviderMocking: LocalizationProvider {
     var isApplyCalled: Bool = false
-    var isGetSupportedLanguages: Bool = false
-    var isGetLocalizedString: Bool = false
-    var isGetLocalizedStringWithArgs: Bool = false
+    var isGetSupportedLanguagesCalled: Bool = false
+    var isGetLocalizedStringCalled: Bool = false
+    var isGetLocalizedStringWithArgsCalled: Bool = false
 
     var isRightToLeft: Bool {
         return false
@@ -21,17 +21,17 @@ class LocalizationProviderMocking: LocalizationProvider {
     }
 
     func getSupportedLanguages() -> [String] {
-        isGetSupportedLanguages = true
+        isGetSupportedLanguagesCalled = true
         return ["en"]
     }
 
     func getLocalizedString(_ key: StringKey) -> String {
-        isGetLocalizedString = true
+        isGetLocalizedStringCalled = true
         return key.rawValue
     }
 
     func getLocalizedString(_ key: StringKey, _ args: CVarArg...) -> String {
-        isGetLocalizedStringWithArgs = true
+        isGetLocalizedStringWithArgsCalled = true
         return key.rawValue
     }
 }

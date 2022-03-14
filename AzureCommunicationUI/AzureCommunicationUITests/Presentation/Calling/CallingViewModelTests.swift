@@ -8,10 +8,18 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class CallingViewModelTests: XCTestCase {
-    var cancellable = CancelBag()
-    var logger = LoggerMocking()
+    var cancellable: CancelBag!
+    var logger: LoggerMocking!
+    var localizationProvider: LocalizationProviderMocking!
 
     private let timeout: TimeInterval = 10.0
+
+    override func setUp() {
+        super.setUp()
+        logger = LoggerMocking()
+        cancellable = CancelBag()
+        localizationProvider = LocalizationProviderMocking()
+    }
 
     func test_callingViewModel_getLeaveCallButtonViewModel_shouldReturnPrimaryButtonViewModel() {
         let sut = makeSUT()
@@ -27,6 +35,15 @@ class CallingViewModelTests: XCTestCase {
         let expectedButtonLabel = "Cancel"
 
         XCTAssertEqual(cancelButtonViewModel.buttonLabel, expectedButtonLabel)
+    }
+
+    func test_callingViewModel_leaveCallButtonLabel_from_LocalizationMocking() {
+        let sut = makeSUTLocalizationMocking()
+        let leaveCallButtonViewModel = sut.getLeaveCallButtonViewModel()
+        let expectedButtonLabelKey = "AzureCommunicationUI.CallingView.Overlay.LeaveCall"
+
+        XCTAssertEqual(leaveCallButtonViewModel.buttonLabel, expectedButtonLabelKey)
+        XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
     }
 
     func test_callingViewModel_displayConfirmLeaveOverlay_when_isConfirmLeaveOverlayDisplayedFalse_shouldBecomeTrue() {
@@ -184,7 +201,16 @@ extension CallingViewModelTests {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
-                                localizationProvider: AppLocalizationProvider(logger: logger))
+                                localizationProvider: AppLocalizationProvider(logger: LoggerMocking()))
+    }
+
+    func makeSUTLocalizationMocking(storeFactory: StoreFactoryMocking = StoreFactoryMocking()) -> CallingViewModel {
+        let logger = LoggerMocking()
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        return CallingViewModel(compositeViewModelFactory: factoryMocking,
+                                logger: logger,
+                                store: storeFactory.store,
+                                localizationProvider: localizationProvider)
     }
 
     func makeSUT(updateControlBarViewModel: @escaping ((LocalUserState, PermissionState) -> Void)) -> CallingViewModel {
