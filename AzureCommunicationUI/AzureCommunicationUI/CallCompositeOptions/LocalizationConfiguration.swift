@@ -31,7 +31,7 @@ public struct LocalizationConfiguration {
 
     /// Creates an instance of `LocalizationConfiguration` with related parameters. Allow
     /// overriding strings of localization keys with dictionary.
-    /// - Parameter language: String representing the locale code (ie. en, fr, zh-Hant, zh-Hans, ...).
+    /// - Parameter languageCode: String representing the locale code (ie. en, fr, zh-Hant, zh-Hans, ...).
     /// - Parameter customTranslations: A dictionary of key-value pairs to override
     ///  predefined AzureCommunicationUICalling's localization string. The keys of the string
     ///  should match with the keys from AzureCommunicationUI localization keys.
