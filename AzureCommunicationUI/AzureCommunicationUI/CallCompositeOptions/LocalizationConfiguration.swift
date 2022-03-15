@@ -6,24 +6,24 @@ import Foundation
 import SwiftUI
 
 public struct LocalizationConfiguration {
-    let language: String
+    let languageCode: String
     let localizableFilename: String
     let customTranslations: [String: String]
     let isRightToLeft: Bool
 
     /// Creates an instance of `LocalizationConfiguration` with related parameters. Allow
     /// overriding strings of localization keys with Localizable.strings file or other localizable filename.
-    /// - Parameter language: String representing the locale code (ie. en, fr, zh-Hant, zh-Hans, ...).
+    /// - Parameter languageCode: String representing the locale code (ie. en, fr, zh-Hant, zh-Hans, ...).
     /// - Parameter localizableFilename: Filename of the `.strings` file to override predefined
     ///  Call Composite's localization key or to provide translation for an custom language.
     ///  The keys of the string should match with the keys from AzureCommunicationUI
     ///  localization keys. Default value is `""`.
     /// - Parameter isRightToLeft: Boolean for mirroring layout for right-to-left.
     ///  Default value is `false`.
-    public init(language: String,
+    public init(languageCode: String,
                 localizableFilename: String = "",
                 isRightToLeft: Bool = false) {
-        self.language = language
+        self.languageCode = languageCode
         self.localizableFilename = localizableFilename
         self.customTranslations = [:]
         self.isRightToLeft = isRightToLeft
@@ -37,10 +37,10 @@ public struct LocalizationConfiguration {
     ///  should match with the keys from AzureCommunicationUI localization keys.
     /// - Parameter isRightToLeft: Boolean for mirroring layout for right-to-left.
     ///  Default value is `false`.
-    public init(language: String,
+    public init(languageCode: String,
                 customTranslations: [String: String],
                 isRightToLeft: Bool = false) {
-        self.language = language
+        self.languageCode = languageCode
         self.localizableFilename = ""
         self.customTranslations = customTranslations
         self.isRightToLeft = isRightToLeft

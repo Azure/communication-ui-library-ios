@@ -47,7 +47,7 @@ struct SettingsView: View {
             HStack {
                 Text("Language: ")
                 Spacer()
-                Button("\(envConfigSubject.language)") {
+                Button("\(envConfigSubject.languageCode)") {
                     self.isLocalePickerDisplayed.toggle()
                 }
                 .padding(.horizontal, horizontalPadding)

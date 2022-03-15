@@ -30,7 +30,7 @@ class EnvConfigSubject: ObservableObject {
 
     @Published var selectedAcsTokenType: ACSTokenType = .token
     @Published var selectedMeetingType: MeetingType = .groupCall
-    @Published var language: String = "en"
+    @Published var languageCode: String = "en"
     @Published var isRightToLeft: Bool = false
 
     func update(from dic: [String: String]) {

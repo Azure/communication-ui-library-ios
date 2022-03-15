@@ -120,7 +120,7 @@ extension SwiftUIDemoView {
     func startCallComposite() {
         let link = getMeetingLink()
 
-        let localizationConfig = LocalizationConfiguration(language: envConfigSubject.language,
+        let localizationConfig = LocalizationConfiguration(languageCode: envConfigSubject.languageCode,
                                                            isRightToLeft: envConfigSubject.isRightToLeft)
         let callCompositeOptions = CallCompositeOptions(themeConfiguration: Theming(),
                                                         localizationConfiguration: localizationConfig)
