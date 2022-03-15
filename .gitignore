@@ -55,7 +55,7 @@ playground.xcworkspace
 # https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
 #
 # Pods/
-AzureCommunicationUICalling/Pods/
+AzureCommunicationUI/AzureCommunicationUICalling/AzureCommunicationUICalling/Pods/
 #
 # Add this line if you want to avoid checking in source code from the Xcode workspace
 # *.xcworkspace
@@ -94,5 +94,5 @@ iOSInjectionProject/
 .DS_Store
 
 #AppCode
-AzureCommunicationUICalling/.idea
-AzureCommunicationUICalling/AzureCommunicationUICallingDemoApp/EnvConfig.xcconfig
+AzureCommunicationUI/AzureCommunicationUICalling/AzureCommunicationUICalling/.idea
+AzureCommunicationUI/AzureCommunicationUICalling/AzureCommunicationUICalling/AzureCommunicationUICallingDemoApp/EnvConfig.xcconfig
