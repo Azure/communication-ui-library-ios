@@ -26,7 +26,7 @@ struct SettingsView: View {
                 localizationSettings
                 Spacer()
             }
-            LocalePicker(selection: $envConfigSubject.language,
+            LocalePicker(selection: $envConfigSubject.languageCode,
                          isShowing: $isLocalePickerDisplayed)
                 .animation(.linear)
                 .offset(y: isLocalePickerDisplayed ? 0 : UIScreen.main.bounds.height)
