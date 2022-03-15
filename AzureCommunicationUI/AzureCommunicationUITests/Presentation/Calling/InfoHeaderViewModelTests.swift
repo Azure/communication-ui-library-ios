@@ -197,7 +197,8 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.toggleDisplayInfoHeaderIfNeeded()
         XCTAssertFalse(sut.isInfoHeaderDisplayed)
         accessibilityProvider.isVoiceOverEnabled = true
-        sut.didChangeVoiceOverStatus(NSNotification())
+        sut.didChangeVoiceOverStatus(NSNotification(name: UIAccessibility.voiceOverStatusDidChangeNotification,
+                                                    object: nil))
         XCTAssertTrue(sut.isInfoHeaderDisplayed)
     }
 }
