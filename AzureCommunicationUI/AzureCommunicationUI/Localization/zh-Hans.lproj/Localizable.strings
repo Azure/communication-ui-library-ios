@@ -8,9 +8,12 @@
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="扬声器";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPhone"="iPhone";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPad"="iPad";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Headphones"="耳机";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="蓝牙";
 
 /* SetupView */
 "AzureCommunicationUI.SetupView.Button.JoinCall"="加入通话";
+"AzureCommunicationUI.SetupView.Button.JoiningCall"="正在加入通话...";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="视频关闭";
 "AzureCommunicationUI.SetupView.Button.VideoOn"="视频开启";
 "AzureCommunicationUI.SetupView.Button.MicOff"="关闭麦克风";
@@ -21,7 +24,7 @@
 "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="你的音频已禁用。若要启用，请转到“设置”以允许访问。必须启用音频才能开始此通话。";
 
 /* LobbyView */
-"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="正在等待主机";
+"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="正在等待主机"; // host (people not server) of a meeting
 "AzureCommunicationUI.LobbyView.Text.WaitingDetails"="会议中的某人将很快允许你加入";
 
 /* CallingView */

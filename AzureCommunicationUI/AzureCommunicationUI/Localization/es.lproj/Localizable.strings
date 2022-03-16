@@ -8,29 +8,32 @@
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="Altavoz";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPhone"="iPhone";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPad"="iPad";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Headphones"="Auriculares";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
 
 /* SetupView */
 "AzureCommunicationUI.SetupView.Button.JoinCall"="Unirse a la llamada";
+"AzureCommunicationUI.SetupView.Button.JoiningCall"="Uniéndose a la llamada…";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="Vídeo desactivado";
 "AzureCommunicationUI.SetupView.Button.VideoOn"="Vídeo activado";
-"AzureCommunicationUI.SetupView.Button.MicOff"="Micro desactivado";
-"AzureCommunicationUI.SetupView.Button.MicOn"="Micro activado";
+"AzureCommunicationUI.SetupView.Button.MicOff"="Micrófono desactivado";
+"AzureCommunicationUI.SetupView.Button.MicOn"="Micrófono activado";
 "AzureCommunicationUI.SetupView.Button.Device"="Dispositivo";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="La cámara está deshabilitada. Para habilitarla, ve a Configuración para permitir el acceso.";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="La cámara y el audio están deshabilitados. Para habilitarla, ve a Configuración para permitir el acceso. Debe habilitar el audio para iniciar esta llamada.";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="El audio está deshabilitado. Para habilitarla, ve a Configuración para permitir el acceso. Debe habilitar el audio para iniciar esta llamada.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Su cámara está deshabilitada. Para habilitarla, vaya a Configuración para permitir el acceso.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="Su cámara y su audio están deshabilitados. Para habilitarlos, vaya a Configuración para permitir el acceso. Debe habilitar el audio para iniciar esta llamada.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="Su audio está deshabilitado. Para habilitarlo, vaya a Configuración para permitir el acceso. Debe habilitar el audio para iniciar esta llamada.";
 
 /* LobbyView */
-"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="Esperando al host";
-"AzureCommunicationUI.LobbyView.Text.WaitingDetails"="Alguien en la reunión le permitirá entrar pronto";
+"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="Esperando al anfitrión"; // host (people not server) of a meeting
+"AzureCommunicationUI.LobbyView.Text.WaitingDetails"="Algún participante de la reunión debería permitirle acceder pronto";
 
 /* CallingView */
 "AzureCommunicationUI.CallingView.InfoHeader.WaitingForOthersToJoin"="Esperando a que se unan otros usuarios";
-"AzureCommunicationUI.CallingView.InfoHeader.CallWith1Person"="Llamar con 1 persona";
-"AzureCommunicationUI.CallingView.InfoHeader.CallWithNPeople"="Llamar con %d personas"; // %d is for number of people in call
+"AzureCommunicationUI.CallingView.InfoHeader.CallWith1Person"="Llamada con 1 persona";
+"AzureCommunicationUI.CallingView.InfoHeader.CallWithNPeople"="Llamada con %d personas"; // %d is for number of people in call
 
 "AzureCommunicationUI.CallingView.ParticipantDrawer.Unnamed"="Participante sin nombre";
-"AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"="%@ (tú)"; // %@ is local participant name
+"AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"="%@ (usted)"; // %@ is local participant name
 
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Abandonar llamada";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="Cancelar";

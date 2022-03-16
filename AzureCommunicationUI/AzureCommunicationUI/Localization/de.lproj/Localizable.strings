@@ -8,24 +8,27 @@
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="Lautsprecher";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPhone"="iPhone";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPad"="iPad";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Headphones"="Kopfhörer";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
 
 /* SetupView */
 "AzureCommunicationUI.SetupView.Button.JoinCall"="An Anruf teilnehmen";
+"AzureCommunicationUI.SetupView.Button.JoiningCall"="Teilnehmen am Anruf…";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="Video aus";
 "AzureCommunicationUI.SetupView.Button.VideoOn"="Video ein";
 "AzureCommunicationUI.SetupView.Button.MicOff"="Mikro deaktiviert";
 "AzureCommunicationUI.SetupView.Button.MicOn"="Mikro ein";
 "AzureCommunicationUI.SetupView.Button.Device"="Gerät";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Ihre Kamera ist deaktiviert. Um dies zu aktivieren, wechseln Sie zu \"Einstellungen\", um den Zugriff zuzulassen.";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="Kamera und Audio sind deaktiviert. Um dies zu aktivieren, wechseln Sie zu \"Einstellungen\", um den Zugriff zuzulassen. Sie müssen Audio aktivieren, um diesen Anruf zu starten.";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="Ihr Audio ist deaktiviert. Um dies zu aktivieren, wechseln Sie zu \"Einstellungen\", um den Zugriff zuzulassen. Sie müssen Audio aktivieren, um diesen Anruf zu starten.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Ihre Kamera ist deaktiviert. Um sie zu aktivieren, wechseln Sie bitte zu „Einstellungen“, um den Zugriff zuzulassen.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="Kamera und Audio sind deaktiviert. Um sie zu aktivieren, wechseln Sie bitte zu „Einstellungen“, um den Zugriff zuzulassen. Sie müssen Audio aktivieren, um diesen Anruf zu starten.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="Ihr Audio ist deaktiviert. Um es zu aktivieren, wechseln Sie bitte zu „Einstellungen“, um den Zugriff zuzulassen. Sie müssen Audio aktivieren, um diesen Anruf zu starten.";
 
 /* LobbyView */
-"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="Warten auf Host";
-"AzureCommunicationUI.LobbyView.Text.WaitingDetails"="Jemand in der Besprechung wird Sie in Kürze einlassen";
+"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="Warten auf Host"; // host (people not server) of a meeting
+"AzureCommunicationUI.LobbyView.Text.WaitingDetails"="Ein Teilnehmer der Besprechung wird Sie in Kürze einlassen";
 
 /* CallingView */
-"AzureCommunicationUI.CallingView.InfoHeader.WaitingForOthersToJoin"="Auf weitere Teilnehmer wartend";
+"AzureCommunicationUI.CallingView.InfoHeader.WaitingForOthersToJoin"="Warten auf andere Teilnehmer";
 "AzureCommunicationUI.CallingView.InfoHeader.CallWith1Person"="Anruf mit 1 Person";
 "AzureCommunicationUI.CallingView.InfoHeader.CallWithNPeople"="Anruf mit %d Personen"; // %d is for number of people in call
 
@@ -55,7 +58,7 @@
 
 /* ComplianceBanner display link */
 "AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"="Datenschutzrichtlinie";
-"AzureCommunicationUI.CallingView.BannerLink.LearnMore"="Weitere Informationen";
+"AzureCommunicationUI.CallingView.BannerLink.LearnMore"="Mehr erfahren";
 
 /* PopUp warning */
 "AzureCommunicationUI.SnackBar.Button.Dismiss"="Schließen";

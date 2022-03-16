@@ -5,24 +5,27 @@
 
 /* Devices */
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iOS"="iOS";
-"AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="Luidspreker";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="Spreker";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPhone"="iPhone";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPad"="iPad";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Headphones"="Hoofdtelefoon";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
 
 /* SetupView */
 "AzureCommunicationUI.SetupView.Button.JoinCall"="Deelnemen aan gesprek";
+"AzureCommunicationUI.SetupView.Button.JoiningCall"="Deelnemen aan gesprek…";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="Video uit";
 "AzureCommunicationUI.SetupView.Button.VideoOn"="Video aan";
 "AzureCommunicationUI.SetupView.Button.MicOff"="Microfoon uit";
 "AzureCommunicationUI.SetupView.Button.MicOn"="Microfoon aan";
 "AzureCommunicationUI.SetupView.Button.Device"="Apparaat";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Uw camera is uitgeschakeld. Als u deze functie wilt inschakelen, gaat u naar Instellingen om toegang toe te staan.";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="Uw camera en audio zijn uitgeschakeld. Als u deze functie wilt inschakelen, gaat u naar Instellingen om toegang toe te staan. U moet audio inschakelen om dit gesprek te starten.";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="Uw audio is uitgeschakeld. Als u deze functie wilt inschakelen, gaat u naar Instellingen om toegang toe te staan. U moet audio inschakelen om dit gesprek te starten.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Uw camera is uitgeschakeld. Als u deze wilt inschakelen, gaat u naar Instellingen om toegang toe te staan.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="Uw camera en audio zijn uitgeschakeld. Als u deze wilt inschakelen, gaat u naar Instellingen om toegang toe te staan. U moet audio inschakelen om dit gesprek te starten.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="Uw audio is uitgeschakeld. Als u deze wilt inschakelen, gaat u naar Instellingen om toegang toe te staan. U moet audio inschakelen om dit gesprek te starten.";
 
 /* LobbyView */
-"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="Wachten op host";
-"AzureCommunicationUI.LobbyView.Text.WaitingDetails"="Iemand in de vergadering geeft u binnenkort toegang";
+"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="Wachten op host"; // host (people not server) of a meeting
+"AzureCommunicationUI.LobbyView.Text.WaitingDetails"="Iemand in de vergadering laat u binnenkort binnen";
 
 /* CallingView */
 "AzureCommunicationUI.CallingView.InfoHeader.WaitingForOthersToJoin"="Wachten tot anderen deelnemen";
@@ -58,7 +61,7 @@
 "AzureCommunicationUI.CallingView.BannerLink.LearnMore"="Meer informatie";
 
 /* PopUp warning */
-"AzureCommunicationUI.SnackBar.Button.Dismiss"="Negeren";
+"AzureCommunicationUI.SnackBar.Button.Dismiss"="Sluiten";
 "AzureCommunicationUI.SnackBar.Text.ErrorCallJoin"="Kan niet deelnemen aan de oproep vanwege een fout.";
 "AzureCommunicationUI.SnackBar.Text.ErrorCallEnd"="U bent uit de oproep verwijderd vanwege een fout.";
-"AzureCommunicationUI.SnackBar.Text.Error"="Er is een fout opgetreden";
+"AzureCommunicationUI.SnackBar.Text.Error"="Er is een fout opgetreden.";
