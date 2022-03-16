@@ -26,7 +26,7 @@ struct SettingsView: View {
                 localizationSettings
                 Spacer()
             }
-            LocalePicker(selection: $envConfigSubject.locale,
+            LocalePicker(selection: $envConfigSubject.languageCode,
                          isShowing: $isLocalePickerDisplayed)
                 .animation(.linear)
                 .offset(y: isLocalePickerDisplayed ? 0 : UIScreen.main.bounds.height)
@@ -47,7 +47,7 @@ struct SettingsView: View {
             HStack {
                 Text("Language: ")
                 Spacer()
-                Button("\(envConfigSubject.locale)") {
+                Button("\(envConfigSubject.languageCode)") {
                     self.isLocalePickerDisplayed.toggle()
                 }
                 .padding(.horizontal, horizontalPadding)
