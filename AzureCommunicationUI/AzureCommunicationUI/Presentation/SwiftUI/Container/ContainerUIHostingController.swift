@@ -30,6 +30,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
         self.environmentProperties = environmentProperties
         super.init(rootView: environmentRoot)
         subscribeEnvironmentProperties(containerView: rootView)
+        haltSetupViewOrientation(containerView: rootView)
     }
 
     @objc required dynamic init?(coder aDecoder: NSCoder) {
@@ -71,6 +72,13 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
             .sink(receiveValue: { isEnable in
                 UIDevice.current.toggleProximityMonitoringStatus(isEnabled: isEnable)
             }).store(in: cancelBag)
+    }
+
+    private func haltSetupViewOrientation(containerView: ContainerView) {
+        if containerView.router.currentView == .setupView,
+           UIDevice.current.isGeneratingDeviceOrientationNotifications {
+            UIDevice.current.endGeneratingDeviceOrientationNotifications()
+        }
     }
 
     private func resetUIDeviceSetup() {
