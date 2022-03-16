@@ -12,6 +12,7 @@ struct LobbyOverlayView: View {
 
     private let layoutSpacing: CGFloat = 24
     private let iconImageSize: CGFloat = 24
+    private let horizontalPaddingSize: CGFloat = 16
 
     var body: some View {
         Color(StyleProvider.color.overlay)
@@ -22,6 +23,8 @@ struct LobbyOverlayView: View {
                         .font(Fonts.headline.font)
                     Text(viewModel.subtitle)
                         .font(Fonts.subhead.font)
+                        .multilineTextAlignment(.center)
                 })
+            .padding(.horizontal, horizontalPaddingSize)
     }
 }
