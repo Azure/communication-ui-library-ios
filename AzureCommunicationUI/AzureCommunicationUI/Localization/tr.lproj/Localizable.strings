@@ -8,20 +8,23 @@
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="Konuşmacı";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPhone"="iPhone";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPad"="iPad";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Headphones"="Kulaklık";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
 
 /* SetupView */
 "AzureCommunicationUI.SetupView.Button.JoinCall"="Aramaya katıl";
+"AzureCommunicationUI.SetupView.Button.JoiningCall"="Aramaya katılıyor...";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="Görüntü kapalı";
 "AzureCommunicationUI.SetupView.Button.VideoOn"="Görüntü açık";
 "AzureCommunicationUI.SetupView.Button.MicOff"="Mikrofon kapalı";
 "AzureCommunicationUI.SetupView.Button.MicOn"="Mikrofon açık";
 "AzureCommunicationUI.SetupView.Button.Device"="Cihaz";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Kameranız devre dışı bırakıldı. Etkinleştirmek için, erişime izin vermek için lütfen Ayarlar'a gidin.";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="Kameranız ve sesiniz devre dışı bırakıldı. Etkinleştirmek için, erişime izin vermek için lütfen Ayarlar'a gidin. Bu aramayı başlatmak için sesi etkinleştirmeniz gerekir.";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="Sesiniz devre dışı bırakıldı. Etkinleştirmek için, erişime izin vermek için lütfen Ayarlar'a gidin. Bu aramayı başlatmak için sesi etkinleştirmeniz gerekir.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Kameranız devre dışı. Etkinleştirmek için Ayarlar seçeneğine giderek erişime izin verin.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="Kameranız ve sesiniz devre dışı. Etkinleştirmek için Ayarlar seçeneğine giderek erişime izin verin. Bu aramayı başlatmak için sesi etkinleştirmeniz gerekiyor.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="Sesiniz devre dışı. Etkinleştirmek için Ayarlar seçeneğine giderek erişime izin verin. Bu aramayı başlatmak için sesi etkinleştirmeniz gerekiyor.";
 
 /* LobbyView */
-"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="Oturum sahibi bekleniyor";
+"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="Oturum sahibi bekleniyor"; // host (people not server) of a meeting
 "AzureCommunicationUI.LobbyView.Text.WaitingDetails"="Katılımcılardan biri sizi kısa süre sonra toplantıya alacak";
 
 /* CallingView */

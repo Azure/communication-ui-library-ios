@@ -8,9 +8,12 @@
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="Speaker";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPhone"="iPhone";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPad"="iPad";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Headphones"="Headphones";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
 
 /* SetupView */
 "AzureCommunicationUI.SetupView.Button.JoinCall"="Join call";
+"AzureCommunicationUI.SetupView.Button.JoiningCall"="Joining calling...";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="Video off";
 "AzureCommunicationUI.SetupView.Button.VideoOn"="Video on";
 "AzureCommunicationUI.SetupView.Button.MicOff"="Mic off";
@@ -21,7 +24,7 @@
 "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="Your audio is disabled. To enable, please go to Settings to allow access. You must enable audio to start this call.";
 
 /* LobbyView */
-"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="Waiting for host";
+"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="Waiting for host"; // host (people not server) of a meeting
 "AzureCommunicationUI.LobbyView.Text.WaitingDetails"="Someone in the meeting will let you in soon";
 
 /* CallingView */

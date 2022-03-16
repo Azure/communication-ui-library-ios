@@ -8,9 +8,12 @@
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="Altoparlante";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPhone"="iPhone";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPad"="iPad";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Headphones"="Cuffie";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
 
 /* SetupView */
 "AzureCommunicationUI.SetupView.Button.JoinCall"="Partecipa alla chiamata";
+"AzureCommunicationUI.SetupView.Button.JoiningCall"="Partecipazione alla chiamata…";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="Video disattivato";
 "AzureCommunicationUI.SetupView.Button.VideoOn"="Video attivato";
 "AzureCommunicationUI.SetupView.Button.MicOff"="Microfono disattivato";
@@ -21,7 +24,7 @@
 "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="L'audio è disabilitato. Per abilitarlo, passa alle Impostazioni per consentire l'accesso. Per avviare la chiamata, è necessario abilitare l'audio.";
 
 /* LobbyView */
-"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="In attesa dell'organizzatore";
+"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="In attesa dell'organizzatore"; // host (people not server) of a meeting
 "AzureCommunicationUI.LobbyView.Text.WaitingDetails"="A breve qualcuno nella riunione ti farà partecipare";
 
 /* CallingView */

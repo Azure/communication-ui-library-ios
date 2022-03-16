@@ -5,24 +5,27 @@
 
 /* Devices */
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iOS"="iOS";
-"AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="揚聲器";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="喇叭";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPhone"="iPhone";
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.iPad"="iPad";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Headphones"="耳機";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="藍牙";
 
 /* SetupView */
 "AzureCommunicationUI.SetupView.Button.JoinCall"="加入通話";
+"AzureCommunicationUI.SetupView.Button.JoiningCall"="正在加入通話…";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="視訊關閉";
 "AzureCommunicationUI.SetupView.Button.VideoOn"="視訊開啟";
-"AzureCommunicationUI.SetupView.Button.MicOff"="麥克風已關閉";
-"AzureCommunicationUI.SetupView.Button.MicOn"="麥克風已開啟";
+"AzureCommunicationUI.SetupView.Button.MicOff"="麥克風關閉";
+"AzureCommunicationUI.SetupView.Button.MicOn"="麥克風開啟";
 "AzureCommunicationUI.SetupView.Button.Device"="裝置";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="您的相機已停用。若要啟用，請移至 [設定] 以允許存取。";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="您的攝影機和音訊已停用。若要啟用，請移至 [設定] 以允許存取。您必須啟用音訊才能開始此通話。";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="您的相機和音訊已停用。若要啟用，請移至 [設定] 以允許存取。您必須啟用音訊才能開始此通話。";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="您的音訊已停用。若要啟用，請移至 [設定] 以允許存取。您必須啟用音訊才能開始此通話。";
 
 /* LobbyView */
-"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="正在等候主持人";
-"AzureCommunicationUI.LobbyView.Text.WaitingDetails"="會議中的某個人很快就會讓您參與";
+"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="正在等候主持人"; // host (people not server) of a meeting
+"AzureCommunicationUI.LobbyView.Text.WaitingDetails"="會議中有人很快會讓您加入";
 
 /* CallingView */
 "AzureCommunicationUI.CallingView.InfoHeader.WaitingForOthersToJoin"="正在等待其他人加入";
