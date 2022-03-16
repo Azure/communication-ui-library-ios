@@ -18,6 +18,7 @@
 - Fixing consistency of unit test. [#35](https://github.com/Azure/communication-ui-library-ios/pull/35)
 - Fixed the UX inconsistencies in the participant list to match Android.
 - Fixed inconsistent display when dragging an opened participants list. [#49](https://github.com/Azure/communication-ui-library-ios/pull/49)
+- Fixed SetupView in landscape mode and CallingView can't rotate to proper orientation after drawer being dismissed [#71](https://github.com/Azure/communication-ui-library-ios/pull/71)
 
 ### Other Changes
 - Update Redux State when initializing the local video preview in the setup view. [#23](https://github.com/Azure/communication-ui-library-ios/pull/23)
