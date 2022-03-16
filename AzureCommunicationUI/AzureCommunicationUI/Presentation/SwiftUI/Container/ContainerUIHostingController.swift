@@ -12,7 +12,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
         @Published var isProximitySensorOn: Bool
 
         init() {
-            self.supportedOrientations = UIDevice.current.userInterfaceIdiom == .pad ? .all : .allButUpsideDown
+            self.supportedOrientations = .portrait
             self.isProximitySensorOn = false
         }
     }
@@ -29,7 +29,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
         self.callComposite = callComposite
         self.environmentProperties = environmentProperties
         super.init(rootView: environmentRoot)
-        subscribeEnvironmentProperties()
+        subscribeEnvironmentProperties(containerView: rootView)
     }
 
     @objc required dynamic init?(coder aDecoder: NSCoder) {
@@ -40,6 +40,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
         super.viewDidLoad()
         UIApplication.shared.isIdleTimerDisabled = true
     }
+
     override func viewDidDisappear(_ animated: Bool) {
         resetUIDeviceSetup()
         super.viewDidDisappear(animated)
@@ -49,25 +50,16 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
         self.environmentProperties.supportedOrientations
     }
 
-    private func subscribeEnvironmentProperties() {
+    private func subscribeEnvironmentProperties(containerView: ContainerView) {
         environmentProperties
             .$supportedOrientations
             .receive(on: RunLoop.main)
             .removeDuplicates()
-            .sink(receiveValue: { orientation in
-                let portrait = orientation == .portrait
-                let landscape = orientation == .landscapeLeft || orientation == .landscapeRight
-                if  portrait || landscape {
-                    // Apply a delay here to allow the previous orientation change to finish,
-                    // then reset orientations
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                        let rotateOrientation: UIInterfaceOrientation = orientation == .portrait ?
-                            .portrait : (orientation == .landscapeLeft ? .landscapeRight : .landscapeLeft)
-                        UIDevice.current.rotateTo(oritation: rotateOrientation)
-                        UIDevice.current.endGeneratingDeviceOrientationNotifications()
-                    }
-                } else if (orientation == .all || orientation == .allButUpsideDown)
-                            && !UIDevice.current.isGeneratingDeviceOrientationNotifications {
+            .sink(receiveValue: { _ in
+                if containerView.router.currentView == .setupView,
+                   UIDevice.current.isGeneratingDeviceOrientationNotifications {
+                    UIDevice.current.endGeneratingDeviceOrientationNotifications()
+                } else if !UIDevice.current.isGeneratingDeviceOrientationNotifications {
                     UIDevice.current.beginGeneratingDeviceOrientationNotifications()
                 }
             }).store(in: cancelBag)
@@ -75,6 +67,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
         environmentProperties
             .$isProximitySensorOn
             .receive(on: RunLoop.main)
+            .removeDuplicates()
             .sink(receiveValue: { isEnable in
                 UIDevice.current.toggleProximityMonitoringStatus(isEnabled: isEnable)
             }).store(in: cancelBag)
