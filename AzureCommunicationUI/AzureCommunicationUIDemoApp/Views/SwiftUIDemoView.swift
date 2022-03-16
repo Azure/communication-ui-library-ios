@@ -9,6 +9,7 @@ import AzureCommunicationCalling
 
 struct SwiftUIDemoView: View {
     @State var isErrorDisplayed: Bool = false
+    @State var isSettingsDisplayed: Bool = false
     @State var errorMessage: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
 
@@ -22,6 +23,7 @@ struct SwiftUIDemoView: View {
             acsTokenSelector
             displayNameTextField
             meetingSelector
+            settingButton
             startExperienceButton
             Spacer()
         }
@@ -31,6 +33,11 @@ struct SwiftUIDemoView: View {
                 title: Text("Error"),
                 message: Text(errorMessage),
                 dismissButton: .default(Text("Dismiss")))
+        }
+        .sheet(isPresented: $isSettingsDisplayed) {
+            SettingsView(envConfigSubject: envConfigSubject) {
+                isSettingsDisplayed = false
+            }
         }
     }
 
@@ -91,6 +98,13 @@ struct SwiftUIDemoView: View {
         }
         .padding(.vertical, verticalPadding)
         .padding(.horizontal, horizontalPadding)
+    }
+
+    var settingButton: some View {
+        Button("Settings") {
+            isSettingsDisplayed = true
+        }
+        .buttonStyle(DemoButtonStyle())
     }
 
     var startExperienceButton: some View {
