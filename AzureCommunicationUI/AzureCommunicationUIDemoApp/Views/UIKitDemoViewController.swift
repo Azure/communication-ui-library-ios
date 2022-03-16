@@ -26,6 +26,7 @@ class UIKitDemoViewController: UIViewController {
     private var displayNameTextField: UITextField!
     private var groupCallTextField: UITextField!
     private var teamsMeetingTextField: UITextField!
+    private var settingsButton: UIButton!
     private var startExperienceButton: UIButton!
     private var acsTokenTypeSegmentedControl: UISegmentedControl!
     private var meetingTypeSegmentedControl: UISegmentedControl!
@@ -262,6 +263,15 @@ class UIKitDemoViewController: UIViewController {
         return true
     }
 
+    @objc func onSettingsPressed() {
+        let settingsView = SettingsView(envConfigSubject: envConfigSubject, dismissAction: {
+            self.dismiss(animated: true, completion: nil)
+        })
+        let settingsViewHostingController = UIHostingController(rootView: settingsView)
+        settingsViewHostingController.modalPresentationStyle = .fullScreen
+        present(settingsViewHostingController, animated: true, completion: nil)
+    }
+
     @objc func onStartExperienceBtnPressed() {
         let link = self.getMeetingLink()
         self.startExperience(with: link)
@@ -384,6 +394,12 @@ class UIKitDemoViewController: UIViewController {
                                               for: .valueChanged)
         selectedMeetingType = envConfigSubject.selectedMeetingType
 
+        settingsButton = UIButton()
+        settingsButton.setTitle("Settings", for: .normal)
+        settingsButton.backgroundColor = .systemBlue
+        settingsButton.addTarget(self, action: #selector(onSettingsPressed), for: .touchUpInside)
+        settingsButton.layer.cornerRadius = 8
+
         startExperienceButton = UIButton()
         startExperienceButton.backgroundColor = .systemBlue
         startExperienceButton.setTitleColor(UIColor.white, for: .normal)
@@ -424,7 +440,9 @@ class UIKitDemoViewController: UIViewController {
                                                    displayNameTextField,
                                                    meetingTypeSegmentedControl,
                                                    groupCallTextField,
-                                                   teamsMeetingTextField, hStack])
+                                                   teamsMeetingTextField,
+                                                   settingsButton,
+                                                   hStack])
         stackView.spacing = Constants.stackViewInterItemSpacingPortrait
         stackView.axis = .vertical
         stackView.alignment = .fill
