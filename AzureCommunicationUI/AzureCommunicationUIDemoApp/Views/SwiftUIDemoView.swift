@@ -9,6 +9,7 @@ import AzureCommunicationCalling
 
 struct SwiftUIDemoView: View {
     @State var isErrorDisplayed: Bool = false
+    @State var isSettingsDisplayed: Bool = false
     @State var errorMessage: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
 
@@ -22,6 +23,7 @@ struct SwiftUIDemoView: View {
             acsTokenSelector
             displayNameTextField
             meetingSelector
+            settingButton
             startExperienceButton
             Spacer()
         }
@@ -31,6 +33,11 @@ struct SwiftUIDemoView: View {
                 title: Text("Error"),
                 message: Text(errorMessage),
                 dismissButton: .default(Text("Dismiss")))
+        }
+        .sheet(isPresented: $isSettingsDisplayed) {
+            SettingsView(envConfigSubject: envConfigSubject) {
+                isSettingsDisplayed = false
+            }
         }
     }
 
@@ -93,6 +100,13 @@ struct SwiftUIDemoView: View {
         .padding(.horizontal, horizontalPadding)
     }
 
+    var settingButton: some View {
+        Button("Settings") {
+            isSettingsDisplayed = true
+        }
+        .buttonStyle(DemoButtonStyle())
+    }
+
     var startExperienceButton: some View {
         Button("Start Experience") {
             startCallComposite()
@@ -120,7 +134,10 @@ extension SwiftUIDemoView {
     func startCallComposite() {
         let link = getMeetingLink()
 
-        let callCompositeOptions = CallCompositeOptions(themeConfiguration: Theming())
+        let localizationConfig = LocalizationConfiguration(languageCode: envConfigSubject.languageCode,
+                                                           isRightToLeft: envConfigSubject.isRightToLeft)
+        let callCompositeOptions = CallCompositeOptions(themeConfiguration: Theming(),
+                                                        localizationConfiguration: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
         callComposite.setTarget(didFail: didFail)
 

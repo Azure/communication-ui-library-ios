@@ -1,0 +1,67 @@
+//
+//  Copyright (c) Microsoft Corporation. All rights reserved.
+//  Licensed under the MIT License.
+//
+
+/* Devices */
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.iOS"="iOS";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="발언자";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.iPhone"="iPhone";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.iPad"="iPad";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Headphones"="헤드폰";
+"AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+
+/* SetupView */
+"AzureCommunicationUI.SetupView.Button.JoinCall"="통화 참여";
+"AzureCommunicationUI.SetupView.Button.JoiningCall"="통화에 참가하는 중...";
+"AzureCommunicationUI.SetupView.Button.VideoOff"="비디오 끄기";
+"AzureCommunicationUI.SetupView.Button.VideoOn"="비디오 켜짐";
+"AzureCommunicationUI.SetupView.Button.MicOff"="마이크 끄기";
+"AzureCommunicationUI.SetupView.Button.MicOn"="마이크 켜기";
+"AzureCommunicationUI.SetupView.Button.Device"="장치";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="카메라가 사용하지 않도록 설정되었습니다. 사용하도록 설정하려면 설정으로 이동하여 액세스를 허용하세요.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="카메라와 오디오를 사용할 수 없습니다. 사용하려면 [설정]으로 이동하여 액세스를 허용하세요. 이 통화를 시작하려면 오디오를 사용하도록 설정해야 합니다.";
+"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="오디오를 사용할 수 없습니다. 사용하려면 [설정]으로 이동하여 액세스를 허용하세요. 이 통화를 시작하려면 오디오를 사용하도록 설정해야 합니다.";
+
+/* LobbyView */
+"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="호스트 대기 중"; // host (people not server) of a meeting
+"AzureCommunicationUI.LobbyView.Text.WaitingDetails"="모임에 참가한 사용자가 곧 참가할 수 있습니다.";
+
+/* CallingView */
+"AzureCommunicationUI.CallingView.InfoHeader.WaitingForOthersToJoin"="다른 사용자의 참여를 기다리는 중";
+"AzureCommunicationUI.CallingView.InfoHeader.CallWith1Person"="1명의 사용자와 통화";
+"AzureCommunicationUI.CallingView.InfoHeader.CallWithNPeople"="%d명의 사용자와 통화"; // %d is for number of people in call
+
+"AzureCommunicationUI.CallingView.ParticipantDrawer.Unnamed"="명명되지 않은 참가자";
+"AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"="%@(귀하)"; // %@ is local participant name
+
+"AzureCommunicationUI.CallingView.Overlay.LeaveCall"="통화 나가기";
+"AzureCommunicationUI.CallingView.Overlay.Cancel"="취소";
+
+/* ComplianceBanner title */
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"="녹음/녹화와 전사를 시작했습니다.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="녹음/녹화를 시작했습니다.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="전사를 중단했습니다.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStarted"="전사를 시작했습니다.";
+"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStopped"="전사를 저장하는 중입니다.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="녹음/녹화를 중단했습니다.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="녹음/녹화를 저장하는 중입니다.";
+"AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="녹음/녹화와 전사를 저장하는 중입니다.";
+
+/* ComplianceBanner body */
+"AzureCommunicationUI.CallingView.BannerBody.Consent"="참가하면 이 모임이 전사되는 것에 동의하게 됩니다.";
+"AzureCommunicationUI.CallingView.BannerBody.Recording"="이제 이 모임의 녹음/녹화만 진행합니다.";
+"AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="전사를 중단했습니다.";
+"AzureCommunicationUI.CallingView.BannerBody.OnlyTranscribing"="이제 이 모임의 전사만 진행합니다.";
+"AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="녹음/녹화를 중단했습니다.";
+"AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="녹음/녹화와 전사를 중단했습니다.";
+
+/* ComplianceBanner display link */
+"AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"="개인 정보 취급 방침";
+"AzureCommunicationUI.CallingView.BannerLink.LearnMore"="자세한 정보";
+
+/* PopUp warning */
+"AzureCommunicationUI.SnackBar.Button.Dismiss"="해제";
+"AzureCommunicationUI.SnackBar.Text.ErrorCallJoin"="오류로 인해 통화에 참가할 수 없습니다.";
+"AzureCommunicationUI.SnackBar.Text.ErrorCallEnd"="오류로 인해 통화에서 제외되었습니다.";
+"AzureCommunicationUI.SnackBar.Text.Error"="오류가 발생했습니다.";
