@@ -109,6 +109,9 @@ class InfoHeaderViewModel: ObservableObject {
 
 extension InfoHeaderViewModel: AccessibilityProviderNotificationsObserver {
     func didChangeVoiceOverStatus(_ notification: NSNotification) {
+        // the notification may be sent a couple of times for the same value
+        // invalidating timer is required for setting the next timer and when VoiceOver is enabled
+        infoHeaderDismissTimer?.invalidate()
         if self.isVoiceOverEnabled {
             isInfoHeaderDisplayed = true
         } else {
