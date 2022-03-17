@@ -17,7 +17,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         static let maxTapRequired: Int = 2
     }
     let videoRendererViewInfo: ParticipantRendererViewInfo!
-    let rendererViewManager: RendererViewManager?
+    weak var rendererViewManager: RendererViewManager?
     private var rendererView: UIView!
     private var scrollView = UIScrollView()
     private var zoomToRect: CGRect = .zero
