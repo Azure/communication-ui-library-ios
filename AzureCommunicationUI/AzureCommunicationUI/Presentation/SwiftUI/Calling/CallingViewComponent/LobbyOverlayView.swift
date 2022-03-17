@@ -24,7 +24,7 @@ struct LobbyOverlayView: View {
                     Text(viewModel.subtitle)
                         .font(Fonts.subhead.font)
                         .multilineTextAlignment(.center)
-                })
-            .padding(.horizontal, horizontalPaddingSize)
+                }.padding(.horizontal, horizontalPaddingSize)
+            )
     }
 }
