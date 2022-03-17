@@ -122,6 +122,26 @@ class InfoHeaderViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_infoHeaderViewModel_update_when_statesUpdated_then_participantsListViewModelUpdated() {
+        let expectation = XCTestExpectation(description: "Should update participantsListViewModel")
+        let participantList = ParticipantInfoModelBuilder.getArray(count: 2)
+        let remoteParticipantsStateValue = RemoteParticipantsState(participantInfoList: participantList,
+                                                                   lastUpdateTimeStamp: Date())
+        let localUserStateValue = LocalUserState(displayName: "Updated Name")
+        let participantsListViewModel = ParticipantsListViewModelMocking(localUserState: LocalUserState(),
+                                                                         localizationProvider: LocalizationProviderMocking())
+        participantsListViewModel.updateStates = { localUserState, remoteParticipantsState in
+            XCTAssertEqual(localUserState.displayName, localUserStateValue.displayName)
+            XCTAssertEqual(remoteParticipantsStateValue.participantInfoList,
+                           remoteParticipantsState.participantInfoList)
+            expectation.fulfill()
+        }
+        let sut = makeSUT(participantsListViewModel: participantsListViewModel)
+        sut.update(localUserState: localUserStateValue,
+                   remoteParticipantsState: remoteParticipantsStateValue)
+        wait(for: [expectation], timeout: 1)
+    }
+
     func test_infoHeaderViewModel_when_displayParticipantsList_then_participantsListDisplayed() {
         let sut = makeSUT()
         sut.displayParticipantsList()
@@ -258,6 +278,15 @@ class InfoHeaderViewModelTests: XCTestCase {
 extension InfoHeaderViewModelTests {
     func makeSUT() -> InfoHeaderViewModel {
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
+        return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
+                                   logger: logger,
+                                   localUserState: LocalUserState(),
+                                   localizationProvider: AppLocalizationProvider(logger: logger))
+    }
+
+    func makeSUT(participantsListViewModel: ParticipantsListViewModel) -> InfoHeaderViewModel {
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
+        factoryMocking.participantsListViewModel = participantsListViewModel
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
                                    localUserState: LocalUserState(),
