@@ -47,10 +47,10 @@ class NavigationRouter: ObservableObject {
             isDismissed = true
         }
 
-        if viewToNavigateTo != nil,
-           currentView != viewToNavigateTo! {
-            logger.debug("Navigating to: \(viewToNavigateTo!)" )
-            currentView = viewToNavigateTo!
+        if let view = viewToNavigateTo,
+           view != currentView {
+            logger.debug("Navigating to: \(view)" )
+            currentView = view
         }
     }
 
