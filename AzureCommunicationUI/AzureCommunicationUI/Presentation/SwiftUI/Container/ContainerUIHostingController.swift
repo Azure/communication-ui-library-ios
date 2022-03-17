@@ -57,9 +57,10 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
             .receive(on: RunLoop.main)
             .removeDuplicates()
             .sink(receiveValue: { _ in
-                if containerView.router.currentView == .setupView,
-                   UIDevice.current.isGeneratingDeviceOrientationNotifications {
-                    UIDevice.current.endGeneratingDeviceOrientationNotifications()
+                if containerView.router.currentView == .setupView {
+                   if UIDevice.current.isGeneratingDeviceOrientationNotifications {
+                       UIDevice.current.endGeneratingDeviceOrientationNotifications()
+                   }
                 } else if !UIDevice.current.isGeneratingDeviceOrientationNotifications {
                     UIDevice.current.beginGeneratingDeviceOrientationNotifications()
                 }
