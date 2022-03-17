@@ -183,11 +183,11 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     class Coordinator: NSObject, UIScrollViewDelegate, UIGestureRecognizerDelegate {
 
         private var streamSize: CGSize = .zero
-        private var rendererView: ZoomableVideoRenderView
+        private var zoomableRenderView: ZoomableVideoRenderView
         private var shouldShowScaleForiPad: Bool
 
         init(_ rendererView: ZoomableVideoRenderView, shouldShowScaleForiPad: Bool) {
-            self.rendererView = rendererView
+            self.zoomableRenderView = rendererView
             self.shouldShowScaleForiPad = shouldShowScaleForiPad
             super.init()
             streamSize = rendererView.videoRendererViewInfo.streamSize
@@ -199,17 +199,17 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
 
         func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
             let visible = scrollView.convert(scrollView.bounds, to: scrollView.subviews.first)
-            self.rendererView.updateZoomRect(rect: visible)
+            self.zoomableRenderView.updateZoomRect(rect: visible)
         }
 
         func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
             let visible = scrollView.convert(scrollView.bounds, to: scrollView.subviews.first)
-            self.rendererView.updateZoomRect(rect: visible)
+            self.zoomableRenderView.updateZoomRect(rect: visible)
         }
 
         func scrollViewDidEndZooming(_ scrollView: UIScrollView) {
             let visible = scrollView.convert(scrollView.bounds, to: scrollView.subviews.first)
-            self.rendererView.updateZoomRect(rect: visible)
+            self.zoomableRenderView.updateZoomRect(rect: visible)
         }
 
         func scrollViewDidZoom(_ scrollView: UIScrollView) {
@@ -256,24 +256,24 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         }
 
         func updateRendererViewSize() {
-            rendererView.updateRendererViewSize()
+            zoomableRenderView.updateRendererViewSize()
         }
 
         func restoreRendererViewZoomStatus() {
-            rendererView.restoreRendererViewZoomStatus()
+            zoomableRenderView.restoreRendererViewZoomStatus()
         }
 
         @objc func doubleTapped(gesture: UITapGestureRecognizer) {
             let point = gesture.location(in: gesture.view)
 
-            let currentScale = rendererView.currentScrollViewZoomScale()
+            let currentScale = zoomableRenderView.currentScrollViewZoomScale()
             let minScale = shouldShowScaleForiPad ? Constants.minScaleiPad : Constants.minScaleiPhone
             let maxScale = shouldShowScaleForiPad ? Constants.maxScaleiPad: Constants.maxScaleiPhone
 
             let toScale = maxScale
             let finalScale = (currentScale == minScale) ? toScale : minScale
 
-            rendererView.zoomScrollView(basedOn: point, scale: finalScale)
+            zoomableRenderView.zoomScrollView(basedOn: point, scale: finalScale)
         }
 
         func videoStreamRenderer(didRenderFirstFrameWithSize size: CGSize) {
