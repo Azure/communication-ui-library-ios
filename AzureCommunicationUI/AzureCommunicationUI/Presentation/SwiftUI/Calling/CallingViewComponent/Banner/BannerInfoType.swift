@@ -13,7 +13,7 @@ enum BannerInfoType: Equatable {
     case recordingStopped
     case recordingAndTranscriptionStopped
 
-    var title: StringKey {
+    var title: LocalizationKey {
         switch self {
         case .recordingAndTranscriptionStarted:
             return .bannerTitleRecordingAndTranscriptionStarted
@@ -34,7 +34,7 @@ enum BannerInfoType: Equatable {
         }
     }
 
-    var body: StringKey {
+    var body: LocalizationKey {
         switch self {
         case .recordingAndTranscriptionStarted,
              .recordingStarted,
@@ -53,7 +53,7 @@ enum BannerInfoType: Equatable {
         }
     }
 
-    var linkDisplay: StringKey {
+    var linkDisplay: LocalizationKey {
         switch self {
         case .recordingAndTranscriptionStarted,
              .recordingStarted,

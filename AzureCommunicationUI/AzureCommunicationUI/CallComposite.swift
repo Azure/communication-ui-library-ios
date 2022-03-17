@@ -47,12 +47,11 @@ public class CallComposite {
         setupLocalization(with: localizationProvider)
         let toolkitHostingController = makeToolkitHostingController(router: dependencyContainer.resolve(),
                                                                     logger: dependencyContainer.resolve(),
-                                                                    viewFactory: dependencyContainer.resolve())
+                                                                    viewFactory: dependencyContainer.resolve(),
+                                                                    isRightToLeft: localizationProvider.isRightToLeft)
         setupManagers(store: dependencyContainer.resolve(),
                       containerHostingController: toolkitHostingController,
                       logger: dependencyContainer.resolve())
-        UIView.appearance().semanticContentAttribute = localizationProvider.isRightToLeft ?
-            .forceRightToLeft : .forceLeftToRight
         present(toolkitHostingController)
     }
 
@@ -105,12 +104,15 @@ public class CallComposite {
 
     private func makeToolkitHostingController(router: NavigationRouter,
                                               logger: Logger,
-                                              viewFactory: CompositeViewFactory) -> ContainerUIHostingController {
+                                              viewFactory: CompositeViewFactory,
+                                              isRightToLeft: Bool) -> ContainerUIHostingController {
         let rootView = ContainerView(router: router,
                                      logger: logger,
-                                     viewFactory: viewFactory)
+                                     viewFactory: viewFactory,
+                                     isRightToLeft: isRightToLeft)
         let toolkitHostingController = ContainerUIHostingController(rootView: rootView,
-                                                                    callComposite: self)
+                                                                    callComposite: self,
+                                                                    isRightToLeft: isRightToLeft)
         toolkitHostingController.modalPresentationStyle = .fullScreen
 
         router.setDismissComposite { [weak toolkitHostingController, weak self] in

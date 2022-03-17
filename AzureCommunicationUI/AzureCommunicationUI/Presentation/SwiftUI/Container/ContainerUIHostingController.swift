@@ -22,7 +22,8 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
     private let cancelBag = CancelBag()
 
     init(rootView: ContainerView,
-         callComposite: CallComposite) {
+         callComposite: CallComposite,
+         isRightToLeft: Bool) {
         let environmentProperties = EnvironmentProperty()
         let environmentRoot = Root(containerView: rootView,
                                    environmentProperties: environmentProperties)
@@ -30,6 +31,8 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
         self.environmentProperties = environmentProperties
         super.init(rootView: environmentRoot)
         subscribeEnvironmentProperties()
+        UIView.appearance().semanticContentAttribute = isRightToLeft ?
+            .forceRightToLeft : .forceLeftToRight
     }
 
     @objc required dynamic init?(coder aDecoder: NSCoder) {
