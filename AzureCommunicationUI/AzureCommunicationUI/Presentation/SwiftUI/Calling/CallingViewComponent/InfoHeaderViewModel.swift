@@ -7,10 +7,11 @@ import Foundation
 import Combine
 
 class InfoHeaderViewModel: ObservableObject {
-    @Published var infoLabel: String = "Waiting for others to join"
+    @Published var infoLabel: String
     @Published var isInfoHeaderDisplayed: Bool = true
     @Published var isParticipantsListDisplayed: Bool = false
     private let logger: Logger
+    private let localizationProvider: LocalizationProvider
     private var infoHeaderDismissTimer: Timer?
     private var participantsCount: Int = 0
 
@@ -20,8 +21,11 @@ class InfoHeaderViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
-         localUserState: LocalUserState) {
+         localUserState: LocalUserState,
+         localizationProvider: LocalizationProvider) {
         self.logger = logger
+        self.localizationProvider = localizationProvider
+        self.infoLabel = localizationProvider.getLocalizedString(.callWith0Person)
         self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
             localUserState: localUserState)
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
@@ -52,6 +56,10 @@ class InfoHeaderViewModel: ObservableObject {
         self.isInfoHeaderDisplayed ? hideInfoHeader() : displayWithTimer()
     }
 
+    func getLocalizationProvider() -> LocalizationProvider {
+        return localizationProvider
+    }
+
     func update(localUserState: LocalUserState, remoteParticipantsState: RemoteParticipantsState) {
         if participantsCount != remoteParticipantsState.participantInfoList.count {
             participantsCount = remoteParticipantsState.participantInfoList.count
@@ -65,11 +73,11 @@ class InfoHeaderViewModel: ObservableObject {
         let content: String
         switch participantsCount {
         case 0:
-            content = "Waiting for others to join"
+            content = localizationProvider.getLocalizedString(.callWith0Person)
         case 1:
-            content = "Call with 1 person"
+            content = localizationProvider.getLocalizedString(.callWith1Person)
         default:
-            content = "Call with \(participantsCount) people"
+            content = localizationProvider.getLocalizedString(.callWithNPerson, participantsCount)
         }
         infoLabel = content
     }

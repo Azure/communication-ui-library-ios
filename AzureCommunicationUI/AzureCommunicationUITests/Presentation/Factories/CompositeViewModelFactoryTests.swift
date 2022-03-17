@@ -17,7 +17,9 @@ class CompositeViewModelFactoryTests: XCTestCase {
         super.setUp()
         logger = LoggerMocking()
         compositeViewModelFactory = ACSCompositeViewModelFactory(
-            logger: logger, store: mockStoreFactory.store)
+            logger: logger,
+            store: mockStoreFactory.store,
+            localizationProvider: LocalizationProviderMocking())
     }
 
     func test_compositeViewModelFactory_getCallingViewModel_when_setupViewModelNotNil_then_getSetupViewModel_shouldReturnDifferentSetupViewModel() {

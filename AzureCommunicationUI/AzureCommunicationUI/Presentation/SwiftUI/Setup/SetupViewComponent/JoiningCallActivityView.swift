@@ -7,7 +7,7 @@ import SwiftUI
 import FluentUI
 
 struct JoiningCallActivityView: View {
-    let title: String = "Joining calling..."
+    let viewModel: JoiningCallActivityViewModel
     let containerHeight: CGFloat = 52
 
     var body: some View {
@@ -15,7 +15,7 @@ struct JoiningCallActivityView: View {
             Spacer()
             ActivityIndicator(size: .small)
                 .isAnimating(true)
-            Text(title)
+            Text(viewModel.title)
                 .font(Fonts.subhead.font)
                 .foregroundColor(Color(StyleProvider.color.onSurfaceColor))
             Spacer()

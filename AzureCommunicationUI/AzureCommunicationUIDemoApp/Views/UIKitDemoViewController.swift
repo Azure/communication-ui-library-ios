@@ -26,6 +26,7 @@ class UIKitDemoViewController: UIViewController {
     private var displayNameTextField: UITextField!
     private var groupCallTextField: UITextField!
     private var teamsMeetingTextField: UITextField!
+    private var settingsButton: UIButton!
     private var startExperienceButton: UIButton!
     private var acsTokenTypeSegmentedControl: UISegmentedControl!
     private var meetingTypeSegmentedControl: UISegmentedControl!
@@ -131,7 +132,11 @@ class UIKitDemoViewController: UIViewController {
     }
 
     func startExperience(with link: String) {
-        let callCompositeOptions = CallCompositeOptions(themeConfiguration: TeamsBrandConfig())
+        let localizationConfig = LocalizationConfiguration(languageCode: envConfigSubject.languageCode,
+                                                           isRightToLeft: envConfigSubject.isRightToLeft)
+
+        let callCompositeOptions = CallCompositeOptions(themeConfiguration: TeamsBrandConfig(),
+                                                        localizationConfiguration: localizationConfig)
 
         let callComposite = CallComposite(withOptions: callCompositeOptions)
 
@@ -258,6 +263,15 @@ class UIKitDemoViewController: UIViewController {
         return true
     }
 
+    @objc func onSettingsPressed() {
+        let settingsView = SettingsView(envConfigSubject: envConfigSubject, dismissAction: {
+            self.dismiss(animated: true, completion: nil)
+        })
+        let settingsViewHostingController = UIHostingController(rootView: settingsView)
+        settingsViewHostingController.modalPresentationStyle = .fullScreen
+        present(settingsViewHostingController, animated: true, completion: nil)
+    }
+
     @objc func onStartExperienceBtnPressed() {
         let link = self.getMeetingLink()
         self.startExperience(with: link)
@@ -380,6 +394,16 @@ class UIKitDemoViewController: UIViewController {
                                               for: .valueChanged)
         selectedMeetingType = envConfigSubject.selectedMeetingType
 
+        settingsButton = UIButton()
+        settingsButton.setTitle("Settings", for: .normal)
+        settingsButton.backgroundColor = .systemBlue
+        settingsButton.addTarget(self, action: #selector(onSettingsPressed), for: .touchUpInside)
+        settingsButton.layer.cornerRadius = 8
+        settingsButton.contentEdgeInsets = UIEdgeInsets.init(top: Constants.buttonVerticalInset,
+                                                             left: Constants.buttonHorizontalInset,
+                                                             bottom: Constants.buttonVerticalInset,
+                                                             right: Constants.buttonHorizontalInset)
+
         startExperienceButton = UIButton()
         startExperienceButton.backgroundColor = .systemBlue
         startExperienceButton.setTitleColor(UIColor.white, for: .normal)
@@ -394,21 +418,38 @@ class UIKitDemoViewController: UIViewController {
         startExperienceButton.translatesAutoresizingMaskIntoConstraints = false
         startExperienceButton.addTarget(self, action: #selector(onStartExperienceBtnPressed), for: .touchUpInside)
 
-        // horizontal stack view for the startExperienceButton
+        // horizontal stack view for the settingButton and startExperienceButton
+        let settingButtonHSpacer1 = UIView()
+        settingButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
+        settingButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
-        let hSpacer1 = UIView()
-        hSpacer1.translatesAutoresizingMaskIntoConstraints = false
-        hSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        let settingButtonHSpacer2 = UIView()
+        settingButtonHSpacer2.translatesAutoresizingMaskIntoConstraints = false
+        settingButtonHSpacer2.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
-        let hSpacer2 = UIView()
-        hSpacer2.translatesAutoresizingMaskIntoConstraints = false
-        hSpacer2.setContentHuggingPriority(.defaultLow, for: .horizontal)
+        let settingsButtonHStack = UIStackView(arrangedSubviews: [settingButtonHSpacer1,
+                                                                  settingsButton,
+                                                                  settingButtonHSpacer2])
+        settingsButtonHStack.axis = .horizontal
+        settingsButtonHStack.alignment = .fill
+        settingsButtonHStack.distribution = .fill
+        settingsButtonHStack.translatesAutoresizingMaskIntoConstraints = false
 
-        let hStack = UIStackView(arrangedSubviews: [hSpacer1, startExperienceButton, hSpacer2])
-        hStack.axis = .horizontal
-        hStack.alignment = .fill
-        hStack.distribution = .fill
-        hStack.translatesAutoresizingMaskIntoConstraints = false
+        let startButtonHSpacer1 = UIView()
+        startButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
+        startButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let startButtonHSpacer2 = UIView()
+        startButtonHSpacer2.translatesAutoresizingMaskIntoConstraints = false
+        startButtonHSpacer2.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let startButtonHStack = UIStackView(arrangedSubviews: [startButtonHSpacer1,
+                                                               startExperienceButton,
+                                                               startButtonHSpacer2])
+        startButtonHStack.axis = .horizontal
+        startButtonHStack.alignment = .fill
+        startButtonHStack.distribution = .fill
+        startButtonHStack.translatesAutoresizingMaskIntoConstraints = false
 
         let spaceView1 = UIView()
         spaceView1.translatesAutoresizingMaskIntoConstraints = false
@@ -420,7 +461,9 @@ class UIKitDemoViewController: UIViewController {
                                                    displayNameTextField,
                                                    meetingTypeSegmentedControl,
                                                    groupCallTextField,
-                                                   teamsMeetingTextField, hStack])
+                                                   teamsMeetingTextField,
+                                                   settingsButtonHStack,
+                                                   startButtonHStack])
         stackView.spacing = Constants.stackViewInterItemSpacingPortrait
         stackView.axis = .vertical
         stackView.alignment = .fill
@@ -450,7 +493,8 @@ class UIKitDemoViewController: UIViewController {
                                             constant: -Constants.stackViewInterItemSpacingPortrait).isActive = true
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
 
-        hSpacer2.widthAnchor.constraint(equalTo: hSpacer1.widthAnchor).isActive = true
+        settingButtonHSpacer2.widthAnchor.constraint(equalTo: settingButtonHSpacer1.widthAnchor).isActive = true
+        startButtonHSpacer2.widthAnchor.constraint(equalTo: startButtonHSpacer1.widthAnchor).isActive = true
 
         updateAcsTokenTypeFields()
         updateMeetingTypeFields()

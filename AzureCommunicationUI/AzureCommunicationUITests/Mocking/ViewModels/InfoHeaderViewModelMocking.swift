@@ -16,7 +16,8 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
-                   localUserState: localUserState)
+                   localUserState: localUserState,
+                   localizationProvider: LocalizationProviderMocking())
     }
 
     override func update(localUserState: LocalUserState, remoteParticipantsState: RemoteParticipantsState) {

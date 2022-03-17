@@ -9,27 +9,35 @@ import Combine
 class SetupViewModel: ObservableObject {
     private let logger: Logger
     private let store: Store<AppState>
+    private let localizationProvider: LocalizationProvider
     private var callingStatus: CallingStatus = .none
     var cancellables = Set<AnyCancellable>()
+
+    @Published var isJoinRequested: Bool = false
+    let isRightToLeft: Bool
 
     let previewAreaViewModel: PreviewAreaViewModel
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
     var joinCallButtonViewModel: PrimaryButtonViewModel!
     var setupControlBarViewModel: SetupControlBarViewModel!
-
-    @Published var isJoinRequested: Bool = false
+    var joiningCallActivityViewModel: JoiningCallActivityViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
-         store: Store<AppState>) {
+         store: Store<AppState>,
+         localizationProvider: LocalizationProvider) {
         self.store = store
+        self.localizationProvider = localizationProvider
+        self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
         self.previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
+        self.joiningCallActivityViewModel = compositeViewModelFactory.makeJoiningCallActivityViewModel()
         self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
         self.joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
-            buttonLabel: "Join Call",
+            buttonLabel: self.localizationProvider
+                .getLocalizedString(.joinCall),
             iconName: .meetNow,
             isDisabled: false) { [weak self] in
                 guard let self = self else {
