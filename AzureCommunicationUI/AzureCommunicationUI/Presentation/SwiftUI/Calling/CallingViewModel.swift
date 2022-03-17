@@ -69,6 +69,7 @@ class CallingViewModel: ObservableObject {
                 self.logger.debug("Leave call button tapped")
                 self.endCall()
             })
+        leaveCallButtonViewModel.update(accessibilityLabel: "Leave call")
         return leaveCallButtonViewModel
     }
 
@@ -85,6 +86,7 @@ class CallingViewModel: ObservableObject {
                 self.logger.debug("Cancel button tapped")
                 self.dismissConfirmLeaveOverlay()
             })
+        cancelButtonViewModel.update(accessibilityLabel: "Cancel")
         return cancelButtonViewModel
     }
 
