@@ -214,6 +214,7 @@ extension SetupViewModelTests {
     func makeSUT() -> SetupViewModel {
         return SetupViewModel(compositeViewModelFactory: factoryMocking,
                               logger: logger,
-                              store: storeFactory.store)
+                              store: storeFactory.store,
+                              localizationProvider: LocalizationProviderMocking())
     }
 }

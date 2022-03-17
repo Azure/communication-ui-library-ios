@@ -9,32 +9,39 @@ import AVFoundation
 let bluetoothAudioPorts: Set<AVAudioSession.Port> = [.bluetoothA2DP, .bluetoothLE, .bluetoothHFP]
 let headphonesAudioPorts: Set<AVAudioSession.Port> = [.headphones, .headsetMic]
 
-enum AudioDeviceType: String {
-    case bluetooth = "Bluetooth"
-    case headphones = "Headphones"
-    case receiver = "iOS"
-    case speaker = "Speaker"
+enum AudioDeviceType {
+    case bluetooth
+    case headphones
+    case receiver
+    case speaker
 
-    var name: String {
+    var name: StringKey {
         switch self {
         case .bluetooth:
-            if let output = AVAudioSession.sharedInstance().currentRoute.outputs.first,
-               bluetoothAudioPorts.contains(output.portType),
-               !output.portName.isEmpty {
-                return output.portName
-            }
-            return self.rawValue
+            return .bluetooth
+        case .headphones:
+            return .headphones
         case .receiver:
             switch UIDevice.current.userInterfaceIdiom {
             case .phone:
-                return "iPhone"
+                return .iPhone
             case .pad:
-                return "iPad"
+                return .iPad
             default:
-                return self.rawValue
+                return .iOS
             }
-        default:
-            return self.rawValue
+        case .speaker:
+            return .speaker
+        }
+    }
+
+    func getBluetoothName() -> String? {
+        if let output = AVAudioSession.sharedInstance().currentRoute.outputs.first,
+           bluetoothAudioPorts.contains(output.portType),
+           !output.portName.isEmpty {
+            return output.portName
+        } else {
+            return nil
         }
     }
 }
