@@ -10,7 +10,8 @@ class CompositeParticipantsListCell: TableViewCell {
 
     /// Set up the participant list item  in the participant list
     /// - Parameter viewModel: the participant view model needed to set up participant list cell
-    func setup(viewModel: ParticipantsListCellViewModel) {
+    func setup(viewModel: ParticipantsListCellViewModel,
+               displayName: String) {
         let isNameEmpty = viewModel.displayName.trimmingCharacters(in: .whitespaces).isEmpty
 
         let avatar = MSFAvatar(style: isNameEmpty ? .outlined : .accent, size: .medium)
@@ -34,23 +35,8 @@ class CompositeParticipantsListCell: TableViewCell {
                                :
                                 UIColor.compositeColor(CompositeColor.onSurface))
 
-        setup(title: displayName(displayName: viewModel.displayName,
-                                 isLocalParticipant: viewModel.isLocalParticipant),
+        setup(title: displayName,
               customView: avatarView,
               customAccessoryView: micImageView)
-    }
-
-    private func displayName(displayName: String, isLocalParticipant: Bool) -> String {
-        let isNameEmpty = displayName.trimmingCharacters(in: .whitespaces).isEmpty
-        if isLocalParticipant {
-            return isNameEmpty ?
-            "\(StringConstants.defaultEmptyName) \(StringConstants.localParticipantNamePostfix)"
-            :
-            "\(displayName) \(StringConstants.localParticipantNamePostfix)"
-        } else {
-            return isNameEmpty ? "\(StringConstants.defaultEmptyName)"
-            :
-            displayName
-        }
     }
 }

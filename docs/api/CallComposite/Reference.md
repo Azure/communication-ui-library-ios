@@ -13,7 +13,7 @@
 - [TeamsMeetingOptions](structs/TeamsMeetingOptions.md)
 - [ErrorEvent](structs/ErrorEvent.md)
 - [CallCompositeErrorCode](structs/CallCompositeErrorCode.md)
-
+- [LocalizationConfiguration](structs/LocalizationConfiguration.md)
 
 ## Protocols
 

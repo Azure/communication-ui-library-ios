@@ -32,6 +32,7 @@ protocol CompositeViewModelFactory {
     func makeErrorInfoViewModel() -> ErrorInfoViewModel
 
     // MARK: CallingViewModels
+    func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel
@@ -46,19 +47,23 @@ protocol CompositeViewModelFactory {
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                       localUserState: LocalUserState) -> SetupControlBarViewModel
+    func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel
 }
 
 class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     private let logger: Logger
     private let store: Store<AppState>
+    private let localizationProvider: LocalizationProvider
 
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
 
     init(logger: Logger,
-         store: Store<AppState>) {
+         store: Store<AppState>,
+         localizationProvider: LocalizationProvider) {
         self.logger = logger
         self.store = store
+        self.localizationProvider = localizationProvider
     }
 
     // MARK: CompositeViewModels
@@ -66,7 +71,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
         guard let viewModel = self.setupViewModel else {
             let viewModel = SetupViewModel(compositeViewModelFactory: self,
                                            logger: logger,
-                                           store: store)
+                                           store: store,
+                                           localizationProvider: localizationProvider)
             self.setupViewModel = viewModel
             self.callingViewModel = nil
             return viewModel
@@ -78,7 +84,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
         guard let viewModel = self.callingViewModel else {
             let viewModel = CallingViewModel(compositeViewModelFactory: self,
                                              logger: logger,
-                                             store: store)
+                                             store: store,
+                                             localizationProvider: localizationProvider)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -126,13 +133,17 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel {
         AudioDevicesListViewModel(dispatchAction: dispatchAction,
-                                  localUserState: localUserState)
+                                  localUserState: localUserState,
+                                  localizationProvider: localizationProvider)
     }
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
-        ErrorInfoViewModel()
+        ErrorInfoViewModel(localizationProvider: localizationProvider)
     }
 
     // MARK: CallingViewModels
+    func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
+        return LobbyOverlayViewModel(localizationProvider: localizationProvider)
+    }
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel {
@@ -145,7 +156,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
-                            localUserState: localUserState)
+                            localUserState: localUserState,
+                            localizationProvider: localizationProvider)
     }
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
         ParticipantGridCellViewModel(compositeViewModelFactory: self, participantModel: participantModel)
@@ -155,19 +167,21 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
-        ParticipantsListViewModel(localUserState: localUserState)
+        ParticipantsListViewModel(localUserState: localUserState,
+                                  localizationProvider: localizationProvider)
     }
     func makeBannerViewModel() -> BannerViewModel {
         BannerViewModel(compositeViewModelFactory: self)
     }
     func makeBannerTextViewModel() -> BannerTextViewModel {
-        BannerTextViewModel()
+        BannerTextViewModel(localizationProvider: localizationProvider)
     }
 
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel {
         PreviewAreaViewModel(compositeViewModelFactory: self,
-                             dispatchAction: dispatchAction)
+                             dispatchAction: dispatchAction,
+                             localizationProvider: localizationProvider)
     }
 
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
@@ -175,6 +189,10 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
         SetupControlBarViewModel(compositeViewModelFactory: self,
                                  logger: logger,
                                  dispatchAction: dispatchAction,
-                                 localUserState: localUserState)
+                                 localUserState: localUserState,
+                                 localizationProvider: localizationProvider)
+    }
+    func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
+        JoiningCallActivityViewModel(localizationProvider: localizationProvider)
     }
 }

@@ -12,6 +12,7 @@ import AzureCommunicationCalling
 public class CallComposite {
     private var logger: Logger?
     private let themeConfiguration: ThemeConfiguration?
+    private let localizationConfiguration: LocalizationConfiguration?
     private let callCompositeEventsHandler = CallCompositeEventsHandler()
     private var errorManager: ErrorManager?
     private var lifeCycleManager: UIKitAppLifeCycleManager?
@@ -20,8 +21,9 @@ public class CallComposite {
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
-    public init(withOptions options: CallCompositeOptions) {
-        themeConfiguration = options.themeConfiguration
+    public init(withOptions options: CallCompositeOptions? = nil) {
+        themeConfiguration = options?.themeConfiguration
+        localizationConfiguration = options?.localizationConfiguration
     }
 
     /// Assign closure to execute when an error occurs inside Call Composite.
@@ -40,14 +42,17 @@ public class CallComposite {
         logger?.debug("launch composite experience")
 
         dependencyContainer.registerDependencies(callConfiguration)
-
+        let localizationProvider = dependencyContainer.resolve() as LocalizationProvider
         setupColorTheming()
+        setupLocalization(with: localizationProvider)
         let toolkitHostingController = makeToolkitHostingController(router: dependencyContainer.resolve(),
                                                                     logger: dependencyContainer.resolve(),
                                                                     viewFactory: dependencyContainer.resolve())
         setupManagers(store: dependencyContainer.resolve(),
                       containerHostingController: toolkitHostingController,
                       logger: dependencyContainer.resolve())
+        UIView.appearance().semanticContentAttribute = localizationProvider.isRightToLeft ?
+            .forceRightToLeft : .forceLeftToRight
         present(toolkitHostingController)
     }
 
@@ -134,6 +139,12 @@ public class CallComposite {
             if let window = UIWindow.keyWindow {
                 Colors.setProvider(provider: colorProvider, for: window)
             }
+        }
+    }
+
+    private func setupLocalization(with provider: LocalizationProvider) {
+        if let localizationConfiguration = localizationConfiguration {
+            provider.apply(localeConfig: localizationConfiguration)
         }
     }
 

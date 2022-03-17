@@ -10,7 +10,16 @@ class ErrorInfoViewModel: ObservableObject {
     @Published var isDisplayed: Bool = false
     @Published var message: String = ""
 
+    private let localizationProvider: LocalizationProvider
     private var previousErrorType: String = ""
+
+    init(localizationProvider: LocalizationProvider) {
+        self.localizationProvider = localizationProvider
+    }
+
+    var dismissContent: String {
+        return localizationProvider.getLocalizedString(.snackBarDismiss)
+    }
 
     func update(errorState: ErrorState) {
         let errorType = errorState.error?.code ?? ""
@@ -27,11 +36,11 @@ class ErrorInfoViewModel: ObservableObject {
         isDisplayed = true
         switch errorState.error?.code {
         case CallCompositeErrorCode.callJoin:
-            message = "Unable to join the call due to an error."
+            message = localizationProvider.getLocalizedString(.snackBarErrorJoinCall)
         case CallCompositeErrorCode.callEnd:
-            message = "You were removed from the call due to an error."
+            message = localizationProvider.getLocalizedString(.snackBarErrorCallEnd)
         default:
-            message = "There was an error."
+            message = localizationProvider.getLocalizedString(.snackBarError)
         }
     }
 }

@@ -11,6 +11,7 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
     @Binding var isInfoHeaderDisplayed: Bool
     @ObservedObject var viewModel: ParticipantsListViewModel
     let sourceView: UIView
+    let localizationProvider: LocalizationProvider
 
     func makeCoordinator() -> Coordinator {
         Coordinator(isPresented: $isPresented,
@@ -19,7 +20,8 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> DrawerContainerViewController<ParticipantsListCellViewModel> {
         let controller = ParticipantsListViewController(items: getParticipantsList(),
-                                                        sourceView: sourceView)
+                                                        sourceView: sourceView,
+                                                        localizationProvider: localizationProvider)
         controller.delegate = context.coordinator
         return controller
     }
