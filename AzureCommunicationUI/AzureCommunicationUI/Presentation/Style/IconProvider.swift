@@ -12,7 +12,7 @@ enum CompositeIcon: String {
     case meetNow = "ic_fluent_meet_now_20_regular"
     case micOff = "ic_fluent_mic_off_24_filled"
     case micOffRegular = "ic_fluent_mic_off_24_regular"
-    case micOn = "ic_fluent_mic_on_24_filled"
+    case micOn = "ic_fluent_mic_24_filled"
     case speakerFilled = "ic_fluent_speaker_2_24_filled"
     case speakerRegular = "ic_fluent_speaker_2_24_regular"
     case speakerBluetooth = "ic_fluent_speaker_bluetooth_24_regular"
