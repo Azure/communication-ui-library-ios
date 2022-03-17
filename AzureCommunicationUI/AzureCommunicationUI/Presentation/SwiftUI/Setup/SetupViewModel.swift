@@ -53,6 +53,7 @@ class SetupViewModel: ObservableObject {
                 }
                 self.joinCallButtonTapped()
         }
+        self.joinCallButtonViewModel.update(accessibilityLabel: "Join Call")
 
         self.dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .leftArrow,
