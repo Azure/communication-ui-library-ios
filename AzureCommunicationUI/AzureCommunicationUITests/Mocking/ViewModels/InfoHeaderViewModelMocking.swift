@@ -7,13 +7,13 @@ import Foundation
 @testable import AzureCommunicationUI
 
 class InfoHeaderViewModelMocking: InfoHeaderViewModel {
-    private let updateState: ((LocalUserState, RemoteParticipantsState) -> Void)?
+    private let updateState: ((LocalUserState, RemoteParticipantsState, CallingState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
          localUserState: LocalUserState,
          accessibilityProvider: AccessibilityProvider,
-         updateState: ((LocalUserState, RemoteParticipantsState) -> Void)? = nil) {
+         updateState: ((LocalUserState, RemoteParticipantsState, CallingState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
@@ -22,7 +22,9 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
                    accessibilityProvider: accessibilityProvider)
     }
 
-    override func update(localUserState: LocalUserState, remoteParticipantsState: RemoteParticipantsState) {
-        updateState?(localUserState, remoteParticipantsState)
+    override func update(localUserState: LocalUserState,
+                         remoteParticipantsState: RemoteParticipantsState,
+                         callingState: CallingState) {
+        updateState?(localUserState, remoteParticipantsState, callingState)
     }
 }
