@@ -39,12 +39,13 @@ struct SetupView: View {
             viewModel.setupAudioPermissions()
             viewModel.setupCall()
         }
+        .environment(\.layoutDirection, viewModel.isRightToLeft ? .rightToLeft : .leftToRight)
     }
 
     var joinCallView: some View {
         Group {
             if viewModel.isJoinRequested {
-                JoiningCallActivityView()
+                JoiningCallActivityView(viewModel: viewModel.joiningCallActivityViewModel)
             } else {
                 PrimaryButton(viewModel: viewModel.joinCallButtonViewModel)
             }
@@ -75,6 +76,7 @@ struct SetupTitleView: View {
         VStack(spacing: verticalSpacing) {
             ZStack(alignment: .leading) {
                 IconButton(viewModel: viewModel.dismissButtonViewModel)
+                    .flipsForRightToLeftLayoutDirection(true)
                 HStack {
                     Spacer()
                     Text(viewModel.title)

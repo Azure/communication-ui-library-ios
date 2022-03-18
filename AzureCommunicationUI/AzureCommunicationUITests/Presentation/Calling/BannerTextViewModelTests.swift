@@ -8,13 +8,20 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class BannerTextViewModelTests: XCTestCase {
+    private var localizationProvider: LocalizationProviderMocking!
+
+    override func setUp() {
+        super.setUp()
+        localizationProvider = LocalizationProviderMocking()
+    }
+
     func test_bannerTextViewModel_update_when_withBannerInfoType_then_shouldBePublish() {
-        let expectedTitle = BannerInfoType.recordingAndTranscriptionStarted.title
-        let expectedBody = BannerInfoType.recordingAndTranscriptionStarted.body
-        let expectedLinkDisplay = BannerInfoType.recordingAndTranscriptionStarted.linkDisplay
-        let expectedLink = BannerInfoType.recordingAndTranscriptionStarted.link
-        let expectation = XCTestExpectation(description: "Should publish bannerTextViewModel")
         let sut = makeSUT()
+        let expectedTitle = "Recording and transcription have started."
+        let expectedBody = "By joining, you are giving consent for this meeting to be transcribed."
+        let expectedLinkDisplay = "Privacy policy"
+        let expectedLink = "https://privacy.microsoft.com/privacystatement#mainnoticetoendusersmodule"
+        let expectation = XCTestExpectation(description: "Should publish bannerTextViewModel")
         let cancel = sut.objectWillChange
             .sink(receiveValue: {
                 expectation.fulfill()
@@ -31,8 +38,8 @@ class BannerTextViewModelTests: XCTestCase {
     }
 
     func test_bannerTextViewModel_update_when_withNil_then_shouldBePublish() {
-        let expectation = XCTestExpectation(description: "Should publish bannerTextViewModel")
         let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should publish bannerTextViewModel")
         let cancel = sut.objectWillChange
             .sink(receiveValue: {
                 expectation.fulfill()
@@ -69,10 +76,38 @@ class BannerTextViewModelTests: XCTestCase {
 
         XCTAssertEqual(sut.accessibilityLabel, sut.title + sut.body + sut.linkDisplay)
     }
+
+    func test_bannerTextViewModel_display_complianceBanner_from_LocalizationMocking() {
+        let sut = makeSUTLocalizationMocking()
+        let expectedTitleKey = "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"
+        let expectedBodyKey = "AzureCommunicationUI.CallingView.BannerBody.Consent"
+        let expectedLinkDisplayKey = "AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"
+        let expectedLinkString = "https://privacy.microsoft.com/privacystatement#mainnoticetoendusersmodule"
+        let expectation = XCTestExpectation(description: "Should publish bannerTextViewModel")
+        let cancel = sut.objectWillChange
+            .sink(receiveValue: {
+                expectation.fulfill()
+            })
+
+        sut.update(bannerInfoType: .recordingAndTranscriptionStarted)
+
+        XCTAssertEqual(sut.title, expectedTitleKey)
+        XCTAssertEqual(sut.body, expectedBodyKey)
+        XCTAssertEqual(sut.linkDisplay, expectedLinkDisplayKey)
+        XCTAssertEqual(sut.link, expectedLinkString)
+        XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
+        cancel.cancel()
+        wait(for: [expectation], timeout: 1)
+    }
 }
 
 extension BannerTextViewModelTests {
     func makeSUT(accessibilityProvider: AccessibilityProvider = AppAccessibilityProvider()) -> BannerTextViewModel {
-        BannerTextViewModel(accessibilityProvider: accessibilityProvider)
+        BannerTextViewModel(localizationProvider: AppLocalizationProvider(logger: LoggerMocking()),
+                            accessibilityProvider: accessibilityProvider)
+    }
+
+    func makeSUTLocalizationMocking() -> BannerTextViewModel {
+        return BannerTextViewModel(localizationProvider: localizationProvider)
     }
 }

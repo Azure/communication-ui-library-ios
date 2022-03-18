@@ -18,6 +18,7 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
                    localUserState: localUserState,
+                   localizationProvider: LocalizationProviderMocking(),
                    accessibilityProvider: accessibilityProvider)
     }
 

@@ -9,14 +9,17 @@ import XCTest
 
 class InfoHeaderViewModelTests: XCTestCase {
 
+    var logger: LoggerMocking!
     var storeFactory: StoreFactoryMocking!
     var cancellable: CancelBag!
-    var infoHeaderViewModel: InfoHeaderViewModel!
+    var localizationProvider: LocalizationProviderMocking!
 
     override func setUp() {
         super.setUp()
+        logger = LoggerMocking()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
+        localizationProvider = LocalizationProviderMocking()
 
         func dispatch(action: Action) {
             storeFactory.store.dispatch(action: action)
@@ -24,9 +27,9 @@ class InfoHeaderViewModelTests: XCTestCase {
     }
 
     func test_infoHeaderViewModel_update_when_participantInfoListCountSame_then_shouldNotBePublished() {
+        let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should not publish infoLabel")
         expectation.isInverted = true
-        let sut = makeSUT()
         sut.$infoLabel
             .dropFirst()
             .sink(receiveValue: { _ in
@@ -46,8 +49,8 @@ class InfoHeaderViewModelTests: XCTestCase {
     }
 
     func test_infoHeaderViewModel_update_when_participantInfoListCountChanged_then_shouldBePublished() {
-        let expectation = XCTestExpectation(description: "Should publish infoLabel")
         let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should publish infoLabel")
         sut.$infoLabel
             .dropFirst()
             .sink(receiveValue: { infoLabel in
@@ -76,8 +79,8 @@ class InfoHeaderViewModelTests: XCTestCase {
     }
 
     func test_infoHeaderViewModel_update_when_multipleParticipantInfoListCountChanged_then_shouldBePublished() {
-        let expectation = XCTestExpectation(description: "Should publish infoLabel")
         let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should publish infoLabel")
         sut.$infoLabel
             .dropFirst()
             .sink(receiveValue: { infoLabel in
@@ -127,8 +130,8 @@ class InfoHeaderViewModelTests: XCTestCase {
     }
 
     func test_infoHeaderViewModel_toggleDisplayInfoHeader_when_isInfoHeaderDisplayedFalse_then_shouldBecomeTrueAndPublish() {
-        let expectation = XCTestExpectation(description: "Should publish isInfoHeaderDisplayed true")
         let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should publish isInfoHeaderDisplayed true")
         let cancel = sut.$isInfoHeaderDisplayed
             .dropFirst(2)
             .sink(receiveValue: { isInfoHeaderDisplayed in
@@ -162,8 +165,8 @@ class InfoHeaderViewModelTests: XCTestCase {
     }
 
     func test_infoHeaderViewModel_toggleDisplayInfoHeader_when_isInfoHeaderDisplayedTrue_then_shouldBecomeFalseAndPublish() {
-        let expectation = XCTestExpectation(description: "Should publish isInfoHeaderDisplayed false")
         let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should publish isInfoHeaderDisplayed false")
         let cancel = sut.$isInfoHeaderDisplayed
             .dropFirst(2)
             .sink(receiveValue: { isInfoHeaderDisplayed in
@@ -201,6 +204,78 @@ class InfoHeaderViewModelTests: XCTestCase {
                                                     object: nil))
         XCTAssertTrue(sut.isInfoHeaderDisplayed)
     }
+    
+    func test_infoHeaderViewModel_display_infoHeaderLabel0Participant_from_LocalizationMocking() {
+        let sut = makeSUTLocalizationMocking()
+        let expectation = XCTestExpectation(description: "Should not publish infoLabel")
+        expectation.isInverted = true
+        sut.$infoLabel
+            .dropFirst()
+            .sink(receiveValue: { _ in
+                expectation.fulfill()
+                XCTFail("participantInfoList count is same and infoLabel should not publish")
+            }).store(in: cancellable)
+
+        let participantInfoModel: [ParticipantInfoModel] = []
+        let remoteParticipantsState = RemoteParticipantsState(
+            participantInfoList: participantInfoModel, lastUpdateTimeStamp: Date())
+
+        sut.update(localUserState: storeFactory.store.state.localUserState,
+                                   remoteParticipantsState: remoteParticipantsState)
+        let expectedInfoHeaderlabel0ParticipantKey = "AzureCommunicationUI.CallingView.InfoHeader.WaitingForOthersToJoin"
+        XCTAssertEqual(sut.infoLabel, expectedInfoHeaderlabel0ParticipantKey)
+        XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_infoHeaderViewModel_display_infoHeaderLabel2Participant_from_LocalizationMocking() {
+        let sut = makeSUTLocalizationMocking()
+        let expectation = XCTestExpectation(description: "Should publish infoLabel")
+        let expectedInfoHeaderlabel0ParticipantKey = "AzureCommunicationUI.CallingView.InfoHeader.WaitingForOthersToJoin"
+        let expectedInfoHeaderlabelNParticipantKey = "AzureCommunicationUI.CallingView.InfoHeader.CallWithNPeople"
+
+        sut.$infoLabel
+            .dropFirst()
+            .sink(receiveValue: { infoLabel in
+                XCTAssertEqual(infoLabel, expectedInfoHeaderlabelNParticipantKey)
+                expectation.fulfill()
+            }).store(in: cancellable)
+
+        var participantList: [ParticipantInfoModel] = []
+        let firstParticipantInfoModel = ParticipantInfoModel(
+            displayName: "Participant 1",
+            isSpeaking: false,
+            isMuted: false,
+            isRemoteUser: true,
+            userIdentifier: "testUserIdentifier1",
+            recentSpeakingStamp: Date(),
+            screenShareVideoStreamModel: nil,
+            cameraVideoStreamModel: nil)
+        participantList.append(firstParticipantInfoModel)
+
+        let secondParticipantInfoModel = ParticipantInfoModel(
+            displayName: "Participant 2",
+            isSpeaking: false,
+            isMuted: false,
+            isRemoteUser: true,
+            userIdentifier: "testUserIdentifier1",
+            recentSpeakingStamp: Date(),
+            screenShareVideoStreamModel: nil,
+            cameraVideoStreamModel: nil)
+        participantList.append(secondParticipantInfoModel)
+
+        let remoteParticipantsState = RemoteParticipantsState(
+            participantInfoList: participantList, lastUpdateTimeStamp: Date())
+
+        XCTAssertEqual(sut.infoLabel, expectedInfoHeaderlabel0ParticipantKey)
+        XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
+        sut.update(localUserState: storeFactory.store.state.localUserState,
+                                   remoteParticipantsState: remoteParticipantsState)
+        XCTAssertEqual(sut.infoLabel, expectedInfoHeaderlabelNParticipantKey)
+        XCTAssertTrue(localizationProvider.isGetLocalizedStringWithArgsCalled)
+
+        wait(for: [expectation], timeout: 1)
+    }
 }
 
 extension InfoHeaderViewModelTests {
@@ -209,6 +284,14 @@ extension InfoHeaderViewModelTests {
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: LoggerMocking(),
                                    localUserState: LocalUserState(),
+                                   localizationProvider: AppLocalizationProvider(logger: logger),
                                    accessibilityProvider: accessibilityProvider)
+
+    func makeSUTLocalizationMocking() -> InfoHeaderViewModel {
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
+        return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
+                                   logger: logger,
+                                   localUserState: LocalUserState(),
+                                   localizationProvider: localizationProvider)
     }
 }

@@ -17,6 +17,7 @@ class IconWithLabelButtonViewModel: ObservableObject {
     @Published var buttonLabel: String
     @Published var accessibilityLabel: String?
     @Published var accessibilityValue: String?
+    @Published var accessibilityHint: String?
     @Published var isDisabled: Bool
     var action: (() -> Void)
 
@@ -50,6 +51,12 @@ class IconWithLabelButtonViewModel: ObservableObject {
     func update(accessibilityValue: String) {
         if self.accessibilityValue != accessibilityValue {
             self.accessibilityValue = accessibilityValue
+        }
+    }
+
+    func update(accessibilityHint: String) {
+        if self.accessibilityHint != accessibilityHint {
+            self.accessibilityHint = accessibilityHint
         }
     }
 

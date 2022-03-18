@@ -6,6 +6,7 @@
 import Foundation
 
 class BannerTextViewModel: ObservableObject {
+	private let localizationProvider: LocalizationProvider
     private(set) var title: String = ""
     private(set) var body: String = ""
     private(set) var linkDisplay: String = ""
@@ -13,16 +14,19 @@ class BannerTextViewModel: ObservableObject {
     private(set) var accessibilityLabel: String = ""
     private let accessibilityProvider: AccessibilityProvider
 
-    init(accessibilityProvider: AccessibilityProvider) {
+    init(
+        accessibilityProvider: AccessibilityProvider,
+        localizationProvider: LocalizationProvider) {
         self.accessibilityProvider = accessibilityProvider
+        self.localizationProvider = localizationProvider
     }
 
     func update(bannerInfoType: BannerInfoType?) {
         if let bannerInfoType = bannerInfoType {
-            title = bannerInfoType.title
-            body = bannerInfoType.body
-            linkDisplay = bannerInfoType.linkDisplay
-            link = bannerInfoType.link
+            self.title = localizationProvider.getLocalizedString(bannerInfoType.title)
+            self.body = localizationProvider.getLocalizedString(bannerInfoType.body)
+            self.linkDisplay = localizationProvider.getLocalizedString(bannerInfoType.linkDisplay)
+            self.link = bannerInfoType.link
         } else {
             title = ""
             body = ""

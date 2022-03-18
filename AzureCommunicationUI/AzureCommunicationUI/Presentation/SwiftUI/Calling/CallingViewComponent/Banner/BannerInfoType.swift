@@ -13,58 +13,58 @@ enum BannerInfoType: Equatable {
     case recordingStopped
     case recordingAndTranscriptionStopped
 
-    var title: String {
+    var title: StringKey {
         switch self {
         case .recordingAndTranscriptionStarted:
-            return "Recording and transcription have started. "
+            return .bannerTitleRecordingAndTranscriptionStarted
         case .recordingStarted:
-            return "Recording has started. "
+            return .bannerTitleReordingStarted
         case .transcriptionStoppedStillRecording:
-            return "Transcription has stopped. "
+            return .bannerTitleTranscriptionStoppedStillRecording
         case .transcriptionStarted:
-            return "Transcription has started. "
+            return .bannerTitleTranscriptionStarted
         case .transcriptionStoppedAndSaved:
-            return "Transcription is being saved. "
+            return .bannerTitleTranscriptionStopped
         case .recordingStoppedStillTranscribing:
-            return "Recording has stopped. "
+            return .bannerTitleRecordingStoppedStillTranscribing
         case .recordingStopped:
-            return "Recording is being saved. "
+            return .bannerTitleRecordingStopped
         case .recordingAndTranscriptionStopped:
-            return "Recording and transcription are being saved. "
+            return .bannerTitleRecordingAndTranscribingStopped
         }
     }
 
-    var body: String {
+    var body: StringKey {
         switch self {
         case .recordingAndTranscriptionStarted,
              .recordingStarted,
              .transcriptionStarted:
-            return "By joining, you are giving consent for this meeting to be transcribed. "
+            return .bannerBodyConsent
         case .transcriptionStoppedStillRecording:
-            return "You are now only recording this meeting. "
+            return .bannerBodyRecording
         case .transcriptionStoppedAndSaved:
-            return "Transcription has stopped. "
+            return .bannerBodyTranscriptionStopped
         case .recordingStoppedStillTranscribing:
-            return "You are now only transcribing this meeting. "
+            return .bannerBodyOnlyTranscribing
         case .recordingStopped:
-            return "Recording has stopped. "
+            return .bannerBodyRecordingStopped
         case .recordingAndTranscriptionStopped:
-            return "Recording and transcription have stopped. "
+            return .bannerBodyRecordingAndTranscriptionStopped
         }
     }
 
-    var linkDisplay: String {
+    var linkDisplay: StringKey {
         switch self {
         case .recordingAndTranscriptionStarted,
              .recordingStarted,
              .transcriptionStoppedStillRecording,
              .transcriptionStarted,
              .recordingStoppedStillTranscribing:
-            return "Privacy policy"
+            return .bannerDisplayLinkPrivacyPolicy
         case .transcriptionStoppedAndSaved,
              .recordingStopped,
              .recordingAndTranscriptionStopped:
-            return "Learn more"
+            return .bannerDisplayLinkLearnMore
         }
     }
 
@@ -75,12 +75,11 @@ enum BannerInfoType: Equatable {
              .transcriptionStoppedStillRecording,
              .transcriptionStarted,
              .recordingStoppedStillTranscribing:
-            return "https://privacy.microsoft.com/en-US/privacystatement#mainnoticetoendusersmodule"
+            return StringConstants.privacyPolicyLink
         case .transcriptionStoppedAndSaved,
              .recordingStopped,
              .recordingAndTranscriptionStopped:
-            return ("https://support.microsoft.com/en-us/office/"
-                + "record-a-meeting-in-teams-34dfbe7f-b07d-4a27-b4c6-de62f1348c24")
+            return StringConstants.learnMoreLink
         }
     }
 }

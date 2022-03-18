@@ -10,8 +10,14 @@ import XCTest
 class CallingViewModelTests: XCTestCase {
     var cancellable = CancelBag()
     var logger = LoggerMocking()
+    var localizationProvider: LocalizationProviderMocking!
 
     private let timeout: TimeInterval = 10.0
+
+    override func setUp() {
+        super.setUp()
+        localizationProvider = LocalizationProviderMocking()
+    }
 
     func test_callingViewModel_getLeaveCallButtonViewModel_shouldReturnPrimaryButtonViewModel() {
         let sut = makeSUT()
@@ -27,6 +33,15 @@ class CallingViewModelTests: XCTestCase {
         let expectedButtonLabel = "Cancel"
 
         XCTAssertEqual(cancelButtonViewModel.buttonLabel, expectedButtonLabel)
+    }
+
+    func test_callingViewModel_leaveCallButtonLabel_from_LocalizationMocking() {
+        let sut = makeSUTLocalizationMocking()
+        let leaveCallButtonViewModel = sut.getLeaveCallButtonViewModel()
+        let expectedButtonLabelKey = "AzureCommunicationUI.CallingView.Overlay.LeaveCall"
+
+        XCTAssertEqual(leaveCallButtonViewModel.buttonLabel, expectedButtonLabelKey)
+        XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
     }
 
     func test_callingViewModel_displayConfirmLeaveOverlay_when_isConfirmLeaveOverlayDisplayedFalse_shouldBecomeTrue() {
@@ -179,10 +194,19 @@ class CallingViewModelTests: XCTestCase {
 
 extension CallingViewModelTests {
     func makeSUT(storeFactory: StoreFactoryMocking = StoreFactoryMocking()) -> CallingViewModel {
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
-                                store: storeFactory.store)
+                                store: storeFactory.store,
+                                localizationProvider: AppLocalizationProvider(logger: logger))
+    }
+
+    func makeSUTLocalizationMocking(storeFactory: StoreFactoryMocking = StoreFactoryMocking()) -> CallingViewModel {
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        return CallingViewModel(compositeViewModelFactory: factoryMocking,
+                                logger: logger,
+                                store: storeFactory.store,
+                                localizationProvider: localizationProvider)
     }
 
     func makeSUT(updateControlBarViewModel: @escaping ((LocalUserState, PermissionState) -> Void)) -> CallingViewModel {
@@ -196,7 +220,8 @@ extension CallingViewModelTests {
                                                                         updateState: updateControlBarViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
-                                store: storeFactory.store)
+                                store: storeFactory.store,
+                                localizationProvider: LocalizationProviderMocking())
     }
 
     func makeSUT(updateInfoHeaderViewModel: @escaping ((LocalUserState, RemoteParticipantsState) -> Void)) -> CallingViewModel {
@@ -209,7 +234,8 @@ extension CallingViewModelTests {
                                                                         updateState: updateInfoHeaderViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
-                                store: storeFactory.store)
+                                store: storeFactory.store,
+                                localizationProvider: LocalizationProviderMocking())
     }
 
     func makeSUT(updateLocalVideoViewModel: @escaping ((LocalUserState) -> Void)) -> CallingViewModel {
@@ -221,7 +247,8 @@ extension CallingViewModelTests {
                                                                         updateState: updateLocalVideoViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
-                                store: storeFactory.store)
+                                store: storeFactory.store,
+                                localizationProvider: LocalizationProviderMocking())
     }
 
     func makeSUT(updateParticipantGridViewModel: @escaping ((CallingState, RemoteParticipantsState) -> Void)) -> CallingViewModel {
@@ -232,7 +259,8 @@ extension CallingViewModelTests {
                                                                                   updateState: updateParticipantGridViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
-                                store: storeFactory.store)
+                                store: storeFactory.store,
+                                localizationProvider: LocalizationProviderMocking())
     }
 
     func makeSUT(updateBannerViewModel: @escaping ((CallingState) -> Void)) -> CallingViewModel {
@@ -242,7 +270,8 @@ extension CallingViewModelTests {
                                                                 updateState: updateBannerViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
-                                store: storeFactory.store)
+                                store: storeFactory.store,
+                                localizationProvider: LocalizationProviderMocking())
     }
 
     func test_callingViewModel_update_when_callStatusIsConnected_appStateForeground_then_switchToBackground_shouldBecomeBackground() {
