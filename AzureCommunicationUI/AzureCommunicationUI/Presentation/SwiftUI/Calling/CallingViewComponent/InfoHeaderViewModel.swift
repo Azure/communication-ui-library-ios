@@ -10,14 +10,12 @@ class InfoHeaderViewModel: ObservableObject {
     @Published var infoLabel: String
     @Published var isInfoHeaderDisplayed: Bool = true
     @Published var isParticipantsListDisplayed: Bool = false
+    @Published var isVoiceOverEnabled: Bool = false
     private let logger: Logger
     private let accessibilityProvider: AccessibilityProvider
     private let localizationProvider: LocalizationProvider
     private var infoHeaderDismissTimer: Timer?
     private var participantsCount: Int = 0
-    private var isVoiceOverEnabled: Bool {
-        accessibilityProvider.isVoiceOverEnabled
-    }
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
@@ -43,6 +41,7 @@ class InfoHeaderViewModel: ObservableObject {
                 }
                 self.showParticipantListButtonTapped()
         }
+        isVoiceOverEnabled = accessibilityProvider.isVoiceOverEnabled
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
         // no need to hide the info view when VoiceOver is on
         if !isVoiceOverEnabled {
@@ -118,6 +117,11 @@ class InfoHeaderViewModel: ObservableObject {
 extension InfoHeaderViewModel: AccessibilityProviderNotificationsObserver {
     func didChangeVoiceOverStatus(_ notification: NSNotification) {
         // the notification may be sent a couple of times for the same value
+        guard isVoiceOverEnabled != accessibilityProvider.isVoiceOverEnabled else {
+            return
+        }
+
+        isVoiceOverEnabled = accessibilityProvider.isVoiceOverEnabled
         // invalidating timer is required for setting the next timer and when VoiceOver is enabled
         infoHeaderDismissTimer?.invalidate()
         if self.isVoiceOverEnabled {

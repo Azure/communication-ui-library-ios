@@ -20,6 +20,8 @@ struct ContainerView: View {
                 setupView.supportedOrientations(setupViewOrientationMask)
             case .callingView:
                 callingView.proximitySensorEnabled(true)
+                    .accessibilityElement(children: .contain)
+                    .accessibility(addTraits: .isModal)
             }
         }
     }

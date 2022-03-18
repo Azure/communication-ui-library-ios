@@ -9,13 +9,15 @@ import FluentUI
 struct CompositeParticipantsList: UIViewControllerRepresentable {
     @Binding var isPresented: Bool
     @Binding var isInfoHeaderDisplayed: Bool
+    @Binding var isVoiceOverEnabled: Bool
     @ObservedObject var viewModel: ParticipantsListViewModel
     let sourceView: UIView
     let localizationProvider: LocalizationProvider
 
     func makeCoordinator() -> Coordinator {
         Coordinator(isPresented: $isPresented,
-                    isInfoHeaderDisplayed: $isInfoHeaderDisplayed)
+                    isInfoHeaderDisplayed: $isInfoHeaderDisplayed,
+                    isVoiceOverEnabled: $isVoiceOverEnabled)
     }
 
     func makeUIViewController(context: Context) -> DrawerContainerViewController<ParticipantsListCellViewModel> {
@@ -43,16 +45,21 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
     class Coordinator: NSObject, DrawerControllerDelegate {
         @Binding var isPresented: Bool
         @Binding var isInfoHeaderDisplayed: Bool
+        @Binding var isVoiceOverEnabled: Bool
 
         init(isPresented: Binding<Bool>,
-             isInfoHeaderDisplayed: Binding<Bool>) {
+             isInfoHeaderDisplayed: Binding<Bool>,
+             isVoiceOverEnabled: Binding<Bool>) {
             self._isPresented = isPresented
             self._isInfoHeaderDisplayed = isInfoHeaderDisplayed
+            self._isVoiceOverEnabled = isVoiceOverEnabled
         }
 
         func drawerControllerDidDismiss(_ controller: DrawerController) {
             isPresented = false
-            isInfoHeaderDisplayed = false
+            if !isVoiceOverEnabled {
+                isInfoHeaderDisplayed = false
+            }
         }
     }
 }

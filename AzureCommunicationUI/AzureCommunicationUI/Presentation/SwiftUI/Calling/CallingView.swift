@@ -30,6 +30,7 @@ struct CallingView: View {
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
         .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveOverlayDisplayed) {
             ConfirmLeaveOverlayView(viewModel: viewModel)
+                .accessibility(hidden: !viewModel.isConfirmLeaveOverlayDisplayed)
                 .accessibilityElement(children: .contain)
                 .accessibility(addTraits: .isModal)
         })
@@ -55,6 +56,8 @@ struct CallingView: View {
             ZStack(alignment: .bottomTrailing) {
                 videoGridView
                 topAlertAreaView
+                    .accessibilityElement(children: .contain)
+                    .accessibility(sortPriority: 1)
                 if viewModel.isParticipantGridDisplayed {
                     localVideoPipView
                         .padding(.horizontal, -12)
@@ -68,6 +71,8 @@ struct CallingView: View {
             })
             .modifier(PopupModalView(isPresented: viewModel.isLobbyOverlayDisplayed) {
                 LobbyOverlayView(viewModel: viewModel.getLobbyOverlayViewModel())
+                    .accessibilityElement(children: .contain)
+                    .accessibility(hidden: !viewModel.isLobbyOverlayDisplayed)
             })
         }
     }
