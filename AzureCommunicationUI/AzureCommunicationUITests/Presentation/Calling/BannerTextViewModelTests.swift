@@ -74,7 +74,7 @@ class BannerTextViewModelTests: XCTestCase {
 
         sut.update(bannerInfoType: .recordingStarted)
 
-        XCTAssertEqual(sut.accessibilityLabel, sut.title + sut.body + sut.linkDisplay)
+        XCTAssertEqual(sut.accessibilityLabel, "\(sut.title) \(sut.body) \(sut.linkDisplay)")
     }
 
     func test_bannerTextViewModel_display_complianceBanner_from_LocalizationMocking() {
@@ -103,11 +103,12 @@ class BannerTextViewModelTests: XCTestCase {
 
 extension BannerTextViewModelTests {
     func makeSUT(accessibilityProvider: AccessibilityProvider = AppAccessibilityProvider()) -> BannerTextViewModel {
-        BannerTextViewModel(localizationProvider: AppLocalizationProvider(logger: LoggerMocking()),
-                            accessibilityProvider: accessibilityProvider)
+        BannerTextViewModel(accessibilityProvider: accessibilityProvider,
+                            localizationProvider: AppLocalizationProvider(logger: LoggerMocking()))
     }
 
     func makeSUTLocalizationMocking() -> BannerTextViewModel {
-        return BannerTextViewModel(localizationProvider: localizationProvider)
+        return BannerTextViewModel(accessibilityProvider: AppAccessibilityProvider(),
+                                   localizationProvider: localizationProvider)
     }
 }

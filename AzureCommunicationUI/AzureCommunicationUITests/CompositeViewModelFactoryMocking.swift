@@ -147,8 +147,8 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     }
 
     func makeBannerTextViewModel() -> BannerTextViewModel {
-        return bannerTextViewModel ?? BannerTextViewModel(localizationProvider: LocalizationProviderMocking(),
-                                                          accessibilityProvider: accessibilityProvider)
+        return bannerTextViewModel ?? BannerTextViewModel(accessibilityProvider: accessibilityProvider,
+                                                          localizationProvider: LocalizationProviderMocking())
     }
 
     // MARK: SetupViewModels

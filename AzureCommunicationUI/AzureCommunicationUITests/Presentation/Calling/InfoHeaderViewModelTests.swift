@@ -204,7 +204,7 @@ class InfoHeaderViewModelTests: XCTestCase {
                                                     object: nil))
         XCTAssertTrue(sut.isInfoHeaderDisplayed)
     }
-    
+
     func test_infoHeaderViewModel_display_infoHeaderLabel0Participant_from_LocalizationMocking() {
         let sut = makeSUTLocalizationMocking()
         let expectation = XCTestExpectation(description: "Should not publish infoLabel")
@@ -286,12 +286,14 @@ extension InfoHeaderViewModelTests {
                                    localUserState: LocalUserState(),
                                    localizationProvider: AppLocalizationProvider(logger: logger),
                                    accessibilityProvider: accessibilityProvider)
+    }
 
     func makeSUTLocalizationMocking() -> InfoHeaderViewModel {
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
                                    localUserState: LocalUserState(),
-                                   localizationProvider: localizationProvider)
+                                   localizationProvider: localizationProvider,
+                                   accessibilityProvider: AppAccessibilityProvider())
     }
 }
