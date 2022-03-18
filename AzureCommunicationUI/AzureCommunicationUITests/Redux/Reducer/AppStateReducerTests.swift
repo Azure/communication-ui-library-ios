@@ -82,7 +82,7 @@ class AppStateReducerTests: XCTestCase {
     func test_appStateReducer_reduceLifeCycleState_then_lifeCycleReducerCalled_stateUpdated() {
         let oldLifeCycleState = LifeCycleState(currentStatus: .background)
         let mockSubReducer = ReducerMocking()
-        let expectedState = LifeCycleState.AppStatus.foreground
+        let expectedState = AppStatus.foreground
 
         let newLifeCycleState = LifeCycleState(currentStatus: expectedState)
         mockSubReducer.outputState = newLifeCycleState
@@ -139,9 +139,9 @@ class AppStateReducerTests: XCTestCase {
     }
 
     func test_appStateReducer_reduceErrorState_then_errorStateReducerCalled_stateUpdated() {
-        let oldState = ErrorState(errorCode: "")
+        let oldState = ErrorState()
         let mockSubReducer = ReducerMocking()
-        let expectedState = ErrorState(error: nil, errorCode: CallCompositeErrorCode.callJoin, errorCategory: .callState)
+        let expectedState = ErrorState(error: nil, errorCategory: .callState)
 
         mockSubReducer.outputState = expectedState
 
@@ -177,9 +177,10 @@ class AppStateReducerTests: XCTestCase {
         XCTAssertEqual(result.remoteParticipantsState.participantInfoList.first?.userIdentifier, userId)
     }
 
-    func test_appStateReducer_reduce_when_CallingViewLaunched_then_remoteParticipantStateCleanup() {
+    func test_appStateReducer_reduce_when_StatusErrorAndCallReset_then_remoteParticipantStateCleanup() {
         let userId = UUID().uuidString
-        let action = CallingViewLaunched()
+        let action = ErrorAction.StatusErrorAndCallReset(error: ErrorEvent(code: "",
+                                                                            error: nil))
         let sut = getSUT()
         let participant = ParticipantInfoModel(displayName: "displayname",
                                                isSpeaking: false,

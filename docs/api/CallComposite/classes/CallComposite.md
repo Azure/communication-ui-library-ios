@@ -14,6 +14,14 @@ This is the main class representing the entry point for the Call Composite.
 
 ### `init`
 
+Create an instance of `CallComposite`.
+
+```swift
+public init()
+```
+
+### `init`
+
 Create an instance of `CallComposite` with options.
 
 ```swift

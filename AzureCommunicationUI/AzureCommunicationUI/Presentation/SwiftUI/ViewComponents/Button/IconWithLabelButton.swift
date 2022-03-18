@@ -11,8 +11,8 @@ struct IconWithLabelButton: View {
 
     private let iconImageSize: CGFloat = 25
     private let verticalSpacing: CGFloat = 8
-    private let width: CGFloat = 75
-    private let height: CGFloat = 65
+    private let width: CGFloat = 85
+    private let height: CGFloat = 85
     private let buttonDisabledColor = Color(StyleProvider.color.onDisabled)
 
     var buttonForegroundColor: Color {
@@ -37,6 +37,6 @@ struct IconWithLabelButton: View {
         .animation(nil)
         .disabled(viewModel.isDisabled)
         .foregroundColor(viewModel.isDisabled ? buttonDisabledColor : buttonForegroundColor)
-        .frame(width: width, height: height, alignment: .center)
+        .frame(width: width, height: height, alignment: .top)
     }
 }

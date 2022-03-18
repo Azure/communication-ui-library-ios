@@ -26,11 +26,12 @@ struct CallingView: View {
             }
         }
         .environment(\.screenSizeClass, getSizeClass())
+        .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
-        .onAppear(perform: viewModel.startCall)
         .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveOverlayDisplayed) {
             ConfirmLeaveOverlayView(viewModel: viewModel)
         })
+        .environment(\.layoutDirection, viewModel.isRightToLeft ? .rightToLeft : .leftToRight)
     }
 
     var portraitCallingView: some View {
@@ -64,7 +65,7 @@ struct CallingView: View {
                 viewModel.infoHeaderViewModel.toggleDisplayInfoHeader()
             })
             .modifier(PopupModalView(isPresented: viewModel.isLobbyOverlayDisplayed) {
-                LobbyOverlayView()
+                LobbyOverlayView(viewModel: viewModel.getLobbyOverlayViewModel())
             })
         }
     }

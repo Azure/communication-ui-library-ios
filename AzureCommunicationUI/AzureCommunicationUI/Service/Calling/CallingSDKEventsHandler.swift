@@ -178,6 +178,8 @@ extension CallingSDKEventsHandler: CallDelegate,
         if callEndReason > 0 {
             if callEndReason == 401 {
                 return CallCompositeErrorCode.tokenExpired
+            } else if callEndReason == 487 {
+                return ""
             } else {
                 if previousStatus == .connected {
                     return CallCompositeErrorCode.callEnd

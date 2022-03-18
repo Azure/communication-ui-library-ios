@@ -9,11 +9,14 @@ import Combine
 class CallingViewModel: ObservableObject {
     @Published var isLobbyOverlayDisplayed: Bool = false
     @Published var isConfirmLeaveOverlayDisplayed: Bool = false
-    @Published var isParticipantGridDisplayed: Bool = false
+    @Published var isParticipantGridDisplayed: Bool
+    let isRightToLeft: Bool
+    @Published var appState: AppStatus = .foreground
 
     private let compositeViewModelFactory: CompositeViewModelFactory
     private let logger: Logger
     private let store: Store<AppState>
+    private let localizationProvider: LocalizationProvider
     private var cancellables = Set<AnyCancellable>()
 
     var controlBarViewModel: ControlBarViewModel!
@@ -24,10 +27,13 @@ class CallingViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
-         store: Store<AppState>) {
+         store: Store<AppState>,
+         localizationProvider: LocalizationProvider) {
         self.logger = logger
         self.compositeViewModelFactory = compositeViewModelFactory
         self.store = store
+        self.localizationProvider = localizationProvider
+        self.isRightToLeft = localizationProvider.isRightToLeft
         let actionDispatch: ActionDispatch = store.dispatch
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel()
@@ -35,7 +41,10 @@ class CallingViewModel: ObservableObject {
 
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
-
+        let isCallConnected = store.state.callingState.status == .connected
+        let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
+        isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
+        appState = store.state.lifeCycleState.currentStatus
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
                 guard let self = self else {
@@ -51,11 +60,15 @@ class CallingViewModel: ObservableObject {
             }.store(in: &cancellables)
     }
 
+    func getLobbyOverlayViewModel() -> LobbyOverlayViewModel {
+        return compositeViewModelFactory.makeLobbyOverlayViewModel()
+    }
+
     // MARK: ConfirmLeaveOverlay
     func getLeaveCallButtonViewModel() -> PrimaryButtonViewModel {
         let leaveCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
-            buttonLabel: "Leave call",
+            buttonLabel: localizationProvider.getLocalizedString(.leaveCall),
             iconName: nil,
             isDisabled: false,
             action: { [weak self] in
@@ -71,7 +84,7 @@ class CallingViewModel: ObservableObject {
     func getCancelButtonViewModel() -> PrimaryButtonViewModel {
         let cancelButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryOutline,
-            buttonLabel: "Cancel",
+            buttonLabel: localizationProvider.getLocalizedString(.cancel),
             iconName: nil,
             isDisabled: false,
             action: { [weak self] in
@@ -92,16 +105,16 @@ class CallingViewModel: ObservableObject {
         self.isConfirmLeaveOverlayDisplayed = false
     }
 
-    func startCall() {
-        store.dispatch(action: CallingAction.CallStartRequested())
-    }
-
     func endCall() {
         store.dispatch(action: CallingAction.CallEndRequested())
         dismissConfirmLeaveOverlay()
     }
 
     func receive(_ state: AppState) {
+        if appState != state.lifeCycleState.currentStatus {
+            appState = state.lifeCycleState.currentStatus
+        }
+
         guard state.lifeCycleState.currentStatus == .foreground else {
             return
         }
@@ -111,7 +124,8 @@ class CallingViewModel: ObservableObject {
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState)
         localVideoViewModel.update(localUserState: state.localUserState)
-        participantGridsViewModel.update(remoteParticipantsState: state.remoteParticipantsState)
+        participantGridsViewModel.update(remoteParticipantsState: state.remoteParticipantsState,
+                                         lifeCycleState: state.lifeCycleState)
         bannerViewModel.update(callingState: state.callingState)
         let isCallConnected = state.callingState.status == .connected
         let hasRemoteParticipants = state.remoteParticipantsState.participantInfoList.count > 0

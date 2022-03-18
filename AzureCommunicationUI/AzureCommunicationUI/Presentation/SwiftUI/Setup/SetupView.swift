@@ -19,7 +19,7 @@ struct SetupView: View {
     var body: some View {
         ZStack {
             VStack(spacing: layoutSpacing) {
-                SetupTitleView(iconButtonViewModel: viewModel.dismissButtonViewModel)
+                SetupTitleView(backButtonViewModel: viewModel.dismissButtonViewModel)
                 VStack(spacing: layoutSpacing) {
                     ZStack(alignment: .bottom) {
                         PreviewAreaView(viewModel: viewModel.previewAreaViewModel,
@@ -28,7 +28,7 @@ struct SetupView: View {
                     }
                     .background(Color(StyleProvider.color.surface))
                     .cornerRadius(4)
-                    startCallButton
+                    joinCallView
                         .padding(.bottom)
                 }
                 .padding(.horizontal, horizontalPadding)
@@ -39,10 +39,17 @@ struct SetupView: View {
             viewModel.setupAudioPermissions()
             viewModel.setupCall()
         }
+        .environment(\.layoutDirection, viewModel.isRightToLeft ? .rightToLeft : .leftToRight)
     }
 
-    var startCallButton: some View {
-        PrimaryButton(viewModel: viewModel.startCallButtonViewModel)
+    var joinCallView: some View {
+        Group {
+            if viewModel.isJoinRequested {
+                JoiningCallActivityView(viewModel: viewModel.joiningCallActivityViewModel)
+            } else {
+                PrimaryButton(viewModel: viewModel.joinCallButtonViewModel)
+            }
+        }
     }
 
     var errorInfoView: some View {
@@ -62,12 +69,13 @@ struct SetupTitleView: View {
     let viewHeight: CGFloat = 44
     let verticalSpacing: CGFloat = 0
     var title: String = ""
-    var iconButtonViewModel: IconButtonViewModel
+    var backButtonViewModel: IconButtonViewModel
 
     var body: some View {
         VStack(spacing: verticalSpacing) {
             ZStack(alignment: .leading) {
-                IconButton(viewModel: iconButtonViewModel)
+                IconButton(viewModel: backButtonViewModel)
+                    .flipsForRightToLeftLayoutDirection(true)
                 HStack {
                     Spacer()
                     Text(title)

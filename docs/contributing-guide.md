@@ -48,6 +48,13 @@ When submitting a pull request, please add relevant tests and ensure your change
 2. Select `AzureCommunicationUI` scheme and target at any iOS simulator
 3. Navigate to `Product` -> `Test` or hit `⌘+U` to start testing
 
+### Running UI tests
+Please follow [Before running the sample for the first time](https://github.com/Azure/communication-ui-library-ios/tree/main/AzureCommunicationUI/AzureCommunicationUIDemoApp#before-running-the-sample-for-the-first-time) to have the `EnvConfig.xcconfig` in your project directory. Add the variables `acsToken`, `displayName`, `groupCallId`, `teamsMeetingLink`, and `expiredAcsToken` with values in the `EnvConfig.xcconfig` file. 
+
+1. Open the `AzureCommunicationUI.xcworkspace` with Xcode
+2. Select `AzureCommunicationUIDemoApp` scheme and target at any iOS simulator/device
+3. Navigate to `Product` -> `Test` or hit `⌘+U` to start testing
+
 ### Style Guidelines
 
 Azure Mobile UI Library employs a few practices to ensure the clean code and project standards. Please follow these practices to make your Pull Request consistent with the MobileUILibrary

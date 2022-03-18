@@ -3,7 +3,11 @@
 ## 1.0.0-beta.2 (Upcoming)
 
 ### New Features
-
+- Update joining experience in setup view. [#44](https://github.com/Azure/communication-ui-library-ios/pull/44)
+- Support pinch & zoom, pan and double tap to zoom in screen share presentation. [#29](https://github.com/Azure/communication-ui-library-ios/pull/29)
+- Update audio device selection list when connected to bluetooth/headphones. [#56](https://github.com/Azure/communication-ui-library-ios/pull/56)
+- Implemented Localization support for 13 languages and right-to-left mirror layout. [#73](https://github.com/Azure/communication-ui-library-ios/pull/73) 
+ 
 ### Breaking Changes
 
 ### Bug Fixes
@@ -16,6 +20,7 @@
 - Fixing consistency of unit test. [#35](https://github.com/Azure/communication-ui-library-ios/pull/35)
 - Fixed the UX inconsistencies in the participant list to match Android.
 - Fixed inconsistent display when dragging an opened participants list. [#49](https://github.com/Azure/communication-ui-library-ios/pull/49)
+- Fixed SetupView in landscape mode and CallingView can't rotate to proper orientation after drawer being dismissed [#71](https://github.com/Azure/communication-ui-library-ios/pull/71)
 
 ### Other Changes
 - Update Redux State when initializing the local video preview in the setup view. [#23](https://github.com/Azure/communication-ui-library-ios/pull/23)
