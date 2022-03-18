@@ -50,8 +50,8 @@ class SetupViewModel: ObservableObject {
         self.joiningCallActivityViewModel = compositeViewModelFactory.makeJoiningCallActivityViewModel()
 
         self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
-        self.errorInfoViewModel.update(dismissButtonAccessibilityLabel: "Dismiss Banner")
-        self.errorInfoViewModel.update(dismissButtonAccessibilityHint: "Dismisses this notification")
+        self.errorInfoViewModel.update(dismissButtonAccessibilityLabel: self.localizationProvider.getLocalizedString(.snackBarDismissAccessibilityLabel))
+        self.errorInfoViewModel.update(dismissButtonAccessibilityHint: self.localizationProvider.getLocalizedString(.snackBarDismissAccessibilityHint))
 
         self.joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
@@ -64,7 +64,7 @@ class SetupViewModel: ObservableObject {
                 }
                 self.joinCallButtonTapped()
         }
-        self.joinCallButtonViewModel.update(accessibilityLabel: "Join Call")
+        self.joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.joinCall))
 
         self.dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .leftArrow,

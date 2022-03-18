@@ -79,6 +79,8 @@ enum StringKey: String {
 
     /* PopUp warning */
     case snackBarDismiss = "AzureCommunicationUI.SnackBar.Button.Dismiss"
+    case snackBarDismissAccessibilityLabel = "AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityLabel"
+    case snackBarDismissAccessibilityHint = "AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityHint"
     case snackBarErrorJoinCall = "AzureCommunicationUI.SnackBar.Text.ErrorCallJoin"
     case snackBarErrorCallEnd = "AzureCommunicationUI.SnackBar.Text.ErrorCallEnd"
     case snackBarError = "AzureCommunicationUI.SnackBar.Text.Error"
