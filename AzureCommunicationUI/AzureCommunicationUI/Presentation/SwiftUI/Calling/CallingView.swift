@@ -33,6 +33,7 @@ struct CallingView: View {
                 .accessibilityElement(children: .contain)
                 .accessibility(addTraits: .isModal)
         })
+        .environment(\.layoutDirection, viewModel.isRightToLeft ? .rightToLeft : .leftToRight)
     }
 
     var portraitCallingView: some View {
@@ -66,7 +67,7 @@ struct CallingView: View {
                 viewModel.infoHeaderViewModel.toggleDisplayInfoHeader()
             })
             .modifier(PopupModalView(isPresented: viewModel.isLobbyOverlayDisplayed) {
-                LobbyOverlayView()
+                LobbyOverlayView(viewModel: viewModel.getLobbyOverlayViewModel())
             })
         }
     }

@@ -13,12 +13,13 @@ class PreviewAreaViewModel: ObservableObject {
     @Published var isPermissionsDenied: Bool = false
 
     let localVideoViewModel: LocalVideoViewModel!
-    private let goToSettingsText: String = "To enable, please go to Settings to allow access."
-    private let enableAudioToStartText: String = "You must enable audio to start this call."
+    private let localizationProvider: LocalizationProvider
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
-         dispatchAction: @escaping ActionDispatch) {
+         dispatchAction: @escaping ActionDispatch,
+         localizationProvider: LocalizationProvider) {
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: dispatchAction)
+        self.localizationProvider = localizationProvider
     }
 
     func getPermissionWarningIcon() -> CompositeIcon {
@@ -38,13 +39,12 @@ class PreviewAreaViewModel: ObservableObject {
     func getPermissionWarningText() -> String {
         let displayText: String
         if self.audioPermission == .granted {
-            displayText = "Your camera is disabled. \(goToSettingsText)"
+            displayText = localizationProvider.getLocalizedString(.cameraDisabled)
         } else if self.cameraPermission == .denied {
-            displayText = "Your camera and audio are disabled. \(goToSettingsText) \(enableAudioToStartText)"
+            displayText = localizationProvider.getLocalizedString(.audioAndCameraDisabled)
         } else {
-            displayText = "Your audio is disabled. \(goToSettingsText) \(enableAudioToStartText)"
+            displayText = localizationProvider.getLocalizedString(.audioDisabled)
         }
-
         return displayText
     }
 

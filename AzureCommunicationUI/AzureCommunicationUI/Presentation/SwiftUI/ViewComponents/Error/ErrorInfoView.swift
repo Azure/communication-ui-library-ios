@@ -22,7 +22,7 @@ struct ErrorInfoView: View {
                     .accessibility(sortPriority: 1)
                 Spacer()
                 Button(action: dismissAction) {
-                    Text("Dismiss")
+                    Text(viewModel.dismissContent)
                         .font(Fonts.button1.font)
                         .foregroundColor(Color(StyleProvider.color.onWarning))
                 }

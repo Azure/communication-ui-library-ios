@@ -9,8 +9,11 @@ import Combine
 class SetupViewModel: ObservableObject {
     private let logger: Logger
     private let store: Store<AppState>
-
+    private let localizationProvider: LocalizationProvider
     private var callingStatus: CallingStatus = .none
+
+    @Published var isJoinRequested: Bool = false
+    let isRightToLeft: Bool
 
     let previewAreaViewModel: PreviewAreaViewModel
     let title: String = "Setup"
@@ -19,14 +22,18 @@ class SetupViewModel: ObservableObject {
     var dismissButtonViewModel: IconButtonViewModel!
     var joinCallButtonViewModel: PrimaryButtonViewModel!
     var setupControlBarViewModel: SetupControlBarViewModel!
+    var joiningCallActivityViewModel: JoiningCallActivityViewModel!
     var cancellables = Set<AnyCancellable>()
 
     @Published var isJoinRequested: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
-         store: Store<AppState>) {
+         store: Store<AppState>,
+         localizationProvider: LocalizationProvider) {
         self.store = store
+        self.localizationProvider = localizationProvider
+        self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
 
         self.previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
@@ -39,13 +46,16 @@ class SetupViewModel: ObservableObject {
         }
         self.dismissButtonViewModel.update(accessibilityLabel: "Back")
 
+        self.joiningCallActivityViewModel = compositeViewModelFactory.makeJoiningCallActivityViewModel()
+
         self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
         self.errorInfoViewModel.update(dismissButtonAccessibilityLabel: "Dismiss Banner")
         self.errorInfoViewModel.update(dismissButtonAccessibilityHint: "Dismisses this notification")
 
         self.joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
-            buttonLabel: "Join Call",
+            buttonLabel: self.localizationProvider
+                .getLocalizedString(.joinCall),
             iconName: .meetNow,
             isDisabled: false) { [weak self] in
                 guard let self = self else {

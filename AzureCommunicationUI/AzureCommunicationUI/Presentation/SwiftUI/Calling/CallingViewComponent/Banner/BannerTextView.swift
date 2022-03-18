@@ -12,8 +12,10 @@ struct BannerTextView: View {
     var body: some View {
         Group {
             Text(viewModel.title).bold()
-                + Text(viewModel.body)
-                + Text(viewModel.linkDisplay).underline()
+            + Text(" ")
+            + Text(viewModel.body)
+            + Text(" ")
+            + Text(viewModel.linkDisplay).underline()
         }
         .font(Fonts.footnote.font)
         .accessibilityElement(children: .ignore)
