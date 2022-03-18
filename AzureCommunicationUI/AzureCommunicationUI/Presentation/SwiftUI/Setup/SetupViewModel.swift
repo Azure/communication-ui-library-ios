@@ -10,13 +10,12 @@ class SetupViewModel: ObservableObject {
     private let logger: Logger
     private let store: Store<AppState>
     private let localizationProvider: LocalizationProvider
+
     private var callingStatus: CallingStatus = .none
 
-    @Published var isJoinRequested: Bool = false
     let isRightToLeft: Bool
-
     let previewAreaViewModel: PreviewAreaViewModel
-    let title: String = "Setup"
+    let title: String
 
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
@@ -36,6 +35,8 @@ class SetupViewModel: ObservableObject {
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
 
+        self.title = self.localizationProvider.getLocalizedString(.setupTitle)
+
         self.previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
 
         self.dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
@@ -44,7 +45,7 @@ class SetupViewModel: ObservableObject {
             isDisabled: false) {
                 store.dispatch(action: CallingAction.DismissSetup())
         }
-        self.dismissButtonViewModel.update(accessibilityLabel: "Back")
+        self.dismissButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.dismiss))
 
         self.joiningCallActivityViewModel = compositeViewModelFactory.makeJoiningCallActivityViewModel()
 

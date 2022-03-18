@@ -15,6 +15,8 @@ enum StringKey: String {
     case bluetooth = "AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"
 
     /* SetupView */
+    case setupTitle = "AzureCommunicationUI.SetupView.Title"
+    case dismiss = "AzureCommunicationUI.SetupView.Button.Dismiss.AccessibilityLabel"
     case joinCall = "AzureCommunicationUI.SetupView.Button.JoinCall"
     case joiningCall = "AzureCommunicationUI.SetupView.Button.JoiningCall"
     case videoOff = "AzureCommunicationUI.SetupView.Button.VideoOff"

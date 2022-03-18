@@ -12,6 +12,8 @@
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
 
 /* SetupView */
+"AzureCommunicationUI.SetupView.Title"="Setup";
+"AzureCommunicationUI.SetupView.Button.Dismiss.AccessibilityLabel"="Back";
 "AzureCommunicationUI.SetupView.Button.JoinCall"="Join call";
 "AzureCommunicationUI.SetupView.Button.JoiningCall"="Joining calling...";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="Video off";
