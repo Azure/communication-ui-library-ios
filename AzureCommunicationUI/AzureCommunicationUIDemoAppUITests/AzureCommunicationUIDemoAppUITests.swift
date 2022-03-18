@@ -27,7 +27,7 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
 
         startButton.tap()
 
-        let joinButton = app.buttons["Join Call"]
+        let joinButton = app.buttons["Join call"]
         wait(for: joinButton)
         joinButton.tap()
     }
@@ -45,7 +45,7 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
 
         startButton.tap()
 
-        let joinButton = app.buttons["Join Call"]
+        let joinButton = app.buttons["Join call"]
         wait(for: joinButton)
         joinButton.tap()
 
@@ -79,7 +79,7 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
 
         startButton.tap()
 
-        let joinButton = app.buttons["Join Call"]
+        let joinButton = app.buttons["Join call"]
         wait(for: joinButton)
         joinButton.tap()
     }
