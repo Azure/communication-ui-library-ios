@@ -16,6 +16,10 @@ class InfoHeaderViewModel: ObservableObject {
     private let localizationProvider: LocalizationProvider
     private var infoHeaderDismissTimer: Timer?
     private var participantsCount: Int = 0
+    private var callingStatus: CallingStatus = .none
+    private var shouldDisplayInfoHeader: Bool {
+        callingStatus != .inLobby
+    }
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
@@ -72,7 +76,13 @@ class InfoHeaderViewModel: ObservableObject {
         return localizationProvider
     }
 
-    func update(localUserState: LocalUserState, remoteParticipantsState: RemoteParticipantsState) {
+    func update(localUserState: LocalUserState,
+                remoteParticipantsState: RemoteParticipantsState,
+                callingState: CallingState) {
+        callingStatus = callingState.status
+        if isVoiceOverEnabled {
+            isInfoHeaderDisplayed = shouldDisplayInfoHeader
+        }
         if participantsCount != remoteParticipantsState.participantInfoList.count {
             participantsCount = remoteParticipantsState.participantInfoList.count
             updateInfoLabel()
@@ -125,10 +135,9 @@ extension InfoHeaderViewModel: AccessibilityProviderNotificationsObserver {
         // invalidating timer is required for setting the next timer and when VoiceOver is enabled
         infoHeaderDismissTimer?.invalidate()
         if self.isVoiceOverEnabled {
-            isInfoHeaderDisplayed = true
-        } else {
-            // info header is shown
-            resetTimer()
+            isInfoHeaderDisplayed = shouldDisplayInfoHeader
+        } else if shouldDisplayInfoHeader {
+            displayWithTimer()
         }
     }
 }

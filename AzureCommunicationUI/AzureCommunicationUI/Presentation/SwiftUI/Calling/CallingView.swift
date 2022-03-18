@@ -55,9 +55,11 @@ struct CallingView: View {
         Group {
             ZStack(alignment: .bottomTrailing) {
                 videoGridView
+                    .accessibility(hidden: viewModel.isLobbyOverlayDisplayed)
                 topAlertAreaView
                     .accessibilityElement(children: .contain)
                     .accessibility(sortPriority: 1)
+                    .accessibility(hidden: viewModel.isLobbyOverlayDisplayed)
                 if viewModel.isParticipantGridDisplayed {
                     localVideoPipView
                         .padding(.horizontal, -12)

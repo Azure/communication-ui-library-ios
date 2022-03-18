@@ -88,7 +88,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
             let viewModel = CallingViewModel(compositeViewModelFactory: self,
                                              logger: logger,
                                              store: store,
-                                             localizationProvider: localizationProvider)
+                                             localizationProvider: localizationProvider,
+                                             accessibilityProvider: accessibilityProvider)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
