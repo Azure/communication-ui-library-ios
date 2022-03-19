@@ -42,7 +42,7 @@ struct InfoHeaderView: View {
                                     trailing: 0))
                 .foregroundColor(foregroundColor)
                 .font(Fonts.caption1.font)
-                .accessibility(label: Text(viewModel.infoLabel))
+                .accessibility(label: Text(viewModel.accessibilityLabel))
                 .accessibility(sortPriority: 1)
             Spacer()
             participantListButton

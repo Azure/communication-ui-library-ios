@@ -7,6 +7,7 @@ import Foundation
 import Combine
 
 class InfoHeaderViewModel: ObservableObject {
+    @Published var accessibilityLabel: String
     @Published var infoLabel: String
     @Published var isInfoHeaderDisplayed: Bool = true
     @Published var isParticipantsListDisplayed: Bool = false
@@ -33,7 +34,9 @@ class InfoHeaderViewModel: ObservableObject {
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
-        self.infoLabel = localizationProvider.getLocalizedString(.callWith0Person)
+        let title = localizationProvider.getLocalizedString(.callWith0Person)
+        self.infoLabel = title
+        self.accessibilityLabel = title
         self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
             localUserState: localUserState)
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
@@ -102,6 +105,7 @@ class InfoHeaderViewModel: ObservableObject {
             content = localizationProvider.getLocalizedString(.callWithNPerson, participantsCount)
         }
         infoLabel = content
+        accessibilityLabel = content
     }
 
     private func displayWithTimer() {
@@ -121,7 +125,6 @@ class InfoHeaderViewModel: ObservableObject {
                                                            userInfo: nil,
                                                            repeats: false)
     }
-
 }
 
 extension InfoHeaderViewModel: AccessibilityProviderNotificationsObserver {
