@@ -15,7 +15,7 @@ enum AudioDeviceType {
     case receiver
     case speaker
 
-    var name: StringKey {
+    var name: LocalizationKey {
         switch self {
         case .bluetooth:
             return .bluetooth
