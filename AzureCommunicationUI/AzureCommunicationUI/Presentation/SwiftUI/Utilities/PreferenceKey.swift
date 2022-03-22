@@ -25,3 +25,14 @@ struct ProximitySensorPreferenceKey: PreferenceKey {
         value = nextValue()
     }
 }
+
+struct PrefersHomeIndicatorAutoHiddenPreferenceKey: PreferenceKey {
+
+    static var defaultValue: Bool {
+        return false
+    }
+
+    static func reduce(value: inout Bool, nextValue: () -> Bool) {
+        value = nextValue() || value
+    }
+}
