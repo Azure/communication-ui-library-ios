@@ -21,5 +21,6 @@ struct PrimaryButton: View {
             .disabled(viewModel.isDisabled)
             .accessibilityElement(children: .combine)
             .accessibility(label: Text(viewModel.accessibilityLabel ?? ""))
+            .accessibility(addTraits: .isButton)
     }
 }

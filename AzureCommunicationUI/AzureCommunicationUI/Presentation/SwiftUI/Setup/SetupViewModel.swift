@@ -39,15 +39,6 @@ class SetupViewModel: ObservableObject {
 
         previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
 
-        dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
-            iconName: .leftArrow,
-            buttonType: .controlButton,
-            isDisabled: false) {
-                store.dispatch(action: CallingAction.DismissSetup())
-        }
-        dismissButtonViewModel.update(
-            accessibilityLabel: self.localizationProvider.getLocalizedString(.dismissAccessibilityLabel))
-
         joiningCallActivityViewModel = compositeViewModelFactory.makeJoiningCallActivityViewModel()
 
         errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
@@ -74,6 +65,8 @@ class SetupViewModel: ObservableObject {
                 }
                 self.dismissButtonTapped()
         }
+        dismissButtonViewModel.update(
+            accessibilityLabel: self.localizationProvider.getLocalizedString(.dismissAccessibilityLabel))
 
         setupControlBarViewModel = compositeViewModelFactory
             .makeSetupControlBarViewModel(dispatchAction: store.dispatch,
