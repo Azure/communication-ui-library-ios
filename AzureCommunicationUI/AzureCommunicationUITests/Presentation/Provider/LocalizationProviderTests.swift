@@ -43,7 +43,7 @@ class LocalizationProviderTests: XCTestCase {
     func test_localizationProvider_getLocalizedString_when_noApply_then_shouldReturnEnString() {
         let sut = makeSUT()
 
-        let key = StringKey.joinCall
+        let key = LocalizationKey.joinCall
         let joinCallEn = "Join call"
         XCTAssertEqual(sut.getLocalizedString(key), joinCallEn)
     }
@@ -51,7 +51,7 @@ class LocalizationProviderTests: XCTestCase {
     func test_localizationProvider_getLocalizedString_when_applyLocaleFr_then_shouldReturnLocalePredefinedString() {
         let sut = makeSUT()
 
-        let key = StringKey.joinCall
+        let key = LocalizationKey.joinCall
         let joinCallEn = "Join call"
         XCTAssertEqual(sut.getLocalizedString(key), joinCallEn)
 
@@ -65,11 +65,11 @@ class LocalizationProviderTests: XCTestCase {
     func test_localizationProvider_getLocalizedString_when_applyCustomTranslations_then_shouldReturnCustomizedString() {
         let sut = makeSUT()
 
-        let key = StringKey.joinCall
+        let key = LocalizationKey.joinCall
         let joinCallEn = "Join call"
         XCTAssertEqual(sut.getLocalizedString(key), joinCallEn)
 
-        let customKey = StringKey.speaker
+        let customKey = LocalizationKey.speaker
         let speakerEn = "Speaker"
         XCTAssertEqual(sut.getLocalizedString(customKey), speakerEn)
 

@@ -25,12 +25,12 @@ class LocalizationProviderMocking: LocalizationProvider {
         return ["en"]
     }
 
-    func getLocalizedString(_ key: StringKey) -> String {
+    func getLocalizedString(_ key: LocalizationKey) -> String {
         isGetLocalizedStringCalled = true
         return key.rawValue
     }
 
-    func getLocalizedString(_ key: StringKey, _ args: CVarArg...) -> String {
+    func getLocalizedString(_ key: LocalizationKey, _ args: CVarArg...) -> String {
         isGetLocalizedStringWithArgsCalled = true
         return key.rawValue
     }

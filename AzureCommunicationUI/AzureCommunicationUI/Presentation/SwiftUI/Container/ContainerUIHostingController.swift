@@ -22,13 +22,16 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
     private let cancelBag = CancelBag()
 
     init(rootView: ContainerView,
-         callComposite: CallComposite) {
+         callComposite: CallComposite,
+         isRightToLeft: Bool) {
         let environmentProperties = EnvironmentProperty()
         let environmentRoot = Root(containerView: rootView,
                                    environmentProperties: environmentProperties)
         self.callComposite = callComposite
         self.environmentProperties = environmentProperties
         super.init(rootView: environmentRoot)
+        UIView.appearance().semanticContentAttribute = isRightToLeft ?
+            .forceRightToLeft : .forceLeftToRight
         subscribeEnvironmentProperties(containerView: rootView)
         haltSetupViewOrientation(containerView: rootView)
     }

@@ -33,7 +33,6 @@ struct CallingView: View {
                 .accessibilityElement(children: .contain)
                 .accessibility(addTraits: .isModal)
         })
-        .environment(\.layoutDirection, viewModel.isRightToLeft ? .rightToLeft : .leftToRight)
     }
 
     var portraitCallingView: some View {
