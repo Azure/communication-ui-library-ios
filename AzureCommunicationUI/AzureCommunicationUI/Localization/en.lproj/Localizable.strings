@@ -17,10 +17,15 @@
 "AzureCommunicationUI.SetupView.Button.JoinCall"="Join call";
 "AzureCommunicationUI.SetupView.Button.JoiningCall"="Joining calling...";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="Video off";
+"AzureCommunicationUI.SetupView.Button.VideoOff.AccessibilityLabel"="Turn Camera off";
 "AzureCommunicationUI.SetupView.Button.VideoOn"="Video on";
+"AzureCommunicationUI.SetupView.Button.VideoOn.AccessibilityLabel"="Turn Camera On";
 "AzureCommunicationUI.SetupView.Button.MicOff"="Mic off";
+"AzureCommunicationUI.SetupView.Button.MicOff.AccessibilityLabel"="Mute";
 "AzureCommunicationUI.SetupView.Button.MicOn"="Mic on";
+"AzureCommunicationUI.SetupView.Button.MicOn.AccessibilityLabel"="Unmute";
 "AzureCommunicationUI.SetupView.Button.Device"="Device";
+"AzureCommunicationUI.SetupView.Button.Device.AccessibilityLabel"="Audio device";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Your camera is disabled. To enable, please go to Settings to allow access.";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="Your camera and audio are disabled. To enable, please go to Settings to allow access. You must enable audio to start this call.";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="Your audio is disabled. To enable, please go to Settings to allow access. You must enable audio to start this call.";

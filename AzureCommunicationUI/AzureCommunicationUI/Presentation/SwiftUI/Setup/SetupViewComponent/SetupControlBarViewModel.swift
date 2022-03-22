@@ -34,11 +34,12 @@ class SetupControlBarViewModel: ObservableObject {
         self.logger = logger
         self.dispatch = dispatchAction
         self.localizationProvider = localizationProvider
-        self.audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
+
+        audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatchAction,
             localUserState: localUserState)
 
-        self.cameraButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
+        cameraButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
             iconName: .videoOff,
             buttonTypeColor: .colorThemedWhite,
             buttonLabel: self.localizationProvider
@@ -50,9 +51,10 @@ class SetupControlBarViewModel: ObservableObject {
                 self.logger.debug("Toggle camera button tapped")
                 self.videoButtonTapped()
         }
-        self.cameraButtonViewModel.accessibilityLabel = "Turn camera on"
+        cameraButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
+            .videoOffAccessibilityLabel)
 
-        self.micButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
+        micButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
             iconName: .micOff,
             buttonTypeColor: .colorThemedWhite,
             buttonLabel: self.localizationProvider
@@ -64,9 +66,9 @@ class SetupControlBarViewModel: ObservableObject {
                 self.logger.debug("Toggle microphone button tapped")
                 self.microphoneButtonTapped()
         }
-        self.micButtonViewModel.accessibilityLabel = "Unmute"
+        micButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(.micOffAccessibilityLabel)
 
-        self.audioDeviceButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
+        audioDeviceButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
             iconName: .speakerFilled,
             buttonTypeColor: .colorThemedWhite,
             buttonLabel: self.localizationProvider
@@ -78,8 +80,9 @@ class SetupControlBarViewModel: ObservableObject {
                 self.logger.debug("Select audio device button tapped")
                 self.selectAudioDeviceButtonTapped()
         }
-        self.audioDeviceButtonViewModel.accessibilityLabel = "Audio device"
-        self.audioDeviceButtonViewModel.accessibilityValue = "Speaker"
+        audioDeviceButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
+            .deviceAccesibiiltyLabel)
+//        audioDeviceButtonViewModel.accessibilityValue = "Speaker"
     }
 
     func videoButtonTapped() {
@@ -161,14 +164,18 @@ class SetupControlBarViewModel: ObservableObject {
             buttonLabel: self.cameraStatus == .on
             ? self.localizationProvider.getLocalizedString(.videoOn)
             : self.localizationProvider.getLocalizedString(.videoOff))
-        cameraButtonViewModel.update(accessibilityLabel: "Turn camera \(self.cameraStatus == .on ? "off" : "on")")
+        cameraButtonViewModel.update(accessibilityLabel: self.cameraStatus == .on
+                                     ? self.localizationProvider.getLocalizedString(.videoOnAccessibilityLabel)
+                                     : self.localizationProvider.getLocalizedString(.videoOffAccessibilityLabel))
         cameraButtonViewModel.update(isDisabled: isCameraDisabled())
         micButtonViewModel.update(
             iconName: self.micStatus == .on ? .micOn : .micOff,
             buttonLabel: self.micStatus == .on
             ? self.localizationProvider.getLocalizedString(.micOn)
             : self.localizationProvider.getLocalizedString(.micOff))
-        micButtonViewModel.update(accessibilityLabel: self.micStatus == .on ? "Mute" : "Unmute")
+        micButtonViewModel.update(accessibilityLabel: self.micStatus == .on
+                                     ? self.localizationProvider.getLocalizedString(.micOnAccessibilityLabel)
+                                     : self.localizationProvider.getLocalizedString(.micOffAccessibilityLabel))
         micButtonViewModel.update(isDisabled: isAudioDisabled())
         let audioDeviceStatus = localUserState.audioState.device
         audioDeviceButtonViewModel.update(

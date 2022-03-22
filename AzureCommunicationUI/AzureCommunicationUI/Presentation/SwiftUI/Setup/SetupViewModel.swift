@@ -35,25 +35,24 @@ class SetupViewModel: ObservableObject {
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
 
-        self.title = self.localizationProvider.getLocalizedString(.setupTitle)
+        title = self.localizationProvider.getLocalizedString(.setupTitle)
 
-        self.previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
+        previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
 
-        self.dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
+        dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .leftArrow,
             buttonType: .controlButton,
             isDisabled: false) {
                 store.dispatch(action: CallingAction.DismissSetup())
         }
-        self.dismissButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.dismiss))
+        dismissButtonViewModel.update(
+            accessibilityLabel: self.localizationProvider.getLocalizedString(.dismissAccessibilityLabel))
 
-        self.joiningCallActivityViewModel = compositeViewModelFactory.makeJoiningCallActivityViewModel()
+        joiningCallActivityViewModel = compositeViewModelFactory.makeJoiningCallActivityViewModel()
 
-        self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
-        self.errorInfoViewModel.update(dismissButtonAccessibilityLabel: self.localizationProvider.getLocalizedString(.snackBarDismissAccessibilityLabel))
-        self.errorInfoViewModel.update(dismissButtonAccessibilityHint: self.localizationProvider.getLocalizedString(.snackBarDismissAccessibilityHint))
+        errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
 
-        self.joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
+        joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: self.localizationProvider
                 .getLocalizedString(.joinCall),
@@ -64,9 +63,9 @@ class SetupViewModel: ObservableObject {
                 }
                 self.joinCallButtonTapped()
         }
-        self.joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.joinCall))
+        joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.joinCall))
 
-        self.dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
+        dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .leftArrow,
             buttonType: .controlButton,
             isDisabled: false) { [weak self] in
@@ -76,7 +75,7 @@ class SetupViewModel: ObservableObject {
                 self.dismissButtonTapped()
         }
 
-        self.setupControlBarViewModel = compositeViewModelFactory
+        setupControlBarViewModel = compositeViewModelFactory
             .makeSetupControlBarViewModel(dispatchAction: store.dispatch,
                                           localUserState: store.state.localUserState)
 

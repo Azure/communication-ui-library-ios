@@ -18,6 +18,9 @@ class ErrorInfoViewModel: ObservableObject {
 
     init(localizationProvider: LocalizationProvider) {
         self.localizationProvider = localizationProvider
+
+        dismissButtonAccessibilityLabel = localizationProvider.getLocalizedString(.snackBarDismissAccessibilityLabel)
+        dismissButtonAccessibilityHint = localizationProvider.getLocalizedString(.snackBarDismissAccessibilityHint)
     }
 
     var dismissContent: String {
@@ -46,17 +49,5 @@ class ErrorInfoViewModel: ObservableObject {
             message = localizationProvider.getLocalizedString(.snackBarError)
         }
         accessibilityLabel = message
-    }
-
-    func update(dismissButtonAccessibilityLabel: String) {
-        if self.dismissButtonAccessibilityLabel != dismissButtonAccessibilityLabel {
-            self.dismissButtonAccessibilityLabel = dismissButtonAccessibilityLabel
-        }
-    }
-
-    func update(dismissButtonAccessibilityHint: String) {
-        if self.dismissButtonAccessibilityHint != dismissButtonAccessibilityHint {
-            self.dismissButtonAccessibilityHint = dismissButtonAccessibilityHint
-        }
     }
 }
