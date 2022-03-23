@@ -45,6 +45,11 @@
 "AzureCommunicationUI.CallingView.SwitchCamera.Front"="Switch to back camera";
 "AzureCommunicationUI.CallingView.SwitchCamera.Back"="Switch to front camera";
 
+"AzureCommunicationUI.CallingView.OnePersonJoined"="%@ joined the meeting";
+"AzureCommunicationUI.CallingView.MutiplePeopleJoined"="%d participants joined the meeting";
+"AzureCommunicationUI.CallingView.OnePersonLeft"="%@ left the meeting";
+"AzureCommunicationUI.CallingView.MutiplePeopleLeft"="%d participants left the meeting";
+
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Leave call";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="Cancel";
 

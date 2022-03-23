@@ -165,7 +165,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
         ParticipantGridCellViewModel(compositeViewModelFactory: self, participantModel: participantModel)
     }
     func makeParticipantGridsViewModel() -> ParticipantGridViewModel {
-        ParticipantGridViewModel(compositeViewModelFactory: self)
+        ParticipantGridViewModel(compositeViewModelFactory: self,
+                                 localizationProvider: localizationProvider)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {

@@ -7,16 +7,20 @@ import Foundation
 import Combine
 
 class ParticipantGridViewModel: ObservableObject {
-    private let maximumParticipantsDisplayed: Int = 6
-    private var lastUpdateTimeStamp = Date()
     private let compositeViewModelFactory: CompositeViewModelFactory
+    private let localizationProvider: LocalizationProvider
+    private let maximumParticipantsDisplayed: Int = 6
+
+    private var lastUpdateTimeStamp = Date()
     private(set) var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
 
     @Published var gridsCount: Int = 0
     @Published var displayedParticipantInfoModelArr: [ParticipantInfoModel] = []
 
-    init(compositeViewModelFactory: CompositeViewModelFactory) {
+    init(compositeViewModelFactory: CompositeViewModelFactory,
+         localizationProvider: LocalizationProvider) {
         self.compositeViewModelFactory = compositeViewModelFactory
+        self.localizationProvider = localizationProvider
     }
 
     func update(callingState: CallingState,
@@ -151,16 +155,20 @@ class ParticipantGridViewModel: ObservableObject {
                                                                       addedModels: [ParticipantInfoModel]) {
         if !removedModels.isEmpty {
             if removedModels.count == 1 {
-                AccessibilityProvider.postQueuedAnnouncement("\(removedModels.first!.displayName) left the meeting")
+                AccessibilityProvider.postQueuedAnnouncement(
+                    localizationProvider.getLocalizedString(.onePersonLeft, removedModels.first!.displayName))
             } else {
-                AccessibilityProvider.postQueuedAnnouncement("\(removedModels.count) participants left the meeting")
+                AccessibilityProvider.postQueuedAnnouncement(
+                    localizationProvider.getLocalizedString(.multiplePeopleLeft, removedModels.count))
             }
         }
         if !addedModels.isEmpty {
             if addedModels.count == 1 {
-                AccessibilityProvider.postQueuedAnnouncement("\(addedModels.first!.displayName) joined the meeting")
+                AccessibilityProvider.postQueuedAnnouncement(
+                    localizationProvider.getLocalizedString(.onePersonJoined, addedModels.first!.displayName))
             } else {
-                AccessibilityProvider.postQueuedAnnouncement("\(addedModels.count) participants joined the meeting")
+                AccessibilityProvider.postQueuedAnnouncement(
+                    localizationProvider.getLocalizedString(.multiplePeopleJoined, addedModels.count))
             }
         }
     }
