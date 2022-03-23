@@ -117,6 +117,7 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel {
         LocalVideoViewModel(compositeViewModelFactory: self,
                             logger: logger,
+                            localizationProvider: localizationProvider,
                             dispatchAction: dispatchAction)
     }
     func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
@@ -149,6 +150,7 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
                                  localUserState: LocalUserState) -> ControlBarViewModel {
         ControlBarViewModel(compositeViewModelFactory: self,
                             logger: logger,
+                            localizationProvider: localizationProvider,
                             dispatchAction: dispatchAction,
                             endCallConfirm: endCallConfirm,
                             localUserState: localUserState)

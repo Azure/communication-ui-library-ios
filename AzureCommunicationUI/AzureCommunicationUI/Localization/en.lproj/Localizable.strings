@@ -17,13 +17,13 @@
 "AzureCommunicationUI.SetupView.Button.JoinCall"="Join call";
 "AzureCommunicationUI.SetupView.Button.JoiningCall"="Joining calling...";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="Video off";
-"AzureCommunicationUI.SetupView.Button.VideoOff.AccessibilityLabel"="Turn Camera off";
+"AzureCommunicationUI.SetupView.Button.VideoOff.AccessibilityLabel"="Turn Camera On";
 "AzureCommunicationUI.SetupView.Button.VideoOn"="Video on";
-"AzureCommunicationUI.SetupView.Button.VideoOn.AccessibilityLabel"="Turn Camera On";
+"AzureCommunicationUI.SetupView.Button.VideoOn.AccessibilityLabel"="Turn Camera Off";
 "AzureCommunicationUI.SetupView.Button.MicOff"="Mic off";
-"AzureCommunicationUI.SetupView.Button.MicOff.AccessibilityLabel"="Mute";
+"AzureCommunicationUI.SetupView.Button.MicOff.AccessibilityLabel"="Unmute";
 "AzureCommunicationUI.SetupView.Button.MicOn"="Mic on";
-"AzureCommunicationUI.SetupView.Button.MicOn.AccessibilityLabel"="Unmute";
+"AzureCommunicationUI.SetupView.Button.MicOn.AccessibilityLabel"="Mute";
 "AzureCommunicationUI.SetupView.Button.Device"="Device";
 "AzureCommunicationUI.SetupView.Button.Device.AccessibilityLabel"="Audio device";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Your camera is disabled. To enable, please go to Settings to allow access.";
@@ -41,6 +41,9 @@
 
 "AzureCommunicationUI.CallingView.ParticipantDrawer.Unnamed"="Unnamed Participant";
 "AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"="%@ (You)"; // %@ is local participant name
+
+"AzureCommunicationUI.CallingView.SwitchCamera.Front"="Switch to back camera";
+"AzureCommunicationUI.CallingView.SwitchCamera.Back"="Switch to front camera";
 
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Leave call";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="Cancel";

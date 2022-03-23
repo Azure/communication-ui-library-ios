@@ -48,6 +48,9 @@ enum LocalizationKey: String {
     case localeParticipantWithSuffix =
             "AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"
 
+    case frontCamera = "AzureCommunicationUI.CallingView.SwitchCamera.Front"
+    case backCamera = "AzureCommunicationUI.CallingView.SwitchCamera.Back"
+
     case leaveCall = "AzureCommunicationUI.CallingView.Overlay.LeaveCall"
     case cancel = "AzureCommunicationUI.CallingView.Overlay.Cancel"
 
