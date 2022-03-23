@@ -443,7 +443,8 @@ extension ParticipantGridViewModelTests {
             }
             return nil
         }
-        return ParticipantGridViewModel(compositeViewModelFactory: factoryMocking)
+        return ParticipantGridViewModel(compositeViewModelFactory: factoryMocking,
+        localizationProvider: LocalizationProviderMocking())
     }
 
     func makeRemoteParticipantState(count: Int = 1,

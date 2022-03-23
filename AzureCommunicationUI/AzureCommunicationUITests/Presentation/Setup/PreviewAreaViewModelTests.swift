@@ -133,6 +133,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let localUserState = LocalUserState(displayName: "UpdatedDisplayName")
         factoryMocking.localVideoViewModel = LocalVideoViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                         logger: logger,
+                                                                        localizationProvider: localizationProvider,
                                                                         dispatchAction: storeFactory.store.dispatch,
                                                                         updateState: { localState in
             XCTAssertEqual(localUserState.displayName, localState.displayName)

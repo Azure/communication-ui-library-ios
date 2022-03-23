@@ -361,7 +361,7 @@ class SetupControlBarViewModelTests: XCTestCase {
 
     func test_setupControlBarViewModel_display_videoButtonLabel__from_LocalizationMocking() {
         let expectation = XCTestExpectation(description: "CameraButtonViewModel button info is updated")
-        let updateButtonInfoCompletion: ((CompositeIcon, String) -> Void) = { icon, label in
+        let updateButtonInfoCompletion: ((CompositeIcon?, String?) -> Void) = { icon, label in
             XCTAssertEqual(icon, .videoOn)
             XCTAssertEqual(label, "AzureCommunicationUI.SetupView.Button.VideoOn")
             expectation.fulfill()
