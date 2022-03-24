@@ -17,6 +17,7 @@ class CallingViewModel: ObservableObject {
     private let logger: Logger
     private let store: Store<AppState>
     private let localizationProvider: LocalizationProvider
+    private let accessibilityProvider: AccessibilityProvider
     private var cancellables = Set<AnyCancellable>()
 
     var controlBarViewModel: ControlBarViewModel!
@@ -28,12 +29,14 @@ class CallingViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
          store: Store<AppState>,
-         localizationProvider: LocalizationProvider) {
+         localizationProvider: LocalizationProvider,
+         accessibilityProvider: AccessibilityProvider) {
         self.logger = logger
         self.compositeViewModelFactory = compositeViewModelFactory
         self.store = store
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
+        self.accessibilityProvider = accessibilityProvider
         let actionDispatch: ActionDispatch = store.dispatch
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel()
@@ -124,7 +127,8 @@ class CallingViewModel: ObservableObject {
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState)
         infoHeaderViewModel.update(localUserState: state.localUserState,
-                                   remoteParticipantsState: state.remoteParticipantsState)
+                                   remoteParticipantsState: state.remoteParticipantsState,
+                                   callingState: state.callingState)
         localVideoViewModel.update(localUserState: state.localUserState)
         participantGridsViewModel.update(callingState: state.callingState,
                                          remoteParticipantsState: state.remoteParticipantsState)
@@ -139,6 +143,7 @@ class CallingViewModel: ObservableObject {
         let shouldLobbyOverlayDisplayed = state.callingState.status == .inLobby
         if shouldLobbyOverlayDisplayed != isLobbyOverlayDisplayed {
             isLobbyOverlayDisplayed = shouldLobbyOverlayDisplayed
+            accessibilityProvider.moveFocusToFirstElement()
         }
     }
 }

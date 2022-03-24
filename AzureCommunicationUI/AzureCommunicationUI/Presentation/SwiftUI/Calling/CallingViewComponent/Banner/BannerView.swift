@@ -20,7 +20,7 @@ struct BannerView: View {
                     .accessibility(sortPriority: 1)
             }
             .background(Color(StyleProvider.color.backgroundColor))
-            .accessibility(sortPriority: 1)
+            .accessibility(sortPriority: 2)
         } else {
             Spacer()
                 .frame(height: 8)

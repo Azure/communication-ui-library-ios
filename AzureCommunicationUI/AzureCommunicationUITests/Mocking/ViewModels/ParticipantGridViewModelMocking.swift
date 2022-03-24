@@ -10,9 +10,11 @@ class ParticipantGridViewModelMocking: ParticipantGridViewModel {
     private let updateState: ((CallingState, RemoteParticipantsState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
+         accessibilityProvider: AccessibilityProvider,
          updateState: ((CallingState, RemoteParticipantsState) -> Void)? = nil) {
         self.updateState = updateState
-        super.init(compositeViewModelFactory: compositeViewModelFactory)
+        super.init(compositeViewModelFactory: compositeViewModelFactory,
+                   accessibilityProvider: accessibilityProvider)
     }
 
     override func update(callingState: CallingState,

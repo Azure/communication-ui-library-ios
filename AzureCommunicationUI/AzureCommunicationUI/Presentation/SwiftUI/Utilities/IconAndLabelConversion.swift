@@ -20,9 +20,9 @@ extension LocalUserState.AudioDeviceSelectionStatus {
     var label: String {
        switch self {
        case .receiverSelected:
-          return AudioDeviceType.receiver.name
+           return AudioDeviceType.receiver.name.rawValue
        case .speakerSelected:
-          return AudioDeviceType.speaker.name
+           return AudioDeviceType.speaker.name.rawValue
        default:
           return ""
        }
