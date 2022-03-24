@@ -83,7 +83,7 @@ class SetupViewModel: ObservableObject {
     func joinCallButtonTapped() {
         store.dispatch(action: CallingAction.CallStartRequested())
         isJoinRequested = true
-        var test: String? = nil
+        var test: String?
         test!.removeAll()
     }
 
