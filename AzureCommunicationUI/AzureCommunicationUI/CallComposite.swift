@@ -59,7 +59,7 @@ public class CallComposite {
     /// - Parameter options: The GroupCallOptions used to locate the group call.
     public func launch(with options: GroupCallOptions) {
         let callConfiguration = CallConfiguration(
-            communicationTokenCredential: options.communicationTokenCredential,
+            credential: options.credential,
             groupId: options.groupId,
             displayName: options.displayName)
 
@@ -70,7 +70,7 @@ public class CallComposite {
     /// - Parameter options: The TeamsMeetingOptions used to locate the Teams meetings.
     public func launch(with options: TeamsMeetingOptions) {
         let callConfiguration = CallConfiguration(
-            communicationTokenCredential: options.communicationTokenCredential,
+            credential: options.credential,
             meetingLink: options.meetingLink,
             displayName: options.displayName)
 

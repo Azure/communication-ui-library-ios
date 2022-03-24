@@ -47,7 +47,7 @@ struct SettingsView: View {
             HStack {
                 Text("Language: ")
                 Spacer()
-                Button("\(envConfigSubject.languageCode)") {
+                Button("\(envConfigSubject.languageCode.description)") {
                     self.isLocalePickerDisplayed.toggle()
                 }
                 .padding(.horizontal, horizontalPadding)
@@ -68,9 +68,9 @@ struct SettingsView: View {
 }
 
 struct LocalePicker: View {
-    @Binding var selection: String
+    @Binding var selection: LanguageCode
     @Binding var isShowing: Bool
-    let supportedLanguage: [String] = LocalizationConfiguration.getSupportedLanguages()
+    let supportedLanguage: [LanguageCode] = LocalizationConfiguration.supportedLanguages
 
     var body: some View {
         VStack {
@@ -83,7 +83,7 @@ struct LocalePicker: View {
             }
             Picker("Language", selection: $selection) {
                 ForEach(supportedLanguage, id: \.self) {
-                    Text($0)
+                    Text($0.description)
                 }
             }
             .pickerStyle(.wheel)

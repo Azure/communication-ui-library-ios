@@ -10,7 +10,7 @@ import AzureCommunicationCommon
 public struct TeamsMeetingOptions {
 
     /// The token credential used for communication service authentication.
-    public let communicationTokenCredential: CommunicationTokenCredential
+    public let credential: CommunicationTokenCredential
 
     /// The URI of the Team's meeting.
     public let meetingLink: String
@@ -22,24 +22,24 @@ public struct TeamsMeetingOptions {
 
     /// Create an instance of a TeamsMeetingOptions with options.
     /// - Parameters:
-    ///   - communicationTokenCredential: The credential used for Azure Communication Service authentication.
+    ///   - credential: The credential used for Azure Communication Service authentication.
     ///   - meetingLink: A string representing the full URI of the teams meeting to join.
     ///   - displayName: The display name of the local participant for the call. The limit for string length is 256.
     public init(communicationTokenCredential: CommunicationTokenCredential,
                 meetingLink: String,
                 displayName: String) {
-        self.communicationTokenCredential = communicationTokenCredential
+        self.credential = communicationTokenCredential
         self.meetingLink = meetingLink
         self.displayName = displayName
     }
 
     /// Create an instance of a TeamsMeetingOptions with options.
     /// - Parameters:
-    ///   - communicationTokenCredential: The credential used for Azure Communication Service authentication.
+    ///   - credential: The credential used for Azure Communication Service authentication.
     ///   - meetingLink: A string representing the full URI of the teams meeting to join.
     public init(communicationTokenCredential: CommunicationTokenCredential,
                 meetingLink: String) {
-        self.communicationTokenCredential = communicationTokenCredential
+        self.credential = communicationTokenCredential
         self.meetingLink = meetingLink
         self.displayName = nil
     }

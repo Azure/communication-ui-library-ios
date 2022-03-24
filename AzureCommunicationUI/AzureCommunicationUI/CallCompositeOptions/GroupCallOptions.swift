@@ -10,7 +10,7 @@ import AzureCommunicationCommon
 public struct GroupCallOptions {
 
     /// The token credential used for communication service authentication.
-    public let communicationTokenCredential: CommunicationTokenCredential
+    public let credential: CommunicationTokenCredential
 
     /// The unique identifier for the group conversation.
     public let groupId: UUID
@@ -22,24 +22,24 @@ public struct GroupCallOptions {
 
     /// Create an instance of a GroupCallOptions with options.
     /// - Parameters:
-    ///   - communicationTokenCredential: The credential used for Azure Communication Service authentication.
+    ///   - credential: The credential used for Azure Communication Service authentication.
     ///   - groupId: The unique identifier for joining a specific group conversation.
     ///   - displayName: The display name of the local participant for the call. The limit for string length is 256.
     public init(communicationTokenCredential: CommunicationTokenCredential,
                 groupId: UUID,
                 displayName: String) {
-        self.communicationTokenCredential = communicationTokenCredential
+        self.credential = communicationTokenCredential
         self.groupId = groupId
         self.displayName = displayName
     }
 
     /// Create an instance of a GroupCallOptions with options.
     /// - Parameters:
-    ///   - communicationTokenCredential: The credential used for Azure Communication Service authentication.
+    ///   - credential: The credential used for Azure Communication Service authentication.
     ///   - groupId: The unique identifier for joining a specific group conversation.
     public init(communicationTokenCredential: CommunicationTokenCredential,
                 groupId: UUID) {
-        self.communicationTokenCredential = communicationTokenCredential
+        self.credential = communicationTokenCredential
         self.groupId = groupId
         self.displayName = nil
     }

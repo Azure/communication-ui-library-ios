@@ -22,7 +22,7 @@ class LocalizationProviderTests: XCTestCase {
         let localeConfig = LocalizationConfiguration(languageCode: languageCode,
                                                      isRightToLeft: isRTL)
         sut.apply(localeConfig: localeConfig)
-        XCTAssertTrue(sut.isRightToLeft)
+        XCTAssertTrue(sut.layoutDirection)
     }
 
     func test_localizationProvider_isRightToLeft_when_applyRTLFalse_then_shouldRTLReturnFalse() {
@@ -32,7 +32,7 @@ class LocalizationProviderTests: XCTestCase {
         let localeConfig = LocalizationConfiguration(languageCode: languageCode,
                                                      isRightToLeft: isRTL)
         sut.apply(localeConfig: localeConfig)
-        XCTAssertFalse(sut.isRightToLeft)
+        XCTAssertFalse(sut.layoutDirection)
     }
 
     func test_localizationProvider_getSupportedLanguages_then_shouldReturnLanguages() {
