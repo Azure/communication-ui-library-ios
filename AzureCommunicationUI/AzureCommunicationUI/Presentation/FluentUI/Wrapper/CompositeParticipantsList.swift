@@ -12,7 +12,6 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
     @Binding var isVoiceOverEnabled: Bool
     @ObservedObject var viewModel: ParticipantsListViewModel
     let sourceView: UIView
-    let localizationProvider: LocalizationProvider
 
     func makeCoordinator() -> Coordinator {
         Coordinator(isPresented: $isPresented,
@@ -22,8 +21,7 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> DrawerContainerViewController<ParticipantsListCellViewModel> {
         let controller = ParticipantsListViewController(items: getParticipantsList(),
-                                                        sourceView: sourceView,
-                                                        localizationProvider: localizationProvider)
+                                                        sourceView: sourceView)
         controller.delegate = context.coordinator
         return controller
     }

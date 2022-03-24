@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum StringKey: String {
+enum LocalizationKey: String {
     /* Devices */
     case iOS = "AzureCommunicationUI.AudioDevice.DeviceDrawer.iOS"
     case speaker = "AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"

@@ -75,10 +75,6 @@ class InfoHeaderViewModel: ObservableObject {
         self.isInfoHeaderDisplayed ? hideInfoHeader() : displayWithTimer()
     }
 
-    func getLocalizationProvider() -> LocalizationProvider {
-        return localizationProvider
-    }
-
     func update(localUserState: LocalUserState,
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState) {

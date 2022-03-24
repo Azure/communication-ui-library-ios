@@ -10,8 +10,8 @@ protocol LocalizationProvider {
     var isRightToLeft: Bool { get }
     func apply(localeConfig: LocalizationConfiguration)
     func getSupportedLanguages() -> [String]
-    func getLocalizedString(_ key: StringKey) -> String
-    func getLocalizedString(_ key: StringKey, _ args: CVarArg...) -> String
+    func getLocalizedString(_ key: LocalizationKey) -> String
+    func getLocalizedString(_ key: LocalizationKey, _ args: CVarArg...) -> String
 }
 
 class AppLocalizationProvider: LocalizationProvider {
@@ -46,7 +46,7 @@ class AppLocalizationProvider: LocalizationProvider {
         return supportedLocales
     }
 
-    func getLocalizedString(_ key: StringKey) -> String {
+    func getLocalizedString(_ key: LocalizationKey) -> String {
         if let customTranslation = customTranslations[key.rawValue] {
             return customTranslation
         }
@@ -66,7 +66,7 @@ class AppLocalizationProvider: LocalizationProvider {
         return getPredefinedLocalizedString(key.rawValue)
     }
 
-    func getLocalizedString(_ key: StringKey, _ args: CVarArg...) -> String {
+    func getLocalizedString(_ key: LocalizationKey, _ args: CVarArg...) -> String {
         let stringFormat = getLocalizedString(key)
         return String(format: stringFormat, arguments: args)
     }

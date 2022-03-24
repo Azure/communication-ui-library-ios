@@ -12,6 +12,7 @@ struct ContainerView: View {
     let logger: Logger
     let viewFactory: CompositeViewFactory
     let setupViewOrientationMask: UIInterfaceOrientationMask = .portrait
+    let isRightToLeft: Bool
 
     var body: some View {
         Group {
@@ -26,6 +27,7 @@ struct ContainerView: View {
                     .accessibility(addTraits: .isModal)
             }
         }
+        .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
     }
 
     var setupView: SetupView {

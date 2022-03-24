@@ -99,12 +99,12 @@
 		505460EE27BAC72100040467 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 505460F027BAC72100040467 /* Localizable.strings */; };
 		5054610227C5977A00040467 /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054610127C5977A00040467 /* LocalizationProvider.swift */; };
 		5054610427C59AD700040467 /* LocalizationConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054610327C59AD700040467 /* LocalizationConfiguration.swift */; };
+		5082C9CEF7CF0B6EAE66E0DB /* Pods_AzureCommunicationUI_AzureCommunicationUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEAA7B30BA59A234786A35F9 /* Pods_AzureCommunicationUI_AzureCommunicationUITests.framework */; };
 		50B390D127D82D7E0010A2ED /* LocalizationProviderMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D027D82D7E0010A2ED /* LocalizationProviderMocking.swift */; };
-		50B390D327D834FE0010A2ED /* StringKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D227D834FE0010A2ED /* StringKeys.swift */; };
+		50B390D327D834FE0010A2ED /* LocalizationKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D227D834FE0010A2ED /* LocalizationKey.swift */; };
 		50B390D627D915F00010A2ED /* LocalizationProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D527D915EF0010A2ED /* LocalizationProviderTests.swift */; };
 		50B390D827D976930010A2ED /* JoiningCallActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D727D976930010A2ED /* JoiningCallActivityViewModel.swift */; };
 		50B390DA27DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D927DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift */; };
-		5082C9CEF7CF0B6EAE66E0DB /* Pods_AzureCommunicationUI_AzureCommunicationUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEAA7B30BA59A234786A35F9 /* Pods_AzureCommunicationUI_AzureCommunicationUITests.framework */; };
 		50C6DECC270E48BE0085D04B /* BannerInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C6DECB270E48BE0085D04B /* BannerInfoType.swift */; };
 		50C6DECF270E4F020085D04B /* BannerInfoTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C6DECE270E4F020085D04B /* BannerInfoTypeTests.swift */; };
 		50E2D68926D9495B006B0EF4 /* InfoHeaderViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */; };
@@ -342,7 +342,7 @@
 		5054610127C5977A00040467 /* LocalizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProvider.swift; sourceTree = "<group>"; };
 		5054610327C59AD700040467 /* LocalizationConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationConfiguration.swift; sourceTree = "<group>"; };
 		50B390D027D82D7E0010A2ED /* LocalizationProviderMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProviderMocking.swift; sourceTree = "<group>"; };
-		50B390D227D834FE0010A2ED /* StringKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringKeys.swift; sourceTree = "<group>"; };
+		50B390D227D834FE0010A2ED /* LocalizationKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationKey.swift; sourceTree = "<group>"; };
 		50B390D527D915EF0010A2ED /* LocalizationProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProviderTests.swift; sourceTree = "<group>"; };
 		50B390D727D976930010A2ED /* JoiningCallActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoiningCallActivityViewModel.swift; sourceTree = "<group>"; };
 		50B390D927DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoiningCallActivityViewModelTests.swift; sourceTree = "<group>"; };
@@ -735,7 +735,7 @@
 				1B70D52727191073007CC933 /* DeviceExtension.swift */,
 				1B79BD4F273F2D87002D5A36 /* UIViewControllerExtension.swift */,
 				883D12D92784F0B1005021E2 /* StringConstants.swift */,
-				50B390D227D834FE0010A2ED /* StringKeys.swift */,
+				50B390D227D834FE0010A2ED /* LocalizationKey.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1503,7 +1503,7 @@
 				A874EDCA266167E5003C7D92 /* LifeCycleReducer.swift in Sources */,
 				1FBCB6D72654765D00F57EEA /* LocalUserState.swift in Sources */,
 				1F94DAE82676885700691D1E /* AppStateReducer.swift in Sources */,
-				50B390D327D834FE0010A2ED /* StringKeys.swift in Sources */,
+				50B390D327D834FE0010A2ED /* LocalizationKey.swift in Sources */,
 				1F2BED68262F86F400D98266 /* SetupViewModel.swift in Sources */,
 				98B1869D27C858D500B837E6 /* CompositeAudioDevicesListCell.swift in Sources */,
 				9885BA0726A2116200CC514B /* SetupControlBarViewModel.swift in Sources */,

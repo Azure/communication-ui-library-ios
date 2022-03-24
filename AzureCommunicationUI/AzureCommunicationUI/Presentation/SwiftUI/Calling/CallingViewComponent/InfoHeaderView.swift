@@ -65,8 +65,7 @@ struct InfoHeaderView: View {
                                   isInfoHeaderDisplayed: $viewModel.isInfoHeaderDisplayed,
                                   isVoiceOverEnabled: $viewModel.isVoiceOverEnabled,
                                   viewModel: viewModel.participantsListViewModel,
-                                  sourceView: participantsListButtonSourceView,
-                                  localizationProvider: viewModel.getLocalizationProvider())
+                                  sourceView: participantsListButtonSourceView)
             .modifier(LockPhoneOrientation())
     }
 }
