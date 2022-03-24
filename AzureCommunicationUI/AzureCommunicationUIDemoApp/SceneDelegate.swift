@@ -15,7 +15,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else {
             return
         }
-        let entryViewController = EntryViewController(envConfigSubject: envConfigSubject)
+        let entryViewController = EntryViewController(envConfigSubject: (UIApplication.shared.delegate as! AppDelegate).envConfigSubject)
         let rootNavController = UINavigationController(rootViewController: entryViewController)
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = rootNavController
@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Handle deep link jump from re-launch
         let urlContexts = connectionOptions.urlContexts
         if let queryDict = urlContexts.first?.url.toQueryDictionary() {
-            envConfigSubject.update(from: queryDict)
+            (UIApplication.shared.delegate as! AppDelegate).envConfigSubject.update(from: queryDict)
         }
 
     }
@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                openURLContexts URLContexts: Set<UIOpenURLContext>) {
 
         if let queryDict = URLContexts.first?.url.toQueryDictionary() {
-            envConfigSubject.update(from: queryDict)
+            (UIApplication.shared.delegate as! AppDelegate).envConfigSubject.update(from: queryDict)
         }
     }
 }
