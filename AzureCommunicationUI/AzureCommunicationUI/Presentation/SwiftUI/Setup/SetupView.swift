@@ -54,7 +54,7 @@ struct SetupView: View {
     var errorInfoView: some View {
         VStack {
             Spacer()
-            ErrorInfoView(viewModel: viewModel.errorInfoViewModel!)
+            ErrorInfoView(viewModel: viewModel.errorInfoViewModel)
                 .padding(EdgeInsets(top: 0,
                                     leading: errorHorizontalPadding,
                                     bottom: startCallButtonHeight + layoutSpacing,
