@@ -40,6 +40,8 @@
 	<array>
 		<string>audio</string>
 	</array>
+	<key>appCenterSecret</key>
+	<string>${appCenterSecret}</string>
 	<key>acsToken</key>
 	<string>${acsToken}</string>
 	<key>acsTokenUrl</key>

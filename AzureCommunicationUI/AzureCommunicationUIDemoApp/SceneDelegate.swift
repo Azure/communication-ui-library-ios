@@ -7,9 +7,7 @@ import UIKit
 import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
-
     var window: UIWindow?
-    let envConfigSubject = EnvConfigSubject()
 
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,

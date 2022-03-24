@@ -17,7 +17,7 @@ class SetupViewModel: ObservableObject {
     let isRightToLeft: Bool
 
     let previewAreaViewModel: PreviewAreaViewModel
-    var errorInfoViewModel: ErrorInfoViewModel
+    var errorInfoViewModel: ErrorInfoViewModel?
     var dismissButtonViewModel: IconButtonViewModel!
     var joinCallButtonViewModel: PrimaryButtonViewModel!
     var setupControlBarViewModel: SetupControlBarViewModel!
@@ -33,7 +33,9 @@ class SetupViewModel: ObservableObject {
         self.logger = logger
         self.previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
         self.joiningCallActivityViewModel = compositeViewModelFactory.makeJoiningCallActivityViewModel()
-        self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
+//        self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
+        self.errorInfoViewModel = nil
+        self.errorInfoViewModel!.isDisplayed = true
         self.joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: self.localizationProvider
@@ -109,6 +111,6 @@ class SetupViewModel: ObservableObject {
                                         callingState: callingState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
 
-        errorInfoViewModel.update(errorState: state.errorState)
+        errorInfoViewModel!.update(errorState: state.errorState)
     }
 }
