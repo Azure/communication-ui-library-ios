@@ -17,7 +17,7 @@ class ErrorInfoViewModelTests: XCTestCase {
         localizationProvier = LocalizationProviderMocking()
     }
 
-    func test_dismissContent_alwaysReturns_snackBarDismissCintent() {
+    func test_dismissContent_alwaysReturns_snackBarDismissContent() {
         let sut = makeSUT()
 
         XCTAssertEqual(sut.dismissContent, "AzureCommunicationUI.SnackBar.Button.Dismiss")
