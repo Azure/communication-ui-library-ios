@@ -24,7 +24,7 @@ class ErrorInfoViewModel: ObservableObject {
     func update(errorState: ErrorState) {
         let errorType = errorState.error?.code ?? ""
         guard errorType != previousErrorType else {
-                  return
+            return
         }
 
         previousErrorType = errorState.error?.code ?? ""
