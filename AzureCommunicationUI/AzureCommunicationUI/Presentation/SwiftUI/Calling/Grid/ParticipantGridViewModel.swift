@@ -9,6 +9,8 @@ import Combine
 class ParticipantGridViewModel: ObservableObject {
     private let compositeViewModelFactory: CompositeViewModelFactory
     private let localizationProvider: LocalizationProvider
+    private let accessibilityProvider: AccessibilityProvider
+
     private let maximumParticipantsDisplayed: Int = 6
 
     private var lastUpdateTimeStamp = Date()
@@ -18,9 +20,11 @@ class ParticipantGridViewModel: ObservableObject {
     @Published var displayedParticipantInfoModelArr: [ParticipantInfoModel] = []
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
-         localizationProvider: LocalizationProvider) {
+         localizationProvider: LocalizationProvider,
+		 accessibilityProvider: AccessibilityProvider) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
+        self.accessibilityProvider = accessibilityProvider
     }
 
     func update(callingState: CallingState,
@@ -155,19 +159,19 @@ class ParticipantGridViewModel: ObservableObject {
                                                                       addedModels: [ParticipantInfoModel]) {
         if !removedModels.isEmpty {
             if removedModels.count == 1 {
-                AccessibilityProvider.postQueuedAnnouncement(
+                accessibilityProvider.postQueuedAnnouncement(
                     localizationProvider.getLocalizedString(.onePersonLeft, removedModels.first!.displayName))
             } else {
-                AccessibilityProvider.postQueuedAnnouncement(
+                accessibilityProvider.postQueuedAnnouncement(
                     localizationProvider.getLocalizedString(.multiplePeopleLeft, removedModels.count))
             }
         }
         if !addedModels.isEmpty {
             if addedModels.count == 1 {
-                AccessibilityProvider.postQueuedAnnouncement(
+                accessibilityProvider.postQueuedAnnouncement(
                     localizationProvider.getLocalizedString(.onePersonJoined, addedModels.first!.displayName))
             } else {
-                AccessibilityProvider.postQueuedAnnouncement(
+                accessibilityProvider.postQueuedAnnouncement(
                     localizationProvider.getLocalizedString(.multiplePeopleJoined, addedModels.count))
             }
         }

@@ -148,10 +148,17 @@ class CallingViewModelTests: XCTestCase {
 
     func test_callingViewModel_receive_when_statusUpdated_then_infoHeaderViewModelUpdated() {
         let expectation = XCTestExpectation(description: "InfoHeaderViewModel is updated")
-        let appState = AppState(localUserState: LocalUserState(displayName: "DisplayName"))
-        let sut = makeSUT(updateInfoHeaderViewModel: { userState, remoteParticipantsState in
+        let date = Calendar.current.date(
+            byAdding: .minute,
+            value: -1,
+            to: Date())!
+        let appState = AppState(callingState: CallingState(status: .connected),
+                                localUserState: LocalUserState(displayName: "DisplayName"),
+                                remoteParticipantsState: RemoteParticipantsState(lastUpdateTimeStamp: date))
+        let sut = makeSUT(updateInfoHeaderViewModel: { userState, remoteParticipantsState, callingState in
             XCTAssertEqual(appState.localUserState.displayName, userState.displayName)
             XCTAssertEqual(appState.remoteParticipantsState.lastUpdateTimeStamp, remoteParticipantsState.lastUpdateTimeStamp)
+            XCTAssertEqual(appState.callingState.status, callingState.status)
             expectation.fulfill()
         })
         sut.receive(appState)
@@ -190,15 +197,29 @@ class CallingViewModelTests: XCTestCase {
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
+
+    func test_callingViewModel_receive_when_callingStateStatusUpdated_then_accessibilityFocusUpdated() {
+        let expectation = XCTestExpectation(description: "Accessibility focus is updated")
+        let appState = AppState(callingState: CallingState(status: .inLobby))
+        let accessibilityProvider = AccessibilityProviderMocking()
+        accessibilityProvider.moveFocusToFirstElementBlock = {
+            expectation.fulfill()
+        }
+        let sut = makeSUT(accessibilityProvider: accessibilityProvider)
+        sut.receive(appState)
+        wait(for: [expectation], timeout: timeout)
+    }
 }
 
 extension CallingViewModelTests {
-    func makeSUT(storeFactory: StoreFactoryMocking = StoreFactoryMocking()) -> CallingViewModel {
+    func makeSUT(storeFactory: StoreFactoryMocking = StoreFactoryMocking(),
+                 accessibilityProvider: AccessibilityProvider = AppAccessibilityProvider()) -> CallingViewModel {
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
-                                localizationProvider: AppLocalizationProvider(logger: logger))
+                                localizationProvider: AppLocalizationProvider(logger: logger),
+                                accessibilityProvider: accessibilityProvider)
     }
 
     func makeSUTLocalizationMocking(storeFactory: StoreFactoryMocking = StoreFactoryMocking()) -> CallingViewModel {
@@ -206,7 +227,8 @@ extension CallingViewModelTests {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
-                                localizationProvider: localizationProvider)
+                                localizationProvider: localizationProvider,
+                                accessibilityProvider: AppAccessibilityProvider())
     }
 
     func makeSUT(updateControlBarViewModel: @escaping ((LocalUserState, PermissionState) -> Void)) -> CallingViewModel {
@@ -222,20 +244,23 @@ extension CallingViewModelTests {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
-                                localizationProvider: LocalizationProviderMocking())
+                                localizationProvider: LocalizationProviderMocking(),
+                                accessibilityProvider: AppAccessibilityProvider())
     }
 
-    func makeSUT(updateInfoHeaderViewModel: @escaping ((LocalUserState, RemoteParticipantsState) -> Void)) -> CallingViewModel {
+    func makeSUT(updateInfoHeaderViewModel: @escaping ((LocalUserState, RemoteParticipantsState, CallingState) -> Void)) -> CallingViewModel {
         let storeFactory = StoreFactoryMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         factoryMocking.infoHeaderViewModel = InfoHeaderViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                         logger: logger,
                                                                         localUserState: storeFactory.store.state.localUserState,
+                                                                        accessibilityProvider: AccessibilityProviderMocking(),
                                                                         updateState: updateInfoHeaderViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
-                                localizationProvider: LocalizationProviderMocking())
+                                localizationProvider: LocalizationProviderMocking(),
+                                accessibilityProvider: AppAccessibilityProvider())
     }
 
     func makeSUT(updateLocalVideoViewModel: @escaping ((LocalUserState) -> Void)) -> CallingViewModel {
@@ -244,12 +269,14 @@ extension CallingViewModelTests {
         factoryMocking.localVideoViewModel = LocalVideoViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                         logger: logger,
                                                                         localizationProvider: localizationProvider,
+																		accessibilityProvider: AccessibilityProviderMocking(),
                                                                         dispatchAction: storeFactory.store.dispatch,
                                                                         updateState: updateLocalVideoViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
-                                localizationProvider: LocalizationProviderMocking())
+                                localizationProvider: LocalizationProviderMocking(),
+                                accessibilityProvider: AppAccessibilityProvider())
     }
 
     func makeSUT(updateParticipantGridViewModel: @escaping ((CallingState, RemoteParticipantsState) -> Void)) -> CallingViewModel {
@@ -261,7 +288,8 @@ extension CallingViewModelTests {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
-                                localizationProvider: LocalizationProviderMocking())
+                                localizationProvider: LocalizationProviderMocking(),
+                                accessibilityProvider: AppAccessibilityProvider())
     }
 
     func makeSUT(updateBannerViewModel: @escaping ((CallingState) -> Void)) -> CallingViewModel {
@@ -272,7 +300,8 @@ extension CallingViewModelTests {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
-                                localizationProvider: LocalizationProviderMocking())
+                                localizationProvider: LocalizationProviderMocking(),
+                                accessibilityProvider: AppAccessibilityProvider())
     }
 
     func test_callingViewModel_update_when_callStatusIsConnected_appStateForeground_then_switchToBackground_shouldBecomeBackground() {

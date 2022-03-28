@@ -293,6 +293,99 @@ class ParticipantGridViewModelTests: XCTestCase {
         XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
     }
 
+    func test_participantGridsViewModel_updateParticipantsState_when_newParticipantsJoined_then_participantsJoinedAnnouncementPosted() {
+        let expectation = XCTestExpectation(description: "Announcement expection")
+        let state = makeRemoteParticipantState(count: 2)
+        let callingState = CallingState(status: .connected)
+        let accessibilityProvider = AccessibilityProviderMocking()
+        let expectedAnnouncement = "2 participants joined the meeting"
+        accessibilityProvider.postQueuedAnnouncementBlock = { message in
+            XCTAssertEqual(message, expectedAnnouncement)
+            expectation.fulfill()
+        }
+        let sut = makeSUT(accessibilityProvider: accessibilityProvider)
+        sut.update(callingState: callingState,
+                   remoteParticipantsState: state)
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_participantGridsViewModel_updateParticipantsState_when_newParticipantJoined_then_participantJoinedAnnouncementPosted() {
+        let expectation = XCTestExpectation(description: "Announcement expection")
+        let state = makeRemoteParticipantState(count: 1)
+        let callingState = CallingState(status: .connected)
+        let accessibilityProvider = AccessibilityProviderMocking()
+        let displayName = state.participantInfoList.first!.displayName
+        let expectedAnnouncement = "\(displayName) joined the meeting"
+        accessibilityProvider.postQueuedAnnouncementBlock = { message in
+            XCTAssertEqual(message, expectedAnnouncement)
+            expectation.fulfill()
+        }
+        let sut = makeSUT(accessibilityProvider: accessibilityProvider)
+        sut.update(callingState: callingState,
+                   remoteParticipantsState: state)
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_participantGridsViewModel_updateParticipantsState_when_participantsLeft_then_participantsLeftAnnouncementPosted() {
+        let expectation = XCTestExpectation(description: "Announcement expection")
+        let state = makeRemoteParticipantState(count: 4)
+        let callingState = CallingState(status: .connected)
+        let accessibilityProvider = AccessibilityProviderMocking()
+        let expectedAnnouncement = "2 participants left the meeting"
+        let sut = makeSUT(accessibilityProvider: accessibilityProvider)
+        sut.update(callingState: callingState,
+                   remoteParticipantsState: state)
+        accessibilityProvider.postQueuedAnnouncementBlock = { message in
+            XCTAssertEqual(message, expectedAnnouncement)
+            expectation.fulfill()
+        }
+        let updatedState = RemoteParticipantsState(participantInfoList: state.participantInfoList.dropLast(2),
+                                                   lastUpdateTimeStamp: Date())
+        sut.update(callingState: callingState,
+                   remoteParticipantsState: updatedState)
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_participantGridsViewModel_updateParticipantsState_when_participantLeft_then_participantLeftAnnouncementPosted() {
+        let expectation = XCTestExpectation(description: "Announcement expection")
+        let state = makeRemoteParticipantState(count: 1)
+        let callingState = CallingState(status: .connected)
+        let accessibilityProvider = AccessibilityProviderMocking()
+        let displayName = state.participantInfoList.first!.displayName
+        let expectedAnnouncement = "\(displayName) left the meeting"
+        let sut = makeSUT(accessibilityProvider: accessibilityProvider)
+        sut.update(callingState: callingState,
+                   remoteParticipantsState: state)
+        accessibilityProvider.postQueuedAnnouncementBlock = { message in
+            XCTAssertEqual(message, expectedAnnouncement)
+            expectation.fulfill()
+        }
+        let updatedState = RemoteParticipantsState(participantInfoList: state.participantInfoList.dropLast(2),
+                                                   lastUpdateTimeStamp: Date())
+        sut.update(callingState: callingState,
+                   remoteParticipantsState: updatedState)
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_participantGridsViewModel_updateParticipantsState_when_participantsListChanged_then_participantLeftAndJoinedAnnouncementPosted() {
+        let expectation = XCTestExpectation(description: "Announcement expection")
+        expectation.expectedFulfillmentCount = 2
+        expectation.assertForOverFulfill = true
+        let state = makeRemoteParticipantState(count: 2)
+        let callingState = CallingState(status: .connected)
+        let accessibilityProvider = AccessibilityProviderMocking()
+        let sut = makeSUT(accessibilityProvider: accessibilityProvider)
+        sut.update(callingState: callingState,
+                   remoteParticipantsState: state)
+        accessibilityProvider.postQueuedAnnouncementBlock = { _ in
+            expectation.fulfill()
+        }
+        let updatedState = makeRemoteParticipantState(count: 3)
+        sut.update(callingState: callingState,
+                   remoteParticipantsState: updatedState)
+        wait(for: [expectation], timeout: 1)
+    }
+
     // MARK: GridsViewType
     func test_participantGridsViewModel_init_then_gridsCountZero() {
         let expectation = XCTestExpectation(description: "subscription expection")
@@ -433,8 +526,10 @@ class ParticipantGridViewModelTests: XCTestCase {
 extension ParticipantGridViewModelTests {
     func makeSUT(participantGridCellViewUpdateCompletion: ((ParticipantInfoModel) -> Void)? = nil) -> ParticipantGridViewModel {
         let storeFactory = StoreFactoryMocking()
-
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
+        let accessibilityProvider = AppAccessibilityProvider()
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
+                                                              store: storeFactory.store,
+                                                              accessibilityProvider: accessibilityProvider)
         factoryMocking.createMockParticipantGridCellViewModel = { [unowned factoryMocking] infoModel in
             if let completion = participantGridCellViewUpdateCompletion {
                 return ParticipantGridCellViewModelMocking(compositeViewModelFactory: factoryMocking,
@@ -444,7 +539,17 @@ extension ParticipantGridViewModelTests {
             return nil
         }
         return ParticipantGridViewModel(compositeViewModelFactory: factoryMocking,
-        localizationProvider: LocalizationProviderMocking())
+        								localizationProvider: LocalizationProviderMocking(),
+                                        accessibilityProvider: accessibilityProvider)
+    }
+
+    func makeSUT(accessibilityProvider: AccessibilityProvider) -> ParticipantGridViewModel {
+        let storeFactory = StoreFactoryMocking()
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
+                                                              store: storeFactory.store,
+                                                              accessibilityProvider: accessibilityProvider)
+        return ParticipantGridViewModel(compositeViewModelFactory: factoryMocking,
+                                        accessibilityProvider: accessibilityProvider)
     }
 
     func makeRemoteParticipantState(count: Int = 1,
