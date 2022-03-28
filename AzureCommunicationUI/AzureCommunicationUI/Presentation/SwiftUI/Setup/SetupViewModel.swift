@@ -24,6 +24,8 @@ class SetupViewModel: ObservableObject {
     var joiningCallActivityViewModel: JoiningCallActivityViewModel!
     var cancellables = Set<AnyCancellable>()
 
+    @Published var isJoinRequested: Bool = false
+
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
          store: Store<AppState>,
