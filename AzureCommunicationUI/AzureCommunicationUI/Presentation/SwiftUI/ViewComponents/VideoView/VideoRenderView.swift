@@ -39,12 +39,11 @@ class VideoRendererUIView: UIView {
         for view in subviews {
             view.removeFromSuperview()
         }
+        // the frame should be updated manually
+        // as setting constrains may cause updateUIView(_ uiView: VideoRendererUIView, context: Context) call
+        rendererView.frame = self.frame
+        rendererView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(rendererView)
-        rendererView.translatesAutoresizingMaskIntoConstraints = false
-        rendererView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        rendererView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        rendererView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        rendererView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         self.rendererView = rendererView
     }
 }
