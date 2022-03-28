@@ -30,6 +30,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
 
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
     var createIconWithLabelButtonViewModel: ((CompositeIcon) -> IconWithLabelButtonViewModel?)?
+    var createIconButtonViewModel: ((CompositeIcon) -> IconButtonViewModel?)?
 
     init(logger: Logger,
          store: Store<AppState>) {
@@ -55,10 +56,10 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel {
-        return iconButtonViewModel ?? IconButtonViewModel(iconName: iconName,
-                                                          buttonType: buttonType,
-                                                          isDisabled: isDisabled,
-                                                          action: action)
+        return createIconButtonViewModel?(iconName) ?? IconButtonViewModel(iconName: iconName,
+                                                                           buttonType: buttonType,
+                                                                           isDisabled: isDisabled,
+                                                                           action: action)
     }
 
     func makeIconWithLabelButtonViewModel(iconName: CompositeIcon,
