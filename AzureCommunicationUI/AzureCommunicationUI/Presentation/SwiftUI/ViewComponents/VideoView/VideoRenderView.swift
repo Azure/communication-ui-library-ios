@@ -34,8 +34,8 @@ class VideoRendererUIView: UIView {
     func update(rendererView: UIView) {
         guard self.rendererView != rendererView
         else {
-            if self.rendererView?.frame != frame {
-                self.rendererView?.frame = frame
+            if self.rendererView?.frame != bounds {
+                self.rendererView?.frame = bounds
             }
             return
         }
@@ -46,7 +46,7 @@ class VideoRendererUIView: UIView {
         }
         // the frame should be updated manually
         // as setting constrains may cause updateUIView(_ uiView: VideoRendererUIView, context: Context) call
-        rendererView.frame = self.frame
+        rendererView.frame = bounds
         rendererView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(rendererView)
         self.rendererView = rendererView
