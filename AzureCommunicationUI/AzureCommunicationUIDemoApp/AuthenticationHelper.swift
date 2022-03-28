@@ -15,7 +15,10 @@ class AuthenticationHelper {
         struct UserAndTokenResponse: Decodable {
             let token: String
             let expiresOn: String?
-            let user: String?
+            let user: CommunicationUserIdResponse?
+        }
+        struct CommunicationUserIdResponse: Decodable {
+            let communicationUserId: String?
         }
         return { completionHandler in
             var urlRequest = URLRequest(url: tokenUrl, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
