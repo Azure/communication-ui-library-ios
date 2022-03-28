@@ -56,10 +56,6 @@ class InfoHeaderViewModel: ObservableObject {
         self.isInfoHeaderDisplayed ? hideInfoHeader() : displayWithTimer()
     }
 
-    func getLocalizationProvider() -> LocalizationProvider {
-        return localizationProvider
-    }
-
     func update(localUserState: LocalUserState, remoteParticipantsState: RemoteParticipantsState) {
         if participantsCount != remoteParticipantsState.participantInfoList.count {
             participantsCount = remoteParticipantsState.participantInfoList.count

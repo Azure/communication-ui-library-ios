@@ -60,8 +60,7 @@ struct InfoHeaderView: View {
         CompositeParticipantsList(isPresented: $viewModel.isParticipantsListDisplayed,
                                   isInfoHeaderDisplayed: $viewModel.isInfoHeaderDisplayed,
                                   viewModel: viewModel.participantsListViewModel,
-                                  sourceView: participantsListButtonSourceView,
-                                  localizationProvider: viewModel.getLocalizationProvider())
+                                  sourceView: participantsListButtonSourceView)
             .modifier(LockPhoneOrientation())
     }
 }
