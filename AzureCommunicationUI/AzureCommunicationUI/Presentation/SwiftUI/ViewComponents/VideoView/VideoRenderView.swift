@@ -33,7 +33,12 @@ class VideoRendererUIView: UIView {
 
     func update(rendererView: UIView) {
         guard self.rendererView != rendererView
-        else { return }
+        else {
+            if self.rendererView?.frame != frame {
+                self.rendererView?.frame = frame
+            }
+            return
+        }
 
         rendererView.removeFromSuperview()
         for view in subviews {
