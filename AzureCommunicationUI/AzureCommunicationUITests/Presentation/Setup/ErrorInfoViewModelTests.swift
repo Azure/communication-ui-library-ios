@@ -7,23 +7,20 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class ErrorInfoViewModelTests: XCTestCase {
-    private var storeFactory: StoreFactoryMocking!
     private var localizationProvier: LocalizationProviderMocking!
-    private let timeout: TimeInterval = 10.0
 
     override func setUp() {
         super.setUp()
-        storeFactory = StoreFactoryMocking()
         localizationProvier = LocalizationProviderMocking()
     }
 
-    func test_dismissContent_alwaysReturns_snackBarDismissContent() {
+    func test_errorInfoViewModel_dismissContent_alwaysReturns_snackBarDismissContent() {
         let sut = makeSUT()
 
         XCTAssertEqual(sut.dismissContent, "AzureCommunicationUI.SnackBar.Button.Dismiss")
     }
 
-    func test_errorCodeCallJoin_returns_snackBarErrorJoinCallMessage() {
+    func test_errorInfoViewModel_errorStateCallJoin_returns_snackBarErrorJoinCallMessage() {
         let sut = makeSUT()
         let event = ErrorEvent(code: CallCompositeErrorCode.callJoin)
         let state = ErrorState(error: event, errorCategory: .callState)
@@ -33,7 +30,7 @@ class ErrorInfoViewModelTests: XCTestCase {
         XCTAssertEqual(sut.message, "AzureCommunicationUI.SnackBar.Text.ErrorCallJoin")
     }
 
-    func test_errorCodeCallEnd_returns_snackBarErrorCallEndMessage() {
+    func test_errorInfoViewModel_errorStateCallEnd_returns_snackBarErrorCallEndMessage() {
         let sut = makeSUT()
         let event = ErrorEvent(code: CallCompositeErrorCode.callEnd)
         let state = ErrorState(error: event, errorCategory: .callState)
