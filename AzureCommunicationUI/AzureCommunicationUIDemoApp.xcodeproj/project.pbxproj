@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		1F18191727B39F36006AF3B3 /* XCUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18191627B39F36006AF3B3 /* XCUITestBase.swift */; };
 		1F18191A27B45050006AF3B3 /* XCUIElementExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18191927B45050006AF3B3 /* XCUIElementExtension.swift */; };
-		1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.swift */; };
+		1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift */; };
 		1F8881BF27909E08001427F0 /* AzureCommunicationUIDemoAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881BE27909E08001427F0 /* AzureCommunicationUIDemoAppUITestsLaunchTests.swift */; };
 		1F8881CA2798D5E7001427F0 /* TextFieldClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881C92798D5E7001427F0 /* TextFieldClearButton.swift */; };
 		1F8881CD279B456E001427F0 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881CC279B456E001427F0 /* Extension.swift */; };
@@ -61,7 +61,7 @@
 		1F18191627B39F36006AF3B3 /* XCUITestBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUITestBase.swift; sourceTree = "<group>"; };
 		1F18191927B45050006AF3B3 /* XCUIElementExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCUIElementExtension.swift; sourceTree = "<group>"; };
 		1F8881BA27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzureCommunicationUIDemoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppUITests.swift; sourceTree = "<group>"; };
+		1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppLaunchTests.swift; sourceTree = "<group>"; };
 		1F8881BE27909E08001427F0 /* AzureCommunicationUIDemoAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		1F8881C92798D5E7001427F0 /* TextFieldClearButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldClearButton.swift; sourceTree = "<group>"; };
 		1F8881CC279B456E001427F0 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 			isa = PBXGroup;
 			children = (
 				1F18191827B45050006AF3B3 /* Utilities */,
-				1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.swift */,
+				1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift */,
 				1F8881BE27909E08001427F0 /* AzureCommunicationUIDemoAppUITestsLaunchTests.swift */,
 				1FBA6B1B27B4F61A00FF3835 /* Info.plist */,
 			);
@@ -447,7 +447,7 @@
 				1F8881BF27909E08001427F0 /* AzureCommunicationUIDemoAppUITestsLaunchTests.swift in Sources */,
 				1F18191A27B45050006AF3B3 /* XCUIElementExtension.swift in Sources */,
 				1F18191727B39F36006AF3B3 /* XCUITestBase.swift in Sources */,
-				1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.swift in Sources */,
+				1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
