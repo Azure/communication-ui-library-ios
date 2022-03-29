@@ -5,37 +5,7 @@
 
 import XCTest
 
-class AzureCommunicationUIDemoAppUITests: XCUITestBase {
-
-    enum CompositeSampleInterface {
-        case swiftUI
-        case uiKit
-
-        var name: String {
-            switch self {
-            case .swiftUI:
-                return "Swift UI"
-            case .uiKit:
-                return "UI Kit"
-            }
-        }
-    }
-
-    enum CompositeMeetingType {
-        case groupCall
-        case teamsCall
-
-        var name: String {
-            switch self {
-            case .groupCall:
-                return "Group Call"
-            case .teamsCall:
-                return "Teams Meeting"
-            }
-        }
-    }
-
-    private var app: XCUIApplication?
+class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
     override func setUp() {
         super.setUp()
@@ -155,34 +125,6 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
 
     // MARK: Private / helper functions
 
-    private func tapInterfaceFor(_ interface: CompositeSampleInterface) {
-        app?.buttons[interface.name].tap()
-    }
-
-    private func tapMeetingType(_ meetingType: CompositeMeetingType) {
-        app?.buttons[meetingType.name].tap()
-    }
-
-    private func tapEnabledButton(buttonName: String, shouldWait: Bool) {
-        guard let button = app?.buttons[buttonName] else {
-            return
-        }
-        if shouldWait {
-            waitEnabled(for: button)
-        }
-        button.tap()
-    }
-
-    private func tapButton(buttonName: String, shouldWait: Bool) {
-        guard let button = app?.buttons[buttonName] else {
-            return
-        }
-        if shouldWait {
-            wait(for: button)
-        }
-        button.tap()
-    }
-
     /// Toggles the control views in the setup screen
     private func toggleSetupScreenControlButtons() {
         guard let app = app else {
@@ -218,9 +160,9 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
 
 }
 
-extension AzureCommunicationUIDemoAppUITests {
+extension AzureCommunicationUIDemoAppLaunchTests {
     private func getExpiredToken() -> String {
-        guard let infoDict = Bundle(for: AzureCommunicationUIDemoAppUITests.self).infoDictionary,
+        guard let infoDict = Bundle(for: AzureCommunicationUIDemoAppLaunchTests.self).infoDictionary,
               let value = infoDict["expiredAcsToken"] as? String, !value.isEmpty else {
                   XCTFail("Need to set expiredAcsToken value in AppConfig")
             return ""
