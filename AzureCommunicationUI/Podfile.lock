@@ -1,10 +1,6 @@
 PODS:
-  - AppCenter/Analytics (4.4.1):
-    - AppCenter/Core
   - AppCenter/Core (4.4.1)
   - AppCenter/Crashes (4.4.1):
-    - AppCenter/Core
-  - AppCenter/Distribute (4.4.1):
     - AppCenter/Core
   - AzureCommunicationCalling (2.2.0-beta.1):
     - AzureCommunicationCommon (~> 1.0.2)
@@ -45,9 +41,7 @@ PODS:
   - SwiftLint (0.42.0)
 
 DEPENDENCIES:
-  - AppCenter/Analytics
   - AppCenter/Crashes
-  - AppCenter/Distribute
   - AzureCommunicationCalling (= 2.2.0-beta.1)
   - MicrosoftFluentUI/ActivityIndicator_ios (= 0.3.9)
   - MicrosoftFluentUI/Avatar_ios (= 0.3.9)
@@ -71,6 +65,6 @@ SPEC CHECKSUMS:
   MicrosoftFluentUI: a1e8f35e43e615a3522c53492f1bc52e9d2a191e
   SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
 
-PODFILE CHECKSUM: 0f8e8612f69e0b1a3dd6f2a31f0fb5b3c73a9147
+PODFILE CHECKSUM: 07a4987221856036dda521a658f3e5acc070a301
 
 COCOAPODS: 1.11.2
