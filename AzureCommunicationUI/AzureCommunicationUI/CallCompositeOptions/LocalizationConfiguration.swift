@@ -40,7 +40,7 @@ public enum LanguageCode: Hashable {
     /// Creates an instance of `LanguageCode` with for language code.
     /// - Parameter rawValue: String representing the locale code (ie. en, fr,  zh-Hant, zh-Hans, ...).
     ///  If unsupported language is provided will create LanguageCode as`.custom(rawValue)`.
-    init(rawValue: String) {
+    public init(rawValue: String) {
         switch rawValue {
         case "de":
             self = .de
