@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B0D8DC627F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */; };
 		1F18191727B39F36006AF3B3 /* XCUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18191627B39F36006AF3B3 /* XCUITestBase.swift */; };
 		1F18191A27B45050006AF3B3 /* XCUIElementExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18191927B45050006AF3B3 /* XCUIElementExtension.swift */; };
 		1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift */; };
@@ -58,6 +59,7 @@
 
 /* Begin PBXFileReference section */
 		0883E4B2C59B676B35210362 /* Pods-AzureCommunicationUIDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp/Pods-AzureCommunicationUIDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
+		1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppCallTests.swift; sourceTree = "<group>"; };
 		1F18191627B39F36006AF3B3 /* XCUITestBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUITestBase.swift; sourceTree = "<group>"; };
 		1F18191927B45050006AF3B3 /* XCUIElementExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCUIElementExtension.swift; sourceTree = "<group>"; };
 		1F8881BA27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzureCommunicationUIDemoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,6 +127,7 @@
 			children = (
 				1F18191827B45050006AF3B3 /* Utilities */,
 				1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift */,
+				1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */,
 				1F8881BE27909E08001427F0 /* AzureCommunicationUIDemoAppUITestsLaunchTests.swift */,
 				1FBA6B1B27B4F61A00FF3835 /* Info.plist */,
 			);
@@ -447,6 +450,7 @@
 				1F8881BF27909E08001427F0 /* AzureCommunicationUIDemoAppUITestsLaunchTests.swift in Sources */,
 				1F18191A27B45050006AF3B3 /* XCUIElementExtension.swift in Sources */,
 				1F18191727B39F36006AF3B3 /* XCUITestBase.swift in Sources */,
+				1B0D8DC627F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift in Sources */,
 				1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
