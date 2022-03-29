@@ -123,11 +123,11 @@ public struct LocalizationConfiguration {
     /// - Parameter localizableFilename: Filename of the `.strings` file to override predefined
     ///  Call Composite's localization key or to provide translation for an custom language.
     ///  The keys of the string should match with the keys from AzureCommunicationUI
-    ///  localization keys. Default value is `""`.
+    ///  localization keys. Default value is `"Localizable"`.
     /// - Parameter layoutDirection: LayoutDirection for mirroring layout for right-to-left.
     ///  Default value is `false`.
     public init(languageCode: LanguageCode,
-                localizableFilename: String = "",
+                localizableFilename: String = "Localizable",
                 layoutDirection: LayoutDirection = .leftToRight) {
         self.languageCode = languageCode
         self.localizableFilename = localizableFilename
