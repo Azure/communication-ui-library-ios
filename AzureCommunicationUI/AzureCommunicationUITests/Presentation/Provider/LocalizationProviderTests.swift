@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import SwiftUI
 import XCTest
 @testable import AzureCommunicationUI
 
@@ -15,24 +16,24 @@ class LocalizationProviderTests: XCTestCase {
         logger = LoggerMocking()
     }
 
-    func test_localizationProvider_isRightToLeft_when_applyRTLTrue_then_shouldRTLReturnTrue() {
+    func test_localizationProvider_applyRTL_when_layoutDirectionRightToLeft_then_shouldRTLReturnTrue() {
         let sut = makeSUT()
-        let languageCode = "en"
-        let isRTL = true
+        let languageCode: LanguageCode = .en
+        let layoutDirection: LayoutDirection = .rightToLeft
         let localeConfig = LocalizationConfiguration(languageCode: languageCode,
-                                                     isRightToLeft: isRTL)
+                                                     layoutDirection: layoutDirection)
         sut.apply(localeConfig: localeConfig)
-        XCTAssertTrue(sut.layoutDirection)
+        XCTAssertTrue(sut.isRightToLeft)
     }
 
-    func test_localizationProvider_isRightToLeft_when_applyRTLFalse_then_shouldRTLReturnFalse() {
+    func test_localizationProvider_applyRTL_when_layoutDirectionLeftToRight_then_shouldRTLReturnFalse() {
         let sut = makeSUT()
-        let languageCode = "en"
-        let isRTL = false
+        let languageCode: LanguageCode = .en
+        let layoutDirection: LayoutDirection = .leftToRight
         let localeConfig = LocalizationConfiguration(languageCode: languageCode,
-                                                     isRightToLeft: isRTL)
+                                                     layoutDirection: layoutDirection)
         sut.apply(localeConfig: localeConfig)
-        XCTAssertFalse(sut.layoutDirection)
+        XCTAssertFalse(sut.isRightToLeft)
     }
 
     func test_localizationProvider_getSupportedLanguages_then_shouldReturnLanguages() {
@@ -55,7 +56,7 @@ class LocalizationProviderTests: XCTestCase {
         let joinCallEn = "Join call"
         XCTAssertEqual(sut.getLocalizedString(key), joinCallEn)
 
-        let languageCode = "fr"
+        let languageCode: LanguageCode = .fr
         let localeConfig = LocalizationConfiguration(languageCode: languageCode)
         sut.apply(localeConfig: localeConfig)
 

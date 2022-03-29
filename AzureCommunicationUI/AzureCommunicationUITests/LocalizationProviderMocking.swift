@@ -12,7 +12,7 @@ class LocalizationProviderMocking: LocalizationProvider {
     var isGetLocalizedStringCalled: Bool = false
     var isGetLocalizedStringWithArgsCalled: Bool = false
 
-    var layoutDirection: Bool {
+    var isRightToLeft: Bool {
         return false
     }
 
