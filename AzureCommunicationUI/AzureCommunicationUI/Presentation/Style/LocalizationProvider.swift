@@ -18,7 +18,6 @@ class AppLocalizationProvider: LocalizationProvider {
     private let logger: Logger
     private var languageCode: String = "en"
     private var localizableFilename: String = ""
-    private var customTranslations: [String: String] = [:]
     private(set) var isRightToLeft: Bool = false
 
     var supportedLocales: [String] = Bundle(for: CallComposite.self).localizations
@@ -28,7 +27,7 @@ class AppLocalizationProvider: LocalizationProvider {
     }
 
     func apply(localeConfig: LocalizationConfiguration) {
-        if !supportedLocales.contains(localeConfig.languageCode.description) {
+        if !supportedLocales.contains(localeConfig.languageCode.rawValue) {
             let warningMessage = "Language not supported by default for " +
             "`\(localeConfig.languageCode)`, if string for AzureCommunicationUI " +
             "localization keys not provided in custom Localizable.strings " +
@@ -36,9 +35,8 @@ class AppLocalizationProvider: LocalizationProvider {
             logger.warning(warningMessage)
         }
 
-        languageCode = localeConfig.languageCode.description
+        languageCode = localeConfig.languageCode.rawValue
         localizableFilename = localeConfig.localizableFilename
-        customTranslations = localeConfig.customTranslations
         isRightToLeft = localeConfig.layoutDirection == .rightToLeft
     }
 
@@ -47,10 +45,6 @@ class AppLocalizationProvider: LocalizationProvider {
     }
 
     func getLocalizedString(_ key: LocalizationKey) -> String {
-        if let customTranslation = customTranslations[key.rawValue] {
-            return customTranslation
-        }
-
         if let path = Bundle.main
             .path(forResource: languageCode, ofType: "lproj"),
            let bundle = Bundle(path: path) {

@@ -5,24 +5,78 @@
 import Foundation
 import SwiftUI
 
-public enum LanguageCode: CustomStringConvertible, Hashable {
+public enum LanguageCode: Hashable {
+    /// Custom value for unrecognized enum values
     case custom(String)
+    /// German
     case de
+    /// Japanese
     case ja
+    /// English
     case en
+    /// Chinese (Traditional)
     case zhHant
+    /// Spanish
     case es
+    /// Chinese (Simplified)
     case zhHans
+    /// Italian
     case it
+    /// English (United Kingdom)
     case enGB
+    /// Korean
     case ko
+    /// Turkish
     case tr
+    /// Russian
     case ru
+    /// French
     case fr
+    /// Dutch
     case nl
+    /// Portuguese
     case pt
 
-    public var description: String {
+    /// Creates an instance of `LanguageCode` with for language code.
+    /// - Parameter rawValue: String representing the locale code (ie. en, fr,  zh-Hant, zh-Hans, ...).
+    ///  If unsupported language is provided will create LanguageCode as`.custom(rawValue)`.
+    init(rawValue: String) {
+        switch rawValue {
+        case "de":
+            self = .de
+        case "ja":
+            self = .ja
+        case "en":
+            self = .en
+        case "zh-Hant":
+            self = .zhHant
+        case "es":
+            self = .es
+        case "zh-Hans":
+            self = .zhHans
+        case "it":
+            self = .it
+        case "en-GB":
+            self = .enGB
+        case "ko":
+            self = .ko
+        case "tr":
+            self = .tr
+        case "ru":
+            self = .ru
+        case "fr":
+            self = .fr
+        case "nl":
+            self = .nl
+        case "pt":
+            self = .pt
+        default:
+            self = .custom(rawValue)
+        }
+    }
+
+    /// Get string representing the LanguageCode (ie. en, fr,  zh-Hant, zh-Hans, ...).
+    public var rawValue: String {
         switch self {
         case let .custom(language):
             return language
@@ -61,7 +115,6 @@ public enum LanguageCode: CustomStringConvertible, Hashable {
 public struct LocalizationConfiguration {
     let languageCode: LanguageCode
     let localizableFilename: String
-    let customTranslations: [String: String]
     let layoutDirection: LayoutDirection
 
     /// Creates an instance of `LocalizationConfiguration` with related parameters. Allow
@@ -78,24 +131,6 @@ public struct LocalizationConfiguration {
                 layoutDirection: LayoutDirection = .leftToRight) {
         self.languageCode = languageCode
         self.localizableFilename = localizableFilename
-        self.customTranslations = [:]
-        self.layoutDirection = layoutDirection
-    }
-
-    /// Creates an instance of `LocalizationConfiguration` with related parameters. Allow
-    /// overriding strings of localization keys with dictionary.
-    /// - Parameter languageCode: String representing the locale code (ie. en, fr, zh-Hant, zh-Hans, ...).
-    /// - Parameter customTranslations: A dictionary of key-value pairs to override
-    ///  predefined AzureCommunicationUICalling's localization string. The keys of the string
-    ///  should match with the keys from AzureCommunicationUI localization keys.
-    /// - Parameter isRightToLeft: LayoutDirection for mirroring layout for right-to-left.
-    ///  Default value is `false`.
-    public init(languageCode: LanguageCode,
-                customTranslations: [String: String],
-                layoutDirection: LayoutDirection = .leftToRight) {
-        self.languageCode = languageCode
-        self.localizableFilename = ""
-        self.customTranslations = customTranslations
         self.layoutDirection = layoutDirection
     }
 

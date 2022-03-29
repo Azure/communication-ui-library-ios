@@ -61,29 +61,6 @@ class LocalizationProviderTests: XCTestCase {
 
         XCTAssertNotEqual(sut.getLocalizedString(key), joinCallEn)
     }
-
-    func test_localizationProvider_getLocalizedString_when_applyCustomTranslations_then_shouldReturnCustomizedString() {
-        let sut = makeSUT()
-
-        let key = LocalizationKey.joinCall
-        let joinCallEn = "Join call"
-        XCTAssertEqual(sut.getLocalizedString(key), joinCallEn)
-
-        let customKey = LocalizationKey.speaker
-        let speakerEn = "Speaker"
-        XCTAssertEqual(sut.getLocalizedString(customKey), speakerEn)
-
-        let languageCode = "en"
-        let customText = "Custom Speaker"
-        let customTranslations: [String: String] = [
-            customKey.rawValue: customText
-        ]
-        let localeConfig = LocalizationConfiguration(languageCode: languageCode,
-                                                     customTranslations: customTranslations)
-        sut.apply(localeConfig: localeConfig)
-        XCTAssertEqual(sut.getLocalizedString(key), joinCallEn)
-        XCTAssertEqual(sut.getLocalizedString(customKey), customText)
-    }
 }
 
 extension LocalizationProviderTests {

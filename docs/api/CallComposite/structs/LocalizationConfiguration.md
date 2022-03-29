@@ -18,37 +18,23 @@ Creates an instance of `LocalizationConfiguration` with related parameters. Allo
 
 ```swift
 public init(
-    languageCode: String,
-    localizableFilename: String = "",
+    languageCode: LanguageCode,
+    localizableFilename: String = "Localizable",
     isRightToLeft: Bool = false)
 ```
 
 ### Parameters
-* `languageCode` - String representing the locale code (ie. en, fr,  zh-Hant, zh-Hans, ...).
+* `languageCode` - LanguageCode enum representing the locale code (ie. en, fr,  zh-Hant, zh-Hans, ...).
 * `localizableFilename` - Filename of the `.strings` file to override predefined Call Composite's localization key or to provide translation for an custom language. The keys of the string should match with the keys from AzureCommunicationUI [localization keys](../../../../AzureCommunicationUI/AzureCommunicationUI/Localization/en.lproj/Localizable.strings). Default value is `""`.
 * `isRightToLeft` - Boolean for mirroring layout for right-to-left. Default value is `false`.
 
-### `init`
-Creates an instance of `LocalizationConfiguration` with related parameters. Allow overriding strings of [localization keys](../../../../AzureCommunicationUI/AzureCommunicationUI/Localization/en.lproj/Localizable.strings) with dictionary.
-
-```swift
-public init(
-    languageCode: String,
-    customTranslations: [String: String],
-    isRightToLeft: Bool = false)
-```
-
-### Parameters
-* `languageCode` - String representing the locale code (ie. en, fr,  zh-Hant, zh-Hans, ...).
-* `customTranslations` - A dictionary of key-value pairs to override predefined AzureCommunicationUICalling's localization string. The keys of the string should match with the keys from AzureCommunicationUI [localization keys](../../../../AzureCommunicationUI/AzureCommunicationUI/Localization/en.lproj/Localizable.strings).
-* `isRightToLeft` - Boolean for mirroring layout for right-to-left. Default value is `false`.
 
 ### `getSupportedLanguages`
 
 Get supported languages the AzureCommunicationUICalling has predefined translations.
 
 ```swift
-public static func getSupportedLanguages() -> [String]
+public static func getSupportedLanguages() -> [LanguageCode]
 ```
 
 ### Returns
