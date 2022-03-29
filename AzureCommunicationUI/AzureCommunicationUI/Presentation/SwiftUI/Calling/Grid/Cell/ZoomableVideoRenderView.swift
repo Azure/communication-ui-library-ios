@@ -41,6 +41,11 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     }
 
     func makeUIView(context: Context) -> UIScrollView {
+        // Creates a content view for scrollview, that holds on to the rendererView
+        let contentView = UIView()
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+
         // Setup scrollview and renderview
         scrollView.delegate = context.coordinator
         scrollView.maximumZoomScale = initialMaxZoomScale
@@ -49,12 +54,15 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.decelerationRate = .fast
-        scrollView.zoomScale = initialMinZoomScale
+
         rendererView!.translatesAutoresizingMaskIntoConstraints = true
         rendererView!.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         rendererView!.frame = scrollView.bounds
-        scrollView.addSubview(rendererView!)
+
+        contentView.addSubview(rendererView!)
+        scrollView.addSubview(contentView)
         scrollView.contentSize = rendererView.bounds.size
+        scrollView.zoomScale = initialMinZoomScale
 
         // Double tap action
         let doubleTapGesture = UITapGestureRecognizer(target: context.coordinator,
