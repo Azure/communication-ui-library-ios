@@ -297,13 +297,15 @@ class ParticipantGridViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Announcement expection")
         let state = makeRemoteParticipantState(count: 2)
         let callingState = CallingState(status: .connected)
-        let accessibilityProvider = AccessibilityProviderMocking()
         let expectedAnnouncement = "2 participants joined the meeting"
+        let accessibilityProvider = AccessibilityProviderMocking()
+        let localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
         accessibilityProvider.postQueuedAnnouncementBlock = { message in
             XCTAssertEqual(message, expectedAnnouncement)
             expectation.fulfill()
         }
-        let sut = makeSUT(accessibilityProvider: accessibilityProvider)
+        let sut = makeSUT(accessibilityProvider: accessibilityProvider,
+                          localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
                    remoteParticipantsState: state)
         wait(for: [expectation], timeout: 1)
@@ -313,14 +315,16 @@ class ParticipantGridViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Announcement expection")
         let state = makeRemoteParticipantState(count: 1)
         let callingState = CallingState(status: .connected)
-        let accessibilityProvider = AccessibilityProviderMocking()
         let displayName = state.participantInfoList.first!.displayName
+        let accessibilityProvider = AccessibilityProviderMocking()
+        let localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
         let expectedAnnouncement = "\(displayName) joined the meeting"
         accessibilityProvider.postQueuedAnnouncementBlock = { message in
             XCTAssertEqual(message, expectedAnnouncement)
             expectation.fulfill()
         }
-        let sut = makeSUT(accessibilityProvider: accessibilityProvider)
+        let sut = makeSUT(accessibilityProvider: accessibilityProvider,
+                          localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
                    remoteParticipantsState: state)
         wait(for: [expectation], timeout: 1)
@@ -331,8 +335,10 @@ class ParticipantGridViewModelTests: XCTestCase {
         let state = makeRemoteParticipantState(count: 4)
         let callingState = CallingState(status: .connected)
         let accessibilityProvider = AccessibilityProviderMocking()
+        let localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
         let expectedAnnouncement = "2 participants left the meeting"
-        let sut = makeSUT(accessibilityProvider: accessibilityProvider)
+        let sut = makeSUT(accessibilityProvider: accessibilityProvider,
+                          localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
                    remoteParticipantsState: state)
         accessibilityProvider.postQueuedAnnouncementBlock = { message in
@@ -350,10 +356,12 @@ class ParticipantGridViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Announcement expection")
         let state = makeRemoteParticipantState(count: 1)
         let callingState = CallingState(status: .connected)
-        let accessibilityProvider = AccessibilityProviderMocking()
         let displayName = state.participantInfoList.first!.displayName
+        let accessibilityProvider = AccessibilityProviderMocking()
+        let localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
         let expectedAnnouncement = "\(displayName) left the meeting"
-        let sut = makeSUT(accessibilityProvider: accessibilityProvider)
+        let sut = makeSUT(accessibilityProvider: accessibilityProvider,
+                          localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
                    remoteParticipantsState: state)
         accessibilityProvider.postQueuedAnnouncementBlock = { message in
@@ -374,7 +382,9 @@ class ParticipantGridViewModelTests: XCTestCase {
         let state = makeRemoteParticipantState(count: 2)
         let callingState = CallingState(status: .connected)
         let accessibilityProvider = AccessibilityProviderMocking()
-        let sut = makeSUT(accessibilityProvider: accessibilityProvider)
+        let localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
+        let sut = makeSUT(accessibilityProvider: accessibilityProvider,
+                          localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
                    remoteParticipantsState: state)
         accessibilityProvider.postQueuedAnnouncementBlock = { _ in
@@ -539,15 +549,18 @@ extension ParticipantGridViewModelTests {
             return nil
         }
         return ParticipantGridViewModel(compositeViewModelFactory: factoryMocking,
+        								localizationProvider: LocalizationProviderMocking(),
                                         accessibilityProvider: accessibilityProvider)
     }
 
-    func makeSUT(accessibilityProvider: AccessibilityProvider) -> ParticipantGridViewModel {
+    func makeSUT(accessibilityProvider: AccessibilityProvider,
+                 localizationProvider: LocalizationProvider) -> ParticipantGridViewModel {
         let storeFactory = StoreFactoryMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
                                                               store: storeFactory.store,
                                                               accessibilityProvider: accessibilityProvider)
         return ParticipantGridViewModel(compositeViewModelFactory: factoryMocking,
+                                        localizationProvider: localizationProvider,
                                         accessibilityProvider: accessibilityProvider)
     }
 
