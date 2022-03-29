@@ -269,7 +269,6 @@ extension CallingViewModelTests {
         factoryMocking.localVideoViewModel = LocalVideoViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                         logger: logger,
                                                                         localizationProvider: localizationProvider,
-																		accessibilityProvider: AccessibilityProviderMocking(),
                                                                         dispatchAction: storeFactory.store.dispatch,
                                                                         updateState: updateLocalVideoViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
@@ -284,6 +283,7 @@ extension CallingViewModelTests {
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         factoryMocking.participantGridViewModel = ParticipantGridViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                                   localizationProvider: localizationProvider,
+                                                                                  accessibilityProvider: AccessibilityProviderMocking(),
                                                                                   updateState: updateParticipantGridViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,

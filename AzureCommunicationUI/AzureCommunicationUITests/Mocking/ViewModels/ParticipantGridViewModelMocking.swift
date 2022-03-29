@@ -16,7 +16,7 @@ class ParticipantGridViewModelMocking: ParticipantGridViewModel {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    localizationProvider: localizationProvider,
-         		   accessibilityProvider: AccessibilityProvider)
+         		   accessibilityProvider: accessibilityProvider)
     }
 
     override func update(callingState: CallingState,

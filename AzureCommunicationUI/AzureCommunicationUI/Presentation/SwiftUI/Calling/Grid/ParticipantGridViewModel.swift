@@ -21,7 +21,7 @@ class ParticipantGridViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          localizationProvider: LocalizationProvider,
-		 accessibilityProvider: AccessibilityProvider) {
+         accessibilityProvider: AccessibilityProvider) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider

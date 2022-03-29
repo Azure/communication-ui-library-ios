@@ -298,7 +298,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let state = makeRemoteParticipantState(count: 2)
         let callingState = CallingState(status: .connected)
         let accessibilityProvider = AccessibilityProviderMocking()
-        let expectedAnnouncement = "2 participants joined the meeting"
+        let expectedAnnouncement = "AzureCommunicationUI.CallingView.MutiplePeopleJoined"
         accessibilityProvider.postQueuedAnnouncementBlock = { message in
             XCTAssertEqual(message, expectedAnnouncement)
             expectation.fulfill()
@@ -314,8 +314,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let state = makeRemoteParticipantState(count: 1)
         let callingState = CallingState(status: .connected)
         let accessibilityProvider = AccessibilityProviderMocking()
-        let displayName = state.participantInfoList.first!.displayName
-        let expectedAnnouncement = "\(displayName) joined the meeting"
+        let expectedAnnouncement = "AzureCommunicationUI.CallingView.OnePersonJoined"
         accessibilityProvider.postQueuedAnnouncementBlock = { message in
             XCTAssertEqual(message, expectedAnnouncement)
             expectation.fulfill()
@@ -331,7 +330,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let state = makeRemoteParticipantState(count: 4)
         let callingState = CallingState(status: .connected)
         let accessibilityProvider = AccessibilityProviderMocking()
-        let expectedAnnouncement = "2 participants left the meeting"
+        let expectedAnnouncement = "AzureCommunicationUI.CallingView.MutiplePeopleLeft"
         let sut = makeSUT(accessibilityProvider: accessibilityProvider)
         sut.update(callingState: callingState,
                    remoteParticipantsState: state)
@@ -351,8 +350,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let state = makeRemoteParticipantState(count: 1)
         let callingState = CallingState(status: .connected)
         let accessibilityProvider = AccessibilityProviderMocking()
-        let displayName = state.participantInfoList.first!.displayName
-        let expectedAnnouncement = "\(displayName) left the meeting"
+        let expectedAnnouncement = "AzureCommunicationUI.CallingView.OnePersonLeft"
         let sut = makeSUT(accessibilityProvider: accessibilityProvider)
         sut.update(callingState: callingState,
                    remoteParticipantsState: state)
@@ -549,6 +547,7 @@ extension ParticipantGridViewModelTests {
                                                               store: storeFactory.store,
                                                               accessibilityProvider: accessibilityProvider)
         return ParticipantGridViewModel(compositeViewModelFactory: factoryMocking,
+                                        localizationProvider: LocalizationProviderMocking(),
                                         accessibilityProvider: accessibilityProvider)
     }
 
