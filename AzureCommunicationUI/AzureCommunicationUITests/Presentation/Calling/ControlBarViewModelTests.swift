@@ -505,7 +505,8 @@ class ControlBarViewModelTests: XCTestCase {
     func test_controlBarViewModel_update_when_statesUpdated_then_audioDeviceListViewModelUpdated() {
         let expectation = XCTestExpectation(description: "AudioDevicesListViewModel should be updated")
         let localUserState = LocalUserState(audioState: LocalUserState.AudioState(operation: .on, device: .speakerSelected))
-        let audioDevicesListViewModel = AudioDevicesListViewModelMocking(dispatchAction: storeFactory.store.dispatch,
+        let audioDevicesListViewModel = AudioDevicesListViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                         dispatchAction: storeFactory.store.dispatch,
                                                                          localUserState: localUserState,
                                                                          localizationProvider: LocalizationProviderMocking())
 
