@@ -12,13 +12,20 @@
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
 
 /* SetupView */
+"AzureCommunicationUI.SetupView.Title"="Configuratie";
+"AzureCommunicationUI.SetupView.Button.Dismiss.AccessibilityLabel"="Terug";
 "AzureCommunicationUI.SetupView.Button.JoinCall"="Deelnemen aan gesprek";
 "AzureCommunicationUI.SetupView.Button.JoiningCall"="Deelnemen aan gesprek…";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="Video uit";
+"AzureCommunicationUI.SetupView.Button.VideoOff.AccessibilityLabel"="Camera inschakelen";
 "AzureCommunicationUI.SetupView.Button.VideoOn"="Video aan";
+"AzureCommunicationUI.SetupView.Button.VideoOn.AccessibilityLabel"="Camera uitschakelen";
 "AzureCommunicationUI.SetupView.Button.MicOff"="Microfoon uit";
+"AzureCommunicationUI.SetupView.Button.MicOff.AccessibilityLabel"="Dempen opheffen";
 "AzureCommunicationUI.SetupView.Button.MicOn"="Microfoon aan";
+"AzureCommunicationUI.SetupView.Button.MicOn.AccessibilityLabel"="Dempen";
 "AzureCommunicationUI.SetupView.Button.Device"="Apparaat";
+"AzureCommunicationUI.SetupView.Button.Device.AccessibilityLabel"="Audioapparaat";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Uw camera is uitgeschakeld. Als u deze wilt inschakelen, gaat u naar Instellingen om toegang toe te staan.";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="Uw camera en audio zijn uitgeschakeld. Als u deze wilt inschakelen, gaat u naar Instellingen om toegang toe te staan. U moet audio inschakelen om dit gesprek te starten.";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="Uw audio is uitgeschakeld. Als u deze wilt inschakelen, gaat u naar Instellingen om toegang toe te staan. U moet audio inschakelen om dit gesprek te starten.";
@@ -34,6 +41,14 @@
 
 "AzureCommunicationUI.CallingView.ParticipantDrawer.Unnamed"="Naamloze deelnemer";
 "AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"="%@ (u)"; // %@ is local participant name
+
+"AzureCommunicationUI.CallingView.SwitchCamera.Front"="Overschakelen naar de camera op de achterzijde";
+"AzureCommunicationUI.CallingView.SwitchCamera.Back"="Overschakelen naar de camera op de voorzijde";
+
+"AzureCommunicationUI.CallingView.OnePersonJoined"="%@ neemt nu deel aan de vergadering";
+"AzureCommunicationUI.CallingView.MutiplePeopleJoined"="%d deelnemers nemen nu deel aan de vergadering";
+"AzureCommunicationUI.CallingView.OnePersonLeft"="%@ heeft de vergadering verlaten";
+"AzureCommunicationUI.CallingView.MutiplePeopleLeft"="%d deelnemers hebben de vergadering verlaten";
 
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Gesprek verlaten";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="Annuleren";
@@ -62,6 +77,8 @@
 
 /* PopUp warning */
 "AzureCommunicationUI.SnackBar.Button.Dismiss"="Sluiten";
+"AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityLabel"="Banner sluiten";
+"AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityHint"="Sluit deze melding";
 "AzureCommunicationUI.SnackBar.Text.ErrorCallJoin"="Kan niet deelnemen aan de oproep vanwege een fout.";
 "AzureCommunicationUI.SnackBar.Text.ErrorCallEnd"="U bent uit de oproep verwijderd vanwege een fout.";
 "AzureCommunicationUI.SnackBar.Text.Error"="Er is een fout opgetreden.";
