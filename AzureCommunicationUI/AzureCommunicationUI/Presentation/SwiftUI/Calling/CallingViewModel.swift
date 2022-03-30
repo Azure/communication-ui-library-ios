@@ -81,7 +81,7 @@ class CallingViewModel: ObservableObject {
                 self.logger.debug("Leave call button tapped")
                 self.endCall()
             })
-        leaveCallButtonViewModel.update(accessibilityLabel: "Leave call")
+        leaveCallButtonViewModel.update(accessibilityLabel: localizationProvider.getLocalizedString(.leaveCall))
         return leaveCallButtonViewModel
     }
 
@@ -98,7 +98,7 @@ class CallingViewModel: ObservableObject {
                 self.logger.debug("Cancel button tapped")
                 self.dismissConfirmLeaveOverlay()
             })
-        cancelButtonViewModel.update(accessibilityLabel: "Cancel")
+        cancelButtonViewModel.update(accessibilityLabel: localizationProvider.getLocalizedString(.cancel))
         return cancelButtonViewModel
     }
 

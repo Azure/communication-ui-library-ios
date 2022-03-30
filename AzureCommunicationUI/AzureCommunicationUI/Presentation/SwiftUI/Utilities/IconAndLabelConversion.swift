@@ -8,34 +8,29 @@ import Foundation
 extension LocalUserState.AudioDeviceSelectionStatus {
     var icon: CompositeIcon? {
        switch self {
+       case .bluetoothSelected:
+           return .speakerBluetooth
+       case .headphonesSelected:
+           return .speakerRegular
        case .receiverSelected:
-          return .speakerRegular
+           return .speakerRegular
        case .speakerSelected:
-          return .speakerFilled
+           return .speakerFilled
        default:
            return nil
        }
     }
 
-    var label: String {
+    func getLabel(localizationProvider: LocalizationProvider) -> String {
        switch self {
+       case .bluetoothSelected:
+           return localizationProvider.getLocalizedString(AudioDeviceType.bluetooth.name)
+       case .headphonesSelected:
+           return localizationProvider.getLocalizedString(AudioDeviceType.headphones.name)
        case .receiverSelected:
-           return AudioDeviceType.receiver.name.rawValue
+           return localizationProvider.getLocalizedString(AudioDeviceType.receiver.name)
        case .speakerSelected:
-           return AudioDeviceType.speaker.name.rawValue
-       default:
-          return ""
-       }
-    }
-}
-
-extension LocalUserState.CameraDeviceSelectionStatus {
-    var label: String {
-       switch self {
-       case .front:
-           return "Switch to back camera"
-       case .back:
-           return "Switch to front camera"
+           return localizationProvider.getLocalizedString(AudioDeviceType.speaker.name)
        default:
           return ""
        }

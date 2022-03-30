@@ -80,6 +80,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel {
         return localVideoViewModel ?? LocalVideoViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
+                                                          localizationProvider: LocalizationProviderMocking(),
                                                           dispatchAction: dispatchAction)
     }
 
@@ -115,6 +116,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
                                  localUserState: LocalUserState) -> ControlBarViewModel {
         return controlBarViewModel ?? ControlBarViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
+                                                          localizationProvider: LocalizationProviderMocking(),
                                                           dispatchAction: dispatchAction,
                                                           endCallConfirm: endCallConfirm,
                                                           localUserState: localUserState)
@@ -135,7 +137,8 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
 
     func makeParticipantGridsViewModel() -> ParticipantGridViewModel {
         return participantGridViewModel ?? ParticipantGridViewModel(compositeViewModelFactory: self,
-                                                                    accessibilityProvider: accessibilityProvider)
+                                                                    localizationProvider: LocalizationProviderMocking(),
+																	accessibilityProvider: accessibilityProvider)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {

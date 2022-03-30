@@ -236,6 +236,7 @@ extension CallingViewModelTests {
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         factoryMocking.controlBarViewModel = ControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                         logger: logger,
+                                                                        localizationProvider: localizationProvider,
                                                                         dispatchAction: storeFactory.store.dispatch,
                                                                         endCallConfirm: {},
                                                                         localUserState: storeFactory.store.state.localUserState,
@@ -267,6 +268,7 @@ extension CallingViewModelTests {
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         factoryMocking.localVideoViewModel = LocalVideoViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                         logger: logger,
+                                                                        localizationProvider: localizationProvider,
                                                                         dispatchAction: storeFactory.store.dispatch,
                                                                         updateState: updateLocalVideoViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
@@ -280,6 +282,7 @@ extension CallingViewModelTests {
         let storeFactory = StoreFactoryMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         factoryMocking.participantGridViewModel = ParticipantGridViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                                  localizationProvider: localizationProvider,
                                                                                   accessibilityProvider: AccessibilityProviderMocking(),
                                                                                   updateState: updateParticipantGridViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
