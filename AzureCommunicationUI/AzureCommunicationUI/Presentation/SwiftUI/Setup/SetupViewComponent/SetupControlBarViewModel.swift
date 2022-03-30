@@ -13,7 +13,7 @@ class SetupControlBarViewModel: ObservableObject {
 
     private let logger: Logger
     private let dispatch: ActionDispatch
-	private let localizationProvider: LocalizationProvider
+    private let localizationProvider: LocalizationProvider
 
     private var isJoinRequested: Bool = false
     private var callingStatus: CallingStatus = .none

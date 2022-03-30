@@ -6,17 +6,17 @@
 import Foundation
 
 class BannerTextViewModel: ObservableObject {
+    private let accessibilityProvider: AccessibilityProvider
 	private let localizationProvider: LocalizationProvider
+
     private(set) var title: String = ""
     private(set) var body: String = ""
     private(set) var linkDisplay: String = ""
     private(set) var link: String = ""
     private(set) var accessibilityLabel: String = ""
-    private let accessibilityProvider: AccessibilityProvider
 
-    init(
-        accessibilityProvider: AccessibilityProvider,
-        localizationProvider: LocalizationProvider) {
+    init(accessibilityProvider: AccessibilityProvider,
+         localizationProvider: LocalizationProvider) {
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
     }
