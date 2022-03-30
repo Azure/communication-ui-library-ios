@@ -5,7 +5,6 @@
 
 import UIKit
 import AppCenter
-import AppCenterAnalytics
 import AppCenterCrashes
 
 @main
@@ -16,7 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
-        AppCenter.start(withAppSecret: envConfigSubject.appCenterSecret, services: [Analytics.self, Crashes.self])
+        AppCenter.start(withAppSecret: envConfigSubject.appCenterSecret, services: [Crashes.self])
 
         return true
     }
