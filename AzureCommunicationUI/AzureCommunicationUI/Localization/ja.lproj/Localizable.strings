@@ -12,13 +12,20 @@
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
 
 /* SetupView */
+"AzureCommunicationUI.SetupView.Title"="セットアップ";
+"AzureCommunicationUI.SetupView.Button.Dismiss.AccessibilityLabel"="戻る";
 "AzureCommunicationUI.SetupView.Button.JoinCall"="通話に参加";
 "AzureCommunicationUI.SetupView.Button.JoiningCall"="通話に参加しています...";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="ビデオ オフ";
+"AzureCommunicationUI.SetupView.Button.VideoOff.AccessibilityLabel"="カメラを有効にします";
 "AzureCommunicationUI.SetupView.Button.VideoOn"="ビデオ オン";
+"AzureCommunicationUI.SetupView.Button.VideoOn.AccessibilityLabel"="カメラを無効にします";
 "AzureCommunicationUI.SetupView.Button.MicOff"="マイク オフ";
+"AzureCommunicationUI.SetupView.Button.MicOff.AccessibilityLabel"="ミュート解除";
 "AzureCommunicationUI.SetupView.Button.MicOn"="マイク オン";
+"AzureCommunicationUI.SetupView.Button.MicOn.AccessibilityLabel"="ミュート";
 "AzureCommunicationUI.SetupView.Button.Device"="デバイス";
+"AzureCommunicationUI.SetupView.Button.Device.AccessibilityLabel"="オーディオ デバイス";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="カメラが無効になっています。有効にするには、[設定] に移動してアクセスを許可してください。";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="カメラとオーディオが無効になっています。有効にするには、[設定] に移動してアクセスを許可してください。この通話を開始するには、オーディオを有効にする必要があります。";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="オーディオが無効になっています。有効にするには、[設定] に移動してアクセスを許可してください。この通話を開始するには、オーディオを有効にする必要があります。";
@@ -34,6 +41,14 @@
 
 "AzureCommunicationUI.CallingView.ParticipantDrawer.Unnamed"="名前のない参加者";
 "AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"="%@ (あなた)"; // %@ is local participant name
+
+"AzureCommunicationUI.CallingView.SwitchCamera.Front"="バック カメラに切り替える";
+"AzureCommunicationUI.CallingView.SwitchCamera.Back"="フロント カメラに切り替える";
+
+"AzureCommunicationUI.CallingView.OnePersonJoined"="%@ さんが会議に参加しました";
+"AzureCommunicationUI.CallingView.MutiplePeopleJoined"="%d 人の参加者が会議に参加しました";
+"AzureCommunicationUI.CallingView.OnePersonLeft"="%@ さんが会議から退出しました";
+"AzureCommunicationUI.CallingView.MutiplePeopleLeft"="%d 人の参加者が会議から退出しました";
 
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="通話から退出";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="キャンセル";
@@ -62,6 +77,8 @@
 
 /* PopUp warning */
 "AzureCommunicationUI.SnackBar.Button.Dismiss"="閉じる";
+"AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityLabel"="バナーを閉じる";
+"AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityHint"="この通知を閉じます";
 "AzureCommunicationUI.SnackBar.Text.ErrorCallJoin"="エラーが発生したため、通話に参加できません。";
 "AzureCommunicationUI.SnackBar.Text.ErrorCallEnd"="エラーが発生したため、通話から削除されました。";
 "AzureCommunicationUI.SnackBar.Text.Error"="エラーが発生しました。";

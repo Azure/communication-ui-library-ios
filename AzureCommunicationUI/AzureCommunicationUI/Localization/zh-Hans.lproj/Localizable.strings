@@ -12,13 +12,20 @@
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="蓝牙";
 
 /* SetupView */
+"AzureCommunicationUI.SetupView.Title"="安装";
+"AzureCommunicationUI.SetupView.Button.Dismiss.AccessibilityLabel"="返回";
 "AzureCommunicationUI.SetupView.Button.JoinCall"="加入通话";
 "AzureCommunicationUI.SetupView.Button.JoiningCall"="正在加入通话...";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="视频关闭";
+"AzureCommunicationUI.SetupView.Button.VideoOff.AccessibilityLabel"="打开照相机";
 "AzureCommunicationUI.SetupView.Button.VideoOn"="视频开启";
+"AzureCommunicationUI.SetupView.Button.VideoOn.AccessibilityLabel"="关闭摄像头";
 "AzureCommunicationUI.SetupView.Button.MicOff"="关闭麦克风";
+"AzureCommunicationUI.SetupView.Button.MicOff.AccessibilityLabel"="取消静音";
 "AzureCommunicationUI.SetupView.Button.MicOn"="打开麦克风";
+"AzureCommunicationUI.SetupView.Button.MicOn.AccessibilityLabel"="静音";
 "AzureCommunicationUI.SetupView.Button.Device"="设备";
+"AzureCommunicationUI.SetupView.Button.Device.AccessibilityLabel"="音频设备";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="你的相机已禁用。若要启用，请转到“设置”以允许访问。";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="你的相机和音频已禁用。若要启用，请转到“设置”以允许访问。必须启用音频才能开始此通话。";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="你的音频已禁用。若要启用，请转到“设置”以允许访问。必须启用音频才能开始此通话。";
@@ -34,6 +41,14 @@
 
 "AzureCommunicationUI.CallingView.ParticipantDrawer.Unnamed"="未命名的参与者";
 "AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"="%@ (你)"; // %@ is local participant name
+
+"AzureCommunicationUI.CallingView.SwitchCamera.Front"="切换到后置摄像头";
+"AzureCommunicationUI.CallingView.SwitchCamera.Back"="切换到前置摄像头";
+
+"AzureCommunicationUI.CallingView.OnePersonJoined"="%@ 已加入会议";
+"AzureCommunicationUI.CallingView.MutiplePeopleJoined"="%d 名参与者已加入会议";
+"AzureCommunicationUI.CallingView.OnePersonLeft"="%@ 已离开会议";
+"AzureCommunicationUI.CallingView.MutiplePeopleLeft"="%d 名参与者已离开会议";
 
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="离开通话";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="取消";
@@ -62,6 +77,8 @@
 
 /* PopUp warning */
 "AzureCommunicationUI.SnackBar.Button.Dismiss"="关闭";
+"AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityLabel"="关闭横幅";
+"AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityHint"="关闭此通知";
 "AzureCommunicationUI.SnackBar.Text.ErrorCallJoin"="由于出现错误，无法加入呼叫。";
 "AzureCommunicationUI.SnackBar.Text.ErrorCallEnd"="由于出现错误，你已从通话中删除。";
 "AzureCommunicationUI.SnackBar.Text.Error"="出现错误。";
