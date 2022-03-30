@@ -12,9 +12,11 @@ class BannerTextViewModelMocking: BannerTextViewModel {
     var updateBannerInfoType: ((BannerInfoType?) -> Void)?
     var bannerType: BannerInfoType?
 
-    init(updateBannerInfoType: ((BannerInfoType?) -> Void)? = nil) {
+    init(accessibilityProvider: AccessibilityProvider = AppAccessibilityProvider(),
+         updateBannerInfoType: ((BannerInfoType?) -> Void)? = nil) {
         self.updateBannerInfoType = updateBannerInfoType
-        super.init(localizationProvider: LocalizationProviderMocking())
+        super.init(accessibilityProvider: accessibilityProvider,
+                   localizationProvider: LocalizationProviderMocking())
     }
 
     override func update(bannerInfoType: BannerInfoType?) {

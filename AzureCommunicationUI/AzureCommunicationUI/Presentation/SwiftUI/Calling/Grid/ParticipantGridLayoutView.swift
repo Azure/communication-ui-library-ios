@@ -38,6 +38,7 @@ struct ParticipantGridLayoutView: View {
             }
         }
         .background(Color(StyleProvider.color.gridLayoutBackground))
+        .accessibilityElement(children: .contain)
     }
 
     var vGridLayout: some View {
@@ -50,6 +51,7 @@ struct ParticipantGridLayoutView: View {
             }
         }
         .background(Color(StyleProvider.color.gridLayoutBackground))
+        .accessibilityElement(children: .contain)
     }
 
     func getRowView(cellsViewModel: [ParticipantGridCellViewModel]) -> some View {
@@ -60,6 +62,7 @@ struct ParticipantGridLayoutView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color(StyleProvider.color.surface))
                 .clipShape(RoundedRectangle(cornerRadius: 4))
+                .accessibilityElement(children: .contain)
 
         }
     }

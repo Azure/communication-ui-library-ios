@@ -33,6 +33,8 @@ class BannerViewModel: ObservableObject {
                 }
                 self.dismissBanner()
         }
+        self.dismissButtonViewModel.update(accessibilityLabel: "Dismiss Banner")
+        self.dismissButtonViewModel.update(accessibilityHint: "Dismisses this notification")
     }
 
     func update(callingState: CallingState) {
