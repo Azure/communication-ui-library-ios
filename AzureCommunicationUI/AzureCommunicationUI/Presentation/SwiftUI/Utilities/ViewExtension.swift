@@ -23,4 +23,9 @@ extension View {
     func proximitySensorEnabled(_ proximityEnabled: Bool) -> some View {
         preference(key: ProximitySensorPreferenceKey.self, value: proximityEnabled)
     }
+
+    // Controls the application's preferred home indicator auto-hiding when this view is shown.
+    func prefersHomeIndicatorAutoHidden(_ value: Bool) -> some View {
+        preference(key: PrefersHomeIndicatorAutoHiddenPreferenceKey.self, value: value)
+    }
 }
