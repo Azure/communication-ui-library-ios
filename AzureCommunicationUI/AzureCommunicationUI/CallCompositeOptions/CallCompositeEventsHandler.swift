@@ -7,5 +7,5 @@ import UIKit
 import AzureCommunicationCalling
 
 class CallCompositeEventsHandler {
-    var didFail: ((ErrorEvent) -> Void)?
+    var didFail: ((CommunicationUIErrorEvent) -> Void)?
 }

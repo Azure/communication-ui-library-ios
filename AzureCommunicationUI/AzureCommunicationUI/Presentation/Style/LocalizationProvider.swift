@@ -9,7 +9,6 @@ import SwiftUI
 protocol LocalizationProvider {
     var isRightToLeft: Bool { get }
     func apply(localeConfig: LocalizationConfiguration)
-    func getSupportedLanguages() -> [String]
     func getLocalizedString(_ key: LocalizationKey) -> String
     func getLocalizedString(_ key: LocalizationKey, _ args: CVarArg...) -> String
 }
@@ -18,7 +17,6 @@ class AppLocalizationProvider: LocalizationProvider {
     private let logger: Logger
     private var languageCode: String = "en"
     private var localizableFilename: String = ""
-    private var customTranslations: [String: String] = [:]
     private(set) var isRightToLeft: Bool = false
 
     var supportedLocales: [String] = Bundle(for: CallComposite.self).localizations
@@ -38,19 +36,10 @@ class AppLocalizationProvider: LocalizationProvider {
 
         languageCode = localeConfig.languageCode
         localizableFilename = localeConfig.localizableFilename
-        customTranslations = localeConfig.customTranslations
-        isRightToLeft = localeConfig.isRightToLeft
-    }
-
-    func getSupportedLanguages() -> [String] {
-        return supportedLocales
+        isRightToLeft = localeConfig.layoutDirection == .rightToLeft
     }
 
     func getLocalizedString(_ key: LocalizationKey) -> String {
-        if let customTranslation = customTranslations[key.rawValue] {
-            return customTranslation
-        }
-
         if let path = Bundle.main
             .path(forResource: languageCode, ofType: "lproj"),
            let bundle = Bundle(path: path) {
