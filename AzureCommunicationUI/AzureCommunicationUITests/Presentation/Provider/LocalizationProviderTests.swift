@@ -18,9 +18,9 @@ class LocalizationProviderTests: XCTestCase {
 
     func test_localizationProvider_applyRTL_when_layoutDirectionRightToLeft_then_shouldRTLReturnTrue() {
         let sut = makeSUT()
-        let languageCode: LanguageCode = .enUS
+        let languageCode: LocalizationConfiguration.LanguageCode = .enUS
         let layoutDirection: LayoutDirection = .rightToLeft
-        let localeConfig = LocalizationConfiguration(languageCode: languageCode,
+        let localeConfig = LocalizationConfiguration(languageCode: languageCode.rawValue,
                                                      layoutDirection: layoutDirection)
         sut.apply(localeConfig: localeConfig)
         XCTAssertTrue(sut.isRightToLeft)
@@ -28,9 +28,9 @@ class LocalizationProviderTests: XCTestCase {
 
     func test_localizationProvider_applyRTL_when_layoutDirectionLeftToRight_then_shouldRTLReturnFalse() {
         let sut = makeSUT()
-        let languageCode: LanguageCode = .enUS
+        let languageCode: LocalizationConfiguration.LanguageCode = .enUS
         let layoutDirection: LayoutDirection = .leftToRight
-        let localeConfig = LocalizationConfiguration(languageCode: languageCode,
+        let localeConfig = LocalizationConfiguration(languageCode: languageCode.rawValue,
                                                      layoutDirection: layoutDirection)
         sut.apply(localeConfig: localeConfig)
         XCTAssertFalse(sut.isRightToLeft)
@@ -51,8 +51,8 @@ class LocalizationProviderTests: XCTestCase {
         let joinCallEn = "Join call"
         XCTAssertEqual(sut.getLocalizedString(key), joinCallEn)
 
-        let languageCode: LanguageCode = .frFR
-        let localeConfig = LocalizationConfiguration(languageCode: languageCode)
+        let languageCode: LocalizationConfiguration.LanguageCode = .frFR
+        let localeConfig = LocalizationConfiguration(languageCode: languageCode.rawValue)
         sut.apply(localeConfig: localeConfig)
 
         XCTAssertNotEqual(sut.getLocalizedString(key), joinCallEn)

@@ -26,7 +26,7 @@ class AppLocalizationProvider: LocalizationProvider {
     }
 
     func apply(localeConfig: LocalizationConfiguration) {
-        if !supportedLocales.contains(localeConfig.languageCode.rawValue) {
+        if !supportedLocales.contains(localeConfig.languageCode) {
             let warningMessage = "Language not supported by default for " +
             "`\(localeConfig.languageCode)`, if string for AzureCommunicationUI " +
             "localization keys not provided in custom Localizable.strings " +
@@ -34,7 +34,7 @@ class AppLocalizationProvider: LocalizationProvider {
             logger.warning(warningMessage)
         }
 
-        languageCode = localeConfig.languageCode.rawValue
+        languageCode = localeConfig.languageCode
         localizableFilename = localeConfig.localizableFilename
         isRightToLeft = localeConfig.layoutDirection == .rightToLeft
     }
