@@ -36,11 +36,6 @@ class LocalizationProviderTests: XCTestCase {
         XCTAssertFalse(sut.isRightToLeft)
     }
 
-    func test_localizationProvider_getSupportedLanguages_then_shouldReturnLanguages() {
-        let sut = makeSUT()
-        XCTAssertNotEqual(sut.getSupportedLanguages().count, 0)
-    }
-
     func test_localizationProvider_getLocalizedString_when_noApply_then_shouldReturnEnString() {
         let sut = makeSUT()
 
