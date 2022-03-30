@@ -10,7 +10,6 @@ import Combine
 struct ParticipantGridCellVideoView: View {
 
     private struct Constants {
-        static let homebarHeight: CGFloat = 22
         static let borderColor = Color(StyleProvider.color.primaryColor)
     }
 
@@ -23,22 +22,12 @@ struct ParticipantGridCellVideoView: View {
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     var body: some View {
-        let lanscapeHasHomeBar = (screenSizeClass == .iphoneLandscapeScreenSize
-                                  && UIDevice.current.hasHomeBar)
         ZStack(alignment: .bottomLeading) {
             VStack(alignment: .center, spacing: 0) {
-                GeometryReader { geometry in
-                    if zoomable {
-                        // reduce height as work-around to resolve the double tap issue, when lanscapeHasHomeBar is true
-                        // To be improved in the next PR
-                        zoomableVideoRenderView
-                            .frame(width: geometry.size.width,
-                                   height: geometry.size.height - (lanscapeHasHomeBar ? Constants.homebarHeight : 0),
-                                   alignment: .center)
-                            .prefersHomeIndicatorAutoHidden(UIDevice.current.hasHomeBar)
-                    } else {
-                        videoRenderView
-                    }
+                if zoomable {
+                    zoomableVideoRenderView
+                } else {
+                    videoRenderView
                 }
             }
 
