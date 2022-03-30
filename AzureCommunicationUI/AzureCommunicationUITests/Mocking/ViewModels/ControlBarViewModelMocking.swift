@@ -11,6 +11,7 @@ class ControlBarViewModelMocking: ControlBarViewModel {
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
+         localizationProvider: LocalizationProvider,
          dispatchAction: @escaping ActionDispatch,
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState,
@@ -18,6 +19,7 @@ class ControlBarViewModelMocking: ControlBarViewModel {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
+                   localizationProvider: localizationProvider,
                    dispatchAction: dispatchAction,
                    endCallConfirm: endCallConfirm,
                    localUserState: localUserState)

@@ -15,6 +15,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     let id = UUID()
 
     @Published var videoViewModel: ParticipantVideoViewInfoModel?
+    @Published var accessibilityLabel: String = ""
     @Published var displayName: String?
     @Published var isSpeaking: Bool
     @Published var isMuted: Bool
@@ -23,6 +24,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     init(compositeViewModelFactory: CompositeViewModelFactory,
          participantModel: ParticipantInfoModel) {
         self.displayName = participantModel.displayName
+        self.accessibilityLabel = participantModel.displayName
         self.isSpeaking = participantModel.isSpeaking
         self.participantIdentifier = participantModel.userIdentifier
         self.isMuted = participantModel.isMuted
@@ -41,6 +43,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
 
         if self.displayName != participantModel.displayName {
             self.displayName = participantModel.displayName
+            self.accessibilityLabel = accessibilityLabel
         }
 
         if self.isSpeaking != participantModel.isSpeaking {

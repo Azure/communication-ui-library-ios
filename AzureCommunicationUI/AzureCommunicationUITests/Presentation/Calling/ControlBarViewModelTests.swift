@@ -24,6 +24,7 @@ class ControlBarViewModelTests: XCTestCase {
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
         controlBarViewModel = ControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                                   logger: LoggerMocking(),
+                                                  localizationProvider: LocalizationProviderMocking(),
                                                   dispatchAction: dispatch,
                                                   endCallConfirm: {},
                                                   localUserState: LocalUserState())

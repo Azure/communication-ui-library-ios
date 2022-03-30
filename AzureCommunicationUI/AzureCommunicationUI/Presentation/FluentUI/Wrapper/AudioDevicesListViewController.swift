@@ -44,6 +44,7 @@ extension AudioDevicesListViewController: UITableViewDataSource, UITableViewDele
         let audioDeviceViewModel = self.items[indexPath.row]
 
         cell.setup(viewModel: audioDeviceViewModel)
+        cell.accessibilityValue = "\(indexPath.row + 1) of \(indexPath.count)"
         return cell
     }
 

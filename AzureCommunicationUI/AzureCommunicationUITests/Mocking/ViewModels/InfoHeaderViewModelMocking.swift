@@ -7,20 +7,24 @@ import Foundation
 @testable import AzureCommunicationUI
 
 class InfoHeaderViewModelMocking: InfoHeaderViewModel {
-    private let updateState: ((LocalUserState, RemoteParticipantsState) -> Void)?
+    private let updateState: ((LocalUserState, RemoteParticipantsState, CallingState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
          localUserState: LocalUserState,
-         updateState: ((LocalUserState, RemoteParticipantsState) -> Void)? = nil) {
+         accessibilityProvider: AccessibilityProvider,
+         updateState: ((LocalUserState, RemoteParticipantsState, CallingState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
                    localUserState: localUserState,
-                   localizationProvider: LocalizationProviderMocking())
+                   localizationProvider: LocalizationProviderMocking(),
+                   accessibilityProvider: accessibilityProvider)
     }
 
-    override func update(localUserState: LocalUserState, remoteParticipantsState: RemoteParticipantsState) {
-        updateState?(localUserState, remoteParticipantsState)
+    override func update(localUserState: LocalUserState,
+                         remoteParticipantsState: RemoteParticipantsState,
+                         callingState: CallingState) {
+        updateState?(localUserState, remoteParticipantsState, callingState)
     }
 }
