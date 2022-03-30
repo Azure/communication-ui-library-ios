@@ -68,4 +68,16 @@ extension XCUITestBase {
     func tapMeetingType(_ meetingType: CompositeMeetingType) {
         app?.buttons[meetingType.name].tap()
     }
+
+    func takeScreenshot(name: String = "App Screenshot - \(Date().description)",
+                        lifetime: XCTAttachment.Lifetime  = .keepAlways) {
+        guard let app = app else {
+            return
+        }
+        let screenshot = app.screenshot()
+        let attachment = XCTAttachment(screenshot: screenshot)
+        attachment.name = name
+        attachment.lifetime = lifetime
+        add(attachment)
+    }
 }
