@@ -148,19 +148,19 @@ extension SwiftUIDemoView {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
                 if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(with: GroupCallOptions(communicationTokenCredential: credential,
+                    callComposite.launch(with: GroupCallOptions(credential: credential,
                                                                 groupId: uuid))
                 } else {
-                    callComposite.launch(with: GroupCallOptions(communicationTokenCredential: credential,
+                    callComposite.launch(with: GroupCallOptions(credential: credential,
                                                                 groupId: uuid,
                                                                 displayName: envConfigSubject.displayName))
                 }
             case .teamsMeeting:
                 if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(with: TeamsMeetingOptions(communicationTokenCredential: credential,
+                    callComposite.launch(with: TeamsMeetingOptions(credential: credential,
                                                                    meetingLink: link))
                 } else {
-                    callComposite.launch(with: TeamsMeetingOptions(communicationTokenCredential: credential,
+                    callComposite.launch(with: TeamsMeetingOptions(credential: credential,
                                                                    meetingLink: link,
                                                                    displayName: envConfigSubject.displayName))
                 }
@@ -212,7 +212,7 @@ extension SwiftUIDemoView {
         isErrorDisplayed = true
     }
 
-    func didFail(_ error: ErrorEvent) {
+    func didFail(_ error: CommunicationUIErrorEvent) {
         print("::::SwiftUIDemoView::getEventsHandler::didFail \(error)")
         print("::::SwiftUIDemoView error.code \(error.code)")
         showError(for: error.code)

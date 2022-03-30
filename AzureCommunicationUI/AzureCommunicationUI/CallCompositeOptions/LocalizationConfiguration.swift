@@ -9,33 +9,33 @@ public enum LanguageCode: Hashable {
     /// Custom value for unrecognized enum values
     case custom(String)
     /// German
-    case de
+    case deDE
     /// Japanese
-    case ja
+    case jaJP
     /// English
-    case en
+    case enUS
     /// Chinese (Traditional)
-    case zhHant
+    case zhTW
     /// Spanish
-    case es
+    case esES
     /// Chinese (Simplified)
-    case zhHans
+    case zhCN
     /// Italian
-    case it
+    case itIT
     /// English (United Kingdom)
     case enGB
     /// Korean
-    case ko
+    case koKR
     /// Turkish
-    case tr
+    case trTR
     /// Russian
-    case ru
+    case ruRU
     /// French
-    case fr
+    case frFR
     /// Dutch
-    case nl
+    case nlNL
     /// Portuguese
-    case pt
+    case ptPT
 
     /// Creates an instance of `LanguageCode` with for language code.
     /// - Parameter rawValue: String representing the locale code (ie. en, fr,  zh-Hant, zh-Hans, ...).
@@ -43,33 +43,33 @@ public enum LanguageCode: Hashable {
     public init(rawValue: String) {
         switch rawValue {
         case "de":
-            self = .de
+            self = .deDE
         case "ja":
-            self = .ja
+            self = .jaJP
         case "en":
-            self = .en
+            self = .enUS
         case "zh-Hant":
-            self = .zhHant
+            self = .zhTW
         case "es":
-            self = .es
+            self = .esES
         case "zh-Hans":
-            self = .zhHans
+            self = .zhCN
         case "it":
-            self = .it
+            self = .itIT
         case "en-GB":
             self = .enGB
         case "ko":
-            self = .ko
+            self = .koKR
         case "tr":
-            self = .tr
+            self = .trTR
         case "ru":
-            self = .ru
+            self = .ruRU
         case "fr":
-            self = .fr
+            self = .frFR
         case "nl":
-            self = .nl
+            self = .nlNL
         case "pt":
-            self = .pt
+            self = .ptPT
         default:
             self = .custom(rawValue)
         }
@@ -80,33 +80,33 @@ public enum LanguageCode: Hashable {
         switch self {
         case let .custom(language):
             return language
-        case .de:
+        case .deDE:
             return "de"
-        case .ja:
+        case .jaJP:
             return "ja"
-        case .en:
+        case .enUS:
             return "en"
-        case .zhHant:
+        case .zhTW:
             return "zh-Hant"
-        case .es:
+        case .esES:
             return "es"
-        case .zhHans:
+        case .zhCN:
             return "zh-Hans"
-        case .it:
+        case .itIT:
             return "it"
         case .enGB:
             return "en-GB"
-        case .ko:
+        case .koKR:
             return "ko"
-        case .tr:
+        case .trTR:
             return "tr"
-        case .ru:
+        case .ruRU:
             return "ru"
-        case .fr:
+        case .frFR:
             return "fr"
-        case .nl:
+        case .nlNL:
             return "nl"
-        case .pt:
+        case .ptPT:
             return "pt"
         }
     }
@@ -138,6 +138,21 @@ public struct LocalizationConfiguration {
     /// - Returns: Get supported languages the AzureCommunicationUICalling
     ///  has predefined translations.
     public static var supportedLanguages: [LanguageCode] {
-        return [.de, .ja, .en, .zhHant, .es, .zhHans, .it, .enGB, .ko, .tr, .ru, .fr, .nl, .pt]
+        return [
+            .deDE,
+            .jaJP,
+            .enUS,
+            .zhTW,
+            .esES,
+            .zhCN,
+            .itIT,
+            .enGB,
+            .koKR,
+            .trTR,
+            .ruRU,
+            .frFR,
+            .nlNL,
+            .ptPT
+        ]
     }
 }

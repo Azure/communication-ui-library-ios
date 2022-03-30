@@ -28,7 +28,7 @@ public class CallComposite {
 
     /// Assign closure to execute when an error occurs inside Call Composite.
     /// - Parameter action: The closure returning the error thrown from Call Composite.
-    public func setTarget(didFail action: ((ErrorEvent) -> Void)?) {
+    public func setTarget(didFail action: ((CommunicationUIErrorEvent) -> Void)?) {
         callCompositeEventsHandler.didFail = action
     }
 
