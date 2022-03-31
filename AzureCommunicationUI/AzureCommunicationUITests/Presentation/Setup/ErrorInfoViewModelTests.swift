@@ -30,7 +30,7 @@ class ErrorInfoViewModelTests: XCTestCase {
         XCTAssertEqual(sut.message, "AzureCommunicationUI.SnackBar.Text.ErrorCallJoin")
     }
 
-    func test_errorInfoViewModel_update_when__errorStateCallEnd_then_snackBarErrorCallEndMessage() {
+    func test_errorInfoViewModel_update_when_errorStateCallEnd_then_snackBarErrorCallEndMessage() {
         let sut = makeSUT()
         let event = ErrorEvent(code: CallCompositeErrorCode.callEnd)
         let state = ErrorState(error: event, errorCategory: .callState)
@@ -38,6 +38,19 @@ class ErrorInfoViewModelTests: XCTestCase {
         sut.update(errorState: state)
         XCTAssertEqual(sut.isDisplayed, true)
         XCTAssertEqual(sut.message, "AzureCommunicationUI.SnackBar.Text.ErrorCallEnd")
+    }
+
+    func test_errorInfoViewModel_update_when_errorTypeIsEmpty_then_isDisplayEqualFalse() {
+        let sut = makeSUT()
+        let event = ErrorEvent(code: CallCompositeErrorCode.callJoin)
+        let state = ErrorState(error: event, errorCategory: .callState)
+
+        sut.update(errorState: state)
+        XCTAssertEqual(sut.isDisplayed, true)
+
+        let newState = ErrorState(error: nil, errorCategory: .callState)
+        sut.update(errorState: newState)
+        XCTAssertEqual(sut.isDisplayed, false)
     }
 
     func makeSUT() -> ErrorInfoViewModel {
