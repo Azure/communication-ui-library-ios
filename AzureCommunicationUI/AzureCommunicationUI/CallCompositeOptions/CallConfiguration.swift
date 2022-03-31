@@ -7,17 +7,17 @@ import Foundation
 import AzureCommunicationCommon
 
 struct CallConfiguration {
-    let communicationTokenCredential: CommunicationTokenCredential
+    let credential: CommunicationTokenCredential
     let displayName: String?
     let groupId: UUID?
     let meetingLink: String?
     let compositeCallType: CompositeCallType
     let diagnosticConfig: DiagnosticConfig
 
-    init(communicationTokenCredential: CommunicationTokenCredential,
+    init(credential: CommunicationTokenCredential,
          groupId: UUID,
          displayName: String?) {
-        self.communicationTokenCredential = communicationTokenCredential
+        self.credential = credential
         self.displayName = displayName
         self.groupId = groupId
         self.meetingLink = nil
@@ -25,10 +25,10 @@ struct CallConfiguration {
         self.diagnosticConfig = DiagnosticConfig()
     }
 
-    init(communicationTokenCredential: CommunicationTokenCredential,
+    init(credential: CommunicationTokenCredential,
          meetingLink: String,
          displayName: String?) {
-        self.communicationTokenCredential = communicationTokenCredential
+        self.credential = credential
         self.displayName = displayName
         self.groupId = nil
         self.meetingLink = meetingLink

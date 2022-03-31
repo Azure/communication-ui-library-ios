@@ -22,7 +22,7 @@ class DependencyContainerTests: XCTestCase {
         let communicationTokenCredential = try? CommunicationTokenCredential(token: sampleToken)
         let displayName = ""
         let groupId = UUID()
-        let callConfiguration = CallConfiguration(communicationTokenCredential: communicationTokenCredential!,
+        let callConfiguration = CallConfiguration(credential: communicationTokenCredential!,
                                                   groupId: groupId,
                                                   displayName: displayName)
 

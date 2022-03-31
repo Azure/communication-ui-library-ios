@@ -184,7 +184,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
 
         let error = getError()
-        let expectedStatus = ErrorEvent(code: CallCompositeErrorCode.callEnd, error: error)
+        let expectedStatus = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callEnd, error: error)
 
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
@@ -205,7 +205,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
 
         let error = CompositeError.invalidSDKWrapper
-        let expectedError = ErrorEvent(code: CallCompositeErrorCode.callEnd, error: error)
+        let expectedError = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callEnd, error: error)
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
             switch action {
@@ -224,7 +224,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_startCall_when_returnsNSError_then_updateCallingCoreError() {
         let error = getError()
         let expectation = XCTestExpectation(description: "Dispatch the new action")
-        let expectedStatus = ErrorEvent(code: CallCompositeErrorCode.callJoin, error: error)
+        let expectedStatus = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callJoin, error: error)
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
             switch action {
@@ -243,7 +243,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_startCall_when_returnsCompositeError_then_updateClientError() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
         let error = CompositeError.invalidSDKWrapper
-        let expectedError = ErrorEvent(code: CallCompositeErrorCode.callJoin, error: error)
+        let expectedError = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callJoin, error: error)
 
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
@@ -300,7 +300,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_setupCall_when_returnsError_then_updateCallingCoreError() {
         let error = getError()
         let expectation = XCTestExpectation(description: "Dispatch the new action")
-        let expectedStatus = ErrorEvent(code: CallCompositeErrorCode.callJoin, error: error)
+        let expectedStatus = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callJoin, error: error)
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
             switch action {

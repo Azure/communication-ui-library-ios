@@ -12,15 +12,12 @@ struct ParticipantGridCellView: View {
     let getRemoteParticipantRendererView: (RemoteParticipantVideoViewId) -> ParticipantRendererViewInfo?
     let rendererViewManager: RendererViewManager?
     @State var displayedVideoStreamId: String?
-    @State var isVideoChanging: Bool = false
     let avatarSize: CGFloat = 56
 
     var body: some View {
         Group {
             GeometryReader { geometry in
-                if isVideoChanging {
-                    EmptyView()
-                } else if let rendererViewInfo = getRendererViewInfo() {
+                if let rendererViewInfo = getRendererViewInfo() {
                     let zoomable = viewModel.videoViewModel?.videoStreamType == .screenSharing
                     ParticipantGridCellVideoView(videoRendererViewInfo: rendererViewInfo,
                                                  rendererViewManager: rendererViewManager,
@@ -34,21 +31,8 @@ struct ParticipantGridCellView: View {
                                height: geometry.size.height)
                 }
             }
-        }
-        .onReceive(viewModel.$videoViewModel) { model in
-            let cachedVideoStreamId = displayedVideoStreamId
-            if model?.videoStreamId != displayedVideoStreamId {
-                displayedVideoStreamId = model?.videoStreamId
-            }
-
-            if model?.videoStreamId != cachedVideoStreamId,
-               model?.videoStreamId != nil {
-                // workaround to force rendererView being recreated
-                isVideoChanging = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    isVideoChanging = false
-                }
-            }
+            .accessibilityElement(children: .combine)
+            .accessibility(label: Text(viewModel.accessibilityLabel))
         }
     }
 

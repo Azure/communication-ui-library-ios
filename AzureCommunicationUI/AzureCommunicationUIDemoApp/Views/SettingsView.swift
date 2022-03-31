@@ -70,7 +70,7 @@ struct SettingsView: View {
 struct LocalePicker: View {
     @Binding var selection: String
     @Binding var isShowing: Bool
-    let supportedLanguage: [String] = LocalizationConfiguration.getSupportedLanguages()
+    let supportedLanguage: [String] = LocalizationConfiguration.supportedLanguages
 
     var body: some View {
         VStack {

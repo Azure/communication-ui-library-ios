@@ -126,17 +126,18 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
-    func didFail(_ error: ErrorEvent) {
+    func didFail(_ error: CommunicationUIErrorEvent) {
         print("::::UIkitDemoView::getEventsHandler::didFail \(error)")
         print("::::UIkitDemoView error.code \(error.code)")
     }
 
     func startExperience(with link: String) {
         let localizationConfig = LocalizationConfiguration(languageCode: envConfigSubject.languageCode,
-                                                           isRightToLeft: envConfigSubject.isRightToLeft)
+                                                           layoutDirection: envConfigSubject.isRightToLeft ?
+                                                            .rightToLeft : .leftToRight)
 
-        let callCompositeOptions = CallCompositeOptions(themeConfiguration: TeamsBrandConfig(),
-                                                        localizationConfiguration: localizationConfig)
+        let callCompositeOptions = CallCompositeOptions(theme: TeamsBrandConfig(),
+                                                        localization: localizationConfig)
 
         let callComposite = CallComposite(withOptions: callCompositeOptions)
 
@@ -146,12 +147,12 @@ class UIKitDemoViewController: UIViewController {
             switch selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
-                let parameters = GroupCallOptions(communicationTokenCredential: communicationTokenCredential,
+                let parameters = GroupCallOptions(credential: communicationTokenCredential,
                                                   groupId: uuid,
                                                   displayName: getDisplayName())
                 callComposite.launch(with: parameters)
             case .teamsMeeting:
-                let parameters = TeamsMeetingOptions(communicationTokenCredential: communicationTokenCredential,
+                let parameters = TeamsMeetingOptions(credential: communicationTokenCredential,
                                                      meetingLink: link,
                                                      displayName: getDisplayName())
                 callComposite.launch(with: parameters)
