@@ -22,7 +22,7 @@ class ErrorInfoViewModelTests: XCTestCase {
 
     func test_errorInfoViewModel_update_when_errorStateCallJoinSet_then_snackBarErrorJoinCallMessageDisplayed() {
         let sut = makeSUT()
-        let event = ErrorEvent(code: CallCompositeErrorCode.callJoin)
+        let event = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callJoin)
         let state = ErrorState(error: event, errorCategory: .callState)
 
         sut.update(errorState: state)
@@ -32,7 +32,7 @@ class ErrorInfoViewModelTests: XCTestCase {
 
     func test_errorInfoViewModel_update_when_errorStateCallEnd_then_snackBarErrorCallEndMessage() {
         let sut = makeSUT()
-        let event = ErrorEvent(code: CallCompositeErrorCode.callEnd)
+        let event = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callEnd)
         let state = ErrorState(error: event, errorCategory: .callState)
 
         sut.update(errorState: state)
@@ -42,7 +42,7 @@ class ErrorInfoViewModelTests: XCTestCase {
 
     func test_errorInfoViewModel_update_when_errorTypeIsEmpty_then_isDisplayEqualFalse() {
         let sut = makeSUT()
-        let event = ErrorEvent(code: CallCompositeErrorCode.callJoin)
+        let event = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callJoin)
         let state = ErrorState(error: event, errorCategory: .callState)
 
         sut.update(errorState: state)
