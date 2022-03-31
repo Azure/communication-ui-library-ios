@@ -38,6 +38,8 @@ struct ControlBarView: View {
         .background(Color(StyleProvider.color.backgroundColor))
         .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
             audioDeviceSelectionListView
+                .accessibilityElement(children: .contain)
+                .accessibility(addTraits: .isModal)
         })
     }
 

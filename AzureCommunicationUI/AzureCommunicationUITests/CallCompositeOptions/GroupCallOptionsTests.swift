@@ -15,7 +15,7 @@ class GroupCallOptionsTests: XCTestCase {
         let displayName = "Display Name"
         let groupId = UUID()
 
-        let groupCallOptions = GroupCallOptions(communicationTokenCredential: communicationTokenCredential!, groupId: groupId, displayName: displayName)
+        let groupCallOptions = GroupCallOptions(credential: communicationTokenCredential!, groupId: groupId, displayName: displayName)
 
         XCTAssertNotNil(groupCallOptions)
         XCTAssertEqual(groupCallOptions.displayName, displayName)

@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import SwiftUI
 import XCTest
 @testable import AzureCommunicationUI
 
@@ -15,29 +16,24 @@ class LocalizationProviderTests: XCTestCase {
         logger = LoggerMocking()
     }
 
-    func test_localizationProvider_isRightToLeft_when_applyRTLTrue_then_shouldRTLReturnTrue() {
+    func test_localizationProvider_applyRTL_when_layoutDirectionRightToLeft_then_shouldRTLReturnTrue() {
         let sut = makeSUT()
-        let languageCode = "en"
-        let isRTL = true
-        let localeConfig = LocalizationConfiguration(languageCode: languageCode,
-                                                     isRightToLeft: isRTL)
+        let languageCode: LocalizationConfiguration.LanguageCode = .enUS
+        let layoutDirection: LayoutDirection = .rightToLeft
+        let localeConfig = LocalizationConfiguration(languageCode: languageCode.rawValue,
+                                                     layoutDirection: layoutDirection)
         sut.apply(localeConfig: localeConfig)
         XCTAssertTrue(sut.isRightToLeft)
     }
 
-    func test_localizationProvider_isRightToLeft_when_applyRTLFalse_then_shouldRTLReturnFalse() {
+    func test_localizationProvider_applyRTL_when_layoutDirectionLeftToRight_then_shouldRTLReturnFalse() {
         let sut = makeSUT()
-        let languageCode = "en"
-        let isRTL = false
-        let localeConfig = LocalizationConfiguration(languageCode: languageCode,
-                                                     isRightToLeft: isRTL)
+        let languageCode: LocalizationConfiguration.LanguageCode = .enUS
+        let layoutDirection: LayoutDirection = .leftToRight
+        let localeConfig = LocalizationConfiguration(languageCode: languageCode.rawValue,
+                                                     layoutDirection: layoutDirection)
         sut.apply(localeConfig: localeConfig)
         XCTAssertFalse(sut.isRightToLeft)
-    }
-
-    func test_localizationProvider_getSupportedLanguages_then_shouldReturnLanguages() {
-        let sut = makeSUT()
-        XCTAssertNotEqual(sut.getSupportedLanguages().count, 0)
     }
 
     func test_localizationProvider_getLocalizedString_when_noApply_then_shouldReturnEnString() {
@@ -55,34 +51,11 @@ class LocalizationProviderTests: XCTestCase {
         let joinCallEn = "Join call"
         XCTAssertEqual(sut.getLocalizedString(key), joinCallEn)
 
-        let languageCode = "fr"
-        let localeConfig = LocalizationConfiguration(languageCode: languageCode)
+        let languageCode: LocalizationConfiguration.LanguageCode = .frFR
+        let localeConfig = LocalizationConfiguration(languageCode: languageCode.rawValue)
         sut.apply(localeConfig: localeConfig)
 
         XCTAssertNotEqual(sut.getLocalizedString(key), joinCallEn)
-    }
-
-    func test_localizationProvider_getLocalizedString_when_applyCustomTranslations_then_shouldReturnCustomizedString() {
-        let sut = makeSUT()
-
-        let key = LocalizationKey.joinCall
-        let joinCallEn = "Join call"
-        XCTAssertEqual(sut.getLocalizedString(key), joinCallEn)
-
-        let customKey = LocalizationKey.speaker
-        let speakerEn = "Speaker"
-        XCTAssertEqual(sut.getLocalizedString(customKey), speakerEn)
-
-        let languageCode = "en"
-        let customText = "Custom Speaker"
-        let customTranslations: [String: String] = [
-            customKey.rawValue: customText
-        ]
-        let localeConfig = LocalizationConfiguration(languageCode: languageCode,
-                                                     customTranslations: customTranslations)
-        sut.apply(localeConfig: localeConfig)
-        XCTAssertEqual(sut.getLocalizedString(key), joinCallEn)
-        XCTAssertEqual(sut.getLocalizedString(customKey), customText)
     }
 }
 

@@ -9,6 +9,9 @@
 - Implemented Localization support for 13 languages and right-to-left mirror layout. [#73](https://github.com/Azure/communication-ui-library-ios/pull/73) 
  
 ### Breaking Changes
+- Rename `ErrorType` to `CommunicationUIErrorType`. [#99](https://github.com/Azure/communication-ui-library-ios/pull/99)
+- Rename parameter `communicationTokenCredential` to `credential` in both `GroupCallOptions` and `TeamsMeetingOptions` initializers. [#99](https://github.com/Azure/communication-ui-library-ios/pull/99)
+- Rename `themeConfiguration` to `theme` in `CallCompositeOptions` initializer. [#99](https://github.com/Azure/communication-ui-library-ios/pull/99)
 
 ### Bug Fixes
 - Cleaning up Calling State and Call Error when joining or returning to a call from error. [#28](https://github.com/Azure/communication-ui-library-ios/pull/28)

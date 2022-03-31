@@ -8,13 +8,19 @@ import Combine
 
 class ErrorInfoViewModel: ObservableObject {
     @Published var isDisplayed: Bool = false
-    @Published var message: String = ""
+    @Published private(set) var message: String = ""
+    @Published private(set) var accessibilityLabel: String = ""
+    @Published private(set) var dismissButtonAccessibilityLabel: String = ""
+    @Published private(set) var dismissButtonAccessibilityHint: String = ""
 
     private let localizationProvider: LocalizationProvider
     private var previousErrorType: String = ""
 
     init(localizationProvider: LocalizationProvider) {
         self.localizationProvider = localizationProvider
+
+        dismissButtonAccessibilityLabel = localizationProvider.getLocalizedString(.snackBarDismissAccessibilityLabel)
+        dismissButtonAccessibilityHint = localizationProvider.getLocalizedString(.snackBarDismissAccessibilityHint)
     }
 
     var dismissContent: String {
@@ -42,5 +48,6 @@ class ErrorInfoViewModel: ObservableObject {
         default:
             message = localizationProvider.getLocalizedString(.snackBarError)
         }
+        accessibilityLabel = message
     }
 }
