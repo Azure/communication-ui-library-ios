@@ -1,0 +1,5 @@
+#import <Foundation/Foundation.h>
+@interface PodsDummy_Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests : NSObject
+@end
+@implementation PodsDummy_Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests
+@end

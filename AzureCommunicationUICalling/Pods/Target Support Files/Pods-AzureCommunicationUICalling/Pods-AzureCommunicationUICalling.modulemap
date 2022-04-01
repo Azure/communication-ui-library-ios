@@ -1,0 +1,6 @@
+framework module Pods_AzureCommunicationUICalling {
+  umbrella header "Pods-AzureCommunicationUICalling-umbrella.h"
+
+  export *
+  module * { export * }
+}

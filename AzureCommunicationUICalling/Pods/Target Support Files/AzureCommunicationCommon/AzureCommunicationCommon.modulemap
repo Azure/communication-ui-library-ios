@@ -1,0 +1,6 @@
+framework module AzureCommunicationCommon {
+  umbrella header "AzureCommunicationCommon-umbrella.h"
+
+  export *
+  module * { export * }
+}
