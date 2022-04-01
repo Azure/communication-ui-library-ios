@@ -54,7 +54,7 @@ let options = GroupCallOptions(credential: communicationTokenCredential,
 callComposite.launch(with: options)
 ```
 
-For more details on Mobile UI Library functionalities visit the [API Reference Documentation](docs/api/CallComposite/Reference.md).
+For more details on Mobile UI Library functionalities visit the [API Reference Documentation](https://azure.github.io/azure-sdk-for-ios/AzureCommunicationUI/index.html).
 
 
 ## Contributing to the Library or Sample
