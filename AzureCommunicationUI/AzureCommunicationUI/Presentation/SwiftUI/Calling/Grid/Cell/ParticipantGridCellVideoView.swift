@@ -26,6 +26,7 @@ struct ParticipantGridCellVideoView: View {
             VStack(alignment: .center, spacing: 0) {
                 if zoomable {
                     zoomableVideoRenderView
+                        .prefersHomeIndicatorAutoHidden(UIDevice.current.hasHomeBar)
                 } else {
                     videoRenderView
                 }
