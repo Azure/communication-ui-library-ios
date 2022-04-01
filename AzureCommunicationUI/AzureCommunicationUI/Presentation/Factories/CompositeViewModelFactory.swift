@@ -59,6 +59,7 @@ protocol CompositeViewModelFactory {
 class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     private let logger: Logger
     private let store: Store<AppState>
+    private let accessibilityProvider: AccessibilityProvider
     private let localizationProvider: LocalizationProvider
 
     private weak var setupViewModel: SetupViewModel?
@@ -66,9 +67,11 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
 
     init(logger: Logger,
          store: Store<AppState>,
-         localizationProvider: LocalizationProvider) {
+         localizationProvider: LocalizationProvider,
+         accessibilityProvider: AccessibilityProvider) {
         self.logger = logger
         self.store = store
+        self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
     }
 
@@ -91,7 +94,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
             let viewModel = CallingViewModel(compositeViewModelFactory: self,
                                              logger: logger,
                                              store: store,
-                                             localizationProvider: localizationProvider)
+                                             localizationProvider: localizationProvider,
+                                             accessibilityProvider: accessibilityProvider)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -123,6 +127,7 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel {
         LocalVideoViewModel(compositeViewModelFactory: self,
                             logger: logger,
+                            localizationProvider: localizationProvider,
                             dispatchAction: dispatchAction)
     }
     func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
@@ -167,6 +172,7 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
                                  localUserState: LocalUserState) -> ControlBarViewModel {
         ControlBarViewModel(compositeViewModelFactory: self,
                             logger: logger,
+                            localizationProvider: localizationProvider,
                             dispatchAction: dispatchAction,
                             endCallConfirm: endCallConfirm,
                             localUserState: localUserState)
@@ -175,13 +181,17 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
                             localUserState: localUserState,
-                            localizationProvider: localizationProvider)
+                            localizationProvider: localizationProvider,
+                            accessibilityProvider: accessibilityProvider)
     }
+
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
         ParticipantGridCellViewModel(compositeViewModelFactory: self, participantModel: participantModel)
     }
     func makeParticipantGridsViewModel() -> ParticipantGridViewModel {
-        ParticipantGridViewModel(compositeViewModelFactory: self)
+        ParticipantGridViewModel(compositeViewModelFactory: self,
+                                 localizationProvider: localizationProvider,
+                                 accessibilityProvider: accessibilityProvider)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
@@ -192,7 +202,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
         BannerViewModel(compositeViewModelFactory: self)
     }
     func makeBannerTextViewModel() -> BannerTextViewModel {
-        BannerTextViewModel(localizationProvider: localizationProvider)
+        BannerTextViewModel(accessibilityProvider: accessibilityProvider,
+                            localizationProvider: localizationProvider)
     }
 
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel {
@@ -221,6 +232,7 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
                                  localUserState: localUserState,
                                  localizationProvider: localizationProvider)
     }
+
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
         JoiningCallActivityViewModel(localizationProvider: localizationProvider)
     }

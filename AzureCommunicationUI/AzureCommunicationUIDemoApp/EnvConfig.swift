@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import AzureCommunicationUI
 
 enum EnvConfig: String {
     case acsToken
@@ -30,7 +31,7 @@ class EnvConfigSubject: ObservableObject {
 
     @Published var selectedAcsTokenType: ACSTokenType = .token
     @Published var selectedMeetingType: MeetingType = .groupCall
-    @Published var languageCode: String = "en"
+    @Published var languageCode: String = LocalizationConfiguration.LanguageCode.enUS.rawValue
     @Published var isRightToLeft: Bool = false
 
     func update(from dic: [String: String]) {

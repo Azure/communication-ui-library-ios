@@ -12,13 +12,20 @@
 "AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
 
 /* SetupView */
+"AzureCommunicationUI.SetupView.Title"="Setup";
+"AzureCommunicationUI.SetupView.Button.Dismiss.AccessibilityLabel"="Zurück";
 "AzureCommunicationUI.SetupView.Button.JoinCall"="An Anruf teilnehmen";
 "AzureCommunicationUI.SetupView.Button.JoiningCall"="Teilnehmen am Anruf…";
 "AzureCommunicationUI.SetupView.Button.VideoOff"="Video aus";
+"AzureCommunicationUI.SetupView.Button.VideoOff.AccessibilityLabel"="Kamera einschalten";
 "AzureCommunicationUI.SetupView.Button.VideoOn"="Video ein";
+"AzureCommunicationUI.SetupView.Button.VideoOn.AccessibilityLabel"="Kamera ausschalten";
 "AzureCommunicationUI.SetupView.Button.MicOff"="Mikro deaktiviert";
+"AzureCommunicationUI.SetupView.Button.MicOff.AccessibilityLabel"="Stummschaltung aufheben";
 "AzureCommunicationUI.SetupView.Button.MicOn"="Mikro ein";
+"AzureCommunicationUI.SetupView.Button.MicOn.AccessibilityLabel"="Stummschalten";
 "AzureCommunicationUI.SetupView.Button.Device"="Gerät";
+"AzureCommunicationUI.SetupView.Button.Device.AccessibilityLabel"="Audiogerät";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Ihre Kamera ist deaktiviert. Um sie zu aktivieren, wechseln Sie bitte zu „Einstellungen“, um den Zugriff zuzulassen.";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="Kamera und Audio sind deaktiviert. Um sie zu aktivieren, wechseln Sie bitte zu „Einstellungen“, um den Zugriff zuzulassen. Sie müssen Audio aktivieren, um diesen Anruf zu starten.";
 "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="Ihr Audio ist deaktiviert. Um es zu aktivieren, wechseln Sie bitte zu „Einstellungen“, um den Zugriff zuzulassen. Sie müssen Audio aktivieren, um diesen Anruf zu starten.";
@@ -34,6 +41,14 @@
 
 "AzureCommunicationUI.CallingView.ParticipantDrawer.Unnamed"="Unbenannter Teilnehmer";
 "AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"="%@ (Sie)"; // %@ is local participant name
+
+"AzureCommunicationUI.CallingView.SwitchCamera.Front"="Zur Rückkamera wechseln";
+"AzureCommunicationUI.CallingView.SwitchCamera.Back"="Zur Frontkamera wechseln";
+
+"AzureCommunicationUI.CallingView.OnePersonJoined"="%@ nimmt an der Besprechung teil";
+"AzureCommunicationUI.CallingView.MutiplePeopleJoined"="%d Teilnehmer*innen nehmen an der Besprechung teil";
+"AzureCommunicationUI.CallingView.OnePersonLeft"="%@ hat die Besprechung verlassen";
+"AzureCommunicationUI.CallingView.MutiplePeopleLeft"="%d Teilnehmer*innen haben die Besprechung verlassen";
 
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Anruf verlassen";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="Abbrechen";
@@ -62,6 +77,8 @@
 
 /* PopUp warning */
 "AzureCommunicationUI.SnackBar.Button.Dismiss"="Schließen";
+"AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityLabel"="Banner schließen";
+"AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityHint"="Schließt diese Benachrichtigung.";
 "AzureCommunicationUI.SnackBar.Text.ErrorCallJoin"="Teilnahme am Anruf aufgrund eines Fehlers nicht möglich.";
 "AzureCommunicationUI.SnackBar.Text.ErrorCallEnd"="Sie wurden aufgrund eines Fehlers aus dem Anruf entfernt.";
 "AzureCommunicationUI.SnackBar.Text.Error"="Ein Fehler ist aufgetreten.";

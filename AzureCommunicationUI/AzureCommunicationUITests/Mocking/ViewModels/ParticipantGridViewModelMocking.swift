@@ -7,15 +7,20 @@ import Foundation
 @testable import AzureCommunicationUI
 
 class ParticipantGridViewModelMocking: ParticipantGridViewModel {
-    private let updateState: ((RemoteParticipantsState, LifeCycleState) -> Void)?
+    private let updateState: ((CallingState, RemoteParticipantsState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
-         updateState: ((RemoteParticipantsState, LifeCycleState) -> Void)? = nil) {
+         localizationProvider: LocalizationProvider,
+         accessibilityProvider: AccessibilityProvider,
+         updateState: ((CallingState, RemoteParticipantsState) -> Void)? = nil) {
         self.updateState = updateState
-        super.init(compositeViewModelFactory: compositeViewModelFactory)
+        super.init(compositeViewModelFactory: compositeViewModelFactory,
+                   localizationProvider: localizationProvider,
+         		   accessibilityProvider: accessibilityProvider)
     }
 
-    override func update(remoteParticipantsState: RemoteParticipantsState, lifeCycleState: LifeCycleState) {
-        updateState?(remoteParticipantsState, lifeCycleState)
+    override func update(callingState: CallingState,
+                         remoteParticipantsState: RemoteParticipantsState) {
+        updateState?(callingState, remoteParticipantsState)
     }
 }

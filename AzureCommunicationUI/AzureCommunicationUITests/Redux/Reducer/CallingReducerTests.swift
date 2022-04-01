@@ -123,7 +123,7 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .connected,
                                  isRecordingActive: true,
                                  isTranscriptionActive: true)
-        let action = ErrorAction.StatusErrorAndCallReset(error: ErrorEvent(code: "",
+        let action = ErrorAction.StatusErrorAndCallReset(error: CommunicationUIErrorEvent(code: "",
                                                                           error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)

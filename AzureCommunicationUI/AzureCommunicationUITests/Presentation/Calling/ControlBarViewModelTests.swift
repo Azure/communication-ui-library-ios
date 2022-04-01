@@ -525,6 +525,7 @@ extension ControlBarViewModelTests {
     func makeSUT() -> ControlBarViewModel {
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
+                                   localizationProvider: LocalizationProviderMocking(),
                                    dispatchAction: storeFactory.store.dispatch,
                                    endCallConfirm: {},
                                    localUserState: storeFactory.store.state.localUserState)

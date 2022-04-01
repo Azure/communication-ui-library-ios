@@ -1,9 +1,9 @@
 **STRUCT**
 
-# `ErrorEvent`
+# `CommmunicationUIErrorEvent`
 
 ```swift
-public struct ErrorEvent
+public struct CommmunicationUIErrorEvent
 ```
 ## Description
 
