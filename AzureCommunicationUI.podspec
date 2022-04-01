@@ -9,7 +9,7 @@ Pod::Spec.new do |spec|
   spec.module_name          = 'AzureCommunicationUI'
   spec.swift_version        = '5.0'
 
-  spec.platform             = :ios, '13.0'
+  spec.platform             = :ios, '14.0'
 
   spec.source_files         = 'AzureCommunicationUI/AzureCommunicationUI/**/*.swift'
   spec.resources            = 'AzureCommunicationUI/AzureCommunicationUI/*.xcassets'
