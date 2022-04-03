@@ -27,10 +27,10 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
             return
         }
         tapInterfaceFor(.uiKit)
-        tapEnabledButton(buttonName: "Start Experience", shouldWait: true)
-        tapButton(buttonName: "Join call", shouldWait: true)
-        tapButton(buttonName: "AzureCommunicationUI.CallingView.ControlButton.HangUp", shouldWait: true)
-        tapButton(buttonName: "Leave call", shouldWait: true)
+        tapEnabledButton(accesiibilityLabel: .startExperienceAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .joinCallAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .hangupAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .leaveCallAccssibilityLabel, shouldWait: true)
     }
 
     func testCallCompositeWithExpiredToken() {
@@ -41,13 +41,13 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         }
 
         tapInterfaceFor(.swiftUI)
-        tapButton(buttonName: "textFieldClearButton", shouldWait: false)
+        tapButton(accesiibilityLabel: .clearTokenTextFieldAccessibilityLabel, shouldWait: false)
 
         let acsTokenTextField = app.textFields["ACS Token"]
         acsTokenTextField.setText(text: getExpiredToken(), application: app)
 
-        tapButton(buttonName: "Start Experience", shouldWait: true)
-        tapButton(buttonName: "Join call", shouldWait: true)
+        tapEnabledButton(accesiibilityLabel: .startExperienceAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .joinCallAccessibilityLabel, shouldWait: true)
     }
 
     func testCallCompositeJoinCallGroupCallSwiftUI() {
@@ -57,11 +57,11 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         }
 
         tapInterfaceFor(.swiftUI)
-        tapEnabledButton(buttonName: "Start Experience", shouldWait: true)
+        tapEnabledButton(accesiibilityLabel: .startExperienceAccessibilityLabel, shouldWait: true)
         toggleSetupScreenControlButtons()
-        tapButton(buttonName: "Join call", shouldWait: true)
-        tapButton(buttonName: "AzureCommunicationUI.CallingView.ControlButton.HangUp", shouldWait: true)
-        tapButton(buttonName: "Leave call", shouldWait: true)
+        tapButton(accesiibilityLabel: .joinCallAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .hangupAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .leaveCallAccssibilityLabel, shouldWait: true)
     }
 
     func testCallCompositeJoinCallTeamsCallSwiftUI() {
@@ -72,11 +72,11 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
         tapInterfaceFor(.swiftUI)
         tapMeetingType(.teamsCall)
-        tapEnabledButton(buttonName: "Start Experience", shouldWait: true)
+        tapEnabledButton(accesiibilityLabel: .startExperienceAccessibilityLabel, shouldWait: true)
         toggleSetupScreenControlButtons()
-        tapButton(buttonName: "Join call", shouldWait: true)
-        tapButton(buttonName: "AzureCommunicationUI.CallingView.ControlButton.HangUp", shouldWait: true)
-        tapButton(buttonName: "Leave call", shouldWait: true)
+        tapButton(accesiibilityLabel: .joinCallAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .hangupAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .leaveCallAccssibilityLabel, shouldWait: true)
     }
 
     func testCallCompositeJoinCallGroupCallUIKit() {
@@ -86,11 +86,11 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         }
 
         tapInterfaceFor(.uiKit)
-        tapEnabledButton(buttonName: "Start Experience", shouldWait: true)
+        tapEnabledButton(accesiibilityLabel: .startExperienceAccessibilityLabel, shouldWait: true)
         toggleSetupScreenControlButtons()
-        tapButton(buttonName: "Join call", shouldWait: true)
-        tapButton(buttonName: "AzureCommunicationUI.CallingView.ControlButton.HangUp", shouldWait: true)
-        tapButton(buttonName: "Leave call", shouldWait: true)
+        tapButton(accesiibilityLabel: .joinCallAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .hangupAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .leaveCallAccssibilityLabel, shouldWait: true)
     }
 
     func testCallCompositeJoinCallTeamsCallUIKit() {
@@ -101,11 +101,11 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
         tapInterfaceFor(.uiKit)
         tapMeetingType(.teamsCall)
-        tapEnabledButton(buttonName: "Start Experience", shouldWait: true)
+        tapEnabledButton(accesiibilityLabel: .startExperienceAccessibilityLabel, shouldWait: true)
         toggleSetupScreenControlButtons()
-        tapButton(buttonName: "Join call", shouldWait: true)
-        tapButton(buttonName: "AzureCommunicationUI.CallingView.ControlButton.HangUp", shouldWait: true)
-        tapButton(buttonName: "Leave call", shouldWait: true)
+        tapButton(accesiibilityLabel: .joinCallAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .hangupAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .leaveCallAccssibilityLabel, shouldWait: true)
     }
 
     func testLaunchPerformance() throws {
@@ -126,29 +126,16 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
             return
         }
 
-        let videoOffButton = app.buttons["Video off"]
-        let videoOnButton = app.buttons["Video on"]
-
         // test video button
-        if videoOffButton.waitForExistence(timeout: 3) {
-            videoOffButton.tap()
-        } else if videoOnButton.waitForExistence(timeout: 3) {
-            videoOnButton.tap()
-        }
+        tapButton(accesiibilityLabel: .toggleVideoAccessibilityID, shouldWait: true)
 
         // test mic button
-        let micOffButton = app.buttons["Mic off"]
-        let micOnButton = app.buttons["Mic on"]
-        if micOffButton.waitForExistence(timeout: 3) {
-            micOffButton.tap()
-        } else if micOnButton.waitForExistence(timeout: 3) {
-            micOnButton.tap()
-        }
+        tapButton(accesiibilityLabel: .togglMicAccessibilityID, shouldWait: true)
 
         // test audio drawer
-        tapEnabledButton(buttonName: "Speaker", shouldWait: true)
+        tapButton(accesiibilityLabel: .deviceAccesibiiltyLabel, shouldWait: true)
         app.tables.cells.firstMatch.tap()
-        tapEnabledButton(buttonName: "iPhone", shouldWait: true)
+        tapButton(accesiibilityLabel: .deviceAccesibiiltyLabel, shouldWait: true)
         app.tables.firstMatch.swipeDown()
     }
 

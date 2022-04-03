@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1B0D8DC627F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */; };
+		1B8DE23827F81CE000112E63 /* LocalizationKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8DE23727F81CE000112E63 /* LocalizationKey.swift */; };
+		1B8DE23A27F8332200112E63 /* LocalizationKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B8DE23727F81CE000112E63 /* LocalizationKey.swift */; };
 		1F18191727B39F36006AF3B3 /* XCUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18191627B39F36006AF3B3 /* XCUITestBase.swift */; };
 		1F18191A27B45050006AF3B3 /* XCUIElementExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18191927B45050006AF3B3 /* XCUIElementExtension.swift */; };
 		1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift */; };
@@ -60,6 +62,7 @@
 /* Begin PBXFileReference section */
 		0883E4B2C59B676B35210362 /* Pods-AzureCommunicationUIDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp/Pods-AzureCommunicationUIDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppCallTests.swift; sourceTree = "<group>"; };
+		1B8DE23727F81CE000112E63 /* LocalizationKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LocalizationKey.swift; path = AzureCommunicationUI/Utilities/LocalizationKey.swift; sourceTree = "<group>"; };
 		1F18191627B39F36006AF3B3 /* XCUITestBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUITestBase.swift; sourceTree = "<group>"; };
 		1F18191927B45050006AF3B3 /* XCUIElementExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCUIElementExtension.swift; sourceTree = "<group>"; };
 		1F8881BA27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzureCommunicationUIDemoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,6 +167,7 @@
 		A8C69FA72728AE1A00143DB7 = {
 			isa = PBXGroup;
 			children = (
+				1B8DE23727F81CE000112E63 /* LocalizationKey.swift */,
 				A8C69FB22728AE1A00143DB7 /* AzureCommunicationUIDemoApp */,
 				1F8881BB27909E08001427F0 /* AzureCommunicationUIDemoAppUITests */,
 				A8C69FB12728AE1A00143DB7 /* Products */,
@@ -447,6 +451,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1B8DE23827F81CE000112E63 /* LocalizationKey.swift in Sources */,
 				1F8881BF27909E08001427F0 /* AzureCommunicationUIDemoAppUITestsLaunchTests.swift in Sources */,
 				1F18191A27B45050006AF3B3 /* XCUIElementExtension.swift in Sources */,
 				1F18191727B39F36006AF3B3 /* XCUITestBase.swift in Sources */,
@@ -467,6 +472,7 @@
 				A85DDCB12728B12D001297B4 /* EnvConfig.swift in Sources */,
 				A85DDCB32728B140001297B4 /* ThemeConfig.swift in Sources */,
 				A85DDCB82728B23B001297B4 /* UIKitDemoViewController.swift in Sources */,
+				1B8DE23A27F8332200112E63 /* LocalizationKey.swift in Sources */,
 				A8C69FB62728AE1A00143DB7 /* SceneDelegate.swift in Sources */,
 				A87CEABC2729ECA600F3AE16 /* EntryViewController.swift in Sources */,
 				1F8881CA2798D5E7001427F0 /* TextFieldClearButton.swift in Sources */,
