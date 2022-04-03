@@ -4,6 +4,7 @@
 //
 
 import XCTest
+@testable import AzureCommunicationUI
 
 class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
@@ -22,8 +23,8 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         }
 
         tapInterfaceFor(.swiftUI)
-        tapEnabledButton(buttonName: "Start Experience", shouldWait: true)
-        tapButton(buttonName: "Join call", shouldWait: true)
+        tapEnabledButton(accesiibilityLabel: .startExperienceAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .joinCallAccessibilityLabel, shouldWait: true)
         toggleLeaveCallOverlay(leaveCall: true)
     }
 
@@ -35,8 +36,8 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
         tapInterfaceFor(.uiKit)
         tapMeetingType(.teamsCall)
-        tapEnabledButton(buttonName: "Start Experience", shouldWait: true)
-        tapButton(buttonName: "Join call", shouldWait: true)
+        tapEnabledButton(accesiibilityLabel: .startExperienceAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .joinCallAccessibilityLabel, shouldWait: true)
         toggleLeaveCallOverlay(leaveCall: true)
     }
 
@@ -47,8 +48,8 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         }
 
         tapInterfaceFor(.swiftUI)
-        tapEnabledButton(buttonName: "Start Experience", shouldWait: true)
-        tapButton(buttonName: "Join call", shouldWait: true)
+        tapEnabledButton(accesiibilityLabel: .startExperienceAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .joinCallAccessibilityLabel, shouldWait: true)
         toggleLeaveCallOverlay(leaveCall: true)
     }
 
@@ -60,8 +61,8 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
         tapInterfaceFor(.uiKit)
         tapMeetingType(.teamsCall)
-        tapEnabledButton(buttonName: "Start Experience", shouldWait: true)
-        tapButton(buttonName: "Join call", shouldWait: true)
+        tapEnabledButton(accesiibilityLabel: .startExperienceAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .joinCallAccessibilityLabel, shouldWait: true)
         toggleLeaveCallOverlay(leaveCall: true)
     }
 
@@ -73,13 +74,15 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
             XCTFail("No App launch")
             return
         }
-        tapButton(buttonName: "AzureCommunicationUI.CallingView.ControlButton.HangUp", shouldWait: true)
-        tapButton(buttonName: "Cancel", shouldWait: true)
-        tapButton(buttonName: "AzureCommunicationUI.CallingView.ControlButton.HangUp", shouldWait: true)
+
+        tapButton(accesiibilityLabel: .hangupAccessibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .cancelAccssibilityLabel, shouldWait: true)
+        tapButton(accesiibilityLabel: .hangupAccessibilityLabel, shouldWait: true)
 
         if leaveCall {
-            tapButton(buttonName: "Leave call", shouldWait: true)
-            XCTAssertTrue(app.buttons["Start Experience"].waitForExistence(timeout: 3))
+            tapButton(accesiibilityLabel: .leaveCallAccssibilityLabel, shouldWait: true)
+            XCTAssertTrue(app.buttons[LocalizationKey.startExperienceAccessibilityLabel.rawValue]
+                            .waitForExistence(timeout: 3))
         }
     }
 }

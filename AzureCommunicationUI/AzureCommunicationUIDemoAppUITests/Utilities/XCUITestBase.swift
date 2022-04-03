@@ -4,6 +4,7 @@
 //
 
 import XCTest
+@testable import AzureCommunicationUI
 
 class XCUITestBase: XCTestCase {
 
@@ -36,11 +37,14 @@ class XCUITestBase: XCTestCase {
     }
 
     var app: XCUIApplication?
-
 }
 
 extension XCUITestBase {
 
+    /// Taps the button that matches with the given name
+    /// - Parameters:
+    ///   - accesiibilityLabel: accessibility label of the button
+    ///   - shouldWait: determienes whether app should wait for the tap test to complete
     func tapEnabledButton(buttonName: String, shouldWait: Bool) {
         guard let button = app?.buttons[buttonName] else {
             return
@@ -51,6 +55,10 @@ extension XCUITestBase {
         button.tap()
     }
 
+    /// Taps the enabled button that matches with the given name
+    /// - Parameters:
+    ///   - accesiibilityLabel: accessibility label of the button
+    ///   - shouldWait: determienes whether app should wait for the tap test to complete
     func tapButton(buttonName: String, shouldWait: Bool) {
         guard let button = app?.buttons[buttonName] else {
             return
@@ -58,7 +66,23 @@ extension XCUITestBase {
         if shouldWait {
             wait(for: button)
         }
-        button.tap()
+        button.forceTapElement()
+    }
+
+    /// Taps the button that matches with the given accessibility label
+    /// - Parameters:
+    ///   - accesiibilityLabel: accessibility label of the button
+    ///   - shouldWait: determienes whether app should wait for the tap test to complete
+    func tapButton(accesiibilityLabel: LocalizationKey, shouldWait: Bool) {
+        tapButton(buttonName: accesiibilityLabel.rawValue, shouldWait: shouldWait)
+    }
+
+    /// Taps the enabled button that matches with the given accessibility label
+    /// - Parameters:
+    ///   - accesiibilityLabel: accessibility label of the button
+    ///   - shouldWait: determienes whether app should wait for the tap test to complete
+    func tapEnabledButton(accesiibilityLabel: LocalizationKey, shouldWait: Bool) {
+        tapEnabledButton(buttonName: accesiibilityLabel.rawValue, shouldWait: shouldWait)
     }
 
     func tapInterfaceFor(_ interface: CompositeSampleInterface) {

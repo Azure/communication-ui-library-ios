@@ -42,9 +42,11 @@ struct ConfirmLeaveOverlayView: View {
 
     var leaveCallButton: some View {
         return PrimaryButton(viewModel: viewModel.getLeaveCallButtonViewModel())
+            .accessibility(identifier: LocalizationKey.leaveCallAccssibilityLabel.rawValue)
     }
 
     var cancelButton: some View {
         return PrimaryButton(viewModel: viewModel.getCancelButtonViewModel())
+            .accessibility(identifier: LocalizationKey.cancelAccssibilityLabel.rawValue)
     }
 }
