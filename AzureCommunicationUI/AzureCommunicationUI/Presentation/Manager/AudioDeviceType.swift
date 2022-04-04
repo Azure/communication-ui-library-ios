@@ -4,22 +4,44 @@
 //
 
 import UIKit
+import AVFoundation
 
-enum AudioDeviceType: String, CaseIterable {
-    case receiver = "iOS"
-    case speaker = "Speaker"
+let bluetoothAudioPorts: Set<AVAudioSession.Port> = [.bluetoothA2DP, .bluetoothLE, .bluetoothHFP]
+let headphonesAudioPorts: Set<AVAudioSession.Port> = [.headphones, .headsetMic]
 
-    var name: String {
-        if self == .receiver {
+enum AudioDeviceType {
+    case bluetooth
+    case headphones
+    case receiver
+    case speaker
+
+    var name: LocalizationKey {
+        switch self {
+        case .bluetooth:
+            return .bluetooth
+        case .headphones:
+            return .headphones
+        case .receiver:
             switch UIDevice.current.userInterfaceIdiom {
             case .phone:
-                return "iPhone"
+                return .iPhone
             case .pad:
-                return "iPad"
+                return .iPad
             default:
-                return self.rawValue
+                return .iOS
             }
+        case .speaker:
+            return .speaker
         }
-        return self.rawValue
+    }
+
+    func getBluetoothName() -> String? {
+        if let output = AVAudioSession.sharedInstance().currentRoute.outputs.first,
+           bluetoothAudioPorts.contains(output.portType),
+           !output.portName.isEmpty {
+            return output.portName
+        } else {
+            return nil
+        }
     }
 }

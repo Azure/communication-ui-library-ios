@@ -33,13 +33,11 @@ struct ParticipantListUpdated: Action {
 
 struct ErrorAction: Action {
     struct FatalErrorUpdated: Action {
-        let error: ErrorEvent
-        let errorCode: String
+        let error: CommunicationUIErrorEvent
     }
 
-    struct CallStateErrorUpdated: Action {
-        let error: ErrorEvent
-        let errorCode: String
+    struct StatusErrorAndCallReset: Action {
+        let error: CommunicationUIErrorEvent
     }
 }
 

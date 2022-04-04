@@ -8,20 +8,27 @@ import SwiftUI
 import FluentUI
 import AzureCommunicationCalling
 
+/// The main class representing the entry point for the Call Composite.
 public class CallComposite {
     private var logger: Logger?
     private let themeConfiguration: ThemeConfiguration?
+    private let localizationConfiguration: LocalizationConfiguration?
     private let callCompositeEventsHandler = CallCompositeEventsHandler()
     private var errorManager: ErrorManager?
     private var lifeCycleManager: UIKitAppLifeCycleManager?
     private var permissionManager: AppPermissionsManager?
     private var audioSessionManager: AppAudioSessionManager?
 
-    public init(withOptions options: CallCompositeOptions) {
-        themeConfiguration = options.themeConfiguration
+    /// Create an instance of CallComposite with options.
+    /// - Parameter options: The CallCompositeOptions used to configure the experience.
+    public init(withOptions options: CallCompositeOptions? = nil) {
+        themeConfiguration = options?.themeConfiguration
+        localizationConfiguration = options?.localizationConfiguration
     }
 
-    public func setTarget(didFail action: ((ErrorEvent) -> Void)?) {
+    /// Assign closure to execute when an error occurs inside Call Composite.
+    /// - Parameter action: The closure returning the error thrown from Call Composite.
+    public func setTarget(didFail action: ((CommunicationUIErrorEvent) -> Void)?) {
         callCompositeEventsHandler.didFail = action
     }
 
@@ -35,29 +42,35 @@ public class CallComposite {
         logger?.debug("launch composite experience")
 
         dependencyContainer.registerDependencies(callConfiguration)
-
+        let localizationProvider = dependencyContainer.resolve() as LocalizationProvider
         setupColorTheming()
+        setupLocalization(with: localizationProvider)
         let toolkitHostingController = makeToolkitHostingController(router: dependencyContainer.resolve(),
                                                                     logger: dependencyContainer.resolve(),
-                                                                    viewFactory: dependencyContainer.resolve())
+                                                                    viewFactory: dependencyContainer.resolve(),
+                                                                    isRightToLeft: localizationProvider.isRightToLeft)
         setupManagers(store: dependencyContainer.resolve(),
                       containerHostingController: toolkitHostingController,
                       logger: dependencyContainer.resolve())
         present(toolkitHostingController)
     }
 
+    /// Start call composite experience with joining a group call.
+    /// - Parameter options: The GroupCallOptions used to locate the group call.
     public func launch(with options: GroupCallOptions) {
         let callConfiguration = CallConfiguration(
-            communicationTokenCredential: options.communicationTokenCredential,
+            credential: options.credential,
             groupId: options.groupId,
             displayName: options.displayName)
 
         launch(callConfiguration)
     }
 
+    /// Start call composite experience with joining a Teams meeting..
+    /// - Parameter options: The TeamsMeetingOptions used to locate the Teams meetings.
     public func launch(with options: TeamsMeetingOptions) {
         let callConfiguration = CallConfiguration(
-            communicationTokenCredential: options.communicationTokenCredential,
+            credential: options.credential,
             meetingLink: options.meetingLink,
             displayName: options.displayName)
 
@@ -91,12 +104,15 @@ public class CallComposite {
 
     private func makeToolkitHostingController(router: NavigationRouter,
                                               logger: Logger,
-                                              viewFactory: CompositeViewFactory) -> ContainerUIHostingController {
+                                              viewFactory: CompositeViewFactory,
+                                              isRightToLeft: Bool) -> ContainerUIHostingController {
         let rootView = ContainerView(router: router,
                                      logger: logger,
-                                     viewFactory: viewFactory)
+                                     viewFactory: viewFactory,
+                                     isRightToLeft: isRightToLeft)
         let toolkitHostingController = ContainerUIHostingController(rootView: rootView,
-                                                                    callComposite: self)
+                                                                    callComposite: self,
+                                                                    isRightToLeft: isRightToLeft)
         toolkitHostingController.modalPresentationStyle = .fullScreen
 
         router.setDismissComposite { [weak toolkitHostingController, weak self] in
@@ -125,6 +141,12 @@ public class CallComposite {
             if let window = UIWindow.keyWindow {
                 Colors.setProvider(provider: colorProvider, for: window)
             }
+        }
+    }
+
+    private func setupLocalization(with provider: LocalizationProvider) {
+        if let localizationConfiguration = localizationConfiguration {
+            provider.apply(localeConfig: localizationConfiguration)
         }
     }
 

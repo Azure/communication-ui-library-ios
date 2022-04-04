@@ -10,6 +10,7 @@ import AzureCommunicationCalling
 protocol CallingSDKEventsHandling: CallDelegate {
     func assign(_ recordingCallFeature: RecordingCallFeature)
     func assign(_ transcriptionCallFeature: TranscriptionCallFeature)
+    func setupProperties()
 
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> { get }
     var callInfoSubject: PassthroughSubject<CallInfoModel, Never> { get }
@@ -48,6 +49,14 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         transcriptionCallFeature.delegate = self
     }
 
+    func setupProperties() {
+        participantsInfoListSubject.value.removeAll()
+        recordingCallFeature = nil
+        transcriptionCallFeature = nil
+        remoteParticipants = MappedSequence<String, RemoteParticipant>()
+        previousCallingStatus = .none
+    }
+
     private func setupRemoteParticipantEventsAdapter() {
         remoteParticipantEventAdapter.onIsMutedChanged = { [weak self] remoteParticipant in
             guard let self = self,
@@ -62,7 +71,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
                   let userIdentifier = remoteParticipant.identifier.stringValue else {
                 return
             }
-            let updateSpeakingStamp = remoteParticipant.isSpeaking ? true : false
+            let updateSpeakingStamp = remoteParticipant.isSpeaking
             self.updateRemoteParticipant(userIdentifier: userIdentifier, updateSpeakingStamp: updateSpeakingStamp)
         }
 
@@ -79,7 +88,6 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         for participant in remoteParticipants {
             if let userIdentifier = participant.identifier.stringValue {
                 self.remoteParticipants.removeValue(forKey: userIdentifier)?.delegate = nil
-
             }
         }
         removeRemoteParticipantsInfoModel(remoteParticipants)
@@ -115,29 +123,20 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         participantsInfoListSubject.send(remoteParticipantsInfoList)
     }
 
-    private func updateRemoteParticipantInfoList() {
-        var remoteParticipantsInfoList = [ParticipantInfoModel]()
-        remoteParticipants.forEach {
-            let infoModel = $0.toParticipantInfoModel(recentSpeakingStamp: Date(timeIntervalSince1970: 0))
-            remoteParticipantsInfoList.append(infoModel)
-        }
-        participantsInfoListSubject.send(remoteParticipantsInfoList)
-    }
-
     private func updateRemoteParticipant(userIdentifier: String,
                                          updateSpeakingStamp: Bool) {
         var remoteParticipantsInfoList = participantsInfoListSubject.value
-        if let index = remoteParticipantsInfoList.firstIndex(where: {
-            $0.userIdentifier == userIdentifier
-        }),
-            let remoteParticipant = remoteParticipants.value(forKey: userIdentifier) {
+        if let remoteParticipant = remoteParticipants.value(forKey: userIdentifier),
+           let index = remoteParticipantsInfoList.firstIndex(where: {
+               $0.userIdentifier == userIdentifier
+           }) {
             let speakingStamp = remoteParticipantsInfoList[index].recentSpeakingStamp
             let timeStamp = updateSpeakingStamp ? Date() : speakingStamp
             let newInfoModel = remoteParticipant.toParticipantInfoModel(recentSpeakingStamp: timeStamp)
             remoteParticipantsInfoList[index] = newInfoModel
-        }
 
-        participantsInfoListSubject.send(remoteParticipantsInfoList)
+            participantsInfoListSubject.send(remoteParticipantsInfoList)
+        }
     }
 }
 
@@ -179,6 +178,8 @@ extension CallingSDKEventsHandler: CallDelegate,
         if callEndReason > 0 {
             if callEndReason == 401 {
                 return CallCompositeErrorCode.tokenExpired
+            } else if callEndReason == 487 {
+                return ""
             } else {
                 if previousStatus == .connected {
                     return CallCompositeErrorCode.callEnd

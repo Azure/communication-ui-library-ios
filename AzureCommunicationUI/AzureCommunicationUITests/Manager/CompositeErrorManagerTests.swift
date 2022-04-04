@@ -15,9 +15,10 @@ class CompositeErrorManagerTests: XCTestCase {
     var mockEventsHandler: CallCompositeEventsHandler?
 
     var handlerCallExpectation = XCTestExpectation(description: "Delegate expectation")
-    var expectedError: ErrorEvent?
+    var expectedError: CommunicationUIErrorEvent?
 
     override func setUp() {
+        super.setUp()
         cancellable = CancelBag()
         compositeManager = CompositeErrorManager(store: mockStoreFactory.store,
                                                  callCompositeEventsHandler: getEventsHandler())
@@ -40,9 +41,9 @@ class CompositeErrorManagerTests: XCTestCase {
     }
 
     func test_errorManager_receiveState_when_fatalErrorCallJoin_then_receiveDidFail() {
-        let fatalError = ErrorEvent(code: CallCompositeErrorCode.callJoin, error: nil)
+        let fatalError = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callJoin, error: nil)
         self.expectedError = fatalError
-        let errorState = ErrorState.init(error: fatalError, errorCode: CallCompositeErrorCode.callJoin, errorCategory: .callState)
+        let errorState = ErrorState(error: fatalError, errorCategory: .callState)
         let newState = getAppState(errorState: errorState)
 
         mockStoreFactory.setState(newState)
@@ -50,9 +51,9 @@ class CompositeErrorManagerTests: XCTestCase {
     }
 
     func test_errorManager_receiveState_when_fatalErrorTokenExpired_then_receiveEmergencyExitAction() {
-        let fatalError = ErrorEvent(code: CallCompositeErrorCode.tokenExpired, error: nil)
+        let fatalError = CommunicationUIErrorEvent(code: CallCompositeErrorCode.tokenExpired, error: nil)
         self.expectedError = fatalError
-        let errorState = ErrorState.init(error: fatalError, errorCode: CallCompositeErrorCode.tokenExpired, errorCategory: .fatal)
+        let errorState = ErrorState.init(error: fatalError, errorCategory: .fatal)
         let newState = getAppState(errorState: errorState)
         let actionExpectation = XCTestExpectation(description: "Dispatch the new emergency exit action")
 

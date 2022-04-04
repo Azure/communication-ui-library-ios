@@ -21,7 +21,10 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let action = LocalUserAction.MicrophoneMuteStateUpdated(isMuted: true)
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.audioState.operation, .off)
     }
@@ -30,7 +33,10 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let action = LocalUserAction.MicrophoneMuteStateUpdated(isMuted: false)
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.audioState.operation, .on)
     }
@@ -40,7 +46,10 @@ class LocalUserReducerTests: XCTestCase {
         let expectedVideoId = "expected"
         let action = LocalUserAction.CameraOnSucceeded(videoStreamIdentifier: expectedVideoId)
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.cameraState.operation, .on)
         XCTAssertEqual(resultState.localVideoStreamIdentifier, expectedVideoId)
@@ -50,7 +59,10 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let action = LocalUserAction.CameraOffSucceeded()
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.cameraState.operation, .off)
     }
@@ -59,7 +71,10 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let action = LocalUserAction.MicrophoneOnTriggered()
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.audioState.operation, .pending)
     }
@@ -68,7 +83,10 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let action = LocalUserAction.MicrophoneOffTriggered()
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.audioState.operation, .pending)
     }
@@ -77,7 +95,10 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let action = LocalUserAction.MicrophonePreviewOn()
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.audioState.operation, .on)
     }
@@ -86,7 +107,10 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let action = LocalUserAction.MicrophonePreviewOff()
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.audioState.operation, .off)
     }
@@ -96,7 +120,10 @@ class LocalUserReducerTests: XCTestCase {
         let expectedCameraDeviceStatus = LocalUserState.CameraDeviceSelectionStatus.switching
         let action = LocalUserAction.CameraSwitchTriggered()
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.cameraState.device, expectedCameraDeviceStatus)
     }
@@ -106,7 +133,10 @@ class LocalUserReducerTests: XCTestCase {
         let expectedCameraDeviceStatus = LocalUserState.CameraDeviceSelectionStatus.back
         let action = LocalUserAction.CameraSwitchSucceeded(cameraDevice: .back)
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.cameraState.device, expectedCameraDeviceStatus)
     }
@@ -116,7 +146,10 @@ class LocalUserReducerTests: XCTestCase {
         let expectedCameraDeviceStatus = LocalUserState.CameraDeviceSelectionStatus.error(ErrorMocking.mockError)
         let action = LocalUserAction.CameraSwitchFailed(error: ErrorMocking.mockError)
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.cameraState.device, expectedCameraDeviceStatus)
     }
@@ -125,7 +158,10 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let action = LocalUserAction.AudioDeviceChangeRequested(device: .speaker)
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.audioState.device, .speakerRequested)
     }
@@ -134,7 +170,10 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let action = LocalUserAction.AudioDeviceChangeRequested(device: .receiver)
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.audioState.device, .receiverRequested)
     }
@@ -143,7 +182,10 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let action = LocalUserAction.AudioDeviceChangeSucceeded(device: .speaker)
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.audioState.device, .speakerSelected)
     }
@@ -152,7 +194,10 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let action = LocalUserAction.AudioDeviceChangeSucceeded(device: .receiver)
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.audioState.device, .receiverSelected)
     }
@@ -162,9 +207,56 @@ class LocalUserReducerTests: XCTestCase {
         let expectedAudioDeviceStatus = LocalUserState.AudioDeviceSelectionStatus.error(ErrorMocking.mockError)
         let action = LocalUserAction.AudioDeviceChangeFailed(error: ErrorMocking.mockError)
         let sut = getSUT()
-        let resultState = sut.reduce(state, action) as! LocalUserState
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
 
         XCTAssertEqual(resultState.audioState.device, expectedAudioDeviceStatus)
+    }
+
+    func test_localUserReducer_reduce_when_localUserActionCameraPreviewOnTriggered_then_cameraTransmissionStatusIsLocal_cameraStatusIsPending() {
+        let state = LocalUserState()
+        let expectedCameraTransmissionStatus = LocalUserState.CameraTransmissionStatus.local
+        let expectedCameraStatus = LocalUserState.CameraOperationalStatus.pending
+        let action = LocalUserAction.CameraPreviewOnTriggered()
+        let sut = getSUT()
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
+
+        XCTAssertEqual(resultState.cameraState.transmission, expectedCameraTransmissionStatus)
+        XCTAssertEqual(resultState.cameraState.operation, expectedCameraStatus)
+
+    }
+
+    func test_localUserReducer_reduce_when_localUserActionCameraOnTriggered_then_cameraTransmissionStatusIsRemote_cameraStatusIsPending() {
+        let state = LocalUserState()
+        let expectedCameraTransmissionStatus = LocalUserState.CameraTransmissionStatus.remote
+        let expectedCameraStatus = LocalUserState.CameraOperationalStatus.pending
+        let action = LocalUserAction.CameraOnTriggered()
+        let sut = getSUT()
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
+
+        XCTAssertEqual(resultState.cameraState.transmission, expectedCameraTransmissionStatus)
+        XCTAssertEqual(resultState.cameraState.operation, expectedCameraStatus)
+    }
+
+    func test_localUserReducer_reduce_when_localUserActionCameraOffTriggered_then_cameraStatusIsPending() {
+        let state = LocalUserState()
+        let expectedCameraStatus = LocalUserState.CameraOperationalStatus.pending
+        let action = LocalUserAction.CameraOffTriggered()
+        let sut = getSUT()
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
+
+        XCTAssertEqual(resultState.cameraState.operation, expectedCameraStatus)
     }
 
     func test_localUserReducer_reduce_when_mockingAction_then_stateNotUpdate() {
@@ -186,7 +278,7 @@ class LocalUserReducerTests: XCTestCase {
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
         guard let resultState = resultState as? LocalUserState else {
-            XCTFail()
+            XCTFail("Failed with state validation")
             return
         }
         XCTAssertEqual(resultState.cameraState.operation, expectedCameraStatus)

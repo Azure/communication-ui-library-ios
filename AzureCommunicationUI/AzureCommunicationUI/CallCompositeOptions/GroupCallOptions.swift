@@ -6,22 +6,40 @@
 import Foundation
 import AzureCommunicationCommon
 
+/// Options for joining a group call.
 public struct GroupCallOptions {
-    public let communicationTokenCredential: CommunicationTokenCredential
+
+    /// The token credential used for communication service authentication.
+    public let credential: CommunicationTokenCredential
+
+    /// The unique identifier for the group conversation.
     public let groupId: UUID
+
+    /// The display name of the local participant when joining the call.
+    ///
+    /// The limit for string length is 256.
     public let displayName: String?
 
-    public init(communicationTokenCredential: CommunicationTokenCredential,
+    /// Create an instance of a GroupCallOptions with options.
+    /// - Parameters:
+    ///   - credential: The credential used for Azure Communication Service authentication.
+    ///   - groupId: The unique identifier for joining a specific group conversation.
+    ///   - displayName: The display name of the local participant for the call. The limit for string length is 256.
+    public init(credential: CommunicationTokenCredential,
                 groupId: UUID,
                 displayName: String) {
-        self.communicationTokenCredential = communicationTokenCredential
+        self.credential = credential
         self.groupId = groupId
         self.displayName = displayName
     }
 
-    public init(communicationTokenCredential: CommunicationTokenCredential,
+    /// Create an instance of a GroupCallOptions with options.
+    /// - Parameters:
+    ///   - credential: The credential used for Azure Communication Service authentication.
+    ///   - groupId: The unique identifier for joining a specific group conversation.
+    public init(credential: CommunicationTokenCredential,
                 groupId: UUID) {
-        self.communicationTokenCredential = communicationTokenCredential
+        self.credential = credential
         self.groupId = groupId
         self.displayName = nil
     }

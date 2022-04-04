@@ -8,25 +8,46 @@ import Combine
 
 class ErrorInfoViewModel: ObservableObject {
     @Published var isDisplayed: Bool = false
-    @Published var message: String = ""
+    @Published private(set) var message: String = ""
+    @Published private(set) var accessibilityLabel: String = ""
+    @Published private(set) var dismissButtonAccessibilityLabel: String = ""
+    @Published private(set) var dismissButtonAccessibilityHint: String = ""
 
+    private let localizationProvider: LocalizationProvider
     private var previousErrorType: String = ""
 
+    init(localizationProvider: LocalizationProvider) {
+        self.localizationProvider = localizationProvider
+
+        dismissButtonAccessibilityLabel = localizationProvider.getLocalizedString(.snackBarDismissAccessibilityLabel)
+        dismissButtonAccessibilityHint = localizationProvider.getLocalizedString(.snackBarDismissAccessibilityHint)
+    }
+
+    var dismissContent: String {
+        return localizationProvider.getLocalizedString(.snackBarDismiss)
+    }
+
     func update(errorState: ErrorState) {
-        guard errorState.errorCode != "",
-              errorState.errorCode != previousErrorType else {
+        let errorType = errorState.error?.code ?? ""
+        guard errorType != previousErrorType else {
                   return
-              }
+        }
+
+        previousErrorType = errorState.error?.code ?? ""
+        guard !errorType.isEmpty else {
+            isDisplayed = false
+            return
+        }
 
         isDisplayed = true
-        previousErrorType = errorState.errorCode
-        switch errorState.errorCode {
+        switch errorState.error?.code {
         case CallCompositeErrorCode.callJoin:
-            message = "Unable to join the call due to an error."
+            message = localizationProvider.getLocalizedString(.snackBarErrorJoinCall)
         case CallCompositeErrorCode.callEnd:
-            message = "You were removed from the call due to an error."
+            message = localizationProvider.getLocalizedString(.snackBarErrorCallEnd)
         default:
-            message = "There was an error."
+            message = localizationProvider.getLocalizedString(.snackBarError)
         }
+        accessibilityLabel = message
     }
 }

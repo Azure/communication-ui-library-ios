@@ -13,6 +13,7 @@ class NavigationRouterTests: XCTestCase {
     var swiftUIRouter: NavigationRouter!
 
     override func setUp() {
+        super.setUp()
         storeFactory = StoreFactoryMocking()
         logger = LoggerMocking()
         swiftUIRouter = NavigationRouter(store: storeFactory.store, logger: logger)

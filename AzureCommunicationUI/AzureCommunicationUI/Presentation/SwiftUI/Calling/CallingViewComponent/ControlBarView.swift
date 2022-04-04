@@ -38,6 +38,8 @@ struct ControlBarView: View {
         .background(Color(StyleProvider.color.backgroundColor))
         .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
             audioDeviceSelectionListView
+                .accessibilityElement(children: .contain)
+                .accessibility(addTraits: .isModal)
         })
     }
 
@@ -57,12 +59,13 @@ struct ControlBarView: View {
 
     var hangUpButton: some View {
         IconButton(viewModel: viewModel.hangUpButtonViewModel)
+            .accessibility(identifier: "AzureCommunicationUI.CallingView.ControlButton.HangUp")
     }
 
     var audioDeviceSelectionListView: some View {
-        CompositePopupMenu(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
-                           viewModel: viewModel.audioDeviceListViewModel,
-                           sourceView: audioDeviceButtonSourceView)
+        CompositeAudioDevicesList(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
+                                  viewModel: viewModel.audioDevicesListViewModel,
+                                  sourceView: audioDeviceButtonSourceView)
             .modifier(LockPhoneOrientation())
     }
 }

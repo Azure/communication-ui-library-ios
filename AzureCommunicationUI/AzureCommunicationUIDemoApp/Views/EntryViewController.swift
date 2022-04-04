@@ -9,10 +9,20 @@ import SwiftUI
 import CoreGraphics
 
 class EntryViewController: UIViewController {
+    private var envConfigSubject: EnvConfigSubject
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+    }
+
+    init(envConfigSubject: EnvConfigSubject) {
+        self.envConfigSubject = envConfigSubject
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func setupUI() {
@@ -35,7 +45,6 @@ class EntryViewController: UIViewController {
         startSwiftUIButton.sizeToFit()
         startSwiftUIButton.translatesAutoresizingMaskIntoConstraints = false
         startSwiftUIButton.addTarget(self, action: #selector(onSwiftUIPressed), for: .touchUpInside)
-        view.addSubview(startSwiftUIButton)
 
         let startUiKitButton = UIButton()
         startUiKitButton.backgroundColor = .systemBlue
@@ -45,7 +54,6 @@ class EntryViewController: UIViewController {
         startUiKitButton.sizeToFit()
         startUiKitButton.translatesAutoresizingMaskIntoConstraints = false
         startUiKitButton.addTarget(self, action: #selector(onUIKitPressed), for: .touchUpInside)
-        view.addSubview(startUiKitButton)
 
         let stackView = UIStackView(arrangedSubviews: [startSwiftUIButton,
                                                        startUiKitButton])
@@ -69,13 +77,14 @@ class EntryViewController: UIViewController {
     }
 
     @objc func onSwiftUIPressed() {
-        let swiftUIDemoViewHostingController = UIHostingController(rootView: SwiftUIDemoView())
+        let swiftUIDemoView = SwiftUIDemoView(envConfigSubject: envConfigSubject)
+        let swiftUIDemoViewHostingController = UIHostingController(rootView: swiftUIDemoView)
         swiftUIDemoViewHostingController.modalPresentationStyle = .fullScreen
         present(swiftUIDemoViewHostingController, animated: true, completion: nil)
     }
 
     @objc func onUIKitPressed() {
-        let uiKitDemoViewController = UIKitDemoViewController()
+        let uiKitDemoViewController = UIKitDemoViewController(envConfigSubject: envConfigSubject)
         uiKitDemoViewController.modalPresentationStyle = .fullScreen
         present(uiKitDemoViewController, animated: true, completion: nil)
     }

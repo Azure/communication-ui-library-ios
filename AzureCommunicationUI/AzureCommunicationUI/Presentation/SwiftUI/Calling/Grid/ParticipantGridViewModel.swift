@@ -3,25 +3,32 @@
 //  Licensed under the MIT License.
 //
 
-import SwiftUI
 import Foundation
 import Combine
 
 class ParticipantGridViewModel: ObservableObject {
-    private let maximumParticipantsDisplayed: Int = 6
-    private var lastUpdateTimeStamp = Date()
     private let compositeViewModelFactory: CompositeViewModelFactory
+    private let localizationProvider: LocalizationProvider
+    private let accessibilityProvider: AccessibilityProvider
+
+    private let maximumParticipantsDisplayed: Int = 6
+
+    private var lastUpdateTimeStamp = Date()
+    private(set) var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
 
     @Published var gridsCount: Int = 0
     @Published var displayedParticipantInfoModelArr: [ParticipantInfoModel] = []
 
-    var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
-
-    init(compositeViewModelFactory: CompositeViewModelFactory) {
+    init(compositeViewModelFactory: CompositeViewModelFactory,
+         localizationProvider: LocalizationProvider,
+         accessibilityProvider: AccessibilityProvider) {
         self.compositeViewModelFactory = compositeViewModelFactory
+        self.localizationProvider = localizationProvider
+        self.accessibilityProvider = accessibilityProvider
     }
 
-    func update(remoteParticipantsState: RemoteParticipantsState) {
+    func update(callingState: CallingState,
+                remoteParticipantsState: RemoteParticipantsState) {
         guard lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp else {
             return
         }
@@ -29,11 +36,19 @@ class ParticipantGridViewModel: ObservableObject {
 
         let remoteParticipants = remoteParticipantsState.participantInfoList
         let newDisplayedInfoModelArr = getDisplayedInfoViewModels(remoteParticipants)
-        let orderedInfoModelArr = sortDisplayedInfoModels(newDisplayedInfoModelArr)
+        let removedModels = getRemovedInfoModels(for: newDisplayedInfoModelArr)
+        let addedModels = getAddedInfoModels(for: newDisplayedInfoModelArr)
+        let orderedInfoModelArr = sortDisplayedInfoModels(newDisplayedInfoModelArr,
+                                                          removedModels: removedModels,
+                                                          addedModels: addedModels)
         updateCellViewModel(for: orderedInfoModelArr)
 
         displayedParticipantInfoModelArr = orderedInfoModelArr
-
+        if callingState.status == .connected {
+            // announce participants list changes only if the user is already connected to the call
+            postParticipantsListUpdateAccessibilityAnnouncements(removedModels: removedModels,
+                                                                 addedModels: addedModels)
+        }
         if gridsCount != displayedParticipantInfoModelArr.count {
             gridsCount = displayedParticipantInfoModelArr.count
         }
@@ -56,20 +71,27 @@ class ParticipantGridViewModel: ObservableObject {
         return Array(newDisplayRemoteParticipant)
     }
 
-    private func sortDisplayedInfoModels(_ newInfoModels: [ParticipantInfoModel]) -> [ParticipantInfoModel] {
-        var localCacheInfoModelArr = displayedParticipantInfoModelArr
-        let infoModelToRemove = localCacheInfoModelArr.filter { old in
+    private func getRemovedInfoModels(for newInfoModels: [ParticipantInfoModel]) -> [ParticipantInfoModel] {
+        return displayedParticipantInfoModelArr.filter { old in
             !newInfoModels.contains(where: { new in
                 new.userIdentifier == old.userIdentifier
             })
         }
-        let infoModelToAdd = newInfoModels.filter { new in
-            !localCacheInfoModelArr.contains(where: { old in
+    }
+
+    private func getAddedInfoModels(for newInfoModels: [ParticipantInfoModel]) -> [ParticipantInfoModel] {
+        return newInfoModels.filter { new in
+            !displayedParticipantInfoModelArr.contains(where: { old in
                 new.userIdentifier == old.userIdentifier
             })
         }
+    }
 
-        guard infoModelToRemove.count == infoModelToAdd.count else {
+    private func sortDisplayedInfoModels(_ newInfoModels: [ParticipantInfoModel],
+                                         removedModels: [ParticipantInfoModel],
+                                         addedModels: [ParticipantInfoModel]) -> [ParticipantInfoModel] {
+        var localCacheInfoModelArr = displayedParticipantInfoModelArr
+        guard removedModels.count == addedModels.count else {
             // when there is a gridType change
             // we just directly update the order based on the latest sorting
             return newInfoModels
@@ -77,11 +99,11 @@ class ParticipantGridViewModel: ObservableObject {
 
         var replacedIndex = [Int]()
         // Otherwise, we keep those existed participant in same position when there is any update
-        for (index, item) in infoModelToRemove.enumerated() {
+        for (index, item) in removedModels.enumerated() {
             if let removeIndex = localCacheInfoModelArr.firstIndex(where: {
                 $0.userIdentifier == item.userIdentifier
             }) {
-                localCacheInfoModelArr[removeIndex] = infoModelToAdd[index]
+                localCacheInfoModelArr[removeIndex] = addedModels[index]
                 replacedIndex.append(removeIndex)
             }
         }
@@ -133,4 +155,25 @@ class ParticipantGridViewModel: ObservableObject {
         participantsCellViewModelArr = newCellViewModelArr
     }
 
+    private func postParticipantsListUpdateAccessibilityAnnouncements(removedModels: [ParticipantInfoModel],
+                                                                      addedModels: [ParticipantInfoModel]) {
+        if !removedModels.isEmpty {
+            if removedModels.count == 1 {
+                accessibilityProvider.postQueuedAnnouncement(
+                    localizationProvider.getLocalizedString(.onePersonLeft, removedModels.first!.displayName))
+            } else {
+                accessibilityProvider.postQueuedAnnouncement(
+                    localizationProvider.getLocalizedString(.multiplePeopleLeft, removedModels.count))
+            }
+        }
+        if !addedModels.isEmpty {
+            if addedModels.count == 1 {
+                accessibilityProvider.postQueuedAnnouncement(
+                    localizationProvider.getLocalizedString(.onePersonJoined, addedModels.first!.displayName))
+            } else {
+                accessibilityProvider.postQueuedAnnouncement(
+                    localizationProvider.getLocalizedString(.multiplePeopleJoined, addedModels.count))
+            }
+        }
+    }
 }

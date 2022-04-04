@@ -12,7 +12,7 @@ struct PreviewAreaView: View {
 
     var body: some View {
         Group {
-            if viewModel.showPermissionWarning() {
+            if viewModel.isPermissionsDenied {
                 PermissionWarningView(displayIcon: viewModel.getPermissionWarningIcon(),
                                       displayText: viewModel.getPermissionWarningText())
             } else {
@@ -48,6 +48,7 @@ struct PermissionWarningView: View {
                     .foregroundColor(Color(StyleProvider.color.onSurface))
             }.frame(width: geometry.size.width,
                     height: geometry.size.height)
+            .accessibilityElement(children: .combine)
         }
     }
 }

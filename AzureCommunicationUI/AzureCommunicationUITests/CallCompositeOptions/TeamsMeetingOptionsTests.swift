@@ -15,7 +15,7 @@ class TeamsMeetingOptionsTests: XCTestCase {
         let displayName = "Display Name"
         let meetingLink = "asdf"
 
-        let options = TeamsMeetingOptions(communicationTokenCredential: communicationTokenCredential!, meetingLink: meetingLink, displayName: displayName)
+        let options = TeamsMeetingOptions(credential: communicationTokenCredential!, meetingLink: meetingLink, displayName: displayName)
 
         XCTAssertNotNil(options)
         XCTAssertEqual(options.displayName, displayName)

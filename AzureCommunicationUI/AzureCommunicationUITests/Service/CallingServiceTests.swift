@@ -16,6 +16,7 @@ class CallingServiceTests: XCTestCase {
     var cancellable: CancelBag!
 
     override func setUp() {
+        super.setUp()
         cancellable = CancelBag()
         logger = LoggerMocking()
         callingSDKWrapper = CallingSDKWrapperMocking()

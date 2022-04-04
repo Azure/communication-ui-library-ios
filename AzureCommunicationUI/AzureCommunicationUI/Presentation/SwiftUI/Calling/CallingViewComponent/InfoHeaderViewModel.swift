@@ -3,26 +3,41 @@
 //  Licensed under the MIT License.
 //
 
-import SwiftUI
 import Foundation
 import Combine
 
 class InfoHeaderViewModel: ObservableObject {
-    @Published var infoLabel: String = "Waiting for others to join"
+    @Published var accessibilityLabel: String
+    @Published var infoLabel: String
     @Published var isInfoHeaderDisplayed: Bool = true
     @Published var isParticipantsListDisplayed: Bool = false
+    @Published var isVoiceOverEnabled: Bool = false
     private let logger: Logger
+    private let accessibilityProvider: AccessibilityProvider
+    private let localizationProvider: LocalizationProvider
     private var infoHeaderDismissTimer: Timer?
     private var participantsCount: Int = 0
+    private var callingStatus: CallingStatus = .none
+    private var shouldDisplayInfoHeader: Bool {
+        callingStatus != .inLobby
+    }
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
+    var isPad: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
-         localUserState: LocalUserState) {
+         localUserState: LocalUserState,
+         localizationProvider: LocalizationProvider,
+         accessibilityProvider: AccessibilityProvider) {
         self.logger = logger
-        participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
+        self.accessibilityProvider = accessibilityProvider
+        self.localizationProvider = localizationProvider
+        let title = localizationProvider.getLocalizedString(.callWith0Person)
+        self.infoLabel = title
+        self.accessibilityLabel = title
+        self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
             localUserState: localUserState)
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,
@@ -31,14 +46,21 @@ class InfoHeaderViewModel: ObservableObject {
                 guard let self = self else {
                     return
                 }
-                self.showParticipantListButtonButtonTapped()
+                self.showParticipantListButtonTapped()
         }
-        resetTimer()
+        isVoiceOverEnabled = accessibilityProvider.isVoiceOverEnabled
+        self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
+        // no need to hide the info view when VoiceOver is on
+        if !isVoiceOverEnabled {
+            resetTimer()
+        }
     }
 
-    func showParticipantListButtonButtonTapped() {
+    func showParticipantListButtonTapped() {
         logger.debug("Show participant list button tapped")
-        self.infoHeaderDismissTimer?.invalidate()
+        if isPad {
+            self.infoHeaderDismissTimer?.invalidate()
+        }
         self.displayParticipantsList()
     }
 
@@ -46,11 +68,20 @@ class InfoHeaderViewModel: ObservableObject {
         self.isParticipantsListDisplayed = true
     }
 
-    func toggleDisplayInfoHeader() {
+    func toggleDisplayInfoHeaderIfNeeded() {
+        guard !isVoiceOverEnabled else {
+            return
+        }
         self.isInfoHeaderDisplayed ? hideInfoHeader() : displayWithTimer()
     }
 
-    func update(localUserState: LocalUserState, remoteParticipantsState: RemoteParticipantsState) {
+    func update(localUserState: LocalUserState,
+                remoteParticipantsState: RemoteParticipantsState,
+                callingState: CallingState) {
+        callingStatus = callingState.status
+        if isVoiceOverEnabled {
+            isInfoHeaderDisplayed = shouldDisplayInfoHeader
+        }
         if participantsCount != remoteParticipantsState.participantInfoList.count {
             participantsCount = remoteParticipantsState.participantInfoList.count
             updateInfoLabel()
@@ -63,13 +94,14 @@ class InfoHeaderViewModel: ObservableObject {
         let content: String
         switch participantsCount {
         case 0:
-            content = "Waiting for others to join"
+            content = localizationProvider.getLocalizedString(.callWith0Person)
         case 1:
-            content = "Call with 1 person"
+            content = localizationProvider.getLocalizedString(.callWith1Person)
         default:
-            content = "Call with \(participantsCount) people"
+            content = localizationProvider.getLocalizedString(.callWithNPerson, participantsCount)
         }
         infoLabel = content
+        accessibilityLabel = content
     }
 
     private func displayWithTimer() {
@@ -89,5 +121,22 @@ class InfoHeaderViewModel: ObservableObject {
                                                            userInfo: nil,
                                                            repeats: false)
     }
+}
 
+extension InfoHeaderViewModel: AccessibilityProviderNotificationsObserver {
+    func didChangeVoiceOverStatus(_ notification: NSNotification) {
+        // the notification may be sent a couple of times for the same value
+        guard isVoiceOverEnabled != accessibilityProvider.isVoiceOverEnabled else {
+            return
+        }
+
+        isVoiceOverEnabled = accessibilityProvider.isVoiceOverEnabled
+        // invalidating timer is required for setting the next timer and when VoiceOver is enabled
+        infoHeaderDismissTimer?.invalidate()
+        if self.isVoiceOverEnabled {
+            isInfoHeaderDisplayed = shouldDisplayInfoHeader
+        } else if shouldDisplayInfoHeader {
+            displayWithTimer()
+        }
+    }
 }

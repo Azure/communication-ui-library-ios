@@ -6,12 +6,19 @@
 import Foundation
 import UIKit
 
+/// User-configurable options for creating CallComposite.
 public struct CallCompositeOptions {
-    var themeConfiguration: ThemeConfiguration?
+    private(set) var themeConfiguration: ThemeConfiguration?
+    private(set) var localizationConfiguration: LocalizationConfiguration?
 
-    public init(themeConfiguration: ThemeConfiguration) {
-        self.themeConfiguration = themeConfiguration
+    /// Creates an instance of CallCompositeOptions with related options.
+    /// - Parameter theme: ThemeConfiguration for changing color pattern.
+    ///  Default value is `nil`.
+    /// - Parameter localization: LocalizationConfiguration for specifying
+    ///  localization customization. Default value is `nil`.
+    public init(theme: ThemeConfiguration? = nil,
+                localization: LocalizationConfiguration? = nil) {
+        self.themeConfiguration = theme
+        self.localizationConfiguration = localization
     }
-
-    public init() { }
 }

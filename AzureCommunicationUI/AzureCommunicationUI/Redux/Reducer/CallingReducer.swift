@@ -11,20 +11,24 @@ struct CallingReducer: Reducer {
             return state
         }
 
-        var coreStatus = callingState.status
+        var callingStatus = callingState.status
         var isRecordingActive = callingState.isRecordingActive
         var isTranscriptionActive = callingState.isTranscriptionActive
         switch action {
         case let action as CallingAction.StateUpdated:
-            coreStatus = action.status
+            callingStatus = action.status
         case let action as CallingAction.RecordingStateUpdated:
             isRecordingActive = action.isRecordingActive
         case let action as CallingAction.TranscriptionStateUpdated:
             isTranscriptionActive = action.isTranscriptionActive
+        case _ as ErrorAction.StatusErrorAndCallReset:
+            callingStatus = .none
+            isRecordingActive = false
+            isTranscriptionActive = false
         default:
             return state
         }
-        return CallingState(status: coreStatus,
+        return CallingState(status: callingStatus,
                             isRecordingActive: isRecordingActive,
                             isTranscriptionActive: isTranscriptionActive)
     }

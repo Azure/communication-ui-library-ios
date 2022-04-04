@@ -32,7 +32,7 @@ Get started with Azure Communication Services by using the UI Library to integra
 CocoaPods is a dependency manager for Cocoa projects. To set up with CocoaPods visit their [Getting Started Guide](https://guides.cocoapods.org/using/getting-started.html). To integrate UI Mobile Library into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-pod 'AzureCommunicationUI', '1.0.0-beta.1'
+pod 'AzureCommunicationUI', '1.0.0-beta.2'
 ```
 
 #### Manual Installation
@@ -46,12 +46,12 @@ Replace `<GROUP_CALL_ID>` with your group id for your call, `<DISPLAY_NAME>` wit
 
 ```swift
 let callCompositeOptions = CallCompositeOptions()
-callComposite = CallComposite(withOptions: callCompositeOptions)
+let callComposite = CallComposite(withOptions: callCompositeOptions)
 let communicationTokenCredential = try! CommunicationTokenCredential(token: "<USER_ACCESS_TOKEN>")
-let options = GroupCallOptions(communicationTokenCredential: communicationTokenCredential,
+let options = GroupCallOptions(credential: communicationTokenCredential,
                                groupId: UUID("<GROUP_CALL_ID>")!,
                                displayName: "<DISPLAY_NAME>")
-callComposite?.launch(with: options)
+callComposite.launch(with: options)
 ```
 
 For more details on Mobile UI Library functionalities visit the [API Reference Documentation](docs/api/CallComposite/Reference.md).

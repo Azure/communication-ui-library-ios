@@ -24,6 +24,7 @@ The sample app is a native iOS application developed using both SwiftUI and UIKi
    - `displayName`: your preferred display name
    - `groupCallId`: this a type of UUID used to start and join a meeting
    - `teamsMeetingLink`: the URL to a Teams meeting
+   - `expiredAcsToken`: an expired Azure Communication Services token for UI testing
 
     ![EnvConfig](/docs/images/EnvConfig.png)
 

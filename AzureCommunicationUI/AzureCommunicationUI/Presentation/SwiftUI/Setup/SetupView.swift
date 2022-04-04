@@ -19,7 +19,7 @@ struct SetupView: View {
     var body: some View {
         ZStack {
             VStack(spacing: layoutSpacing) {
-                SetupTitleView(iconButtonViewModel: viewModel.dismissButtonViewModel)
+                SetupTitleView(viewModel: viewModel)
                 VStack(spacing: layoutSpacing) {
                     ZStack(alignment: .bottom) {
                         PreviewAreaView(viewModel: viewModel.previewAreaViewModel,
@@ -28,7 +28,7 @@ struct SetupView: View {
                     }
                     .background(Color(StyleProvider.color.surface))
                     .cornerRadius(4)
-                    startCallButton
+                    joinCallView
                         .padding(.bottom)
                 }
                 .padding(.horizontal, horizontalPadding)
@@ -41,8 +41,15 @@ struct SetupView: View {
         }
     }
 
-    var startCallButton: some View {
-        PrimaryButton(viewModel: viewModel.startCallButtonViewModel)
+    var joinCallView: some View {
+        Group {
+            if viewModel.isJoinRequested {
+                JoiningCallActivityView(viewModel: viewModel.joiningCallActivityViewModel)
+            } else {
+                PrimaryButton(viewModel: viewModel.joinCallButtonViewModel)
+                    .accessibility(identifier: "AzureCommunicationUI.SetupView.PrimaryButton.JoinCall")
+            }
+        }
     }
 
     var errorInfoView: some View {
@@ -54,6 +61,8 @@ struct SetupView: View {
                                     bottom: startCallButtonHeight + layoutSpacing,
                                     trailing: errorHorizontalPadding)
                 )
+                .accessibilityElement(children: .contain)
+                .accessibility(addTraits: .isModal)
         }
     }
 }
@@ -61,20 +70,21 @@ struct SetupView: View {
 struct SetupTitleView: View {
     let viewHeight: CGFloat = 44
     let verticalSpacing: CGFloat = 0
-    var title: String = ""
-    var iconButtonViewModel: IconButtonViewModel
+    var viewModel: SetupViewModel
 
     var body: some View {
         VStack(spacing: verticalSpacing) {
             ZStack(alignment: .leading) {
-                IconButton(viewModel: iconButtonViewModel)
+                IconButton(viewModel: viewModel.dismissButtonViewModel)
+                    .flipsForRightToLeftLayoutDirection(true)
                 HStack {
                     Spacer()
-                    Text(title)
+                    Text(viewModel.title)
                         .font(Fonts.headline.font)
                         .foregroundColor(Color(StyleProvider.color.onBackground))
+                        .accessibility(addTraits: .isHeader)
                     Spacer()
-                }
+                }.accessibility(sortPriority: 1)
             }.frame(height: viewHeight)
             Divider()
         }

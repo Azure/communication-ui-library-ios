@@ -6,22 +6,40 @@
 import Foundation
 import AzureCommunicationCommon
 
+/// Options for joining a Team's meeting.
 public struct TeamsMeetingOptions {
-    public let communicationTokenCredential: CommunicationTokenCredential
+
+    /// The token credential used for communication service authentication.
+    public let credential: CommunicationTokenCredential
+
+    /// The URI of the Team's meeting.
     public let meetingLink: String
+
+    /// The display name of the local participant when joining the call.
+    ///
+    /// The limit for string length is 256.
     public let displayName: String?
 
-    public init(communicationTokenCredential: CommunicationTokenCredential,
+    /// Create an instance of a TeamsMeetingOptions with options.
+    /// - Parameters:
+    ///   - credential: The credential used for Azure Communication Service authentication.
+    ///   - meetingLink: A string representing the full URI of the teams meeting to join.
+    ///   - displayName: The display name of the local participant for the call. The limit for string length is 256.
+    public init(credential: CommunicationTokenCredential,
                 meetingLink: String,
                 displayName: String) {
-        self.communicationTokenCredential = communicationTokenCredential
+        self.credential = credential
         self.meetingLink = meetingLink
         self.displayName = displayName
     }
 
-    public init(communicationTokenCredential: CommunicationTokenCredential,
+    /// Create an instance of a TeamsMeetingOptions with options.
+    /// - Parameters:
+    ///   - credential: The credential used for Azure Communication Service authentication.
+    ///   - meetingLink: A string representing the full URI of the teams meeting to join.
+    public init(credential: CommunicationTokenCredential,
                 meetingLink: String) {
-        self.communicationTokenCredential = communicationTokenCredential
+        self.credential = credential
         self.meetingLink = meetingLink
         self.displayName = nil
     }

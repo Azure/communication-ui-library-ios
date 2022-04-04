@@ -10,11 +10,11 @@ import AzureCommunicationCommon
 
 class DiagnosticConfigTests: XCTestCase {
 
-    let expectedCompositeTag = "aci110/1.0.0-alpha.2"
+    let expectedCompositeTag: String = "aci110/1.0.0-beta.2"
     func test_init_when_init_then_returnExpectedTags() {
         let sut = makeSUT()
         guard let tag = sut.tags.first else {
-            XCTFail()
+            XCTFail("Failed with empty array")
             return
         }
 
@@ -25,7 +25,7 @@ class DiagnosticConfigTests: XCTestCase {
     func test_init_when_init_then_returnRegExValidTags() {
         let sut = makeSUT()
         guard let tag = sut.tags.first else {
-            XCTFail()
+            XCTFail("Failed with empty array")
             return
         }
         let validationRegEx = "aci110/[0-9][0-9]?.[0-9][0-9]?.[0-9][0-9]?(-(alpha|beta)(.[0-9][0-9]?)?)?"

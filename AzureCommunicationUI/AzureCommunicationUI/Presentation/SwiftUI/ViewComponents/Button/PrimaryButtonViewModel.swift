@@ -9,6 +9,7 @@ import Combine
 
 class PrimaryButtonViewModel: ObservableObject {
     @Published var isDisabled: Bool
+    @Published var accessibilityLabel: String?
     let buttonStyle: FluentUI.ButtonStyle
     let buttonLabel: String
     let iconName: CompositeIcon?
@@ -29,6 +30,12 @@ class PrimaryButtonViewModel: ObservableObject {
     func update(isDisabled: Bool) {
         if self.isDisabled != isDisabled {
             self.isDisabled = isDisabled
+        }
+    }
+
+    func update(accessibilityLabel: String?) {
+        if self.accessibilityLabel != accessibilityLabel {
+            self.accessibilityLabel = accessibilityLabel
         }
     }
 }

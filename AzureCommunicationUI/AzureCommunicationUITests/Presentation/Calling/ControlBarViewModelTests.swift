@@ -14,9 +14,9 @@ class ControlBarViewModelTests: XCTestCase {
     var controlBarViewModel: ControlBarViewModel!
 
     override func setUp() {
+        super.setUp()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
-
 
         func dispatch(action: Action) {
             storeFactory.store.dispatch(action: action)
@@ -24,6 +24,7 @@ class ControlBarViewModelTests: XCTestCase {
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
         controlBarViewModel = ControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                                   logger: LoggerMocking(),
+                                                  localizationProvider: LocalizationProviderMocking(),
                                                   dispatchAction: dispatch,
                                                   endCallConfirm: {},
                                                   localUserState: LocalUserState())

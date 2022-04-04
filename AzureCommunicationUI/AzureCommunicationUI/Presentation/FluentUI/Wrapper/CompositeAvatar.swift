@@ -12,10 +12,13 @@ struct CompositeAvatar: View {
     var avatarSize: MSFAvatarSize = .xxlarge
 
     var body: some View {
-        Avatar(style: .default,
+        let isNameEmpty = displayName == nil
+        || displayName?.trimmingCharacters(in: .whitespaces).isEmpty == true
+        return Avatar(style: isNameEmpty ? .outlined : .default,
                size: avatarSize,
                primaryText: displayName)
             .ringColor(StyleProvider.color.primaryColor)
             .isRingVisible(isSpeaking)
+            .accessibility(hidden: true)
     }
 }

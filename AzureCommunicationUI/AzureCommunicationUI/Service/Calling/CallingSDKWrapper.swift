@@ -59,6 +59,8 @@ class ACSCallingSDKWrapper: NSObject, CallingSDKWrapper {
     }
 
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) -> AnyPublisher<Void, Error> {
+        logger.debug("Reset Subjects in callingEventsHandler")
+        callingEventsHandler.setupProperties()
         self.logger.debug( "Starting call")
         return setupCallAgent()
             .flatMap { [weak self] _ -> AnyPublisher<Void, Error> in
@@ -94,9 +96,7 @@ class ACSCallingSDKWrapper: NSObject, CallingSDKWrapper {
             }
 
             self.callAgent?.join(with: joinLocator, joinCallOptions: joinCallOptions) { [weak self] (call, error) in
-                guard let self = self,
-                      let call = call else {
-                    self?.logger.error( "Join call failed")
+                guard let self = self else {
                     return promise(.failure(CompositeError.invalidSDKWrapper))
                 }
 
@@ -104,6 +104,12 @@ class ACSCallingSDKWrapper: NSObject, CallingSDKWrapper {
                     self.logger.error( "Join call failed with error")
                     return promise(.failure(error))
                 }
+
+                guard let call = call else {
+                    self.logger.error( "Join call failed")
+                    return promise(.failure(CompositeError.invalidSDKWrapper))
+                }
+
                 call.delegate = self.callingEventsHandler
                 self.call = call
                 self.setupCallRecordingAndTranscriptionFeature()
@@ -260,7 +266,7 @@ extension ACSCallingSDKWrapper {
                 options.displayName = displayName
             }
 
-            self.callClient?.createCallAgent(userCredential: self.callConfiguration.communicationTokenCredential,
+            self.callClient?.createCallAgent(userCredential: self.callConfiguration.credential,
                                              options: options) { [weak self] (agent, error) in
                 guard let self = self else {
                     return promise(.failure(CompositeError.invalidSDKWrapper))
