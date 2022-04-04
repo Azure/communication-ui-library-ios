@@ -18,10 +18,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
             XCTFail("No App launch")
             return
         }
-
         tapInterfaceFor(.uiKit)
-        tapEnabledButton(buttonName: "Start Experience", shouldWait: true)
-        tapButton(buttonName: "Join call", shouldWait: true)
     }
 
     func testCallCompositeExit() {
@@ -52,7 +49,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         tapEnabledButton(accesiibilityLabel: .startExperienceAccessibilityLabel, shouldWait: true)
         tapButton(accesiibilityLabel: .joinCallAccessibilityLabel, shouldWait: true)
     }
-    
+
     func testCallCompositeJoinCallGroupCallSwiftUI() {
         guard app != nil else {
             XCTFail("No App launch")
@@ -121,7 +118,6 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
     }
 
     // MARK: Private / helper functions
-
     /// Toggles the control views in the setup screen
     private func toggleSetupScreenControlButtons() {
         guard let app = app else {
