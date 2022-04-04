@@ -18,8 +18,9 @@ Pod::Spec.new do |spec|
   
   spec.frameworks           = 'UIKit', 'SwiftUI'
   spec.dependency             'AzureCommunicationCalling', '2.2.0-beta.1'
-  spec.dependency             'MicrosoftFluentUI/Avatar_ios', '0.3.5'
-  spec.dependency             'MicrosoftFluentUI/BottomSheet_ios', '0.3.5'
-  spec.dependency             'MicrosoftFluentUI/Button_ios', '0.3.5'
-  spec.dependency             'MicrosoftFluentUI/PopupMenu_ios', '0.3.5'
+  spec.dependency             'MicrosoftFluentUI/Avatar_ios', '0.3.9'
+  spec.dependency             'MicrosoftFluentUI/BottomSheet_ios', '0.3.9'
+  spec.dependency             'MicrosoftFluentUI/Button_ios', '0.3.9'
+  spec.dependency             'MicrosoftFluentUI/PopupMenu_ios', '0.3.9'
+  spec.dependency             'MicrosoftFluentUI/ActivityIndicator_ios', '0.3.9'
 end
