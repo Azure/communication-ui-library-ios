@@ -10,7 +10,7 @@ import AzureCommunicationCommon
 
 class DiagnosticConfigTests: XCTestCase {
 
-    let expectedCompositeTag: String = "aci110/1.0.0-alpha.2"
+    let expectedCompositeTag: String = "aci110/1.0.0-beta.2"
     func test_init_when_init_then_returnExpectedTags() {
         let sut = makeSUT()
         guard let tag = sut.tags.first else {
