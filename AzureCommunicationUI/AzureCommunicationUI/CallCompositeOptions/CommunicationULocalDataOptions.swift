@@ -8,7 +8,6 @@ import UIKit
 
 public struct CommunicationULocalDataOptions {
    let localPersona: CommunicationUPersonaData
-
 }
 
 public struct CommunicationUPersonaData {
