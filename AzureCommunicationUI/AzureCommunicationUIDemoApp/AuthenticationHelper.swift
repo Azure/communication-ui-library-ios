@@ -17,6 +17,7 @@ class AuthenticationHelper {
             URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
                 if let error = error {
                     print(error)
+                    completionHandler(nil, error)
                 } else if let data = data {
                     do {
                         let res = try JSONDecoder().decode(TokenResponse.self, from: data)
@@ -24,6 +25,7 @@ class AuthenticationHelper {
                         completionHandler(res.token, nil)
                     } catch let error {
                         print(error)
+                        completionHandler(nil, error)
                     }
                 }
             }.resume()
