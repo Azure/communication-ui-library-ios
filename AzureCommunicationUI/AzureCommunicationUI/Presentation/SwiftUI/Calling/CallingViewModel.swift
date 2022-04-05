@@ -102,6 +102,28 @@ class CallingViewModel: ObservableObject {
         return cancelButtonViewModel
     }
 
+    func getLeaveCallButtonViewModel() -> LeaveCallConfirmationViewModel {
+        return LeaveCallConfirmationViewModel(title: localizationProvider.getLocalizedString(.leaveCall),
+                                              action: { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.logger.debug("Leave call button tapped")
+            self.endCall()
+        })
+    }
+
+    func getCancelButtonViewModel() -> LeaveCallConfirmationViewModel {
+        return LeaveCallConfirmationViewModel(title: localizationProvider.getLocalizedString(.cancel),
+                                              action: { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.logger.debug("Cancel button tapped")
+            self.dismissConfirmLeaveOverlay()
+        })
+    }
+
     func displayConfirmLeaveOverlay() {
         self.isConfirmLeaveOverlayDisplayed = true
     }

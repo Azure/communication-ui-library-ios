@@ -10,6 +10,8 @@ struct CallingView: View {
     @ObservedObject var viewModel: CallingViewModel
     let viewManager: VideoViewManager
 
+    let leaveCallConfirmationListSourceView = UIView()
+
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
 
@@ -28,8 +30,14 @@ struct CallingView: View {
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
+//        .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveOverlayDisplayed) {
+//            ConfirmLeaveOverlayView(viewModel: viewModel)
+//                .accessibility(hidden: !viewModel.isConfirmLeaveOverlayDisplayed)
+//                .accessibilityElement(children: .contain)
+//                .accessibility(addTraits: .isModal)
+//        })
         .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveOverlayDisplayed) {
-            ConfirmLeaveOverlayView(viewModel: viewModel)
+            exitConfirmationDrawer
                 .accessibility(hidden: !viewModel.isConfirmLeaveOverlayDisplayed)
                 .accessibilityElement(children: .contain)
                 .accessibility(addTraits: .isModal)
@@ -76,6 +84,17 @@ struct CallingView: View {
                     .accessibility(hidden: !viewModel.isLobbyOverlayDisplayed)
             })
         }
+    }
+
+    var exitConfirmationDrawer: some View {
+        let leaveCallConfirmationVm: [LeaveCallConfirmationViewModel] = [
+            viewModel.getLeaveCallButtonViewModel(),
+            viewModel.getCancelButtonViewModel()
+        ]
+
+        return CompositeLeaveCallConfirmationList(isPresented: $viewModel.isLobbyOverlayDisplayed,
+                                                  viewModel: leaveCallConfirmationVm,
+                                                  sourceView: leaveCallConfirmationListSourceView)
     }
 
     var localVideoPipView: some View {
