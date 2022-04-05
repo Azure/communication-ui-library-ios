@@ -47,6 +47,7 @@ struct SetupView: View {
                 JoiningCallActivityView(viewModel: viewModel.joiningCallActivityViewModel)
             } else {
                 PrimaryButton(viewModel: viewModel.joinCallButtonViewModel)
+                    .accessibility(identifier: "AzureCommunicationUI.SetupView.PrimaryButton.JoinCall")
             }
         }
     }
