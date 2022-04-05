@@ -73,16 +73,16 @@ extension XCUITestBase {
     /// - Parameters:
     ///   - accesiibilityLabel: accessibility label of the button
     ///   - shouldWait: determienes whether app should wait for the tap test to complete
-    func tapButton(accesiibilityLabel: LocalizationKey, shouldWait: Bool) {
-        tapButton(buttonName: accesiibilityLabel.rawValue, shouldWait: shouldWait)
+    func tapButton(accessibilityIdentifier: LocalizationKey, shouldWait: Bool) {
+        tapButton(buttonName: accessibilityIdentifier.rawValue, shouldWait: shouldWait)
     }
 
     /// Taps the enabled button that matches with the given accessibility label
     /// - Parameters:
     ///   - accesiibilityLabel: accessibility label of the button
     ///   - shouldWait: determienes whether app should wait for the tap test to complete
-    func tapEnabledButton(accesiibilityLabel: LocalizationKey, shouldWait: Bool) {
-        tapEnabledButton(buttonName: accesiibilityLabel.rawValue, shouldWait: shouldWait)
+    func tapEnabledButton(accessibilityIdentifier: LocalizationKey, shouldWait: Bool) {
+        tapEnabledButton(buttonName: accessibilityIdentifier.rawValue, shouldWait: shouldWait)
     }
 
     func tapInterfaceFor(_ interface: CompositeSampleInterface) {
