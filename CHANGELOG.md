@@ -1,6 +1,8 @@
 # Release History
 
-## 1.0.0-beta.2 (Upcoming)
+## 1.0.0-beta.3 (Upcoming)
+
+## 1.0.0-beta.2 (2022-04-04)
 
 ### New Features
 - Update joining experience in setup view. [#44](https://github.com/Azure/communication-ui-library-ios/pull/44)

@@ -5,37 +5,38 @@
 import Foundation
 import SwiftUI
 
+/// A configuration to allow customizing localization.
 public struct LocalizationConfiguration {
     /// LanguageCode enum representing the locale code.
     public enum LanguageCode: String {
         /// German
-        case deDE = "de"
+        case de = "de"
         /// Japanese
-        case jaJP = "ja"
+        case ja = "ja"
         /// English
-        case enUS = "en"
+        case en = "en"
         /// Chinese (Traditional)
-        case zhTW = "zh-Hant"
+        case zhHant = "zh-Hant"
         /// Spanish
-        case esES = "es"
+        case es = "es"
         /// Chinese (Simplified)
-        case zhCN = "zh-Hans"
+        case zhHans = "zh-Hans"
         /// Italian
-        case itIT = "it"
+        case it = "it"
         /// English (United Kingdom)
         case enGB = "en-GB"
         /// Korean
-        case koKR = "ko"
+        case ko = "ko"
         /// Turkish
-        case trTR = "tr"
+        case tr = "tr"
         /// Russian
-        case ruRU = "ru"
+        case ru = "ru"
         /// French
-        case frFR = "fr"
+        case fr = "fr"
         /// Dutch
-        case nlNL = "nl"
+        case nl = "nl"
         /// Portuguese
-        case ptPT = "pt"
+        case pt = "pt"
     }
 
     let languageCode: String
