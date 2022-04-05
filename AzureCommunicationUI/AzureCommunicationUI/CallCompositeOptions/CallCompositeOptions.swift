@@ -12,13 +12,13 @@ public struct CallCompositeOptions {
     private(set) var localizationConfiguration: LocalizationConfiguration?
 
     /// Creates an instance of CallCompositeOptions with related options.
-    /// - Parameter themeConfiguration: ThemeConfiguration for changing color pattern.
+    /// - Parameter theme: ThemeConfiguration for changing color pattern.
     ///  Default value is `nil`.
-    /// - Parameter localizationConfiguration: LocalizationConfiguration for specifying
+    /// - Parameter localization: LocalizationConfiguration for specifying
     ///  localization customization. Default value is `nil`.
-    public init(themeConfiguration: ThemeConfiguration? = nil,
-                localizationConfiguration: LocalizationConfiguration? = nil) {
-        self.themeConfiguration = themeConfiguration
-        self.localizationConfiguration = localizationConfiguration
+    public init(theme: ThemeConfiguration? = nil,
+                localization: LocalizationConfiguration? = nil) {
+        self.themeConfiguration = theme
+        self.localizationConfiguration = localization
     }
 }
