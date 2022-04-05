@@ -45,7 +45,7 @@ extension XCUITestBase {
     /// - Parameters:
     ///   - accesiibilityLabel: accessibility label of the button
     ///   - shouldWait: determienes whether app should wait for the tap test to complete
-    func tapEnabledButton(buttonName: String, shouldWait: Bool) {
+    private func tapEnabledButton(buttonName: String, shouldWait: Bool) {
         guard let button = app?.buttons[buttonName] else {
             return
         }
@@ -59,7 +59,7 @@ extension XCUITestBase {
     /// - Parameters:
     ///   - accesiibilityLabel: accessibility label of the button
     ///   - shouldWait: determienes whether app should wait for the tap test to complete
-    func tapButton(buttonName: String, shouldWait: Bool) {
+    private func tapButton(buttonName: String, shouldWait: Bool) {
         guard let button = app?.buttons[buttonName] else {
             return
         }
