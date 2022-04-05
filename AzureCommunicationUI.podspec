@@ -12,7 +12,7 @@ Pod::Spec.new do |spec|
   spec.platform             = :ios, '13.0'
 
   spec.source_files         = 'AzureCommunicationUI/AzureCommunicationUI/**/*.swift'
-  spec.resources            = 'AzureCommunicationUI/AzureCommunicationUI/*.xcassets'
+  spec.resources            = 'AzureCommunicationUI/AzureCommunicationUI/**/*.{xcassets,strings}'
 
   spec.pod_target_xcconfig  = { "EXCLUDED_ARCHS[sdk=iphonesimulator*]": "arm64", "ENABLE_BITCODE": "NO"}
   
