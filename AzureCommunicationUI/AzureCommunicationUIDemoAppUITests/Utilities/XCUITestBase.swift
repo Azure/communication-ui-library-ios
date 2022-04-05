@@ -36,7 +36,7 @@ class XCUITestBase: XCTestCase {
         }
     }
 
-    var app: XCUIApplication?
+    var app: XCUIApplication!
 }
 
 extension XCUITestBase {
@@ -46,9 +46,7 @@ extension XCUITestBase {
     ///   - accesiibilityLabel: accessibility label of the button
     ///   - shouldWait: determienes whether app should wait for the tap test to complete
     private func tapEnabledButton(buttonName: String, shouldWait: Bool) {
-        guard let button = app?.buttons[buttonName] else {
-            return
-        }
+        let button = app.buttons[buttonName]
         if shouldWait {
             waitEnabled(for: button)
         }
@@ -60,9 +58,7 @@ extension XCUITestBase {
     ///   - accesiibilityLabel: accessibility label of the button
     ///   - shouldWait: determienes whether app should wait for the tap test to complete
     private func tapButton(buttonName: String, shouldWait: Bool) {
-        guard let button = app?.buttons[buttonName] else {
-            return
-        }
+        let button = app.buttons[buttonName]
         if shouldWait {
             wait(for: button)
         }
@@ -85,19 +81,20 @@ extension XCUITestBase {
         tapEnabledButton(buttonName: accessibilityIdentifier.rawValue, shouldWait: shouldWait)
     }
 
+    /// Selects the interface before entering the composite
+    /// - Note: Only call this function before entering composite.
     func tapInterfaceFor(_ interface: CompositeSampleInterface) {
-        app?.buttons[interface.name].tap()
+        app.buttons[interface.name].tap()
     }
 
+    /// Selects the meeting type before entering the composite
+    /// - Note: Only call this function before entering composite.
     func tapMeetingType(_ meetingType: CompositeMeetingType) {
-        app?.buttons[meetingType.name].tap()
+        app.buttons[meetingType.name].tap()
     }
 
     func takeScreenshot(name: String = "App Screenshot - \(Date().description)",
                         lifetime: XCTAttachment.Lifetime  = .keepAlways) {
-        guard let app = app else {
-            return
-        }
         let screenshot = app.screenshot()
         let attachment = XCTAttachment(screenshot: screenshot)
         attachment.name = name

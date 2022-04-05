@@ -11,17 +11,12 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     override func setUp() {
         super.setUp()
         app = XCUIApplication()
-        app?.launch()
+        app.launch()
     }
 
     // MARK: End call tests
 
     func testCallCompositeEndCallGroupCallSwiftUI() {
-        guard app != nil else {
-            XCTFail("No App launch")
-            return
-        }
-
         tapInterfaceFor(.swiftUI)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
@@ -29,11 +24,6 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     }
 
     func testCallCompositeEndCallTeamsCallSwiftUI() {
-        guard app != nil else {
-            XCTFail("No App launch")
-            return
-        }
-
         tapInterfaceFor(.uiKit)
         tapMeetingType(.teamsCall)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
@@ -42,11 +32,6 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     }
 
     func testCallCompositeEndCallGroupCallUIKit() {
-        guard app != nil else {
-            XCTFail("No App launch")
-            return
-        }
-
         tapInterfaceFor(.swiftUI)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
@@ -54,11 +39,6 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     }
 
     func testCallCompositeEndCallTeamsCallUIKit() {
-        guard app != nil else {
-            XCTFail("No App launch")
-            return
-        }
-
         tapInterfaceFor(.uiKit)
         tapMeetingType(.teamsCall)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
@@ -70,11 +50,6 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     /// Toggles the leave call overlay  in the calling screen
     private func toggleLeaveCallOverlay(leaveCall: Bool) {
-        guard let app = app else {
-            XCTFail("No App launch")
-            return
-        }
-
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .cancelAccssibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)

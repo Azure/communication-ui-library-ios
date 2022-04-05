@@ -10,14 +10,10 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
     override func setUp() {
         super.setUp()
         app = XCUIApplication()
-        app?.launch()
+        app.launch()
     }
 
     func testCallCompositeLaunch() {
-        guard app != nil else {
-            XCTFail("No App launch")
-            return
-        }
         tapInterfaceFor(.uiKit)
     }
 
@@ -34,12 +30,6 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
     }
 
     func testCallCompositeWithExpiredToken() {
-        // UI tests must launch the application that they test.
-        guard let app = app else {
-            XCTFail("No App launch")
-            return
-        }
-
         tapInterfaceFor(.swiftUI)
         tapButton(accessibilityIdentifier: .clearTokenTextFieldAccessibilityLabel, shouldWait: false)
 
@@ -51,11 +41,6 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
     }
 
     func testCallCompositeJoinCallGroupCallSwiftUI() {
-        guard app != nil else {
-            XCTFail("No App launch")
-            return
-        }
-
         tapInterfaceFor(.swiftUI)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
         toggleSetupScreenControlButtons()
@@ -65,11 +50,6 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
     }
 
     func testCallCompositeJoinCallTeamsCallSwiftUI() {
-        guard app != nil else {
-            XCTFail("No App launch")
-            return
-        }
-
         tapInterfaceFor(.swiftUI)
         tapMeetingType(.teamsCall)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
@@ -80,11 +60,6 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
     }
 
     func testCallCompositeJoinCallGroupCallUIKit() {
-        guard app != nil else {
-            XCTFail("No App launch")
-            return
-        }
-
         tapInterfaceFor(.uiKit)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
         toggleSetupScreenControlButtons()
@@ -94,11 +69,6 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
     }
 
     func testCallCompositeJoinCallTeamsCallUIKit() {
-        guard app != nil else {
-            XCTFail("No App launch")
-            return
-        }
-
         tapInterfaceFor(.uiKit)
         tapMeetingType(.teamsCall)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
@@ -121,11 +91,6 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
     /// Toggles the control views in the setup screen
     private func toggleSetupScreenControlButtons() {
-        guard let app = app else {
-            XCTFail("No App launch")
-            return
-        }
-
         // test video button
         tapButton(accessibilityIdentifier: .toggleVideoAccessibilityID, shouldWait: true)
 
