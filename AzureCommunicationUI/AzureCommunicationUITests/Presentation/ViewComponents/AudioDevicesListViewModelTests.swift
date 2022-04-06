@@ -8,16 +8,19 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class AudioDevicesListViewModelTests: XCTestCase {
-    var storeFactory: StoreFactoryMocking!
-    var cancellable: CancelBag!
-    var audioDevicesListViewModel: AudioDevicesListViewModel!
-    var localizationProvider: LocalizationProviderMocking!
+    private var storeFactory: StoreFactoryMocking!
+    private var cancellable: CancelBag!
+    private var audioDevicesListViewModel: AudioDevicesListViewModel!
+    private var localizationProvider: LocalizationProviderMocking!
+    private var factoryMocking: CompositeViewModelFactoryMocking!
 
     override func setUp() {
         super.setUp()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
+        factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
+                                                          store: storeFactory.store)
     }
 
     func test_audioDevicesListViewModel_update_when_audioDevicesListFirstInitialized_then_shouldBePublished() {
@@ -97,7 +100,8 @@ extension AudioDevicesListViewModelTests {
         func dispatch(action: Action) {
             storeFactory.store.dispatch(action: action)
         }
-        return AudioDevicesListViewModel(dispatchAction: dispatch,
+        return AudioDevicesListViewModel(compositeViewModelFactory: factoryMocking,
+                                         dispatchAction: dispatch,
                                          localUserState: LocalUserState(),
                                          localizationProvider: localizationProvider)
     }
