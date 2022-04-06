@@ -20,10 +20,10 @@ The sample app is a native iOS application developed using both SwiftUI and UIKi
 4. (Optional) Run `touch EnvConfig.xcconfig` via the Command Line. 
 5. (Optional) Add constants from following list to `EnvConfig.xcconfig` as the sample app's local configurations. 
    - `acsToken`: a generated Azure Communication Services token
-   - `acsTokenUrl`: the URL to request Azure Communication Services token
+   - `acsTokenUrl`: the URL to request Azure Communication Services token (You must use http:/$()/ in the format of URL)
    - `displayName`: your preferred display name
    - `groupCallId`: this a type of UUID used to start and join a meeting
-   - `teamsMeetingLink`: the URL to a Teams meeting
+   - `teamsMeetingLink`: the URL to a Teams meeting (You must use http:/$()/ in the format of URL)
    - `expiredAcsToken`: an expired Azure Communication Services token for UI testing
 
     ![EnvConfig](/docs/images/EnvConfig.png)
