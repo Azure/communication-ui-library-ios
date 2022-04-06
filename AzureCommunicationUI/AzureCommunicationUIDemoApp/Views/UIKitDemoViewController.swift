@@ -135,7 +135,7 @@ class UIKitDemoViewController: UIViewController {
         let localizationConfig = LocalizationConfiguration(languageCode: envConfigSubject.languageCode,
                                                            isRightToLeft: envConfigSubject.isRightToLeft)
 
-        let callCompositeOptions = CallCompositeOptions(themeConfiguration: TeamsBrandConfig(),
+        let callCompositeOptions = CallCompositeOptions(themeConfiguration: Theming(),
                                                         localizationConfiguration: localizationConfig)
 
         let callComposite = CallComposite(withOptions: callCompositeOptions)
