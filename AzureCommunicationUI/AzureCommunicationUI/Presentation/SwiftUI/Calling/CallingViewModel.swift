@@ -10,7 +10,7 @@ class CallingViewModel: ObservableObject {
     @Published var isLobbyOverlayDisplayed: Bool = false
     @Published var isConfirmLeaveOverlayDisplayed: Bool = false
     @Published var isParticipantGridDisplayed: Bool
-    @Published var isLocalCameraOn: Bool = false
+    @Published var isVideoGridViewAccessibilityAvailable: Bool = false
     let isRightToLeft: Bool
     @Published var appState: AppStatus = .foreground
 
@@ -151,6 +151,10 @@ class CallingViewModel: ObservableObject {
     }
 
     private func updateIsLocalCameraOn(with state: AppState) {
-        isLocalCameraOn = state.localUserState.cameraState.operation == .on
+        let isLocalCameraOn = state.localUserState.cameraState.operation == .on
+        let displayName = state.localUserState.displayName ?? ""
+        let isLocalUserInfoNotEmpty = isLocalCameraOn || !displayName.isEmpty
+        isVideoGridViewAccessibilityAvailable = !isLobbyOverlayDisplayed &&
+        !isParticipantGridDisplayed && isLocalUserInfoNotEmpty
     }
 }
