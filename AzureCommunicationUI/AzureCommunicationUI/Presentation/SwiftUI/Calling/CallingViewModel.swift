@@ -103,7 +103,8 @@ class CallingViewModel: ObservableObject {
     }
 
     func getLeaveCallButtonViewModel() -> LeaveCallConfirmationViewModel {
-        return LeaveCallConfirmationViewModel(title: localizationProvider.getLocalizedString(.leaveCall),
+        return LeaveCallConfirmationViewModel(icon: .endCallRegular,
+                                              title: localizationProvider.getLocalizedString(.leaveCall),
                                               action: { [weak self] in
             guard let self = self else {
                 return
@@ -114,7 +115,8 @@ class CallingViewModel: ObservableObject {
     }
 
     func getCancelButtonViewModel() -> LeaveCallConfirmationViewModel {
-        return LeaveCallConfirmationViewModel(title: localizationProvider.getLocalizedString(.cancel),
+        return LeaveCallConfirmationViewModel(icon: .dismiss,
+                                              title: localizationProvider.getLocalizedString(.cancel),
                                               action: { [weak self] in
             guard let self = self else {
                 return

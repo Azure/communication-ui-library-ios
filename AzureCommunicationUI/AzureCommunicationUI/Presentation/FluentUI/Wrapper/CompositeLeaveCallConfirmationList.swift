@@ -8,7 +8,6 @@ import FluentUI
 
 struct CompositeLeaveCallConfirmationList: UIViewControllerRepresentable {
     @Binding var isPresented: Bool
-//    var viewModel: [String] =  ["Leave", "Cancel"]
     var viewModel: [LeaveCallConfirmationViewModel]
     let sourceView: UIView
 
@@ -18,7 +17,8 @@ struct CompositeLeaveCallConfirmationList: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> DrawerContainerViewController<LeaveCallConfirmationViewModel> {
         let controller = LeaveCallConfirmationListViewController(items: getLeaveCallConfirmationList(),
-                                                        sourceView: sourceView)
+                                                                 sourceView: sourceView,
+                                                                 showHeader: true)
         controller.delegate = context.coordinator
         return controller
     }

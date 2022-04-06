@@ -6,12 +6,14 @@
 import Foundation
 
 class LeaveCallConfirmationViewModel {
-//    let icon: CompositeIcon
+    let icon: CompositeIcon
     let title: String
     let action: (() -> Void)
 
-    init(title: String,
+    init(icon: CompositeIcon,
+         title: String,
          action: @escaping (() -> Void)) {
+        self.icon = icon
         self.title = title
         self.action = action
     }

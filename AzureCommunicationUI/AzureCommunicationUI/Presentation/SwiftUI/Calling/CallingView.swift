@@ -30,12 +30,6 @@ struct CallingView: View {
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
-//        .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveOverlayDisplayed) {
-//            ConfirmLeaveOverlayView(viewModel: viewModel)
-//                .accessibility(hidden: !viewModel.isConfirmLeaveOverlayDisplayed)
-//                .accessibilityElement(children: .contain)
-//                .accessibility(addTraits: .isModal)
-//        })
         .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveOverlayDisplayed) {
             exitConfirmationDrawer
                 .accessibility(hidden: !viewModel.isConfirmLeaveOverlayDisplayed)

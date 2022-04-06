@@ -50,7 +50,7 @@
 "AzureCommunicationUI.CallingView.OnePersonLeft"="%@ left the meeting";
 "AzureCommunicationUI.CallingView.MutiplePeopleLeft"="%d participants left the meeting";
 
-"AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Leave call";
+"AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Leave";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="Cancel";
 
 /* ComplianceBanner title */

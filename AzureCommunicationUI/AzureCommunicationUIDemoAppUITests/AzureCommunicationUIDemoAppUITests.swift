@@ -53,7 +53,7 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
         wait(for: hangUpButton)
         hangUpButton.tap()
 
-        let leaveCallButton = app.buttons["Leave call"]
+        let leaveCallButton = app.buttons["Leave"]
         wait(for: leaveCallButton)
         leaveCallButton.tap()
 

@@ -22,7 +22,7 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_getLeaveCallButtonViewModel_shouldReturnPrimaryButtonViewModel() {
         let sut = makeSUT()
         let leaveCallButtonViewModel = sut.getLeaveCallButtonViewModel()
-        let expectedButtonLabel = "Leave call"
+        let expectedButtonLabel = "Leave"
 
         XCTAssertEqual(leaveCallButtonViewModel.buttonLabel, expectedButtonLabel)
     }
