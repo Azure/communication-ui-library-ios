@@ -28,7 +28,7 @@ struct IconWithLabelButton: View {
         Button(action: viewModel.action) {
             VStack(alignment: .center, spacing: verticalSpacing) {
                 Icon(name: viewModel.iconName, size: iconImageSize)
-                    .accessibility(hidden: true)
+                    .accessibilityHidden(true)
                 if let buttonLabel = viewModel.buttonLabel {
                     Text(buttonLabel)
                         .font(Fonts.button2.font)
