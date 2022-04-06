@@ -3,8 +3,6 @@
 ### New Features
 - Update minimum iOS version to 14.0
 
-## 1.0.0-beta.3 (Upcoming)
-
 ## 1.0.0-beta.2 (2022-04-04)
 
 ### New Features
