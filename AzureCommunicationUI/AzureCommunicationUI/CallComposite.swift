@@ -28,7 +28,7 @@ public class CallComposite {
 
     /// Assign closure to execute when an error occurs inside Call Composite.
     /// - Parameter action: The closure returning the error thrown from Call Composite.
-    public func setTarget(didFail action: ((ErrorEvent) -> Void)?) {
+    public func setTarget(didFail action: ((CommunicationUIErrorEvent) -> Void)?) {
         callCompositeEventsHandler.didFail = action
     }
 
@@ -47,12 +47,11 @@ public class CallComposite {
         setupLocalization(with: localizationProvider)
         let toolkitHostingController = makeToolkitHostingController(router: dependencyContainer.resolve(),
                                                                     logger: dependencyContainer.resolve(),
-                                                                    viewFactory: dependencyContainer.resolve())
+                                                                    viewFactory: dependencyContainer.resolve(),
+                                                                    isRightToLeft: localizationProvider.isRightToLeft)
         setupManagers(store: dependencyContainer.resolve(),
                       containerHostingController: toolkitHostingController,
                       logger: dependencyContainer.resolve())
-        UIView.appearance().semanticContentAttribute = localizationProvider.isRightToLeft ?
-            .forceRightToLeft : .forceLeftToRight
         present(toolkitHostingController)
     }
 
@@ -60,7 +59,7 @@ public class CallComposite {
     /// - Parameter options: The GroupCallOptions used to locate the group call.
     public func launch(with options: GroupCallOptions) {
         let callConfiguration = CallConfiguration(
-            communicationTokenCredential: options.communicationTokenCredential,
+            credential: options.credential,
             groupId: options.groupId,
             displayName: options.displayName)
 
@@ -71,7 +70,7 @@ public class CallComposite {
     /// - Parameter options: The TeamsMeetingOptions used to locate the Teams meetings.
     public func launch(with options: TeamsMeetingOptions) {
         let callConfiguration = CallConfiguration(
-            communicationTokenCredential: options.communicationTokenCredential,
+            credential: options.credential,
             meetingLink: options.meetingLink,
             displayName: options.displayName)
 
@@ -105,12 +104,15 @@ public class CallComposite {
 
     private func makeToolkitHostingController(router: NavigationRouter,
                                               logger: Logger,
-                                              viewFactory: CompositeViewFactory) -> ContainerUIHostingController {
+                                              viewFactory: CompositeViewFactory,
+                                              isRightToLeft: Bool) -> ContainerUIHostingController {
         let rootView = ContainerView(router: router,
                                      logger: logger,
-                                     viewFactory: viewFactory)
+                                     viewFactory: viewFactory,
+                                     isRightToLeft: isRightToLeft)
         let toolkitHostingController = ContainerUIHostingController(rootView: rootView,
-                                                                    callComposite: self)
+                                                                    callComposite: self,
+                                                                    isRightToLeft: isRightToLeft)
         toolkitHostingController.modalPresentationStyle = .fullScreen
 
         router.setDismissComposite { [weak toolkitHostingController, weak self] in

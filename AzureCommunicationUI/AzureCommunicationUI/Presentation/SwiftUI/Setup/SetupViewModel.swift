@@ -10,18 +10,21 @@ class SetupViewModel: ObservableObject {
     private let logger: Logger
     private let store: Store<AppState>
     private let localizationProvider: LocalizationProvider
+
     private var callingStatus: CallingStatus = .none
-    var cancellables = Set<AnyCancellable>()
 
-    @Published var isJoinRequested: Bool = false
     let isRightToLeft: Bool
-
     let previewAreaViewModel: PreviewAreaViewModel
+    let title: String
+
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
     var joinCallButtonViewModel: PrimaryButtonViewModel!
     var setupControlBarViewModel: SetupControlBarViewModel!
     var joiningCallActivityViewModel: JoiningCallActivityViewModel!
+    var cancellables = Set<AnyCancellable>()
+
+    @Published var isJoinRequested: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
@@ -31,10 +34,16 @@ class SetupViewModel: ObservableObject {
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
-        self.previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
-        self.joiningCallActivityViewModel = compositeViewModelFactory.makeJoiningCallActivityViewModel()
-        self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
-        self.joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
+
+        title = self.localizationProvider.getLocalizedString(.setupTitle)
+
+        previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
+
+        joiningCallActivityViewModel = compositeViewModelFactory.makeJoiningCallActivityViewModel()
+
+        errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
+
+        joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: self.localizationProvider
                 .getLocalizedString(.joinCall),
@@ -45,8 +54,9 @@ class SetupViewModel: ObservableObject {
                 }
                 self.joinCallButtonTapped()
         }
+        joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.joinCall))
 
-        self.dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
+        dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .leftArrow,
             buttonType: .controlButton,
             isDisabled: false) { [weak self] in
@@ -55,7 +65,10 @@ class SetupViewModel: ObservableObject {
                 }
                 self.dismissButtonTapped()
         }
-        self.setupControlBarViewModel = compositeViewModelFactory
+        dismissButtonViewModel.update(
+            accessibilityLabel: self.localizationProvider.getLocalizedString(.dismissAccessibilityLabel))
+
+        setupControlBarViewModel = compositeViewModelFactory
             .makeSetupControlBarViewModel(dispatchAction: store.dispatch,
                                           localUserState: store.state.localUserState)
 
@@ -108,7 +121,6 @@ class SetupViewModel: ObservableObject {
                                         permissionState: permissionState,
                                         callingState: callingState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
-
         errorInfoViewModel.update(errorState: state.errorState)
     }
 }

@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum StringKey: String {
+enum LocalizationKey: String {
     /* Devices */
     case iOS = "AzureCommunicationUI.AudioDevice.DeviceDrawer.iOS"
     case speaker = "AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"
@@ -15,13 +15,20 @@ enum StringKey: String {
     case bluetooth = "AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"
 
     /* SetupView */
+    case setupTitle = "AzureCommunicationUI.SetupView.Title"
+    case dismissAccessibilityLabel = "AzureCommunicationUI.SetupView.Button.Dismiss.AccessibilityLabel"
     case joinCall = "AzureCommunicationUI.SetupView.Button.JoinCall"
     case joiningCall = "AzureCommunicationUI.SetupView.Button.JoiningCall"
     case videoOff = "AzureCommunicationUI.SetupView.Button.VideoOff"
+    case videoOffAccessibilityLabel = "AzureCommunicationUI.SetupView.Button.VideoOff.AccessibilityLabel"
     case videoOn = "AzureCommunicationUI.SetupView.Button.VideoOn"
+    case videoOnAccessibilityLabel = "AzureCommunicationUI.SetupView.Button.VideoOn.AccessibilityLabel"
     case micOff = "AzureCommunicationUI.SetupView.Button.MicOff"
+    case micOffAccessibilityLabel = "AzureCommunicationUI.SetupView.Button.MicOff.AccessibilityLabel"
     case micOn = "AzureCommunicationUI.SetupView.Button.MicOn"
+    case micOnAccessibilityLabel = "AzureCommunicationUI.SetupView.Button.MicOn.AccessibilityLabel"
     case device = "AzureCommunicationUI.SetupView.Button.Device"
+    case deviceAccesibiiltyLabel = "AzureCommunicationUI.SetupView.Button.Device.AccessibilityLabel"
     case cameraDisabled = "AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"
     case audioAndCameraDisabled = "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"
     case audioDisabled = "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"
@@ -40,6 +47,14 @@ enum StringKey: String {
     // %@ is local participant name
     case localeParticipantWithSuffix =
             "AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"
+
+    case frontCamera = "AzureCommunicationUI.CallingView.SwitchCamera.Front"
+    case backCamera = "AzureCommunicationUI.CallingView.SwitchCamera.Back"
+
+    case onePersonJoined = "AzureCommunicationUI.CallingView.OnePersonJoined"
+    case multiplePeopleJoined = "AzureCommunicationUI.CallingView.MutiplePeopleJoined"
+    case onePersonLeft = "AzureCommunicationUI.CallingView.OnePersonLeft"
+    case multiplePeopleLeft = "AzureCommunicationUI.CallingView.MutiplePeopleLeft"
 
     case leaveCall = "AzureCommunicationUI.CallingView.Overlay.LeaveCall"
     case cancel = "AzureCommunicationUI.CallingView.Overlay.Cancel"
@@ -77,6 +92,8 @@ enum StringKey: String {
 
     /* PopUp warning */
     case snackBarDismiss = "AzureCommunicationUI.SnackBar.Button.Dismiss"
+    case snackBarDismissAccessibilityLabel = "AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityLabel"
+    case snackBarDismissAccessibilityHint = "AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityHint"
     case snackBarErrorJoinCall = "AzureCommunicationUI.SnackBar.Text.ErrorCallJoin"
     case snackBarErrorCallEnd = "AzureCommunicationUI.SnackBar.Text.ErrorCallEnd"
     case snackBarError = "AzureCommunicationUI.SnackBar.Text.Error"

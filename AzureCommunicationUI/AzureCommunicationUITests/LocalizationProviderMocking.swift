@@ -8,7 +8,6 @@ import Foundation
 
 class LocalizationProviderMocking: LocalizationProvider {
     var isApplyCalled: Bool = false
-    var isGetSupportedLanguagesCalled: Bool = false
     var isGetLocalizedStringCalled: Bool = false
     var isGetLocalizedStringWithArgsCalled: Bool = false
 
@@ -20,17 +19,12 @@ class LocalizationProviderMocking: LocalizationProvider {
         isApplyCalled = true
     }
 
-    func getSupportedLanguages() -> [String] {
-        isGetSupportedLanguagesCalled = true
-        return ["en"]
-    }
-
-    func getLocalizedString(_ key: StringKey) -> String {
+    func getLocalizedString(_ key: LocalizationKey) -> String {
         isGetLocalizedStringCalled = true
         return key.rawValue
     }
 
-    func getLocalizedString(_ key: StringKey, _ args: CVarArg...) -> String {
+    func getLocalizedString(_ key: LocalizationKey, _ args: CVarArg...) -> String {
         isGetLocalizedStringWithArgsCalled = true
         return key.rawValue
     }

@@ -12,12 +12,12 @@ Options for joining a Team's meeting.
 
 ## Properties
 
-### `communicationTokenCredential`
+### `credential`
 
 The token credential used for communication service authentication.
 
 ```swift
-public let communicationTokenCredential: CommunicationTokenCredential
+public let credential: CommunicationTokenCredential
 ```
 
 ### `meetingLink`
@@ -44,18 +44,18 @@ Create an instance of a `TeamsMeetingOptions` with options.
 
 ```swift
 public init(
-    communicationTokenCredential: CommunicationTokenCredential,
+    credential: CommunicationTokenCredential,
     meetingLink: String,
     displayName: String)
 ```
 
 ```swift
 public init(
-    communicationTokenCredential: CommunicationTokenCredential,
+    credential: CommunicationTokenCredential,
     meetingLink: String,
     displayName: String)
 ```
 ### Parameters
-* `communicationTokenCredential` - The CommunicationTokenCredential used for communication service authentication
+* `credential` - The CommunicationTokenCredential used for communication service authentication
 * `meetingLink` - A string representing the full URI of the teams meeting to join.
 * `displayName` - Specify the display name of the local participant for the call

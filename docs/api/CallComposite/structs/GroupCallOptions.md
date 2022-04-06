@@ -12,12 +12,12 @@ Options for joining a group call.
 
 ## Properties
 
-### `communicationTokenCredential`
+### `credential`
 
 The token credential used for communication service authentication.
 
 ```swift
-public let communicationTokenCredential: CommunicationTokenCredential
+public let credential: CommunicationTokenCredential
 ```
 
 ### `groupId`
@@ -44,18 +44,18 @@ Create an instance of a `GroupCallOptions` with options.
 
 ```swift
 public init(
-    communicationTokenCredential: CommunicationTokenCredential,
+    credential: CommunicationTokenCredential,
     groupId: UUID)
 ```
 
 ```swift
 public init(
-    communicationTokenCredential: CommunicationTokenCredential,
+    credential: CommunicationTokenCredential,
     groupId: UUID,
     displayName: String)
 ```
 
 ### Parameters
-* `communicationTokenCredential` - The CommunicationTokenCredential used for communication service authentication
+* `credential` - The CommunicationTokenCredential used for communication service authentication
 * `groupId` - The unique identifier for joining a specific group conversation
 * `displayName` - Specify the display name of the local participant for the call

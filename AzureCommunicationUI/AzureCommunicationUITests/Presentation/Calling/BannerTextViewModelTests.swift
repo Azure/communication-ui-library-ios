@@ -8,7 +8,6 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class BannerTextViewModelTests: XCTestCase {
-
     private var localizationProvider: LocalizationProviderMocking!
 
     override func setUp() {
@@ -56,6 +55,28 @@ class BannerTextViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_bannerTextViewModel_update_when_newInfoTypeSubmitted_then_accessibilityMoveFocusCalled() {
+        let expectation = XCTestExpectation(description: "Should move accessibility focus to the first element")
+        let accessibilityProvider = AccessibilityProviderMocking()
+        accessibilityProvider.moveFocusToFirstElementBlock = {
+            expectation.fulfill()
+        }
+        let sut = makeSUT(accessibilityProvider: accessibilityProvider)
+
+        sut.update(bannerInfoType: .recordingStarted)
+
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_bannerTextViewModel_update_when_newInfoTypeSubmitted_then_accessibilityLabelUpdated() {
+        let accessibilityProvider = AccessibilityProviderMocking()
+        let sut = makeSUT(accessibilityProvider: accessibilityProvider)
+
+        sut.update(bannerInfoType: .recordingStarted)
+
+        XCTAssertEqual(sut.accessibilityLabel, "\(sut.title) \(sut.body) \(sut.linkDisplay)")
+    }
+
     func test_bannerTextViewModel_display_complianceBanner_from_LocalizationMocking() {
         let sut = makeSUTLocalizationMocking()
         let expectedTitleKey = "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"
@@ -81,11 +102,13 @@ class BannerTextViewModelTests: XCTestCase {
 }
 
 extension BannerTextViewModelTests {
-    func makeSUT() -> BannerTextViewModel {
-        return BannerTextViewModel(localizationProvider: AppLocalizationProvider(logger: LoggerMocking()))
+    func makeSUT(accessibilityProvider: AccessibilityProvider = AppAccessibilityProvider()) -> BannerTextViewModel {
+        BannerTextViewModel(accessibilityProvider: accessibilityProvider,
+                            localizationProvider: AppLocalizationProvider(logger: LoggerMocking()))
     }
 
     func makeSUTLocalizationMocking() -> BannerTextViewModel {
-        return BannerTextViewModel(localizationProvider: localizationProvider)
+        return BannerTextViewModel(accessibilityProvider: AppAccessibilityProvider(),
+                                   localizationProvider: localizationProvider)
     }
 }

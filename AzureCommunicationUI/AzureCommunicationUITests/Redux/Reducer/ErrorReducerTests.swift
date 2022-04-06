@@ -14,7 +14,7 @@ class ErrorReducerTests: XCTestCase {
 
     func test_handleErrorReducer_reduce_when_notErrorState_then_return() {
         let state = StateMocking()
-        let action = ErrorAction.FatalErrorUpdated(error: ErrorEvent(code: "",
+        let action = ErrorAction.FatalErrorUpdated(error: CommunicationUIErrorEvent(code: "",
                                                                      error: nil))
         let sut = getSUT()
 
@@ -23,10 +23,10 @@ class ErrorReducerTests: XCTestCase {
     }
 
     func test_handleErrorReducer_reduce_when_fatalErrorUpdated_then_returnErrorState_categoryFatal() {
-        let state = ErrorState(error: ErrorEvent(code: CallCompositeErrorCode.callJoin,
+        let state = ErrorState(error: CommunicationUIErrorEvent(code: CallCompositeErrorCode.callJoin,
                                                  error: nil),
                                errorCategory: .callState)
-        let errorEvent = ErrorEvent(code: CallCompositeErrorCode.callJoin, error: nil)
+        let errorEvent = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callJoin, error: nil)
 
         let action = ErrorAction.FatalErrorUpdated(error: errorEvent)
         let sut = getSUT()
@@ -43,10 +43,10 @@ class ErrorReducerTests: XCTestCase {
     }
 
     func test_handleErrorReducer_reduce_when_statusErrorAndCallReset_then_returnErrorState_categoryCallState() {
-        let state = ErrorState(error: ErrorEvent(code: CallCompositeErrorCode.callJoin,
+        let state = ErrorState(error: CommunicationUIErrorEvent(code: CallCompositeErrorCode.callJoin,
                                                  error: nil),
                                errorCategory: .callState)
-        let errorEvent = ErrorEvent(code: CallCompositeErrorCode.callJoin, error: nil)
+        let errorEvent = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callJoin, error: nil)
 
         let action = ErrorAction.StatusErrorAndCallReset(error: errorEvent)
         let sut = getSUT()
@@ -64,7 +64,7 @@ class ErrorReducerTests: XCTestCase {
     }
 
     func test_handleErrorReducer_reduce_when_callStartRequested_then_cleanup() {
-        let error = ErrorEvent(code: "", error: nil)
+        let error = CommunicationUIErrorEvent(code: "", error: nil)
         let state = ErrorState(error: error,
                                errorCategory: .callState)
 

@@ -34,6 +34,8 @@ struct ParticipantGridCellView: View {
                                height: geometry.size.height)
                 }
             }
+            .accessibilityElement(children: .combine)
+            .accessibility(label: Text(viewModel.accessibilityLabel))
         }
         .onReceive(viewModel.$videoViewModel) { model in
             let cachedVideoStreamId = displayedVideoStreamId

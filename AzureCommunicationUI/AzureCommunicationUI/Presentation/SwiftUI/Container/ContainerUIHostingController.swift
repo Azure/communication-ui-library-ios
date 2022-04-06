@@ -10,10 +10,12 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
     class EnvironmentProperty {
         @Published var supportedOrientations: UIInterfaceOrientationMask
         @Published var isProximitySensorOn: Bool
+        @Published var prefersHomeIndicatorAutoHidden: Bool
 
         init() {
             self.supportedOrientations = .portrait
             self.isProximitySensorOn = false
+            self.prefersHomeIndicatorAutoHidden = false
         }
     }
 
@@ -22,13 +24,16 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
     private let cancelBag = CancelBag()
 
     init(rootView: ContainerView,
-         callComposite: CallComposite) {
+         callComposite: CallComposite,
+         isRightToLeft: Bool) {
         let environmentProperties = EnvironmentProperty()
         let environmentRoot = Root(containerView: rootView,
                                    environmentProperties: environmentProperties)
         self.callComposite = callComposite
         self.environmentProperties = environmentProperties
         super.init(rootView: environmentRoot)
+        UIView.appearance().semanticContentAttribute = isRightToLeft ?
+            .forceRightToLeft : .forceLeftToRight
         subscribeEnvironmentProperties(containerView: rootView)
         haltSetupViewOrientation(containerView: rootView)
     }
@@ -77,6 +82,16 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
             .sink(receiveValue: { isEnable in
                 UIDevice.current.toggleProximityMonitoringStatus(isEnabled: isEnable)
             }).store(in: cancelBag)
+
+        environmentProperties
+            .$prefersHomeIndicatorAutoHidden
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] shouldHide in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf._prefersHomeIndicatorAutoHidden = shouldHide
+            }).store(in: cancelBag)
     }
 
     private func haltSetupViewOrientation(containerView: ContainerView) {
@@ -108,6 +123,19 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
                 .onPreferenceChange(ProximitySensorPreferenceKey.self) {
                     self.environmentProperties.isProximitySensorOn = $0
                 }
+                .onPreferenceChange(PrefersHomeIndicatorAutoHiddenPreferenceKey.self) {
+                    self.environmentProperties.prefersHomeIndicatorAutoHidden = $0
+                }
         }
+    }
+
+    // MARK: Prefers Home Indicator Auto Hidden
+
+    private var _prefersHomeIndicatorAutoHidden: Bool = false {
+        didSet { setNeedsUpdateOfHomeIndicatorAutoHidden() }
+    }
+
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        _prefersHomeIndicatorAutoHidden
     }
 }
