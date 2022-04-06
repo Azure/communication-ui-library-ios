@@ -54,7 +54,8 @@ struct CallingView: View {
         Group {
             ZStack(alignment: .bottomTrailing) {
                 videoGridView
-                    .accessibility(hidden: viewModel.isLobbyOverlayDisplayed)
+                    .accessibility(hidden: viewModel.isLobbyOverlayDisplayed ||
+                                   (!viewModel.isParticipantGridDisplayed && !viewModel.isLocalCameraOn))
                 topAlertAreaView
                     .accessibilityElement(children: .contain)
                     .accessibility(sortPriority: 1)
