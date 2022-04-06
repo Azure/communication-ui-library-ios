@@ -47,6 +47,8 @@ enum LocalizationKey: String {
     // %@ is local participant name
     case localeParticipantWithSuffix =
             "AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"
+    case muted = "AzureCommunicationUI.CallingView.ParticipantDrawer.IsMuted"
+    case unmuted = "AzureCommunicationUI.CallingView.ParticipantDrawer.IsUnmuted"
 
     case frontCamera = "AzureCommunicationUI.CallingView.SwitchCamera.Front"
     case backCamera = "AzureCommunicationUI.CallingView.SwitchCamera.Back"

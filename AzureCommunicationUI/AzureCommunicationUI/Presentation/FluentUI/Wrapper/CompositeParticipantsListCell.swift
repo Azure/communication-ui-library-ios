@@ -30,6 +30,9 @@ class CompositeParticipantsListCell: TableViewCell {
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
 
+        accessibilityLabel = viewModel.getCellAccessibilityLabel()
+        accessibilityTraits.remove(.button)
+
         setTitleLabelTextColor(color: isNameEmpty ?
                                 UIColor.compositeColor(CompositeColor.mute)
                                :
