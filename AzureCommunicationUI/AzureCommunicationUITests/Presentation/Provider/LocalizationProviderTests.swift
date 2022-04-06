@@ -18,7 +18,7 @@ class LocalizationProviderTests: XCTestCase {
 
     func test_localizationProvider_applyRTL_when_layoutDirectionRightToLeft_then_shouldRTLReturnTrue() {
         let sut = makeSUT()
-        let languageCode: LocalizationConfiguration.LanguageCode = .enUS
+        let languageCode: LocalizationConfiguration.LanguageCode = .en
         let layoutDirection: LayoutDirection = .rightToLeft
         let localeConfig = LocalizationConfiguration(languageCode: languageCode.rawValue,
                                                      layoutDirection: layoutDirection)
@@ -28,7 +28,7 @@ class LocalizationProviderTests: XCTestCase {
 
     func test_localizationProvider_applyRTL_when_layoutDirectionLeftToRight_then_shouldRTLReturnFalse() {
         let sut = makeSUT()
-        let languageCode: LocalizationConfiguration.LanguageCode = .enUS
+        let languageCode: LocalizationConfiguration.LanguageCode = .en
         let layoutDirection: LayoutDirection = .leftToRight
         let localeConfig = LocalizationConfiguration(languageCode: languageCode.rawValue,
                                                      layoutDirection: layoutDirection)
@@ -51,7 +51,7 @@ class LocalizationProviderTests: XCTestCase {
         let joinCallEn = "Join call"
         XCTAssertEqual(sut.getLocalizedString(key), joinCallEn)
 
-        let languageCode: LocalizationConfiguration.LanguageCode = .frFR
+        let languageCode: LocalizationConfiguration.LanguageCode = .fr
         let localeConfig = LocalizationConfiguration(languageCode: languageCode.rawValue)
         sut.apply(localeConfig: localeConfig)
 
