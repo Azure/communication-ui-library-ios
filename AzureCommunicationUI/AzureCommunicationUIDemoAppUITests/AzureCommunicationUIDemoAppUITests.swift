@@ -27,7 +27,7 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
 
         startButton.tap()
 
-        let joinButton = app.buttons["Join call"]
+        let joinButton = app.buttons["AzureCommunicationUI.SetupView.PrimaryButton.JoinCall"]
         wait(for: joinButton)
         joinButton.tap()
     }
@@ -45,7 +45,7 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
 
         startButton.tap()
 
-        let joinButton = app.buttons["Join call"]
+        let joinButton = app.buttons["AzureCommunicationUI.SetupView.PrimaryButton.JoinCall"]
         wait(for: joinButton)
         joinButton.tap()
 
@@ -53,7 +53,7 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
         wait(for: hangUpButton)
         hangUpButton.tap()
 
-        let leaveCallButton = app.buttons["Leave call"]
+        let leaveCallButton = app.buttons["AzureCommunicationUI.CallingView.PrimaryButton.LeaveCall"]
         wait(for: leaveCallButton)
         leaveCallButton.tap()
 
@@ -79,7 +79,7 @@ class AzureCommunicationUIDemoAppUITests: XCUITestBase {
 
         startButton.tap()
 
-        let joinButton = app.buttons["Join call"]
+        let joinButton = app.buttons["AzureCommunicationUI.SetupView.PrimaryButton.JoinCall"]
         wait(for: joinButton)
         joinButton.tap()
     }
