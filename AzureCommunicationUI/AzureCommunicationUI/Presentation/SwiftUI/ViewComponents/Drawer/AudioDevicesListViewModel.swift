@@ -13,13 +13,16 @@ class AudioDevicesListViewModel: ObservableObject {
     private var previousConnectedDevice: AudioDeviceType?
     private let dispatch: ActionDispatch
     private let localizationProvider: LocalizationProvider
+    private let compositeViewModelFactory: CompositeViewModelFactory
 
-    init(dispatchAction: @escaping ActionDispatch,
+    init(compositeViewModelFactory: CompositeViewModelFactory,
+         dispatchAction: @escaping ActionDispatch,
          localUserState: LocalUserState,
          localizationProvider: LocalizationProvider) {
         self.dispatch = dispatchAction
         self.audioDeviceStatus = localUserState.audioState.device
         self.localizationProvider = localizationProvider
+        self.compositeViewModelFactory = compositeViewModelFactory
     }
 
     func update(audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) {
@@ -72,11 +75,11 @@ class AudioDevicesListViewModel: ObservableObject {
     private func getAudioDeviceOption(for audioDeviceType: AudioDeviceType) -> AudioDevicesListCellViewModel {
         let isSelected = isAudioDeviceSelected(audioDeviceType, selectedDevice: audioDeviceStatus)
         let action = LocalUserAction.AudioDeviceChangeRequested(device: audioDeviceType)
-        let audioDeviceOption = AudioDevicesListCellViewModel(
+        let audioDeviceOption = compositeViewModelFactory.makeAudioDevicesListCellViewModel(
             icon: getAudioDeviceIcon(audioDeviceType),
             title: getAudioDeviceTitle(audioDeviceType),
             isSelected: isSelected,
-            onSelected: { [weak self] in self?.dispatch(action) })
+            onSelectedAction: { [weak self] in self?.dispatch(action) })
         return audioDeviceOption
     }
 
