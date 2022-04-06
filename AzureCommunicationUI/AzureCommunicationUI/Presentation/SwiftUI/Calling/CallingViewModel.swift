@@ -53,7 +53,7 @@ class CallingViewModel: ObservableObject {
                 guard let self = self else {
                     return
                 }
-                self.displayConfirmLeaveOverlay()
+                self.endCall()
             }, localUserState: store.state.localUserState)
 
         store.$state
@@ -100,30 +100,6 @@ class CallingViewModel: ObservableObject {
             })
         cancelButtonViewModel.update(accessibilityLabel: localizationProvider.getLocalizedString(.cancel))
         return cancelButtonViewModel
-    }
-
-    func getLeaveCallButtonViewModel() -> LeaveCallConfirmationViewModel {
-        return LeaveCallConfirmationViewModel(icon: .endCallRegular,
-                                              title: localizationProvider.getLocalizedString(.leaveCall),
-                                              action: { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.logger.debug("Leave call button tapped")
-            self.endCall()
-        })
-    }
-
-    func getCancelButtonViewModel() -> LeaveCallConfirmationViewModel {
-        return LeaveCallConfirmationViewModel(icon: .dismiss,
-                                              title: localizationProvider.getLocalizedString(.cancel),
-                                              action: { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.logger.debug("Cancel button tapped")
-            self.dismissConfirmLeaveOverlay()
-        })
     }
 
     func displayConfirmLeaveOverlay() {

@@ -100,14 +100,13 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         let isiPhoneLayout = UIDevice.current.userInterfaceIdiom == .phone
         var isScrollEnabled = !isiPhoneLayout
         var drawerHeight = CGFloat(self.items.count * 44)
-        let shouldAddResizeBarView = self.controller?.resizingBehavior != .none
 
         if isiPhoneLayout {
             // workaround to adjust cell divider height for drawer resize
             let tableCellsDividerOffsetHeight = CGFloat(self.items.count * 3)
-            drawerHeight += tableCellsDividerOffsetHeight + (shouldAddResizeBarView ? self.drawerResizeBarHeight : 0)
+            drawerHeight += tableCellsDividerOffsetHeight + self.drawerResizeBarHeight
         } else {
-            drawerHeight = CGFloat(self.items.count) * 48.5
+            drawerHeight = CGFloat(self.items.count) * 48.5 + (showHeader ? self.drawerResizeBarHeight : 0)
         }
         if drawerHeight > self.halfScreenHeight {
             drawerHeight = self.halfScreenHeight

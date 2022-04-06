@@ -30,12 +30,6 @@ struct CallingView: View {
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
-        .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveOverlayDisplayed) {
-            exitConfirmationDrawer
-                .accessibility(hidden: !viewModel.isConfirmLeaveOverlayDisplayed)
-                .accessibilityElement(children: .contain)
-                .accessibility(addTraits: .isModal)
-        })
     }
 
     var portraitCallingView: some View {
@@ -78,17 +72,6 @@ struct CallingView: View {
                     .accessibility(hidden: !viewModel.isLobbyOverlayDisplayed)
             })
         }
-    }
-
-    var exitConfirmationDrawer: some View {
-        let leaveCallConfirmationVm: [LeaveCallConfirmationViewModel] = [
-            viewModel.getLeaveCallButtonViewModel(),
-            viewModel.getCancelButtonViewModel()
-        ]
-
-        return CompositeLeaveCallConfirmationList(isPresented: $viewModel.isLobbyOverlayDisplayed,
-                                                  viewModel: leaveCallConfirmationVm,
-                                                  sourceView: leaveCallConfirmationListSourceView)
     }
 
     var localVideoPipView: some View {

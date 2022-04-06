@@ -8,7 +8,9 @@ import SwiftUI
 struct ControlBarView: View {
     @ObservedObject var viewModel: ControlBarViewModel
 
+    // anchor views for drawer views on (iPad)
     let audioDeviceButtonSourceView = UIView()
+    let leaveCallConfirmationListSourceView = UIView()
 
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
@@ -41,6 +43,12 @@ struct ControlBarView: View {
                 .accessibilityElement(children: .contain)
                 .accessibility(addTraits: .isModal)
         })
+        .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveOverlayDisplayed) {
+            exitConfirmationDrawer
+                .accessibility(hidden: !viewModel.isConfirmLeaveOverlayDisplayed)
+                .accessibilityElement(children: .contain)
+                .accessibility(addTraits: .isModal)
+        })
     }
 
     var videoButton: some View {
@@ -63,6 +71,7 @@ struct ControlBarView: View {
 
     var hangUpButton: some View {
         IconButton(viewModel: viewModel.hangUpButtonViewModel)
+            .background(SourceViewSpace(sourceView: leaveCallConfirmationListSourceView))
             .accessibility(identifier: LocalizationKey.hangupAccessibilityLabel.rawValue)
     }
 
@@ -71,5 +80,16 @@ struct ControlBarView: View {
                                   viewModel: viewModel.audioDevicesListViewModel,
                                   sourceView: audioDeviceButtonSourceView)
             .modifier(LockPhoneOrientation())
+    }
+
+    var exitConfirmationDrawer: some View {
+        let leaveCallConfirmationVm: [LeaveCallConfirmationViewModel] = [
+            viewModel.getLeaveCallButtonViewModel(),
+            viewModel.getCancelButtonViewModel()
+        ]
+
+        return CompositeLeaveCallConfirmationList(isPresented: $viewModel.isConfirmLeaveOverlayDisplayed,
+                                                  viewModel: leaveCallConfirmationVm,
+                                                  sourceView: leaveCallConfirmationListSourceView)
     }
 }

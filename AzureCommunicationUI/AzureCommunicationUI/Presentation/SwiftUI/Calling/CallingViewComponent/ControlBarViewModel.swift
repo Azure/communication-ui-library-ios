@@ -13,6 +13,7 @@ class ControlBarViewModel: ObservableObject {
 
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var isAudioDeviceSelectionDisplayed: Bool = false
+    @Published var isConfirmLeaveOverlayDisplayed: Bool = false
 
     let audioDevicesListViewModel: AudioDevicesListViewModel
 
@@ -96,7 +97,7 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func endCallButtonTapped() {
-        displayEndCallConfirm()
+        self.isConfirmLeaveOverlayDisplayed = true
     }
 
     func cameraButtonTapped() {
@@ -115,12 +116,40 @@ class ControlBarViewModel: ObservableObject {
         self.isAudioDeviceSelectionDisplayed = true
     }
 
+    func dismissConfirmLeaveOverlay() {
+        self.isConfirmLeaveOverlayDisplayed = false
+    }
+
     func isCameraDisabled() -> Bool {
         cameraPermission == .denied || cameraState.operation == .pending
     }
 
     func isMicDisabled() -> Bool {
         audioState.operation == .pending
+    }
+
+    func getLeaveCallButtonViewModel() -> LeaveCallConfirmationViewModel {
+        return LeaveCallConfirmationViewModel(icon: .endCallRegular,
+                                              title: localizationProvider.getLocalizedString(.leaveCall),
+                                              action: { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.logger.debug("Leave call button tapped")
+            self.displayEndCallConfirm()
+        })
+    }
+
+    func getCancelButtonViewModel() -> LeaveCallConfirmationViewModel {
+        return LeaveCallConfirmationViewModel(icon: .dismiss,
+                                              title: localizationProvider.getLocalizedString(.cancel),
+                                              action: { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.logger.debug("Cancel button tapped")
+            self.dismissConfirmLeaveOverlay()
+        })
     }
 
     func update(localUserState: LocalUserState, permissionState: PermissionState) {
