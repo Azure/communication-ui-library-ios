@@ -16,6 +16,7 @@ class CallingViewModel: ObservableObject {
     private let compositeViewModelFactory: CompositeViewModelFactory
     private let logger: Logger
     private let store: Store<AppState>
+    private let avatarManager: AvatarManager
     private let localizationProvider: LocalizationProvider
     private let accessibilityProvider: AccessibilityProvider
     private var cancellables = Set<AnyCancellable>()
@@ -29,11 +30,13 @@ class CallingViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
          store: Store<AppState>,
+         avatarManager: AvatarManager,
          localizationProvider: LocalizationProvider,
          accessibilityProvider: AccessibilityProvider) {
         self.logger = logger
         self.compositeViewModelFactory = compositeViewModelFactory
         self.store = store
+        self.avatarManager = avatarManager
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.accessibilityProvider = accessibilityProvider
