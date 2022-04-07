@@ -1,6 +1,7 @@
 # Release History
-
 ## 1.0.0-beta.3 (Upcoming)
+### New Features
+- Update minimum iOS version to 14.0
 
 ## 1.0.0-beta.2 (2022-04-04)
 
