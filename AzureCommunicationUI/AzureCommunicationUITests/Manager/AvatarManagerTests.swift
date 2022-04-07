@@ -13,7 +13,7 @@ class AvatarManagerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        avatarManager = AvatarManager(store: mockStoreFactory.store)
+        avatarManager = CompositeAvatarManager(store: mockStoreFactory.store)
     }
 
     func test_avatarManager_when_setLocalAvatar_then_getLocalAvatar_returnsSameUIImage() {

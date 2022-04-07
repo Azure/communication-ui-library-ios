@@ -7,7 +7,12 @@ import Foundation
 import UIKit
 import AzureCommunicationCommon
 
-public class AvatarManager {
+protocol AvatarManager {
+    func setLocalAvatar(_ image: UIImage)
+    func getLocalAvatar() -> UIImage?
+}
+
+public class CompositeAvatarManager: AvatarManager {
     private let localUserAvatarKey: String = "local"
 
     private let store: Store<AppState>

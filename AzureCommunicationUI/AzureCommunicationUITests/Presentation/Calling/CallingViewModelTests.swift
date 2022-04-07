@@ -218,6 +218,7 @@ extension CallingViewModelTests {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
+                                avatarManager: AvatarManagerMocking(),
                                 localizationProvider: AppLocalizationProvider(logger: logger),
                                 accessibilityProvider: accessibilityProvider)
     }
@@ -227,6 +228,7 @@ extension CallingViewModelTests {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
+                                avatarManager: AvatarManagerMocking(),
                                 localizationProvider: localizationProvider,
                                 accessibilityProvider: AppAccessibilityProvider())
     }
@@ -244,6 +246,7 @@ extension CallingViewModelTests {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
+                                avatarManager: AvatarManagerMocking(),
                                 localizationProvider: LocalizationProviderMocking(),
                                 accessibilityProvider: AppAccessibilityProvider())
     }
@@ -259,6 +262,7 @@ extension CallingViewModelTests {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
+                                avatarManager: AvatarManagerMocking(),
                                 localizationProvider: LocalizationProviderMocking(),
                                 accessibilityProvider: AppAccessibilityProvider())
     }
@@ -274,6 +278,7 @@ extension CallingViewModelTests {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
+                                avatarManager: AvatarManagerMocking(),
                                 localizationProvider: LocalizationProviderMocking(),
                                 accessibilityProvider: AppAccessibilityProvider())
     }
@@ -288,6 +293,7 @@ extension CallingViewModelTests {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
+                                avatarManager: AvatarManagerMocking(),
                                 localizationProvider: LocalizationProviderMocking(),
                                 accessibilityProvider: AppAccessibilityProvider())
     }
@@ -300,6 +306,7 @@ extension CallingViewModelTests {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
+                                avatarManager: AvatarManagerMocking(),
                                 localizationProvider: LocalizationProviderMocking(),
                                 accessibilityProvider: AppAccessibilityProvider())
     }
