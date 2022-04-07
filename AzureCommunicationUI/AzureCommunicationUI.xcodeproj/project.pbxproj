@@ -213,6 +213,7 @@
 		FA03CC8D27C8420300986D4E /* IconWithLabelButtonViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC8C27C8420300986D4E /* IconWithLabelButtonViewModelMocking.swift */; };
 		FA62233327DAC7BC008B5466 /* AccessibilityProviderNotificationsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62233227DAC7BC008B5466 /* AccessibilityProviderNotificationsObserver.swift */; };
 		FA62233727DAD9AF008B5466 /* AccessibilityProviderMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */; };
+		FA40424A27E3E86700875368 /* ParticipantsListViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA40424927E3E86700875368 /* ParticipantsListViewModelMocking.swift */; };
 		FA94AF3F27D68DFD001063A6 /* AccessibilityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA94AF3E27D68DFD001063A6 /* AccessibilityProvider.swift */; };
 		FAC1FEC127C94D9200D95845 /* AudioDeviceListViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1FEC027C94D9200D95845 /* AudioDeviceListViewModelMocking.swift */; };
 		FAC1FECA27C98FC200D95845 /* ControlBarViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1FEC327C98FC200D95845 /* ControlBarViewModelMocking.swift */; };
@@ -222,6 +223,7 @@
 		FAC1FECE27C98FC200D95845 /* ParticipantGridViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1FEC727C98FC200D95845 /* ParticipantGridViewModelMocking.swift */; };
 		FAC1FECF27C98FC200D95845 /* InfoHeaderViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1FEC827C98FC200D95845 /* InfoHeaderViewModelMocking.swift */; };
 		FAC1FED027C98FC200D95845 /* BannerTextViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1FEC927C98FC200D95845 /* BannerTextViewModelMocking.swift */; };
+		FAC3128F27F24A8B00A4F1D0 /* IconButtonViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC3128E27F24A8B00A4F1D0 /* IconButtonViewModelMocking.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -460,6 +462,7 @@
 		FA03CC8C27C8420300986D4E /* IconWithLabelButtonViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithLabelButtonViewModelMocking.swift; sourceTree = "<group>"; };
 		FA62233227DAC7BC008B5466 /* AccessibilityProviderNotificationsObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderNotificationsObserver.swift; sourceTree = "<group>"; };
 		FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderMocking.swift; sourceTree = "<group>"; };
+		FA40424927E3E86700875368 /* ParticipantsListViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsListViewModelMocking.swift; sourceTree = "<group>"; };
 		FA94AF3E27D68DFD001063A6 /* AccessibilityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityProvider.swift; sourceTree = "<group>"; };
 		FAC1FEC027C94D9200D95845 /* AudioDeviceListViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDeviceListViewModelMocking.swift; sourceTree = "<group>"; };
 		FAC1FEC327C98FC200D95845 /* ControlBarViewModelMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlBarViewModelMocking.swift; sourceTree = "<group>"; };
@@ -469,6 +472,7 @@
 		FAC1FEC727C98FC200D95845 /* ParticipantGridViewModelMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantGridViewModelMocking.swift; sourceTree = "<group>"; };
 		FAC1FEC827C98FC200D95845 /* InfoHeaderViewModelMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoHeaderViewModelMocking.swift; sourceTree = "<group>"; };
 		FAC1FEC927C98FC200D95845 /* BannerTextViewModelMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerTextViewModelMocking.swift; sourceTree = "<group>"; };
+		FAC3128E27F24A8B00A4F1D0 /* IconButtonViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtonViewModelMocking.swift; sourceTree = "<group>"; };
 		FEAA7B30BA59A234786A35F9 /* Pods_AzureCommunicationUI_AzureCommunicationUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUI_AzureCommunicationUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -1182,6 +1186,8 @@
 				FA03CC7E27C8189900986D4E /* PrimaryButtonViewModelMocking.swift */,
 				FA03CC8C27C8420300986D4E /* IconWithLabelButtonViewModelMocking.swift */,
 				FAC1FEC027C94D9200D95845 /* AudioDeviceListViewModelMocking.swift */,
+				FA40424927E3E86700875368 /* ParticipantsListViewModelMocking.swift */,
+				FAC3128E27F24A8B00A4F1D0 /* IconButtonViewModelMocking.swift */,
 			);
 			name = ViewModels;
 			path = Mocking/ViewModels;
@@ -1452,6 +1458,7 @@
 				1F09A11126BA484000BACED7 /* ControlBarViewModelTests.swift in Sources */,
 				50B390D127D82D7E0010A2ED /* LocalizationProviderMocking.swift in Sources */,
 				881D8F7627FCA8C4008EC897 /* AvatarManagerTests.swift in Sources */,
+				FA40424A27E3E86700875368 /* ParticipantsListViewModelMocking.swift in Sources */,
 				50FA4616268D13E9001844AC /* LocalUserReducerTests.swift in Sources */,
 				1F4A24BC26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift in Sources */,
 				503300FE27079FC900289BB5 /* BannerTextViewModelTests.swift in Sources */,
@@ -1475,6 +1482,7 @@
 				1F9184B626B4A3340049EF5B /* NavigationReducerTests.swift in Sources */,
 				5A31416F1C27AA7C96202B17 /* TeamsMeetingOptionsTests.swift in Sources */,
 				5A314750E50CDF6A6F4577E5 /* GroupCallOptionsTests.swift in Sources */,
+				FAC3128F27F24A8B00A4F1D0 /* IconButtonViewModelMocking.swift in Sources */,
 				FAC1FECD27C98FC200D95845 /* ParticipantGridCellViewModelMocking.swift in Sources */,
 				5A31429C377C213B53F19163 /* DependencyContainerTests.swift in Sources */,
 				1F09A10426BA472A00BACED7 /* ParticipantInfoModelBuilder.swift in Sources */,
@@ -1765,7 +1773,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1827,7 +1835,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1853,7 +1861,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = AzureCommunicationUI/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1883,7 +1891,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				INFOPLIST_FILE = AzureCommunicationUI/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

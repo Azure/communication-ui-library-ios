@@ -8,13 +8,18 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class ParticipantsListViewModelTests: XCTestCase {
-    var cancellable: CancelBag!
-    var localizationProvider: LocalizationProviderMocking!
+    private var cancellable: CancelBag!
+    private var localizationProvider: LocalizationProviderMocking!
+    private var logger: LoggerMocking!
+    private var factoryMocking: CompositeViewModelFactoryMocking!
 
     override func setUp() {
         super.setUp()
+        logger = LoggerMocking()
         cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
+        let storeFactory = StoreFactoryMocking()
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
     }
 
     // MARK: localParticipantsListCellViewModel test
@@ -218,11 +223,46 @@ class ParticipantsListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.participantsList.count, 0)
         wait(for: [expectation], timeout: 1)
     }
+
+    func test_participantsListViewModel_update_when_localParticipantAudioStateChanged_then_localParticipantsListCellViewModelUpdated() {
+        let sut = makeSUT()
+        let audioState = LocalUserState.AudioState(operation: .on,
+                                                   device: .receiverSelected)
+        let localUserState = LocalUserState(audioState: audioState,
+                                            displayName: "Updated display name")
+        XCTAssertNotEqual(sut.localParticipantsListCellViewModel.displayName,
+                          localUserState.displayName)
+        sut.update(localUserState: localUserState,
+                   remoteParticipantsState: RemoteParticipantsState())
+        XCTAssertEqual(sut.localParticipantsListCellViewModel.displayName,
+                       localUserState.displayName)
+    }
+
+    func test_participantsListViewModel_update_when_remoteParticipantsStateChanged_then_participantsListUpdated() {
+        let sut = makeSUT()
+        let participantInfoList = [ParticipantInfoModelBuilder.get(displayName: "Name 1"),
+                                   ParticipantInfoModelBuilder.get(displayName: "Name 2"),
+                                   ParticipantInfoModelBuilder.get(displayName: "Name 3")]
+        let remoteParticipantsState = RemoteParticipantsState(participantInfoList: participantInfoList)
+        let expectation = XCTestExpectation(description: "ParticipantsListCellViewModel should be created")
+        expectation.assertForOverFulfill = true
+        expectation.expectedFulfillmentCount = remoteParticipantsState.participantInfoList.count
+        factoryMocking.createParticipantsListCellViewModel = { [weak self] infoModel in
+            expectation.fulfill()
+            return ParticipantsListCellViewModel(participantInfoModel: infoModel,
+                                                 localizationProvider: self?.localizationProvider ?? LocalizationProviderMocking())
+        }
+        sut.update(localUserState: LocalUserState(),
+                   remoteParticipantsState: remoteParticipantsState)
+        XCTAssertEqual(sut.participantsList.map { $0.displayName },
+                       participantInfoList.map { $0.displayName })
+        wait(for: [expectation], timeout: 1)
+    }
 }
 
 extension ParticipantsListViewModelTests {
     func makeSUT() -> ParticipantsListViewModel {
-        return ParticipantsListViewModel(localUserState: LocalUserState(),
-                                         localizationProvider: localizationProvider)
+        return ParticipantsListViewModel(compositeViewModelFactory: factoryMocking,
+                                         localUserState: LocalUserState())
     }
 }

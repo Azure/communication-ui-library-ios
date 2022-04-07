@@ -47,7 +47,7 @@ struct SetupView: View {
                 JoiningCallActivityView(viewModel: viewModel.joiningCallActivityViewModel)
             } else {
                 PrimaryButton(viewModel: viewModel.joinCallButtonViewModel)
-                    .accessibility(identifier: "AzureCommunicationUI.SetupView.PrimaryButton.JoinCall")
+                    .accessibilityIdentifier("AzureCommunicationUI.SetupView.PrimaryButton.JoinCall")
             }
         }
     }
@@ -62,7 +62,7 @@ struct SetupView: View {
                                     trailing: errorHorizontalPadding)
                 )
                 .accessibilityElement(children: .contain)
-                .accessibility(addTraits: .isModal)
+                .accessibilityAddTraits(.isModal)
         }
     }
 }
@@ -82,9 +82,9 @@ struct SetupTitleView: View {
                     Text(viewModel.title)
                         .font(Fonts.headline.font)
                         .foregroundColor(Color(StyleProvider.color.onBackground))
-                        .accessibility(addTraits: .isHeader)
+                        .accessibilityAddTraits(.isHeader)
                     Spacer()
-                }.accessibility(sortPriority: 1)
+                }.accessibilitySortPriority(1)
             }.frame(height: viewHeight)
             Divider()
         }
