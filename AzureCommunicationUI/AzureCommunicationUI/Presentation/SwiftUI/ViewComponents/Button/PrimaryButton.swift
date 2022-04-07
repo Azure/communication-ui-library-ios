@@ -20,7 +20,7 @@ struct PrimaryButton: View {
             .frame(height: height)
             .disabled(viewModel.isDisabled)
             .accessibilityElement(children: .combine)
-            .accessibility(label: Text(viewModel.accessibilityLabel ?? ""))
-            .accessibility(addTraits: .isButton)
+            .accessibilityLabel(Text(viewModel.accessibilityLabel ?? ""))
+            .accessibilityAddTraits(.isButton)
     }
 }
