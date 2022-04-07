@@ -17,12 +17,12 @@ struct ConfirmLeaveOverlayView: View {
                 leaveCallButton
                     .frame(width: getButtonWidth(from: geometry))
                     .padding(.all)
-                    .accessibility(sortPriority: 1)
-                    .accessibility(identifier: "AzureCommunicationUI.CallingView.PrimaryButton.LeaveCall")
+                    .accessibilitySortPriority(1)
+                    .accessibilityIdentifier("AzureCommunicationUI.CallingView.PrimaryButton.LeaveCall")
                 cancelButton
                     .frame(width: getButtonWidth(from: geometry))
                     .padding(.horizontal)
-                    .accessibility(sortPriority: 0)
+                    .accessibilitySortPriority(0)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.black.opacity(0.7))

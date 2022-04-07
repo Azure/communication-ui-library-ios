@@ -32,7 +32,7 @@ struct CallingView: View {
             ConfirmLeaveOverlayView(viewModel: viewModel)
                 .accessibilityHidden(!viewModel.isConfirmLeaveOverlayDisplayed)
                 .accessibilityElement(children: .contain)
-                .accessibility(addTraits: .isModal)
+                .accessibilityAddTraits(.isModal)
         })
     }
 
@@ -57,7 +57,7 @@ struct CallingView: View {
                     .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
                 topAlertAreaView
                     .accessibilityElement(children: .contain)
-                    .accessibility(sortPriority: 1)
+                    .accessibilitySortPriority(1)
                     .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
                 if viewModel.isParticipantGridDisplayed {
                     localVideoPipView
