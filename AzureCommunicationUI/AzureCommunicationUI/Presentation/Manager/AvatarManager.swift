@@ -8,7 +8,7 @@ import UIKit
 import AzureCommunicationCommon
 
 public class AvatarManager {
-    private let localKey: String = "local"
+    private let localUserAvatarKey: String = "local"
 
     private let store: Store<AppState>
     private var avatarCache = MappedSequence<String, Data>()
@@ -19,12 +19,12 @@ public class AvatarManager {
 
     func setLocalAvatar(_ image: UIImage) {
         if let rawData = image.pngData() {
-            avatarCache.append(forKey: localKey, value: rawData)
+            avatarCache.append(forKey: localUserAvatarKey, value: rawData)
         }
     }
 
     func getLocalAvatar() -> UIImage? {
-        if let data = avatarCache.value(forKey: localKey) {
+        if let data = avatarCache.value(forKey: localUserAvatarKey) {
             return UIImage(data: data)
         }
 

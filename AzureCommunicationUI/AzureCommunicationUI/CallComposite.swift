@@ -37,7 +37,7 @@ public class CallComposite {
     }
 
     private func launch(_ callConfiguration: CallConfiguration,
-                        localData: CommunicationULocalDataOptions?) {
+                        localOptions: CommunicationUILocalDataOptions?) {
         let dependencyContainer = DependencyContainer()
         logger = dependencyContainer.resolve() as Logger
         logger?.debug("launch composite experience")
@@ -61,13 +61,13 @@ public class CallComposite {
     /// - Parameter localData: LocalData used to set the user participants information for the call.
     ///                         This is data is not sent up to ACS.
     public func launch(with options: GroupCallOptions,
-                       localData: CommunicationULocalDataOptions? = nil) {
+                       localOptions: CommunicationUILocalDataOptions? = nil) {
         let callConfiguration = CallConfiguration(
             credential: options.credential,
             groupId: options.groupId,
             displayName: options.displayName)
 
-        launch(callConfiguration, localData: localData)
+        launch(callConfiguration, localOptions: localOptions)
     }
 
     /// Start call composite experience with joining a Teams meeting..
@@ -75,13 +75,13 @@ public class CallComposite {
     /// - Parameter localData: LocalData used to set the user participants information for the call.
     ///                         This is data is not sent up to ACS.
     public func launch(with options: TeamsMeetingOptions,
-                       localData: CommunicationULocalDataOptions? = nil) {
+                       localOptions: CommunicationUILocalDataOptions? = nil) {
         let callConfiguration = CallConfiguration(
             credential: options.credential,
             meetingLink: options.meetingLink,
             displayName: options.displayName)
 
-        launch(callConfiguration, localData: localData)
+        launch(callConfiguration, localOptions: localOptions)
     }
 
     private func setupManagers(store: Store<AppState>,

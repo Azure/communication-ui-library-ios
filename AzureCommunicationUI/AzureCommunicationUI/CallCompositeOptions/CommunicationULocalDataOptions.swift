@@ -6,11 +6,11 @@
 import Foundation
 import UIKit
 
-public struct CommunicationULocalDataOptions {
-   let localPersona: CommunicationUPersonaData
+public struct CommunicationUILocalDataOptions {
+   let localPersona: CommunicationUIPersonaData
 }
 
-public struct CommunicationUPersonaData {
+public struct CommunicationUIPersonaData {
     let avatar: UIImage?
     let displaName: String?
 }
