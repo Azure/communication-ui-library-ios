@@ -23,6 +23,26 @@ class AppLocalizationProvider: LocalizationProvider {
 
     init(logger: Logger) {
         self.logger = logger
+        self.detectSystemLanguage()
+    }
+
+    func detectSystemLanguage() {
+        if let collatorIdentifier = Locale.current.collatorIdentifier,
+           self.isLanguageSupportedByContoso(collatorIdentifier) {
+            self.languageCode = collatorIdentifier
+
+        } else if let collatorIdentifier = Locale.current.collatorIdentifier,
+                  let regionCode = Locale.current.regionCode,
+                  self.isLanguageSupportedByContoso(collatorIdentifier
+                    .replacingOccurrences(of: "-\(regionCode)", with: "")) {
+            let languageRegionCode = collatorIdentifier
+                .replacingOccurrences(of: "-\(regionCode)", with: "")
+            self.languageCode = languageRegionCode
+
+        } else if let systemLanguageCode = Locale.current.languageCode,
+                  self.isLanguageSupportedByContoso(systemLanguageCode) {
+            self.languageCode = systemLanguageCode
+        }
     }
 
     func apply(localeConfig: LocalizationConfiguration) {
@@ -76,5 +96,10 @@ class AppLocalizationProvider: LocalizationProvider {
                                  bundle: Bundle(for: CallComposite.self),
                                  value: key,
                                  comment: key)
+    }
+
+    private func isLanguageSupportedByContoso(_ systemLanguage: String) -> Bool {
+        return Bundle.main.localizations.contains(systemLanguage) &&
+            supportedLocales.contains(systemLanguage)
     }
 }
