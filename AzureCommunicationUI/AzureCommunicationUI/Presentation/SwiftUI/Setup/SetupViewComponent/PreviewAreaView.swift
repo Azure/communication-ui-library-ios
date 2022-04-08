@@ -8,6 +8,7 @@ import FluentUI
 
 struct PreviewAreaView: View {
     @ObservedObject var viewModel: PreviewAreaViewModel
+    let avatarManager: AvatarManager
     let viewManager: VideoViewManager
 
     var body: some View {
@@ -23,6 +24,7 @@ struct PreviewAreaView: View {
 
     var localVideoPreviewView: some View {
         return LocalVideoView(viewModel: viewModel.localVideoViewModel,
+                              avatarManager: avatarManager,
                               viewManager: viewManager,
                               viewType: .preview)
     }

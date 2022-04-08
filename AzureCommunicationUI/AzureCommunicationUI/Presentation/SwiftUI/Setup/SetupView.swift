@@ -9,6 +9,7 @@ import FluentUI
 
 struct SetupView: View {
     @ObservedObject var viewModel: SetupViewModel
+    let avatarManager: AvatarManager
     let viewManager: VideoViewManager
 
     let layoutSpacing: CGFloat = 24
@@ -23,6 +24,7 @@ struct SetupView: View {
                 VStack(spacing: layoutSpacing) {
                     ZStack(alignment: .bottom) {
                         PreviewAreaView(viewModel: viewModel.previewAreaViewModel,
+                                        avatarManager: avatarManager,
                                         viewManager: viewManager)
                         SetupControlBarView(viewModel: viewModel.setupControlBarViewModel)
                     }

@@ -46,10 +46,10 @@ final class DependencyContainer {
         register(CompositeAvatarManager(store: resolve()) as AvatarManager)
         register(ACSCompositeViewModelFactory(logger: resolve(),
                                               store: resolve(),
-                                              avatarManager: resolve(),
                                               localizationProvider: resolve(),
                                               accessibilityProvider: resolve()) as CompositeViewModelFactory)
         register(ACSCompositeViewFactory(logger: resolve(),
+                                         avatarManager: resolve(),
                                          videoViewManager: resolve(),
                                          compositeViewModelFactory: resolve()) as CompositeViewFactory)
     }

@@ -59,7 +59,6 @@ protocol CompositeViewModelFactory {
 class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     private let logger: Logger
     private let store: Store<AppState>
-    private let avatarManager: AvatarManager
     private let accessibilityProvider: AccessibilityProvider
     private let localizationProvider: LocalizationProvider
 
@@ -68,12 +67,10 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
 
     init(logger: Logger,
          store: Store<AppState>,
-         avatarManager: AvatarManager,
          localizationProvider: LocalizationProvider,
          accessibilityProvider: AccessibilityProvider) {
         self.logger = logger
         self.store = store
-        self.avatarManager = avatarManager
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
     }
@@ -84,7 +81,6 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
             let viewModel = SetupViewModel(compositeViewModelFactory: self,
                                            logger: logger,
                                            store: store,
-                                           avatarManager: avatarManager,
                                            localizationProvider: localizationProvider)
             self.setupViewModel = viewModel
             self.callingViewModel = nil
@@ -98,7 +94,6 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
             let viewModel = CallingViewModel(compositeViewModelFactory: self,
                                              logger: logger,
                                              store: store,
-                                             avatarManager: avatarManager,
                                              localizationProvider: localizationProvider,
                                              accessibilityProvider: accessibilityProvider)
             self.setupViewModel = nil

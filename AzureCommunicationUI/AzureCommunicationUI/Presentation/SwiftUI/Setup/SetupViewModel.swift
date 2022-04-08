@@ -9,7 +9,6 @@ import Combine
 class SetupViewModel: ObservableObject {
     private let logger: Logger
     private let store: Store<AppState>
-    private let avatarManager: AvatarManager
     private let localizationProvider: LocalizationProvider
 
     private var callingStatus: CallingStatus = .none
@@ -30,10 +29,8 @@ class SetupViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
          store: Store<AppState>,
-         avatarManager: AvatarManager,
          localizationProvider: LocalizationProvider) {
         self.store = store
-        self.avatarManager = avatarManager
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger

@@ -44,6 +44,11 @@ public class CallComposite {
 
         dependencyContainer.registerDependencies(callConfiguration)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProvider
+        let avatarManager = dependencyContainer.resolve() as AvatarManager
+        if let localAvatar = localOptions?.localPersona.avatar {
+            avatarManager.setLocalAvatar(localAvatar)
+        }
+
         setupColorTheming()
         setupLocalization(with: localizationProvider)
         let toolkitHostingController = makeToolkitHostingController(router: dependencyContainer.resolve(),

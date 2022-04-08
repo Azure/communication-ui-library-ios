@@ -109,7 +109,9 @@ struct SwiftUIDemoView: View {
 
     var startExperienceButton: some View {
         Button("Start Experience") {
-            startCallComposite()
+            getLocalAvatar { avatar in
+                startCallComposite(avatar)
+            }
         }
         .buttonStyle(DemoButtonStyle())
         .disabled(isStartExperienceDisabled)
@@ -131,7 +133,7 @@ struct SwiftUIDemoView: View {
 }
 
 extension SwiftUIDemoView {
-    func startCallComposite() {
+    func startCallComposite(_ avatar: UIImage?) {
         let link = getMeetingLink()
 
         let localizationConfig = LocalizationConfiguration(languageCode: envConfigSubject.languageCode,
@@ -143,26 +145,32 @@ extension SwiftUIDemoView {
         let callComposite = CallComposite(withOptions: callCompositeOptions)
         callComposite.setTarget(didFail: didFail)
 
+        let persona = CommunicationUIPersonaData(avatar,
+                                                 displayName: envConfigSubject.displayName)
+        let localOptions = CommunicationUILocalDataOptions(persona)
         if let credential = try? getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
                 if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(with: GroupCallOptions(credential: credential,
-                                                                groupId: uuid))
+                    callComposite.launch(with: GroupCallOptions(credential: credential, groupId: uuid),
+                                         localOptions: localOptions)
                 } else {
                     callComposite.launch(with: GroupCallOptions(credential: credential,
                                                                 groupId: uuid,
-                                                                displayName: envConfigSubject.displayName))
+                                                                displayName: envConfigSubject.displayName),
+                                         localOptions: localOptions)
                 }
             case .teamsMeeting:
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(with: TeamsMeetingOptions(credential: credential,
-                                                                   meetingLink: link))
+                                                                   meetingLink: link),
+                                         localOptions: localOptions)
                 } else {
                     callComposite.launch(with: TeamsMeetingOptions(credential: credential,
                                                                    meetingLink: link,
-                                                                   displayName: envConfigSubject.displayName))
+                                                                   displayName: envConfigSubject.displayName),
+                                         localOptions: localOptions)
                 }
             }
         } else {
@@ -193,6 +201,18 @@ extension SwiftUIDemoView {
         }
     }
 
+    private func getLocalAvatar(_ completion:@escaping (UIImage?) -> Void) {
+        let urlRequest = URL(string:
+"https://img.favpng.com/0/15/12/computer-icons-avatar-male-user-profile-png-favpng-ycgruUsQBHhtGyGKfw7fWCtgN.jpg")!
+        URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
+            if let error = error {
+                print(error)
+            } else if let data = data {
+                let avatar = UIImage(data: data)
+                completion(avatar)
+            }
+        }.resume()
+    }
     private func getMeetingLink() -> String {
         switch envConfigSubject.selectedMeetingType {
         case .groupCall:
