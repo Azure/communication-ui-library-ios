@@ -215,7 +215,6 @@ extension SetupViewModelTests {
         return SetupViewModel(compositeViewModelFactory: factoryMocking,
                               logger: logger,
                               store: storeFactory.store,
-                              avatarManager: AvatarManagerMocking(),
                               localizationProvider: LocalizationProviderMocking())
     }
 }

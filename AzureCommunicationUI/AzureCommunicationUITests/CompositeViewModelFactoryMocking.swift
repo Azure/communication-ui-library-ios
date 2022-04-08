@@ -48,7 +48,6 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
         return setupViewModel ?? SetupViewModel(compositeViewModelFactory: self,
                                                 logger: logger,
                                                 store: store,
-                                                avatarManager: AvatarManagerMocking(),
                                                 localizationProvider: LocalizationProviderMocking())
     }
 
@@ -56,7 +55,6 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
         return callingViewModel ?? CallingViewModel(compositeViewModelFactory: self,
                                                     logger: logger,
                                                     store: store,
-                                                    avatarManager: AvatarManagerMocking(),
                                                     localizationProvider: LocalizationProviderMocking(),
                                                     accessibilityProvider: accessibilityProvider)
     }
