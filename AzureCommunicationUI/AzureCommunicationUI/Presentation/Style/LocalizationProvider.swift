@@ -27,20 +27,22 @@ class AppLocalizationProvider: LocalizationProvider {
     }
 
     func detectSystemLanguage() {
-        if let collatorIdentifier = Locale.current.collatorIdentifier,
-           self.isLanguageSupportedByContoso(collatorIdentifier) {
-            self.languageCode = collatorIdentifier
+        guard let preferredLanguageId = Locale.preferredLanguages.first else {
+            return
+        }
 
-        } else if let collatorIdentifier = Locale.current.collatorIdentifier,
-                  let regionCode = Locale.current.regionCode,
-                  self.isLanguageSupportedByContoso(collatorIdentifier
+        if self.isLanguageSupportedByApp(preferredLanguageId) {
+            self.languageCode = preferredLanguageId
+
+        } else if let regionCode = Locale.current.regionCode,
+                  self.isLanguageSupportedByApp(preferredLanguageId
                     .replacingOccurrences(of: "-\(regionCode)", with: "")) {
-            let languageRegionCode = collatorIdentifier
+            let languageRegionId = preferredLanguageId
                 .replacingOccurrences(of: "-\(regionCode)", with: "")
-            self.languageCode = languageRegionCode
+            self.languageCode = languageRegionId
 
         } else if let systemLanguageCode = Locale.current.languageCode,
-                  self.isLanguageSupportedByContoso(systemLanguageCode) {
+                  self.isLanguageSupportedByApp(systemLanguageCode) {
             self.languageCode = systemLanguageCode
         }
     }
@@ -98,8 +100,8 @@ class AppLocalizationProvider: LocalizationProvider {
                                  comment: key)
     }
 
-    private func isLanguageSupportedByContoso(_ systemLanguage: String) -> Bool {
-        return Bundle.main.localizations.contains(systemLanguage) &&
-            supportedLocales.contains(systemLanguage)
+    private func isLanguageSupportedByApp(_ languageId: String) -> Bool {
+        return Bundle.main.localizations.contains(languageId) &&
+            supportedLocales.contains(languageId)
     }
 }
