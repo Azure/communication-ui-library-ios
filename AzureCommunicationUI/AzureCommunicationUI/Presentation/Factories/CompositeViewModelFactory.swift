@@ -71,8 +71,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
          accessibilityProvider: AccessibilityProvider) {
         self.logger = logger
         self.store = store
-        self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
+        self.localizationProvider = localizationProvider
     }
 
     // MARK: CompositeViewModels
