@@ -1,22 +1,22 @@
 # Release History
 ## 1.0.0-beta.3 (Upcoming)
 ### New Features
-- Update minimum iOS version to 14.0. [#103](https://github.com/Azure/communication-ui-library-ios/pull/103)
+- Updated minimum iOS version to 14.0. [#103](https://github.com/Azure/communication-ui-library-ios/pull/103)
 
 ## 1.0.0-beta.2 (2022-04-04)
 ### New Features
-- Update joining experience in setup view. [#44](https://github.com/Azure/communication-ui-library-ios/pull/44)
-- Support pinch & zoom, pan and double tap to zoom in screen share presentation. [#29](https://github.com/Azure/communication-ui-library-ios/pull/29)
-- Update audio device selection list when connected to bluetooth/headphones. [#56](https://github.com/Azure/communication-ui-library-ios/pull/56)
+- Updated joining experience in setup view. [#44](https://github.com/Azure/communication-ui-library-ios/pull/44)
+- Implemented pinch & zoom, pan and double tap to zoom in screen share presentation. [#29](https://github.com/Azure/communication-ui-library-ios/pull/29)
+- Updated audio device selection list when connected to bluetooth/headphones. [#56](https://github.com/Azure/communication-ui-library-ios/pull/56)
 - Implemented Localization support for 13 languages and right-to-left mirror layout. [#73](https://github.com/Azure/communication-ui-library-ios/pull/73) 
  
 ### Breaking Changes
-- Rename `ErrorType` to `CommunicationUIErrorType`. [#99](https://github.com/Azure/communication-ui-library-ios/pull/99)
-- Rename parameter `communicationTokenCredential` to `credential` in both `GroupCallOptions` and `TeamsMeetingOptions` initializers. [#99](https://github.com/Azure/communication-ui-library-ios/pull/99)
-- Rename `themeConfiguration` to `theme` in `CallCompositeOptions` initializer. [#99](https://github.com/Azure/communication-ui-library-ios/pull/99)
+- Renamed `ErrorType` to `CommunicationUIErrorType`. [#99](https://github.com/Azure/communication-ui-library-ios/pull/99)
+- Renamed parameter `communicationTokenCredential` to `credential` in both `GroupCallOptions` and `TeamsMeetingOptions` initializers. [#99](https://github.com/Azure/communication-ui-library-ios/pull/99)
+- Renamed `themeConfiguration` to `theme` in `CallCompositeOptions` initializer. [#99](https://github.com/Azure/communication-ui-library-ios/pull/99)
 
 ### Bugs Fixed
-- Cleaning up Calling State and Call Error when joining or returning to a call from error. [#28](https://github.com/Azure/communication-ui-library-ios/pull/28)
+- Cleaned up Calling State and Call Error when joining or returning to a call from error. [#28](https://github.com/Azure/communication-ui-library-ios/pull/28)
 - Fixed the order of CompositeError throwing in joining a call. [#11](https://github.com/Azure/communication-ui-library-ios/pull/11)
 - Fixed for info header doesn't disappear when bottom drawer is displayed. [#12](https://github.com/Azure/communication-ui-library-ios/pull/12)
 - Fixed for the local video rotation in setup view when device orientation is locked. [#13](https://github.com/Azure/communication-ui-library-ios/pull/13)
@@ -28,9 +28,9 @@
 - Fixed SetupView in landscape mode and CallingView can't rotate to proper orientation after drawer being dismissed [#71](https://github.com/Azure/communication-ui-library-ios/pull/71)
 
 ### Other Changes
-- Update Redux State when initializing the local video preview in the setup view. [#23](https://github.com/Azure/communication-ui-library-ios/pull/23)
-- Remove alphabet in CFBundleShortVersionString and add UILibrarySemVersion inside info.plist. [#27](https://github.com/Azure/communication-ui-library-ios/pull/27)
-- Update FluentUI version to 0.3.9 [#49](https://github.com/Azure/communication-ui-library-ios/pull/49)
+- Updated Redux State when initializing the local video preview in the setup view. [#23](https://github.com/Azure/communication-ui-library-ios/pull/23)
+- Removed alphabet in CFBundleShortVersionString and add UILibrarySemVersion inside info.plist. [#27](https://github.com/Azure/communication-ui-library-ios/pull/27)
+- Updated FluentUI version to 0.3.9 [#49](https://github.com/Azure/communication-ui-library-ios/pull/49)
 - Code cleanup and refactoring.
 
 
