@@ -15,17 +15,17 @@
 - Rename parameter `communicationTokenCredential` to `credential` in both `GroupCallOptions` and `TeamsMeetingOptions` initializers. [#99](https://github.com/Azure/communication-ui-library-ios/pull/99)
 - Rename `themeConfiguration` to `theme` in `CallCompositeOptions` initializer. [#99](https://github.com/Azure/communication-ui-library-ios/pull/99)
 
-### Bug Fixes
+### Bugs Fixed
 - Cleaning up Calling State and Call Error when joining or returning to a call from error. [#28](https://github.com/Azure/communication-ui-library-ios/pull/28)
-- Fixing the order of CompositeError throwing in joining a call. [#11](https://github.com/Azure/communication-ui-library-ios/pull/11)
-- Fixing for info header doesn't disappear when bottom drawer is displayed. [#12](https://github.com/Azure/communication-ui-library-ios/pull/12)
-- Fixing for the local video rotation in setup view when device orientation is locked. [#13](https://github.com/Azure/communication-ui-library-ios/pull/13)
-- Fixing the display of the participant with an empty name in the participant list. [#24](https://github.com/Azure/communication-ui-library-ios/pull/24)
-- Fixing the default audio selection when the UI Composite is launched. [#21](https://github.com/Azure/communication-ui-library-ios/pull/21)
-- Fixing consistency of unit test. [#35](https://github.com/Azure/communication-ui-library-ios/pull/35)
-- Fixing the UX inconsistencies in the participant list to match Android.
-- Fixing inconsistent display when dragging an opened participants list. [#49](https://github.com/Azure/communication-ui-library-ios/pull/49)
-- Fixing SetupView in landscape mode and CallingView can't rotate to proper orientation after drawer being dismissed [#71](https://github.com/Azure/communication-ui-library-ios/pull/71)
+- Fixed the order of CompositeError throwing in joining a call. [#11](https://github.com/Azure/communication-ui-library-ios/pull/11)
+- Fixed for info header doesn't disappear when bottom drawer is displayed. [#12](https://github.com/Azure/communication-ui-library-ios/pull/12)
+- Fixed for the local video rotation in setup view when device orientation is locked. [#13](https://github.com/Azure/communication-ui-library-ios/pull/13)
+- Fixed the display of the participant with an empty name in the participant list. [#24](https://github.com/Azure/communication-ui-library-ios/pull/24)
+- Fixed the default audio selection when the UI Composite is launched. [#21](https://github.com/Azure/communication-ui-library-ios/pull/21)
+- Fixed consistency of unit test. [#35](https://github.com/Azure/communication-ui-library-ios/pull/35)
+- Fixed the UX inconsistencies in the participant list to match Android.
+- Fixed inconsistent display when dragging an opened participants list. [#49](https://github.com/Azure/communication-ui-library-ios/pull/49)
+- Fixed SetupView in landscape mode and CallingView can't rotate to proper orientation after drawer being dismissed [#71](https://github.com/Azure/communication-ui-library-ios/pull/71)
 
 ### Other Changes
 - Update Redux State when initializing the local video preview in the setup view. [#23](https://github.com/Azure/communication-ui-library-ios/pull/23)
