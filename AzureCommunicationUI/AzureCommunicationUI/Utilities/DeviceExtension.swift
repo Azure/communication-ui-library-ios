@@ -23,3 +23,10 @@ extension UIDevice {
         UIDevice.current.isProximityMonitoringEnabled = isEnabled
     }
 }
+
+extension UIScreen {
+    static func isScreenSmall(_ length: CGFloat) -> Bool {
+        let maxLength = max(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
+        return maxLength < length
+    }
+}
