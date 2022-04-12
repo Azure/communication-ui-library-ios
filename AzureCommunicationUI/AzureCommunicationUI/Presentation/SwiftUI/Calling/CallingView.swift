@@ -8,7 +8,7 @@ import FluentUI
 
 struct CallingView: View {
     @ObservedObject var viewModel: CallingViewModel
-    let avatarManager: AvatarManager
+    let avatarManager: AvatarViewManager
     let viewManager: VideoViewManager
 
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?

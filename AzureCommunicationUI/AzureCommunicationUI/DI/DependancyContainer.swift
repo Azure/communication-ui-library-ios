@@ -43,7 +43,7 @@ final class DependencyContainer {
                                   logger: resolve()) as NavigationRouter)
         register(AppAccessibilityProvider() as AccessibilityProvider)
         register(AppLocalizationProvider(logger: resolve()) as LocalizationProvider)
-        register(CompositeAvatarManager(store: resolve()) as AvatarManager)
+        register(CompositeAvatarViewManager(store: resolve()) as AvatarViewManager)
         register(ACSCompositeViewModelFactory(logger: resolve(),
                                               store: resolve(),
                                               localizationProvider: resolve(),

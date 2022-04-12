@@ -9,7 +9,7 @@ import FluentUI
 
 struct SetupView: View {
     @ObservedObject var viewModel: SetupViewModel
-    let avatarManager: AvatarManager
+    let avatarManager: AvatarViewManager
     let viewManager: VideoViewManager
 
     let layoutSpacing: CGFloat = 24

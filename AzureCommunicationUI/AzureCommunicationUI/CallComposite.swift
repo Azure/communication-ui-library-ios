@@ -44,7 +44,7 @@ public class CallComposite {
 
         dependencyContainer.registerDependencies(callConfiguration)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProvider
-        let avatarManager = dependencyContainer.resolve() as AvatarManager
+        let avatarManager = dependencyContainer.resolve() as AvatarViewManager
         if let localAvatar = localOptions?.localPersona.avatar {
             avatarManager.setLocalAvatar(localAvatar)
         }

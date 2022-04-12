@@ -7,7 +7,7 @@ import Foundation
 import UIKit
 @testable import AzureCommunicationUI
 
-class AvatarManagerMocking: AvatarManager {
+class AvatarManagerMocking: AvatarViewManager {
     func setLocalAvatar(_ image: UIImage) {
     }
 

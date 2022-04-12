@@ -13,11 +13,11 @@ protocol CompositeViewFactory {
 struct ACSCompositeViewFactory: CompositeViewFactory {
     private let logger: Logger
     private let compositeViewModelFactory: CompositeViewModelFactory
-    private let avatarManager: AvatarManager
+    private let avatarManager: AvatarViewManager
     private let videoViewManager: VideoViewManager
 
     init(logger: Logger,
-         avatarManager: AvatarManager,
+         avatarManager: AvatarViewManager,
          videoViewManager: VideoViewManager,
          compositeViewModelFactory: CompositeViewModelFactory) {
         self.logger = logger

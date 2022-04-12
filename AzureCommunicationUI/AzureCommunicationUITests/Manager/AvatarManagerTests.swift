@@ -9,11 +9,11 @@ import UIKit
 
 class AvatarManagerTests: XCTestCase {
     var mockStoreFactory = StoreFactoryMocking()
-    var avatarManager: AvatarManager!
+    var avatarManager: AvatarViewManager!
 
     override func setUp() {
         super.setUp()
-        avatarManager = CompositeAvatarManager(store: mockStoreFactory.store)
+        avatarManager = CompositeAvatarViewManager(store: mockStoreFactory.store)
     }
 
     func test_avatarManager_when_setLocalAvatar_then_getLocalAvatar_returnsSameUIImage() {
