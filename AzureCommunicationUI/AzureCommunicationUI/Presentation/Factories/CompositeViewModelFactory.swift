@@ -29,6 +29,10 @@ protocol CompositeViewModelFactory {
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
+    func makeAudioDevicesListCellViewModel(icon: CompositeIcon,
+                                           title: String,
+                                           isSelected: Bool,
+                                           onSelectedAction: @escaping (() -> Void)) -> AudioDevicesListCellViewModel
     func makeErrorInfoViewModel() -> ErrorInfoViewModel
 
     // MARK: CallingViewModels
@@ -42,6 +46,8 @@ protocol CompositeViewModelFactory {
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel
     func makeBannerViewModel() -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
+    func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
+    func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
 
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
@@ -137,10 +143,22 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     }
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel {
-        AudioDevicesListViewModel(dispatchAction: dispatchAction,
+        AudioDevicesListViewModel(compositeViewModelFactory: self,
+                                  dispatchAction: dispatchAction,
                                   localUserState: localUserState,
                                   localizationProvider: localizationProvider)
     }
+
+    func makeAudioDevicesListCellViewModel(icon: CompositeIcon,
+                                           title: String,
+                                           isSelected: Bool,
+                                           onSelectedAction: @escaping (() -> Void)) -> AudioDevicesListCellViewModel {
+        AudioDevicesListCellViewModel(icon: icon,
+                                      title: title,
+                                      isSelected: isSelected,
+                                      onSelected: onSelectedAction)
+    }
+
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
         ErrorInfoViewModel(localizationProvider: localizationProvider)
     }
@@ -177,8 +195,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
-        ParticipantsListViewModel(localUserState: localUserState,
-                                  localizationProvider: localizationProvider)
+        ParticipantsListViewModel(compositeViewModelFactory: self,
+                                  localUserState: localUserState)
     }
     func makeBannerViewModel() -> BannerViewModel {
         BannerViewModel(compositeViewModelFactory: self)
@@ -186,6 +204,17 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     func makeBannerTextViewModel() -> BannerTextViewModel {
         BannerTextViewModel(accessibilityProvider: accessibilityProvider,
                             localizationProvider: localizationProvider)
+    }
+
+    func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel {
+        ParticipantsListCellViewModel(localUserState: localUserState,
+                                      localizationProvider: localizationProvider)
+    }
+
+    func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel)
+    -> ParticipantsListCellViewModel {
+        ParticipantsListCellViewModel(participantInfoModel: participantInfoModel,
+                                      localizationProvider: localizationProvider)
     }
 
     // MARK: SetupViewModels

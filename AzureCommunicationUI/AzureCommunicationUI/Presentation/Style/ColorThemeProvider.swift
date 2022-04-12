@@ -21,7 +21,6 @@ class ColorThemeProvider: ColorProviding {
     let disableColor = UIColor.compositeColor(.disabled)
     let error = UIColor.compositeColor(.error)
     let onBackground = UIColor.compositeColor(.onBackground)
-    let onDisabled = UIColor.compositeColor(.onDisabled)
     let onError = UIColor.compositeColor(.onError)
     let onPrimary = UIColor.compositeColor(.onPrimary)
     let onSuccess = UIColor.compositeColor(.onSuccess)
