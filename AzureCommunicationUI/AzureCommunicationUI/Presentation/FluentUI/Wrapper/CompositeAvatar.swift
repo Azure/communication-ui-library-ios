@@ -19,6 +19,6 @@ struct CompositeAvatar: View {
                primaryText: displayName)
             .ringColor(StyleProvider.color.primaryColor)
             .isRingVisible(isSpeaking)
-            .accessibility(hidden: true)
+            .accessibilityHidden(true)
     }
 }

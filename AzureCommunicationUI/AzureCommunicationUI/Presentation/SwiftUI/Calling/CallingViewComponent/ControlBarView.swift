@@ -41,7 +41,7 @@ struct ControlBarView: View {
         .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
             audioDeviceSelectionListView
                 .accessibilityElement(children: .contain)
-                .accessibility(addTraits: .isModal)
+                .accessibilityAddTraits(.isModal)
         })
         .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveListDisplayed) {
             exitConfirmationDrawer
@@ -72,7 +72,7 @@ struct ControlBarView: View {
     var hangUpButton: some View {
         IconButton(viewModel: viewModel.hangUpButtonViewModel)
             .background(SourceViewSpace(sourceView: leaveCallConfirmationListSourceView))
-            .accessibility(identifier: LocalizationKey.hangupAccessibilityLabel.rawValue)
+            .accessibilityIdentifier(LocalizationKey.hangupAccessibilityLabel.rawValue)
     }
 
     var audioDeviceSelectionListView: some View {
