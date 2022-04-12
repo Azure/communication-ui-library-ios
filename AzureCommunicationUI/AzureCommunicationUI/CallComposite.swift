@@ -45,10 +45,7 @@ public class CallComposite {
         dependencyContainer.registerDependencies(callConfiguration)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProvider
         let avatarManager = dependencyContainer.resolve() as AvatarViewManager
-        if let localAvatar = localOptions?.localPersona.avatar {
-            avatarManager.setLocalAvatar(localAvatar)
-        }
-
+        setupLocalOptions(with: avatarManager, localOptions: localOptions)
         setupColorTheming()
         setupLocalization(with: localizationProvider)
         let toolkitHostingController = makeToolkitHostingController(router: dependencyContainer.resolve(),
@@ -143,6 +140,13 @@ public class CallComposite {
                 return
             }
             topViewController.present(viewController, animated: true, completion: nil)
+        }
+    }
+
+    private func setupLocalOptions(with manager: AvatarViewManager,
+                                   localOptions: CommunicationUILocalDataOptions?) {
+        if let localAvatar = localOptions?.localPersona.avatar {
+            manager.setLocalAvatar(localAvatar)
         }
     }
 
