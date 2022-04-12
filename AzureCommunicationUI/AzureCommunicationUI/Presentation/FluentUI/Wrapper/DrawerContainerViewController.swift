@@ -12,6 +12,7 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         ? StyleProvider.color.popoverColor
         : StyleProvider.color.drawerColor
     var items: [T] = []
+    let headerName: String?
     private let sourceView: UIView
     private let drawerResizeBarHeight: CGFloat = 25
     private let showHeader: Bool
@@ -20,10 +21,11 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
     }
     private weak var controller: DrawerController?
 
-    init(items: [T], sourceView: UIView, showHeader: Bool = false) {
+    init(items: [T], sourceView: UIView, headerName: String? = nil, showHeader: Bool = false) {
         self.items = items
         self.sourceView = sourceView
         self.showHeader = showHeader
+        self.headerName = headerName
         super.init(nibName: nil, bundle: nil)
     }
 

@@ -43,9 +43,9 @@ struct ControlBarView: View {
                 .accessibilityElement(children: .contain)
                 .accessibility(addTraits: .isModal)
         })
-        .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveOverlayDisplayed) {
+        .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveListDisplayed) {
             exitConfirmationDrawer
-                .accessibility(hidden: !viewModel.isConfirmLeaveOverlayDisplayed)
+                .accessibility(hidden: !viewModel.isConfirmLeaveListDisplayed)
                 .accessibilityElement(children: .contain)
                 .accessibility(addTraits: .isModal)
         })
@@ -83,13 +83,13 @@ struct ControlBarView: View {
     }
 
     var exitConfirmationDrawer: some View {
-        let leaveCallConfirmationVm: [LeaveCallConfirmationViewModel] = [
-            viewModel.getLeaveCallButtonViewModel(),
-            viewModel.getCancelButtonViewModel()
-        ]
-
-        return CompositeLeaveCallConfirmationList(isPresented: $viewModel.isConfirmLeaveOverlayDisplayed,
-                                                  viewModel: leaveCallConfirmationVm,
-                                                  sourceView: leaveCallConfirmationListSourceView)
+        CompositeLeaveCallConfirmationList(isPresented: $viewModel.isConfirmLeaveListDisplayed,
+                                           viewModel: viewModel.getLeaveCallConfirmationListViewModel(),
+                                           sourceView: leaveCallConfirmationListSourceView)
     }
+}
+
+struct LeaveCallConfirmationListViewModel {
+    let headerName: String?
+    let listItemViewModel: [LeaveCallConfirmationViewModel]
 }

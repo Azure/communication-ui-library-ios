@@ -69,6 +69,7 @@ enum LocalizationKey: String {
     case audioDeviceAccessibilityLabel = "AzureCommunicationUI.CallingView.ControlButton.AudioDevice.AccessibilityLabel"
     case hangupAccessibilityLabel = "AzureCommunicationUI.CallingView.ControlButton.HangUp.AccessibilityLabel"
 
+    case leaveCallListHeader = "AzureCommunicationUI.CallingView.LeaveCallList.Header.LeaveCall"
     case leaveCall = "AzureCommunicationUI.CallingView.Overlay.LeaveCall"
     case leaveCallAccssibilityLabel = "AzureCommunicationUI.CallingView.Overlay.LeaveCall.AccessibilityLabel"
     case cancel = "AzureCommunicationUI.CallingView.Overlay.Cancel"

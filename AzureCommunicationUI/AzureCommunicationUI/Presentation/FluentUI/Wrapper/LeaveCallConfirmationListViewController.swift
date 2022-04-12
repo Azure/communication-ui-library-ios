@@ -46,8 +46,7 @@ extension LeaveCallConfirmationListViewController: UITableViewDataSource, UITabl
 
         let label = UILabel()
         label.frame = headerView.frame
-        // todo: update UI
-        label.text = "Leave call ?"
+        label.text = headerName
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 17, weight: .semibold)
         label.textColor = UIColor.compositeColor(CompositeColor.onSurface)

@@ -52,6 +52,7 @@
 
 "AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Leave";
 "AzureCommunicationUI.CallingView.Overlay.Cancel"="Cancel";
+"AzureCommunicationUI.CallingView.LeaveCallList.Header.LeaveCall"="Leave call?";
 
 /* ComplianceBanner title */
 "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Recording and transcription have started.";

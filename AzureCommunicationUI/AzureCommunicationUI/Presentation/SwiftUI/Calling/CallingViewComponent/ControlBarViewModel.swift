@@ -13,7 +13,7 @@ class ControlBarViewModel: ObservableObject {
 
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var isAudioDeviceSelectionDisplayed: Bool = false
-    @Published var isConfirmLeaveOverlayDisplayed: Bool = false
+    @Published var isConfirmLeaveListDisplayed: Bool = false
 
     let audioDevicesListViewModel: AudioDevicesListViewModel
 
@@ -97,7 +97,7 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func endCallButtonTapped() {
-        self.isConfirmLeaveOverlayDisplayed = true
+        self.isConfirmLeaveListDisplayed = true
     }
 
     func cameraButtonTapped() {
@@ -117,7 +117,7 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func dismissConfirmLeaveOverlay() {
-        self.isConfirmLeaveOverlayDisplayed = false
+        self.isConfirmLeaveListDisplayed = false
     }
 
     func isCameraDisabled() -> Bool {
@@ -150,6 +150,16 @@ class ControlBarViewModel: ObservableObject {
             self.logger.debug("Cancel button tapped")
             self.dismissConfirmLeaveOverlay()
         })
+    }
+
+    func getLeaveCallConfirmationListViewModel() -> LeaveCallConfirmationListViewModel {
+        let leaveCallConfirmationVm: [LeaveCallConfirmationViewModel] = [
+            getLeaveCallButtonViewModel(),
+            getCancelButtonViewModel()
+        ]
+        let headerName = localizationProvider.getLocalizedString(.leaveCallListHeader)
+        return LeaveCallConfirmationListViewModel(headerName: headerName,
+                                                  listItemViewModel: leaveCallConfirmationVm)
     }
 
     func update(localUserState: LocalUserState, permissionState: PermissionState) {

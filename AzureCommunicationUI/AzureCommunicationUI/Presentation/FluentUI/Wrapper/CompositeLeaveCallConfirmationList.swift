@@ -8,7 +8,7 @@ import FluentUI
 
 struct CompositeLeaveCallConfirmationList: UIViewControllerRepresentable {
     @Binding var isPresented: Bool
-    var viewModel: [LeaveCallConfirmationViewModel]
+    var viewModel: LeaveCallConfirmationListViewModel
     let sourceView: UIView
 
     func makeCoordinator() -> Coordinator {
@@ -18,6 +18,7 @@ struct CompositeLeaveCallConfirmationList: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> DrawerContainerViewController<LeaveCallConfirmationViewModel> {
         let controller = LeaveCallConfirmationListViewController(items: getLeaveCallConfirmationList(),
                                                                  sourceView: sourceView,
+                                                                 headerName: viewModel.headerName,
                                                                  showHeader: true)
         controller.delegate = context.coordinator
         return controller
@@ -34,7 +35,7 @@ struct CompositeLeaveCallConfirmationList: UIViewControllerRepresentable {
     }
 
     private func getLeaveCallConfirmationList() -> [LeaveCallConfirmationViewModel] {
-        return viewModel
+        return viewModel.listItemViewModel
     }
 
     class Coordinator: NSObject, DrawerControllerDelegate {
