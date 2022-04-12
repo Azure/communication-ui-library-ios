@@ -17,7 +17,7 @@ struct ConfirmLeaveOverlayView: View {
                 leaveCallButton
                     .frame(width: getButtonWidth(from: geometry))
                     .padding(.all)
-                    .accessibility(sortPriority: 1)
+                    .accessibilitySortPriority(1)
                 cancelButton
                     .frame(width: getButtonWidth(from: geometry))
                     .padding(.horizontal)
