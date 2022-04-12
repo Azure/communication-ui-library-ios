@@ -1463,6 +1463,7 @@
 				50B390D127D82D7E0010A2ED /* LocalizationProviderMocking.swift in Sources */,
 				881D8F7627FCA8C4008EC897 /* AvatarManagerTests.swift in Sources */,
 				FA40424A27E3E86700875368 /* ParticipantsListViewModelMocking.swift in Sources */,
+				881D8F7627FCA8C4008EC897 /* AvatarManagerTests.swift in Sources */,
 				50FA4616268D13E9001844AC /* LocalUserReducerTests.swift in Sources */,
 				1F4A24BC26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift in Sources */,
 				503300FE27079FC900289BB5 /* BannerTextViewModelTests.swift in Sources */,
