@@ -51,11 +51,9 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     /// Toggles the leave call overlay  in the calling screen
     private func toggleLeaveCallOverlay(leaveCall: Bool) {
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .cancelAccssibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
 
         if leaveCall {
-            tapButton(accessibilityIdentifier: .leaveCallAccssibilityLabel, shouldWait: true)
+            app.tables.cells.firstMatch.tap()
             XCTAssertTrue(app.buttons[LocalizationKey.startExperienceAccessibilityLabel.rawValue]
                             .waitForExistence(timeout: 3))
         }
