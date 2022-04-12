@@ -101,7 +101,6 @@ class AppLocalizationProvider: LocalizationProvider {
     }
 
     private func isLanguageSupportedByApp(_ languageId: String) -> Bool {
-        return Bundle.main.localizations.contains(languageId) &&
-            supportedLocales.contains(languageId)
+        return Bundle.main.localizations.contains(languageId)
     }
 }
