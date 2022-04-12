@@ -39,7 +39,7 @@ struct ControlBarView: View {
         .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
             audioDeviceSelectionListView
                 .accessibilityElement(children: .contain)
-                .accessibility(addTraits: .isModal)
+                .accessibilityAddTraits(.isModal)
         })
     }
 

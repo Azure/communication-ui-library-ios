@@ -21,7 +21,7 @@ struct ConfirmLeaveOverlayView: View {
                 cancelButton
                     .frame(width: getButtonWidth(from: geometry))
                     .padding(.horizontal)
-                    .accessibility(sortPriority: 0)
+                    .accessibilitySortPriority(0)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.black.opacity(0.7))
