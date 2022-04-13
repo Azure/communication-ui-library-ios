@@ -10,7 +10,7 @@ class CallingViewModel: ObservableObject {
     @Published var isLobbyOverlayDisplayed: Bool = false
     @Published var isConfirmLeaveOverlayDisplayed: Bool = false
     @Published var isParticipantGridDisplayed: Bool
-    @Published var isVideoGridViewAccessibilityAvailable: Bool = false
+    @Published var isVideoGridViewAccessibilityAvailable: Bool!
     let isRightToLeft: Bool
     @Published var appState: AppStatus = .foreground
 
