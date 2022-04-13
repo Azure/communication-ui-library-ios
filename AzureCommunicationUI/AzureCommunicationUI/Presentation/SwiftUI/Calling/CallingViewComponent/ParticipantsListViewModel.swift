@@ -7,33 +7,31 @@ import Foundation
 import Combine
 
 class ParticipantsListViewModel: ObservableObject {
-
     @Published var participantsList: [ParticipantsListCellViewModel] = []
     @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
     var lastUpdateTimeStamp = Date()
-    private let localizationProvider: LocalizationProvider
 
-    init(localUserState: LocalUserState,
-         localizationProvider: LocalizationProvider) {
-        localParticipantsListCellViewModel = ParticipantsListCellViewModel(localUserState: localUserState,
-                                                                           localizationProvider: localizationProvider)
-        self.localizationProvider = localizationProvider
+    private let compositeViewModelFactory: CompositeViewModelFactory
+
+    init(compositeViewModelFactory: CompositeViewModelFactory,
+         localUserState: LocalUserState) {
+        self.compositeViewModelFactory = compositeViewModelFactory
+        localParticipantsListCellViewModel =
+        compositeViewModelFactory.makeLocalParticipantsListCellViewModel(localUserState: localUserState)
     }
 
     func update(localUserState: LocalUserState,
                 remoteParticipantsState: RemoteParticipantsState) {
 
         if localParticipantsListCellViewModel.isMuted != (localUserState.audioState.operation == .off) {
-            localParticipantsListCellViewModel = ParticipantsListCellViewModel(
-                localUserState: localUserState,
-                localizationProvider: localizationProvider)
+            localParticipantsListCellViewModel =
+            compositeViewModelFactory.makeLocalParticipantsListCellViewModel(localUserState: localUserState)
         }
 
         if lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp {
             lastUpdateTimeStamp = remoteParticipantsState.lastUpdateTimeStamp
             participantsList = remoteParticipantsState.participantInfoList.map {
-                ParticipantsListCellViewModel(participantInfoModel: $0,
-                                              localizationProvider: localizationProvider)
+                compositeViewModelFactory.makeParticipantsListCellViewModel(participantInfoModel: $0)
             }
         }
     }

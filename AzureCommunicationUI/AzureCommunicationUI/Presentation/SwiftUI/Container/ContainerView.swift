@@ -20,11 +20,11 @@ struct ContainerView: View {
             case .setupView:
                 setupView.supportedOrientations(setupViewOrientationMask)
                     .accessibilityElement(children: .contain)
-                    .accessibility(addTraits: .isModal)
+                    .accessibilityAddTraits(.isModal)
             case .callingView:
                 callingView.proximitySensorEnabled(true)
                     .accessibilityElement(children: .contain)
-                    .accessibility(addTraits: .isModal)
+                    .accessibilityAddTraits(.isModal)
             }
         }
         .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
