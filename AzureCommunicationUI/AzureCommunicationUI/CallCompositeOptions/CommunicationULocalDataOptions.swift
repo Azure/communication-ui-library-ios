@@ -15,12 +15,12 @@ public struct CommunicationUILocalDataOptions {
 }
 
 public struct CommunicationUIPersonaData {
-    let avatar: UIImage?
-    let displayName: String?
+    let avatarImage: UIImage?
+    let renderDisplayName: String?
 
     public init(_ avatar: UIImage?,
                 displayName: String? = nil) {
-        self.avatar = avatar
-        self.displayName = displayName
+        self.avatarImage = avatar
+        self.renderDisplayName = displayName
     }
 }

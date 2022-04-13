@@ -145,7 +145,7 @@ public class CallComposite {
 
     private func setupLocalOptions(with manager: AvatarViewManager,
                                    localOptions: CommunicationUILocalDataOptions?) {
-        if let localAvatar = localOptions?.localPersona.avatar {
+        if let localAvatar = localOptions?.localPersona.avatarImage {
             manager.setLocalAvatar(localAvatar)
         }
     }
