@@ -17,11 +17,11 @@ struct ConfirmLeaveOverlayView: View {
                 leaveCallButton
                     .frame(width: getButtonWidth(from: geometry))
                     .padding(.all)
-                    .accessibility(sortPriority: 1)
+                    .accessibilitySortPriority(1)
                 cancelButton
                     .frame(width: getButtonWidth(from: geometry))
                     .padding(.horizontal)
-                    .accessibility(sortPriority: 0)
+                    .accessibilitySortPriority(0)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color.black.opacity(0.7))
@@ -41,9 +41,11 @@ struct ConfirmLeaveOverlayView: View {
 
     var leaveCallButton: some View {
         return PrimaryButton(viewModel: viewModel.getLeaveCallButtonViewModel())
+            .accessibility(identifier: LocalizationKey.leaveCallAccssibilityLabel.rawValue)
     }
 
     var cancelButton: some View {
         return PrimaryButton(viewModel: viewModel.getCancelButtonViewModel())
+            .accessibility(identifier: LocalizationKey.cancelAccssibilityLabel.rawValue)
     }
 }

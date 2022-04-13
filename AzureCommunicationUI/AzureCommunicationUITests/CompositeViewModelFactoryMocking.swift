@@ -28,9 +28,13 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     var iconButtonViewModel: IconButtonViewModel?
     var setupViewModel: SetupViewModel?
     var callingViewModel: CallingViewModel?
+    var localParticipantsListCellViewModel: ParticipantsListCellViewModel?
+    var audioDevicesListCellViewModel: AudioDevicesListCellViewModel?
 
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
+    var createParticipantsListCellViewModel: ((ParticipantInfoModel) -> ParticipantsListCellViewModel?)?
     var createIconWithLabelButtonViewModel: ((CompositeIcon) -> IconWithLabelButtonViewModel?)?
+    var createIconButtonViewModel: ((CompositeIcon) -> IconButtonViewModel?)?
 
     init(logger: Logger,
          store: Store<AppState>,
@@ -59,10 +63,10 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel {
-        return iconButtonViewModel ?? IconButtonViewModel(iconName: iconName,
-                                                          buttonType: buttonType,
-                                                          isDisabled: isDisabled,
-                                                          action: action)
+        return createIconButtonViewModel?(iconName) ?? IconButtonViewModel(iconName: iconName,
+                                                                           buttonType: buttonType,
+                                                                           isDisabled: isDisabled,
+                                                                           action: action)
     }
 
     func makeIconWithLabelButtonViewModel(iconName: CompositeIcon,
@@ -98,13 +102,24 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
 
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel {
-        return audioDevicesListViewModel ?? AudioDevicesListViewModel(dispatchAction: dispatchAction,
+        return audioDevicesListViewModel ?? AudioDevicesListViewModel(compositeViewModelFactory: self,
+                                                                      dispatchAction: dispatchAction,
                                                                       localUserState: localUserState,
                                                                       localizationProvider: LocalizationProviderMocking())
     }
 
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
         return errorInfoViewModel ?? ErrorInfoViewModel(localizationProvider: LocalizationProviderMocking())
+    }
+
+    func makeAudioDevicesListCellViewModel(icon: CompositeIcon,
+                                           title: String,
+                                           isSelected: Bool,
+                                           onSelectedAction: @escaping (() -> Void)) -> AudioDevicesListCellViewModel {
+        return audioDevicesListCellViewModel ?? AudioDevicesListCellViewModel(icon: icon,
+                                                                              title: title,
+                                                                              isSelected: isSelected,
+                                                                              onSelected: onSelectedAction)
     }
 
     // MARK: CallingViewModels
@@ -142,8 +157,8 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
-        return participantsListViewModel ?? ParticipantsListViewModel(localUserState: localUserState,
-                                                                      localizationProvider: LocalizationProviderMocking())
+        return participantsListViewModel ?? ParticipantsListViewModel(compositeViewModelFactory: self,
+                                                                      localUserState: localUserState)
     }
 
     func makeBannerViewModel() -> BannerViewModel {
@@ -153,6 +168,16 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
     func makeBannerTextViewModel() -> BannerTextViewModel {
         return bannerTextViewModel ?? BannerTextViewModel(accessibilityProvider: accessibilityProvider,
                                                           localizationProvider: LocalizationProviderMocking())
+    }
+
+    func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel {
+        localParticipantsListCellViewModel ?? ParticipantsListCellViewModel(localUserState: localUserState,
+                                                                            localizationProvider: LocalizationProviderMocking())
+    }
+
+    func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel {
+        createParticipantsListCellViewModel?(participantInfoModel) ?? ParticipantsListCellViewModel(participantInfoModel: participantInfoModel,
+                                                                                                    localizationProvider: LocalizationProviderMocking())
     }
 
     // MARK: SetupViewModels

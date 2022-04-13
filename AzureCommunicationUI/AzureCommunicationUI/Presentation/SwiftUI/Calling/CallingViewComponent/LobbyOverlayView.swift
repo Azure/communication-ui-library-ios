@@ -19,12 +19,15 @@ struct LobbyOverlayView: View {
             .overlay(
                 VStack(spacing: layoutSpacing) {
                     Icon(name: .clock, size: iconImageSize)
+                        .accessibility(hidden: true)
                     Text(viewModel.title)
                         .font(Fonts.headline.font)
                     Text(viewModel.subtitle)
                         .font(Fonts.subhead.font)
                         .multilineTextAlignment(.center)
                 }.padding(.horizontal, horizontalPaddingSize)
+                    .accessibilityElement(children: .combine)
+                    .accessibility(addTraits: .isHeader)
             )
     }
 }

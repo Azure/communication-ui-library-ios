@@ -29,7 +29,7 @@ struct InfoHeaderView: View {
         .modifier(PopupModalView(isPresented: viewModel.isParticipantsListDisplayed) {
             participantsListView
                 .accessibilityElement(children: .contain)
-                .accessibility(addTraits: .isModal)
+                .accessibilityAddTraits(.isModal)
         })
     }
 
@@ -42,8 +42,8 @@ struct InfoHeaderView: View {
                                     trailing: 0))
                 .foregroundColor(foregroundColor)
                 .font(Fonts.caption1.font)
-                .accessibility(label: Text(viewModel.accessibilityLabel))
-                .accessibility(sortPriority: 1)
+                .accessibilityLabel(Text(viewModel.accessibilityLabel))
+                .accessibilitySortPriority(1)
             Spacer()
             participantListButton
         }

@@ -13,6 +13,7 @@ class InfoHeaderViewModelTests: XCTestCase {
     var storeFactory: StoreFactoryMocking!
     var cancellable: CancelBag!
     var localizationProvider: LocalizationProviderMocking!
+    var factoryMocking: CompositeViewModelFactoryMocking!
 
     override func setUp() {
         super.setUp()
@@ -20,6 +21,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
+        factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
 
         func dispatch(action: Action) {
             storeFactory.store.dispatch(action: action)
@@ -122,6 +124,28 @@ class InfoHeaderViewModelTests: XCTestCase {
                    callingState: CallingState())
         XCTAssertEqual(sut.infoLabel, "Call with 2 people")
 
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_infoHeaderViewModel_update_when_statesUpdated_then_participantsListViewModelUpdated() {
+        let expectation = XCTestExpectation(description: "Should update participantsListViewModel")
+        let participantList = ParticipantInfoModelBuilder.getArray(count: 2)
+        let remoteParticipantsStateValue = RemoteParticipantsState(participantInfoList: participantList,
+                                                                   lastUpdateTimeStamp: Date())
+        let localUserStateValue = LocalUserState(displayName: "Updated Name")
+        let participantsListViewModel = ParticipantsListViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                         localUserState: LocalUserState())
+        participantsListViewModel.updateStates = { localUserState, remoteParticipantsState in
+            XCTAssertEqual(localUserState.displayName, localUserStateValue.displayName)
+            XCTAssertEqual(remoteParticipantsStateValue.participantInfoList,
+                           remoteParticipantsState.participantInfoList)
+            expectation.fulfill()
+        }
+        factoryMocking.participantsListViewModel = participantsListViewModel
+        let sut = makeSUT()
+        sut.update(localUserState: localUserStateValue,
+                   remoteParticipantsState: remoteParticipantsStateValue,
+                   callingState: CallingState())
         wait(for: [expectation], timeout: 1)
     }
 
@@ -285,7 +309,6 @@ class InfoHeaderViewModelTests: XCTestCase {
 
 extension InfoHeaderViewModelTests {
     func makeSUT(accessibilityProvider: AccessibilityProvider = AppAccessibilityProvider()) -> InfoHeaderViewModel {
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: LoggerMocking(),
                                    localUserState: LocalUserState(),
@@ -294,7 +317,6 @@ extension InfoHeaderViewModelTests {
     }
 
     func makeSUTLocalizationMocking() -> InfoHeaderViewModel {
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
                                    localUserState: LocalUserState(),
