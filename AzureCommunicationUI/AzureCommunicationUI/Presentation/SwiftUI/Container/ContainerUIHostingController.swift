@@ -65,7 +65,16 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
                 switch containerView.router.currentView {
                 case .setupView:
                     if UIDevice.current.isGeneratingDeviceOrientationNotifications {
-                        UIDevice.current.endGeneratingDeviceOrientationNotifications()
+                        // This work-around is to make sure the setup view rotates back to portrait if the previous
+                        // screen was on a different orientation.
+                        // The 0.35s delay here is to wait for any orientation switch animation that happends at
+                        // the same time with the steup view navigation.
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                            if UIDevice.current.orientation != .portrait {
+                                UIDevice.current.rotateTo(oritation: .portrait)
+                            }
+                            UIDevice.current.endGeneratingDeviceOrientationNotifications()
+                        }
                     }
                 default:
                     if !UIDevice.current.isGeneratingDeviceOrientationNotifications {
