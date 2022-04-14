@@ -6,7 +6,7 @@
 import Foundation
 import FluentUI
 
-class ColorThemeProvider: ColorProviding {
+class ColorThemeProvider {
     let colorSchemeOverride: UIUserInterfaceStyle
 
     let primaryColor: UIColor
@@ -45,7 +45,9 @@ class ColorThemeProvider: ColorProviding {
         self.primaryColorTint20 = themeConfiguration?.primaryColorTint20 ?? Colors.Palette.communicationBlueTint20.color
         self.primaryColorTint30 = themeConfiguration?.primaryColorTint30 ?? Colors.Palette.communicationBlueTint30.color
     }
+}
 
+extension ColorThemeProvider: ColorProviding {
     func primaryColor(for window: UIWindow) -> UIColor? {
         return primaryColor
     }
@@ -77,5 +79,4 @@ class ColorThemeProvider: ColorProviding {
     func primaryShade30Color(for window: UIWindow) -> UIColor? {
         return primaryColor
     }
-
 }
