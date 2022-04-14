@@ -107,6 +107,7 @@ struct ParticipantTitleView: View {
             }
             if isMuted {
                 Icon(name: .micOff, size: mutedIconSize)
+                    .accessibility(hidden: true)
             }
         })
         .padding(.horizontal, isEmpty ? 0 : 4)
