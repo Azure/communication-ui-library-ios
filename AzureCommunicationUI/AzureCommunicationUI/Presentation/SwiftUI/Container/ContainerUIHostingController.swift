@@ -35,7 +35,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
         UIView.appearance().semanticContentAttribute = isRightToLeft ?
             .forceRightToLeft : .forceLeftToRight
         subscribeEnvironmentProperties(containerView: rootView)
-        haltSetupViewOrientation(containerView: rootView)
+//        haltSetupViewOrientation(containerView: rootView)
     }
 
     @objc required dynamic init?(coder aDecoder: NSCoder) {

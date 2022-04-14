@@ -109,9 +109,7 @@ struct SwiftUIDemoView: View {
 
     var startExperienceButton: some View {
         Button("Start Experience") {
-            getLocalAvatar { avatar in
-                startCallComposite(avatar)
-            }
+            startCallComposite()
         }
         .buttonStyle(DemoButtonStyle())
         .disabled(isStartExperienceDisabled)
@@ -133,7 +131,7 @@ struct SwiftUIDemoView: View {
 }
 
 extension SwiftUIDemoView {
-    func startCallComposite(_ avatar: UIImage?) {
+    func startCallComposite() {
         let link = getMeetingLink()
 
         let localizationConfig = LocalizationConfiguration(languageCode: envConfigSubject.languageCode,
@@ -145,8 +143,8 @@ extension SwiftUIDemoView {
         let callComposite = CallComposite(withOptions: callCompositeOptions)
         callComposite.setTarget(didFail: didFail)
 
-        let persona = CommunicationUIPersonaData(avatar,
-                                                 renderDisplayName: envConfigSubject.displayName)
+        let persona = CommunicationUIPersonaData(UIImage(named: envConfigSubject.avatarImageName),
+                                                 renderDisplayName: envConfigSubject.renderedDisplayName)
         let localOptions = CommunicationUILocalDataOptions(persona)
         if let credential = try? getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
@@ -201,18 +199,6 @@ extension SwiftUIDemoView {
         }
     }
 
-    private func getLocalAvatar(_ completion:@escaping (UIImage?) -> Void) {
-        let urlRequest = URL(string:
-"https://img.favpng.com/0/15/12/computer-icons-avatar-male-user-profile-png-favpng-ycgruUsQBHhtGyGKfw7fWCtgN.jpg")!
-        URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
-            if let error = error {
-                print(error)
-            } else if let data = data {
-                let avatar = UIImage(data: data)
-                completion(avatar)
-            }
-        }.resume()
-    }
     private func getMeetingLink() -> String {
         switch envConfigSubject.selectedMeetingType {
         case .groupCall:
