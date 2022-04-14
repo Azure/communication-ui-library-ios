@@ -35,7 +35,7 @@ struct ParticipantGridCellView: View {
                 }
             }
             .accessibilityElement(children: .combine)
-            .accessibility(label: Text(viewModel.accessibilityLabel))
+            .accessibilityLabel(Text(viewModel.accessibilityLabel))
         }
         .onReceive(viewModel.$videoViewModel) { model in
             let cachedVideoStreamId = displayedVideoStreamId
@@ -108,6 +108,7 @@ struct ParticipantTitleView: View {
             }
             if isMuted {
                 Icon(name: .micOff, size: mutedIconSize)
+                    .accessibility(hidden: true)
             }
         })
         .padding(.horizontal, isEmpty ? 0 : 4)

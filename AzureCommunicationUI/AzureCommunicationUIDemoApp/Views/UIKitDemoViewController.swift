@@ -136,7 +136,7 @@ class UIKitDemoViewController: UIViewController {
                                                            layoutDirection: envConfigSubject.isRightToLeft ?
                                                             .rightToLeft : .leftToRight)
 
-        let callCompositeOptions = CallCompositeOptions(theme: TeamsBrandConfig(),
+        let callCompositeOptions = CallCompositeOptions(theme: Theming(),
                                                         localization: localizationConfig)
 
         let callComposite = CallComposite(withOptions: callCompositeOptions)
@@ -418,6 +418,8 @@ class UIKitDemoViewController: UIViewController {
         startExperienceButton.sizeToFit()
         startExperienceButton.translatesAutoresizingMaskIntoConstraints = false
         startExperienceButton.addTarget(self, action: #selector(onStartExperienceBtnPressed), for: .touchUpInside)
+
+        startExperienceButton.accessibilityLabel = LocalizationKey.startExperienceAccessibilityLabel.rawValue
 
         // horizontal stack view for the settingButton and startExperienceButton
         let settingButtonHSpacer1 = UIView()

@@ -18,8 +18,8 @@ struct ErrorInfoView: View {
                     .padding([.top, .leading, .bottom])
                     .font(Fonts.footnote.font)
                     .foregroundColor(Color(StyleProvider.color.onWarning))
-                    .accessibility(label: Text(viewModel.accessibilityLabel))
-                    .accessibility(sortPriority: 1)
+                    .accessibilityLabel(Text(viewModel.accessibilityLabel))
+                    .accessibilitySortPriority(1)
                 Spacer()
                 Button(action: dismissAction) {
                     Text(viewModel.dismissContent)
@@ -27,9 +27,9 @@ struct ErrorInfoView: View {
                         .foregroundColor(Color(StyleProvider.color.onWarning))
                 }
                 .padding([.top, .bottom, .trailing])
-                .accessibility(label: Text(viewModel.dismissButtonAccessibilityLabel))
-                .accessibility(hint: Text(viewModel.dismissButtonAccessibilityHint))
-                .accessibility(sortPriority: 0)
+                .accessibilityLabel(Text(viewModel.dismissButtonAccessibilityLabel))
+                .accessibilityHint(Text(viewModel.dismissButtonAccessibilityHint))
+                .accessibilitySortPriority(0)
             }
             .background(Color(StyleProvider.color.warning))
             .cornerRadius(cornerRadius)

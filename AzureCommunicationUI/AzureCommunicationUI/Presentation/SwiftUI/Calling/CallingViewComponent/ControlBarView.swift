@@ -39,27 +39,31 @@ struct ControlBarView: View {
         .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
             audioDeviceSelectionListView
                 .accessibilityElement(children: .contain)
-                .accessibility(addTraits: .isModal)
+                .accessibilityAddTraits(.isModal)
         })
     }
 
     var videoButton: some View {
         IconButton(viewModel: viewModel.cameraButtonViewModel)
+            .accessibility(identifier: LocalizationKey.videoAccessibilityLabel.rawValue)
     }
 
     var micButton: some View {
         IconButton(viewModel: viewModel.micButtonViewModel)
             .disabled(viewModel.isMicDisabled())
+            .accessibility(identifier: LocalizationKey.micAccessibilityLabel.rawValue)
     }
 
     var audioDeviceButton: some View {
         IconButton(viewModel: viewModel.audioDeviceButtonViewModel)
             .background(SourceViewSpace(sourceView: audioDeviceButtonSourceView))
+            .accessibility(identifier: LocalizationKey.audioDeviceAccessibilityLabel.rawValue)
+
     }
 
     var hangUpButton: some View {
         IconButton(viewModel: viewModel.hangUpButtonViewModel)
-            .accessibility(identifier: "AzureCommunicationUI.CallingView.ControlButton.HangUp")
+            .accessibility(identifier: LocalizationKey.hangupAccessibilityLabel.rawValue)
     }
 
     var audioDeviceSelectionListView: some View {
