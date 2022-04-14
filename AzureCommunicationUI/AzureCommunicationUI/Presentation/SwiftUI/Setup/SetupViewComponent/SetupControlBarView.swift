@@ -41,15 +41,18 @@ struct SetupControlBarView: View {
 
     var cameraButton: some View {
         IconWithLabelButton(viewModel: viewModel.cameraButtonViewModel)
+            .accessibility(identifier: LocalizationKey.toggleVideoAccessibilityID.rawValue)
     }
 
     var micButton: some View {
         IconWithLabelButton(viewModel: viewModel.micButtonViewModel)
+            .accessibility(identifier: LocalizationKey.togglMicAccessibilityID.rawValue)
     }
 
     var audioDeviceButton: some View {
         IconWithLabelButton(viewModel: viewModel.audioDeviceButtonViewModel)
             .background(SourceViewSpace(sourceView: audioDeviceButtonSourceView))
+            .accessibility(identifier: LocalizationKey.deviceAccesibiiltyLabel.rawValue)
     }
 
     var audioDeviceSelectionListView: some View {
