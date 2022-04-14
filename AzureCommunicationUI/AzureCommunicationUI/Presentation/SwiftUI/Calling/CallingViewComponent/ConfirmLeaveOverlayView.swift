@@ -18,7 +18,6 @@ struct ConfirmLeaveOverlayView: View {
                     .frame(width: getButtonWidth(from: geometry))
                     .padding(.all)
                     .accessibilitySortPriority(1)
-                    .accessibilityIdentifier("AzureCommunicationUI.CallingView.PrimaryButton.LeaveCall")
                 cancelButton
                     .frame(width: getButtonWidth(from: geometry))
                     .padding(.horizontal)
@@ -42,9 +41,11 @@ struct ConfirmLeaveOverlayView: View {
 
     var leaveCallButton: some View {
         return PrimaryButton(viewModel: viewModel.getLeaveCallButtonViewModel())
+            .accessibility(identifier: LocalizationKey.leaveCallAccssibilityLabel.rawValue)
     }
 
     var cancelButton: some View {
         return PrimaryButton(viewModel: viewModel.getCancelButtonViewModel())
+            .accessibility(identifier: LocalizationKey.cancelAccssibilityLabel.rawValue)
     }
 }
