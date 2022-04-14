@@ -136,7 +136,7 @@ class UIKitDemoViewController: UIViewController {
                                                            layoutDirection: envConfigSubject.isRightToLeft ?
                                                             .rightToLeft : .leftToRight)
 
-        let callCompositeOptions = CallCompositeOptions(theme: TeamsBrandConfig(),
+        let callCompositeOptions = CallCompositeOptions(theme: Theming(),
                                                         localization: localizationConfig)
 
         let callComposite = CallComposite(withOptions: callCompositeOptions)
