@@ -146,7 +146,7 @@ extension SwiftUIDemoView {
         callComposite.setTarget(didFail: didFail)
 
         let persona = CommunicationUIPersonaData(avatar,
-                                                 displayName: envConfigSubject.displayName)
+                                                 renderDisplayName: envConfigSubject.displayName)
         let localOptions = CommunicationUILocalDataOptions(persona)
         if let credential = try? getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {

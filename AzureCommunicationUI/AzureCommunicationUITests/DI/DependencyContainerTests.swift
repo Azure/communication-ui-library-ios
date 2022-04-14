@@ -25,8 +25,11 @@ class DependencyContainerTests: XCTestCase {
         let callConfiguration = CallConfiguration(credential: communicationTokenCredential!,
                                                   groupId: groupId,
                                                   displayName: displayName)
+        let localPersonaData = CommunicationUIPersonaData(nil, renderDisplayName: nil)
+        let localDataOptions = CommunicationUILocalDataOptions(localPersonaData)
 
-        dependencyContainer.registerDependencies(callConfiguration)
+        dependencyContainer.registerDependencies(callConfiguration,
+                                                 localDataOptions: localDataOptions)
 
         XCTAssertNotNil(dependencyContainer.resolve() as CallingSDKWrapper)
         XCTAssertNotNil(dependencyContainer.resolve() as VideoViewManager)

@@ -8,31 +8,29 @@ import UIKit
 import AzureCommunicationCommon
 
 protocol AvatarViewManager {
-    func setLocalAvatar(_ image: UIImage)
-    func getLocalAvatar() -> UIImage?
+    func getLocalPersonaData() -> CommunicationUIPersonaData
 }
 
 public class CompositeAvatarViewManager: AvatarViewManager {
     private let localUserAvatarKey: String = "local"
 
     private let store: Store<AppState>
-    private var avatarCache = MappedSequence<String, Data>()
+    private(set) var avatarCache = MappedSequence<String, Data>()
+    private(set) var localDataOptions: CommunicationUILocalDataOptions?
 
-    init(store: Store<AppState>) {
+    init(store: Store<AppState>,
+         localDataOptions: CommunicationUILocalDataOptions?) {
         self.store = store
+        self.localDataOptions = localDataOptions
     }
 
-    func setLocalAvatar(_ image: UIImage) {
-        if let rawData = image.pngData() {
-            avatarCache.append(forKey: localUserAvatarKey, value: rawData)
+    func getLocalPersonaData() -> CommunicationUIPersonaData {
+        if let localPersona = localDataOptions?.localPersona {
+            return localPersona
+        } else {
+            let emptyPersona = CommunicationUIPersonaData(nil,
+                                                          renderDisplayName: "Unnamed Participant")
+            return emptyPersona
         }
-    }
-
-    func getLocalAvatar() -> UIImage? {
-        if let data = avatarCache.value(forKey: localUserAvatarKey) {
-            return UIImage(data: data)
-        }
-
-        return nil
     }
 }

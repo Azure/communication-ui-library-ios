@@ -9,11 +9,9 @@ import UIKit
 
 class AvatarManagerTests: XCTestCase {
     var mockStoreFactory = StoreFactoryMocking()
-    var avatarManager: AvatarViewManager!
 
     override func setUp() {
         super.setUp()
-        avatarManager = CompositeAvatarViewManager(store: mockStoreFactory.store)
     }
 
     func test_avatarManager_when_setLocalAvatar_then_getLocalAvatar_returnsSameUIImage() {
@@ -23,11 +21,18 @@ class AvatarManagerTests: XCTestCase {
             XCTFail("UIImage does not exist")
             return
         }
+        let mockAvatarManager = makeSUT(mockImage)
         let mockImageData = mockImage.cgImage?.bitsPerPixel
-
-        avatarManager.setLocalAvatar(mockImage)
-        let setAvatar = avatarManager.getLocalAvatar()
+        let setAvatar = mockAvatarManager.getLocalPersonaData().avatarImage
         let setAvatarImageData = setAvatar?.cgImage?.bitsPerPixel
         XCTAssertEqual(mockImageData, setAvatarImageData)
+    }
+
+    private func makeSUT(_ image: UIImage) -> AvatarViewManager {
+        let mockPersonaData = CommunicationUIPersonaData(image, renderDisplayName: "")
+        let mockDataOptions = CommunicationUILocalDataOptions(mockPersonaData)
+        return CompositeAvatarViewManager(store: mockStoreFactory.store,
+                                          localDataOptions: mockDataOptions)
+
     }
 }

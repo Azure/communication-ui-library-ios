@@ -19,8 +19,8 @@ public struct CommunicationUIPersonaData {
     let renderDisplayName: String?
 
     public init(_ avatar: UIImage?,
-                displayName: String? = nil) {
+                renderDisplayName: String? = nil) {
         self.avatarImage = avatar
-        self.renderDisplayName = displayName
+        self.renderDisplayName = renderDisplayName
     }
 }

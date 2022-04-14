@@ -30,7 +30,8 @@ final class DependencyContainer {
         register(DefaultLogger() as Logger)
     }
 
-    func registerDependencies(_ callConfiguration: CallConfiguration) {
+    func registerDependencies(_ callConfiguration: CallConfiguration,
+                              localDataOptions: CommunicationUILocalDataOptions?) {
         register(CallingSDKEventsHandler(logger: resolve()) as CallingSDKEventsHandling)
         register(ACSCallingSDKWrapper(logger: resolve(),
                                       callingEventsHandler: resolve(),
@@ -43,7 +44,8 @@ final class DependencyContainer {
                                   logger: resolve()) as NavigationRouter)
         register(AppAccessibilityProvider() as AccessibilityProvider)
         register(AppLocalizationProvider(logger: resolve()) as LocalizationProvider)
-        register(CompositeAvatarViewManager(store: resolve()) as AvatarViewManager)
+        register(CompositeAvatarViewManager(store: resolve(),
+                                            localDataOptions: localDataOptions) as AvatarViewManager)
         register(ACSCompositeViewModelFactory(logger: resolve(),
                                               store: resolve(),
                                               localizationProvider: resolve(),
