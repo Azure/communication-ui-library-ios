@@ -8,7 +8,7 @@ import FluentUI
 
 struct PreviewAreaView: View {
     @ObservedObject var viewModel: PreviewAreaViewModel
-    let localPersonaData: CommunicationUIPersonaData
+    let localPersonaData: CommunicationUIPersonaData?
     let viewManager: VideoViewManager
 
     var body: some View {

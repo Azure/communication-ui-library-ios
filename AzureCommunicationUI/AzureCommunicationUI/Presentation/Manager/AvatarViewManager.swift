@@ -8,12 +8,10 @@ import UIKit
 import AzureCommunicationCommon
 
 protocol AvatarViewManager {
-    func getLocalPersonaData() -> CommunicationUIPersonaData
+    func getLocalPersonaData() -> CommunicationUIPersonaData?
 }
 
 public class CompositeAvatarViewManager: AvatarViewManager {
-    private let localUserAvatarKey: String = "local"
-
     private let store: Store<AppState>
     private(set) var avatarCache = MappedSequence<String, Data>()
     private(set) var localDataOptions: CommunicationUILocalDataOptions?
@@ -24,13 +22,11 @@ public class CompositeAvatarViewManager: AvatarViewManager {
         self.localDataOptions = localDataOptions
     }
 
-    func getLocalPersonaData() -> CommunicationUIPersonaData {
-        if let localPersona = localDataOptions?.localPersona {
-            return localPersona
-        } else {
-            let emptyPersona = CommunicationUIPersonaData(nil,
-                                                          renderDisplayName: "Unnamed Participant")
-            return emptyPersona
+    func getLocalPersonaData() -> CommunicationUIPersonaData? {
+        guard let localPersona = localDataOptions?.localPersona else {
+            return nil
         }
+
+        return localPersona
     }
 }
