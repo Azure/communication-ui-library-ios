@@ -78,7 +78,7 @@ struct LocalVideoView: View {
                     }
                 } else {
                     VStack(alignment: .center, spacing: 5) {
-                        CompositeAvatar(displayName: .constant(personaData?.renderDisplayName ?? ""),
+                        CompositeAvatar(displayName: $viewModel.displayName,
                                         isSpeaking: false,
                                         avatarSize: viewType.avatarSize,
                                         avatarImage: personaData?.avatarImage)

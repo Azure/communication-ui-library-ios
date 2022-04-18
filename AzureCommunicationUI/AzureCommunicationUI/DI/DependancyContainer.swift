@@ -39,7 +39,8 @@ final class DependencyContainer {
         register(VideoViewManager(callingSDKWrapper: resolve(), logger: resolve()) as VideoViewManager)
         register(ACSCallingService(logger: resolve(),
                                    callingSDKWrapper: resolve()) as CallingService)
-        register(makeStore(displayName: localDataOptions?.localPersona.renderDisplayName) as Store<AppState>)
+        let displayName = localDataOptions?.localPersona.renderDisplayName ?? callConfiguration.displayName
+        register(makeStore(displayName: displayName) as Store<AppState>)
         register(NavigationRouter(store: resolve(),
                                   logger: resolve()) as NavigationRouter)
         register(AppAccessibilityProvider() as AccessibilityProvider)
