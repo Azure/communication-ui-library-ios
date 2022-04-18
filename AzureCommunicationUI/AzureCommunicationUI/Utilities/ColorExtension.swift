@@ -34,9 +34,7 @@ enum CompositeColor: String {
 
 extension UIColor {
     static func compositeColor(_ name: CompositeColor) -> UIColor {
-
         return getAssetsColor(named: name.rawValue)
-
     }
 
     private static func getAssetsColor(named: String) -> UIColor {

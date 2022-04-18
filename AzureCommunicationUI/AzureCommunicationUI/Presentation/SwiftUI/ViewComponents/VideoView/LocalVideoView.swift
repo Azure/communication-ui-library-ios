@@ -93,6 +93,7 @@ struct LocalVideoView: View {
                     }
                     .frame(width: geometry.size.width,
                            height: geometry.size.height)
+                    .accessibilityElement(children: .combine)
                 }
             }
         }.onReceive(viewModel.$localVideoStreamId) {
