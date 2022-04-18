@@ -155,6 +155,6 @@ class CallingViewModel: ObservableObject {
         let displayName = state.localUserState.displayName ?? ""
         let isLocalUserInfoNotEmpty = isLocalCameraOn || !displayName.isEmpty
         isVideoGridViewAccessibilityAvailable = !isLobbyOverlayDisplayed &&
-        !isParticipantGridDisplayed && isLocalUserInfoNotEmpty
+        ((!isParticipantGridDisplayed && isLocalUserInfoNotEmpty) || isParticipantGridDisplayed)
     }
 }

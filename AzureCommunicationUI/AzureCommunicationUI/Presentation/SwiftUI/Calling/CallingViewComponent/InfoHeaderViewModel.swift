@@ -18,9 +18,7 @@ class InfoHeaderViewModel: ObservableObject {
     private var infoHeaderDismissTimer: Timer?
     private var participantsCount: Int = 0
     private var callingStatus: CallingStatus = .none
-    private var shouldDisplayInfoHeader: Bool {
-        callingStatus != .inLobby
-    }
+    private var shouldDisplayInfoHeader: Bool!
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
@@ -48,12 +46,8 @@ class InfoHeaderViewModel: ObservableObject {
                 }
                 self.showParticipantListButtonTapped()
         }
-        isVoiceOverEnabled = accessibilityProvider.isVoiceOverEnabled
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
-        // no need to hide the info view when VoiceOver is on
-        if !isVoiceOverEnabled {
-            resetTimer()
-        }
+        updateInfoHeaderAvailability()
     }
 
     func showParticipantListButtonTapped() {
@@ -79,8 +73,9 @@ class InfoHeaderViewModel: ObservableObject {
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState) {
         callingStatus = callingState.status
-        if isVoiceOverEnabled {
-            isInfoHeaderDisplayed = shouldDisplayInfoHeader
+        let newDisplayInfoHeaderValue = callingStatus != .inLobby
+        if isVoiceOverEnabled && newDisplayInfoHeaderValue != shouldDisplayInfoHeader {
+            updateInfoHeaderAvailability()
         }
         if participantsCount != remoteParticipantsState.participantInfoList.count {
             participantsCount = remoteParticipantsState.participantInfoList.count
@@ -121,15 +116,9 @@ class InfoHeaderViewModel: ObservableObject {
                                                            userInfo: nil,
                                                            repeats: false)
     }
-}
 
-extension InfoHeaderViewModel: AccessibilityProviderNotificationsObserver {
-    func didChangeVoiceOverStatus(_ notification: NSNotification) {
-        // the notification may be sent a couple of times for the same value
-        guard isVoiceOverEnabled != accessibilityProvider.isVoiceOverEnabled else {
-            return
-        }
-
+    private func updateInfoHeaderAvailability() {
+        shouldDisplayInfoHeader = callingStatus != .inLobby
         isVoiceOverEnabled = accessibilityProvider.isVoiceOverEnabled
         // invalidating timer is required for setting the next timer and when VoiceOver is enabled
         infoHeaderDismissTimer?.invalidate()
@@ -138,5 +127,15 @@ extension InfoHeaderViewModel: AccessibilityProviderNotificationsObserver {
         } else if shouldDisplayInfoHeader {
             displayWithTimer()
         }
+    }
+}
+
+extension InfoHeaderViewModel: AccessibilityProviderNotificationsObserver {
+    func didChangeVoiceOverStatus(_ notification: NSNotification) {
+        guard isVoiceOverEnabled != accessibilityProvider.isVoiceOverEnabled else {
+            return
+        }
+
+        updateInfoHeaderAvailability()
     }
 }
