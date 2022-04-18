@@ -144,26 +144,33 @@ extension SwiftUIDemoView {
         let callComposite = CallComposite(withOptions: callCompositeOptions)
         callComposite.setTarget(didFail: didFail)
 
+        let persona = CommunicationUIPersonaData(UIImage(named: envConfigSubject.avatarImageName),
+                                                 renderDisplayName: envConfigSubject.renderedDisplayName.isEmpty ?
+                                                 nil : envConfigSubject.renderedDisplayName)
+        let localOptions = CommunicationUILocalDataOptions(persona)
         if let credential = try? getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
                 if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(with: GroupCallOptions(credential: credential,
-                                                                groupId: uuid))
+                    callComposite.launch(with: GroupCallOptions(credential: credential, groupId: uuid),
+                                         localOptions: localOptions)
                 } else {
                     callComposite.launch(with: GroupCallOptions(credential: credential,
                                                                 groupId: uuid,
-                                                                displayName: envConfigSubject.displayName))
+                                                                displayName: envConfigSubject.displayName),
+                                         localOptions: localOptions)
                 }
             case .teamsMeeting:
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(with: TeamsMeetingOptions(credential: credential,
-                                                                   meetingLink: link))
+                                                                   meetingLink: link),
+                                         localOptions: localOptions)
                 } else {
                     callComposite.launch(with: TeamsMeetingOptions(credential: credential,
                                                                    meetingLink: link,
-                                                                   displayName: envConfigSubject.displayName))
+                                                                   displayName: envConfigSubject.displayName),
+                                         localOptions: localOptions)
                 }
             }
         } else {

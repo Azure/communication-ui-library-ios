@@ -5,6 +5,7 @@
 
 import Foundation
 import AzureCommunicationUI
+import SwiftUI
 
 enum EnvConfig: String {
     case acsToken
@@ -26,6 +27,8 @@ class EnvConfigSubject: ObservableObject {
     @Published var acsToken: String = EnvConfig.acsToken.value()
     @Published var acsTokenUrl: String = EnvConfig.acsTokenUrl.value()
     @Published var displayName: String = EnvConfig.displayName.value()
+    @Published var avatarImageName: String = ""
+    @Published var renderedDisplayName: String = ""
     @Published var groupCallId: String = EnvConfig.groupCallId.value()
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
 

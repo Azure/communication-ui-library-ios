@@ -42,7 +42,7 @@ public class CallComposite {
         logger = dependencyContainer.resolve() as Logger
         logger?.debug("launch composite experience")
 
-        dependencyContainer.registerDependencies(callConfiguration)
+        dependencyContainer.registerDependencies(callConfiguration, localDataOptions: localOptions)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProvider
         setupColorTheming()
         setupLocalization(with: localizationProvider)

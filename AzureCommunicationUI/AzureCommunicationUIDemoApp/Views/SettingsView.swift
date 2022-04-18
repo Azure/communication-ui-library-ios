@@ -9,12 +9,13 @@ import AzureCommunicationCalling
 
 struct SettingsView: View {
     @State private var isLocalePickerDisplayed: Bool = false
+    @State private var selectedAvatarImage: Image?
     @ObservedObject var envConfigSubject: EnvConfigSubject
     var dismissAction: (() -> Void)
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
-
+    let avatarChoices: [String] = ["cat", "fox", "koala", "monkey", "mouse", "octopus"]
     var body: some View {
         ZStack {
             VStack {
@@ -24,6 +25,7 @@ struct SettingsView: View {
                 }
                 Text("UI Library - Settings")
                 localizationSettings
+                avatarSettings
                 Spacer()
             }
             LocalePicker(selection: $envConfigSubject.languageCode,
@@ -63,6 +65,33 @@ struct SettingsView: View {
             .padding(.horizontal, horizontalPadding)
         }
         .padding(.vertical, verticalPadding)
+        .padding(.horizontal, horizontalPadding)
+    }
+
+    var avatarSettings: some View {
+        VStack {
+            Text("Avatars")
+                .bold()
+            HStack() {
+                ForEach(avatarChoices, id: \.self) { imgName in
+                    Button {
+                        if envConfigSubject.avatarImageName == imgName {
+                            envConfigSubject.avatarImageName = ""
+                        } else {
+                            envConfigSubject.avatarImageName = imgName
+                        }
+                    } label: {
+                        Image(imgName)
+                    }
+                    .border(envConfigSubject.avatarImageName == imgName ? Color.blue : Color.clear)
+                }
+                Spacer()
+            }
+            TextField("Rendered Display Name", text: $envConfigSubject.renderedDisplayName)
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
+                .textFieldStyle(.roundedBorder)
+        }
         .padding(.horizontal, horizontalPadding)
     }
 }
