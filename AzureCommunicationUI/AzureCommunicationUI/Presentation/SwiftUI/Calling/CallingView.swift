@@ -191,8 +191,9 @@ struct CallingView: View {
     }
 
     private func getInitialPipPosition(containerBounds: CGRect, pipSize: CGSize) -> CGPoint {
-        // Calculate correct position
-        return CGPoint(x: containerBounds.midX, y: containerBounds.midY)
+        return CGPoint(
+            x: getContainerBounds(bounds: containerBounds, pipSize: pipSize).maxX,
+            y: getContainerBounds(bounds: containerBounds, pipSize: pipSize).maxY)
     }
 
     private func getRotatedPipPosition(currentPipPosition: CGPoint) -> CGPoint {
@@ -216,12 +217,20 @@ struct CallingView: View {
 
         if bounds.contains(requestedPipPosition) {
             boundedPipPosition = requestedPipPosition
-        } else if (requestedPipPosition.x > bounds.minX && requestedPipPosition.x < bounds.maxX)
-            && (requestedPipPosition.y < bounds.minY || requestedPipPosition.y > bounds.maxY) {
+        } else if requestedPipPosition.x > bounds.minX && requestedPipPosition.x < bounds.maxX {
             boundedPipPosition.x = requestedPipPosition.x
-        } else if (requestedPipPosition.x < bounds.minX || requestedPipPosition.x > bounds.maxX)
-            && (requestedPipPosition.y > bounds.minY && requestedPipPosition.y < bounds.maxY) {
+            if requestedPipPosition.y < bounds.minY {
+                boundedPipPosition.y = bounds.minY
+            } else if requestedPipPosition.y > bounds.maxY {
+                boundedPipPosition.y = bounds.maxY
+            }
+        } else if requestedPipPosition.y > bounds.minY && requestedPipPosition.y < bounds.maxY {
             boundedPipPosition.y = requestedPipPosition.y
+            if requestedPipPosition.x < bounds.minX {
+                boundedPipPosition.x = bounds.minX
+            } else if requestedPipPosition.x > bounds.maxX {
+                boundedPipPosition.x = bounds.maxX
+            }
         }
 
         return boundedPipPosition
