@@ -142,9 +142,10 @@ class UIKitDemoViewController: UIViewController {
         let callComposite = CallComposite(withOptions: callCompositeOptions)
 
         callComposite.setTarget(didFail: didFail)
+        let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
+                                nil : envConfigSubject.renderedDisplayName
         let persona = CommunicationUIPersonaData(UIImage(named: envConfigSubject.avatarImageName),
-                                                 renderDisplayName: envConfigSubject.renderedDisplayName.isEmpty ?
-                                                 nil : envConfigSubject.renderedDisplayName)
+                                                 renderDisplayName: renderDisplayName)
         let localOptions = CommunicationUILocalDataOptions(persona)
 
         if let communicationTokenCredential = try? getTokenCredential() {

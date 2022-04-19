@@ -74,16 +74,16 @@ struct SettingsView: View {
                 .bold()
             HStack() {
                 ForEach(avatarChoices, id: \.self) { imgName in
-                    Button {
-                        if envConfigSubject.avatarImageName == imgName {
-                            envConfigSubject.avatarImageName = ""
-                        } else {
-                            envConfigSubject.avatarImageName = imgName
-                        }
-                    } label: {
-                        Image(imgName)
-                    }
-                    .border(envConfigSubject.avatarImageName == imgName ? Color.blue : Color.clear)
+                    Button(
+                        action: {
+                            if envConfigSubject.avatarImageName == imgName {
+                                envConfigSubject.avatarImageName = ""
+                            } else {
+                                envConfigSubject.avatarImageName = imgName
+                            }
+                        },
+                        label: { Image(imgName) }
+                    ).border(envConfigSubject.avatarImageName == imgName ? Color.blue : Color.clear)
                 }
                 Spacer()
             }
