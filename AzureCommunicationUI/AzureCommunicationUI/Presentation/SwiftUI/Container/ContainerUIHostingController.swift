@@ -45,6 +45,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
     override func viewDidLoad() {
         super.viewDidLoad()
         UIApplication.shared.isIdleTimerDisabled = true
+        overrideUserInterfaceStyle = StyleProvider.color.colorSchemeOverride
     }
 
     override func viewDidDisappear(_ animated: Bool) {
