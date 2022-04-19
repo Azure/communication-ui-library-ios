@@ -8,6 +8,7 @@ import FluentUI
 
 struct CallingView: View {
     @ObservedObject var viewModel: CallingViewModel
+    let avatarManager: AvatarViewManager
     let viewManager: VideoViewManager
 
     let leaveCallConfirmationListSourceView = UIView()
@@ -82,6 +83,7 @@ struct CallingView: View {
 
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
+                           personaData: avatarManager.getLocalPersonaData(),
                            viewManager: viewManager,
                            viewType: .localVideoPip)
                 .frame(width: frameWidth, height: frameHeight, alignment: .center)
@@ -118,6 +120,7 @@ struct CallingView: View {
     var localVideoFullscreenView: some View {
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
+                           personaData: avatarManager.getLocalPersonaData(),
                            viewManager: viewManager,
                            viewType: .localVideofull)
                 .background(Color(StyleProvider.color.surface))

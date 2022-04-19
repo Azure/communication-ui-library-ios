@@ -56,6 +56,7 @@ enum LocalVideoViewType {
 
 struct LocalVideoView: View {
     @ObservedObject var viewModel: LocalVideoViewModel
+    var personaData: CommunicationUIPersonaData?
     let viewManager: VideoViewManager
     let viewType: LocalVideoViewType
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
@@ -79,7 +80,8 @@ struct LocalVideoView: View {
                     VStack(alignment: .center, spacing: 5) {
                         CompositeAvatar(displayName: $viewModel.displayName,
                                         isSpeaking: false,
-                                        avatarSize: viewType.avatarSize)
+                                        avatarSize: viewType.avatarSize,
+                                        avatarImage: personaData?.avatarImage)
                         if viewType.showDisplayNameTitleView {
                             Spacer().frame(height: 10)
                             ParticipantTitleView(displayName: $viewModel.displayName,
