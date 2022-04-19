@@ -86,6 +86,7 @@ struct ControlBarView: View {
         CompositeLeaveCallConfirmationList(isPresented: $viewModel.isConfirmLeaveListDisplayed,
                                            viewModel: viewModel.getLeaveCallConfirmationListViewModel(),
                                            sourceView: leaveCallConfirmationListSourceView)
+            .modifier(LockPhoneOrientation())
     }
 }
 
