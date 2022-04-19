@@ -72,7 +72,7 @@ struct SettingsView: View {
         VStack {
             Text("Avatars")
                 .bold()
-            HStack() {
+            HStack {
                 ForEach(avatarChoices, id: \.self) { imgName in
                     Button(
                         action: {
