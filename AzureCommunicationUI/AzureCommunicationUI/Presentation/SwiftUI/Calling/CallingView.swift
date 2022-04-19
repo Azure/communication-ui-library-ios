@@ -13,8 +13,8 @@ struct CallingView: View {
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
 
-    @State private var pipPosition: CGPoint? = CGPoint()
-    @State private var pipSize: CGSize? = CGSize.zero
+    @State private var pipPosition = CGPoint()
+    @State private var pipSize = CGSize()
 
     var safeAreaIgnoreArea: Edge.Set {
         return getSizeClass() != .iphoneLandscapeScreenSize ? []: [.bottom]
@@ -70,7 +70,7 @@ struct CallingView: View {
                             .onAppear {
                                 self.pipPosition = getInitialPipPosition(
                                     containerBounds: geometry.frame(in: .local),
-                                    pipSize: self.pipSize!)
+                                    pipSize: self.pipSize)
                             }
                     }
                 }
@@ -113,15 +113,15 @@ struct CallingView: View {
                     .onPreferenceChange(BoundsPreferenceKey.self) {
                         self.pipSize = $0.size
                     }
-                    .position(self.pipPosition!)
+                    .position(self.pipPosition)
                     .gesture(
                         DragGesture()
                             .onChanged { value in
                                 let containerBounds = getContainerBounds(
                                     bounds: geometry.frame(in: .local),
-                                    pipSize: pipSize!)
+                                    pipSize: self.pipSize)
                                 self.pipPosition = getBoundedPipPosition(
-                                    currentPipPosition: self.pipPosition!,
+                                    currentPipPosition: self.pipPosition,
                                     requestedPipPosition: value.location,
                                     bounds: containerBounds)
                             }
