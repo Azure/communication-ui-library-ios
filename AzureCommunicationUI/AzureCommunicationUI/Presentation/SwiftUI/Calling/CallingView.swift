@@ -13,6 +13,9 @@ struct CallingView: View {
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
 
+    @State private var pipPosition: CGPoint? = CGPoint()
+    @State private var pipSize: CGSize? = CGSize.zero
+
     var safeAreaIgnoreArea: Edge.Set {
         return getSizeClass() != .iphoneLandscapeScreenSize ? []: [.bottom]
     }
@@ -52,29 +55,36 @@ struct CallingView: View {
 
     var containerView: some View {
         Group {
-            ZStack(alignment: .bottomTrailing) {
-                videoGridView
-                    .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
-                topAlertAreaView
-                    .accessibilityElement(children: .contain)
-                    .accessibilitySortPriority(1)
-                    .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
-                if viewModel.isParticipantGridDisplayed {
-                    localVideoPipView
-                        .padding(.horizontal, -12)
-                        .padding(.vertical, -12)
+            GeometryReader { geometry in
+                ZStack(alignment: .bottomTrailing) {
+                    videoGridView
+                        .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
+                    topAlertAreaView
+                        .accessibilityElement(children: .contain)
+                        .accessibilitySortPriority(1)
+                        .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
+                    if viewModel.isParticipantGridDisplayed {
+                        draggableVideoPipView
+                            .padding(.horizontal, -12)
+                            .padding(.vertical, -12)
+                            .onAppear {
+                                self.pipPosition = getInitialPipPosition(
+                                    containerBounds: geometry.frame(in: .local),
+                                    pipSize: self.pipSize!)
+                            }
+                    }
                 }
+                .contentShape(Rectangle())
+                .animation(.linear(duration: 0.167))
+                .onTapGesture(perform: {
+                    viewModel.infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
+                })
+                .modifier(PopupModalView(isPresented: viewModel.isLobbyOverlayDisplayed) {
+                    LobbyOverlayView(viewModel: viewModel.getLobbyOverlayViewModel())
+                        .accessibilityElement(children: .contain)
+                        .accessibilityHidden(!viewModel.isLobbyOverlayDisplayed)
+                })
             }
-            .contentShape(Rectangle())
-            .animation(.linear(duration: 0.167))
-            .onTapGesture(perform: {
-                viewModel.infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
-            })
-            .modifier(PopupModalView(isPresented: viewModel.isLobbyOverlayDisplayed) {
-                LobbyOverlayView(viewModel: viewModel.getLobbyOverlayViewModel())
-                    .accessibilityElement(children: .contain)
-                    .accessibilityHidden(!viewModel.isLobbyOverlayDisplayed)
-            })
         }
     }
 
@@ -92,6 +102,31 @@ struct CallingView: View {
                 .background(Color(StyleProvider.color.backgroundColor))
                 .clipShape(RoundedRectangle(cornerRadius: shapeCornerRadius))
                 .padding()
+        }
+    }
+
+    var draggableVideoPipView: some View {
+        return Group {
+            GeometryReader { geometry in
+                localVideoPipView
+                    .anchorPreference(key: BoundsPreferenceKey.self, value: .bounds) { geometry[$0] }
+                    .onPreferenceChange(BoundsPreferenceKey.self) {
+                        self.pipSize = $0.size
+                    }
+                    .position(self.pipPosition!)
+                    .gesture(
+                        DragGesture()
+                            .onChanged { value in
+                                let containerBounds = getContainerBounds(
+                                    bounds: geometry.frame(in: .local),
+                                    pipSize: pipSize!)
+                                self.pipPosition = getBoundedPipPosition(
+                                    currentPipPosition: self.pipPosition!,
+                                    requestedPipPosition: value.location,
+                                    bounds: containerBounds)
+                            }
+                    )
+            }
         }
     }
 
@@ -153,5 +188,49 @@ struct CallingView: View {
         default:
             return .ipadScreenSize
         }
+    }
+
+    private func getInitialPipPosition(containerBounds: CGRect, pipSize: CGSize) -> CGPoint {
+        // Calculate correct position
+        return CGPoint(x: containerBounds.midX, y: containerBounds.midY)
+    }
+
+    private func getRotatedPipPosition(currentPipPosition: CGPoint) -> CGPoint {
+        // Calculate new pipPosition after screen rotation
+        return currentPipPosition
+    }
+
+    private func getContainerBounds(bounds: CGRect, pipSize: CGSize) -> CGRect {
+        return bounds.inset(by: UIEdgeInsets(
+                top: pipSize.height / 2.0,
+                left: pipSize.width / 2.0,
+                bottom: pipSize.height / 2.0,
+                right: pipSize.width / 2.0))
+    }
+
+    private func getBoundedPipPosition(
+        currentPipPosition: CGPoint,
+        requestedPipPosition: CGPoint,
+        bounds: CGRect) -> CGPoint {
+        var boundedPipPosition = currentPipPosition
+
+        if bounds.contains(requestedPipPosition) {
+            boundedPipPosition = requestedPipPosition
+        } else if (requestedPipPosition.x > bounds.minX && requestedPipPosition.x < bounds.maxX)
+            && (requestedPipPosition.y < bounds.minY || requestedPipPosition.y > bounds.maxY) {
+            boundedPipPosition.x = requestedPipPosition.x
+        } else if (requestedPipPosition.x < bounds.minX || requestedPipPosition.x > bounds.maxX)
+            && (requestedPipPosition.y > bounds.minY && requestedPipPosition.y < bounds.maxY) {
+            boundedPipPosition.y = requestedPipPosition.y
+        }
+
+        return boundedPipPosition
+    }
+}
+
+private struct BoundsPreferenceKey: PreferenceKey {
+    static var defaultValue: CGRect = .zero
+    static func reduce(value: inout CGRect, nextValue: () -> CGRect) {
+        value = nextValue()
     }
 }
