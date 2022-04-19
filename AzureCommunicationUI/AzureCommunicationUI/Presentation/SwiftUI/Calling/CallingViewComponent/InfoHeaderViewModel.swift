@@ -18,7 +18,7 @@ class InfoHeaderViewModel: ObservableObject {
     private var infoHeaderDismissTimer: Timer?
     private var participantsCount: Int = 0
     private var callingStatus: CallingStatus = .none
-    private var shouldDisplayInfoHeader: Bool!
+    private var shouldDisplayInfoHeader: Bool = true
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
