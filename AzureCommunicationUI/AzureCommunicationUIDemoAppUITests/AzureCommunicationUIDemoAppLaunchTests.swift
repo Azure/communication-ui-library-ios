@@ -26,7 +26,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .leaveCallAccssibilityLabel, shouldWait: true)
+        leaveCall()
     }
 
     func testCallCompositeWithExpiredToken() {
@@ -46,7 +46,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         toggleSetupScreenControlButtons()
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .leaveCallAccssibilityLabel, shouldWait: true)
+        leaveCall()
     }
 
     func testCallCompositeJoinCallTeamsCallSwiftUI() {
@@ -56,7 +56,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         toggleSetupScreenControlButtons()
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .leaveCallAccssibilityLabel, shouldWait: true)
+        leaveCall()
     }
 
     func testCallCompositeJoinCallGroupCallUIKit() {
@@ -65,7 +65,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         toggleSetupScreenControlButtons()
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .leaveCallAccssibilityLabel, shouldWait: true)
+        leaveCall()
     }
 
     func testCallCompositeJoinCallTeamsCallUIKit() {
@@ -75,7 +75,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         toggleSetupScreenControlButtons()
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .leaveCallAccssibilityLabel, shouldWait: true)
+        leaveCall()
     }
 
     func testLaunchPerformance() throws {
@@ -104,6 +104,12 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         app.tables.firstMatch.swipeDown()
     }
 
+    /// Toggles the leave call overlay  in the calling screen
+    private func leaveCall() {
+        app.tables.cells.firstMatch.tap()
+        XCTAssertTrue(app.buttons[LocalizationKey.startExperienceAccessibilityLabel.rawValue]
+                        .waitForExistence(timeout: 3))
+    }
 }
 
 extension AzureCommunicationUIDemoAppLaunchTests {
