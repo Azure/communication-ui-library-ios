@@ -4,6 +4,9 @@
 - Updated minimum iOS version to 14.0. [#103](https://github.com/Azure/communication-ui-library-ios/pull/103)
 - Implemented new local participant avatar parameter into launch method. [#131](https://github.com/Azure/communication-ui-library-ios/pull/131)
 
+### Bugs Fixed
+- Fixed screen share not rendering in large screen device. [#128](https://github.com/Azure/communication-ui-library-ios/pull/128)
+
 ## 1.0.0-beta.2 (2022-04-04)
 ### New Features
 - Updated joining experience in setup view. [#44](https://github.com/Azure/communication-ui-library-ios/pull/44)
