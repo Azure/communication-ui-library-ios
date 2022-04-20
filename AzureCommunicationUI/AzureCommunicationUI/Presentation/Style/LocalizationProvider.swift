@@ -31,7 +31,7 @@ class AppLocalizationProvider: LocalizationProvider {
         guard let preferredLanguageId = Locale.preferredLanguages.first else {
             return
         }
-        let preferredLanguageCode = removeLastLanguageComponent(preferredLanguageId)
+        let preferredLanguageCode = removeRegionCode(preferredLanguageId)
 
         if self.isLanguageSupportedByApp(preferredLanguageId) {
             self.languageIdentifier = preferredLanguageId
@@ -56,7 +56,7 @@ class AppLocalizationProvider: LocalizationProvider {
         }
 
         languageIdentifier = localeConfig.languageCode
-        languageCode = removeLastLanguageComponent(localeConfig.languageCode)
+        languageCode = removeRegionCode(localeConfig.languageCode)
         localizableFilename = localeConfig.localizableFilename
         isRightToLeft = localeConfig.layoutDirection == .rightToLeft
     }
@@ -114,7 +114,7 @@ class AppLocalizationProvider: LocalizationProvider {
         return nil
     }
 
-    private func removeLastLanguageComponent(_ languageId: String) -> String {
+    private func removeRegionCode(_ languageId: String) -> String {
         let languageComponents = languageId
             .replacingOccurrences(of: "_", with: "-")
             .components(separatedBy: "-")
