@@ -37,6 +37,36 @@ class XCUITestBase: XCTestCase {
     }
 
     var app: XCUIApplication!
+
+    override func setUp() {
+        super.setUp()
+        app = XCUIApplication()
+        app.launch()
+        setupSystemPromptMonitor()
+    }
+
+    // MARK: Private / helper functions
+
+    /// Responds to app permission prompts and system prompt
+    private func setupSystemPromptMonitor() {
+        addUIInterruptionMonitor(withDescription: "System Dialog") { _ in
+            let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+            let allowBtn = springboard.buttons["Allow"]
+            if allowBtn.waitForExistence(timeout: 2) {
+                allowBtn.tap()
+                return true
+            }
+
+            let okBtn = springboard.buttons["OK"]
+            if okBtn.waitForExistence(timeout: 2) {
+                okBtn.tap()
+                return true
+            }
+
+            return true
+        }
+        app.tap()
+    }
 }
 
 extension XCUITestBase {

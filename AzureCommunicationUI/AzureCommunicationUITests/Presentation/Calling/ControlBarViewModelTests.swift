@@ -13,6 +13,9 @@ class ControlBarViewModelTests: XCTestCase {
     var cancellable: CancelBag!
     var logger: Logger!
     var factoryMocking: CompositeViewModelFactoryMocking!
+    var localizationProvider: LocalizationProviderMocking!
+
+    private let timeout: TimeInterval = 10.0
 
     override func setUp() {
         super.setUp()
@@ -20,6 +23,57 @@ class ControlBarViewModelTests: XCTestCase {
         cancellable = CancelBag()
         logger = LoggerMocking()
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        localizationProvider = LocalizationProviderMocking()
+    }
+
+    // MARK: Leave Call / Cancel test
+    func test_controlBarViewModel_getLeaveCallButtonViewModel_shouldReturnLeaveCallButtonViewModel() {
+        let sut = makeSUT()
+        let leaveCallButtonViewModel = sut.getLeaveCallButtonViewModel()
+        let expectedButtonLabel = "Leave"
+
+        XCTAssertEqual(leaveCallButtonViewModel.title, expectedButtonLabel)
+    }
+
+    func test_controlBarViewModel_getLeaveCallButtonViewModel_shouldReturnCancelButtonViewModel() {
+        let sut = makeSUT()
+        let leaveCallButtonViewModel = sut.getCancelButtonViewModel()
+        let expectedButtonLabel = "Cancel"
+
+        XCTAssertEqual(leaveCallButtonViewModel.title, expectedButtonLabel)
+    }
+
+    func test_controlBarViewModel_CancellButtonLabel_from_LocalizationMocking() {
+        let sut = makeSUTLocalizationMocking()
+        let cancelButtonViewModel = sut.getCancelButtonViewModel()
+        let expectedButtonLabelKey = "AzureCommunicationUI.CallingView.Overlay.Cancel"
+
+        XCTAssertEqual(cancelButtonViewModel.title, expectedButtonLabelKey)
+        XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
+    }
+
+    func test_controlBarViewModel_leaveCallButtonLabel_from_LocalizationMocking() {
+        let sut = makeSUTLocalizationMocking()
+        let leaveCallButtonViewModel = sut.getLeaveCallButtonViewModel()
+        let expectedButtonLabelKey = "AzureCommunicationUI.CallingView.Overlay.LeaveCall"
+
+        XCTAssertEqual(leaveCallButtonViewModel.title, expectedButtonLabelKey)
+        XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
+    }
+
+    func test_controlBarViewModel_dismissConfirmLeaveOverlay_when_isConfirmLeaveListDisplayedTrue_shouldBecomeFalse() {
+        let sut = makeSUT()
+        sut.isConfirmLeaveListDisplayed = true
+        sut.dismissConfirmLeaveOverlay()
+
+        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
+    }
+
+    func test_controlBarViewModel_endCall_when_confirmLeaveListIsDisplayed_shouldBecomeTrue() {
+        let sut = makeSUT()
+        sut.isConfirmLeaveListDisplayed = false
+        sut.endCallButtonTapped()
+        XCTAssertTrue(sut.isConfirmLeaveListDisplayed)
     }
 
     // MARK: Microphone tests
@@ -525,7 +579,16 @@ extension ControlBarViewModelTests {
     func makeSUT() -> ControlBarViewModel {
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
-                                   localizationProvider: LocalizationProviderMocking(),
+                                   localizationProvider: AppLocalizationProvider(logger: logger),
+                                   dispatchAction: storeFactory.store.dispatch,
+                                   endCallConfirm: {},
+                                   localUserState: storeFactory.store.state.localUserState)
+    }
+
+    func makeSUTLocalizationMocking() -> ControlBarViewModel {
+        return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
+                                   logger: logger,
+                                   localizationProvider: localizationProvider,
                                    dispatchAction: storeFactory.store.dispatch,
                                    endCallConfirm: {},
                                    localUserState: storeFactory.store.state.localUserState)

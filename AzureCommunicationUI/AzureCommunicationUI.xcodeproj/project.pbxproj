@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1B5F169D27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */; };
+		1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F169E27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift */; };
+		1B5F16A127FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F16A027FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift */; };
+		1B5F16A327FBC34E00C35126 /* LeaveCallConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F16A227FBC34E00C35126 /* LeaveCallConfirmationViewModel.swift */; };
 		1B70D52827191073007CC933 /* DeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B70D52727191073007CC933 /* DeviceExtension.swift */; };
 		1B79BD50273F2D87002D5A36 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B79BD4F273F2D87002D5A36 /* UIViewControllerExtension.swift */; };
 		1B7ABF82278CFFC400D79DF7 /* ZoomableVideoRenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7ABF81278CFFC400D79DF7 /* ZoomableVideoRenderView.swift */; };
@@ -87,7 +91,6 @@
 		1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */; };
 		1FFEA01426A68D0D00E90816 /* UIFontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEA01326A68D0D00E90816 /* UIFontExtension.swift */; };
 		4EFDD23E634871B55C951638 /* Pods_AzureCommunicationUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEF91CC2CFA3B351A6C90172 /* Pods_AzureCommunicationUI.framework */; };
-		50137D0426A245E100AB843E /* ConfirmLeaveOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50137D0326A245E100AB843E /* ConfirmLeaveOverlayView.swift */; };
 		50137D0626A7479C00AB843E /* EnvironmentValuesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50137D0526A7479C00AB843E /* EnvironmentValuesExtension.swift */; };
 		503300FC2706763800289BB5 /* BannerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503300FB2706763800289BB5 /* BannerViewModelTests.swift */; };
 		503300FE27079FC900289BB5 /* BannerTextViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503300FD27079FC900289BB5 /* BannerTextViewModelTests.swift */; };
@@ -238,6 +241,10 @@
 
 /* Begin PBXFileReference section */
 		01D765D8184BB2E6A5879C73 /* Pods-AzureCommunicationUI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUI.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUI/Pods-AzureCommunicationUI.release.xcconfig"; sourceTree = "<group>"; };
+		1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLeaveCallConfirmationList.swift; sourceTree = "<group>"; };
+		1B5F169E27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveCallConfirmationListViewController.swift; sourceTree = "<group>"; };
+		1B5F16A027FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLeaveCallConfirmationListCell.swift; sourceTree = "<group>"; };
+		1B5F16A227FBC34E00C35126 /* LeaveCallConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveCallConfirmationViewModel.swift; sourceTree = "<group>"; };
 		1B70D52727191073007CC933 /* DeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceExtension.swift; sourceTree = "<group>"; };
 		1B79BD4F273F2D87002D5A36 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		1B7ABF81278CFFC400D79DF7 /* ZoomableVideoRenderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomableVideoRenderView.swift; sourceTree = "<group>"; };
@@ -321,7 +328,6 @@
 		1FFEA01326A68D0D00E90816 /* UIFontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontExtension.swift; sourceTree = "<group>"; };
 		2B98CA1B860F28A7040E1A96 /* Pods-AzureCommunicationUI-AzureCommunicationUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUI-AzureCommunicationUITests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUI-AzureCommunicationUITests/Pods-AzureCommunicationUI-AzureCommunicationUITests.release.xcconfig"; sourceTree = "<group>"; };
 		30C760C4D92036602499EEB8 /* Pods-AzureCommunicationUI-AzureCommunicationUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUI-AzureCommunicationUITests.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUI-AzureCommunicationUITests/Pods-AzureCommunicationUI-AzureCommunicationUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		50137D0326A245E100AB843E /* ConfirmLeaveOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmLeaveOverlayView.swift; sourceTree = "<group>"; };
 		50137D0526A7479C00AB843E /* EnvironmentValuesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentValuesExtension.swift; sourceTree = "<group>"; };
 		503300FB2706763800289BB5 /* BannerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerViewModelTests.swift; sourceTree = "<group>"; };
 		503300FD27079FC900289BB5 /* BannerTextViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerTextViewModelTests.swift; sourceTree = "<group>"; };
@@ -551,6 +557,7 @@
 			children = (
 				98B186A027C85F9800B837E6 /* AudioDevicesListViewModel.swift */,
 				98B186A227C85FAD00B837E6 /* AudioDevicesListCellViewModel.swift */,
+				1B5F16A227FBC34E00C35126 /* LeaveCallConfirmationViewModel.swift */,
 				988799902745EABE00AA3759 /* SourceViewSpace.swift */,
 			);
 			path = Drawer;
@@ -906,7 +913,6 @@
 				50FA460D26829345001844AC /* InfoHeaderViewModel.swift */,
 				50FA45F4267D3BD3001844AC /* ControlBarView.swift */,
 				50FA460F26829B7A001844AC /* ControlBarViewModel.swift */,
-				50137D0326A245E100AB843E /* ConfirmLeaveOverlayView.swift */,
 				5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */,
 				8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */,
 				50E2D69426EACB74006B0EF4 /* ParticipantsListViewModel.swift */,
@@ -970,11 +976,14 @@
 				982C2834267D15AF00427246 /* CompositeAvatar.swift */,
 				982C2832267D0C4500427246 /* CompositeButton.swift */,
 				98B1869A27C858B400B837E6 /* CompositeAudioDevicesList.swift */,
+				1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */,
 				98B1869C27C858D500B837E6 /* CompositeAudioDevicesListCell.swift */,
+				1B5F16A027FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift */,
 				50E2D69026EAAB33006B0EF4 /* CompositeParticipantsList.swift */,
 				50E2D69626EBCD15006B0EF4 /* CompositeParticipantsListCell.swift */,
 				1F47F78626E9E18E000AE4B7 /* DrawerContainerViewController.swift */,
 				98B1869E27C858F500B837E6 /* AudioDevicesListViewController.swift */,
+				1B5F169E27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift */,
 				9852C2D426EFD19300435252 /* ParticipantsListViewController.swift */,
 			);
 			path = Wrapper;
@@ -1545,6 +1554,7 @@
 				A874EDCC2666DF07003C7D92 /* ContainerUIHostingController.swift in Sources */,
 				A8810CD8263CC46500C88545 /* NavigationRouter.swift in Sources */,
 				5054610227C5977A00040467 /* LocalizationProvider.swift in Sources */,
+				1B5F16A327FBC34E00C35126 /* LeaveCallConfirmationViewModel.swift in Sources */,
 				A8100385269E1B370015C26E /* GroupCallOptions.swift in Sources */,
 				982C282E267C0C7500427246 /* Icon.swift in Sources */,
 				50FA461D2698DCEC001844AC /* IconButton.swift in Sources */,
@@ -1557,6 +1567,7 @@
 				1F2BED68262F86F400D98266 /* SetupViewModel.swift in Sources */,
 				98B1869D27C858D500B837E6 /* CompositeAudioDevicesListCell.swift in Sources */,
 				9885BA0726A2116200CC514B /* SetupControlBarViewModel.swift in Sources */,
+				1B5F169D27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift in Sources */,
 				1FD299662728B72B0084B9ED /* CallingSDKEventsHandler.swift in Sources */,
 				1FBCB6AC2649993500F57EEA /* CallingSDKWrapper.swift in Sources */,
 				1F2BED72262F8F4D00D98266 /* Reducer.swift in Sources */,
@@ -1565,6 +1576,7 @@
 				1F94DAF326772B3C00691D1E /* UIWindowExtension.swift in Sources */,
 				1F94DAE12673EA9500691D1E /* CallCompositeEventsHandler.swift in Sources */,
 				88701EB8274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift in Sources */,
+				1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
 				1B70D52827191073007CC933 /* DeviceExtension.swift in Sources */,
@@ -1597,7 +1609,6 @@
 				50FA45FE26813FCE001844AC /* ParticipantGridViewModel.swift in Sources */,
 				1F94DAF52677D48400691D1E /* CommunicationUIErrorEvent.swift in Sources */,
 				1F94DAE626740D4400691D1E /* AppState.swift in Sources */,
-				50137D0426A245E100AB843E /* ConfirmLeaveOverlayView.swift in Sources */,
 				8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */,
 				50137D0626A7479C00AB843E /* EnvironmentValuesExtension.swift in Sources */,
 				1FD299642723345B0084B9ED /* DefaultLogger.swift in Sources */,
@@ -1661,6 +1672,7 @@
 				1F11D2B2263CA10000D33838 /* CommunicationIdentifierExtension.swift in Sources */,
 				1F4B0F0126A2025900E87014 /* ParticipantGridLayoutView.swift in Sources */,
 				A837397A261CE9FF00D46787 /* DependancyContainer.swift in Sources */,
+				1B5F16A127FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift in Sources */,
 				5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */,
 				5A3142646DD55C66CF290F7A /* LocalVideoViewModel.swift in Sources */,
 				5A314059D7E61D1083A8C473 /* LocalVideoView.swift in Sources */,
