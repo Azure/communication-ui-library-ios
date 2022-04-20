@@ -219,21 +219,29 @@ struct CallingView: View {
             boundedPipPosition = requestedPipPosition
         } else if requestedPipPosition.x > bounds.minX && requestedPipPosition.x < bounds.maxX {
             boundedPipPosition.x = requestedPipPosition.x
-            if requestedPipPosition.y < bounds.minY {
-                boundedPipPosition.y = bounds.minY
-            } else if requestedPipPosition.y > bounds.maxY {
-                boundedPipPosition.y = bounds.maxY
-            }
+            boundedPipPosition.y = getMinMaxLimitedValue(
+                value: requestedPipPosition.y,
+                min: bounds.minY,
+                max: bounds.maxY)
         } else if requestedPipPosition.y > bounds.minY && requestedPipPosition.y < bounds.maxY {
+            boundedPipPosition.x = getMinMaxLimitedValue(
+                value: requestedPipPosition.x,
+                min: bounds.minX,
+                max: bounds.maxX)
             boundedPipPosition.y = requestedPipPosition.y
-            if requestedPipPosition.x < bounds.minX {
-                boundedPipPosition.x = bounds.minX
-            } else if requestedPipPosition.x > bounds.maxX {
-                boundedPipPosition.x = bounds.maxX
-            }
         }
 
         return boundedPipPosition
+    }
+
+    private func getMinMaxLimitedValue(value: CGFloat, min: CGFloat, max: CGFloat) -> CGFloat {
+        var limitedValue = value
+        if value < min {
+            limitedValue = min
+        } else if value > max {
+            limitedValue = max
+        }
+        return limitedValue
     }
 }
 
