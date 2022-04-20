@@ -9,34 +9,62 @@ import SwiftUI
 public struct LocalizationConfiguration {
     /// LanguageCode enum representing the locale code.
     public enum LanguageCode: String {
-        /// German
-        case de = "de"
-        /// Japanese
-        case ja = "ja"
-        /// English
-        case en = "en"
-        /// Chinese (Traditional)
-        case zhHant = "zh-Hant"
-        /// Spanish
-        case es = "es"
-        /// Chinese (Simplified)
+        /// Chinese, Simplified
+        case zh = "zh"
+        /// Chinese, Simplified
         case zhHans = "zh-Hans"
-        /// Italian
-        case it = "it"
-        /// English (United Kingdom)
-        case enGB = "en-GB"
-        /// Korean
-        case ko = "ko"
-        /// Turkish
-        case tr = "tr"
-        /// Russian
-        case ru = "ru"
-        /// French
-        case fr = "fr"
+        /// Chinese, Simplified (China mainland)
+        case zhHansCN = "zh-Hans-CN"
+        /// Chinese, Traditional
+        case zhHant = "zh-Hant"
+        /// Chinese, Traditional (Taiwan)
+        case zhHantTW = "zh-Hant-TW"
         /// Dutch
         case nl = "nl"
+        /// Dutch (Netherlands)
+        case nlNL = "nl-NL"
+        /// English
+        case en = "en"
+        /// English (United Kingdom)
+        case enGB = "en-GB"
+        /// English (United States)
+        case enUS = "en-US"
+        /// French
+        case fr = "fr"
+        /// French (France)
+        case frFR = "fr-FR"
+        /// German
+        case de = "de"
+        /// German (Germany)
+        case deDE = "de-DE"
+        /// Italian
+        case it = "it"
+        /// Italian (Italy)
+        case itIT = "it-IT"
+        /// Japanese
+        case ja = "ja"
+        /// Japanese (Japan)
+        case jaJP = "ja-JP"
+        /// Korean
+        case ko = "ko"
+        /// Korean (South Korea)
+        case koKR = "ko-KR"
         /// Portuguese
         case pt = "pt"
+        /// Portuguese (Brazil)
+        case ptBR = "pt-BR"
+        /// Russian
+        case ru = "ru"
+        /// Russian (Russia)
+        case ruRU = "ru-RU"
+        /// Spanish
+        case es = "es"
+        /// Spanish (Spain)
+        case esES = "es-ES"
+        /// Turkish
+        case tr = "tr"
+        /// Turkish (Turkey)
+        case trTR = "tr-TR"
     }
 
     let languageCode: String
@@ -45,7 +73,8 @@ public struct LocalizationConfiguration {
 
     /// Creates an instance of `LocalizationConfiguration` with related parameters. Allow
     /// overriding strings of localization keys with Localizable.strings file or other localizable filename.
-    /// - Parameter languageCode: String representing the language code (ie. en, fr, zh-Hant, zh-Hans, ...).
+    /// - Parameter languageCode: String representing the language code with or without region
+    /// (ie. en, fr, fr-FR, zh-Hant, zh-Hans, ...)  separated by dash `-`.
     /// - Parameter localizableFilename: Filename of the `.strings` file to override predefined
     ///  Call Composite's localization key or to provide translation for an custom language.
     ///  The keys of the string should match with the keys from AzureCommunicationUI
@@ -56,6 +85,24 @@ public struct LocalizationConfiguration {
                 localizableFilename: String = "Localizable",
                 layoutDirection: LayoutDirection = .leftToRight) {
         self.languageCode = languageCode
+        self.localizableFilename = localizableFilename
+        self.layoutDirection = layoutDirection
+    }
+
+    /// Creates an instance of `LocalizationConfiguration` with related parameters. Allow
+    /// overriding strings of localization keys with Localizable.strings file or other localizable filename.
+    /// - Parameter locale: Locale struct representing the language identifier (ie. en, fr, fr-FR,
+    /// zh-Hant, zh-Hans, ...), with or without region. If Locale.languageCode is nil, will default to `en`.
+    /// - Parameter localizableFilename: Filename of the `.strings` file to override predefined
+    ///  Call Composite's localization key or to provide translation for an custom language.
+    ///  The keys of the string should match with the keys from AzureCommunicationUI
+    ///  localization keys. Default value is `"Localizable"`.
+    /// - Parameter layoutDirection: LayoutDirection for mirroring layout for right-to-left.
+    ///  Default value is `false`.
+    public init(locale: Locale,
+                localizableFilename: String = "Localizable",
+                layoutDirection: LayoutDirection = .leftToRight) {
+        self.languageCode = locale.collatorIdentifier ?? "en"
         self.localizableFilename = localizableFilename
         self.layoutDirection = layoutDirection
     }

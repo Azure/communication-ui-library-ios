@@ -55,6 +55,8 @@ enum LocalizationKey: String {
     // %@ is local participant name
     case localeParticipantWithSuffix =
             "AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"
+    case muted = "AzureCommunicationUI.CallingView.ParticipantDrawer.IsMuted"
+    case unmuted = "AzureCommunicationUI.CallingView.ParticipantDrawer.IsUnmuted"
 
     case frontCamera = "AzureCommunicationUI.CallingView.SwitchCamera.Front"
     case backCamera = "AzureCommunicationUI.CallingView.SwitchCamera.Back"
@@ -69,8 +71,8 @@ enum LocalizationKey: String {
     case audioDeviceAccessibilityLabel = "AzureCommunicationUI.CallingView.ControlButton.AudioDevice.AccessibilityLabel"
     case hangupAccessibilityLabel = "AzureCommunicationUI.CallingView.ControlButton.HangUp.AccessibilityLabel"
 
+    case leaveCallListHeader = "AzureCommunicationUI.CallingView.LeaveCallList.Header.LeaveCall"
     case leaveCall = "AzureCommunicationUI.CallingView.Overlay.LeaveCall"
-    case leaveCallAccssibilityLabel = "AzureCommunicationUI.CallingView.Overlay.LeaveCall.AccessibilityLabel"
     case cancel = "AzureCommunicationUI.CallingView.Overlay.Cancel"
     case cancelAccssibilityLabel = "AzureCommunicationUI.CallingView.Overlay.Cancel.AccssibilityLabel"
 

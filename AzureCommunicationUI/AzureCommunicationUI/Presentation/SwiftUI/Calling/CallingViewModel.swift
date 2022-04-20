@@ -8,7 +8,7 @@ import Combine
 
 class CallingViewModel: ObservableObject {
     @Published var isLobbyOverlayDisplayed: Bool = false
-    @Published var isConfirmLeaveOverlayDisplayed: Bool = false
+    @Published var isConfirmLeaveListDisplayed: Bool = false
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
     let isRightToLeft: Bool
@@ -54,7 +54,7 @@ class CallingViewModel: ObservableObject {
                 guard let self = self else {
                     return
                 }
-                self.displayConfirmLeaveOverlay()
+                self.endCall()
             }, localUserState: store.state.localUserState)
 
         store.$state
@@ -105,11 +105,11 @@ class CallingViewModel: ObservableObject {
     }
 
     func displayConfirmLeaveOverlay() {
-        self.isConfirmLeaveOverlayDisplayed = true
+        self.isConfirmLeaveListDisplayed = true
     }
 
     func dismissConfirmLeaveOverlay() {
-        self.isConfirmLeaveOverlayDisplayed = false
+        self.isConfirmLeaveListDisplayed = false
     }
 
     func endCall() {

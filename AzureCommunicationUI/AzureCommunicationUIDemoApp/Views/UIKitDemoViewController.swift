@@ -131,13 +131,17 @@ class UIKitDemoViewController: UIViewController {
         print("::::UIkitDemoView error.code \(error.code)")
     }
 
-    func startExperience(with link: String) {
+    func startExperience(with link: String) {        
         var localizationConfig: LocalizationConfiguration?
-        if envConfigSubject.languageCode != "auto" {
+        let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
+        if envConfigSubject.localeIdentifier != "" {
+            let locale = Locale(identifier: envConfigSubject.localeIdentifier)
+            localizationConfig = LocalizationConfiguration(locale: locale,
+                                                           layoutDirection: layoutDirection)
+        } else if envConfigSubject.languageCode != "auto" {
             localizationConfig = LocalizationConfiguration(
                 languageCode: envConfigSubject.languageCode,
-                layoutDirection: envConfigSubject.isRightToLeft
-                ? .rightToLeft : .leftToRight)
+                layoutDirection: layoutDirection)
         }
 
         let callCompositeOptions = CallCompositeOptions(

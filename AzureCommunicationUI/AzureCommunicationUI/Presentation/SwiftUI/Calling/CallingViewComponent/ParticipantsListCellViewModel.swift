@@ -40,4 +40,11 @@ class ParticipantsListCellViewModel {
             : displayName
         }
     }
+
+    func getCellAccessibilityLabel() -> String {
+        let displayName = getCellDisplayName()
+        return isMuted
+        ? displayName + localizationProvider.getLocalizedString(.muted)
+        : displayName + localizationProvider.getLocalizedString(.unmuted)
+    }
 }

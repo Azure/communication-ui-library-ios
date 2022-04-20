@@ -19,47 +19,6 @@ class CallingViewModelTests: XCTestCase {
         localizationProvider = LocalizationProviderMocking()
     }
 
-    func test_callingViewModel_getLeaveCallButtonViewModel_shouldReturnPrimaryButtonViewModel() {
-        let sut = makeSUT()
-        let leaveCallButtonViewModel = sut.getLeaveCallButtonViewModel()
-        let expectedButtonLabel = "Leave call"
-
-        XCTAssertEqual(leaveCallButtonViewModel.buttonLabel, expectedButtonLabel)
-    }
-
-    func test_callingViewModel_getCancelButtonViewModel_shouldReturnPrimaryButtonViewModel() {
-        let sut = makeSUT()
-        let cancelButtonViewModel = sut.getCancelButtonViewModel()
-        let expectedButtonLabel = "Cancel"
-
-        XCTAssertEqual(cancelButtonViewModel.buttonLabel, expectedButtonLabel)
-    }
-
-    func test_callingViewModel_leaveCallButtonLabel_from_LocalizationMocking() {
-        let sut = makeSUTLocalizationMocking()
-        let leaveCallButtonViewModel = sut.getLeaveCallButtonViewModel()
-        let expectedButtonLabelKey = "AzureCommunicationUI.CallingView.Overlay.LeaveCall"
-
-        XCTAssertEqual(leaveCallButtonViewModel.buttonLabel, expectedButtonLabelKey)
-        XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
-    }
-
-    func test_callingViewModel_displayConfirmLeaveOverlay_when_isConfirmLeaveOverlayDisplayedFalse_shouldBecomeTrue() {
-        let sut = makeSUT()
-        sut.isConfirmLeaveOverlayDisplayed = false
-        sut.displayConfirmLeaveOverlay()
-
-        XCTAssertTrue(sut.isConfirmLeaveOverlayDisplayed)
-    }
-
-    func test_callingViewModel_dismissConfirmLeaveOverlay_when_isConfirmLeaveOverlayDisplayedTrue_shouldBecomeFalse() {
-        let sut = makeSUT()
-        sut.isConfirmLeaveOverlayDisplayed = true
-        sut.dismissConfirmLeaveOverlay()
-
-        XCTAssertFalse(sut.isConfirmLeaveOverlayDisplayed)
-    }
-
     func test_callingViewModel_endCall_when_confirmLeaveOverlayIsDisplayed_shouldEndCall() {
         let storeFactory = StoreFactoryMocking()
         let sut = makeSUT(storeFactory: storeFactory)
@@ -72,9 +31,9 @@ class CallingViewModelTests: XCTestCase {
 
                 expectation.fulfill()
             }.store(in: cancellable)
-        sut.isConfirmLeaveOverlayDisplayed = true
+        sut.isConfirmLeaveListDisplayed = true
         sut.endCall()
-        XCTAssertFalse(sut.isConfirmLeaveOverlayDisplayed)
+        XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
         wait(for: [expectation], timeout: timeout)
     }
 

@@ -8,7 +8,9 @@ import SwiftUI
 struct ControlBarView: View {
     @ObservedObject var viewModel: ControlBarViewModel
 
+    // anchor views for drawer views on (iPad)
     let audioDeviceButtonSourceView = UIView()
+    let leaveCallConfirmationListSourceView = UIView()
 
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
@@ -41,6 +43,12 @@ struct ControlBarView: View {
                 .accessibilityElement(children: .contain)
                 .accessibilityAddTraits(.isModal)
         })
+        .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveListDisplayed) {
+            exitConfirmationDrawer
+                .accessibility(hidden: !viewModel.isConfirmLeaveListDisplayed)
+                .accessibilityElement(children: .contain)
+                .accessibility(addTraits: .isModal)
+        })
     }
 
     var videoButton: some View {
@@ -63,7 +71,8 @@ struct ControlBarView: View {
 
     var hangUpButton: some View {
         IconButton(viewModel: viewModel.hangUpButtonViewModel)
-            .accessibility(identifier: LocalizationKey.hangupAccessibilityLabel.rawValue)
+            .background(SourceViewSpace(sourceView: leaveCallConfirmationListSourceView))
+            .accessibilityIdentifier(LocalizationKey.hangupAccessibilityLabel.rawValue)
     }
 
     var audioDeviceSelectionListView: some View {
@@ -72,4 +81,16 @@ struct ControlBarView: View {
                                   sourceView: audioDeviceButtonSourceView)
             .modifier(LockPhoneOrientation())
     }
+
+    var exitConfirmationDrawer: some View {
+        CompositeLeaveCallConfirmationList(isPresented: $viewModel.isConfirmLeaveListDisplayed,
+                                           viewModel: viewModel.getLeaveCallConfirmationListViewModel(),
+                                           sourceView: leaveCallConfirmationListSourceView)
+            .modifier(LockPhoneOrientation())
+    }
+}
+
+struct LeaveCallConfirmationListViewModel {
+    let headerName: String?
+    let listItemViewModel: [LeaveCallConfirmationViewModel]
 }

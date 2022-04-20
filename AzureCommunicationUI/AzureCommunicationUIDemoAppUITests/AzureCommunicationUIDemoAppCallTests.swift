@@ -8,12 +8,6 @@ import XCTest
 
 class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
-    override func setUp() {
-        super.setUp()
-        app = XCUIApplication()
-        app.launch()
-    }
-
     // MARK: End call tests
 
     func testCallCompositeEndCallGroupCallSwiftUI() {
@@ -24,7 +18,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     }
 
     func testCallCompositeEndCallTeamsCallSwiftUI() {
-        tapInterfaceFor(.uiKit)
+        tapInterfaceFor(.swiftUI)
         tapMeetingType(.teamsCall)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
@@ -32,7 +26,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     }
 
     func testCallCompositeEndCallGroupCallUIKit() {
-        tapInterfaceFor(.swiftUI)
+        tapInterfaceFor(.uiKit)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
         toggleLeaveCallOverlay(leaveCall: true)
@@ -51,11 +45,9 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     /// Toggles the leave call overlay  in the calling screen
     private func toggleLeaveCallOverlay(leaveCall: Bool) {
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .cancelAccssibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
 
         if leaveCall {
-            tapButton(accessibilityIdentifier: .leaveCallAccssibilityLabel, shouldWait: true)
+            app.tables.cells.firstMatch.tap()
             XCTAssertTrue(app.buttons[LocalizationKey.startExperienceAccessibilityLabel.rawValue]
                             .waitForExistence(timeout: 3))
         }
