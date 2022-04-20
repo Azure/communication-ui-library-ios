@@ -21,6 +21,7 @@ enum CompositeIcon: String {
     case videoOff = "ic_fluent_video_off_24_filled"
     case warning = "ic_fluent_warning_24_filled"
     case endCall = "ic_fluent_call_end_24_filled"
+    case endCallRegular = "ic_fluent_call_end_24_regular"
     case showParticipant = "ic_fluent_people_24_regular"
     case leftArrow = "ic_ios_arrow_left_24"
     case dismiss = "ic_fluent_dismiss_16_regular"
