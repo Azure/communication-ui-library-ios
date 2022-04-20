@@ -73,7 +73,8 @@ public struct LocalizationConfiguration {
 
     /// Creates an instance of `LocalizationConfiguration` with related parameters. Allow
     /// overriding strings of localization keys with Localizable.strings file or other localizable filename.
-    /// - Parameter languageCode: String representing the language code with or without region (ie. en, fr, fr-FR, zh-Hant, zh-Hans, ...)  separated by dash `-`.
+    /// - Parameter languageCode: String representing the language code with or without region
+    /// (ie. en, fr, fr-FR, zh-Hant, zh-Hans, ...)  separated by dash `-`.
     /// - Parameter localizableFilename: Filename of the `.strings` file to override predefined
     ///  Call Composite's localization key or to provide translation for an custom language.
     ///  The keys of the string should match with the keys from AzureCommunicationUI
@@ -90,7 +91,8 @@ public struct LocalizationConfiguration {
 
     /// Creates an instance of `LocalizationConfiguration` with related parameters. Allow
     /// overriding strings of localization keys with Localizable.strings file or other localizable filename.
-    /// - Parameter locale: Locale struct representing the language identifier (ie. en, fr, fr-FR, zh-Hant, zh-Hans, ...), with or without region. If Locale.languageCode is nil, will default to `en`.
+    /// - Parameter locale: Locale struct representing the language identifier (ie. en, fr, fr-FR,
+    /// zh-Hant, zh-Hans, ...), with or without region. If Locale.languageCode is nil, will default to `en`.
     /// - Parameter localizableFilename: Filename of the `.strings` file to override predefined
     ///  Call Composite's localization key or to provide translation for an custom language.
     ///  The keys of the string should match with the keys from AzureCommunicationUI

@@ -40,7 +40,7 @@ class AppLocalizationProvider: LocalizationProvider {
             .components(separatedBy: "-")
         languageCode = languageComponents.count == 1
         ? localeConfig.languageCode
-        : languageComponents[..<(languageComponents.count-1)]
+        : languageComponents[..<(languageComponents.count - 1)]
             .joined(separator: "-")
         languageIdentifier = localeConfig.languageCode
         localizableFilename = localeConfig.localizableFilename
