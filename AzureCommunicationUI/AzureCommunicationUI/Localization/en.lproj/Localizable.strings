@@ -41,6 +41,8 @@
 
 "AzureCommunicationUI.CallingView.ParticipantDrawer.Unnamed"="Unnamed Participant";
 "AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"="%@ (You)"; // %@ is local participant name
+"AzureCommunicationUI.CallingView.ParticipantDrawer.IsMuted"="Muted";
+"AzureCommunicationUI.CallingView.ParticipantDrawer.IsUnmuted"="Unmuted";
 
 "AzureCommunicationUI.CallingView.SwitchCamera.Front"="Switch to back camera";
 "AzureCommunicationUI.CallingView.SwitchCamera.Back"="Switch to front camera";
