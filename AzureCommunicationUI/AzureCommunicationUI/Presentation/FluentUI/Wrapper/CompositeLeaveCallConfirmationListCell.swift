@@ -21,10 +21,9 @@ class CompositeLeaveCallConfirmationListCell: TableViewCell {
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
 
-        setTitleLabelTextColor(color: isNameEmpty ?
-                                UIColor.compositeColor(CompositeColor.mute)
-                               :
-                                UIColor.compositeColor(CompositeColor.onSurface))
+        setTitleLabelTextColor(color: isNameEmpty
+                               ? UIColor.compositeColor(CompositeColor.mute)
+                               : UIColor.compositeColor(CompositeColor.onSurface))
 
         setup(title: viewModel.title,
               customView: micImageView)
