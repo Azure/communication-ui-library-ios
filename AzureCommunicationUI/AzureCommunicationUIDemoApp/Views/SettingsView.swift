@@ -63,6 +63,15 @@ struct SettingsView: View {
                 Toggle("Is Right-to-Left: ", isOn: $envConfigSubject.isRightToLeft)
             }
             .padding(.horizontal, horizontalPadding)
+            TextField(
+                "Locale identifier (eg. zh-Hant, fr-CA)",
+                text: $envConfigSubject.localeIdentifier
+            )
+            .multilineTextAlignment(.center)
+            .keyboardType(.default)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .textFieldStyle(.roundedBorder)
         }
         .padding(.vertical, verticalPadding)
         .padding(.horizontal, horizontalPadding)
