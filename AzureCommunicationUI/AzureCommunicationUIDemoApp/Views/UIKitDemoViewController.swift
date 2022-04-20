@@ -142,6 +142,11 @@ class UIKitDemoViewController: UIViewController {
         let callComposite = CallComposite(withOptions: callCompositeOptions)
 
         callComposite.setTarget(didFail: didFail)
+        let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
+                                nil : envConfigSubject.renderedDisplayName
+        let persona = CommunicationUIPersonaData(UIImage(named: envConfigSubject.avatarImageName),
+                                                 renderDisplayName: renderDisplayName)
+        let localOptions = CommunicationUILocalDataOptions(persona)
 
         if let communicationTokenCredential = try? getTokenCredential() {
             switch selectedMeetingType {
@@ -150,12 +155,12 @@ class UIKitDemoViewController: UIViewController {
                 let parameters = GroupCallOptions(credential: communicationTokenCredential,
                                                   groupId: uuid,
                                                   displayName: getDisplayName())
-                callComposite.launch(with: parameters)
+                callComposite.launch(with: parameters, localOptions: localOptions)
             case .teamsMeeting:
                 let parameters = TeamsMeetingOptions(credential: communicationTokenCredential,
                                                      meetingLink: link,
                                                      displayName: getDisplayName())
-                callComposite.launch(with: parameters)
+                callComposite.launch(with: parameters, localOptions: localOptions)
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
