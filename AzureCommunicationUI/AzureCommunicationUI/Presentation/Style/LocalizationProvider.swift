@@ -16,6 +16,7 @@ protocol LocalizationProvider {
 class AppLocalizationProvider: LocalizationProvider {
     private let logger: Logger
     private var languageCode: String = "en"
+    private var languageIdentifier: String = "en"
     private var localizableFilename: String = ""
     private(set) var isRightToLeft: Bool = false
 
@@ -34,14 +35,21 @@ class AppLocalizationProvider: LocalizationProvider {
             logger.warning(warningMessage)
         }
 
-        languageCode = localeConfig.languageCode
+        let languageComponents = localeConfig.languageCode
+            .replacingOccurrences(of: "_", with: "-")
+            .components(separatedBy: "-")
+        languageCode = languageComponents.count == 1
+        ? localeConfig.languageCode
+        : languageComponents[..<(languageComponents.count-1)]
+            .joined(separator: "-")
+        languageIdentifier = localeConfig.languageCode
         localizableFilename = localeConfig.localizableFilename
         isRightToLeft = localeConfig.layoutDirection == .rightToLeft
     }
 
     func getLocalizedString(_ key: LocalizationKey) -> String {
         if let path = Bundle.main
-            .path(forResource: languageCode, ofType: "lproj"),
+            .path(forResource: languageIdentifier, ofType: "lproj"),
            let bundle = Bundle(path: path) {
             let customLocalizableString = NSLocalizedString(key.rawValue,
                                                             tableName: localizableFilename,
@@ -61,20 +69,34 @@ class AppLocalizationProvider: LocalizationProvider {
     }
 
     private func getPredefinedLocalizedString(_ key: String) -> String {
-        if let path = Bundle(for: CallComposite.self)
-            .path(forResource: languageCode, ofType: "lproj"),
-           let bundle = Bundle(path: path) {
-            let predefinedTranslation = NSLocalizedString(key,
-                                                          bundle: bundle,
-                                                          value: "localize_key_not_found",
-                                                          comment: key)
-            if predefinedTranslation != "localize_key_not_found" {
-                return predefinedTranslation
-            }
+        if let predefinedTranslation = findPredefinedLocalizedString(languageIdentifier, key) {
+            return predefinedTranslation
+        }
+        if let predefinedTranslation = findPredefinedLocalizedString(languageCode, key) {
+            return predefinedTranslation
         }
         return NSLocalizedString(key,
                                  bundle: Bundle(for: CallComposite.self),
                                  value: key,
                                  comment: key)
+    }
+
+    private func findPredefinedLocalizedString(_ languageCode: String,
+                                               _ key: String) -> String? {
+        guard let path = Bundle(for: CallComposite.self)
+            .path(forResource: languageCode, ofType: "lproj") else {
+            return nil
+        }
+        guard let bundle = Bundle(path: path) else {
+            return nil
+        }
+        let predefinedTranslation = NSLocalizedString(key,
+                                                      bundle: bundle,
+                                                      value: "localize_key_not_found",
+                                                      comment: key)
+        if predefinedTranslation != "localize_key_not_found" {
+            return predefinedTranslation
+        }
+        return nil
     }
 }
