@@ -15,8 +15,8 @@ protocol LocalizationProvider {
 
 class AppLocalizationProvider: LocalizationProvider {
     private let logger: Logger
-    private var languageCode: String = "en"
     private var languageIdentifier: String = "en"
+    private var languageCode: String = "en"
     private var localizableFilename: String = ""
     private(set) var isRightToLeft: Bool = false
 
@@ -31,19 +31,17 @@ class AppLocalizationProvider: LocalizationProvider {
         guard let preferredLanguageId = Locale.preferredLanguages.first else {
             return
         }
+        let preferredLanguageCode = removeLastLanguageComponent(preferredLanguageId)
 
         if self.isLanguageSupportedByApp(preferredLanguageId) {
-            self.languageCode = preferredLanguageId
-
-        } else if let regionCode = Locale.current.regionCode,
-                  self.isLanguageSupportedByApp(preferredLanguageId
-                    .replacingOccurrences(of: "-\(regionCode)", with: "")) {
-            let languageRegionId = preferredLanguageId
-                .replacingOccurrences(of: "-\(regionCode)", with: "")
-            self.languageCode = languageRegionId
-
+            self.languageIdentifier = preferredLanguageId
+            self.languageCode = preferredLanguageCode
+        } else if self.isLanguageSupportedByApp(preferredLanguageCode) {
+            self.languageIdentifier = preferredLanguageCode
+            self.languageCode = preferredLanguageCode
         } else if let systemLanguageCode = Locale.current.languageCode,
                   self.isLanguageSupportedByApp(systemLanguageCode) {
+            self.languageIdentifier = systemLanguageCode
             self.languageCode = systemLanguageCode
         }
     }
@@ -57,14 +55,8 @@ class AppLocalizationProvider: LocalizationProvider {
             logger.warning(warningMessage)
         }
 
-        let languageComponents = localeConfig.languageCode
-            .replacingOccurrences(of: "_", with: "-")
-            .components(separatedBy: "-")
-        languageCode = languageComponents.count == 1
-        ? localeConfig.languageCode
-        : languageComponents[..<(languageComponents.count - 1)]
-            .joined(separator: "-")
         languageIdentifier = localeConfig.languageCode
+        languageCode = removeLastLanguageComponent(localeConfig.languageCode)
         localizableFilename = localeConfig.localizableFilename
         isRightToLeft = localeConfig.layoutDirection == .rightToLeft
     }
@@ -103,10 +95,6 @@ class AppLocalizationProvider: LocalizationProvider {
                                  comment: key)
     }
 
-
-    private func isLanguageSupportedByApp(_ languageId: String) -> Bool {
-        return Bundle.main.localizations.contains(languageId)
-
     private func findPredefinedLocalizedString(_ languageCode: String,
                                                _ key: String) -> String? {
         guard let path = Bundle(for: CallComposite.self)
@@ -124,5 +112,19 @@ class AppLocalizationProvider: LocalizationProvider {
             return predefinedTranslation
         }
         return nil
+    }
+
+    private func removeLastLanguageComponent(_ languageId: String) -> String {
+        let languageComponents = languageId
+            .replacingOccurrences(of: "_", with: "-")
+            .components(separatedBy: "-")
+        return languageComponents.count == 1
+        ? languageId
+        : languageComponents[..<(languageComponents.count - 1)]
+            .joined(separator: "-")
+    }
+
+    private func isLanguageSupportedByApp(_ languageId: String) -> Bool {
+        return Bundle.main.localizations.contains(languageId)
     }
 }

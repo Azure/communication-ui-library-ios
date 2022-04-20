@@ -131,7 +131,7 @@ class UIKitDemoViewController: UIViewController {
         print("::::UIkitDemoView error.code \(error.code)")
     }
 
-    func startExperience(with link: String) {        
+    func startExperience(with link: String) {
         var localizationConfig: LocalizationConfiguration?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         if envConfigSubject.localeIdentifier != "" {
