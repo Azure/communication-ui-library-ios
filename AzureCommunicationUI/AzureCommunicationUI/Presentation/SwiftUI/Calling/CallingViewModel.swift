@@ -10,6 +10,7 @@ class CallingViewModel: ObservableObject {
     @Published var isLobbyOverlayDisplayed: Bool = false
     @Published var isConfirmLeaveOverlayDisplayed: Bool = false
     @Published var isParticipantGridDisplayed: Bool
+    @Published var isVideoGridViewAccessibilityAvailable: Bool = false
     let isRightToLeft: Bool
     @Published var appState: AppStatus = .foreground
 
@@ -61,6 +62,7 @@ class CallingViewModel: ObservableObject {
             .sink { [weak self] state in
                 self?.receive(state)
             }.store(in: &cancellables)
+        updateIsLocalCameraOn(with: store.state)
     }
 
     func getLobbyOverlayViewModel() -> LobbyOverlayViewModel {
@@ -145,5 +147,14 @@ class CallingViewModel: ObservableObject {
             isLobbyOverlayDisplayed = shouldLobbyOverlayDisplayed
             accessibilityProvider.moveFocusToFirstElement()
         }
+        updateIsLocalCameraOn(with: state)
+    }
+
+    private func updateIsLocalCameraOn(with state: AppState) {
+        let isLocalCameraOn = state.localUserState.cameraState.operation == .on
+        let displayName = state.localUserState.displayName ?? ""
+        let isLocalUserInfoNotEmpty = isLocalCameraOn || !displayName.isEmpty
+        isVideoGridViewAccessibilityAvailable = !isLobbyOverlayDisplayed &&
+        (isLocalUserInfoNotEmpty || isParticipantGridDisplayed)
     }
 }

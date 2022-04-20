@@ -8,6 +8,7 @@ import FluentUI
 
 struct CallingView: View {
     @ObservedObject var viewModel: CallingViewModel
+    let avatarManager: AvatarViewManager
     let viewManager: VideoViewManager
 
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
@@ -54,7 +55,7 @@ struct CallingView: View {
         Group {
             ZStack(alignment: .bottomTrailing) {
                 videoGridView
-                    .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
+                    .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
                 topAlertAreaView
                     .accessibilityElement(children: .contain)
                     .accessibilitySortPriority(1)
@@ -86,6 +87,7 @@ struct CallingView: View {
 
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
+                           personaData: avatarManager.getLocalPersonaData(),
                            viewManager: viewManager,
                            viewType: .localVideoPip)
                 .frame(width: frameWidth, height: frameHeight, alignment: .center)
@@ -122,6 +124,7 @@ struct CallingView: View {
     var localVideoFullscreenView: some View {
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
+                           personaData: avatarManager.getLocalPersonaData(),
                            viewManager: viewManager,
                            viewType: .localVideofull)
                 .background(Color(StyleProvider.color.surface))

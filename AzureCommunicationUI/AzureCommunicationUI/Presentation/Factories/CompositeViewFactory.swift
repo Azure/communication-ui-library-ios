@@ -13,22 +13,28 @@ protocol CompositeViewFactory {
 struct ACSCompositeViewFactory: CompositeViewFactory {
     private let logger: Logger
     private let compositeViewModelFactory: CompositeViewModelFactory
+    private let avatarManager: AvatarViewManager
     private let videoViewManager: VideoViewManager
 
     init(logger: Logger,
+         avatarManager: AvatarViewManager,
          videoViewManager: VideoViewManager,
          compositeViewModelFactory: CompositeViewModelFactory) {
         self.logger = logger
+        self.avatarManager = avatarManager
         self.videoViewManager = videoViewManager
         self.compositeViewModelFactory = compositeViewModelFactory
     }
 
     func makeSetupView() -> SetupView {
-        return SetupView(viewModel: compositeViewModelFactory.getSetupViewModel(), viewManager: videoViewManager)
+        return SetupView(viewModel: compositeViewModelFactory.getSetupViewModel(),
+                         localPersonaData: avatarManager.getLocalPersonaData(),
+                         viewManager: videoViewManager)
     }
 
     func makeCallingView() -> CallingView {
         return CallingView(viewModel: compositeViewModelFactory.getCallingViewModel(),
+                           avatarManager: avatarManager,
                            viewManager: videoViewManager)
     }
 }
