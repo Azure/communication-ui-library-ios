@@ -7,12 +7,6 @@ import XCTest
 
 class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
-    override func setUp() {
-        super.setUp()
-        app = XCUIApplication()
-        app.launch()
-    }
-
     func testCallCompositeLaunch() {
         tapInterfaceFor(.uiKit)
     }

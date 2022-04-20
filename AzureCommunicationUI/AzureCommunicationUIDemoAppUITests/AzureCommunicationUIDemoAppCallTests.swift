@@ -8,12 +8,6 @@ import XCTest
 
 class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
-    override func setUp() {
-        super.setUp()
-        app = XCUIApplication()
-        app.launch()
-    }
-
     // MARK: End call tests
 
     func testCallCompositeEndCallGroupCallSwiftUI() {
@@ -24,7 +18,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     }
 
     func testCallCompositeEndCallTeamsCallSwiftUI() {
-        tapInterfaceFor(.uiKit)
+        tapInterfaceFor(.swiftUI)
         tapMeetingType(.teamsCall)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
@@ -32,7 +26,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     }
 
     func testCallCompositeEndCallGroupCallUIKit() {
-        tapInterfaceFor(.swiftUI)
+        tapInterfaceFor(.uiKit)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
         toggleLeaveCallOverlay(leaveCall: true)
