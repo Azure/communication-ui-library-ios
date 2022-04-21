@@ -22,11 +22,14 @@ class DependencyContainerTests: XCTestCase {
         let communicationTokenCredential = try? CommunicationTokenCredential(token: sampleToken)
         let displayName = ""
         let groupId = UUID()
-        let callConfiguration = CallConfiguration(communicationTokenCredential: communicationTokenCredential!,
+        let callConfiguration = CallConfiguration(credential: communicationTokenCredential!,
                                                   groupId: groupId,
                                                   displayName: displayName)
+        let localPersonaData = CommunicationUIPersonaData(nil, renderDisplayName: nil)
+        let localDataOptions = CommunicationUILocalDataOptions(localPersonaData)
 
-        dependencyContainer.registerDependencies(callConfiguration)
+        dependencyContainer.registerDependencies(callConfiguration,
+                                                 localDataOptions: localDataOptions)
 
         XCTAssertNotNil(dependencyContainer.resolve() as CallingSDKWrapper)
         XCTAssertNotNil(dependencyContainer.resolve() as VideoViewManager)

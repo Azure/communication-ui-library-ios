@@ -23,6 +23,7 @@ class LocalVideoViewModelTests: XCTestCase {
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
         localVideoViewModel = LocalVideoViewModel(compositeViewModelFactory: factoryMocking,
                                                   logger: LoggerMocking(),
+                                                  localizationProvider: LocalizationProviderMocking(),
                                                   dispatchAction: dispatch)
     }
 

@@ -19,8 +19,12 @@ struct ContainerView: View {
             switch router.currentView {
             case .setupView:
                 setupView.supportedOrientations(setupViewOrientationMask)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isModal)
             case .callingView:
                 callingView.proximitySensorEnabled(true)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isModal)
             }
         }
         .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)

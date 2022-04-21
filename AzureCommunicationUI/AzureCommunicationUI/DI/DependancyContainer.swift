@@ -30,7 +30,8 @@ final class DependencyContainer {
         register(DefaultLogger() as Logger)
     }
 
-    func registerDependencies(_ callConfiguration: CallConfiguration) {
+    func registerDependencies(_ callConfiguration: CallConfiguration,
+                              localDataOptions: CommunicationUILocalDataOptions?) {
         register(CallingSDKEventsHandler(logger: resolve()) as CallingSDKEventsHandling)
         register(ACSCallingSDKWrapper(logger: resolve(),
                                       callingEventsHandler: resolve(),
@@ -38,14 +39,20 @@ final class DependencyContainer {
         register(VideoViewManager(callingSDKWrapper: resolve(), logger: resolve()) as VideoViewManager)
         register(ACSCallingService(logger: resolve(),
                                    callingSDKWrapper: resolve()) as CallingService)
-        register(makeStore(displayName: callConfiguration.displayName) as Store<AppState>)
+        let displayName = localDataOptions?.localPersona.renderDisplayName ?? callConfiguration.displayName
+        register(makeStore(displayName: displayName) as Store<AppState>)
         register(NavigationRouter(store: resolve(),
                                   logger: resolve()) as NavigationRouter)
+        register(AppAccessibilityProvider() as AccessibilityProvider)
         register(AppLocalizationProvider(logger: resolve()) as LocalizationProvider)
+        register(CompositeAvatarViewManager(store: resolve(),
+                                            localDataOptions: localDataOptions) as AvatarViewManager)
         register(ACSCompositeViewModelFactory(logger: resolve(),
                                               store: resolve(),
-                                              localizationProvider: resolve()) as CompositeViewModelFactory)
+                                              localizationProvider: resolve(),
+                                              accessibilityProvider: resolve()) as CompositeViewModelFactory)
         register(ACSCompositeViewFactory(logger: resolve(),
+                                         avatarManager: resolve(),
                                          videoViewManager: resolve(),
                                          compositeViewModelFactory: resolve()) as CompositeViewFactory)
     }

@@ -9,6 +9,7 @@ import FluentUI
 
 struct SetupView: View {
     @ObservedObject var viewModel: SetupViewModel
+    let localPersonaData: CommunicationUIPersonaData?
     let viewManager: VideoViewManager
 
     let layoutSpacing: CGFloat = 24
@@ -19,10 +20,11 @@ struct SetupView: View {
     var body: some View {
         ZStack {
             VStack(spacing: layoutSpacing) {
-                SetupTitleView(backButtonViewModel: viewModel.dismissButtonViewModel)
+                SetupTitleView(viewModel: viewModel)
                 VStack(spacing: layoutSpacing) {
                     ZStack(alignment: .bottom) {
                         PreviewAreaView(viewModel: viewModel.previewAreaViewModel,
+                                        localPersonaData: localPersonaData,
                                         viewManager: viewManager)
                         SetupControlBarView(viewModel: viewModel.setupControlBarViewModel)
                     }
@@ -47,6 +49,7 @@ struct SetupView: View {
                 JoiningCallActivityView(viewModel: viewModel.joiningCallActivityViewModel)
             } else {
                 PrimaryButton(viewModel: viewModel.joinCallButtonViewModel)
+                    .accessibilityIdentifier(LocalizationKey.joinCallAccessibilityLabel.rawValue)
             }
         }
     }
@@ -60,6 +63,8 @@ struct SetupView: View {
                                     bottom: startCallButtonHeight + layoutSpacing,
                                     trailing: errorHorizontalPadding)
                 )
+                .accessibilityElement(children: .contain)
+                .accessibilityAddTraits(.isModal)
         }
     }
 }
@@ -67,21 +72,21 @@ struct SetupView: View {
 struct SetupTitleView: View {
     let viewHeight: CGFloat = 44
     let verticalSpacing: CGFloat = 0
-    var title: String = ""
-    var backButtonViewModel: IconButtonViewModel
+    var viewModel: SetupViewModel
 
     var body: some View {
         VStack(spacing: verticalSpacing) {
             ZStack(alignment: .leading) {
-                IconButton(viewModel: backButtonViewModel)
+                IconButton(viewModel: viewModel.dismissButtonViewModel)
                     .flipsForRightToLeftLayoutDirection(true)
                 HStack {
                     Spacer()
-                    Text(title)
+                    Text(viewModel.title)
                         .font(Fonts.headline.font)
                         .foregroundColor(Color(StyleProvider.color.onBackground))
+                        .accessibilityAddTraits(.isHeader)
                     Spacer()
-                }
+                }.accessibilitySortPriority(1)
             }.frame(height: viewHeight)
             Divider()
         }

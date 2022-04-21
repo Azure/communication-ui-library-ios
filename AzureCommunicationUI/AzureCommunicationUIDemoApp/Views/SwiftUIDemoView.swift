@@ -113,6 +113,7 @@ struct SwiftUIDemoView: View {
         }
         .buttonStyle(DemoButtonStyle())
         .disabled(isStartExperienceDisabled)
+        .accessibility(identifier: LocalizationKey.startExperienceAccessibilityLabel.rawValue)
     }
 
     var isStartExperienceDisabled: Bool {
@@ -134,33 +135,51 @@ extension SwiftUIDemoView {
     func startCallComposite() {
         let link = getMeetingLink()
 
-        let localizationConfig = LocalizationConfiguration(languageCode: envConfigSubject.languageCode,
-                                                           isRightToLeft: envConfigSubject.isRightToLeft)
-        let callCompositeOptions = CallCompositeOptions(themeConfiguration: Theming(),
-                                                        localizationConfiguration: localizationConfig)
+        var localizationConfig: LocalizationConfiguration?
+        let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
+        if envConfigSubject.localeIdentifier != "" {
+            let locale = Locale(identifier: envConfigSubject.localeIdentifier)
+            localizationConfig = LocalizationConfiguration(locale: locale,
+                                                           layoutDirection: layoutDirection)
+        } else if envConfigSubject.languageCode != "auto" {
+            localizationConfig = LocalizationConfiguration(
+                languageCode: envConfigSubject.languageCode,
+                layoutDirection: layoutDirection)
+        }
+
+        let callCompositeOptions = CallCompositeOptions(
+            theme: Theming(),
+            localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
         callComposite.setTarget(didFail: didFail)
-
+        let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
+                                nil:envConfigSubject.renderedDisplayName
+        let persona = CommunicationUIPersonaData(UIImage(named: envConfigSubject.avatarImageName),
+                                                 renderDisplayName: renderDisplayName)
+        let localOptions = CommunicationUILocalDataOptions(persona)
         if let credential = try? getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
                 if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(with: GroupCallOptions(communicationTokenCredential: credential,
-                                                                groupId: uuid))
+                    callComposite.launch(with: GroupCallOptions(credential: credential, groupId: uuid),
+                                         localOptions: localOptions)
                 } else {
-                    callComposite.launch(with: GroupCallOptions(communicationTokenCredential: credential,
+                    callComposite.launch(with: GroupCallOptions(credential: credential,
                                                                 groupId: uuid,
-                                                                displayName: envConfigSubject.displayName))
+                                                                displayName: envConfigSubject.displayName),
+                                         localOptions: localOptions)
                 }
             case .teamsMeeting:
                 if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(with: TeamsMeetingOptions(communicationTokenCredential: credential,
-                                                                   meetingLink: link))
+                    callComposite.launch(with: TeamsMeetingOptions(credential: credential,
+                                                                   meetingLink: link),
+                                         localOptions: localOptions)
                 } else {
-                    callComposite.launch(with: TeamsMeetingOptions(communicationTokenCredential: credential,
+                    callComposite.launch(with: TeamsMeetingOptions(credential: credential,
                                                                    meetingLink: link,
-                                                                   displayName: envConfigSubject.displayName))
+                                                                   displayName: envConfigSubject.displayName),
+                                         localOptions: localOptions)
                 }
             }
         } else {
@@ -210,7 +229,7 @@ extension SwiftUIDemoView {
         isErrorDisplayed = true
     }
 
-    func didFail(_ error: ErrorEvent) {
+    func didFail(_ error: CommunicationUIErrorEvent) {
         print("::::SwiftUIDemoView::getEventsHandler::didFail \(error)")
         print("::::SwiftUIDemoView error.code \(error.code)")
         showError(for: error.code)

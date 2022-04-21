@@ -4,6 +4,8 @@
 //
 
 import Foundation
+import AzureCommunicationUI
+import SwiftUI
 
 enum EnvConfig: String {
     case appCenterSecret
@@ -27,12 +29,15 @@ class EnvConfigSubject: ObservableObject {
     @Published var acsToken: String = EnvConfig.acsToken.value()
     @Published var acsTokenUrl: String = EnvConfig.acsTokenUrl.value()
     @Published var displayName: String = EnvConfig.displayName.value()
+    @Published var avatarImageName: String = ""
+    @Published var renderedDisplayName: String = ""
     @Published var groupCallId: String = EnvConfig.groupCallId.value()
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
 
     @Published var selectedAcsTokenType: ACSTokenType = .token
     @Published var selectedMeetingType: MeetingType = .groupCall
-    @Published var languageCode: String = "en"
+    @Published var languageCode: String = LocalizationConfiguration.LanguageCode.en.rawValue
+    @Published var localeIdentifier: String = ""
     @Published var isRightToLeft: Bool = false
 
     func update(from dic: [String: String]) {

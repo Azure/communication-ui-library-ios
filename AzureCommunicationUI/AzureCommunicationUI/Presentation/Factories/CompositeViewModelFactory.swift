@@ -29,6 +29,10 @@ protocol CompositeViewModelFactory {
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
+    func makeAudioDevicesListCellViewModel(icon: CompositeIcon,
+                                           title: String,
+                                           isSelected: Bool,
+                                           onSelectedAction: @escaping (() -> Void)) -> AudioDevicesListCellViewModel
     func makeErrorInfoViewModel() -> ErrorInfoViewModel
 
     // MARK: CallingViewModels
@@ -42,6 +46,8 @@ protocol CompositeViewModelFactory {
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel
     func makeBannerViewModel() -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
+    func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
+    func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
 
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
@@ -53,6 +59,7 @@ protocol CompositeViewModelFactory {
 class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     private let logger: Logger
     private let store: Store<AppState>
+    private let accessibilityProvider: AccessibilityProvider
     private let localizationProvider: LocalizationProvider
 
     private weak var setupViewModel: SetupViewModel?
@@ -60,9 +67,11 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
 
     init(logger: Logger,
          store: Store<AppState>,
-         localizationProvider: LocalizationProvider) {
+         localizationProvider: LocalizationProvider,
+         accessibilityProvider: AccessibilityProvider) {
         self.logger = logger
         self.store = store
+        self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
     }
 
@@ -85,7 +94,8 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
             let viewModel = CallingViewModel(compositeViewModelFactory: self,
                                              logger: logger,
                                              store: store,
-                                             localizationProvider: localizationProvider)
+                                             localizationProvider: localizationProvider,
+                                             accessibilityProvider: accessibilityProvider)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -117,6 +127,7 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel {
         LocalVideoViewModel(compositeViewModelFactory: self,
                             logger: logger,
+                            localizationProvider: localizationProvider,
                             dispatchAction: dispatchAction)
     }
     func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
@@ -132,10 +143,22 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
     }
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel {
-        AudioDevicesListViewModel(dispatchAction: dispatchAction,
+        AudioDevicesListViewModel(compositeViewModelFactory: self,
+                                  dispatchAction: dispatchAction,
                                   localUserState: localUserState,
                                   localizationProvider: localizationProvider)
     }
+
+    func makeAudioDevicesListCellViewModel(icon: CompositeIcon,
+                                           title: String,
+                                           isSelected: Bool,
+                                           onSelectedAction: @escaping (() -> Void)) -> AudioDevicesListCellViewModel {
+        AudioDevicesListCellViewModel(icon: icon,
+                                      title: title,
+                                      isSelected: isSelected,
+                                      onSelected: onSelectedAction)
+    }
+
     func makeErrorInfoViewModel() -> ErrorInfoViewModel {
         ErrorInfoViewModel(localizationProvider: localizationProvider)
     }
@@ -149,6 +172,7 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
                                  localUserState: LocalUserState) -> ControlBarViewModel {
         ControlBarViewModel(compositeViewModelFactory: self,
                             logger: logger,
+                            localizationProvider: localizationProvider,
                             dispatchAction: dispatchAction,
                             endCallConfirm: endCallConfirm,
                             localUserState: localUserState)
@@ -157,24 +181,40 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
                             localUserState: localUserState,
-                            localizationProvider: localizationProvider)
+                            localizationProvider: localizationProvider,
+                            accessibilityProvider: accessibilityProvider)
     }
+
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
         ParticipantGridCellViewModel(compositeViewModelFactory: self, participantModel: participantModel)
     }
     func makeParticipantGridsViewModel() -> ParticipantGridViewModel {
-        ParticipantGridViewModel(compositeViewModelFactory: self)
+        ParticipantGridViewModel(compositeViewModelFactory: self,
+                                 localizationProvider: localizationProvider,
+                                 accessibilityProvider: accessibilityProvider)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
-        ParticipantsListViewModel(localUserState: localUserState,
-                                  localizationProvider: localizationProvider)
+        ParticipantsListViewModel(compositeViewModelFactory: self,
+                                  localUserState: localUserState)
     }
     func makeBannerViewModel() -> BannerViewModel {
         BannerViewModel(compositeViewModelFactory: self)
     }
     func makeBannerTextViewModel() -> BannerTextViewModel {
-        BannerTextViewModel(localizationProvider: localizationProvider)
+        BannerTextViewModel(accessibilityProvider: accessibilityProvider,
+                            localizationProvider: localizationProvider)
+    }
+
+    func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel {
+        ParticipantsListCellViewModel(localUserState: localUserState,
+                                      localizationProvider: localizationProvider)
+    }
+
+    func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel)
+    -> ParticipantsListCellViewModel {
+        ParticipantsListCellViewModel(participantInfoModel: participantInfoModel,
+                                      localizationProvider: localizationProvider)
     }
 
     // MARK: SetupViewModels
@@ -192,6 +232,7 @@ class ACSCompositeViewModelFactory: CompositeViewModelFactory {
                                  localUserState: localUserState,
                                  localizationProvider: localizationProvider)
     }
+
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
         JoiningCallActivityViewModel(localizationProvider: localizationProvider)
     }

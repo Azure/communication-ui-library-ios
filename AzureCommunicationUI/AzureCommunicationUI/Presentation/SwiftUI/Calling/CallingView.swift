@@ -8,7 +8,10 @@ import FluentUI
 
 struct CallingView: View {
     @ObservedObject var viewModel: CallingViewModel
+    let avatarManager: AvatarViewManager
     let viewManager: VideoViewManager
+
+    let leaveCallConfirmationListSourceView = UIView()
 
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
@@ -28,9 +31,6 @@ struct CallingView: View {
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
-        .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveOverlayDisplayed) {
-            ConfirmLeaveOverlayView(viewModel: viewModel)
-        })
     }
 
     var portraitCallingView: some View {
@@ -51,7 +51,11 @@ struct CallingView: View {
         Group {
             ZStack(alignment: .bottomTrailing) {
                 videoGridView
+                    .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
                 topAlertAreaView
+                    .accessibilityElement(children: .contain)
+                    .accessibilitySortPriority(1)
+                    .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
                 if viewModel.isParticipantGridDisplayed {
                     localVideoPipView
                         .padding(.horizontal, -12)
@@ -61,10 +65,12 @@ struct CallingView: View {
             .contentShape(Rectangle())
             .animation(.linear(duration: 0.167))
             .onTapGesture(perform: {
-                viewModel.infoHeaderViewModel.toggleDisplayInfoHeader()
+                viewModel.infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
             })
             .modifier(PopupModalView(isPresented: viewModel.isLobbyOverlayDisplayed) {
                 LobbyOverlayView(viewModel: viewModel.getLobbyOverlayViewModel())
+                    .accessibilityElement(children: .contain)
+                    .accessibilityHidden(!viewModel.isLobbyOverlayDisplayed)
             })
         }
     }
@@ -77,6 +83,7 @@ struct CallingView: View {
 
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
+                           personaData: avatarManager.getLocalPersonaData(),
                            viewManager: viewManager,
                            viewType: .localVideoPip)
                 .frame(width: frameWidth, height: frameHeight, alignment: .center)
@@ -113,6 +120,7 @@ struct CallingView: View {
     var localVideoFullscreenView: some View {
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
+                           personaData: avatarManager.getLocalPersonaData(),
                            viewManager: viewManager,
                            viewType: .localVideofull)
                 .background(Color(StyleProvider.color.surface))

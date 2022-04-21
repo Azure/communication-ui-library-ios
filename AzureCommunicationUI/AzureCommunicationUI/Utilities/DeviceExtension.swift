@@ -22,4 +22,15 @@ extension UIDevice {
     func toggleProximityMonitoringStatus(isEnabled: Bool) {
         UIDevice.current.isProximityMonitoringEnabled = isEnabled
     }
+    func rotateTo(oritation: UIInterfaceOrientation) {
+        UIDevice.current.setValue(oritation.rawValue, forKey: "orientation")
+        UIViewController.attemptRotationToDeviceOrientation()
+    }
+}
+
+extension UIScreen {
+    static func isScreenSmall(_ length: CGFloat) -> Bool {
+        let maxLength = max(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
+        return maxLength < length
+    }
 }

@@ -241,7 +241,7 @@ class SetupControlBarViewModelTests: XCTestCase {
 
     func test_setupControlBarViewModel_updateStates_when_stateUpdated_then_cameraButtonViewModelButtonInfoUpdated() {
         let expectation = XCTestExpectation(description: "CameraButtonViewModel button info is updated")
-        let updateButtonInfoCompletion: ((CompositeIcon, String) -> Void) = { icon, label in
+        let updateButtonInfoCompletion: ((CompositeIcon?, String?) -> Void) = { icon, label in
             XCTAssertEqual(icon, .videoOn)
             XCTAssertEqual(label, "Video on")
             expectation.fulfill()
@@ -292,7 +292,7 @@ class SetupControlBarViewModelTests: XCTestCase {
 
     func test_setupControlBarViewModel_updateStates_when_stateUpdated_then_micButtonViewModelButtonInfoUpdated() {
         let expectation = XCTestExpectation(description: "MicButtonViewModel button info is updated")
-        let updateButtonInfoCompletion: ((CompositeIcon, String) -> Void) = { icon, label in
+        let updateButtonInfoCompletion: ((CompositeIcon?, String?) -> Void) = { icon, label in
             XCTAssertEqual(icon, .micOn)
             XCTAssertEqual(label, "Mic on")
             expectation.fulfill()
@@ -317,7 +317,7 @@ class SetupControlBarViewModelTests: XCTestCase {
 
     func test_setupControlBarViewModel_updateStates_when_stateUpdated_then_audioDeviceButtonViewModelButtonInfoUpdated() {
         let expectation = XCTestExpectation(description: "AudioDeviceButtonViewModel button info is updated")
-        let updateButtonInfoCompletion: ((CompositeIcon, String) -> Void) = { icon, label in
+        let updateButtonInfoCompletion: ((CompositeIcon?, String?) -> Void) = { icon, label in
             XCTAssertEqual(icon, .speakerFilled)
             XCTAssertEqual(label, "Speaker")
             expectation.fulfill()
@@ -343,7 +343,8 @@ class SetupControlBarViewModelTests: XCTestCase {
     func test_setupControlBarViewModel_updateStates_when_stateUpdated_then_audioDeviceListViewModelUpdated() {
         let expectation = XCTestExpectation(description: "AudioDevicesListViewModel is updated")
         let localUserState = LocalUserState(audioState: LocalUserState.AudioState(operation: .on, device: .speakerSelected))
-        let audioDevicesListViewModel = AudioDevicesListViewModelMocking(dispatchAction: storeFactory.store.dispatch,
+        let audioDevicesListViewModel = AudioDevicesListViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                         dispatchAction: storeFactory.store.dispatch,
                                                                          localUserState: localUserState,
                                                                          localizationProvider: LocalizationProviderMocking())
 
@@ -361,7 +362,7 @@ class SetupControlBarViewModelTests: XCTestCase {
 
     func test_setupControlBarViewModel_display_videoButtonLabel__from_LocalizationMocking() {
         let expectation = XCTestExpectation(description: "CameraButtonViewModel button info is updated")
-        let updateButtonInfoCompletion: ((CompositeIcon, String) -> Void) = { icon, label in
+        let updateButtonInfoCompletion: ((CompositeIcon?, String?) -> Void) = { icon, label in
             XCTAssertEqual(icon, .videoOn)
             XCTAssertEqual(label, "AzureCommunicationUI.SetupView.Button.VideoOn")
             expectation.fulfill()

@@ -9,12 +9,13 @@ import AzureCommunicationCalling
 
 struct SettingsView: View {
     @State private var isLocalePickerDisplayed: Bool = false
+    @State private var selectedAvatarImage: Image?
     @ObservedObject var envConfigSubject: EnvConfigSubject
     var dismissAction: (() -> Void)
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
-
+    let avatarChoices: [String] = ["cat", "fox", "koala", "monkey", "mouse", "octopus"]
     var body: some View {
         ZStack {
             VStack {
@@ -24,6 +25,7 @@ struct SettingsView: View {
                 }
                 Text("UI Library - Settings")
                 localizationSettings
+                avatarSettings
                 Spacer()
             }
             LocalePicker(selection: $envConfigSubject.languageCode,
@@ -61,8 +63,44 @@ struct SettingsView: View {
                 Toggle("Is Right-to-Left: ", isOn: $envConfigSubject.isRightToLeft)
             }
             .padding(.horizontal, horizontalPadding)
+            TextField(
+                "Locale identifier (eg. zh-Hant, fr-CA)",
+                text: $envConfigSubject.localeIdentifier
+            )
+            .multilineTextAlignment(.center)
+            .keyboardType(.default)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .textFieldStyle(.roundedBorder)
         }
         .padding(.vertical, verticalPadding)
+        .padding(.horizontal, horizontalPadding)
+    }
+
+    var avatarSettings: some View {
+        VStack {
+            Text("Avatars")
+                .bold()
+            HStack {
+                ForEach(avatarChoices, id: \.self) { imgName in
+                    Button(
+                        action: {
+                            if envConfigSubject.avatarImageName == imgName {
+                                envConfigSubject.avatarImageName = ""
+                            } else {
+                                envConfigSubject.avatarImageName = imgName
+                            }
+                        },
+                        label: { Image(imgName) }
+                    ).border(envConfigSubject.avatarImageName == imgName ? Color.blue : Color.clear)
+                }
+                Spacer()
+            }
+            TextField("Rendered Display Name", text: $envConfigSubject.renderedDisplayName)
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
+                .textFieldStyle(.roundedBorder)
+        }
         .padding(.horizontal, horizontalPadding)
     }
 }
@@ -70,7 +108,7 @@ struct SettingsView: View {
 struct LocalePicker: View {
     @Binding var selection: String
     @Binding var isShowing: Bool
-    let supportedLanguage: [String] = LocalizationConfiguration.getSupportedLanguages()
+    let supportedLanguage: [String] = ["auto"] + LocalizationConfiguration.supportedLanguages
 
     var body: some View {
         VStack {
@@ -83,7 +121,11 @@ struct LocalePicker: View {
             }
             Picker("Language", selection: $selection) {
                 ForEach(supportedLanguage, id: \.self) {
-                    Text($0)
+                    if $0 == "auto" {
+                        Text("Detect locale (en, zh-Hant, fr, fr-CA)")
+                    } else {
+                        Text($0)
+                    }
                 }
             }
             .pickerStyle(.wheel)

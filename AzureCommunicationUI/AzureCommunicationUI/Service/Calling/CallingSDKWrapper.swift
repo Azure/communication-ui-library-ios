@@ -266,7 +266,7 @@ extension ACSCallingSDKWrapper {
                 options.displayName = displayName
             }
 
-            self.callClient?.createCallAgent(userCredential: self.callConfiguration.communicationTokenCredential,
+            self.callClient?.createCallAgent(userCredential: self.callConfiguration.credential,
                                              options: options) { [weak self] (agent, error) in
                 guard let self = self else {
                     return promise(.failure(CompositeError.invalidSDKWrapper))

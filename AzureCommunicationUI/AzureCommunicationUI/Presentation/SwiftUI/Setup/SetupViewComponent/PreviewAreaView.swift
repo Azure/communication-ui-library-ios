@@ -8,6 +8,7 @@ import FluentUI
 
 struct PreviewAreaView: View {
     @ObservedObject var viewModel: PreviewAreaViewModel
+    let localPersonaData: CommunicationUIPersonaData?
     let viewManager: VideoViewManager
 
     var body: some View {
@@ -23,6 +24,7 @@ struct PreviewAreaView: View {
 
     var localVideoPreviewView: some View {
         return LocalVideoView(viewModel: viewModel.localVideoViewModel,
+                              personaData: localPersonaData,
                               viewManager: viewManager,
                               viewType: .preview)
     }
@@ -48,6 +50,7 @@ struct PermissionWarningView: View {
                     .foregroundColor(Color(StyleProvider.color.onSurface))
             }.frame(width: geometry.size.width,
                     height: geometry.size.height)
+            .accessibilityElement(children: .combine)
         }
     }
 }

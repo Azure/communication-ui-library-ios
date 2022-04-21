@@ -7,7 +7,6 @@ import SwiftUI
 
 struct ParticipantGridLayoutView: View {
     var cellViewModels: [ParticipantGridCellViewModel]
-    let getRemoteParticipantRendererView: (RemoteParticipantVideoViewId) -> ParticipantRendererViewInfo?
     let rendererViewManager: RendererViewManager?
     let screenSize: ScreenSizeClassType
     let gridsMargin: CGFloat = 3
@@ -38,6 +37,7 @@ struct ParticipantGridLayoutView: View {
             }
         }
         .background(Color(StyleProvider.color.gridLayoutBackground))
+        .accessibilityElement(children: .contain)
     }
 
     var vGridLayout: some View {
@@ -50,16 +50,17 @@ struct ParticipantGridLayoutView: View {
             }
         }
         .background(Color(StyleProvider.color.gridLayoutBackground))
+        .accessibilityElement(children: .contain)
     }
 
     func getRowView(cellsViewModel: [ParticipantGridCellViewModel]) -> some View {
         return ForEach(cellsViewModel) { vm in
             ParticipantGridCellView(viewModel: vm,
-                                    getRemoteParticipantRendererView: getRemoteParticipantRendererView,
                                     rendererViewManager: rendererViewManager)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .background(Color(StyleProvider.color.surface))
                 .clipShape(RoundedRectangle(cornerRadius: 4))
+                .accessibilityElement(children: .contain)
 
         }
     }

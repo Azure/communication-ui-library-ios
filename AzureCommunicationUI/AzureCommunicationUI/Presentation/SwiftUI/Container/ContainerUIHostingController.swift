@@ -10,10 +10,12 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
     class EnvironmentProperty {
         @Published var supportedOrientations: UIInterfaceOrientationMask
         @Published var isProximitySensorOn: Bool
+        @Published var prefersHomeIndicatorAutoHidden: Bool
 
         init() {
             self.supportedOrientations = .portrait
             self.isProximitySensorOn = false
+            self.prefersHomeIndicatorAutoHidden = false
         }
     }
 
@@ -43,6 +45,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
     override func viewDidLoad() {
         super.viewDidLoad()
         UIApplication.shared.isIdleTimerDisabled = true
+        overrideUserInterfaceStyle = StyleProvider.color.colorSchemeOverride
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -63,7 +66,16 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
                 switch containerView.router.currentView {
                 case .setupView:
                     if UIDevice.current.isGeneratingDeviceOrientationNotifications {
-                        UIDevice.current.endGeneratingDeviceOrientationNotifications()
+                        // This work-around is to make sure the setup view rotates back to portrait if the previous
+                        // screen was on a different orientation.
+                        // The 0.35s delay here is to wait for any orientation switch animation that happends at
+                        // the same time with the steup view navigation.
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                            if UIDevice.current.orientation != .portrait {
+                                UIDevice.current.rotateTo(oritation: .portrait)
+                            }
+                            UIDevice.current.endGeneratingDeviceOrientationNotifications()
+                        }
                     }
                 default:
                     if !UIDevice.current.isGeneratingDeviceOrientationNotifications {
@@ -78,6 +90,16 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
             .removeDuplicates()
             .sink(receiveValue: { isEnable in
                 UIDevice.current.toggleProximityMonitoringStatus(isEnabled: isEnable)
+            }).store(in: cancelBag)
+
+        environmentProperties
+            .$prefersHomeIndicatorAutoHidden
+            .receive(on: RunLoop.main)
+            .sink(receiveValue: { [weak self] shouldHide in
+                guard let strongSelf = self else {
+                    return
+                }
+                strongSelf._prefersHomeIndicatorAutoHidden = shouldHide
             }).store(in: cancelBag)
     }
 
@@ -110,6 +132,19 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
                 .onPreferenceChange(ProximitySensorPreferenceKey.self) {
                     self.environmentProperties.isProximitySensorOn = $0
                 }
+                .onPreferenceChange(PrefersHomeIndicatorAutoHiddenPreferenceKey.self) {
+                    self.environmentProperties.prefersHomeIndicatorAutoHidden = $0
+                }
         }
+    }
+
+    // MARK: Prefers Home Indicator Auto Hidden
+
+    private var _prefersHomeIndicatorAutoHidden: Bool = false {
+        didSet { setNeedsUpdateOfHomeIndicatorAutoHidden() }
+    }
+
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        _prefersHomeIndicatorAutoHidden
     }
 }

@@ -28,6 +28,8 @@ struct InfoHeaderView: View {
         })
         .modifier(PopupModalView(isPresented: viewModel.isParticipantsListDisplayed) {
             participantsListView
+                .accessibilityElement(children: .contain)
+                .accessibilityAddTraits(.isModal)
         })
     }
 
@@ -40,6 +42,8 @@ struct InfoHeaderView: View {
                                     trailing: 0))
                 .foregroundColor(foregroundColor)
                 .font(Fonts.caption1.font)
+                .accessibilityLabel(Text(viewModel.accessibilityLabel))
+                .accessibilitySortPriority(1)
             Spacer()
             participantListButton
         }
@@ -59,6 +63,7 @@ struct InfoHeaderView: View {
     var participantsListView: some View {
         CompositeParticipantsList(isPresented: $viewModel.isParticipantsListDisplayed,
                                   isInfoHeaderDisplayed: $viewModel.isInfoHeaderDisplayed,
+                                  isVoiceOverEnabled: $viewModel.isVoiceOverEnabled,
                                   viewModel: viewModel.participantsListViewModel,
                                   sourceView: participantsListButtonSourceView)
             .modifier(LockPhoneOrientation())

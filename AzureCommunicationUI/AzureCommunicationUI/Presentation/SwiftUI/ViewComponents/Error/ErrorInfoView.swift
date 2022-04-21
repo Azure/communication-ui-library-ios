@@ -9,7 +9,7 @@ import FluentUI
 struct ErrorInfoView: View {
     @ObservedObject var viewModel: ErrorInfoViewModel
 
-    private let cornerRaidus: CGFloat = 4
+    private let cornerRadius: CGFloat = 4
 
     var body: some View {
         if viewModel.isDisplayed {
@@ -18,6 +18,8 @@ struct ErrorInfoView: View {
                     .padding([.top, .leading, .bottom])
                     .font(Fonts.footnote.font)
                     .foregroundColor(Color(StyleProvider.color.onWarning))
+                    .accessibilityLabel(Text(viewModel.accessibilityLabel))
+                    .accessibilitySortPriority(1)
                 Spacer()
                 Button(action: dismissAction) {
                     Text(viewModel.dismissContent)
@@ -25,9 +27,12 @@ struct ErrorInfoView: View {
                         .foregroundColor(Color(StyleProvider.color.onWarning))
                 }
                 .padding([.top, .bottom, .trailing])
+                .accessibilityLabel(Text(viewModel.dismissButtonAccessibilityLabel))
+                .accessibilityHint(Text(viewModel.dismissButtonAccessibilityHint))
+                .accessibilitySortPriority(0)
             }
             .background(Color(StyleProvider.color.warning))
-            .cornerRadius(cornerRaidus)
+            .cornerRadius(cornerRadius)
         }
     }
 

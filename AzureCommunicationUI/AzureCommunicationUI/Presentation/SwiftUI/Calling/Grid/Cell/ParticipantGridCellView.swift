@@ -9,7 +9,6 @@ import Combine
 
 struct ParticipantGridCellView: View {
     @ObservedObject var viewModel: ParticipantGridCellViewModel
-    let getRemoteParticipantRendererView: (RemoteParticipantVideoViewId) -> ParticipantRendererViewInfo?
     let rendererViewManager: RendererViewManager?
     @State var displayedVideoStreamId: String?
     @State var isVideoChanging: Bool = false
@@ -34,6 +33,8 @@ struct ParticipantGridCellView: View {
                                height: geometry.size.height)
                 }
             }
+            .accessibilityElement(children: .combine)
+            .accessibilityLabel(Text(viewModel.accessibilityLabel))
         }
         .onReceive(viewModel.$videoViewModel) { model in
             let cachedVideoStreamId = displayedVideoStreamId
@@ -57,7 +58,7 @@ struct ParticipantGridCellView: View {
             return nil
         }
 
-        return getRemoteParticipantRendererView(remoteParticipantVideoViewId)
+        return rendererViewManager?.getRemoteParticipantVideoRendererView(remoteParticipantVideoViewId)
     }
 
     private func getRemoteParticipantVideoViewId() -> RemoteParticipantVideoViewId? {
@@ -106,6 +107,7 @@ struct ParticipantTitleView: View {
             }
             if isMuted {
                 Icon(name: .micOff, size: mutedIconSize)
+                    .accessibility(hidden: true)
             }
         })
         .padding(.horizontal, isEmpty ? 0 : 4)

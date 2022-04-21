@@ -18,6 +18,9 @@ struct BannerTextView: View {
             + Text(viewModel.linkDisplay).underline()
         }
         .font(Fonts.footnote.font)
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Text(viewModel.accessibilityLabel))
+        .accessibilityAddTraits(.isLink)
         .onTapGesture {
             if let url = URL(string: viewModel.link) {
                 UIApplication.shared.open(url)

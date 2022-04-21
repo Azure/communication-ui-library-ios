@@ -16,4 +16,7 @@ struct Theming: ThemeConfiguration {
 //    var primaryColor: UIColor {
 //        return UIColor.red
 //    }
+//    var colorSchemeOverride: UIUserInterfaceStyle {
+//        return .dark
+//    }
 }

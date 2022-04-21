@@ -13,11 +13,14 @@ struct BannerView: View {
             HStack(alignment: .top) {
                 BannerTextView(viewModel: viewModel.bannerTextViewModel)
                     .padding([.top, .leading, .bottom])
+                    .accessibilitySortPriority(2)
                 Spacer()
                 dismissButton
                     .padding([.top, .trailing])
+                    .accessibilitySortPriority(1)
             }
             .background(Color(StyleProvider.color.backgroundColor))
+            .accessibilitySortPriority(2)
         } else {
             Spacer()
                 .frame(height: 8)

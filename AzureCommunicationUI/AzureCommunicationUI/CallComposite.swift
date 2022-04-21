@@ -28,7 +28,7 @@ public class CallComposite {
 
     /// Assign closure to execute when an error occurs inside Call Composite.
     /// - Parameter action: The closure returning the error thrown from Call Composite.
-    public func setTarget(didFail action: ((ErrorEvent) -> Void)?) {
+    public func setTarget(didFail action: ((CommunicationUIErrorEvent) -> Void)?) {
         callCompositeEventsHandler.didFail = action
     }
 
@@ -36,12 +36,13 @@ public class CallComposite {
         logger?.debug("Composite deallocated")
     }
 
-    private func launch(_ callConfiguration: CallConfiguration) {
+    private func launch(_ callConfiguration: CallConfiguration,
+                        localOptions: CommunicationUILocalDataOptions?) {
         let dependencyContainer = DependencyContainer()
         logger = dependencyContainer.resolve() as Logger
         logger?.debug("launch composite experience")
 
-        dependencyContainer.registerDependencies(callConfiguration)
+        dependencyContainer.registerDependencies(callConfiguration, localDataOptions: localOptions)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProvider
         setupColorTheming()
         setupLocalization(with: localizationProvider)
@@ -57,24 +58,30 @@ public class CallComposite {
 
     /// Start call composite experience with joining a group call.
     /// - Parameter options: The GroupCallOptions used to locate the group call.
-    public func launch(with options: GroupCallOptions) {
+    /// - Parameter localData: LocalData used to set the user participants information for the call.
+    ///                         This is data is not sent up to ACS.
+    public func launch(with options: GroupCallOptions,
+                       localOptions: CommunicationUILocalDataOptions? = nil) {
         let callConfiguration = CallConfiguration(
-            communicationTokenCredential: options.communicationTokenCredential,
+            credential: options.credential,
             groupId: options.groupId,
             displayName: options.displayName)
 
-        launch(callConfiguration)
+        launch(callConfiguration, localOptions: localOptions)
     }
 
     /// Start call composite experience with joining a Teams meeting..
     /// - Parameter options: The TeamsMeetingOptions used to locate the Teams meetings.
-    public func launch(with options: TeamsMeetingOptions) {
+    /// - Parameter localData: LocalData used to set the user participants information for the call.
+    ///                         This is data is not sent up to ACS.
+    public func launch(with options: TeamsMeetingOptions,
+                       localOptions: CommunicationUILocalDataOptions? = nil) {
         let callConfiguration = CallConfiguration(
-            communicationTokenCredential: options.communicationTokenCredential,
+            credential: options.credential,
             meetingLink: options.meetingLink,
             displayName: options.displayName)
 
-        launch(callConfiguration)
+        launch(callConfiguration, localOptions: localOptions)
     }
 
     private func setupManagers(store: Store<AppState>,

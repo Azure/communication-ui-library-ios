@@ -127,35 +127,49 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
-    func didFail(_ error: ErrorEvent) {
+    func didFail(_ error: CommunicationUIErrorEvent) {
         print("::::UIkitDemoView::getEventsHandler::didFail \(error)")
         print("::::UIkitDemoView error.code \(error.code)")
     }
 
     func startExperience(with link: String) {
-        let localizationConfig = LocalizationConfiguration(languageCode: envConfigSubject.languageCode,
-                                                           isRightToLeft: envConfigSubject.isRightToLeft)
+        var localizationConfig: LocalizationConfiguration?
+        let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
+        if envConfigSubject.localeIdentifier != "" {
+            let locale = Locale(identifier: envConfigSubject.localeIdentifier)
+            localizationConfig = LocalizationConfiguration(locale: locale,
+                                                           layoutDirection: layoutDirection)
+        } else if envConfigSubject.languageCode != "auto" {
+            localizationConfig = LocalizationConfiguration(
+                languageCode: envConfigSubject.languageCode,
+                layoutDirection: layoutDirection)
+        }
 
-        let callCompositeOptions = CallCompositeOptions(themeConfiguration: TeamsBrandConfig(),
-                                                        localizationConfiguration: localizationConfig)
-
+        let callCompositeOptions = CallCompositeOptions(
+            theme: TeamsBrandConfig(),
+            localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
 
         callComposite.setTarget(didFail: didFail)
+        let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
+                                nil : envConfigSubject.renderedDisplayName
+        let persona = CommunicationUIPersonaData(UIImage(named: envConfigSubject.avatarImageName),
+                                                 renderDisplayName: renderDisplayName)
+        let localOptions = CommunicationUILocalDataOptions(persona)
 
         if let communicationTokenCredential = try? getTokenCredential() {
             switch selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
-                let parameters = GroupCallOptions(communicationTokenCredential: communicationTokenCredential,
+                let parameters = GroupCallOptions(credential: communicationTokenCredential,
                                                   groupId: uuid,
                                                   displayName: getDisplayName())
-                callComposite.launch(with: parameters)
+                callComposite.launch(with: parameters, localOptions: localOptions)
             case .teamsMeeting:
-                let parameters = TeamsMeetingOptions(communicationTokenCredential: communicationTokenCredential,
+                let parameters = TeamsMeetingOptions(credential: communicationTokenCredential,
                                                      meetingLink: link,
                                                      displayName: getDisplayName())
-                callComposite.launch(with: parameters)
+                callComposite.launch(with: parameters, localOptions: localOptions)
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
@@ -418,6 +432,8 @@ class UIKitDemoViewController: UIViewController {
         startExperienceButton.sizeToFit()
         startExperienceButton.translatesAutoresizingMaskIntoConstraints = false
         startExperienceButton.addTarget(self, action: #selector(onStartExperienceBtnPressed), for: .touchUpInside)
+
+        startExperienceButton.accessibilityLabel = LocalizationKey.startExperienceAccessibilityLabel.rawValue
 
         // horizontal stack view for the settingButton and startExperienceButton
         let settingButtonHSpacer1 = UIView()

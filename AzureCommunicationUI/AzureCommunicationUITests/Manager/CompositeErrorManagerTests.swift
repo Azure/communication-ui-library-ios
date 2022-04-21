@@ -15,7 +15,7 @@ class CompositeErrorManagerTests: XCTestCase {
     var mockEventsHandler: CallCompositeEventsHandler?
 
     var handlerCallExpectation = XCTestExpectation(description: "Delegate expectation")
-    var expectedError: ErrorEvent?
+    var expectedError: CommunicationUIErrorEvent?
 
     override func setUp() {
         super.setUp()
@@ -41,7 +41,7 @@ class CompositeErrorManagerTests: XCTestCase {
     }
 
     func test_errorManager_receiveState_when_fatalErrorCallJoin_then_receiveDidFail() {
-        let fatalError = ErrorEvent(code: CallCompositeErrorCode.callJoin, error: nil)
+        let fatalError = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callJoin, error: nil)
         self.expectedError = fatalError
         let errorState = ErrorState(error: fatalError, errorCategory: .callState)
         let newState = getAppState(errorState: errorState)
@@ -51,7 +51,7 @@ class CompositeErrorManagerTests: XCTestCase {
     }
 
     func test_errorManager_receiveState_when_fatalErrorTokenExpired_then_receiveEmergencyExitAction() {
-        let fatalError = ErrorEvent(code: CallCompositeErrorCode.tokenExpired, error: nil)
+        let fatalError = CommunicationUIErrorEvent(code: CallCompositeErrorCode.tokenExpired, error: nil)
         self.expectedError = fatalError
         let errorState = ErrorState.init(error: fatalError, errorCategory: .fatal)
         let newState = getAppState(errorState: errorState)
