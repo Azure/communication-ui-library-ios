@@ -8,14 +8,21 @@ import AzureCommunicationUI
 import AzureCommunicationCalling
 
 struct SettingsView: View {
+
+
     @State private var isLocalePickerDisplayed: Bool = false
     @State private var selectedAvatarImage: Image?
+    @State private var selectedColor: Color?
+    @State private var selectedThemeMode: String
+
     @ObservedObject var envConfigSubject: EnvConfigSubject
+
     var dismissAction: (() -> Void)
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
     let avatarChoices: [String] = ["cat", "fox", "koala", "monkey", "mouse", "octopus"]
+
     var body: some View {
         ZStack {
             VStack {
@@ -44,7 +51,7 @@ struct SettingsView: View {
 
     var localizationSettings: some View {
         VStack {
-            Text("Localization Settings")
+            Text("Localization")
                 .bold()
             HStack {
                 Text("Language: ")
@@ -102,6 +109,18 @@ struct SettingsView: View {
                 .textFieldStyle(.roundedBorder)
         }
         .padding(.horizontal, horizontalPadding)
+    }
+
+    var themeSettings: some View {
+        VStack {
+            Text("Theme")
+                .bold()
+            ColorPicker("Select a Primary Color", selection: $selectedColor)
+            Picker("Force Theme Mode", selection: $selectedThemeMode) {
+                ForEach(UIUserInterfaceStyle.allCases) { mode in
+                    Text(mode)
+            }
+        }
     }
 }
 
