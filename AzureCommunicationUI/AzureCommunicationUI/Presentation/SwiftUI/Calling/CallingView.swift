@@ -14,7 +14,6 @@ struct CallingView: View {
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
 
     @State private var pipPosition = CGPoint()
-    @State private var pipSize = CGSize()
 
     var safeAreaIgnoreArea: Edge.Set {
         return getSizeClass() != .iphoneLandscapeScreenSize ? []: [.bottom]
@@ -59,20 +58,16 @@ struct CallingView: View {
                 ZStack(alignment: .bottomTrailing) {
                     videoGridView
                         .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
+                    if viewModel.isParticipantGridDisplayed {
+                        draggableVideoPipView
+                            .onAppear {
+                                self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
+                            }
+                    }
                     topAlertAreaView
                         .accessibilityElement(children: .contain)
                         .accessibilitySortPriority(1)
                         .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
-                    if viewModel.isParticipantGridDisplayed {
-                        draggableVideoPipView
-                            .padding(.horizontal, -12)
-                            .padding(.vertical, -12)
-                            .onAppear {
-                                self.pipPosition = getInitialPipPosition(
-                                    containerBounds: geometry.frame(in: .local),
-                                    pipSize: self.pipSize)
-                            }
-                    }
                 }
                 .contentShape(Rectangle())
                 .animation(.linear(duration: 0.167))
@@ -90,15 +85,13 @@ struct CallingView: View {
 
     var localVideoPipView: some View {
         let shapeCornerRadius: CGFloat = 4
-        let isPortraitMode = getSizeClass() != .iphoneLandscapeScreenSize
-        let frameWidth: CGFloat = isPortraitMode ? 72 : 104
-        let frameHeight: CGFloat = isPortraitMode ? 104 : 72
+        let size = getPipSize()
 
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
                            viewManager: viewManager,
                            viewType: .localVideoPip)
-                .frame(width: frameWidth, height: frameHeight, alignment: .center)
+                .frame(width: size.width, height: size.height, alignment: .center)
                 .background(Color(StyleProvider.color.backgroundColor))
                 .clipShape(RoundedRectangle(cornerRadius: shapeCornerRadius))
                 .padding()
@@ -109,17 +102,11 @@ struct CallingView: View {
         return Group {
             GeometryReader { geometry in
                 localVideoPipView
-                    .anchorPreference(key: BoundsPreferenceKey.self, value: .bounds) { geometry[$0] }
-                    .onPreferenceChange(BoundsPreferenceKey.self) {
-                        self.pipSize = $0.size
-                    }
                     .position(self.pipPosition)
                     .gesture(
                         DragGesture()
                             .onChanged { value in
-                                let containerBounds = getContainerBounds(
-                                    bounds: geometry.frame(in: .local),
-                                    pipSize: self.pipSize)
+                                let containerBounds = getContainerBounds(bounds: geometry.frame(in: .local))
                                 self.pipPosition = getBoundedPipPosition(
                                     currentPipPosition: self.pipPosition,
                                     requestedPipPosition: value.location,
@@ -190,23 +177,20 @@ struct CallingView: View {
         }
     }
 
-    private func getInitialPipPosition(containerBounds: CGRect, pipSize: CGSize) -> CGPoint {
+    private func getInitialPipPosition(containerBounds: CGRect) -> CGPoint {
         return CGPoint(
-            x: getContainerBounds(bounds: containerBounds, pipSize: pipSize).maxX,
-            y: getContainerBounds(bounds: containerBounds, pipSize: pipSize).maxY)
+            x: getContainerBounds(bounds: containerBounds).maxX,
+            y: getContainerBounds(bounds: containerBounds).maxY)
     }
 
-    private func getRotatedPipPosition(currentPipPosition: CGPoint) -> CGPoint {
-        // Calculate new pipPosition after screen rotation
-        return currentPipPosition
-    }
-
-    private func getContainerBounds(bounds: CGRect, pipSize: CGSize) -> CGRect {
+    private func getContainerBounds(bounds: CGRect) -> CGRect {
+        let pipSize = getPipSize()
+        let padding = 12.0
         return bounds.inset(by: UIEdgeInsets(
-                top: pipSize.height / 2.0,
-                left: pipSize.width / 2.0,
-                bottom: pipSize.height / 2.0,
-                right: pipSize.width / 2.0))
+                top: pipSize.height / 2.0 + padding,
+                left: pipSize.width / 2.0 + padding,
+                bottom: pipSize.height / 2.0 + padding,
+                right: pipSize.width / 2.0 + padding))
     }
 
     private func getBoundedPipPosition(
@@ -234,6 +218,11 @@ struct CallingView: View {
         return boundedPipPosition
     }
 
+    private func getPipSize() -> CGSize {
+        let isPortraitMode = getSizeClass() != .iphoneLandscapeScreenSize
+        return CGSize(width: isPortraitMode ? 72 : 104, height: isPortraitMode ? 104 : 72)
+    }
+
     private func getMinMaxLimitedValue(value: CGFloat, min: CGFloat, max: CGFloat) -> CGFloat {
         var limitedValue = value
         if value < min {
@@ -242,12 +231,5 @@ struct CallingView: View {
             limitedValue = max
         }
         return limitedValue
-    }
-}
-
-private struct BoundsPreferenceKey: PreferenceKey {
-    static var defaultValue: CGRect = .zero
-    static func reduce(value: inout CGRect, nextValue: () -> CGRect) {
-        value = nextValue()
     }
 }
