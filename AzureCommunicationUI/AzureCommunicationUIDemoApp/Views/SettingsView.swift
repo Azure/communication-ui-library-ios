@@ -8,8 +8,6 @@ import AzureCommunicationUI
 import AzureCommunicationCalling
 
 struct SettingsView: View {
-
-
     @State private var isLocalePickerDisplayed: Bool = false
     @State private var selectedAvatarImage: Image?
     @State private var selectedColor: Color?
@@ -115,11 +113,12 @@ struct SettingsView: View {
         VStack {
             Text("Theme")
                 .bold()
-            ColorPicker("Select a Primary Color", selection: $selectedColor)
+//            ColorPicker("Select a Primary Color", selection: $selectedColor)
             Picker("Force Theme Mode", selection: $selectedThemeMode) {
-                ForEach(UIUserInterfaceStyle.allCases) { mode in
-                    Text(mode)
+                Text("Light Mode")
+                Text("Dark Mode")
             }
+            .pickerStyle(.segmented)
         }
     }
 }
