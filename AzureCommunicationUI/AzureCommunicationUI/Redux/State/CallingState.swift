@@ -16,7 +16,6 @@ enum CallingStatus: Int {
     case disconnected
     case inLobby
     case remoteHold
-    case callEvicted
 }
 
 class CallingState: ReduxState, Equatable {
