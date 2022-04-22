@@ -95,6 +95,18 @@ class LocalUserState: ReduxState {
         case headphonesRequested
         case error(Error)
 
+        func hasProcess(for audioDeviceType: AudioDeviceType) -> Bool {
+            switch (self, audioDeviceType) {
+            case (.speakerSelected, .speaker),
+                (.bluetoothSelected, .bluetooth),
+                (.headphonesSelected, .headphones),
+                (.receiverSelected, .receiver):
+                return true
+            default:
+                return false
+            }
+        }
+
         static func == (lhs: LocalUserState.AudioDeviceSelectionStatus,
                         rhs: LocalUserState.AudioDeviceSelectionStatus) -> Bool {
             switch (lhs, rhs) {
