@@ -222,7 +222,10 @@ struct CallingView: View {
 
     private func getPipSize() -> CGSize {
         let isPortraitMode = getSizeClass() != .iphoneLandscapeScreenSize
-        return CGSize(width: isPortraitMode ? 72 : 104, height: isPortraitMode ? 104 : 72)
+        let width = isPortraitMode ? 72 : 104
+        let height = isPortraitMode ? 104 : 72
+        
+        return CGSize(width: width, height: height)
     }
 
     private func getMinMaxLimitedValue(value: CGFloat, min: CGFloat, max: CGFloat) -> CGFloat {
