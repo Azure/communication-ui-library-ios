@@ -177,24 +177,23 @@ extension CallingSDKEventsHandler: CallDelegate,
     private func determineErrorType(previousStatus: CallingStatus, callEndReason: CallEndReason) -> String {
         let callEndReasonCode = callEndReason.code
         let callEndReasonSubCode = callEndReason.subcode
-        if callEndReasonCode > 0 {
+
+        if callEndReasonCode == 0 {
+            if (callEndReasonSubCode == 5300 || callEndReasonSubCode == 5000),
+                previousStatus == .connected {
+                return CallCompositeErrorCode.callEvicted
+            }
+        } else if callEndReasonCode > 0 {
             if callEndReasonCode == 401 {
                 return CallCompositeErrorCode.tokenExpired
             } else if callEndReasonCode == 487 {
                 // having "" will leave the composite
                 return ""
             } else {
-                if previousStatus == .connected {
-                    return CallCompositeErrorCode.callEnd
-                } else {
-                    return CallCompositeErrorCode.callJoin
-                }
+                return previousStatus == .connected
+                ? CallCompositeErrorCode.callEnd
+                : CallCompositeErrorCode.callJoin
             }
-
-        } else if callEndReasonCode == 0,
-                  (callEndReasonSubCode == 5300 || callEndReasonSubCode == 5000),
-                  previousStatus == .connected {
-            return CallCompositeErrorCode.callEvicted
         }
 
         return ""
