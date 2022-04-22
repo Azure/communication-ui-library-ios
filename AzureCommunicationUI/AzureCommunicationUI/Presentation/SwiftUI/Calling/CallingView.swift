@@ -224,7 +224,7 @@ struct CallingView: View {
         let isPortraitMode = getSizeClass() != .iphoneLandscapeScreenSize
         let width = isPortraitMode ? 72 : 104
         let height = isPortraitMode ? 104 : 72
-        
+
         return CGSize(width: width, height: height)
     }
 
