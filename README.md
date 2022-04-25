@@ -1,4 +1,4 @@
-![Hero Imaage](/docs/images/mobile-ui-library-hero-image.png)
+![Hero Image](/docs/images/mobile-ui-library-hero-image.png)
 
 # Azure Communication UI Mobile Library for iOS
 
@@ -24,7 +24,7 @@ Get started with Azure Communication Services by using the UI Library to integra
 #### Requirements
 
 * iOS 13+
-* Xcode 11+
+* Xcode 13+
 * Swift 5.0+
 
 #### Using CocoaPods
@@ -54,7 +54,7 @@ let options = GroupCallOptions(credential: communicationTokenCredential,
 callComposite.launch(with: options)
 ```
 
-For more details on Mobile UI Library functionalities visit the [API Reference Documentation](docs/api/CallComposite/Reference.md).
+For more details on Mobile UI Library functionalities visit the [API Reference Documentation](https://azure.github.io/azure-sdk-for-ios/AzureCommunicationUI/index.html).
 
 
 ## Contributing to the Library or Sample
