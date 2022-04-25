@@ -8,6 +8,7 @@ import AzureCommunicationUI
 import SwiftUI
 
 enum EnvConfig: String {
+    case appCenterSecret
     case acsToken
     case acsTokenUrl
     case displayName
@@ -24,6 +25,7 @@ enum EnvConfig: String {
 }
 
 class EnvConfigSubject: ObservableObject {
+    @Published var appCenterSecret: String = EnvConfig.appCenterSecret.value()
     @Published var acsToken: String = EnvConfig.acsToken.value()
     @Published var acsTokenUrl: String = EnvConfig.acsTokenUrl.value()
     @Published var displayName: String = EnvConfig.displayName.value()

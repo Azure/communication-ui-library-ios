@@ -4,6 +4,10 @@
 - Updated minimum iOS version to 14.0. [#103](https://github.com/Azure/communication-ui-library-ios/pull/103)
 - Updated leave call confirmation drawer. [#129](https://github.com/Azure/communication-ui-library-ios/pull/129)
 - Implemented new local participant avatar parameter into launch method. [#131](https://github.com/Azure/communication-ui-library-ios/pull/131)
+- Implemented automatic system language detection for localization. [#126](https://github.com/Azure/communication-ui-library-ios/pull/126)
+- Updated localization language code to supoort both `ll` (language code) and `ll-CC` (language code with country code) format. [#133](https://github.com/Azure/communication-ui-library-ios/pull/133)
+- Implemented additional initializer for `LocalizationConfiguration` to accept Locale struct. [#133](https://github.com/Azure/communication-ui-library-ios/pull/133)
+
 
 ### Bugs Fixed
 - Fixed screen share not rendering in large screen device. [#128](https://github.com/Azure/communication-ui-library-ios/pull/128)
