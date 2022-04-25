@@ -8,135 +8,89 @@ import AzureCommunicationUI
 import AzureCommunicationCalling
 
 struct SettingsView: View {
+    private enum ThemeMode: String, CaseIterable, Identifiable {
+        case osApp = "OS / App"
+        case light = "Light Mode"
+        case dark = "Dark Mode"
+
+        var id: UIUserInterfaceStyle {
+            switch self {
+            case .osApp:
+                return .unspecified
+            case .light:
+                return .light
+            case .dark:
+                return .dark
+            }
+        }
+    }
+
     @State private var isLocalePickerDisplayed: Bool = false
-    @State private var selectedAvatarImage: Image?
-    @State private var selectedColor: Color?
-    @State private var selectedThemeMode: String
 
     @ObservedObject var envConfigSubject: EnvConfigSubject
 
-    var dismissAction: (() -> Void)
-
-    let verticalPadding: CGFloat = 5
-    let horizontalPadding: CGFloat = 10
     let avatarChoices: [String] = ["cat", "fox", "koala", "monkey", "mouse", "octopus"]
 
     var body: some View {
-        ZStack {
-            VStack {
-                HStack {
-                    backButton
-                    Spacer()
-                }
-                Text("UI Library - Settings")
+        NavigationView {
+            Form {
                 localizationSettings
                 avatarSettings
-                Spacer()
-            }
-            LocalePicker(selection: $envConfigSubject.languageCode,
-                         isShowing: $isLocalePickerDisplayed)
-                .animation(.linear)
-                .offset(y: isLocalePickerDisplayed ? 0 : UIScreen.main.bounds.height)
-        }
-        .padding()
-    }
-
-    var backButton: some View {
-        Button("Back") {
-            dismissAction()
+                themeSettings
+            }.navigationTitle("UI Library - Settings")
         }
     }
 
     var localizationSettings: some View {
-        VStack {
-            Text("Localization")
-                .bold()
-            HStack {
-                Text("Language: ")
-                Spacer()
-                Button("\(envConfigSubject.languageCode)") {
-                    self.isLocalePickerDisplayed.toggle()
-                }
-                .padding(.horizontal, horizontalPadding)
-            }
-            .onTapGesture(perform: {
-                self.isLocalePickerDisplayed.toggle()
-            })
-            .padding(.horizontal, horizontalPadding)
-
-            HStack {
-                Toggle("Is Right-to-Left: ", isOn: $envConfigSubject.isRightToLeft)
-            }
-            .padding(.horizontal, horizontalPadding)
+        Section(header: Text("Localilzation")) {
+            LocalePicker(selection: $envConfigSubject.languageCode)
+            Toggle("Is Right-to-Left", isOn: $envConfigSubject.isRightToLeft)
             TextField(
                 "Locale identifier (eg. zh-Hant, fr-CA)",
                 text: $envConfigSubject.localeIdentifier
             )
-            .multilineTextAlignment(.center)
             .keyboardType(.default)
             .disableAutocorrection(true)
             .autocapitalization(.none)
             .textFieldStyle(.roundedBorder)
         }
-        .padding(.vertical, verticalPadding)
-        .padding(.horizontal, horizontalPadding)
     }
 
     var avatarSettings: some View {
-        VStack {
-            Text("Avatars")
-                .bold()
-            HStack {
-                ForEach(avatarChoices, id: \.self) { imgName in
-                    Button(
-                        action: {
-                            if envConfigSubject.avatarImageName == imgName {
-                                envConfigSubject.avatarImageName = ""
-                            } else {
-                                envConfigSubject.avatarImageName = imgName
-                            }
-                        },
-                        label: { Image(imgName) }
-                    ).border(envConfigSubject.avatarImageName == imgName ? Color.blue : Color.clear)
+        Section(header: Text("Persona")) {
+            Picker("Avatar Choices", selection: $envConfigSubject.avatarImageName) {
+                ForEach(avatarChoices, id: \.self) { avatar in
+                    Image(avatar)
                 }
-                Spacer()
-            }
+            }.pickerStyle(.segmented)
             TextField("Rendered Display Name", text: $envConfigSubject.renderedDisplayName)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
                 .textFieldStyle(.roundedBorder)
         }
-        .padding(.horizontal, horizontalPadding)
     }
 
     var themeSettings: some View {
-        VStack {
-            Text("Theme")
-                .bold()
-//            ColorPicker("Select a Primary Color", selection: $selectedColor)
-            Picker("Force Theme Mode", selection: $selectedThemeMode) {
-                Text("Light Mode")
-                Text("Dark Mode")
-            }
-            .pickerStyle(.segmented)
+        Section(header: Text("Theme")) {
+            Toggle("Use Custom Theme Colors", isOn: $envConfigSubject.useCustomColors)
+            ColorPicker("Primary Color", selection: $envConfigSubject.primaryColor)
+            ColorPicker("Tint 10 Color", selection: $envConfigSubject.tint10)
+            ColorPicker("Tint 20 Color", selection: $envConfigSubject.tint20)
+            ColorPicker("Tint 30 Color", selection: $envConfigSubject.tint30)
+            Picker("Force Theme Mode", selection: $envConfigSubject.colorSchemeOverride) {
+                ForEach(ThemeMode.allCases) { themeMode in
+                    Text(themeMode.rawValue)
+                }
+            }.pickerStyle(.segmented)
         }
     }
 }
 
 struct LocalePicker: View {
     @Binding var selection: String
-    @Binding var isShowing: Bool
     let supportedLanguage: [String] = ["auto"] + LocalizationConfiguration.supportedLanguages
 
     var body: some View {
-        VStack {
-            Spacer()
-            HStack {
-                Spacer()
-                Button("Close") {
-                    self.isShowing = false
-                }
-            }
             Picker("Language", selection: $selection) {
                 ForEach(supportedLanguage, id: \.self) {
                     if $0 == "auto" {
@@ -146,7 +100,5 @@ struct LocalePicker: View {
                     }
                 }
             }
-            .pickerStyle(.wheel)
-        }
     }
 }

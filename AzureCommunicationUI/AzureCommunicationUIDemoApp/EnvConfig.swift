@@ -37,6 +37,12 @@ class EnvConfigSubject: ObservableObject {
     @Published var languageCode: String = LocalizationConfiguration.LanguageCode.en.rawValue
     @Published var localeIdentifier: String = ""
     @Published var isRightToLeft: Bool = false
+    @Published var useCustomColors: Bool = false
+    @Published var primaryColor: Color = .blue
+    @Published var tint10: Color = .blue
+    @Published var tint20: Color = .blue
+    @Published var tint30: Color = .blue
+    @Published var colorSchemeOverride: UIUserInterfaceStyle = .unspecified
 
     func update(from dic: [String: String]) {
         if let token = dic["acstoken"],
