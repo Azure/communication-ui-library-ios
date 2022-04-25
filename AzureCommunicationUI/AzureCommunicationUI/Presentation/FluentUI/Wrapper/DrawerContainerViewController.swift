@@ -12,16 +12,20 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         ? StyleProvider.color.popoverColor
         : StyleProvider.color.drawerColor
     var items: [T] = []
+    let headerName: String?
     private let sourceView: UIView
     private let drawerResizeBarHeight: CGFloat = 25
+    private let showHeader: Bool
     private var halfScreenHeight: CGFloat {
         UIScreen.main.bounds.height / 2
     }
     private weak var controller: DrawerController?
 
-    init(items: [T], sourceView: UIView) {
+    init(items: [T], sourceView: UIView, headerName: String? = nil, showHeader: Bool = false) {
         self.items = items
         self.sourceView = sourceView
+        self.showHeader = showHeader
+        self.headerName = headerName
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -86,7 +90,7 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
             presentationDirection: .up)
         controller.delegate = self.delegate
         controller.contentView = drawerTableView
-        controller.resizingBehavior = .dismiss
+        controller.resizingBehavior = showHeader ? .none : .dismiss
         controller.backgroundColor = backgroundColor
 
         self.controller = controller
@@ -104,17 +108,21 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
             let tableCellsDividerOffsetHeight = CGFloat(self.items.count * 3)
             drawerHeight += tableCellsDividerOffsetHeight + self.drawerResizeBarHeight
         } else {
-            drawerHeight = CGFloat(self.items.count) * 48.5
+            drawerHeight = CGFloat(self.items.count) * 48.5 + (showHeader ? self.drawerResizeBarHeight : 0)
         }
         if drawerHeight > self.halfScreenHeight {
             drawerHeight = self.halfScreenHeight
             isScrollEnabled = true
         }
 
-        DispatchQueue.main.async {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {
+                return
+            }
             self.drawerTableView?.reloadData()
             self.drawerTableView?.isScrollEnabled = isScrollEnabled
-            self.controller?.preferredContentSize = CGSize(width: 400, height: drawerHeight)
+            self.controller?.preferredContentSize = CGSize(width: 400,
+                                                           height: drawerHeight + (self.showHeader ? 36 : 0))
         }
     }
 }

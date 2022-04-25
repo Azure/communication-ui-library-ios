@@ -17,6 +17,7 @@
 		1F8881CA2798D5E7001427F0 /* TextFieldClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881C92798D5E7001427F0 /* TextFieldClearButton.swift */; };
 		1F8881CD279B456E001427F0 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881CC279B456E001427F0 /* Extension.swift */; };
 		3507F9550C99D777E493AA92 /* Pods_AzureCommunicationUIDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 747FFD0380FFBF53EC331032 /* Pods_AzureCommunicationUIDemoApp.framework */; };
+		5075FEA127FFA8C200136B34 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5075FEA327FFA8C200136B34 /* Localizable.strings */; };
 		50B390CF27D2996E0010A2ED /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390CE27D2996E0010A2ED /* SettingsView.swift */; };
 		9885A0E0274C6F470015E37F /* AzureCommunicationUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9885A0DF274C6F470015E37F /* AzureCommunicationUI.framework */; };
 		9885A0E1274C6F470015E37F /* AzureCommunicationUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9885A0DF274C6F470015E37F /* AzureCommunicationUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -72,6 +73,13 @@
 		1F8881CC279B456E001427F0 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		1FBA6B1B27B4F61A00FF3835 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FEC635827588B5600EA746B /* AppConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = AppConfig.xcconfig; sourceTree = "<group>"; };
+		5075FE9C27FFA87200136B34 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		5075FE9D27FFA87600136B34 /* fr-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fr-CA"; path = "fr-CA.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		5075FE9E27FFA87C00136B34 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		5075FEA227FFA8C200136B34 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5075FEA527FFA8C800136B34 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5075FEA627FFA8C900136B34 /* fr-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fr-CA"; path = "fr-CA.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		5075FEA727FFA9D700136B34 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		50B390CE27D2996E0010A2ED /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		747FFD0380FFBF53EC331032 /* Pods_AzureCommunicationUIDemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIDemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		783B4A5D1275750402B848F2 /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,6 +172,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		5075FE9B27FFA84B00136B34 /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				5075FEA327FFA8C200136B34 /* Localizable.strings */,
+			);
+			name = Localization;
+			path = Views;
+			sourceTree = "<group>";
+		};
 		A8C69FA72728AE1A00143DB7 = {
 			isa = PBXGroup;
 			children = (
@@ -190,6 +207,7 @@
 			children = (
 				1F8881CB279B4521001427F0 /* Utilities */,
 				A8FB819D272A0B3500AA0930 /* Views */,
+				5075FE9B27FFA84B00136B34 /* Localization */,
 				A8849E522732FFA10049FB1A /* AuthenticationHelper.swift */,
 				A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */,
 				A85DDCB22728B140001297B4 /* ThemeConfig.swift */,
@@ -298,6 +316,9 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
+				"fr-CA",
+				"zh-Hant",
 			);
 			mainGroup = A8C69FA72728AE1A00143DB7;
 			productRefGroup = A8C69FB12728AE1A00143DB7 /* Products */;
@@ -323,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8C69FC02728AE1C00143DB7 /* LaunchScreen.storyboard in Resources */,
+				5075FEA127FFA8C200136B34 /* Localizable.strings in Resources */,
 				A8C69FBD2728AE1C00143DB7 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -492,10 +514,24 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		5075FEA327FFA8C200136B34 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5075FEA227FFA8C200136B34 /* en */,
+				5075FEA527FFA8C800136B34 /* fr */,
+				5075FEA627FFA8C900136B34 /* fr-CA */,
+				5075FEA727FFA9D700136B34 /* zh-Hant */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		A8C69FBE2728AE1C00143DB7 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				A8C69FBF2728AE1C00143DB7 /* Base */,
+				5075FE9C27FFA87200136B34 /* fr */,
+				5075FE9D27FFA87600136B34 /* fr-CA */,
+				5075FE9E27FFA87C00136B34 /* zh-Hant */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -558,6 +594,7 @@
 			baseConfigurationReference = 1FEC635827588B5600EA746B /* AppConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
@@ -620,6 +657,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";

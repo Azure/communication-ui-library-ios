@@ -63,6 +63,15 @@ struct SettingsView: View {
                 Toggle("Is Right-to-Left: ", isOn: $envConfigSubject.isRightToLeft)
             }
             .padding(.horizontal, horizontalPadding)
+            TextField(
+                "Locale identifier (eg. zh-Hant, fr-CA)",
+                text: $envConfigSubject.localeIdentifier
+            )
+            .multilineTextAlignment(.center)
+            .keyboardType(.default)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .textFieldStyle(.roundedBorder)
         }
         .padding(.vertical, verticalPadding)
         .padding(.horizontal, horizontalPadding)
@@ -99,7 +108,7 @@ struct SettingsView: View {
 struct LocalePicker: View {
     @Binding var selection: String
     @Binding var isShowing: Bool
-    let supportedLanguage: [String] = LocalizationConfiguration.supportedLanguages
+    let supportedLanguage: [String] = ["auto"] + LocalizationConfiguration.supportedLanguages
 
     var body: some View {
         VStack {
@@ -112,7 +121,11 @@ struct LocalePicker: View {
             }
             Picker("Language", selection: $selection) {
                 ForEach(supportedLanguage, id: \.self) {
-                    Text($0)
+                    if $0 == "auto" {
+                        Text("Detect locale (en, zh-Hant, fr, fr-CA)")
+                    } else {
+                        Text($0)
+                    }
                 }
             }
             .pickerStyle(.wheel)
