@@ -45,6 +45,8 @@ class ErrorInfoViewModel: ObservableObject {
             message = localizationProvider.getLocalizedString(.snackBarErrorJoinCall)
         case CallCompositeErrorCode.callEnd:
             message = localizationProvider.getLocalizedString(.snackBarErrorCallEnd)
+        case CallCompositeErrorCode.callEvicted:
+            message = localizationProvider.getLocalizedString(.snackBarErrorCallEvicted)
         default:
             message = localizationProvider.getLocalizedString(.snackBarError)
         }

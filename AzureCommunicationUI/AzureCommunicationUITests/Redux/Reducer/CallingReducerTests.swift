@@ -134,6 +134,25 @@ class CallingReducerTests: XCTestCase {
         }
         XCTAssertEqual(resultState, expectedState)
     }
+
+    func test_callingReducer_reduce_when_callEvictionErrorAndCallReset_then_CallingStateReset() {
+        let expectedState = CallingState(status: .none,
+                                         isRecordingActive: false,
+                                         isTranscriptionActive: false)
+        let state = CallingState(status: .disconnected,
+                                 isRecordingActive: true,
+                                 isTranscriptionActive: true)
+        let action = ErrorAction.StatusErrorAndCallReset(error: CommunicationUIErrorEvent(code: "callEvicted",
+                                                                          error: nil))
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+
+        guard let resultState = resultState as? CallingState else {
+            XCTFail("Failed with state validation")
+            return
+        }
+        XCTAssertEqual(resultState, expectedState)
+    }
 }
 
 extension CallingReducerTests {

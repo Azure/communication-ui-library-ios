@@ -84,4 +84,5 @@
 "AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityHint"="Dismisses this notification";
 "AzureCommunicationUI.SnackBar.Text.ErrorCallJoin"="Unable to join the call due to an error.";
 "AzureCommunicationUI.SnackBar.Text.ErrorCallEnd"="You were removed from the call due to an error.";
+"AzureCommunicationUI.SnackBar.Text.ErrorCallEvicted"="You were removed from the call.";
 "AzureCommunicationUI.SnackBar.Text.Error"="There was an error.";
