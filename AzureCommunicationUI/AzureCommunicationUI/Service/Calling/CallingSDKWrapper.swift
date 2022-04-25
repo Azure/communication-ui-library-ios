@@ -281,7 +281,6 @@ extension ACSCallingSDKWrapper {
                 self.callAgent = agent
                 return promise(.success(()))
             }
-
         }
     }
 

@@ -55,10 +55,8 @@ class AppAudioSessionManager: AudioSessionManager {
     }
 
     private func setupAudioSession() {
-        print("-----------setupAudioSession")
 
         activateAudioSessionCategory()
-
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleRouteChange),
                                                name: AVAudioSession.routeChangeNotification,
@@ -68,17 +66,28 @@ class AppAudioSessionManager: AudioSessionManager {
                                                selector: #selector(handleInterruption),
                                                name: AVAudioSession.interruptionNotification,
                                                object: AVAudioSession.sharedInstance())
+    }
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleMediaServicesReset),
-                                               name: AVAudioSession.mediaServicesWereResetNotification,
-                                               object: AVAudioSession.sharedInstance())
+    @objc func handleInterruption(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let interruptionType = AVAudioSession.InterruptionType(rawValue: typeValue),
+              interruptionType == AVAudioSession.InterruptionType.ended else {
+            return
+        }
+        resumeAudioSession()
+    }
 
+    @objc func handleRouteChange(notification: Notification) {
+        let currentDevice = getCurrentAudioDevice()
+        guard !hasProcess(currentDevice) else {
+            return
+        }
+
+        store.dispatch(action: LocalUserAction.AudioDeviceChangeSucceeded(device: getCurrentAudioDevice()))
     }
 
     private func activateAudioSessionCategory() {
-        print("-----------activateAudioSessionCategory")
-
         let audioSession = AVAudioSession.sharedInstance()
         do {
             let options: AVAudioSession.CategoryOptions = [.allowBluetooth,
@@ -92,20 +101,7 @@ class AppAudioSessionManager: AudioSessionManager {
         }
     }
 
-    private func deactivateAudioSession() {
-        print("-----------deactivateAudioSession")
-
-        let audioSession = AVAudioSession.sharedInstance()
-        do {
-            try audioSession.setActive(false)
-        } catch let error {
-            logger.error("Failed to deactive audio session:\(error.localizedDescription)")
-        }
-    }
-
     private func resumeAudioSession() {
-        print("-----------resumeAudioSession")
-
         var audioDeviceType: AudioDeviceType
         switch localUserAudioDeviceState {
         case .receiverSelected,
@@ -124,13 +120,11 @@ class AppAudioSessionManager: AudioSessionManager {
             audioDeviceType = .receiver
         }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) { [weak self] in
-            self?.activateAudioSessionCategory()
+        activateAudioSessionCategory()
+
+        // Add a delay of setting audioDeviceType, to override the default port from setAudioSessionCategory.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
             self?.switchAudioDevice(to: audioDeviceType)
-        }
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 6) { [weak self] in
-
         }
     }
 
@@ -153,7 +147,6 @@ class AppAudioSessionManager: AudioSessionManager {
     }
 
     private func switchAudioDevice(to selectedAudioDevice: AudioDeviceType) {
-        print("-----------switchAudioDevice:\(selectedAudioDevice)")
         let audioSession = AVAudioSession.sharedInstance()
 
         let audioPort: AVAudioSession.PortOverride
@@ -174,61 +167,9 @@ class AppAudioSessionManager: AudioSessionManager {
         }
     }
 
-    private func hasProcessCurrentAudioDevice() -> Bool {
-        let currentDevice = getCurrentAudioDevice()
-        let hasProcess = localUserAudioDeviceState?.hasProcess(for: currentDevice)
-        print("-------localState:\(localUserAudioDeviceState!), currentAduioDevice:\(currentDevice)")
+    private func hasProcess(_ currentAudioDevice: AudioDeviceType) -> Bool {
+        let hasProcess = localUserAudioDeviceState?.hasProcess(for: currentAudioDevice)
 
         return hasProcess ?? false
     }
-
-    @objc func handleMediaServicesReset(notification: Notification) {
-        print("---------------------~handleMediaServicesReset")
-        let audioSession = AVAudioSession.sharedInstance()
-
-        do {
-            try audioSession.setActive(true)
-        } catch let error {
-            logger.error("Failed to select audio device, reason:\(error.localizedDescription)")
-            store.dispatch(action: LocalUserAction.AudioDeviceChangeFailed(error: error))
-        }
-
-    }
-
-    @objc func handleRouteChange(notification: Notification) {
-        guard let userInfo = notification.userInfo,
-               let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
-               let reason = AVAudioSession.RouteChangeReason(rawValue: reasonValue) else {
-                   return
-           }
-
-        print("---------------------handleRouteChange reason:\(reason.rawValue)")
-        guard !hasProcessCurrentAudioDevice() else {
-            return
-        }
-
-        store.dispatch(action: LocalUserAction.AudioDeviceChangeSucceeded(device: getCurrentAudioDevice()))
-    }
-
-    @objc func handleInterruption(notification: Notification) {
-        print("---------------------handleInterruption")
-        guard let userInfo = notification.userInfo,
-                let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
-                let type = AVAudioSession.InterruptionType(rawValue: typeValue) else {
-                    return
-            }
-
-            switch type {
-            case .began:
-                print("------------ began")
-//                deactivateAudioSession()
-            case .ended:
-                print("------------ end")
-
-                resumeAudioSession()
-            default:
-                break
-            }
-    }
-
 }
