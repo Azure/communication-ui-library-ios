@@ -37,7 +37,6 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
     func testCallCompositeJoinCallGroupCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        toggleSetupScreenControlButtons()
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
         leaveCall()
@@ -47,7 +46,6 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         tapInterfaceFor(.swiftUI)
         tapMeetingType(.teamsCall)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        toggleSetupScreenControlButtons()
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
         leaveCall()
@@ -56,7 +54,6 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
     func testCallCompositeJoinCallGroupCallUIKit() {
         tapInterfaceFor(.uiKit)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        toggleSetupScreenControlButtons()
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
         leaveCall()
@@ -66,7 +63,6 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         tapInterfaceFor(.uiKit)
         tapMeetingType(.teamsCall)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        toggleSetupScreenControlButtons()
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
         leaveCall()
@@ -82,21 +78,6 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
     }
 
     // MARK: Private / helper functions
-
-    /// Toggles the control views in the setup screen
-    private func toggleSetupScreenControlButtons() {
-        // test video button
-        tapButton(accessibilityIdentifier: .toggleVideoAccessibilityID, shouldWait: true)
-
-        // test mic button
-        tapButton(accessibilityIdentifier: .togglMicAccessibilityID, shouldWait: true)
-
-        // test audio drawer
-        tapButton(accessibilityIdentifier: .deviceAccesibiiltyLabel, shouldWait: true)
-        app.tables.cells.firstMatch.tap()
-        tapButton(accessibilityIdentifier: .deviceAccesibiiltyLabel, shouldWait: true)
-        app.tables.firstMatch.swipeDown()
-    }
 
     /// Toggles the leave call overlay  in the calling screen
     private func leaveCall() {
