@@ -86,7 +86,7 @@ struct SettingsView: View {
 
 struct LocalePicker: View {
     @Binding var selection: String
-    let supportedLanguage: [String] = ["auto"] + LocalizationConfiguration.supportedLanguages
+    let supportedLanguage: [String] = ["auto"] + LocalizationConfiguration.supportedLanguages.sorted()
 
     var body: some View {
             Picker("Language", selection: $selection) {
