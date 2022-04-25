@@ -25,8 +25,6 @@ struct SettingsView: View {
         }
     }
 
-    @State private var isLocalePickerDisplayed: Bool = false
-
     @ObservedObject var envConfigSubject: EnvConfigSubject
 
     let avatarChoices: [String] = ["cat", "fox", "koala", "monkey", "mouse", "octopus"]
