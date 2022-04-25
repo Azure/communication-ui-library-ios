@@ -1,4 +1,4 @@
-![Hero Imaage](/docs/images/mobile-ui-library-hero-image.png)
+![Hero Imaage](https://raw.githubusercontent.com/Azure/communication-ui-library-ios/main/docs/images/mobile-ui-library-hero-image.png)
 
 # Azure Communication UI Mobile Library for iOS
 
