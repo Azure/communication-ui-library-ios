@@ -8,6 +8,7 @@ import Combine
 import SwiftUI
 import AzureCommunicationUI
 import AzureCommunicationCalling
+import AppCenterCrashes
 
 class UIKitDemoViewController: UIViewController {
 
