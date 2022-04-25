@@ -113,5 +113,6 @@ enum LocalizationKey: String {
     case snackBarDismissAccessibilityHint = "AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityHint"
     case snackBarErrorJoinCall = "AzureCommunicationUI.SnackBar.Text.ErrorCallJoin"
     case snackBarErrorCallEnd = "AzureCommunicationUI.SnackBar.Text.ErrorCallEnd"
+    case snackBarErrorCallEvicted = "AzureCommunicationUI.SnackBar.Text.ErrorCallEvicted"
     case snackBarError = "AzureCommunicationUI.SnackBar.Text.Error"
 }

@@ -16,6 +16,9 @@ public struct CallCompositeErrorCode {
 
     /// Error when the input token is expired.
     public static let tokenExpired: String = "tokenExpired"
+
+    /// Error when a participant is evicted from the call by another participant
+    public static let callEvicted: String = "callEvicted"
 }
 
 /// The error thrown after Call Composite launching.
