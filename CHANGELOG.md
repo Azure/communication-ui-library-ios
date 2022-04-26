@@ -11,6 +11,7 @@
 
 ### Bugs Fixed
 - Fixed screen share not rendering in large screen device. [#128](https://github.com/Azure/communication-ui-library-ios/pull/128)
+- Fixed the audio session not being active after an interruption. [#140](https://github.com/Azure/communication-ui-library-ios/pull/140)
 
 ## 1.0.0-beta.2 (2022-04-04)
 ### New Features
