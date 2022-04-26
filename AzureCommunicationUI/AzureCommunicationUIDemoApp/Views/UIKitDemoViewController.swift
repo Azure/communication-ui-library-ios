@@ -146,7 +146,9 @@ class UIKitDemoViewController: UIViewController {
         }
 
         let callCompositeOptions = CallCompositeOptions(
-            theme: TeamsBrandConfig(),
+            theme: envConfigSubject.useCustomColors
+            ? CustomColorTheming(envConfigSubject: envConfigSubject)
+            : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
 
@@ -279,11 +281,9 @@ class UIKitDemoViewController: UIViewController {
     }
 
     @objc func onSettingsPressed() {
-        let settingsView = SettingsView(envConfigSubject: envConfigSubject, dismissAction: {
-            self.dismiss(animated: true, completion: nil)
-        })
+        let settingsView = SettingsView(envConfigSubject: envConfigSubject)
         let settingsViewHostingController = UIHostingController(rootView: settingsView)
-        settingsViewHostingController.modalPresentationStyle = .fullScreen
+        settingsViewHostingController.modalPresentationStyle = .formSheet
         present(settingsViewHostingController, animated: true, completion: nil)
     }
 
