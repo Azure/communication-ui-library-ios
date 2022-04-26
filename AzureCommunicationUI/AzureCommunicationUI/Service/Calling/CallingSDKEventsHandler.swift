@@ -27,14 +27,17 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
 
     private let logger: Logger
+    private let compositeEventsHandler: CallCompositeEventsHandling
     private var remoteParticipantEventAdapter = RemoteParticipantsEventsAdapter()
     private var recordingCallFeature: RecordingCallFeature?
     private var transcriptionCallFeature: TranscriptionCallFeature?
     private var remoteParticipants = MappedSequence<String, RemoteParticipant>()
     private var previousCallingStatus: CallingStatus = .none
 
-    init(logger: Logger) {
+    init(logger: Logger,
+         compositeEventsHandler: CallCompositeEventsHandling) {
         self.logger = logger
+        self.compositeEventsHandler = compositeEventsHandler
         super.init()
         setupRemoteParticipantEventsAdapter()
     }
@@ -101,7 +104,9 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
                     $0.identifier.stringValue == infoModel.userIdentifier
                 })
             }
-        participantsInfoListSubject.send(remoteParticipantsInfoList)
+        if !remoteParticipants.isEmpty {
+            participantsInfoListSubject.send(remoteParticipantsInfoList)
+        }
     }
 
     private func addRemoteParticipants(_ remoteParticipants: [RemoteParticipant]) {
@@ -120,7 +125,10 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
             let infoModel = $0.toParticipantInfoModel(recentSpeakingStamp: Date(timeIntervalSince1970: 0))
             remoteParticipantsInfoList.append(infoModel)
         }
-        participantsInfoListSubject.send(remoteParticipantsInfoList)
+        if !remoteParticipants.isEmpty {
+            participantsInfoListSubject.send(remoteParticipantsInfoList)
+            compositeEventsHandler.didRemoteParticipantsJoin?(remoteParticipants.map { $0.identifier })
+        }
     }
 
     private func updateRemoteParticipant(userIdentifier: String,

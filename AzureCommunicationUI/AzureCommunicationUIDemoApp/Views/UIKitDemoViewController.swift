@@ -128,8 +128,12 @@ class UIKitDemoViewController: UIViewController {
     }
 
     func didFail(_ error: CommunicationUIErrorEvent) {
-        print("::::UIkitDemoView::getEventsHandler::didFail \(error)")
-        print("::::UIkitDemoView error.code \(error.code)")
+        print("::::UIKitDemoView::getEventsHandler::didFail \(error)")
+        print("::::UIKitDemoView error.code \(error.code)")
+    }
+
+    func didRemoteParticipantsJoin(_ identifiers: [CommunicationIdentifier]) {
+        print("::::UIKitDemoView::getEventsHandler::didRemoteParticipantsJoin \(identifiers)")
     }
 
     func startExperience(with link: String) {
@@ -150,7 +154,7 @@ class UIKitDemoViewController: UIViewController {
             localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
 
-        callComposite.setTarget(didFail: didFail)
+        callComposite.setTarget(didFail: didFail, didRemoteParticipantsJoin: didRemoteParticipantsJoin)
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
         let persona = CommunicationUIPersonaData(UIImage(named: envConfigSubject.avatarImageName),

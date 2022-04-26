@@ -13,7 +13,7 @@ public class CallComposite {
     private var logger: Logger?
     private let themeConfiguration: ThemeConfiguration?
     private let localizationConfiguration: LocalizationConfiguration?
-    private let callCompositeEventsHandler = CallCompositeEventsHandler()
+    private let callCompositeEventsHandler: CallCompositeEventsHandling
     private var errorManager: ErrorManager?
     private var lifeCycleManager: UIKitAppLifeCycleManager?
     private var permissionManager: AppPermissionsManager?
@@ -22,14 +22,18 @@ public class CallComposite {
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
+        callCompositeEventsHandler = CallCompositeEventsHandler()
         themeConfiguration = options?.themeConfiguration
         localizationConfiguration = options?.localizationConfiguration
     }
 
-    /// Assign closure to execute when an error occurs inside Call Composite.
-    /// - Parameter action: The closure returning the error thrown from Call Composite.
-    public func setTarget(didFail action: ((CommunicationUIErrorEvent) -> Void)?) {
-        callCompositeEventsHandler.didFail = action
+    /// Assign closures to execute when events occur inside Call Composite.
+    /// - Parameter didFailAction: The closure returning the error thrown from Call Composite.
+    /// - Parameter participantsJoinedAction: The closure returning identifiers for joined remote participants.
+    public func setTarget(didFail didFailAction: ((CommunicationUIErrorEvent) -> Void)?,
+                          didRemoteParticipantsJoin participantsJoinedAction: (([CommunicationIdentifier]) -> Void)?) {
+        callCompositeEventsHandler.didFail = didFailAction
+        callCompositeEventsHandler.didRemoteParticipantsJoin = participantsJoinedAction
     }
 
     deinit {
@@ -42,7 +46,9 @@ public class CallComposite {
         logger = dependencyContainer.resolve() as Logger
         logger?.debug("launch composite experience")
 
-        dependencyContainer.registerDependencies(callConfiguration, localDataOptions: localOptions)
+        dependencyContainer.registerDependencies(callConfiguration,
+                                                 localDataOptions: localOptions,
+                                                 eventsHandler: callCompositeEventsHandler)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProvider
         setupColorTheming()
         setupLocalization(with: localizationProvider)

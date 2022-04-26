@@ -12,7 +12,6 @@ class CompositeErrorManagerTests: XCTestCase {
     var cancellable: CancelBag!
     var compositeManager: CompositeErrorManager!
     var mockCallComposite = CallCompositeMocking(withOptions: CallCompositeOptions())
-    var mockEventsHandler: CallCompositeEventsHandler?
 
     var handlerCallExpectation = XCTestExpectation(description: "Delegate expectation")
     var expectedError: CommunicationUIErrorEvent?
@@ -94,7 +93,7 @@ extension CompositeErrorManagerTests {
                         errorState: errorState)
     }
 
-    func getEventsHandler() -> CallCompositeEventsHandler {
+    func getEventsHandler() -> CallCompositeEventsHandling {
         let handler = CallCompositeEventsHandler()
         handler.didFail = { [weak self] callCompositeError in
             guard let self = self else {
@@ -105,7 +104,6 @@ extension CompositeErrorManagerTests {
             self.handlerCallExpectation.fulfill()
 
         }
-        mockEventsHandler = handler
         return handler
     }
 }

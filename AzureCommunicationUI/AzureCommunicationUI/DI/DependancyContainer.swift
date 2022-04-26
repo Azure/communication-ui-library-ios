@@ -31,8 +31,10 @@ final class DependencyContainer {
     }
 
     func registerDependencies(_ callConfiguration: CallConfiguration,
-                              localDataOptions: CommunicationUILocalDataOptions?) {
-        register(CallingSDKEventsHandler(logger: resolve()) as CallingSDKEventsHandling)
+                              localDataOptions: CommunicationUILocalDataOptions?,
+                              eventsHandler: CallCompositeEventsHandling) {
+        register(CallingSDKEventsHandler(logger: resolve(),
+                                         compositeEventsHandler: eventsHandler) as CallingSDKEventsHandling)
         register(ACSCallingSDKWrapper(logger: resolve(),
                                       callingEventsHandler: resolve(),
                                       callConfiguration: callConfiguration) as CallingSDKWrapper)
