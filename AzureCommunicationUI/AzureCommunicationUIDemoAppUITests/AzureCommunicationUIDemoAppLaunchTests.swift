@@ -7,20 +7,18 @@ import XCTest
 
 class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
-    func testCallCompositeLaunch() {
-        tapInterfaceFor(.uiKit)
+    func testLaunch() {
+        let app = XCUIApplication()
+        app.launch()
+
+        let attachment = XCTAttachment(screenshot: app.screenshot())
+        attachment.name = "Launch Screen"
+        attachment.lifetime = .keepAlways
+        add(attachment)
     }
 
-    func testCallCompositeExit() {
-        guard app != nil else {
-            XCTFail("No App launch")
-            return
-        }
+    func testCallCompositeLaunch() {
         tapInterfaceFor(.uiKit)
-        tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
-        leaveCall()
     }
 
     func testCallCompositeWithExpiredToken() {
