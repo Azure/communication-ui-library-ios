@@ -253,11 +253,11 @@
 			buildConfigurationList = 1F8881C427909E08001427F0 /* Build configuration list for PBXNativeTarget "AzureCommunicationUIDemoAppUITests" */;
 			buildPhases = (
 				2AECBD19FD5EFA9D5C88AE8E /* [CP] Check Pods Manifest.lock */,
+				1FC9AB9927BC4E8F0027F9DB /* Run SwiftLint */,
 				1F8881B627909E08001427F0 /* Sources */,
 				1F8881B727909E08001427F0 /* Frameworks */,
 				1F8881B827909E08001427F0 /* Resources */,
 				9EE99EB8DA9BFFA0E1CA976C /* [CP] Embed Pods Frameworks */,
-				1FC9AB9927BC4E8F0027F9DB /* Run SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -274,12 +274,12 @@
 			buildConfigurationList = A8C69FC42728AE1C00143DB7 /* Build configuration list for PBXNativeTarget "AzureCommunicationUIDemoApp" */;
 			buildPhases = (
 				21973AE741F3B55B42A2E0CE /* [CP] Check Pods Manifest.lock */,
+				1FF252D427B5E44E006A113E /* Run SwiftLint */,
 				A8C69FAC2728AE1A00143DB7 /* Sources */,
 				A8C69FAD2728AE1A00143DB7 /* Frameworks */,
 				A8C69FAE2728AE1A00143DB7 /* Resources */,
 				4CA6E42B5D6299A63290DA44 /* [CP] Embed Pods Frameworks */,
 				A8EE2C0D2728AF3500DF7362 /* Embed Frameworks */,
-				1FF252D427B5E44E006A113E /* Run SwiftLint */,
 			);
 			buildRules = (
 			);
