@@ -11,10 +11,10 @@ protocol CallingSDKEventsHandling: CallDelegate {
     func assign(_ recordingCallFeature: RecordingCallFeature)
     func assign(_ transcriptionCallFeature: TranscriptionCallFeature)
     func setupProperties()
+    func getParticipantCommunicationIdentifier(for id: String) -> CommunicationIdentifier?
 
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> { get }
     var callInfoSubject: PassthroughSubject<CallInfoModel, Never> { get }
-    var remoteParticipants: MappedSequence<String, RemoteParticipant> { get }
     var isRecordingActiveSubject: PassthroughSubject<Bool, Never> { get }
     var isTranscriptionActiveSubject: PassthroughSubject<Bool, Never> { get }
     var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
@@ -32,7 +32,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     private var recordingCallFeature: RecordingCallFeature?
     private var transcriptionCallFeature: TranscriptionCallFeature?
     private var previousCallingStatus: CallingStatus = .none
-    private(set) var remoteParticipants = MappedSequence<String, RemoteParticipant>()
+    private var remoteParticipants = MappedSequence<String, RemoteParticipant>()
 
     init(logger: Logger) {
         self.logger = logger
@@ -56,6 +56,10 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         transcriptionCallFeature = nil
         remoteParticipants = MappedSequence<String, RemoteParticipant>()
         previousCallingStatus = .none
+    }
+
+    func getParticipantCommunicationIdentifier(for idString: String) -> CommunicationIdentifier? {
+        return remoteParticipants.value(forKey: idString)?.identifier
     }
 
     private func setupRemoteParticipantEventsAdapter() {

@@ -11,7 +11,6 @@ class CompositeErrorManagerTests: XCTestCase {
     var mockStoreFactory = StoreFactoryMocking()
     var cancellable: CancelBag!
     var compositeManager: CompositeErrorManager!
-    var mockCallComposite = CallCompositeMocking(withOptions: CallCompositeOptions())
 
     var handlerCallExpectation = XCTestExpectation(description: "Delegate expectation")
     var expectedError: CommunicationUIErrorEvent?

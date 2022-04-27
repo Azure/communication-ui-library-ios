@@ -10,8 +10,7 @@ import AzureCommunicationCalling
 
 class CallingSDKWrapperMocking: CallingSDKWrapper {
     var error: NSError?
-    var callingEventsHandler: CallingSDKEventsHandling = CallingSDKEventsHandler(logger: LoggerMocking(),
-                                                                                 compositeEventsHandler: CallCompositeEventsHandler())
+    var callingEventsHandler: CallingSDKEventsHandling = CallingSDKEventsHandler(logger: LoggerMocking())
 
     func getLocalVideoStream(_ identifier: String) -> LocalVideoStream? {
         return nil

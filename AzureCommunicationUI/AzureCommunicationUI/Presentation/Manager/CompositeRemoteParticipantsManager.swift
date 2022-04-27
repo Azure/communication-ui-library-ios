@@ -41,8 +41,6 @@ class CompositeRemoteParticipantsManager: RemoteParticipantsManager {
 
         participantsLastUpdateTimeStamp = state.remoteParticipantsState.lastUpdateTimeStamp
         let updatedParticipantsIds = Set(state.remoteParticipantsState.participantInfoList.map { $0.userIdentifier })
-        guard updatedParticipantsIds != participantsIds
-        else { return }
 
         let joinedParticipantsIds = updatedParticipantsIds.subtracting(participantsIds)
         participantsIds = updatedParticipantsIds
@@ -52,7 +50,7 @@ class CompositeRemoteParticipantsManager: RemoteParticipantsManager {
         else { return }
 
         let joinedParticipantsCommunicationIds = joinedParticipantsIds
-            .compactMap { callingSDKEventsHandling.remoteParticipants.value(forKey: $0)?.identifier }
+            .compactMap { callingSDKEventsHandling.getParticipantCommunicationIdentifier(for: $0) }
         didRemoteParticipantsJoin(joinedParticipantsCommunicationIds)
     }
 }
