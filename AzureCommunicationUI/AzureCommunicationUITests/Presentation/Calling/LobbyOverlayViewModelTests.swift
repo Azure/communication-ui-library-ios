@@ -27,7 +27,7 @@ class LobbyOverlayViewModelTests: XCTestCase {
 
     func test_lobbyOverlayViewModel_displays_subtitle_from_LocalizationMocking() {
         let sut = makeSUTLocalizationMocking()
-        XCTAssertEqual(sut.subtitle, "AzureCommunicationUI.LobbyView.Text.WaitingDetails")
+        XCTAssertEqual(sut.subtitle, "AzureCommunicationUICalling.LobbyView.Text.WaitingDetails")
         XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
     }
 }
