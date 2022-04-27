@@ -3,4 +3,4 @@
 //  Licensed under the MIT License.
 //
 
-"AzureCommunicationUI.SetupView.Button.JoinCall"="Join call (override fr-CA)";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall"="Join call (override fr-CA)";

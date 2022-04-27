@@ -79,9 +79,9 @@ class BannerTextViewModelTests: XCTestCase {
 
     func test_bannerTextViewModel_display_complianceBanner_from_LocalizationMocking() {
         let sut = makeSUTLocalizationMocking()
-        let expectedTitleKey = "AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"
-        let expectedBodyKey = "AzureCommunicationUI.CallingView.BannerBody.Consent"
-        let expectedLinkDisplayKey = "AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"
+        let expectedTitleKey = "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"
+        let expectedBodyKey = "AzureCommunicationUICalling.CallingView.BannerBody.Consent"
+        let expectedLinkDisplayKey = "AzureCommunicationUICalling.CallingView.BannerLink.PrivacyPolicy"
         let expectedLinkString = "https://privacy.microsoft.com/privacystatement#mainnoticetoendusersmodule"
         let expectation = XCTestExpectation(description: "Should publish bannerTextViewModel")
         let cancel = sut.objectWillChange
