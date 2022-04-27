@@ -13,6 +13,7 @@ struct CallingView: View {
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
 
+    @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
     @State private var pipPosition: CGPoint?
 
     var safeAreaIgnoreArea: Edge.Set {
@@ -36,6 +37,14 @@ struct CallingView: View {
                 .accessibilityElement(children: .contain)
                 .accessibilityAddTraits(.isModal)
         })
+        .onRotate { newOrientation in
+            if newOrientation != orientation
+                && newOrientation != .unknown
+                && newOrientation != .faceDown
+                && newOrientation != .faceUp {
+                orientation = newOrientation
+            }
+        }
     }
 
     var portraitCallingView: some View {
@@ -67,6 +76,11 @@ struct CallingView: View {
                         .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
                 }
                 .onAppear {
+                    if self.pipPosition == nil {
+                        self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
+                    }
+                }
+                .onChange(of: orientation) { _ in
                     self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
                 }
                 .contentShape(Rectangle())
