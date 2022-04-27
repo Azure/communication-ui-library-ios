@@ -150,7 +150,7 @@ extension SwiftUIDemoView {
         let callCompositeOptions = CallCompositeOptions(
             theme: Theming(),
             localization: localizationConfig)
-        var callComposite = CallComposite(withOptions: callCompositeOptions)
+        let callComposite = CallComposite(withOptions: callCompositeOptions)
         callComposite.setTarget(didFail: didFail, didRemoteParticipantsJoin: didRemoteParticipantsJoin)
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName

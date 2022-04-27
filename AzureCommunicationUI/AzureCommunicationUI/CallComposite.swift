@@ -18,6 +18,7 @@ public class CallComposite {
     private var lifeCycleManager: UIKitAppLifeCycleManager?
     private var permissionManager: AppPermissionsManager?
     private var audioSessionManager: AppAudioSessionManager?
+    private var remoteParticipantsManager: RemoteParticipantsManager?
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
@@ -57,8 +58,8 @@ public class CallComposite {
                                                                     viewFactory: dependencyContainer.resolve(),
                                                                     isRightToLeft: localizationProvider.isRightToLeft)
         setupManagers(store: dependencyContainer.resolve(),
-                      containerHostingController: toolkitHostingController,
-                      logger: dependencyContainer.resolve())
+                      logger: dependencyContainer.resolve(),
+                      callingSDKEventsHandling: dependencyContainer.resolve())
         present(toolkitHostingController)
     }
 
@@ -91,8 +92,8 @@ public class CallComposite {
     }
 
     private func setupManagers(store: Store<AppState>,
-                               containerHostingController: ContainerUIHostingController,
-                               logger: Logger) {
+                               logger: Logger,
+                               callingSDKEventsHandling: CallingSDKEventsHandling) {
         let errorManager = CompositeErrorManager(store: store,
                                                  callCompositeEventsHandler: callCompositeEventsHandler)
         self.errorManager = errorManager
@@ -106,6 +107,12 @@ public class CallComposite {
         let audioSessionManager = AppAudioSessionManager(store: store,
                                                          logger: logger)
         self.audioSessionManager = audioSessionManager
+
+        let remoteParticipantsManager = CompositeRemoteParticipantsManager(
+            store: store,
+            callCompositeEventsHandler: callCompositeEventsHandler,
+            callingSDKEventsHandling: callingSDKEventsHandling)
+        self.remoteParticipantsManager = remoteParticipantsManager
     }
 
     private func cleanUpManagers() {

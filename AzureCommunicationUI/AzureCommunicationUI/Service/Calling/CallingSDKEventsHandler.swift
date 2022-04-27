@@ -14,6 +14,7 @@ protocol CallingSDKEventsHandling: CallDelegate {
 
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> { get }
     var callInfoSubject: PassthroughSubject<CallInfoModel, Never> { get }
+    var remoteParticipants: MappedSequence<String, RemoteParticipant> { get }
     var isRecordingActiveSubject: PassthroughSubject<Bool, Never> { get }
     var isTranscriptionActiveSubject: PassthroughSubject<Bool, Never> { get }
     var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
@@ -27,17 +28,14 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
 
     private let logger: Logger
-    private let compositeEventsHandler: CallCompositeEventsHandling
     private var remoteParticipantEventAdapter = RemoteParticipantsEventsAdapter()
     private var recordingCallFeature: RecordingCallFeature?
     private var transcriptionCallFeature: TranscriptionCallFeature?
-    private var remoteParticipants = MappedSequence<String, RemoteParticipant>()
     private var previousCallingStatus: CallingStatus = .none
+    private(set) var remoteParticipants = MappedSequence<String, RemoteParticipant>()
 
-    init(logger: Logger,
-         compositeEventsHandler: CallCompositeEventsHandling) {
+    init(logger: Logger) {
         self.logger = logger
-        self.compositeEventsHandler = compositeEventsHandler
         super.init()
         setupRemoteParticipantEventsAdapter()
     }
@@ -127,7 +125,6 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         }
         if !remoteParticipants.isEmpty {
             participantsInfoListSubject.send(remoteParticipantsInfoList)
-            compositeEventsHandler.didRemoteParticipantsJoin?(remoteParticipants.map { $0.identifier })
         }
     }
 
