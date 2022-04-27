@@ -17,7 +17,8 @@ enum LocalizationKey: String {
     /* DemoView */
     case startExperience = "AzureCommunicationUICalling.DemoView.StartExperience"
     case startExperienceAccessibilityLabel = "AzureCommunicationUICalling.DemoView.StartExperience.AccessibilityLabel"
-    case clearTokenTextFieldAccessibilityLabel = "AzureCommunicationUICalling.DemoView.ClearTokenTextField.AccessibilityLabel"
+    case clearTokenTextFieldAccessibilityLabel =
+            "AzureCommunicationUICalling.DemoView.ClearTokenTextField.AccessibilityLabel"
 
     /* SetupView */
     case setupTitle = "AzureCommunicationUICalling.SetupView.Title"
@@ -68,7 +69,8 @@ enum LocalizationKey: String {
 
     case videoAccessibilityLabel = "AzureCommunicationUICalling.CallingView.ControlButton.Video.AccessibilityLabel"
     case micAccessibilityLabel = "AzureCommunicationUICalling.CallingView.ControlButton.Microphone.AccessibilityLabel"
-    case audioDeviceAccessibilityLabel = "AzureCommunicationUICalling.CallingView.ControlButton.AudioDevice.AccessibilityLabel"
+    case audioDeviceAccessibilityLabel =
+            "AzureCommunicationUICalling.CallingView.ControlButton.AudioDevice.AccessibilityLabel"
     case hangupAccessibilityLabel = "AzureCommunicationUICalling.CallingView.ControlButton.HangUp.AccessibilityLabel"
 
     case leaveCallListHeader = "AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"
