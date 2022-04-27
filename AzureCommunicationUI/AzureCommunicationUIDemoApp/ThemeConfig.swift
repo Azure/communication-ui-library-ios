@@ -6,17 +6,42 @@
 import UIKit
 import AzureCommunicationUI
 
-struct TeamsBrandConfig: ThemeConfiguration {
-    func primaryColor() -> UIColor? {
-        return UIColor(named: "TeamsColor")
+struct CustomColorTheming: ThemeConfiguration {
+    private var envConfigSubject: EnvConfigSubject
+
+    init(envConfigSubject: EnvConfigSubject) {
+        self.envConfigSubject = envConfigSubject
+    }
+
+    var primaryColor: UIColor {
+        return UIColor(envConfigSubject.primaryColor)
+    }
+
+    var primaryColorTint10: UIColor {
+        return UIColor(envConfigSubject.tint10)
+    }
+
+    var primaryColorTint20: UIColor {
+        return UIColor(envConfigSubject.tint20)
+    }
+
+    var primaryColorTint30: UIColor {
+        return UIColor(envConfigSubject.tint30)
+    }
+
+    var colorSchemeOverride: UIUserInterfaceStyle {
+        return envConfigSubject.colorSchemeOverride
     }
 }
 
 struct Theming: ThemeConfiguration {
-//    var primaryColor: UIColor {
-//        return UIColor.red
-//    }
-//    var colorSchemeOverride: UIUserInterfaceStyle {
-//        return .dark
-//    }
+    private var envConfigSubject: EnvConfigSubject
+
+    init(envConfigSubject: EnvConfigSubject) {
+        self.envConfigSubject = envConfigSubject
+    }
+
+    var colorSchemeOverride: UIUserInterfaceStyle {
+        return envConfigSubject.colorSchemeOverride
+    }
 }
