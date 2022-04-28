@@ -108,7 +108,7 @@ public class CallComposite {
                                                          logger: logger)
         self.audioSessionManager = audioSessionManager
 
-        let remoteParticipantsManager = CompositeRemoteParticipantsManager(
+        let remoteParticipantsManager = RemoteParticipantsManager(
             store: store,
             callCompositeEventsHandler: callCompositeEventsHandler,
             callingSDKWrapper: callingSDKWrapper)

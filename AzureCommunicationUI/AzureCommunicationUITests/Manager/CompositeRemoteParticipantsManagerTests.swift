@@ -7,7 +7,7 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class CompositeRemoteParticipantsManagerTests: XCTestCase {
-    var sut: CompositeRemoteParticipantsManager!
+    var sut: RemoteParticipantsManager!
     var mockStoreFactory: StoreFactoryMocking!
     var callingSDKWrapper: CallingSDKWrapperMocking!
     var eventsHandler: CallCompositeEventsHandling!
@@ -28,9 +28,9 @@ class CompositeRemoteParticipantsManagerTests: XCTestCase {
                            self.expectedIds.sorted())
             self.remoteParticipantsJoinedExpectation.fulfill()
         }
-        sut = CompositeRemoteParticipantsManager(store: mockStoreFactory.store,
-                                                 callCompositeEventsHandler: eventsHandler,
-                                                 callingSDKWrapper: callingSDKWrapper)
+        sut = RemoteParticipantsManager(store: mockStoreFactory.store,
+                                        callCompositeEventsHandler: eventsHandler,
+                                        callingSDKWrapper: callingSDKWrapper)
     }
 
     func test_compositeRemoteParticipantsManager_receive_when_stateUpdated_then_didRemoteParticipantsJoinEventPosted() {

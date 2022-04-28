@@ -7,10 +7,10 @@ import Foundation
 import Combine
 import AzureCommunicationCommon
 
-protocol RemoteParticipantsManager {
+protocol RemoteParticipantsManagerProtocol {
 }
 
-class CompositeRemoteParticipantsManager: RemoteParticipantsManager {
+class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
     private let store: Store<AppState>
     private let eventsHandler: CallCompositeEventsHandling
     private let callingSDKWrapper: CallingSDKWrapper
