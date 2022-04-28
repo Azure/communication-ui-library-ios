@@ -47,7 +47,10 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
 
         if leaveCall {
-            app.tables.cells.firstMatch.tap()
+            let cell = app.tables.cells[LocalizationKey.leaveCall.rawValue]
+            if cell.waitForExistence(timeout: 3) {
+                cell.tap()
+            }
             XCTAssertTrue(app.buttons[LocalizationKey.startExperienceAccessibilityLabel.rawValue]
                             .waitForExistence(timeout: 3))
         }
