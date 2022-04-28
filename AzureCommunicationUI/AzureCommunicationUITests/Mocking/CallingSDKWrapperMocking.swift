@@ -33,6 +33,7 @@ class CallingSDKWrapperMocking: CallingSDKWrapper {
     var startCallCallCount: Int = 0
     var endCallCallCount: Int = 0
     var switchCameraCallCount: Int = 0
+    var getRemoteParticipantCallIds: [String] = []
 
     var muteLocalMicCalled: Bool = false
     var unmuteLocalMicCalled: Bool = false
@@ -65,6 +66,7 @@ class CallingSDKWrapperMocking: CallingSDKWrapper {
     }
 
     func getRemoteParticipant(_ identifier: String) -> RemoteParticipant? {
+        getRemoteParticipantCallIds.append(identifier)
         return nil
     }
 

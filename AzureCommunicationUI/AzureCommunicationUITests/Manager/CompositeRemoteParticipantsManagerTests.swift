@@ -9,6 +9,7 @@ import XCTest
 class CompositeRemoteParticipantsManagerTests: XCTestCase {
     var sut: CompositeRemoteParticipantsManager!
     var mockStoreFactory: StoreFactoryMocking!
+    var callingSDKWrapper: CallingSDKWrapperMocking!
     var eventsHandler: CallCompositeEventsHandling!
     var remoteParticipantsJoinedExpectation = XCTestExpectation(description: "DidRemoteParticipantsJoin event expectation")
     var expectedIds: [String] = []
@@ -17,17 +18,19 @@ class CompositeRemoteParticipantsManagerTests: XCTestCase {
         super.setUp()
         mockStoreFactory = StoreFactoryMocking()
         eventsHandler = CallCompositeEventsHandler()
-        let callingSDKEventsHandler = CallingSDKEventsHandlerMocking()
-        eventsHandler.didRemoteParticipantsJoin = { [weak self] id in
+        callingSDKWrapper = CallingSDKWrapperMocking()
+        eventsHandler.didRemoteParticipantsJoin = { [weak self] _ in
             guard let self = self else {
                 return
             }
-            XCTAssertEqual(id.compactMap { $0.stringValue }.sorted(), self.expectedIds.sorted())
+            // check getRemoteParticipantCallIds as there is no way to init RemoteParticipant for getRemoteParticipant func
+            XCTAssertEqual(self.callingSDKWrapper.getRemoteParticipantCallIds.sorted(),
+                           self.expectedIds.sorted())
             self.remoteParticipantsJoinedExpectation.fulfill()
         }
         sut = CompositeRemoteParticipantsManager(store: mockStoreFactory.store,
                                                  callCompositeEventsHandler: eventsHandler,
-                                                 callingSDKEventsHandling: callingSDKEventsHandler)
+                                                 callingSDKWrapper: callingSDKWrapper)
     }
 
     func test_compositeRemoteParticipantsManager_receive_when_stateUpdated_then_didRemoteParticipantsJoinEventPosted() {

@@ -11,7 +11,6 @@ protocol CallingSDKEventsHandling: CallDelegate {
     func assign(_ recordingCallFeature: RecordingCallFeature)
     func assign(_ transcriptionCallFeature: TranscriptionCallFeature)
     func setupProperties()
-    func getParticipantCommunicationIdentifier(for id: String) -> CommunicationIdentifier?
 
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> { get }
     var callInfoSubject: PassthroughSubject<CallInfoModel, Never> { get }
@@ -56,10 +55,6 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         transcriptionCallFeature = nil
         remoteParticipants = MappedSequence<String, RemoteParticipant>()
         previousCallingStatus = .none
-    }
-
-    func getParticipantCommunicationIdentifier(for idString: String) -> CommunicationIdentifier? {
-        return remoteParticipants.value(forKey: idString)?.identifier
     }
 
     private func setupRemoteParticipantEventsAdapter() {

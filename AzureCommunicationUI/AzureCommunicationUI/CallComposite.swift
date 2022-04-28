@@ -59,7 +59,7 @@ public class CallComposite {
                                                                     isRightToLeft: localizationProvider.isRightToLeft)
         setupManagers(store: dependencyContainer.resolve(),
                       logger: dependencyContainer.resolve(),
-                      callingSDKEventsHandling: dependencyContainer.resolve())
+                      callingSDKWrapper: dependencyContainer.resolve())
         present(toolkitHostingController)
     }
 
@@ -93,7 +93,7 @@ public class CallComposite {
 
     private func setupManagers(store: Store<AppState>,
                                logger: Logger,
-                               callingSDKEventsHandling: CallingSDKEventsHandling) {
+                               callingSDKWrapper: CallingSDKWrapper) {
         let errorManager = CompositeErrorManager(store: store,
                                                  callCompositeEventsHandler: callCompositeEventsHandler)
         self.errorManager = errorManager
@@ -111,7 +111,7 @@ public class CallComposite {
         let remoteParticipantsManager = CompositeRemoteParticipantsManager(
             store: store,
             callCompositeEventsHandler: callCompositeEventsHandler,
-            callingSDKEventsHandling: callingSDKEventsHandling)
+            callingSDKWrapper: callingSDKWrapper)
         self.remoteParticipantsManager = remoteParticipantsManager
     }
 

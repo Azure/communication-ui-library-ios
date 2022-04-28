@@ -20,8 +20,4 @@ class CallingSDKEventsHandlerMocking: NSObject, CallingSDKEventsHandling {
     func assign(_ transcriptionCallFeature: TranscriptionCallFeature) {}
 
     func setupProperties() {}
-
-    func getParticipantCommunicationIdentifier(for id: String) -> CommunicationIdentifier? {
-        CommunicationUserIdentifier(id)
-    }
 }

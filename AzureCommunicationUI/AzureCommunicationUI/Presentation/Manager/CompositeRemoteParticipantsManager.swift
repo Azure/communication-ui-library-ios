@@ -13,7 +13,7 @@ protocol RemoteParticipantsManager {
 class CompositeRemoteParticipantsManager: RemoteParticipantsManager {
     private let store: Store<AppState>
     private let eventsHandler: CallCompositeEventsHandling
-    private let callingSDKEventsHandling: CallingSDKEventsHandling
+    private let callingSDKWrapper: CallingSDKWrapper
     private var participantsLastUpdateTimeStamp: Date
     private var participantsIds: Set<String>
 
@@ -21,10 +21,10 @@ class CompositeRemoteParticipantsManager: RemoteParticipantsManager {
 
     init(store: Store<AppState>,
          callCompositeEventsHandler: CallCompositeEventsHandling,
-         callingSDKEventsHandling: CallingSDKEventsHandling) {
+         callingSDKWrapper: CallingSDKWrapper) {
         self.store = store
         self.eventsHandler = callCompositeEventsHandler
-        self.callingSDKEventsHandling = callingSDKEventsHandling
+        self.callingSDKWrapper = callingSDKWrapper
         participantsIds = Set(store.state.remoteParticipantsState.participantInfoList.map { $0.userIdentifier })
         participantsLastUpdateTimeStamp = store.state.remoteParticipantsState.lastUpdateTimeStamp
         store.$state
@@ -50,7 +50,7 @@ class CompositeRemoteParticipantsManager: RemoteParticipantsManager {
         else { return }
 
         let joinedParticipantsCommunicationIds = joinedParticipantsIds
-            .compactMap { callingSDKEventsHandling.getParticipantCommunicationIdentifier(for: $0) }
+            .compactMap { callingSDKWrapper.getRemoteParticipant($0)?.identifier }
         didRemoteParticipantsJoin(joinedParticipantsCommunicationIds)
     }
 }
