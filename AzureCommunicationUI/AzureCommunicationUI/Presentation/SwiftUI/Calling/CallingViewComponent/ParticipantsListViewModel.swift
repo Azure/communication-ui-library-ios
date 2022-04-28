@@ -11,9 +11,9 @@ class ParticipantsListViewModel: ObservableObject {
     @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
     var lastUpdateTimeStamp = Date()
 
-    private let compositeViewModelFactory: CompositeViewModelFactory
+    private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localUserState: LocalUserState) {
         self.compositeViewModelFactory = compositeViewModelFactory
         localParticipantsListCellViewModel =

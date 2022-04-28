@@ -14,11 +14,11 @@ class CallingViewModel: ObservableObject {
     let isRightToLeft: Bool
     @Published var appState: AppStatus = .foreground
 
-    private let compositeViewModelFactory: CompositeViewModelFactory
+    private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
     private let store: Store<AppState>
-    private let localizationProvider: LocalizationProvider
-    private let accessibilityProvider: AccessibilityProvider
+    private let localizationProvider: LocalizationProviderProtocol
+    private let accessibilityProvider: AccessibilityProviderProtocol
     private var cancellables = Set<AnyCancellable>()
 
     var controlBarViewModel: ControlBarViewModel!
@@ -27,11 +27,11 @@ class CallingViewModel: ObservableObject {
     let participantGridsViewModel: ParticipantGridViewModel
     let bannerViewModel: BannerViewModel
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState>,
-         localizationProvider: LocalizationProvider,
-         accessibilityProvider: AccessibilityProvider) {
+         localizationProvider: LocalizationProviderProtocol,
+         accessibilityProvider: AccessibilityProviderProtocol) {
         self.logger = logger
         self.compositeViewModelFactory = compositeViewModelFactory
         self.store = store

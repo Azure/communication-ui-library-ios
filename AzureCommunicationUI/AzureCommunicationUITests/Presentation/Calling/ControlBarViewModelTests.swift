@@ -579,7 +579,7 @@ extension ControlBarViewModelTests {
     func makeSUT() -> ControlBarViewModel {
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
-                                   localizationProvider: AppLocalizationProvider(logger: logger),
+                                   localizationProvider: LocalizationProvider(logger: logger),
                                    dispatchAction: storeFactory.store.dispatch,
                                    endCallConfirm: {},
                                    localUserState: storeFactory.store.state.localUserState)

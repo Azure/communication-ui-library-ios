@@ -7,12 +7,12 @@ import Foundation
 import AVFoundation
 import Combine
 
-protocol PermissionsManager {
+protocol PermissionsManagerProtocol {
     func resolveStatus(for permission: AppPermission) -> AppPermission.Status
     func request(_ permission: AppPermission) -> Future<AppPermission.Status, Never>
 }
 
-class AppPermissionsManager: PermissionsManager {
+class PermissionsManager: PermissionsManagerProtocol {
     private var audioPermission: AppPermission.Status?
     private var cameraPermission: AppPermission.Status?
     private let store: Store<AppState>
@@ -116,7 +116,7 @@ extension AVAuthorizationStatus {
     }
 }
 
-private extension AppPermissionsManager {
+private extension PermissionsManager {
 
     func getAudioPermissionStatus() -> AppPermission.Status {
         let audioSession = AVAudioSession.sharedInstance().recordPermission

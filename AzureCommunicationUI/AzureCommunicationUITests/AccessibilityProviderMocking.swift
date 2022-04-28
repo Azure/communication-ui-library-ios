@@ -6,7 +6,7 @@
 import Foundation
 @testable import AzureCommunicationUI
 
-class AccessibilityProviderMocking: AccessibilityProvider {
+class AccessibilityProviderMocking: AccessibilityProviderProtocol {
     var postQueuedAnnouncementBlock: ((String) -> Void)?
     var moveFocusToFirstElementBlock: (() -> Void)?
     var subscribeToVoiceOverStatusDidChangeNotificationBlock: ((AccessibilityProviderNotificationsObserver) -> Void)?

@@ -12,7 +12,7 @@ class BannerTextViewModelMocking: BannerTextViewModel {
     var updateBannerInfoType: ((BannerInfoType?) -> Void)?
     var bannerType: BannerInfoType?
 
-    init(accessibilityProvider: AccessibilityProvider = AppAccessibilityProvider(),
+    init(accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider(),
          updateBannerInfoType: ((BannerInfoType?) -> Void)? = nil) {
         self.updateBannerInfoType = updateBannerInfoType
         super.init(accessibilityProvider: accessibilityProvider,

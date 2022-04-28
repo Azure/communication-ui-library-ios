@@ -7,7 +7,7 @@ import Foundation
 import Combine
 @testable import AzureCommunicationUI
 
-class PermissionsManagerMocking: PermissionsManager {
+class PermissionsManagerMocking: PermissionsManagerProtocol {
     private var requestWasCalled: Bool = false
     private var requestWasCalledWithPermission: AppPermission?
 

@@ -12,7 +12,7 @@ class CallingServiceTests: XCTestCase {
 
     var logger: LoggerMocking!
     var callingSDKWrapper: CallingSDKWrapperMocking!
-    var callingService: ACSCallingService!
+    var callingService: CallingService!
     var cancellable: CancelBag!
 
     override func setUp() {
@@ -20,7 +20,7 @@ class CallingServiceTests: XCTestCase {
         cancellable = CancelBag()
         logger = LoggerMocking()
         callingSDKWrapper = CallingSDKWrapperMocking()
-        callingService = ACSCallingService(logger: logger, callingSDKWrapper: callingSDKWrapper)
+        callingService = CallingService(logger: logger, callingSDKWrapper: callingSDKWrapper)
     }
 
     func test_callingService_setupCall_shouldCallcallingSDKWrapperSetupCall() {

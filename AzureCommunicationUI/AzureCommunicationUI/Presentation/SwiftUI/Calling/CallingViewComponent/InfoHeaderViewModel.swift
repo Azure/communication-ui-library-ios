@@ -13,8 +13,8 @@ class InfoHeaderViewModel: ObservableObject {
     @Published var isParticipantsListDisplayed: Bool = false
     @Published var isVoiceOverEnabled: Bool = false
     private let logger: Logger
-    private let accessibilityProvider: AccessibilityProvider
-    private let localizationProvider: LocalizationProvider
+    private let accessibilityProvider: AccessibilityProviderProtocol
+    private let localizationProvider: LocalizationProviderProtocol
     private var infoHeaderDismissTimer: Timer?
     private var participantsCount: Int = 0
     private var callingStatus: CallingStatus = .none
@@ -24,11 +24,11 @@ class InfoHeaderViewModel: ObservableObject {
     var participantListButtonViewModel: IconButtonViewModel!
     var isPad: Bool = false
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          localUserState: LocalUserState,
-         localizationProvider: LocalizationProvider,
-         accessibilityProvider: AccessibilityProvider) {
+         localizationProvider: LocalizationProviderProtocol,
+         accessibilityProvider: AccessibilityProviderProtocol) {
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
