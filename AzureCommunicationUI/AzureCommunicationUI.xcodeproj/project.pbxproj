@@ -199,7 +199,6 @@
 		A874EDCC2666DF07003C7D92 /* ContainerUIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A874EDCB2666DF07003C7D92 /* ContainerUIHostingController.swift */; };
 		A8810CD8263CC46500C88545 /* NavigationRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8810CD7263CC46500C88545 /* NavigationRouter.swift */; };
 		A8810CDD263CC75200C88545 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8810CDC263CC75200C88545 /* ContainerView.swift */; };
-		A88672872819F50F00B434D1 /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88672862819F50F00B434D1 /* ViewModifier.swift */; };
 		A88CDFB9274FF9C10004E2F5 /* ErrorInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88CDFB8274FF9C10004E2F5 /* ErrorInfoView.swift */; };
 		A88CDFBC27505A410004E2F5 /* ErrorInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88CDFBB27505A410004E2F5 /* ErrorInfoViewModel.swift */; };
 		A8ED232D2645C637008A26B2 /* CallingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ED232C2645C637008A26B2 /* CallingServiceTests.swift */; };
@@ -445,7 +444,6 @@
 		A874EDCB2666DF07003C7D92 /* ContainerUIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerUIHostingController.swift; sourceTree = "<group>"; };
 		A8810CD7263CC46500C88545 /* NavigationRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouter.swift; sourceTree = "<group>"; };
 		A8810CDC263CC75200C88545 /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
-		A88672862819F50F00B434D1 /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
 		A88CDFB8274FF9C10004E2F5 /* ErrorInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorInfoView.swift; sourceTree = "<group>"; };
 		A88CDFBB27505A410004E2F5 /* ErrorInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorInfoViewModel.swift; sourceTree = "<group>"; };
 		A8ED232C2645C637008A26B2 /* CallingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingServiceTests.swift; sourceTree = "<group>"; };
@@ -547,7 +545,6 @@
 				98FFD82726CC5FD900655398 /* PreferenceKey.swift */,
 				1FFEA01326A68D0D00E90816 /* UIFontExtension.swift */,
 				985DF371269D065400CFDA55 /* ViewExtension.swift */,
-				A88672862819F50F00B434D1 /* ViewModifier.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1584,7 +1581,6 @@
 				1F09A11D26BB5B0D00BACED7 /* ArrayExtension.swift in Sources */,
 				98B1869B27C858B400B837E6 /* CompositeAudioDevicesList.swift in Sources */,
 				A874EDC4266152AA003C7D92 /* AppLifeCycleManager.swift in Sources */,
-				A88672872819F50F00B434D1 /* ViewModifier.swift in Sources */,
 				1F8E0B78268D0EF000DDD18E /* CompositeErrorManager.swift in Sources */,
 				98546EBA26DEF24D0069B246 /* AudioDeviceType.swift in Sources */,
 				A8810CDD263CC75200C88545 /* ContainerView.swift in Sources */,

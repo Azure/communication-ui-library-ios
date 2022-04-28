@@ -28,8 +28,4 @@ extension View {
     func prefersHomeIndicatorAutoHidden(_ value: Bool) -> some View {
         preference(key: PrefersHomeIndicatorAutoHiddenPreferenceKey.self, value: value)
     }
-
-    func onRotate(perform action: @escaping (UIDeviceOrientation) -> Void) -> some View {
-        self.modifier(DeviceRotationViewModifier(action: action))
-    }
 }
