@@ -45,7 +45,7 @@ class CompositeRemoteParticipantsManager: RemoteParticipantsManager {
         let joinedParticipantsIds = updatedParticipantsIds.subtracting(participantsIds)
         participantsIds = updatedParticipantsIds
 
-        // check if participants are removed
+        // check if new participants joined a call
         guard !joinedParticipantsIds.isEmpty
         else { return }
 
