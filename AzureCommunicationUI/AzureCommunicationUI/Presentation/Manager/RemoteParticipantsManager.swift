@@ -26,7 +26,7 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
         self.eventsHandler = callCompositeEventsHandler
         self.callingSDKWrapper = callingSDKWrapper
         store.$state
-            .receive(on: RunLoop.main)
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.receive(state)
             }.store(in: &cancellables)

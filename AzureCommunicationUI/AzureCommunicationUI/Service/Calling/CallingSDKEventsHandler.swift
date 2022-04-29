@@ -94,6 +94,9 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     }
 
     private func removeRemoteParticipantsInfoModel(_ remoteParticipants: [RemoteParticipant]) {
+        guard !remoteParticipants.isEmpty
+        else { return }
+
         var remoteParticipantsInfoList = participantsInfoListSubject.value
         remoteParticipantsInfoList =
             remoteParticipantsInfoList.filter { infoModel in
@@ -101,9 +104,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
                     $0.identifier.stringValue == infoModel.userIdentifier
                 })
             }
-        if !remoteParticipants.isEmpty {
-            participantsInfoListSubject.send(remoteParticipantsInfoList)
-        }
+        participantsInfoListSubject.send(remoteParticipantsInfoList)
     }
 
     private func addRemoteParticipants(_ remoteParticipants: [RemoteParticipant]) {
@@ -117,14 +118,15 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     }
 
     private func addRemoteParticipantsInfoModel(_ remoteParticipants: [RemoteParticipant]) {
+        guard !remoteParticipants.isEmpty
+        else { return }
+
         var remoteParticipantsInfoList = participantsInfoListSubject.value
         remoteParticipants.forEach {
             let infoModel = $0.toParticipantInfoModel(recentSpeakingStamp: Date(timeIntervalSince1970: 0))
             remoteParticipantsInfoList.append(infoModel)
         }
-        if !remoteParticipants.isEmpty {
-            participantsInfoListSubject.send(remoteParticipantsInfoList)
-        }
+        participantsInfoListSubject.send(remoteParticipantsInfoList)
     }
 
     private func updateRemoteParticipant(userIdentifier: String,
@@ -148,8 +150,12 @@ extension CallingSDKEventsHandler: CallDelegate,
     RecordingCallFeatureDelegate,
     TranscriptionCallFeatureDelegate {
     func call(_ call: Call, didUpdateRemoteParticipant args: ParticipantsUpdatedEventArgs) {
-        removeRemoteParticipants(args.removedParticipants)
-        addRemoteParticipants(args.addedParticipants)
+        if !args.removedParticipants.isEmpty {
+            removeRemoteParticipants(args.removedParticipants)
+        }
+        if !args.addedParticipants.isEmpty {
+            addRemoteParticipants(args.addedParticipants)
+        }
     }
 
     func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {
