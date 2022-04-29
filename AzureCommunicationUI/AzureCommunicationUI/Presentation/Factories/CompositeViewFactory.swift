@@ -13,11 +13,11 @@ protocol CompositeViewFactoryProtocol {
 struct CompositeViewFactory: CompositeViewFactoryProtocol {
     private let logger: Logger
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
-    private let avatarManager: AvatarViewManager
+    private let avatarManager: AvatarViewManagerProtocol
     private let videoViewManager: VideoViewManager
 
     init(logger: Logger,
-         avatarManager: AvatarViewManager,
+         avatarManager: AvatarViewManagerProtocol,
          videoViewManager: VideoViewManager,
          compositeViewModelFactory: CompositeViewModelFactoryProtocol) {
         self.logger = logger

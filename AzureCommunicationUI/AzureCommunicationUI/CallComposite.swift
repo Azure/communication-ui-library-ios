@@ -14,10 +14,10 @@ public class CallComposite {
     private let themeConfiguration: ThemeConfiguration?
     private let localizationConfiguration: LocalizationConfiguration?
     private let callCompositeEventsHandler = CallCompositeEventsHandler()
-    private var errorManager: ErrorManager?
-    private var lifeCycleManager: UIKitAppLifeCycleManager?
-    private var permissionManager: PermissionsManager?
-    private var audioSessionManager: AudioSessionManager?
+    private var errorManager: ErrorManagerProtocol?
+    private var lifeCycleManager: LifeCycleManagerProtocol?
+    private var permissionManager: PermissionsManagerProtocol?
+    private var audioSessionManager: AudioSessionManagerProtocol?
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
