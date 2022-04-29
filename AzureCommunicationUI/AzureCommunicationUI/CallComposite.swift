@@ -22,6 +22,7 @@ public class CallComposite {
     private var permissionManager: AppPermissionsManager?
     private var audioSessionManager: AppAudioSessionManager?
     private var remoteParticipantsManager: RemoteParticipantsManager?
+    private var avatarViewManager: AvatarViewManager?
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
@@ -60,9 +61,7 @@ public class CallComposite {
                                                                     logger: dependencyContainer.resolve(),
                                                                     viewFactory: dependencyContainer.resolve(),
                                                                     isRightToLeft: localizationProvider.isRightToLeft)
-        setupManagers(store: dependencyContainer.resolve(),
-                      logger: dependencyContainer.resolve(),
-                      callingSDKWrapper: dependencyContainer.resolve())
+        setupManagers(dependencyContainer: dependencyContainer)
         present(toolkitHostingController)
     }
 
@@ -94,28 +93,38 @@ public class CallComposite {
         launch(callConfiguration, localOptions: localOptions)
     }
 
-    private func setupManagers(store: Store<AppState>,
-                               logger: Logger,
-                               callingSDKWrapper: CallingSDKWrapper) {
-        let errorManager = CompositeErrorManager(store: store,
+    @discardableResult
+    public func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
+                                                personaData: PersonaData) -> Result<Bool, Error> {
+        guard let avatarManager = avatarViewManager
+        else { return .failure(CompositeError.callCompositeNotLaunched) }
+
+        return avatarManager.setRemoteParticipantPersonaData(for: identifier,
+                                                             personaData: personaData)
+    }
+
+    private func setupManagers(dependencyContainer: DependencyContainer) {
+        let errorManager = CompositeErrorManager(store: dependencyContainer.resolve(),
                                                  callCompositeEventsHandler: callCompositeEventsHandler)
         self.errorManager = errorManager
 
-        let lifeCycleManager = UIKitAppLifeCycleManager(store: store, logger: logger)
+        let lifeCycleManager = UIKitAppLifeCycleManager(store: dependencyContainer.resolve(),
+                                                        logger: dependencyContainer.resolve())
         self.lifeCycleManager = lifeCycleManager
 
-        let permissionManager = AppPermissionsManager(store: store)
+        let permissionManager = AppPermissionsManager(store: dependencyContainer.resolve())
         self.permissionManager = permissionManager
 
-        let audioSessionManager = AppAudioSessionManager(store: store,
-                                                         logger: logger)
+        let audioSessionManager = AppAudioSessionManager(store: dependencyContainer.resolve(),
+                                                         logger: dependencyContainer.resolve())
         self.audioSessionManager = audioSessionManager
 
         let remoteParticipantsManager = RemoteParticipantsManager(
-            store: store,
+            store: dependencyContainer.resolve(),
             callCompositeEventsHandler: callCompositeEventsHandler,
-            callingSDKWrapper: callingSDKWrapper)
+            callingSDKWrapper: dependencyContainer.resolve())
         self.remoteParticipantsManager = remoteParticipantsManager
+        avatarViewManager = dependencyContainer.resolve()
     }
 
     private func cleanUpManagers() {
@@ -123,6 +132,7 @@ public class CallComposite {
         self.lifeCycleManager = nil
         self.permissionManager = nil
         self.audioSessionManager = nil
+        self.remoteParticipantsManager = nil
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,

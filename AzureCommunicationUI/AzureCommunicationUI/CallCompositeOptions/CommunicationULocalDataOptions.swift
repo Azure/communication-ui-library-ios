@@ -7,14 +7,14 @@ import Foundation
 import UIKit
 
 public struct CommunicationUILocalDataOptions {
-    let localPersona: CommunicationUIPersonaData
+    let localPersona: PersonaData
 
-    public init(_ localPersona: CommunicationUIPersonaData) {
+    public init(_ localPersona: PersonaData) {
         self.localPersona = localPersona
     }
 }
 
-public struct CommunicationUIPersonaData {
+public struct PersonaData {
     let avatarImage: UIImage?
     let renderDisplayName: String?
 

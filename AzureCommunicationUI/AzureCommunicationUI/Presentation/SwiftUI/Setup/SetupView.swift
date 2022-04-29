@@ -9,7 +9,7 @@ import FluentUI
 
 struct SetupView: View {
     @ObservedObject var viewModel: SetupViewModel
-    let localPersonaData: CommunicationUIPersonaData?
+    let localPersonaData: PersonaData?
     let viewManager: VideoViewManager
 
     let layoutSpacing: CGFloat = 24
