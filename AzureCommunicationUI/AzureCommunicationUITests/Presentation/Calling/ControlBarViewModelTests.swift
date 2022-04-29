@@ -64,7 +64,7 @@ class ControlBarViewModelTests: XCTestCase {
     func test_controlBarViewModel_dismissConfirmLeaveOverlay_when_isConfirmLeaveListDisplayedTrue_shouldBecomeFalse() {
         let sut = makeSUT()
         sut.isConfirmLeaveListDisplayed = true
-        sut.dismissConfirmLeaveOverlay()
+        sut.dismissConfirmLeaveDrawerList()
 
         XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
     }
