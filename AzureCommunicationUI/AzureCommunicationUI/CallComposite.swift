@@ -8,6 +8,9 @@ import SwiftUI
 import FluentUI
 import AzureCommunicationCalling
 
+public typealias CompositeErrorHandler = (CommunicationUIErrorEvent) -> Void
+public typealias RemoteParticipantsJoinedHandler = ([CommunicationIdentifier]) -> Void
+
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
     private var logger: Logger?
@@ -31,8 +34,8 @@ public class CallComposite {
     /// Assign closures to execute when events occur inside Call Composite.
     /// - Parameter didFailAction: The closure returning the error thrown from Call Composite.
     /// - Parameter participantsJoinedAction: The closure returning identifiers for joined remote participants.
-    public func setTarget(didFail didFailAction: ((CommunicationUIErrorEvent) -> Void)?,
-                          didRemoteParticipantsJoin participantsJoinedAction: (([CommunicationIdentifier]) -> Void)?) {
+    public func setTarget(didFail didFailAction: CompositeErrorHandler?,
+                          didRemoteParticipantsJoin participantsJoinedAction: RemoteParticipantsJoinedHandler?) {
         callCompositeEventsHandler.didFail = didFailAction
         callCompositeEventsHandler.didRemoteParticipantsJoin = participantsJoinedAction
     }

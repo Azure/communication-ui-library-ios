@@ -14,8 +14,8 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
     private let store: Store<AppState>
     private let eventsHandler: CallCompositeEventsHandling
     private let callingSDKWrapper: CallingSDKWrapper
-    private var participantsLastUpdateTimeStamp: Date
-    private var participantsIds: Set<String>
+    private var participantsLastUpdateTimeStamp = Date()
+    private var participantsIds: Set<String> = []
 
     var cancellables = Set<AnyCancellable>()
 
@@ -25,8 +25,6 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
         self.store = store
         self.eventsHandler = callCompositeEventsHandler
         self.callingSDKWrapper = callingSDKWrapper
-        participantsIds = Set(store.state.remoteParticipantsState.participantInfoList.map { $0.userIdentifier })
-        participantsLastUpdateTimeStamp = store.state.remoteParticipantsState.lastUpdateTimeStamp
         store.$state
             .receive(on: RunLoop.main)
             .sink { [weak self] state in
