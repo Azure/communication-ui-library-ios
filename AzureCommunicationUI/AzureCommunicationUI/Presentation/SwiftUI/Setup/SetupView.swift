@@ -9,6 +9,7 @@ import FluentUI
 
 struct SetupView: View {
     @ObservedObject var viewModel: SetupViewModel
+    let localPersonaData: CommunicationUIPersonaData?
     let viewManager: VideoViewManager
 
     let layoutSpacing: CGFloat = 24
@@ -23,6 +24,7 @@ struct SetupView: View {
                 VStack(spacing: layoutSpacing) {
                     ZStack(alignment: .bottom) {
                         PreviewAreaView(viewModel: viewModel.previewAreaViewModel,
+                                        localPersonaData: localPersonaData,
                                         viewManager: viewManager)
                         SetupControlBarView(viewModel: viewModel.setupControlBarViewModel)
                     }
@@ -47,7 +49,7 @@ struct SetupView: View {
                 JoiningCallActivityView(viewModel: viewModel.joiningCallActivityViewModel)
             } else {
                 PrimaryButton(viewModel: viewModel.joinCallButtonViewModel)
-                    .accessibilityIdentifier("AzureCommunicationUI.SetupView.PrimaryButton.JoinCall")
+                    .accessibilityIdentifier(LocalizationKey.joinCallAccessibilityLabel.rawValue)
             }
         }
     }

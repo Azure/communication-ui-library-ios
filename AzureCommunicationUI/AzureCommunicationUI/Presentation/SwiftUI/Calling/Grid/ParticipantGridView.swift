@@ -13,7 +13,6 @@ struct ParticipantGridView: View {
     var body: some View {
         return Group {
             ParticipantGridLayoutView(cellViewModels: viewModel.participantsCellViewModelArr,
-                                      getRemoteParticipantRendererView: getRemoteParticipantRendererView(videoViewId:),
                                       rendererViewManager: videoViewManager,
                                       screenSize: screenSize)
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -24,10 +23,6 @@ struct ParticipantGridView: View {
             .onReceive(viewModel.$displayedParticipantInfoModelArr) {
                 updateVideoViewManager(displayedRemoteInfoModelArr: $0)
             }
-    }
-
-    func getRemoteParticipantRendererView(videoViewId: RemoteParticipantVideoViewId) -> ParticipantRendererViewInfo? {
-        return videoViewManager.getRemoteParticipantVideoRendererView(videoViewId)
     }
 
     func updateVideoViewManager(displayedRemoteInfoModelArr: [ParticipantInfoModel]) {

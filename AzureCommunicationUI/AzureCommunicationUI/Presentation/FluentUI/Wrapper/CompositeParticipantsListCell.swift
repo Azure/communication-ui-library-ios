@@ -18,17 +18,24 @@ class CompositeParticipantsListCell: TableViewCell {
         avatar.state.primaryText = !isNameEmpty ? viewModel.displayName : nil
         let avatarView = avatar.view
 
+        var micImage: UIImage?
         var micImageView: UIImageView?
         if viewModel.isMuted {
-            let micImage = StyleProvider.icon.getUIImage(for: .micOffRegular)?
+            micImage = StyleProvider.icon.getUIImage(for: .micOffRegular)?
                 .withTintColor(StyleProvider.color.mute, renderingMode: .alwaysOriginal)
-            micImageView = UIImageView(image: micImage)
+        } else {
+            micImage = StyleProvider.icon.getUIImage(for: .micOnRegular)?
+                .withTintColor(StyleProvider.color.mute, renderingMode: .alwaysOriginal)
         }
+        micImageView = UIImageView(image: micImage)
 
         selectionStyle = .none
         backgroundColor = UIDevice.current.userInterfaceIdiom == .pad
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
+
+        accessibilityLabel = viewModel.getCellAccessibilityLabel()
+        accessibilityTraits.remove(.button)
 
         setTitleLabelTextColor(color: isNameEmpty ?
                                 UIColor.compositeColor(CompositeColor.mute)

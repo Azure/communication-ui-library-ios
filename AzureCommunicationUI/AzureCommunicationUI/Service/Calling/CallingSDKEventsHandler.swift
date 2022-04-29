@@ -151,7 +151,7 @@ extension CallingSDKEventsHandler: CallDelegate,
     func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {
         let currentStatus = call.state.toCallingStatus()
         let errorCode = determineErrorType(previousStatus: self.previousCallingStatus,
-                                           callEndReason: call.callEndReason.code)
+                                           callEndReason: call.callEndReason)
 
         let callInfoModel = CallInfoModel(status: currentStatus, errorCode: errorCode)
         callInfoSubject.send(callInfoModel)
@@ -174,20 +174,26 @@ extension CallingSDKEventsHandler: CallDelegate,
         isLocalUserMutedSubject.send(call.isMuted)
     }
 
-    private func determineErrorType(previousStatus: CallingStatus, callEndReason: Int32) -> String {
-        if callEndReason > 0 {
-            if callEndReason == 401 {
+    private func determineErrorType(previousStatus: CallingStatus, callEndReason: CallEndReason) -> String {
+        let callEndReasonCode = callEndReason.code
+        let callEndReasonSubCode = callEndReason.subcode
+
+        if callEndReasonCode == 0 {
+            if (callEndReasonSubCode == 5300 || callEndReasonSubCode == 5000),
+                previousStatus == .connected {
+                return CallCompositeErrorCode.callEvicted
+            }
+        } else if callEndReasonCode > 0 {
+            if callEndReasonCode == 401 {
                 return CallCompositeErrorCode.tokenExpired
-            } else if callEndReason == 487 {
+            } else if callEndReasonCode == 487 {
+                // having "" will leave the composite
                 return ""
             } else {
-                if previousStatus == .connected {
-                    return CallCompositeErrorCode.callEnd
-                } else {
-                    return CallCompositeErrorCode.callJoin
-                }
+                return previousStatus == .connected
+                ? CallCompositeErrorCode.callEnd
+                : CallCompositeErrorCode.callJoin
             }
-
         }
 
         return ""

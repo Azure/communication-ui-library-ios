@@ -8,7 +8,10 @@ import FluentUI
 
 struct CallingView: View {
     @ObservedObject var viewModel: CallingViewModel
+    let avatarManager: AvatarViewManager
     let viewManager: VideoViewManager
+
+    let leaveCallConfirmationListSourceView = UIView()
 
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
@@ -30,12 +33,6 @@ struct CallingView: View {
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
-        .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveOverlayDisplayed) {
-            ConfirmLeaveOverlayView(viewModel: viewModel)
-                .accessibilityHidden(!viewModel.isConfirmLeaveOverlayDisplayed)
-                .accessibilityElement(children: .contain)
-                .accessibilityAddTraits(.isModal)
-        })
     }
 
     var portraitCallingView: some View {
@@ -57,7 +54,7 @@ struct CallingView: View {
             GeometryReader { geometry in
                 ZStack(alignment: .bottomTrailing) {
                     videoGridView
-                        .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
+                        .accessibilityHidden(viewModel.isVideoGridViewAccessibilityAvailable)
                     if viewModel.isParticipantGridDisplayed {
                         draggableVideoPipView
                     }
@@ -94,6 +91,7 @@ struct CallingView: View {
 
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
+                           personaData: avatarManager.getLocalPersonaData(),
                            viewManager: viewManager,
                            viewType: .localVideoPip)
                 .frame(width: size.width, height: size.height, alignment: .center)
@@ -151,6 +149,7 @@ struct CallingView: View {
     var localVideoFullscreenView: some View {
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
+                           personaData: avatarManager.getLocalPersonaData(),
                            viewManager: viewManager,
                            viewType: .localVideofull)
                 .background(Color(StyleProvider.color.surface))
