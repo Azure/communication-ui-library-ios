@@ -8,6 +8,7 @@ import Combine
 import SwiftUI
 import AzureCommunicationUI
 import AzureCommunicationCalling
+import AppCenterCrashes
 
 class UIKitDemoViewController: UIViewController {
 
@@ -132,16 +133,31 @@ class UIKitDemoViewController: UIViewController {
     }
 
     func startExperience(with link: String) {
-        let localizationConfig = LocalizationConfiguration(languageCode: envConfigSubject.languageCode,
-                                                           layoutDirection: envConfigSubject.isRightToLeft ?
-                                                            .rightToLeft : .leftToRight)
+        var localizationConfig: LocalizationConfiguration?
+        let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
+        if envConfigSubject.localeIdentifier != "" {
+            let locale = Locale(identifier: envConfigSubject.localeIdentifier)
+            localizationConfig = LocalizationConfiguration(locale: locale,
+                                                           layoutDirection: layoutDirection)
+        } else if envConfigSubject.languageCode != "auto" {
+            localizationConfig = LocalizationConfiguration(
+                languageCode: envConfigSubject.languageCode,
+                layoutDirection: layoutDirection)
+        }
 
-        let callCompositeOptions = CallCompositeOptions(theme: TeamsBrandConfig(),
-                                                        localization: localizationConfig)
-
+        let callCompositeOptions = CallCompositeOptions(
+            theme: envConfigSubject.useCustomColors
+            ? CustomColorTheming(envConfigSubject: envConfigSubject)
+            : Theming(envConfigSubject: envConfigSubject),
+            localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
 
         callComposite.setTarget(didFail: didFail)
+        let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
+                                nil : envConfigSubject.renderedDisplayName
+        let persona = CommunicationUIPersonaData(UIImage(named: envConfigSubject.avatarImageName),
+                                                 renderDisplayName: renderDisplayName)
+        let localOptions = CommunicationUILocalDataOptions(persona)
 
         if let communicationTokenCredential = try? getTokenCredential() {
             switch selectedMeetingType {
@@ -150,12 +166,12 @@ class UIKitDemoViewController: UIViewController {
                 let parameters = GroupCallOptions(credential: communicationTokenCredential,
                                                   groupId: uuid,
                                                   displayName: getDisplayName())
-                callComposite.launch(with: parameters)
+                callComposite.launch(with: parameters, localOptions: localOptions)
             case .teamsMeeting:
                 let parameters = TeamsMeetingOptions(credential: communicationTokenCredential,
                                                      meetingLink: link,
                                                      displayName: getDisplayName())
-                callComposite.launch(with: parameters)
+                callComposite.launch(with: parameters, localOptions: localOptions)
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
@@ -265,11 +281,9 @@ class UIKitDemoViewController: UIViewController {
     }
 
     @objc func onSettingsPressed() {
-        let settingsView = SettingsView(envConfigSubject: envConfigSubject, dismissAction: {
-            self.dismiss(animated: true, completion: nil)
-        })
+        let settingsView = SettingsView(envConfigSubject: envConfigSubject)
         let settingsViewHostingController = UIHostingController(rootView: settingsView)
-        settingsViewHostingController.modalPresentationStyle = .fullScreen
+        settingsViewHostingController.modalPresentationStyle = .formSheet
         present(settingsViewHostingController, animated: true, completion: nil)
     }
 
@@ -418,6 +432,8 @@ class UIKitDemoViewController: UIViewController {
         startExperienceButton.sizeToFit()
         startExperienceButton.translatesAutoresizingMaskIntoConstraints = false
         startExperienceButton.addTarget(self, action: #selector(onStartExperienceBtnPressed), for: .touchUpInside)
+
+        startExperienceButton.accessibilityLabel = LocalizationKey.startExperienceAccessibilityLabel.rawValue
 
         // horizontal stack view for the settingButton and startExperienceButton
         let settingButtonHSpacer1 = UIView()

@@ -155,7 +155,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
 
         let expectedIcon = CompositeIcon.micOff
-        let expectedTextKey = "AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"
+        let expectedTextKey = "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"
 
         XCTAssertTrue(sut.isPermissionsDenied)
         XCTAssertEqual(sut.getPermissionWarningIcon(), expectedIcon)

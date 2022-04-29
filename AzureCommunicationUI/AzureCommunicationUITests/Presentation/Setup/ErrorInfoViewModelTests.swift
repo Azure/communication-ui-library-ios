@@ -17,7 +17,7 @@ class ErrorInfoViewModelTests: XCTestCase {
     func test_errorInfoViewModel_dismissContent_alwaysReturns_snackBarDismissContent() {
         let sut = makeSUT()
 
-        XCTAssertEqual(sut.dismissContent, "AzureCommunicationUI.SnackBar.Button.Dismiss")
+        XCTAssertEqual(sut.dismissContent, "AzureCommunicationUICalling.SnackBar.Button.Dismiss")
     }
 
     func test_errorInfoViewModel_update_when_errorStateCallJoinSet_then_snackBarErrorJoinCallMessageDisplayed() {
@@ -27,7 +27,7 @@ class ErrorInfoViewModelTests: XCTestCase {
 
         sut.update(errorState: state)
         XCTAssertEqual(sut.isDisplayed, true)
-        XCTAssertEqual(sut.message, "AzureCommunicationUI.SnackBar.Text.ErrorCallJoin")
+        XCTAssertEqual(sut.message, "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin")
     }
 
     func test_errorInfoViewModel_update_when_errorStateCallEnd_then_snackBarErrorCallEndMessage() {
@@ -37,7 +37,17 @@ class ErrorInfoViewModelTests: XCTestCase {
 
         sut.update(errorState: state)
         XCTAssertEqual(sut.isDisplayed, true)
-        XCTAssertEqual(sut.message, "AzureCommunicationUI.SnackBar.Text.ErrorCallEnd")
+        XCTAssertEqual(sut.message, "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd")
+    }
+
+    func test_errorInfoViewModel_update_when_errorStateCallEvictionSet_then_snackBarErrorJoinCallMessageDisplayed() {
+        let sut = makeSUT()
+        let event = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callEvicted)
+        let state = ErrorState(error: event, errorCategory: .callState)
+
+        sut.update(errorState: state)
+        XCTAssertEqual(sut.isDisplayed, true)
+        XCTAssertEqual(sut.message, "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted")
     }
 
     func test_errorInfoViewModel_update_when_errorTypeIsEmpty_then_isDisplayEqualFalse() {
