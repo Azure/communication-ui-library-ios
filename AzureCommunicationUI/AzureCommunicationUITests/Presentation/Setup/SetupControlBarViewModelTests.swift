@@ -364,7 +364,7 @@ class SetupControlBarViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "CameraButtonViewModel button info is updated")
         let updateButtonInfoCompletion: ((CompositeIcon?, String?) -> Void) = { icon, label in
             XCTAssertEqual(icon, .videoOn)
-            XCTAssertEqual(label, "AzureCommunicationUI.SetupView.Button.VideoOn")
+            XCTAssertEqual(label, "AzureCommunicationUICalling.SetupView.Button.VideoOn")
             expectation.fulfill()
         }
         factoryMocking.createIconWithLabelButtonViewModel = { icon in

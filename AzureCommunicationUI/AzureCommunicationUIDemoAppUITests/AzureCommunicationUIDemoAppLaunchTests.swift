@@ -7,20 +7,13 @@ import XCTest
 
 class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
-    func testCallCompositeLaunch() {
-        tapInterfaceFor(.uiKit)
+    func testLaunch() {
+        let app = XCUIApplication()
+        app.launch()
     }
 
-    func testCallCompositeExit() {
-        guard app != nil else {
-            XCTFail("No App launch")
-            return
-        }
+    func testCallCompositeLaunch() {
         tapInterfaceFor(.uiKit)
-        tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
-        leaveCall()
     }
 
     func testCallCompositeWithExpiredToken() {
@@ -37,72 +30,31 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
     func testCallCompositeJoinCallGroupCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        toggleSetupScreenControlButtons()
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
-        leaveCall()
     }
 
     func testCallCompositeJoinCallTeamsCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
         tapMeetingType(.teamsCall)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        toggleSetupScreenControlButtons()
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
-        leaveCall()
     }
 
     func testCallCompositeJoinCallGroupCallUIKit() {
         tapInterfaceFor(.uiKit)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        toggleSetupScreenControlButtons()
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
-        leaveCall()
     }
 
     func testCallCompositeJoinCallTeamsCallUIKit() {
         tapInterfaceFor(.uiKit)
         tapMeetingType(.teamsCall)
         tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        toggleSetupScreenControlButtons()
         tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
         tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
-        leaveCall()
-    }
-
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
-    }
-
-    // MARK: Private / helper functions
-
-    /// Toggles the control views in the setup screen
-    private func toggleSetupScreenControlButtons() {
-        // test video button
-        tapButton(accessibilityIdentifier: .toggleVideoAccessibilityID, shouldWait: true)
-
-        // test mic button
-        tapButton(accessibilityIdentifier: .togglMicAccessibilityID, shouldWait: true)
-
-        // test audio drawer
-        tapButton(accessibilityIdentifier: .deviceAccesibiiltyLabel, shouldWait: true)
-        app.tables.cells.firstMatch.tap()
-        tapButton(accessibilityIdentifier: .deviceAccesibiiltyLabel, shouldWait: true)
-        app.tables.firstMatch.swipeDown()
-    }
-
-    /// Toggles the leave call overlay  in the calling screen
-    private func leaveCall() {
-        app.tables.cells.firstMatch.tap()
-        XCTAssertTrue(app.buttons[LocalizationKey.startExperienceAccessibilityLabel.rawValue]
-                        .waitForExistence(timeout: 3))
     }
 }
 
