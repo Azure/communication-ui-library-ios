@@ -14,10 +14,10 @@ public class CallComposite {
     private let themeConfiguration: ThemeConfiguration?
     private let localizationConfiguration: LocalizationConfiguration?
     private let callCompositeEventsHandler = CallCompositeEventsHandler()
-    private var errorManager: ErrorManager?
-    private var lifeCycleManager: UIKitAppLifeCycleManager?
-    private var permissionManager: AppPermissionsManager?
-    private var audioSessionManager: AppAudioSessionManager?
+    private var errorManager: ErrorManagerProtocol?
+    private var lifeCycleManager: LifeCycleManagerProtocol?
+    private var permissionManager: PermissionsManagerProtocol?
+    private var audioSessionManager: AudioSessionManagerProtocol?
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
@@ -43,7 +43,7 @@ public class CallComposite {
         logger?.debug("launch composite experience")
 
         dependencyContainer.registerDependencies(callConfiguration, localDataOptions: localOptions)
-        let localizationProvider = dependencyContainer.resolve() as LocalizationProvider
+        let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)
         let toolkitHostingController = makeToolkitHostingController(router: dependencyContainer.resolve(),
@@ -94,10 +94,10 @@ public class CallComposite {
         let lifeCycleManager = UIKitAppLifeCycleManager(store: store, logger: logger)
         self.lifeCycleManager = lifeCycleManager
 
-        let permissionManager = AppPermissionsManager(store: store)
+        let permissionManager = PermissionsManager(store: store)
         self.permissionManager = permissionManager
 
-        let audioSessionManager = AppAudioSessionManager(store: store,
+        let audioSessionManager = AudioSessionManager(store: store,
                                                          logger: logger)
         self.audioSessionManager = audioSessionManager
     }
@@ -111,7 +111,7 @@ public class CallComposite {
 
     private func makeToolkitHostingController(router: NavigationRouter,
                                               logger: Logger,
-                                              viewFactory: CompositeViewFactory,
+                                              viewFactory: CompositeViewFactoryProtocol,
                                               isRightToLeft: Bool) -> ContainerUIHostingController {
         let rootView = ContainerView(router: router,
                                      logger: logger,
@@ -151,7 +151,7 @@ public class CallComposite {
         }
     }
 
-    private func setupLocalization(with provider: LocalizationProvider) {
+    private func setupLocalization(with provider: LocalizationProviderProtocol) {
         if let localizationConfiguration = localizationConfiguration {
             provider.apply(localeConfig: localizationConfiguration)
         }

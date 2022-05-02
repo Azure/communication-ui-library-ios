@@ -7,10 +7,10 @@ import Foundation
 import FluentUI
 @testable import AzureCommunicationUI
 
-class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
+class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let store: Store<AppState>
-    private let accessibilityProvider: AccessibilityProvider
+    private let accessibilityProvider: AccessibilityProviderProtocol
 
     var bannerTextViewModel: BannerTextViewModel?
     var controlBarViewModel: ControlBarViewModel?
@@ -38,7 +38,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactory {
 
     init(logger: Logger,
          store: Store<AppState>,
-         accessibilityProvider: AccessibilityProvider = AccessibilityProviderMocking()) {
+         accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking()) {
         self.logger = logger
         self.store = store
         self.accessibilityProvider = accessibilityProvider

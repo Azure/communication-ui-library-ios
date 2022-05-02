@@ -10,7 +10,7 @@ class SetupControlBarViewModelMocking: SetupControlBarViewModel {
     private let updateState: ((LocalUserState, PermissionState, CallingState) -> Void)?
     var updateIsJoinRequested: ((Bool) -> Void)?
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          dispatchAction: @escaping ActionDispatch,
          localUserState: LocalUserState,

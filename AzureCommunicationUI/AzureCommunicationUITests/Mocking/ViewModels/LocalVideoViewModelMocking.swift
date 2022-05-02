@@ -9,9 +9,9 @@ import Foundation
 class LocalVideoViewModelMocking: LocalVideoViewModel {
     private let updateState: ((LocalUserState) -> Void)?
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
-         localizationProvider: LocalizationProvider,
+         localizationProvider: LocalizationProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          updateState: ((LocalUserState) -> Void)? = nil) {
         self.updateState = updateState

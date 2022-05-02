@@ -9,7 +9,7 @@ import Foundation
 class ParticipantGridCellViewModelMocking: ParticipantGridCellViewModel {
     private let updateParticipantModelCompletion: ((ParticipantInfoModel) -> Void)?
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          participantModel: ParticipantInfoModel,
          updateParticipantModelCompletion: ((ParticipantInfoModel) -> Void)?) {
         self.updateParticipantModelCompletion = updateParticipantModelCompletion

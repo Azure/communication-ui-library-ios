@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-protocol AccessibilityProvider {
+protocol AccessibilityProviderProtocol {
     /// A Boolean value that indicates whether VoiceOver is in an enabled state
     var isVoiceOverEnabled: Bool { get }
 
@@ -22,7 +22,7 @@ protocol AccessibilityProvider {
     func subscribeToVoiceOverStatusDidChangeNotification(_ observer: AccessibilityProviderNotificationsObserver)
 }
 
-struct AppAccessibilityProvider: AccessibilityProvider {
+struct AccessibilityProvider: AccessibilityProviderProtocol {
     var isVoiceOverEnabled: Bool {
         UIAccessibility.isVoiceOverRunning
     }

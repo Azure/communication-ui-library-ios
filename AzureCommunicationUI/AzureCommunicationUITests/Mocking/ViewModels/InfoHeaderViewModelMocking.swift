@@ -9,10 +9,10 @@ import Foundation
 class InfoHeaderViewModelMocking: InfoHeaderViewModel {
     private let updateState: ((LocalUserState, RemoteParticipantsState, CallingState) -> Void)?
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          localUserState: LocalUserState,
-         accessibilityProvider: AccessibilityProvider,
+         accessibilityProvider: AccessibilityProviderProtocol,
          updateState: ((LocalUserState, RemoteParticipantsState, CallingState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,

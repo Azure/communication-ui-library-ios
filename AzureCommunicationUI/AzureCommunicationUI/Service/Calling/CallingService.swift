@@ -6,7 +6,7 @@
 import Foundation
 import Combine
 
-protocol CallingService {
+protocol CallingServiceProtocol {
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> { get }
     var callInfoSubject: PassthroughSubject<CallInfoModel, Never> { get }
     var isRecordingActiveSubject: PassthroughSubject<Bool, Never> { get }
@@ -27,10 +27,10 @@ protocol CallingService {
     func unmuteLocalMic() -> AnyPublisher<Void, Error>
 }
 
-class ACSCallingService: NSObject, CallingService {
+class CallingService: NSObject, CallingServiceProtocol {
 
     private let logger: Logger
-    private let callingSDKWrapper: CallingSDKWrapper
+    private let callingSDKWrapper: CallingSDKWrapperProtocol
 
     var isRecordingActiveSubject: PassthroughSubject<Bool, Never>
     var isTranscriptionActiveSubject: PassthroughSubject<Bool, Never>
@@ -40,7 +40,7 @@ class ACSCallingService: NSObject, CallingService {
     var callInfoSubject: PassthroughSubject<CallInfoModel, Never>
 
     init(logger: Logger,
-         callingSDKWrapper: CallingSDKWrapper ) {
+         callingSDKWrapper: CallingSDKWrapperProtocol ) {
         self.logger = logger
         self.callingSDKWrapper = callingSDKWrapper
         isRecordingActiveSubject = callingSDKWrapper.callingEventsHandler.isRecordingActiveSubject

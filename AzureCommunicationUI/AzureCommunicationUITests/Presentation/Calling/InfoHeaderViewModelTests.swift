@@ -308,11 +308,11 @@ class InfoHeaderViewModelTests: XCTestCase {
 }
 
 extension InfoHeaderViewModelTests {
-    func makeSUT(accessibilityProvider: AccessibilityProvider = AppAccessibilityProvider()) -> InfoHeaderViewModel {
+    func makeSUT(accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()) -> InfoHeaderViewModel {
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: LoggerMocking(),
                                    localUserState: LocalUserState(),
-                                   localizationProvider: AppLocalizationProvider(logger: logger),
+                                   localizationProvider: LocalizationProvider(logger: logger),
                                    accessibilityProvider: accessibilityProvider)
     }
 
@@ -321,6 +321,6 @@ extension InfoHeaderViewModelTests {
                                    logger: logger,
                                    localUserState: LocalUserState(),
                                    localizationProvider: localizationProvider,
-                                   accessibilityProvider: AppAccessibilityProvider())
+                                   accessibilityProvider: AccessibilityProvider())
     }
 }

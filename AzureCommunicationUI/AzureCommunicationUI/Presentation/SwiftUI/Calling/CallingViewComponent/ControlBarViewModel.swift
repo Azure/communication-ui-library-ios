@@ -8,7 +8,7 @@ import Combine
 
 class ControlBarViewModel: ObservableObject {
     private let logger: Logger
-    private let localizationProvider: LocalizationProvider
+    private let localizationProvider: LocalizationProviderProtocol
     private let dispatch: ActionDispatch
 
     @Published var cameraPermission: AppPermission.Status = .unknown
@@ -28,9 +28,9 @@ class ControlBarViewModel: ObservableObject {
                                                device: .receiverSelected)
     var displayEndCallConfirm: (() -> Void)
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
-         localizationProvider: LocalizationProvider,
+         localizationProvider: LocalizationProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState) {
