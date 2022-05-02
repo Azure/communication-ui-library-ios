@@ -71,6 +71,14 @@ struct CallingView: View {
                 .onChange(of: geometry.size) { _ in
                     self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
                 }
+                .onRotate { newOrientation in
+                    if newOrientation != orientation
+                        && newOrientation != .unknown
+                        && newOrientation != .faceDown
+                        && newOrientation != .faceUp {
+                        orientation = newOrientation
+                    }
+                }
                 .contentShape(Rectangle())
                 .animation(.linear(duration: 0.167))
                 .onTapGesture(perform: {

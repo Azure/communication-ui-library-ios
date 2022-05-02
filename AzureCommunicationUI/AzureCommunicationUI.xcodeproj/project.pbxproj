@@ -187,6 +187,7 @@
 		A837397A261CE9FF00D46787 /* DependancyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8373979261CE9FF00D46787 /* DependancyContainer.swift */; };
 		A837397E261CEA4300D46787 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = A837397D261CEA4300D46787 /* Logger.swift */; };
 		A8373994261F9D7600D46787 /* CallCompositeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8373993261F9D7600D46787 /* CallCompositeOptions.swift */; };
+		A83F35BE28203EA9008C1ECE /* ViewModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83F35BD28203EA9008C1ECE /* ViewModifer.swift */; };
 		A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A865AF0827B7116B008347B4 /* IconAndLabelConversion.swift */; };
 		A869A63826546A2E003CC4F2 /* CallingServiceMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A869A62F26546A2D003CC4F2 /* CallingServiceMocking.swift */; };
 		A869A63926546A2E003CC4F2 /* LoggerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A869A63026546A2D003CC4F2 /* LoggerMocking.swift */; };
@@ -450,6 +451,7 @@
 		A8373979261CE9FF00D46787 /* DependancyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependancyContainer.swift; sourceTree = "<group>"; };
 		A837397D261CEA4300D46787 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		A8373993261F9D7600D46787 /* CallCompositeOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeOptions.swift; sourceTree = "<group>"; };
+		A83F35BD28203EA9008C1ECE /* ViewModifer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifer.swift; sourceTree = "<group>"; };
 		A8659FC52602A22000C807DE /* AzureCommunicationUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AzureCommunicationUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8659FC92602A22000C807DE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A865AF0827B7116B008347B4 /* IconAndLabelConversion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconAndLabelConversion.swift; sourceTree = "<group>"; };
@@ -570,6 +572,7 @@
 				A865AF0827B7116B008347B4 /* IconAndLabelConversion.swift */,
 				98FFD82726CC5FD900655398 /* PreferenceKey.swift */,
 				1FFEA01326A68D0D00E90816 /* UIFontExtension.swift */,
+				A83F35BD28203EA9008C1ECE /* ViewModifer.swift */,
 				985DF371269D065400CFDA55 /* ViewExtension.swift */,
 			);
 			path = Utilities;
@@ -1568,6 +1571,7 @@
 				1FD299662728B72B0084B9ED /* CallingSDKEventsHandler.swift in Sources */,
 				1FBCB6AC2649993500F57EEA /* CallingSDKWrapper.swift in Sources */,
 				1F2BED72262F8F4D00D98266 /* Reducer.swift in Sources */,
+				A83F35BE28203EA9008C1ECE /* ViewModifer.swift in Sources */,
 				50FA460E26829345001844AC /* InfoHeaderViewModel.swift in Sources */,
 				503F4B6D2705065700C17DA6 /* BannerTextView.swift in Sources */,
 				1F94DAF326772B3C00691D1E /* UIWindowExtension.swift in Sources */,
