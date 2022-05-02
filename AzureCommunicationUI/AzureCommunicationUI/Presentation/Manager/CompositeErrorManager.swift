@@ -11,13 +11,13 @@ protocol ErrorManager {
 
 class CompositeErrorManager: ErrorManager {
     private let store: Store<AppState>
-    private weak var eventsHandler: CallCompositeEventsHandler?
+    private let eventsHandler: CallCompositeEventsHandling
     private var error: CommunicationUIErrorEvent?
 
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState>,
-         callCompositeEventsHandler: CallCompositeEventsHandler?) {
+         callCompositeEventsHandler: CallCompositeEventsHandling) {
         self.store = store
         self.eventsHandler = callCompositeEventsHandler
         store.$state
@@ -47,8 +47,7 @@ class CompositeErrorManager: ErrorManager {
         }
 
         self.error = error
-        guard let eventsHandler = eventsHandler,
-              let didFail = eventsHandler.didFail else {
+        guard let didFail = eventsHandler.didFail else {
             return
         }
         didFail(error)

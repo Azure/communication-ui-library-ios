@@ -151,7 +151,7 @@ extension SwiftUIDemoView {
             theme: Theming(),
             localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
-        callComposite.setTarget(didFail: didFail)
+        callComposite.setTarget(didFail: didFail, didRemoteParticipantsJoin: didRemoteParticipantsJoin)
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
         let persona = CommunicationUIPersonaData(UIImage(named: envConfigSubject.avatarImageName),
@@ -233,5 +233,9 @@ extension SwiftUIDemoView {
         print("::::SwiftUIDemoView::getEventsHandler::didFail \(error)")
         print("::::SwiftUIDemoView error.code \(error.code)")
         showError(for: error.code)
+    }
+
+    func didRemoteParticipantsJoin(_ identifiers: [CommunicationIdentifier]) {
+        print("::::SwiftUIDemoView::getEventsHandler::didRemoteParticipantsJoin \(identifiers)")
     }
 }
