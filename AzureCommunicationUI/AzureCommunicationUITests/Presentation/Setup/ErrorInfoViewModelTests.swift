@@ -42,7 +42,7 @@ class ErrorInfoViewModelTests: XCTestCase {
 
     func test_errorInfoViewModel_update_when_errorStateCallEvictionSet_then_snackBarErrorJoinCallMessageDisplayed() {
         let sut = makeSUT()
-        let event = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callEvicted)
+        let event = CommunicationUIErrorEvent(code: InternalCallCompositeErrorCode.callEvicted)
         let state = ErrorState(error: event, errorCategory: .callState)
 
         sut.update(errorState: state)

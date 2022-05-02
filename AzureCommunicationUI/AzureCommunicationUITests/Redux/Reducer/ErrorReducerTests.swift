@@ -64,10 +64,10 @@ class ErrorReducerTests: XCTestCase {
     }
 
     func test_handleErrorReducer_reduce_when_statusErrorCallEvictionAndCallReset_then_returnErrorState_categoryCallState() {
-        let state = ErrorState(error: CommunicationUIErrorEvent(code: CallCompositeErrorCode.callEvicted,
+        let state = ErrorState(error: CommunicationUIErrorEvent(code: InternalCallCompositeErrorCode.callEvicted,
                                                  error: nil),
                                errorCategory: .callState)
-        let errorEvent = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callEvicted, error: nil)
+        let errorEvent = CommunicationUIErrorEvent(code: InternalCallCompositeErrorCode.callEvicted, error: nil)
 
         let action = ErrorAction.StatusErrorAndCallReset(error: errorEvent)
         let sut = getSUT()
