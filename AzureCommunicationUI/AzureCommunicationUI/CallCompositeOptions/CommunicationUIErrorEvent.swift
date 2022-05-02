@@ -24,7 +24,7 @@ public struct CallCompositeErrorCode: BaseCallCompositeErrorCode {
     public private(set) static var tokenExpired: String = "tokenExpired"
 }
 
-struct InternalCallCompositeErrorCode: BaseCallCompositeErrorCode { // TODO: check name InternalCallCompositeErrorCode
+struct InternalCallCompositeErrorCode: BaseCallCompositeErrorCode {
     /// Error when local user fails to join a call.
     static var callJoin: String = "callJoin"
 
