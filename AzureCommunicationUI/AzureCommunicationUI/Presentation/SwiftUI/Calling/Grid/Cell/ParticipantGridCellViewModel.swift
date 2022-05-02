@@ -21,7 +21,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var isMuted: Bool
     var participantIdentifier: String
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          participantModel: ParticipantInfoModel) {
         self.displayName = participantModel.displayName
         self.accessibilityLabel = participantModel.displayName

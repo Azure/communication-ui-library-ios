@@ -6,11 +6,11 @@
 import AVFoundation
 import Combine
 
-protocol AudioSessionManager {
+protocol AudioSessionManagerProtocol {
 
 }
 
-class AppAudioSessionManager: AudioSessionManager {
+class AudioSessionManager: AudioSessionManagerProtocol {
     private let logger: Logger
     private let store: Store<AppState>
     var cancellables = Set<AnyCancellable>()

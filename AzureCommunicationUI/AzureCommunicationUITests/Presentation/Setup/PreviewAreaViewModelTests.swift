@@ -168,7 +168,7 @@ extension PreviewAreaViewModelTests {
     func makeSUT() -> PreviewAreaViewModel {
         return PreviewAreaViewModel(compositeViewModelFactory: factoryMocking,
                                     dispatchAction: storeFactory.store.dispatch,
-                                    localizationProvider: AppLocalizationProvider(logger: logger))
+                                    localizationProvider: LocalizationProvider(logger: logger))
     }
 
     func makeSUTLocalizationMocking() -> PreviewAreaViewModel {

@@ -9,9 +9,9 @@ import Foundation
 class ParticipantGridViewModelMocking: ParticipantGridViewModel {
     private let updateState: ((CallingState, RemoteParticipantsState) -> Void)?
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
-         localizationProvider: LocalizationProvider,
-         accessibilityProvider: AccessibilityProvider,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
+         localizationProvider: LocalizationProviderProtocol,
+         accessibilityProvider: AccessibilityProviderProtocol,
          updateState: ((CallingState, RemoteParticipantsState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,

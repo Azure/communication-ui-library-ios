@@ -9,7 +9,7 @@ import Foundation
 class PreviewAreaViewModelMocking: PreviewAreaViewModel {
     private let updateState: ((LocalUserState, PermissionState) -> Void)?
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          dispatchAction: @escaping ActionDispatch,
          updateState: ((LocalUserState, PermissionState) -> Void)? = nil) {
         self.updateState = updateState

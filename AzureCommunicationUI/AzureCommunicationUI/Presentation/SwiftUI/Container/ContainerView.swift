@@ -10,7 +10,7 @@ struct ContainerView: View {
     @ObservedObject var router: NavigationRouter
 
     let logger: Logger
-    let viewFactory: CompositeViewFactory
+    let viewFactory: CompositeViewFactoryProtocol
     let setupViewOrientationMask: UIInterfaceOrientationMask = .portrait
     let isRightToLeft: Bool
 

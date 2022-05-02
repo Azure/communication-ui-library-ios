@@ -8,7 +8,7 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class JoiningCallActivityViewModelTests: XCTestCase {
-    private var localizationProvider: LocalizationProvider!
+    private var localizationProvider: LocalizationProviderProtocol!
 
     override func setUp() {
         super.setUp()
