@@ -11,12 +11,12 @@ class CompositeViewModelFactoryTests: XCTestCase {
 
     var logger: LoggerMocking!
     var mockStoreFactory = StoreFactoryMocking()
-    var compositeViewModelFactory: ACSCompositeViewModelFactory!
+    var compositeViewModelFactory: CompositeViewModelFactory!
 
     override func setUp() {
         super.setUp()
         logger = LoggerMocking()
-        compositeViewModelFactory = ACSCompositeViewModelFactory(logger: logger,
+        compositeViewModelFactory = CompositeViewModelFactory(logger: logger,
                                                                  store: mockStoreFactory.store,
                                                                  localizationProvider: LocalizationProviderMocking(),
                                                                  accessibilityProvider: AccessibilityProviderMocking())

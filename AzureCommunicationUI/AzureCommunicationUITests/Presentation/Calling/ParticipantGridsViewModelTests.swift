@@ -299,7 +299,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let callingState = CallingState(status: .connected)
         let expectedAnnouncement = "2 participants joined the meeting"
         let accessibilityProvider = AccessibilityProviderMocking()
-        let localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
+        let localizationProvider = LocalizationProvider(logger: LoggerMocking())
         accessibilityProvider.postQueuedAnnouncementBlock = { message in
             XCTAssertEqual(message, expectedAnnouncement)
             expectation.fulfill()
@@ -317,7 +317,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let callingState = CallingState(status: .connected)
         let displayName = state.participantInfoList.first!.displayName
         let accessibilityProvider = AccessibilityProviderMocking()
-        let localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
+        let localizationProvider = LocalizationProvider(logger: LoggerMocking())
         let expectedAnnouncement = "\(displayName) joined the meeting"
         accessibilityProvider.postQueuedAnnouncementBlock = { message in
             XCTAssertEqual(message, expectedAnnouncement)
@@ -335,7 +335,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let state = makeRemoteParticipantState(count: 4)
         let callingState = CallingState(status: .connected)
         let accessibilityProvider = AccessibilityProviderMocking()
-        let localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
+        let localizationProvider = LocalizationProvider(logger: LoggerMocking())
         let expectedAnnouncement = "2 participants left the meeting"
         let sut = makeSUT(accessibilityProvider: accessibilityProvider,
                           localizationProvider: localizationProvider)
@@ -358,7 +358,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let callingState = CallingState(status: .connected)
         let displayName = state.participantInfoList.first!.displayName
         let accessibilityProvider = AccessibilityProviderMocking()
-        let localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
+        let localizationProvider = LocalizationProvider(logger: LoggerMocking())
         let expectedAnnouncement = "\(displayName) left the meeting"
         let sut = makeSUT(accessibilityProvider: accessibilityProvider,
                           localizationProvider: localizationProvider)
@@ -382,7 +382,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let state = makeRemoteParticipantState(count: 2)
         let callingState = CallingState(status: .connected)
         let accessibilityProvider = AccessibilityProviderMocking()
-        let localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
+        let localizationProvider = LocalizationProvider(logger: LoggerMocking())
         let sut = makeSUT(accessibilityProvider: accessibilityProvider,
                           localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
@@ -536,7 +536,7 @@ class ParticipantGridViewModelTests: XCTestCase {
 extension ParticipantGridViewModelTests {
     func makeSUT(participantGridCellViewUpdateCompletion: ((ParticipantInfoModel) -> Void)? = nil) -> ParticipantGridViewModel {
         let storeFactory = StoreFactoryMocking()
-        let accessibilityProvider = AppAccessibilityProvider()
+        let accessibilityProvider = AccessibilityProvider()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
                                                               store: storeFactory.store,
                                                               accessibilityProvider: accessibilityProvider)
@@ -553,8 +553,8 @@ extension ParticipantGridViewModelTests {
                                         accessibilityProvider: accessibilityProvider)
     }
 
-    func makeSUT(accessibilityProvider: AccessibilityProvider,
-                 localizationProvider: LocalizationProvider) -> ParticipantGridViewModel {
+    func makeSUT(accessibilityProvider: AccessibilityProviderProtocol,
+                 localizationProvider: LocalizationProviderProtocol) -> ParticipantGridViewModel {
         let storeFactory = StoreFactoryMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
                                                               store: storeFactory.store,

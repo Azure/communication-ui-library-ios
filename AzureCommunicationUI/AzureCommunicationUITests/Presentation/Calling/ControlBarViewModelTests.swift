@@ -64,7 +64,7 @@ class ControlBarViewModelTests: XCTestCase {
     func test_controlBarViewModel_dismissConfirmLeaveOverlay_when_isConfirmLeaveListDisplayedTrue_shouldBecomeFalse() {
         let sut = makeSUT()
         sut.isConfirmLeaveListDisplayed = true
-        sut.dismissConfirmLeaveOverlay()
+        sut.dismissConfirmLeaveDrawerList()
 
         XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
     }
@@ -579,7 +579,7 @@ extension ControlBarViewModelTests {
     func makeSUT() -> ControlBarViewModel {
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
-                                   localizationProvider: AppLocalizationProvider(logger: logger),
+                                   localizationProvider: LocalizationProvider(logger: logger),
                                    dispatchAction: storeFactory.store.dispatch,
                                    endCallConfirm: {},
                                    localUserState: storeFactory.store.state.localUserState)

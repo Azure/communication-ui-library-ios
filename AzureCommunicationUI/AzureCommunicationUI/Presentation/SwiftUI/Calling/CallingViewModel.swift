@@ -14,11 +14,11 @@ class CallingViewModel: ObservableObject {
     let isRightToLeft: Bool
     @Published var appState: AppStatus = .foreground
 
-    private let compositeViewModelFactory: CompositeViewModelFactory
+    private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
     private let store: Store<AppState>
-    private let localizationProvider: LocalizationProvider
-    private let accessibilityProvider: AccessibilityProvider
+    private let localizationProvider: LocalizationProviderProtocol
+    private let accessibilityProvider: AccessibilityProviderProtocol
     private var cancellables = Set<AnyCancellable>()
 
     var controlBarViewModel: ControlBarViewModel!
@@ -27,11 +27,11 @@ class CallingViewModel: ObservableObject {
     let participantGridsViewModel: ParticipantGridViewModel
     let bannerViewModel: BannerViewModel
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState>,
-         localizationProvider: LocalizationProvider,
-         accessibilityProvider: AccessibilityProvider) {
+         localizationProvider: LocalizationProviderProtocol,
+         accessibilityProvider: AccessibilityProviderProtocol) {
         self.logger = logger
         self.compositeViewModelFactory = compositeViewModelFactory
         self.store = store
@@ -69,52 +69,13 @@ class CallingViewModel: ObservableObject {
         return compositeViewModelFactory.makeLobbyOverlayViewModel()
     }
 
-    // MARK: ConfirmLeaveOverlay
-    func getLeaveCallButtonViewModel() -> PrimaryButtonViewModel {
-        let leaveCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
-            buttonStyle: .primaryFilled,
-            buttonLabel: localizationProvider.getLocalizedString(.leaveCall),
-            iconName: nil,
-            isDisabled: false,
-            action: { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                self.logger.debug("Leave call button tapped")
-                self.endCall()
-            })
-        leaveCallButtonViewModel.update(accessibilityLabel: localizationProvider.getLocalizedString(.leaveCall))
-        return leaveCallButtonViewModel
-    }
-
-    func getCancelButtonViewModel() -> PrimaryButtonViewModel {
-        let cancelButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
-            buttonStyle: .primaryOutline,
-            buttonLabel: localizationProvider.getLocalizedString(.cancel),
-            iconName: nil,
-            isDisabled: false,
-            action: { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                self.logger.debug("Cancel button tapped")
-                self.dismissConfirmLeaveOverlay()
-            })
-        cancelButtonViewModel.update(accessibilityLabel: localizationProvider.getLocalizedString(.cancel))
-        return cancelButtonViewModel
-    }
-
-    func displayConfirmLeaveOverlay() {
-        self.isConfirmLeaveListDisplayed = true
-    }
-
-    func dismissConfirmLeaveOverlay() {
+    func dismissConfirmLeaveDrawerList() {
         self.isConfirmLeaveListDisplayed = false
     }
 
     func endCall() {
         store.dispatch(action: CallingAction.CallEndRequested())
-        dismissConfirmLeaveOverlay()
+        dismissConfirmLeaveDrawerList()
     }
 
     func receive(_ state: AppState) {

@@ -9,9 +9,9 @@ import Foundation
 class ControlBarViewModelMocking: ControlBarViewModel {
     private let updateState: ((LocalUserState, PermissionState) -> Void)?
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
-         localizationProvider: LocalizationProvider,
+         localizationProvider: LocalizationProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState,

@@ -5,21 +5,21 @@
 
 import Foundation
 
-protocol CompositeViewFactory {
+protocol CompositeViewFactoryProtocol {
     func makeSetupView() -> SetupView
     func makeCallingView() -> CallingView
 }
 
-struct ACSCompositeViewFactory: CompositeViewFactory {
+struct CompositeViewFactory: CompositeViewFactoryProtocol {
     private let logger: Logger
-    private let compositeViewModelFactory: CompositeViewModelFactory
-    private let avatarManager: AvatarViewManager
+    private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
+    private let avatarManager: AvatarViewManagerProtocol
     private let videoViewManager: VideoViewManager
 
     init(logger: Logger,
-         avatarManager: AvatarViewManager,
+         avatarManager: AvatarViewManagerProtocol,
          videoViewManager: VideoViewManager,
-         compositeViewModelFactory: CompositeViewModelFactory) {
+         compositeViewModelFactory: CompositeViewModelFactoryProtocol) {
         self.logger = logger
         self.avatarManager = avatarManager
         self.videoViewManager = videoViewManager

@@ -6,7 +6,7 @@
 import Foundation
 
 struct LobbyOverlayViewModel {
-    let localizationProvider: LocalizationProvider
+    let localizationProvider: LocalizationProviderProtocol
 
     var title: String {
         return localizationProvider.getLocalizedString(.waitingForHost)

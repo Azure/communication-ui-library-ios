@@ -8,7 +8,7 @@ import FluentUI
 
 struct CallingView: View {
     @ObservedObject var viewModel: CallingViewModel
-    let avatarManager: AvatarViewManager
+    let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
 
     let leaveCallConfirmationListSourceView = UIView()

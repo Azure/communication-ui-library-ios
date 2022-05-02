@@ -12,7 +12,7 @@ enum CameraDevice {
     case back
 }
 
-protocol CallingSDKWrapper {
+protocol CallingSDKWrapperProtocol {
     func getRemoteParticipant(_ identifier: String) -> RemoteParticipant?
     func startPreviewVideoStream() -> AnyPublisher<String, Error>
     func getLocalVideoStream(_ identifier: String) -> LocalVideoStream?
@@ -28,7 +28,7 @@ protocol CallingSDKWrapper {
     var callingEventsHandler: CallingSDKEventsHandling { get }
 }
 
-class ACSCallingSDKWrapper: NSObject, CallingSDKWrapper {
+class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
     private let logger: Logger
@@ -236,7 +236,7 @@ class ACSCallingSDKWrapper: NSObject, CallingSDKWrapper {
     }
 }
 
-extension ACSCallingSDKWrapper {
+extension CallingSDKWrapper {
     private func setupCallClientAndDeviceManager() -> Future<Void, Error> {
         Future { promise in
             self.callClient = self.makeCallClient()
@@ -346,7 +346,7 @@ extension ACSCallingSDKWrapper {
     }
 }
 
-extension ACSCallingSDKWrapper: DeviceManagerDelegate {
+extension CallingSDKWrapper: DeviceManagerDelegate {
     func deviceManager(_ deviceManager: DeviceManager, didUpdateCameras args: VideoDevicesUpdatedEventArgs) {
         for newDevice in args.addedVideoDevices {
             newVideoDeviceAddedHandler?(newDevice)
