@@ -16,6 +16,7 @@ struct CallingView: View {
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
 
+    @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
     @State private var pipPosition: CGPoint?
 
     var safeAreaIgnoreArea: Edge.Set {
@@ -33,6 +34,14 @@ struct CallingView: View {
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
+        .onRotate { newOrientation in
+            if newOrientation != orientation
+                && newOrientation != .unknown
+                && newOrientation != .faceDown
+                && newOrientation != .faceUp {
+                orientation = newOrientation
+            }
+        }
     }
 
     var portraitCallingView: some View {
@@ -71,13 +80,8 @@ struct CallingView: View {
                 .onChange(of: geometry.size) { _ in
                     self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
                 }
-                .onRotate { newOrientation in
-                    if newOrientation != orientation
-                        && newOrientation != .unknown
-                        && newOrientation != .faceDown
-                        && newOrientation != .faceUp {
-                        orientation = newOrientation
-                    }
+                .onChange(of: orientation) { _ in
+                    self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
                 }
                 .contentShape(Rectangle())
                 .animation(.linear(duration: 0.167))
