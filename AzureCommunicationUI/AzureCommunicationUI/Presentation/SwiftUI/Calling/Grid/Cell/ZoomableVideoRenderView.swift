@@ -26,11 +26,6 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     let videoRendererViewInfo: ParticipantRendererViewInfo!
     weak var rendererViewManager: RendererViewManager?
     private var rendererView: UIView!
-    private var scrollView = UIScrollView()
-    private var zoomToRect: CGRect = .zero
-
-    @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
-    @Environment(\.appPhase) var appPhase: AppStatus
 
     init(videoRendererViewInfo: ParticipantRendererViewInfo,
          rendererViewManager: RendererViewManager?) {
@@ -45,7 +40,8 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
-        // Setup scrollview and renderview
+        // Setup scrollview and render view
+        let scrollView = UIScrollView()
         scrollView.delegate = context.coordinator
         scrollView.maximumZoomScale = Constants.initialMaxZoomScale
         scrollView.minimumZoomScale = Constants.initialMinZoomScale
@@ -79,106 +75,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     }
 
     func updateUIView(_ scrollView: UIScrollView, context: Context) {
-        guard appPhase == .foreground else {
-            return
-        }
-        // Set zoom scale per each orientation to fix the zoom issue (blury screen upon orientation change)
-        let initialMinZoomScale = Constants.initialMinZoomScale
-        let iPhoneOrientationChanged = scrollView.zoomScale != initialMinZoomScale
-                                && (scrollView.contentSize == .zero)
-        let isiPadLandscape = UIDevice.current.orientation.isLandscape && isiPadScreen()
-        let isiPadPortrait = UIDevice.current.orientation.isPortrait && isiPadScreen()
 
-        let iPadOrientationChanged = (isiPadLandscape && scrollView.contentSize.height > scrollView.contentSize.width)
-                                  || (isiPadPortrait && scrollView.contentSize.height < scrollView.contentSize.width)
-
-        if iPhoneOrientationChanged || iPadOrientationChanged {
-            scrollView.setZoomScale(initialMinZoomScale, animated: true)
-        } else if appPhase == .foreground {
-            restoreRendererViewZoomStatus()
-        }
-    }
-
-    /// Zooms to a specific area in scroll view
-    mutating func zoomScrollView(basedOn point: CGPoint, scale: CGFloat) {
-        // Normalize current content size back to content scale of Constants.minScale
-        var contentSize = CGSize()
-
-        contentSize.width = (self.scrollView.frame.width / self.scrollView.zoomScale)
-        contentSize.height = (self.scrollView.frame.height / self.scrollView.zoomScale)
-
-        // translate the zoom point to relative to the content rect
-        var zoomPoint = CGPoint()
-        zoomPoint.x = (point.x / self.scrollView.bounds.size.width) * contentSize.width
-        zoomPoint.y = (point.y / self.scrollView.bounds.size.height) * contentSize.height
-
-        // derive the size of the region to zoom to
-        var zoomSize = CGSize()
-        zoomSize.width = self.scrollView.bounds.size.width / scale
-        zoomSize.height = self.scrollView.bounds.size.height / scale
-
-        // offset the zoom rect so the actual zoom point is in the middle of the rectangle
-        var zoomRect = CGRect()
-        zoomRect.origin.x = zoomPoint.x - zoomSize.width / 2.0
-        zoomRect.origin.y = zoomPoint.y - zoomSize.height / 2.0
-        zoomRect.size.width = zoomSize.width
-        zoomRect.size.height = zoomSize.height
-        zoomToRect = zoomRect
-
-        if scale == self.scrollView.maximumZoomScale {
-            scrollView.zoom(to: zoomRect, animated: true)
-        } else {
-            scrollView.setZoomScale(Constants.initialMinZoomScale,
-                                    animated: true)
-        }
-    }
-
-    func updateRendererViewSize() {
-        guard scrollView.frame != .zero else {
-            return
-        }
-        let scrollViewFrame = scrollView.frame
-        let initialMinZoomScale = Constants.initialMinZoomScale
-        let newFrame = CGRect(origin: scrollViewFrame.origin,
-                              size: CGSize(width: scrollViewFrame.width * (1 / initialMinZoomScale),
-                                           height: scrollViewFrame.height * (1 / initialMinZoomScale)))
-        self.rendererView.frame = newFrame
-        self.scrollView.setZoomScale(initialMinZoomScale, animated: false)
-        self.scrollView.contentSize = CGSize(width: scrollViewFrame.width, height: scrollViewFrame.height)
-    }
-
-    func restoreRendererViewZoomStatus() {
-        guard scrollView.frame != .zero else {
-            return
-        }
-        let initialMinZoomScale = Constants.initialMinZoomScale
-        let currentScale = scrollView.zoomScale
-        guard initialMinZoomScale != currentScale, zoomToRect != .zero else {
-            return
-        }
-        updateRendererViewSize()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0) {
-            // For some reason the zooming does not work without this explict async call for scrollview.
-            // Added it for now, and will continue to find improvement.
-            self.scrollView.zoom(to: zoomToRect, animated: false)
-        }
-    }
-
-    mutating func updateZoomRect(rect: CGRect) {
-        self.zoomToRect = rect
-    }
-
-    func resetRendererView() {
-        rendererView.frame = .zero
-        scrollView.contentSize = .zero
-    }
-
-    func currentScrollViewZoomScale() -> CGFloat {
-        return scrollView.zoomScale
-    }
-
-    private func isiPadScreen() -> Bool {
-        return screenSizeClass == .ipadScreenSize
     }
 
     // MARK: - Coordinator
@@ -196,21 +93,6 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
 
         func viewForZooming(in scrollView: UIScrollView) -> UIView? {
             return scrollView.subviews.first
-        }
-
-        func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-            let visible = scrollView.convert(scrollView.bounds, to: scrollView.subviews.first)
-            self.zoomableRenderView.updateZoomRect(rect: visible)
-        }
-
-        func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-            let visible = scrollView.convert(scrollView.bounds, to: scrollView.subviews.first)
-            self.zoomableRenderView.updateZoomRect(rect: visible)
-        }
-
-        func scrollViewDidEndZooming(_ scrollView: UIScrollView) {
-            let visible = scrollView.convert(scrollView.bounds, to: scrollView.subviews.first)
-            self.zoomableRenderView.updateZoomRect(rect: visible)
         }
 
         func scrollViewDidZoom(_ scrollView: UIScrollView) {
@@ -256,29 +138,55 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
             }
         }
 
-        func updateRendererViewSize() {
-            zoomableRenderView.updateRendererViewSize()
-        }
-
-        func restoreRendererViewZoomStatus() {
-            zoomableRenderView.restoreRendererViewZoomStatus()
-        }
-
         @objc func doubleTapped(gesture: UITapGestureRecognizer) {
+            guard let scrollView = gesture.view as? UIScrollView else {
+                return
+            }
             let point = gesture.location(in: gesture.view)
 
-            let currentScale = zoomableRenderView.currentScrollViewZoomScale()
+            let currentScale = scrollView.zoomScale
             let minScale = Constants.initialMinZoomScale
             let maxScale = Constants.initialMaxZoomScale
 
             let finalScale = (currentScale == minScale) ? maxScale : minScale
 
-            zoomableRenderView.zoomScrollView(basedOn: point, scale: finalScale)
+            zoom(scrollView, basedOn: point, scale: finalScale)
+        }
+
+        private func zoom(_ scrollView: UIScrollView, basedOn point: CGPoint, scale: CGFloat) {
+            // Normalize current content size back to content scale of Constants.minScale
+            var contentSize = CGSize()
+
+            contentSize.width = (scrollView.frame.width / scrollView.zoomScale)
+            contentSize.height = (scrollView.frame.height / scrollView.zoomScale)
+
+            // translate the zoom point to relative to the content rect
+            var zoomPoint = CGPoint()
+            zoomPoint.x = (point.x / scrollView.bounds.size.width) * contentSize.width
+            zoomPoint.y = (point.y / scrollView.bounds.size.height) * contentSize.height
+
+            // derive the size of the region to zoom to
+            var zoomSize = CGSize()
+            zoomSize.width = scrollView.bounds.size.width / scale
+            zoomSize.height = scrollView.bounds.size.height / scale
+
+            // offset the zoom rect so the actual zoom point is in the middle of the rectangle
+            var zoomRect = CGRect()
+            zoomRect.origin.x = zoomPoint.x - zoomSize.width / 2.0
+            zoomRect.origin.y = zoomPoint.y - zoomSize.height / 2.0
+            zoomRect.size.width = zoomSize.width
+            zoomRect.size.height = zoomSize.height
+
+            if scale == scrollView.maximumZoomScale {
+                scrollView.zoom(to: zoomRect, animated: true)
+            } else {
+                scrollView.setZoomScale(Constants.initialMinZoomScale,
+                                        animated: true)
+            }
         }
 
         func videoStreamRenderer(didRenderFirstFrameWithSize size: CGSize) {
             streamSize = size
-            updateRendererViewSize()
         }
     }
 }
