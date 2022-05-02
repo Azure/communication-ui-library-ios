@@ -18,43 +18,71 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
     func testCallCompositeWithExpiredToken() {
         tapInterfaceFor(.swiftUI)
-        tapButton(accessibilityIdentifier: .clearTokenTextFieldAccessibilityLabel, shouldWait: false)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.clearTokenTextFieldAccessibilityLabel.rawValue,
+            shouldWait: false)
 
         let acsTokenTextField = app.textFields["ACS Token"]
         acsTokenTextField.setText(text: getExpiredToken(), application: app)
 
-        tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
+        tapEnabledButton(
+            accessibilityIdentifier: AccessibilityIdentifier.startExperienceAccessibilityLabel.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityLabel.rawValue,
+            shouldWait: true)
     }
 
     func testCallCompositeJoinCallGroupCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
-        tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
+        tapEnabledButton(
+            accessibilityIdentifier: AccessibilityIdentifier.startExperienceAccessibilityLabel.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityLabel.rawValue,
+            shouldWait: true)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityLabel.rawValue, shouldWait: true)
     }
 
     func testCallCompositeJoinCallTeamsCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
         tapMeetingType(.teamsCall)
-        tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
+        tapEnabledButton(
+            accessibilityIdentifier: AccessibilityIdentifier.startExperienceAccessibilityLabel.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityLabel.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityLabel.rawValue,
+            shouldWait: true)
     }
 
     func testCallCompositeJoinCallGroupCallUIKit() {
         tapInterfaceFor(.uiKit)
-        tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
+        tapEnabledButton(
+            accessibilityIdentifier: AccessibilityIdentifier.startExperienceAccessibilityLabel.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityLabel.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityLabel.rawValue,
+            shouldWait: true)
     }
 
     func testCallCompositeJoinCallTeamsCallUIKit() {
         tapInterfaceFor(.uiKit)
         tapMeetingType(.teamsCall)
-        tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
+        tapEnabledButton(
+            accessibilityIdentifier: AccessibilityIdentifier.startExperienceAccessibilityLabel.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityLabel.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityLabel.rawValue,
+            shouldWait: true)
     }
 }
 
@@ -62,7 +90,7 @@ extension AzureCommunicationUIDemoAppLaunchTests {
     private func getExpiredToken() -> String {
         guard let infoDict = Bundle(for: AzureCommunicationUIDemoAppLaunchTests.self).infoDictionary,
               let value = infoDict["expiredAcsToken"] as? String, !value.isEmpty else {
-                  XCTFail("Need to set expiredAcsToken value in AppConfig")
+            XCTFail("Need to set expiredAcsToken value in AppConfig")
             return ""
         }
         return value

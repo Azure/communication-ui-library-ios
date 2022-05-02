@@ -111,7 +111,7 @@ struct SwiftUIDemoView: View {
         }
         .buttonStyle(DemoButtonStyle())
         .disabled(isStartExperienceDisabled)
-        .accessibility(identifier: LocalizationKey.startExperienceAccessibilityLabel.rawValue)
+        .accessibility(identifier: AccessibilityIdentifier.startExperienceAccessibilityLabel.rawValue)
     }
 
     var isStartExperienceDisabled: Bool {
