@@ -11,7 +11,6 @@ enum CompositeError: String, LocalizedError, Equatable {
     case invalidLocalVideoStream = "InvalidLocalVideoStream"
     case callCompositeNotLaunched = "CallCompositeNotLaunched"
     case remoteParticipantNotFound = "RemoteParticipantNotFound"
-    case invalidRemoteParticipantAvatarImage = "InvalidRemoteParticipantAvatarImage"
 
     var localizedDescription: String { return NSLocalizedString(self.rawValue, comment: "") }
 }

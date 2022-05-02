@@ -7,7 +7,6 @@ import Foundation
 import AzureCommunicationCommon
 import Combine
 
-typealias AvatarManagerPersonaData = (rendererName: String?, imageData: Data)
 
 protocol AvatarViewManager {
     func getLocalPersonaData() -> PersonaData?
@@ -17,7 +16,7 @@ protocol AvatarViewManager {
 
 class CompositeAvatarViewManager: AvatarViewManager {
     private let store: Store<AppState>
-    private(set) var avatarStorage = MappedSequence<String, AvatarManagerPersonaData>()
+    private(set) var avatarStorage = MappedSequence<String, PersonaData>()
     private(set) var localDataOptions: CommunicationUILocalDataOptions?
     var cancellables = Set<AnyCancellable>()
 
@@ -36,7 +35,7 @@ class CompositeAvatarViewManager: AvatarViewManager {
                 state.errorState.errorCategory == .callState
         else { return }
 
-        avatarStorage = MappedSequence<String, AvatarManagerPersonaData>()
+        avatarStorage = MappedSequence<String, PersonaData>()
     }
 
     func getLocalPersonaData() -> PersonaData? {
@@ -52,15 +51,8 @@ class CompositeAvatarViewManager: AvatarViewManager {
         guard let idStringValue = identifier.stringValue
         else { return .failure(CompositeError.remoteParticipantNotFound) }
 
-        guard let image = personaData.avatarImage
-        else { return .success(true) }
-
-        guard let imageData = image.pngData()
-        else { return .failure(CompositeError.invalidRemoteParticipantAvatarImage) }
-        
         avatarStorage.append(forKey: idStringValue,
-                             value: AvatarManagerPersonaData(rendererName: personaData.renderDisplayName,
-                                                             imageData: imageData))
+                             value: personaData)
         return .success(true)
     }
 }
