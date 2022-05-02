@@ -69,52 +69,13 @@ class CallingViewModel: ObservableObject {
         return compositeViewModelFactory.makeLobbyOverlayViewModel()
     }
 
-    // MARK: ConfirmLeaveOverlay
-    func getLeaveCallButtonViewModel() -> PrimaryButtonViewModel {
-        let leaveCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
-            buttonStyle: .primaryFilled,
-            buttonLabel: localizationProvider.getLocalizedString(.leaveCall),
-            iconName: nil,
-            isDisabled: false,
-            action: { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                self.logger.debug("Leave call button tapped")
-                self.endCall()
-            })
-        leaveCallButtonViewModel.update(accessibilityLabel: localizationProvider.getLocalizedString(.leaveCall))
-        return leaveCallButtonViewModel
-    }
-
-    func getCancelButtonViewModel() -> PrimaryButtonViewModel {
-        let cancelButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
-            buttonStyle: .primaryOutline,
-            buttonLabel: localizationProvider.getLocalizedString(.cancel),
-            iconName: nil,
-            isDisabled: false,
-            action: { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                self.logger.debug("Cancel button tapped")
-                self.dismissConfirmLeaveOverlay()
-            })
-        cancelButtonViewModel.update(accessibilityLabel: localizationProvider.getLocalizedString(.cancel))
-        return cancelButtonViewModel
-    }
-
-    func displayConfirmLeaveOverlay() {
-        self.isConfirmLeaveListDisplayed = true
-    }
-
-    func dismissConfirmLeaveOverlay() {
+    func dismissConfirmLeaveDrawerList() {
         self.isConfirmLeaveListDisplayed = false
     }
 
     func endCall() {
         store.dispatch(action: CallingAction.CallEndRequested())
-        dismissConfirmLeaveOverlay()
+        dismissConfirmLeaveDrawerList()
     }
 
     func receive(_ state: AppState) {
