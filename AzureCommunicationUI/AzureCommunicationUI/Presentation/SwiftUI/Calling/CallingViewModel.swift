@@ -13,6 +13,7 @@ class CallingViewModel: ObservableObject {
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
     let isRightToLeft: Bool
     @Published var appState: AppStatus = .foreground
+    private var isCallConnected: Bool = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -96,9 +97,9 @@ class CallingViewModel: ObservableObject {
         participantGridsViewModel.update(callingState: state.callingState,
                                          remoteParticipantsState: state.remoteParticipantsState)
         bannerViewModel.update(callingState: state.callingState)
-        let isCallConnected = state.callingState.status == .connected
+        let newIsCallConnected = state.callingState.status == .connected
         let hasRemoteParticipants = state.remoteParticipantsState.participantInfoList.count > 0
-        let shouldParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
+        let shouldParticipantGridDisplayed = newIsCallConnected && hasRemoteParticipants
         if shouldParticipantGridDisplayed != isParticipantGridDisplayed {
             isParticipantGridDisplayed = shouldParticipantGridDisplayed
         }
@@ -107,6 +108,14 @@ class CallingViewModel: ObservableObject {
         if shouldLobbyOverlayDisplayed != isLobbyOverlayDisplayed {
             isLobbyOverlayDisplayed = shouldLobbyOverlayDisplayed
             accessibilityProvider.moveFocusToFirstElement()
+        }
+
+        if isCallConnected != newIsCallConnected && newIsCallConnected {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                self.accessibilityProvider.postQueuedAnnouncement(
+                    self.localizationProvider.getLocalizedString(.joinedCallAccessibilityLabel))
+            }
+            isCallConnected = newIsCallConnected
         }
         updateIsLocalCameraOn(with: state)
     }

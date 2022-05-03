@@ -12,6 +12,8 @@ struct ParticipantVideoViewInfoModel {
 }
 
 class ParticipantGridCellViewModel: ObservableObject, Identifiable {
+    private let localizationProvider: LocalizationProviderProtocol
+    private let accessibilityProvider: AccessibilityProviderProtocol
     let id = UUID()
 
     @Published var videoViewModel: ParticipantVideoViewInfoModel?
@@ -20,9 +22,14 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var isSpeaking: Bool
     @Published var isMuted: Bool
     var participantIdentifier: String
+    private var isScreenSharing: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
+         localizationProvider: LocalizationProviderProtocol,
+         accessibilityProvider: AccessibilityProviderProtocol,
          participantModel: ParticipantInfoModel) {
+        self.localizationProvider = localizationProvider
+        self.accessibilityProvider = accessibilityProvider
         self.displayName = participantModel.displayName
         self.accessibilityLabel = participantModel.displayName
         self.isSpeaking = participantModel.isSpeaking
@@ -37,6 +44,15 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
 
         if self.videoViewModel?.videoStreamId != videoViewModel.videoStreamId ||
             self.videoViewModel?.videoStreamType != videoViewModel.videoStreamType {
+            let newIsScreenSharing = videoViewModel.videoStreamType == .screenSharing
+            if newIsScreenSharing {
+                accessibilityProvider.postQueuedAnnouncement(
+                    localizationProvider.getLocalizedString(.screenshareStartAccessibilityLabel))
+            } else if self.isScreenSharing && !newIsScreenSharing {
+                accessibilityProvider.postQueuedAnnouncement(
+                    localizationProvider.getLocalizedString(.screenshareEndAccessibilityLabel))
+            }
+            self.isScreenSharing = newIsScreenSharing
             self.videoViewModel = ParticipantVideoViewInfoModel(videoStreamType: videoViewModel.videoStreamType,
                                                  videoStreamId: videoViewModel.videoStreamId)
         }
