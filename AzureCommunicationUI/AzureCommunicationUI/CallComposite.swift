@@ -21,7 +21,7 @@ public class CallComposite {
     private var lifeCycleManager: UIKitAppLifeCycleManager?
     private var permissionManager: AppPermissionsManager?
     private var audioSessionManager: AppAudioSessionManager?
-    private var remoteParticipantsManager: RemoteParticipantsManager?
+    private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
     private var avatarViewManager: AvatarViewManagerProtocol?
 
     /// Create an instance of CallComposite with options.
