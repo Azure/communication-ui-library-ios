@@ -6,11 +6,11 @@
 import Foundation
 import AzureCommunicationCommon
 
-protocol AvatarViewManager {
+protocol AvatarViewManagerProtocol {
     func getLocalPersonaData() -> CommunicationUIPersonaData?
 }
 
-class CompositeAvatarViewManager: AvatarViewManager {
+public class CompositeAvatarViewManager: AvatarViewManagerProtocol {
     private let store: Store<AppState>
     private(set) var avatarCache = MappedSequence<String, Data>()
     private(set) var localDataOptions: CommunicationUILocalDataOptions?

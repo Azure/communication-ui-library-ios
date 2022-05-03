@@ -9,10 +9,10 @@ class ParticipantsListCellViewModel {
     let displayName: String
     let isMuted: Bool
     let isLocalParticipant: Bool
-    let localizationProvider: LocalizationProvider
+    let localizationProvider: LocalizationProviderProtocol
 
     init(localUserState: LocalUserState,
-         localizationProvider: LocalizationProvider) {
+         localizationProvider: LocalizationProviderProtocol) {
         self.localizationProvider = localizationProvider
         self.displayName = localUserState.displayName ?? ""
         self.isMuted = localUserState.audioState.operation != .on
@@ -20,7 +20,7 @@ class ParticipantsListCellViewModel {
     }
 
     init(participantInfoModel: ParticipantInfoModel,
-         localizationProvider: LocalizationProvider) {
+         localizationProvider: LocalizationProviderProtocol) {
         self.localizationProvider = localizationProvider
         self.displayName = participantInfoModel.displayName
         self.isMuted = participantInfoModel.isMuted

@@ -111,6 +111,6 @@ public struct LocalizationConfiguration {
     /// - Returns: Get supported languages the AzureCommunicationUICalling
     ///  has predefined translations.
     public static var supportedLanguages: [String] {
-        return Bundle(for: CallComposite.self).localizations
+        return Bundle(for: CallComposite.self).localizations.sorted()
     }
 }

@@ -8,13 +8,16 @@ import FluentUI
 
 struct CallingView: View {
     @ObservedObject var viewModel: CallingViewModel
-    let avatarManager: AvatarViewManager
+    let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
 
     let leaveCallConfirmationListSourceView = UIView()
 
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
+
+    @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
+    @State private var pipPosition: CGPoint?
 
     var safeAreaIgnoreArea: Edge.Set {
         return getSizeClass() != .iphoneLandscapeScreenSize ? []: [.bottom]
@@ -31,6 +34,14 @@ struct CallingView: View {
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
+        .onRotate { newOrientation in
+            if newOrientation != orientation
+                && newOrientation != .unknown
+                && newOrientation != .faceDown
+                && newOrientation != .faceUp {
+                orientation = newOrientation
+            }
+        }
     }
 
     var portraitCallingView: some View {
@@ -49,47 +60,77 @@ struct CallingView: View {
 
     var containerView: some View {
         Group {
-            ZStack(alignment: .bottomTrailing) {
-                videoGridView
-                    .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
-                topAlertAreaView
-                    .accessibilityElement(children: .contain)
-                    .accessibilitySortPriority(1)
-                    .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
-                if viewModel.isParticipantGridDisplayed {
-                    localVideoPipView
-                        .padding(.horizontal, -12)
-                        .padding(.vertical, -12)
+            GeometryReader { geometry in
+                ZStack(alignment: .bottomTrailing) {
+                    videoGridView
+                        .accessibilityHidden(viewModel.isVideoGridViewAccessibilityAvailable)
+                    if viewModel.isParticipantGridDisplayed {
+                        draggableVideoPipView
+                    }
+                    topAlertAreaView
+                        .accessibilityElement(children: .contain)
+                        .accessibilitySortPriority(1)
+                        .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
                 }
+                .onAppear {
+                    if self.pipPosition == nil {
+                        self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
+                    }
+                }
+                .onChange(of: geometry.size) { _ in
+                    self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
+                }
+                .onChange(of: orientation) { _ in
+                    self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
+                }
+                .contentShape(Rectangle())
+                .animation(.linear(duration: 0.167))
+                .onTapGesture(perform: {
+                    viewModel.infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
+                })
+                .modifier(PopupModalView(isPresented: viewModel.isLobbyOverlayDisplayed) {
+                    LobbyOverlayView(viewModel: viewModel.getLobbyOverlayViewModel())
+                        .accessibilityElement(children: .contain)
+                        .accessibilityHidden(!viewModel.isLobbyOverlayDisplayed)
+                })
             }
-            .contentShape(Rectangle())
-            .animation(.linear(duration: 0.167))
-            .onTapGesture(perform: {
-                viewModel.infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
-            })
-            .modifier(PopupModalView(isPresented: viewModel.isLobbyOverlayDisplayed) {
-                LobbyOverlayView(viewModel: viewModel.getLobbyOverlayViewModel())
-                    .accessibilityElement(children: .contain)
-                    .accessibilityHidden(!viewModel.isLobbyOverlayDisplayed)
-            })
         }
     }
 
     var localVideoPipView: some View {
         let shapeCornerRadius: CGFloat = 4
-        let isPortraitMode = getSizeClass() != .iphoneLandscapeScreenSize
-        let frameWidth: CGFloat = isPortraitMode ? 72 : 104
-        let frameHeight: CGFloat = isPortraitMode ? 104 : 72
+        let size = getPipSize()
 
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
                            personaData: avatarManager.getLocalPersonaData(),
                            viewManager: viewManager,
                            viewType: .localVideoPip)
-                .frame(width: frameWidth, height: frameHeight, alignment: .center)
+                .frame(width: size.width, height: size.height, alignment: .center)
                 .background(Color(StyleProvider.color.backgroundColor))
                 .clipShape(RoundedRectangle(cornerRadius: shapeCornerRadius))
                 .padding()
+        }
+    }
+
+    var draggableVideoPipView: some View {
+        return Group {
+            if self.pipPosition != nil {
+                GeometryReader { geometry in
+                    localVideoPipView
+                        .position(self.pipPosition!)
+                        .gesture(
+                            DragGesture()
+                                .onChanged { value in
+                                        let containerBounds = getContainerBounds(bounds: geometry.frame(in: .local))
+                                        self.pipPosition = getBoundedPipPosition(
+                                            currentPipPosition: self.pipPosition!,
+                                            requestedPipPosition: value.location,
+                                            bounds: containerBounds)
+                                }
+                        )
+                }
+            }
         }
     }
 
@@ -152,5 +193,64 @@ struct CallingView: View {
         default:
             return .ipadScreenSize
         }
+    }
+
+    private func getInitialPipPosition(containerBounds: CGRect) -> CGPoint {
+        return CGPoint(
+            x: getContainerBounds(bounds: containerBounds).maxX,
+            y: getContainerBounds(bounds: containerBounds).maxY)
+    }
+
+    private func getContainerBounds(bounds: CGRect) -> CGRect {
+        let pipSize = getPipSize()
+        let padding = 12.0
+        return bounds.inset(by: UIEdgeInsets(
+                top: pipSize.height / 2.0 + padding,
+                left: pipSize.width / 2.0 + padding,
+                bottom: pipSize.height / 2.0 + padding,
+                right: pipSize.width / 2.0 + padding))
+    }
+
+    private func getBoundedPipPosition(
+        currentPipPosition: CGPoint,
+        requestedPipPosition: CGPoint,
+        bounds: CGRect) -> CGPoint {
+        var boundedPipPosition = currentPipPosition
+
+        if bounds.contains(requestedPipPosition) {
+            boundedPipPosition = requestedPipPosition
+        } else if requestedPipPosition.x > bounds.minX && requestedPipPosition.x < bounds.maxX {
+            boundedPipPosition.x = requestedPipPosition.x
+            boundedPipPosition.y = getMinMaxLimitedValue(
+                value: requestedPipPosition.y,
+                min: bounds.minY,
+                max: bounds.maxY)
+        } else if requestedPipPosition.y > bounds.minY && requestedPipPosition.y < bounds.maxY {
+            boundedPipPosition.x = getMinMaxLimitedValue(
+                value: requestedPipPosition.x,
+                min: bounds.minX,
+                max: bounds.maxX)
+            boundedPipPosition.y = requestedPipPosition.y
+        }
+
+        return boundedPipPosition
+    }
+
+    private func getPipSize() -> CGSize {
+        let isPortraitMode = getSizeClass() != .iphoneLandscapeScreenSize
+        let width = isPortraitMode ? 72 : 104
+        let height = isPortraitMode ? 104 : 72
+
+        return CGSize(width: width, height: height)
+    }
+
+    private func getMinMaxLimitedValue(value: CGFloat, min: CGFloat, max: CGFloat) -> CGFloat {
+        var limitedValue = value
+        if value < min {
+            limitedValue = min
+        } else if value > max {
+            limitedValue = max
+        }
+        return limitedValue
     }
 }

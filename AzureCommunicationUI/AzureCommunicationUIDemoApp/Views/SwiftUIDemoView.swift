@@ -35,9 +35,7 @@ struct SwiftUIDemoView: View {
                 dismissButton: .default(Text("Dismiss")))
         }
         .sheet(isPresented: $isSettingsDisplayed) {
-            SettingsView(envConfigSubject: envConfigSubject) {
-                isSettingsDisplayed = false
-            }
+            SettingsView(envConfigSubject: envConfigSubject)
         }
     }
 
@@ -148,7 +146,9 @@ extension SwiftUIDemoView {
         }
 
         let callCompositeOptions = CallCompositeOptions(
-            theme: Theming(),
+            theme: envConfigSubject.useCustomColors
+            ? CustomColorTheming(envConfigSubject: envConfigSubject)
+            : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
         callComposite.setTarget(didFail: didFail, didRemoteParticipantsJoin: didRemoteParticipantsJoin)

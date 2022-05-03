@@ -8,11 +8,11 @@ import XCTest
 @testable import AzureCommunicationUI
 
 class BannerInfoTypeTests: XCTestCase {
-    private var localizationProvider: LocalizationProvider!
+    private var localizationProvider: LocalizationProviderProtocol!
 
     override func setUp() {
         super.setUp()
-        localizationProvider = AppLocalizationProvider(logger: LoggerMocking())
+        localizationProvider = LocalizationProvider(logger: LoggerMocking())
     }
 
     func test_bannerInfoType_when_recordingAndTranscriptionStarted_then_shouldEqualExpectedString() {

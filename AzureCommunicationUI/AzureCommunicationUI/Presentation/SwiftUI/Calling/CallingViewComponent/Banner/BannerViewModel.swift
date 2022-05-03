@@ -22,7 +22,7 @@ class BannerViewModel: ObservableObject {
 
     var dismissButtonViewModel: IconButtonViewModel!
 
-    init(compositeViewModelFactory: CompositeViewModelFactory) {
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol) {
         self.bannerTextViewModel = compositeViewModelFactory.makeBannerTextViewModel()
         self.dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .dismiss,

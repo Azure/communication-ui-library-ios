@@ -13,11 +13,11 @@ class PreviewAreaViewModel: ObservableObject {
     @Published var isPermissionsDenied: Bool = false
 
     let localVideoViewModel: LocalVideoViewModel!
-    private let localizationProvider: LocalizationProvider
+    private let localizationProvider: LocalizationProviderProtocol
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          dispatchAction: @escaping ActionDispatch,
-         localizationProvider: LocalizationProvider) {
+         localizationProvider: LocalizationProviderProtocol) {
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: dispatchAction)
         self.localizationProvider = localizationProvider
     }

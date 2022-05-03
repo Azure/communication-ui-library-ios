@@ -7,9 +7,9 @@ import Foundation
 import Combine
 
 class ParticipantGridViewModel: ObservableObject {
-    private let compositeViewModelFactory: CompositeViewModelFactory
-    private let localizationProvider: LocalizationProvider
-    private let accessibilityProvider: AccessibilityProvider
+    private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
+    private let localizationProvider: LocalizationProviderProtocol
+    private let accessibilityProvider: AccessibilityProviderProtocol
 
     private let maximumParticipantsDisplayed: Int = 6
 
@@ -19,9 +19,9 @@ class ParticipantGridViewModel: ObservableObject {
     @Published var gridsCount: Int = 0
     @Published var displayedParticipantInfoModelArr: [ParticipantInfoModel] = []
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
-         localizationProvider: LocalizationProvider,
-         accessibilityProvider: AccessibilityProvider) {
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
+         localizationProvider: LocalizationProviderProtocol,
+         accessibilityProvider: AccessibilityProviderProtocol) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider

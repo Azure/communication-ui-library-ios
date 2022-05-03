@@ -60,7 +60,7 @@ class LocalizationProviderTests: XCTestCase {
 }
 
 extension LocalizationProviderTests {
-    func makeSUT() -> LocalizationProvider {
-        return AppLocalizationProvider(logger: logger)
+    func makeSUT() -> LocalizationProviderProtocol {
+        return LocalizationProvider(logger: logger)
     }
 }

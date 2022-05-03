@@ -9,7 +9,7 @@ import Foundation
 class BannerViewModelMocking: BannerViewModel {
     private let updateState: ((CallingState) -> Void)?
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          updateState: ((CallingState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory)

@@ -73,6 +73,7 @@ extension LeaveCallConfirmationListViewController: UITableViewDataSource, UITabl
 
         cell.setup(viewModel: viewModel)
         cell.accessibilityValue = "\(indexPath.row + 1) of \(indexPath.count)"
+        cell.accessibilityIdentifier = viewModel.accessibilityIdentifier
         return cell
     }
 
