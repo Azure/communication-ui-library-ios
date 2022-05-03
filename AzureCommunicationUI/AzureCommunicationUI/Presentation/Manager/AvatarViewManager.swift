@@ -10,7 +10,7 @@ import Combine
 protocol AvatarViewManagerProtocol {
     func getLocalPersonaData() -> PersonaData?
     func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
-                                         personaData: PersonaData) -> Result<Bool, Error>
+                                         personaData: PersonaData) -> Result<Void, Error>
 }
 
 class AvatarViewManager: AvatarViewManagerProtocol {
@@ -46,12 +46,12 @@ class AvatarViewManager: AvatarViewManagerProtocol {
     }
 
     func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
-                                         personaData: PersonaData) -> Result<Bool, Error> {
+                                         personaData: PersonaData) -> Result<Void, Error> {
         guard let idStringValue = identifier.stringValue
         else { return .failure(CompositeError.remoteParticipantNotFound) }
 
         avatarStorage.append(forKey: idStringValue,
                              value: personaData)
-        return .success(true)
+        return .success(Void())
     }
 }

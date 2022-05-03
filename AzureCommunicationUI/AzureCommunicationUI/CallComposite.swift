@@ -94,8 +94,14 @@ public class CallComposite {
     }
 
     @discardableResult
+    /// Set persona data for the remote participant
+    /// - Parameters:
+    ///   - identifier: The communication identifier for the remote participant
+    ///   - personaData: PersonaData used to set the user participants information for the call.
+    ///   This is data is not sent up to ACS.
+    /// - Returns: The `Result` enum value with either a `Void' or an `Error`
     public func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
-                                                personaData: PersonaData) -> Result<Bool, Error> {
+                                                personaData: PersonaData) -> Result<Void, Error> {
         guard let avatarManager = avatarViewManager
         else { return .failure(CompositeError.callCompositeNotLaunched) }
 

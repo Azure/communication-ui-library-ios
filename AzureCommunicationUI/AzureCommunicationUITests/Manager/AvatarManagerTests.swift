@@ -41,11 +41,10 @@ class AvatarManagerTests: XCTestCase {
         let id = UUID().uuidString
         let result = sut.setRemoteParticipantPersonaData(for: CommunicationUserIdentifier(id),
                                                          personaData: personaData)
-        guard case let .success(resultValue) = result else {
+        guard case .success = result else {
             XCTFail("Failed with result validation")
             return
         }
-        XCTAssertTrue(resultValue)
         XCTAssertEqual(sut.avatarStorage.value(forKey: id)?.avatarImage!, mockImage)
     }
 }
