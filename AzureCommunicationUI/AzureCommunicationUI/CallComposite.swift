@@ -22,7 +22,7 @@ public class CallComposite {
     private var permissionManager: AppPermissionsManager?
     private var audioSessionManager: AppAudioSessionManager?
     private var remoteParticipantsManager: RemoteParticipantsManager?
-    private var avatarViewManager: AvatarViewManager?
+    private var avatarViewManager: AvatarViewManagerProtocol?
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
@@ -124,7 +124,7 @@ public class CallComposite {
             callCompositeEventsHandler: callCompositeEventsHandler,
             callingSDKWrapper: dependencyContainer.resolve())
         self.remoteParticipantsManager = remoteParticipantsManager
-        avatarViewManager = dependencyContainer.resolve() as AvatarViewManager
+        avatarViewManager = dependencyContainer.resolve() as AvatarViewManagerProtocol
     }
 
     private func cleanUpManagers() {

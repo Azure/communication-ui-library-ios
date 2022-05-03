@@ -5,6 +5,7 @@
 
 import XCTest
 import UIKit
+import AzureCommunicationCommon
 @testable import AzureCommunicationUI
 
 class AvatarManagerTests: XCTestCase {
@@ -28,11 +29,39 @@ class AvatarManagerTests: XCTestCase {
         XCTAssertEqual(mockImageData, setAvatarImageData)
     }
 
+    func test_avatarManager_setRemoteParticipantPersonaData_when_personeDataSet_then_personaDataUpdated() {
+        guard let mockImage = UIImage(named: "Icon/ic_fluent_call_end_24_filled",
+                                      in: Bundle(for: CallComposite.self),
+                                      compatibleWith: nil) else {
+            XCTFail("UIImage does not exist")
+            return
+        }
+        let sut = makeSUT()
+        let personaData = PersonaData(mockImage)
+        let id = UUID().uuidString
+        let result = sut.setRemoteParticipantPersonaData(for: CommunicationUserIdentifier(id),
+                                                         personaData: personaData)
+        guard case let .success(resultValue) = result else {
+            XCTFail("Failed with result validation")
+            return
+        }
+        XCTAssertTrue(resultValue)
+        XCTAssertEqual(sut.avatarStorage.value(forKey: id)?.avatarImage!, mockImage)
+    }
+}
+
+extension AvatarManagerTests {
     private func makeSUT(_ image: UIImage) -> AvatarViewManager {
-        let mockPersonaData = CommunicationUIPersonaData(image, renderDisplayName: "")
+        let mockPersonaData = PersonaData(image, renderDisplayName: "")
         let mockDataOptions = CommunicationUILocalDataOptions(mockPersonaData)
-        return CompositeAvatarViewManager(store: mockStoreFactory.store,
-                                          localDataOptions: mockDataOptions)
+        return AvatarViewManager(store: mockStoreFactory.store,
+                                 localDataOptions: mockDataOptions)
+
+    }
+
+    private func makeSUT() -> AvatarViewManager {
+        return AvatarViewManager(store: mockStoreFactory.store,
+                                 localDataOptions: nil)
 
     }
 }

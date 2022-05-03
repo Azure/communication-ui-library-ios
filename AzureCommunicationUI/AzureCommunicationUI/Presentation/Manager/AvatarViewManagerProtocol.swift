@@ -7,14 +7,13 @@ import Foundation
 import AzureCommunicationCommon
 import Combine
 
-
-protocol AvatarViewManager {
+protocol AvatarViewManagerProtocol {
     func getLocalPersonaData() -> PersonaData?
     func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
                                          personaData: PersonaData) -> Result<Bool, Error>
 }
 
-class CompositeAvatarViewManager: AvatarViewManager {
+class AvatarViewManager: AvatarViewManagerProtocol {
     private let store: Store<AppState>
     private(set) var avatarStorage = MappedSequence<String, PersonaData>()
     private(set) var localDataOptions: CommunicationUILocalDataOptions?
