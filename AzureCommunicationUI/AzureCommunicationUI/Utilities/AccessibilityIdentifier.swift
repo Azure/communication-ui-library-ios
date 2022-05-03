@@ -15,5 +15,5 @@ enum AccessibilityIdentifier: String {
     case audioDeviceAccessibilityID =
             "AzureCommunicationUICalling.CallingView.ControlButton.AudioDevice.AccessibilityID"
     case hangupAccessibilityID = "AzureCommunicationUICalling.CallingView.ControlButton.HangUp.AccessibilityID"
-    case cancelAccessibilityID = "AzureCommunicationUICalling.CallingView.Overlay.Cancel.AccssibilityID"
+    case cancelAccessibilityID = "AzureCommunicationUICalling.CallingView.Overlay.Cancel.AccessibilityID"
 }
