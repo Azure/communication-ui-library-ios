@@ -27,7 +27,7 @@ class LobbyOverlayViewModelTests: XCTestCase {
 
     func test_lobbyOverlayViewModel_displays_subtitle_from_LocalizationMocking() {
         let sut = makeSUTLocalizationMocking()
-        XCTAssertEqual(sut.subtitle, "AzureCommunicationUI.LobbyView.Text.WaitingDetails")
+        XCTAssertEqual(sut.subtitle, "AzureCommunicationUICalling.LobbyView.Text.WaitingDetails")
         XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
     }
 }
@@ -35,7 +35,7 @@ class LobbyOverlayViewModelTests: XCTestCase {
 extension LobbyOverlayViewModelTests {
     func makeSUT() -> LobbyOverlayViewModel {
         return LobbyOverlayViewModel(localizationProvider:
-                                        AppLocalizationProvider(logger: LoggerMocking()))
+                                        LocalizationProvider(logger: LoggerMocking()))
     }
 
     func makeSUTLocalizationMocking() -> LobbyOverlayViewModel {

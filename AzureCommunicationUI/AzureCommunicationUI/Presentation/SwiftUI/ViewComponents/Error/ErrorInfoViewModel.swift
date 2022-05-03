@@ -13,10 +13,10 @@ class ErrorInfoViewModel: ObservableObject {
     @Published private(set) var dismissButtonAccessibilityLabel: String = ""
     @Published private(set) var dismissButtonAccessibilityHint: String = ""
 
-    private let localizationProvider: LocalizationProvider
+    private let localizationProvider: LocalizationProviderProtocol
     private var previousErrorType: String = ""
 
-    init(localizationProvider: LocalizationProvider) {
+    init(localizationProvider: LocalizationProviderProtocol) {
         self.localizationProvider = localizationProvider
 
         dismissButtonAccessibilityLabel = localizationProvider.getLocalizedString(.snackBarDismissAccessibilityLabel)
@@ -45,6 +45,8 @@ class ErrorInfoViewModel: ObservableObject {
             message = localizationProvider.getLocalizedString(.snackBarErrorJoinCall)
         case CallCompositeErrorCode.callEnd:
             message = localizationProvider.getLocalizedString(.snackBarErrorCallEnd)
+        case CallCompositeErrorCode.callEvicted:
+            message = localizationProvider.getLocalizedString(.snackBarErrorCallEvicted)
         default:
             message = localizationProvider.getLocalizedString(.snackBarError)
         }

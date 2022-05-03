@@ -36,9 +36,9 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
 
     private var localRendererViews = MappedSequence<String, VideoStreamCache>()
 
-    private let callingSDKWrapper: CallingSDKWrapper
+    private let callingSDKWrapper: CallingSDKWrapperProtocol
 
-    init(callingSDKWrapper: CallingSDKWrapper,
+    init(callingSDKWrapper: CallingSDKWrapperProtocol,
          logger: Logger) {
         self.callingSDKWrapper = callingSDKWrapper
         self.logger = logger

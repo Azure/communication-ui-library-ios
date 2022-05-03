@@ -250,7 +250,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState())
-        let expectedInfoHeaderlabel0ParticipantKey = "AzureCommunicationUI.CallingView.InfoHeader.WaitingForOthersToJoin"
+        let expectedInfoHeaderlabel0ParticipantKey = "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"
         XCTAssertEqual(sut.infoLabel, expectedInfoHeaderlabel0ParticipantKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
         wait(for: [expectation], timeout: 1)
@@ -259,8 +259,8 @@ class InfoHeaderViewModelTests: XCTestCase {
     func test_infoHeaderViewModel_display_infoHeaderLabel2Participant_from_LocalizationMocking() {
         let sut = makeSUTLocalizationMocking()
         let expectation = XCTestExpectation(description: "Should publish infoLabel")
-        let expectedInfoHeaderlabel0ParticipantKey = "AzureCommunicationUI.CallingView.InfoHeader.WaitingForOthersToJoin"
-        let expectedInfoHeaderlabelNParticipantKey = "AzureCommunicationUI.CallingView.InfoHeader.CallWithNPeople"
+        let expectedInfoHeaderlabel0ParticipantKey = "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"
+        let expectedInfoHeaderlabelNParticipantKey = "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"
 
         sut.$infoLabel
             .dropFirst()
@@ -308,11 +308,11 @@ class InfoHeaderViewModelTests: XCTestCase {
 }
 
 extension InfoHeaderViewModelTests {
-    func makeSUT(accessibilityProvider: AccessibilityProvider = AppAccessibilityProvider()) -> InfoHeaderViewModel {
+    func makeSUT(accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()) -> InfoHeaderViewModel {
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: LoggerMocking(),
                                    localUserState: LocalUserState(),
-                                   localizationProvider: AppLocalizationProvider(logger: logger),
+                                   localizationProvider: LocalizationProvider(logger: logger),
                                    accessibilityProvider: accessibilityProvider)
     }
 
@@ -321,6 +321,6 @@ extension InfoHeaderViewModelTests {
                                    logger: logger,
                                    localUserState: LocalUserState(),
                                    localizationProvider: localizationProvider,
-                                   accessibilityProvider: AppAccessibilityProvider())
+                                   accessibilityProvider: AccessibilityProvider())
     }
 }

@@ -8,7 +8,7 @@ import Combine
 import AzureCommunicationCalling
 @testable import AzureCommunicationUI
 
-class CallingSDKWrapperMocking: CallingSDKWrapper {
+class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     var error: NSError?
     var callingEventsHandler: CallingSDKEventsHandling = CallingSDKEventsHandler(logger: LoggerMocking())
 

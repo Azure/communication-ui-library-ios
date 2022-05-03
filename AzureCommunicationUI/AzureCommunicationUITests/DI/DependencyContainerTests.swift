@@ -31,12 +31,12 @@ class DependencyContainerTests: XCTestCase {
         dependencyContainer.registerDependencies(callConfiguration,
                                                  localDataOptions: localDataOptions)
 
-        XCTAssertNotNil(dependencyContainer.resolve() as CallingSDKWrapper)
+        XCTAssertNotNil(dependencyContainer.resolve() as CallingSDKWrapperProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as VideoViewManager)
-        XCTAssertNotNil(dependencyContainer.resolve() as CallingService)
+        XCTAssertNotNil(dependencyContainer.resolve() as CallingServiceProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as Store<AppState>)
         XCTAssertNotNil(dependencyContainer.resolve() as NavigationRouter)
-        XCTAssertNotNil(dependencyContainer.resolve() as CompositeViewModelFactory)
-        XCTAssertNotNil(dependencyContainer.resolve() as CompositeViewFactory)
+        XCTAssertNotNil(dependencyContainer.resolve() as CompositeViewModelFactoryProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as CompositeViewFactoryProtocol)
     }
 }

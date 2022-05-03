@@ -8,6 +8,7 @@ import AzureCommunicationUI
 import SwiftUI
 
 enum EnvConfig: String {
+    case appCenterSecret
     case acsToken
     case acsTokenUrl
     case displayName
@@ -24,6 +25,7 @@ enum EnvConfig: String {
 }
 
 class EnvConfigSubject: ObservableObject {
+    @Published var appCenterSecret: String = EnvConfig.appCenterSecret.value()
     @Published var acsToken: String = EnvConfig.acsToken.value()
     @Published var acsTokenUrl: String = EnvConfig.acsTokenUrl.value()
     @Published var displayName: String = EnvConfig.displayName.value()
@@ -37,6 +39,12 @@ class EnvConfigSubject: ObservableObject {
     @Published var languageCode: String = LocalizationConfiguration.LanguageCode.en.rawValue
     @Published var localeIdentifier: String = ""
     @Published var isRightToLeft: Bool = false
+    @Published var useCustomColors: Bool = false
+    @Published var primaryColor: Color = .blue
+    @Published var tint10: Color = .blue
+    @Published var tint20: Color = .blue
+    @Published var tint30: Color = .blue
+    @Published var colorSchemeOverride: UIUserInterfaceStyle = .unspecified
 
     func update(from dic: [String: String]) {
         if let token = dic["acstoken"],

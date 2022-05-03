@@ -9,7 +9,7 @@ import Combine
 class SetupViewModel: ObservableObject {
     private let logger: Logger
     private let store: Store<AppState>
-    private let localizationProvider: LocalizationProvider
+    private let localizationProvider: LocalizationProviderProtocol
 
     private var callingStatus: CallingStatus = .none
 
@@ -26,10 +26,10 @@ class SetupViewModel: ObservableObject {
 
     @Published var isJoinRequested: Bool = false
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState>,
-         localizationProvider: LocalizationProvider) {
+         localizationProvider: LocalizationProviderProtocol) {
         self.store = store
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
