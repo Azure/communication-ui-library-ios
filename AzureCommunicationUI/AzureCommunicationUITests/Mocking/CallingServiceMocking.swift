@@ -7,7 +7,7 @@ import Foundation
 import Combine
 @testable import AzureCommunicationUI
 
-class CallingServiceMocking: CallingService {
+class CallingServiceMocking: CallingServiceProtocol {
     var error: Error?
     var videoStreamId: String?
     var cameraDevice: CameraDevice = .front

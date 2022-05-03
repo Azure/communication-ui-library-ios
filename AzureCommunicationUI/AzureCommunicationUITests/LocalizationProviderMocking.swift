@@ -6,7 +6,7 @@
 import Foundation
 @testable import AzureCommunicationUI
 
-class LocalizationProviderMocking: LocalizationProvider {
+class LocalizationProviderMocking: LocalizationProviderProtocol {
     var isApplyCalled: Bool = false
     var isGetLocalizedStringCalled: Bool = false
     var isGetLocalizedStringWithArgsCalled: Bool = false

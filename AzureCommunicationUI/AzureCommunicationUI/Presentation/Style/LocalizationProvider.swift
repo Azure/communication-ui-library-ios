@@ -6,14 +6,14 @@
 import Foundation
 import SwiftUI
 
-protocol LocalizationProvider {
+protocol LocalizationProviderProtocol {
     var isRightToLeft: Bool { get }
     func apply(localeConfig: LocalizationConfiguration)
     func getLocalizedString(_ key: LocalizationKey) -> String
     func getLocalizedString(_ key: LocalizationKey, _ args: CVarArg...) -> String
 }
 
-class AppLocalizationProvider: LocalizationProvider {
+class LocalizationProvider: LocalizationProviderProtocol {
     private let logger: Logger
     private var languageIdentifier: String = "en"
     private var languageCode: String = "en"

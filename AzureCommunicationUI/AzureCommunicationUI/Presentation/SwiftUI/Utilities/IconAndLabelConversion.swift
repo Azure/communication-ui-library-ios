@@ -21,7 +21,7 @@ extension LocalUserState.AudioDeviceSelectionStatus {
        }
     }
 
-    func getLabel(localizationProvider: LocalizationProvider) -> String {
+    func getLabel(localizationProvider: LocalizationProviderProtocol) -> String {
        switch self {
        case .bluetoothSelected:
            return localizationProvider.getLocalizedString(AudioDeviceType.bluetooth.name)

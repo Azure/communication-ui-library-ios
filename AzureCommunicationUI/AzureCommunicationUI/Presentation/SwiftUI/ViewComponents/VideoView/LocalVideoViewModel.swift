@@ -8,7 +8,7 @@ import Combine
 
 class LocalVideoViewModel: ObservableObject {
     private let logger: Logger
-    private let localizationProvider: LocalizationProvider
+    private let localizationProvider: LocalizationProviderProtocol
     private let dispatch: ActionDispatch
 
     @Published var localVideoStreamId: String?
@@ -18,9 +18,9 @@ class LocalVideoViewModel: ObservableObject {
     var cameraSwitchButtonPipViewModel: IconButtonViewModel!
     var cameraSwitchButtonFullViewModel: IconButtonViewModel!
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
-         localizationProvider: LocalizationProvider,
+         localizationProvider: LocalizationProviderProtocol,
          dispatchAction: @escaping ActionDispatch) {
         self.logger = logger
         self.localizationProvider = localizationProvider

@@ -6,7 +6,7 @@
 import Foundation
 import FluentUI
 
-protocol CompositeViewModelFactory {
+protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
     func getSetupViewModel() -> SetupViewModel
     func getCallingViewModel() -> CallingViewModel
@@ -56,19 +56,19 @@ protocol CompositeViewModelFactory {
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel
 }
 
-class ACSCompositeViewModelFactory: CompositeViewModelFactory {
+class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let store: Store<AppState>
-    private let accessibilityProvider: AccessibilityProvider
-    private let localizationProvider: LocalizationProvider
+    private let accessibilityProvider: AccessibilityProviderProtocol
+    private let localizationProvider: LocalizationProviderProtocol
 
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
 
     init(logger: Logger,
          store: Store<AppState>,
-         localizationProvider: LocalizationProvider,
-         accessibilityProvider: AccessibilityProvider) {
+         localizationProvider: LocalizationProviderProtocol,
+         accessibilityProvider: AccessibilityProviderProtocol) {
         self.logger = logger
         self.store = store
         self.accessibilityProvider = accessibilityProvider

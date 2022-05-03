@@ -34,28 +34,28 @@ final class DependencyContainer {
                               localDataOptions: CommunicationUILocalDataOptions?,
                               eventsHandler: CallCompositeEventsHandling) {
         register(CallingSDKEventsHandler(logger: resolve()) as CallingSDKEventsHandling)
-        register(ACSCallingSDKWrapper(logger: resolve(),
-                                      callingEventsHandler: resolve(),
-                                      callConfiguration: callConfiguration) as CallingSDKWrapper)
+        register(CallingSDKWrapper(logger: resolve(),
+                                   callingEventsHandler: resolve(),
+                                   callConfiguration: callConfiguration) as CallingSDKWrapperProtocol)
         register(VideoViewManager(callingSDKWrapper: resolve(), logger: resolve()) as VideoViewManager)
-        register(ACSCallingService(logger: resolve(),
-                                   callingSDKWrapper: resolve()) as CallingService)
+        register(CallingService(logger: resolve(),
+                                callingSDKWrapper: resolve()) as CallingServiceProtocol)
         let displayName = localDataOptions?.localPersona.renderDisplayName ?? callConfiguration.displayName
         register(makeStore(displayName: displayName) as Store<AppState>)
         register(NavigationRouter(store: resolve(),
                                   logger: resolve()) as NavigationRouter)
-        register(AppAccessibilityProvider() as AccessibilityProvider)
-        register(AppLocalizationProvider(logger: resolve()) as LocalizationProvider)
+        register(AccessibilityProvider() as AccessibilityProviderProtocol)
+        register(LocalizationProvider(logger: resolve()) as LocalizationProviderProtocol)
         register(AvatarViewManager(store: resolve(),
                                    localDataOptions: localDataOptions) as AvatarViewManagerProtocol)
-        register(ACSCompositeViewModelFactory(logger: resolve(),
-                                              store: resolve(),
-                                              localizationProvider: resolve(),
-                                              accessibilityProvider: resolve()) as CompositeViewModelFactory)
-        register(ACSCompositeViewFactory(logger: resolve(),
-                                         avatarManager: resolve(),
-                                         videoViewManager: resolve(),
-                                         compositeViewModelFactory: resolve()) as CompositeViewFactory)
+        register(CompositeViewModelFactory(logger: resolve(),
+                                           store: resolve(),
+                                           localizationProvider: resolve(),
+                                           accessibilityProvider: resolve()) as CompositeViewModelFactoryProtocol)
+        register(CompositeViewFactory(logger: resolve(),
+                                      avatarManager: resolve(),
+                                      videoViewManager: resolve(),
+                                      compositeViewModelFactory: resolve()) as CompositeViewFactoryProtocol)
     }
 
     private func makeStore(displayName: String?) -> Store<AppState> {

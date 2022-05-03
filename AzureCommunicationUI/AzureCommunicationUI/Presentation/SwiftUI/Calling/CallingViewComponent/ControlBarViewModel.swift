@@ -8,7 +8,7 @@ import Combine
 
 class ControlBarViewModel: ObservableObject {
     private let logger: Logger
-    private let localizationProvider: LocalizationProvider
+    private let localizationProvider: LocalizationProviderProtocol
     private let dispatch: ActionDispatch
 
     @Published var cameraPermission: AppPermission.Status = .unknown
@@ -28,9 +28,9 @@ class ControlBarViewModel: ObservableObject {
                                                device: .receiverSelected)
     var displayEndCallConfirm: (() -> Void)
 
-    init(compositeViewModelFactory: CompositeViewModelFactory,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
-         localizationProvider: LocalizationProvider,
+         localizationProvider: LocalizationProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState) {
@@ -116,7 +116,7 @@ class ControlBarViewModel: ObservableObject {
         self.isAudioDeviceSelectionDisplayed = true
     }
 
-    func dismissConfirmLeaveOverlay() {
+    func dismissConfirmLeaveDrawerList() {
         self.isConfirmLeaveListDisplayed = false
     }
 
@@ -131,6 +131,7 @@ class ControlBarViewModel: ObservableObject {
     func getLeaveCallButtonViewModel() -> LeaveCallConfirmationViewModel {
         return LeaveCallConfirmationViewModel(icon: .endCallRegular,
                                               title: localizationProvider.getLocalizedString(.leaveCall),
+                                              accessibilityIdentifier: LocalizationKey.leaveCall.rawValue,
                                               action: { [weak self] in
             guard let self = self else {
                 return
@@ -143,12 +144,13 @@ class ControlBarViewModel: ObservableObject {
     func getCancelButtonViewModel() -> LeaveCallConfirmationViewModel {
         return LeaveCallConfirmationViewModel(icon: .dismiss,
                                               title: localizationProvider.getLocalizedString(.cancel),
+                                              accessibilityIdentifier: LocalizationKey.cancelAccssibilityLabel.rawValue,
                                               action: { [weak self] in
             guard let self = self else {
                 return
             }
             self.logger.debug("Cancel button tapped")
-            self.dismissConfirmLeaveOverlay()
+            self.dismissConfirmLeaveDrawerList()
         })
     }
 

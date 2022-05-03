@@ -46,7 +46,7 @@ class ControlBarViewModelTests: XCTestCase {
     func test_controlBarViewModel_CancellButtonLabel_from_LocalizationMocking() {
         let sut = makeSUTLocalizationMocking()
         let cancelButtonViewModel = sut.getCancelButtonViewModel()
-        let expectedButtonLabelKey = "AzureCommunicationUI.CallingView.Overlay.Cancel"
+        let expectedButtonLabelKey = "AzureCommunicationUICalling.CallingView.Overlay.Cancel"
 
         XCTAssertEqual(cancelButtonViewModel.title, expectedButtonLabelKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
@@ -55,7 +55,7 @@ class ControlBarViewModelTests: XCTestCase {
     func test_controlBarViewModel_leaveCallButtonLabel_from_LocalizationMocking() {
         let sut = makeSUTLocalizationMocking()
         let leaveCallButtonViewModel = sut.getLeaveCallButtonViewModel()
-        let expectedButtonLabelKey = "AzureCommunicationUI.CallingView.Overlay.LeaveCall"
+        let expectedButtonLabelKey = "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"
 
         XCTAssertEqual(leaveCallButtonViewModel.title, expectedButtonLabelKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
@@ -64,7 +64,7 @@ class ControlBarViewModelTests: XCTestCase {
     func test_controlBarViewModel_dismissConfirmLeaveOverlay_when_isConfirmLeaveListDisplayedTrue_shouldBecomeFalse() {
         let sut = makeSUT()
         sut.isConfirmLeaveListDisplayed = true
-        sut.dismissConfirmLeaveOverlay()
+        sut.dismissConfirmLeaveDrawerList()
 
         XCTAssertFalse(sut.isConfirmLeaveListDisplayed)
     }
@@ -579,7 +579,7 @@ extension ControlBarViewModelTests {
     func makeSUT() -> ControlBarViewModel {
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
-                                   localizationProvider: AppLocalizationProvider(logger: logger),
+                                   localizationProvider: LocalizationProvider(logger: logger),
                                    dispatchAction: storeFactory.store.dispatch,
                                    endCallConfirm: {},
                                    localUserState: storeFactory.store.state.localUserState)

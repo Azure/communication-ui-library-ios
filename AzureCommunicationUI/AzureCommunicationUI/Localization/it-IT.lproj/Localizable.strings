@@ -4,81 +4,85 @@
 //
 
 /* Devices */
-"AzureCommunicationUI.AudioDevice.DeviceDrawer.iOS"="iOS";
-"AzureCommunicationUI.AudioDevice.DeviceDrawer.Speaker"="Altoparlante";
-"AzureCommunicationUI.AudioDevice.DeviceDrawer.iPhone"="iPhone";
-"AzureCommunicationUI.AudioDevice.DeviceDrawer.iPad"="iPad";
-"AzureCommunicationUI.AudioDevice.DeviceDrawer.Headphones"="Cuffie";
-"AzureCommunicationUI.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iOS"="iOS";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Speaker"="Altoparlante";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPhone"="iPhone";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Cuffie";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
 
 /* SetupView */
-"AzureCommunicationUI.SetupView.Title"="Configura";
-"AzureCommunicationUI.SetupView.Button.Dismiss.AccessibilityLabel"="Indietro";
-"AzureCommunicationUI.SetupView.Button.JoinCall"="Partecipa alla chiamata";
-"AzureCommunicationUI.SetupView.Button.JoiningCall"="Partecipazione alla chiamata…";
-"AzureCommunicationUI.SetupView.Button.VideoOff"="Video disattivato";
-"AzureCommunicationUI.SetupView.Button.VideoOff.AccessibilityLabel"="Attiva la fotocamera";
-"AzureCommunicationUI.SetupView.Button.VideoOn"="Video attivato";
-"AzureCommunicationUI.SetupView.Button.VideoOn.AccessibilityLabel"="Disattiva la fotocamera";
-"AzureCommunicationUI.SetupView.Button.MicOff"="Microfono disattivato";
-"AzureCommunicationUI.SetupView.Button.MicOff.AccessibilityLabel"="Riattiva audio";
-"AzureCommunicationUI.SetupView.Button.MicOn"="Microfono attivato";
-"AzureCommunicationUI.SetupView.Button.MicOn.AccessibilityLabel"="Disattiva audio";
-"AzureCommunicationUI.SetupView.Button.Device"="Dispositivo";
-"AzureCommunicationUI.SetupView.Button.Device.AccessibilityLabel"="Dispositivo audio";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioGrantedCameraDisabled"="La videocamera è disabilitata. Per abilitarla, passa alle Impostazioni per consentire l'accesso.";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabledCameraDenied"="La videocamera e l'audio sono disabilitati. Per abilitarli, passa alle Impostazioni per consentire l'accesso. Per avviare la chiamata, è necessario abilitare l'audio.";
-"AzureCommunicationUI.SetupView.PreviewArea.AudioDisabled"="L'audio è disabilitato. Per abilitarlo, passa alle Impostazioni per consentire l'accesso. Per avviare la chiamata, è necessario abilitare l'audio.";
+"AzureCommunicationUICalling.SetupView.Title"="Configura";
+"AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Indietro";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall"="Partecipa alla chiamata";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Partecipazione alla chiamata…";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video disattivato";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Attiva la fotocamera";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video attivato";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Disattiva la fotocamera";
+"AzureCommunicationUICalling.SetupView.Button.MicOff"="Microfono disattivato";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Riattiva audio";
+"AzureCommunicationUICalling.SetupView.Button.MicOn"="Microfono attivato";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Disattiva audio";
+"AzureCommunicationUICalling.SetupView.Button.Device"="Dispositivo";
+"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Dispositivo audio";
+"AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="La videocamera è disabilitata. Per abilitarla, passa alle Impostazioni per consentire l'accesso.";
+"AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="La videocamera e l'audio sono disabilitati. Per abilitarli, passa alle Impostazioni per consentire l'accesso. Per avviare la chiamata, è necessario abilitare l'audio.";
+"AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="L'audio è disabilitato. Per abilitarlo, passa alle Impostazioni per consentire l'accesso. Per avviare la chiamata, è necessario abilitare l'audio.";
 
 /* LobbyView */
-"AzureCommunicationUI.LobbyView.Text.WaitingForHost"="In attesa dell'organizzatore"; // host (people not server) of a meeting
-"AzureCommunicationUI.LobbyView.Text.WaitingDetails"="A breve qualcuno nella riunione ti farà partecipare";
+"AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="In attesa dell'organizzatore"; // host (people not server) of a meeting
+"AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"="A breve qualcuno nella riunione ti farà partecipare";
 
 /* CallingView */
-"AzureCommunicationUI.CallingView.InfoHeader.WaitingForOthersToJoin"="In attesa di altri partecipanti";
-"AzureCommunicationUI.CallingView.InfoHeader.CallWith1Person"="Chiamata con 1 persona";
-"AzureCommunicationUI.CallingView.InfoHeader.CallWithNPeople"="Chiamata con %d persone"; // %d is for number of people in call
+"AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="In attesa di altri partecipanti";
+"AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="Chiamata con 1 persona";
+"AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Chiamata con %d persone"; // %d is for number of people in call
 
-"AzureCommunicationUI.CallingView.ParticipantDrawer.Unnamed"="Partecipante senza nome";
-"AzureCommunicationUI.CallingView.ParticipantDrawer.LocalParticipant"="%@ (tu)"; // %@ is local participant name
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Partecipante senza nome";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (me)"; // %@ is local participant name
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Audio disattivato";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Microfono riattivato";
 
-"AzureCommunicationUI.CallingView.SwitchCamera.Front"="Passa alla videocamera posteriore";
-"AzureCommunicationUI.CallingView.SwitchCamera.Back"="Passa alla videocamera anteriore";
+"AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Passa alla videocamera posteriore";
+"AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Passa alla videocamera anteriore";
 
-"AzureCommunicationUI.CallingView.OnePersonJoined"="%@ si è unito/a alla riunione";
-"AzureCommunicationUI.CallingView.MutiplePeopleJoined"="%d utenti ora partecipano alla riunione";
-"AzureCommunicationUI.CallingView.OnePersonLeft"="%@ ha abbandonato la riunione";
-"AzureCommunicationUI.CallingView.MutiplePeopleLeft"="%d partecipanti hanno abbandonato la riunione";
+"AzureCommunicationUICalling.CallingView.OnePersonJoined"="%@ si è unito/a alla riunione";
+"AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d utenti ora partecipano alla riunione";
+"AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ ha abbandonato la riunione";
+"AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d partecipanti hanno abbandonato la riunione";
 
-"AzureCommunicationUI.CallingView.Overlay.LeaveCall"="Abbandona chiamata";
-"AzureCommunicationUI.CallingView.Overlay.Cancel"="Annulla";
+"AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Abbandona";
+"AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Annulla";
+"AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="Vuoi uscire dalla chiamata?";
 
 /* ComplianceBanner title */
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Registrazione e trascrizione avviate.";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingStarted"="Registrazione avviata.";
-"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Trascrizione interrotta.";
-"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStarted"="Trascrizione avviata.";
-"AzureCommunicationUI.CallingView.BannerTitle.TranscriptionStopped"="È in corso il salvataggio della trascrizione.";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="Registrazione arrestata.";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingStopped"="Salvataggio della registrazione in corso.";
-"AzureCommunicationUI.CallingView.BannerTitle.RecordingAndTranscribingStopped"="È in corso il salvataggio della registrazione e della trascrizione.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Registrazione e trascrizione avviate.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStarted"="Registrazione avviata.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Trascrizione interrotta.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStarted"="Trascrizione avviata.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStopped"="È in corso il salvataggio della trascrizione.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="Registrazione arrestata.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStopped"="Salvataggio della registrazione in corso.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStopped"="È in corso il salvataggio della registrazione e della trascrizione.";
 
 /* ComplianceBanner body */
-"AzureCommunicationUI.CallingView.BannerBody.Consent"="Partecipando, fornisci il consenso per la trascrizione di questa riunione.";
-"AzureCommunicationUI.CallingView.BannerBody.Recording"="È in corso la registrazione solo di questa riunione.";
-"AzureCommunicationUI.CallingView.BannerBody.TranscriptionStopped"="Trascrizione interrotta.";
-"AzureCommunicationUI.CallingView.BannerBody.OnlyTranscribing"="È in corso la trascrizione solo di questa riunione.";
-"AzureCommunicationUI.CallingView.BannerBody.RecordingStopped"="Registrazione arrestata.";
-"AzureCommunicationUI.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Registrazione e trascrizione interrotte.";
+"AzureCommunicationUICalling.CallingView.BannerBody.Consent"="Partecipando, fornisci il consenso per la trascrizione di questa riunione.";
+"AzureCommunicationUICalling.CallingView.BannerBody.Recording"="È in corso la registrazione solo di questa riunione.";
+"AzureCommunicationUICalling.CallingView.BannerBody.TranscriptionStopped"="Trascrizione interrotta.";
+"AzureCommunicationUICalling.CallingView.BannerBody.OnlyTranscribing"="È in corso la trascrizione solo di questa riunione.";
+"AzureCommunicationUICalling.CallingView.BannerBody.RecordingStopped"="Registrazione arrestata.";
+"AzureCommunicationUICalling.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Registrazione e trascrizione interrotte.";
 
 /* ComplianceBanner display link */
-"AzureCommunicationUI.CallingView.BannerLink.PrivacyPolicy"="Informativa sulla privacy";
-"AzureCommunicationUI.CallingView.BannerLink.LearnMore"="Altre informazioni";
+"AzureCommunicationUICalling.CallingView.BannerLink.PrivacyPolicy"="Informativa sulla privacy";
+"AzureCommunicationUICalling.CallingView.BannerLink.LearnMore"="Altre informazioni";
 
 /* PopUp warning */
-"AzureCommunicationUI.SnackBar.Button.Dismiss"="Ignora";
-"AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityLabel"="Ignora il banner";
-"AzureCommunicationUI.SnackBar.Button.Dismiss.AccessibilityHint"="Ignora questa notifica";
-"AzureCommunicationUI.SnackBar.Text.ErrorCallJoin"="Impossibile partecipare alla chiamata a causa di un errore.";
-"AzureCommunicationUI.SnackBar.Text.ErrorCallEnd"="Sei stato rimosso dalla chiamata a causa di un errore.";
-"AzureCommunicationUI.SnackBar.Text.Error"="Si è verificato un errore.";
+"AzureCommunicationUICalling.SnackBar.Button.Dismiss"="Ignora";
+"AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Ignora il banner";
+"AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Ignora questa notifica";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Impossibile partecipare alla chiamata a causa di un errore.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Sei stato rimosso dalla chiamata a causa di un errore.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Sei stato rimosso dalla chiamata.";
+"AzureCommunicationUICalling.SnackBar.Text.Error"="Si è verificato un errore.";

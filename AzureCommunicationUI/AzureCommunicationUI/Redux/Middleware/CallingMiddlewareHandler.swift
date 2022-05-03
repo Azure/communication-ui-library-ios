@@ -22,12 +22,12 @@ protocol CallingMiddlewareHandling {
 }
 
 class CallingMiddlewareHandler: CallingMiddlewareHandling {
-    private let callingService: CallingService
+    private let callingService: CallingServiceProtocol
     private let logger: Logger
     private let cancelBag = CancelBag()
     private let subscription = CancelBag()
 
-    init(callingService: CallingService, logger: Logger) {
+    init(callingService: CallingServiceProtocol, logger: Logger) {
         self.callingService = callingService
         self.logger = logger
     }

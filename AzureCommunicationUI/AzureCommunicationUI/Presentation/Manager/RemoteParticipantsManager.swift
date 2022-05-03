@@ -13,7 +13,7 @@ protocol RemoteParticipantsManagerProtocol {
 class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
     private let store: Store<AppState>
     private let eventsHandler: CallCompositeEventsHandling
-    private let callingSDKWrapper: CallingSDKWrapper
+    private let callingSDKWrapper: CallingSDKWrapperProtocol
     private var participantsLastUpdateTimeStamp = Date()
     private var participantsIds: Set<String> = []
 
@@ -21,7 +21,7 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
 
     init(store: Store<AppState>,
          callCompositeEventsHandler: CallCompositeEventsHandling,
-         callingSDKWrapper: CallingSDKWrapper) {
+         callingSDKWrapper: CallingSDKWrapperProtocol) {
         self.store = store
         self.eventsHandler = callCompositeEventsHandler
         self.callingSDKWrapper = callingSDKWrapper

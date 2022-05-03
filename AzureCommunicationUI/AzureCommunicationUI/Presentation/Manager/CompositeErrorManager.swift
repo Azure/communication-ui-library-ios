@@ -6,10 +6,10 @@
 import Foundation
 import Combine
 
-protocol ErrorManager {
+protocol ErrorManagerProtocol {
 }
 
-class CompositeErrorManager: ErrorManager {
+class CompositeErrorManager: ErrorManagerProtocol {
     private let store: Store<AppState>
     private let eventsHandler: CallCompositeEventsHandling
     private var error: CommunicationUIErrorEvent?
