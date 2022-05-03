@@ -5,37 +5,19 @@
 
 import UIKit
 
-protocol BaseCallCompositeErrorCode {
-    static var callJoin: String { get }
-    static var callEnd: String { get }
-    static var tokenExpired: String { get }
-}
-
 /// Call Composite runtime error types.
-public struct CallCompositeErrorCode: BaseCallCompositeErrorCode {
-
-    /// Error when local user fails to join a call. 
-    public private(set) static var callJoin: String = "callJoin"
-
-    /// Error when a call disconnects unexpectedly or fails on ending.
-    public private(set) static var callEnd: String = "callEnd"
-
-    /// Error when the input token is expired.
-    public private(set) static var tokenExpired: String = "tokenExpired"
-}
-
-struct InternalCallCompositeErrorCode: BaseCallCompositeErrorCode {
+public struct CallCompositeErrorCode {
     /// Error when local user fails to join a call.
-    static var callJoin: String = "callJoin"
+    public static let callJoin: String = "callJoin"
 
     /// Error when a call disconnects unexpectedly or fails on ending.
-    static var callEnd: String = "callEnd"
+    public static var callEnd: String = "callEnd"
 
     /// Error when the input token is expired.
-    static var tokenExpired: String = "tokenExpired"
+    public static let tokenExpired: String = "tokenExpired"
 
     /// Error when a participant is evicted from the call by another participant
-    static var callEvicted: String = "callEvicted"
+    static let callEvicted: String = "callEvicted"
 }
 
 /// The error thrown after Call Composite launching.

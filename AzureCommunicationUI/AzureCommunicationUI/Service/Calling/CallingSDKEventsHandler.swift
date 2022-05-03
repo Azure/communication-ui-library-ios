@@ -181,7 +181,7 @@ extension CallingSDKEventsHandler: CallDelegate,
         if callEndReasonCode == 0 {
             if (callEndReasonSubCode == 5300 || callEndReasonSubCode == 5000),
                 previousStatus == .connected {
-                return InternalCallCompositeErrorCode.callEvicted
+                return CallCompositeErrorCode.callEvicted
             }
         } else if callEndReasonCode > 0 {
             if callEndReasonCode == 401 {

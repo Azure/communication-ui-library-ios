@@ -48,7 +48,7 @@ class CompositeErrorManager: ErrorManagerProtocol {
 
         self.error = error
         guard let eventsHandler = eventsHandler,
-              error.code != InternalCallCompositeErrorCode.callEvicted,
+              error.code != CallCompositeErrorCode.callEvicted,
               let didFail = eventsHandler.didFail else {
             return
         }
@@ -56,9 +56,9 @@ class CompositeErrorManager: ErrorManagerProtocol {
     }
 
     private func respondToFatalError(code: String) {
-        if code == InternalCallCompositeErrorCode.tokenExpired ||
-            code == InternalCallCompositeErrorCode.callJoin ||
-            code == InternalCallCompositeErrorCode.callEnd {
+        if code == CallCompositeErrorCode.tokenExpired ||
+            code == CallCompositeErrorCode.callJoin ||
+            code == CallCompositeErrorCode.callEnd {
             store.dispatch(action: CompositeExitAction())
         }
     }
