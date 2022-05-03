@@ -7,7 +7,7 @@ import Foundation
 import AzureCommunicationCalling
 
 extension CallEndReason {
-    func toCompositeErrorCodeString(_ isCallConnected: Bool) -> String {
+    func toCompositeErrorCodeString(_ wasCallConnected: Bool) -> String {
         let callEndErrorCode = self.code
         let callEndErrorSubCode = self.subcode
 
@@ -15,7 +15,7 @@ extension CallEndReason {
         switch callEndErrorCode {
         case 0 :
             if (callEndErrorSubCode == 5300 || callEndErrorSubCode == 5000),
-               isCallConnected {
+               wasCallConnected {
                 compositeErrorCodeString = CallCompositeErrorCode.callEvicted
             }
         case 401:
@@ -26,7 +26,7 @@ extension CallEndReason {
         default:
             // For all other errorCodes:
             // https://docs.microsoft.com/en-us/azure/communication-services/concepts/troubleshooting-info
-            compositeErrorCodeString = isCallConnected ? CallCompositeErrorCode.callEnd
+            compositeErrorCodeString = wasCallConnected ? CallCompositeErrorCode.callEnd
             : CallCompositeErrorCode.callJoin
         }
 
