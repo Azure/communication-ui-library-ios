@@ -87,6 +87,7 @@
 		1FCB056B2671D8BE00126A4E /* StyleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FCB056A2671D8BE00126A4E /* StyleProvider.swift */; };
 		1FD299642723345B0084B9ED /* DefaultLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD299632723345B0084B9ED /* DefaultLogger.swift */; };
 		1FD299662728B72B0084B9ED /* CallingSDKEventsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD299652728B72B0084B9ED /* CallingSDKEventsHandler.swift */; };
+		1FDBF9F1281F8D2F00B92273 /* ACSCallEndReasonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */; };
 		1FE1BE7F26FE38C9000A8D18 /* CompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1BE7E26FE38C9000A8D18 /* CompositeError.swift */; };
 		1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */; };
 		1FFEA01426A68D0D00E90816 /* UIFontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEA01326A68D0D00E90816 /* UIFontExtension.swift */; };
@@ -322,6 +323,7 @@
 		1FCB056A2671D8BE00126A4E /* StyleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleProvider.swift; sourceTree = "<group>"; };
 		1FD299632723345B0084B9ED /* DefaultLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultLogger.swift; sourceTree = "<group>"; };
 		1FD299652728B72B0084B9ED /* CallingSDKEventsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKEventsHandler.swift; sourceTree = "<group>"; };
+		1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACSCallEndReasonExtension.swift; sourceTree = "<group>"; };
 		1FE1BE7E26FE38C9000A8D18 /* CompositeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeError.swift; sourceTree = "<group>"; };
 		1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoiningCallActivityView.swift; sourceTree = "<group>"; };
 		1FFEA01326A68D0D00E90816 /* UIFontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontExtension.swift; sourceTree = "<group>"; };
@@ -634,6 +636,7 @@
 				1FBCB6B02649EB1200F57EEA /* RemoteParticipantExtension.swift */,
 				1F13D37226AB3F1200E31666 /* ACSCallingStateExtension.swift */,
 				5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */,
+				1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1664,6 +1667,7 @@
 				985DF378269E07F400CFDA55 /* PrimaryButtonViewModel.swift in Sources */,
 				1FC30846266949E8007EC537 /* ColorExtension.swift in Sources */,
 				1F6470AC2639FE670008B9E9 /* CancelBag.swift in Sources */,
+				1FDBF9F1281F8D2F00B92273 /* ACSCallEndReasonExtension.swift in Sources */,
 				883D12DA2784F0B1005021E2 /* StringConstants.swift in Sources */,
 				1F4B0F0526A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift in Sources */,
 				1F11D2B2263CA10000D33838 /* CommunicationIdentifierExtension.swift in Sources */,
