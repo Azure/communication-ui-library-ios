@@ -19,7 +19,7 @@ struct TextFieldClearButton: ViewModifier {
                         Image(systemName: "delete.left")
                             .foregroundColor(Color(UIColor.opaqueSeparator))
                     }
-                ).accessibilityIdentifier(AccessibilityIdentifier.clearTokenTextFieldAccessibilityLabel.rawValue)
+                ).accessibilityIdentifier(AccessibilityId.clearTokenTextFieldAccessibilityID.rawValue)
             }
         }
     }

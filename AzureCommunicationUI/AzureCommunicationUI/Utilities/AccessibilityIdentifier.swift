@@ -6,19 +6,14 @@
 import Foundation
 
 enum AccessibilityIdentifier: String {
-    /* DemoView */
-    case startExperience = "AzureCommunicationUICalling.DemoView.StartExperience"
-    case startExperienceAccessibilityLabel = "AzureCommunicationUICalling.DemoView.StartExperience.AccessibilityLabel"
-    case clearTokenTextFieldAccessibilityLabel =
-            "AzureCommunicationUICalling.DemoView.ClearTokenTextField.AccessibilityLabel"
-
-    case joinCallAccessibilityLabel = "AzureCommunicationUICalling.SetupView.Button.JoinCall.AccessibilityID"
+    case leaveCallAccessibilityID = "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall.AccessibilityID"
+    case joinCallAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.JoinCall.AccessibilityID"
     case toggleVideoAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.Video.AccessibilityID"
     case togglMicAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.Mic.AccessibilityID"
-    case videoAccessibilityLabel = "AzureCommunicationUICalling.CallingView.ControlButton.Video.AccessibilityID"
-    case micAccessibilityLabel = "AzureCommunicationUICalling.CallingView.ControlButton.Microphone.AccessibilityID"
-    case audioDeviceAccessibilityLabel =
+    case videoAccessibilityID = "AzureCommunicationUICalling.CallingView.ControlButton.Video.AccessibilityID"
+    case micAccessibilityID = "AzureCommunicationUICalling.CallingView.ControlButton.Microphone.AccessibilityID"
+    case audioDeviceAccessibilityID =
             "AzureCommunicationUICalling.CallingView.ControlButton.AudioDevice.AccessibilityID"
-    case hangupAccessibilityLabel = "AzureCommunicationUICalling.CallingView.ControlButton.HangUp.AccessibilityID"
-    case cancelAccssibilityLabel = "AzureCommunicationUICalling.CallingView.Overlay.Cancel.AccssibilityID"
+    case hangupAccessibilityID = "AzureCommunicationUICalling.CallingView.ControlButton.HangUp.AccessibilityID"
+    case cancelAccessibilityID = "AzureCommunicationUICalling.CallingView.Overlay.Cancel.AccssibilityID"
 }

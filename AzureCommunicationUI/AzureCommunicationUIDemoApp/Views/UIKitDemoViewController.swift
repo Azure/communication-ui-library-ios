@@ -433,7 +433,7 @@ class UIKitDemoViewController: UIViewController {
         startExperienceButton.translatesAutoresizingMaskIntoConstraints = false
         startExperienceButton.addTarget(self, action: #selector(onStartExperienceBtnPressed), for: .touchUpInside)
 
-        startExperienceButton.accessibilityLabel = AccessibilityIdentifier.startExperienceAccessibilityLabel.rawValue
+        startExperienceButton.accessibilityLabel = AccessibilityId.startExperienceAccessibilityID.rawValue
 
         // horizontal stack view for the settingButton and startExperienceButton
         let settingButtonHSpacer1 = UIView()
