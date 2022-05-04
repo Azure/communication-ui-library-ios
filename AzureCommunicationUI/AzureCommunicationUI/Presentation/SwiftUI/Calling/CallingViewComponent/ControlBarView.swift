@@ -53,26 +53,26 @@ struct ControlBarView: View {
 
     var videoButton: some View {
         IconButton(viewModel: viewModel.cameraButtonViewModel)
-            .accessibility(identifier: LocalizationKey.videoAccessibilityLabel.rawValue)
+            .accessibility(identifier: AccessibilityIdentifier.videoAccessibilityID.rawValue)
     }
 
     var micButton: some View {
         IconButton(viewModel: viewModel.micButtonViewModel)
             .disabled(viewModel.isMicDisabled())
-            .accessibility(identifier: LocalizationKey.micAccessibilityLabel.rawValue)
+            .accessibility(identifier: AccessibilityIdentifier.micAccessibilityID.rawValue)
     }
 
     var audioDeviceButton: some View {
         IconButton(viewModel: viewModel.audioDeviceButtonViewModel)
             .background(SourceViewSpace(sourceView: audioDeviceButtonSourceView))
-            .accessibility(identifier: LocalizationKey.audioDeviceAccessibilityLabel.rawValue)
+            .accessibility(identifier: AccessibilityIdentifier.audioDeviceAccessibilityID.rawValue)
 
     }
 
     var hangUpButton: some View {
         IconButton(viewModel: viewModel.hangUpButtonViewModel)
             .background(SourceViewSpace(sourceView: leaveCallConfirmationListSourceView))
-            .accessibilityIdentifier(LocalizationKey.hangupAccessibilityLabel.rawValue)
+            .accessibilityIdentifier(AccessibilityIdentifier.hangupAccessibilityID.rawValue)
     }
 
     var audioDeviceSelectionListView: some View {
