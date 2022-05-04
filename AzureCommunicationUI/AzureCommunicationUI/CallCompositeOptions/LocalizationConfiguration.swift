@@ -5,89 +5,71 @@
 import Foundation
 import SwiftUI
 
+/// CommunicationUISupportedLocale representing the supported locales.
+public struct CommunicationUISupportedLocale {
+    /// Chinese, Simplified
+    public static let zh = Locale(identifier: "zh")
+    /// Chinese, Simplified
+    public static let zhHans = Locale(identifier: "zh-Hans")
+    /// Chinese, Simplified (China mainland)
+    public static let zhHansCN = Locale(identifier: "zh-Hans-CN")
+    /// Chinese, Traditional
+    public static let zhHant = Locale(identifier: "zh-Hant")
+    /// Chinese, Traditional (Taiwan)
+    public static let zhHantTW = Locale(identifier: "zh-Hant-TW")
+    /// Dutch
+    public static let nl = Locale(identifier: "nl")
+    /// Dutch (Netherlands)
+    public static let nlNL = Locale(identifier: "nl-NL")
+    /// English
+    public static let en = Locale(identifier: "en")
+    /// English (United Kingdom)
+    public static let enGB = Locale(identifier: "en-GB")
+    /// English (United States)
+    public static let enUS = Locale(identifier: "en-US")
+    /// French
+    public static let fr = Locale(identifier: "fr")
+    /// French (France)
+    public static let frFR = Locale(identifier: "fr-FR")
+    /// German
+    public static let de = Locale(identifier: "de")
+    /// German (Germany)
+    public static let deDE = Locale(identifier: "de-DE")
+    /// Italian
+    public static let it = Locale(identifier: "it")
+    /// Italian (Italy)
+    public static let itIT = Locale(identifier: "it-IT")
+    /// Japanese
+    public static let ja = Locale(identifier: "ja")
+    /// Japanese (Japan)
+    public static let jaJP = Locale(identifier: "ja-JP")
+    /// Korean
+    public static let ko = Locale(identifier: "ko")
+    /// Korean (South Korea)
+    public static let koKR = Locale(identifier: "ko-KR")
+    /// Portuguese
+    public static let pt = Locale(identifier: "pt")
+    /// Portuguese (Brazil)
+    public static let ptBR = Locale(identifier: "pt-BR")
+    /// Russian
+    public static let ru = Locale(identifier: "ru")
+    /// Russian (Russia)
+    public static let ruRU = Locale(identifier: "ru-RU")
+    /// Spanish
+    public static let es = Locale(identifier: "es")
+    /// Spanish (Spain)
+    public static let esES = Locale(identifier: "es-ES")
+    /// Turkish
+    public static let tr = Locale(identifier: "tr")
+    /// Turkish (Turkey)
+    public static let trTR = Locale(identifier: "tr-TR")
+}
+
 /// A configuration to allow customizing localization.
 public struct LocalizationConfiguration {
-    /// LanguageCode enum representing the locale code.
-    public enum LanguageCode: String {
-        /// Chinese, Simplified
-        case zh = "zh"
-        /// Chinese, Simplified
-        case zhHans = "zh-Hans"
-        /// Chinese, Simplified (China mainland)
-        case zhHansCN = "zh-Hans-CN"
-        /// Chinese, Traditional
-        case zhHant = "zh-Hant"
-        /// Chinese, Traditional (Taiwan)
-        case zhHantTW = "zh-Hant-TW"
-        /// Dutch
-        case nl = "nl"
-        /// Dutch (Netherlands)
-        case nlNL = "nl-NL"
-        /// English
-        case en = "en"
-        /// English (United Kingdom)
-        case enGB = "en-GB"
-        /// English (United States)
-        case enUS = "en-US"
-        /// French
-        case fr = "fr"
-        /// French (France)
-        case frFR = "fr-FR"
-        /// German
-        case de = "de"
-        /// German (Germany)
-        case deDE = "de-DE"
-        /// Italian
-        case it = "it"
-        /// Italian (Italy)
-        case itIT = "it-IT"
-        /// Japanese
-        case ja = "ja"
-        /// Japanese (Japan)
-        case jaJP = "ja-JP"
-        /// Korean
-        case ko = "ko"
-        /// Korean (South Korea)
-        case koKR = "ko-KR"
-        /// Portuguese
-        case pt = "pt"
-        /// Portuguese (Brazil)
-        case ptBR = "pt-BR"
-        /// Russian
-        case ru = "ru"
-        /// Russian (Russia)
-        case ruRU = "ru-RU"
-        /// Spanish
-        case es = "es"
-        /// Spanish (Spain)
-        case esES = "es-ES"
-        /// Turkish
-        case tr = "tr"
-        /// Turkish (Turkey)
-        case trTR = "tr-TR"
-    }
-
     let languageCode: String
     let localizableFilename: String
     let layoutDirection: LayoutDirection
-
-    /// Creates an instance of `LocalizationConfiguration` with related parameters. Allow
-    /// overriding strings of localization keys with Localizable.strings file or other localizable filename.
-    /// - Parameter languageCode: String representing the language code with or without region
-    /// (ie. en, fr, fr-FR, zh-Hant, zh-Hans, ...)  separated by dash `-`.
-    /// - Parameter localizableFilename: Filename of the `.strings` file to override predefined
-    ///  Call Composite's localization key or to provide translation for an custom language.
-    ///  The keys of the string should match with the keys from AzureCommunicationUI
-    ///  localization keys. Default value is `"Localizable"`.
-    /// - Parameter layoutDirection: LayoutDirection for mirroring layout for right-to-left.
-    ///  Default value is `false`.
-    public init(languageCode: String,
-                localizableFilename: String = "Localizable",
-                layoutDirection: LayoutDirection = .leftToRight) {
-        self.languageCode = languageCode
-        self.localizableFilename = localizableFilename
-        self.layoutDirection = layoutDirection
-    }
 
     /// Creates an instance of `LocalizationConfiguration` with related parameters. Allow
     /// overriding strings of localization keys with Localizable.strings file or other localizable filename.
@@ -108,9 +90,10 @@ public struct LocalizationConfiguration {
     }
 
     /// Get supported languages the AzureCommunicationUICalling has predefined translations.
-    /// - Returns: Get supported languages the AzureCommunicationUICalling
+    /// - Returns: Get supported Locales the AzureCommunicationUICalling
     ///  has predefined translations.
-    public static var supportedLanguages: [String] {
+    public static var supportedLocales: [Locale] {
         return Bundle(for: CallComposite.self).localizations.sorted()
+            .map { Locale(identifier: $0) }
     }
 }

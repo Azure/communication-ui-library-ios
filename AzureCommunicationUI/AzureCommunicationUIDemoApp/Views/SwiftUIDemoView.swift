@@ -139,9 +139,9 @@ extension SwiftUIDemoView {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationConfiguration(locale: locale,
                                                            layoutDirection: layoutDirection)
-        } else if envConfigSubject.languageCode != "auto" {
+        } else if envConfigSubject.locale.identifier != "" {
             localizationConfig = LocalizationConfiguration(
-                languageCode: envConfigSubject.languageCode,
+                locale: envConfigSubject.locale,
                 layoutDirection: layoutDirection)
         }
 
