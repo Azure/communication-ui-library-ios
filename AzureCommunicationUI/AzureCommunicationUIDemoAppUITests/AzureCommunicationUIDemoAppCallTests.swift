@@ -12,31 +12,47 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeEndCallGroupCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
-        tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
+        tapEnabledButton(
+            accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+            shouldWait: true)
         toggleLeaveCallDrawer(leaveCall: true)
     }
 
     func testCallCompositeEndCallTeamsCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
         tapMeetingType(.teamsCall)
-        tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
+        tapEnabledButton(
+            accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+            shouldWait: true)
         toggleLeaveCallDrawer(leaveCall: true)
     }
 
     func testCallCompositeEndCallGroupCallUIKit() {
         tapInterfaceFor(.uiKit)
-        tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
+        tapEnabledButton(
+            accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+            shouldWait: true)
         toggleLeaveCallDrawer(leaveCall: true)
     }
 
     func testCallCompositeEndCallTeamsCallUIKit() {
         tapInterfaceFor(.uiKit)
         tapMeetingType(.teamsCall)
-        tapEnabledButton(accessibilityIdentifier: .startExperienceAccessibilityLabel, shouldWait: true)
-        tapButton(accessibilityIdentifier: .joinCallAccessibilityLabel, shouldWait: true)
+        tapEnabledButton(
+            accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+            shouldWait: true)
         toggleLeaveCallDrawer(leaveCall: true)
     }
 
@@ -44,15 +60,15 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     /// Toggles the leave call overlay  in the calling screen
     private func toggleLeaveCallDrawer(leaveCall: Bool) {
-        tapButton(accessibilityIdentifier: .hangupAccessibilityLabel, shouldWait: true)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityID.rawValue, shouldWait: true)
 
         if leaveCall {
-            let cell = app.tables.cells[LocalizationKey.leaveCall.rawValue]
+            let cell = app.tables.cells[AccessibilityIdentifier.leaveCallAccessibilityID.rawValue]
             if cell.waitForExistence(timeout: 3) {
                 cell.tap()
             }
-            XCTAssertTrue(app.buttons[LocalizationKey.startExperienceAccessibilityLabel.rawValue]
-                            .waitForExistence(timeout: 3))
+            XCTAssertTrue(app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue]
+                .waitForExistence(timeout: 3))
         }
     }
 }

@@ -109,6 +109,7 @@
 		50B390D627D915F00010A2ED /* LocalizationProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D527D915EF0010A2ED /* LocalizationProviderTests.swift */; };
 		50B390D827D976930010A2ED /* JoiningCallActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D727D976930010A2ED /* JoiningCallActivityViewModel.swift */; };
 		50B390DA27DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D927DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift */; };
+		50B6AC7F28208C750077FC01 /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B6AC7E28208C750077FC01 /* AccessibilityIdentifier.swift */; };
 		50C6DECC270E48BE0085D04B /* BannerInfoType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C6DECB270E48BE0085D04B /* BannerInfoType.swift */; };
 		50C6DECF270E4F020085D04B /* BannerInfoTypeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C6DECE270E4F020085D04B /* BannerInfoTypeTests.swift */; };
 		50E2D68926D9495B006B0EF4 /* InfoHeaderViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */; };
@@ -373,6 +374,7 @@
 		50B390D527D915EF0010A2ED /* LocalizationProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProviderTests.swift; sourceTree = "<group>"; };
 		50B390D727D976930010A2ED /* JoiningCallActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoiningCallActivityViewModel.swift; sourceTree = "<group>"; };
 		50B390D927DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoiningCallActivityViewModelTests.swift; sourceTree = "<group>"; };
+		50B6AC7E28208C750077FC01 /* AccessibilityIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifier.swift; sourceTree = "<group>"; };
 		50C6DECB270E48BE0085D04B /* BannerInfoType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerInfoType.swift; sourceTree = "<group>"; };
 		50C6DECE270E4F020085D04B /* BannerInfoTypeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerInfoTypeTests.swift; sourceTree = "<group>"; };
 		50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoHeaderViewModelTests.swift; sourceTree = "<group>"; };
@@ -774,6 +776,7 @@
 				1B79BD4F273F2D87002D5A36 /* UIViewControllerExtension.swift */,
 				883D12D92784F0B1005021E2 /* StringConstants.swift */,
 				50B390D227D834FE0010A2ED /* LocalizationKey.swift */,
+				50B6AC7E28208C750077FC01 /* AccessibilityIdentifier.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1596,6 +1599,7 @@
 				50E2D69526EACB74006B0EF4 /* ParticipantsListViewModel.swift in Sources */,
 				50FA45FC26813FB8001844AC /* ParticipantGridView.swift in Sources */,
 				1F2BEDD126329E7C00D98266 /* CallingAction.swift in Sources */,
+				50B6AC7F28208C750077FC01 /* AccessibilityIdentifier.swift in Sources */,
 				985DF376269E07E700CFDA55 /* PrimaryButton.swift in Sources */,
 				1FBCB6AF2649DC7900F57EEA /* ParticipantInfoModel.swift in Sources */,
 				988799932746CDEC00AA3759 /* LockPhoneOrientation.swift in Sources */,

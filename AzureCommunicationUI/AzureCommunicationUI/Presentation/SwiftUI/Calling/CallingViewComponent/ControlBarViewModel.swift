@@ -129,29 +129,31 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func getLeaveCallButtonViewModel() -> LeaveCallConfirmationViewModel {
-        return LeaveCallConfirmationViewModel(icon: .endCallRegular,
-                                              title: localizationProvider.getLocalizedString(.leaveCall),
-                                              accessibilityIdentifier: LocalizationKey.leaveCall.rawValue,
-                                              action: { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.logger.debug("Leave call button tapped")
-            self.displayEndCallConfirm()
-        })
+        return LeaveCallConfirmationViewModel(
+            icon: .endCallRegular,
+            title: localizationProvider.getLocalizedString(.leaveCall),
+            accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue,
+            action: { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.logger.debug("Leave call button tapped")
+                self.displayEndCallConfirm()
+            })
     }
 
     func getCancelButtonViewModel() -> LeaveCallConfirmationViewModel {
-        return LeaveCallConfirmationViewModel(icon: .dismiss,
-                                              title: localizationProvider.getLocalizedString(.cancel),
-                                              accessibilityIdentifier: LocalizationKey.cancelAccssibilityLabel.rawValue,
-                                              action: { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.logger.debug("Cancel button tapped")
-            self.dismissConfirmLeaveDrawerList()
-        })
+        return LeaveCallConfirmationViewModel(
+            icon: .dismiss,
+            title: localizationProvider.getLocalizedString(.cancel),
+            accessibilityIdentifier: AccessibilityIdentifier.cancelAccessibilityID.rawValue,
+            action: { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.logger.debug("Cancel button tapped")
+                self.dismissConfirmLeaveDrawerList()
+            })
     }
 
     func getLeaveCallConfirmationListViewModel() -> LeaveCallConfirmationListViewModel {
