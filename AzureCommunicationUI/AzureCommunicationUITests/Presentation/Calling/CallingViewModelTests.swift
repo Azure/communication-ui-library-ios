@@ -127,7 +127,7 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_receive_when_statusUpdated_then_localVideoViewModelUpdated() {
         let expectation = XCTestExpectation(description: "LocalVideoViewModel is updated")
         let appState = AppState(localUserState: LocalUserState(displayName: "DisplayName"))
-        let sut = makeSUT(updateLocalVideoViewModel: { userState in
+        let sut = makeSUT(state: appState, updateLocalVideoViewModel: { userState in
             XCTAssertEqual(appState.localUserState.displayName, userState.displayName)
             expectation.fulfill()
         })
@@ -138,7 +138,7 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_receive_when_statusUpdated_then_participantGridViewModelUpdated() {
         let expectation = XCTestExpectation(description: "ParticipantGridViewModel is updated")
         let appState = AppState()
-        let sut = makeSUT(updateParticipantGridViewModel: { _, remoteParticipantsState in
+        let sut = makeSUT(state: appState, updateParticipantGridViewModel: { _, remoteParticipantsState in
             XCTAssertEqual(appState.remoteParticipantsState.lastUpdateTimeStamp, remoteParticipantsState.lastUpdateTimeStamp)
             expectation.fulfill()
         })
@@ -149,7 +149,7 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_receive_when_statusUpdated_then_bannerViewModelUpdated() {
         let expectation = XCTestExpectation(description: "BannerViewModel is updated")
         let appState = AppState(callingState: CallingState(status: .connected))
-        let sut = makeSUT(updateBannerViewModel: { callingState in
+        let sut = makeSUT(state: appState, updateBannerViewModel: { callingState in
             XCTAssertEqual(appState.callingState.status, callingState.status)
             expectation.fulfill()
         })
@@ -207,8 +207,11 @@ extension CallingViewModelTests {
                                 accessibilityProvider: AccessibilityProvider())
     }
 
-    func makeSUT(updateInfoHeaderViewModel: @escaping ((LocalUserState, RemoteParticipantsState, CallingState) -> Void)) -> CallingViewModel {
+    func makeSUT(state: AppState? = nil, updateInfoHeaderViewModel: @escaping ((LocalUserState, RemoteParticipantsState, CallingState) -> Void)) -> CallingViewModel {
         let storeFactory = StoreFactoryMocking()
+        if let state = state {
+            storeFactory.store.state = state
+        }
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         factoryMocking.infoHeaderViewModel = InfoHeaderViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                         logger: logger,
@@ -222,8 +225,11 @@ extension CallingViewModelTests {
                                 accessibilityProvider: AccessibilityProvider())
     }
 
-    func makeSUT(updateLocalVideoViewModel: @escaping ((LocalUserState) -> Void)) -> CallingViewModel {
+    func makeSUT(state: AppState? = nil, updateLocalVideoViewModel: @escaping ((LocalUserState) -> Void)) -> CallingViewModel {
         let storeFactory = StoreFactoryMocking()
+        if let state = state {
+            storeFactory.store.state = state
+        }
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         factoryMocking.localVideoViewModel = LocalVideoViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                         logger: logger,
@@ -237,8 +243,11 @@ extension CallingViewModelTests {
                                 accessibilityProvider: AccessibilityProvider())
     }
 
-    func makeSUT(updateParticipantGridViewModel: @escaping ((CallingState, RemoteParticipantsState) -> Void)) -> CallingViewModel {
+    func makeSUT(state: AppState? = nil, updateParticipantGridViewModel: @escaping ((CallingState, RemoteParticipantsState) -> Void)) -> CallingViewModel {
         let storeFactory = StoreFactoryMocking()
+        if let state = state {
+            storeFactory.store.state = state
+        }
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         factoryMocking.participantGridViewModel = ParticipantGridViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                                   localizationProvider: localizationProvider,
@@ -251,8 +260,11 @@ extension CallingViewModelTests {
                                 accessibilityProvider: AccessibilityProvider())
     }
 
-    func makeSUT(updateBannerViewModel: @escaping ((CallingState) -> Void)) -> CallingViewModel {
+    func makeSUT(state: AppState? = nil, updateBannerViewModel: @escaping ((CallingState) -> Void)) -> CallingViewModel {
         let storeFactory = StoreFactoryMocking()
+        if let state = state {
+            storeFactory.store.state = state
+        }
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         factoryMocking.bannerViewModel = BannerViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                 updateState: updateBannerViewModel)
