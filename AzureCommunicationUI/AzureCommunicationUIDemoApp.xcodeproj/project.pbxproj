@@ -33,6 +33,7 @@
 		A8C69FBD2728AE1C00143DB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8C69FBC2728AE1C00143DB7 /* Assets.xcassets */; };
 		A8C69FC02728AE1C00143DB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C69FBE2728AE1C00143DB7 /* LaunchScreen.storyboard */; };
 		A8FB819C272A082B00AA0930 /* DemoInputTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */; };
+		FA7B53EC282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		C8502DED9B8B08581B1F2DE1 /* Pods-AzureCommunicationUIDemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp/Pods-AzureCommunicationUIDemoApp.release.xcconfig"; sourceTree = "<group>"; };
 		EF7AB40C51CC8F415AF653FD /* Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F4B7600B47B9FF25ADA8C5F5 /* Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantAvatarHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,6 +208,7 @@
 				A8FB819D272A0B3500AA0930 /* Views */,
 				5075FE9B27FFA84B00136B34 /* Localization */,
 				A8849E522732FFA10049FB1A /* AuthenticationHelper.swift */,
+				FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */,
 				A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */,
 				A85DDCB22728B140001297B4 /* ThemeConfig.swift */,
 				A85DDCAF2728B12D001297B4 /* EnvConfig.swift */,
@@ -488,6 +491,7 @@
 				A85DDCB92728B23B001297B4 /* SwiftUIDemoView.swift in Sources */,
 				1F8881CD279B456E001427F0 /* Extension.swift in Sources */,
 				A85DDCB12728B12D001297B4 /* EnvConfig.swift in Sources */,
+				FA7B53EC282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift in Sources */,
 				A85DDCB32728B140001297B4 /* ThemeConfig.swift in Sources */,
 				A85DDCB82728B23B001297B4 /* UIKitDemoViewController.swift in Sources */,
 				1B8DE23A27F8332200112E63 /* LocalizationKey.swift in Sources */,

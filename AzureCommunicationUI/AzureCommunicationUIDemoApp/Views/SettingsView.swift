@@ -34,6 +34,7 @@ struct SettingsView: View {
             Form {
                 localizationSettings
                 avatarSettings
+                remoteParticipantsAvatarsSettings
                 themeSettings
             }.navigationTitle("UI Library - Settings")
         }
@@ -65,6 +66,12 @@ struct SettingsView: View {
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
                 .textFieldStyle(.roundedBorder)
+        }
+    }
+
+    var remoteParticipantsAvatarsSettings: some View {
+        Section(header: Text("Remote Participant Persona")) {
+            Toggle("Inject avatars", isOn: $envConfigSubject.useCustomRemoteParticipantsAvatars)
         }
     }
 

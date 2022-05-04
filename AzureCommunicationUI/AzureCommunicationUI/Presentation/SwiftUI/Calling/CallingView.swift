@@ -153,6 +153,7 @@ struct CallingView: View {
 
     var participantGridsView: some View {
         ParticipantGridView(viewModel: viewModel.participantGridsViewModel,
+                            avatarViewManager: avatarManager,
                             videoViewManager: viewManager,
                             screenSize: getSizeClass())
             .edgesIgnoringSafeArea(safeAreaIgnoreArea)

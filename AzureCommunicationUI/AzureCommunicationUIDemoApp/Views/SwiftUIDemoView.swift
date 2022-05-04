@@ -151,6 +151,13 @@ extension SwiftUIDemoView {
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
+        let didRemoteParticipantsJoin: ([CommunicationIdentifier]) -> Void = { [weak callComposite] identifiers in
+            guard let composite = callComposite else {
+                return
+            }
+
+            self.didRemoteParticipantsJoin(to: composite, identifiers: identifiers)
+        }
         callComposite.setTarget(didFail: didFail, didRemoteParticipantsJoin: didRemoteParticipantsJoin)
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
@@ -235,7 +242,13 @@ extension SwiftUIDemoView {
         showError(for: error.code)
     }
 
-    func didRemoteParticipantsJoin(_ identifiers: [CommunicationIdentifier]) {
+    func didRemoteParticipantsJoin(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::SwiftUIDemoView::getEventsHandler::didRemoteParticipantsJoin \(identifiers)")
+        guard envConfigSubject.useCustomRemoteParticipantsAvatars else {
+            return
+        }
+
+        RemoteParticipantAvatarHelper.didRemoteParticipantsJoin(to: callComposite,
+                                                                identifiers: identifiers)
     }
 }

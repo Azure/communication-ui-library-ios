@@ -7,6 +7,7 @@ import SwiftUI
 
 struct ParticipantGridView: View {
     let viewModel: ParticipantGridViewModel
+    let avatarViewManager: AvatarViewManagerProtocol
     let videoViewManager: VideoViewManager
     let screenSize: ScreenSizeClassType
     @State var gridsCount: Int = 0
