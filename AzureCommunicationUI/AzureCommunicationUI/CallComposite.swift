@@ -79,7 +79,7 @@ public class CallComposite {
         launch(callConfiguration, localOptions: localOptions)
     }
 
-    /// Start call composite experience with joining a Teams meeting..
+    /// Start call composite experience with joining a Teams meeting.
     /// - Parameter options: The TeamsMeetingOptions used to locate the Teams meetings.
     /// - Parameter localData: LocalData used to set the user participants information for the call.
     ///                         This is data is not sent up to ACS.
@@ -93,17 +93,18 @@ public class CallComposite {
         launch(callConfiguration, localOptions: localOptions)
     }
 
-    @discardableResult
-    /// Set persona data for the remote participant
+    /// Set persona data for the remote participant.
     /// - Parameters:
-    ///   - identifier: The communication identifier for the remote participant
+    ///   - identifier: The communication identifier for the remote participant.
     ///   - personaData: PersonaData used to set the user participants information for the call.
     ///   This is data is not sent up to ACS.
-    /// - Returns: The `Result` enum value with either a `Void` or an `Error`
+    /// - Returns: The `Result` enum value with either a `Void` or an `Error`.
+    @discardableResult
     public func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
                                                 personaData: PersonaData) -> Result<Void, Error> {
-        guard let avatarManager = avatarViewManager
-        else { return .failure(CompositeError.callCompositeNotLaunched) }
+        guard let avatarManager = avatarViewManager else {
+            return .failure(CompositeError.callCompositeNotLaunched)
+        }
 
         return avatarManager.setRemoteParticipantPersonaData(for: identifier,
                                                              personaData: personaData)

@@ -31,8 +31,9 @@ class AvatarViewManager: AvatarViewManagerProtocol {
 
     private func receive(state: AppState) {
         guard state.callingState.status == .disconnected ||
-                state.errorState.errorCategory == .callState
-        else { return }
+                state.errorState.errorCategory == .callState else {
+            return
+        }
 
         avatarStorage = MappedSequence<String, PersonaData>()
     }
@@ -48,7 +49,9 @@ class AvatarViewManager: AvatarViewManagerProtocol {
     func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
                                          personaData: PersonaData) -> Result<Void, Error> {
         guard let idStringValue = identifier.stringValue
-        else { return .failure(CompositeError.remoteParticipantNotFound) }
+        else {
+            return .failure(CompositeError.remoteParticipantNotFound)
+        }
 
         avatarStorage.append(forKey: idStringValue,
                              value: personaData)
