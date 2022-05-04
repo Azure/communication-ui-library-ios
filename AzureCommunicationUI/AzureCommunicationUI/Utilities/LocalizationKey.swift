@@ -14,28 +14,19 @@ enum LocalizationKey: String {
     case headphones = "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"
     case bluetooth = "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"
 
-    /* DemoView */
-    case startExperience = "AzureCommunicationUICalling.DemoView.StartExperience"
-    case startExperienceAccessibilityLabel = "AzureCommunicationUICalling.DemoView.StartExperience.AccessibilityLabel"
-    case clearTokenTextFieldAccessibilityLabel =
-            "AzureCommunicationUICalling.DemoView.ClearTokenTextField.AccessibilityLabel"
-
     /* SetupView */
     case setupTitle = "AzureCommunicationUICalling.SetupView.Title"
     case dismissAccessibilityLabel = "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"
     case joinCall = "AzureCommunicationUICalling.SetupView.Button.JoinCall"
-    case joinCallAccessibilityLabel = "AzureCommunicationUICalling.SetupView.Button.JoinCall.AccessibilityLabel"
     case joiningCall = "AzureCommunicationUICalling.SetupView.Button.JoiningCall"
     case videoOff = "AzureCommunicationUICalling.SetupView.Button.VideoOff"
     case videoOffAccessibilityLabel = "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"
     case videoOn = "AzureCommunicationUICalling.SetupView.Button.VideoOn"
     case videoOnAccessibilityLabel = "AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"
-    case toggleVideoAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.Video.AccessibilityID"
     case micOff = "AzureCommunicationUICalling.SetupView.Button.MicOff"
     case micOffAccessibilityLabel = "AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"
     case micOn = "AzureCommunicationUICalling.SetupView.Button.MicOn"
     case micOnAccessibilityLabel = "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"
-    case togglMicAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.Mic.AccessibilityID"
     case device = "AzureCommunicationUICalling.SetupView.Button.Device"
     case deviceAccesibiiltyLabel = "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"
     case cameraDisabled = "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"
@@ -73,16 +64,9 @@ enum LocalizationKey: String {
     case screenshareEndAccessibilityLabel =
             "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"
 
-    case videoAccessibilityLabel = "AzureCommunicationUICalling.CallingView.ControlButton.Video.AccessibilityLabel"
-    case micAccessibilityLabel = "AzureCommunicationUICalling.CallingView.ControlButton.Microphone.AccessibilityLabel"
-    case audioDeviceAccessibilityLabel =
-            "AzureCommunicationUICalling.CallingView.ControlButton.AudioDevice.AccessibilityLabel"
-    case hangupAccessibilityLabel = "AzureCommunicationUICalling.CallingView.ControlButton.HangUp.AccessibilityLabel"
-
     case leaveCallListHeader = "AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"
     case leaveCall = "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"
     case cancel = "AzureCommunicationUICalling.CallingView.Overlay.Cancel"
-    case cancelAccssibilityLabel = "AzureCommunicationUICalling.CallingView.Overlay.Cancel.AccssibilityLabel"
 
     /* ComplianceBanner title */
     case bannerTitleRecordingAndTranscriptionStarted =
