@@ -63,7 +63,7 @@ struct CallingView: View {
             GeometryReader { geometry in
                 ZStack(alignment: .bottomTrailing) {
                     videoGridView
-                        .accessibilityHidden(viewModel.isVideoGridViewAccessibilityAvailable)
+                        .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
                     if viewModel.isParticipantGridDisplayed {
                         draggableVideoPipView
                     }
