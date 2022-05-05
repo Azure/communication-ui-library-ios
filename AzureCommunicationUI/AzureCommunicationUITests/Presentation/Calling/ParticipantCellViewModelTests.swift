@@ -273,9 +273,7 @@ extension ParticipantCellViewModelTests {
                                                         displayName: displayName,
                                                         isSpeaking: isSpeaking,
                                                         isMuted: isMuted)
-        let storeFactory = StoreFactoryMocking()
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
-        return ParticipantGridCellViewModel(compositeViewModelFactory: factoryMocking,
+        return ParticipantGridCellViewModel(localizationProvider: LocalizationProviderMocking(),
                                             participantModel: infoModel)
     }
 
