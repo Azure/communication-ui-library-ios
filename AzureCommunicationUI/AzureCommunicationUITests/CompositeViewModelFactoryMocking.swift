@@ -147,7 +147,6 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
         return createMockParticipantGridCellViewModel?(participantModel) ?? ParticipantGridCellViewModel(
-            compositeViewModelFactory: self,
             localizationProvider: LocalizationProviderMocking(),
             accessibilityProvider: AccessibilityProviderMocking(),
             participantModel: participantModel)

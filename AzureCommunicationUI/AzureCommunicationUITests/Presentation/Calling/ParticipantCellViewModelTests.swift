@@ -275,8 +275,7 @@ extension ParticipantCellViewModelTests {
                                                         isMuted: isMuted)
         let storeFactory = StoreFactoryMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
-        return ParticipantGridCellViewModel(compositeViewModelFactory: factoryMocking,
-                                            localizationProvider: LocalizationProviderMocking(),
+        return ParticipantGridCellViewModel(localizationProvider: LocalizationProviderMocking(),
                                             accessibilityProvider: AccessibilityProvider(),
                                             participantModel: infoModel)
     }
