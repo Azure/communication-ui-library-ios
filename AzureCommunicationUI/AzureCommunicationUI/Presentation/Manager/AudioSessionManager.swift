@@ -84,7 +84,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
             return
         }
 
-        store.dispatch(action: LocalUserAction.AudioDeviceChangeSucceeded(device: getCurrentAudioDevice()))
+        store.dispatch(action: LocalUserAction.AudioDeviceChangeSucceeded(device: currentDevice))
     }
 
     private func activateAudioSessionCategory() {
@@ -168,8 +168,14 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     private func hasProcess(_ currentAudioDevice: AudioDeviceType) -> Bool {
-        let hasProcess = localUserAudioDeviceState?.hasProcess(for: currentAudioDevice)
-
-        return hasProcess ?? false
+        switch (localUserAudioDeviceState, currentAudioDevice) {
+        case (.speakerSelected, .speaker),
+            (.bluetoothSelected, .bluetooth),
+            (.headphonesSelected, .headphones),
+            (.receiverSelected, .receiver):
+            return true
+        default:
+            return false
+        }
     }
 }
