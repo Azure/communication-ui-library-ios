@@ -103,9 +103,9 @@ struct CallingView: View {
 
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
-                           personaData: avatarManager.getLocalPersonaData(),
                            viewManager: viewManager,
-                           viewType: .localVideoPip)
+                           viewType: .localVideoPip,
+                           avatarManager: avatarManager)
                 .frame(width: size.width, height: size.height, alignment: .center)
                 .background(Color(StyleProvider.color.backgroundColor))
                 .clipShape(RoundedRectangle(cornerRadius: shapeCornerRadius))
@@ -162,9 +162,9 @@ struct CallingView: View {
     var localVideoFullscreenView: some View {
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
-                           personaData: avatarManager.getLocalPersonaData(),
                            viewManager: viewManager,
-                           viewType: .localVideofull)
+                           viewType: .localVideofull,
+                           avatarManager: avatarManager)
                 .background(Color(StyleProvider.color.surface))
                 .edgesIgnoringSafeArea(safeAreaIgnoreArea)
         }

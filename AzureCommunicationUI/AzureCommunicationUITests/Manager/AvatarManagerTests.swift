@@ -24,7 +24,7 @@ class AvatarManagerTests: XCTestCase {
         }
         let mockAvatarManager = makeSUT(mockImage)
         let mockImageData = mockImage.cgImage?.bitsPerPixel
-        let setAvatar = mockAvatarManager.getLocalPersonaData()?.avatarImage
+        let setAvatar = mockAvatarManager.localDataOptions?.localPersona.avatarImage
         let setAvatarImageData = setAvatar?.cgImage?.bitsPerPixel
         XCTAssertEqual(mockImageData, setAvatarImageData)
     }

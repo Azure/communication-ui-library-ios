@@ -56,41 +56,13 @@ struct ParticipantGridCellView: View {
                 }
             }
         }
-        .onReceive(avatarViewManager.$avatarStorage) { _ in
-            print("------$$avatarStorage")
-            guard let personaData =
-                    avatarViewManager.getRemoteParticipantPersonaData(viewModel.participantIdentifier) else {
-                avatarImage = nil
-                renderDisplayName = nil
-                return
-            }
-            print("!!!!\(viewModel.participantIdentifier) - \(personaData.renderDisplayName) \(viewModel.displayName)")
-            if avatarImage !== personaData.avatarImage {
-                avatarImage = personaData.avatarImage
-            }
-
-            if renderDisplayName != personaData.renderDisplayName {
-                renderDisplayName = personaData.renderDisplayName
-            }
-            print("------$$avatarStorage end")
+        .onReceive(avatarViewManager.$avatarStorage) {
+            updatePersonaData(for: viewModel.participantIdentifier,
+                              storage: $0)
         }
-        .onReceive(viewModel.$participantIdentifier) { identifier in
-            print("------$participantIdentifier")
-            guard let personaData =
-                    avatarViewManager.getRemoteParticipantPersonaData(identifier) else {
-                avatarImage = nil
-                renderDisplayName = nil
-                return
-            }
-            print("!!!!\(identifier) - \(personaData.renderDisplayName) \(viewModel.displayName)")
-            if avatarImage !== personaData.avatarImage {
-                avatarImage = personaData.avatarImage
-            }
-
-            if renderDisplayName != personaData.renderDisplayName {
-                renderDisplayName = personaData.renderDisplayName
-            }
-            print("------$participantIdentifier end")
+        .onReceive(viewModel.$participantIdentifier) {
+            updatePersonaData(for: $0,
+                              storage: avatarViewManager.avatarStorage)
         }
     }
 
@@ -100,6 +72,24 @@ struct ParticipantGridCellView: View {
         }
 
         return rendererViewManager?.getRemoteParticipantVideoRendererView(remoteParticipantVideoViewId)
+    }
+
+    private func updatePersonaData(for identifier: String,
+                                   storage: MappedSequence<String, PersonaData>) {
+        guard let personaData =
+                storage.value(forKey: identifier) else {
+            avatarImage = nil
+            renderDisplayName = nil
+            return
+        }
+
+        if avatarImage !== personaData.avatarImage {
+            avatarImage = personaData.avatarImage
+        }
+
+        if renderDisplayName != personaData.renderDisplayName {
+            renderDisplayName = personaData.renderDisplayName
+        }
     }
 
     private func getRemoteParticipantVideoViewId() -> RemoteParticipantVideoViewId? {
