@@ -5,7 +5,7 @@
 - Updated leave call confirmation drawer. [#129](https://github.com/Azure/communication-ui-library-ios/pull/129)
 - Implemented new local participant avatar parameter into launch method. [#131](https://github.com/Azure/communication-ui-library-ios/pull/131)
 - Implemented automatic system language detection for localization. [#126](https://github.com/Azure/communication-ui-library-ios/pull/126)
-- Updated localization language code to suport both `ll` (language code) and `ll-CC` (language code with country code) format. [#133](https://github.com/Azure/communication-ui-library-ios/pull/133)
+- Updated localization language code to support both `ll` (language code) and `ll-CC` (language code with country code) format. [#133](https://github.com/Azure/communication-ui-library-ios/pull/133)
 - Implemented additional initializer for `LocalizationConfiguration` to accept Locale struct. [#133](https://github.com/Azure/communication-ui-library-ios/pull/133)
 - Implemented additional primary color tint overrides to ThemeConfiguration
 - Implemented light/dark mode override to ThemeConfiguration
