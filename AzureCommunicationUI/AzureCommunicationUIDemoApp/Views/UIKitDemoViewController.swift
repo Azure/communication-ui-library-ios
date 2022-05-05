@@ -145,13 +145,13 @@ class UIKitDemoViewController: UIViewController {
     func startExperience(with link: String) {
         var localizationConfig: LocalizationConfiguration?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
-        if envConfigSubject.localeIdentifier != "" {
+        if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationConfiguration(locale: locale,
                                                            layoutDirection: layoutDirection)
-        } else if envConfigSubject.languageCode != "auto" {
+        } else if !envConfigSubject.locale.identifier.isEmpty {
             localizationConfig = LocalizationConfiguration(
-                languageCode: envConfigSubject.languageCode,
+                locale: envConfigSubject.locale,
                 layoutDirection: layoutDirection)
         }
 
@@ -449,7 +449,7 @@ class UIKitDemoViewController: UIViewController {
         startExperienceButton.translatesAutoresizingMaskIntoConstraints = false
         startExperienceButton.addTarget(self, action: #selector(onStartExperienceBtnPressed), for: .touchUpInside)
 
-        startExperienceButton.accessibilityLabel = LocalizationKey.startExperienceAccessibilityLabel.rawValue
+        startExperienceButton.accessibilityLabel = AccessibilityId.startExperienceAccessibilityID.rawValue
 
         // horizontal stack view for the settingButton and startExperienceButton
         let settingButtonHSpacer1 = UIView()

@@ -186,7 +186,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
-        ParticipantGridCellViewModel(compositeViewModelFactory: self, participantModel: participantModel)
+        ParticipantGridCellViewModel(localizationProvider: localizationProvider,
+                                     accessibilityProvider: accessibilityProvider,
+                                     participantModel: participantModel)
     }
     func makeParticipantGridsViewModel() -> ParticipantGridViewModel {
         ParticipantGridViewModel(compositeViewModelFactory: self,

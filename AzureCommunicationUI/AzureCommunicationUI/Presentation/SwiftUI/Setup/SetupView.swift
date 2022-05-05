@@ -49,7 +49,7 @@ struct SetupView: View {
                 JoiningCallActivityView(viewModel: viewModel.joiningCallActivityViewModel)
             } else {
                 PrimaryButton(viewModel: viewModel.joinCallButtonViewModel)
-                    .accessibilityIdentifier(LocalizationKey.joinCallAccessibilityLabel.rawValue)
+                    .accessibilityIdentifier(AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
             }
         }
     }

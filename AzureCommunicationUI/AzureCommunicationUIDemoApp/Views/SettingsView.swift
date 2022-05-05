@@ -42,7 +42,7 @@ struct SettingsView: View {
 
     var localizationSettings: some View {
         Section(header: Text("Localilzation")) {
-            LocalePicker(selection: $envConfigSubject.languageCode)
+            LocalePicker(selection: $envConfigSubject.locale)
             Toggle("Is Right-to-Left", isOn: $envConfigSubject.isRightToLeft)
             TextField(
                 "Locale identifier (eg. zh-Hant, fr-CA)",
@@ -92,16 +92,16 @@ struct SettingsView: View {
 }
 
 struct LocalePicker: View {
-    @Binding var selection: String
-    let supportedLanguage: [String] = ["auto"] + LocalizationConfiguration.supportedLanguages.sorted()
+    @Binding var selection: Locale
+    let supportedLanguage: [Locale] = [Locale(identifier: "")] + LocalizationConfiguration.supportedLocales
 
     var body: some View {
             Picker("Language", selection: $selection) {
                 ForEach(supportedLanguage, id: \.self) {
-                    if $0 == "auto" {
+                    if $0.identifier == "" {
                         Text("Detect locale (en, zh-Hant, fr, fr-CA)")
                     } else {
-                        Text($0)
+                        Text($0.identifier)
                     }
                 }
             }

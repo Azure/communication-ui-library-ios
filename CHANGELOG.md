@@ -5,12 +5,16 @@
 - Updated leave call confirmation drawer. [#129](https://github.com/Azure/communication-ui-library-ios/pull/129)
 - Implemented new local participant avatar parameter into launch method. [#131](https://github.com/Azure/communication-ui-library-ios/pull/131)
 - Implemented automatic system language detection for localization. [#126](https://github.com/Azure/communication-ui-library-ios/pull/126)
-- Updated localization language code to supoort both `ll` (language code) and `ll-CC` (language code with country code) format. [#133](https://github.com/Azure/communication-ui-library-ios/pull/133)
-- Implemented additional initializer for `LocalizationConfiguration` to accept Locale struct. [#133](https://github.com/Azure/communication-ui-library-ios/pull/133)
+- Change `LanguageCode` to `CommunicationUISupportedLocale` to support both `ll` (language code) and `ll-CC` (language code with country code) format using swift `Locale` struct. [#158](https://github.com/Azure/communication-ui-library-ios/pull/133)
+- Change initializer  `LocalizationConfiguration` to accept Locale struct. [#158](https://github.com/Azure/communication-ui-library-ios/pull/133)
+- Implemented additional primary color tint overrides to ThemeConfiguration
+- Implemented light/dark mode override to ThemeConfiguration
+- Implemented ability to drag the PiP around the display
 
 
 ### Bugs Fixed
 - Fixed screen share not rendering in large screen device. [#128](https://github.com/Azure/communication-ui-library-ios/pull/128)
+- Fixed the audio session not being active after an interruption. [#140](https://github.com/Azure/communication-ui-library-ios/pull/140)
 
 ## 1.0.0-beta.2 (2022-04-04)
 ### New Features
