@@ -21,7 +21,8 @@ public class CallComposite {
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
     private var audioSessionManager: AudioSessionManagerProtocol?
-    private var remoteParticipantsManager: RemoteParticipantsManager?
+    private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
+    private var avatarViewManager: AvatarViewManagerProtocol?
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
@@ -60,9 +61,7 @@ public class CallComposite {
                                                                     logger: dependencyContainer.resolve(),
                                                                     viewFactory: dependencyContainer.resolve(),
                                                                     isRightToLeft: localizationProvider.isRightToLeft)
-        setupManagers(store: dependencyContainer.resolve(),
-                      logger: dependencyContainer.resolve(),
-                      callingSDKWrapper: dependencyContainer.resolve())
+        setupManagers(dependencyContainer: dependencyContainer)
         present(toolkitHostingController)
     }
 
@@ -80,7 +79,7 @@ public class CallComposite {
         launch(callConfiguration, localOptions: localOptions)
     }
 
-    /// Start call composite experience with joining a Teams meeting..
+    /// Start call composite experience with joining a Teams meeting.
     /// - Parameter options: The TeamsMeetingOptions used to locate the Teams meetings.
     /// - Parameter localData: LocalData used to set the user participants information for the call.
     ///                         This is data is not sent up to ACS.
@@ -94,28 +93,45 @@ public class CallComposite {
         launch(callConfiguration, localOptions: localOptions)
     }
 
-    private func setupManagers(store: Store<AppState>,
-                               logger: Logger,
-                               callingSDKWrapper: CallingSDKWrapper) {
-        let errorManager = CompositeErrorManager(store: store,
+    /// Set persona data for the remote participant.
+    /// - Parameters:
+    ///   - identifier: The communication identifier for the remote participant.
+    ///   - personaData: PersonaData used to set the user participants information for the call.
+    ///   This is data is not sent up to ACS.
+    /// - Returns: The `Result` enum value with either a `Void` or an `Error`.
+    @discardableResult
+    public func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
+                                                personaData: PersonaData) -> Result<Void, Error> {
+        guard let avatarManager = avatarViewManager else {
+            return .failure(CompositeError.callCompositeNotLaunched)
+        }
+
+        return avatarManager.setRemoteParticipantPersonaData(for: identifier,
+                                                             personaData: personaData)
+    }
+
+    private func setupManagers(dependencyContainer: DependencyContainer) {
+        let errorManager = CompositeErrorManager(store: dependencyContainer.resolve(),
                                                  callCompositeEventsHandler: callCompositeEventsHandler)
         self.errorManager = errorManager
 
-        let lifeCycleManager = UIKitAppLifeCycleManager(store: store, logger: logger)
+        let lifeCycleManager = UIKitAppLifeCycleManager(store: dependencyContainer.resolve(),
+                                                        logger: dependencyContainer.resolve())
         self.lifeCycleManager = lifeCycleManager
 
-        let permissionManager = PermissionsManager(store: store)
+        let permissionManager = PermissionsManager(store: dependencyContainer.resolve())
         self.permissionManager = permissionManager
 
-        let audioSessionManager = AudioSessionManager(store: store,
-                                                         logger: logger)
+        let audioSessionManager = AudioSessionManager(store: dependencyContainer.resolve(),
+                                                      logger: dependencyContainer.resolve())
         self.audioSessionManager = audioSessionManager
 
         let remoteParticipantsManager = RemoteParticipantsManager(
-            store: store,
+            store: dependencyContainer.resolve(),
             callCompositeEventsHandler: callCompositeEventsHandler,
-            callingSDKWrapper: callingSDKWrapper)
+            callingSDKWrapper: dependencyContainer.resolve())
         self.remoteParticipantsManager = remoteParticipantsManager
+        avatarViewManager = dependencyContainer.resolve() as AvatarViewManagerProtocol
     }
 
     private func cleanUpManagers() {
@@ -123,6 +139,7 @@ public class CallComposite {
         self.lifeCycleManager = nil
         self.permissionManager = nil
         self.audioSessionManager = nil
+        self.remoteParticipantsManager = nil
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,

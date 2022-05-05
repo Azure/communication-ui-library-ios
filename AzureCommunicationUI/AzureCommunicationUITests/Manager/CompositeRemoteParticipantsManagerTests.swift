@@ -11,11 +11,12 @@ class CompositeRemoteParticipantsManagerTests: XCTestCase {
     var mockStoreFactory: StoreFactoryMocking!
     var callingSDKWrapper: CallingSDKWrapperMocking!
     var eventsHandler: CallCompositeEventsHandling!
-    var remoteParticipantsJoinedExpectation = XCTestExpectation(description: "DidRemoteParticipantsJoin event expectation")
+    var remoteParticipantsJoinedExpectation: XCTestExpectation!
     var expectedIds: [String] = []
 
     override func setUp() {
         super.setUp()
+        remoteParticipantsJoinedExpectation = XCTestExpectation(description: "DidRemoteParticipantsJoin event expectation")
         mockStoreFactory = StoreFactoryMocking()
         eventsHandler = CallCompositeEventsHandler()
         callingSDKWrapper = CallingSDKWrapperMocking()

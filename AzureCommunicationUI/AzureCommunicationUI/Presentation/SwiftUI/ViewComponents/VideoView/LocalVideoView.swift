@@ -56,7 +56,7 @@ enum LocalVideoViewType {
 
 struct LocalVideoView: View {
     @ObservedObject var viewModel: LocalVideoViewModel
-    var personaData: CommunicationUIPersonaData?
+    var personaData: PersonaData?
     let viewManager: VideoViewManager
     let viewType: LocalVideoViewType
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType

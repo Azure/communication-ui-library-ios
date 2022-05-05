@@ -159,7 +159,7 @@ class UIKitDemoViewController: UIViewController {
         callComposite.setTarget(didFail: didFail, didRemoteParticipantsJoin: didRemoteParticipantsJoin)
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
-        let persona = CommunicationUIPersonaData(UIImage(named: envConfigSubject.avatarImageName),
+        let persona = PersonaData(UIImage(named: envConfigSubject.avatarImageName),
                                                  renderDisplayName: renderDisplayName)
         let localOptions = CommunicationUILocalDataOptions(persona)
 
