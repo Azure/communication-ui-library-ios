@@ -135,11 +135,11 @@ class UIKitDemoViewController: UIViewController {
     func startExperience(with link: String) {
         var localizationConfig: LocalizationConfiguration?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
-        if envConfigSubject.localeIdentifier != "" {
+        if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
             localizationConfig = LocalizationConfiguration(locale: locale,
                                                            layoutDirection: layoutDirection)
-        } else if envConfigSubject.locale.identifier != "" {
+        } else if !envConfigSubject.locale.identifier.isEmpty {
             localizationConfig = LocalizationConfiguration(
                 locale: envConfigSubject.locale,
                 layoutDirection: layoutDirection)

@@ -48,7 +48,7 @@ class LocalizationProvider: LocalizationProviderProtocol {
 
     func apply(localeConfig: LocalizationConfiguration) {
         if !supportedLocales.contains(localeConfig.languageCode) {
-            let warningMessage = "Language not supported by default for " +
+            let warningMessage = "Locale not supported by default for " +
             "`\(localeConfig.languageCode)`, if string for AzureCommunicationUI " +
             "localization keys not provided in custom Localizable.strings " +
             "or customString, strings will default to `en`"
