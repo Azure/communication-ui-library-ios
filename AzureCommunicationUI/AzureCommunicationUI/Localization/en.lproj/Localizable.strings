@@ -51,6 +51,9 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d participants joined the meeting";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ left the meeting";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d participants left the meeting";
+"AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="You have joined the call";
+"AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Content is being shared";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Content sharing has ended";
 
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Leave";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Cancel";

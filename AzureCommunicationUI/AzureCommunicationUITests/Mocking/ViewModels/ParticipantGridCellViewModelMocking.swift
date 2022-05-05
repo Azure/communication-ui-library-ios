@@ -14,6 +14,7 @@ class ParticipantGridCellViewModelMocking: ParticipantGridCellViewModel {
          updateParticipantModelCompletion: ((ParticipantInfoModel) -> Void)?) {
         self.updateParticipantModelCompletion = updateParticipantModelCompletion
         super.init(localizationProvider: LocalizationProviderMocking(),
+                   accessibilityProvider: AccessibilityProviderMocking(),
                    participantModel: participantModel)
     }
 
