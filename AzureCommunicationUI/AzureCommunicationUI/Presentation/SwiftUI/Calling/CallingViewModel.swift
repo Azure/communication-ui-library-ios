@@ -13,7 +13,7 @@ class CallingViewModel: ObservableObject {
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
     let isRightToLeft: Bool
     @Published var appState: AppStatus = .foreground
-    private var isCallConnected: Bool = false
+    private var callHasConnected: Bool = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -110,12 +110,12 @@ class CallingViewModel: ObservableObject {
             accessibilityProvider.moveFocusToFirstElement()
         }
 
-        if isCallConnected != newIsCallConnected && newIsCallConnected {
+        if callHasConnected != newIsCallConnected && newIsCallConnected {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 self.accessibilityProvider.postQueuedAnnouncement(
                     self.localizationProvider.getLocalizedString(.joinedCallAccessibilityLabel))
             }
-            isCallConnected = newIsCallConnected
+            callHasConnected = newIsCallConnected
         }
         updateIsLocalCameraOn(with: state)
     }
