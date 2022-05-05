@@ -7,10 +7,14 @@
 - Implemented automatic system language detection for localization. [#126](https://github.com/Azure/communication-ui-library-ios/pull/126)
 - Change `LanguageCode` to `CommunicationUISupportedLocale` to support both `ll` (language code) and `ll-CC` (language code with country code) format using swift `Locale` struct. [#158](https://github.com/Azure/communication-ui-library-ios/pull/133)
 - Change initializer  `LocalizationConfiguration` to accept Locale struct. [#158](https://github.com/Azure/communication-ui-library-ios/pull/133)
+- Implemented additional primary color tint overrides to ThemeConfiguration
+- Implemented light/dark mode override to ThemeConfiguration
+- Implemented ability to drag the PiP around the display
 
 
 ### Bugs Fixed
 - Fixed screen share not rendering in large screen device. [#128](https://github.com/Azure/communication-ui-library-ios/pull/128)
+- Fixed the audio session not being active after an interruption. [#140](https://github.com/Azure/communication-ui-library-ios/pull/140)
 
 ## 1.0.0-beta.2 (2022-04-04)
 ### New Features

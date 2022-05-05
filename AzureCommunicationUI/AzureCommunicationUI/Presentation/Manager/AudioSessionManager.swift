@@ -13,6 +13,7 @@ protocol AudioSessionManagerProtocol {
 class AudioSessionManager: AudioSessionManagerProtocol {
     private let logger: Logger
     private let store: Store<AppState>
+    private var localUserAudioDeviceState: LocalUserState.AudioDeviceSelectionStatus?
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState>,
@@ -30,7 +31,12 @@ class AudioSessionManager: AudioSessionManagerProtocol {
 
     private func receive(state: AppState) {
         let localUserState = state.localUserState
-        handle(state: localUserState.audioState.device)
+        let userAudioDeviceState = localUserState.audioState.device
+        guard userAudioDeviceState != localUserAudioDeviceState else {
+            return
+        }
+        localUserAudioDeviceState = userAudioDeviceState
+        handle(state: userAudioDeviceState)
     }
 
     private func handle(state: LocalUserState.AudioDeviceSelectionStatus) {
@@ -49,6 +55,39 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     private func setupAudioSession() {
+
+        activateAudioSessionCategory()
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleRouteChange),
+                                               name: AVAudioSession.routeChangeNotification,
+                                               object: nil)
+
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleInterruption),
+                                               name: AVAudioSession.interruptionNotification,
+                                               object: AVAudioSession.sharedInstance())
+    }
+
+    @objc func handleInterruption(notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
+              let interruptionType = AVAudioSession.InterruptionType(rawValue: typeValue),
+              interruptionType == AVAudioSession.InterruptionType.ended else {
+            return
+        }
+        resumeAudioSession()
+    }
+
+    @objc func handleRouteChange(notification: Notification) {
+        let currentDevice = getCurrentAudioDevice()
+        guard !hasProcess(currentDevice) else {
+            return
+        }
+
+        store.dispatch(action: LocalUserAction.AudioDeviceChangeSucceeded(device: currentDevice))
+    }
+
+    private func activateAudioSessionCategory() {
         let audioSession = AVAudioSession.sharedInstance()
         do {
             let options: AVAudioSession.CategoryOptions = [.allowBluetooth,
@@ -60,11 +99,33 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         } catch let error {
             logger.error("Failed to set audio session category:\(error.localizedDescription)")
         }
+    }
 
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(handleRouteChange),
-                                               name: AVAudioSession.routeChangeNotification,
-                                               object: nil)
+    private func resumeAudioSession() {
+        var audioDeviceType: AudioDeviceType
+        switch localUserAudioDeviceState {
+        case .receiverSelected,
+                .receiverRequested:
+            audioDeviceType = .receiver
+        case .speakerSelected,
+                .speakerRequested:
+            audioDeviceType = .speaker
+        case .headphonesSelected,
+                .headphonesRequested:
+            audioDeviceType = .headphones
+        case .bluetoothSelected,
+                .bluetoothRequested:
+            audioDeviceType = .bluetooth
+        default:
+            audioDeviceType = .receiver
+        }
+
+        activateAudioSessionCategory()
+
+        // Add a delay of setting audioDeviceType, to override the default port from setAudioSessionCategory.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+            self?.switchAudioDevice(to: audioDeviceType)
+        }
     }
 
     private func getCurrentAudioDevice() -> AudioDeviceType {
@@ -106,7 +167,15 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         }
     }
 
-    @objc func handleRouteChange(notification: Notification) {
-        store.dispatch(action: LocalUserAction.AudioDeviceChangeRequested(device: getCurrentAudioDevice()))
+    private func hasProcess(_ currentAudioDevice: AudioDeviceType) -> Bool {
+        switch (localUserAudioDeviceState, currentAudioDevice) {
+        case (.speakerSelected, .speaker),
+            (.bluetoothSelected, .bluetooth),
+            (.headphonesSelected, .headphones),
+            (.receiverSelected, .receiver):
+            return true
+        default:
+            return false
+        }
     }
 }
