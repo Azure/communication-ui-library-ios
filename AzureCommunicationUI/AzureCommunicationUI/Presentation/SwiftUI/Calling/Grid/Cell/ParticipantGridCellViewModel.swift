@@ -13,6 +13,7 @@ struct ParticipantVideoViewInfoModel {
 
 class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     private let localizationProvider: LocalizationProviderProtocol
+    private let accessibilityProvider: AccessibilityProviderProtocol
 
     let id = UUID()
 
@@ -23,10 +24,13 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var isMuted: Bool
 
     var participantIdentifier: String
+    private var isScreenSharing: Bool = false
 
     init(localizationProvider: LocalizationProviderProtocol,
+         accessibilityProvider: AccessibilityProviderProtocol,
          participantModel: ParticipantInfoModel) {
         self.localizationProvider = localizationProvider
+        self.accessibilityProvider = accessibilityProvider
         self.displayName = participantModel.displayName
         self.isSpeaking = participantModel.isSpeaking
         self.participantIdentifier = participantModel.userIdentifier
@@ -41,6 +45,15 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
 
         if self.videoViewModel?.videoStreamId != videoViewModel.videoStreamId ||
             self.videoViewModel?.videoStreamType != videoViewModel.videoStreamType {
+            let newIsScreenSharing = videoViewModel.videoStreamType == .screenSharing
+            if newIsScreenSharing {
+                accessibilityProvider.postQueuedAnnouncement(
+                    localizationProvider.getLocalizedString(.screenshareStartAccessibilityLabel))
+            } else if self.isScreenSharing && !newIsScreenSharing {
+                accessibilityProvider.postQueuedAnnouncement(
+                    localizationProvider.getLocalizedString(.screenshareEndAccessibilityLabel))
+            }
+            self.isScreenSharing = newIsScreenSharing
             self.videoViewModel = ParticipantVideoViewInfoModel(videoStreamType: videoViewModel.videoStreamType,
                                                  videoStreamId: videoViewModel.videoStreamId)
         }
