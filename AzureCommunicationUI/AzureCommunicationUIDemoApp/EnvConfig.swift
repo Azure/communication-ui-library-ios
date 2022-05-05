@@ -40,7 +40,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var localeIdentifier: String = ""
     @Published var isRightToLeft: Bool = false
     @Published var useCustomColors: Bool = false
-    @Published var useCustomRemoteParticipantsAvatars: Bool = false
+    @Published var useCustomRemoteParticipantsAvatars: Bool = true
     @Published var primaryColor: Color = .blue
     @Published var tint10: Color = .blue
     @Published var tint20: Color = .blue
