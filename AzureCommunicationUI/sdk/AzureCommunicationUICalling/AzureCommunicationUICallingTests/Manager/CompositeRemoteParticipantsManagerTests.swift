@@ -4,7 +4,7 @@
 //
 
 import XCTest
-@testable import AzureCommunicationUI
+@testable import AzureCommunicationUICalling
 
 class CompositeRemoteParticipantsManagerTests: XCTestCase {
     var sut: RemoteParticipantsManager!
