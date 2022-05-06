@@ -23,9 +23,11 @@ struct ParticipantGridLayoutView: View {
     }
 
     func  getChunkedCellViewModelArray() -> [[ParticipantGridCellViewModel]] {
-        let screenBasedRowSize = screenSize == .ipadScreenSize ? 3 : 2
-        let rowSize = cellViewModels.count == 2 ? 1 : screenBasedRowSize
-        return cellViewModels.chunkedAndReversed(into: rowSize)
+        let cellCount = cellViewModels.count
+        let vGridLayout = screenSize == .iphonePortraitScreenSize
+        let screenBasedRowSize = (screenSize == .ipadScreenSize && (cellCount != 4)) ? 3 : 2
+        return cellViewModels.chunkedAndReversed(into: screenBasedRowSize,
+                                                 vGridLayout: vGridLayout)
     }
 
     var hGridLayout: some View {
