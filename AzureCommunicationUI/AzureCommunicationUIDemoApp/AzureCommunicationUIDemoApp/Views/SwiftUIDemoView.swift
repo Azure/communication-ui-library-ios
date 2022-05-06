@@ -4,7 +4,7 @@
 //
 
 import SwiftUI
-import AzureCommunicationUI
+import AzureCommunicationUICalling
 import AzureCommunicationCalling
 
 struct SwiftUIDemoView: View {

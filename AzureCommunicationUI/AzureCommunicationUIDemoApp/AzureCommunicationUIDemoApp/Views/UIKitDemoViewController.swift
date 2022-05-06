@@ -6,7 +6,7 @@
 import UIKit
 import Combine
 import SwiftUI
-import AzureCommunicationUI
+import AzureCommunicationUICalling
 import AzureCommunicationCalling
 import AppCenterCrashes
 

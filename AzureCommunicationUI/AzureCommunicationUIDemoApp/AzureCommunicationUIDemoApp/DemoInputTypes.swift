@@ -4,7 +4,7 @@
 //
 
 import Foundation
-import AzureCommunicationUI
+import AzureCommunicationUICalling
 
 enum MeetingType: Int {
     case groupCall

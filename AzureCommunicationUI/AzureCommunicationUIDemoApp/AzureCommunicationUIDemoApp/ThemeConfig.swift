@@ -4,7 +4,7 @@
 //
 
 import UIKit
-import AzureCommunicationUI
+import AzureCommunicationUICalling
 
 struct CustomColorTheming: ThemeConfiguration {
     private var envConfigSubject: EnvConfigSubject

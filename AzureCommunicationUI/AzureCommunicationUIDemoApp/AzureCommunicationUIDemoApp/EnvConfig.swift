@@ -4,7 +4,7 @@
 //
 
 import Foundation
-import AzureCommunicationUI
+import AzureCommunicationUICalling
 import SwiftUI
 
 enum EnvConfig: String {
