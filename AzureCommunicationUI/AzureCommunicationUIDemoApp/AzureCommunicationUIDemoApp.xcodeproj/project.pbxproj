@@ -31,10 +31,10 @@
 		A8C69FBD2728AE1C00143DB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8C69FBC2728AE1C00143DB7 /* Assets.xcassets */; };
 		A8C69FC02728AE1C00143DB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C69FBE2728AE1C00143DB7 /* LaunchScreen.storyboard */; };
 		A8FB819C272A082B00AA0930 /* DemoInputTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */; };
-		FA76FC0E282496090047B56F /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA76FC0D282496090047B56F /* AccessibilityIdentifier.swift */; };
-		FA76FC0F282496090047B56F /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA76FC0D282496090047B56F /* AccessibilityIdentifier.swift */; };
 		FAA448A0282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; };
 		FAA448A1282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FAA448A42825931500BD0DC0 /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA448A32825931500BD0DC0 /* AccessibilityIdentifier.swift */; };
+		FAA448A52825931500BD0DC0 /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA448A32825931500BD0DC0 /* AccessibilityIdentifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -100,8 +100,8 @@
 		A8C69FBF2728AE1C00143DB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8C69FC12728AE1C00143DB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoInputTypes.swift; sourceTree = "<group>"; };
-		FA76FC0D282496090047B56F /* AccessibilityIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccessibilityIdentifier.swift; path = ../sdk/AzureCommunicationUI/AzureCommunicationUI/Utilities/AccessibilityIdentifier.swift; sourceTree = "<group>"; };
 		FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AzureCommunicationUICalling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FAA448A32825931500BD0DC0 /* AccessibilityIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccessibilityIdentifier.swift; path = ../sdk/AzureCommunicationUICalling/AzureCommunicationUICalling/Utilities/AccessibilityIdentifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,7 +186,7 @@
 		A8C69FA72728AE1A00143DB7 = {
 			isa = PBXGroup;
 			children = (
-				FA76FC0D282496090047B56F /* AccessibilityIdentifier.swift */,
+				FAA448A32825931500BD0DC0 /* AccessibilityIdentifier.swift */,
 				A8C69FB22728AE1A00143DB7 /* AzureCommunicationUIDemoApp */,
 				1F8881BB27909E08001427F0 /* AzureCommunicationUIDemoAppUITests */,
 				A8C69FB12728AE1A00143DB7 /* Products */,
@@ -476,7 +476,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5027C1C72821A55E00DC7131 /* AccessibilityId.swift in Sources */,
-				FA76FC0F282496090047B56F /* AccessibilityIdentifier.swift in Sources */,
+				FAA448A52825931500BD0DC0 /* AccessibilityIdentifier.swift in Sources */,
 				1F18191A27B45050006AF3B3 /* XCUIElementExtension.swift in Sources */,
 				1F18191727B39F36006AF3B3 /* XCUITestBase.swift in Sources */,
 				1B0D8DC627F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift in Sources */,
@@ -490,7 +490,7 @@
 			files = (
 				A8C69FB42728AE1A00143DB7 /* AppDelegate.swift in Sources */,
 				A8FB819C272A082B00AA0930 /* DemoInputTypes.swift in Sources */,
-				FA76FC0E282496090047B56F /* AccessibilityIdentifier.swift in Sources */,
+				FAA448A42825931500BD0DC0 /* AccessibilityIdentifier.swift in Sources */,
 				A8AC66FE2735A41600632D0B /* CustomControls.swift in Sources */,
 				A85DDCB92728B23B001297B4 /* SwiftUIDemoView.swift in Sources */,
 				1F8881CD279B456E001427F0 /* Extension.swift in Sources */,
