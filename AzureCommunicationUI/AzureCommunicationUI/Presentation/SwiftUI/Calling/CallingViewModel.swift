@@ -32,7 +32,8 @@ class CallingViewModel: ObservableObject {
          logger: Logger,
          store: Store<AppState>,
          localizationProvider: LocalizationProviderProtocol,
-         accessibilityProvider: AccessibilityProviderProtocol) {
+         accessibilityProvider: AccessibilityProviderProtocol,
+         isIPadInterface: Bool) {
         self.logger = logger
         self.compositeViewModelFactory = compositeViewModelFactory
         self.store = store
@@ -41,7 +42,8 @@ class CallingViewModel: ObservableObject {
         self.accessibilityProvider = accessibilityProvider
         let actionDispatch: ActionDispatch = store.dispatch
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
-        participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel()
+        participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
+                                                                                                isIPadInterface)
         bannerViewModel = compositeViewModelFactory.makeBannerViewModel()
 
         infoHeaderViewModel = compositeViewModelFactory

@@ -14,7 +14,11 @@ extension Array {
             if index % size == 0, index != 0 {
                 chunkedArray.append(Array(self[(index - size)..<index]))
             } else if index == self.count {
-                chunkedArray.append(Array(self[index - 1..<index]))
+                let startingIdx = index - (index % size)
+                if startingIdx < index - 1 {
+                    chunkedArray.append(Array(self[startingIdx...]))
+                } else {
+                }
             }
         }
 
