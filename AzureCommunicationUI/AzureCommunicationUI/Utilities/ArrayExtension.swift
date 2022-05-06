@@ -20,7 +20,6 @@ extension Array {
                     let startingIdx = index - (index % size)
                     if startingIdx < index - 1 || self.count < size {
                         chunkedArray.append(Array(self[startingIdx...]))
-                    } else {
                     }
                 }
             }
