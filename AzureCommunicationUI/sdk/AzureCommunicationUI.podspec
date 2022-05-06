@@ -16,7 +16,6 @@ Pod::Spec.new do |spec|
 
   spec.pod_target_xcconfig  = { "EXCLUDED_ARCHS[sdk=iphonesimulator*]": "arm64", "ENABLE_BITCODE": "NO"}
   
-  spec.frameworks           = 'UIKit', 'SwiftUI'
   spec.dependency             'AzureCommunicationCalling', '2.2.0-beta.1'
   spec.dependency             'MicrosoftFluentUI/Avatar_ios', '0.3.9'
   spec.dependency             'MicrosoftFluentUI/BottomSheet_ios', '0.3.9'
