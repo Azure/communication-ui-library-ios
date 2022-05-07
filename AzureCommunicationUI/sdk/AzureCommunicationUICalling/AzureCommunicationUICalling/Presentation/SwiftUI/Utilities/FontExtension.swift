@@ -11,3 +11,7 @@ extension UIFont {
         return Font(self as CTFont)
     }
 }
+
+extension Fonts {
+    static var button2Accessibility: UIFont { return Fonts.button2.withSize(20) }
+}
