@@ -10,10 +10,10 @@ import AzureCommunicationCalling
 
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
+    public var callCompositeEventsHandler = CallCompositeEvents()
     private var logger: Logger?
     private let themeConfiguration: ThemeConfiguration?
     private let localizationConfiguration: LocalizationConfiguration?
-    private let callCompositeEventsHandler = CallCompositeEventsHandler()
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
@@ -24,12 +24,6 @@ public class CallComposite {
     public init(withOptions options: CallCompositeOptions? = nil) {
         themeConfiguration = options?.themeConfiguration
         localizationConfiguration = options?.localizationConfiguration
-    }
-
-    /// Assign closure to execute when an error occurs inside Call Composite.
-    /// - Parameter action: The closure returning the error thrown from Call Composite.
-    public func setTarget(didFail action: ((CommunicationUIErrorEvent) -> Void)?) {
-        callCompositeEventsHandler.didFail = action
     }
 
     deinit {

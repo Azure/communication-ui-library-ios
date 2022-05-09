@@ -6,6 +6,7 @@ import Foundation
 import UIKit
 import AzureCommunicationCalling
 
-class CallCompositeEventsHandler {
-    var didFail: ((CommunicationUIErrorEvent) -> Void)?
+public typealias CompositeErrorHandler = (CommunicationUIErrorEvent) -> Void
+public struct CallCompositeEvents {
+    public var didFail: CompositeErrorHandler?
 }
