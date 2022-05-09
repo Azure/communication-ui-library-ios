@@ -33,7 +33,7 @@ struct RemoteParticipantAvatarHelper {
                 let selectedAvatar = avatars[index]
                 let image = UIImage(named: selectedAvatar)
                 let nameIdValue = id != nil ? " \(id?.suffix(4) ?? "")" : ""
-                let personaData = PersonaData(image,
+                let personaData = PersonaData(avatar: image,
                                               renderDisplayName: selectedAvatar + nameIdValue)
                 callComposite.setRemoteParticipantPersonaData(for: identifier,
                                                               personaData: personaData)

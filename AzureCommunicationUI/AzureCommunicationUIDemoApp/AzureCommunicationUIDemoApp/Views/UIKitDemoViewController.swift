@@ -43,6 +43,7 @@ class UIKitDemoViewController: UIViewController {
 
     private var cancellable = Set<AnyCancellable>()
     private var envConfigSubject: EnvConfigSubject
+    private(set) var callComposite: CallComposite?
 
     private lazy var contentView: UIView = {
         let view = UIView()
@@ -160,18 +161,21 @@ class UIKitDemoViewController: UIViewController {
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
-        let callComposite = CallComposite(withOptions: callCompositeOptions)
+        callComposite = CallComposite(withOptions: callCompositeOptions)
         let didRemoteParticipantsJoin: ([CommunicationIdentifier]) -> Void = { [weak callComposite] identifiers in
             guard let composite = callComposite else {
                 return
             }
-
             self.didRemoteParticipantsJoin(to: composite, identifiers: identifiers)
         }
+        guard let callComposite = callComposite else {
+            return
+        }
+
         callComposite.setTarget(didFail: didFail, didRemoteParticipantsJoin: didRemoteParticipantsJoin)
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
-                                nil : envConfigSubject.renderedDisplayName
-        let persona = PersonaData(UIImage(named: envConfigSubject.avatarImageName),
+        nil : envConfigSubject.renderedDisplayName
+        let persona = PersonaData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                  renderDisplayName: renderDisplayName)
         let localOptions = CommunicationUILocalDataOptions(persona)
 
