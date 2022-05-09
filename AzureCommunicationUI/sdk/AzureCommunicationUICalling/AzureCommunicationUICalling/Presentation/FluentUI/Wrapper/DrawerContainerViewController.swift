@@ -115,6 +115,7 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
             isScrollEnabled = true
         }
 
+
         DispatchQueue.main.async { [weak self] in
             guard let self = self else {
                 return
@@ -123,6 +124,9 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
             self.drawerTableView?.isScrollEnabled = isScrollEnabled
             self.controller?.preferredContentSize = CGSize(width: 400,
                                                            height: drawerHeight + (self.showHeader ? 36 : 0))
+            for cell in self.drawerTableView!.visibleCells {
+                print(cell.bounds.height)
+            }
         }
     }
 }
