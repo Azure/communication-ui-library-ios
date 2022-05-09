@@ -25,6 +25,7 @@ class NavigationRouter: ObservableObject {
         self.logger = logger
 
         store.$state
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.receive(state)
             }.store(in: &cancellables)
