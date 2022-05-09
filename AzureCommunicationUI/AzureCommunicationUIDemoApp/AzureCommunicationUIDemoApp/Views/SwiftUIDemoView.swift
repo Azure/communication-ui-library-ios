@@ -154,7 +154,7 @@ extension SwiftUIDemoView {
         callComposite.setTarget(didFail: didFail, didRemoteParticipantsJoin: didRemoteParticipantsJoin)
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
-        let persona = PersonaData(UIImage(named: envConfigSubject.avatarImageName),
+        let persona = PersonaData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                  renderDisplayName: renderDisplayName)
         let localOptions = CommunicationUILocalDataOptions(persona)
         if let credential = try? getTokenCredential() {
