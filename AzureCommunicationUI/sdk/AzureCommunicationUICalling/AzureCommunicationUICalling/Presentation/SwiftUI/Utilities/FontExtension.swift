@@ -5,6 +5,7 @@
 
 import SwiftUI
 import UIKit
+import FluentUI
 
 extension UIFont {
     var font: Font {
