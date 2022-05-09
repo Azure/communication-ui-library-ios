@@ -122,7 +122,7 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
                 isScrollEnabled = true
             }
 
-            self.drawerTableView?.isScrollEnabled = isScrollEnabled
+            self.drawerTableView!.isScrollEnabled = isScrollEnabled
             self.controller?.preferredContentSize = CGSize(width: 400,
                                                            height: drawerHeight)
         }
