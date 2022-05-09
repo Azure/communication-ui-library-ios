@@ -37,7 +37,7 @@ class AvatarManagerTests: XCTestCase {
             return
         }
         let sut = makeSUT()
-        let personaData = PersonaData(mockImage)
+        let personaData = PersonaData(avatar: mockImage)
         let id = UUID().uuidString
         let result = sut.setRemoteParticipantPersonaData(for: CommunicationUserIdentifier(id),
                                                          personaData: personaData)
@@ -51,7 +51,7 @@ class AvatarManagerTests: XCTestCase {
 
 extension AvatarManagerTests {
     private func makeSUT(_ image: UIImage) -> AvatarViewManager {
-        let mockPersonaData = PersonaData(image, renderDisplayName: "")
+        let mockPersonaData = PersonaData(avatar: image, renderDisplayName: "")
         let mockDataOptions = CommunicationUILocalDataOptions(mockPersonaData)
         return AvatarViewManager(store: mockStoreFactory.store,
                                  localDataOptions: mockDataOptions)

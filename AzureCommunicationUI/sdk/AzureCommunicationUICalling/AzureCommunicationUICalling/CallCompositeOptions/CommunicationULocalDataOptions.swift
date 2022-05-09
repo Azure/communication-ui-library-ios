@@ -18,7 +18,7 @@ public struct PersonaData {
     let avatarImage: UIImage?
     let renderDisplayName: String?
 
-    public init(_ avatar: UIImage?,
+    public init(avatar: UIImage?,
                 renderDisplayName: String? = nil) {
         self.avatarImage = avatar
         self.renderDisplayName = renderDisplayName
