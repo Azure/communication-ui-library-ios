@@ -244,7 +244,7 @@ extension SwiftUIDemoView {
 
     func didRemoteParticipantsJoin(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::SwiftUIDemoView::getEventsHandler::didRemoteParticipantsJoin \(identifiers)")
-        guard envConfigSubject.useCustomRemoteParticipantsAvatars else {
+        guard envConfigSubject.useCustomRemoteParticipantsPersonaData else {
             return
         }
 
