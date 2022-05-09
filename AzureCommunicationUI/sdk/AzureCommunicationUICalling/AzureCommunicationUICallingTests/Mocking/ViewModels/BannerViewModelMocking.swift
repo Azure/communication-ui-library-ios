@@ -7,7 +7,7 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class BannerViewModelMocking: BannerViewModel {
-    private let updateState: ((CallingState) -> Void)?
+    private var updateState: ((CallingState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          updateState: ((CallingState) -> Void)? = nil) {
@@ -17,5 +17,6 @@ class BannerViewModelMocking: BannerViewModel {
 
     override func update(callingState: CallingState) {
         updateState?(callingState)
+        updateState = nil
     }
 }
