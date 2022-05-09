@@ -7,7 +7,7 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class LocalVideoViewModelMocking: LocalVideoViewModel {
-    private let updateState: ((LocalUserState) -> Void)?
+    var updateState: ((LocalUserState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,

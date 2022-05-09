@@ -59,7 +59,6 @@ class CallingViewModel: ObservableObject {
             }, localUserState: store.state.localUserState)
 
         store.$state
-            .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.receive(state)
             }.store(in: &cancellables)

@@ -123,15 +123,20 @@ class SetupViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted),
                                 localUserState: LocalUserState(displayName: "DisplayName"))
         let expectation = XCTestExpectation(description: "PreviewAreaViewModel is updated")
-        let updatePreviewAreaViewModel: ((LocalUserState, PermissionState) -> Void) = { userState, permissionsState in
+        let storeFactory = StoreFactoryMocking()
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        let previewAreaViewModel = PreviewAreaViewModelMocking(
+            compositeViewModelFactory: factoryMocking,
+            dispatchAction: storeFactory.store.dispatch)
+        factoryMocking.previewAreaViewModel = previewAreaViewModel
+        let sut = makeSUT(factoryMocking: factoryMocking)
+
+        previewAreaViewModel.updateState = { userState, permissionsState in
             XCTAssertEqual(userState.displayName, appState.localUserState.displayName)
             XCTAssertEqual(permissionsState.audioPermission, appState.permissionState.audioPermission)
             expectation.fulfill()
         }
-        factoryMocking.previewAreaViewModel = PreviewAreaViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                          dispatchAction: storeFactory.store.dispatch,
-                                                                          updateState: updatePreviewAreaViewModel)
-        let sut = makeSUT()
+
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
@@ -141,18 +146,23 @@ class SetupViewModelTests: XCTestCase {
                                 permissionState: PermissionState(audioPermission: .granted),
                                 localUserState: LocalUserState(displayName: "DisplayName"))
         let expectation = XCTestExpectation(description: "SetupControlBarViewModel is updated")
-        let updateSetupControlBarViewModel: ((LocalUserState, PermissionState, CallingState) -> Void) = { userState, permissionsState, callingState in
+        let storeFactory = StoreFactoryMocking()
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        let setupControlBarViewModel = SetupControlBarViewModelMocking(
+            compositeViewModelFactory: factoryMocking,
+            logger: logger,
+            dispatchAction: storeFactory.store.dispatch,
+            localUserState: LocalUserState())
+        factoryMocking.setupControlBarViewModel = setupControlBarViewModel
+        let sut = makeSUT(factoryMocking: factoryMocking)
+
+        setupControlBarViewModel.updateState = { userState, permissionsState, callingState in
             XCTAssertEqual(userState.displayName, appState.localUserState.displayName)
             XCTAssertEqual(permissionsState.audioPermission, appState.permissionState.audioPermission)
             XCTAssertEqual(callingState, appState.callingState)
             expectation.fulfill()
         }
-        factoryMocking.setupControlBarViewModel = SetupControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                                  logger: logger,
-                                                                                  dispatchAction: storeFactory.store.dispatch,
-                                                                                  localUserState: LocalUserState(),
-                                                                                  updateState: updateSetupControlBarViewModel)
-        let sut = makeSUT()
+
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
@@ -212,6 +222,13 @@ extension SetupViewModelTests {
     }
 
     func makeSUT() -> SetupViewModel {
+        return SetupViewModel(compositeViewModelFactory: factoryMocking,
+                              logger: logger,
+                              store: storeFactory.store,
+                              localizationProvider: LocalizationProviderMocking())
+    }
+
+    func makeSUT(factoryMocking: CompositeViewModelFactoryMocking) -> SetupViewModel {
         return SetupViewModel(compositeViewModelFactory: factoryMocking,
                               logger: logger,
                               store: storeFactory.store,

@@ -7,7 +7,7 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class BannerViewModelMocking: BannerViewModel {
-    private let updateState: ((CallingState) -> Void)?
+    var updateState: ((CallingState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          updateState: ((CallingState) -> Void)? = nil) {

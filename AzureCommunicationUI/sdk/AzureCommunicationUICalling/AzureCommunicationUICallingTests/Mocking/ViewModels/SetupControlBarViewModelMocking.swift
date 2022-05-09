@@ -7,7 +7,7 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class SetupControlBarViewModelMocking: SetupControlBarViewModel {
-    private let updateState: ((LocalUserState, PermissionState, CallingState) -> Void)?
+    var updateState: ((LocalUserState, PermissionState, CallingState) -> Void)?
     var updateIsJoinRequested: ((Bool) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
