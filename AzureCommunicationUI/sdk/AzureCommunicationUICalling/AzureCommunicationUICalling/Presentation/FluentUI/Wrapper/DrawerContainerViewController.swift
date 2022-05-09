@@ -32,6 +32,11 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        resizeDrawer()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         showDrawerView()
@@ -108,8 +113,8 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
             self.drawerTableView?.reloadData()
 
             var drawerHeight = self.getDrawerHeight(
+                tableView: self.drawerTableView!,
                 numberOfItems: self.items.count,
-                cellHeight: self.getCellHeight(tableView: self.drawerTableView),
                 showHeader: self.showHeader,
                 isiPhoneLayout: isiPhoneLayout)
 
@@ -124,34 +129,44 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         }
     }
 
-    private func getCellHeight(tableView: UITableView?) -> CGFloat {
-        let defaultCellHeight: CGFloat = 44
-        var cellHeight: CGFloat = defaultCellHeight
-
-        guard tableView != nil else {
-            return cellHeight
-        }
-
-        for cell in tableView!.visibleCells {
-            cellHeight = cell.bounds.height
-            break
-        }
-
-        return cellHeight
-    }
-
-    private func getDrawerHeight(numberOfItems: Int,
-                                 cellHeight: CGFloat,
+    private func getDrawerHeight(tableView: UITableView,
+                                 numberOfItems: Int,
                                  showHeader: Bool,
                                  isiPhoneLayout: Bool) -> CGFloat {
-        let headerHeight: CGFloat = isiPhoneLayout ? 56 : 70
+        let headerHeight = self.getHeaderHeight(tableView: tableView, isiPhoneLayout: isiPhoneLayout)
         let resizeBarHeight: CGFloat = isiPhoneLayout ? 20 : 0
         let dividerOffsetHeight = CGFloat(numberOfItems * 3)
 
-        var drawerHeight = CGFloat(numberOfItems) * cellHeight
+        var drawerHeight: CGFloat = getTotalCellsHeight(tableView: tableView, numberOfItems: numberOfItems)
         drawerHeight += showHeader ? headerHeight : resizeBarHeight
         drawerHeight += dividerOffsetHeight
 
         return drawerHeight
+    }
+
+    private func getHeaderHeight(tableView: UITableView,
+                                 isiPhoneLayout: Bool) -> CGFloat {
+        return isiPhoneLayout ? tableView.sectionHeaderHeight + 20 : tableView.sectionHeaderHeight + 35
+    }
+
+    private func getTotalCellsHeight(tableView: UITableView,
+                                     numberOfItems: Int) -> CGFloat {
+        // If we can't get all table cell heights,
+        // fall back to assumption all cells are the same height.
+        guard tableView.visibleCells.count == numberOfItems else {
+            let defaultCellHeight: CGFloat = 44
+            var firstCellHeight: CGFloat = defaultCellHeight
+            for cell in tableView.visibleCells {
+                firstCellHeight = cell.bounds.height
+                break
+            }
+            return firstCellHeight * CGFloat(numberOfItems)
+        }
+
+        var totalCellsHeight: CGFloat = 0
+        for cell in tableView.visibleCells {
+            totalCellsHeight += cell.bounds.height
+        }
+        return totalCellsHeight
     }
 }
