@@ -105,7 +105,7 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
             guard let self = self else {
                 return
             }
-            guard self.drawerTableView == nil else {
+            guard self.drawerTableView != nil else {
                 return
             }
 
