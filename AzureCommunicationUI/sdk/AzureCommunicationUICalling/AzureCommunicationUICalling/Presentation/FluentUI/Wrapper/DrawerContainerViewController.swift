@@ -105,7 +105,11 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
             guard let self = self else {
                 return
             }
-            self.drawerTableView?.reloadData()
+            guard self.drawerTableView == nil else {
+                return
+            }
+
+            self.drawerTableView!.reloadData()
 
             var drawerHeight = self.getDrawerHeight(
                 tableView: self.drawerTableView!,
