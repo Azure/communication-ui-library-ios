@@ -25,7 +25,7 @@ class DependencyContainerTests: XCTestCase {
         let callConfiguration = CallConfiguration(credential: communicationTokenCredential!,
                                                   groupId: groupId,
                                                   displayName: displayName)
-        let localPersonaData = PersonaData(nil, renderDisplayName: nil)
+        let localPersonaData = PersonaData(avatar: nil, renderDisplayName: nil)
         let localDataOptions = CommunicationUILocalDataOptions(localPersonaData)
 
         dependencyContainer.registerDependencies(callConfiguration,
