@@ -7,6 +7,8 @@ import SwiftUI
 import FluentUI
 
 struct IconWithLabelButton: View {
+    @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
+
     @ObservedObject var viewModel: IconWithLabelButtonViewModel
 
     private let iconImageSize: CGFloat = 25
@@ -30,8 +32,13 @@ struct IconWithLabelButton: View {
                 Icon(name: viewModel.iconName, size: iconImageSize)
                     .accessibilityHidden(true)
                 if let buttonLabel = viewModel.buttonLabel {
-                    Text(buttonLabel)
-                        .font(Fonts.button2.font)
+                    if sizeCategory >= ContentSizeCategory.accessibilityMedium {
+                        Text(buttonLabel)
+                            .font(Fonts.button2Accessibility.font)
+                    } else {
+                        Text(buttonLabel)
+                            .font(Fonts.button2.font)
+                    }
                 }
             }
         }
