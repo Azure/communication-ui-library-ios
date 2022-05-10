@@ -18,8 +18,8 @@ Azure Communication Mobile UI Library requires a few dependencies. Please import
 git submodule add https://github.com/Azure/azure-communication-ui-library-ios
 ```
 
-- Open the newly added folder from running the command and navigate into `AzureCommunicationUI` subfolder, drag the `AzureCommunicationUI.xcodeproj` into your Xcode project's Navigator
-- Match the deployment target of `AzureCommunicationUI.xcodeproj` with your application target
+- Open the newly added folder from running the command and navigate into `AzureCommunicationUICalling` subfolder, drag the `AzureCommunicationUICalling.xcodeproj` into your Xcode project's Navigator
+- Match the deployment target of `AzureCommunicationUICalling.xcodeproj` with your application target
 - Select your application project in the Xcode Navigator, and open the target you want to import Mobile UI Library
 - Open the "General" panel and click on the `+` button under the "Frameworks and Libraries" section
-- Select `AzureCommunicationUI.framework` and then you can `import AzureCommunicationUI` inside the code to use Mobile UI Library 
+- Select `AzureCommunicationUICalling.framework` and then you can `import AzureCommunicationUICalling` inside the code to use Mobile UI Library 
