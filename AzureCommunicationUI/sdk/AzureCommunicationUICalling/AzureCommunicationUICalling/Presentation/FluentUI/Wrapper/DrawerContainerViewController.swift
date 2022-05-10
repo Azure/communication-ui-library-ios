@@ -102,17 +102,14 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         var isScrollEnabled = !isiPhoneLayout
 
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
-                return
-            }
-            guard self.drawerTableView != nil else {
+            guard let self = self, let drawerTableView = self.drawerTableView else {
                 return
             }
 
-            self.drawerTableView!.reloadData()
+            drawerTableView.reloadData()
 
             var drawerHeight = self.getDrawerHeight(
-                tableView: self.drawerTableView!,
+                tableView: drawerTableView,
                 numberOfItems: self.items.count,
                 showHeader: self.showHeader,
                 isiPhoneLayout: isiPhoneLayout)
@@ -122,7 +119,7 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
                 isScrollEnabled = true
             }
 
-            self.drawerTableView!.isScrollEnabled = isScrollEnabled
+            drawerTableView.isScrollEnabled = isScrollEnabled
             self.controller?.preferredContentSize = CGSize(width: 400,
                                                            height: drawerHeight)
         }
