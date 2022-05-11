@@ -25,7 +25,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Mic on";
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mute";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Device";
-"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Audio device";
+"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Select audio device";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Your camera is disabled. To enable, please go to Settings to allow access.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="Your camera and audio are disabled. To enable, please go to Settings to allow access. You must enable audio to start this call.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="Your audio is disabled. To enable, please go to Settings to allow access. You must enable audio to start this call.";

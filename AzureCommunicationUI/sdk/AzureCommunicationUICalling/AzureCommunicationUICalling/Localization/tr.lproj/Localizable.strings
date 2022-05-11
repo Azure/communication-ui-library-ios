@@ -25,7 +25,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Mikrofon açık";
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Sesi kapat";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Cihaz";
-"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Ses cihazı";
+"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Ses cihazını seç";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Kameranız devre dışı. Etkinleştirmek için Ayarlar seçeneğine giderek erişime izin verin.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="Kameranız ve sesiniz devre dışı. Etkinleştirmek için Ayarlar seçeneğine giderek erişime izin verin. Bu aramayı başlatmak için sesi etkinleştirmeniz gerekiyor.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="Sesiniz devre dışı. Etkinleştirmek için Ayarlar seçeneğine giderek erişime izin verin. Bu aramayı başlatmak için sesi etkinleştirmeniz gerekiyor.";
@@ -51,6 +51,9 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d katılımcı toplantıya katıldı";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ toplantıdan ayrıldı";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d katılımcı toplantıdan ayrıldı";
+"AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Aramaya katıldınız";
+"AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="İçerik paylaşılıyor";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="İçerik paylaşımı sona erdi";
 
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Çık";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="İptal";

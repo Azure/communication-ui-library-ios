@@ -13,7 +13,7 @@
 
 /* SetupView */
 "AzureCommunicationUICalling.SetupView.Title"="Configuration";
-"AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Précédent";
+"AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Retour";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Rejoindre l’appel";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Connexion à l'appel…";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Vidéo désactivée";
@@ -25,7 +25,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Microphone activé";
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Désactiver le son";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Appareil";
-"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Périphérique audio";
+"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Sélectionner un périphérique audio";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Votre caméra est désactivée. Pour l’activer, accédez à Paramètres pour autoriser l’accès.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="Votre caméra et votre audio sont désactivés. Pour les activer, accédez à Paramètres pour autoriser l’accès. Vous devez activer l’audio pour démarrer cet appel.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="Votre audio est désactivé. Pour l’activer, accédez à Paramètres pour autoriser l’accès. Vous devez activer l’audio pour démarrer cet appel.";
@@ -51,6 +51,9 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d participants ont rejoint la réunion";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ a quitté la réunion.";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d participant(s) a/ont quitté l'appel.";
+"AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Vous avez rejoint l'appel";
+"AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Le contenu est en cours de partage";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Le partage de contenu est terminé";
 
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Quitter";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Annuler";
