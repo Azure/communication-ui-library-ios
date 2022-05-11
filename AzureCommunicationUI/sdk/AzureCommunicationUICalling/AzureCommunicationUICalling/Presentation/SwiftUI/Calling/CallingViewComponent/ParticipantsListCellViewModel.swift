@@ -6,6 +6,7 @@
 import Foundation
 
 class ParticipantsListCellViewModel {
+    let participantId: String?
     let displayName: String
     let isMuted: Bool
     let isLocalParticipant: Bool
@@ -13,6 +14,7 @@ class ParticipantsListCellViewModel {
 
     init(localUserState: LocalUserState,
          localizationProvider: LocalizationProviderProtocol) {
+        participantId = nil
         self.localizationProvider = localizationProvider
         self.displayName = localUserState.displayName ?? ""
         self.isMuted = localUserState.audioState.operation != .on
@@ -21,6 +23,7 @@ class ParticipantsListCellViewModel {
 
     init(participantInfoModel: ParticipantInfoModel,
          localizationProvider: LocalizationProviderProtocol) {
+        participantId = participantInfoModel.userIdentifier
         self.localizationProvider = localizationProvider
         self.displayName = participantInfoModel.displayName
         self.isMuted = participantInfoModel.isMuted

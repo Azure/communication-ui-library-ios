@@ -6,6 +6,7 @@
 import FluentUI
 
 class ParticipantsListViewController: DrawerContainerViewController<ParticipantsListCellViewModel> {
+
     private lazy var participantsListTableView: UITableView? = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = backgroundColor
@@ -41,6 +42,7 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
                   for: indexPath) as? CompositeParticipantsListCell else {
             return UITableViewCell()
         }
+        cell.avatarViewManager = avatarViewManager
         let participantViewModel = self.items[indexPath.row]
 
         let displayName = participantViewModel.getCellDisplayName()

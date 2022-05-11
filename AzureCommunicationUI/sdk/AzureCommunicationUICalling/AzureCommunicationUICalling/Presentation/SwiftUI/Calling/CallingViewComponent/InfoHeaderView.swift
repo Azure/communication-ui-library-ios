@@ -14,6 +14,7 @@ struct InfoHeaderView: View {
     let shapeCornerRadius: CGFloat = 5
     let infoLabelHorizontalPadding: CGFloat = 16.0
     let hStackHorizontalPadding: CGFloat = 20.0
+    let avatarViewManager: AvatarViewManager
 
     var body: some View {
         ZStack {
@@ -65,7 +66,8 @@ struct InfoHeaderView: View {
                                   isInfoHeaderDisplayed: $viewModel.isInfoHeaderDisplayed,
                                   isVoiceOverEnabled: $viewModel.isVoiceOverEnabled,
                                   viewModel: viewModel.participantsListViewModel,
-                                  sourceView: participantsListButtonSourceView)
+                                  sourceView: participantsListButtonSourceView,
+                                  avatarViewManager: avatarViewManager)
             .modifier(LockPhoneOrientation())
     }
 }

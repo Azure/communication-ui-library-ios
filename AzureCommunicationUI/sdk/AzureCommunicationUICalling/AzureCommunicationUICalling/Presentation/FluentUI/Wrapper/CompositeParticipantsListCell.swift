@@ -5,8 +5,10 @@
 
 import Foundation
 import FluentUI
+import UIKit
 
 class CompositeParticipantsListCell: TableViewCell {
+    var avatarViewManager: AvatarViewManager?
 
     /// Set up the participant list item  in the participant list
     /// - Parameter viewModel: the participant view model needed to set up participant list cell
@@ -16,6 +18,13 @@ class CompositeParticipantsListCell: TableViewCell {
 
         let avatar = MSFAvatar(style: isNameEmpty ? .outlined : .accent, size: .medium)
         avatar.state.primaryText = !isNameEmpty ? viewModel.displayName : nil
+        if viewModel.isLocalParticipant {
+            avatar.state.image = avatarViewManager?.localDataOptions?.localPersona.avatarImage
+        } else if let participantId = viewModel.participantId {
+            avatar.state.image = avatarViewManager?.avatarStorage.value(forKey: participantId)?.avatarImage
+        } else {
+            avatar.state.image = nil
+        }
         let avatarView = avatar.view
 
         var micImage: UIImage?

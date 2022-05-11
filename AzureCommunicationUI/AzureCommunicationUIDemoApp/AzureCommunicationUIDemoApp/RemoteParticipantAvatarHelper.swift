@@ -27,17 +27,19 @@ struct RemoteParticipantAvatarHelper {
         let avatars = ["cat", "fox", "koala", "monkey", "mouse", "octopus"]
         for identifier in identifiers {
             let id = getRemoteParticipantId(identifier)
+            let nameIdValue = id != nil ? "\(id?.suffix(4) ?? "")" : ""
+            var avatarImage: UIImage?
+            var selectedAvatarName = ""
             if let lastSymbol = id?.last,
                let index = Int(String(lastSymbol)),
                index < avatars.count {
-                let selectedAvatar = avatars[index]
-                let image = UIImage(named: selectedAvatar)
-                let nameIdValue = id != nil ? " \(id?.suffix(4) ?? "")" : ""
-                let personaData = PersonaData(avatar: image,
-                                              renderDisplayName: selectedAvatar + nameIdValue)
-                callComposite.setRemoteParticipantPersonaData(for: identifier,
-                                                              personaData: personaData)
+                selectedAvatarName = avatars[index]
+                avatarImage = UIImage(named: selectedAvatarName)
             }
+            let personaData = PersonaData(avatar: avatarImage,
+                                          renderDisplayName: selectedAvatarName + nameIdValue)
+            callComposite.setRemoteParticipantPersonaData(for: identifier,
+                                                          personaData: personaData)
         }
     }
 }
