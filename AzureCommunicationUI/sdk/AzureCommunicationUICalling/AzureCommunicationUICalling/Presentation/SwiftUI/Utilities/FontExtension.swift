@@ -5,9 +5,14 @@
 
 import SwiftUI
 import UIKit
+import FluentUI
 
 extension UIFont {
     var font: Font {
         return Font(self as CTFont)
     }
+}
+
+extension Fonts {
+    static var button2Accessibility: UIFont { return Fonts.button2.withSize(20) }
 }

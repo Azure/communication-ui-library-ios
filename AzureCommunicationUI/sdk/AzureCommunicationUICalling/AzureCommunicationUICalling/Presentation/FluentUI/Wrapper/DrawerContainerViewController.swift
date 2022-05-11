@@ -14,7 +14,6 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
     var items: [T] = []
     let headerName: String?
     private let sourceView: UIView
-    private let drawerResizeBarHeight: CGFloat = 25
     private let showHeader: Bool
     private var halfScreenHeight: CGFloat {
         UIScreen.main.bounds.height / 2
@@ -101,28 +100,69 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
     private func resizeDrawer() {
         let isiPhoneLayout = UIDevice.current.userInterfaceIdiom == .phone
         var isScrollEnabled = !isiPhoneLayout
-        var drawerHeight = CGFloat(self.items.count * 44)
-
-        if isiPhoneLayout {
-            // workaround to adjust cell divider height for drawer resize
-            let tableCellsDividerOffsetHeight = CGFloat(self.items.count * 3)
-            drawerHeight += tableCellsDividerOffsetHeight + self.drawerResizeBarHeight
-        } else {
-            drawerHeight = CGFloat(self.items.count) * 48.5 + (showHeader ? self.drawerResizeBarHeight : 0)
-        }
-        if drawerHeight > self.halfScreenHeight {
-            drawerHeight = self.halfScreenHeight
-            isScrollEnabled = true
-        }
 
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
+            guard let self = self, let drawerTableView = self.drawerTableView else {
                 return
             }
-            self.drawerTableView?.reloadData()
-            self.drawerTableView?.isScrollEnabled = isScrollEnabled
+
+            drawerTableView.reloadData()
+
+            var drawerHeight = self.getDrawerHeight(
+                tableView: drawerTableView,
+                numberOfItems: self.items.count,
+                showHeader: self.showHeader,
+                isiPhoneLayout: isiPhoneLayout)
+
+            if drawerHeight > self.halfScreenHeight {
+                drawerHeight = self.halfScreenHeight
+                isScrollEnabled = true
+            }
+
+            drawerTableView.isScrollEnabled = isScrollEnabled
             self.controller?.preferredContentSize = CGSize(width: 400,
-                                                           height: drawerHeight + (self.showHeader ? 36 : 0))
+                                                           height: drawerHeight)
         }
+    }
+
+    private func getDrawerHeight(tableView: UITableView,
+                                 numberOfItems: Int,
+                                 showHeader: Bool,
+                                 isiPhoneLayout: Bool) -> CGFloat {
+        let headerHeight = self.getHeaderHeight(tableView: tableView, isiPhoneLayout: isiPhoneLayout)
+        let resizeBarHeight: CGFloat = isiPhoneLayout ? 20 : 0
+        let dividerOffsetHeight = CGFloat(numberOfItems * 3)
+
+        var drawerHeight: CGFloat = getTotalCellsHeight(tableView: tableView, numberOfItems: numberOfItems)
+        drawerHeight += showHeader ? headerHeight : resizeBarHeight
+        drawerHeight += dividerOffsetHeight
+
+        return drawerHeight
+    }
+
+    private func getHeaderHeight(tableView: UITableView,
+                                 isiPhoneLayout: Bool) -> CGFloat {
+        return isiPhoneLayout ? tableView.sectionHeaderHeight + 20 : tableView.sectionHeaderHeight + 35
+    }
+
+    private func getTotalCellsHeight(tableView: UITableView,
+                                     numberOfItems: Int) -> CGFloat {
+        // If we can't get all table cell heights,
+        // fall back to assumption all cells are the same height.
+        guard tableView.visibleCells.count == numberOfItems else {
+            let defaultCellHeight: CGFloat = 44
+            var firstCellHeight: CGFloat = defaultCellHeight
+            for cell in tableView.visibleCells {
+                firstCellHeight = cell.bounds.height
+                break
+            }
+            return firstCellHeight * CGFloat(numberOfItems)
+        }
+
+        var totalCellsHeight: CGFloat = 0
+        for cell in tableView.visibleCells {
+            totalCellsHeight += cell.bounds.height
+        }
+        return totalCellsHeight
     }
 }
