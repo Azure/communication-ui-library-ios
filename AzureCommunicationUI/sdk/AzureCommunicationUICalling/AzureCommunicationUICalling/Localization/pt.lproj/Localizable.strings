@@ -25,7 +25,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Microfone ativado";
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Ativar mudo";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Dispositivo";
-"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Dispositivo de áudio";
+"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Selecionar dispositivo de áudio";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Sua câmera está desabilitada. Para habilitar, vá para Configurações para permitir o acesso.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="A câmera e o áudio estão desabilitados. Para habilitar, vá para Configurações para permitir o acesso. Habilite o áudio para iniciar esta chamada.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="O áudio está desabilitado. Para habilitar, vá para Configurações para permitir o acesso. Habilite o áudio para iniciar esta chamada.";
@@ -51,6 +51,9 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d participantes ingressaram na reunião";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ saiu da reunião";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d participantes saíram da reunião";
+"AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Você ingressou na chamada";
+"AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="O conteúdo está sendo compartilhado";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="O compartilhamento de conteúdo foi encerrado";
 
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Sair";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Cancelar";
