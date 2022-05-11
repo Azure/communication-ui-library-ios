@@ -12,7 +12,7 @@ class ParticipantGridViewModel: ObservableObject {
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let isIpadInterface: Bool
     private var maximumParticipantsDisplayed: Int {
-        return isIpadInterface ? 9 : 6
+        return isIpadInterface ? 12 : 6
     }
 
     private var lastUpdateTimeStamp = Date()
