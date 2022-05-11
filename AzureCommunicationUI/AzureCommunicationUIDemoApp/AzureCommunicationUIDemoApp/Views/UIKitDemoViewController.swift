@@ -172,7 +172,8 @@ class UIKitDemoViewController: UIViewController {
             return
         }
 
-        callComposite.setTarget(didFail: didFail, didRemoteParticipantsJoin: didRemoteParticipantsJoin)
+        callComposite.setEventHandler(didFail: didFail)
+        callComposite.setEventHandler(didRemoteParticipantJoin: didRemoteParticipantsJoin)
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
         nil : envConfigSubject.renderedDisplayName
         let persona = PersonaData(avatar: UIImage(named: envConfigSubject.avatarImageName),

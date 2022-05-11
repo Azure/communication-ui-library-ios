@@ -32,12 +32,15 @@ public class CallComposite {
         localizationConfiguration = options?.localizationConfiguration
     }
 
-    /// Assign closures to execute when events occur inside Call Composite.
+    /// Assign closures to execute when error event  occurs inside Call Composite.
     /// - Parameter didFailAction: The closure returning the error thrown from Call Composite.
-    /// - Parameter participantsJoinedAction: The closure returning identifiers for joined remote participants.
-    public func setTarget(didFail didFailAction: CompositeErrorHandler?,
-                          didRemoteParticipantsJoin participantsJoinedAction: RemoteParticipantsJoinedHandler?) {
+    public func setEventHandler(didFail didFailAction: CompositeErrorHandler?) {
         callCompositeEventsHandler.didFail = didFailAction
+    }
+
+    /// Assign closures to execute when participant has joined a call  inside Call Composite.
+    /// - Parameter participantsJoinedAction: The closure returning identifiers for joined remote participants.
+    public func setEventHandler(didRemoteParticipantJoin participantsJoinedAction: RemoteParticipantsJoinedHandler?) {
         callCompositeEventsHandler.didRemoteParticipantsJoin = participantsJoinedAction
     }
 

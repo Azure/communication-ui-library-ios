@@ -151,6 +151,7 @@ extension SwiftUIDemoView {
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
+
         let didRemoteParticipantsJoin: ([CommunicationIdentifier]) -> Void = { [weak callComposite] identifiers in
             guard let composite = callComposite else {
                 return
@@ -158,7 +159,9 @@ extension SwiftUIDemoView {
 
             self.didRemoteParticipantsJoin(to: composite, identifiers: identifiers)
         }
-        callComposite.setTarget(didFail: didFail, didRemoteParticipantsJoin: didRemoteParticipantsJoin)
+        callComposite.setEventHandler(didFail: didFail)
+        callComposite.setEventHandler(didRemoteParticipantJoin: didRemoteParticipantsJoin)
+
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
         let persona = PersonaData(avatar: UIImage(named: envConfigSubject.avatarImageName),
