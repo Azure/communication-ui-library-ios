@@ -24,12 +24,14 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var isMuted: Bool
     @Published var participantIdentifier: String
     private var isScreenSharing: Bool = false
+    private var participantName: String
 
     init(localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          participantModel: ParticipantInfoModel) {
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
+        self.participantName = participantModel.displayName
         self.displayName = participantModel.displayName
         self.isSpeaking = participantModel.isSpeaking
         self.participantIdentifier = participantModel.userIdentifier
@@ -57,12 +59,12 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
                                                  videoStreamId: videoViewModel.videoStreamId)
         }
 
-        if self.displayName != participantModel.displayName || self.isMuted != participantModel.isMuted {
+        if self.participantName != participantModel.displayName || self.isMuted != participantModel.isMuted {
             self.accessibilityLabel = getAccessibilityLabel(participantModel: participantModel)
         }
 
-        if self.displayName != participantModel.displayName {
-            self.displayName = participantModel.displayName
+        if self.participantName != participantModel.displayName {
+            self.participantName = participantModel.displayName
         }
 
         if self.isSpeaking != participantModel.isSpeaking {
@@ -72,6 +74,21 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         if self.isMuted != participantModel.isMuted {
             self.isMuted = participantModel.isMuted
         }
+    }
+
+    func updateParticipantNameIfNeeded(with renderDisplayName: String?) {
+        guard renderDisplayName != displayName else {
+            return
+        }
+
+        let name: String
+        if let renderDisplayName = renderDisplayName {
+            let isPersonaNameEmpty = renderDisplayName.trimmingCharacters(in: .whitespaces).isEmpty
+            name = isPersonaNameEmpty ? participantName : renderDisplayName
+        } else {
+            name = participantName
+        }
+        displayName = name
     }
 
     private func getAccessibilityLabel(participantModel: ParticipantInfoModel) -> String {

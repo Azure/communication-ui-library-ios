@@ -45,13 +45,7 @@ class ParticipantsListCellViewModel {
     }
 
     func getCellDisplayName(with personaData: PersonaData?) -> String {
-        let name: String
-        if let data = personaData, let renderDisplayName = data.renderDisplayName {
-            let isPersonaNameEmpty = renderDisplayName.trimmingCharacters(in: .whitespaces).isEmpty
-            name = isPersonaNameEmpty ? displayName : renderDisplayName
-        } else {
-            name = displayName
-        }
+        let name = getParticipantName(with: personaData)
         let isNameEmpty = name.trimmingCharacters(in: .whitespaces).isEmpty
         let displayName = isNameEmpty
         ? localizationProvider.getLocalizedString(.unnamedParticipant)
@@ -69,6 +63,13 @@ class ParticipantsListCellViewModel {
     }
 
     func getParticipantName(with personaData: PersonaData?) -> String {
-        return personaData?.renderDisplayName ?? displayName
+        let name: String
+        if let data = personaData, let renderDisplayName = data.renderDisplayName {
+            let isPersonaNameEmpty = renderDisplayName.trimmingCharacters(in: .whitespaces).isEmpty
+            name = isPersonaNameEmpty ? displayName : renderDisplayName
+        } else {
+            name = displayName
+        }
+        return name
     }
 }
