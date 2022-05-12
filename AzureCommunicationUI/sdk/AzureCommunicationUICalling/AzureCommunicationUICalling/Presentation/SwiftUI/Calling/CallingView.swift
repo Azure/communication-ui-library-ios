@@ -18,6 +18,7 @@ struct CallingView: View {
 
     @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
     @State private var pipPosition: CGPoint?
+    @GestureState private var startLocation: CGPoint?
 
     var safeAreaIgnoreArea: Edge.Set {
         return getSizeClass() != .iphoneLandscapeScreenSize ? []: [.bottom]
@@ -122,11 +123,29 @@ struct CallingView: View {
                         .gesture(
                             DragGesture()
                                 .onChanged { value in
-                                        let containerBounds = getContainerBounds(bounds: geometry.frame(in: .local))
-                                        self.pipPosition = getBoundedPipPosition(
-                                            currentPipPosition: self.pipPosition!,
-                                            requestedPipPosition: value.location,
-                                            bounds: containerBounds)
+                                    let containerBounds = getContainerBounds(bounds: geometry.frame(in: .local))
+                                    print("Pip Position: \(self.pipPosition)")
+                                    print("Bounds: \(containerBounds)")
+                                    print("Drag Position: \(value.location)")
+                                    print("Drag Translation: \(value.translation)")
+                                    var flippedLocation = self.startLocation ?? self.pipPosition!
+                                    flippedLocation.x += viewModel.isRightToLeft
+                                    ? -value.translation.width
+                                    : value.translation.width
+                                    flippedLocation.y += value.translation.height
+//                                    transformEffect(CGAffineTransform()
+//                                    self.pipPosition = getBoundedPipPosition(
+//                                        currentPipPosition: self.pipPosition!,
+//                                        requestedPipPosition: value.location,
+//                                        bounds: containerBounds)
+                                    self.pipPosition = getBoundedPipPosition(
+                                        currentPipPosition: self.pipPosition!,
+                                        requestedPipPosition: flippedLocation,
+                                        bounds: containerBounds)
+                                    print("New Position: \(self.pipPosition)")
+                                }
+                                .updating($startLocation) { (_, startLocation, _) in
+                                    startLocation = startLocation ?? self.pipPosition
                                 }
                         )
                 }
