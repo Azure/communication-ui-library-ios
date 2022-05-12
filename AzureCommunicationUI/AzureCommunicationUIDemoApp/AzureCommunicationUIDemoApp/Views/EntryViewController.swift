@@ -64,6 +64,12 @@ class EntryViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackView)
 
+        let versionLabel = UILabel()
+        versionLabel.text = getAppVersion()
+        versionLabel.sizeToFit()
+        versionLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(versionLabel)
+
         let constraints = [
             titleLabel.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: margin),
@@ -71,7 +77,10 @@ class EntryViewController: UIViewController {
             stackView.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: margins.centerYAnchor),
             stackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: margin),
-            stackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -margin)
+            stackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -margin),
+
+            versionLabel.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
+            versionLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -margin)
         ]
         NSLayoutConstraint.activate(constraints)
     }
@@ -87,5 +96,16 @@ class EntryViewController: UIViewController {
         let uiKitDemoViewController = UIKitDemoViewController(envConfigSubject: envConfigSubject)
         uiKitDemoViewController.modalPresentationStyle = .fullScreen
         present(uiKitDemoViewController, animated: true, completion: nil)
+    }
+
+    func getAppVersion() -> String {
+        let dictionary = Bundle.main.infoDictionary
+        guard let version = dictionary?["CFBundleShortVersionString"] as? String,
+              let build = dictionary?["CFBundleVersion"] as? String,
+              build != "1"
+        else {
+            return "Version: debug"
+        }
+        return "Version: \(version) (\(build))"
     }
 }
