@@ -22,8 +22,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var displayName: String?
     @Published var isSpeaking: Bool
     @Published var isMuted: Bool
-
-    var participantIdentifier: String
+    @Published var participantIdentifier: String
     private var isScreenSharing: Bool = false
 
     init(localizationProvider: LocalizationProviderProtocol,

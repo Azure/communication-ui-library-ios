@@ -131,7 +131,7 @@ public class CallComposite {
             callCompositeEventsHandler: callCompositeEventsHandler,
             callingSDKWrapper: dependencyContainer.resolve())
         self.remoteParticipantsManager = remoteParticipantsManager
-        avatarViewManager = dependencyContainer.resolve() as AvatarViewManagerProtocol
+        avatarViewManager = dependencyContainer.resolve() as AvatarViewManager
     }
 
     private func cleanUpManagers() {

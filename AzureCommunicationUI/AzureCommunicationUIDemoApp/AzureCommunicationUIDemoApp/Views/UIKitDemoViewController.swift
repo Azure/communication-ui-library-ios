@@ -133,8 +133,14 @@ class UIKitDemoViewController: UIViewController {
         print("::::UIKitDemoView error.code \(error.code)")
     }
 
-    func didRemoteParticipantsJoin(_ identifiers: [CommunicationIdentifier]) {
+    func didRemoteParticipantsJoin(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::UIKitDemoView::getEventsHandler::didRemoteParticipantsJoin \(identifiers)")
+        guard envConfigSubject.useCustomRemoteParticipantsPersonaData else {
+            return
+        }
+
+        RemoteParticipantAvatarHelper.didRemoteParticipantsJoin(to: callComposite,
+                                                                identifiers: identifiers)
     }
 
     func startExperience(with link: String) {
@@ -156,14 +162,19 @@ class UIKitDemoViewController: UIViewController {
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
         callComposite = CallComposite(withOptions: callCompositeOptions)
-
+        let didRemoteParticipantsJoin: ([CommunicationIdentifier]) -> Void = { [weak callComposite] identifiers in
+            guard let composite = callComposite else {
+                return
+            }
+            self.didRemoteParticipantsJoin(to: composite, identifiers: identifiers)
+        }
         guard let callComposite = callComposite else {
             return
         }
 
         callComposite.setTarget(didFail: didFail, didRemoteParticipantsJoin: didRemoteParticipantsJoin)
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
-                                nil : envConfigSubject.renderedDisplayName
+        nil : envConfigSubject.renderedDisplayName
         let persona = PersonaData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                  renderDisplayName: renderDisplayName)
         let localOptions = CommunicationUILocalDataOptions(persona)

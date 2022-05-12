@@ -8,15 +8,14 @@ import AzureCommunicationCommon
 import Combine
 
 protocol AvatarViewManagerProtocol {
-    func getLocalPersonaData() -> PersonaData?
     func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
                                          personaData: PersonaData) -> Result<Void, Error>
 }
 
 class AvatarViewManager: AvatarViewManagerProtocol {
     private let store: Store<AppState>
-    private(set) var avatarStorage = MappedSequence<String, PersonaData>()
-    private(set) var localDataOptions: CommunicationUILocalDataOptions?
+    @Published private(set) var avatarStorage = MappedSequence<String, PersonaData>()
+    @Published private(set) var localDataOptions: CommunicationUILocalDataOptions?
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState>,
@@ -24,6 +23,7 @@ class AvatarViewManager: AvatarViewManagerProtocol {
         self.store = store
         self.localDataOptions = localDataOptions
         store.$state
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.receive(state: state)
             }.store(in: &cancellables)
@@ -36,14 +36,6 @@ class AvatarViewManager: AvatarViewManagerProtocol {
         }
 
         avatarStorage = MappedSequence<String, PersonaData>()
-    }
-
-    func getLocalPersonaData() -> PersonaData? {
-        guard let localPersona = localDataOptions?.localPersona else {
-            return nil
-        }
-
-        return localPersona
     }
 
     func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
