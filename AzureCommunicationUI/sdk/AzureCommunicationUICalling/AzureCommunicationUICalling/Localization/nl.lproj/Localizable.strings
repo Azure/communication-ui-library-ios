@@ -25,7 +25,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Microfoon aan";
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Dempen";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Apparaat";
-"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Audioapparaat";
+"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Audioapparaat selecteren";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Uw camera is uitgeschakeld. Als u deze wilt inschakelen, gaat u naar Instellingen om toegang toe te staan.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="Uw camera en audio zijn uitgeschakeld. Als u deze wilt inschakelen, gaat u naar Instellingen om toegang toe te staan. U moet audio inschakelen om dit gesprek te starten.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="Uw audio is uitgeschakeld. Als u deze wilt inschakelen, gaat u naar Instellingen om toegang toe te staan. U moet audio inschakelen om dit gesprek te starten.";
@@ -51,6 +51,9 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d deelnemers nemen nu deel aan de vergadering";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ heeft de vergadering verlaten";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d deelnemers hebben de vergadering verlaten";
+"AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="U neemt deel aan het gesprek";
+"AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Inhoud wordt gedeeld";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Delen van inhoud is beëindigd";
 
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Verlaten";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Annuleren";
