@@ -7,10 +7,10 @@ import Foundation
 
 class ParticipantsListCellViewModel {
     let participantId: String?
-    let displayName: String
     let isMuted: Bool
     let isLocalParticipant: Bool
     let localizationProvider: LocalizationProviderProtocol
+    private let displayName: String
 
     init(localUserState: LocalUserState,
          localizationProvider: LocalizationProviderProtocol) {
@@ -30,24 +30,45 @@ class ParticipantsListCellViewModel {
         self.isLocalParticipant = false
     }
 
-    func getCellDisplayName() -> String {
-        let isNameEmpty = displayName.trimmingCharacters(in: .whitespaces).isEmpty
-        if isLocalParticipant {
-            let localDisplayName = isNameEmpty
-            ? localizationProvider.getLocalizedString(.unnamedParticipant)
-            : displayName
-            return localizationProvider.getLocalizedString(.localeParticipantWithSuffix, localDisplayName)
-        } else {
-            return isNameEmpty
-            ? localizationProvider.getLocalizedString(.unnamedParticipant)
-            : displayName
+    func getPersonaData(from avatarViewManager: AvatarViewManager?) -> PersonaData? {
+        guard let avatarViewManager = avatarViewManager else {
+            return nil
         }
+
+        var personaData: PersonaData?
+        if isLocalParticipant {
+            personaData = avatarViewManager.localDataOptions?.localPersona
+        } else if let participantId = participantId {
+            personaData = avatarViewManager.avatarStorage.value(forKey: participantId)
+        }
+        return personaData
     }
 
-    func getCellAccessibilityLabel() -> String {
-        let displayName = getCellDisplayName()
+    func getCellDisplayName(with personaData: PersonaData?) -> String {
+        let name: String
+        if let data = personaData, let renderDisplayName = data.renderDisplayName {
+            let isPersonaNameEmpty = renderDisplayName.trimmingCharacters(in: .whitespaces).isEmpty
+            name = isPersonaNameEmpty ? displayName : renderDisplayName
+        } else {
+            name = displayName
+        }
+        let isNameEmpty = name.trimmingCharacters(in: .whitespaces).isEmpty
+        let displayName = isNameEmpty
+        ? localizationProvider.getLocalizedString(.unnamedParticipant)
+        : name
+        return isLocalParticipant
+        ? localizationProvider.getLocalizedString(.localeParticipantWithSuffix, displayName)
+        : displayName
+    }
+
+    func getCellAccessibilityLabel(with personaData: PersonaData?) -> String {
+        let displayName = getCellDisplayName(with: personaData)
         return isMuted
         ? displayName + localizationProvider.getLocalizedString(.muted)
         : displayName + localizationProvider.getLocalizedString(.unmuted)
+    }
+
+    func getParticipantName(with personaData: PersonaData?) -> String {
+        return personaData?.renderDisplayName ?? displayName
     }
 }

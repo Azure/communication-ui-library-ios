@@ -12,9 +12,10 @@ protocol AvatarViewManagerProtocol {
                                          personaData: PersonaData) -> Result<Void, Error>
 }
 
-class AvatarViewManager: AvatarViewManagerProtocol {
+class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
     private let store: Store<AppState>
-    @Published private(set) var avatarStorage = MappedSequence<String, PersonaData>()
+    private(set) var avatarStorage = MappedSequence<String, PersonaData>()
+    @Published var updatedId: String?
     @Published private(set) var localDataOptions: CommunicationUILocalDataOptions?
     var cancellables = Set<AnyCancellable>()
 
@@ -45,8 +46,12 @@ class AvatarViewManager: AvatarViewManagerProtocol {
             return .failure(CompositeError.remoteParticipantNotFound)
         }
 
+        if avatarStorage.value(forKey: idStringValue) != nil {
+            avatarStorage.removeValue(forKey: idStringValue)
+        }
         avatarStorage.append(forKey: idStringValue,
                              value: personaData)
+        updatedId = idStringValue
         return .success(Void())
     }
 }

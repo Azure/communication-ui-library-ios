@@ -39,7 +39,7 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
     }
 
     private func getParticipantsList() -> [ParticipantsListCellViewModel] {
-        return viewModel.sortedParticipants()
+        return viewModel.sortedParticipants(with: avatarViewManager)
     }
 
     class Coordinator: NSObject, DrawerControllerDelegate {

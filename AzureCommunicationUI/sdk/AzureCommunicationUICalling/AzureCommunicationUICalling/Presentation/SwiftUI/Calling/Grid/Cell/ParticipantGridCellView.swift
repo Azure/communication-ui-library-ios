@@ -56,13 +56,15 @@ struct ParticipantGridCellView: View {
                 }
             }
         }
-        .onReceive(avatarViewManager.$avatarStorage) {
-            updatePersonaData(for: viewModel.participantIdentifier,
-                              storage: $0)
-        }
         .onReceive(viewModel.$participantIdentifier) {
-            updatePersonaData(for: $0,
-                              storage: avatarViewManager.avatarStorage)
+            updatePersonaData(for: $0)
+        }
+        .onReceive(avatarViewManager.$updatedId) {
+            guard $0 == viewModel.participantIdentifier else {
+                return
+            }
+
+            updatePersonaData(for: viewModel.participantIdentifier)
         }
     }
 
@@ -74,10 +76,9 @@ struct ParticipantGridCellView: View {
         return rendererViewManager?.getRemoteParticipantVideoRendererView(remoteParticipantVideoViewId)
     }
 
-    private func updatePersonaData(for identifier: String,
-                                   storage: MappedSequence<String, PersonaData>) {
+    private func updatePersonaData(for identifier: String) {
         guard let personaData =
-                storage.value(forKey: identifier) else {
+                avatarViewManager.avatarStorage.value(forKey: identifier) else {
             avatarImage = nil
             renderDisplayName = nil
             return

@@ -8,13 +8,13 @@ import FluentUI
 
 struct InfoHeaderView: View {
     @ObservedObject var viewModel: InfoHeaderViewModel
+    @ObservedObject var avatarViewManager: AvatarViewManager
 
     let participantsListButtonSourceView = UIView()
     let foregroundColor: Color = .white
     let shapeCornerRadius: CGFloat = 5
     let infoLabelHorizontalPadding: CGFloat = 16.0
     let hStackHorizontalPadding: CGFloat = 20.0
-    let avatarViewManager: AvatarViewManager
 
     var body: some View {
         ZStack {

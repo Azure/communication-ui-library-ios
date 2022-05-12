@@ -45,9 +45,7 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
         cell.avatarViewManager = avatarViewManager
         let participantViewModel = self.items[indexPath.row]
 
-        let displayName = participantViewModel.getCellDisplayName()
-        cell.setup(viewModel: participantViewModel,
-                   displayName: displayName)
+        cell.setup(viewModel: participantViewModel)
         return cell
     }
 }

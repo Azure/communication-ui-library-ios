@@ -12,19 +12,14 @@ class CompositeParticipantsListCell: TableViewCell {
 
     /// Set up the participant list item  in the participant list
     /// - Parameter viewModel: the participant view model needed to set up participant list cell
-    func setup(viewModel: ParticipantsListCellViewModel,
-               displayName: String) {
-        let isNameEmpty = viewModel.displayName.trimmingCharacters(in: .whitespaces).isEmpty
+    func setup(viewModel: ParticipantsListCellViewModel) {
+        let personaData = viewModel.getPersonaData(from: avatarViewManager)
+        let avatarParticipantName = viewModel.getParticipantName(with: personaData)
+        let isNameEmpty = avatarParticipantName.trimmingCharacters(in: .whitespaces).isEmpty
 
         let avatar = MSFAvatar(style: isNameEmpty ? .outlined : .accent, size: .medium)
-        avatar.state.primaryText = !isNameEmpty ? viewModel.displayName : nil
-        if viewModel.isLocalParticipant {
-            avatar.state.image = avatarViewManager?.localDataOptions?.localPersona.avatarImage
-        } else if let participantId = viewModel.participantId {
-            avatar.state.image = avatarViewManager?.avatarStorage.value(forKey: participantId)?.avatarImage
-        } else {
-            avatar.state.image = nil
-        }
+        avatar.state.primaryText = !isNameEmpty ? avatarParticipantName : nil
+        avatar.state.image = personaData?.avatarImage
         let avatarView = avatar.view
 
         var micImage: UIImage?
@@ -43,7 +38,7 @@ class CompositeParticipantsListCell: TableViewCell {
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
 
-        accessibilityLabel = viewModel.getCellAccessibilityLabel()
+        accessibilityLabel = viewModel.getCellAccessibilityLabel(with: personaData)
         accessibilityTraits.remove(.button)
 
         setTitleLabelTextColor(color: isNameEmpty ?
@@ -51,7 +46,7 @@ class CompositeParticipantsListCell: TableViewCell {
                                :
                                 UIColor.compositeColor(CompositeColor.onSurface))
 
-        setup(title: displayName,
+        setup(title: viewModel.getCellDisplayName(with: personaData),
               customView: avatarView,
               customAccessoryView: micImageView)
     }
