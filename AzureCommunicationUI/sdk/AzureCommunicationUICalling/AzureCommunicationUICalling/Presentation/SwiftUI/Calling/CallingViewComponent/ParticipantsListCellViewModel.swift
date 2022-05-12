@@ -30,11 +30,7 @@ class ParticipantsListCellViewModel {
         self.isLocalParticipant = false
     }
 
-    func getPersonaData(from avatarViewManager: AvatarViewManager?) -> PersonaData? {
-        guard let avatarViewManager = avatarViewManager else {
-            return nil
-        }
-
+    func getPersonaData(from avatarViewManager: AvatarViewManager) -> PersonaData? {
         var personaData: PersonaData?
         if isLocalParticipant {
             personaData = avatarViewManager.localDataOptions?.localPersona

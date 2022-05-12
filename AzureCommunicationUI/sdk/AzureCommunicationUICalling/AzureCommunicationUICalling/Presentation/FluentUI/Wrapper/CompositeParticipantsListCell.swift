@@ -8,11 +8,12 @@ import FluentUI
 import UIKit
 
 class CompositeParticipantsListCell: TableViewCell {
-    var avatarViewManager: AvatarViewManager?
 
     /// Set up the participant list item  in the participant list
     /// - Parameter viewModel: the participant view model needed to set up participant list cell
-    func setup(viewModel: ParticipantsListCellViewModel) {
+    /// - Parameter avatarViewManager: the avatar view manager needed to set up avatar data
+    func setup(viewModel: ParticipantsListCellViewModel,
+               avatarViewManager: AvatarViewManager) {
         let personaData = viewModel.getPersonaData(from: avatarViewManager)
         let avatarParticipantName = viewModel.getParticipantName(with: personaData)
         let isNameEmpty = avatarParticipantName.trimmingCharacters(in: .whitespaces).isEmpty
