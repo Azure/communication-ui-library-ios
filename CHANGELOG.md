@@ -1,5 +1,8 @@
 # Release History
 ## 1.0.0-beta.3 (Upcoming)
+### Breaking Change
+- Updated CallComposite function `setTarget(didFail:)` has been renamed to `setDidFailHandler(didFail:)`
+
 ### New Features
 - Updated minimum iOS version to 14.0. [#103](https://github.com/Azure/communication-ui-library-ios/pull/103)
 - Updated leave call confirmation drawer. [#129](https://github.com/Azure/communication-ui-library-ios/pull/129)
@@ -10,7 +13,7 @@
 - Implemented additional primary color tint overrides to ThemeConfiguration
 - Implemented light/dark mode override to ThemeConfiguration
 - Implemented ability to drag the PiP around the display
-
+- Implemented new event handler to listen fo when a participant has joined the call `setRemoteParticipantJoinHandler(didRemoteParticipantJoin:)`
 
 ### Bugs Fixed
 - Fixed screen share not rendering in large screen device. [#128](https://github.com/Azure/communication-ui-library-ios/pull/128)
