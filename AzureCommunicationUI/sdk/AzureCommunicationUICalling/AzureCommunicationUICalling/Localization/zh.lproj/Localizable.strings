@@ -25,7 +25,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="打开麦克风";
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="静音";
 "AzureCommunicationUICalling.SetupView.Button.Device"="设备";
-"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="音频设备";
+"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="选择音频设备";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="你的相机已禁用。若要启用，请转到“设置”以允许访问。";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="你的相机和音频已禁用。若要启用，请转到“设置”以允许访问。必须启用音频才能开始此通话。";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="你的音频已禁用。若要启用，请转到“设置”以允许访问。必须启用音频才能开始此通话。";
@@ -51,6 +51,9 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d 名参与者已加入会议";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ 已离开会议";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d 名参与者已离开会议";
+"AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="你已加入通话";
+"AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="正在共享内容";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="内容共享已结束";
 
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="离开";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="取消";

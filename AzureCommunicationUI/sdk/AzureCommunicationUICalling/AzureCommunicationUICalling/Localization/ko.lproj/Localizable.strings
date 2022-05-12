@@ -25,7 +25,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="마이크 켜기";
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="음소거";
 "AzureCommunicationUICalling.SetupView.Button.Device"="장치";
-"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="오디오 장치";
+"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="오디오 장치 선택";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="카메라가 사용하지 않도록 설정되었습니다. 사용하도록 설정하려면 설정으로 이동하여 액세스를 허용하세요.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="카메라와 오디오를 사용할 수 없습니다. 사용하려면 [설정]으로 이동하여 액세스를 허용하세요. 이 통화를 시작하려면 오디오를 사용하도록 설정해야 합니다.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="오디오를 사용할 수 없습니다. 사용하려면 [설정]으로 이동하여 액세스를 허용하세요. 이 통화를 시작하려면 오디오를 사용하도록 설정해야 합니다.";
@@ -51,6 +51,9 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d명의 참가자가 모임에 참가했습니다.";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ 님이 모임을 나갔습니다.";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d명 참가자가 모임에서 나갔습니다.";
+"AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="통화에 참여하지 않았습니다.";
+"AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="콘텐츠를 공유하고 있습니다.";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="콘텐츠 공유를 종료했습니다.";
 
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="나가기";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="취소";
