@@ -18,7 +18,7 @@ struct CallingView: View {
 
     @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
     @State private var pipPosition: CGPoint?
-    @GestureState private var startLocation: CGPoint?
+    @GestureState private var pipDragStartPosition: CGPoint?
 
     var safeAreaIgnoreArea: Edge.Set {
         return getSizeClass() != .iphoneLandscapeScreenSize ? []: [.bottom]
@@ -124,27 +124,17 @@ struct CallingView: View {
                             DragGesture()
                                 .onChanged { value in
                                     let containerBounds = getContainerBounds(bounds: geometry.frame(in: .local))
-                                    print("Pip Position: \(self.pipPosition)")
-                                    print("Bounds: \(containerBounds)")
-                                    print("Drag Position: \(value.location)")
-                                    print("Drag Translation: \(value.translation)")
-                                    var flippedLocation = self.startLocation ?? self.pipPosition!
-                                    flippedLocation.x += viewModel.isRightToLeft
-                                    ? -value.translation.width
-                                    : value.translation.width
-                                    flippedLocation.y += value.translation.height
-//                                    transformEffect(CGAffineTransform()
-//                                    self.pipPosition = getBoundedPipPosition(
-//                                        currentPipPosition: self.pipPosition!,
-//                                        requestedPipPosition: value.location,
-//                                        bounds: containerBounds)
+                                    let translatedPipPosition = getTranslatedPipPosition(
+                                        currentPipPosition: self.pipPosition!,
+                                        pipDragStartPosition: self.pipDragStartPosition,
+                                        translation: value.translation,
+                                        isRightToLeft: viewModel.isRightToLeft)
                                     self.pipPosition = getBoundedPipPosition(
                                         currentPipPosition: self.pipPosition!,
-                                        requestedPipPosition: flippedLocation,
+                                        requestedPipPosition: translatedPipPosition,
                                         bounds: containerBounds)
-                                    print("New Position: \(self.pipPosition)")
                                 }
-                                .updating($startLocation) { (_, startLocation, _) in
+                                .updating($pipDragStartPosition) { (_, startLocation, _) in
                                     startLocation = startLocation ?? self.pipPosition
                                 }
                         )
@@ -228,6 +218,21 @@ struct CallingView: View {
                 left: pipSize.width / 2.0 + padding,
                 bottom: pipSize.height / 2.0 + padding,
                 right: pipSize.width / 2.0 + padding))
+    }
+
+    private func getTranslatedPipPosition(
+        currentPipPosition: CGPoint,
+        pipDragStartPosition: CGPoint?,
+        translation: CGSize,
+        isRightToLeft: Bool) -> CGPoint {
+        var translatedPipPosition = pipDragStartPosition ?? currentPipPosition
+
+        translatedPipPosition.x += isRightToLeft
+        ? -translation.width
+        : translation.width
+        translatedPipPosition.y += translation.height
+
+        return translatedPipPosition
     }
 
     private func getBoundedPipPosition(
