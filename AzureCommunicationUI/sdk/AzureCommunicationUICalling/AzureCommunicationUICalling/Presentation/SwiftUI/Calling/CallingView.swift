@@ -99,17 +99,13 @@ struct CallingView: View {
 
     var localVideoPipView: some View {
         let shapeCornerRadius: CGFloat = 4
-        let size = getPipSize()
-
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
                            personaData: avatarManager.getLocalPersonaData(),
                            viewManager: viewManager,
                            viewType: .localVideoPip)
-                .frame(width: size.width, height: size.height, alignment: .center)
                 .background(Color(StyleProvider.color.backgroundColor))
                 .clipShape(RoundedRectangle(cornerRadius: shapeCornerRadius))
-                .padding()
         }
     }
 
@@ -117,7 +113,9 @@ struct CallingView: View {
         return Group {
             if self.pipPosition != nil {
                 GeometryReader { geometry in
+                    let size = getPipSize(parentSize: geometry.size)
                     localVideoPipView
+                        .frame(width: size.width, height: size.height, alignment: .center)
                         .position(self.pipPosition!)
                         .gesture(
                             DragGesture()
@@ -202,13 +200,15 @@ struct CallingView: View {
     }
 
     private func getContainerBounds(bounds: CGRect) -> CGRect {
-        let pipSize = getPipSize()
-        let padding = 12.0
-        return bounds.inset(by: UIEdgeInsets(
-                top: pipSize.height / 2.0 + padding,
-                left: pipSize.width / 2.0 + padding,
-                bottom: pipSize.height / 2.0 + padding,
-                right: pipSize.width / 2.0 + padding))
+        let pipSize = getPipSize(parentSize: bounds.size)
+        let isiPad = getSizeClass() == .ipadScreenSize
+        let padding = isiPad ? 8.0 : 12.0
+        let containerBounds = bounds.inset(by: UIEdgeInsets(
+            top: pipSize.height / 2.0 + padding,
+            left: pipSize.width / 2.0 + padding,
+            bottom: pipSize.height / 2.0 + padding,
+            right: pipSize.width / 2.0 + padding))
+        return containerBounds
     }
 
     private func getBoundedPipPosition(
@@ -234,14 +234,37 @@ struct CallingView: View {
         }
 
         return boundedPipPosition
-    }
+        }
 
-    private func getPipSize() -> CGSize {
+    private func getPipSize(parentSize: CGSize? = nil) -> CGSize {
         let isPortraitMode = getSizeClass() != .iphoneLandscapeScreenSize
-        let width = isPortraitMode ? 72 : 104
-        let height = isPortraitMode ? 104 : 72
+        let isiPad = getSizeClass() == .ipadScreenSize
 
-        return CGSize(width: width, height: height)
+        func defaultSize() -> CGSize {
+            let width = isPortraitMode ? 72 : 104
+            let height = isPortraitMode ? 104 : 72
+            let size = CGSize(width: width, height: height)
+            return size
+        }
+
+        if isiPad {
+            if let parentSize = parentSize {
+                // To be reviewed by UX: the Pip view takes 15% of the parent view height
+                let height = parentSize.height * 0.15
+                if parentSize.width < parentSize.height {
+                    let height = parentSize.height * 0.15
+                    // Note: the number 152 and 115 are units from Figma, they are used to calculate width / height
+                    // based on the aspect ratio
+                    let size = CGSize(width: height / 152 * 115, height: height)
+                    return size
+                } else {
+                    let size = CGSize(width: height / 115 * 152, height: height)
+                    return size
+                }
+            }
+        }
+
+        return defaultSize()
     }
 
     private func getMinMaxLimitedValue(value: CGFloat, min: CGFloat, max: CGFloat) -> CGFloat {
