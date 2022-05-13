@@ -126,12 +126,14 @@ public class CallComposite {
                                                       logger: dependencyContainer.resolve())
         self.audioSessionManager = audioSessionManager
 
+        avatarViewManager = dependencyContainer.resolve() as AvatarViewManager
+
         let remoteParticipantsManager = RemoteParticipantsManager(
             store: dependencyContainer.resolve(),
             callCompositeEventsHandler: callCompositeEventsHandler,
-            callingSDKWrapper: dependencyContainer.resolve())
+            callingSDKWrapper: dependencyContainer.resolve(),
+            avatarViewManager: dependencyContainer.resolve())
         self.remoteParticipantsManager = remoteParticipantsManager
-        avatarViewManager = dependencyContainer.resolve() as AvatarViewManager
     }
 
     private func cleanUpManagers() {

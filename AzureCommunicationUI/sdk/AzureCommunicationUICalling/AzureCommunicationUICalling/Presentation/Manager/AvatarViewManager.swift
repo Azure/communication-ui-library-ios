@@ -39,10 +39,19 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
         avatarStorage = MappedSequence<String, PersonaData>()
     }
 
+    func removeLeftParticipants(_ leftParticipantsIds: [String]) {
+        guard avatarStorage.count > 0 else {
+            return
+        }
+
+        for id in leftParticipantsIds {
+            avatarStorage.removeValue(forKey: id)
+        }
+    }
+
     func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
                                          personaData: PersonaData) -> Result<Void, Error> {
-        guard let idStringValue = identifier.stringValue
-        else {
+        guard let idStringValue = identifier.stringValue else {
             return .failure(CompositeError.remoteParticipantNotFound)
         }
 
