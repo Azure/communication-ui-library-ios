@@ -7,10 +7,16 @@ import SwiftUI
 import FluentUI
 
 struct CallingView: View {
+
+    struct Constants {
+        static let infoHeaderViewHorizontalPadding: CGFloat = 8.0
+        static let infoHeaderViewMaxWidth: CGFloat = 380.0
+        static let infoHeaderViewHeight: CGFloat = 46.0
+    }
+
     @ObservedObject var viewModel: CallingViewModel
     let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
-
     let leaveCallConfirmationListSourceView = UIView()
 
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
@@ -135,11 +141,22 @@ struct CallingView: View {
     }
 
     var topAlertAreaView: some View {
-        VStack {
-            bannerView
-            infoHeaderView
-                .padding(.horizontal, 8)
-            Spacer()
+        GeometryReader { geometry in
+            let geoWidth: CGFloat = geometry.size.width
+            let isIpad = getSizeClass() == .ipadScreenSize
+            let widthWIthHorizontalPadding = geoWidth - 2 * Constants.infoHeaderViewHorizontalPadding
+            let infoHeaderViewWidth = isIpad ? min(widthWIthHorizontalPadding,
+                                                   Constants.infoHeaderViewMaxWidth) : widthWIthHorizontalPadding
+            VStack {
+                bannerView
+                HStack {
+                    infoHeaderView
+                        .frame(width: infoHeaderViewWidth, height: Constants.infoHeaderViewHeight, alignment: .leading)
+                        .padding(.horizontal, Constants.infoHeaderViewHorizontalPadding)
+                    Spacer()
+                }
+                Spacer()
+            }
         }
     }
 
