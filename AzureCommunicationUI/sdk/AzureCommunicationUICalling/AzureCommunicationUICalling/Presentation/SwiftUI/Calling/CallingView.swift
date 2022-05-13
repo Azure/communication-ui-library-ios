@@ -150,6 +150,11 @@ struct CallingView: View {
             VStack {
                 bannerView
                 HStack {
+                    if isIpad {
+                        Spacer()
+                    } else {
+                        EmptyView()
+                    }
                     infoHeaderView
                         .frame(width: infoHeaderViewWidth, height: Constants.infoHeaderViewHeight, alignment: .leading)
                         .padding(.horizontal, Constants.infoHeaderViewHorizontalPadding)
