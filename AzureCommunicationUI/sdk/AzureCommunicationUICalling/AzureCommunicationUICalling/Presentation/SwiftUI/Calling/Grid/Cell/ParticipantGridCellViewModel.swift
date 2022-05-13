@@ -25,6 +25,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var participantIdentifier: String
     private var isScreenSharing: Bool = false
     private var participantName: String
+    private var renderDisplayName: String?
 
     init(localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
@@ -65,6 +66,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
 
         if self.participantName != participantModel.displayName {
             self.participantName = participantModel.displayName
+            updateParticipantNameIfNeeded(with: renderDisplayName)
         }
 
         if self.isSpeaking != participantModel.isSpeaking {
@@ -77,6 +79,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     }
 
     func updateParticipantNameIfNeeded(with renderDisplayName: String?) {
+        self.renderDisplayName = renderDisplayName
         guard renderDisplayName != displayName else {
             return
         }

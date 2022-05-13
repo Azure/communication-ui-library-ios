@@ -34,7 +34,7 @@
 		FA7B53EC282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */; };
 		FAA448A0282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; };
 		FAA448A1282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FAA448A42825931500BD0DC0 /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA448A32825931500BD0DC0 /* AccessibilityIdentifier.swift */; };
+		FAC342F5282F1AA5006CB50B /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA448A32825931500BD0DC0 /* AccessibilityIdentifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -478,7 +478,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5027C1C72821A55E00DC7131 /* AccessibilityId.swift in Sources */,
-				FAA448A52825931500BD0DC0 /* AccessibilityIdentifier.swift in Sources */,
+				FAC342F5282F1AA5006CB50B /* AccessibilityIdentifier.swift in Sources */,
 				1F18191A27B45050006AF3B3 /* XCUIElementExtension.swift in Sources */,
 				1F18191727B39F36006AF3B3 /* XCUITestBase.swift in Sources */,
 				1B0D8DC627F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift in Sources */,
@@ -492,7 +492,6 @@
 			files = (
 				A8C69FB42728AE1A00143DB7 /* AppDelegate.swift in Sources */,
 				A8FB819C272A082B00AA0930 /* DemoInputTypes.swift in Sources */,
-				FAA448A42825931500BD0DC0 /* AccessibilityIdentifier.swift in Sources */,
 				A8AC66FE2735A41600632D0B /* CustomControls.swift in Sources */,
 				A85DDCB92728B23B001297B4 /* SwiftUIDemoView.swift in Sources */,
 				1F8881CD279B456E001427F0 /* Extension.swift in Sources */,
