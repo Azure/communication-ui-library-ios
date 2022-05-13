@@ -8,13 +8,13 @@ import AzureCommunicationCommon
 import Combine
 
 protocol AvatarViewManagerProtocol {
-    func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
-                                         personaData: PersonaData) -> Result<Void, Error>
+    func setRemoteParticipantViewData(for identifier: CommunicationIdentifier,
+                                      participantViewData: ParticipantViewData) -> Result<Void, Error>
 }
 
 class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
     private let store: Store<AppState>
-    private(set) var avatarStorage = MappedSequence<String, PersonaData>()
+    private(set) var avatarStorage = MappedSequence<String, ParticipantViewData>()
     @Published var updatedId: String?
     @Published private(set) var localDataOptions: CommunicationUILocalDataOptions?
     var cancellables = Set<AnyCancellable>()
@@ -36,7 +36,7 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
             return
         }
 
-        avatarStorage = MappedSequence<String, PersonaData>()
+        avatarStorage = MappedSequence<String, ParticipantViewData>()
     }
 
     func removeLeftParticipants(_ leftParticipantsIds: [String]) {
@@ -49,8 +49,8 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
         }
     }
 
-    func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
-                                         personaData: PersonaData) -> Result<Void, Error> {
+    func setRemoteParticipantViewData(for identifier: CommunicationIdentifier,
+                                      participantViewData: ParticipantViewData) -> Result<Void, Error> {
         guard let idStringValue = identifier.stringValue else {
             return .failure(CompositeError.remoteParticipantNotFound)
         }
@@ -59,7 +59,7 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
             avatarStorage.removeValue(forKey: idStringValue)
         }
         avatarStorage.append(forKey: idStringValue,
-                             value: personaData)
+                             value: participantViewData)
         updatedId = idStringValue
         return .success(Void())
     }

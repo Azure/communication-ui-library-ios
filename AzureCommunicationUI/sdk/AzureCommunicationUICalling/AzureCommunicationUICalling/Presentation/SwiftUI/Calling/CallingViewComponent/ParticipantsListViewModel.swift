@@ -39,8 +39,8 @@ class ParticipantsListViewModel: ObservableObject {
     func sortedParticipants(with avatarManager: AvatarViewManager) -> [ParticipantsListCellViewModel] {
         // alphabetical order
         return ([localParticipantsListCellViewModel] + participantsList).sorted {
-            let name = $0.getCellDisplayName(with: $0.getPersonaData(from: avatarManager))
-            let nextName = $1.getCellDisplayName(with: $1.getPersonaData(from: avatarManager))
+            let name = $0.getCellDisplayName(with: $0.getParticipantViewData(from: avatarManager))
+            let nextName = $1.getCellDisplayName(with: $1.getParticipantViewData(from: avatarManager))
             return name.localizedCaseInsensitiveCompare(nextName) == .orderedAscending
         }
     }

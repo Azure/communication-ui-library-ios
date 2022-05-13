@@ -30,18 +30,18 @@ class ParticipantsListCellViewModel {
         self.isLocalParticipant = false
     }
 
-    func getPersonaData(from avatarViewManager: AvatarViewManager) -> PersonaData? {
-        var personaData: PersonaData?
+    func getParticipantViewData(from avatarViewManager: AvatarViewManager) -> ParticipantViewData? {
+        var participantViewData: ParticipantViewData?
         if isLocalParticipant {
-            personaData = avatarViewManager.localDataOptions?.localPersona
+            participantViewData = avatarViewManager.localDataOptions?.participantViewData
         } else if let participantId = participantId {
-            personaData = avatarViewManager.avatarStorage.value(forKey: participantId)
+            participantViewData = avatarViewManager.avatarStorage.value(forKey: participantId)
         }
-        return personaData
+        return participantViewData
     }
 
-    func getCellDisplayName(with personaData: PersonaData?) -> String {
-        let name = getParticipantName(with: personaData)
+    func getCellDisplayName(with participantViewData: ParticipantViewData?) -> String {
+        let name = getParticipantName(with: participantViewData)
         let isNameEmpty = name.trimmingCharacters(in: .whitespaces).isEmpty
         let displayName = isNameEmpty
         ? localizationProvider.getLocalizedString(.unnamedParticipant)
@@ -51,18 +51,18 @@ class ParticipantsListCellViewModel {
         : displayName
     }
 
-    func getCellAccessibilityLabel(with personaData: PersonaData?) -> String {
-        let displayName = getCellDisplayName(with: personaData)
+    func getCellAccessibilityLabel(with participantViewData: ParticipantViewData?) -> String {
+        let displayName = getCellDisplayName(with: participantViewData)
         return isMuted
         ? displayName + localizationProvider.getLocalizedString(.muted)
         : displayName + localizationProvider.getLocalizedString(.unmuted)
     }
 
-    func getParticipantName(with personaData: PersonaData?) -> String {
+    func getParticipantName(with participantViewData: ParticipantViewData?) -> String {
         let name: String
-        if let data = personaData, let renderDisplayName = data.renderDisplayName {
-            let isPersonaNameEmpty = renderDisplayName.trimmingCharacters(in: .whitespaces).isEmpty
-            name = isPersonaNameEmpty ? displayName : renderDisplayName
+        if let data = participantViewData, let renderDisplayName = data.renderDisplayName {
+            let isRendererNameEmpty = renderDisplayName.trimmingCharacters(in: .whitespaces).isEmpty
+            name = isRendererNameEmpty ? displayName : renderDisplayName
         } else {
             name = displayName
         }

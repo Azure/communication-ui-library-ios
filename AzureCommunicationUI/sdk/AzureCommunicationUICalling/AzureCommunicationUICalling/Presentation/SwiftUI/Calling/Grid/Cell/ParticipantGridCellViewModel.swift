@@ -83,8 +83,8 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
 
         let name: String
         if let renderDisplayName = renderDisplayName {
-            let isPersonaNameEmpty = renderDisplayName.trimmingCharacters(in: .whitespaces).isEmpty
-            name = isPersonaNameEmpty ? participantName : renderDisplayName
+            let isRendererNameEmpty = renderDisplayName.trimmingCharacters(in: .whitespaces).isEmpty
+            name = isRendererNameEmpty ? participantName : renderDisplayName
         } else {
             name = participantName
         }

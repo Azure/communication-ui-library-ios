@@ -161,9 +161,9 @@ extension SwiftUIDemoView {
         callComposite.setTarget(didFail: didFail, didRemoteParticipantsJoin: didRemoteParticipantsJoin)
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
-        let persona = PersonaData(avatar: UIImage(named: envConfigSubject.avatarImageName),
-                                                 renderDisplayName: renderDisplayName)
-        let localOptions = CommunicationUILocalDataOptions(persona)
+        let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
+                                                      renderDisplayName: renderDisplayName)
+        let localOptions = CommunicationUILocalDataOptions(participantViewData)
         if let credential = try? getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -244,7 +244,7 @@ extension SwiftUIDemoView {
 
     func didRemoteParticipantsJoin(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::SwiftUIDemoView::getEventsHandler::didRemoteParticipantsJoin \(identifiers)")
-        guard envConfigSubject.useCustomRemoteParticipantsPersonaData else {
+        guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }
 

@@ -14,13 +14,13 @@ class CompositeParticipantsListCell: TableViewCell {
     /// - Parameter avatarViewManager: the avatar view manager needed to set up avatar data
     func setup(viewModel: ParticipantsListCellViewModel,
                avatarViewManager: AvatarViewManager) {
-        let personaData = viewModel.getPersonaData(from: avatarViewManager)
-        let avatarParticipantName = viewModel.getParticipantName(with: personaData)
+        let participantViewData = viewModel.getParticipantViewData(from: avatarViewManager)
+        let avatarParticipantName = viewModel.getParticipantName(with: participantViewData)
         let isNameEmpty = avatarParticipantName.trimmingCharacters(in: .whitespaces).isEmpty
 
         let avatar = MSFAvatar(style: isNameEmpty ? .outlined : .accent, size: .medium)
         avatar.state.primaryText = !isNameEmpty ? avatarParticipantName : nil
-        avatar.state.image = personaData?.avatarImage
+        avatar.state.image = participantViewData?.avatarImage
         let avatarView = avatar.view
 
         var micImage: UIImage?
@@ -39,7 +39,7 @@ class CompositeParticipantsListCell: TableViewCell {
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
 
-        accessibilityLabel = viewModel.getCellAccessibilityLabel(with: personaData)
+        accessibilityLabel = viewModel.getCellAccessibilityLabel(with: participantViewData)
         accessibilityTraits.remove(.button)
 
         setTitleLabelTextColor(color: isNameEmpty ?
@@ -47,7 +47,7 @@ class CompositeParticipantsListCell: TableViewCell {
                                :
                                 UIColor.compositeColor(CompositeColor.onSurface))
 
-        setup(title: viewModel.getCellDisplayName(with: personaData),
+        setup(title: viewModel.getCellDisplayName(with: participantViewData),
               customView: avatarView,
               customAccessoryView: micImageView)
     }

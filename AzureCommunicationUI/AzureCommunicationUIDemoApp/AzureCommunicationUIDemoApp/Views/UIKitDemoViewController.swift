@@ -135,7 +135,7 @@ class UIKitDemoViewController: UIViewController {
 
     func didRemoteParticipantsJoin(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::UIKitDemoView::getEventsHandler::didRemoteParticipantsJoin \(identifiers)")
-        guard envConfigSubject.useCustomRemoteParticipantsPersonaData else {
+        guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }
 
@@ -175,9 +175,9 @@ class UIKitDemoViewController: UIViewController {
         callComposite.setTarget(didFail: didFail, didRemoteParticipantsJoin: didRemoteParticipantsJoin)
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
         nil : envConfigSubject.renderedDisplayName
-        let persona = PersonaData(avatar: UIImage(named: envConfigSubject.avatarImageName),
-                                                 renderDisplayName: renderDisplayName)
-        let localOptions = CommunicationUILocalDataOptions(persona)
+        let localParticipantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
+                                                           renderDisplayName: renderDisplayName)
+        let localOptions = CommunicationUILocalDataOptions(localParticipantViewData)
 
         if let communicationTokenCredential = try? getTokenCredential() {
             switch selectedMeetingType {

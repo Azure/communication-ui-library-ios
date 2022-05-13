@@ -54,14 +54,14 @@ struct ParticipantGridCellView: View {
             }
         }
         .onReceive(viewModel.$participantIdentifier) {
-            updatePersonaData(for: $0)
+            updateParticipantViewData(for: $0)
         }
         .onReceive(avatarViewManager.$updatedId) {
             guard $0 == viewModel.participantIdentifier else {
                 return
             }
 
-            updatePersonaData(for: viewModel.participantIdentifier)
+            updateParticipantViewData(for: viewModel.participantIdentifier)
         }
     }
 
@@ -73,19 +73,19 @@ struct ParticipantGridCellView: View {
         return rendererViewManager?.getRemoteParticipantVideoRendererView(remoteParticipantVideoViewId)
     }
 
-    private func updatePersonaData(for identifier: String) {
-        guard let personaData =
+    private func updateParticipantViewData(for identifier: String) {
+        guard let participantViewData =
                 avatarViewManager.avatarStorage.value(forKey: identifier) else {
             avatarImage = nil
             viewModel.updateParticipantNameIfNeeded(with: nil)
             return
         }
 
-        if avatarImage !== personaData.avatarImage {
-            avatarImage = personaData.avatarImage
+        if avatarImage !== participantViewData.avatarImage {
+            avatarImage = participantViewData.avatarImage
         }
 
-        viewModel.updateParticipantNameIfNeeded(with: personaData.renderDisplayName)
+        viewModel.updateParticipantNameIfNeeded(with: participantViewData.renderDisplayName)
     }
 
     private func getRemoteParticipantVideoViewId() -> RemoteParticipantVideoViewId? {
