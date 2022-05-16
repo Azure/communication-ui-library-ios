@@ -58,8 +58,8 @@ public class CallComposite {
 
     /// Start call composite experience with joining a group call.
     /// - Parameter options: The GroupCallOptions used to locate the group call.
-    /// - Parameter localData: LocalData used to set the user participants information for the call.
-    ///                         This is data is not sent up to ACS.
+    /// - Parameter localSettings: LocalSettings used to set the user participants information for the call.
+    ///                            This is data is not sent up to ACS.
     public func launch(with options: GroupCallOptions,
                        localSettings: LocalSettings? = nil) {
         let callConfiguration = CallConfiguration(
@@ -72,8 +72,8 @@ public class CallComposite {
 
     /// Start call composite experience with joining a Teams meeting..
     /// - Parameter options: The TeamsMeetingOptions used to locate the Teams meetings.
-    /// - Parameter localData: LocalData used to set the user participants information for the call.
-    ///                         This is data is not sent up to ACS.
+    /// - Parameter localSettings: LocalSettings used to set the user participants information for the call.
+    ///                            This is data is not sent up to ACS.
     public func launch(with options: TeamsMeetingOptions,
                        localSettings: LocalSettings? = nil) {
         let callConfiguration = CallConfiguration(
