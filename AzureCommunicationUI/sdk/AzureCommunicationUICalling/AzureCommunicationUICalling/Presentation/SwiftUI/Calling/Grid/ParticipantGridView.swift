@@ -23,11 +23,11 @@ struct ParticipantGridView: View {
                 gridsCount = $0
             }
             .onReceive(viewModel.$displayedParticipantInfoModelArr) {
-                updateVideoViewManagers(displayedRemoteInfoModelArr: $0)
+                updateVideoViewManager(displayedRemoteInfoModelArr: $0)
             }
     }
 
-    func updateVideoViewManagers(displayedRemoteInfoModelArr: [ParticipantInfoModel]) {
+    func updateVideoViewManager(displayedRemoteInfoModelArr: [ParticipantInfoModel]) {
         let videoCacheIds: [RemoteParticipantVideoViewId] = displayedRemoteInfoModelArr.compactMap {
             let screenShareVideoStreamIdentifier = $0.screenShareVideoStreamModel?.videoStreamIdentifier
             let cameraVideoStreamIdentifier = $0.cameraVideoStreamModel?.videoStreamIdentifier
