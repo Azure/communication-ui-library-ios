@@ -155,9 +155,9 @@ class UIKitDemoViewController: UIViewController {
         callComposite.setTarget(didFail: didFail)
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
-        let persona = CommunicationUIPersonaData(UIImage(named: envConfigSubject.avatarImageName),
+        let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                  renderDisplayName: renderDisplayName)
-        let localOptions = CommunicationUILocalDataOptions(persona)
+        let localOptions = CommunicationUILocalDataOptions(participantViewData)
 
         if let communicationTokenCredential = try? getTokenCredential() {
             switch selectedMeetingType {

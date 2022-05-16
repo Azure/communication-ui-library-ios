@@ -8,7 +8,7 @@ import UIKit
 import AzureCommunicationCommon
 
 protocol AvatarViewManagerProtocol {
-    func getLocalPersonaData() -> CommunicationUIPersonaData?
+    func getLocalParticipantViewData() -> ParticipantViewData?
 }
 
 public class CompositeAvatarViewManager: AvatarViewManagerProtocol {
@@ -22,11 +22,11 @@ public class CompositeAvatarViewManager: AvatarViewManagerProtocol {
         self.localDataOptions = localDataOptions
     }
 
-    func getLocalPersonaData() -> CommunicationUIPersonaData? {
-        guard let localPersona = localDataOptions?.localPersona else {
+    func getLocalParticipantViewData() -> ParticipantViewData? {
+        guard let participantViewData = localDataOptions?.participantViewData else {
             return nil
         }
 
-        return localPersona
+        return participantViewData
     }
 }

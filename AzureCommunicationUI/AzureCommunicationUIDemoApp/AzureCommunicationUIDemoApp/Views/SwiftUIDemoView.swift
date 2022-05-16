@@ -154,9 +154,9 @@ extension SwiftUIDemoView {
         callComposite.setTarget(didFail: didFail)
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
-        let persona = CommunicationUIPersonaData(UIImage(named: envConfigSubject.avatarImageName),
-                                                 renderDisplayName: renderDisplayName)
-        let localOptions = CommunicationUILocalDataOptions(persona)
+        let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
+                                          renderDisplayName: renderDisplayName)
+        let localOptions = CommunicationUILocalDataOptions(pParticipantViewDataarticipantViewData)
         if let credential = try? getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:

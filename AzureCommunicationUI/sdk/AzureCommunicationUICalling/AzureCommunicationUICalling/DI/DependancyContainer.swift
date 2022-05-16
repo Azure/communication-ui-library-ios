@@ -39,7 +39,7 @@ final class DependencyContainer {
         register(VideoViewManager(callingSDKWrapper: resolve(), logger: resolve()) as VideoViewManager)
         register(CallingService(logger: resolve(),
                                 callingSDKWrapper: resolve()) as CallingServiceProtocol)
-        let displayName = localDataOptions?.localPersona.renderDisplayName ?? callConfiguration.displayName
+        let displayName = localDataOptions?.participantViewData.renderDisplayName ?? callConfiguration.displayName
         register(makeStore(displayName: displayName) as Store<AppState>)
         register(NavigationRouter(store: resolve(),
                                   logger: resolve()) as NavigationRouter)
