@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-public struct CommunicationUILocalDataOptions {
+public struct LocalSettings {
     let participantViewData: ParticipantViewData
 
     public init(_ participantViewData: ParticipantViewData) {

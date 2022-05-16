@@ -26,10 +26,10 @@ class DependencyContainerTests: XCTestCase {
                                                   groupId: groupId,
                                                   displayName: displayName)
         let participantViewData = ParticipantViewData(avatar: nil, renderDisplayName: nil)
-        let localDataOptions = CommunicationUILocalDataOptions(participantViewData)
+        let localSettings = LocalSettings(participantViewData)
 
         dependencyContainer.registerDependencies(callConfiguration,
-                                                 localDataOptions: localDataOptions)
+                                                 localSettings: localSettings)
 
         XCTAssertNotNil(dependencyContainer.resolve() as CallingSDKWrapperProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as VideoViewManager)

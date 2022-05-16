@@ -14,16 +14,16 @@ protocol AvatarViewManagerProtocol {
 public class CompositeAvatarViewManager: AvatarViewManagerProtocol {
     private let store: Store<AppState>
     private(set) var avatarCache = MappedSequence<String, Data>()
-    private(set) var localDataOptions: CommunicationUILocalDataOptions?
+    private(set) var localSettings: LocalSettings?
 
     init(store: Store<AppState>,
-         localDataOptions: CommunicationUILocalDataOptions?) {
+         localSettings: LocalSettings?) {
         self.store = store
-        self.localDataOptions = localDataOptions
+        self.localSettings = localSettings
     }
 
     func getLocalParticipantViewData() -> ParticipantViewData? {
-        guard let participantViewData = localDataOptions?.participantViewData else {
+        guard let participantViewData = localSettings?.participantViewData else {
             return nil
         }
 

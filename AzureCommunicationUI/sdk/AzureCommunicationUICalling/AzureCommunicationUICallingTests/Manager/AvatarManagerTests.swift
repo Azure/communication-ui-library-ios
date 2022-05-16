@@ -30,9 +30,9 @@ class AvatarManagerTests: XCTestCase {
 
     private func makeSUT(_ image: UIImage) -> AvatarViewManagerProtocol {
         let mockParticipantViewData = ParticipantViewData(avatar: image, renderDisplayName: "")
-        let mockDataOptions = CommunicationUILocalDataOptions(mockParticipantViewData)
+        let mockLocalSettings = LocalSettings(mockParticipantViewData)
         return CompositeAvatarViewManager(store: mockStoreFactory.store,
-                                          localDataOptions: mockDataOptions)
+                                          localSettings: mockLocalSettings)
 
     }
 }
