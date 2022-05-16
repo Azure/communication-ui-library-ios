@@ -11,9 +11,21 @@ struct SetupView: View {
     @ObservedObject var viewModel: SetupViewModel
     let localPersonaData: CommunicationUIPersonaData?
     let viewManager: VideoViewManager
+    @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
+    @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
+    @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
 
     let layoutSpacing: CGFloat = 24
-    let horizontalPadding: CGFloat = 16
+    var horizontalPadding: CGFloat {
+        let isIpad = getSizeClass() == .ipadScreenSize
+        let isLandscape = orientation.isLandscape
+        return isIpad ? (isLandscape ? 360 : 200 ) : 0
+    }
+    var verticalPadding: CGFloat {
+        let isIpad = getSizeClass() == .ipadScreenSize
+        let isLandscape = orientation.isLandscape
+        return isIpad ? (isLandscape ? 180 : 280 ) : 0
+    }
     let startCallButtonHeight: CGFloat = 52
     let errorHorizontalPadding: CGFloat = 8
 
@@ -34,12 +46,21 @@ struct SetupView: View {
                         .padding(.bottom)
                 }
                 .padding(.horizontal, horizontalPadding)
+                .padding(.vertical, verticalPadding)
             }
             errorInfoView
         }
         .onAppear {
             viewModel.setupAudioPermissions()
             viewModel.setupCall()
+        }
+        .onRotate { newOrientation in
+            if newOrientation != orientation
+                && newOrientation != .unknown
+                && newOrientation != .faceDown
+                && newOrientation != .faceUp {
+                orientation = newOrientation
+            }
         }
     }
 
@@ -65,6 +86,18 @@ struct SetupView: View {
                 )
                 .accessibilityElement(children: .contain)
                 .accessibilityAddTraits(.isModal)
+        }
+    }
+    
+    private func getSizeClass() -> ScreenSizeClassType {
+        switch (widthSizeClass, heightSizeClass) {
+        case (.compact, .regular):
+            return .iphonePortraitScreenSize
+        case (.compact, .compact),
+             (.regular, .compact):
+            return .iphoneLandscapeScreenSize
+        default:
+            return .ipadScreenSize
         }
     }
 }
