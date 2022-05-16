@@ -36,10 +36,9 @@ struct RemoteParticipantAvatarHelper {
                 selectedAvatarName = avatars[index]
                 avatarImage = UIImage(named: selectedAvatarName)
             }
-            let personaData = PersonaData(avatar: avatarImage,
+            let particiantViewData = ParticipantViewData(avatar: avatarImage,
                                           renderDisplayName: selectedAvatarName + nameIdValue)
-            callComposite.setRemoteParticipantPersonaData(for: identifier,
-                                                          personaData: personaData)
+            callComposite.setRemoteParticipantViewData(for: identifier, participantViewData: particiantViewData)
         }
     }
 }

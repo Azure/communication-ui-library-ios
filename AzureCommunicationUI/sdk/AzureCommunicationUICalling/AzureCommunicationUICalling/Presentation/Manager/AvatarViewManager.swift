@@ -15,7 +15,7 @@ protocol AvatarViewManagerProtocol {
 class AvatarViewManager: AvatarViewManagerProtocol {
     private let store: Store<AppState>
 
-    @Published private(set) var avatarStorage = MappedSequence<String, PersonaData>()
+    @Published private(set) var avatarStorage = MappedSequence<String, ParticipantViewData>()
     @Published private(set) var localSettings: LocalSettings?
     var cancellables = Set<AnyCancellable>()
 
@@ -36,7 +36,7 @@ class AvatarViewManager: AvatarViewManagerProtocol {
             return
         }
 
-        avatarStorage = MappedSequence<String, PersonaData>()
+        avatarStorage = MappedSequence<String, ParticipantViewData>()
     }
 
     func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
@@ -47,7 +47,7 @@ class AvatarViewManager: AvatarViewManagerProtocol {
         }
 
         avatarStorage.append(forKey: idStringValue,
-                             value: personaData)
+                             value: participantViewData)
         return .success(Void())
     }
 }

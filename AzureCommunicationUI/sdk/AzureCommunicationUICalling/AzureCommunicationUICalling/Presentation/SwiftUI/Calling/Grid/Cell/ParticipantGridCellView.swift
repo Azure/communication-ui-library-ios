@@ -75,7 +75,7 @@ struct ParticipantGridCellView: View {
     }
 
     private func updatePersonaData(for identifier: String,
-                                   storage: MappedSequence<String, PersonaData>) {
+                                   storage: MappedSequence<String, ParticipantViewData>) {
         guard let personaData =
                 storage.value(forKey: identifier) else {
             avatarImage = nil

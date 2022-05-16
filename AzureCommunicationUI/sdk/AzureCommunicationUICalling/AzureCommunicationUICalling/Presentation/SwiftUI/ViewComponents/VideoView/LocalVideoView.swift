@@ -83,8 +83,7 @@ struct LocalVideoView: View {
                         CompositeAvatar(displayName: $viewModel.displayName,
                                         avatarImage: $avatarImage,
                                         isSpeaking: false,
-                                        avatarSize: viewType.avatarSize,
-                                        avatarImage: participantViewData?.avatarImage)
+                                        avatarSize: viewType.avatarSize)
 
                         if viewType.showDisplayNameTitleView {
                             Spacer().frame(height: 10)
@@ -104,8 +103,8 @@ struct LocalVideoView: View {
             }
         }.onReceive(viewModel.$localVideoStreamId) {
             viewManager.updateDisplayedLocalVideoStream($0)
-        }.onReceive(avatarManager.$localDataOptions) {
-            avatarImage = $0?.localPersona.avatarImage
+        }.onReceive(avatarManager.$localSettings) {
+            avatarImage = $0?.participantViewData.avatarImage
         }
     }
 
