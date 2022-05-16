@@ -12,7 +12,7 @@
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
 
 /* SetupView */
-"AzureCommunicationUICalling.SetupView.Title"="Setup";
+"AzureCommunicationUICalling.SetupView.Title"="Einrichten";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Zurück";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="An Anruf teilnehmen";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Teilnehmen am Anruf…";
@@ -25,7 +25,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="Mikro ein";
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Stummschalten";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Gerät";
-"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Audiogerät";
+"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Audiogerät auswählen";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Ihre Kamera ist deaktiviert. Um sie zu aktivieren, wechseln Sie bitte zu „Einstellungen“, um den Zugriff zuzulassen.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="Kamera und Audio sind deaktiviert. Um sie zu aktivieren, wechseln Sie bitte zu „Einstellungen“, um den Zugriff zuzulassen. Sie müssen Audio aktivieren, um diesen Anruf zu starten.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="Ihr Audio ist deaktiviert. Um es zu aktivieren, wechseln Sie bitte zu „Einstellungen“, um den Zugriff zuzulassen. Sie müssen Audio aktivieren, um diesen Anruf zu starten.";
@@ -51,10 +51,13 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d Teilnehmer*innen nehmen an der Besprechung teil";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ hat die Besprechung verlassen";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d Teilnehmer*innen haben die Besprechung verlassen";
+"AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Sie sind dem Anruf beigetreten.";
+"AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Inhalte werden geteilt";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Die Inhaltsfreigabe wurde beendet";
 
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Verlassen";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Abbrechen";
-"AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="Anruf verlassen";
+"AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="Anruf verlassen?";
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Die Aufzeichnung und Transkription haben begonnen.";
@@ -76,7 +79,7 @@
 
 /* ComplianceBanner display link */
 "AzureCommunicationUICalling.CallingView.BannerLink.PrivacyPolicy"="Datenschutzrichtlinie";
-"AzureCommunicationUICalling.CallingView.BannerLink.LearnMore"="Mehr erfahren";
+"AzureCommunicationUICalling.CallingView.BannerLink.LearnMore"="Weitere Informationen";
 
 /* PopUp warning */
 "AzureCommunicationUICalling.SnackBar.Button.Dismiss"="Schließen";

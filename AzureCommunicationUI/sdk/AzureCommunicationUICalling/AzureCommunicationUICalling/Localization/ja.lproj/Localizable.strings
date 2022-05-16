@@ -25,7 +25,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="マイク オン";
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="ミュート";
 "AzureCommunicationUICalling.SetupView.Button.Device"="デバイス";
-"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="オーディオ デバイス";
+"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="オーディオ デバイスを選択";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="カメラが無効になっています。有効にするには、[設定] に移動してアクセスを許可してください。";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="カメラとオーディオが無効になっています。有効にするには、[設定] に移動してアクセスを許可してください。この通話を開始するには、オーディオを有効にする必要があります。";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="オーディオが無効になっています。有効にするには、[設定] に移動してアクセスを許可してください。この通話を開始するには、オーディオを有効にする必要があります。";
@@ -51,6 +51,9 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d 人の参加者が会議に参加しました";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ さんが会議から退出しました";
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d 人の参加者が会議から退出しました";
+"AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="通話に参加しました";
+"AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="コンテンツは共有されています";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="コンテンツの共有が終了しました";
 
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="退出";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="キャンセル";
