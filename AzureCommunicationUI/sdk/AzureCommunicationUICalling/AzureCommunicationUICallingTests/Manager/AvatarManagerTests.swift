@@ -23,16 +23,16 @@ class AvatarManagerTests: XCTestCase {
         }
         let mockAvatarManager = makeSUT(mockImage)
         let mockImageData = mockImage.cgImage?.bitsPerPixel
-        let setAvatar = mockAvatarManager.getLocalPersonaData()?.avatarImage
+        let setAvatar = mockAvatarManager.getLocalParticipantViewData()?.avatarImage
         let setAvatarImageData = setAvatar?.cgImage?.bitsPerPixel
         XCTAssertEqual(mockImageData, setAvatarImageData)
     }
 
-    private func makeSUT(_ image: UIImage) -> AvatarViewManager {
-        let mockPersonaData = CommunicationUIPersonaData(image, renderDisplayName: "")
-        let mockDataOptions = CommunicationUILocalDataOptions(mockPersonaData)
+    private func makeSUT(_ image: UIImage) -> AvatarViewManagerProtocol {
+        let mockParticipantViewData = ParticipantViewData(avatar: image, renderDisplayName: "")
+        let mockLocalSettings = LocalSettings(mockParticipantViewData)
         return CompositeAvatarViewManager(store: mockStoreFactory.store,
-                                          localDataOptions: mockDataOptions)
+                                          localSettings: mockLocalSettings)
 
     }
 }
