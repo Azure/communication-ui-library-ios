@@ -55,7 +55,7 @@ struct SettingsView: View {
     }
 
     var avatarSettings: some View {
-        Section(header: Text("Participant View Data")) {
+        Section(header: Text("Local Participant View Data")) {
             Picker("Avatar Choices", selection: $envConfigSubject.avatarImageName) {
                 ForEach(avatarChoices, id: \.self) { avatar in
                     Image(avatar)
