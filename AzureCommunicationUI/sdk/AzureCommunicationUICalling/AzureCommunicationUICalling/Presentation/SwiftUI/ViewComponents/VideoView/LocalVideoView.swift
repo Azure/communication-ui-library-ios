@@ -83,7 +83,9 @@ struct LocalVideoView: View {
                         CompositeAvatar(displayName: $viewModel.displayName,
                                         avatarImage: $avatarImage,
                                         isSpeaking: false,
-                                        avatarSize: viewType.avatarSize)
+                                        avatarSize: viewType.avatarSize,
+                                        avatarImage: participantViewData?.avatarImage)
+
                         if viewType.showDisplayNameTitleView {
                             Spacer().frame(height: 10)
                             ParticipantTitleView(displayName: $viewModel.displayName,

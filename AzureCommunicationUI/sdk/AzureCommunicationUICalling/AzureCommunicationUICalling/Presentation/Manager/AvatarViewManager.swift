@@ -9,19 +9,20 @@ import Combine
 
 protocol AvatarViewManagerProtocol {
     func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
-                                         personaData: PersonaData) -> Result<Void, Error>
+                                         participantViewData: ParticipantViewData) -> Result<Void, Error>
 }
 
 class AvatarViewManager: AvatarViewManagerProtocol {
     private let store: Store<AppState>
+
     @Published private(set) var avatarStorage = MappedSequence<String, PersonaData>()
-    @Published private(set) var localDataOptions: CommunicationUILocalDataOptions?
+    @Published private(set) var localSettings: LocalSettings?
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState>,
-         localDataOptions: CommunicationUILocalDataOptions?) {
+         localSettings: LocalSettings?) {
         self.store = store
-        self.localDataOptions = localDataOptions
+        self.localSettings = localSettings
         store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
@@ -39,7 +40,7 @@ class AvatarViewManager: AvatarViewManagerProtocol {
     }
 
     func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
-                                         personaData: PersonaData) -> Result<Void, Error> {
+                                         participantViewData: ParticipantViewData) -> Result<Void, Error> {
         guard let idStringValue = identifier.stringValue
         else {
             return .failure(CompositeError.remoteParticipantNotFound)

@@ -25,11 +25,11 @@ class DependencyContainerTests: XCTestCase {
         let callConfiguration = CallConfiguration(credential: communicationTokenCredential!,
                                                   groupId: groupId,
                                                   displayName: displayName)
-        let localPersonaData = PersonaData(avatar: nil, renderDisplayName: nil)
-        let localDataOptions = CommunicationUILocalDataOptions(localPersonaData)
+        let participantViewData = ParticipantViewData(avatar: nil, renderDisplayName: nil)
+        let localSettings = LocalSettings(participantViewData)
 
         dependencyContainer.registerDependencies(callConfiguration,
-                                                 localDataOptions: localDataOptions,
+                                                 localSettings: localSettings,
                                                  eventsHandler: CallCompositeEventsHandler())
 
         XCTAssertNotNil(dependencyContainer.resolve() as CallingSDKWrapperProtocol)

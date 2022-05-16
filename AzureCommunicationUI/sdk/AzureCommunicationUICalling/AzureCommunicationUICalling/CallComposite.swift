@@ -46,14 +46,15 @@ public class CallComposite {
     }
 
     private func launch(_ callConfiguration: CallConfiguration,
-                        localOptions: CommunicationUILocalDataOptions?) {
+                        localSettings: LocalSettings?) {
         let dependencyContainer = DependencyContainer()
         logger = dependencyContainer.resolve() as Logger
         logger?.debug("launch composite experience")
 
         dependencyContainer.registerDependencies(callConfiguration,
-                                                 localDataOptions: localOptions,
+                                                 localSettings: localSettings,
                                                  eventsHandler: callCompositeEventsHandler)
+
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)
@@ -67,30 +68,30 @@ public class CallComposite {
 
     /// Start call composite experience with joining a group call.
     /// - Parameter options: The GroupCallOptions used to locate the group call.
-    /// - Parameter localData: LocalData used to set the user participants information for the call.
-    ///                         This is data is not sent up to ACS.
+    /// - Parameter localSettings: LocalSettings used to set the user participants information for the call.
+    ///                            This is data is not sent up to ACS.
     public func launch(with options: GroupCallOptions,
-                       localOptions: CommunicationUILocalDataOptions? = nil) {
+                       localSettings: LocalSettings? = nil) {
         let callConfiguration = CallConfiguration(
             credential: options.credential,
             groupId: options.groupId,
             displayName: options.displayName)
 
-        launch(callConfiguration, localOptions: localOptions)
+        launch(callConfiguration, localSettings: localSettings)
     }
 
     /// Start call composite experience with joining a Teams meeting.
     /// - Parameter options: The TeamsMeetingOptions used to locate the Teams meetings.
-    /// - Parameter localData: LocalData used to set the user participants information for the call.
-    ///                         This is data is not sent up to ACS.
+    /// - Parameter localSettings: LocalSettings used to set the user participants information for the call.
+    ///                            This is data is not sent up to ACS.
     public func launch(with options: TeamsMeetingOptions,
-                       localOptions: CommunicationUILocalDataOptions? = nil) {
+                       localSettings: LocalSettings? = nil) {
         let callConfiguration = CallConfiguration(
             credential: options.credential,
             meetingLink: options.meetingLink,
             displayName: options.displayName)
 
-        launch(callConfiguration, localOptions: localOptions)
+        launch(callConfiguration, localSettings: localSettings)
     }
 
     /// Set persona data for the remote participant.
