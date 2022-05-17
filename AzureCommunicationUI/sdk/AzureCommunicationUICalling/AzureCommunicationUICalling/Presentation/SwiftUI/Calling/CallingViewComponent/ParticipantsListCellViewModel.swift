@@ -33,7 +33,7 @@ class ParticipantsListCellViewModel {
     func getParticipantViewData(from avatarViewManager: AvatarViewManager) -> ParticipantViewData? {
         var participantViewData: ParticipantViewData?
         if isLocalParticipant {
-            participantViewData = avatarViewManager.localDataOptions?.participantViewData
+            participantViewData = avatarViewManager.localSettings?.participantViewData
         } else if let participantId = participantId {
             participantViewData = avatarViewManager.avatarStorage.value(forKey: participantId)
         }

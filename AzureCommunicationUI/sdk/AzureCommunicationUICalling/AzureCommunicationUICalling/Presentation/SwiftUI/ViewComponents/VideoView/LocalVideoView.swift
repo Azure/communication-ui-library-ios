@@ -84,6 +84,7 @@ struct LocalVideoView: View {
                                         avatarImage: $avatarImage,
                                         isSpeaking: false,
                                         avatarSize: viewType.avatarSize)
+
                         if viewType.showDisplayNameTitleView {
                             Spacer().frame(height: 10)
                             ParticipantTitleView(displayName: $viewModel.displayName,
@@ -102,7 +103,7 @@ struct LocalVideoView: View {
             }
         }.onReceive(viewModel.$localVideoStreamId) {
             viewManager.updateDisplayedLocalVideoStream($0)
-        }.onReceive(avatarManager.$localDataOptions) {
+        }.onReceive(avatarManager.$localSettings) {
             avatarImage = $0?.participantViewData.avatarImage
         }
     }

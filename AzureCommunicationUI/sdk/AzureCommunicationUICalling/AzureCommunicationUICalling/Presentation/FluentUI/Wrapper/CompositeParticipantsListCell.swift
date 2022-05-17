@@ -50,5 +50,6 @@ class CompositeParticipantsListCell: TableViewCell {
         setup(title: viewModel.getCellDisplayName(with: participantViewData),
               customView: avatarView,
               customAccessoryView: micImageView)
+        self.titleNumberOfLines = 2
     }
 }

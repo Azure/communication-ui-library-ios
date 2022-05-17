@@ -30,7 +30,7 @@ class CompositeRemoteParticipantsManagerTests: XCTestCase {
             self.remoteParticipantsJoinedExpectation.fulfill()
         }
         let avatarViewManager = AvatarViewManager(store: mockStoreFactory.store,
-                                                  localDataOptions: nil)
+                                                  localSettings: nil)
         sut = RemoteParticipantsManager(store: mockStoreFactory.store,
                                         callCompositeEventsHandler: eventsHandler,
                                         callingSDKWrapper: callingSDKWrapper,

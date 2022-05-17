@@ -56,7 +56,7 @@ struct SettingsView: View {
     }
 
     var avatarSettings: some View {
-        Section(header: Text("Local Participant")) {
+        Section(header: Text("Local Participant View Data")) {
             Picker("Avatar Choices", selection: $envConfigSubject.avatarImageName) {
                 ForEach(avatarChoices, id: \.self) { avatar in
                     Image(avatar)
@@ -70,7 +70,7 @@ struct SettingsView: View {
     }
 
     var remoteParticipantsAvatarsSettings: some View {
-        Section(header: Text("Remote Participant View Data")) {
+        Section(header: Text("Remote Participants View Data")) {
             Toggle("Inject avatars", isOn: $envConfigSubject.useCustomRemoteParticipantViewData)
         }
     }
