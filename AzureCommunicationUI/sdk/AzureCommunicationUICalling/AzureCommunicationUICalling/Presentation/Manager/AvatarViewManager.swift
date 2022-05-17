@@ -8,25 +8,25 @@ import UIKit
 import AzureCommunicationCommon
 
 protocol AvatarViewManagerProtocol {
-    func getLocalPersonaData() -> CommunicationUIPersonaData?
+    func getLocalParticipantViewData() -> ParticipantViewData?
 }
 
 public class CompositeAvatarViewManager: AvatarViewManagerProtocol {
     private let store: Store<AppState>
     private(set) var avatarCache = MappedSequence<String, Data>()
-    private(set) var localDataOptions: CommunicationUILocalDataOptions?
+    private(set) var localSettings: LocalSettings?
 
     init(store: Store<AppState>,
-         localDataOptions: CommunicationUILocalDataOptions?) {
+         localSettings: LocalSettings?) {
         self.store = store
-        self.localDataOptions = localDataOptions
+        self.localSettings = localSettings
     }
 
-    func getLocalPersonaData() -> CommunicationUIPersonaData? {
-        guard let localPersona = localDataOptions?.localPersona else {
+    func getLocalParticipantViewData() -> ParticipantViewData? {
+        guard let participantViewData = localSettings?.participantViewData else {
             return nil
         }
 
-        return localPersona
+        return participantViewData
     }
 }

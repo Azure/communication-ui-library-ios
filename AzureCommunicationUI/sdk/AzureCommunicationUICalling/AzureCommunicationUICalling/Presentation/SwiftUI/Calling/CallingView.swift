@@ -102,7 +102,7 @@ struct CallingView: View {
 
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
-                           personaData: avatarManager.getLocalPersonaData(),
+                           participantViewData: avatarManager.getLocalParticipantViewData(),
                            viewManager: viewManager,
                            viewType: .localVideoPip)
                 .frame(width: size.width, height: size.height, alignment: .center)
@@ -168,7 +168,7 @@ struct CallingView: View {
     var localVideoFullscreenView: some View {
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
-                           personaData: avatarManager.getLocalPersonaData(),
+                           participantViewData: avatarManager.getLocalParticipantViewData(),
                            viewManager: viewManager,
                            viewType: .localVideofull)
                 .background(Color(StyleProvider.color.surface))
