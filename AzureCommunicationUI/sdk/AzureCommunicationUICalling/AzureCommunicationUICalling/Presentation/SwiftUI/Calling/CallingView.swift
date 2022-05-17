@@ -249,17 +249,12 @@ struct CallingView: View {
 
         if isiPad {
             if let parentSize = parentSize {
-                // To be reviewed by UX: the Pip view takes 15% of the parent view height
-                let height = parentSize.height * 0.15
                 if parentSize.width < parentSize.height {
-                    let height = parentSize.height * 0.15
-                    // Note: the number 152 and 115 are units from Figma, they are used to calculate width / height
-                    // based on the aspect ratio
-                    let size = CGSize(width: height / 152 * 115, height: height)
-                    return size
+                    // portrait
+                    return CGSize(width: 80.0, height: 115.0)
                 } else {
-                    let size = CGSize(width: height / 115 * 152, height: height)
-                    return size
+                    // landscape
+                    return CGSize(width: 152.0, height: 115.0)
                 }
             }
         }
