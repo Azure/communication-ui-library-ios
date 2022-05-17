@@ -7,9 +7,10 @@
 - Implemented automatic system language detection for localization. [#126](https://github.com/Azure/communication-ui-library-ios/pull/126)
 - Change `LanguageCode` to `CommunicationUISupportedLocale` to support both `ll` (language code) and `ll-CC` (language code with country code) format using swift `Locale` struct. [#158](https://github.com/Azure/communication-ui-library-ios/pull/133)
 - Change initializer  `LocalizationConfiguration` to accept Locale struct. [#158](https://github.com/Azure/communication-ui-library-ios/pull/133)
-- Implemented additional primary color tint overrides to ThemeConfiguration
-- Implemented light/dark mode override to ThemeConfiguration
-- Implemented ability to drag the PiP around the display
+- Implemented call eviction [#139](https://github.com/Azure/communication-ui-library-ios/pull/139)
+- Implemented additional primary color tint overrides to ThemeConfiguration [#121](https://github.com/Azure/communication-ui-library-ios/pull/121)
+- Implemented light/dark mode override to ThemeConfiguration [#121](https://github.com/Azure/communication-ui-library-ios/pull/121)
+- Implemented ability to drag the PiP around the display [#151](https://github.com/Azure/communication-ui-library-ios/pull/151)
 
 
 ### Bugs Fixed
