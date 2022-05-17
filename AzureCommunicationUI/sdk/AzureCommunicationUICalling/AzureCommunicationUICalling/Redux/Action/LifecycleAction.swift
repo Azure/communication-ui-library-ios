@@ -9,5 +9,7 @@ struct LifecycleAction {
     struct ForegroundEntered: Action {}
     struct BackgroundEntered: Action {}
 
+    struct AudioInterruptionBegan: Action {}
+    struct AudioInterruptionEnded: Action {}
     // Additional action completed
 }

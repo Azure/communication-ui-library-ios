@@ -71,9 +71,14 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     @objc func handleInterruption(notification: Notification) {
         guard let userInfo = notification.userInfo,
               let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
-              let interruptionType = AVAudioSession.InterruptionType(rawValue: typeValue),
-              interruptionType == AVAudioSession.InterruptionType.ended else {
+              let interruptionType = AVAudioSession.InterruptionType(rawValue: typeValue)else {
             return
+        }
+        switch interruptionType {
+        case .began:
+            <#code#>
+        case .ended:
+            <#code#>
         }
         resumeAudioSession()
     }

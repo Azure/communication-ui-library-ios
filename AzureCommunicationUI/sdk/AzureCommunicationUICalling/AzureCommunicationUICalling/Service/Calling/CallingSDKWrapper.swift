@@ -7,27 +7,6 @@ import Foundation
 import Combine
 import AzureCommunicationCalling
 
-enum CameraDevice {
-    case front
-    case back
-}
-
-protocol CallingSDKWrapperProtocol {
-    func getRemoteParticipant(_ identifier: String) -> RemoteParticipant?
-    func startPreviewVideoStream() -> AnyPublisher<String, Error>
-    func getLocalVideoStream(_ identifier: String) -> LocalVideoStream?
-    func setupCall() -> AnyPublisher<Void, Error>
-    func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) -> AnyPublisher<Void, Error>
-    func endCall() -> AnyPublisher<Void, Error>
-    func startCallLocalVideoStream() -> AnyPublisher<String, Error>
-    func stopLocalVideoStream() -> AnyPublisher<Void, Error>
-    func switchCamera() -> AnyPublisher<CameraDevice, Error>
-    func muteLocalMic() -> AnyPublisher<Void, Error>
-    func unmuteLocalMic() -> AnyPublisher<Void, Error>
-
-    var callingEventsHandler: CallingSDKEventsHandling { get }
-}
-
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -234,6 +213,33 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             }
         }.eraseToAnyPublisher()
     }
+
+    func holdCall() -> AnyPublisher<Void, Error> {
+        Future { promise in
+            self.call?.hold { [weak self] (error) in
+                if error != nil {
+                    self?.logger.error( "ERROR: It was not possible to hold call. \(error!)")
+                    return promise(.failure(error!))
+                }
+                self?.logger.debug("Hold Call successful")
+                promise(.success(()))
+            }
+        }.eraseToAnyPublisher()
+    }
+
+    func resumeCall() -> AnyPublisher<Void, Error> {
+        Future { promise in
+            self.call?.resume { [weak self] (error) in
+                if error != nil {
+                    self?.logger.error( "ERROR: It was not possible to resume call. \(error!)")
+                    return promise(.failure(error!))
+                }
+                self?.logger.debug("Resume Call successful")
+                promise(.success(()))
+            }
+        }.eraseToAnyPublisher()
+    }
+
 }
 
 extension CallingSDKWrapper {
