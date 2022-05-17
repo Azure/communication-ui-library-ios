@@ -55,7 +55,6 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     private func setupAudioSession() {
-
         activateAudioSessionCategory()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleRouteChange),
@@ -74,13 +73,16 @@ class AudioSessionManager: AudioSessionManagerProtocol {
               let interruptionType = AVAudioSession.InterruptionType(rawValue: typeValue)else {
             return
         }
+
         switch interruptionType {
         case .began:
-            <#code#>
+            store.dispatch(action: LifecycleAction.AudioInterruptionBegan())
         case .ended:
-            <#code#>
+            store.dispatch(action: LifecycleAction.AudioInterruptionEnded())
+        default:
+            break
         }
-        resumeAudioSession()
+
     }
 
     @objc func handleRouteChange(notification: Notification) {
@@ -103,33 +105,6 @@ class AudioSessionManager: AudioSessionManagerProtocol {
             try audioSession.setActive(true)
         } catch let error {
             logger.error("Failed to set audio session category:\(error.localizedDescription)")
-        }
-    }
-
-    private func resumeAudioSession() {
-        var audioDeviceType: AudioDeviceType
-        switch localUserAudioDeviceState {
-        case .receiverSelected,
-                .receiverRequested:
-            audioDeviceType = .receiver
-        case .speakerSelected,
-                .speakerRequested:
-            audioDeviceType = .speaker
-        case .headphonesSelected,
-                .headphonesRequested:
-            audioDeviceType = .headphones
-        case .bluetoothSelected,
-                .bluetoothRequested:
-            audioDeviceType = .bluetooth
-        default:
-            audioDeviceType = .receiver
-        }
-
-        activateAudioSessionCategory()
-
-        // Add a delay of setting audioDeviceType, to override the default port from setAudioSessionCategory.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            self?.switchAudioDevice(to: audioDeviceType)
         }
     }
 

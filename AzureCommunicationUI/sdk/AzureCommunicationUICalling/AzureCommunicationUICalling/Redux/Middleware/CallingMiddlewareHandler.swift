@@ -10,6 +10,8 @@ protocol CallingMiddlewareHandling {
     func setupCall(state: ReduxState?, dispatch: @escaping ActionDispatch)
     func startCall(state: ReduxState?, dispatch: @escaping ActionDispatch)
     func endCall(state: ReduxState?, dispatch: @escaping ActionDispatch)
+    func holdCall(state: ReduxState?, dispatch: @escaping ActionDispatch)
+    func resumeCall(state: ReduxState?, dispatch: @escaping ActionDispatch)
     func enterBackground(state: ReduxState?, dispatch: @escaping ActionDispatch)
     func enterForeground(state: ReduxState?, dispatch: @escaping ActionDispatch)
     func requestCameraPreviewOn(state: ReduxState?, dispatch: @escaping ActionDispatch)
@@ -95,14 +97,14 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             .store(in: cancelBag)
     }
 
-    func beginAudioSessionInterruption(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func holdCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
         guard let state = state as? AppState,
            state.callingState.status == .connected else {
             return
         }
 
         callingService.holdCall()
-            .sink(receiveCompletion: { [weak self] _ in
+            .sink(receiveCompletion: { _ in
 
             }, receiveValue: { _ in
                 self.subscription(dispatch: dispatch)
@@ -110,14 +112,14 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     }
 
-    func endAudioSessionInterruption(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func resumeCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
         guard let state = state as? AppState,
            state.callingState.status == .localHold else {
             return
         }
 
         callingService.resumeCall()
-            .sink(receiveCompletion: { [weak self] _ in
+            .sink(receiveCompletion: { _ in
 
             }, receiveValue: { _ in
                 self.subscription(dispatch: dispatch)
