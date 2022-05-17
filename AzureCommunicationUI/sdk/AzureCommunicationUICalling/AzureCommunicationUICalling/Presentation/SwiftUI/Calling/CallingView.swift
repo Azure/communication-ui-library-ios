@@ -18,6 +18,7 @@ struct CallingView: View {
 
     @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
     @State private var pipPosition: CGPoint?
+    @GestureState private var pipDragStartPosition: CGPoint?
 
     var safeAreaIgnoreArea: Edge.Set {
         return getSizeClass() != .iphoneLandscapeScreenSize ? []: [.bottom]
@@ -73,9 +74,7 @@ struct CallingView: View {
                         .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
                 }
                 .onAppear {
-                    if self.pipPosition == nil {
-                        self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
-                    }
+                    self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
                 }
                 .onChange(of: geometry.size) { _ in
                     self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
@@ -103,7 +102,7 @@ struct CallingView: View {
 
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
-                           personaData: avatarManager.getLocalPersonaData(),
+                           participantViewData: avatarManager.getLocalParticipantViewData(),
                            viewManager: viewManager,
                            viewType: .localVideoPip)
                 .frame(width: size.width, height: size.height, alignment: .center)
@@ -122,11 +121,19 @@ struct CallingView: View {
                         .gesture(
                             DragGesture()
                                 .onChanged { value in
-                                        let containerBounds = getContainerBounds(bounds: geometry.frame(in: .local))
-                                        self.pipPosition = getBoundedPipPosition(
-                                            currentPipPosition: self.pipPosition!,
-                                            requestedPipPosition: value.location,
-                                            bounds: containerBounds)
+                                    let containerBounds = getContainerBounds(bounds: geometry.frame(in: .local))
+                                    let translatedPipPosition = getTranslatedPipPosition(
+                                        currentPipPosition: self.pipPosition!,
+                                        pipDragStartPosition: self.pipDragStartPosition,
+                                        translation: value.translation,
+                                        isRightToLeft: viewModel.isRightToLeft)
+                                    self.pipPosition = getBoundedPipPosition(
+                                        currentPipPosition: self.pipPosition!,
+                                        requestedPipPosition: translatedPipPosition,
+                                        bounds: containerBounds)
+                                }
+                                .updating($pipDragStartPosition) { (_, startLocation, _) in
+                                    startLocation = startLocation ?? self.pipPosition
                                 }
                         )
                 }
@@ -161,7 +168,7 @@ struct CallingView: View {
     var localVideoFullscreenView: some View {
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
-                           personaData: avatarManager.getLocalPersonaData(),
+                           participantViewData: avatarManager.getLocalParticipantViewData(),
                            viewManager: viewManager,
                            viewType: .localVideofull)
                 .background(Color(StyleProvider.color.surface))
@@ -209,6 +216,21 @@ struct CallingView: View {
                 left: pipSize.width / 2.0 + padding,
                 bottom: pipSize.height / 2.0 + padding,
                 right: pipSize.width / 2.0 + padding))
+    }
+
+    private func getTranslatedPipPosition(
+        currentPipPosition: CGPoint,
+        pipDragStartPosition: CGPoint?,
+        translation: CGSize,
+        isRightToLeft: Bool) -> CGPoint {
+        var translatedPipPosition = pipDragStartPosition ?? currentPipPosition
+
+        translatedPipPosition.x += isRightToLeft
+        ? -translation.width
+        : translation.width
+        translatedPipPosition.y += translation.height
+
+        return translatedPipPosition
     }
 
     private func getBoundedPipPosition(

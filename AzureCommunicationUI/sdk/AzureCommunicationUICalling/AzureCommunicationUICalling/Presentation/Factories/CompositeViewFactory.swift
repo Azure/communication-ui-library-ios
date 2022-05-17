@@ -28,7 +28,7 @@ struct CompositeViewFactory: CompositeViewFactoryProtocol {
 
     func makeSetupView() -> SetupView {
         return SetupView(viewModel: compositeViewModelFactory.getSetupViewModel(),
-                         localPersonaData: avatarManager.getLocalPersonaData(),
+                         participantViewData: avatarManager.getLocalParticipantViewData(),
                          viewManager: videoViewManager)
     }
 

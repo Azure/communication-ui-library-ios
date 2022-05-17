@@ -31,7 +31,7 @@ final class DependencyContainer {
     }
 
     func registerDependencies(_ callConfiguration: CallConfiguration,
-                              localDataOptions: CommunicationUILocalDataOptions?) {
+                              localSettings: LocalSettings?) {
         register(CallingSDKEventsHandler(logger: resolve()) as CallingSDKEventsHandling)
         register(CallingSDKWrapper(logger: resolve(),
                                    callingEventsHandler: resolve(),
@@ -39,14 +39,14 @@ final class DependencyContainer {
         register(VideoViewManager(callingSDKWrapper: resolve(), logger: resolve()) as VideoViewManager)
         register(CallingService(logger: resolve(),
                                 callingSDKWrapper: resolve()) as CallingServiceProtocol)
-        let displayName = localDataOptions?.localPersona.renderDisplayName ?? callConfiguration.displayName
+        let displayName = localSettings?.participantViewData.renderDisplayName ?? callConfiguration.displayName
         register(makeStore(displayName: displayName) as Store<AppState>)
         register(NavigationRouter(store: resolve(),
                                   logger: resolve()) as NavigationRouter)
         register(AccessibilityProvider() as AccessibilityProviderProtocol)
         register(LocalizationProvider(logger: resolve()) as LocalizationProviderProtocol)
         register(CompositeAvatarViewManager(store: resolve(),
-                                            localDataOptions: localDataOptions) as AvatarViewManagerProtocol)
+                                            localSettings: localSettings) as AvatarViewManagerProtocol)
         register(CompositeViewModelFactory(logger: resolve(),
                                            store: resolve(),
                                            localizationProvider: resolve(),

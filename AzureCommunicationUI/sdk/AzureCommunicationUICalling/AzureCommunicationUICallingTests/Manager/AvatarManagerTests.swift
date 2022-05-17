@@ -15,24 +15,37 @@ class AvatarManagerTests: XCTestCase {
     }
 
     func test_avatarManager_when_setLocalAvatar_then_getLocalAvatar_returnsSameUIImage() {
-        guard let mockImage = UIImage(named: "Icon/ic_fluent_call_end_24_filled",
-                                      in: Bundle(for: CallComposite.self),
-                                      compatibleWith: nil) else {
+        guard let mockImage = UIImage.make(withColor: .red) else {
             XCTFail("UIImage does not exist")
             return
         }
         let mockAvatarManager = makeSUT(mockImage)
         let mockImageData = mockImage.cgImage?.bitsPerPixel
-        let setAvatar = mockAvatarManager.getLocalPersonaData()?.avatarImage
+        let setAvatar = mockAvatarManager.getLocalParticipantViewData()?.avatarImage
         let setAvatarImageData = setAvatar?.cgImage?.bitsPerPixel
         XCTAssertEqual(mockImageData, setAvatarImageData)
     }
 
-    private func makeSUT(_ image: UIImage) -> AvatarViewManager {
-        let mockPersonaData = CommunicationUIPersonaData(image, renderDisplayName: "")
-        let mockDataOptions = CommunicationUILocalDataOptions(mockPersonaData)
+    private func makeSUT(_ image: UIImage) -> AvatarViewManagerProtocol {
+        let mockParticipantViewData = ParticipantViewData(avatar: image, renderDisplayName: "")
+        let mockLocalSettings = LocalSettings(mockParticipantViewData)
         return CompositeAvatarViewManager(store: mockStoreFactory.store,
-                                          localDataOptions: mockDataOptions)
+                                          localSettings: mockLocalSettings)
 
+    }
+}
+
+extension UIImage {
+    static func make(withColor color: UIColor) -> UIImage? {
+        let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
+        UIGraphicsBeginImageContext(rect.size)
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return nil
+        }
+        context.setFillColor(color.cgColor)
+        context.fill(rect)
+        let img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return img
     }
 }
