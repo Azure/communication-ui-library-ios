@@ -11,8 +11,8 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
     @Binding var isInfoHeaderDisplayed: Bool
     @Binding var isVoiceOverEnabled: Bool
     @ObservedObject var viewModel: ParticipantsListViewModel
+    @ObservedObject var avatarViewManager: AvatarViewManager
     let sourceView: UIView
-    let avatarViewManager: AvatarViewManager
 
     func makeCoordinator() -> Coordinator {
         Coordinator(isPresented: $isPresented,
