@@ -74,9 +74,7 @@ struct CallingView: View {
                         .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
                 }
                 .onAppear {
-                    if self.pipPosition == nil {
-                        self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
-                    }
+                    self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
                 }
                 .onChange(of: geometry.size) { _ in
                     self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
