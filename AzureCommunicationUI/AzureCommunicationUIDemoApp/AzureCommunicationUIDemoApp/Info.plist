@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CFBundleName</key>
-	<string>Azure Communication Demo</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -17,10 +15,6 @@
 			</array>
 		</dict>
 	</array>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>This is required for calling.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>This is required for calling.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -42,12 +36,12 @@
 	<array>
 		<string>audio</string>
 	</array>
-	<key>appCenterSecret</key>
-	<string>${appCenterSecret}</string>
 	<key>acsToken</key>
 	<string>${acsToken}</string>
 	<key>acsTokenUrl</key>
 	<string>${acsTokenUrl}</string>
+	<key>appCenterSecret</key>
+	<string>${appCenterSecret}</string>
 	<key>displayName</key>
 	<string>${displayName}</string>
 	<key>groupCallId</key>
