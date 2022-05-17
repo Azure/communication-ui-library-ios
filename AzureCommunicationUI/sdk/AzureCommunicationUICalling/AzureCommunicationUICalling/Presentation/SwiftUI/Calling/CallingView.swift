@@ -144,9 +144,9 @@ struct CallingView: View {
         GeometryReader { geometry in
             let geoWidth: CGFloat = geometry.size.width
             let isIpad = getSizeClass() == .ipadScreenSize
-            let widthWIthHorizontalPadding = geoWidth - 2 * Constants.infoHeaderViewHorizontalPadding
-            let infoHeaderViewWidth = isIpad ? min(widthWIthHorizontalPadding,
-                                                   Constants.infoHeaderViewMaxWidth) : widthWIthHorizontalPadding
+            let widthWithoutHorizontalPadding = geoWidth - 2 * Constants.infoHeaderViewHorizontalPadding
+            let infoHeaderViewWidth = isIpad ? min(widthWithoutHorizontalPadding,
+                                                   Constants.infoHeaderViewMaxWidth) : widthWithoutHorizontalPadding
             VStack {
                 bannerView
                 HStack {
