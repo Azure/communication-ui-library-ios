@@ -10,8 +10,10 @@ class ParticipantGridViewModel: ObservableObject {
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
-
-    private let maximumParticipantsDisplayed: Int = 6
+    private let isIpadInterface: Bool
+    private var maximumParticipantsDisplayed: Int {
+        return isIpadInterface ? 12 : 6
+    }
 
     private var lastUpdateTimeStamp = Date()
     private(set) var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
@@ -21,10 +23,12 @@ class ParticipantGridViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localizationProvider: LocalizationProviderProtocol,
-         accessibilityProvider: AccessibilityProviderProtocol) {
+         accessibilityProvider: AccessibilityProviderProtocol,
+         isIPadInterface: Bool) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
+        self.isIpadInterface = isIPadInterface
     }
 
     func update(callingState: CallingState,
