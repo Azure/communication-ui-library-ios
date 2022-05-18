@@ -70,8 +70,8 @@ struct SettingsView: View {
     }
 
     var remoteParticipantsAvatarsSettings: some View {
-        Section(header: Text("Remote Participant Persona")) {
-            Toggle("Inject avatars", isOn: $envConfigSubject.useCustomRemoteParticipantsPersonaData)
+        Section(header: Text("Remote Participants View Data")) {
+            Toggle("Inject avatars", isOn: $envConfigSubject.useCustomRemoteParticipantViewData)
         }
     }
 

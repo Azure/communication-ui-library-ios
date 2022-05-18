@@ -8,15 +8,15 @@ import AzureCommunicationCommon
 import Combine
 
 protocol AvatarViewManagerProtocol {
-    func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
-                                         participantViewData: ParticipantViewData) -> Result<Void, Error>
+    func setRemoteParticipantViewData(for identifier: CommunicationIdentifier,
+                                      participantViewData: ParticipantViewData) -> Result<Void, Error>
 }
 
-class AvatarViewManager: AvatarViewManagerProtocol {
-    private let store: Store<AppState>
-
-    @Published private(set) var avatarStorage = MappedSequence<String, ParticipantViewData>()
+class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
+    @Published var updatedId: String?
     @Published private(set) var localSettings: LocalSettings?
+    private let store: Store<AppState>
+    private(set) var avatarStorage = MappedSequence<String, ParticipantViewData>()
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState>,
@@ -39,15 +39,28 @@ class AvatarViewManager: AvatarViewManagerProtocol {
         avatarStorage = MappedSequence<String, ParticipantViewData>()
     }
 
-    func setRemoteParticipantPersonaData(for identifier: CommunicationIdentifier,
-                                         participantViewData: ParticipantViewData) -> Result<Void, Error> {
-        guard let idStringValue = identifier.stringValue
-        else {
+    func updateStorage(with removedParticipantsIds: [String]) {
+        guard avatarStorage.count > 0 else {
+            return
+        }
+
+        for id in removedParticipantsIds {
+            avatarStorage.removeValue(forKey: id)
+        }
+    }
+
+    func setRemoteParticipantViewData(for identifier: CommunicationIdentifier,
+                                      participantViewData: ParticipantViewData) -> Result<Void, Error> {
+        guard let idStringValue = identifier.stringValue else {
             return .failure(CompositeError.remoteParticipantNotFound)
         }
 
+        if avatarStorage.value(forKey: idStringValue) != nil {
+            avatarStorage.removeValue(forKey: idStringValue)
+        }
         avatarStorage.append(forKey: idStringValue,
                              value: participantViewData)
+        updatedId = idStringValue
         return .success(Void())
     }
 }

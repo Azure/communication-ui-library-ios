@@ -167,7 +167,6 @@ extension SwiftUIDemoView {
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                           renderDisplayName: renderDisplayName)
         let localSettings = LocalSettings(participantViewData)
-
         if let credential = try? getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -248,7 +247,7 @@ extension SwiftUIDemoView {
 
     func didRemoteParticipantsJoin(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::SwiftUIDemoView::getEventsHandler::didRemoteParticipantsJoin \(identifiers)")
-        guard envConfigSubject.useCustomRemoteParticipantsPersonaData else {
+        guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }
 

@@ -135,7 +135,7 @@ class UIKitDemoViewController: UIViewController {
 
     func didRemoteParticipantsJoin(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::UIKitDemoView::getEventsHandler::didRemoteParticipantsJoin \(identifiers)")
-        guard envConfigSubject.useCustomRemoteParticipantsPersonaData else {
+        guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }
 

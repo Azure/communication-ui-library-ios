@@ -11,6 +11,7 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
     @Binding var isInfoHeaderDisplayed: Bool
     @Binding var isVoiceOverEnabled: Bool
     @ObservedObject var viewModel: ParticipantsListViewModel
+    @ObservedObject var avatarViewManager: AvatarViewManager
     let sourceView: UIView
 
     func makeCoordinator() -> Coordinator {
@@ -21,7 +22,8 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> DrawerContainerViewController<ParticipantsListCellViewModel> {
         let controller = ParticipantsListViewController(items: getParticipantsList(),
-                                                        sourceView: sourceView)
+                                                        sourceView: sourceView,
+                                                        avatarViewManager: avatarViewManager)
         controller.delegate = context.coordinator
         return controller
     }
@@ -37,7 +39,7 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
     }
 
     private func getParticipantsList() -> [ParticipantsListCellViewModel] {
-        return viewModel.sortedParticipants()
+        return viewModel.sortedParticipants(with: avatarViewManager)
     }
 
     class Coordinator: NSObject, DrawerControllerDelegate {

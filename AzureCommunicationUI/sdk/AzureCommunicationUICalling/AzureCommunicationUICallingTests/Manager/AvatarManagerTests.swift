@@ -24,13 +24,12 @@ class AvatarManagerTests: XCTestCase {
         }
         let mockAvatarManager = makeSUT(mockImage)
         let mockImageData = mockImage.cgImage?.bitsPerPixel
-
         let setAvatar = mockAvatarManager.localSettings?.participantViewData.avatarImage
         let setAvatarImageData = setAvatar?.cgImage?.bitsPerPixel
         XCTAssertEqual(mockImageData, setAvatarImageData)
     }
 
-    func test_avatarManager_setRemoteParticipantPersonaData_when_personeDataSet_then_personaDataUpdated() {
+    func test_avatarManager_setRemoteParticipantViewData_when_personeDataSet_then_participantViewDataDataUpdated() {
         guard let mockImage = UIImage(named: "Icon/ic_fluent_call_end_24_filled",
                                       in: Bundle(for: CallComposite.self),
                                       compatibleWith: nil) else {
@@ -38,10 +37,10 @@ class AvatarManagerTests: XCTestCase {
             return
         }
         let sut = makeSUT()
-        let personaData = PersonaData(avatar: mockImage)
+        let participantViewData = ParticipantViewData(avatar: mockImage)
         let id = UUID().uuidString
-        let result = sut.setRemoteParticipantPersonaData(for: CommunicationUserIdentifier(id),
-                                                         personaData: personaData)
+        let result = sut.setRemoteParticipantViewData(for: CommunicationUserIdentifier(id),
+                                                      participantViewData: participantViewData)
         guard case .success = result else {
             XCTFail("Failed with result validation")
             return
@@ -61,6 +60,6 @@ extension AvatarManagerTests {
 
     private func makeSUT() -> AvatarViewManager {
         return AvatarViewManager(store: mockStoreFactory.store,
-                                 localDataOptions: nil)
+                                 localSettings: nil)
     }
 }

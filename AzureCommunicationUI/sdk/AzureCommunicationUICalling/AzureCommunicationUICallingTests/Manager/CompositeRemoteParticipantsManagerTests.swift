@@ -29,9 +29,12 @@ class CompositeRemoteParticipantsManagerTests: XCTestCase {
                            self.expectedIds.sorted())
             self.remoteParticipantsJoinedExpectation.fulfill()
         }
+        let avatarViewManager = AvatarViewManager(store: mockStoreFactory.store,
+                                                  localSettings: nil)
         sut = RemoteParticipantsManager(store: mockStoreFactory.store,
                                         callCompositeEventsHandler: eventsHandler,
-                                        callingSDKWrapper: callingSDKWrapper)
+                                        callingSDKWrapper: callingSDKWrapper,
+                                        avatarViewManager: avatarViewManager)
     }
 
     func test_compositeRemoteParticipantsManager_receive_when_stateUpdated_then_didRemoteParticipantsJoinEventPosted() {

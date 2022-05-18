@@ -153,7 +153,8 @@ struct CallingView: View {
     }
 
     var infoHeaderView: some View {
-        InfoHeaderView(viewModel: viewModel.infoHeaderViewModel)
+        InfoHeaderView(viewModel: viewModel.infoHeaderViewModel,
+                       avatarViewManager: avatarManager)
     }
 
     var bannerView: some View {

@@ -20,7 +20,11 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
     }
     private weak var controller: DrawerController?
 
-    init(items: [T], sourceView: UIView, headerName: String? = nil, showHeader: Bool = false) {
+    init(items: [T],
+         sourceView: UIView,
+         headerName: String? = nil,
+         showHeader: Bool = false
+    ) {
         self.items = items
         self.sourceView = sourceView
         self.showHeader = showHeader
