@@ -2,9 +2,9 @@
 
 # Azure Communication UI Mobile Library for iOS
 
-![Cocoapods](https://img.shields.io/cocoapods/l/AzureCommunicationUI)
-![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AzureCommunicationUI)
-![Cocoapods platforms](https://img.shields.io/cocoapods/p/AzureCommunicationUI)
+![Cocoapods](https://img.shields.io/cocoapods/l/AzureCommunicationUICalling)
+![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AzureCommunicationUICalling)
+![Cocoapods platforms](https://img.shields.io/cocoapods/p/AzureCommunicationUICalling)
 
 Azure Communication [UI Mobile Library](https://docs.microsoft.com/en-us/azure/communication-services/concepts/ui-library/ui-library-overview) is an Azure Communication Services capability focused on providing UI components for common business-to-consumer and business-to-business calling interactions.
 
@@ -23,7 +23,7 @@ Get started with Azure Communication Services by using the UI Library to integra
 
 #### Requirements
 
-* iOS 13+
+* iOS 14+
 * Xcode 13+
 * Swift 5.0+
 
@@ -32,7 +32,7 @@ Get started with Azure Communication Services by using the UI Library to integra
 CocoaPods is a dependency manager for Cocoa projects. To set up with CocoaPods visit their [Getting Started Guide](https://guides.cocoapods.org/using/getting-started.html). To integrate UI Mobile Library into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-pod 'AzureCommunicationUI', '1.0.0-beta.2'
+pod 'AzureCommunicationUICalling', '1.0.0-beta.1'
 ```
 
 #### Manual Installation

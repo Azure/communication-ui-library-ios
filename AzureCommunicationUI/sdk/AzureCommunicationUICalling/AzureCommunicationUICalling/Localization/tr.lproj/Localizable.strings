@@ -1,0 +1,91 @@
+//
+//  Copyright (c) Microsoft Corporation. All rights reserved.
+//  Licensed under the MIT License.
+//
+
+/* Devices */
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iOS"="iOS";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Speaker"="Konuşmacı";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPhone"="iPhone";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Kulaklık";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+
+/* SetupView */
+"AzureCommunicationUICalling.SetupView.Title"="Kur";
+"AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Geri";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall"="Aramaya katıl";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Aramaya katılıyor...";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff"="Görüntü kapalı";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Kamerayı Aç";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn"="Görüntü açık";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Kamerayı Kapat";
+"AzureCommunicationUICalling.SetupView.Button.MicOff"="Mikrofon kapalı";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Sesi aç";
+"AzureCommunicationUICalling.SetupView.Button.MicOn"="Mikrofon açık";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Sesi kapat";
+"AzureCommunicationUICalling.SetupView.Button.Device"="Cihaz";
+"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Ses cihazını seç";
+"AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Kameranız devre dışı. Etkinleştirmek için Ayarlar seçeneğine giderek erişime izin verin.";
+"AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="Kameranız ve sesiniz devre dışı. Etkinleştirmek için Ayarlar seçeneğine giderek erişime izin verin. Bu aramayı başlatmak için sesi etkinleştirmeniz gerekiyor.";
+"AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="Sesiniz devre dışı. Etkinleştirmek için Ayarlar seçeneğine giderek erişime izin verin. Bu aramayı başlatmak için sesi etkinleştirmeniz gerekiyor.";
+
+/* LobbyView */
+"AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="Oturum sahibi bekleniyor"; // host (people not server) of a meeting
+"AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"="Katılımcılardan biri sizi kısa süre sonra toplantıya alacak";
+
+/* CallingView */
+"AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Diğerlerinin katılması bekleniyor";
+"AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="1 kişi ile arama";
+"AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="%d kişi ile arama"; // %d is for number of people in call
+
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Adsız Katılımcı";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (ben)"; // %@ is local participant name
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Sessize alındı";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Sesi açıldı";
+
+"AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Arka kameraya geç";
+"AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Ön kameraya geç";
+
+"AzureCommunicationUICalling.CallingView.OnePersonJoined"="%@ toplantıya katıldı";
+"AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d katılımcı toplantıya katıldı";
+"AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ toplantıdan ayrıldı";
+"AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d katılımcı toplantıdan ayrıldı";
+"AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Aramaya katıldınız";
+"AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="İçerik paylaşılıyor";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="İçerik paylaşımı sona erdi";
+
+"AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Çık";
+"AzureCommunicationUICalling.CallingView.Overlay.Cancel"="İptal";
+"AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="Aramadan çıkılsın mı?";
+
+/* ComplianceBanner title */
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Kayıt ve döküm başlatıldı.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStarted"="Kayıt başladı.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Döküm durduruldu.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStarted"="Döküm başlatıldı.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStopped"="Döküm kaydediliyor.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="Kayıt durduruldu.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStopped"="Kayıt kaydediliyor.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStopped"="Kayıt ve döküm kaydediliyor.";
+
+/* ComplianceBanner body */
+"AzureCommunicationUICalling.CallingView.BannerBody.Consent"="Katılarak bu toplantının dökümünün çıkarılmasına onay verirsiniz.";
+"AzureCommunicationUICalling.CallingView.BannerBody.Recording"="Şu anda yalnızca bu toplantıyı kaydediyorsunuz.";
+"AzureCommunicationUICalling.CallingView.BannerBody.TranscriptionStopped"="Döküm durduruldu.";
+"AzureCommunicationUICalling.CallingView.BannerBody.OnlyTranscribing"="Şu anda yalnızca bu toplantının dökümünü oluşturuyorsunuz.";
+"AzureCommunicationUICalling.CallingView.BannerBody.RecordingStopped"="Kayıt durduruldu.";
+"AzureCommunicationUICalling.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Kayıt ve döküm durduruldu.";
+
+/* ComplianceBanner display link */
+"AzureCommunicationUICalling.CallingView.BannerLink.PrivacyPolicy"="Gizlilik ilkesi";
+"AzureCommunicationUICalling.CallingView.BannerLink.LearnMore"="Daha fazla bilgi edinin";
+
+/* PopUp warning */
+"AzureCommunicationUICalling.SnackBar.Button.Dismiss"="Kapat";
+"AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="Başlığı Kapat";
+"AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="Bu bildirimi kapatır";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="Bir hata nedeniyle aramaya katılınamıyor.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Bir hata nedeniyle aramadan çıkarıldınız.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Aramadan çıkarıldınız.";
+"AzureCommunicationUICalling.SnackBar.Text.Error"="Bir hata oluştu.";
