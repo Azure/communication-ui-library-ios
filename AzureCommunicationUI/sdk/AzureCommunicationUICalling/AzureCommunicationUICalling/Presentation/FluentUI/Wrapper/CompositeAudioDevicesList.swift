@@ -5,6 +5,7 @@
 
 import SwiftUI
 import FluentUI
+import UIKit
 
 struct CompositeAudioDevicesList: UIViewControllerRepresentable {
     @Binding var isPresented: Bool
