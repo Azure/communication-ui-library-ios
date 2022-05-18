@@ -1,21 +1,4 @@
 # Release History
-## 1.0.0-beta.3
-### New Features
-- Updated minimum iOS version to 14.0. [#103](https://github.com/Azure/communication-ui-library-ios/pull/103)
-- Updated leave call confirmation drawer. [#129](https://github.com/Azure/communication-ui-library-ios/pull/129)
-- Implemented new local participant avatar parameter into launch method. [#131](https://github.com/Azure/communication-ui-library-ios/pull/131)
-- Implemented automatic system language detection for localization. [#126](https://github.com/Azure/communication-ui-library-ios/pull/126)
-- Change `LanguageCode` to `CommunicationUISupportedLocale` to support both `ll` (language code) and `ll-CC` (language code with country code) format using swift `Locale` struct. [#158](https://github.com/Azure/communication-ui-library-ios/pull/133)
-- Change initializer  `LocalizationConfiguration` to accept Locale struct. [#158](https://github.com/Azure/communication-ui-library-ios/pull/133)
-- Implemented call eviction [#139](https://github.com/Azure/communication-ui-library-ios/pull/139)
-- Implemented additional primary color tint overrides to ThemeConfiguration [#121](https://github.com/Azure/communication-ui-library-ios/pull/121)
-- Implemented light/dark mode override to ThemeConfiguration [#121](https://github.com/Azure/communication-ui-library-ios/pull/121)
-- Implemented ability to drag the PiP around the display [#151](https://github.com/Azure/communication-ui-library-ios/pull/151)
-
-### Bugs Fixed
-- Fixed screen share not rendering in large screen device. [#128](https://github.com/Azure/communication-ui-library-ios/pull/128)
-- Fixed the audio session not being active after an interruption. [#140](https://github.com/Azure/communication-ui-library-ios/pull/140)
-
 ## 1.0.0-beta.2 (2022-04-04)
 ### New Features
 - Updated joining experience in setup view. [#44](https://github.com/Azure/communication-ui-library-ios/pull/44)
