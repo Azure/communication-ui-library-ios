@@ -34,6 +34,8 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     var endCallCallCount: Int = 0
     var switchCameraCallCount: Int = 0
 
+    var holdCallCalled: Bool = false
+    var resumeCallCalled: Bool = false
     var muteLocalMicCalled: Bool = false
     var unmuteLocalMicCalled: Bool = false
     var startPreviewVideoStreamCalled: Bool = false
@@ -91,6 +93,28 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
         return AnyPublisher<Void, Error>.init(Result<Void, Error>.Publisher(()))
     }
 
+    func holdCall() -> AnyPublisher<Void, Error> {
+        holdCallCalled = true
+
+        return Future<Void, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success(()))
+        }.eraseToAnyPublisher()
+    }
+
+    func resumeCall() -> AnyPublisher<Void, Error> {
+        resumeCallCalled = true
+
+        return Future<Void, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success(()))
+        }.eraseToAnyPublisher()
+    }
+
     func startCallWasCalled() -> Bool {
         return startCallCallCount > 0
     }
@@ -124,4 +148,5 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     func switchCameraWasCalled() -> Bool {
         return switchCameraCallCount > 0
     }
+
 }
