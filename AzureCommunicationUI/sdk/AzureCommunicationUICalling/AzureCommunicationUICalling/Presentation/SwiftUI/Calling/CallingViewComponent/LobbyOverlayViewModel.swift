@@ -5,14 +5,28 @@
 
 import Foundation
 
-struct LobbyOverlayViewModel {
-    let localizationProvider: LocalizationProviderProtocol
+protocol OverlayViewModel {
+    var title: String { get }
+    var subtitle: String? { get set }
+    var actionTitle: String? { get set }
+    var action: ()? { get set }
+}
 
-    var title: String {
-        return localizationProvider.getLocalizedString(.waitingForHost)
-    }
+struct LobbyOverlayViewModel: OverlayViewModel {
+    var title: String
 
-    var subtitle: String {
-        return localizationProvider.getLocalizedString(.waitingDetails)
-    }
+    var subtitle: String?
+
+    var actionTitle: String?
+
+    var action: ()?
+//    let localizationProvider: LocalizationProviderProtocol
+//
+//    var title: String {
+//        return localizationProvider.getLocalizedString(.waitingForHost)
+//    }
+//
+//    var subtitle: String {
+//        return localizationProvider.getLocalizedString(.waitingDetails)
+//    }
 }

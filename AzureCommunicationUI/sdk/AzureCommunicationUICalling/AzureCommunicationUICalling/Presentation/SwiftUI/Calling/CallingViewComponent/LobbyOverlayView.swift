@@ -8,7 +8,7 @@ import FluentUI
 import Combine
 
 struct LobbyOverlayView: View {
-    let viewModel: LobbyOverlayViewModel
+    let viewModel: OverlayViewModel
 
     private let layoutSpacing: CGFloat = 24
     private let iconImageSize: CGFloat = 24
@@ -22,9 +22,14 @@ struct LobbyOverlayView: View {
                         .accessibility(hidden: true)
                     Text(viewModel.title)
                         .font(Fonts.headline.font)
-                    Text(viewModel.subtitle)
-                        .font(Fonts.subhead.font)
-                        .multilineTextAlignment(.center)
+                    if viewModel.subtitle != nil {
+                        Text(viewModel.subtitle!)
+                            .font(Fonts.subhead.font)
+                            .multilineTextAlignment(.center)
+                    }
+                    if viewModel.actionTitle != nil && viewModel.action != nil {
+                        PrimaryButton(viewModel: viewModel.getOverlayButton())
+                    }
                 }.padding(.horizontal, horizontalPaddingSize)
                     .accessibilityElement(children: .combine)
                     .accessibility(addTraits: .isHeader)

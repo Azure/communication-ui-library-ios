@@ -67,7 +67,9 @@ class CallingViewModel: ObservableObject {
     }
 
     func getLobbyOverlayViewModel() -> LobbyOverlayViewModel {
-        return compositeViewModelFactory.makeLobbyOverlayViewModel()
+        return compositeViewModelFactory.makeLobbyOverlayViewModel(
+            title: localizationProvider.getLocalizedString(.waitingForHost),
+            subtitle: localizationProvider.getLocalizedString(.waitingDetails))
     }
 
     func dismissConfirmLeaveDrawerList() {
