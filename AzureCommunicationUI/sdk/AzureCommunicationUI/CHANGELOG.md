@@ -1,5 +1,5 @@
 # Release History
-## 1.0.0-beta.3 (Upcoming)
+## 1.0.0-beta.3
 ### New Features
 - Updated minimum iOS version to 14.0. [#103](https://github.com/Azure/communication-ui-library-ios/pull/103)
 - Updated leave call confirmation drawer. [#129](https://github.com/Azure/communication-ui-library-ios/pull/129)
@@ -11,7 +11,6 @@
 - Implemented additional primary color tint overrides to ThemeConfiguration [#121](https://github.com/Azure/communication-ui-library-ios/pull/121)
 - Implemented light/dark mode override to ThemeConfiguration [#121](https://github.com/Azure/communication-ui-library-ios/pull/121)
 - Implemented ability to drag the PiP around the display [#151](https://github.com/Azure/communication-ui-library-ios/pull/151)
-
 
 ### Bugs Fixed
 - Fixed screen share not rendering in large screen device. [#128](https://github.com/Azure/communication-ui-library-ios/pull/128)
@@ -46,7 +45,6 @@
 - Removed alphabet in CFBundleShortVersionString and add UILibrarySemVersion inside info.plist. [#27](https://github.com/Azure/communication-ui-library-ios/pull/27)
 - Updated FluentUI version to 0.3.9 [#49](https://github.com/Azure/communication-ui-library-ios/pull/49)
 - Code cleanup and refactoring.
-
 
 ## 1.0.0-beta.1 (2021-12-09)
 This is the initial release of Azure Communication UI Library. For more information, please see the [README](README.md) and [QuickStart](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/ui-library/get-started-call?tabs=kotlin&pivots=platform-ios).
