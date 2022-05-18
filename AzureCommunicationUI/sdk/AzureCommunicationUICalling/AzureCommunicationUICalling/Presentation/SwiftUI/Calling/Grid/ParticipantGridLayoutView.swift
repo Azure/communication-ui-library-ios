@@ -17,7 +17,18 @@ struct ParticipantGridLayoutView: View {
             case .iphonePortraitScreenSize:
                 vGridLayout
             default:
-                hGridLayout
+                let cellCount = cellViewModels.count
+                let isPortrait = UIDevice.current.orientation.isPortrait
+                let isiPadLanscape = UIDevice.current.orientation.isLandscape && screenSize == .ipadScreenSize
+                let isiPadPortrait = isPortrait && screenSize == .ipadScreenSize
+                if (cellCount == 5 && isiPadLanscape)
+                    || (cellCount == 8 && isiPadPortrait)
+                    || (cellCount == 7 && isiPadPortrait)
+                    || (cellCount == 3 && isiPadLanscape) {
+                    vGridLayout
+                } else {
+                    hGridLayout
+                }
             }
         }
     }

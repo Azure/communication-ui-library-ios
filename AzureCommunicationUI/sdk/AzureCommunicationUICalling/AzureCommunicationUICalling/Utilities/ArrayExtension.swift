@@ -14,7 +14,7 @@ extension Array {
             if index % size == 0, index != 0 {
                 chunkedArray.append(Array(self[(index - size)..<index]))
             } else if index == self.count {
-                if vGridLayout {
+                if vGridLayout && size <= 2 {
                     chunkedArray.append(Array(self[index - 1..<index]))
                 } else {
                     let startingIdx = index - (index % size)
