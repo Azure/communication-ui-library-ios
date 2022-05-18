@@ -18,7 +18,7 @@ extension Array {
                     chunkedArray.append(Array(self[index - 1..<index]))
                 } else {
                     let startingIdx = index - (index % size)
-                    if startingIdx < index - 1 || self.count < size {
+                    if startingIdx <= index - 1 || self.count < size {
                         chunkedArray.append(Array(self[startingIdx...]))
                     }
                 }
