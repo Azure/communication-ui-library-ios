@@ -44,20 +44,20 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
         let updatedParticipantsIds = Set(state.remoteParticipantsState.participantInfoList.map { $0.userIdentifier })
 
         let joinedParticipantsIds = updatedParticipantsIds.subtracting(participantsIds)
-        let leftParticipantsIds = participantsIds.subtracting(updatedParticipantsIds)
+        let removedParticipantsIds = participantsIds.subtracting(updatedParticipantsIds)
         participantsIds = updatedParticipantsIds
 
         postRemoteParticipantsJoinedEvent(joinedParticipantsIds)
-        postRemoteParticipantsLeftEvent(leftParticipantsIds)
+        postRemoteParticipantsRemovedEvent(removedParticipantsIds)
     }
 
-    private func postRemoteParticipantsLeftEvent(_ leftParticipantsIds: Set<String>) {
-        // check if participants left a call
-        guard !leftParticipantsIds.isEmpty else {
+    private func postRemoteParticipantsRemovedEvent(_ removedParticipantsIds: Set<String>) {
+        // check if participants were removed from a call
+        guard !removedParticipantsIds.isEmpty else {
             return
         }
 
-        avatarViewManager.removeLeftParticipants(Array(leftParticipantsIds))
+        avatarViewManager.updateStorage(with: Array(removedParticipantsIds))
     }
 
     private func postRemoteParticipantsJoinedEvent(_ joinedParticipantsIds: Set<String>) {

@@ -27,7 +27,7 @@ struct RemoteParticipantAvatarHelper {
         let avatars = ["cat", "fox", "koala", "monkey", "mouse", "octopus"]
         for identifier in identifiers {
             let id = getRemoteParticipantId(identifier)
-            let nameIdValue = id != nil ? " \(id?.suffix(4) ?? "")" : ""
+            let nameIdValue = id != nil ? "\(id?.suffix(4) ?? "")" : ""
             var avatarImage: UIImage?
             var selectedAvatarName = ""
             if let lastSymbol = id?.last,
@@ -36,8 +36,9 @@ struct RemoteParticipantAvatarHelper {
                 selectedAvatarName = avatars[index]
                 avatarImage = UIImage(named: selectedAvatarName)
             }
+            let renderDisplayName = selectedAvatarName.isEmpty ? nameIdValue : "\(selectedAvatarName) \(nameIdValue)"
             let participantViewData = ParticipantViewData(avatar: avatarImage,
-                                          renderDisplayName: selectedAvatarName + nameIdValue)
+                                          renderDisplayName: renderDisplayName)
             callComposite.setRemoteParticipantViewData(for: identifier, participantViewData: participantViewData)
         }
     }

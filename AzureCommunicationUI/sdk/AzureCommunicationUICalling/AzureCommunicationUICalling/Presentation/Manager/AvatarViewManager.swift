@@ -39,12 +39,12 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
         avatarStorage = MappedSequence<String, ParticipantViewData>()
     }
 
-    func removeLeftParticipants(_ leftParticipantsIds: [String]) {
+    func updateStorage(with removedParticipantsIds: [String]) {
         guard avatarStorage.count > 0 else {
             return
         }
 
-        for id in leftParticipantsIds {
+        for id in removedParticipantsIds {
             avatarStorage.removeValue(forKey: id)
         }
     }
