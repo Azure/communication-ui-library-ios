@@ -17,6 +17,8 @@ extension CallEndReason {
             if (callEndErrorSubCode == 5300 || callEndErrorSubCode == 5000),
                wasCallConnected {
                 compositeErrorCodeString = CallCompositeErrorCode.callEvicted
+            } else if callEndErrorSubCode == 5854 {
+                compositeErrorCodeString = CallCompositeErrorCode.callDenied
             }
         case 401:
             compositeErrorCodeString = CallCompositeErrorCode.tokenExpired
