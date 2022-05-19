@@ -5,6 +5,7 @@
 
 import Foundation
 import FluentUI
+import UIKit
 
 class CompositeLeaveCallConfirmationListCell: TableViewCell {
 

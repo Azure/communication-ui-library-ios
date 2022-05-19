@@ -2,9 +2,9 @@
 
 # Azure Communication UI Mobile Library for iOS
 
-![Cocoapods](https://img.shields.io/cocoapods/l/AzureCommunicationUI)
-![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AzureCommunicationUI)
-![Cocoapods platforms](https://img.shields.io/cocoapods/p/AzureCommunicationUI)
+![Cocoapods](https://img.shields.io/cocoapods/l/AzureCommunicationUICalling)
+![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AzureCommunicationUICalling)
+![Cocoapods platforms](https://img.shields.io/cocoapods/p/AzureCommunicationUICalling)
 
 Azure Communication [UI Mobile Library](https://docs.microsoft.com/en-us/azure/communication-services/concepts/ui-library/ui-library-overview) is an Azure Communication Services capability focused on providing UI components for common business-to-consumer and business-to-business calling interactions.
 
