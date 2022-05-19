@@ -5,6 +5,7 @@
 
 import SwiftUI
 import FluentUI
+import UIKit
 
 struct CompositeAvatar: View {
     @Binding var displayName: String?

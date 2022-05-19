@@ -4,6 +4,7 @@
 //
 
 import FluentUI
+import UIKit
 
 class ParticipantsListViewController: DrawerContainerViewController<ParticipantsListCellViewModel> {
     private let avatarViewManager: AvatarViewManager
