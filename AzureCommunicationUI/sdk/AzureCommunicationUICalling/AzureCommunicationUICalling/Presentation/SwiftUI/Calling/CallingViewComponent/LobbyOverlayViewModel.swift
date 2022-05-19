@@ -5,28 +5,41 @@
 
 import Foundation
 
-protocol OverlayViewModel {
+protocol OverlayViewModelProtocol {
     var title: String { get }
-    var subtitle: String? { get set }
-    var actionTitle: String? { get set }
-    var action: ()? { get set }
+    var subtitle: String? { get }
+    var actionTitle: String? { get }
+    var action: ()? { get }
 }
 
-struct LobbyOverlayViewModel: OverlayViewModel {
-    var title: String
+struct LobbyOverlayViewModel: OverlayViewModelProtocol {
+    let localizationProvider: LocalizationProviderProtocol
 
-    var subtitle: String?
+    var title: String {
+        return localizationProvider.getLocalizedString(.waitingForHost)
+    }
+
+    var subtitle: String? {
+        return localizationProvider.getLocalizedString(.waitingDetails)
+    }
 
     var actionTitle: String?
 
     var action: ()?
-//    let localizationProvider: LocalizationProviderProtocol
-//
-//    var title: String {
-//        return localizationProvider.getLocalizedString(.waitingForHost)
-//    }
-//
-//    var subtitle: String {
-//        return localizationProvider.getLocalizedString(.waitingDetails)
-//    }
+}
+
+struct OnHoldOverlayViewModel: OverlayViewModelProtocol {
+    let localizationProvider: LocalizationProviderProtocol
+
+    var title: String {
+        return localizationProvider.getLocalizedString(.onHoldTitle)
+    }
+
+    var subtitle: String? {
+        return localizationProvider.getLocalizedString(.onHoldMessage)
+    }
+
+    var actionTitle: String?
+
+    var action: ()?
 }
