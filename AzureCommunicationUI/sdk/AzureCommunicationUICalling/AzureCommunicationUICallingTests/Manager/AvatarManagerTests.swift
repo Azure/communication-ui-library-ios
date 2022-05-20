@@ -34,16 +34,46 @@ class AvatarManagerTests: XCTestCase {
             XCTFail("UIImage does not exist")
             return
         }
+        let participant = ParticipantInfoModel(
+            displayName: "Participant 1",
+            isSpeaking: false,
+            isMuted: false,
+            isRemoteUser: true,
+            userIdentifier: "testUserIdentifier1",
+            recentSpeakingStamp: Date(),
+            screenShareVideoStreamModel: nil,
+            cameraVideoStreamModel: nil)
+        let remoteParticipantsState = RemoteParticipantsState(participantInfoList: [participant],
+                                                              lastUpdateTimeStamp: Date())
+        mockStoreFactory.setState(AppState(remoteParticipantsState: remoteParticipantsState))
         let sut = makeSUT()
         let participantViewData = ParticipantViewData(avatar: mockImage)
-        let id = UUID().uuidString
-        let result = sut.setRemoteParticipantViewData(for: CommunicationUserIdentifier(id),
-                                                      participantViewData: participantViewData)
+        let result = sut.setRemoteParticipantViewData(participantViewData,
+                                                      for: CommunicationUserIdentifier(participant.userIdentifier))
         guard case .success = result else {
             XCTFail("Failed with result validation")
             return
         }
-        XCTAssertEqual(sut.avatarStorage.value(forKey: id)?.avatarImage!, mockImage)
+        XCTAssertEqual(sut.avatarStorage.value(forKey: participant.userIdentifier)?.avatarImage!, mockImage)
+    }
+
+    func test_avatarManager_setRemoteParticipantViewData_when_avatarDataSet__and_participantNotOnCall_then_participantNotFoundErrorReturned() {
+        guard let mockImage = UIImage(named: "Icon/ic_fluent_call_end_24_filled",
+                                      in: Bundle(for: CallComposite.self),
+                                      compatibleWith: nil) else {
+            XCTFail("UIImage does not exist")
+            return
+        }
+        let sut = makeSUT()
+        let participantViewData = ParticipantViewData(avatar: mockImage)
+        let id = UUID().uuidString
+        let result = sut.setRemoteParticipantViewData(participantViewData,
+                                                      for: CommunicationUserIdentifier(id))
+        guard case .failure(let error) = result else {
+            XCTFail("Failed with result validation")
+            return
+        }
+        XCTAssertEqual(error.code, CallCompositeErrorCode.remoteParticipantNotFound)
     }
 }
 

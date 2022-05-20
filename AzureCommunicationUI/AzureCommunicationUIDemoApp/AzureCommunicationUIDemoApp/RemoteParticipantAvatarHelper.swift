@@ -4,7 +4,8 @@
 //
 
 import Foundation
-import AzureCommunicationCommon
+import UIKit
+// import AzureCommunicationCommon
 import AzureCommunicationUICalling
 
 struct RemoteParticipantAvatarHelper {
@@ -39,7 +40,14 @@ struct RemoteParticipantAvatarHelper {
             let renderDisplayName = selectedAvatarName.isEmpty ? nameIdValue : "\(selectedAvatarName) \(nameIdValue)"
             let participantViewData = ParticipantViewData(avatar: avatarImage,
                                           renderDisplayName: renderDisplayName)
-            callComposite.setRemoteParticipantViewData(for: identifier, participantViewData: participantViewData)
+            let result = callComposite.setRemoteParticipantViewData(participantViewData,
+                                                                    for: identifier)
+            switch result {
+            case .success:
+                break
+            case .failure(let errorPart):
+                print("!!!!!! \(errorPart)")
+            }
         }
     }
 }

@@ -8,7 +8,7 @@ import Foundation
 
 class Store<T: ReduxState>: ObservableObject {
 
-    @Published public var state: T
+    @Published var state: T
 
     private var dispatchFunction: ActionDispatch!
     private let reducer: Reducer
