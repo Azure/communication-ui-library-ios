@@ -28,9 +28,7 @@ class AvatarManagerTests: XCTestCase {
     }
 
     func test_avatarManager_setRemoteParticipantViewData_when_personeDataSet_then_participantViewDataDataUpdated() {
-        guard let mockImage = UIImage(named: "Icon/ic_fluent_call_end_24_filled",
-                                      in: Bundle(for: CallComposite.self),
-                                      compatibleWith: nil) else {
+        guard let mockImage = UIImage.make(withColor: .red) else {
             XCTFail("UIImage does not exist")
             return
         }
@@ -58,9 +56,7 @@ class AvatarManagerTests: XCTestCase {
     }
 
     func test_avatarManager_setRemoteParticipantViewData_when_avatarDataSet__and_participantNotOnCall_then_participantNotFoundErrorReturned() {
-        guard let mockImage = UIImage(named: "Icon/ic_fluent_call_end_24_filled",
-                                      in: Bundle(for: CallComposite.self),
-                                      compatibleWith: nil) else {
+        guard let mockImage = UIImage.make(withColor: .red) else {
             XCTFail("UIImage does not exist")
             return
         }
