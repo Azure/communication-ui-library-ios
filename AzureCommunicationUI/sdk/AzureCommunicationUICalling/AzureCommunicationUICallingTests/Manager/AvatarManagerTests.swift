@@ -46,8 +46,8 @@ class AvatarManagerTests: XCTestCase {
         mockStoreFactory.setState(AppState(remoteParticipantsState: remoteParticipantsState))
         let sut = makeSUT()
         let participantViewData = ParticipantViewData(avatar: mockImage)
-        let result = sut.setRemoteParticipantViewData(participantViewData,
-                                                      for: CommunicationUserIdentifier(participant.userIdentifier))
+        let result = sut.setRemoteParticipantViewData(for: CommunicationUserIdentifier(participant.userIdentifier),
+                                                      participantViewData: participantViewData)
         guard case .success = result else {
             XCTFail("Failed with result validation")
             return
@@ -63,8 +63,8 @@ class AvatarManagerTests: XCTestCase {
         let sut = makeSUT()
         let participantViewData = ParticipantViewData(avatar: mockImage)
         let id = UUID().uuidString
-        let result = sut.setRemoteParticipantViewData(participantViewData,
-                                                      for: CommunicationUserIdentifier(id))
+        let result = sut.setRemoteParticipantViewData(for: CommunicationUserIdentifier(id),
+                                                      participantViewData: participantViewData)
         guard case .failure(let error) = result else {
             XCTFail("Failed with result validation")
             return

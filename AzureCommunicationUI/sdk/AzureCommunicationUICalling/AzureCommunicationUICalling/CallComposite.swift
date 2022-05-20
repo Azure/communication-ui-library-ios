@@ -105,14 +105,14 @@ public class CallComposite {
     /// - Returns: The `Result` enum value with either a `Void` or an `Error`.
     @discardableResult
     public func setRemoteParticipantViewData(
-        _ participantViewData: ParticipantViewData,
-        for identifier: CommunicationIdentifier) -> Result<Void, CommunicationUIErrorEvent> {
+        for identifier: CommunicationIdentifier,
+        participantViewData: ParticipantViewData) -> Result<Void, CommunicationUIErrorEvent> {
         guard let avatarManager = avatarViewManager else {
             return .failure(CommunicationUIErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
         }
 
-        return avatarManager.setRemoteParticipantViewData(participantViewData,
-                                                          for: identifier)
+        return avatarManager.setRemoteParticipantViewData(for: identifier,
+                                                          participantViewData: participantViewData)
     }
 
     private func setupManagers(dependencyContainer: DependencyContainer) {

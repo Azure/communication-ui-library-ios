@@ -9,8 +9,8 @@ import Combine
 
 protocol AvatarViewManagerProtocol {
     func setRemoteParticipantViewData(
-        _ participantViewData: ParticipantViewData,
-        for identifier: CommunicationIdentifier) -> Result<Void, CommunicationUIErrorEvent>
+        for identifier: CommunicationIdentifier,
+        participantViewData: ParticipantViewData) -> Result<Void, CommunicationUIErrorEvent>
 }
 
 class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
@@ -51,8 +51,8 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
     }
 
     func setRemoteParticipantViewData(
-        _ participantViewData: ParticipantViewData,
-        for identifier: CommunicationIdentifier) -> Result<Void, CommunicationUIErrorEvent> {
+        for identifier: CommunicationIdentifier,
+        participantViewData: ParticipantViewData) -> Result<Void, CommunicationUIErrorEvent> {
         let participantsList = store.state.remoteParticipantsState.participantInfoList
         guard let idStringValue = identifier.stringValue,
               participantsList.contains(where: { $0.userIdentifier == idStringValue })
