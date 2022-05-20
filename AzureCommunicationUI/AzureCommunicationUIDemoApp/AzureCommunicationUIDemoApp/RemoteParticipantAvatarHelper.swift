@@ -5,7 +5,7 @@
 
 import Foundation
 import UIKit
-// import AzureCommunicationCommon
+import AzureCommunicationCommon
 import AzureCommunicationUICalling
 
 struct RemoteParticipantAvatarHelper {
