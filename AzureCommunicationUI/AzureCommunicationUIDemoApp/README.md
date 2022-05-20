@@ -16,7 +16,7 @@ The sample app is a native iOS application developed using both SwiftUI and UIKi
 
 1. After cloning the [Repo](https://github.com/Azure/azure-communication-ui-library-ios) in your local environment, `cd` to the `AzureCommunicationUI` folder in the root of the project directory.
 2. Run `pod install`, this generates a `.xcworkspace` file.
-3. (Optional) `cd` to the `AzureCommunicationUIDemoApp` folder inside the project directory
+3. (Optional) cd to the <project_folder>/AzureCommunicationUI/AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp folder.
 4. (Optional) Run `touch EnvConfig.xcconfig` via the Command Line. 
 5. (Optional) Add constants from following list to `EnvConfig.xcconfig` as the sample app's local configurations. 
    - `acsToken`: a generated Azure Communication Services token
