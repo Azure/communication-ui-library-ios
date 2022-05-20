@@ -18,6 +18,9 @@ public struct CallCompositeErrorCode {
 
     /// Error when a participant is evicted from the call by another participant
     static let callEvicted: String = "callEvicted"
+
+    /// Error when a participant is denied from entering the call
+    static let callDenied: String = "callDenied"
 }
 
 /// The error thrown after Call Composite launching.
