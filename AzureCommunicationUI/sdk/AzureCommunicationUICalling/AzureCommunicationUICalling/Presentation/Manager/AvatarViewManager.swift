@@ -8,8 +8,9 @@ import AzureCommunicationCommon
 import Combine
 
 protocol AvatarViewManagerProtocol {
-    func setRemoteParticipantViewData(for identifier: CommunicationIdentifier,
-                                      participantViewData: ParticipantViewData) -> Result<Void, Error>
+    func setRemoteParticipantViewData(
+        _ participantViewData: ParticipantViewData,
+        for identifier: CommunicationIdentifier) -> Result<Void, CommunicationUIErrorEvent>
 }
 
 class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
@@ -49,10 +50,14 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
         }
     }
 
-    func setRemoteParticipantViewData(for identifier: CommunicationIdentifier,
-                                      participantViewData: ParticipantViewData) -> Result<Void, Error> {
-        guard let idStringValue = identifier.stringValue else {
-            return .failure(CompositeError.remoteParticipantNotFound)
+    func setRemoteParticipantViewData(
+        _ participantViewData: ParticipantViewData,
+        for identifier: CommunicationIdentifier) -> Result<Void, CommunicationUIErrorEvent> {
+            let participantslist = store.state.remoteParticipantsState.participantInfoList
+        guard let idStringValue = identifier.stringValue,
+              participantslist.contains(where: { $0.userIdentifier == idStringValue })
+        else {
+            return .failure(CommunicationUIErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
         }
 
         if avatarStorage.value(forKey: idStringValue) != nil {
