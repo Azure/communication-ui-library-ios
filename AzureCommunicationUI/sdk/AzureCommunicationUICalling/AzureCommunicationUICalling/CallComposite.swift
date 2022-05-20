@@ -42,7 +42,9 @@ public class CallComposite {
         logger = dependencyContainer.resolve() as Logger
         logger?.debug("launch composite experience")
 
-        dependencyContainer.registerDependencies(callConfiguration, localSettings: localSettings)
+        dependencyContainer.registerDependencies(callConfiguration,
+                                                 localSettings: localSettings,
+                                                 callCompositeEventsHandler: callCompositeEventsHandler)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)
@@ -50,9 +52,7 @@ public class CallComposite {
                                                                     logger: dependencyContainer.resolve(),
                                                                     viewFactory: dependencyContainer.resolve(),
                                                                     isRightToLeft: localizationProvider.isRightToLeft)
-        setupManagers(store: dependencyContainer.resolve(),
-                      containerHostingController: toolkitHostingController,
-                      logger: dependencyContainer.resolve())
+        setupManagers(with: dependencyContainer)
         present(toolkitHostingController)
     }
 
@@ -84,22 +84,11 @@ public class CallComposite {
         launch(callConfiguration, localSettings: localSettings)
     }
 
-    private func setupManagers(store: Store<AppState>,
-                               containerHostingController: ContainerUIHostingController,
-                               logger: Logger) {
-        let errorManager = CompositeErrorManager(store: store,
-                                                 callCompositeEventsHandler: callCompositeEventsHandler)
-        self.errorManager = errorManager
-
-        let lifeCycleManager = UIKitAppLifeCycleManager(store: store, logger: logger)
-        self.lifeCycleManager = lifeCycleManager
-
-        let permissionManager = PermissionsManager(store: store)
-        self.permissionManager = permissionManager
-
-        let audioSessionManager = AudioSessionManager(store: store,
-                                                         logger: logger)
-        self.audioSessionManager = audioSessionManager
+    private func setupManagers(with dependencyContainer: DependencyContainer) {
+        self.errorManager = dependencyContainer.resolve()
+        self.lifeCycleManager = dependencyContainer.resolve()
+        self.permissionManager = dependencyContainer.resolve()
+        self.audioSessionManager = dependencyContainer.resolve()
     }
 
     private func cleanUpManagers() {
