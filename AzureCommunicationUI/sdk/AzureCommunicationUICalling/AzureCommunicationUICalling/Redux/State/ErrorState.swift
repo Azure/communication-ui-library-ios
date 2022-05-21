@@ -15,8 +15,8 @@ class ErrorState: ReduxState, Equatable {
     let error: CommunicationUIErrorEvent?
     let errorCategory: ErrorCategory
 
-    public init(error: CommunicationUIErrorEvent? = nil,
-                errorCategory: ErrorCategory = .none) {
+    init(error: CommunicationUIErrorEvent? = nil,
+         errorCategory: ErrorCategory = .none) {
         self.error = error
         self.errorCategory = errorCategory
     }
