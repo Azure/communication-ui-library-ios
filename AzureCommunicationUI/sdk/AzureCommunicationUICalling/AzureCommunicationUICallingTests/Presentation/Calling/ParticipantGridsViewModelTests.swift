@@ -550,7 +550,8 @@ extension ParticipantGridViewModelTests {
         }
         return ParticipantGridViewModel(compositeViewModelFactory: factoryMocking,
         								localizationProvider: LocalizationProviderMocking(),
-                                        accessibilityProvider: accessibilityProvider)
+                                        accessibilityProvider: accessibilityProvider,
+                                        isIPadInterface: false)
     }
 
     func makeSUT(accessibilityProvider: AccessibilityProviderProtocol,
@@ -561,7 +562,8 @@ extension ParticipantGridViewModelTests {
                                                               accessibilityProvider: accessibilityProvider)
         return ParticipantGridViewModel(compositeViewModelFactory: factoryMocking,
                                         localizationProvider: localizationProvider,
-                                        accessibilityProvider: accessibilityProvider)
+                                        accessibilityProvider: accessibilityProvider,
+                                        isIPadInterface: false)
     }
 
     func makeRemoteParticipantState(count: Int = 1,
