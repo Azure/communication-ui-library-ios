@@ -41,11 +41,11 @@
 Azure Communication Mobile UI Library requires a few dependencies. Please embed the following libraries into your project if you prefer manually embedding Mobile UI Library. And you can refer from each library's Podspec file for the required source files.
 
 
-#### [AzureCommunicationCalling](https://github.com/Azure/azure-sdk-for-ios/tree/main/sdk/communication/AzureCommunicationCalling) version require: [2.2.0-beta.1](https://github.com/Azure/Communication/releases/tag/v2.2.0-beta.1)
+#### 1. [AzureCommunicationCalling](https://github.com/Azure/azure-sdk-for-ios/tree/main/sdk/communication/AzureCommunicationCalling) version require: [2.2.0-beta.1](https://github.com/Azure/Communication/releases/tag/v2.2.0-beta.1)
 - Drag the `AzureCommunicationCalling.xcframework` into your project. Add it as embedded framework in your target's "Frameworks and Libraries" section. 
 
 
-#### [AzureCommunicationCommon](https://github.com/Azure/azure-sdk-for-ios/tree/main/sdk/communication/AzureCommunicationCommon) - version [1.0.3](https://github.com/Azure/azure-sdk-for-ios/releases/tag/AzureCommunicationCommon_1.0.3)
+#### 2. [AzureCommunicationCommon](https://github.com/Azure/azure-sdk-for-ios/tree/main/sdk/communication/AzureCommunicationCommon) - version [1.0.3](https://github.com/Azure/azure-sdk-for-ios/releases/tag/AzureCommunicationCommon_1.0.3)
 - Find the project [AzureCommunicationCommon.xcodeproj](https://github.com/Azure/azure-sdk-for-ios/tree/main/sdk/communication/AzureCommunicationCommon) in the repo source code and drag it into your project. 
 - Follow same steps of embedding `AzureCommunicationUICalling` and embed `AzureCommunicationCommon` to your project. 
 
@@ -64,7 +64,7 @@ Note: Please refer to [How to fix the issues](#how-to-fix-the-issues) to fix som
     2. Select Navigator and navigate to the target `AzureCommunicationCommon` and choose `Build Phases`.
     3. Delete the script `Format And Lint`. 
     
-####[MicrosoftFluentUI](https://github.com/microsoft/fluentui-apple) - version [0.3.9](https://github.com/microsoft/fluentui-apple/releases/tag/0.3.9_main_0.3) 
+#### 3. [MicrosoftFluentUI](https://github.com/microsoft/fluentui-apple) - version [0.3.9](https://github.com/microsoft/fluentui-apple/releases/tag/0.3.9_main_0.3) 
 - Follow this [Manual Installation Instruction](https://github.com/microsoft/fluentui-apple#manual-installation) to embed the `libFluentUI.a` in your target's "Frameworks and Libraries" section. 
 
 **Related Issues**
@@ -73,7 +73,7 @@ Note: Please refer to [How to fix the issues](#how-to-fix-the-issues) to fix som
 
     1. Select Navigator and navigate to the target `FluentUI.xcodeproj`, open the folder `Products` and you will see the `FluentUIResources-ios.bundle`. Right Click it and `Show in Finder` to find the bundle source in your finder. 
     2. Select your own project and the target import FluentUI. Go to tab `Building Phases` and drag the `FluentUIResources-ios.bundle` to the `Copy Bundle Resources` section. 
-    3. Select the `AzureCommunicationUICalling.xcodeproj` and the main target, add `FluentUIResources-ios.bundle` to the `Copy Bundle Resources` section in same steps.
+    3. Apply same update to the main target in the `AzureCommunicationUICalling.xcodeproj`, by adding the `FluentUIResources-ios.bundle` to the `Copy Bundle Resources` section.
         
 - **Buildtime issue: 'Undefined symbol:...'**
 
