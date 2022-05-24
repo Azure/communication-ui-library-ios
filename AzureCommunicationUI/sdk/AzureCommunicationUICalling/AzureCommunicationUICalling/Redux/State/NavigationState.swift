@@ -15,7 +15,7 @@ class NavigationState: ReduxState, Equatable {
 
     let status: NavigationStatus
 
-    public init(status: NavigationStatus = .setup) {
+    init(status: NavigationStatus = .setup) {
         self.status = status
     }
 

@@ -104,10 +104,11 @@ public class CallComposite {
     ///   This is data is not sent up to ACS.
     /// - Returns: The `Result` enum value with either a `Void` or an `Error`.
     @discardableResult
-    public func setRemoteParticipantViewData(for identifier: CommunicationIdentifier,
-                                             participantViewData: ParticipantViewData) -> Result<Void, Error> {
+    public func setRemoteParticipantViewData(
+        for identifier: CommunicationIdentifier,
+        participantViewData: ParticipantViewData) -> Result<Void, CommunicationUIErrorEvent> {
         guard let avatarManager = avatarViewManager else {
-            return .failure(CompositeError.callCompositeNotLaunched)
+            return .failure(CommunicationUIErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
         }
 
         return avatarManager.setRemoteParticipantViewData(for: identifier,

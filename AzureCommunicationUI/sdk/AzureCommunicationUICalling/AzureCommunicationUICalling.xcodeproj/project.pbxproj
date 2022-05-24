@@ -230,8 +230,9 @@
 		FAC1FED027C98FC200D95845 /* BannerTextViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC1FEC927C98FC200D95845 /* BannerTextViewModelMocking.swift */; };
 		FAC3128F27F24A8B00A4F1D0 /* IconButtonViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC3128E27F24A8B00A4F1D0 /* IconButtonViewModelMocking.swift */; };
 		FAD845402819C129007DAFE1 /* RemoteParticipantsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD8453F2819C129007DAFE1 /* RemoteParticipantsManager.swift */; };
-		FAD845422819FC8E007DAFE1 /* CompositeRemoteParticipantsManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD845412819FC8E007DAFE1 /* CompositeRemoteParticipantsManagerTests.swift */; };
+		FAD845422819FC8E007DAFE1 /* RemoteParticipantsManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD845412819FC8E007DAFE1 /* RemoteParticipantsManagerTests.swift */; };
 		FAD845442819FFE6007DAFE1 /* CallingSDKEventsHandlerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAD845432819FFE6007DAFE1 /* CallingSDKEventsHandlerMocking.swift */; };
+		FAFA427D28380F7500053EA7 /* AvatarViewManagerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAFA427C28380F7500053EA7 /* AvatarViewManagerMocking.swift */; };
 		FB22A9D340197CA3DC74EEBB /* Pods_AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C580DBF67D8B5AEF7A801F90 /* Pods_AzureCommunicationUICalling.framework */; };
 /* End PBXBuildFile section */
 
@@ -504,8 +505,9 @@
 		FAC1FEC927C98FC200D95845 /* BannerTextViewModelMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BannerTextViewModelMocking.swift; sourceTree = "<group>"; };
 		FAC3128E27F24A8B00A4F1D0 /* IconButtonViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtonViewModelMocking.swift; sourceTree = "<group>"; };
 		FAD8453F2819C129007DAFE1 /* RemoteParticipantsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantsManager.swift; sourceTree = "<group>"; };
-		FAD845412819FC8E007DAFE1 /* CompositeRemoteParticipantsManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeRemoteParticipantsManagerTests.swift; sourceTree = "<group>"; };
+		FAD845412819FC8E007DAFE1 /* RemoteParticipantsManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantsManagerTests.swift; sourceTree = "<group>"; };
 		FAD845432819FFE6007DAFE1 /* CallingSDKEventsHandlerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKEventsHandlerMocking.swift; sourceTree = "<group>"; };
+		FAFA427C28380F7500053EA7 /* AvatarViewManagerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AvatarViewManagerMocking.swift; path = Mocking/AvatarViewManagerMocking.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -743,7 +745,7 @@
 			children = (
 				1F4B0EF7269BD17600E87014 /* CompositeErrorManagerTests.swift */,
 				881D8F7527FCA8C4008EC897 /* AvatarManagerTests.swift */,
-				FAD845412819FC8E007DAFE1 /* CompositeRemoteParticipantsManagerTests.swift */,
+				FAD845412819FC8E007DAFE1 /* RemoteParticipantsManagerTests.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1134,6 +1136,7 @@
 				FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */,
 				50B390D027D82D7E0010A2ED /* LocalizationProviderMocking.swift */,
 				FAD845432819FFE6007DAFE1 /* CallingSDKEventsHandlerMocking.swift */,
+				FAFA427C28380F7500053EA7 /* AvatarViewManagerMocking.swift */,
 			);
 			name = Mocking;
 			sourceTree = "<group>";
@@ -1484,7 +1487,7 @@
 				503E361C26CC2D0900158CB4 /* CompositeViewModelFactoryTests.swift in Sources */,
 				503300FC2706763800289BB5 /* BannerViewModelTests.swift in Sources */,
 				A869A63F26546A2E003CC4F2 /* VideoViewManagerMocking.swift in Sources */,
-				FAD845422819FC8E007DAFE1 /* CompositeRemoteParticipantsManagerTests.swift in Sources */,
+				FAD845422819FC8E007DAFE1 /* RemoteParticipantsManagerTests.swift in Sources */,
 				A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */,
 				88BC24C12832D29D00818446 /* AvatarManagerTests.swift in Sources */,
 				FAC1FECF27C98FC200D95845 /* InfoHeaderViewModelMocking.swift in Sources */,
@@ -1542,6 +1545,7 @@
 				5A314750E50CDF6A6F4577E5 /* GroupCallOptionsTests.swift in Sources */,
 				FAC3128F27F24A8B00A4F1D0 /* IconButtonViewModelMocking.swift in Sources */,
 				FAC1FECD27C98FC200D95845 /* ParticipantGridCellViewModelMocking.swift in Sources */,
+				FAFA427D28380F7500053EA7 /* AvatarViewManagerMocking.swift in Sources */,
 				5A31429C377C213B53F19163 /* DependencyContainerTests.swift in Sources */,
 				1F09A10426BA472A00BACED7 /* ParticipantInfoModelBuilder.swift in Sources */,
 				FAC1FECE27C98FC200D95845 /* ParticipantGridViewModelMocking.swift in Sources */,
