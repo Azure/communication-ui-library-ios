@@ -1,33 +1,9 @@
 //
-//  Copyright (c) Microsoft Corporation. All rights reserved.
-//  Licensed under the MIT License.
+//  Copyright (c) Microsoft Corporation. All rights reserved.
+//  Licensed under the MIT License.
 //
 
 import Foundation
-
-protocol OverlayViewModelProtocol {
-    var title: String { get }
-    var subtitle: String? { get }
-    var getActionButtonViewModel: PrimaryButtonViewModel? { get }
-}
-
-struct LobbyOverlayViewModel: OverlayViewModelProtocol {
-    private let localizationProvider: LocalizationProviderProtocol
-
-    init(localizationProvider: LocalizationProviderProtocol) {
-        self.localizationProvider = localizationProvider
-    }
-
-    var title: String {
-        return localizationProvider.getLocalizedString(.waitingForHost)
-    }
-
-    var subtitle: String? {
-        return localizationProvider.getLocalizedString(.waitingDetails)
-    }
-
-    var getActionButtonViewModel: PrimaryButtonViewModel?
-}
 
 class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
@@ -79,36 +55,4 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
 //            // Disable/enable resume button
 //            actionButtonViewModel?.isDisabled = false
 //        }
-
-//    •New added State:
-//
-//    •AudioSessionState:
-//
-//    •active
-//
-//    •interrupted
-//
-//    •New added Actions:
-//
-//    •LifecycleAction.AudioInterrupted
-//
-//    •LifecycleAction.AudioEngaged
-//
-//    •CallAction.ResumeRequested
-//
-//    •CallAction.HoldRequested
-//
-//    •AudioSessionManager:
-//
-//    •Send AudioInterrupted when interrupt began -> state: interrupted -> middleware: holdCall
-//
-//    Send AudioEngaged when timer detect audio session is not used by other apps
-//
-//    •Send AudioEngaged when interruption ended -> state: free -> middleware: resumeCall
-//
-//    •CallingViewModel:
-//
-//    •Show holding state layer when call is hold
-//
-//    •Enable resume button when audioSessionState is `active`
 }

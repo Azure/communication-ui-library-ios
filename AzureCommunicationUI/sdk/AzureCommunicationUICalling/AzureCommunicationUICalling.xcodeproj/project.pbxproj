@@ -212,6 +212,8 @@
 		A88CDFBC27505A410004E2F5 /* ErrorInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88CDFBB27505A410004E2F5 /* ErrorInfoViewModel.swift */; };
 		A8ED232D2645C637008A26B2 /* CallingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ED232C2645C637008A26B2 /* CallingServiceTests.swift */; };
 		A8ED23302649EA61008A26B2 /* NavigationRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */; };
+		BD3CC699283D952E0052DE4A /* OverlayViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CC698283D952E0052DE4A /* OverlayViewModelProtocol.swift */; };
+		BD3CC69B283D953E0052DE4A /* OnHoldOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CC69A283D953E0052DE4A /* OnHoldOverlayViewModel.swift */; };
 		FA03CC8127C8189900986D4E /* PreviewAreaViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC7627C8189900986D4E /* PreviewAreaViewModelMocking.swift */; };
 		FA03CC8327C8189900986D4E /* SetupControlBarViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC7827C8189900986D4E /* SetupControlBarViewModelMocking.swift */; };
 		FA03CC8527C8189900986D4E /* ErrorInfoViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC7A27C8189900986D4E /* ErrorInfoViewModelMocking.swift */; };
@@ -480,6 +482,8 @@
 		A8ED232C2645C637008A26B2 /* CallingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingServiceTests.swift; sourceTree = "<group>"; };
 		A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouterTests.swift; sourceTree = "<group>"; };
 		B75F3B6936323E60658040C6 /* Pods-AzureCommunicationUICalling.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling/Pods-AzureCommunicationUICalling.debug.xcconfig"; sourceTree = "<group>"; };
+		BD3CC698283D952E0052DE4A /* OverlayViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayViewModelProtocol.swift; sourceTree = "<group>"; };
+		BD3CC69A283D953E0052DE4A /* OnHoldOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModel.swift; sourceTree = "<group>"; };
 		C580DBF67D8B5AEF7A801F90 /* Pods_AzureCommunicationUICalling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUICalling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3504C0C167BEEE155CF30AD /* Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests/Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E7792CEA9A8EE93D3F8391F4 /* Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests/Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -909,13 +913,12 @@
 		50FA45F6267D45FD001844AC /* CallingViewComponent */ = {
 			isa = PBXGroup;
 			children = (
+				BD3CC697283D95040052DE4A /* Overlay */,
 				50C6DECD270E49270085D04B /* Banner */,
 				50FA45F7267D466D001844AC /* InfoHeaderView.swift */,
 				50FA460D26829345001844AC /* InfoHeaderViewModel.swift */,
 				50FA45F4267D3BD3001844AC /* ControlBarView.swift */,
 				50FA460F26829B7A001844AC /* ControlBarViewModel.swift */,
-				5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */,
-				8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */,
 				50E2D69426EACB74006B0EF4 /* ParticipantsListViewModel.swift */,
 				50E2D69826F4FA05006B0EF4 /* ParticipantsListCellViewModel.swift */,
 			);
@@ -1182,6 +1185,17 @@
 				A837397D261CEA4300D46787 /* Logger.swift */,
 			);
 			path = Logger;
+			sourceTree = "<group>";
+		};
+		BD3CC697283D95040052DE4A /* Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */,
+				8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */,
+				BD3CC698283D952E0052DE4A /* OverlayViewModelProtocol.swift */,
+				BD3CC69A283D953E0052DE4A /* OnHoldOverlayViewModel.swift */,
+			);
+			path = Overlay;
 			sourceTree = "<group>";
 		};
 		D0F8928467AFB90CE84E93DF /* Pods */ = {
@@ -1561,6 +1575,7 @@
 				1F2BEDA5263252E100D98266 /* Middleware.swift in Sources */,
 				9823AB4B26A13F4B0006266D /* PreviewAreaViewModel.swift in Sources */,
 				1F6470A92639DCFA0008B9E9 /* CallingService.swift in Sources */,
+				BD3CC699283D952E0052DE4A /* OverlayViewModelProtocol.swift in Sources */,
 				1F83813F26803ADF0096A454 /* CallingReducer.swift in Sources */,
 				1F2BED64262F86E600D98266 /* SetupView.swift in Sources */,
 				A874EDCC2666DF07003C7D92 /* ContainerUIHostingController.swift in Sources */,
@@ -1650,6 +1665,7 @@
 				98546EBA26DEF24D0069B246 /* AudioDeviceType.swift in Sources */,
 				A8810CDD263CC75200C88545 /* ContainerView.swift in Sources */,
 				A8100387269F9DA70015C26E /* TeamsMeetingOptions.swift in Sources */,
+				BD3CC69B283D953E0052DE4A /* OnHoldOverlayViewModel.swift in Sources */,
 				981ACABC2685459400CD6A40 /* IconProvider.swift in Sources */,
 				1F2BEDCD26329E5600D98266 /* PermissionAction.swift in Sources */,
 				98B186A127C85F9800B837E6 /* AudioDevicesListViewModel.swift in Sources */,
