@@ -7,7 +7,7 @@ import SwiftUI
 import FluentUI
 import Combine
 
-struct LobbyOverlayView: View {
+struct OverlayView: View {
     let viewModel: OverlayViewModelProtocol
 
     private let layoutSpacing: CGFloat = 24
@@ -27,8 +27,8 @@ struct LobbyOverlayView: View {
                             .font(Fonts.subhead.font)
                             .multilineTextAlignment(.center)
                     }
-                    if viewModel.actionTitle != nil && viewModel.action != nil {
-//                        PrimaryButton(viewModel: viewModel.getOverlayButton())
+                    if let actionButtonViewModel = viewModel.getActionButtonViewModel {
+                        PrimaryButton(viewModel: actionButtonViewModel)
                     }
                 }.padding(.horizontal, horizontalPaddingSize)
                     .accessibilityElement(children: .combine)

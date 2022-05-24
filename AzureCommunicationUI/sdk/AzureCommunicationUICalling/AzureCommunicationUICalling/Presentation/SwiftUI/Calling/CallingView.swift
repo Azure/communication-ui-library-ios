@@ -88,7 +88,7 @@ struct CallingView: View {
                     viewModel.infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
                 })
                 .modifier(PopupModalView(isPresented: viewModel.isLobbyOverlayDisplayed) {
-                    LobbyOverlayView(viewModel: viewModel.getLobbyOverlayViewModel())
+                    OverlayView(viewModel: viewModel.getLobbyOverlayViewModel())
                         .accessibilityElement(children: .contain)
                         .accessibilityHidden(!viewModel.isLobbyOverlayDisplayed)
                 })
