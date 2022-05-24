@@ -12,7 +12,11 @@ protocol OverlayViewModelProtocol {
 }
 
 struct LobbyOverlayViewModel: OverlayViewModelProtocol {
-    let localizationProvider: LocalizationProviderProtocol
+    private let localizationProvider: LocalizationProviderProtocol
+
+    init(localizationProvider: LocalizationProviderProtocol) {
+        self.localizationProvider = localizationProvider
+    }
 
     var title: String {
         return localizationProvider.getLocalizedString(.waitingForHost)
@@ -25,29 +29,43 @@ struct LobbyOverlayViewModel: OverlayViewModelProtocol {
     var getActionButtonViewModel: PrimaryButtonViewModel?
 }
 
-struct OnHoldOverlayViewModel: OverlayViewModelProtocol {
-    let localizationProvider: LocalizationProviderProtocol
-    let compositeViewModelFactory: CompositeViewModelFactory
-    let logger: Logger
+class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
+    private let localizationProvider: LocalizationProviderProtocol
+    private let compositeViewModelFactory: CompositeViewModelFactory
+    private let logger: Logger
+
+    private var actionButtonViewModel: PrimaryButtonViewModel?
 
 //    var audioSessionState: AudioSessionState
 
-    var title: String {
-        return localizationProvider.getLocalizedString(.onHold)
+    init(localizationProvider: LocalizationProviderProtocol,
+         compositeViewModelFactory: CompositeViewModelFactory,
+         logger: Logger) {
+        self.localizationProvider = localizationProvider
+        self.compositeViewModelFactory = compositeViewModelFactory
+        self.logger = logger
     }
 
-    var subtitle: String? {
+    var title: String {
         return localizationProvider.getLocalizedString(.onHoldMessage)
     }
 
+    var subtitle: String?
+
     var getActionButtonViewModel: PrimaryButtonViewModel? {
-        compositeViewModelFactory.makePrimaryButtonViewModel(
-            buttonStyle: .primaryFilled,
-            buttonLabel: localizationProvider.getLocalizedString(.resume),
-            iconName: nil) {
-                self.logger.debug("Resume from hold button tapped")
-                self.resumeButtonTapped()
+        if actionButtonViewModel == nil {
+            actionButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
+                buttonStyle: .primaryFilled,
+                buttonLabel: localizationProvider.getLocalizedString(.resume),
+                iconName: nil) { [weak self] in
+                    guard let self = self else {
+                        return
+                    }
+                    self.logger.debug("Resume from hold button tapped")
+                    self.resumeButtonTapped()
+            }
         }
+        return actionButtonViewModel
     }
 
     func resumeButtonTapped() {
@@ -55,12 +73,12 @@ struct OnHoldOverlayViewModel: OverlayViewModelProtocol {
 //        dispatch(action)
     }
 
-        func update(audioSessionState: AudioSessionState) {
-            self.audioSessionState = audioSessionState
-
-
-
-        }
+//        func update(audioSessionState: AudioSessionState) {
+//            self.audioSessionState = audioSessionState
+//
+//            // Disable/enable resume button
+//            actionButtonViewModel?.isDisabled = false
+//        }
 
 //    •New added State:
 //

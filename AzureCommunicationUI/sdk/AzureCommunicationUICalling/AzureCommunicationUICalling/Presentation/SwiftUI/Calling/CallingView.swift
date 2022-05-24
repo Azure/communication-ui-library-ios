@@ -92,6 +92,11 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityHidden(!viewModel.isLobbyOverlayDisplayed)
                 })
+                .modifier(PopupModalView(isPresented: viewModel.isOnHoldOverlayDisplayed) {
+                    OverlayView(viewModel: viewModel.getOnHoldOverlayViewModel())
+                        .accessibilityElement(children: .contain)
+                        .accessibilityHidden(!viewModel.isOnHoldOverlayDisplayed)
+                })
             }
         }
     }

@@ -166,10 +166,10 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
-        return LobbyOverlayViewModel(localizationProvider: localizationProvider)
+        LobbyOverlayViewModel(localizationProvider: localizationProvider)
     }
     func makeOnHoldOverlayViewModel() -> OnHoldOverlayViewModel {
-        return OnHoldOverlayViewModel(localizationProvider: localizationProvider,
+        OnHoldOverlayViewModel(localizationProvider: localizationProvider,
                                       compositeViewModelFactory: self,
                                       logger: logger)
     }

@@ -8,48 +8,53 @@ import Combine
 
 class CallingViewModel: ObservableObject {
     @Published var isLobbyOverlayDisplayed: Bool = false
+    @Published var isOnHoldOverlayDisplayed: Bool = true
     @Published var isConfirmLeaveListDisplayed: Bool = false
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
-    let isRightToLeft: Bool
     @Published var appState: AppStatus = .foreground
-    private var callHasConnected: Bool = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
     private let store: Store<AppState>
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
-    private var cancellables = Set<AnyCancellable>()
 
-    var controlBarViewModel: ControlBarViewModel!
-    var infoHeaderViewModel: InfoHeaderViewModel!
+    private var cancellables = Set<AnyCancellable>()
+    private var callHasConnected: Bool = false
+
     let localVideoViewModel: LocalVideoViewModel
     let participantGridsViewModel: ParticipantGridViewModel
     let bannerViewModel: BannerViewModel
+    let isRightToLeft: Bool
+
+    var controlBarViewModel: ControlBarViewModel!
+    var infoHeaderViewModel: InfoHeaderViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState>,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol) {
-        self.logger = logger
+        let isCallConnected = store.state.callingState.status == .connected
+        let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
+        let actionDispatch: ActionDispatch = store.dispatch
+
         self.compositeViewModelFactory = compositeViewModelFactory
+        self.logger = logger
         self.store = store
         self.localizationProvider = localizationProvider
-        self.isRightToLeft = localizationProvider.isRightToLeft
         self.accessibilityProvider = accessibilityProvider
-        let actionDispatch: ActionDispatch = store.dispatch
+        self.isRightToLeft = localizationProvider.isRightToLeft
+
+        isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
+        appState = store.state.lifeCycleState.currentStatus
+
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel()
         bannerViewModel = compositeViewModelFactory.makeBannerViewModel()
-
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
-        let isCallConnected = store.state.callingState.status == .connected
-        let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
-        isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
-        appState = store.state.lifeCycleState.currentStatus
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
                 guard let self = self else {
@@ -63,11 +68,16 @@ class CallingViewModel: ObservableObject {
             .sink { [weak self] state in
                 self?.receive(state)
             }.store(in: &cancellables)
+
         updateIsLocalCameraOn(with: store.state)
     }
 
     func getLobbyOverlayViewModel() -> LobbyOverlayViewModel {
         return compositeViewModelFactory.makeLobbyOverlayViewModel()
+    }
+
+    func getOnHoldOverlayViewModel() -> OnHoldOverlayViewModel {
+        return compositeViewModelFactory.makeOnHoldOverlayViewModel()
     }
 
     func dismissConfirmLeaveDrawerList() {
@@ -97,6 +107,7 @@ class CallingViewModel: ObservableObject {
         participantGridsViewModel.update(callingState: state.callingState,
                                          remoteParticipantsState: state.remoteParticipantsState)
         bannerViewModel.update(callingState: state.callingState)
+
         let newIsCallConnected = state.callingState.status == .connected
         let hasRemoteParticipants = state.remoteParticipantsState.participantInfoList.count > 0
         let shouldParticipantGridDisplayed = newIsCallConnected && hasRemoteParticipants
@@ -110,6 +121,12 @@ class CallingViewModel: ObservableObject {
             accessibilityProvider.moveFocusToFirstElement()
         }
 
+//        let shouldOnHoldOverlayDisplayed = state.AudioSessionState == .interuptted
+//        if shouldOnHoldOverlayDisplayed != isOnHoldOverlayDisplayed {
+//            isOnHoldOverlayDisplayed = shouldOnHoldOverlayDisplayed
+//            accessibilityProvider.moveFocusToFirstElement()
+//        }
+
         if callHasConnected != newIsCallConnected && newIsCallConnected {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                 self.accessibilityProvider.postQueuedAnnouncement(
@@ -117,6 +134,7 @@ class CallingViewModel: ObservableObject {
             }
             callHasConnected = newIsCallConnected
         }
+
         updateIsLocalCameraOn(with: state)
     }
 

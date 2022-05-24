@@ -20,15 +20,18 @@ struct OverlayView: View {
                 VStack(spacing: layoutSpacing) {
                     Icon(name: .clock, size: iconImageSize)
                         .accessibility(hidden: true)
-                    Text(viewModel.title)
-                        .font(Fonts.headline.font)
-                    if viewModel.subtitle != nil {
-                        Text(viewModel.subtitle!)
+                    if let title = viewModel.title {
+                        Text(title)
+                            .font(Fonts.title2.font)
+                    }
+                    if let subtitle = viewModel.subtitle {
+                        Text(subtitle)
                             .font(Fonts.subhead.font)
                             .multilineTextAlignment(.center)
                     }
                     if let actionButtonViewModel = viewModel.getActionButtonViewModel {
                         PrimaryButton(viewModel: actionButtonViewModel)
+                            .fixedSize()
                     }
                 }.padding(.horizontal, horizontalPaddingSize)
                     .accessibilityElement(children: .combine)
