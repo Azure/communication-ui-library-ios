@@ -14,11 +14,8 @@ struct AudioSessionReducer: Reducer {
         switch action {
         case _ as AudioEngaged,
             _ as AudioInterruptEnded:
-            print("--------audioSessionStatus engaged")
             audioSessionStatus = .active
         case _ as AudioInterrupted:
-            print("--------audioSessionStatus AudioInterrupted")
-
             audioSessionStatus = .interrupted
         default:
             return audioSessionState

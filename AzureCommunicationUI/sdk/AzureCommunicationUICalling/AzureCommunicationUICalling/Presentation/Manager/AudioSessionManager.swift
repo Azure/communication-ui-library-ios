@@ -79,12 +79,9 @@ class AudioSessionManager: AudioSessionManagerProtocol {
 
         switch interruptionType {
         case .began:
-            print("-------------interrupted begin")
-
             startAudioSessionDetector()
             store.dispatch(action: AudioInterrupted())
         case .ended:
-            print("-------------interrupted end, send AudioInterruptEnded,  audioSessionState:\(audioSessionState)")
             store.dispatch(action: AudioInterruptEnded())
             audioSessionDetector?.invalidate()
         default:
@@ -168,26 +165,19 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     @objc private func detectAudioSessionEngage() {
-        print("----------detectAudioSessionEngage ")
-
         guard AVAudioSession.sharedInstance().isOtherAudioPlaying == false else {
             return
         }
 
         guard audioSessionState == .interrupted else {
-            print("----------detectAudioSessionEngage active")
-
             audioSessionDetector?.invalidate()
             return
         }
-        print("----------send action audioEngaged")
-
         store.dispatch(action: AudioEngaged())
         audioSessionDetector?.invalidate()
     }
 
     private func startAudioSessionDetector() {
-        print("----------startAudioSessionDetector")
         audioSessionDetector?.invalidate()
         audioSessionDetector = Timer.scheduledTimer(timeInterval: 1,
                                                     target: self,
