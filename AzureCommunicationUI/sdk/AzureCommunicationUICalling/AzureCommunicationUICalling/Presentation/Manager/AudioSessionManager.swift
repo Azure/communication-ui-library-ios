@@ -179,10 +179,10 @@ class AudioSessionManager: AudioSessionManagerProtocol {
 
     private func startAudioSessionDetector() {
         audioSessionDetector?.invalidate()
-        audioSessionDetector = Timer.scheduledTimer(timeInterval: 1,
-                                                    target: self,
-                                                    selector: #selector(detectAudioSessionEngage),
-                                                    userInfo: nil,
-                                                    repeats: true)
+        audioSessionDetector = Timer.scheduledTimer(withTimeInterval: 1,
+                                                    repeats: true,
+                                                    block: { [weak self] _ in
+            self?.detectAudioSessionEngage()
+        })
     }
 }
