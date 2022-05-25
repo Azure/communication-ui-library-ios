@@ -6,15 +6,7 @@
 import Foundation
 import Combine
 
-protocol ErrorInfoViewModelProtocol: ObservableObject {
-    var isDisplayed: Bool { get }
-    var message: String { get }
-    var dismissContent: String { get }
-    var dismissAccessibilitylabel: String { get }
-    var dismissAccessibilityHint: String { get }
-}
-
-class ErrorInfoViewModel: ErrorInfoViewModelProtocol {
+class ErrorInfoViewModel: ObservableObject {
     @Published var isDisplayed: Bool = false
     @Published private(set) var message: String = ""
 

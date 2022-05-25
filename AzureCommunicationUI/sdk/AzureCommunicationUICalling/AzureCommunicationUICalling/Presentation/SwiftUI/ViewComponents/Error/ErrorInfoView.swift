@@ -26,8 +26,8 @@ struct ErrorInfoView: View {
                         .foregroundColor(Color(StyleProvider.color.onWarning))
                 }
                 .padding([.top, .bottom, .trailing])
-                .accessibilityLabel(Text(viewModel.dismissButtonAccessibilityLabel))
-                .accessibilityHint(Text(viewModel.dismissButtonAccessibilityHint))
+                .accessibilityLabel(Text(viewModel.dismissAccessibilitylabel))
+                .accessibilityHint(Text(viewModel.dismissAccessibilityHint))
                 .accessibilitySortPriority(0)
             }
             .background(Color(StyleProvider.color.warning))

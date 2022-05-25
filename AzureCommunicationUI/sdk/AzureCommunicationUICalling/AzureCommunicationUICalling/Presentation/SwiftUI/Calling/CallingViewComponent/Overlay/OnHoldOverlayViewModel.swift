@@ -43,7 +43,7 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
         actionDispatch(action)
     }
 
-        func update(audioSessionState: AudioSessionState) {
-            getActionButtonViewModel?.isDisabled = audioSessionState.status == .interrupted
-        }
+    func update(audioSessionState: AudioSessionState) {
+        getActionButtonViewModel?.isDisabled = audioSessionState.status == .interrupted
+    }
 }

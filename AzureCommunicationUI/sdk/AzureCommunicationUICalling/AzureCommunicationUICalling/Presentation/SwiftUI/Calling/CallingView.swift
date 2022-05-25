@@ -159,11 +159,11 @@ struct CallingView: View {
     var errorInfoView: some View {
         VStack {
             Spacer()
-            ErrorInfoView(viewModel: ErrorInfoViewModel()
-//                .padding(EdgeInsets(top: 0,
-//                                    leading: errorHorizontalPadding,
-//                                    bottom: startCallButtonHeight + layoutSpacing,
-//                                    trailing: errorHorizontalPadding)
+            ErrorInfoView(viewModel: compositeViewModelFactory.makeErrorInfoViewModel())
+                .padding(EdgeInsets(top: 0,
+                                    leading: errorHorizontalPadding,
+                                    bottom: startCallButtonHeight + layoutSpacing,
+                                    trailing: errorHorizontalPadding)
                 )
                 .accessibilityElement(children: .contain)
                 .accessibilityAddTraits(.isModal)
