@@ -20,6 +20,8 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     var requestCameraSwitchCalled: Bool = false
     var requestMicMuteCalled: Bool = false
     var requestMicUnmuteCalled: Bool = false
+    var requestHoldCalled: Bool = false
+    var requestResumeCalled: Bool = false
 
     func setupCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
         setupCallWasCalled = true
@@ -71,5 +73,21 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
 
     func requestMicrophoneUnmute(state: ReduxState?, dispatch: @escaping ActionDispatch) {
         requestMicUnmuteCalled = true
+    }
+
+    func holdCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+        requestHoldCalled = true
+    }
+
+    func resumeCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+        requestResumeCalled = true
+    }
+
+    func audioSessionInterrupted(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+
+    }
+
+    func audioSessionInterruptEnded(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+
     }
 }

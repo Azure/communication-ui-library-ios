@@ -23,6 +23,10 @@ struct CallingMiddleware: Middleware {
                     actionHandler.startCall(state: getState(), dispatch: dispatch)
                 case _ as CallingAction.CallEndRequested:
                     actionHandler.endCall(state: getState(), dispatch: dispatch)
+                case _ as CallingAction.HoldRequested:
+                    actionHandler.holdCall(state: getState(), dispatch: dispatch)
+                case _ as CallingAction.ResumeRequested:
+                    actionHandler.resumeCall(state: getState(), dispatch: dispatch)
                 case _ as LocalUserAction.CameraPreviewOnTriggered:
                     actionHandler.requestCameraPreviewOn(state: getState(), dispatch: dispatch)
                 case _ as LocalUserAction.CameraOnTriggered:
@@ -35,12 +39,16 @@ struct CallingMiddleware: Middleware {
                     actionHandler.requestMicrophoneMute(state: getState(), dispatch: dispatch)
                 case _ as LocalUserAction.MicrophoneOnTriggered:
                     actionHandler.requestMicrophoneUnmute(state: getState(), dispatch: dispatch)
+                case _ as PermissionAction.CameraPermissionGranted:
+                    actionHandler.onCameraPermissionIsSet(state: getState(), dispatch: dispatch)
                 case _ as LifecycleAction.BackgroundEntered:
                     actionHandler.enterBackground(state: getState(), dispatch: dispatch)
                 case _ as LifecycleAction.ForegroundEntered:
                     actionHandler.enterForeground(state: getState(), dispatch: dispatch)
-                case _ as PermissionAction.CameraPermissionGranted:
-                    actionHandler.onCameraPermissionIsSet(state: getState(), dispatch: dispatch)
+                case _ as AudioInterrupted:
+                    actionHandler.audioSessionInterrupted(state: getState(), dispatch: dispatch)
+                case _ as AudioInterruptEnded:
+                    actionHandler.audioSessionInterruptEnded(state: getState(), dispatch: dispatch)
                 default:
                     break
                 }
