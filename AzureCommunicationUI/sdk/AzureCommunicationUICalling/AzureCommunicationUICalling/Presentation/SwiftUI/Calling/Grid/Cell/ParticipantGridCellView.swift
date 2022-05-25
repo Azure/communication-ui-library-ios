@@ -10,6 +10,8 @@ import Combine
 struct ParticipantGridCellView: View {
     @ObservedObject var viewModel: ParticipantGridCellViewModel
     let rendererViewManager: RendererViewManager?
+    let avatarViewManager: AvatarViewManager
+    @State var avatarImage: UIImage?
     @State var displayedVideoStreamId: String?
     @State var isVideoChanging: Bool = false
     let avatarSize: CGFloat = 56
@@ -51,6 +53,16 @@ struct ParticipantGridCellView: View {
                 }
             }
         }
+        .onReceive(viewModel.$participantIdentifier) {
+            updateParticipantViewData(for: $0)
+        }
+        .onReceive(avatarViewManager.$updatedId) {
+            guard $0 == viewModel.participantIdentifier else {
+                return
+            }
+
+            updateParticipantViewData(for: viewModel.participantIdentifier)
+        }
     }
 
     func getRendererViewInfo() -> ParticipantRendererViewInfo? {
@@ -59,6 +71,21 @@ struct ParticipantGridCellView: View {
         }
 
         return rendererViewManager?.getRemoteParticipantVideoRendererView(remoteParticipantVideoViewId)
+    }
+
+    private func updateParticipantViewData(for identifier: String) {
+        guard let participantViewData =
+                avatarViewManager.avatarStorage.value(forKey: identifier) else {
+            avatarImage = nil
+            viewModel.updateParticipantNameIfNeeded(with: nil)
+            return
+        }
+
+        if avatarImage !== participantViewData.avatarImage {
+            avatarImage = participantViewData.avatarImage
+        }
+
+        viewModel.updateParticipantNameIfNeeded(with: participantViewData.renderDisplayName)
     }
 
     private func getRemoteParticipantVideoViewId() -> RemoteParticipantVideoViewId? {
@@ -72,10 +99,11 @@ struct ParticipantGridCellView: View {
     }
 
     var avatarView: some View {
-        VStack(alignment: .center, spacing: 5) {
+        return VStack(alignment: .center, spacing: 5) {
             CompositeAvatar(displayName: $viewModel.displayName,
+                            avatarImage: $avatarImage,
                             isSpeaking: viewModel.isSpeaking && !viewModel.isMuted)
-                .frame(width: avatarSize, height: avatarSize)
+            .frame(width: avatarSize, height: avatarSize)
             Spacer().frame(height: 10)
             ParticipantTitleView(displayName: $viewModel.displayName,
                                  isMuted: $viewModel.isMuted,

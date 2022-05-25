@@ -4,6 +4,7 @@
 //
 
 import FluentUI
+import UIKit
 
 class LeaveCallConfirmationListViewController: DrawerContainerViewController<LeaveCallConfirmationViewModel> {
     private struct Constants {
