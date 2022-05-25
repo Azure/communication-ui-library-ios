@@ -9,6 +9,7 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactory
     private let logger: Logger
+    private let actionDispatch: ActionDispatch
 
     var title: String {
         return localizationProvider.getLocalizedString(.onHoldMessage)
@@ -16,14 +17,14 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
     var subtitle: String?
     @Published var getActionButtonViewModel: PrimaryButtonViewModel?
 
-    //    var audioSessionState: AudioSessionState
-
     init(localizationProvider: LocalizationProviderProtocol,
          compositeViewModelFactory: CompositeViewModelFactory,
-         logger: Logger) {
+         logger: Logger,
+         actionDispatch: @escaping ActionDispatch) {
         self.localizationProvider = localizationProvider
         self.compositeViewModelFactory = compositeViewModelFactory
         self.logger = logger
+        self.actionDispatch = actionDispatch
 
         getActionButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
@@ -38,14 +39,11 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
     }
 
     func resumeButtonTapped() {
-//        let action: Action = CallAction.ResumeRequested()
-//        dispatch(action)
+        let action = CallingAction.ResumeRequested()
+        actionDispatch(action)
     }
 
-//        func update(audioSessionState: AudioSessionState) {
-//            self.audioSessionState = audioSessionState
-//
-//            // Disable/enable resume button
-//            actionButtonViewModel?.isDisabled = false
-//        }
+        func update(audioSessionState: AudioSessionState) {
+            getActionButtonViewModel?.isDisabled = audioSessionState.status == .interrupted
+        }
 }

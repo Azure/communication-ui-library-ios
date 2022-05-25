@@ -77,7 +77,7 @@ class CallingViewModel: ObservableObject {
     }
 
     func getOnHoldOverlayViewModel() -> OnHoldOverlayViewModel {
-        return compositeViewModelFactory.makeOnHoldOverlayViewModel()
+        return compositeViewModelFactory.makeOnHoldOverlayViewModel(dispatchAction: store.dispatch)
     }
 
     func dismissConfirmLeaveDrawerList() {
