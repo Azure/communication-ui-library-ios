@@ -82,4 +82,12 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     func resumeCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
         requestResumeCalled = true
     }
+
+    func audioSessionInterrupted(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+
+    }
+
+    func audioSessionInterruptEnded(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+
+    }
 }

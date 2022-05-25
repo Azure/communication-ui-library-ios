@@ -25,6 +25,9 @@ struct CallingAction {
     struct TranscriptionStateUpdated: Action {
         let isTranscriptionActive: Bool
     }
+
+    struct ResumeRequested: Action {}
+    struct HoldRequested: Action {}
 }
 
 struct ParticipantListUpdated: Action {
