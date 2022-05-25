@@ -34,6 +34,10 @@
 "AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="Ожидание организатора"; // host (people not server) of a meeting
 "AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"="Кто-то из участников собрания скоро вас подключит";
 
+/* OnHoldView */
+"AzureCommunicationUICalling.OnHoldView.Text.OnHold"="Ваш звонок на удержании";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume"="Возобновить";
+
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Ожидание присоединения других участников";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="Звонок с 1 пользователем";
@@ -43,6 +47,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (Я)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Звук отключен";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Звук включен";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="На удержании";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Переключиться на заднюю камеру";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Переключиться на переднюю камеру";
@@ -89,3 +94,6 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Вы были удалены из звонка из-за ошибки.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Вас удалили из звонка.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Произошла ошибка";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Не удалось возобновить звонок";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Ваш микрофон используется другим приложением";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Вам отказано в доступе к звонку.";

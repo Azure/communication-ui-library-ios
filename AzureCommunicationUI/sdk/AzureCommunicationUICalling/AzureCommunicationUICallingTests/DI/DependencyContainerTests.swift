@@ -29,7 +29,8 @@ class DependencyContainerTests: XCTestCase {
         let localSettings = LocalSettings(participantViewData)
 
         dependencyContainer.registerDependencies(callConfiguration,
-                                                 localSettings: localSettings)
+                                                 localSettings: localSettings,
+                                                 eventsHandler: CallCompositeEventsHandler())
 
         XCTAssertNotNil(dependencyContainer.resolve() as CallingSDKWrapperProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as VideoViewManager)

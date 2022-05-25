@@ -36,13 +36,11 @@ class ParticipantsListViewModel: ObservableObject {
         }
     }
 
-    func sortedParticipants() -> [ParticipantsListCellViewModel] {
+    func sortedParticipants(with avatarManager: AvatarViewManager) -> [ParticipantsListCellViewModel] {
         // alphabetical order
         return ([localParticipantsListCellViewModel] + participantsList).sorted {
-            let name = $0.displayName.trimmingCharacters(in: .whitespaces).isEmpty ?
-                StringConstants.defaultEmptyName : $0.displayName
-            let nextName = $1.displayName.trimmingCharacters(in: .whitespaces).isEmpty ?
-                StringConstants.defaultEmptyName : $1.displayName
+            let name = $0.getCellDisplayName(with: $0.getParticipantViewData(from: avatarManager))
+            let nextName = $1.getCellDisplayName(with: $1.getParticipantViewData(from: avatarManager))
             return name.localizedCaseInsensitiveCompare(nextName) == .orderedAscending
         }
     }

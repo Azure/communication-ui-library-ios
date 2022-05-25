@@ -37,6 +37,10 @@ enum LocalizationKey: String {
     case waitingForHost = "AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"
     case waitingDetails = "AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"
 
+    /* OnHoldView */
+    case onHoldMessage = "AzureCommunicationUICalling.OnHoldView.Text.OnHold"
+    case resume = "AzureCommunicationUICalling.OnHoldView.Button.Resume"
+
     /* CallingView */
     case callWith0Person = "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"
     case callWith1Person = "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"
@@ -49,6 +53,7 @@ enum LocalizationKey: String {
             "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"
     case muted = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"
     case unmuted = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"
+    case onHold = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"
 
     case frontCamera = "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"
     case backCamera = "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"
@@ -107,4 +112,8 @@ enum LocalizationKey: String {
     case snackBarErrorCallEnd = "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"
     case snackBarErrorCallEvicted = "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"
     case snackBarError = "AzureCommunicationUICalling.SnackBar.Text.Error"
+    case snackBarErrorOnHoldTitle = "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"
+    case snackBarErrorOnHoldSubtitle = "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"
+    case snackBarErrorCallDenied =
+            "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"
 }
