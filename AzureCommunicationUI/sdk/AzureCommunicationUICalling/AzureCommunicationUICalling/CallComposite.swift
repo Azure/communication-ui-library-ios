@@ -8,28 +8,40 @@ import SwiftUI
 import FluentUI
 import AzureCommunicationCalling
 
+public typealias CompositeErrorHandler = (CommunicationUIErrorEvent) -> Void
+public typealias RemoteParticipantsJoinedHandler = ([CommunicationIdentifier]) -> Void
+
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
     private var logger: Logger?
     private let themeConfiguration: ThemeConfiguration?
     private let localizationConfiguration: LocalizationConfiguration?
-    private let callCompositeEventsHandler = CallCompositeEventsHandler()
+    private let callCompositeEventsHandler: CallCompositeEventsHandling
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
     private var audioSessionManager: AudioSessionManagerProtocol?
+    private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
+    private var avatarViewManager: AvatarViewManagerProtocol?
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
+        callCompositeEventsHandler = CallCompositeEventsHandler()
         themeConfiguration = options?.themeConfiguration
         localizationConfiguration = options?.localizationConfiguration
     }
 
-    /// Assign closure to execute when an error occurs inside Call Composite.
-    /// - Parameter action: The closure returning the error thrown from Call Composite.
-    public func setTarget(didFail action: ((CommunicationUIErrorEvent) -> Void)?) {
-        callCompositeEventsHandler.didFail = action
+    /// Assign closures to execute when error event  occurs inside Call Composite.
+    /// - Parameter didFailAction: The closure returning the error thrown from Call Composite.
+    public func setDidFailHandler(with didFailAction: CompositeErrorHandler?) {
+        callCompositeEventsHandler.didFail = didFailAction
+    }
+
+    /// Assign closures to execute when participant has joined a call  inside Call Composite.
+    /// - Parameter participantsJoinedAction: The closure returning identifiers for joined remote participants.
+    public func setRemoteParticipantJoinHandler(with participantsJoinedAction: RemoteParticipantsJoinedHandler?) {
+        callCompositeEventsHandler.didRemoteParticipantsJoin = participantsJoinedAction
     }
 
     deinit {
@@ -70,7 +82,7 @@ public class CallComposite {
         launch(callConfiguration, localSettings: localSettings)
     }
 
-    /// Start call composite experience with joining a Teams meeting..
+    /// Start call composite experience with joining a Teams meeting.
     /// - Parameter options: The TeamsMeetingOptions used to locate the Teams meetings.
     /// - Parameter localSettings: LocalSettings used to set the user participants information for the call.
     ///                            This is data is not sent up to ACS.
@@ -84,11 +96,31 @@ public class CallComposite {
         launch(callConfiguration, localSettings: localSettings)
     }
 
+    /// Set ParticipantViewData for the remote participant.
+    /// - Parameters:
+    ///   - identifier: The communication identifier for the remote participant.
+    ///   - participantViewData: ParticipantViewData used to set the user participants information for the call.
+    ///   This is data is not sent up to ACS.
+    /// - Returns: The `Result` enum value with either a `Void` or an `Error`.
+    @discardableResult
+    public func setRemoteParticipantViewData(
+        for identifier: CommunicationIdentifier,
+        participantViewData: ParticipantViewData) -> Result<Void, CommunicationUIErrorEvent> {
+        guard let avatarManager = avatarViewManager else {
+            return .failure(CommunicationUIErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
+        }
+
+        return avatarManager.setRemoteParticipantViewData(for: identifier,
+                                                          participantViewData: participantViewData)
+    }
+
     private func setupManagers(with dependencyContainer: DependencyContainer) {
         self.errorManager = dependencyContainer.resolve()
         self.lifeCycleManager = dependencyContainer.resolve()
         self.permissionManager = dependencyContainer.resolve()
         self.audioSessionManager = dependencyContainer.resolve()
+        self.avatarViewManager = dependencyContainer.resolve() as AvatarViewManager
+        self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManager
     }
 
     private func cleanUpManagers() {
@@ -96,6 +128,7 @@ public class CallComposite {
         self.lifeCycleManager = nil
         self.permissionManager = nil
         self.audioSessionManager = nil
+        self.remoteParticipantsManager = nil
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,

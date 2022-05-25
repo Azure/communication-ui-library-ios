@@ -43,10 +43,11 @@ class DependencyContainerTests: XCTestCase {
         XCTAssertNotNil(dependencyContainer.resolve() as CallingSDKEventsHandling)
         XCTAssertNotNil(dependencyContainer.resolve() as AccessibilityProviderProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as LocalizationProviderProtocol)
-        XCTAssertNotNil(dependencyContainer.resolve() as AvatarViewManagerProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as CompositeErrorManager)
         XCTAssertNotNil(dependencyContainer.resolve() as LifeCycleManagerProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as PermissionsManagerProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as AudioSessionManagerProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as AvatarViewManager)
+        XCTAssertNotNil(dependencyContainer.resolve() as RemoteParticipantsManager)
     }
 }
