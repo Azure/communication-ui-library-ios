@@ -4,8 +4,10 @@
 //
 
 import FluentUI
+import UIKit
 
 class ParticipantsListViewController: DrawerContainerViewController<ParticipantsListCellViewModel> {
+    private let avatarViewManager: AvatarViewManager
     private lazy var participantsListTableView: UITableView? = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = backgroundColor
@@ -22,6 +24,18 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
     override var drawerTableView: UITableView? {
         get { return participantsListTableView }
         set { participantsListTableView = newValue }
+    }
+
+    init(items: [ParticipantsListCellViewModel],
+         sourceView: UIView,
+         avatarViewManager: AvatarViewManager
+    ) {
+        self.avatarViewManager = avatarViewManager
+        super.init(items: items, sourceView: sourceView)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }
 
@@ -43,9 +57,8 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
         }
         let participantViewModel = self.items[indexPath.row]
 
-        let displayName = participantViewModel.getCellDisplayName()
         cell.setup(viewModel: participantViewModel,
-                   displayName: displayName)
+                   avatarViewManager: avatarViewManager)
         return cell
     }
 }

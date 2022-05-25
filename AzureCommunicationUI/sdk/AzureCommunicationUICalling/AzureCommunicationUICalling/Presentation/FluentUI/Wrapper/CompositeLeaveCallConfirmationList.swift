@@ -5,6 +5,7 @@
 
 import SwiftUI
 import FluentUI
+import UIKit
 
 struct CompositeLeaveCallConfirmationList: UIViewControllerRepresentable {
     @Binding var isPresented: Bool

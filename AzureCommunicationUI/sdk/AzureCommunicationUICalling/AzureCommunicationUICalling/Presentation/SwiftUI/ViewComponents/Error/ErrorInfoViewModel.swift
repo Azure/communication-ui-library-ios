@@ -47,6 +47,8 @@ class ErrorInfoViewModel: ObservableObject {
             message = localizationProvider.getLocalizedString(.snackBarErrorCallEnd)
         case CallCompositeErrorCode.callEvicted:
             message = localizationProvider.getLocalizedString(.snackBarErrorCallEvicted)
+        case CallCompositeErrorCode.callDenied:
+            message = localizationProvider.getLocalizedString(.snackBarErrorCallDenied)
         default:
             message = localizationProvider.getLocalizedString(.snackBarError)
         }

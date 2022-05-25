@@ -34,6 +34,10 @@
 "AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="Waiting for host"; // host (people not server) of a meeting
 "AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"="Someone in the meeting will let you in soon";
 
+/* OnHoldView */
+"AzureCommunicationUICalling.OnHoldView.Text.OnHold"="You're on hold";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume"="Resume";
+
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Waiting for others to join";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="Call with 1 person";
@@ -43,6 +47,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (me)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Muted";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Unmuted";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="On hold";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Switch to back camera";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Switch to front camera";
@@ -89,3 +94,6 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="You were removed from the call due to an error.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="You were removed from the call.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="There was an error.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Unable to resume call";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Your mic is in use by another app";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="You were denied access to the call.";

@@ -5,6 +5,7 @@
 
 import SwiftUI
 import FluentUI
+import UIKit
 
 struct CompositeButton: UIViewRepresentable {
     let buttonStyle: FluentUI.ButtonStyle
