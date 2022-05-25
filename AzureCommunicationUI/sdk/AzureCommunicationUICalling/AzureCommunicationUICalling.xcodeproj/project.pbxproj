@@ -42,6 +42,9 @@
 		1F2BEDC026328F2700D98266 /* CallingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BEDBF26328F2700D98266 /* CallingState.swift */; };
 		1F2BEDCD26329E5600D98266 /* PermissionAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BEDCC26329E5600D98266 /* PermissionAction.swift */; };
 		1F2BEDD126329E7C00D98266 /* CallingAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BEDD026329E7C00D98266 /* CallingAction.swift */; };
+		1F3F0C65283E853800C66054 /* AudioSessionAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F0C64283E853800C66054 /* AudioSessionAction.swift */; };
+		1F3F0C67283E858600C66054 /* AudioSessionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F0C66283E858600C66054 /* AudioSessionState.swift */; };
+		1F3F0C69283E860600C66054 /* AudioSessionReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F0C68283E860600C66054 /* AudioSessionReducer.swift */; };
 		1F47F78726E9E18E000AE4B7 /* DrawerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47F78626E9E18E000AE4B7 /* DrawerContainerViewController.swift */; };
 		1F48B401274879F000B6E5F9 /* DiagnosticConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48B400274879F000B6E5F9 /* DiagnosticConfig.swift */; };
 		1F48B40327496E2800B6E5F9 /* DiagnosticConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48B40227496E2800B6E5F9 /* DiagnosticConfigTests.swift */; };
@@ -278,6 +281,9 @@
 		1F2BEDBF26328F2700D98266 /* CallingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingState.swift; sourceTree = "<group>"; };
 		1F2BEDCC26329E5600D98266 /* PermissionAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAction.swift; sourceTree = "<group>"; };
 		1F2BEDD026329E7C00D98266 /* CallingAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingAction.swift; sourceTree = "<group>"; };
+		1F3F0C64283E853800C66054 /* AudioSessionAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionAction.swift; sourceTree = "<group>"; };
+		1F3F0C66283E858600C66054 /* AudioSessionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSessionState.swift; sourceTree = "<group>"; };
+		1F3F0C68283E860600C66054 /* AudioSessionReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionReducer.swift; sourceTree = "<group>"; };
 		1F47F78626E9E18E000AE4B7 /* DrawerContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerContainerViewController.swift; sourceTree = "<group>"; };
 		1F48B400274879F000B6E5F9 /* DiagnosticConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticConfig.swift; sourceTree = "<group>"; };
 		1F48B40227496E2800B6E5F9 /* DiagnosticConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticConfigTests.swift; sourceTree = "<group>"; };
@@ -702,6 +708,7 @@
 				1F13D36F26AB293700E31666 /* NavigationReducer.swift */,
 				88F6EE192735F5CB001AD3E9 /* ErrorReducer.swift */,
 				1F83813E26803ADF0096A454 /* CallingReducer.swift */,
+				1F3F0C68283E860600C66054 /* AudioSessionReducer.swift */,
 			);
 			path = Reducer;
 			sourceTree = "<group>";
@@ -709,6 +716,7 @@
 		1F2BEDBE26328EFA00D98266 /* State */ = {
 			isa = PBXGroup;
 			children = (
+				1F3F0C66283E858600C66054 /* AudioSessionState.swift */,
 				1F2BED75262F944500D98266 /* ReduxState.swift */,
 				1F2BED982631FA6C00D98266 /* PermissionState.swift */,
 				1F2BEDBF26328F2700D98266 /* CallingState.swift */,
@@ -729,6 +737,7 @@
 				1F2BEDCC26329E5600D98266 /* PermissionAction.swift */,
 				1F2BEDD026329E7C00D98266 /* CallingAction.swift */,
 				A874EDC726616792003C7D92 /* LifecycleAction.swift */,
+				1F3F0C64283E853800C66054 /* AudioSessionAction.swift */,
 				1F94DAE326740BCB00691D1E /* LocalUserAction.swift */,
 			);
 			path = Action;
@@ -1547,6 +1556,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50B390D827D976930010A2ED /* JoiningCallActivityViewModel.swift in Sources */,
+				1F3F0C67283E858600C66054 /* AudioSessionState.swift in Sources */,
 				1FBCB6B6264BA8A200F57EEA /* ParticipantGridCellViewModel.swift in Sources */,
 				1F03D3CE2638A6AE0055C456 /* CallingView.swift in Sources */,
 				1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */,
@@ -1624,6 +1634,7 @@
 				1F94DAF52677D48400691D1E /* CommunicationUIErrorEvent.swift in Sources */,
 				1F94DAE626740D4400691D1E /* AppState.swift in Sources */,
 				8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */,
+				1F3F0C69283E860600C66054 /* AudioSessionReducer.swift in Sources */,
 				50137D0626A7479C00AB843E /* EnvironmentValuesExtension.swift in Sources */,
 				1FD299642723345B0084B9ED /* DefaultLogger.swift in Sources */,
 				1F2BEDA92632530D00D98266 /* Action.swift in Sources */,
@@ -1667,6 +1678,7 @@
 				1F2BEDC026328F2700D98266 /* CallingState.swift in Sources */,
 				88F6EE1A2735F5CB001AD3E9 /* ErrorReducer.swift in Sources */,
 				A874EDC626616728003C7D92 /* AppLifeCycleState.swift in Sources */,
+				1F3F0C65283E853800C66054 /* AudioSessionAction.swift in Sources */,
 				A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */,
 				1F13D36C26A8B83300E31666 /* RemoteParticipantsState.swift in Sources */,
 				1FFEA01426A68D0D00E90816 /* FontExtension.swift in Sources */,

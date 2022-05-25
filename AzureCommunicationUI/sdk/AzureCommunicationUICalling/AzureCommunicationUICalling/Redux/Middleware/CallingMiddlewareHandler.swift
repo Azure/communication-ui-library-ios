@@ -14,6 +14,8 @@ protocol CallingMiddlewareHandling {
     func resumeCall(state: ReduxState?, dispatch: @escaping ActionDispatch)
     func enterBackground(state: ReduxState?, dispatch: @escaping ActionDispatch)
     func enterForeground(state: ReduxState?, dispatch: @escaping ActionDispatch)
+    func audioSessionInterrupted(state: ReduxState?, dispatch: @escaping ActionDispatch)
+    func audioSessionInterruptEnded(state: ReduxState?, dispatch: @escaping ActionDispatch)
     func requestCameraPreviewOn(state: ReduxState?, dispatch: @escaping ActionDispatch)
     func requestCameraOn(state: ReduxState?, dispatch: @escaping ActionDispatch)
     func requestCameraOff(state: ReduxState?, dispatch: @escaping ActionDispatch)
@@ -99,7 +101,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     func holdCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
         guard let state = state as? AppState,
-           state.callingState.status == .connected else {
+              state.callingState.status == .connected else {
             return
         }
 
@@ -114,7 +116,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     func resumeCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
         guard let state = state as? AppState,
-           state.callingState.status == .localHold else {
+              state.callingState.status == .localHold else {
             return
         }
 
@@ -261,15 +263,35 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
     }
 
     func onCameraPermissionIsSet(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        if let state = state as? AppState,
-           state.permissionState.cameraPermission == .requesting {
-            switch state.localUserState.cameraState.transmission {
-            case .local:
-                dispatch(LocalUserAction.CameraPreviewOnTriggered())
-            case .remote:
-                dispatch(LocalUserAction.CameraOnTriggered())
-            }
+        guard let state = state as? AppState,
+              state.permissionState.cameraPermission == .requesting else {
+            return
         }
+
+        switch state.localUserState.cameraState.transmission {
+        case .local:
+            dispatch(LocalUserAction.CameraPreviewOnTriggered())
+        case .remote:
+            dispatch(LocalUserAction.CameraOnTriggered())
+        }
+    }
+
+    func audioSessionInterrupted(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+        guard let state = state as? AppState,
+              state.callingState.status == .connected else {
+            return
+        }
+
+        dispatch(CallingAction.HoldRequested())
+    }
+
+    func audioSessionInterruptEnded(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+        guard let state = state as? AppState,
+              state.callingState.status == .localHold else {
+            return
+        }
+
+        dispatch(CallingAction.ResumeRequested())
     }
 }
 

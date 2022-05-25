@@ -14,6 +14,8 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     private let logger: Logger
     private let store: Store<AppState>
     private var localUserAudioDeviceState: LocalUserState.AudioDeviceSelectionStatus?
+    private var audioSessionState: AudioSessionStatus = .active
+    private var audioSessionDetector: Timer?
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState>,
@@ -30,6 +32,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     private func receive(state: AppState) {
+        audioSessionState = state.audioSessionState.status
         let localUserState = state.localUserState
         let userAudioDeviceState = localUserState.audioState.device
         guard userAudioDeviceState != localUserAudioDeviceState else {
@@ -76,9 +79,14 @@ class AudioSessionManager: AudioSessionManagerProtocol {
 
         switch interruptionType {
         case .began:
-            store.dispatch(action: LifecycleAction.AudioInterruptionBegan())
+            print("-------------interrupted begin")
+
+            startAudioSessionDetector()
+            store.dispatch(action: AudioInterrupted())
         case .ended:
-            store.dispatch(action: LifecycleAction.AudioInterruptionEnded())
+            print("-------------interrupted end, send AudioInterruptEnded,  audioSessionState:\(audioSessionState)")
+            store.dispatch(action: AudioInterruptEnded())
+            audioSessionDetector?.invalidate()
         default:
             break
         }
@@ -157,5 +165,34 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         default:
             return false
         }
+    }
+
+    @objc private func detectAudioSessionEngage() {
+        print("----------detectAudioSessionEngage ")
+
+        guard AVAudioSession.sharedInstance().isOtherAudioPlaying == false else {
+            return
+        }
+
+        guard audioSessionState == .interrupted else {
+            print("----------detectAudioSessionEngage active")
+
+            audioSessionDetector?.invalidate()
+            return
+        }
+        print("----------send action audioEngaged")
+
+        store.dispatch(action: AudioEngaged())
+        audioSessionDetector?.invalidate()
+    }
+
+    private func startAudioSessionDetector() {
+        print("----------startAudioSessionDetector")
+        audioSessionDetector?.invalidate()
+        audioSessionDetector = Timer.scheduledTimer(timeInterval: 1,
+                                                    target: self,
+                                                    selector: #selector(detectAudioSessionEngage),
+                                                    userInfo: nil,
+                                                    repeats: true)
     }
 }
