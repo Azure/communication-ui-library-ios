@@ -7,7 +7,7 @@ import SwiftUI
 
 struct SetupControlBarView: View {
     @ObservedObject var viewModel: SetupControlBarViewModel
-    let audioDeviceButtonSourceView = UIView()
+    @State var audioDeviceButtonSourceView = UIView()
     let layoutSpacing: CGFloat = 0
     let controlWidth: CGFloat = 315
     let controlHeight: CGFloat = 50
