@@ -40,7 +40,6 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     private func handle(state: LocalUserState.AudioDeviceSelectionStatus) {
-        print("-----------handle state:\(state)")
         switch state {
         case .speakerRequested:
             switchAudioDevice(to: .speaker)
