@@ -15,7 +15,7 @@ struct CallingView: View {
     }
 
     @ObservedObject var viewModel: CallingViewModel
-    let avatarManager: AvatarViewManagerProtocol
+    let avatarManager: AvatarViewManager
     let viewManager: VideoViewManager
     let leaveCallConfirmationListSourceView = UIView()
 
@@ -24,6 +24,7 @@ struct CallingView: View {
 
     @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
     @State private var pipPosition: CGPoint?
+    @GestureState private var pipDragStartPosition: CGPoint?
 
     var safeAreaIgnoreArea: Edge.Set {
         return getSizeClass() != .iphoneLandscapeScreenSize ? []: [.bottom]
@@ -79,9 +80,7 @@ struct CallingView: View {
                         .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
                 }
                 .onAppear {
-                    if self.pipPosition == nil {
-                        self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
-                    }
+                    self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
                 }
                 .onChange(of: geometry.size) { _ in
                     self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
@@ -103,37 +102,13 @@ struct CallingView: View {
         }
     }
 
-    var localVideoPipView: some View {
-        let shapeCornerRadius: CGFloat = 4
-        return Group {
-            LocalVideoView(viewModel: viewModel.localVideoViewModel,
-                           personaData: avatarManager.getLocalPersonaData(),
-                           viewManager: viewManager,
-                           viewType: .localVideoPip)
-                .background(Color(StyleProvider.color.backgroundColor))
-                .clipShape(RoundedRectangle(cornerRadius: shapeCornerRadius))
-        }
-    }
-
     var draggableVideoPipView: some View {
         return Group {
             if self.pipPosition != nil {
-                GeometryReader { geometry in
-                    let size = getPipSize(parentSize: geometry.size)
-                    localVideoPipView
-                        .frame(width: size.width, height: size.height, alignment: .center)
-                        .position(self.pipPosition!)
-                        .gesture(
-                            DragGesture()
-                                .onChanged { value in
-                                        let containerBounds = getContainerBounds(bounds: geometry.frame(in: .local))
-                                        self.pipPosition = getBoundedPipPosition(
-                                            currentPipPosition: self.pipPosition!,
-                                            requestedPipPosition: value.location,
-                                            bounds: containerBounds)
-                                }
-                        )
-                }
+                DraggableLocalVideoView(viewModel: viewModel,
+                                        avatarManager: avatarManager,
+                                        viewManager: viewManager,
+                                        pipPosition: $pipPosition)
             }
         }
     }
@@ -164,7 +139,8 @@ struct CallingView: View {
     }
 
     var infoHeaderView: some View {
-        InfoHeaderView(viewModel: viewModel.infoHeaderViewModel)
+        InfoHeaderView(viewModel: viewModel.infoHeaderViewModel,
+                       avatarViewManager: avatarManager)
     }
 
     var bannerView: some View {
@@ -173,6 +149,7 @@ struct CallingView: View {
 
     var participantGridsView: some View {
         ParticipantGridView(viewModel: viewModel.participantGridsViewModel,
+                            avatarViewManager: avatarManager,
                             videoViewManager: viewManager,
                             screenSize: getSizeClass())
             .edgesIgnoringSafeArea(safeAreaIgnoreArea)
@@ -181,9 +158,9 @@ struct CallingView: View {
     var localVideoFullscreenView: some View {
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
-                           personaData: avatarManager.getLocalPersonaData(),
                            viewManager: viewManager,
-                           viewType: .localVideofull)
+                           viewType: .localVideofull,
+                           avatarManager: avatarManager)
                 .background(Color(StyleProvider.color.surface))
                 .edgesIgnoringSafeArea(safeAreaIgnoreArea)
         }
@@ -233,31 +210,6 @@ struct CallingView: View {
         return containerBounds
     }
 
-    private func getBoundedPipPosition(
-        currentPipPosition: CGPoint,
-        requestedPipPosition: CGPoint,
-        bounds: CGRect) -> CGPoint {
-        var boundedPipPosition = currentPipPosition
-
-        if bounds.contains(requestedPipPosition) {
-            boundedPipPosition = requestedPipPosition
-        } else if requestedPipPosition.x > bounds.minX && requestedPipPosition.x < bounds.maxX {
-            boundedPipPosition.x = requestedPipPosition.x
-            boundedPipPosition.y = getMinMaxLimitedValue(
-                value: requestedPipPosition.y,
-                min: bounds.minY,
-                max: bounds.maxY)
-        } else if requestedPipPosition.y > bounds.minY && requestedPipPosition.y < bounds.maxY {
-            boundedPipPosition.x = getMinMaxLimitedValue(
-                value: requestedPipPosition.x,
-                min: bounds.minX,
-                max: bounds.maxX)
-            boundedPipPosition.y = requestedPipPosition.y
-        }
-
-        return boundedPipPosition
-        }
-
     private func getPipSize(parentSize: CGSize? = nil) -> CGSize {
         let isPortraitMode = getSizeClass() != .iphoneLandscapeScreenSize
         let isiPad = getSizeClass() == .ipadScreenSize
@@ -282,15 +234,5 @@ struct CallingView: View {
         }
 
         return defaultSize()
-    }
-
-    private func getMinMaxLimitedValue(value: CGFloat, min: CGFloat, max: CGFloat) -> CGFloat {
-        var limitedValue = value
-        if value < min {
-            limitedValue = min
-        } else if value > max {
-            limitedValue = max
-        }
-        return limitedValue
     }
 }

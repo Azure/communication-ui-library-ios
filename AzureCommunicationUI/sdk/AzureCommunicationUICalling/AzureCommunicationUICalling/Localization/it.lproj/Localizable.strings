@@ -34,6 +34,10 @@
 "AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="In attesa dell'organizzatore"; // host (people not server) of a meeting
 "AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"="A breve qualcuno nella riunione ti farà partecipare";
 
+/* OnHoldView */
+"AzureCommunicationUICalling.OnHoldView.Text.OnHold"="In attesa.";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume"="Riprendi";
+
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="In attesa di altri partecipanti";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="Chiamata con 1 persona";
@@ -43,6 +47,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (me)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Audio disattivato";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Microfono riattivato";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="In attesa";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Passa alla videocamera posteriore";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Passa alla videocamera anteriore";
@@ -89,3 +94,6 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Sei stato rimosso dalla chiamata a causa di un errore.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Sei stato rimosso dalla chiamata.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Si è verificato un errore.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Non è possibile riprendere la chiamata";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Il microfono è usato da un'altra app";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Ti è stato negato l'accesso alla chiamata.";
