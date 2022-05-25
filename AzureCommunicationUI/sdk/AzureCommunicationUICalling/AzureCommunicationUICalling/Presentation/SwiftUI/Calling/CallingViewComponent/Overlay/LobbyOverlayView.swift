@@ -20,10 +20,8 @@ struct OverlayView: View {
                 VStack(spacing: layoutSpacing) {
                     Icon(name: .clock, size: iconImageSize)
                         .accessibility(hidden: true)
-                    if let title = viewModel.title {
-                        Text(title)
-                            .font(Fonts.title2.font)
-                    }
+                    Text(viewModel.title)
+                        .font(Fonts.title2.font)
                     if let subtitle = viewModel.subtitle {
                         Text(subtitle)
                             .font(Fonts.subhead.font)

@@ -6,25 +6,33 @@
 import Foundation
 import Combine
 
-class ErrorInfoViewModel: ObservableObject {
+protocol ErrorInfoViewModelProtocol: ObservableObject {
+    var isDisplayed: Bool { get }
+    var message: String { get }
+    var dismissContent: String { get }
+    var dismissAccessibilitylabel: String { get }
+    var dismissAccessibilityHint: String { get }
+}
+
+class ErrorInfoViewModel: ErrorInfoViewModelProtocol {
     @Published var isDisplayed: Bool = false
     @Published private(set) var message: String = ""
-    @Published private(set) var accessibilityLabel: String = ""
-    @Published private(set) var dismissButtonAccessibilityLabel: String = ""
-    @Published private(set) var dismissButtonAccessibilityHint: String = ""
 
     private let localizationProvider: LocalizationProviderProtocol
     private var previousErrorType: String = ""
 
     init(localizationProvider: LocalizationProviderProtocol) {
         self.localizationProvider = localizationProvider
-
-        dismissButtonAccessibilityLabel = localizationProvider.getLocalizedString(.snackBarDismissAccessibilityLabel)
-        dismissButtonAccessibilityHint = localizationProvider.getLocalizedString(.snackBarDismissAccessibilityHint)
     }
 
     var dismissContent: String {
-        return localizationProvider.getLocalizedString(.snackBarDismiss)
+        localizationProvider.getLocalizedString(.snackBarDismiss)
+    }
+    var dismissAccessibilitylabel: String {
+        localizationProvider.getLocalizedString(.snackBarDismissAccessibilityLabel)
+    }
+    var dismissAccessibilityHint: String {
+        localizationProvider.getLocalizedString(.snackBarDismissAccessibilityHint)
     }
 
     func update(errorState: ErrorState) {
@@ -50,6 +58,5 @@ class ErrorInfoViewModel: ObservableObject {
         default:
             message = localizationProvider.getLocalizedString(.snackBarError)
         }
-        accessibilityLabel = message
     }
 }

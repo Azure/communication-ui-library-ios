@@ -48,14 +48,14 @@ struct CallingView: View {
     var portraitCallingView: some View {
         VStack(alignment: .center, spacing: 0) {
             containerView
-            controlBarView
+            ControlBarView(viewModel: viewModel.controlBarViewModel)
         }
     }
 
     var landscapeCallingView: some View {
         HStack(alignment: .center, spacing: 0) {
             containerView
-            controlBarView
+            ControlBarView(viewModel: viewModel.controlBarViewModel)
         }
     }
 
@@ -72,6 +72,7 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilitySortPriority(1)
                         .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
+                    errorInfoView
                 }
                 .onAppear {
                     self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
@@ -148,19 +149,25 @@ struct CallingView: View {
 
     var topAlertAreaView: some View {
         VStack {
-            bannerView
-            infoHeaderView
+            BannerView(viewModel: viewModel.bannerViewModel)
+            InfoHeaderView(viewModel: viewModel.infoHeaderViewModel)
                 .padding(.horizontal, 8)
             Spacer()
         }
     }
 
-    var infoHeaderView: some View {
-        InfoHeaderView(viewModel: viewModel.infoHeaderViewModel)
-    }
-
-    var bannerView: some View {
-        BannerView(viewModel: viewModel.bannerViewModel)
+    var errorInfoView: some View {
+        VStack {
+            Spacer()
+            ErrorInfoView(viewModel: ErrorInfoViewModel()
+//                .padding(EdgeInsets(top: 0,
+//                                    leading: errorHorizontalPadding,
+//                                    bottom: startCallButtonHeight + layoutSpacing,
+//                                    trailing: errorHorizontalPadding)
+                )
+                .accessibilityElement(children: .contain)
+                .accessibilityAddTraits(.isModal)
+        }
     }
 
     var participantGridsView: some View {
@@ -171,7 +178,7 @@ struct CallingView: View {
     }
 
     var localVideoFullscreenView: some View {
-        return Group {
+        Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
                            participantViewData: avatarManager.getLocalParticipantViewData(),
                            viewManager: viewManager,
@@ -190,11 +197,9 @@ struct CallingView: View {
             }
         }
     }
+}
 
-    var controlBarView: some View {
-        ControlBarView(viewModel: viewModel.controlBarViewModel)
-    }
-
+extension CallingView {
     private func getSizeClass() -> ScreenSizeClassType {
         switch (widthSizeClass, heightSizeClass) {
         case (.compact, .regular):

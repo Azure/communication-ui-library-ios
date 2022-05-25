@@ -18,7 +18,6 @@ struct ErrorInfoView: View {
                     .padding([.top, .leading, .bottom])
                     .font(Fonts.footnote.font)
                     .foregroundColor(Color(StyleProvider.color.onWarning))
-                    .accessibilityLabel(Text(viewModel.accessibilityLabel))
                     .accessibilitySortPriority(1)
                 Spacer()
                 Button(action: dismissAction) {
