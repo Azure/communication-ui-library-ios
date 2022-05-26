@@ -31,6 +31,10 @@ class ErrorInfoViewModel: ObservableObject {
         isDisplayed = false
     }
 
+    func show() {
+        isDisplayed = true
+    }
+
     func update(errorState: ErrorState) {
         let errorType = errorState.error?.code ?? ""
         guard errorType != previousErrorType else {

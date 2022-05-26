@@ -10,9 +10,6 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
     private let compositeViewModelFactory: CompositeViewModelFactory
     private let logger: Logger
     private let accessibilityProvider: AccessibilityProviderProtocol
-    private let dispatchAction: ActionDispatch
-
-    private var audioSessionStatus: AudioSessionStatus?
 
     var title: String {
         return localizationProvider.getLocalizedString(.onHoldMessage)
@@ -28,12 +25,11 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
          compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
          accessibilityProvider: AccessibilityProviderProtocol,
-         dispatchAction: @escaping ActionDispatch) {
+         resume: @escaping (() -> Void)) {
         self.localizationProvider = localizationProvider
         self.compositeViewModelFactory = compositeViewModelFactory
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
-        self.dispatchAction = dispatchAction
 
         actionButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
@@ -43,29 +39,15 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
                     return
                 }
                 self.logger.debug("Resume from hold button tapped")
-                self.resumeButtonTapped()
+                resume()
         }
     }
 
-    func resumeButtonTapped() {
-        if audioSessionStatus == .active {
-            let action = CallingAction.ResumeRequested()
-            dispatchAction(action)
-        } else {
-            // Display Error Banner
-        }
-    }
-
-    func update(callingStatus: CallingStatus,
-                audioSessionStatus: AudioSessionStatus) {
-//        actionButtonViewModel?.isDisabled = audioSessionState.status == .interrupted
-
+    func update(callingStatus: CallingStatus) {
         let shouldDisplay = callingStatus == .localHold
         if isDisplayed != shouldDisplay {
             isDisplayed = shouldDisplay
             accessibilityProvider.moveFocusToFirstElement()
         }
-
-        self.audioSessionStatus = audioSessionStatus
     }
 }

@@ -37,7 +37,7 @@ protocol CompositeViewModelFactoryProtocol {
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel
-    func makeOnHoldOverlayViewModel(dispatchAction: @escaping ActionDispatch) -> OnHoldOverlayViewModel
+    func makeOnHoldOverlayViewModel(resume: @escaping (() -> Void)) -> OnHoldOverlayViewModel
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel
@@ -169,12 +169,12 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         LobbyOverlayViewModel(localizationProvider: localizationProvider,
                               accessibilityProvider: accessibilityProvider)
     }
-    func makeOnHoldOverlayViewModel(dispatchAction: @escaping ActionDispatch) -> OnHoldOverlayViewModel {
+    func makeOnHoldOverlayViewModel(resume: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
         OnHoldOverlayViewModel(localizationProvider: localizationProvider,
                                compositeViewModelFactory: self,
                                logger: logger,
                                accessibilityProvider: accessibilityProvider,
-                               dispatchAction: dispatchAction)
+                               resume: resume)
     }
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),

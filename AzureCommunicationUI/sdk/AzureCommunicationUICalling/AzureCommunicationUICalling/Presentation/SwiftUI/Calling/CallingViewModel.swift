@@ -39,7 +39,7 @@ class CallingViewModel: ObservableObject {
          accessibilityProvider: AccessibilityProviderProtocol) {
         let isCallConnected = store.state.callingState.status == .connected
         let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
-        let actionDispatch: ActionDispatch = store.dispatch
+        let dispatchAction: ActionDispatch = store.dispatch
 
         self.compositeViewModelFactory = compositeViewModelFactory
         self.logger = logger
@@ -51,17 +51,22 @@ class CallingViewModel: ObservableObject {
         isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
         appState = store.state.lifeCycleState.currentStatus
 
-        localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
+        localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: dispatchAction)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel()
         bannerViewModel = compositeViewModelFactory.makeBannerViewModel()
         errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
         lobbyOverlayViewModel = compositeViewModelFactory.makeLobbyOverlayViewModel()
-        onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(dispatchAction: actionDispatch)
+        onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(resume: { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.resumeOnHold()
+        })
 
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
         controlBarViewModel = compositeViewModelFactory
-            .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
+            .makeControlBarViewModel(dispatchAction: dispatchAction, endCallConfirm: { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -86,6 +91,15 @@ class CallingViewModel: ObservableObject {
         dismissConfirmLeaveDrawerList()
     }
 
+    func resumeOnHold() {
+        if store.state.audioSessionState.status == .active {
+            let action = CallingAction.ResumeRequested()
+            store.dispatch(action: action)
+        } else {
+            errorInfoViewModel.show()
+        }
+    }
+
     func receive(_ state: AppState) {
         if appState != state.lifeCycleState.currentStatus {
             appState = state.lifeCycleState.currentStatus
@@ -104,6 +118,8 @@ class CallingViewModel: ObservableObject {
         participantGridsViewModel.update(callingState: state.callingState,
                                          remoteParticipantsState: state.remoteParticipantsState)
         bannerViewModel.update(callingState: state.callingState)
+        lobbyOverlayViewModel.update(callingStatus: state.callingState.status)
+        onHoldOverlayViewModel.update(callingStatus: state.callingState.status)
 
         let newIsCallConnected = state.callingState.status == .connected
         let hasRemoteParticipants = state.remoteParticipantsState.participantInfoList.count > 0
@@ -111,10 +127,6 @@ class CallingViewModel: ObservableObject {
         if shouldParticipantGridDisplayed != isParticipantGridDisplayed {
             isParticipantGridDisplayed = shouldParticipantGridDisplayed
         }
-
-        lobbyOverlayViewModel.update(callingStatus: state.callingState.status)
-        onHoldOverlayViewModel.update(callingStatus: state.callingState.status ,
-                                     audioSessionStatus: state.audioSessionState.status)
 
         if callHasConnected != newIsCallConnected && newIsCallConnected {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
