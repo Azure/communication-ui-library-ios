@@ -41,13 +41,13 @@ class ErrorInfoViewModel: ObservableObject {
 
         isDisplayed = true
         switch errorState.error?.code {
-        case CallCompositeErrorCode.callJoin:
+        case CallErrorCode.callJoin:
             message = localizationProvider.getLocalizedString(.snackBarErrorJoinCall)
-        case CallCompositeErrorCode.callEnd:
+        case CallErrorCode.callEnd:
             message = localizationProvider.getLocalizedString(.snackBarErrorCallEnd)
-        case CallCompositeErrorCode.callEvicted:
+        case CallErrorCode.callEvicted:
             message = localizationProvider.getLocalizedString(.snackBarErrorCallEvicted)
-        case CallCompositeErrorCode.callDenied:
+        case CallErrorCode.callDenied:
             message = localizationProvider.getLocalizedString(.snackBarErrorCallDenied)
         default:
             message = localizationProvider.getLocalizedString(.snackBarError)

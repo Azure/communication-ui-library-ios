@@ -16,20 +16,20 @@ extension CallEndReason {
         case 0 :
             if (callEndErrorSubCode == 5300 || callEndErrorSubCode == 5000),
                wasCallConnected {
-                compositeErrorCodeString = CallCompositeErrorCode.callEvicted
+                compositeErrorCodeString = CallErrorCode.callEvicted
             } else if callEndErrorSubCode == 5854 {
-                compositeErrorCodeString = CallCompositeErrorCode.callDenied
+                compositeErrorCodeString = CallErrorCode.callDenied
             }
         case 401:
-            compositeErrorCodeString = CallCompositeErrorCode.tokenExpired
+            compositeErrorCodeString = CallErrorCode.tokenExpired
         case 487:
             // Call cancelled by user as a happy path
             break
         default:
             // For all other errorCodes:
             // https://docs.microsoft.com/en-us/azure/communication-services/concepts/troubleshooting-info
-            compositeErrorCodeString = wasCallConnected ? CallCompositeErrorCode.callEnd
-            : CallCompositeErrorCode.callJoin
+            compositeErrorCodeString = wasCallConnected ? CallErrorCode.callEnd
+            : CallErrorCode.callJoin
         }
 
         return compositeErrorCodeString

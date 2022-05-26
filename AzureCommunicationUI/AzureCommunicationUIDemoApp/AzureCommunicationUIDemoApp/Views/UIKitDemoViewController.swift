@@ -128,7 +128,7 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
-    func didFail(_ error: CommunicationUIErrorEvent) {
+    func didFail(_ error: CallErrorEvent) {
         print("::::UIKitDemoView::getEventsHandler::didFail \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
     }
@@ -237,7 +237,7 @@ class UIKitDemoViewController: UIViewController {
     private func showError(for errorCode: String) {
         var errorMessage = ""
         switch errorCode {
-        case CallCompositeErrorCode.tokenExpired:
+        case CallErrorCode.tokenExpired:
             errorMessage = "Token is invalid"
         default:
             errorMessage = "Unknown error"

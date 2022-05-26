@@ -69,7 +69,7 @@ class AvatarManagerTests: XCTestCase {
             XCTFail("Failed with result validation")
             return
         }
-        XCTAssertEqual(error.code, CallCompositeErrorCode.remoteParticipantNotFound)
+        XCTAssertEqual(error.code, CallErrorCode.remoteParticipantNotFound)
     }
 }
 

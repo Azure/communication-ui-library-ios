@@ -123,7 +123,7 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .connected,
                                  isRecordingActive: true,
                                  isTranscriptionActive: true)
-        let action = ErrorAction.StatusErrorAndCallReset(error: CommunicationUIErrorEvent(code: "",
+        let action = ErrorAction.StatusErrorAndCallReset(error: CallErrorEvent(code: "",
                                                                           error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
@@ -142,7 +142,7 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .disconnected,
                                  isRecordingActive: true,
                                  isTranscriptionActive: true)
-        let action = ErrorAction.StatusErrorAndCallReset(error: CommunicationUIErrorEvent(code: "callEvicted",
+        let action = ErrorAction.StatusErrorAndCallReset(error: CallErrorEvent(code: "callEvicted",
                                                                           error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
@@ -161,7 +161,7 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .disconnected,
                                  isRecordingActive: false,
                                  isTranscriptionActive: false)
-        let action = ErrorAction.StatusErrorAndCallReset(error: CommunicationUIErrorEvent(code: "callDenied",
+        let action = ErrorAction.StatusErrorAndCallReset(error: CallErrorEvent(code: "callDenied",
                                                                           error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)

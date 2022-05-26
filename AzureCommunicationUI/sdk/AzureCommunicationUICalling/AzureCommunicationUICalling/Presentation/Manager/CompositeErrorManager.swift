@@ -12,7 +12,7 @@ protocol ErrorManagerProtocol {
 class CompositeErrorManager: ErrorManagerProtocol {
     private let store: Store<AppState>
     private let eventsHandler: CallCompositeEventsHandling
-    private var error: CommunicationUIErrorEvent?
+    private var error: CallErrorEvent?
 
     var cancellables = Set<AnyCancellable>()
 
@@ -41,14 +41,14 @@ class CompositeErrorManager: ErrorManagerProtocol {
         }
     }
 
-    private func update(error: CommunicationUIErrorEvent) {
+    private func update(error: CallErrorEvent) {
         guard self.error != error else {
             return
         }
 
         self.error = error
-        guard error.code != CallCompositeErrorCode.callEvicted,
-              error.code != CallCompositeErrorCode.callDenied,
+        guard error.code != CallErrorCode.callEvicted,
+              error.code != CallErrorCode.callDenied,
               let didFail = eventsHandler.didFail else {
             return
         }
@@ -56,9 +56,9 @@ class CompositeErrorManager: ErrorManagerProtocol {
     }
 
     private func respondToFatalError(code: String) {
-        if code == CallCompositeErrorCode.tokenExpired ||
-            code == CallCompositeErrorCode.callJoin ||
-            code == CallCompositeErrorCode.callEnd {
+        if code == CallErrorCode.tokenExpired ||
+            code == CallErrorCode.callJoin ||
+            code == CallErrorCode.callEnd {
             store.dispatch(action: CompositeExitAction())
         }
     }

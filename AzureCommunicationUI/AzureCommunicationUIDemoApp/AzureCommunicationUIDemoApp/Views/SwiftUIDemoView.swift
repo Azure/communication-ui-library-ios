@@ -231,7 +231,7 @@ extension SwiftUIDemoView {
 
     private func showError(for errorCode: String) {
         switch errorCode {
-        case CallCompositeErrorCode.tokenExpired:
+        case CallErrorCode.tokenExpired:
             errorMessage = "Token is invalid"
         default:
             errorMessage = "Unknown error"
@@ -239,7 +239,7 @@ extension SwiftUIDemoView {
         isErrorDisplayed = true
     }
 
-    func didFail(_ error: CommunicationUIErrorEvent) {
+    func didFail(_ error: CallErrorEvent) {
         print("::::SwiftUIDemoView::getEventsHandler::didFail \(error)")
         print("::::SwiftUIDemoView error.code \(error.code)")
         showError(for: error.code)

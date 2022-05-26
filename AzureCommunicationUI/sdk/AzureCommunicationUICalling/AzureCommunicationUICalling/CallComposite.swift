@@ -8,7 +8,7 @@ import SwiftUI
 import FluentUI
 import AzureCommunicationCalling
 
-public typealias CompositeErrorHandler = (CommunicationUIErrorEvent) -> Void
+public typealias CompositeErrorHandler = (CallErrorEvent) -> Void
 public typealias RemoteParticipantsJoinedHandler = ([CommunicationIdentifier]) -> Void
 
 /// The main class representing the entry point for the Call Composite.
@@ -106,9 +106,9 @@ public class CallComposite {
     @discardableResult
     public func setRemoteParticipantViewData(
         for identifier: CommunicationIdentifier,
-        participantViewData: ParticipantViewData) -> Result<Void, CommunicationUIErrorEvent> {
+        participantViewData: ParticipantViewData) -> Result<Void, CallErrorEvent> {
         guard let avatarManager = avatarViewManager else {
-            return .failure(CommunicationUIErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
+            return .failure(CallErrorEvent(code: CallErrorCode.remoteParticipantNotFound))
         }
 
         return avatarManager.setRemoteParticipantViewData(for: identifier,

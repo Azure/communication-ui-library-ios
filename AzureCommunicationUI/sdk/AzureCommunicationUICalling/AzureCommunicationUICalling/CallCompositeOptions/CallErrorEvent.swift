@@ -6,7 +6,7 @@
 import UIKit
 
 /// Call Composite runtime error types.
-public struct CallCompositeErrorCode {
+public struct CallErrorCode {
     /// Error when local user fails to join a call.
     public static let callJoin: String = "callJoin"
 
@@ -27,17 +27,17 @@ public struct CallCompositeErrorCode {
 }
 
 /// The error thrown after Call Composite launching.
-public struct CommunicationUIErrorEvent: Error {
+public struct CallErrorEvent: Error {
 
-    /// The string representing the CallCompositeErrorCode.
+    /// The string representing the CallErrorCode.
     public let code: String
 
     /// The NSError returned from Azure Communication SDK.
     public var error: Error?
 }
 
-extension CommunicationUIErrorEvent: Equatable {
-    public static func == (lhs: CommunicationUIErrorEvent, rhs: CommunicationUIErrorEvent) -> Bool {
+extension CallErrorEvent: Equatable {
+    public static func == (lhs: CallErrorEvent, rhs: CallErrorEvent) -> Bool {
         if let error1 = lhs.error as NSError?,
            let error2 = rhs.error as NSError? {
             return error1.domain == error2.domain
