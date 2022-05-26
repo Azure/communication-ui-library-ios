@@ -106,11 +106,17 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
 
         callingService.holdCall()
-            .sink(receiveCompletion: { _ in
-
-            }, receiveValue: { _ in
-                self.subscription(dispatch: dispatch)
-            }).store(in: cancelBag)
+            .sink(receiveCompletion: { [weak self] completion in
+                guard let self = self else {
+                    return
+                }
+                switch completion {
+                case .failure(let error):
+                    self.handle(error: error, errorCode: CallCompositeErrorCode.callHold, dispatch: dispatch)
+                case .finished:
+                    break
+                }
+            }, receiveValue: {}).store(in: cancelBag)
 
     }
 
@@ -121,11 +127,17 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
 
         callingService.resumeCall()
-            .sink(receiveCompletion: { _ in
-
-            }, receiveValue: { _ in
-                self.subscription(dispatch: dispatch)
-            }).store(in: cancelBag)
+            .sink(receiveCompletion: { [weak self] completion in
+                guard let self = self else {
+                    return
+                }
+                switch completion {
+                case .failure(let error):
+                    self.handle(error: error, errorCode: CallCompositeErrorCode.callResume, dispatch: dispatch)
+                case .finished:
+                    break
+                }
+            }, receiveValue: {}).store(in: cancelBag)
     }
 
     func enterBackground(state: ReduxState?, dispatch: @escaping ActionDispatch) {
