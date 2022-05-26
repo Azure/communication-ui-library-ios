@@ -99,17 +99,17 @@ public class CallComposite {
     ///   - participantViewData: ParticipantViewData used to set the user participants information for the call.
     ///   - identifier: The communication identifier for the remote participant.
     ///   - errorHandler: Handler that will be called if an error occurs when trying to set the participant view dataC
-    public func set(participantViewData: ParticipantViewData,
-                    for identifier: CommunicationIdentifier,
-                    errorHandler: ((CommunicationUIErrorEvent) -> Void)? = nil) {
+    public func setRemoteParticipantViewData(_ participantViewData: ParticipantViewData,
+                                             for identifier: CommunicationIdentifier,
+                                             errorHandler: ((CommunicationUIErrorEvent) -> Void)? = nil) {
         guard let avatarManager = avatarViewManager else {
             errorHandler?(CommunicationUIErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
             return
         }
 
-        avatarManager.set(participantViewData: participantViewData,
-                          for: identifier,
-                          errorHandler: errorHandler)
+        avatarManager.setRemoteParticipantViewData(participantViewData,
+                                                   for: identifier,
+                                                   errorHandler: errorHandler)
     }
 
     private func setupManagers(dependencyContainer: DependencyContainer) {

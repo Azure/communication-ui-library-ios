@@ -48,8 +48,8 @@ class AvatarManagerTests: XCTestCase {
         mockStoreFactory.setState(AppState(remoteParticipantsState: remoteParticipantsState))
         let sut = makeSUT()
         let participantViewData = ParticipantViewData(avatar: mockImage)
-        sut.set(participantViewData: participantViewData,
-                for: CommunicationUserIdentifier(participant.userIdentifier)) { _ in
+        sut.setRemoteParticipantViewData(participantViewData,
+                                         for: CommunicationUserIdentifier(participant.userIdentifier)) { _ in
             expectation.fulfill()
         }
         XCTAssertEqual(sut.avatarStorage.value(forKey: participant.userIdentifier)?.avatarImage!, mockImage)
@@ -65,8 +65,8 @@ class AvatarManagerTests: XCTestCase {
         let sut = makeSUT()
         let participantViewData = ParticipantViewData(avatar: mockImage)
         let id = UUID().uuidString
-        sut.set(participantViewData: participantViewData,
-                for: CommunicationUserIdentifier(id)) { errorEvent in
+        sut.setRemoteParticipantViewData(participantViewData,
+                                         for: CommunicationUserIdentifier(id)) { errorEvent in
             XCTAssertEqual(errorEvent.code, CallCompositeErrorCode.remoteParticipantNotFound)
             expectation.fulfill()
         }
