@@ -8,9 +8,6 @@ import SwiftUI
 import FluentUI
 import AzureCommunicationCalling
 
-public typealias CompositeErrorHandler = (CommunicationUIErrorEvent) -> Void
-public typealias RemoteParticipantsJoinedHandler = ([CommunicationIdentifier]) -> Void
-
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
     private var logger: Logger?
@@ -34,13 +31,13 @@ public class CallComposite {
 
     /// Assign closures to execute when error event  occurs inside Call Composite.
     /// - Parameter didFailAction: The closure returning the error thrown from Call Composite.
-    public func setDidFailHandler(with didFailAction: CompositeErrorHandler?) {
+    public func setDidFailHandler(with didFailAction: ((CommunicationUIErrorEvent) -> Void)?) {
         callCompositeEventsHandler.didFail = didFailAction
     }
 
     /// Assign closures to execute when participant has joined a call  inside Call Composite.
     /// - Parameter participantsJoinedAction: The closure returning identifiers for joined remote participants.
-    public func setRemoteParticipantJoinHandler(with participantsJoinedAction: RemoteParticipantsJoinedHandler?) {
+    public func setRemoteParticipantJoinHandler(with participantsJoinedAction: (([CommunicationIdentifier]) -> Void)?) {
         callCompositeEventsHandler.didRemoteParticipantsJoin = participantsJoinedAction
     }
 
@@ -106,18 +103,13 @@ public class CallComposite {
                     for identifier: CommunicationIdentifier,
                     errorHandler: ((CommunicationUIErrorEvent) -> Void)? = nil) {
         guard let avatarManager = avatarViewManager else {
-            if let errorHandler = errorHandler {
-                errorHandler(CommunicationUIErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
-            }
-
+            errorHandler?(CommunicationUIErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
             return
         }
 
-        if let response = avatarManager.setRemoteParticipantViewData(for: identifier,
-                                                                     participantViewData: participantViewData),
-            let errorHandler = errorHandler {
-            errorHandler(response)
-        }
+        avatarManager.set(participantViewData: participantViewData,
+                          for: identifier,
+                          errorHandler: errorHandler)
     }
 
     private func setupManagers(dependencyContainer: DependencyContainer) {

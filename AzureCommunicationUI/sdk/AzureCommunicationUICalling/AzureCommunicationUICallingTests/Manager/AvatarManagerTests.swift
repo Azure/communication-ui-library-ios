@@ -32,6 +32,8 @@ class AvatarManagerTests: XCTestCase {
             XCTFail("UIImage does not exist")
             return
         }
+        let expectation = XCTestExpectation(description: "Update participant's view data failed")
+        expectation.isInverted = true
         let participant = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,
@@ -46,13 +48,12 @@ class AvatarManagerTests: XCTestCase {
         mockStoreFactory.setState(AppState(remoteParticipantsState: remoteParticipantsState))
         let sut = makeSUT()
         let participantViewData = ParticipantViewData(avatar: mockImage)
-        let result = sut.setRemoteParticipantViewData(for: CommunicationUserIdentifier(participant.userIdentifier),
-                                                      participantViewData: participantViewData)
-        guard case .success = result else {
-            XCTFail("Failed with result validation")
-            return
+        sut.set(participantViewData: participantViewData,
+                for: CommunicationUserIdentifier(participant.userIdentifier)) { _ in
+            expectation.fulfill()
         }
         XCTAssertEqual(sut.avatarStorage.value(forKey: participant.userIdentifier)?.avatarImage!, mockImage)
+        wait(for: [expectation], timeout: 1)
     }
 
     func test_avatarManager_setRemoteParticipantViewData_when_avatarDataSet__and_participantNotOnCall_then_participantNotFoundErrorReturned() {
@@ -60,16 +61,16 @@ class AvatarManagerTests: XCTestCase {
             XCTFail("UIImage does not exist")
             return
         }
+        let expectation = XCTestExpectation(description: "Update participant's view data failed")
         let sut = makeSUT()
         let participantViewData = ParticipantViewData(avatar: mockImage)
         let id = UUID().uuidString
-        let result = sut.setRemoteParticipantViewData(for: CommunicationUserIdentifier(id),
-                                                      participantViewData: participantViewData)
-        guard case .failure(let error) = result else {
-            XCTFail("Failed with result validation")
-            return
+        sut.set(participantViewData: participantViewData,
+                for: CommunicationUserIdentifier(id)) { errorEvent in
+            XCTAssertEqual(errorEvent.code, CallCompositeErrorCode.remoteParticipantNotFound)
+            expectation.fulfill()
         }
-        XCTAssertEqual(error.code, CallCompositeErrorCode.remoteParticipantNotFound)
+        wait(for: [expectation], timeout: 1)
     }
 }
 
