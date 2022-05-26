@@ -97,22 +97,26 @@ public class CallComposite {
         launch(callConfiguration, localSettings: localSettings)
     }
 
-    /// Set ParticipantViewData for the remote participant.
+    /// Set ParticipantViewData for the remote participant. This is data is not sent up to ACS.
     /// - Parameters:
-    ///   - identifier: The communication identifier for the remote participant.
     ///   - participantViewData: ParticipantViewData used to set the user participants information for the call.
-    ///   This is data is not sent up to ACS.
-    /// - Returns: The `Result` enum value with either a `Void` or an `Error`.
-    @discardableResult
-    public func setRemoteParticipantViewData(
-        for identifier: CommunicationIdentifier,
-        participantViewData: ParticipantViewData) -> Result<Void, CommunicationUIErrorEvent> {
+    ///   - identifier: The communication identifier for the remote participant.
+    public func set(participantViewData: ParticipantViewData,
+                    for identifier: CommunicationIdentifier,
+                    errorHandler: ((CommunicationUIErrorEvent) -> Void)? = nil) {
         guard let avatarManager = avatarViewManager else {
-            return .failure(CommunicationUIErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
+            if let errorHandler = errorHandler {
+                errorHandler(CommunicationUIErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
+            }
+
+            return
         }
 
-        return avatarManager.setRemoteParticipantViewData(for: identifier,
-                                                          participantViewData: participantViewData)
+        if let response = avatarManager.setRemoteParticipantViewData(for: identifier,
+                                                                     participantViewData: participantViewData),
+            let errorHandler = errorHandler {
+            errorHandler(response)
+        }
     }
 
     private func setupManagers(dependencyContainer: DependencyContainer) {
