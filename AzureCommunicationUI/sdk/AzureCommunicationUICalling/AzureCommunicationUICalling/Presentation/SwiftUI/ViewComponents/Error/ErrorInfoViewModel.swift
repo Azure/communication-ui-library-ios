@@ -7,7 +7,7 @@ import Foundation
 import Combine
 
 class ErrorInfoViewModel: ObservableObject {
-    @Published var isDisplayed: Bool = false
+    @Published private(set) var isDisplayed: Bool = false
     @Published private(set) var message: String = ""
 
     private let localizationProvider: LocalizationProviderProtocol
@@ -25,6 +25,10 @@ class ErrorInfoViewModel: ObservableObject {
     }
     var dismissAccessibilityHint: String {
         localizationProvider.getLocalizedString(.snackBarDismissAccessibilityHint)
+    }
+
+    func dismiss() {
+        isDisplayed = false
     }
 
     func update(errorState: ErrorState) {

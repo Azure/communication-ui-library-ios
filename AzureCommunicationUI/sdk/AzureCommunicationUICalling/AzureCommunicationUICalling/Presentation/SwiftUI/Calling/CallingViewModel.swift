@@ -8,7 +8,7 @@ import Combine
 
 class CallingViewModel: ObservableObject {
     @Published var isLobbyOverlayDisplayed: Bool = false
-    @Published var isOnHoldOverlayDisplayed: Bool = true
+    @Published var isOnHoldOverlayDisplayed: Bool = false
     @Published var isConfirmLeaveListDisplayed: Bool = false
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
@@ -26,6 +26,7 @@ class CallingViewModel: ObservableObject {
     let localVideoViewModel: LocalVideoViewModel
     let participantGridsViewModel: ParticipantGridViewModel
     let bannerViewModel: BannerViewModel
+    let errorInfoViewModel: ErrorInfoViewModel
     let isRightToLeft: Bool
 
     var controlBarViewModel: ControlBarViewModel!
@@ -53,6 +54,7 @@ class CallingViewModel: ObservableObject {
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel()
         bannerViewModel = compositeViewModelFactory.makeBannerViewModel()
+        errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
         controlBarViewModel = compositeViewModelFactory
@@ -121,11 +123,11 @@ class CallingViewModel: ObservableObject {
             accessibilityProvider.moveFocusToFirstElement()
         }
 
-//        let shouldOnHoldOverlayDisplayed = state.AudioSessionState == .interuptted
-//        if shouldOnHoldOverlayDisplayed != isOnHoldOverlayDisplayed {
-//            isOnHoldOverlayDisplayed = shouldOnHoldOverlayDisplayed
-//            accessibilityProvider.moveFocusToFirstElement()
-//        }
+        let shouldOnHoldOverlayDisplayed = state.audioSessionState.status == .interrupted
+        if shouldOnHoldOverlayDisplayed != isOnHoldOverlayDisplayed {
+            isOnHoldOverlayDisplayed = shouldOnHoldOverlayDisplayed
+            accessibilityProvider.moveFocusToFirstElement()
+        }
 
         if callHasConnected != newIsCallConnected && newIsCallConnected {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {

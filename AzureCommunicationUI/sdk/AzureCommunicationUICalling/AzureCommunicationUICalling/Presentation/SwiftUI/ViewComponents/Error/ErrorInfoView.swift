@@ -20,7 +20,7 @@ struct ErrorInfoView: View {
                     .foregroundColor(Color(StyleProvider.color.onWarning))
                     .accessibilitySortPriority(1)
                 Spacer()
-                Button(action: dismissAction) {
+                Button(action: viewModel.dismiss) {
                     Text(viewModel.dismissContent)
                         .font(Fonts.button1.font)
                         .foregroundColor(Color(StyleProvider.color.onWarning))
@@ -33,9 +33,5 @@ struct ErrorInfoView: View {
             .background(Color(StyleProvider.color.warning))
             .cornerRadius(cornerRadius)
         }
-    }
-
-    func dismissAction() {
-        viewModel.isDisplayed = false
     }
 }

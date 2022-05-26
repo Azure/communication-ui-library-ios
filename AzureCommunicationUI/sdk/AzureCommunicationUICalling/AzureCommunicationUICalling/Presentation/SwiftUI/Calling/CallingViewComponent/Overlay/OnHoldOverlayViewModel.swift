@@ -9,7 +9,7 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactory
     private let logger: Logger
-    private let actionDispatch: ActionDispatch
+    private let dispatchAction: ActionDispatch
 
     var title: String {
         return localizationProvider.getLocalizedString(.onHoldMessage)
@@ -20,11 +20,11 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
     init(localizationProvider: LocalizationProviderProtocol,
          compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
-         actionDispatch: @escaping ActionDispatch) {
+         dispatchAction: @escaping ActionDispatch) {
         self.localizationProvider = localizationProvider
         self.compositeViewModelFactory = compositeViewModelFactory
         self.logger = logger
-        self.actionDispatch = actionDispatch
+        self.dispatchAction = dispatchAction
 
         getActionButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
@@ -40,7 +40,7 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
 
     func resumeButtonTapped() {
         let action = CallingAction.ResumeRequested()
-        actionDispatch(action)
+        dispatchAction(action)
     }
 
     func update(audioSessionState: AudioSessionState) {
