@@ -38,7 +38,7 @@ struct RemoteParticipantAvatarHelper {
             let renderDisplayName = selectedAvatarName.isEmpty ? nameIdValue : "\(selectedAvatarName) \(nameIdValue)"
             let participantViewData = ParticipantViewData(avatar: avatarImage,
                                                           renderDisplayName: renderDisplayName)
-            callComposite.set(participantViewData: participantViewData, for: identifier) { error in
+            callComposite.setRemoteParticipantViewData(participantViewData, for: identifier) { error in
                 print(error.code)
             }
         }
