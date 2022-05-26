@@ -23,8 +23,6 @@ struct CallingView: View {
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
 
     @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
-    @State private var pipPosition: CGPoint?
-    @GestureState private var pipDragStartPosition: CGPoint?
 
     var safeAreaIgnoreArea: Edge.Set {
         return getSizeClass() != .iphoneLandscapeScreenSize ? []: [.bottom]
@@ -72,21 +70,20 @@ struct CallingView: View {
                     videoGridView
                         .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
                     if viewModel.isParticipantGridDisplayed {
-                        draggableVideoPipView
+                        Group {
+                            DraggableLocalVideoView(containerBounds:
+                                                        geometry.frame(in: .local),
+                                                    viewModel: viewModel,
+                                                    avatarManager: avatarManager,
+                                                    viewManager: viewManager,
+                                                    orientation: $orientation,
+                                                    screenSize: getSizeClass())
+                        }
                     }
                     topAlertAreaView
                         .accessibilityElement(children: .contain)
                         .accessibilitySortPriority(1)
                         .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
-                }
-                .onAppear {
-                    self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
-                }
-                .onChange(of: geometry.size) { _ in
-                    self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
-                }
-                .onChange(of: orientation) { _ in
-                    self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
                 }
                 .contentShape(Rectangle())
                 .animation(.linear(duration: 0.167))
@@ -98,17 +95,6 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityHidden(!viewModel.isLobbyOverlayDisplayed)
                 })
-            }
-        }
-    }
-
-    var draggableVideoPipView: some View {
-        return Group {
-            if self.pipPosition != nil {
-                DraggableLocalVideoView(viewModel: viewModel,
-                                        avatarManager: avatarManager,
-                                        viewManager: viewManager,
-                                        pipPosition: $pipPosition)
             }
         }
     }
@@ -190,49 +176,5 @@ struct CallingView: View {
         default:
             return .ipadScreenSize
         }
-    }
-
-    private func getInitialPipPosition(containerBounds: CGRect) -> CGPoint {
-        return CGPoint(
-            x: getContainerBounds(bounds: containerBounds).maxX,
-            y: getContainerBounds(bounds: containerBounds).maxY)
-    }
-
-    private func getContainerBounds(bounds: CGRect) -> CGRect {
-        let pipSize = getPipSize(parentSize: bounds.size)
-        let isiPad = getSizeClass() == .ipadScreenSize
-        let padding = isiPad ? 8.0 : 12.0
-        let containerBounds = bounds.inset(by: UIEdgeInsets(
-            top: pipSize.height / 2.0 + padding,
-            left: pipSize.width / 2.0 + padding,
-            bottom: pipSize.height / 2.0 + padding,
-            right: pipSize.width / 2.0 + padding))
-        return containerBounds
-    }
-
-    private func getPipSize(parentSize: CGSize? = nil) -> CGSize {
-        let isPortraitMode = getSizeClass() != .iphoneLandscapeScreenSize
-        let isiPad = getSizeClass() == .ipadScreenSize
-
-        func defaultSize() -> CGSize {
-            let width = isPortraitMode ? 72 : 104
-            let height = isPortraitMode ? 104 : 72
-            let size = CGSize(width: width, height: height)
-            return size
-        }
-
-        if isiPad {
-            if let parentSize = parentSize {
-                if parentSize.width < parentSize.height {
-                    // portrait
-                    return CGSize(width: 80.0, height: 115.0)
-                } else {
-                    // landscape
-                    return CGSize(width: 152.0, height: 115.0)
-                }
-            }
-        }
-
-        return defaultSize()
     }
 }

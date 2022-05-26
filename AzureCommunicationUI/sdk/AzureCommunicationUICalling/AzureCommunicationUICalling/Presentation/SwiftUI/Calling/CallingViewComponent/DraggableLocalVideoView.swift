@@ -6,20 +6,22 @@
 import SwiftUI
 
 struct DraggableLocalVideoView: View {
+    let containerBounds: CGRect
     let viewModel: CallingViewModel
     let avatarManager: AvatarViewManager
     let viewManager: VideoViewManager
-    @Binding var pipPosition: CGPoint?
+
+    @State var pipPosition: CGPoint?
     @GestureState var pipDragStartPosition: CGPoint?
-    @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
-    @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
+    @Binding var orientation: UIDeviceOrientation
+    let screenSize: ScreenSizeClassType
 
     var body: some View {
-        GeometryReader { geometry in
+        return GeometryReader { geometry in
             let size = getPipSize(parentSize: geometry.size)
             localVideoPipView
                 .frame(width: size.width, height: size.height, alignment: .center)
-                .position(self.pipPosition!)
+                .position(self.pipPosition ?? getInitialPipPosition(containerBounds: containerBounds))
                 .gesture(
                     DragGesture()
                         .onChanged { value in
@@ -38,6 +40,15 @@ struct DraggableLocalVideoView: View {
                             startLocation = startLocation ?? self.pipPosition
                         }
                 )
+                .onAppear {
+                    self.pipPosition = getInitialPipPosition(containerBounds: containerBounds)
+                }
+                .onChange(of: geometry.size) { _ in
+                    self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
+                }
+                .onChange(of: orientation) { _ in
+                    self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
+                }
         }
     }
 
@@ -53,22 +64,15 @@ struct DraggableLocalVideoView: View {
         }
     }
 
-    private func getSizeClass() -> ScreenSizeClassType {
-        switch (widthSizeClass, heightSizeClass) {
-        case (.compact, .regular):
-            return .iphonePortraitScreenSize
-        case (.compact, .compact),
-            (.regular, .compact):
-            return .iphoneLandscapeScreenSize
-        default:
-            return .ipadScreenSize
-        }
+    private func getInitialPipPosition(containerBounds: CGRect) -> CGPoint {
+        return CGPoint(
+            x: getContainerBounds(bounds: containerBounds).maxX,
+            y: getContainerBounds(bounds: containerBounds).maxY)
     }
 
     private func getContainerBounds(bounds: CGRect) -> CGRect {
         let pipSize = getPipSize(parentSize: bounds.size)
-        let isiPad = getSizeClass() == .ipadScreenSize
-        let padding = isiPad ? 8.0 : 12.0
+        let padding = 12.0
         let containerBounds = bounds.inset(by: UIEdgeInsets(
             top: pipSize.height / 2.0 + padding,
             left: pipSize.width / 2.0 + padding,
@@ -116,8 +120,8 @@ struct DraggableLocalVideoView: View {
         }
 
     private func getPipSize(parentSize: CGSize? = nil) -> CGSize {
-        let isPortraitMode = getSizeClass() != .iphoneLandscapeScreenSize
-        let isiPad = getSizeClass() == .ipadScreenSize
+        let isPortraitMode = screenSize != .iphoneLandscapeScreenSize
+        let isiPad = UIDevice.current.userInterfaceIdiom == .pad
 
         func defaultSize() -> CGSize {
             let width = isPortraitMode ? 72 : 104
