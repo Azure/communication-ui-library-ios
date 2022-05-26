@@ -101,6 +101,7 @@ public class CallComposite {
     /// - Parameters:
     ///   - participantViewData: ParticipantViewData used to set the user participants information for the call.
     ///   - identifier: The communication identifier for the remote participant.
+    ///   - errorHandler: Handler that will be called if an error occurs when trying to set the participant view dataC
     public func set(participantViewData: ParticipantViewData,
                     for identifier: CommunicationIdentifier,
                     errorHandler: ((CommunicationUIErrorEvent) -> Void)? = nil) {
