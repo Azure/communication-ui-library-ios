@@ -30,6 +30,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     init(localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          participantModel: ParticipantInfoModel) {
+        print("!!! init")
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
         self.participantName = participantModel.displayName
@@ -44,9 +45,11 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     func update(participantModel: ParticipantInfoModel) {
         self.participantIdentifier = participantModel.userIdentifier
         let videoViewModel = getDisplayingVideoStreamModel(participantModel)
-
+print("!!! update")
         if self.videoViewModel?.videoStreamId != videoViewModel.videoStreamId ||
             self.videoViewModel?.videoStreamType != videoViewModel.videoStreamType {
+            print("!!!!!! 1 check \(self.videoViewModel?.videoStreamId != videoViewModel.videoStreamId)")
+            print("!!!!!! 2 check \(self.videoViewModel?.videoStreamType != videoViewModel.videoStreamType)")
             let newIsScreenSharing = videoViewModel.videoStreamType == .screenSharing
             if newIsScreenSharing {
                 accessibilityProvider.postQueuedAnnouncement(

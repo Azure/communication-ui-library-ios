@@ -22,7 +22,13 @@ struct ParticipantGridCellVideoView: View {
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     var body: some View {
-        ZStack(alignment: .bottomLeading) {
+//        if #available(iOS 15.0, *) {
+//            print("!!!!")
+//            print(Self._printChanges())
+//            print("!!!!")
+//            print("!!! \(zoomable)")
+//        }
+        return ZStack(alignment: .bottomLeading) {
             VStack(alignment: .center, spacing: 0) {
                 if zoomable {
                     zoomableVideoRenderView
