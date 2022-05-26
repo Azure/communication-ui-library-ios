@@ -70,7 +70,6 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             guard let self = self else {
                 return
             }
-
             switch completion {
             case .failure(let error):
                 self.handle(error: error, errorCode: CallCompositeErrorCode.callJoin, dispatch: dispatch)
