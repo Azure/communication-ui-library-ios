@@ -8,5 +8,6 @@ import Foundation
 protocol OverlayViewModelProtocol {
     var title: String { get }
     var subtitle: String? { get }
-    var getActionButtonViewModel: PrimaryButtonViewModel? { get }
+    var actionButtonViewModel: PrimaryButtonViewModel? { get }
+    var isDisplayed: Bool { get }
 }

@@ -5,11 +5,14 @@
 
 import Foundation
 
-struct LobbyOverlayViewModel: OverlayViewModelProtocol {
+class LobbyOverlayViewModel: OverlayViewModelProtocol {
     private let localizationProvider: LocalizationProviderProtocol
+    private let accessibilityProvider: AccessibilityProviderProtocol
 
-    init(localizationProvider: LocalizationProviderProtocol) {
+    init(localizationProvider: LocalizationProviderProtocol,
+         accessibilityProvider: AccessibilityProviderProtocol) {
         self.localizationProvider = localizationProvider
+        self.accessibilityProvider = accessibilityProvider
     }
 
     var title: String {
@@ -20,5 +23,15 @@ struct LobbyOverlayViewModel: OverlayViewModelProtocol {
         return localizationProvider.getLocalizedString(.waitingDetails)
     }
 
-    var getActionButtonViewModel: PrimaryButtonViewModel?
+    var actionButtonViewModel: PrimaryButtonViewModel?
+
+    @Published var isDisplayed: Bool = false
+
+    func update(callingStatus: CallingStatus) {
+        let shouldDisplay = callingStatus == .inLobby
+        if shouldDisplay != isDisplayed {
+            isDisplayed = shouldDisplay
+            accessibilityProvider.moveFocusToFirstElement()
+        }
+    }
 }

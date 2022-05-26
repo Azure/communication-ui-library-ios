@@ -71,7 +71,7 @@ struct CallingView: View {
                     topAlertAreaView
                         .accessibilityElement(children: .contain)
                         .accessibilitySortPriority(1)
-                        .accessibilityHidden(viewModel.isLobbyOverlayDisplayed)
+                        .accessibilityHidden(viewModel.lobbyOverlayViewModel.isDisplayed)
                     errorInfoView
                 }
                 .onAppear {
@@ -88,15 +88,15 @@ struct CallingView: View {
                 .onTapGesture(perform: {
                     viewModel.infoHeaderViewModel.toggleDisplayInfoHeaderIfNeeded()
                 })
-                .modifier(PopupModalView(isPresented: viewModel.isLobbyOverlayDisplayed) {
-                    OverlayView(viewModel: viewModel.getLobbyOverlayViewModel())
+                .modifier(PopupModalView(isPresented: viewModel.lobbyOverlayViewModel.isDisplayed) {
+                    OverlayView(viewModel: viewModel.lobbyOverlayViewModel)
                         .accessibilityElement(children: .contain)
-                        .accessibilityHidden(!viewModel.isLobbyOverlayDisplayed)
+                        .accessibilityHidden(!viewModel.lobbyOverlayViewModel.isDisplayed)
                 })
-                .modifier(PopupModalView(isPresented: viewModel.isOnHoldOverlayDisplayed) {
-                    OverlayView(viewModel: viewModel.getOnHoldOverlayViewModel())
+                .modifier(PopupModalView(isPresented: viewModel.onHoldOverlayViewModel.isDisplayed) {
+                    OverlayView(viewModel: viewModel.onHoldOverlayViewModel)
                         .accessibilityElement(children: .contain)
-                        .accessibilityHidden(!viewModel.isOnHoldOverlayDisplayed)
+                        .accessibilityHidden(!viewModel.onHoldOverlayViewModel.isDisplayed)
                 })
             }
         }

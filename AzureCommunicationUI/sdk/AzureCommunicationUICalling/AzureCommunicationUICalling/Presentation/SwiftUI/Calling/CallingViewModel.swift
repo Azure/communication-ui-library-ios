@@ -7,8 +7,6 @@ import Foundation
 import Combine
 
 class CallingViewModel: ObservableObject {
-    @Published var isLobbyOverlayDisplayed: Bool = false
-    @Published var isOnHoldOverlayDisplayed: Bool = false
     @Published var isConfirmLeaveListDisplayed: Bool = false
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
@@ -27,6 +25,8 @@ class CallingViewModel: ObservableObject {
     let participantGridsViewModel: ParticipantGridViewModel
     let bannerViewModel: BannerViewModel
     let errorInfoViewModel: ErrorInfoViewModel
+    let lobbyOverlayViewModel: LobbyOverlayViewModel
+    let onHoldOverlayViewModel: OnHoldOverlayViewModel
     let isRightToLeft: Bool
 
     var controlBarViewModel: ControlBarViewModel!
@@ -55,6 +55,9 @@ class CallingViewModel: ObservableObject {
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel()
         bannerViewModel = compositeViewModelFactory.makeBannerViewModel()
         errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
+        lobbyOverlayViewModel = compositeViewModelFactory.makeLobbyOverlayViewModel()
+        onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(dispatchAction: actionDispatch)
+
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
         controlBarViewModel = compositeViewModelFactory
@@ -72,14 +75,6 @@ class CallingViewModel: ObservableObject {
             }.store(in: &cancellables)
 
         updateIsLocalCameraOn(with: store.state)
-    }
-
-    func getLobbyOverlayViewModel() -> LobbyOverlayViewModel {
-        return compositeViewModelFactory.makeLobbyOverlayViewModel()
-    }
-
-    func getOnHoldOverlayViewModel() -> OnHoldOverlayViewModel {
-        return compositeViewModelFactory.makeOnHoldOverlayViewModel(dispatchAction: store.dispatch)
     }
 
     func dismissConfirmLeaveDrawerList() {
@@ -117,17 +112,9 @@ class CallingViewModel: ObservableObject {
             isParticipantGridDisplayed = shouldParticipantGridDisplayed
         }
 
-        let shouldLobbyOverlayDisplayed = state.callingState.status == .inLobby
-        if shouldLobbyOverlayDisplayed != isLobbyOverlayDisplayed {
-            isLobbyOverlayDisplayed = shouldLobbyOverlayDisplayed
-            accessibilityProvider.moveFocusToFirstElement()
-        }
-
-        let shouldOnHoldOverlayDisplayed = state.audioSessionState.status == .interrupted
-        if shouldOnHoldOverlayDisplayed != isOnHoldOverlayDisplayed {
-            isOnHoldOverlayDisplayed = shouldOnHoldOverlayDisplayed
-            accessibilityProvider.moveFocusToFirstElement()
-        }
+        lobbyOverlayViewModel.update(callingStatus: state.callingState.status)
+        onHoldOverlayViewModel.update(callingStatus: state.callingState.status ,
+                                     audioSessionStatus: state.audioSessionState.status)
 
         if callHasConnected != newIsCallConnected && newIsCallConnected {
             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
@@ -144,7 +131,7 @@ class CallingViewModel: ObservableObject {
         let isLocalCameraOn = state.localUserState.cameraState.operation == .on
         let displayName = state.localUserState.displayName ?? ""
         let isLocalUserInfoNotEmpty = isLocalCameraOn || !displayName.isEmpty
-        isVideoGridViewAccessibilityAvailable = !isLobbyOverlayDisplayed &&
+        isVideoGridViewAccessibilityAvailable = !lobbyOverlayViewModel.isDisplayed &&
         (isLocalUserInfoNotEmpty || isParticipantGridDisplayed)
     }
 }

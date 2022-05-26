@@ -166,12 +166,14 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
-        LobbyOverlayViewModel(localizationProvider: localizationProvider)
+        LobbyOverlayViewModel(localizationProvider: localizationProvider,
+                              accessibilityProvider: accessibilityProvider)
     }
     func makeOnHoldOverlayViewModel(dispatchAction: @escaping ActionDispatch) -> OnHoldOverlayViewModel {
         OnHoldOverlayViewModel(localizationProvider: localizationProvider,
                                compositeViewModelFactory: self,
                                logger: logger,
+                               accessibilityProvider: accessibilityProvider,
                                dispatchAction: dispatchAction)
     }
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,

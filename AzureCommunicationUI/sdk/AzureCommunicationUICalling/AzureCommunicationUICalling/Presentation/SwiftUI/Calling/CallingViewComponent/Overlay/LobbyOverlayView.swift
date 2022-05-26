@@ -27,7 +27,7 @@ struct OverlayView: View {
                             .font(Fonts.subhead.font)
                             .multilineTextAlignment(.center)
                     }
-                    if let actionButtonViewModel = viewModel.getActionButtonViewModel {
+                    if let actionButtonViewModel = viewModel.actionButtonViewModel {
                         PrimaryButton(viewModel: actionButtonViewModel)
                             .fixedSize()
                     }
