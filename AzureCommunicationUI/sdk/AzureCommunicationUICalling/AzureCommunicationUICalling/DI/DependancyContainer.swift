@@ -31,7 +31,8 @@ final class DependencyContainer {
     }
 
     func registerDependencies(_ callConfiguration: CallConfiguration,
-                              localSettings: LocalSettings?) {
+                              localSettings: LocalSettings?,
+                              eventsHandler: CallCompositeEventsHandling) {
         register(CallingSDKEventsHandler(logger: resolve()) as CallingSDKEventsHandling)
         register(CallingSDKWrapper(logger: resolve(),
                                    callingEventsHandler: resolve(),
@@ -45,8 +46,8 @@ final class DependencyContainer {
                                   logger: resolve()) as NavigationRouter)
         register(AccessibilityProvider() as AccessibilityProviderProtocol)
         register(LocalizationProvider(logger: resolve()) as LocalizationProviderProtocol)
-        register(CompositeAvatarViewManager(store: resolve(),
-                                            localSettings: localSettings) as AvatarViewManagerProtocol)
+        register(AvatarViewManager(store: resolve(),
+                                   localSettings: localSettings) as AvatarViewManager)
         register(CompositeViewModelFactory(logger: resolve(),
                                            store: resolve(),
                                            localizationProvider: resolve(),

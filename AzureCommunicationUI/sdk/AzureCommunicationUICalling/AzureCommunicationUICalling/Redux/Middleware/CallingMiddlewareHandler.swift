@@ -95,8 +95,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 case .finished:
                     break
                 }
-            }, receiveValue: { _ in })
-            .store(in: cancelBag)
+            }, receiveValue: {}).store(in: cancelBag)
     }
 
     func holdCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
@@ -168,7 +167,6 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
               state.localUserState.cameraState.operation == .paused else {
             return
         }
-
         requestCameraOn(state: state, dispatch: dispatch)
     }
 

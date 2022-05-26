@@ -34,6 +34,10 @@
 "AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="正在等候主持人"; // host (people not server) of a meeting
 "AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"="會議中有人很快會讓您加入";
 
+/* OnHoldView */
+"AzureCommunicationUICalling.OnHoldView.Text.OnHold"="您的通話已保留";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume"="繼續";
+
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="正在等待其他人加入";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="與 1 個人通話";
@@ -43,6 +47,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (我)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="已靜音";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="已取消靜音";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="切換到後相機";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="切換到前相機";
@@ -89,3 +94,6 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="因為發生錯誤，您已從通話中移除。";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="已從通話中移除您。";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="發生錯誤。";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="無法繼續通話";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="您的麥克風正由另一個應用程式使用中";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="您被拒絕存取通話。";

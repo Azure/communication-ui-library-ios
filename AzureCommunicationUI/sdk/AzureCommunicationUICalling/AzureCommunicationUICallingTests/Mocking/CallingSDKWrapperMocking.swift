@@ -33,6 +33,7 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     var startCallCallCount: Int = 0
     var endCallCallCount: Int = 0
     var switchCameraCallCount: Int = 0
+    var getRemoteParticipantCallIds: [String] = []
 
     var holdCallCalled: Bool = false
     var resumeCallCalled: Bool = false
@@ -67,6 +68,7 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     }
 
     func getRemoteParticipant(_ identifier: String) -> RemoteParticipant? {
+        getRemoteParticipantCallIds.append(identifier)
         return nil
     }
 

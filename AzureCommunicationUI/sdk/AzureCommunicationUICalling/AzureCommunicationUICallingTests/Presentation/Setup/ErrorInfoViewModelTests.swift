@@ -40,7 +40,7 @@ class ErrorInfoViewModelTests: XCTestCase {
         XCTAssertEqual(sut.message, "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd")
     }
 
-    func test_errorInfoViewModel_update_when_errorStateCallEvictionSet_then_snackBarErrorJoinCallMessageDisplayed() {
+    func test_errorInfoViewModel_update_when_errorStateCallEvictionSet_then_snackBarErrorCallEvictedMessageDisplayed() {
         let sut = makeSUT()
         let event = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callEvicted)
         let state = ErrorState(error: event, errorCategory: .callState)
@@ -48,6 +48,16 @@ class ErrorInfoViewModelTests: XCTestCase {
         sut.update(errorState: state)
         XCTAssertEqual(sut.isDisplayed, true)
         XCTAssertEqual(sut.message, "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted")
+    }
+
+    func test_errorInfoViewModel_update_when_errorStateCallDeniedSet_then_snackBarErrorCallDeniedMessageDisplayed() {
+        let sut = makeSUT()
+        let event = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callDenied)
+        let state = ErrorState(error: event, errorCategory: .callState)
+
+        sut.update(errorState: state)
+        XCTAssertEqual(sut.isDisplayed, true)
+        XCTAssertEqual(sut.message, "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied")
     }
 
     func test_errorInfoViewModel_update_when_errorTypeIsEmpty_then_isDisplayEqualFalse() {
