@@ -17,7 +17,9 @@ struct OverlayView: View {
     var body: some View {
         Color(StyleProvider.color.overlay)
             .overlay(
+                ZStack(alignment: .bottom) {
                 VStack(spacing: layoutSpacing) {
+                    Spacer()
                     Icon(name: .clock, size: iconImageSize)
                         .accessibility(hidden: true)
                     Text(viewModel.title)
@@ -30,6 +32,15 @@ struct OverlayView: View {
                     if let actionButtonViewModel = viewModel.actionButtonViewModel {
                         PrimaryButton(viewModel: actionButtonViewModel)
                             .fixedSize()
+                    }
+                    Spacer()
+                }
+                    if let errorInfoViewModel = viewModel.errorInfoViewModel {
+                        VStack {
+                            Spacer()
+                            ErrorInfoView(viewModel: errorInfoViewModel)
+                                .padding([.bottom])
+                        }
                     }
                 }.padding(.horizontal, horizontalPaddingSize)
                     .accessibilityElement(children: .combine)

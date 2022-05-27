@@ -8,13 +8,18 @@ import Combine
 
 class ErrorInfoViewModel: ObservableObject {
     @Published private(set) var isDisplayed: Bool = false
-    @Published private(set) var message: String = ""
+    @Published private(set) var title: String
+    @Published private(set) var subtitle: String
 
     private let localizationProvider: LocalizationProviderProtocol
     private var previousErrorType: String = ""
 
-    init(localizationProvider: LocalizationProviderProtocol) {
+    init(localizationProvider: LocalizationProviderProtocol,
+         title: String = "",
+         subtitle: String = "") {
         self.localizationProvider = localizationProvider
+        self.title = title
+        self.subtitle = subtitle
     }
 
     var dismissContent: String {
@@ -50,15 +55,15 @@ class ErrorInfoViewModel: ObservableObject {
         isDisplayed = true
         switch errorState.error?.code {
         case CallCompositeErrorCode.callJoin:
-            message = localizationProvider.getLocalizedString(.snackBarErrorJoinCall)
+            title = localizationProvider.getLocalizedString(.snackBarErrorJoinCall)
         case CallCompositeErrorCode.callEnd:
-            message = localizationProvider.getLocalizedString(.snackBarErrorCallEnd)
+            title = localizationProvider.getLocalizedString(.snackBarErrorCallEnd)
         case CallCompositeErrorCode.callEvicted:
-            message = localizationProvider.getLocalizedString(.snackBarErrorCallEvicted)
+            title = localizationProvider.getLocalizedString(.snackBarErrorCallEvicted)
         case CallCompositeErrorCode.callDenied:
-            message = localizationProvider.getLocalizedString(.snackBarErrorCallDenied)
+            title = localizationProvider.getLocalizedString(.snackBarErrorCallDenied)
         default:
-            message = localizationProvider.getLocalizedString(.snackBarError)
+            title = localizationProvider.getLocalizedString(.snackBarError)
         }
     }
 }

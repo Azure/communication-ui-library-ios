@@ -9,16 +9,24 @@ import FluentUI
 struct ErrorInfoView: View {
     @ObservedObject var viewModel: ErrorInfoViewModel
 
-    private let cornerRadius: CGFloat = 4
+    private let cornerRadius: CGFloat = 12
 
     var body: some View {
         if viewModel.isDisplayed {
             HStack {
-                Text(viewModel.message)
-                    .padding([.top, .leading, .bottom])
-                    .font(Fonts.footnote.font)
-                    .foregroundColor(Color(StyleProvider.color.onWarning))
-                    .accessibilitySortPriority(1)
+                VStack(alignment: .leading, spacing: 0) {
+                    Text(viewModel.title)
+                        .font(Fonts.button1.font)
+                        .foregroundColor(Color(StyleProvider.color.onWarning))
+                        .accessibilitySortPriority(1)
+
+                    if !viewModel.subtitle.isEmpty {
+                        Text(viewModel.subtitle)
+                            .font(Fonts.subhead.font)
+                            .foregroundColor(Color(StyleProvider.color.onWarning))
+                            .accessibilitySortPriority(2)
+                    }
+                }.padding([.top, .leading, .bottom])
                 Spacer()
                 Button(action: viewModel.dismiss) {
                     Text(viewModel.dismissContent)

@@ -72,7 +72,6 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilitySortPriority(1)
                         .accessibilityHidden(viewModel.lobbyOverlayViewModel.isDisplayed)
-                    errorInfoView
                 }
                 .onAppear {
                     self.pipPosition = getInitialPipPosition(containerBounds: geometry.frame(in: .local))
@@ -154,20 +153,6 @@ struct CallingView: View {
                        avatarViewManager: avatarManager)
                 .padding(.horizontal, 8)
             Spacer()
-        }
-    }
-
-    var errorInfoView: some View {
-        VStack {
-            Spacer()
-            ErrorInfoView(viewModel: viewModel.errorInfoViewModel)
-//                .padding(EdgeInsets(top: 0,
-//                                    leading: errorHorizontalPadding,
-//                                    bottom: startCallButtonHeight + layoutSpacing,
-//                                    trailing: errorHorizontalPadding)
-//                )
-                .accessibilityElement(children: .contain)
-                .accessibilityAddTraits(.isModal)
         }
     }
 

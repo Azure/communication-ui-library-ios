@@ -23,8 +23,6 @@ class LobbyOverlayViewModel: OverlayViewModelProtocol {
         return localizationProvider.getLocalizedString(.waitingDetails)
     }
 
-    var actionButtonViewModel: PrimaryButtonViewModel?
-
     @Published var isDisplayed: Bool = false
 
     func update(callingStatus: CallingStatus) {
