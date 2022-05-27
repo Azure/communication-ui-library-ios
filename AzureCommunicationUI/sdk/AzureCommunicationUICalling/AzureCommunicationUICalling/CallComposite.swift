@@ -94,22 +94,22 @@ public class CallComposite {
         launch(callConfiguration, localSettings: localSettings)
     }
 
-    /// Set ParticipantViewData for the remote participant. This is data is not sent up to ACS.
+    /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.
     /// - Parameters:
-    ///   - participantViewData: ParticipantViewData used to set the user participants information for the call.
+    ///   - remoteParticipantViewData: ParticipantViewData used to set the participant's information for the call.
     ///   - identifier: The communication identifier for the remote participant.
     ///   - errorHandler: Handler that will be called if an error occurs when trying to set the participant view dataC
-    public func setRemoteParticipantViewData(_ participantViewData: ParticipantViewData,
-                                             for identifier: CommunicationIdentifier,
-                                             errorHandler: ((CommunicationUIErrorEvent) -> Void)? = nil) {
+    public func set(remoteParticipantViewData: ParticipantViewData,
+                    for identifier: CommunicationIdentifier,
+                    errorHandler: ((CommunicationUIErrorEvent) -> Void)? = nil) {
         guard let avatarManager = avatarViewManager else {
             errorHandler?(CommunicationUIErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
             return
         }
 
-        avatarManager.setRemoteParticipantViewData(participantViewData,
-                                                   for: identifier,
-                                                   errorHandler: errorHandler)
+        avatarManager.set(remoteParticipantViewData: remoteParticipantViewData,
+                          for: identifier,
+                          errorHandler: errorHandler)
     }
 
     private func setupManagers(dependencyContainer: DependencyContainer) {

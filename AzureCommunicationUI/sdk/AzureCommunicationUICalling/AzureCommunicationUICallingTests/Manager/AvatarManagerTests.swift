@@ -65,8 +65,8 @@ class AvatarManagerTests: XCTestCase {
         let sut = makeSUT()
         let participantViewData = ParticipantViewData(avatar: mockImage)
         let id = UUID().uuidString
-        sut.setRemoteParticipantViewData(participantViewData,
-                                         for: CommunicationUserIdentifier(id)) { errorEvent in
+        sut.set(remoteParticipantViewData: participantViewData,
+                for: CommunicationUserIdentifier(id)) { errorEvent in
             XCTAssertEqual(errorEvent.code, CallCompositeErrorCode.remoteParticipantNotFound)
             expectation.fulfill()
         }

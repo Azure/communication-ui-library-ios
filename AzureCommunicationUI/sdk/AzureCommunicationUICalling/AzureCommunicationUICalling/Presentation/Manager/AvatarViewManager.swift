@@ -8,9 +8,9 @@ import AzureCommunicationCommon
 import Combine
 
 protocol AvatarViewManagerProtocol {
-    func setRemoteParticipantViewData(_ participantViewData: ParticipantViewData,
-                                      for identifier: CommunicationIdentifier,
-                                      errorHandler: ((CommunicationUIErrorEvent) -> Void)?)
+    func set(remoteParticipantViewData: ParticipantViewData,
+             for identifier: CommunicationIdentifier,
+             errorHandler: ((CommunicationUIErrorEvent) -> Void)?)
 }
 
 class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
@@ -50,9 +50,9 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
         }
     }
 
-    func setRemoteParticipantViewData(_ participantViewData: ParticipantViewData,
-                                      for identifier: CommunicationIdentifier,
-                                      errorHandler: ((CommunicationUIErrorEvent) -> Void)? = nil) {
+    func set(remoteParticipantViewData: ParticipantViewData,
+             for identifier: CommunicationIdentifier,
+             errorHandler: ((CommunicationUIErrorEvent) -> Void)? = nil) {
         let participantsList = store.state.remoteParticipantsState.participantInfoList
         guard let idStringValue = identifier.stringValue,
               participantsList.contains(where: { $0.userIdentifier == idStringValue })
@@ -66,7 +66,7 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
             avatarStorage.removeValue(forKey: idStringValue)
         }
         avatarStorage.append(forKey: idStringValue,
-                             value: participantViewData)
+                             value: remoteParticipantViewData)
         updatedId = idStringValue
     }
 }
