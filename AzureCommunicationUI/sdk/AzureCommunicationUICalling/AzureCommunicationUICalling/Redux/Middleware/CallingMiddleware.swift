@@ -47,8 +47,6 @@ struct CallingMiddleware: Middleware {
                     actionHandler.enterForeground(state: getState(), dispatch: dispatch)
                 case _ as AudioInterrupted:
                     actionHandler.audioSessionInterrupted(state: getState(), dispatch: dispatch)
-                case _ as AudioInterruptEnded:
-                    actionHandler.audioSessionInterruptEnded(state: getState(), dispatch: dispatch)
                 default:
                     break
                 }
