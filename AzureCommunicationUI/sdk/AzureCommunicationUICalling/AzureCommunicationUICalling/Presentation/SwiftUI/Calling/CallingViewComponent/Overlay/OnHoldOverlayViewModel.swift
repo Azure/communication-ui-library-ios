@@ -62,5 +62,9 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
             isDisplayed = shouldDisplay
             accessibilityProvider.moveFocusToFirstElement()
         }
+
+        if !isDisplayed {
+            self.errorInfoViewModel?.dismiss()
+        }
     }
 }
