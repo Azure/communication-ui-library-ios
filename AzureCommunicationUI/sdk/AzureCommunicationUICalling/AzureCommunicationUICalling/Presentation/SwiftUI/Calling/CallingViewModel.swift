@@ -104,7 +104,8 @@ class CallingViewModel: ObservableObject {
         }
 
         controlBarViewModel.update(localUserState: state.localUserState,
-                                   permissionState: state.permissionState)
+                                   permissionState: state.permissionState,
+                                   callingState: state.callingState)
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState)
