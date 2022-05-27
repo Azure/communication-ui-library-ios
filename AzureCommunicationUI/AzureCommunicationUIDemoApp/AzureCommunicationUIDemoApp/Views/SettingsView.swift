@@ -34,6 +34,7 @@ struct SettingsView: View {
             Form {
                 localizationSettings
                 avatarSettings
+                remoteParticipantsAvatarsSettings
                 themeSettings
             }.navigationTitle("UI Library - Settings")
         }
@@ -55,7 +56,7 @@ struct SettingsView: View {
     }
 
     var avatarSettings: some View {
-        Section(header: Text("Persona")) {
+        Section(header: Text("Local Participant View Data")) {
             Picker("Avatar Choices", selection: $envConfigSubject.avatarImageName) {
                 ForEach(avatarChoices, id: \.self) { avatar in
                     Image(avatar)
@@ -65,6 +66,12 @@ struct SettingsView: View {
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
                 .textFieldStyle(.roundedBorder)
+        }
+    }
+
+    var remoteParticipantsAvatarsSettings: some View {
+        Section(header: Text("Remote Participants View Data")) {
+            Toggle("Inject avatars", isOn: $envConfigSubject.useCustomRemoteParticipantViewData)
         }
     }
 

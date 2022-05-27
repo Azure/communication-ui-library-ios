@@ -9,11 +9,11 @@ import FluentUI
 
 struct SetupView: View {
     @ObservedObject var viewModel: SetupViewModel
-    let localPersonaData: CommunicationUIPersonaData?
     let viewManager: VideoViewManager
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
     @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
+    let avatarManager: AvatarViewManager
 
     let layoutSpacing: CGFloat = 24
     let layoutSpacingLarge: CGFloat = 40
@@ -31,8 +31,8 @@ struct SetupView: View {
                         VStack(spacing: getSizeClass() == .ipadScreenSize ? layoutSpacingLarge : layoutSpacing) {
                             ZStack(alignment: .bottom) {
                                 PreviewAreaView(viewModel: viewModel.previewAreaViewModel,
-                                                localPersonaData: localPersonaData,
-                                                viewManager: viewManager)
+                                                viewManager: viewManager,
+                                                avatarManager: avatarManager)
                                 SetupControlBarView(viewModel: viewModel.setupControlBarViewModel)
                             }
                             .background(Color(StyleProvider.color.surface))
