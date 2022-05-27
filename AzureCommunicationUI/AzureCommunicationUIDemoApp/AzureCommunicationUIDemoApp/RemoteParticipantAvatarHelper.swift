@@ -35,12 +35,17 @@ struct RemoteParticipantAvatarHelper {
                 selectedAvatarName = avatars[index]
                 avatarImage = UIImage(named: selectedAvatarName)
             }
-            let renderDisplayName = selectedAvatarName.isEmpty ? nameIdValue : "\(selectedAvatarName) \(nameIdValue)"
+            let displayName = selectedAvatarName.isEmpty ? nameIdValue : "\(selectedAvatarName) \(nameIdValue)"
             let participantViewData = ParticipantViewData(avatar: avatarImage,
-                                                          renderDisplayName: renderDisplayName)
+                                                          displayName: displayName)
             callComposite.set(remoteParticipantViewData: participantViewData,
-                              for: identifier) { error in
-                print(error.code)
+                              for: identifier) { result in
+                switch result {
+                case .success:
+                    break
+                case .failure(let error):
+                    print("::::RemoteParticipantAvatarHelper::didRemoteParticipantsJoin::failure \(error)")
+                }
             }
         }
     }

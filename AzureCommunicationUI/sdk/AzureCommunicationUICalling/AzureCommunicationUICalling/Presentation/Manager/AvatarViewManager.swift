@@ -10,7 +10,7 @@ import Combine
 protocol AvatarViewManagerProtocol {
     func set(remoteParticipantViewData: ParticipantViewData,
              for identifier: CommunicationIdentifier,
-             errorHandler: ((CommunicationUIErrorEvent) -> Void)?)
+             completionHandler: ((Result<Void, ParticipantViewDataSetError>) -> Void)?)
 }
 
 class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
@@ -52,13 +52,12 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
 
     func set(remoteParticipantViewData: ParticipantViewData,
              for identifier: CommunicationIdentifier,
-             errorHandler: ((CommunicationUIErrorEvent) -> Void)? = nil) {
+             completionHandler: ((Result<Void, ParticipantViewDataSetError>) -> Void)? = nil) {
         let participantsList = store.state.remoteParticipantsState.participantInfoList
         guard let idStringValue = identifier.stringValue,
               participantsList.contains(where: { $0.userIdentifier == idStringValue })
         else {
-            let errorEvent = CommunicationUIErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound)
-            errorHandler?(errorEvent)
+            completionHandler?(.failure(ParticipantViewDataSetError.remoteParticipantNotFound))
             return
         }
 
@@ -68,5 +67,6 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
         avatarStorage.append(forKey: idStringValue,
                              value: remoteParticipantViewData)
         updatedId = idStringValue
+        completionHandler?(.success(Void()))
     }
 }

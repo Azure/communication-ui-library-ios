@@ -98,18 +98,18 @@ public class CallComposite {
     /// - Parameters:
     ///   - remoteParticipantViewData: ParticipantViewData used to set the participant's information for the call.
     ///   - identifier: The communication identifier for the remote participant.
-    ///   - errorHandler: Handler that will be called if an error occurs when trying to set the participant view dataC
+    ///   - completionHandler: The completion handler that receives `Result` enum value with either
+    ///                        a `Void` or an `ParticipantViewDataSetError`.
     public func set(remoteParticipantViewData: ParticipantViewData,
                     for identifier: CommunicationIdentifier,
-                    errorHandler: ((CommunicationUIErrorEvent) -> Void)? = nil) {
+                    completionHandler: ((Result<Void, ParticipantViewDataSetError>) -> Void)? = nil) {
         guard let avatarManager = avatarViewManager else {
-            errorHandler?(CommunicationUIErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
+            completionHandler?(.failure(ParticipantViewDataSetError.remoteParticipantNotFound))
             return
         }
-
         avatarManager.set(remoteParticipantViewData: remoteParticipantViewData,
                           for: identifier,
-                          errorHandler: errorHandler)
+                          completionHandler: completionHandler)
     }
 
     private func setupManagers(dependencyContainer: DependencyContainer) {

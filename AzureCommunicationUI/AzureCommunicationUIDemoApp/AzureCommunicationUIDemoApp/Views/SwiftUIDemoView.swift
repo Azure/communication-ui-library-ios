@@ -165,7 +165,7 @@ extension SwiftUIDemoView {
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
-                                          renderDisplayName: renderDisplayName)
+                                                      displayName: renderDisplayName)
         let localSettings = LocalSettings(participantViewData)
         if let credential = try? getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
