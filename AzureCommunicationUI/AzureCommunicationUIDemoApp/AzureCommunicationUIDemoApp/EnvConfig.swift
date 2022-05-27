@@ -36,7 +36,7 @@ class EnvConfigSubject: ObservableObject {
 
     @Published var selectedAcsTokenType: ACSTokenType = .token
     @Published var selectedMeetingType: MeetingType = .groupCall
-    @Published var locale: Locale = CallSupportedLocale.en
+    @Published var locale: Locale = CallCompositeSupportedLocale.en
     @Published var localeIdentifier: String = ""
     @Published var isRightToLeft: Bool = false
     @Published var useCustomColors: Bool = false

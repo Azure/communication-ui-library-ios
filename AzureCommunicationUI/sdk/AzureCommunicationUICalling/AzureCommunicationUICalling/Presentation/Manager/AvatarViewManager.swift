@@ -10,7 +10,7 @@ import Combine
 protocol AvatarViewManagerProtocol {
     func setRemoteParticipantViewData(
         for identifier: CommunicationIdentifier,
-        participantViewData: ParticipantViewData) -> Result<Void, CallErrorEvent>
+        participantViewData: ParticipantViewData) -> Result<Void, CallCompositeErrorEvent>
 }
 
 class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
@@ -52,12 +52,12 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
 
     func setRemoteParticipantViewData(
         for identifier: CommunicationIdentifier,
-        participantViewData: ParticipantViewData) -> Result<Void, CallErrorEvent> {
+        participantViewData: ParticipantViewData) -> Result<Void, CallCompositeErrorEvent> {
         let participantsList = store.state.remoteParticipantsState.participantInfoList
         guard let idStringValue = identifier.stringValue,
               participantsList.contains(where: { $0.userIdentifier == idStringValue })
         else {
-            return .failure(CallErrorEvent(code: CallErrorCode.remoteParticipantNotFound))
+            return .failure(CallCompositeErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
         }
 
         if avatarStorage.value(forKey: idStringValue) != nil {

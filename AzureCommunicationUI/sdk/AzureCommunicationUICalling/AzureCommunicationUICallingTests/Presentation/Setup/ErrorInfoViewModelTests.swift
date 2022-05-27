@@ -22,7 +22,7 @@ class ErrorInfoViewModelTests: XCTestCase {
 
     func test_errorInfoViewModel_update_when_errorStateCallJoinSet_then_snackBarErrorJoinCallMessageDisplayed() {
         let sut = makeSUT()
-        let event = CallErrorEvent(code: CallErrorCode.callJoin)
+        let event = CallCompositeErrorEvent(code: CallCompositeErrorCode.callJoin)
         let state = ErrorState(error: event, errorCategory: .callState)
 
         sut.update(errorState: state)
@@ -32,7 +32,7 @@ class ErrorInfoViewModelTests: XCTestCase {
 
     func test_errorInfoViewModel_update_when_errorStateCallEnd_then_snackBarErrorCallEndMessage() {
         let sut = makeSUT()
-        let event = CallErrorEvent(code: CallErrorCode.callEnd)
+        let event = CallCompositeErrorEvent(code: CallCompositeErrorCode.callEnd)
         let state = ErrorState(error: event, errorCategory: .callState)
 
         sut.update(errorState: state)
@@ -42,7 +42,7 @@ class ErrorInfoViewModelTests: XCTestCase {
 
     func test_errorInfoViewModel_update_when_errorStateCallEvictionSet_then_snackBarErrorCallEvictedMessageDisplayed() {
         let sut = makeSUT()
-        let event = CallErrorEvent(code: CallErrorCode.callEvicted)
+        let event = CallCompositeErrorEvent(code: CallCompositeErrorCode.callEvicted)
         let state = ErrorState(error: event, errorCategory: .callState)
 
         sut.update(errorState: state)
@@ -52,7 +52,7 @@ class ErrorInfoViewModelTests: XCTestCase {
 
     func test_errorInfoViewModel_update_when_errorStateCallDeniedSet_then_snackBarErrorCallDeniedMessageDisplayed() {
         let sut = makeSUT()
-        let event = CallErrorEvent(code: CallErrorCode.callDenied)
+        let event = CallCompositeErrorEvent(code: CallCompositeErrorCode.callDenied)
         let state = ErrorState(error: event, errorCategory: .callState)
 
         sut.update(errorState: state)
@@ -62,7 +62,7 @@ class ErrorInfoViewModelTests: XCTestCase {
 
     func test_errorInfoViewModel_update_when_errorTypeIsEmpty_then_isDisplayEqualFalse() {
         let sut = makeSUT()
-        let event = CallErrorEvent(code: CallErrorCode.callJoin)
+        let event = CallCompositeErrorEvent(code: CallCompositeErrorCode.callJoin)
         let state = ErrorState(error: event, errorCategory: .callState)
 
         sut.update(errorState: state)

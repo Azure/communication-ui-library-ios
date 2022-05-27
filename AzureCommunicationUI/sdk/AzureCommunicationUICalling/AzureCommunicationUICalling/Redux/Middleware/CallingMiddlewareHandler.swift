@@ -43,7 +43,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 }
                 switch completion {
                 case .failure(let error):
-                    self.handle(error: error, errorCode: CallErrorCode.callJoin, dispatch: dispatch)
+                    self.handle(error: error, errorCode: CallCompositeErrorCode.callJoin, dispatch: dispatch)
                 case .finished:
                     break
                 }
@@ -69,7 +69,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
                 switch completion {
                 case .failure(let error):
-                    self.handle(error: error, errorCode: CallErrorCode.callJoin, dispatch: dispatch)
+                    self.handle(error: error, errorCode: CallCompositeErrorCode.callJoin, dispatch: dispatch)
                 case .finished:
                     break
                 }
@@ -87,7 +87,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
                 switch completion {
                 case .failure(let error):
-                    self.handle(error: error, errorCode: CallErrorCode.callEnd, dispatch: dispatch)
+                    self.handle(error: error, errorCode: CallCompositeErrorCode.callEnd, dispatch: dispatch)
                 case .finished:
                     break
                 }

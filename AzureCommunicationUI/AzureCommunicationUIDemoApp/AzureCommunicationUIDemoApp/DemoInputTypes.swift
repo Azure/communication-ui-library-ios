@@ -22,7 +22,7 @@ enum DemoError: Error {
     func getErrorCode() -> String {
         switch self {
         case .invalidToken:
-            return CallErrorCode.tokenExpired
+            return CallCompositeErrorCode.tokenExpired
         }
     }
 }
