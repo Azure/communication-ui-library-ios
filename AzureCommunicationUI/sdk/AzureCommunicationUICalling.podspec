@@ -5,14 +5,14 @@ Pod::Spec.new do |spec|
   spec.homepage             = "https://github.com/Azure/communication-ui-library-ios"
   spec.license              = { :type => 'MIT' }
   spec.author               = 'Microsoft'
-  spec.source               = { :git => 'https://github.com/Azure/communication-ui-library-ios', :tag => 'AzureCommunicationUI_1.0.0-beta.1' }
+  spec.source               = { :git => 'https://github.com/Azure/communication-ui-library-ios', :tag => 'AzureCommunicationUICalling_1.0.0-beta.1' }
   spec.module_name          = 'AzureCommunicationUICalling'
   spec.swift_version        = '5.0'
 
   spec.platform             = :ios, '14.0'
 
-  spec.source_files         = 'AzureCommunicationUICalling/AzureCommunicationUICalling/**/*.swift'
-  spec.resources            = 'AzureCommunicationUICalling/AzureCommunicationUICalling/**/*.{xcassets,strings}'
+  spec.source_files         = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling/**/*.swift'
+  spec.resources            = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling/**/*.{xcassets,strings}'
 
   spec.pod_target_xcconfig  = { "EXCLUDED_ARCHS[sdk=iphonesimulator*]": "arm64", "ENABLE_BITCODE": "NO"}
   

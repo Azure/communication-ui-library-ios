@@ -34,6 +34,10 @@
 "AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="Wachten op host"; // host (people not server) of a meeting
 "AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"="Iemand in de vergadering laat u binnenkort binnen";
 
+/* OnHoldView */
+"AzureCommunicationUICalling.OnHoldView.Text.OnHold"="U staat in de wacht";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume"="Hervatten";
+
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Wachten tot anderen deelnemen";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="Gesprek met 1 persoon";
@@ -43,6 +47,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (ik)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Gedempt";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Niet gedempt";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="In de wacht";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Overschakelen naar de camera op de achterzijde";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Overschakelen naar de camera op de voorzijde";
@@ -89,3 +94,6 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="U bent uit de oproep verwijderd vanwege een fout.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="U bent verwijderd uit het gesprek.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Er is een fout opgetreden.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Kan gesprek niet hervatten";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Uw microfoon wordt gebruikt door een andere app";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="U hebt geen toegang tot het gesprek.";
