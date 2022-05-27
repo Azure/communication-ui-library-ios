@@ -27,10 +27,11 @@ class DependencyContainerTests: XCTestCase {
                                                   displayName: displayName)
         let participantViewData = ParticipantViewData(avatar: nil, displayName: nil)
         let localSettings = LocalSettings(participantViewData)
+        let callCompositeEventsHandler = CallCompositeEventsHandler()
 
         dependencyContainer.registerDependencies(callConfiguration,
                                                  localSettings: localSettings,
-                                                 eventsHandler: CallCompositeEventsHandler())
+                                                 callCompositeEventsHandler: callCompositeEventsHandler)
 
         XCTAssertNotNil(dependencyContainer.resolve() as CallingSDKWrapperProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as VideoViewManager)
@@ -39,5 +40,14 @@ class DependencyContainerTests: XCTestCase {
         XCTAssertNotNil(dependencyContainer.resolve() as NavigationRouter)
         XCTAssertNotNil(dependencyContainer.resolve() as CompositeViewModelFactoryProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as CompositeViewFactoryProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as CallingSDKEventsHandling)
+        XCTAssertNotNil(dependencyContainer.resolve() as AccessibilityProviderProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as LocalizationProviderProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as CompositeErrorManager)
+        XCTAssertNotNil(dependencyContainer.resolve() as LifeCycleManagerProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as PermissionsManagerProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as AudioSessionManagerProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as AvatarViewManager)
+        XCTAssertNotNil(dependencyContainer.resolve() as RemoteParticipantsManager)
     }
 }
