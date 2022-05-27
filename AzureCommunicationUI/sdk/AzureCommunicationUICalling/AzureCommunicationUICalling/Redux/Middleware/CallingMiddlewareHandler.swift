@@ -15,7 +15,6 @@ protocol CallingMiddlewareHandling {
     func enterBackground(state: ReduxState?, dispatch: @escaping ActionDispatch)
     func enterForeground(state: ReduxState?, dispatch: @escaping ActionDispatch)
     func audioSessionInterrupted(state: ReduxState?, dispatch: @escaping ActionDispatch)
-    func audioSessionInterruptEnded(state: ReduxState?, dispatch: @escaping ActionDispatch)
     func requestCameraPreviewOn(state: ReduxState?, dispatch: @escaping ActionDispatch)
     func requestCameraOn(state: ReduxState?, dispatch: @escaping ActionDispatch)
     func requestCameraOff(state: ReduxState?, dispatch: @escaping ActionDispatch)
@@ -283,15 +282,6 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
 
         dispatch(CallingAction.HoldRequested())
-    }
-
-    func audioSessionInterruptEnded(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        guard let state = state as? AppState,
-              state.callingState.status == .localHold else {
-            return
-        }
-
-        dispatch(CallingAction.ResumeRequested())
     }
 }
 
