@@ -7,7 +7,7 @@ import Foundation
 
 class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
-    private let compositeViewModelFactory: CompositeViewModelFactory
+    private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
     private let accessibilityProvider: AccessibilityProviderProtocol
     private var audioSessionStatus: AudioSessionStatus = .interrupted
@@ -24,7 +24,7 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
     @Published var isDisplayed: Bool = false
 
     init(localizationProvider: LocalizationProviderProtocol,
-         compositeViewModelFactory: CompositeViewModelFactory,
+         compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          accessibilityProvider: AccessibilityProviderProtocol,
          resumeAction: @escaping (() -> Void)) {
@@ -40,7 +40,8 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
         self.actionButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: localizationProvider.getLocalizedString(.resume),
-            iconName: nil) { [weak self] in
+            iconName: nil,
+            isDisabled: false) { [weak self] in
                 guard let self = self else {
                     return
                 }
