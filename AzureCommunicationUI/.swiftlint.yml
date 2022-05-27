@@ -165,7 +165,7 @@ opt_in_rules:
   - weak_delegate
 
 disabled_rules: # rule identifiers turned on by default to exclude from running
-
+  - redundant_type_annotation
 
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Pods
