@@ -109,6 +109,13 @@ struct ParticipantGridCellView: View {
                                  isMuted: $viewModel.isMuted,
                                  titleFont: Fonts.button1.font,
                                  mutedIconSize: 16)
+            if viewModel.isHold {
+                Text(viewModel.getOnHoldString())
+                    .font(Fonts.caption1.font)
+                    .lineLimit(1)
+                    .foregroundColor(Color(StyleProvider.color.onBackground))
+                    .padding(.top, 8)
+            }
         }
     }
 

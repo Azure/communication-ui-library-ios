@@ -76,6 +76,7 @@
 		1F94DAF52677D48400691D1E /* CommunicationUIErrorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAF42677D48400691D1E /* CommunicationUIErrorEvent.swift */; };
 		1FA23F9E265DA21400B4A080 /* VideoStreamInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA23F9D265DA21400B4A080 /* VideoStreamInfoModel.swift */; };
 		1FA24BAD2666F0CC00B4A080 /* ColorThemeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA24BAC2666F0CC00B4A080 /* ColorThemeProvider.swift */; };
+		1FB0A1C128412A5100D57B0F /* ACSParticipantStateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A1C028412A5000D57B0F /* ACSParticipantStateExtension.swift */; };
 		1FBCB666264519DA00F57EEA /* VideoViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBCB665264519DA00F57EEA /* VideoViewManager.swift */; };
 		1FBCB69F2645285100F57EEA /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8659FC52602A22000C807DE /* AzureCommunicationUICalling.framework */; platformFilter = ios; };
 		1FBCB6AA2645AC2F00F57EEA /* VideoRenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBCB6A92645AC2F00F57EEA /* VideoRenderView.swift */; };
@@ -319,6 +320,7 @@
 		1F94DAF42677D48400691D1E /* CommunicationUIErrorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationUIErrorEvent.swift; sourceTree = "<group>"; };
 		1FA23F9D265DA21400B4A080 /* VideoStreamInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoStreamInfoModel.swift; sourceTree = "<group>"; };
 		1FA24BAC2666F0CC00B4A080 /* ColorThemeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorThemeProvider.swift; sourceTree = "<group>"; };
+		1FB0A1C028412A5000D57B0F /* ACSParticipantStateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACSParticipantStateExtension.swift; sourceTree = "<group>"; };
 		1FBCB665264519DA00F57EEA /* VideoViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewManager.swift; sourceTree = "<group>"; };
 		1FBCB682264522F200F57EEA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		1FBCB69A2645285100F57EEA /* AzureCommunicationUICallingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzureCommunicationUICallingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -657,6 +659,7 @@
 				1F87A7BA263A7EE900F49C7E /* CommunicationIdentifierExtension.swift */,
 				1FBCB6B02649EB1200F57EEA /* RemoteParticipantExtension.swift */,
 				1F13D37226AB3F1200E31666 /* ACSCallingStateExtension.swift */,
+				1FB0A1C028412A5000D57B0F /* ACSParticipantStateExtension.swift */,
 				5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */,
 				1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */,
 			);
@@ -1677,6 +1680,7 @@
 				98546EBA26DEF24D0069B246 /* AudioDeviceType.swift in Sources */,
 				A8810CDD263CC75200C88545 /* ContainerView.swift in Sources */,
 				A8100387269F9DA70015C26E /* TeamsMeetingOptions.swift in Sources */,
+				1FB0A1C128412A5100D57B0F /* ACSParticipantStateExtension.swift in Sources */,
 				981ACABC2685459400CD6A40 /* IconProvider.swift in Sources */,
 				1F2BEDCD26329E5600D98266 /* PermissionAction.swift in Sources */,
 				98B186A127C85F9800B837E6 /* AudioDevicesListViewModel.swift in Sources */,
