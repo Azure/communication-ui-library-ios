@@ -2,7 +2,7 @@
 
 ### Manual Installation Steps
 
-1. You could download/clone/submodule the latest [`AzureCommunicationUICalling`](https://github.com/Azure/azure-communication-ui-library-ios) Library to your project root directory.
+1. Download/clone/submodule the latest [`AzureCommunicationUICalling`](https://github.com/Azure/azure-communication-ui-library-ios) Library to your project root directory.
 2. Open your existing iOS application Xcode project.
 3. Drag the `AzureCommunicationUICalling.xcodeproj` from the newly added subfolder path `/AzureCommunicationUI/sdk/AzureCommunicationUICalling` into your Xcode project's `xcworkspace`.
 4. Select your application project in the Xcode Navigator, and open the target that you want to import Mobile UI Library.
@@ -32,18 +32,12 @@
     1. Select Navigator and navigate to the target `AzureCommunicationUICalling` and choose `Build Phases`.
     2. Delete the script `Run SwiftLint`.
 
-
-
-
 ### Other Dependencies Installation
-
 
 Azure Communication Mobile UI Library requires a few dependencies. Please embed the following libraries into your project if you prefer manually embedding Mobile UI Library. And you can refer from each library's Podspec file for the required source files.
 
-
 #### 1. [AzureCommunicationCalling](https://github.com/Azure/azure-sdk-for-ios/tree/main/sdk/communication/AzureCommunicationCalling) version require: [2.2.0-beta.1](https://github.com/Azure/Communication/releases/tag/v2.2.0-beta.1)
 - Drag the `AzureCommunicationCalling.xcframework` into your project. Add it as embedded framework in your target's "Frameworks and Libraries" section. 
-
 
 #### 2. [AzureCommunicationCommon](https://github.com/Azure/azure-sdk-for-ios/tree/main/sdk/communication/AzureCommunicationCommon) - version [1.0.3](https://github.com/Azure/azure-sdk-for-ios/releases/tag/AzureCommunicationCommon_1.0.3)
 - Find the project [AzureCommunicationCommon.xcodeproj](https://github.com/Azure/azure-sdk-for-ios/tree/main/sdk/communication/AzureCommunicationCommon) in the repo source code and drag it into your project. 
@@ -56,7 +50,7 @@ Note: Please refer to [How to fix the issues](#how-to-fix-the-issues) to fix som
 - **Buildtime issue: 'framework not found AzureCore'**
 
     1. Select Navigator and navigate to the target `AzureCommunicationCommon`.
-    2. delete the `AzureCore.framework` under "Frameworks and Libraries" section. 
+    2. Delete the `AzureCore.framework` under "Frameworks and Libraries" section. 
     
 - **Buildtime issue: 'Swift Compiler Error'**
 
