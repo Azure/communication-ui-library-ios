@@ -187,6 +187,7 @@ class AppStateReducerTests: XCTestCase {
                                                isMuted: true,
                                                isRemoteUser: false,
                                                userIdentifier: userId,
+                                               status: .idle,
                                                recentSpeakingStamp: Date(),
                                                screenShareVideoStreamModel: nil,
                                                cameraVideoStreamModel: nil)
