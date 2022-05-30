@@ -133,14 +133,14 @@ extension SwiftUIDemoView {
     func startCallComposite() {
         let link = getMeetingLink()
 
-        var localizationConfig: LocalizationConfiguration?
+        var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
-            localizationConfig = LocalizationConfiguration(locale: locale,
+            localizationConfig = LocalizationOptions(locale: locale,
                                                            layoutDirection: layoutDirection)
         } else if !envConfigSubject.locale.identifier.isEmpty {
-            localizationConfig = LocalizationConfiguration(
+            localizationConfig = LocalizationOptions(
                 locale: envConfigSubject.locale,
                 layoutDirection: layoutDirection)
         }

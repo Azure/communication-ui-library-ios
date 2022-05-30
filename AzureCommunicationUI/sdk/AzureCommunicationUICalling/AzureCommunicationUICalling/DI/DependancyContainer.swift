@@ -57,7 +57,7 @@ final class DependencyContainer {
                                       videoViewManager: resolve(),
                                       compositeViewModelFactory: resolve()) as CompositeViewFactoryProtocol)
         register(CompositeErrorManager(store: resolve(),
-                                       callCompositeEventsHandler: callCompositeEventsHandler) as CompositeErrorManager)
+                                       callCompositeEventsHandler: callCompositeEventsHandler) as ErrorManagerProtocol)
         register(UIKitAppLifeCycleManager(store: resolve(),
                                           logger: resolve()) as LifeCycleManagerProtocol)
         register(PermissionsManager(store: resolve()) as PermissionsManagerProtocol)
