@@ -107,8 +107,9 @@ struct ParticipantGridCellView: View {
             Spacer().frame(height: 10)
             ParticipantTitleView(displayName: $viewModel.displayName,
                                  isMuted: $viewModel.isMuted,
-                                 titleFont: Fonts.button1.font,
+                                 titleFont: Fonts.caption1.font,
                                  mutedIconSize: 16)
+            .opacity(viewModel.isHold ? 0.6 : 1)
             if viewModel.isHold {
                 Text(viewModel.getOnHoldString())
                     .font(Fonts.caption1.font)
