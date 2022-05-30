@@ -22,6 +22,7 @@ extension RemoteParticipant {
                                     isMuted: isMuted,
                                     isRemoteUser: true,
                                     userIdentifier: self.identifier.stringValue ?? "",
+                                    status: state.toCompositeParticipantStatus(),
                                     recentSpeakingStamp: recentSpeakingStamp,
                                     screenShareVideoStreamModel: screenShareVideoStreamModel,
                                     cameraVideoStreamModel: cameraVideoStreamModel)

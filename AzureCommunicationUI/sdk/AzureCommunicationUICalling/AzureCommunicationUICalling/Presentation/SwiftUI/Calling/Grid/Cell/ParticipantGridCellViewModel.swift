@@ -22,6 +22,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var displayName: String?
     @Published var isSpeaking: Bool
     @Published var isMuted: Bool
+    @Published var isHold: Bool
     @Published var participantIdentifier: String
     private var isScreenSharing: Bool = false
     private var participantName: String
@@ -35,6 +36,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         self.participantName = participantModel.displayName
         self.displayName = participantModel.displayName
         self.isSpeaking = participantModel.isSpeaking
+        self.isHold = participantModel.status == .hold
         self.participantIdentifier = participantModel.userIdentifier
         self.isMuted = participantModel.isMuted
         self.videoViewModel = getDisplayingVideoStreamModel(participantModel)
@@ -76,6 +78,12 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         if self.isMuted != participantModel.isMuted {
             self.isMuted = participantModel.isMuted
         }
+
+        let isOnHold = participantModel.status == .hold
+
+        if self.isHold != isOnHold {
+            self.isHold = isOnHold
+        }
     }
 
     func updateParticipantNameIfNeeded(with renderDisplayName: String?) {
@@ -92,6 +100,10 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
             name = participantName
         }
         displayName = name
+    }
+
+    func getOnHoldString() -> String {
+        localizationProvider.getLocalizedString(.onHold)
     }
 
     private func getAccessibilityLabel(participantModel: ParticipantInfoModel) -> String {

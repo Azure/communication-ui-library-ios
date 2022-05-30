@@ -67,6 +67,7 @@ class InfoHeaderViewModelTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -99,6 +100,7 @@ class InfoHeaderViewModelTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -110,6 +112,7 @@ class InfoHeaderViewModelTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -276,6 +279,7 @@ class InfoHeaderViewModelTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -287,6 +291,7 @@ class InfoHeaderViewModelTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
