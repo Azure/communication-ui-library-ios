@@ -8,14 +8,14 @@ import SwiftUI
 import FluentUI
 import AzureCommunicationCalling
 
-public typealias CompositeErrorHandler = (CommunicationUIErrorEvent) -> Void
+public typealias CompositeErrorHandler = (CallCompositeErrorEvent) -> Void
 public typealias RemoteParticipantsJoinedHandler = ([CommunicationIdentifier]) -> Void
 
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
     private var logger: Logger?
-    private let themeConfiguration: ThemeConfiguration?
-    private let localizationConfiguration: LocalizationConfiguration?
+    private let themeOptions: ThemeOptions?
+    private let localizationOptions: LocalizationOptions?
     private let callCompositeEventsHandler: CallCompositeEventsHandling
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
@@ -28,8 +28,8 @@ public class CallComposite {
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
         callCompositeEventsHandler = CallCompositeEventsHandler()
-        themeConfiguration = options?.themeConfiguration
-        localizationConfiguration = options?.localizationConfiguration
+        themeOptions = options?.themeOptions
+        localizationOptions = options?.localizationOptions
     }
 
     /// Assign closures to execute when error event  occurs inside Call Composite.
@@ -56,8 +56,7 @@ public class CallComposite {
 
         dependencyContainer.registerDependencies(callConfiguration,
                                                  localSettings: localSettings,
-                                                 eventsHandler: callCompositeEventsHandler)
-
+                                                 callCompositeEventsHandler: callCompositeEventsHandler)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)
@@ -65,7 +64,7 @@ public class CallComposite {
                                                                     logger: dependencyContainer.resolve(),
                                                                     viewFactory: dependencyContainer.resolve(),
                                                                     isRightToLeft: localizationProvider.isRightToLeft)
-        setupManagers(dependencyContainer: dependencyContainer)
+        setupManagers(with: dependencyContainer)
         present(toolkitHostingController)
     }
 
@@ -106,39 +105,22 @@ public class CallComposite {
     @discardableResult
     public func setRemoteParticipantViewData(
         for identifier: CommunicationIdentifier,
-        participantViewData: ParticipantViewData) -> Result<Void, CommunicationUIErrorEvent> {
+        participantViewData: ParticipantViewData) -> Result<Void, CallCompositeErrorEvent> {
         guard let avatarManager = avatarViewManager else {
-            return .failure(CommunicationUIErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
+            return .failure(CallCompositeErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
         }
 
         return avatarManager.setRemoteParticipantViewData(for: identifier,
                                                           participantViewData: participantViewData)
     }
 
-    private func setupManagers(dependencyContainer: DependencyContainer) {
-        let errorManager = CompositeErrorManager(store: dependencyContainer.resolve(),
-                                                 callCompositeEventsHandler: callCompositeEventsHandler)
-        self.errorManager = errorManager
-
-        let lifeCycleManager = UIKitAppLifeCycleManager(store: dependencyContainer.resolve(),
-                                                        logger: dependencyContainer.resolve())
-        self.lifeCycleManager = lifeCycleManager
-
-        let permissionManager = PermissionsManager(store: dependencyContainer.resolve())
-        self.permissionManager = permissionManager
-
-        let audioSessionManager = AudioSessionManager(store: dependencyContainer.resolve(),
-                                                      logger: dependencyContainer.resolve())
-        self.audioSessionManager = audioSessionManager
-
-        avatarViewManager = dependencyContainer.resolve() as AvatarViewManager
-
-        let remoteParticipantsManager = RemoteParticipantsManager(
-            store: dependencyContainer.resolve(),
-            callCompositeEventsHandler: callCompositeEventsHandler,
-            callingSDKWrapper: dependencyContainer.resolve(),
-            avatarViewManager: dependencyContainer.resolve())
-        self.remoteParticipantsManager = remoteParticipantsManager
+    private func setupManagers(with dependencyContainer: DependencyContainer) {
+        self.errorManager = dependencyContainer.resolve() as ErrorManagerProtocol
+        self.lifeCycleManager = dependencyContainer.resolve() as LifeCycleManagerProtocol
+        self.permissionManager = dependencyContainer.resolve() as PermissionsManagerProtocol
+        self.audioSessionManager = dependencyContainer.resolve() as AudioSessionManagerProtocol
+        self.avatarViewManager = dependencyContainer.resolve() as AvatarViewManager
+        self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManager
     }
 
     private func cleanUpManagers() {
@@ -182,7 +164,7 @@ public class CallComposite {
     }
 
     private func setupColorTheming() {
-        let colorProvider = ColorThemeProvider(themeConfiguration: themeConfiguration)
+        let colorProvider = ColorThemeProvider(themeOptions: themeOptions)
         StyleProvider.color = colorProvider
         DispatchQueue.main.async {
             if let window = UIWindow.keyWindow {
@@ -192,8 +174,8 @@ public class CallComposite {
     }
 
     private func setupLocalization(with provider: LocalizationProviderProtocol) {
-        if let localizationConfiguration = localizationConfiguration {
-            provider.apply(localeConfig: localizationConfiguration)
+        if let localizationOptions = localizationOptions {
+            provider.apply(localeConfig: localizationOptions)
         }
     }
 
