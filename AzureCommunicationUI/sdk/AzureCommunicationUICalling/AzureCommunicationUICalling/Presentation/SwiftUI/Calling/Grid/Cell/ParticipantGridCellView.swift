@@ -104,6 +104,7 @@ struct ParticipantGridCellView: View {
                             avatarImage: $avatarImage,
                             isSpeaking: viewModel.isSpeaking && !viewModel.isMuted)
             .frame(width: avatarSize, height: avatarSize)
+            .opacity(viewModel.isHold ? 0.6 : 1)
             Spacer().frame(height: 10)
             ParticipantTitleView(displayName: $viewModel.displayName,
                                  isMuted: $viewModel.isMuted,
