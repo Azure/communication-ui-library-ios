@@ -66,7 +66,7 @@
 		1F9184AD26B491840049EF5B /* LifeCycleReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9184AC26B491840049EF5B /* LifeCycleReducerTests.swift */; };
 		1F9184B426B4A2EF0049EF5B /* CallingReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9184B326B4A2EF0049EF5B /* CallingReducerTests.swift */; };
 		1F9184B626B4A3340049EF5B /* NavigationReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9184B526B4A3340049EF5B /* NavigationReducerTests.swift */; };
-		1F94DADC2673E87700691D1E /* ThemeConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DADB2673E87700691D1E /* ThemeConfiguration.swift */; };
+		1F94DADC2673E87700691D1E /* ThemeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DADB2673E87700691D1E /* ThemeOptions.swift */; };
 		1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DADE2673E94F00691D1E /* CallComposite.swift */; };
 		1F94DAE12673EA9500691D1E /* CallCompositeEventsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAE02673EA9500691D1E /* CallCompositeEventsHandler.swift */; };
 		1F94DAE426740BCB00691D1E /* LocalUserAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAE326740BCB00691D1E /* LocalUserAction.swift */; };
@@ -106,7 +106,7 @@
 		503F4B6D2705065700C17DA6 /* BannerTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 503F4B6C2705065700C17DA6 /* BannerTextView.swift */; };
 		505460EE27BAC72100040467 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 505460F027BAC72100040467 /* Localizable.strings */; };
 		5054610227C5977A00040467 /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054610127C5977A00040467 /* LocalizationProvider.swift */; };
-		5054610427C59AD700040467 /* LocalizationConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054610327C59AD700040467 /* LocalizationConfiguration.swift */; };
+		5054610427C59AD700040467 /* LocalizationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5054610327C59AD700040467 /* LocalizationOptions.swift */; };
 		50B390D127D82D7E0010A2ED /* LocalizationProviderMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D027D82D7E0010A2ED /* LocalizationProviderMocking.swift */; };
 		50B390D327D834FE0010A2ED /* LocalizationKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D227D834FE0010A2ED /* LocalizationKey.swift */; };
 		50B390D627D915F00010A2ED /* LocalizationProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390D527D915EF0010A2ED /* LocalizationProviderTests.swift */; };
@@ -311,7 +311,7 @@
 		1F9184AC26B491840049EF5B /* LifeCycleReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCycleReducerTests.swift; sourceTree = "<group>"; };
 		1F9184B326B4A2EF0049EF5B /* CallingReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingReducerTests.swift; sourceTree = "<group>"; };
 		1F9184B526B4A3340049EF5B /* NavigationReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationReducerTests.swift; sourceTree = "<group>"; };
-		1F94DADB2673E87700691D1E /* ThemeConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeConfiguration.swift; sourceTree = "<group>"; };
+		1F94DADB2673E87700691D1E /* ThemeOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeOptions.swift; sourceTree = "<group>"; };
 		1F94DADE2673E94F00691D1E /* CallComposite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallComposite.swift; sourceTree = "<group>"; };
 		1F94DAE02673EA9500691D1E /* CallCompositeEventsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeEventsHandler.swift; sourceTree = "<group>"; };
 		1F94DAE326740BCB00691D1E /* LocalUserAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalUserAction.swift; sourceTree = "<group>"; };
@@ -365,7 +365,7 @@
 		505460FD27BACA7F00040467 /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		505460FE27BC166C00040467 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5054610127C5977A00040467 /* LocalizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProvider.swift; sourceTree = "<group>"; };
-		5054610327C59AD700040467 /* LocalizationConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationConfiguration.swift; sourceTree = "<group>"; };
+		5054610327C59AD700040467 /* LocalizationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationOptions.swift; sourceTree = "<group>"; };
 		506EA4FB280F70A200578781 /* en-US */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-US"; path = "en-US.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		506EA4FC280F70DB00578781 /* de-DE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "de-DE"; path = "de-DE.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		506EA4FD280F70F300578781 /* es-ES */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-ES"; path = "es-ES.lproj/Localizable.strings"; sourceTree = "<group>"; };
@@ -1082,14 +1082,14 @@
 			isa = PBXGroup;
 			children = (
 				A8373993261F9D7600D46787 /* CallCompositeOptions.swift */,
-				1F94DADB2673E87700691D1E /* ThemeConfiguration.swift */,
+				1F94DADB2673E87700691D1E /* ThemeOptions.swift */,
 				1F94DAE02673EA9500691D1E /* CallCompositeEventsHandler.swift */,
 				1F94DAF42677D48400691D1E /* CommunicationUIErrorEvent.swift */,
 				A8100384269E1B370015C26E /* GroupCallOptions.swift */,
 				A8100386269F9DA70015C26E /* TeamsMeetingOptions.swift */,
 				A810038A26A0C1740015C26E /* CallConfiguration.swift */,
 				1F48B400274879F000B6E5F9 /* DiagnosticConfig.swift */,
-				5054610327C59AD700040467 /* LocalizationConfiguration.swift */,
+				5054610327C59AD700040467 /* LocalizationOptions.swift */,
 				881D8F7127FB6992008EC897 /* LocalSettings.swift */,
 			);
 			path = CallCompositeOptions;
@@ -1642,7 +1642,7 @@
 				A88CDFBC27505A410004E2F5 /* ErrorInfoViewModel.swift in Sources */,
 				98B1869F27C858F500B837E6 /* AudioDevicesListViewController.swift in Sources */,
 				A88CDFB9274FF9C10004E2F5 /* ErrorInfoView.swift in Sources */,
-				5054610427C59AD700040467 /* LocalizationConfiguration.swift in Sources */,
+				5054610427C59AD700040467 /* LocalizationOptions.swift in Sources */,
 				50E2D69526EACB74006B0EF4 /* ParticipantsListViewModel.swift in Sources */,
 				50FA45FC26813FB8001844AC /* ParticipantGridView.swift in Sources */,
 				1F2BEDD126329E7C00D98266 /* CallingAction.swift in Sources */,
@@ -1696,7 +1696,7 @@
 				981ACABC2685459400CD6A40 /* IconProvider.swift in Sources */,
 				1F2BEDCD26329E5600D98266 /* PermissionAction.swift in Sources */,
 				98B186A127C85F9800B837E6 /* AudioDevicesListViewModel.swift in Sources */,
-				1F94DADC2673E87700691D1E /* ThemeConfiguration.swift in Sources */,
+				1F94DADC2673E87700691D1E /* ThemeOptions.swift in Sources */,
 				1F94DAE426740BCB00691D1E /* LocalUserAction.swift in Sources */,
 				1F11D2BD2640BD9800D33838 /* CallingMiddleware.swift in Sources */,
 				1F87A7B9263A7E6E00F49C7E /* MappedSequence.swift in Sources */,

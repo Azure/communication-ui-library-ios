@@ -14,7 +14,7 @@ import FluentUI
 /// Join Call Button - Border - Normal - Light/Dark Mode - Tint10
 /// Join Call Button - Border - Highlighted - Light/Dark Mode - Tint30
 ///
-public protocol ThemeConfiguration {
+public protocol ThemeOptions {
     /// Provide a getter to force color scheme to be light or dark.
     var colorSchemeOverride: UIUserInterfaceStyle { get }
 
@@ -31,7 +31,7 @@ public protocol ThemeConfiguration {
     var primaryColorTint30: UIColor { get }
 }
 
-public extension ThemeConfiguration {
+public extension ThemeOptions {
     var colorSchemeOverride: UIUserInterfaceStyle {
         return .unspecified
     }

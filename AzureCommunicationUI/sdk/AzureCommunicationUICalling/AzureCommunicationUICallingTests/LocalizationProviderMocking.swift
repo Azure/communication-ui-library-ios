@@ -15,7 +15,7 @@ class LocalizationProviderMocking: LocalizationProviderProtocol {
         return false
     }
 
-    func apply(localeConfig: LocalizationConfiguration) {
+    func apply(localeConfig: LocalizationOptions) {
         isApplyCalled = true
     }
 
