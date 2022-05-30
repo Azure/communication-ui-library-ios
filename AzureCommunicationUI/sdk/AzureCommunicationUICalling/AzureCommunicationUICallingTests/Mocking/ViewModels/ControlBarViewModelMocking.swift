@@ -25,7 +25,9 @@ class ControlBarViewModelMocking: ControlBarViewModel {
                    localUserState: localUserState)
     }
 
-    override func update(localUserState: LocalUserState, permissionState: PermissionState) {
+    override func update(localUserState: LocalUserState,
+                         permissionState: PermissionState,
+                         callingState: CallingState) {
         updateState?(localUserState, permissionState)
     }
 }

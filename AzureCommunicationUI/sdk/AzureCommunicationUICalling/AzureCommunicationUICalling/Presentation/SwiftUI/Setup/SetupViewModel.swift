@@ -41,7 +41,8 @@ class SetupViewModel: ObservableObject {
 
         joiningCallActivityViewModel = compositeViewModelFactory.makeJoiningCallActivityViewModel()
 
-        errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
+        errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel(title: "",
+                                                                              subtitle: "")
 
         joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,

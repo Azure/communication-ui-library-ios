@@ -126,7 +126,9 @@ class ControlBarViewModelTests: XCTestCase {
         let localUserState = LocalUserState(audioState: audioState)
         let permissionState = PermissionState(audioPermission: .granted,
                                               cameraPermission: .granted)
-        sut.update(localUserState: localUserState, permissionState: permissionState)
+        sut.update(localUserState: localUserState,
+                   permissionState: permissionState,
+                   callingState: CallingState())
         XCTAssertEqual(sut.audioState.operation, .off)
         XCTAssertEqual(sut.micButtonViewModel.iconName, .micOff)
         wait(for: [expectation], timeout: 1)
@@ -147,7 +149,9 @@ class ControlBarViewModelTests: XCTestCase {
         let permissionState = PermissionState(audioPermission: .granted,
                                               cameraPermission: .granted)
 
-        sut.update(localUserState: localUserState, permissionState: permissionState)
+        sut.update(localUserState: localUserState,
+                   permissionState: permissionState,
+                   callingState: CallingState())
         XCTAssertEqual(sut.audioState.operation, .pending)
         XCTAssertEqual(sut.isMicDisabled(), true)
         wait(for: [expectation], timeout: 1)
@@ -172,7 +176,9 @@ class ControlBarViewModelTests: XCTestCase {
         let permissionState = PermissionState(audioPermission: .granted,
                                               cameraPermission: .granted)
 
-        sut.update(localUserState: localUserState, permissionState: permissionState)
+        sut.update(localUserState: localUserState,
+                   permissionState: permissionState,
+                   callingState: CallingState())
         XCTAssertEqual(sut.audioState.operation, .pending)
         XCTAssertEqual(sut.isMicDisabled(), true)
         wait(for: [expectation], timeout: 1)
@@ -198,7 +204,9 @@ class ControlBarViewModelTests: XCTestCase {
         let permissionState = PermissionState(audioPermission: .granted,
                                               cameraPermission: .granted)
 
-        sut.update(localUserState: localUserState, permissionState: permissionState)
+        sut.update(localUserState: localUserState,
+                   permissionState: permissionState,
+                   callingState: CallingState())
         XCTAssertEqual(sut.audioState.operation, .on)
         XCTAssertEqual(sut.isMicDisabled(), false)
         wait(for: [expectation], timeout: 1)
@@ -223,7 +231,9 @@ class ControlBarViewModelTests: XCTestCase {
         let permissionState = PermissionState(audioPermission: .granted,
                                               cameraPermission: .granted)
 
-        sut.update(localUserState: localUserState, permissionState: permissionState)
+        sut.update(localUserState: localUserState,
+                   permissionState: permissionState,
+                   callingState: CallingState())
         XCTAssertEqual(sut.audioState.operation, .off)
         XCTAssertEqual(sut.isMicDisabled(), false)
         wait(for: [expectation], timeout: 1)
@@ -243,7 +253,9 @@ class ControlBarViewModelTests: XCTestCase {
         let localUserState = LocalUserState(audioState: audioState)
         let permissionState = PermissionState(audioPermission: .granted,
                                               cameraPermission: .granted)
-        sut.update(localUserState: localUserState, permissionState: permissionState)
+        sut.update(localUserState: localUserState,
+                   permissionState: permissionState,
+                   callingState: CallingState())
         XCTAssertEqual(sut.audioState.operation, .on)
         XCTAssertEqual(sut.isMicDisabled(), false)
         XCTAssertEqual(sut.micButtonViewModel.iconName, .micOn)
@@ -268,7 +280,9 @@ class ControlBarViewModelTests: XCTestCase {
         let localUserState = LocalUserState(audioState: audioState)
         let permissionState = PermissionState(audioPermission: .granted,
                                               cameraPermission: .granted)
-        sut.update(localUserState: localUserState, permissionState: permissionState)
+        sut.update(localUserState: localUserState,
+                   permissionState: permissionState,
+                   callingState: CallingState())
         XCTAssertEqual(sut.audioState.operation, .on)
         XCTAssertEqual(sut.isMicDisabled(), false)
         XCTAssertEqual(sut.micButtonViewModel.iconName, .micOn)
@@ -292,7 +306,9 @@ class ControlBarViewModelTests: XCTestCase {
         let localUserState = LocalUserState(audioState: audioState)
         let permissionState = PermissionState(audioPermission: .granted,
                                               cameraPermission: .granted)
-        sut.update(localUserState: localUserState, permissionState: permissionState)
+        sut.update(localUserState: localUserState,
+                   permissionState: permissionState,
+                   callingState: CallingState())
         XCTAssertEqual(sut.audioState.operation, .off)
         XCTAssertEqual(sut.isMicDisabled(), false)
         XCTAssertEqual(sut.micButtonViewModel.iconName, .micOff)
@@ -360,7 +376,9 @@ class ControlBarViewModelTests: XCTestCase {
                                                    device: .receiverSelected)
         let localUserState = LocalUserState(cameraState: cameraState, audioState: audioState)
         let permissionState = PermissionState(audioPermission: .granted, cameraPermission: .granted)
-        sut.update(localUserState: localUserState, permissionState: permissionState)
+        sut.update(localUserState: localUserState,
+                   permissionState: permissionState,
+                   callingState: CallingState())
         XCTAssertEqual(sut.cameraState.operation, .off)
         XCTAssertEqual(sut.cameraButtonViewModel.iconName, .videoOff)
         wait(for: [expectation], timeout: 1)
@@ -387,7 +405,9 @@ class ControlBarViewModelTests: XCTestCase {
                                                    device: .receiverSelected)
         let localUserState = LocalUserState(cameraState: cameraState, audioState: audioState)
         let permissionState = PermissionState(audioPermission: .granted, cameraPermission: .granted)
-        sut.update(localUserState: localUserState, permissionState: permissionState)
+        sut.update(localUserState: localUserState,
+                   permissionState: permissionState,
+                   callingState: CallingState())
         XCTAssertEqual(sut.cameraState.operation, .on)
         XCTAssertEqual(sut.cameraButtonViewModel.iconName, .videoOn)
         wait(for: [expectation], timeout: 1)
@@ -415,7 +435,9 @@ class ControlBarViewModelTests: XCTestCase {
                                                    device: .receiverSelected)
         let localUserState = LocalUserState(cameraState: cameraState, audioState: audioState)
         let permissionState = PermissionState(audioPermission: .granted, cameraPermission: .granted)
-        sut.update(localUserState: localUserState, permissionState: permissionState)
+        sut.update(localUserState: localUserState,
+                   permissionState: permissionState,
+                   callingState: CallingState())
         XCTAssertEqual(sut.cameraState.operation, .on)
         XCTAssertEqual(sut.cameraButtonViewModel.iconName, .videoOn)
         wait(for: [expectation], timeout: 1)
@@ -442,7 +464,9 @@ class ControlBarViewModelTests: XCTestCase {
                                                    device: .receiverSelected)
         let localUserState = LocalUserState(cameraState: cameraState, audioState: audioState)
         let permissionState = PermissionState(audioPermission: .granted, cameraPermission: .granted)
-        sut.update(localUserState: localUserState, permissionState: permissionState)
+        sut.update(localUserState: localUserState,
+                   permissionState: permissionState,
+                   callingState: CallingState())
         XCTAssertEqual(sut.cameraState.operation, .off)
         XCTAssertEqual(sut.cameraButtonViewModel.iconName, .videoOff)
         wait(for: [expectation], timeout: 1)
@@ -468,7 +492,9 @@ class ControlBarViewModelTests: XCTestCase {
                                                      device: .front,
                                                      transmission: .local)
         let localUserState = LocalUserState(cameraState: cameraState)
-        sut.update(localUserState: localUserState, permissionState: PermissionState())
+        sut.update(localUserState: localUserState,
+                   permissionState: PermissionState(),
+                   callingState: CallingState())
         wait(for: [expectation], timeout: 1)
     }
 
@@ -488,7 +514,9 @@ class ControlBarViewModelTests: XCTestCase {
         }
         let sut = makeSUT()
         let permissionState = PermissionState(cameraPermission: .granted)
-        sut.update(localUserState: LocalUserState(), permissionState: permissionState)
+        sut.update(localUserState: LocalUserState(),
+                   permissionState: permissionState,
+                   callingState: CallingState())
         wait(for: [expectation], timeout: 1)
     }
 
@@ -510,7 +538,9 @@ class ControlBarViewModelTests: XCTestCase {
         let audioState = LocalUserState.AudioState(operation: .on,
                                                    device: .speakerSelected)
         let localUserState = LocalUserState(audioState: audioState)
-        sut.update(localUserState: localUserState, permissionState: PermissionState())
+        sut.update(localUserState: localUserState,
+                   permissionState: PermissionState(),
+                   callingState: CallingState())
         wait(for: [expectation], timeout: 1)
     }
 
@@ -530,7 +560,9 @@ class ControlBarViewModelTests: XCTestCase {
         }
         let sut = makeSUT()
         let permissionState = PermissionState(audioPermission: .granted)
-        sut.update(localUserState: LocalUserState(), permissionState: permissionState)
+        sut.update(localUserState: LocalUserState(),
+                   permissionState: permissionState,
+                   callingState: CallingState())
         wait(for: [expectation], timeout: 1)
     }
 
@@ -552,7 +584,9 @@ class ControlBarViewModelTests: XCTestCase {
         let audioState = LocalUserState.AudioState(operation: .on,
                                                    device: .bluetoothSelected)
         let localUserState = LocalUserState(audioState: audioState)
-        sut.update(localUserState: localUserState, permissionState: PermissionState())
+        sut.update(localUserState: localUserState,
+                   permissionState: PermissionState(),
+                   callingState: CallingState())
         wait(for: [expectation], timeout: 1)
     }
 
@@ -570,7 +604,9 @@ class ControlBarViewModelTests: XCTestCase {
         }
         factoryMocking.audioDevicesListViewModel = audioDevicesListViewModel
         let sut = makeSUT()
-        sut.update(localUserState: localUserState, permissionState: PermissionState())
+        sut.update(localUserState: localUserState,
+                   permissionState: PermissionState(),
+                   callingState: CallingState())
         wait(for: [expectation], timeout: 1.0)
     }
 }
