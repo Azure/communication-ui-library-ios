@@ -24,9 +24,8 @@ class CallingViewModel: ObservableObject {
     let localVideoViewModel: LocalVideoViewModel
     let participantGridsViewModel: ParticipantGridViewModel
     let bannerViewModel: BannerViewModel
-    let errorInfoViewModel: ErrorInfoViewModel
     let lobbyOverlayViewModel: LobbyOverlayViewModel
-    let onHoldOverlayViewModel: OnHoldOverlayViewModel
+    var onHoldOverlayViewModel: OnHoldOverlayViewModel!
     let isRightToLeft: Bool
 
     var controlBarViewModel: ControlBarViewModel!
@@ -54,14 +53,7 @@ class CallingViewModel: ObservableObject {
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: dispatchAction)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel()
         bannerViewModel = compositeViewModelFactory.makeBannerViewModel()
-        errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel()
         lobbyOverlayViewModel = compositeViewModelFactory.makeLobbyOverlayViewModel()
-        onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(resume: { [weak self] in
-            guard let self = self else {
-                return
-            }
-            self.resumeOnHold()
-        })
 
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
@@ -72,6 +64,13 @@ class CallingViewModel: ObservableObject {
                 }
                 self.endCall()
             }, localUserState: store.state.localUserState)
+
+        onHoldOverlayViewModel = compositeViewModelFactory.makeOnHoldOverlayViewModel(resumeAction: { [weak self] in
+            guard let self = self else {
+                return
+            }
+            self.resumeOnHold()
+        })
 
         store.$state
             .receive(on: DispatchQueue.main)
@@ -92,12 +91,7 @@ class CallingViewModel: ObservableObject {
     }
 
     func resumeOnHold() {
-        if store.state.audioSessionState.status == .active {
-            let action = CallingAction.ResumeRequested()
-            store.dispatch(action: action)
-        } else {
-            errorInfoViewModel.show()
-        }
+        store.dispatch(action: CallingAction.ResumeRequested())
     }
 
     func receive(_ state: AppState) {
@@ -110,7 +104,8 @@ class CallingViewModel: ObservableObject {
         }
 
         controlBarViewModel.update(localUserState: state.localUserState,
-                                   permissionState: state.permissionState)
+                                   permissionState: state.permissionState,
+                                   callingState: state.callingState)
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState)
@@ -119,7 +114,8 @@ class CallingViewModel: ObservableObject {
                                          remoteParticipantsState: state.remoteParticipantsState)
         bannerViewModel.update(callingState: state.callingState)
         lobbyOverlayViewModel.update(callingStatus: state.callingState.status)
-        onHoldOverlayViewModel.update(callingStatus: state.callingState.status)
+        onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
+                                      audioSessionStatus: state.audioSessionState.status)
 
         let newIsCallConnected = state.callingState.status == .connected
         let hasRemoteParticipants = state.remoteParticipantsState.participantInfoList.count > 0

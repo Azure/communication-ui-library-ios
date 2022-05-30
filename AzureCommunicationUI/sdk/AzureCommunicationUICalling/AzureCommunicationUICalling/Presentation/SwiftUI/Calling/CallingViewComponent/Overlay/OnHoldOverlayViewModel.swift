@@ -7,47 +7,64 @@ import Foundation
 
 class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
-    private let compositeViewModelFactory: CompositeViewModelFactory
+    private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
     private let accessibilityProvider: AccessibilityProviderProtocol
+    private var audioSessionStatus: AudioSessionStatus = .interrupted
+    private var resumeAction: (() -> Void)
 
     var title: String {
         return localizationProvider.getLocalizedString(.onHoldMessage)
     }
 
-    var subtitle: String?
+    var errorInfoViewModel: ErrorInfoViewModel?
 
     @Published var actionButtonViewModel: PrimaryButtonViewModel?
 
     @Published var isDisplayed: Bool = false
 
     init(localizationProvider: LocalizationProviderProtocol,
-         compositeViewModelFactory: CompositeViewModelFactory,
+         compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          accessibilityProvider: AccessibilityProviderProtocol,
-         resume: @escaping (() -> Void)) {
+         resumeAction: @escaping (() -> Void)) {
         self.localizationProvider = localizationProvider
         self.compositeViewModelFactory = compositeViewModelFactory
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
-
-        actionButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
+        let errorInfoTitle = localizationProvider.getLocalizedString(.snackBarErrorOnHoldTitle)
+        let errorInfoSubtitle = localizationProvider.getLocalizedString(.snackBarErrorOnHoldSubtitle)
+        self.errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel(title: errorInfoTitle,
+                                                                            subtitle: errorInfoSubtitle)
+        self.resumeAction = resumeAction
+        self.actionButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: localizationProvider.getLocalizedString(.resume),
-            iconName: nil) { [weak self] in
+            iconName: nil,
+            isDisabled: false) { [weak self] in
                 guard let self = self else {
                     return
                 }
                 self.logger.debug("Resume from hold button tapped")
-                resume()
+                if self.audioSessionStatus == .active {
+                    resumeAction()
+                } else {
+                    self.errorInfoViewModel?.show()
+                }
         }
     }
 
-    func update(callingStatus: CallingStatus) {
+    func update(callingStatus: CallingStatus,
+                audioSessionStatus: AudioSessionStatus) {
+        self.audioSessionStatus = audioSessionStatus
         let shouldDisplay = callingStatus == .localHold
         if isDisplayed != shouldDisplay {
             isDisplayed = shouldDisplay
             accessibilityProvider.moveFocusToFirstElement()
+        }
+
+        if !isDisplayed {
+            self.errorInfoViewModel?.dismiss()
         }
     }
 }

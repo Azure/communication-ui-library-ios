@@ -33,11 +33,12 @@ protocol CompositeViewModelFactoryProtocol {
                                            title: String,
                                            isSelected: Bool,
                                            onSelectedAction: @escaping (() -> Void)) -> AudioDevicesListCellViewModel
-    func makeErrorInfoViewModel() -> ErrorInfoViewModel
+    func makeErrorInfoViewModel(title: String,
+                                subtitle: String) -> ErrorInfoViewModel
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel
-    func makeOnHoldOverlayViewModel(resume: @escaping (() -> Void)) -> OnHoldOverlayViewModel
+    func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel
@@ -160,8 +161,11 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                       onSelected: onSelectedAction)
     }
 
-    func makeErrorInfoViewModel() -> ErrorInfoViewModel {
-        ErrorInfoViewModel(localizationProvider: localizationProvider)
+    func makeErrorInfoViewModel(title: String,
+                                subtitle: String) -> ErrorInfoViewModel {
+        ErrorInfoViewModel(localizationProvider: localizationProvider,
+                           title: title,
+                           subtitle: subtitle)
     }
 
     // MARK: CallingViewModels
@@ -169,12 +173,12 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         LobbyOverlayViewModel(localizationProvider: localizationProvider,
                               accessibilityProvider: accessibilityProvider)
     }
-    func makeOnHoldOverlayViewModel(resume: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
+    func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
         OnHoldOverlayViewModel(localizationProvider: localizationProvider,
                                compositeViewModelFactory: self,
                                logger: logger,
                                accessibilityProvider: accessibilityProvider,
-                               resume: resume)
+                               resumeAction: resumeAction)
     }
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
