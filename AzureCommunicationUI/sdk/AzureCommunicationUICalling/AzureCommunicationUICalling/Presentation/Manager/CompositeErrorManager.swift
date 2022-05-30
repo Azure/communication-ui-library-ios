@@ -47,7 +47,7 @@ class CompositeErrorManager: ErrorManagerProtocol {
         }
 
         self.error = error
-        guard !isInternalErrorCode(error.code),
+        guard isPublicErrorCode(error.code),
               let didFail = eventsHandler.didFail else {
             return
         }
@@ -62,14 +62,14 @@ class CompositeErrorManager: ErrorManagerProtocol {
         }
     }
 
-    private func isInternalErrorCode(_ errorCode: String) -> Bool {
-        if errorCode == CallCompositeErrorCode.callEvicted,
-           errorCode == CallCompositeErrorCode.callDenied,
-           errorCode == CallCompositeErrorCode.callResume,
-           errorCode == CallCompositeErrorCode.callHold {
-            return true
-        } else {
+    private func isPublicErrorCode(_ errorCode: String) -> Bool {
+        guard errorCode != CallCompositeErrorCode.callEvicted,
+              errorCode != CallCompositeErrorCode.callDenied,
+              errorCode != CallCompositeErrorCode.callResume,
+              errorCode != CallCompositeErrorCode.callHold else {
             return false
         }
+
+        return true
     }
 }
