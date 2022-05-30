@@ -14,8 +14,8 @@ public typealias RemoteParticipantsJoinedHandler = ([CommunicationIdentifier]) -
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
     private var logger: Logger?
-    private let themeConfiguration: ThemeConfiguration?
-    private let localizationConfiguration: LocalizationConfiguration?
+    private let themeOptions: ThemeOptions?
+    private let localizationOptions: LocalizationOptions?
     private let callCompositeEventsHandler: CallCompositeEventsHandling
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
@@ -28,8 +28,8 @@ public class CallComposite {
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
         callCompositeEventsHandler = CallCompositeEventsHandler()
-        themeConfiguration = options?.themeConfiguration
-        localizationConfiguration = options?.localizationConfiguration
+        themeOptions = options?.themeOptions
+        localizationOptions = options?.localizationOptions
     }
 
     /// Assign closures to execute when error event  occurs inside Call Composite.
@@ -164,7 +164,7 @@ public class CallComposite {
     }
 
     private func setupColorTheming() {
-        let colorProvider = ColorThemeProvider(themeConfiguration: themeConfiguration)
+        let colorProvider = ColorThemeProvider(themeOptions: themeOptions)
         StyleProvider.color = colorProvider
         DispatchQueue.main.async {
             if let window = UIWindow.keyWindow {
@@ -174,8 +174,8 @@ public class CallComposite {
     }
 
     private func setupLocalization(with provider: LocalizationProviderProtocol) {
-        if let localizationConfiguration = localizationConfiguration {
-            provider.apply(localeConfig: localizationConfiguration)
+        if let localizationOptions = localizationOptions {
+            provider.apply(localeConfig: localizationOptions)
         }
     }
 
