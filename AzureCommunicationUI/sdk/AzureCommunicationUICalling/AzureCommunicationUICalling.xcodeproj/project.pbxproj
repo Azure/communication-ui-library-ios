@@ -69,7 +69,7 @@
 		1F94DAE626740D4400691D1E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAE526740D4400691D1E /* AppState.swift */; };
 		1F94DAE82676885700691D1E /* AppStateReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAE72676885700691D1E /* AppStateReducer.swift */; };
 		1F94DAF326772B3C00691D1E /* UIWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAF226772B3C00691D1E /* UIWindowExtension.swift */; };
-		1F94DAF52677D48400691D1E /* CommunicationUIErrorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAF42677D48400691D1E /* CommunicationUIErrorEvent.swift */; };
+		1F94DAF52677D48400691D1E /* CallCompositeErrorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAF42677D48400691D1E /* CallCompositeErrorEvent.swift */; };
 		1FA23F9E265DA21400B4A080 /* VideoStreamInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA23F9D265DA21400B4A080 /* VideoStreamInfoModel.swift */; };
 		1FA24BAD2666F0CC00B4A080 /* ColorThemeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA24BAC2666F0CC00B4A080 /* ColorThemeProvider.swift */; };
 		1FBCB666264519DA00F57EEA /* VideoViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBCB665264519DA00F57EEA /* VideoViewManager.swift */; };
@@ -308,7 +308,7 @@
 		1F94DAE526740D4400691D1E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		1F94DAE72676885700691D1E /* AppStateReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateReducer.swift; sourceTree = "<group>"; };
 		1F94DAF226772B3C00691D1E /* UIWindowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWindowExtension.swift; sourceTree = "<group>"; };
-		1F94DAF42677D48400691D1E /* CommunicationUIErrorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationUIErrorEvent.swift; sourceTree = "<group>"; };
+		1F94DAF42677D48400691D1E /* CallCompositeErrorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeErrorEvent.swift; sourceTree = "<group>"; };
 		1FA23F9D265DA21400B4A080 /* VideoStreamInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoStreamInfoModel.swift; sourceTree = "<group>"; };
 		1FA24BAC2666F0CC00B4A080 /* ColorThemeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorThemeProvider.swift; sourceTree = "<group>"; };
 		1FBCB665264519DA00F57EEA /* VideoViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewManager.swift; sourceTree = "<group>"; };
@@ -1069,7 +1069,7 @@
 				A8373993261F9D7600D46787 /* CallCompositeOptions.swift */,
 				1F94DADB2673E87700691D1E /* ThemeOptions.swift */,
 				1F94DAE02673EA9500691D1E /* CallCompositeEventsHandler.swift */,
-				1F94DAF42677D48400691D1E /* CommunicationUIErrorEvent.swift */,
+				1F94DAF42677D48400691D1E /* CallCompositeErrorEvent.swift */,
 				A8100384269E1B370015C26E /* GroupCallOptions.swift */,
 				A8100386269F9DA70015C26E /* TeamsMeetingOptions.swift */,
 				A810038A26A0C1740015C26E /* CallConfiguration.swift */,
@@ -1634,7 +1634,7 @@
 				50C6DECC270E48BE0085D04B /* BannerInfoType.swift in Sources */,
 				1F03D3D22638A6B70055C456 /* CallingViewModel.swift in Sources */,
 				50FA45FE26813FCE001844AC /* ParticipantGridViewModel.swift in Sources */,
-				1F94DAF52677D48400691D1E /* CommunicationUIErrorEvent.swift in Sources */,
+				1F94DAF52677D48400691D1E /* CallCompositeErrorEvent.swift in Sources */,
 				1F94DAE626740D4400691D1E /* AppState.swift in Sources */,
 				8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */,
 				50137D0626A7479C00AB843E /* EnvironmentValuesExtension.swift in Sources */,
