@@ -129,7 +129,7 @@ class ControlBarViewModel: ObservableObject {
         audioState.operation == .pending || callingStatus == .localHold
     }
 
-    func isAudioDeviceDisable() -> Bool {
+    func isAudioDeviceDisabled() -> Bool {
         callingStatus == .localHold
     }
 
@@ -192,7 +192,7 @@ class ControlBarViewModel: ObservableObject {
                                      ? localizationProvider.getLocalizedString(.micOnAccessibilityLabel)
                                      : localizationProvider.getLocalizedString(.micOffAccessibilityLabel))
         micButtonViewModel.update(isDisabled: isMicDisabled())
-        audioDeviceButtonViewModel.update(isDisabled: isAudioDeviceDisable())
+        audioDeviceButtonViewModel.update(isDisabled: isAudioDeviceDisabled())
         let audioDeviceState = localUserState.audioState.device
         audioDeviceButtonViewModel.update(
             iconName: audioDeviceState.icon
