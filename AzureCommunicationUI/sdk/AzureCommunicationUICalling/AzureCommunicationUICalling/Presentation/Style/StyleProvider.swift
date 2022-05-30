@@ -6,7 +6,7 @@
 import Foundation
 
 struct StyleProvider {
-    static var color = ColorThemeProvider(themeConfiguration: nil)
+    static var color = ColorThemeProvider(themeOptions: nil)
     static var icon = IconProvider()
     // static var font = FontProvider()
 }
