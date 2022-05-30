@@ -56,8 +56,7 @@ public class CallComposite {
 
         dependencyContainer.registerDependencies(callConfiguration,
                                                  localSettings: localSettings,
-                                                 eventsHandler: callCompositeEventsHandler)
-
+                                                 callCompositeEventsHandler: callCompositeEventsHandler)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)
@@ -65,7 +64,7 @@ public class CallComposite {
                                                                     logger: dependencyContainer.resolve(),
                                                                     viewFactory: dependencyContainer.resolve(),
                                                                     isRightToLeft: localizationProvider.isRightToLeft)
-        setupManagers(dependencyContainer: dependencyContainer)
+        setupManagers(with: dependencyContainer)
         present(toolkitHostingController)
     }
 
@@ -115,30 +114,13 @@ public class CallComposite {
                                                           participantViewData: participantViewData)
     }
 
-    private func setupManagers(dependencyContainer: DependencyContainer) {
-        let errorManager = CompositeErrorManager(store: dependencyContainer.resolve(),
-                                                 callCompositeEventsHandler: callCompositeEventsHandler)
-        self.errorManager = errorManager
-
-        let lifeCycleManager = UIKitAppLifeCycleManager(store: dependencyContainer.resolve(),
-                                                        logger: dependencyContainer.resolve())
-        self.lifeCycleManager = lifeCycleManager
-
-        let permissionManager = PermissionsManager(store: dependencyContainer.resolve())
-        self.permissionManager = permissionManager
-
-        let audioSessionManager = AudioSessionManager(store: dependencyContainer.resolve(),
-                                                      logger: dependencyContainer.resolve())
-        self.audioSessionManager = audioSessionManager
-
-        avatarViewManager = dependencyContainer.resolve() as AvatarViewManager
-
-        let remoteParticipantsManager = RemoteParticipantsManager(
-            store: dependencyContainer.resolve(),
-            callCompositeEventsHandler: callCompositeEventsHandler,
-            callingSDKWrapper: dependencyContainer.resolve(),
-            avatarViewManager: dependencyContainer.resolve())
-        self.remoteParticipantsManager = remoteParticipantsManager
+    private func setupManagers(with dependencyContainer: DependencyContainer) {
+        self.errorManager = dependencyContainer.resolve()
+        self.lifeCycleManager = dependencyContainer.resolve()
+        self.permissionManager = dependencyContainer.resolve()
+        self.audioSessionManager = dependencyContainer.resolve()
+        self.avatarViewManager = dependencyContainer.resolve() as AvatarViewManager
+        self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManager
     }
 
     private func cleanUpManagers() {
