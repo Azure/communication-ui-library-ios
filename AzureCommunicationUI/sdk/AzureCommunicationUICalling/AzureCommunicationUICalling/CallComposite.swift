@@ -115,10 +115,10 @@ public class CallComposite {
     }
 
     private func setupManagers(with dependencyContainer: DependencyContainer) {
-        self.errorManager = dependencyContainer.resolve()
-        self.lifeCycleManager = dependencyContainer.resolve()
-        self.permissionManager = dependencyContainer.resolve()
-        self.audioSessionManager = dependencyContainer.resolve()
+        self.errorManager = dependencyContainer.resolve() as ErrorManagerProtocol
+        self.lifeCycleManager = dependencyContainer.resolve() as LifeCycleManagerProtocol
+        self.permissionManager = dependencyContainer.resolve() as PermissionsManagerProtocol
+        self.audioSessionManager = dependencyContainer.resolve() as AudioSessionManagerProtocol
         self.avatarViewManager = dependencyContainer.resolve() as AvatarViewManager
         self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManager
     }
