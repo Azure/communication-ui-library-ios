@@ -128,7 +128,8 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
-        return lobbyOverlayViewModel ?? LobbyOverlayViewModel(localizationProvider: LocalizationProviderMocking(), accessibilityProvider: AccessibilityProviderMocking())
+        return lobbyOverlayViewModel ?? LobbyOverlayViewModel(localizationProvider: LocalizationProviderMocking(),
+                                                              accessibilityProvider: accessibilityProvider)
     }
 
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,

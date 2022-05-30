@@ -173,7 +173,9 @@ class CallingViewModelTests: XCTestCase {
 extension CallingViewModelTests {
     func makeSUT(storeFactory: StoreFactoryMocking = StoreFactoryMocking(),
                  accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()) -> CallingViewModel {
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
+                                                              store: storeFactory.store,
+                                                              accessibilityProvider: accessibilityProvider)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
