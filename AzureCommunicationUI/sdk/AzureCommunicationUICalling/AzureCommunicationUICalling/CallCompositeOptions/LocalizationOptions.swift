@@ -66,12 +66,12 @@ public struct CommunicationUISupportedLocale {
 }
 
 /// A configuration to allow customizing localization.
-public struct LocalizationConfiguration {
+public struct LocalizationOptions {
     let languageCode: String
     let localizableFilename: String
     let layoutDirection: LayoutDirection
 
-    /// Creates an instance of `LocalizationConfiguration` with related parameters. Allow
+    /// Creates an instance of `LocalizationOptions` with related parameters. Allow
     /// overriding strings of localization keys with Localizable.strings file or other localizable filename.
     /// - Parameter locale: Locale struct representing the language identifier (ie. en, fr, fr-FR,
     /// zh-Hant, zh-Hans, ...), with or without region. If Locale identifier is not valid, will default to `en`.
