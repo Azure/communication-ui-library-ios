@@ -63,6 +63,14 @@ public struct CommunicationUISupportedLocale {
     public static let tr = Locale(identifier: "tr")
     /// Turkish (Turkey)
     public static let trTR = Locale(identifier: "tr-TR")
+
+    /// Get supported languages the AzureCommunicationUICalling has predefined translations.
+    /// - Returns: Get supported Locales the AzureCommunicationUICalling
+    ///  has predefined translations.
+    public static func getSupportedLocales() -> [Locale] {
+        return Bundle(for: CallComposite.self).localizations.sorted()
+            .map { Locale(identifier: $0) }
+    }
 }
 
 /// A configuration to allow customizing localization.
@@ -87,13 +95,5 @@ public struct LocalizationOptions {
         self.languageCode = locale.collatorIdentifier ?? "en"
         self.localizableFilename = localizableFilename
         self.layoutDirection = layoutDirection
-    }
-
-    /// Get supported languages the AzureCommunicationUICalling has predefined translations.
-    /// - Returns: Get supported Locales the AzureCommunicationUICalling
-    ///  has predefined translations.
-    public static var supportedLocales: [Locale] {
-        return Bundle(for: CallComposite.self).localizations.sorted()
-            .map { Locale(identifier: $0) }
     }
 }
