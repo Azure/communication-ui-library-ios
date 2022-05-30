@@ -11,6 +11,7 @@ struct ParticipantGridLayoutView: View {
     let avatarViewManager: AvatarViewManager
     let screenSize: ScreenSizeClassType
     let gridsMargin: CGFloat = 3
+    @Orientation var orientation: UIDeviceOrientation
 
     var body: some View {
         Group {
@@ -19,9 +20,10 @@ struct ParticipantGridLayoutView: View {
                 vGridLayout
             default:
                 let cellCount = cellViewModels.count
-                let isPortrait = UIDevice.current.orientation.isPortrait
-                let isiPadLanscape = UIDevice.current.orientation.isLandscape && screenSize == .ipadScreenSize
-                let isiPadPortrait = isPortrait && screenSize == .ipadScreenSize
+                let isPortrait = orientation.isPortrait
+                let isiPadLanscape = orientation.isLandscape && screenSize == .ipadScreenSize
+                let isiPadPortrait = isPortrait
+                    && (screenSize == .ipadScreenSize)
                 if (cellCount == 5 && isiPadLanscape)
                     || (cellCount == 8 && isiPadPortrait)
                     || (cellCount == 7 && isiPadPortrait)
@@ -37,8 +39,8 @@ struct ParticipantGridLayoutView: View {
     func getChunkedCellViewModelArray() -> [[ParticipantGridCellViewModel]] {
         let cellCount = cellViewModels.count
         let vGridLayout = screenSize == .iphonePortraitScreenSize
-        let isPortrait = UIDevice.current.orientation.isPortrait
-        let isiPadLanscape = UIDevice.current.orientation.isLandscape && screenSize == .ipadScreenSize
+        let isPortrait = orientation.isPortrait
+        let isiPadLanscape = orientation.isLandscape && (screenSize == .ipadScreenSize)
         let isiPadPortrait = isPortrait && screenSize == .ipadScreenSize
 
         var screenBasedRowSize = 2
@@ -103,5 +105,4 @@ struct ParticipantGridLayoutView: View {
 
         }
     }
-
 }
