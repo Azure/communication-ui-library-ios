@@ -32,7 +32,7 @@ final class DependencyContainer {
 
     func registerDependencies(_ callConfiguration: CallConfiguration,
                               localSettings: LocalSettings?,
-                              eventsHandler: CallCompositeEventsHandling) {
+                              callCompositeEventsHandler: CallCompositeEventsHandling) {
         register(CallingSDKEventsHandler(logger: resolve()) as CallingSDKEventsHandling)
         register(CallingSDKWrapper(logger: resolve(),
                                    callingEventsHandler: resolve(),
@@ -56,6 +56,18 @@ final class DependencyContainer {
                                       avatarManager: resolve(),
                                       videoViewManager: resolve(),
                                       compositeViewModelFactory: resolve()) as CompositeViewFactoryProtocol)
+        register(CompositeErrorManager(store: resolve(),
+                                       callCompositeEventsHandler: callCompositeEventsHandler) as CompositeErrorManager)
+        register(UIKitAppLifeCycleManager(store: resolve(),
+                                          logger: resolve()) as LifeCycleManagerProtocol)
+        register(PermissionsManager(store: resolve()) as PermissionsManagerProtocol)
+        register(AudioSessionManager(store: resolve(),
+                                     logger: resolve()) as AudioSessionManagerProtocol)
+        register(RemoteParticipantsManager(store: resolve(),
+                                           callCompositeEventsHandler: callCompositeEventsHandler,
+                                           callingSDKWrapper: resolve(),
+                                           avatarViewManager: resolve()) as RemoteParticipantsManager)
+
     }
 
     private func makeStore(displayName: String?) -> Store<AppState> {
