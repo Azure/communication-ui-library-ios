@@ -8,7 +8,7 @@ import SwiftUI
 import Combine
 
 @propertyWrapper struct Orientation: DynamicProperty {
-    @StateObject private var manager: OrientationManager = OrientationManager.shared
+    @StateObject private var manager: OrientationManager = .shared
 
     var wrappedValue: UIDeviceOrientation {
         manager.type

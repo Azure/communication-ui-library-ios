@@ -25,7 +25,7 @@ struct AppPhaseKey: EnvironmentKey {
 }
 
 struct OrientationKey: EnvironmentKey {
-    static let defaultValue: OrientationManager = OrientationManager.shared
+    static let defaultValue: OrientationManager = .shared
 }
 
 extension EnvironmentValues {
