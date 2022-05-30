@@ -20,7 +20,7 @@ class LocalizationProviderTests: XCTestCase {
         let sut = makeSUT()
         let locale: Locale = CallCompositeSupportedLocale.en
         let layoutDirection: LayoutDirection = .rightToLeft
-        let localeConfig = LocalizationConfiguration(locale: locale,
+        let localeConfig = LocalizationOptions(locale: locale,
                                                      layoutDirection: layoutDirection)
         sut.apply(localeConfig: localeConfig)
         XCTAssertTrue(sut.isRightToLeft)
@@ -30,7 +30,7 @@ class LocalizationProviderTests: XCTestCase {
         let sut = makeSUT()
         let locale: Locale = CallCompositeSupportedLocale.en
         let layoutDirection: LayoutDirection = .leftToRight
-        let localeConfig = LocalizationConfiguration(locale: locale,
+        let localeConfig = LocalizationOptions(locale: locale,
                                                      layoutDirection: layoutDirection)
         sut.apply(localeConfig: localeConfig)
         XCTAssertFalse(sut.isRightToLeft)
@@ -52,7 +52,7 @@ class LocalizationProviderTests: XCTestCase {
         XCTAssertEqual(sut.getLocalizedString(key), joinCallEn)
 
         let locale: Locale = CallCompositeSupportedLocale.fr
-        let localeConfig = LocalizationConfiguration(locale: locale)
+        let localeConfig = LocalizationOptions(locale: locale)
         sut.apply(localeConfig: localeConfig)
 
         XCTAssertNotEqual(sut.getLocalizedString(key), joinCallEn)
