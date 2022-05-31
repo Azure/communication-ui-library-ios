@@ -96,7 +96,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              store: store,
                                              localizationProvider: localizationProvider,
                                              accessibilityProvider: accessibilityProvider,
-                                             isIPadInterface: UIDevice.current.userInterfaceIdiom == .pad)
+                                             isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -195,7 +195,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         ParticipantGridViewModel(compositeViewModelFactory: self,
                                  localizationProvider: localizationProvider,
                                  accessibilityProvider: accessibilityProvider,
-                                 isIPadInterface: isIpadInterface)
+                                 isIpadInterface: isIpadInterface)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {

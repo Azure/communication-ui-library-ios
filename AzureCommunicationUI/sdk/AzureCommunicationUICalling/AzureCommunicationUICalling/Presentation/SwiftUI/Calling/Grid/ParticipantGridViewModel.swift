@@ -24,11 +24,11 @@ class ParticipantGridViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
-         isIPadInterface: Bool) {
+         isIpadInterface: Bool) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
-        self.isIpadInterface = isIPadInterface
+        self.isIpadInterface = isIpadInterface
     }
 
     func update(callingState: CallingState,

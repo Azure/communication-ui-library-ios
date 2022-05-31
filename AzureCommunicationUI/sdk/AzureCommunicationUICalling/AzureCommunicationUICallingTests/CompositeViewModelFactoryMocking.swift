@@ -57,7 +57,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                     store: store,
                                                     localizationProvider: LocalizationProviderMocking(),
                                                     accessibilityProvider: accessibilityProvider,
-                                                    isIPadInterface: false)
+                                                    isIpadInterface: false)
     }
 
     func makeIconButtonViewModel(iconName: CompositeIcon,
@@ -157,7 +157,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         return participantGridViewModel ?? ParticipantGridViewModel(compositeViewModelFactory: self,
                                                                     localizationProvider: LocalizationProviderMocking(),
 																	accessibilityProvider: accessibilityProvider,
-                                                                    isIPadInterface: isIpadInterface)
+                                                                    isIpadInterface: isIpadInterface)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
