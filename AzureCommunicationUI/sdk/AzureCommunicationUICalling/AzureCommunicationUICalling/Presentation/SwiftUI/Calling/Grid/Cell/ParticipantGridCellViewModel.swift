@@ -95,8 +95,9 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     }
 
     private func getAccessibilityLabel(participantModel: ParticipantInfoModel) -> String {
-        return participantModel.displayName
-        + localizationProvider.getLocalizedString(participantModel.isMuted ? .muted : .unmuted)
+        let status = localizationProvider.getLocalizedString(
+            participantModel.isSpeaking ? .speaking : participantModel.isMuted ? .muted : .unmuted)
+        return "\(participantModel.displayName) \(status)"
     }
 
     private func getDisplayingVideoStreamModel(_ participantModel: ParticipantInfoModel)
