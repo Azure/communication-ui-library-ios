@@ -3,7 +3,7 @@
 ### Manual Installation Steps
 
 1. Download/clone/submodule the latest [`AzureCommunicationUICalling`](https://github.com/Azure/azure-communication-ui-library-ios) Library to your project root directory.
-2. Open your existing iOS application Xcode project.
+2. Open your existing iOS application Xcode project in `xcworkspace`.
 3. Drag the `AzureCommunicationUICalling.xcodeproj` from the newly added subfolder path `/AzureCommunicationUI/sdk/AzureCommunicationUICalling` into your Xcode project's `xcworkspace`.
 4. Select your application project in the Xcode Navigator, and open the target that you want to import Mobile UI Library.
 5. Open the "General" panel and click on the `+` button under the "Frameworks and Libraries" section.
@@ -15,7 +15,7 @@
 
 - **Buildtime issue: 'unable to open file(...)' - 'Pods-AzureCommunicationUICalling.debug.xcconfig...'**
 
-    Navigate to the project `AzureCommunicationUICalling.xcodeproj`, delete the whole folder `Pods` with red name. 
+    Navigate to the project `AzureCommunicationUICalling.xcodeproj` in Xcode, delete the whole folder `Pods` with red name. 
     
 - **Buildtime issue: 'Framework not found Pods_AzureCommunicationUICalling.'**
     
