@@ -43,7 +43,6 @@ class UIKitDemoViewController: UIViewController {
 
     private var cancellable = Set<AnyCancellable>()
     private var envConfigSubject: EnvConfigSubject
-    private(set) var callComposite: CallComposite?
 
     private lazy var contentView: UIView = {
         let view = UIView()
@@ -128,18 +127,18 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
-    func didFail(_ error: CallCompositeErrorEvent) {
-        print("::::UIKitDemoView::getEventsHandler::didFail \(error)")
+    func onError(_ error: CallCompositeErrorEvent) {
+        print("::::UIKitDemoView::getEventsHandler::onError \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
     }
 
-    func didRemoteParticipantsJoin(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
-        print("::::UIKitDemoView::getEventsHandler::didRemoteParticipantsJoin \(identifiers)")
+    func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+        print("::::UIKitDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }
 
-        RemoteParticipantAvatarHelper.didRemoteParticipantsJoin(to: callComposite,
+        RemoteParticipantAvatarHelper.onRemoteParticipantJoined(to: callComposite,
                                                                 identifiers: identifiers)
     }
 
@@ -161,19 +160,17 @@ class UIKitDemoViewController: UIViewController {
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
-        callComposite = CallComposite(withOptions: callCompositeOptions)
-        let didRemoteParticipantsJoin: ([CommunicationIdentifier]) -> Void = { [weak callComposite] identifiers in
+        let callComposite = CallComposite(withOptions: callCompositeOptions)
+        let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
             }
-            self.didRemoteParticipantsJoin(to: composite, identifiers: identifiers)
-        }
-        guard let callComposite = callComposite else {
-            return
+            self.onRemoteParticipantJoined(to: composite,
+                                           identifiers: ids)
         }
 
-        callComposite.setDidFailHandler(with: didFail)
-        callComposite.setRemoteParticipantJoinHandler(with: didRemoteParticipantsJoin)
+        callComposite.set(onErrorHandler: onError)
+        callComposite.set(onRemoteParticipantJoinedHandler: onRemoteParticipantJoinedHandler)
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),

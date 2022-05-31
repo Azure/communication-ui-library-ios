@@ -49,7 +49,7 @@ class CompositeErrorManager: ErrorManagerProtocol {
         self.error = error
         guard error.code != CallCompositeErrorCode.callEvicted,
               error.code != CallCompositeErrorCode.callDenied,
-              let didFail = eventsHandler.didFail else {
+              let didFail = eventsHandler.onError else {
             return
         }
         didFail(error)

@@ -61,7 +61,7 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
     }
 
     private func postRemoteParticipantsJoinedEvent(_ joinedParticipantsIds: Set<String>) {
-        guard let didRemoteParticipantsJoin = eventsHandler.didRemoteParticipantsJoin else {
+        guard let didRemoteParticipantsJoin = eventsHandler.onRemoteParticipantJoined else {
             return
         }
 

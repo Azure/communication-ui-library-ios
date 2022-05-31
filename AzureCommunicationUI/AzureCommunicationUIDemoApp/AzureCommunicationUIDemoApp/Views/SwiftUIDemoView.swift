@@ -152,15 +152,15 @@ extension SwiftUIDemoView {
             localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
 
-        let didRemoteParticipantsJoin: ([CommunicationIdentifier]) -> Void = { [weak callComposite] identifiers in
+        let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
             }
-
-            self.didRemoteParticipantsJoin(to: composite, identifiers: identifiers)
+            self.onRemoteParticipantJoined(to: composite,
+                                           identifiers: ids)
         }
-        callComposite.setDidFailHandler(with: didFail)
-        callComposite.setRemoteParticipantJoinHandler(with: didRemoteParticipantsJoin)
+        callComposite.set(onErrorHandler: onError)
+        callComposite.set(onRemoteParticipantJoinedHandler: onRemoteParticipantJoinedHandler)
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
@@ -239,19 +239,19 @@ extension SwiftUIDemoView {
         isErrorDisplayed = true
     }
 
-    func didFail(_ error: CallCompositeErrorEvent) {
-        print("::::SwiftUIDemoView::getEventsHandler::didFail \(error)")
+    func onError(_ error: CallCompositeErrorEvent) {
+        print("::::SwiftUIDemoView::getEventsHandler::onError \(error)")
         print("::::SwiftUIDemoView error.code \(error.code)")
         showError(for: error.code)
     }
 
-    func didRemoteParticipantsJoin(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
-        print("::::SwiftUIDemoView::getEventsHandler::didRemoteParticipantsJoin \(identifiers)")
+    func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+        print("::::SwiftUIDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }
 
-        RemoteParticipantAvatarHelper.didRemoteParticipantsJoin(to: callComposite,
+        RemoteParticipantAvatarHelper.onRemoteParticipantJoined(to: callComposite,
                                                                 identifiers: identifiers)
     }
 }

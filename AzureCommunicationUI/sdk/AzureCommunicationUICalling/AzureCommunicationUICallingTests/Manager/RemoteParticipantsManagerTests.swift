@@ -172,7 +172,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
 extension RemoteParticipantsManagerTests {
     func makeSUT(isParticipantsJoinHandlerSet: Bool = true) {
         if isParticipantsJoinHandlerSet {
-            eventsHandler.didRemoteParticipantsJoin = { [weak self] _ in
+            eventsHandler.onRemoteParticipantJoined = { [weak self] _ in
                 guard let self = self else {
                     return
                 }

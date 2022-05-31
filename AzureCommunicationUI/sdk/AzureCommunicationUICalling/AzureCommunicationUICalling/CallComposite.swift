@@ -30,15 +30,15 @@ public class CallComposite {
     }
 
     /// Assign closures to execute when error event  occurs inside Call Composite.
-    /// - Parameter didFailAction: The closure returning the error thrown from Call Composite.
-    public func setDidFailHandler(with didFailAction: ((CallCompositeErrorEvent) -> Void)?) {
-        callCompositeEventsHandler.didFail = didFailAction
+    /// - Parameter onErrorHandler: The closure returning the error thrown from Call Composite.
+    public func set(onErrorHandler: ((CallCompositeErrorEvent) -> Void)?) {
+        callCompositeEventsHandler.onError = onErrorHandler
     }
 
     /// Assign closures to execute when participant has joined a call  inside Call Composite.
-    /// - Parameter participantsJoinedAction: The closure returning identifiers for joined remote participants.
-    public func setRemoteParticipantJoinHandler(with participantsJoinedAction: (([CommunicationIdentifier]) -> Void)?) {
-        callCompositeEventsHandler.didRemoteParticipantsJoin = participantsJoinedAction
+    /// - Parameter onRemoteParticipantJoinedHandler: The closure returning identifiers for joined remote participants.
+    public func set(onRemoteParticipantJoinedHandler: (([CommunicationIdentifier]) -> Void)?) {
+        callCompositeEventsHandler.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
     }
 
     deinit {
@@ -125,6 +125,7 @@ public class CallComposite {
         self.lifeCycleManager = nil
         self.permissionManager = nil
         self.audioSessionManager = nil
+        self.avatarViewManager = nil
         self.remoteParticipantsManager = nil
     }
 
