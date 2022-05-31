@@ -128,7 +128,7 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
-    func didFail(_ error: CommunicationUIErrorEvent) {
+    func didFail(_ error: CallCompositeErrorEvent) {
         print("::::UIKitDemoView::getEventsHandler::didFail \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
     }

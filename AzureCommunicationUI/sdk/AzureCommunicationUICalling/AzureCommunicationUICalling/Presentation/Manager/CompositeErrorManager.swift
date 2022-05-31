@@ -12,7 +12,7 @@ protocol ErrorManagerProtocol {
 class CompositeErrorManager: ErrorManagerProtocol {
     private let store: Store<AppState>
     private let eventsHandler: CallCompositeEventsHandling
-    private var error: CommunicationUIErrorEvent?
+    private var error: CallCompositeErrorEvent?
 
     var cancellables = Set<AnyCancellable>()
 
@@ -41,7 +41,7 @@ class CompositeErrorManager: ErrorManagerProtocol {
         }
     }
 
-    private func update(error: CommunicationUIErrorEvent) {
+    private func update(error: CallCompositeErrorEvent) {
         guard self.error != error else {
             return
         }
