@@ -8,9 +8,13 @@ import FluentUI
 import Combine
 
 struct OverlayView: View {
-    let viewModel: OverlayViewModelProtocol
     private let iconImageSize: CGFloat = 24
+    private let verticalIconPaddingSize: CGFloat = 14
+    private let verticalSubtitlePaddingSize: CGFloat = 5
+    private let verticalButtonPaddingSize: CGFloat = 32
     private let horizontalPaddingSize: CGFloat = 16
+
+    let viewModel: OverlayViewModelProtocol
 
     var body: some View {
         Color(StyleProvider.color.overlay)
@@ -20,7 +24,7 @@ struct OverlayView: View {
                     Spacer()
                     Icon(name: .clock, size: iconImageSize)
                         .accessibility(hidden: true)
-                        .padding(.bottom, 14)
+                        .padding(.bottom, verticalIconPaddingSize)
 
                     Text(viewModel.title)
                         .font(Fonts.title2.font)
@@ -28,23 +32,23 @@ struct OverlayView: View {
                         Text(subtitle)
                             .font(Fonts.subhead.font)
                             .multilineTextAlignment(.center)
-                            .padding(.top, 5)
+                            .padding(.top, verticalSubtitlePaddingSize)
 
                     }
                     if let actionButtonViewModel = viewModel.actionButtonViewModel {
                         PrimaryButton(viewModel: actionButtonViewModel)
                             .fixedSize()
-                            .padding(.top, 32)
+                            .padding(.top, verticalButtonPaddingSize)
                     }
                     Spacer()
                 }
-                    if let errorInfoViewModel = viewModel.errorInfoViewModel {
-                        VStack {
-                            Spacer()
-                            ErrorInfoView(viewModel: errorInfoViewModel)
-                                .padding([.bottom])
-                        }
+                if let errorInfoViewModel = viewModel.errorInfoViewModel {
+                    VStack {
+                        Spacer()
+                        ErrorInfoView(viewModel: errorInfoViewModel)
+                            .padding([.bottom])
                     }
+                }
                 }.padding(.horizontal, horizontalPaddingSize)
                     .accessibilityElement(children: .combine)
                     .accessibility(addTraits: .isHeader)
