@@ -96,6 +96,9 @@ struct SetupView: View {
 
     private func setupViewVerticalPadding(parentSize: CGSize) -> CGFloat {
         let isIpad = getSizeClass() == .ipadScreenSize
+        guard isIpad else {
+            return 16
+        }
         let isLandscape = orientation.isLandscape
         let setupViewiPadSmallHeightWithMargin = setupViewiPadSmall + (isIpad ?
                                                                        layoutSpacingLarge : layoutSpacing)
@@ -108,7 +111,7 @@ struct SetupView: View {
         let verticalPadding = (parentSize.height - (isLandscape ?
                                                     setupViewiPadSmallHeightWithMargin
                                                     : setupViewiPadLargeHeightWithMargin)) / 2.0
-        return isIpad ? verticalPadding : 16
+        return verticalPadding
     }
 
     private func getSizeClass() -> ScreenSizeClassType {

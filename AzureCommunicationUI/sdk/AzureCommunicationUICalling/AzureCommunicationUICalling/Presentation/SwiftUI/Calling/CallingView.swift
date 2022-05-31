@@ -40,12 +40,7 @@ struct CallingView: View {
         .environment(\.appPhase, viewModel.appState)
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
         .onRotate { newOrientation in
-            if newOrientation != orientation
-                && newOrientation != .unknown
-                && newOrientation != .faceDown
-                && newOrientation != .faceUp {
-                orientation = newOrientation
-            }
+            updateChildViewIfNeededWith(newOrientation: newOrientation)
         }
     }
 
@@ -175,6 +170,15 @@ struct CallingView: View {
             return .iphoneLandscapeScreenSize
         default:
             return .ipadScreenSize
+        }
+    }
+
+    private func updateChildViewIfNeededWith(newOrientation: UIDeviceOrientation) {
+        if newOrientation != orientation
+            && newOrientation != .unknown
+            && newOrientation != .faceDown
+            && newOrientation != .faceUp {
+            orientation = newOrientation
         }
     }
 }

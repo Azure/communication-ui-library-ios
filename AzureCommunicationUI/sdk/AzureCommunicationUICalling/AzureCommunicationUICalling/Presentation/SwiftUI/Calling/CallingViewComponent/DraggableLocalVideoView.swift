@@ -104,12 +104,12 @@ struct DraggableLocalVideoView: View {
                 boundedPipPosition = requestedPipPosition
             } else if requestedPipPosition.x > bounds.minX && requestedPipPosition.x < bounds.maxX {
                 boundedPipPosition.x = requestedPipPosition.x
-                boundedPipPosition.y = getMinMaxLimitedValue(
+                boundedPipPosition.y = getLimitedValue(
                     value: requestedPipPosition.y,
                     min: bounds.minY,
                     max: bounds.maxY)
             } else if requestedPipPosition.y > bounds.minY && requestedPipPosition.y < bounds.maxY {
-                boundedPipPosition.x = getMinMaxLimitedValue(
+                boundedPipPosition.x = getLimitedValue(
                     value: requestedPipPosition.x,
                     min: bounds.minX,
                     max: bounds.maxX)
@@ -119,33 +119,33 @@ struct DraggableLocalVideoView: View {
             return boundedPipPosition
         }
 
+    /// Gets the size of the Pip view based on the parent size
+    /// - Parameter parentSize: size of the parent view
+    /// - Returns: the size of the Pip view based on the parent size
     private func getPipSize(parentSize: CGSize? = nil) -> CGSize {
         let isPortraitMode = screenSize != .iphoneLandscapeScreenSize
         let isiPad = UIDevice.current.userInterfaceIdiom == .pad
 
-        func defaultSize() -> CGSize {
+        func defaultPipSize() -> CGSize {
             let width = isPortraitMode ? 72 : 104
             let height = isPortraitMode ? 104 : 72
             let size = CGSize(width: width, height: height)
             return size
         }
 
-        if isiPad {
-            if let parentSize = parentSize {
-                if parentSize.width < parentSize.height {
-                    // portrait
-                    return CGSize(width: 80.0, height: 115.0)
-                } else {
-                    // landscape
-                    return CGSize(width: 152.0, height: 115.0)
-                }
+        func iPadPipSize() -> CGSize {
+            guard let parentSize = parentSize else {
+                return defaultPipSize()
             }
+            let isIpadPortrait = parentSize.width < parentSize.height
+            let width = isIpadPortrait ? 80.0 : 152.0
+            return CGSize(width: width, height: 115.0)
         }
 
-        return defaultSize()
+        return isiPad ? iPadPipSize() : defaultPipSize()
     }
 
-    private func getMinMaxLimitedValue(value: CGFloat, min: CGFloat, max: CGFloat) -> CGFloat {
+    private func getLimitedValue(value: CGFloat, min: CGFloat, max: CGFloat) -> CGFloat {
         var limitedValue = value
         if value < min {
             limitedValue = min
