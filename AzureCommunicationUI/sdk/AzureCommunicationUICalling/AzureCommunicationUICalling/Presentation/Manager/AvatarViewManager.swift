@@ -10,7 +10,7 @@ import Combine
 protocol AvatarViewManagerProtocol {
     func set(remoteParticipantViewData: ParticipantViewData,
              for identifier: CommunicationIdentifier,
-             completionHandler: ((Result<Void, ParticipantViewDataSetError>) -> Void)?)
+             completionHandler: ((Result<Void, SetParticipantViewDataError>) -> Void)?)
 }
 
 class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
@@ -52,12 +52,12 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
 
     func set(remoteParticipantViewData: ParticipantViewData,
              for identifier: CommunicationIdentifier,
-             completionHandler: ((Result<Void, ParticipantViewDataSetError>) -> Void)? = nil) {
+             completionHandler: ((Result<Void, SetParticipantViewDataError>) -> Void)? = nil) {
         let participantsList = store.state.remoteParticipantsState.participantInfoList
         guard let idStringValue = identifier.stringValue,
               participantsList.contains(where: { $0.userIdentifier == idStringValue })
         else {
-            completionHandler?(.failure(ParticipantViewDataSetError.participantNotInCall))
+            completionHandler?(.failure(SetParticipantViewDataError.participantNotInCall))
             return
         }
 
