@@ -139,7 +139,8 @@ class CallingViewModel: ObservableObject {
         let isLocalCameraOn = state.localUserState.cameraState.operation == .on
         let displayName = state.localUserState.displayName ?? ""
         let isLocalUserInfoNotEmpty = isLocalCameraOn || !displayName.isEmpty
-        isVideoGridViewAccessibilityAvailable = !lobbyOverlayViewModel.isDisplayed &&
-        (isLocalUserInfoNotEmpty || isParticipantGridDisplayed)
+        isVideoGridViewAccessibilityAvailable = !lobbyOverlayViewModel.isDisplayed
+        && !onHoldOverlayViewModel.isDisplayed
+        && (isLocalUserInfoNotEmpty || isParticipantGridDisplayed)
     }
 }
