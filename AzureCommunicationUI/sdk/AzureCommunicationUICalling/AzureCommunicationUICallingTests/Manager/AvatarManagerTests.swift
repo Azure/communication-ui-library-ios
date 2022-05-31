@@ -74,7 +74,7 @@ class AvatarManagerTests: XCTestCase {
                 XCTFail("Failed with result validation")
                 return
             }
-            XCTAssertEqual(error, ParticipantViewDataSetError.remoteParticipantNotFound)
+            XCTAssertEqual(error, ParticipantViewDataSetError.participantNotInCall)
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 1)

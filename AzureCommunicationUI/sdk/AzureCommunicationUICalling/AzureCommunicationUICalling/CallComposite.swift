@@ -103,7 +103,7 @@ public class CallComposite {
                     for identifier: CommunicationIdentifier,
                     completionHandler: ((Result<Void, ParticipantViewDataSetError>) -> Void)? = nil) {
         guard let avatarManager = avatarViewManager else {
-            completionHandler?(.failure(ParticipantViewDataSetError.remoteParticipantNotFound))
+            completionHandler?(.failure(ParticipantViewDataSetError.participantNotInCall))
             return
         }
         avatarManager.set(remoteParticipantViewData: remoteParticipantViewData,

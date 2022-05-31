@@ -6,6 +6,6 @@
 import Foundation
 
 public enum ParticipantViewDataSetError: String, Error {
-    /// Error when the remote participant is not found in the call.
-    case remoteParticipantNotFound = "RemoteParticipantNotFound"
+    /// Error when the remote participant is not in the call.
+    case participantNotInCall
 }

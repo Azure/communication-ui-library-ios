@@ -57,7 +57,7 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
         guard let idStringValue = identifier.stringValue,
               participantsList.contains(where: { $0.userIdentifier == idStringValue })
         else {
-            completionHandler?(.failure(ParticipantViewDataSetError.remoteParticipantNotFound))
+            completionHandler?(.failure(ParticipantViewDataSetError.participantNotInCall))
             return
         }
 
