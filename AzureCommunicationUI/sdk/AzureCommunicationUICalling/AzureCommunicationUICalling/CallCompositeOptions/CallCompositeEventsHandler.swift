@@ -7,11 +7,11 @@ import UIKit
 import AzureCommunicationCalling
 
 protocol CallCompositeEventsHandling: AnyObject {
-    var didFail: ((CommunicationUIErrorEvent) -> Void)? { get set }
+    var didFail: ((CallCompositeErrorEvent) -> Void)? { get set }
     var didRemoteParticipantsJoin: (([CommunicationIdentifier]) -> Void)? { get set }
 }
 
 class CallCompositeEventsHandler: CallCompositeEventsHandling {
-    var didFail: ((CommunicationUIErrorEvent) -> Void)?
+    var didFail: ((CallCompositeErrorEvent) -> Void)?
     var didRemoteParticipantsJoin: (([CommunicationIdentifier]) -> Void)?
 }
