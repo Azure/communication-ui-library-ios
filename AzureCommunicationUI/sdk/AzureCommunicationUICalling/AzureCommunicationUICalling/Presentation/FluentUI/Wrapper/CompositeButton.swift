@@ -21,7 +21,6 @@ struct CompositeButton: UIViewRepresentable {
     func makeUIView(context: Context) -> FluentUI.Button {
         let button = Button(style: buttonStyle)
         button.setTitle(buttonLabel, for: .normal)
-        button.titleLabel?.numberOfLines = 0
 
         if let iconName = iconName {
             let icon = StyleProvider.icon.getUIImage(for: iconName)

@@ -8,6 +8,7 @@ import FluentUI
 @testable import AzureCommunicationUICalling
 
 class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
+
     private let logger: Logger
     private let store: Store<AppState>
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -108,8 +109,11 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                       localizationProvider: LocalizationProviderMocking())
     }
 
-    func makeErrorInfoViewModel() -> ErrorInfoViewModel {
-        return errorInfoViewModel ?? ErrorInfoViewModel(localizationProvider: LocalizationProviderMocking())
+    func makeErrorInfoViewModel(title: String,
+                                subtitle: String) -> ErrorInfoViewModel {
+        return errorInfoViewModel ?? ErrorInfoViewModel(localizationProvider: LocalizationProviderMocking(),
+                                                        title: title,
+                                                        subtitle: title)
     }
 
     func makeAudioDevicesListCellViewModel(icon: CompositeIcon,
@@ -124,8 +128,10 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
-        return lobbyOverlayViewModel ?? LobbyOverlayViewModel(localizationProvider: LocalizationProviderMocking())
+        return lobbyOverlayViewModel ?? LobbyOverlayViewModel(localizationProvider: LocalizationProviderMocking(),
+                                                              accessibilityProvider: accessibilityProvider)
     }
+
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel {
@@ -200,5 +206,13 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
         JoiningCallActivityViewModel(localizationProvider: LocalizationProviderMocking())
+    }
+
+    func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
+        return OnHoldOverlayViewModel(localizationProvider: LocalizationProviderMocking(),
+                                      compositeViewModelFactory: self,
+                                      logger: LoggerMocking(),
+                                      accessibilityProvider: AccessibilityProviderMocking(),
+                                      resumeAction: {})
     }
 }
