@@ -20,38 +20,41 @@ struct OverlayView: View {
         Color(StyleProvider.color.overlay)
             .overlay(
                 ZStack(alignment: .bottom) {
-                VStack(spacing: 0) {
-                    Spacer()
-                    Icon(name: .clock, size: iconImageSize)
-                        .accessibility(hidden: true)
-                        .padding(.bottom, verticalIconPaddingSize)
-
-                    Text(viewModel.title)
-                        .font(Fonts.title2.font)
-                    if let subtitle = viewModel.subtitle {
-                        Text(subtitle)
-                            .font(Fonts.subhead.font)
-                            .multilineTextAlignment(.center)
-                            .padding(.top, verticalSubtitlePaddingSize)
-
-                    }
-                    if let actionButtonViewModel = viewModel.actionButtonViewModel {
-                        PrimaryButton(viewModel: actionButtonViewModel)
-                            .fixedSize()
-                            .padding(.top, verticalButtonPaddingSize)
-                    }
-                    Spacer()
-                }
-                if let errorInfoViewModel = viewModel.errorInfoViewModel {
-                    VStack {
+                    VStack(spacing: 0) {
                         Spacer()
-                        ErrorInfoView(viewModel: errorInfoViewModel)
-                            .padding([.bottom])
+                        Group {
+                            Icon(name: .clock, size: iconImageSize)
+                                .accessibility(hidden: true)
+                                .padding(.bottom, verticalIconPaddingSize)
+
+                            Text(viewModel.title)
+                                .font(Fonts.title2.font)
+                            if let subtitle = viewModel.subtitle {
+                                Text(subtitle)
+                                    .font(Fonts.subhead.font)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.top, verticalSubtitlePaddingSize)
+
+                            }
+                        }
+                        .padding(.horizontal, horizontalPaddingSize)
+                                .accessibilityElement(children: .combine)
+                                .accessibility(addTraits: .isHeader)
+                        if let actionButtonViewModel = viewModel.actionButtonViewModel {
+                            PrimaryButton(viewModel: actionButtonViewModel)
+                                .fixedSize()
+                                .padding(.top, verticalButtonPaddingSize)
+                        }
+                        Spacer()
+                    }
+                    if let errorInfoViewModel = viewModel.errorInfoViewModel {
+                        VStack {
+                            Spacer()
+                            ErrorInfoView(viewModel: errorInfoViewModel)
+                                .padding([.bottom])
+                        }
                     }
                 }
-                }.padding(.horizontal, horizontalPaddingSize)
-                    .accessibilityElement(children: .combine)
-                    .accessibility(addTraits: .isHeader)
             )
     }
 }
