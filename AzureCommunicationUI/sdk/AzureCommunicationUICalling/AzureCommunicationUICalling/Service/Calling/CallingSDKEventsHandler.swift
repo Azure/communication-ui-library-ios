@@ -142,13 +142,9 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     }
 
     private func wasCallConnected() -> Bool {
-        guard previousCallingStatus != .connected,
-              previousCallingStatus != .localHold,
-              previousCallingStatus != .remoteHold else {
-            return true
-        }
-
-        return false
+        return previousCallingStatus == .connected ||
+              previousCallingStatus == .localHold ||
+              previousCallingStatus == .remoteHold
     }
 }
 
