@@ -10,20 +10,20 @@ import Combine
 protocol AvatarViewManagerProtocol {
     func setRemoteParticipantViewData(
         for identifier: CommunicationIdentifier,
-        participantViewData: ParticipantViewData) -> Result<Void, CommunicationUIErrorEvent>
+        participantViewData: ParticipantViewData) -> Result<Void, CallCompositeErrorEvent>
 }
 
 class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
     @Published var updatedId: String?
-    @Published private(set) var localSettings: LocalSettings?
+    @Published private(set) var localOptions: LocalOptions?
     private let store: Store<AppState>
     private(set) var avatarStorage = MappedSequence<String, ParticipantViewData>()
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState>,
-         localSettings: LocalSettings?) {
+         localOptions: LocalOptions?) {
         self.store = store
-        self.localSettings = localSettings
+        self.localOptions = localOptions
         store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
@@ -52,12 +52,12 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
 
     func setRemoteParticipantViewData(
         for identifier: CommunicationIdentifier,
-        participantViewData: ParticipantViewData) -> Result<Void, CommunicationUIErrorEvent> {
+        participantViewData: ParticipantViewData) -> Result<Void, CallCompositeErrorEvent> {
         let participantsList = store.state.remoteParticipantsState.participantInfoList
         guard let idStringValue = identifier.stringValue,
               participantsList.contains(where: { $0.userIdentifier == idStringValue })
         else {
-            return .failure(CommunicationUIErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
+            return .failure(CallCompositeErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
         }
 
         if avatarStorage.value(forKey: idStringValue) != nil {

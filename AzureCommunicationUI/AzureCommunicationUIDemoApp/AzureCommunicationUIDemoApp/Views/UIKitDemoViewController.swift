@@ -128,7 +128,7 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
-    func didFail(_ error: CommunicationUIErrorEvent) {
+    func didFail(_ error: CallCompositeErrorEvent) {
         print("::::UIKitDemoView::getEventsHandler::didFail \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
     }
@@ -178,7 +178,7 @@ class UIKitDemoViewController: UIViewController {
                                 nil : envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       renderDisplayName: renderDisplayName)
-        let localSettings = LocalSettings(participantViewData)
+        let localOptions = LocalOptions(participantViewData)
 
         if let communicationTokenCredential = try? getTokenCredential() {
             switch selectedMeetingType {
@@ -187,12 +187,12 @@ class UIKitDemoViewController: UIViewController {
                 let parameters = GroupCallOptions(credential: communicationTokenCredential,
                                                   groupId: uuid,
                                                   displayName: getDisplayName())
-                callComposite.launch(with: parameters, localSettings: localSettings)
+                callComposite.launch(with: parameters, localOptions: localOptions)
             case .teamsMeeting:
                 let parameters = TeamsMeetingOptions(credential: communicationTokenCredential,
                                                      meetingLink: link,
                                                      displayName: getDisplayName())
-                callComposite.launch(with: parameters, localSettings: localSettings)
+                callComposite.launch(with: parameters, localOptions: localOptions)
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
