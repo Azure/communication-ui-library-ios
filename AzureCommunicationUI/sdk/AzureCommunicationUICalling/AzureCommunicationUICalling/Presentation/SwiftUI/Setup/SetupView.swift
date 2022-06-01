@@ -12,7 +12,7 @@ struct SetupView: View {
     let viewManager: VideoViewManager
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
-    @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
+    @Orientation var orientation: UIDeviceOrientation
     let avatarManager: AvatarViewManager
 
     let layoutSpacing: CGFloat = 24
@@ -52,14 +52,6 @@ struct SetupView: View {
             viewModel.setupAudioPermissions()
             viewModel.setupCall()
         }
-        .onRotate { newOrientation in
-            if newOrientation != orientation
-                && newOrientation != .unknown
-                && newOrientation != .faceDown
-                && newOrientation != .faceUp {
-                orientation = newOrientation
-            }
-        }
     }
 
     var joinCallView: some View {
@@ -89,9 +81,12 @@ struct SetupView: View {
 
     private func setupViewHorizontalPadding(parentSize: CGSize) -> CGFloat {
         let isIpad = getSizeClass() == .ipadScreenSize
+        guard isIpad else {
+            return 16
+        }
         let isLandscape = orientation.isLandscape
         let horizontalPadding = (parentSize.width - (isLandscape ? setupViewiPadLarge : setupViewiPadSmall)) / 2.0
-        return isIpad ? horizontalPadding : 16
+        return horizontalPadding
     }
 
     private func setupViewVerticalPadding(parentSize: CGSize) -> CGFloat {
@@ -100,14 +95,8 @@ struct SetupView: View {
             return 16
         }
         let isLandscape = orientation.isLandscape
-        let setupViewiPadSmallHeightWithMargin = setupViewiPadSmall + (isIpad ?
-                                                                       layoutSpacingLarge : layoutSpacing)
-                                                                    + startCallButtonHeight
-
-        let setupViewiPadLargeHeightWithMargin = setupViewiPadLarge + (isIpad ?
-                                                                       layoutSpacingLarge : layoutSpacing)
-                                                                    + startCallButtonHeight
-
+        let setupViewiPadSmallHeightWithMargin = setupViewiPadSmall + layoutSpacingLarge + startCallButtonHeight
+        let setupViewiPadLargeHeightWithMargin = setupViewiPadLarge + layoutSpacingLarge + startCallButtonHeight
         let verticalPadding = (parentSize.height - (isLandscape ?
                                                     setupViewiPadSmallHeightWithMargin
                                                     : setupViewiPadLargeHeightWithMargin)) / 2.0
