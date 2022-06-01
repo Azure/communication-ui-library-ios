@@ -133,14 +133,14 @@ extension SwiftUIDemoView {
     func startCallComposite() {
         let link = getMeetingLink()
 
-        var localizationConfig: LocalizationConfiguration?
+        var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
-            localizationConfig = LocalizationConfiguration(locale: locale,
+            localizationConfig = LocalizationOptions(locale: locale,
                                                            layoutDirection: layoutDirection)
         } else if !envConfigSubject.locale.identifier.isEmpty {
-            localizationConfig = LocalizationConfiguration(
+            localizationConfig = LocalizationOptions(
                 locale: envConfigSubject.locale,
                 layoutDirection: layoutDirection)
         }
@@ -151,35 +151,45 @@ extension SwiftUIDemoView {
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
-        callComposite.setTarget(didFail: didFail)
+
+        let didRemoteParticipantsJoin: ([CommunicationIdentifier]) -> Void = { [weak callComposite] identifiers in
+            guard let composite = callComposite else {
+                return
+            }
+
+            self.didRemoteParticipantsJoin(to: composite, identifiers: identifiers)
+        }
+        callComposite.setDidFailHandler(with: didFail)
+        callComposite.setRemoteParticipantJoinHandler(with: didRemoteParticipantsJoin)
+
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                           renderDisplayName: renderDisplayName)
-        let localSettings = LocalSettings(participantViewData)
+        let localOptions = LocalOptions(participantViewData)
         if let credential = try? getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(with: GroupCallOptions(credential: credential, groupId: uuid),
-                                         localSettings: localSettings)
+                                         localOptions: localOptions)
                 } else {
                     callComposite.launch(with: GroupCallOptions(credential: credential,
                                                                 groupId: uuid,
                                                                 displayName: envConfigSubject.displayName),
-                                         localSettings: localSettings)
+                                         localOptions: localOptions)
                 }
             case .teamsMeeting:
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(with: TeamsMeetingOptions(credential: credential,
                                                                    meetingLink: link),
-                                         localSettings: localSettings)
+                                         localOptions: localOptions)
                 } else {
                     callComposite.launch(with: TeamsMeetingOptions(credential: credential,
                                                                    meetingLink: link,
                                                                    displayName: envConfigSubject.displayName),
-                                         localSettings: localSettings)
+                                         localOptions: localOptions)
                 }
             }
         } else {
@@ -229,9 +239,19 @@ extension SwiftUIDemoView {
         isErrorDisplayed = true
     }
 
-    func didFail(_ error: CommunicationUIErrorEvent) {
+    func didFail(_ error: CallCompositeErrorEvent) {
         print("::::SwiftUIDemoView::getEventsHandler::didFail \(error)")
         print("::::SwiftUIDemoView error.code \(error.code)")
         showError(for: error.code)
+    }
+
+    func didRemoteParticipantsJoin(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+        print("::::SwiftUIDemoView::getEventsHandler::didRemoteParticipantsJoin \(identifiers)")
+        guard envConfigSubject.useCustomRemoteParticipantViewData else {
+            return
+        }
+
+        RemoteParticipantAvatarHelper.didRemoteParticipantsJoin(to: callComposite,
+                                                                identifiers: identifiers)
     }
 }

@@ -9,9 +9,9 @@ import UIKit
 
 struct CompositeAvatar: View {
     @Binding var displayName: String?
+    @Binding var avatarImage: UIImage?
     var isSpeaking: Bool
     var avatarSize: MSFAvatarSize = .xxlarge
-    var avatarImage: UIImage?
     var body: some View {
         let isNameEmpty = displayName == nil
         || displayName?.trimmingCharacters(in: .whitespaces).isEmpty == true

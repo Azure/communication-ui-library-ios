@@ -34,6 +34,7 @@ struct SettingsView: View {
             Form {
                 localizationSettings
                 avatarSettings
+                remoteParticipantsAvatarsSettings
                 themeSettings
             }.navigationTitle("UI Library - Settings")
         }
@@ -68,6 +69,12 @@ struct SettingsView: View {
         }
     }
 
+    var remoteParticipantsAvatarsSettings: some View {
+        Section(header: Text("Remote Participants View Data")) {
+            Toggle("Inject avatars", isOn: $envConfigSubject.useCustomRemoteParticipantViewData)
+        }
+    }
+
     var themeSettings: some View {
         Section(header: Text("Theme")) {
             Toggle("Use Custom Theme Colors", isOn: $envConfigSubject.useCustomColors)
@@ -86,7 +93,7 @@ struct SettingsView: View {
 
 struct LocalePicker: View {
     @Binding var selection: Locale
-    let supportedLanguage: [Locale] = [Locale(identifier: "")] + LocalizationConfiguration.supportedLocales
+    let supportedLanguage: [Locale] = [Locale(identifier: "")] + CallCompositeSupportedLocale.getSupportedLocales()
 
     var body: some View {
             Picker("Language", selection: $selection) {

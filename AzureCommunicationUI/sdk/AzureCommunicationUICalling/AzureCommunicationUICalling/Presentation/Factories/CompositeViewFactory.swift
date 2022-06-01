@@ -13,11 +13,11 @@ protocol CompositeViewFactoryProtocol {
 struct CompositeViewFactory: CompositeViewFactoryProtocol {
     private let logger: Logger
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
-    private let avatarManager: AvatarViewManagerProtocol
+    private let avatarManager: AvatarViewManager
     private let videoViewManager: VideoViewManager
 
     init(logger: Logger,
-         avatarManager: AvatarViewManagerProtocol,
+         avatarManager: AvatarViewManager,
          videoViewManager: VideoViewManager,
          compositeViewModelFactory: CompositeViewModelFactoryProtocol) {
         self.logger = logger
@@ -28,8 +28,8 @@ struct CompositeViewFactory: CompositeViewFactoryProtocol {
 
     func makeSetupView() -> SetupView {
         return SetupView(viewModel: compositeViewModelFactory.getSetupViewModel(),
-                         participantViewData: avatarManager.getLocalParticipantViewData(),
-                         viewManager: videoViewManager)
+                         viewManager: videoViewManager,
+                         avatarManager: avatarManager)
     }
 
     func makeCallingView() -> CallingView {

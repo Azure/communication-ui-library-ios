@@ -26,10 +26,12 @@ class DependencyContainerTests: XCTestCase {
                                                   groupId: groupId,
                                                   displayName: displayName)
         let participantViewData = ParticipantViewData(avatar: nil, renderDisplayName: nil)
-        let localSettings = LocalSettings(participantViewData)
+        let localOptions = LocalOptions(participantViewData)
+        let callCompositeEventsHandler = CallCompositeEventsHandler()
 
         dependencyContainer.registerDependencies(callConfiguration,
-                                                 localSettings: localSettings)
+                                                 localOptions: localOptions,
+                                                 callCompositeEventsHandler: callCompositeEventsHandler)
 
         XCTAssertNotNil(dependencyContainer.resolve() as CallingSDKWrapperProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as VideoViewManager)
@@ -38,5 +40,14 @@ class DependencyContainerTests: XCTestCase {
         XCTAssertNotNil(dependencyContainer.resolve() as NavigationRouter)
         XCTAssertNotNil(dependencyContainer.resolve() as CompositeViewModelFactoryProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as CompositeViewFactoryProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as CallingSDKEventsHandling)
+        XCTAssertNotNil(dependencyContainer.resolve() as AccessibilityProviderProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as LocalizationProviderProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as ErrorManagerProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as LifeCycleManagerProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as PermissionsManagerProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as AudioSessionManagerProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as AvatarViewManager)
+        XCTAssertNotNil(dependencyContainer.resolve() as RemoteParticipantsManager)
     }
 }

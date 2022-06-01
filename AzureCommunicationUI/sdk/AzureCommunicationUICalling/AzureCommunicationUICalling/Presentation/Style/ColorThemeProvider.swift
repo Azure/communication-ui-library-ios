@@ -38,13 +38,13 @@ class ColorThemeProvider {
     let hangup = UIColor.compositeColor(.hangup)
     let overlay = UIColor.compositeColor(.overlay)
 
-    init(themeConfiguration: ThemeConfiguration?) {
-        self.colorSchemeOverride = themeConfiguration?.colorSchemeOverride ?? .unspecified
+    init(themeOptions: ThemeOptions?) {
+        self.colorSchemeOverride = themeOptions?.colorSchemeOverride ?? .unspecified
 
-        self.primaryColor = themeConfiguration?.primaryColor ?? Colors.Palette.communicationBlue.color
-        self.primaryColorTint10 = themeConfiguration?.primaryColorTint10 ?? Colors.Palette.communicationBlueTint10.color
-        self.primaryColorTint20 = themeConfiguration?.primaryColorTint20 ?? Colors.Palette.communicationBlueTint20.color
-        self.primaryColorTint30 = themeConfiguration?.primaryColorTint30 ?? Colors.Palette.communicationBlueTint30.color
+        self.primaryColor = themeOptions?.primaryColor ?? Colors.Palette.communicationBlue.color
+        self.primaryColorTint10 = themeOptions?.primaryColorTint10 ?? Colors.Palette.communicationBlueTint10.color
+        self.primaryColorTint20 = themeOptions?.primaryColorTint20 ?? Colors.Palette.communicationBlueTint20.color
+        self.primaryColorTint30 = themeOptions?.primaryColorTint30 ?? Colors.Palette.communicationBlueTint30.color
     }
 }
 

@@ -9,7 +9,8 @@ import FluentUI
 struct InfoHeaderView: View {
     @ObservedObject var viewModel: InfoHeaderViewModel
 
-    let participantsListButtonSourceView = UIView()
+    @State var participantsListButtonSourceView = UIView()
+    let avatarViewManager: AvatarViewManager
     let foregroundColor: Color = .white
     let shapeCornerRadius: CGFloat = 5
     let infoLabelHorizontalPadding: CGFloat = 16.0
@@ -65,6 +66,7 @@ struct InfoHeaderView: View {
                                   isInfoHeaderDisplayed: $viewModel.isInfoHeaderDisplayed,
                                   isVoiceOverEnabled: $viewModel.isVoiceOverEnabled,
                                   viewModel: viewModel.participantsListViewModel,
+                                  avatarViewManager: avatarViewManager,
                                   sourceView: participantsListButtonSourceView)
             .modifier(LockPhoneOrientation())
     }

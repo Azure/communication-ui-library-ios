@@ -34,6 +34,10 @@
 "AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="ホストを待機しています"; // host (people not server) of a meeting
 "AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"="会議の参加者がまもなくあなたを招待します";
 
+/* OnHoldView */
+"AzureCommunicationUICalling.OnHoldView.Text.OnHold"="保留中です";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume"="再開";
+
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="他のユーザーの参加を待っています";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="1 人のユーザーと通話";
@@ -43,6 +47,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (自分)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="ミュート状態";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="ミュート解除";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留中";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="バック カメラに切り替える";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="フロント カメラに切り替える";
@@ -89,3 +94,6 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="エラーが発生したため、通話から削除されました。";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="通話から削除されました。";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="エラーが発生しました。";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="通話を再開できません";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="マイクは別のアプリで使用されています";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="通話へのアクセスが拒否されました。";

@@ -11,11 +11,9 @@ class CompositeErrorManagerTests: XCTestCase {
     var mockStoreFactory = StoreFactoryMocking()
     var cancellable: CancelBag!
     var compositeManager: CompositeErrorManager!
-    var mockCallComposite = CallCompositeMocking(withOptions: CallCompositeOptions())
-    var mockEventsHandler: CallCompositeEventsHandler?
 
     var handlerCallExpectation = XCTestExpectation(description: "Delegate expectation")
-    var expectedError: CommunicationUIErrorEvent?
+    var expectedError: CallCompositeErrorEvent?
 
     override func setUp() {
         super.setUp()
@@ -41,7 +39,7 @@ class CompositeErrorManagerTests: XCTestCase {
     }
 
     func test_errorManager_receiveState_when_fatalErrorCallJoin_then_receiveDidFail() {
-        let fatalError = CommunicationUIErrorEvent(code: CallCompositeErrorCode.callJoin, error: nil)
+        let fatalError = CallCompositeErrorEvent(code: CallCompositeErrorCode.callJoin, error: nil)
         self.expectedError = fatalError
         let errorState = ErrorState(error: fatalError, errorCategory: .callState)
         let newState = getAppState(errorState: errorState)
@@ -51,7 +49,7 @@ class CompositeErrorManagerTests: XCTestCase {
     }
 
     func test_errorManager_receiveState_when_fatalErrorTokenExpired_then_receiveEmergencyExitAction() {
-        let fatalError = CommunicationUIErrorEvent(code: CallCompositeErrorCode.tokenExpired, error: nil)
+        let fatalError = CallCompositeErrorEvent(code: CallCompositeErrorCode.tokenExpired, error: nil)
         self.expectedError = fatalError
         let errorState = ErrorState.init(error: fatalError, errorCategory: .fatal)
         let newState = getAppState(errorState: errorState)
@@ -94,7 +92,7 @@ extension CompositeErrorManagerTests {
                         errorState: errorState)
     }
 
-    func getEventsHandler() -> CallCompositeEventsHandler {
+    func getEventsHandler() -> CallCompositeEventsHandling {
         let handler = CallCompositeEventsHandler()
         handler.didFail = { [weak self] callCompositeError in
             guard let self = self else {
@@ -105,7 +103,6 @@ extension CompositeErrorManagerTests {
             self.handlerCallExpectation.fulfill()
 
         }
-        mockEventsHandler = handler
         return handler
     }
 }

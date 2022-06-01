@@ -11,12 +11,16 @@ class CompositeParticipantsListCell: TableViewCell {
 
     /// Set up the participant list item  in the participant list
     /// - Parameter viewModel: the participant view model needed to set up participant list cell
+    /// - Parameter avatarViewManager: the avatar view manager needed to set up avatar data
     func setup(viewModel: ParticipantsListCellViewModel,
-               displayName: String) {
-        let isNameEmpty = viewModel.displayName.trimmingCharacters(in: .whitespaces).isEmpty
+               avatarViewManager: AvatarViewManager) {
+        let participantViewData = viewModel.getParticipantViewData(from: avatarViewManager)
+        let avatarParticipantName = viewModel.getParticipantName(with: participantViewData)
+        let isNameEmpty = avatarParticipantName.trimmingCharacters(in: .whitespaces).isEmpty
 
         let avatar = MSFAvatar(style: isNameEmpty ? .outlined : .accent, size: .medium)
-        avatar.state.primaryText = !isNameEmpty ? viewModel.displayName : nil
+        avatar.state.primaryText = !isNameEmpty ? avatarParticipantName : nil
+        avatar.state.image = participantViewData?.avatarImage
         let avatarView = avatar.view
 
         var micImage: UIImage?
@@ -35,7 +39,7 @@ class CompositeParticipantsListCell: TableViewCell {
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
 
-        accessibilityLabel = viewModel.getCellAccessibilityLabel()
+        accessibilityLabel = viewModel.getCellAccessibilityLabel(with: participantViewData)
         accessibilityTraits.remove(.button)
 
         setTitleLabelTextColor(color: isNameEmpty ?
@@ -43,7 +47,7 @@ class CompositeParticipantsListCell: TableViewCell {
                                :
                                 UIColor.compositeColor(CompositeColor.onSurface))
 
-        setup(title: displayName,
+        setup(title: viewModel.getCellDisplayName(with: participantViewData),
               customView: avatarView,
               customAccessoryView: micImageView)
         self.titleNumberOfLines = 2

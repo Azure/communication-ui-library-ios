@@ -123,7 +123,7 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .connected,
                                  isRecordingActive: true,
                                  isTranscriptionActive: true)
-        let action = ErrorAction.StatusErrorAndCallReset(error: CommunicationUIErrorEvent(code: "",
+        let action = ErrorAction.StatusErrorAndCallReset(error: CallCompositeErrorEvent(code: "",
                                                                           error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
@@ -142,7 +142,26 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .disconnected,
                                  isRecordingActive: true,
                                  isTranscriptionActive: true)
-        let action = ErrorAction.StatusErrorAndCallReset(error: CommunicationUIErrorEvent(code: "callEvicted",
+        let action = ErrorAction.StatusErrorAndCallReset(error: CallCompositeErrorEvent(code: "callEvicted",
+                                                                          error: nil))
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+
+        guard let resultState = resultState as? CallingState else {
+            XCTFail("Failed with state validation")
+            return
+        }
+        XCTAssertEqual(resultState, expectedState)
+    }
+
+    func test_callingReducer_reduce_when_callDeniedErrorAndCallReset_then_CallingStateReset() {
+        let expectedState = CallingState(status: .none,
+                                         isRecordingActive: false,
+                                         isTranscriptionActive: false)
+        let state = CallingState(status: .disconnected,
+                                 isRecordingActive: false,
+                                 isTranscriptionActive: false)
+        let action = ErrorAction.StatusErrorAndCallReset(error: CallCompositeErrorEvent(code: "callDenied",
                                                                           error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)

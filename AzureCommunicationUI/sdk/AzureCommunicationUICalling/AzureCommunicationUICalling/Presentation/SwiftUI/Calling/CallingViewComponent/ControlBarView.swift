@@ -9,8 +9,8 @@ struct ControlBarView: View {
     @ObservedObject var viewModel: ControlBarViewModel
 
     // anchor views for drawer views on (iPad)
-    let audioDeviceButtonSourceView = UIView()
-    let leaveCallConfirmationListSourceView = UIView()
+    @State var audioDeviceButtonSourceView = UIView()
+    @State var leaveCallConfirmationListSourceView = UIView()
 
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 

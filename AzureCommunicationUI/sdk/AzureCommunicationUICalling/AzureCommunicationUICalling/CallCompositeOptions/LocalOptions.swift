@@ -6,10 +6,10 @@
 import Foundation
 import UIKit
 /// Object for local settings for Call Composite
-public struct LocalSettings {
+public struct LocalOptions {
     /// The ParticipantViewData of the local participant when joining the call.
     let participantViewData: ParticipantViewData
-    /// Create an instance of LocalSettings. All information in this object is only stored locally in the composite.
+    /// Create an instance of LocalOptions. All information in this object is only stored locally in the composite.
     /// - Parameters:
     ///    - participantViewData: The ParticipantViewData to be displayed for local participants avatar
     public init(_ participantViewData: ParticipantViewData) {

@@ -8,7 +8,7 @@ import FluentUI
 
 struct CallingView: View {
     @ObservedObject var viewModel: CallingViewModel
-    let avatarManager: AvatarViewManagerProtocol
+    let avatarManager: AvatarViewManager
     let viewManager: VideoViewManager
 
     let leaveCallConfirmationListSourceView = UIView()
@@ -102,9 +102,9 @@ struct CallingView: View {
 
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
-                           participantViewData: avatarManager.getLocalParticipantViewData(),
                            viewManager: viewManager,
-                           viewType: .localVideoPip)
+                           viewType: .localVideoPip,
+                           avatarManager: avatarManager)
                 .frame(width: size.width, height: size.height, alignment: .center)
                 .background(Color(StyleProvider.color.backgroundColor))
                 .clipShape(RoundedRectangle(cornerRadius: shapeCornerRadius))
@@ -151,7 +151,8 @@ struct CallingView: View {
     }
 
     var infoHeaderView: some View {
-        InfoHeaderView(viewModel: viewModel.infoHeaderViewModel)
+        InfoHeaderView(viewModel: viewModel.infoHeaderViewModel,
+                       avatarViewManager: avatarManager)
     }
 
     var bannerView: some View {
@@ -160,6 +161,7 @@ struct CallingView: View {
 
     var participantGridsView: some View {
         ParticipantGridView(viewModel: viewModel.participantGridsViewModel,
+                            avatarViewManager: avatarManager,
                             videoViewManager: viewManager,
                             screenSize: getSizeClass())
             .edgesIgnoringSafeArea(safeAreaIgnoreArea)
@@ -168,9 +170,9 @@ struct CallingView: View {
     var localVideoFullscreenView: some View {
         return Group {
             LocalVideoView(viewModel: viewModel.localVideoViewModel,
-                           participantViewData: avatarManager.getLocalParticipantViewData(),
                            viewManager: viewManager,
-                           viewType: .localVideofull)
+                           viewType: .localVideofull,
+                           avatarManager: avatarManager)
                 .background(Color(StyleProvider.color.surface))
                 .edgesIgnoringSafeArea(safeAreaIgnoreArea)
         }
