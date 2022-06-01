@@ -214,6 +214,7 @@
 		FA03CC8527C8189900986D4E /* ErrorInfoViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC7A27C8189900986D4E /* ErrorInfoViewModelMocking.swift */; };
 		FA03CC8927C8189900986D4E /* PrimaryButtonViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC7E27C8189900986D4E /* PrimaryButtonViewModelMocking.swift */; };
 		FA03CC8D27C8420300986D4E /* IconWithLabelButtonViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC8C27C8420300986D4E /* IconWithLabelButtonViewModelMocking.swift */; };
+		FA378672284152CA005B6288 /* SetParticipantViewDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA378671284152CA005B6288 /* SetParticipantViewDataError.swift */; };
 		FA40424A27E3E86700875368 /* ParticipantsListViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA40424927E3E86700875368 /* ParticipantsListViewModelMocking.swift */; };
 		FA62233327DAC7BC008B5466 /* AccessibilityProviderNotificationsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62233227DAC7BC008B5466 /* AccessibilityProviderNotificationsObserver.swift */; };
 		FA62233727DAD9AF008B5466 /* AccessibilityProviderMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */; };
@@ -487,6 +488,7 @@
 		FA03CC7A27C8189900986D4E /* ErrorInfoViewModelMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInfoViewModelMocking.swift; sourceTree = "<group>"; };
 		FA03CC7E27C8189900986D4E /* PrimaryButtonViewModelMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButtonViewModelMocking.swift; sourceTree = "<group>"; };
 		FA03CC8C27C8420300986D4E /* IconWithLabelButtonViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithLabelButtonViewModelMocking.swift; sourceTree = "<group>"; };
+		FA378671284152CA005B6288 /* SetParticipantViewDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetParticipantViewDataError.swift; sourceTree = "<group>"; };
 		FA40424927E3E86700875368 /* ParticipantsListViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsListViewModelMocking.swift; sourceTree = "<group>"; };
 		FA62233227DAC7BC008B5466 /* AccessibilityProviderNotificationsObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderNotificationsObserver.swift; sourceTree = "<group>"; };
 		FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderMocking.swift; sourceTree = "<group>"; };
@@ -1069,6 +1071,7 @@
 				1F48B400274879F000B6E5F9 /* DiagnosticConfig.swift */,
 				5054610327C59AD700040467 /* LocalizationOptions.swift */,
 				500C0F1E2847DE18000BA2DC /* RemoteOptions.swift */,
+				FA378671284152CA005B6288 /* SetParticipantViewDataError.swift */,
 				881D8F7127FB6992008EC897 /* LocalOptions.swift */,
 			);
 			path = CallCompositeOptions;
@@ -1683,6 +1686,7 @@
 				1F2BED6C262F8B7000D98266 /* Store.swift in Sources */,
 				881D8F7227FB6992008EC897 /* LocalOptions.swift in Sources */,
 				50E2D69126EAAB33006B0EF4 /* CompositeParticipantsList.swift in Sources */,
+				FA378672284152CA005B6288 /* SetParticipantViewDataError.swift in Sources */,
 				985DF378269E07F400CFDA55 /* PrimaryButtonViewModel.swift in Sources */,
 				1FC30846266949E8007EC537 /* ColorExtension.swift in Sources */,
 				1F6470AC2639FE670008B9E9 /* CancelBag.swift in Sources */,

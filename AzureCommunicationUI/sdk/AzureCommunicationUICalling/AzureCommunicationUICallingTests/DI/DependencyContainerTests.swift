@@ -25,7 +25,7 @@ class DependencyContainerTests: XCTestCase {
         let callConfiguration = CallConfiguration(locator: .groupCall(groupId: groupId),
                                                   credential: communicationTokenCredential!,
                                                   displayName: displayName)
-        let participantViewData = ParticipantViewData(avatar: nil, renderDisplayName: nil)
+        let participantViewData = ParticipantViewData(avatar: nil, displayName: nil)
         let localOptions = LocalOptions(participantViewData)
         let callCompositeEventsHandler = CallCompositeEventsHandler()
 

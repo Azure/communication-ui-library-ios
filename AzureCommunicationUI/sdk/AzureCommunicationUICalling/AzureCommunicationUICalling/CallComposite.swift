@@ -8,9 +8,6 @@ import SwiftUI
 import FluentUI
 import AzureCommunicationCalling
 
-public typealias CompositeErrorHandler = (CallCompositeErrorEvent) -> Void
-public typealias RemoteParticipantsJoinedHandler = ([CommunicationIdentifier]) -> Void
-
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
     private var logger: Logger?
@@ -34,13 +31,13 @@ public class CallComposite {
 
     /// Assign closures to execute when error event  occurs inside Call Composite.
     /// - Parameter didFailAction: The closure returning the error thrown from Call Composite.
-    public func setDidFailHandler(with didFailAction: CompositeErrorHandler?) {
+    public func setDidFailHandler(with didFailAction: ((CallCompositeErrorEvent) -> Void)?) {
         callCompositeEventsHandler.didFail = didFailAction
     }
 
     /// Assign closures to execute when participant has joined a call  inside Call Composite.
     /// - Parameter participantsJoinedAction: The closure returning identifiers for joined remote participants.
-    public func setRemoteParticipantJoinHandler(with participantsJoinedAction: RemoteParticipantsJoinedHandler?) {
+    public func setRemoteParticipantJoinHandler(with participantsJoinedAction: (([CommunicationIdentifier]) -> Void)?) {
         callCompositeEventsHandler.didRemoteParticipantsJoin = participantsJoinedAction
     }
 
@@ -81,22 +78,22 @@ public class CallComposite {
         launch(callConfiguration, localOptions: localOptions)
     }
 
-    /// Set ParticipantViewData for the remote participant.
+    /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.
     /// - Parameters:
+    ///   - remoteParticipantViewData: ParticipantViewData used to set the participant's information for the call.
     ///   - identifier: The communication identifier for the remote participant.
-    ///   - participantViewData: ParticipantViewData used to set the user participants information for the call.
-    ///   This is data is not sent up to ACS.
-    /// - Returns: The `Result` enum value with either a `Void` or an `Error`.
-    @discardableResult
-    public func setRemoteParticipantViewData(
-        for identifier: CommunicationIdentifier,
-        participantViewData: ParticipantViewData) -> Result<Void, CallCompositeErrorEvent> {
+    ///   - completionHandler: The completion handler that receives `Result` enum value with either
+    ///                        a `Void` or an `SetParticipantViewDataError`.
+    public func set(remoteParticipantViewData: ParticipantViewData,
+                    for identifier: CommunicationIdentifier,
+                    completionHandler: ((Result<Void, SetParticipantViewDataError>) -> Void)? = nil) {
         guard let avatarManager = avatarViewManager else {
-            return .failure(CallCompositeErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
+            completionHandler?(.failure(SetParticipantViewDataError.participantNotInCall))
+            return
         }
-
-        return avatarManager.setRemoteParticipantViewData(for: identifier,
-                                                          participantViewData: participantViewData)
+        avatarManager.set(remoteParticipantViewData: remoteParticipantViewData,
+                          for: identifier,
+                          completionHandler: completionHandler)
     }
 
     private func setupManagers(with dependencyContainer: DependencyContainer) {
