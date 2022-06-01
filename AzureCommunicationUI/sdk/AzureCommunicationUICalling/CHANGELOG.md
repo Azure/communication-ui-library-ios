@@ -1,10 +1,7 @@
 # Release History
 ## 1.0.0-beta.2 (Upcoming)
 ### New Features
-- Implemented reposition and reduced the width of the participation banner in iPad layout in calling view. [#177](https://github.com/Azure/communication-ui-library-ios/pull/177)
-- Updated the size and UX of the pip view on iPad layout in calling screen. [#178](https://github.com/Azure/communication-ui-library-ios/pull/178)
-- Updated setup screen UX on iPad. [#191](https://github.com/Azure/communication-ui-library-ios/pull/191)
-- Updated participant grid layout for iPad. [#203](https://github.com/Azure/communication-ui-library-ios/pull/203)
+- Implemented adaptive layout and tailored UX for iPad. [#221](https://github.com/Azure/communication-ui-library-ios/pull/221)
 - Implemented new event to listen for remote participants joining a call [#209](https://github.com/Azure/communication-ui-library-ios/pull/209)
 - Implemented new method `setRemoteParticipantViewData` to set ParticipantViewData for the remote participant. [#205](https://github.com/Azure/communication-ui-library-ios/pull/205)
 - Implemented new behaviour for call denied to return to setup view. [#204](https://github.com/Azure/communication-ui-library-ios/pull/204)
