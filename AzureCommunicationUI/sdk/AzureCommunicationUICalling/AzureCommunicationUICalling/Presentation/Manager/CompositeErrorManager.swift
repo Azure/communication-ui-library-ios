@@ -64,8 +64,8 @@ class CompositeErrorManager: ErrorManagerProtocol {
 
     private func isInternalErrorCode(_ errorCode: String) -> Bool {
         return errorCode == CallCompositeErrorCode.callEvicted ||
-        errorCode != CallCompositeErrorCode.callDenied ||
-        errorCode != CallCompositeErrorCode.callResume ||
-        errorCode != CallCompositeErrorCode.callHold
+        errorCode == CallCompositeErrorCode.callDenied ||
+        errorCode == CallCompositeErrorCode.callResume ||
+        errorCode == CallCompositeErrorCode.callHold
     }
 }
