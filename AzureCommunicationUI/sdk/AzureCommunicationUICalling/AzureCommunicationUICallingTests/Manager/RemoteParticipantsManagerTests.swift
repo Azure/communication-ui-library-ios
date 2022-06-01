@@ -24,7 +24,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
         eventsHandler = CallComposite.Events()
         callingSDKWrapper = CallingSDKWrapperMocking()
         avatarViewManager = AvatarViewManagerMocking(store: mockStoreFactory.store,
-                                                     localSettings: nil)
+                                                     localOptions: nil)
     }
 
     func test_remoteParticipantsManager_receive_when_stateUpdated_and_participantRemoved_then_avatarViewManagerUpdateStorageCalled() {

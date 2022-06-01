@@ -5,7 +5,8 @@
 
 import Foundation
 
-public enum ParticipantViewDataSetError: String, Error {
+/// An error that occurs during setting participants view data.
+public enum SetParticipantViewDataError: String, Error {
     /// Error when the remote participant is not in the call.
     case participantNotInCall
 }
