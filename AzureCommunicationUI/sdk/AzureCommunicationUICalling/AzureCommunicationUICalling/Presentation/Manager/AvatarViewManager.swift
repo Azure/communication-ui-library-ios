@@ -15,15 +15,15 @@ protocol AvatarViewManagerProtocol {
 
 class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
     @Published var updatedId: String?
-    @Published private(set) var localSettings: LocalSettings?
+    @Published private(set) var localOptions: LocalOptions?
     private let store: Store<AppState>
     private(set) var avatarStorage = MappedSequence<String, ParticipantViewData>()
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState>,
-         localSettings: LocalSettings?) {
+         localOptions: LocalOptions?) {
         self.store = store
-        self.localSettings = localSettings
+        self.localOptions = localOptions
         store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
