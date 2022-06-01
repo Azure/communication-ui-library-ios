@@ -8,9 +8,9 @@ import AzureCommunicationCommon
 
 /// CallComposite Locator for locating call destination
 public enum CallCompositeLocator {
-    /// Group Capp with UUID groupId
+    /// Group Call with UUID groupId
     case groupCall(groupId: UUID)
-    /// Teams Meeeting with string teamsLink URI
+    /// Teams Meeting with string teamsLink URI
     case teamsMeeting(teamsLink: String)
 }
 
