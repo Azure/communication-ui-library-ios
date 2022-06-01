@@ -166,30 +166,30 @@ extension SwiftUIDemoView {
                                 nil:envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                           renderDisplayName: renderDisplayName)
-        let localSettings = LocalSettings(participantViewData)
+        let localOptions = LocalOptions(participantViewData)
         if let credential = try? getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(with: GroupCallOptions(credential: credential, groupId: uuid),
-                                         localSettings: localSettings)
+                                         localOptions: localOptions)
                 } else {
                     callComposite.launch(with: GroupCallOptions(credential: credential,
                                                                 groupId: uuid,
                                                                 displayName: envConfigSubject.displayName),
-                                         localSettings: localSettings)
+                                         localOptions: localOptions)
                 }
             case .teamsMeeting:
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(with: TeamsMeetingOptions(credential: credential,
                                                                    meetingLink: link),
-                                         localSettings: localSettings)
+                                         localOptions: localOptions)
                 } else {
                     callComposite.launch(with: TeamsMeetingOptions(credential: credential,
                                                                    meetingLink: link,
                                                                    displayName: envConfigSubject.displayName),
-                                         localSettings: localSettings)
+                                         localOptions: localOptions)
                 }
             }
         } else {

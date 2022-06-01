@@ -103,7 +103,7 @@ struct LocalVideoView: View {
             }
         }.onReceive(viewModel.$localVideoStreamId) {
             viewManager.updateDisplayedLocalVideoStream($0)
-        }.onReceive(avatarManager.$localSettings) {
+        }.onReceive(avatarManager.$localOptions) {
             avatarImage = $0?.participantViewData.avatarImage
         }
     }
