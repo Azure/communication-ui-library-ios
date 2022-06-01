@@ -169,8 +169,8 @@ class UIKitDemoViewController: UIViewController {
                                            identifiers: ids)
         }
 
-        callComposite.set(onErrorHandler: onError)
-        callComposite.set(onRemoteParticipantJoinedHandler: onRemoteParticipantJoinedHandler)
+        callComposite.events.onError = onError
+        callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),

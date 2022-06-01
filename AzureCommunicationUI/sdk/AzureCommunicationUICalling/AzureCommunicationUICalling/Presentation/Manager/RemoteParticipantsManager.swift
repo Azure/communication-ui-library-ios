@@ -12,7 +12,7 @@ protocol RemoteParticipantsManagerProtocol {
 
 class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
     private let store: Store<AppState>
-    private let eventsHandler: CallCompositeEventsHandling
+    private let eventsHandler: CallComposite.Events
     private let callingSDKWrapper: CallingSDKWrapperProtocol
     private let avatarViewManager: AvatarViewManager
     private var participantsLastUpdateTimeStamp = Date()
@@ -21,7 +21,7 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState>,
-         callCompositeEventsHandler: CallCompositeEventsHandling,
+         callCompositeEventsHandler: CallComposite.Events,
          callingSDKWrapper: CallingSDKWrapperProtocol,
          avatarViewManager: AvatarViewManager) {
         self.store = store

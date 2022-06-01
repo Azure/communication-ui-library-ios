@@ -32,7 +32,7 @@ final class DependencyContainer {
 
     func registerDependencies(_ callConfiguration: CallConfiguration,
                               localSettings: LocalSettings?,
-                              callCompositeEventsHandler: CallCompositeEventsHandling) {
+                              callCompositeEventsHandler: CallComposite.Events) {
         register(CallingSDKEventsHandler(logger: resolve()) as CallingSDKEventsHandling)
         register(CallingSDKWrapper(logger: resolve(),
                                    callingEventsHandler: resolve(),

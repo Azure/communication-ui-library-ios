@@ -10,15 +10,20 @@ import AzureCommunicationCalling
 
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
+
+    /// The class to configure events closures for Call Composite.
     public class Events {
-        var onError: ((CallCompositeErrorEvent) -> Void)?
-        var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
+        /// Closure to execute when error event occurs inside Call Composite.
+        public var onError: ((CallCompositeErrorEvent) -> Void)?
+        /// Closures to execute when participant has joined a call inside Call Composite.
+        public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
     }
 
+    /// The events handler for Call Composite
+    public let events: Events
     private var logger: Logger?
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
-    private let callCompositeEventsHandler: CallCompositeEventsHandling
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
@@ -29,21 +34,9 @@ public class CallComposite {
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
-        callCompositeEventsHandler = CallCompositeEventsHandler()
+        events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
-    }
-
-    /// Assign closures to execute when error event  occurs inside Call Composite.
-    /// - Parameter onErrorHandler: The closure returning the error thrown from Call Composite.
-    public func set(onErrorHandler: ((CallCompositeErrorEvent) -> Void)?) {
-        callCompositeEventsHandler.onError = onErrorHandler
-    }
-
-    /// Assign closures to execute when participant has joined a call  inside Call Composite.
-    /// - Parameter onRemoteParticipantJoinedHandler: The closure returning identifiers for joined remote participants.
-    public func set(onRemoteParticipantJoinedHandler: (([CommunicationIdentifier]) -> Void)?) {
-        callCompositeEventsHandler.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
     }
 
     deinit {
@@ -58,7 +51,7 @@ public class CallComposite {
 
         dependencyContainer.registerDependencies(callConfiguration,
                                                  localSettings: localSettings,
-                                                 callCompositeEventsHandler: callCompositeEventsHandler)
+                                                 callCompositeEventsHandler: events)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)

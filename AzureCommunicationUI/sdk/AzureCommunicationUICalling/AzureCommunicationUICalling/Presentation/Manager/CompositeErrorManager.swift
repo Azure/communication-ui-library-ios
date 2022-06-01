@@ -11,13 +11,13 @@ protocol ErrorManagerProtocol {
 
 class CompositeErrorManager: ErrorManagerProtocol {
     private let store: Store<AppState>
-    private let eventsHandler: CallCompositeEventsHandling
+    private let eventsHandler: CallComposite.Events
     private var error: CallCompositeErrorEvent?
 
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState>,
-         callCompositeEventsHandler: CallCompositeEventsHandling) {
+         callCompositeEventsHandler: CallComposite.Events) {
         self.store = store
         self.eventsHandler = callCompositeEventsHandler
         store.$state
