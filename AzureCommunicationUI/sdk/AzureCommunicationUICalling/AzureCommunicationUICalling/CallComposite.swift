@@ -10,6 +10,11 @@ import AzureCommunicationCalling
 
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
+    public class Events {
+        var onError: ((CallCompositeErrorEvent) -> Void)?
+        var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
+    }
+
     private var logger: Logger?
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
