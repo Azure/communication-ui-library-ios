@@ -174,10 +174,18 @@ struct CallingView: View {
     }
 
     private func updateChildViewIfNeededWith(newOrientation: UIDeviceOrientation) {
+        guard !viewModel.controlBarViewModel.isAudioDeviceSelectionDisplayed,
+                  !viewModel.controlBarViewModel.isConfirmLeaveListDisplayed,
+                  !viewModel.infoHeaderViewModel.isParticipantsListDisplayed else {
+                return
+            }
+        let areAllOrientationsSupported = SupportedOrientationsPreferenceKey.defaultValue == .all
         if newOrientation != orientation
             && newOrientation != .unknown
             && newOrientation != .faceDown
-            && newOrientation != .faceUp {
+            && newOrientation != .faceUp
+            && (areAllOrientationsSupported || (!areAllOrientationsSupported
+                                                && newOrientation != .portraitUpsideDown)) {
             orientation = newOrientation
         }
     }
