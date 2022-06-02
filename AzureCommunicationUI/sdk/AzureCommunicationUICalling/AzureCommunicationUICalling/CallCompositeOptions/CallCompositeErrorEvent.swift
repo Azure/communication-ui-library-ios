@@ -16,9 +16,6 @@ public struct CallCompositeErrorCode {
     /// Error when the input token is expired.
     public static let tokenExpired: String = "tokenExpired"
 
-    /// Error when the remote participant is not found in the call.
-    public static let remoteParticipantNotFound: String = "RemoteParticipantNotFound"
-
     /// Error when a participant is evicted from the call by another participant
     static let callEvicted: String = "callEvicted"
 
@@ -33,7 +30,7 @@ public struct CallCompositeErrorCode {
 }
 
 /// The error thrown after Call Composite launching.
-public struct CallCompositeErrorEvent: Error {
+public struct CallCompositeErrorEvent {
 
     /// The string representing the CallCompositeErrorCode.
     public let code: String

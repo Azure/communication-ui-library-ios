@@ -85,7 +85,7 @@ struct ParticipantGridCellView: View {
             avatarImage = participantViewData.avatarImage
         }
 
-        viewModel.updateParticipantNameIfNeeded(with: participantViewData.renderDisplayName)
+        viewModel.updateParticipantNameIfNeeded(with: participantViewData.displayName)
     }
 
     private func getRemoteParticipantVideoViewId() -> RemoteParticipantVideoViewId? {

@@ -8,9 +8,9 @@ import AzureCommunicationCommon
 import Combine
 
 protocol AvatarViewManagerProtocol {
-    func setRemoteParticipantViewData(
-        for identifier: CommunicationIdentifier,
-        participantViewData: ParticipantViewData) -> Result<Void, CallCompositeErrorEvent>
+    func set(remoteParticipantViewData: ParticipantViewData,
+             for identifier: CommunicationIdentifier,
+             completionHandler: ((Result<Void, SetParticipantViewDataError>) -> Void)?)
 }
 
 class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
@@ -50,22 +50,23 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
         }
     }
 
-    func setRemoteParticipantViewData(
-        for identifier: CommunicationIdentifier,
-        participantViewData: ParticipantViewData) -> Result<Void, CallCompositeErrorEvent> {
+    func set(remoteParticipantViewData: ParticipantViewData,
+             for identifier: CommunicationIdentifier,
+             completionHandler: ((Result<Void, SetParticipantViewDataError>) -> Void)? = nil) {
         let participantsList = store.state.remoteParticipantsState.participantInfoList
         guard let idStringValue = identifier.stringValue,
               participantsList.contains(where: { $0.userIdentifier == idStringValue })
         else {
-            return .failure(CallCompositeErrorEvent(code: CallCompositeErrorCode.remoteParticipantNotFound))
+            completionHandler?(.failure(SetParticipantViewDataError.participantNotInCall))
+            return
         }
 
         if avatarStorage.value(forKey: idStringValue) != nil {
             avatarStorage.removeValue(forKey: idStringValue)
         }
         avatarStorage.append(forKey: idStringValue,
-                             value: participantViewData)
+                             value: remoteParticipantViewData)
         updatedId = idStringValue
-        return .success(Void())
+        completionHandler?(.success(Void()))
     }
 }

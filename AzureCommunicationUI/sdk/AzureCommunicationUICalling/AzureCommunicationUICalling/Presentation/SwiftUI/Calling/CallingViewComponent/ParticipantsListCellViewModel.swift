@@ -63,7 +63,7 @@ class ParticipantsListCellViewModel {
 
     func getParticipantName(with participantViewData: ParticipantViewData?) -> String {
         let name: String
-        if let data = participantViewData, let renderDisplayName = data.renderDisplayName {
+        if let data = participantViewData, let renderDisplayName = data.displayName {
             let isRendererNameEmpty = renderDisplayName.trimmingCharacters(in: .whitespaces).isEmpty
             name = isRendererNameEmpty ? displayName : renderDisplayName
         } else {
