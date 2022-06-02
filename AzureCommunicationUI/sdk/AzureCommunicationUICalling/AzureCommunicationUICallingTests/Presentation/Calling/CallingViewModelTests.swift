@@ -180,7 +180,8 @@ extension CallingViewModelTests {
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: LocalizationProvider(logger: logger),
-                                accessibilityProvider: accessibilityProvider)
+                                accessibilityProvider: accessibilityProvider,
+                                isIpadInterface: false)
     }
 
     func makeSUTLocalizationMocking(storeFactory: StoreFactoryMocking = StoreFactoryMocking()) -> CallingViewModel {
@@ -189,7 +190,8 @@ extension CallingViewModelTests {
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: localizationProvider,
-                                accessibilityProvider: AccessibilityProvider())
+                                accessibilityProvider: AccessibilityProvider(),
+                                isIpadInterface: false)
     }
 
     func makeSUT(updateControlBarViewModel: @escaping ((LocalUserState, PermissionState) -> Void)) -> CallingViewModel {
@@ -206,7 +208,8 @@ extension CallingViewModelTests {
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: LocalizationProviderMocking(),
-                                accessibilityProvider: AccessibilityProvider())
+                                accessibilityProvider: AccessibilityProvider(),
+                                isIpadInterface: false)
     }
 
     func makeSUT(state: AppState? = nil, updateInfoHeaderViewModel: @escaping ((LocalUserState, RemoteParticipantsState, CallingState) -> Void)) -> CallingViewModel {
@@ -224,7 +227,8 @@ extension CallingViewModelTests {
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: LocalizationProviderMocking(),
-                                accessibilityProvider: AccessibilityProvider())
+                                accessibilityProvider: AccessibilityProvider(),
+                                isIpadInterface: false)
     }
 
     func makeSUT(state: AppState? = nil, updateLocalVideoViewModel: @escaping ((LocalUserState) -> Void)) -> CallingViewModel {
@@ -242,7 +246,8 @@ extension CallingViewModelTests {
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: LocalizationProviderMocking(),
-                                accessibilityProvider: AccessibilityProvider())
+                                accessibilityProvider: AccessibilityProvider(),
+                                isIpadInterface: false)
     }
 
     func makeSUT(state: AppState? = nil, updateParticipantGridViewModel: @escaping ((CallingState, RemoteParticipantsState) -> Void)) -> CallingViewModel {
@@ -259,7 +264,8 @@ extension CallingViewModelTests {
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: LocalizationProviderMocking(),
-                                accessibilityProvider: AccessibilityProvider())
+                                accessibilityProvider: AccessibilityProvider(),
+                                isIpadInterface: false)
     }
 
     func makeSUT(state: AppState? = nil, updateBannerViewModel: @escaping ((CallingState) -> Void)) -> CallingViewModel {
@@ -274,7 +280,8 @@ extension CallingViewModelTests {
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: LocalizationProviderMocking(),
-                                accessibilityProvider: AccessibilityProvider())
+                                accessibilityProvider: AccessibilityProvider(),
+                                isIpadInterface: false)
     }
 
     func test_callingViewModel_update_when_callStatusIsConnected_appStateForeground_then_switchToBackground_shouldBecomeBackground() {

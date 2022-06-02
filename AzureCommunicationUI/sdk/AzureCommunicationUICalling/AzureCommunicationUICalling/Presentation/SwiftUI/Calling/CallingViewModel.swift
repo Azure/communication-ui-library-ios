@@ -35,30 +35,28 @@ class CallingViewModel: ObservableObject {
          logger: Logger,
          store: Store<AppState>,
          localizationProvider: LocalizationProviderProtocol,
-         accessibilityProvider: AccessibilityProviderProtocol) {
-        let isCallConnected = store.state.callingState.status == .connected
-        let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
-        let dispatchAction: ActionDispatch = store.dispatch
-
-        self.compositeViewModelFactory = compositeViewModelFactory
+         accessibilityProvider: AccessibilityProviderProtocol,
+         isIpadInterface: Bool) {
         self.logger = logger
         self.store = store
+        self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
-        self.accessibilityProvider = accessibilityProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
-
-        isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
-        appState = store.state.lifeCycleState.currentStatus
-
-        localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: dispatchAction)
-        participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel()
+        self.accessibilityProvider = accessibilityProvider
+        let actionDispatch: ActionDispatch = store.dispatch
+        localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
+        participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
+                                                                                                isIpadInterface)
         bannerViewModel = compositeViewModelFactory.makeBannerViewModel()
         lobbyOverlayViewModel = compositeViewModelFactory.makeLobbyOverlayViewModel()
 
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
+        let isCallConnected = store.state.callingState.status == .connected
+        let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
+        isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
         controlBarViewModel = compositeViewModelFactory
-            .makeControlBarViewModel(dispatchAction: dispatchAction, endCallConfirm: { [weak self] in
+            .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
                 guard let self = self else {
                     return
                 }

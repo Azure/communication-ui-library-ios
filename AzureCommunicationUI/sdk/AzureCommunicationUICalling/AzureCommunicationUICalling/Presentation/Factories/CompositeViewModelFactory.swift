@@ -44,7 +44,7 @@ protocol CompositeViewModelFactoryProtocol {
                                  localUserState: LocalUserState) -> ControlBarViewModel
     func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel
-    func makeParticipantGridsViewModel() -> ParticipantGridViewModel
+    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel
     func makeBannerViewModel() -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
@@ -97,7 +97,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              logger: logger,
                                              store: store,
                                              localizationProvider: localizationProvider,
-                                             accessibilityProvider: accessibilityProvider)
+                                             accessibilityProvider: accessibilityProvider,
+                                             isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -203,10 +204,11 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                      accessibilityProvider: accessibilityProvider,
                                      participantModel: participantModel)
     }
-    func makeParticipantGridsViewModel() -> ParticipantGridViewModel {
+    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {
         ParticipantGridViewModel(compositeViewModelFactory: self,
                                  localizationProvider: localizationProvider,
-                                 accessibilityProvider: accessibilityProvider)
+                                 accessibilityProvider: accessibilityProvider,
+                                 isIpadInterface: isIpadInterface)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
