@@ -65,6 +65,9 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
             .sink(receiveValue: { _ in
                 switch containerView.router.currentView {
                 case .setupView:
+                    guard self.traitCollection.userInterfaceIdiom == .phone else {
+                        return
+                    }
                     if UIDevice.current.isGeneratingDeviceOrientationNotifications {
                         // This work-around is to make sure the setup view rotates back to portrait if the previous
                         // screen was on a different orientation.
@@ -105,6 +108,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
 
     private func haltSetupViewOrientation(containerView: ContainerView) {
         if containerView.router.currentView == .setupView,
+           traitCollection.userInterfaceIdiom == .phone,
            UIDevice.current.isGeneratingDeviceOrientationNotifications {
             UIDevice.current.endGeneratingDeviceOrientationNotifications()
         }
