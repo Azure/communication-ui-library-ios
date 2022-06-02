@@ -19,7 +19,6 @@ struct CallConfiguration {
          displayName: String?) {
         switch locator {
         case let .groupCall(groupId: groupId):
-            print(groupId)
             self.groupId = groupId
             self.meetingLink = nil
             self.compositeCallType = .groupCall

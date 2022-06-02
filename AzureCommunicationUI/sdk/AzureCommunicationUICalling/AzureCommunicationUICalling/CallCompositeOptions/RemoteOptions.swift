@@ -29,7 +29,7 @@ public struct RemoteOptions {
 
     /// Create an instance of a RemoteOptions with options.
     /// - Parameters:
-    ///   - for: The CallCompositeLocator type with unique identifier for joining a specific call.
+    ///   - locator: The CallCompositeLocator type with unique identifier for joining a specific call.
     ///   - credential: The credential used for Azure Communication Service authentication.
     ///   - displayName: The display name of the local participant for the call. The limit for string length is 256.
     public init(for locator: CallCompositeLocator,
@@ -42,7 +42,7 @@ public struct RemoteOptions {
 
     /// Create an instance of a RemoteOptions with options.
     /// - Parameters:
-    ///   - for: The CallCompositeLocator type with unique identifier for joining a specific call.
+    ///   - locator: The CallCompositeLocator type with unique identifier for joining a specific call.
     ///   - credential: The credential used for Azure Communication Service authentication.
     public init(for locator: CallCompositeLocator,
                 credential: CommunicationTokenCredential) {
