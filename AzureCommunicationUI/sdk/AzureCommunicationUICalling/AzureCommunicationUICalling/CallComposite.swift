@@ -12,7 +12,7 @@ import AzureCommunicationCalling
 public class CallComposite {
 
     /// The class to configure events closures for Call Composite.
-    public class Events {
+    public class EventsHandler {
         /// Closure to execute when error event occurs inside Call Composite.
         public var onError: ((CallCompositeErrorEvent) -> Void)?
         /// Closures to execute when participant has joined a call inside Call Composite.
@@ -20,7 +20,7 @@ public class CallComposite {
     }
 
     /// The events handler for Call Composite
-    public let events: Events
+    public let eventsHandler: EventsHandler
     private var logger: Logger?
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
@@ -34,7 +34,7 @@ public class CallComposite {
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
-        events = Events()
+        eventsHandler = EventsHandler()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
     }
@@ -51,7 +51,7 @@ public class CallComposite {
 
         dependencyContainer.registerDependencies(callConfiguration,
                                                  localOptions: localOptions,
-                                                 callCompositeEventsHandler: events)
+                                                 callCompositeEventsHandler: eventsHandler)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)
