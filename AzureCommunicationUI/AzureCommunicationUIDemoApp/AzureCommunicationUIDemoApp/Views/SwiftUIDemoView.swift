@@ -159,8 +159,8 @@ extension SwiftUIDemoView {
             self.onRemoteParticipantJoined(to: composite,
                                            identifiers: ids)
         }
-        callComposite.eventsHandler.onError = onError
-        callComposite.eventsHandler.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
+        callComposite.events.onError = onError
+        callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
