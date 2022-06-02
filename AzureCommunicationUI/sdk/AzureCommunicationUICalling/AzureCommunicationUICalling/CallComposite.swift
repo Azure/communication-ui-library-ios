@@ -65,30 +65,15 @@ public class CallComposite {
         present(toolkitHostingController)
     }
 
-    /// Start call composite experience with joining a group call.
-    /// - Parameter options: The GroupCallOptions used to locate the group call.
-    /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
-    ///                            This is data is not sent up to ACS.
-    public func launch(with options: GroupCallOptions,
-                       localOptions: LocalOptions? = nil) {
-        let callConfiguration = CallConfiguration(
-            credential: options.credential,
-            groupId: options.groupId,
-            displayName: options.displayName)
-
-        launch(callConfiguration, localOptions: localOptions)
-    }
-
     /// Start call composite experience with joining a Teams meeting.
-    /// - Parameter options: The TeamsMeetingOptions used to locate the Teams meetings.
+    /// - Parameter remoteOptions: RemoteOptions used to send to ACS to locate the call.
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This is data is not sent up to ACS.
-    public func launch(with options: TeamsMeetingOptions,
+    public func launch(remoteOptions: RemoteOptions,
                        localOptions: LocalOptions? = nil) {
-        let callConfiguration = CallConfiguration(
-            credential: options.credential,
-            meetingLink: options.meetingLink,
-            displayName: options.displayName)
+        let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
+                                                  credential: remoteOptions.credential,
+                                                  displayName: remoteOptions.displayName)
 
         launch(callConfiguration, localOptions: localOptions)
     }

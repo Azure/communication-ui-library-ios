@@ -5,7 +5,8 @@
 
 import Foundation
 import UIKit
-/// Object for local settings for Call Composite
+
+/// Object for local options for Call Composite
 public struct LocalOptions {
     /// The ParticipantViewData of the local participant when joining the call.
     let participantViewData: ParticipantViewData

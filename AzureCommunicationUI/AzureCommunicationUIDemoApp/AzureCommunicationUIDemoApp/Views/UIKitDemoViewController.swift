@@ -180,19 +180,19 @@ class UIKitDemoViewController: UIViewController {
                                                       displayName: renderDisplayName)
         let localOptions = LocalOptions(participantViewData)
 
-        if let communicationTokenCredential = try? getTokenCredential() {
+        if let credential = try? getTokenCredential() {
             switch selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
-                let parameters = GroupCallOptions(credential: communicationTokenCredential,
-                                                  groupId: uuid,
-                                                  displayName: getDisplayName())
-                callComposite.launch(with: parameters, localOptions: localOptions)
+                callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
+                                                                  credential: credential,
+                                                                  displayName: getDisplayName()),
+                                     localOptions: localOptions)
             case .teamsMeeting:
-                let parameters = TeamsMeetingOptions(credential: communicationTokenCredential,
-                                                     meetingLink: link,
-                                                     displayName: getDisplayName())
-                callComposite.launch(with: parameters, localOptions: localOptions)
+                callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                                                                  credential: credential,
+                                                                  displayName: getDisplayName()),
+                                     localOptions: localOptions)
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
