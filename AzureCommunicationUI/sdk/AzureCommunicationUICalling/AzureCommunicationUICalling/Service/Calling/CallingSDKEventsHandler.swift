@@ -140,6 +140,12 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
             participantsInfoListSubject.send(remoteParticipantsInfoList)
         }
     }
+
+    private func wasCallConnected() -> Bool {
+        return previousCallingStatus == .connected ||
+              previousCallingStatus == .localHold ||
+              previousCallingStatus == .remoteHold
+    }
 }
 
 extension CallingSDKEventsHandler: CallDelegate,
@@ -156,8 +162,7 @@ extension CallingSDKEventsHandler: CallDelegate,
 
     func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {
         let currentStatus = call.state.toCallingStatus()
-        let wasCallConnected = previousCallingStatus == .connected
-        let errorCode = call.callEndReason.toCompositeErrorCodeString(wasCallConnected)
+        let errorCode = call.callEndReason.toCompositeErrorCodeString(wasCallConnected())
 
         let callInfoModel = CallInfoModel(status: currentStatus, errorCode: errorCode)
         callInfoSubject.send(callInfoModel)

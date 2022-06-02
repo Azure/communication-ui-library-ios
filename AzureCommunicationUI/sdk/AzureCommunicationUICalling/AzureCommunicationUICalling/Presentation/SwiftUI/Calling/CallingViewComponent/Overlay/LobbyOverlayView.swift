@@ -38,8 +38,8 @@ struct OverlayView: View {
                             }
                         }
                         .padding(.horizontal, horizontalPaddingSize)
-                                .accessibilityElement(children: .combine)
-                                .accessibility(addTraits: .isHeader)
+                        .accessibilityElement(children: .combine)
+                        .accessibility(addTraits: .isHeader)
                         if let actionButtonViewModel = viewModel.actionButtonViewModel {
                             PrimaryButton(viewModel: actionButtonViewModel)
                                 .fixedSize()
