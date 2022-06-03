@@ -23,7 +23,7 @@ struct RemoteParticipantAvatarHelper {
         }
     }
 
-    static func didRemoteParticipantsJoin(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+    static func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         let avatars = ["cat", "fox", "koala", "monkey", "mouse", "octopus"]
         for identifier in identifiers {
             let id = getRemoteParticipantId(identifier)
@@ -44,7 +44,7 @@ struct RemoteParticipantAvatarHelper {
                 case .success:
                     break
                 case .failure(let error):
-                    print("::::RemoteParticipantAvatarHelper::didRemoteParticipantsJoin::failure \(error)")
+                    print("::::RemoteParticipantAvatarHelper::onRemoteParticipantJoined::failure \(error)")
                 }
             }
         }

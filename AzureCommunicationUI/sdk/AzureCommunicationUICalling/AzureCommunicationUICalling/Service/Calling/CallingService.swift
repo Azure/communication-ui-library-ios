@@ -25,6 +25,9 @@ protocol CallingServiceProtocol {
 
     func muteLocalMic() -> AnyPublisher<Void, Error>
     func unmuteLocalMic() -> AnyPublisher<Void, Error>
+
+    func holdCall() -> AnyPublisher<Void, Error>
+    func resumeCall() -> AnyPublisher<Void, Error>
 }
 
 class CallingService: NSObject, CallingServiceProtocol {
@@ -86,5 +89,13 @@ class CallingService: NSObject, CallingServiceProtocol {
 
     func unmuteLocalMic() -> AnyPublisher<Void, Error> {
         return callingSDKWrapper.unmuteLocalMic()
+    }
+
+    func holdCall() -> AnyPublisher<Void, Error> {
+        return callingSDKWrapper.holdCall()
+    }
+
+    func resumeCall() -> AnyPublisher<Void, Error> {
+        return callingSDKWrapper.resumeCall()
     }
 }

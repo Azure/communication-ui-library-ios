@@ -21,6 +21,12 @@ public struct CallCompositeErrorCode {
 
     /// Error when a participant is denied from entering the call
     static let callDenied: String = "callDenied"
+
+    /// Error when local user fails to hold a call.
+    static let callHold: String = "callHold"
+
+    /// Error when local user fails to resume a call.
+    static let callResume: String = "callResume"
 }
 
 /// The error thrown after Call Composite launching.
