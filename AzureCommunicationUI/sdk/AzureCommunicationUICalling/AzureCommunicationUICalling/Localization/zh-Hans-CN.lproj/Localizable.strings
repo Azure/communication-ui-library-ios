@@ -47,6 +47,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (我)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="已静音";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="已取消静音";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="正在讲话";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="切换到后置摄像头";

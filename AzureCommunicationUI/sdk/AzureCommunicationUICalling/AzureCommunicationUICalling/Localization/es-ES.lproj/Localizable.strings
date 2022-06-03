@@ -47,6 +47,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (yo)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Silenciados";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Audio reactivado";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Hablando";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="En espera";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Cambiar a cámara trasera";

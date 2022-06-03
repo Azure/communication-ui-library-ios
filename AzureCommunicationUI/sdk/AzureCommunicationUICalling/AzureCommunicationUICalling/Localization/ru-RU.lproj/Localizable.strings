@@ -47,6 +47,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (Я)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Звук отключен";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Звук включен";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Говорит";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="На удержании";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Переключиться на заднюю камеру";
