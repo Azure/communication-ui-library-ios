@@ -62,10 +62,11 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
             .$supportedOrientations
             .receive(on: RunLoop.main)
             .removeDuplicates()
-            .sink(receiveValue: { _ in
+            .sink(receiveValue: { [weak self] _ in
                 switch containerView.router.currentView {
                 case .setupView:
-                    guard self.traitCollection.userInterfaceIdiom == .phone else {
+                    guard let self = self,
+                          self.traitCollection.userInterfaceIdiom == .phone else {
                         return
                     }
                     if UIDevice.current.isGeneratingDeviceOrientationNotifications {
