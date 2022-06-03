@@ -86,12 +86,13 @@ The UI library wouldn't work for the device target lower than iOS 14. But it's s
 2. Embed the newly added framework into your main target's "Frameworks and Libraries" section with `Embed and Sign`.
 3. In main app, use the [`Loadable Bundles in Cocoa`](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/LoadingCode/Concepts/CocoaBundles.html#//apple_ref/doc/uid/20001269-BAJCIAHA) to load the new added UIViewController from the framework when the iOS 14 is available. Code example:
 ```
- if #available(iOS 14.0, *) {
-            if let principleClass = Bundle(identifier: "com.****.UILibraryFramework")?.principalClass as? UIViewController.Type {
-                let controller = principleClass()
-                self.addChild(controller)
-                view.addSubview(controller.view)
-            }
+if #available(iOS 14.0, *) {
+    if let principleClass = Bundle(identifier: "com.****.UILibraryFramework")?.principalClass as? UIViewController.Type {
+        let controller = principleClass()
+        self.addChild(controller)
+        view.addSubview(controller.view)
+    }
+}
 ```
 
 
