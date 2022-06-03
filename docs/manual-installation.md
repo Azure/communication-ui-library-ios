@@ -78,7 +78,7 @@ Note: Please refer to [How to fix the issues](#how-to-fix-the-issues) to fix som
 The UI library won't work for devices lower than iOS 14 but it's still possible to import the UI library with the following workaround and then conditionally launch the UI library when iOS 14 is available. 
 
 1. Add a framework to your project’s target and set the minimum deployment target > iOS 14. 
-	* Use this framework for all needed dependencies import, through Cocoapods or manual embed.
+	* Use this framework for all needed dependencies imported through Cocoapods or manual embed.
 	* Create an UIViewController only targeted for the framework.
 	* Import needed dependency modules inside the UIViewController, add `tokenCredential`, `callCompositeOptions`, and code in the `init()` method to launch the UI library. 
 	* Set this UIViewController as the `NSPrincipalClass` for the newly added framework. 
