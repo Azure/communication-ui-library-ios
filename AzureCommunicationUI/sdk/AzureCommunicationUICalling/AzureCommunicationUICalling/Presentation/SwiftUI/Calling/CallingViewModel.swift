@@ -123,7 +123,10 @@ class CallingViewModel: ObservableObject {
         }
 
         if callHasConnected != newIsCallConnected && newIsCallConnected {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) { [weak self] in
+                guard let self = self else {
+                    return
+                }
                 self.accessibilityProvider.postQueuedAnnouncement(
                     self.localizationProvider.getLocalizedString(.joinedCallAccessibilityLabel))
             }
