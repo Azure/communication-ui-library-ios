@@ -44,9 +44,13 @@
 		1F2BEDC026328F2700D98266 /* CallingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BEDBF26328F2700D98266 /* CallingState.swift */; };
 		1F2BEDCD26329E5600D98266 /* PermissionAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BEDCC26329E5600D98266 /* PermissionAction.swift */; };
 		1F2BEDD126329E7C00D98266 /* CallingAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BEDD026329E7C00D98266 /* CallingAction.swift */; };
+		1F3F0C65283E853800C66054 /* AudioSessionAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F0C64283E853800C66054 /* AudioSessionAction.swift */; };
+		1F3F0C67283E858600C66054 /* AudioSessionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F0C66283E858600C66054 /* AudioSessionState.swift */; };
+		1F3F0C69283E860600C66054 /* AudioSessionReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F3F0C68283E860600C66054 /* AudioSessionReducer.swift */; };
 		1F47F78726E9E18E000AE4B7 /* DrawerContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F47F78626E9E18E000AE4B7 /* DrawerContainerViewController.swift */; };
 		1F48B401274879F000B6E5F9 /* DiagnosticConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48B400274879F000B6E5F9 /* DiagnosticConfig.swift */; };
 		1F48B40327496E2800B6E5F9 /* DiagnosticConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48B40227496E2800B6E5F9 /* DiagnosticConfigTests.swift */; };
+		1F48CF1F283447F400A44D58 /* CallingSDKWrapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48CF1E283447F400A44D58 /* CallingSDKWrapperProtocol.swift */; };
 		1F4A24BC26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A24BB26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift */; };
 		1F4B0EF8269BD17600E87014 /* CompositeErrorManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B0EF7269BD17600E87014 /* CompositeErrorManagerTests.swift */; };
 		1F4B0EFA269BD3D000E87014 /* CallCompositeMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B0EF9269BD3D000E87014 /* CallCompositeMocking.swift */; };
@@ -74,6 +78,7 @@
 		1F94DAF52677D48400691D1E /* CallCompositeErrorEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAF42677D48400691D1E /* CallCompositeErrorEvent.swift */; };
 		1FA23F9E265DA21400B4A080 /* VideoStreamInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA23F9D265DA21400B4A080 /* VideoStreamInfoModel.swift */; };
 		1FA24BAD2666F0CC00B4A080 /* ColorThemeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA24BAC2666F0CC00B4A080 /* ColorThemeProvider.swift */; };
+		1FB0A1C128412A5100D57B0F /* ACSParticipantStateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A1C028412A5000D57B0F /* ACSParticipantStateExtension.swift */; };
 		1FBCB666264519DA00F57EEA /* VideoViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBCB665264519DA00F57EEA /* VideoViewManager.swift */; };
 		1FBCB69F2645285100F57EEA /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A8659FC52602A22000C807DE /* AzureCommunicationUICalling.framework */; platformFilter = ios; };
 		1FBCB6AA2645AC2F00F57EEA /* VideoRenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FBCB6A92645AC2F00F57EEA /* VideoRenderView.swift */; };
@@ -211,6 +216,8 @@
 		A88CDFBC27505A410004E2F5 /* ErrorInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88CDFBB27505A410004E2F5 /* ErrorInfoViewModel.swift */; };
 		A8ED232D2645C637008A26B2 /* CallingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ED232C2645C637008A26B2 /* CallingServiceTests.swift */; };
 		A8ED23302649EA61008A26B2 /* NavigationRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */; };
+		BD3CC699283D952E0052DE4A /* OverlayViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CC698283D952E0052DE4A /* OverlayViewModelProtocol.swift */; };
+		BD3CC69B283D953E0052DE4A /* OnHoldOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CC69A283D953E0052DE4A /* OnHoldOverlayViewModel.swift */; };
 		FA03CC8127C8189900986D4E /* PreviewAreaViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC7627C8189900986D4E /* PreviewAreaViewModelMocking.swift */; };
 		FA03CC8327C8189900986D4E /* SetupControlBarViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC7827C8189900986D4E /* SetupControlBarViewModelMocking.swift */; };
 		FA03CC8527C8189900986D4E /* ErrorInfoViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC7A27C8189900986D4E /* ErrorInfoViewModelMocking.swift */; };
@@ -284,9 +291,13 @@
 		1F2BEDBF26328F2700D98266 /* CallingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingState.swift; sourceTree = "<group>"; };
 		1F2BEDCC26329E5600D98266 /* PermissionAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAction.swift; sourceTree = "<group>"; };
 		1F2BEDD026329E7C00D98266 /* CallingAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingAction.swift; sourceTree = "<group>"; };
+		1F3F0C64283E853800C66054 /* AudioSessionAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionAction.swift; sourceTree = "<group>"; };
+		1F3F0C66283E858600C66054 /* AudioSessionState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioSessionState.swift; sourceTree = "<group>"; };
+		1F3F0C68283E860600C66054 /* AudioSessionReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionReducer.swift; sourceTree = "<group>"; };
 		1F47F78626E9E18E000AE4B7 /* DrawerContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerContainerViewController.swift; sourceTree = "<group>"; };
 		1F48B400274879F000B6E5F9 /* DiagnosticConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticConfig.swift; sourceTree = "<group>"; };
 		1F48B40227496E2800B6E5F9 /* DiagnosticConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticConfigTests.swift; sourceTree = "<group>"; };
+		1F48CF1E283447F400A44D58 /* CallingSDKWrapperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKWrapperProtocol.swift; sourceTree = "<group>"; };
 		1F4A24BB26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeViewModelFactoryMocking.swift; sourceTree = "<group>"; };
 		1F4B0EF7269BD17600E87014 /* CompositeErrorManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeErrorManagerTests.swift; sourceTree = "<group>"; };
 		1F4B0EF9269BD3D000E87014 /* CallCompositeMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeMocking.swift; sourceTree = "<group>"; };
@@ -314,6 +325,7 @@
 		1F94DAF42677D48400691D1E /* CallCompositeErrorEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeErrorEvent.swift; sourceTree = "<group>"; };
 		1FA23F9D265DA21400B4A080 /* VideoStreamInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoStreamInfoModel.swift; sourceTree = "<group>"; };
 		1FA24BAC2666F0CC00B4A080 /* ColorThemeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorThemeProvider.swift; sourceTree = "<group>"; };
+		1FB0A1C028412A5000D57B0F /* ACSParticipantStateExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACSParticipantStateExtension.swift; sourceTree = "<group>"; };
 		1FBCB665264519DA00F57EEA /* VideoViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewManager.swift; sourceTree = "<group>"; };
 		1FBCB682264522F200F57EEA /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		1FBCB69A2645285100F57EEA /* AzureCommunicationUICallingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzureCommunicationUICallingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -483,6 +495,8 @@
 		A8ED232C2645C637008A26B2 /* CallingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingServiceTests.swift; sourceTree = "<group>"; };
 		A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouterTests.swift; sourceTree = "<group>"; };
 		B75F3B6936323E60658040C6 /* Pods-AzureCommunicationUICalling.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling/Pods-AzureCommunicationUICalling.debug.xcconfig"; sourceTree = "<group>"; };
+		BD3CC698283D952E0052DE4A /* OverlayViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayViewModelProtocol.swift; sourceTree = "<group>"; };
+		BD3CC69A283D953E0052DE4A /* OnHoldOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModel.swift; sourceTree = "<group>"; };
 		C580DBF67D8B5AEF7A801F90 /* Pods_AzureCommunicationUICalling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUICalling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3504C0C167BEEE155CF30AD /* Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests/Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E7792CEA9A8EE93D3F8391F4 /* Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests/Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -652,6 +666,7 @@
 				1F87A7BA263A7EE900F49C7E /* CommunicationIdentifierExtension.swift */,
 				1FBCB6B02649EB1200F57EEA /* RemoteParticipantExtension.swift */,
 				1F13D37226AB3F1200E31666 /* ACSCallingStateExtension.swift */,
+				1FB0A1C028412A5000D57B0F /* ACSParticipantStateExtension.swift */,
 				5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */,
 				1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */,
 			);
@@ -711,6 +726,7 @@
 				1F13D36F26AB293700E31666 /* NavigationReducer.swift */,
 				88F6EE192735F5CB001AD3E9 /* ErrorReducer.swift */,
 				1F83813E26803ADF0096A454 /* CallingReducer.swift */,
+				1F3F0C68283E860600C66054 /* AudioSessionReducer.swift */,
 			);
 			path = Reducer;
 			sourceTree = "<group>";
@@ -718,6 +734,7 @@
 		1F2BEDBE26328EFA00D98266 /* State */ = {
 			isa = PBXGroup;
 			children = (
+				1F3F0C66283E858600C66054 /* AudioSessionState.swift */,
 				1F2BED75262F944500D98266 /* ReduxState.swift */,
 				1F2BED982631FA6C00D98266 /* PermissionState.swift */,
 				1F2BEDBF26328F2700D98266 /* CallingState.swift */,
@@ -738,6 +755,7 @@
 				1F2BEDCC26329E5600D98266 /* PermissionAction.swift */,
 				1F2BEDD026329E7C00D98266 /* CallingAction.swift */,
 				A874EDC726616792003C7D92 /* LifecycleAction.swift */,
+				1F3F0C64283E853800C66054 /* AudioSessionAction.swift */,
 				1F94DAE326740BCB00691D1E /* LocalUserAction.swift */,
 			);
 			path = Action;
@@ -837,6 +855,7 @@
 				1F13D37126AB3DDB00E31666 /* Extension */,
 				1F6470A82639DCFA0008B9E9 /* CallingService.swift */,
 				1FBCB6AB2649993500F57EEA /* CallingSDKWrapper.swift */,
+				1F48CF1E283447F400A44D58 /* CallingSDKWrapperProtocol.swift */,
 				1F4B0F0426A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift */,
 				1FD299652728B72B0084B9ED /* CallingSDKEventsHandler.swift */,
 			);
@@ -919,13 +938,12 @@
 		50FA45F6267D45FD001844AC /* CallingViewComponent */ = {
 			isa = PBXGroup;
 			children = (
+				BD3CC697283D95040052DE4A /* Overlay */,
 				50C6DECD270E49270085D04B /* Banner */,
 				50FA45F7267D466D001844AC /* InfoHeaderView.swift */,
 				50FA460D26829345001844AC /* InfoHeaderViewModel.swift */,
 				50FA45F4267D3BD3001844AC /* ControlBarView.swift */,
 				50FA460F26829B7A001844AC /* ControlBarViewModel.swift */,
-				5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */,
-				8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */,
 				50E2D69426EACB74006B0EF4 /* ParticipantsListViewModel.swift */,
 				50E2D69826F4FA05006B0EF4 /* ParticipantsListCellViewModel.swift */,
 				1BAD44BB283DAF2100C9E6A9 /* DraggableLocalVideoView.swift */,
@@ -1194,6 +1212,17 @@
 				A837397D261CEA4300D46787 /* Logger.swift */,
 			);
 			path = Logger;
+			sourceTree = "<group>";
+		};
+		BD3CC697283D95040052DE4A /* Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */,
+				8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */,
+				BD3CC698283D952E0052DE4A /* OverlayViewModelProtocol.swift */,
+				BD3CC69A283D953E0052DE4A /* OnHoldOverlayViewModel.swift */,
+			);
+			path = Overlay;
 			sourceTree = "<group>";
 		};
 		D0F8928467AFB90CE84E93DF /* Pods */ = {
@@ -1561,6 +1590,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50B390D827D976930010A2ED /* JoiningCallActivityViewModel.swift in Sources */,
+				1F3F0C67283E858600C66054 /* AudioSessionState.swift in Sources */,
 				1FBCB6B6264BA8A200F57EEA /* ParticipantGridCellViewModel.swift in Sources */,
 				1F03D3CE2638A6AE0055C456 /* CallingView.swift in Sources */,
 				1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */,
@@ -1575,6 +1605,7 @@
 				1F2BEDA5263252E100D98266 /* Middleware.swift in Sources */,
 				9823AB4B26A13F4B0006266D /* PreviewAreaViewModel.swift in Sources */,
 				1F6470A92639DCFA0008B9E9 /* CallingService.swift in Sources */,
+				BD3CC699283D952E0052DE4A /* OverlayViewModelProtocol.swift in Sources */,
 				1F83813F26803ADF0096A454 /* CallingReducer.swift in Sources */,
 				1F2BED64262F86E600D98266 /* SetupView.swift in Sources */,
 				FAD845402819C129007DAFE1 /* RemoteParticipantsManager.swift in Sources */,
@@ -1640,6 +1671,7 @@
 				1F94DAF52677D48400691D1E /* CallCompositeErrorEvent.swift in Sources */,
 				1F94DAE626740D4400691D1E /* AppState.swift in Sources */,
 				8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */,
+				1F3F0C69283E860600C66054 /* AudioSessionReducer.swift in Sources */,
 				50137D0626A7479C00AB843E /* EnvironmentValuesExtension.swift in Sources */,
 				1FD299642723345B0084B9ED /* DefaultLogger.swift in Sources */,
 				1F2BEDA92632530D00D98266 /* Action.swift in Sources */,
@@ -1665,6 +1697,8 @@
 				1F8E0B78268D0EF000DDD18E /* CompositeErrorManager.swift in Sources */,
 				98546EBA26DEF24D0069B246 /* AudioDeviceType.swift in Sources */,
 				A8810CDD263CC75200C88545 /* ContainerView.swift in Sources */,
+				BD3CC69B283D953E0052DE4A /* OnHoldOverlayViewModel.swift in Sources */,
+				1FB0A1C128412A5100D57B0F /* ACSParticipantStateExtension.swift in Sources */,
 				981ACABC2685459400CD6A40 /* IconProvider.swift in Sources */,
 				1F2BEDCD26329E5600D98266 /* PermissionAction.swift in Sources */,
 				98B186A127C85F9800B837E6 /* AudioDevicesListViewModel.swift in Sources */,
@@ -1678,9 +1712,11 @@
 				988799912745EABE00AA3759 /* SourceViewSpace.swift in Sources */,
 				1FBCB6B12649EB1200F57EEA /* RemoteParticipantExtension.swift in Sources */,
 				88F6EE1C2735F8E8001AD3E9 /* ErrorState.swift in Sources */,
+				1F48CF1F283447F400A44D58 /* CallingSDKWrapperProtocol.swift in Sources */,
 				1F2BEDC026328F2700D98266 /* CallingState.swift in Sources */,
 				88F6EE1A2735F5CB001AD3E9 /* ErrorReducer.swift in Sources */,
 				A874EDC626616728003C7D92 /* AppLifeCycleState.swift in Sources */,
+				1F3F0C65283E853800C66054 /* AudioSessionAction.swift in Sources */,
 				A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */,
 				500C0F1F2847DE18000BA2DC /* RemoteOptions.swift in Sources */,
 				1F13D36C26A8B83300E31666 /* RemoteParticipantsState.swift in Sources */,

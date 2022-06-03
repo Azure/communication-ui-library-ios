@@ -33,10 +33,12 @@ protocol CompositeViewModelFactoryProtocol {
                                            title: String,
                                            isSelected: Bool,
                                            onSelectedAction: @escaping (() -> Void)) -> AudioDevicesListCellViewModel
-    func makeErrorInfoViewModel() -> ErrorInfoViewModel
+    func makeErrorInfoViewModel(title: String,
+                                subtitle: String) -> ErrorInfoViewModel
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel
+    func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel
@@ -160,13 +162,24 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                       onSelected: onSelectedAction)
     }
 
-    func makeErrorInfoViewModel() -> ErrorInfoViewModel {
-        ErrorInfoViewModel(localizationProvider: localizationProvider)
+    func makeErrorInfoViewModel(title: String,
+                                subtitle: String) -> ErrorInfoViewModel {
+        ErrorInfoViewModel(localizationProvider: localizationProvider,
+                           title: title,
+                           subtitle: subtitle)
     }
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
-        return LobbyOverlayViewModel(localizationProvider: localizationProvider)
+        LobbyOverlayViewModel(localizationProvider: localizationProvider,
+                              accessibilityProvider: accessibilityProvider)
+    }
+    func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
+        OnHoldOverlayViewModel(localizationProvider: localizationProvider,
+                               compositeViewModelFactory: self,
+                               logger: logger,
+                               accessibilityProvider: accessibilityProvider,
+                               resumeAction: resumeAction)
     }
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),

@@ -39,6 +39,7 @@ class AvatarManagerTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
