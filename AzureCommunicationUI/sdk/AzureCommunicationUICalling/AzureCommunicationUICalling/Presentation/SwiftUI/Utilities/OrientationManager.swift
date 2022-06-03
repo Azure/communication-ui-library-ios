@@ -43,7 +43,7 @@ class OrientationManager: ObservableObject {
 
         NotificationCenter.default
             .publisher(for: UIDevice.orientationDidChangeNotification)
-            .sink() { [weak self] _ in
+            .sink { [weak self] _ in
                 self?.type = UIDevice.current.orientation
             }
             .store(in: &cancellables)
