@@ -75,7 +75,7 @@ Note: Please refer to [How to fix the issues](#how-to-fix-the-issues) to fix som
     
 ### FAQ
 #### How to conditionally use the UI library based on the iOS version when the project has a lower minimum deployment target?
-The UI library wouldn't work for the device target lower than iOS 14. But it's still possible to import the UI library with the following workaround and conditional launch the UI library when iOS 14 is available. 
+The UI library won't work for devices lower than iOS 14 but it's still possible to import the UI library with the following workaround and then conditionally launch the UI library when iOS 14 is available. 
 
 1. Add a framework to your project’s target and set the minimum deployment target > iOS 14. 
 	* Use this framework for all needed dependencies import, through Cocoapods or manual embed.
