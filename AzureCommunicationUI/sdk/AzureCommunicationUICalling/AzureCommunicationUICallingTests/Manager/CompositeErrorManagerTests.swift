@@ -92,9 +92,9 @@ extension CompositeErrorManagerTests {
                         errorState: errorState)
     }
 
-    func getEventsHandler() -> CallCompositeEventsHandling {
-        let handler = CallCompositeEventsHandler()
-        handler.didFail = { [weak self] callCompositeError in
+    func getEventsHandler() -> CallComposite.Events {
+        let handler = CallComposite.Events()
+        handler.onError = { [weak self] callCompositeError in
             guard let self = self else {
                 return
             }

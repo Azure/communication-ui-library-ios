@@ -10,10 +10,20 @@ import AzureCommunicationCalling
 
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
+
+    /// The class to configure events closures for Call Composite.
+    public class Events {
+        /// Closure to execute when error event occurs inside Call Composite.
+        public var onError: ((CallCompositeErrorEvent) -> Void)?
+        /// Closures to execute when participant has joined a call inside Call Composite.
+        public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
+    }
+
+    /// The events handler for Call Composite
+    public let events: Events
     private var logger: Logger?
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
-    private let callCompositeEventsHandler: CallCompositeEventsHandling
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
@@ -24,21 +34,9 @@ public class CallComposite {
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
-        callCompositeEventsHandler = CallCompositeEventsHandler()
+        events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
-    }
-
-    /// Assign closures to execute when error event  occurs inside Call Composite.
-    /// - Parameter didFailAction: The closure returning the error thrown from Call Composite.
-    public func setDidFailHandler(with didFailAction: ((CallCompositeErrorEvent) -> Void)?) {
-        callCompositeEventsHandler.didFail = didFailAction
-    }
-
-    /// Assign closures to execute when participant has joined a call  inside Call Composite.
-    /// - Parameter participantsJoinedAction: The closure returning identifiers for joined remote participants.
-    public func setRemoteParticipantJoinHandler(with participantsJoinedAction: (([CommunicationIdentifier]) -> Void)?) {
-        callCompositeEventsHandler.didRemoteParticipantsJoin = participantsJoinedAction
     }
 
     deinit {
@@ -53,7 +51,7 @@ public class CallComposite {
 
         dependencyContainer.registerDependencies(callConfiguration,
                                                  localOptions: localOptions,
-                                                 callCompositeEventsHandler: callCompositeEventsHandler)
+                                                 callCompositeEventsHandler: events)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)
@@ -110,6 +108,7 @@ public class CallComposite {
         self.lifeCycleManager = nil
         self.permissionManager = nil
         self.audioSessionManager = nil
+        self.avatarViewManager = nil
         self.remoteParticipantsManager = nil
     }
 

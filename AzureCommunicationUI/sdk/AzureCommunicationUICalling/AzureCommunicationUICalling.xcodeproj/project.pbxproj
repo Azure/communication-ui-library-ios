@@ -70,7 +70,6 @@
 		1F9184B626B4A3340049EF5B /* NavigationReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9184B526B4A3340049EF5B /* NavigationReducerTests.swift */; };
 		1F94DADC2673E87700691D1E /* ThemeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DADB2673E87700691D1E /* ThemeOptions.swift */; };
 		1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DADE2673E94F00691D1E /* CallComposite.swift */; };
-		1F94DAE12673EA9500691D1E /* CallCompositeEventsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAE02673EA9500691D1E /* CallCompositeEventsHandler.swift */; };
 		1F94DAE426740BCB00691D1E /* LocalUserAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAE326740BCB00691D1E /* LocalUserAction.swift */; };
 		1F94DAE626740D4400691D1E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAE526740D4400691D1E /* AppState.swift */; };
 		1F94DAE82676885700691D1E /* AppStateReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAE72676885700691D1E /* AppStateReducer.swift */; };
@@ -317,7 +316,6 @@
 		1F9184B526B4A3340049EF5B /* NavigationReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationReducerTests.swift; sourceTree = "<group>"; };
 		1F94DADB2673E87700691D1E /* ThemeOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeOptions.swift; sourceTree = "<group>"; };
 		1F94DADE2673E94F00691D1E /* CallComposite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallComposite.swift; sourceTree = "<group>"; };
-		1F94DAE02673EA9500691D1E /* CallCompositeEventsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeEventsHandler.swift; sourceTree = "<group>"; };
 		1F94DAE326740BCB00691D1E /* LocalUserAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalUserAction.swift; sourceTree = "<group>"; };
 		1F94DAE526740D4400691D1E /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		1F94DAE72676885700691D1E /* AppStateReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateReducer.swift; sourceTree = "<group>"; };
@@ -1089,7 +1087,6 @@
 			children = (
 				A8373993261F9D7600D46787 /* CallCompositeOptions.swift */,
 				1F94DADB2673E87700691D1E /* ThemeOptions.swift */,
-				1F94DAE02673EA9500691D1E /* CallCompositeEventsHandler.swift */,
 				1F94DAF42677D48400691D1E /* CallCompositeErrorEvent.swift */,
 				A810038A26A0C1740015C26E /* CallConfiguration.swift */,
 				1F48B400274879F000B6E5F9 /* DiagnosticConfig.swift */,
@@ -1632,7 +1629,6 @@
 				50FA460E26829345001844AC /* InfoHeaderViewModel.swift in Sources */,
 				503F4B6D2705065700C17DA6 /* BannerTextView.swift in Sources */,
 				1F94DAF326772B3C00691D1E /* UIWindowExtension.swift in Sources */,
-				1F94DAE12673EA9500691D1E /* CallCompositeEventsHandler.swift in Sources */,
 				88701EB8274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift in Sources */,
 				1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
