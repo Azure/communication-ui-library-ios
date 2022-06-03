@@ -5,7 +5,6 @@
 
 import Foundation
 
-struct LifecycleAction {
-    struct ForegroundEntered: Action {}
-    struct BackgroundEntered: Action {}
-}
+struct AudioInterrupted: Action {}
+struct AudioInterruptEnded: Action {}
+struct AudioEngaged: Action {}

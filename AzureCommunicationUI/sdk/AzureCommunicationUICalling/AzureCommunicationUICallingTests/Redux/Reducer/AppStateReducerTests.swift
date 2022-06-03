@@ -187,6 +187,7 @@ class AppStateReducerTests: XCTestCase {
                                                isMuted: true,
                                                isRemoteUser: false,
                                                userIdentifier: userId,
+                                               status: .idle,
                                                recentSpeakingStamp: Date(),
                                                screenShareVideoStreamModel: nil,
                                                cameraVideoStreamModel: nil)
@@ -205,12 +206,14 @@ extension AppStateReducerTests {
     func getSUT(permissionReducer: Reducer = ReducerMocking(),
                 localUserReducer: Reducer = ReducerMocking(),
                 lifeCycleReducer: Reducer = ReducerMocking(),
+                audioSessionReducer: Reducer = ReducerMocking(),
                 callingReducer: Reducer = ReducerMocking(),
                 navigationReducer: Reducer = ReducerMocking(),
                 errorReducer: Reducer = ReducerMocking()) -> AppStateReducer {
         return AppStateReducer(permissionReducer: permissionReducer,
                                localUserReducer: localUserReducer,
                                lifeCycleReducer: lifeCycleReducer,
+                               audioSessionReducer: audioSessionReducer,
                                callingReducer: callingReducer,
                                navigationReducer: navigationReducer,
                                errorReducer: errorReducer)

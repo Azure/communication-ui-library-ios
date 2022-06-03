@@ -36,6 +36,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -45,6 +46,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier2",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -69,6 +71,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -86,6 +89,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -104,6 +108,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -126,6 +131,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -151,6 +157,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
                 isMuted: false,
                 isRemoteUser: true,
                 userIdentifier: "testUserIdentifier\(i)",
+                status: .idle,
                 recentSpeakingStamp: Date(),
                 screenShareVideoStreamModel: nil,
                 cameraVideoStreamModel: nil))

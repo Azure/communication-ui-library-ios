@@ -47,8 +47,7 @@ class CompositeErrorManager: ErrorManagerProtocol {
         }
 
         self.error = error
-        guard error.code != CallCompositeErrorCode.callEvicted,
-              error.code != CallCompositeErrorCode.callDenied,
+        guard !isInternalErrorCode(error.code),
               let didFail = eventsHandler.onError else {
             return
         }
@@ -61,5 +60,12 @@ class CompositeErrorManager: ErrorManagerProtocol {
             code == CallCompositeErrorCode.callEnd {
             store.dispatch(action: CompositeExitAction())
         }
+    }
+
+    private func isInternalErrorCode(_ errorCode: String) -> Bool {
+        return errorCode == CallCompositeErrorCode.callEvicted ||
+        errorCode == CallCompositeErrorCode.callDenied ||
+        errorCode == CallCompositeErrorCode.callResume ||
+        errorCode == CallCompositeErrorCode.callHold
     }
 }

@@ -77,6 +77,7 @@ final class DependencyContainer {
         let appStateReducer = AppStateReducer(permissionReducer: PermissionReducer(),
                                               localUserReducer: LocalUserReducer(),
                                               lifeCycleReducer: LifeCycleReducer(),
+                                              audioSessionReducer: AudioSessionReducer(),
                                               callingReducer: CallingReducer(),
                                               navigationReducer: NavigationReducer(),
                                               errorReducer: ErrorReducer())

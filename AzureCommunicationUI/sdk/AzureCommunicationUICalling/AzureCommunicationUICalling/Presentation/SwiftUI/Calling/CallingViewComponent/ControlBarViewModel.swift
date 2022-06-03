@@ -21,6 +21,7 @@ class ControlBarViewModel: ObservableObject {
     var micButtonViewModel: IconButtonViewModel!
     var audioDeviceButtonViewModel: IconButtonViewModel!
     var hangUpButtonViewModel: IconButtonViewModel!
+    var callingStatus: CallingStatus = .none
     var cameraState = LocalUserState.CameraState(operation: .off,
                                                  device: .front,
                                                  transmission: .local)
@@ -121,11 +122,15 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func isCameraDisabled() -> Bool {
-        cameraPermission == .denied || cameraState.operation == .pending
+        cameraPermission == .denied || cameraState.operation == .pending || callingStatus == .localHold
     }
 
     func isMicDisabled() -> Bool {
-        audioState.operation == .pending
+        audioState.operation == .pending || callingStatus == .localHold
+    }
+
+    func isAudioDeviceDisabled() -> Bool {
+        callingStatus == .localHold
     }
 
     func getLeaveCallButtonViewModel() -> LeaveCallConfirmationViewModel {
@@ -166,7 +171,10 @@ class ControlBarViewModel: ObservableObject {
                                                   listItemViewModel: leaveCallConfirmationVm)
     }
 
-    func update(localUserState: LocalUserState, permissionState: PermissionState) {
+    func update(localUserState: LocalUserState,
+                permissionState: PermissionState,
+                callingState: CallingState) {
+        callingStatus = callingState.status
         if cameraPermission != permissionState.cameraPermission {
             cameraPermission = permissionState.cameraPermission
         }
@@ -184,6 +192,7 @@ class ControlBarViewModel: ObservableObject {
                                      ? localizationProvider.getLocalizedString(.micOnAccessibilityLabel)
                                      : localizationProvider.getLocalizedString(.micOffAccessibilityLabel))
         micButtonViewModel.update(isDisabled: isMicDisabled())
+        audioDeviceButtonViewModel.update(isDisabled: isAudioDeviceDisabled())
         let audioDeviceState = localUserState.audioState.device
         audioDeviceButtonViewModel.update(
             iconName: audioDeviceState.icon
