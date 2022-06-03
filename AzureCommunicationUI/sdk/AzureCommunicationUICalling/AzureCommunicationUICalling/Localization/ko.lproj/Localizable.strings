@@ -47,6 +47,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@(나)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="음소거";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="음소거 해제됨";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="말하기";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="대기 중";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="후면 카메라로 전환";

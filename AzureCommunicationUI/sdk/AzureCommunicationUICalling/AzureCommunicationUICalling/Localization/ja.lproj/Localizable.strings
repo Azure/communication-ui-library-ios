@@ -47,6 +47,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (自分)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="ミュート状態";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="ミュート解除";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="話し中";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留中";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="バック カメラに切り替える";
