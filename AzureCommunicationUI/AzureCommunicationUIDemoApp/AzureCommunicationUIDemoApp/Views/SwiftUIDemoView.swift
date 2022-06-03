@@ -165,30 +165,31 @@ extension SwiftUIDemoView {
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
-                                          renderDisplayName: renderDisplayName)
+                                                      displayName: renderDisplayName)
         let localOptions = LocalOptions(participantViewData)
         if let credential = try? getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
                 if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(with: GroupCallOptions(credential: credential, groupId: uuid),
+                    callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
+                                                                      credential: credential),
                                          localOptions: localOptions)
                 } else {
-                    callComposite.launch(with: GroupCallOptions(credential: credential,
-                                                                groupId: uuid,
-                                                                displayName: envConfigSubject.displayName),
+                    callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
+                                                                      credential: credential,
+                                                                      displayName: envConfigSubject.displayName),
                                          localOptions: localOptions)
                 }
             case .teamsMeeting:
                 if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(with: TeamsMeetingOptions(credential: credential,
-                                                                   meetingLink: link),
+                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                                                                      credential: credential),
                                          localOptions: localOptions)
                 } else {
-                    callComposite.launch(with: TeamsMeetingOptions(credential: credential,
-                                                                   meetingLink: link,
-                                                                   displayName: envConfigSubject.displayName),
+                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                                                                      credential: credential,
+                                                                      displayName: envConfigSubject.displayName),
                                          localOptions: localOptions)
                 }
             }

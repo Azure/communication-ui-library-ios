@@ -22,10 +22,10 @@ class DependencyContainerTests: XCTestCase {
         let communicationTokenCredential = try? CommunicationTokenCredential(token: sampleToken)
         let displayName = ""
         let groupId = UUID()
-        let callConfiguration = CallConfiguration(credential: communicationTokenCredential!,
-                                                  groupId: groupId,
+        let callConfiguration = CallConfiguration(locator: .groupCall(groupId: groupId),
+                                                  credential: communicationTokenCredential!,
                                                   displayName: displayName)
-        let participantViewData = ParticipantViewData(avatar: nil, renderDisplayName: nil)
+        let participantViewData = ParticipantViewData(avatar: nil, displayName: nil)
         let localOptions = LocalOptions(participantViewData)
         let callCompositeEventsHandler = CallCompositeEventsHandler()
 

@@ -54,7 +54,7 @@ let remoteOptions = RemoteOptions(for: .groupCall(groupId: UUID("<GROUP_CALL_ID>
 callComposite.launch(remoteOptions: remoteOptions)
 ```
 
-For more details on Mobile UI Library functionalities visit the [API Reference Documentation](https://azure.github.io/azure-sdk-for-ios/AzureCommunicationUI/index.html).
+For more details on Mobile UI Library functionalities visit the [API Reference Documentation](https://azure.github.io/azure-sdk-for-ios/AzureCommunicationUICalling/index.html).
 
 
 ## Contributing to the Library or Sample

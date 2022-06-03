@@ -31,6 +31,7 @@ struct ParticipantInfoModelBuilder {
                                     isMuted: isMuted,
                                     isRemoteUser: true,
                                     userIdentifier: participantIdentifier,
+                                    status: .idle,
                                     recentSpeakingStamp: recentSpeakingStamp,
                                     screenShareVideoStreamModel: screenShareIdInfoModel,
                                     cameraVideoStreamModel: videoStreamInfoModel)

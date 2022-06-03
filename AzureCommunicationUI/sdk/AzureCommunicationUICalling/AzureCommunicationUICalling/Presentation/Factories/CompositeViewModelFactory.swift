@@ -33,16 +33,18 @@ protocol CompositeViewModelFactoryProtocol {
                                            title: String,
                                            isSelected: Bool,
                                            onSelectedAction: @escaping (() -> Void)) -> AudioDevicesListCellViewModel
-    func makeErrorInfoViewModel() -> ErrorInfoViewModel
+    func makeErrorInfoViewModel(title: String,
+                                subtitle: String) -> ErrorInfoViewModel
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel
+    func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel
     func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel
-    func makeParticipantGridsViewModel() -> ParticipantGridViewModel
+    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel
     func makeBannerViewModel() -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
@@ -95,7 +97,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              logger: logger,
                                              store: store,
                                              localizationProvider: localizationProvider,
-                                             accessibilityProvider: accessibilityProvider)
+                                             accessibilityProvider: accessibilityProvider,
+                                             isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -159,13 +162,24 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                       onSelected: onSelectedAction)
     }
 
-    func makeErrorInfoViewModel() -> ErrorInfoViewModel {
-        ErrorInfoViewModel(localizationProvider: localizationProvider)
+    func makeErrorInfoViewModel(title: String,
+                                subtitle: String) -> ErrorInfoViewModel {
+        ErrorInfoViewModel(localizationProvider: localizationProvider,
+                           title: title,
+                           subtitle: subtitle)
     }
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
-        return LobbyOverlayViewModel(localizationProvider: localizationProvider)
+        LobbyOverlayViewModel(localizationProvider: localizationProvider,
+                              accessibilityProvider: accessibilityProvider)
+    }
+    func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
+        OnHoldOverlayViewModel(localizationProvider: localizationProvider,
+                               compositeViewModelFactory: self,
+                               logger: logger,
+                               accessibilityProvider: accessibilityProvider,
+                               resumeAction: resumeAction)
     }
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
@@ -190,10 +204,11 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                      accessibilityProvider: accessibilityProvider,
                                      participantModel: participantModel)
     }
-    func makeParticipantGridsViewModel() -> ParticipantGridViewModel {
+    func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {
         ParticipantGridViewModel(compositeViewModelFactory: self,
                                  localizationProvider: localizationProvider,
-                                 accessibilityProvider: accessibilityProvider)
+                                 accessibilityProvider: accessibilityProvider,
+                                 isIpadInterface: isIpadInterface)
     }
 
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {

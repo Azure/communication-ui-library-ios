@@ -10,32 +10,43 @@ import FluentUI
 struct SetupView: View {
     @ObservedObject var viewModel: SetupViewModel
     let viewManager: VideoViewManager
+    @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
+    @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
+    @Orientation var orientation: UIDeviceOrientation
     let avatarManager: AvatarViewManager
 
     let layoutSpacing: CGFloat = 24
-    let horizontalPadding: CGFloat = 16
+    let layoutSpacingLarge: CGFloat = 40
     let startCallButtonHeight: CGFloat = 52
     let errorHorizontalPadding: CGFloat = 8
+    private let setupViewiPadLarge: CGFloat = 469.0
+    private let setupViewiPadSmall: CGFloat = 375.0
 
     var body: some View {
         ZStack {
             VStack(spacing: layoutSpacing) {
                 SetupTitleView(viewModel: viewModel)
-                VStack(spacing: layoutSpacing) {
-                    ZStack(alignment: .bottom) {
-                        PreviewAreaView(viewModel: viewModel.previewAreaViewModel,
-                                        viewManager: viewManager,
-                                        avatarManager: avatarManager)
-                        SetupControlBarView(viewModel: viewModel.setupControlBarViewModel)
+                GeometryReader { geometry in
+                    ZStack(alignment: .bottomLeading) {
+                        VStack(spacing: getSizeClass() == .ipadScreenSize ? layoutSpacingLarge : layoutSpacing) {
+                            ZStack(alignment: .bottom) {
+                                PreviewAreaView(viewModel: viewModel.previewAreaViewModel,
+                                                viewManager: viewManager,
+                                                avatarManager: avatarManager)
+                                SetupControlBarView(viewModel: viewModel.setupControlBarViewModel)
+                            }
+                            .background(Color(StyleProvider.color.surface))
+                            .cornerRadius(4)
+                            joinCallView
+                                .padding(.bottom)
+                        }
+                        .padding(.vertical, setupViewVerticalPadding(parentSize: geometry.size))
+                        errorInfoView
+                            .padding(.bottom, setupViewVerticalPadding(parentSize: geometry.size))
                     }
-                    .background(Color(StyleProvider.color.surface))
-                    .cornerRadius(4)
-                    joinCallView
-                        .padding(.bottom)
+                    .padding(.horizontal, setupViewHorizontalPadding(parentSize: geometry.size))
                 }
-                .padding(.horizontal, horizontalPadding)
             }
-            errorInfoView
         }
         .onAppear {
             viewModel.setupAudioPermissions()
@@ -65,6 +76,42 @@ struct SetupView: View {
                 )
                 .accessibilityElement(children: .contain)
                 .accessibilityAddTraits(.isModal)
+        }
+    }
+
+    private func setupViewHorizontalPadding(parentSize: CGSize) -> CGFloat {
+        let isIpad = getSizeClass() == .ipadScreenSize
+        guard isIpad else {
+            return 16
+        }
+        let isLandscape = orientation.isLandscape
+        let horizontalPadding = (parentSize.width - (isLandscape ? setupViewiPadLarge : setupViewiPadSmall)) / 2.0
+        return horizontalPadding
+    }
+
+    private func setupViewVerticalPadding(parentSize: CGSize) -> CGFloat {
+        let isIpad = getSizeClass() == .ipadScreenSize
+        guard isIpad else {
+            return 16
+        }
+        let isLandscape = orientation.isLandscape
+        let setupViewiPadSmallHeightWithMargin = setupViewiPadSmall + layoutSpacingLarge + startCallButtonHeight
+        let setupViewiPadLargeHeightWithMargin = setupViewiPadLarge + layoutSpacingLarge + startCallButtonHeight
+        let verticalPadding = (parentSize.height - (isLandscape ?
+                                                    setupViewiPadSmallHeightWithMargin
+                                                    : setupViewiPadLargeHeightWithMargin)) / 2.0
+        return verticalPadding
+    }
+
+    private func getSizeClass() -> ScreenSizeClassType {
+        switch (widthSizeClass, heightSizeClass) {
+        case (.compact, .regular):
+            return .iphonePortraitScreenSize
+        case (.compact, .compact),
+             (.regular, .compact):
+            return .iphoneLandscapeScreenSize
+        default:
+            return .ipadScreenSize
         }
     }
 }

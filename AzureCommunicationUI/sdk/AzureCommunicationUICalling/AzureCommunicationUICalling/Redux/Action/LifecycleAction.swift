@@ -8,6 +8,4 @@ import Foundation
 struct LifecycleAction {
     struct ForegroundEntered: Action {}
     struct BackgroundEntered: Action {}
-
-    // Additional action completed
 }
