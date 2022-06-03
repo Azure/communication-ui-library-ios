@@ -9,6 +9,7 @@ struct AppStateReducer: Reducer {
     let permissionReducer: Reducer
     let localUserReducer: Reducer
     let lifeCycleReducer: Reducer
+    let audioSessionReducer: Reducer
     let callingReducer: Reducer
     let navigationReducer: Reducer
     let errorReducer: Reducer
@@ -16,12 +17,14 @@ struct AppStateReducer: Reducer {
     init(permissionReducer: Reducer,
          localUserReducer: Reducer,
          lifeCycleReducer: Reducer,
+         audioSessionReducer: Reducer,
          callingReducer: Reducer,
          navigationReducer: Reducer,
          errorReducer: Reducer) {
         self.permissionReducer = permissionReducer
         self.localUserReducer = localUserReducer
         self.lifeCycleReducer = lifeCycleReducer
+        self.audioSessionReducer = audioSessionReducer
         self.callingReducer = callingReducer
         self.navigationReducer = navigationReducer
         self.errorReducer = errorReducer
@@ -39,6 +42,7 @@ struct AppStateReducer: Reducer {
         var remoteParticipantState = state.remoteParticipantsState
         var navigationState = state.navigationState
         var errorState = state.errorState
+        var audioSessionState = state.audioSessionState
 
         if let newPermissionState = permissionReducer.reduce(state.permissionState, action) as? PermissionState {
             permissionState = newPermissionState
@@ -64,6 +68,10 @@ struct AppStateReducer: Reducer {
             errorState = newErrorState
         }
 
+        if let newAudioState = audioSessionReducer.reduce(state.audioSessionState, action) as? AudioSessionState {
+            audioSessionState = newAudioState
+        }
+
         switch action {
         case let action as ParticipantListUpdated:
             remoteParticipantState = RemoteParticipantsState(participantInfoList: action.participantsInfoList)
@@ -76,6 +84,7 @@ struct AppStateReducer: Reducer {
                         permissionState: permissionState,
                         localUserState: localUserState,
                         lifeCycleState: lifeCycleState,
+                        audioSessionState: audioSessionState,
                         navigationState: navigationState,
                         remoteParticipantsState: remoteParticipantState,
                         errorState: errorState)

@@ -11,7 +11,8 @@ struct ContainerView: View {
 
     let logger: Logger
     let viewFactory: CompositeViewFactoryProtocol
-    let setupViewOrientationMask: UIInterfaceOrientationMask = .portrait
+    let setupViewOrientationMask: UIInterfaceOrientationMask =
+        UIDevice.current.userInterfaceIdiom == .phone ? .portrait : .allButUpsideDown
     let isRightToLeft: Bool
 
     var body: some View {

@@ -16,18 +16,21 @@ public struct CallCompositeErrorCode {
     /// Error when the input token is expired.
     public static let tokenExpired: String = "tokenExpired"
 
-    /// Error when the remote participant is not found in the call.
-    public static let remoteParticipantNotFound: String = "RemoteParticipantNotFound"
-
     /// Error when a participant is evicted from the call by another participant
     static let callEvicted: String = "callEvicted"
 
     /// Error when a participant is denied from entering the call
     static let callDenied: String = "callDenied"
+
+    /// Error when local user fails to hold a call.
+    static let callHold: String = "callHold"
+
+    /// Error when local user fails to resume a call.
+    static let callResume: String = "callResume"
 }
 
 /// The error thrown after Call Composite launching.
-public struct CommunicationUIErrorEvent: Error {
+public struct CallCompositeErrorEvent {
 
     /// The string representing the CallCompositeErrorCode.
     public let code: String
@@ -36,8 +39,8 @@ public struct CommunicationUIErrorEvent: Error {
     public var error: Error?
 }
 
-extension CommunicationUIErrorEvent: Equatable {
-    public static func == (lhs: CommunicationUIErrorEvent, rhs: CommunicationUIErrorEvent) -> Bool {
+extension CallCompositeErrorEvent: Equatable {
+    public static func == (lhs: CallCompositeErrorEvent, rhs: CallCompositeErrorEvent) -> Bool {
         if let error1 = lhs.error as NSError?,
            let error2 = rhs.error as NSError? {
             return error1.domain == error2.domain

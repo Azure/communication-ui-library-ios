@@ -6,7 +6,7 @@
 import UIKit
 import AzureCommunicationUICalling
 
-struct CustomColorTheming: ThemeConfiguration {
+struct CustomColorTheming: ThemeOptions {
     private var envConfigSubject: EnvConfigSubject
 
     init(envConfigSubject: EnvConfigSubject) {
@@ -34,7 +34,7 @@ struct CustomColorTheming: ThemeConfiguration {
     }
 }
 
-struct Theming: ThemeConfiguration {
+struct Theming: ThemeOptions {
     private var envConfigSubject: EnvConfigSubject
 
     init(envConfigSubject: EnvConfigSubject) {

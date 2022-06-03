@@ -22,7 +22,7 @@ class AvatarManagerTests: XCTestCase {
         }
         let mockAvatarManager = makeSUT(mockImage)
         let mockImageData = mockImage.cgImage?.bitsPerPixel
-        let setAvatar = mockAvatarManager.localSettings?.participantViewData.avatarImage
+        let setAvatar = mockAvatarManager.localOptions?.participantViewData.avatarImage
         let setAvatarImageData = setAvatar?.cgImage?.bitsPerPixel
         XCTAssertEqual(mockImageData, setAvatarImageData)
     }
@@ -32,12 +32,14 @@ class AvatarManagerTests: XCTestCase {
             XCTFail("UIImage does not exist")
             return
         }
+        let expectation = XCTestExpectation(description: "Update participant's view data completion called")
         let participant = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -46,13 +48,16 @@ class AvatarManagerTests: XCTestCase {
         mockStoreFactory.setState(AppState(remoteParticipantsState: remoteParticipantsState))
         let sut = makeSUT()
         let participantViewData = ParticipantViewData(avatar: mockImage)
-        let result = sut.setRemoteParticipantViewData(for: CommunicationUserIdentifier(participant.userIdentifier),
-                                                      participantViewData: participantViewData)
-        guard case .success = result else {
-            XCTFail("Failed with result validation")
-            return
+        sut.set(remoteParticipantViewData: participantViewData,
+                for: CommunicationUserIdentifier(participant.userIdentifier)) { result in
+            guard case .success = result else {
+                XCTFail("Failed with result validation")
+                return
+            }
+            XCTAssertEqual(sut.avatarStorage.value(forKey: participant.userIdentifier)?.avatarImage!, mockImage)
+            expectation.fulfill()
         }
-        XCTAssertEqual(sut.avatarStorage.value(forKey: participant.userIdentifier)?.avatarImage!, mockImage)
+        wait(for: [expectation], timeout: 1)
     }
 
     func test_avatarManager_setRemoteParticipantViewData_when_avatarDataSet__and_participantNotOnCall_then_participantNotFoundErrorReturned() {
@@ -60,31 +65,35 @@ class AvatarManagerTests: XCTestCase {
             XCTFail("UIImage does not exist")
             return
         }
+        let expectation = XCTestExpectation(description: "Update participant's view data completion called")
         let sut = makeSUT()
         let participantViewData = ParticipantViewData(avatar: mockImage)
         let id = UUID().uuidString
-        let result = sut.setRemoteParticipantViewData(for: CommunicationUserIdentifier(id),
-                                                      participantViewData: participantViewData)
-        guard case .failure(let error) = result else {
-            XCTFail("Failed with result validation")
-            return
+        sut.set(remoteParticipantViewData: participantViewData,
+                for: CommunicationUserIdentifier(id)) { result in
+            guard case .failure(let error) = result else {
+                XCTFail("Failed with result validation")
+                return
+            }
+            XCTAssertEqual(error, SetParticipantViewDataError.participantNotInCall)
+            expectation.fulfill()
         }
-        XCTAssertEqual(error.code, CallCompositeErrorCode.remoteParticipantNotFound)
+        wait(for: [expectation], timeout: 1)
     }
 }
 
 extension AvatarManagerTests {
     private func makeSUT(_ image: UIImage) -> AvatarViewManager {
-        let mockParticipantViewData = ParticipantViewData(avatar: image, renderDisplayName: "")
-        let mockLocalSettings = LocalSettings(mockParticipantViewData)
+        let mockParticipantViewData = ParticipantViewData(avatar: image, displayName: "")
+        let mockLocalOptions = LocalOptions(mockParticipantViewData)
         return AvatarViewManager(store: mockStoreFactory.store,
-                                 localSettings: mockLocalSettings)
+                                 localOptions: mockLocalOptions)
 
     }
 
     private func makeSUT() -> AvatarViewManager {
         return AvatarViewManager(store: mockStoreFactory.store,
-                                 localSettings: nil)
+                                 localOptions: nil)
     }
 }
 

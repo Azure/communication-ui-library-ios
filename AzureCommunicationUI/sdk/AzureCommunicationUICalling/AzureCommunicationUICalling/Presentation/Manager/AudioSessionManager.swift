@@ -14,6 +14,8 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     private let logger: Logger
     private let store: Store<AppState>
     private var localUserAudioDeviceState: LocalUserState.AudioDeviceSelectionStatus?
+    private var audioSessionState: AudioSessionStatus = .active
+    private var audioSessionDetector: Timer?
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState>,
@@ -30,6 +32,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     private func receive(state: AppState) {
+        audioSessionState = state.audioSessionState.status
         let localUserState = state.localUserState
         let userAudioDeviceState = localUserState.audioState.device
         guard userAudioDeviceState != localUserAudioDeviceState else {
@@ -55,7 +58,6 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     private func setupAudioSession() {
-
         activateAudioSessionCategory()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleRouteChange),
@@ -71,11 +73,21 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     @objc func handleInterruption(notification: Notification) {
         guard let userInfo = notification.userInfo,
               let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
-              let interruptionType = AVAudioSession.InterruptionType(rawValue: typeValue),
-              interruptionType == AVAudioSession.InterruptionType.ended else {
+              let interruptionType = AVAudioSession.InterruptionType(rawValue: typeValue) else {
             return
         }
-        resumeAudioSession()
+
+        switch interruptionType {
+        case .began:
+            startAudioSessionDetector()
+            store.dispatch(action: AudioInterrupted())
+        case .ended:
+            store.dispatch(action: AudioInterruptEnded())
+            audioSessionDetector?.invalidate()
+        default:
+            break
+        }
+
     }
 
     @objc func handleRouteChange(notification: Notification) {
@@ -98,33 +110,6 @@ class AudioSessionManager: AudioSessionManagerProtocol {
             try audioSession.setActive(true)
         } catch let error {
             logger.error("Failed to set audio session category:\(error.localizedDescription)")
-        }
-    }
-
-    private func resumeAudioSession() {
-        var audioDeviceType: AudioDeviceType
-        switch localUserAudioDeviceState {
-        case .receiverSelected,
-                .receiverRequested:
-            audioDeviceType = .receiver
-        case .speakerSelected,
-                .speakerRequested:
-            audioDeviceType = .speaker
-        case .headphonesSelected,
-                .headphonesRequested:
-            audioDeviceType = .headphones
-        case .bluetoothSelected,
-                .bluetoothRequested:
-            audioDeviceType = .bluetooth
-        default:
-            audioDeviceType = .receiver
-        }
-
-        activateAudioSessionCategory()
-
-        // Add a delay of setting audioDeviceType, to override the default port from setAudioSessionCategory.
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
-            self?.switchAudioDevice(to: audioDeviceType)
         }
     }
 
@@ -177,5 +162,27 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         default:
             return false
         }
+    }
+
+    @objc private func detectAudioSessionEngage() {
+        guard AVAudioSession.sharedInstance().isOtherAudioPlaying == false else {
+            return
+        }
+
+        guard audioSessionState == .interrupted else {
+            audioSessionDetector?.invalidate()
+            return
+        }
+        store.dispatch(action: AudioEngaged())
+        audioSessionDetector?.invalidate()
+    }
+
+    private func startAudioSessionDetector() {
+        audioSessionDetector?.invalidate()
+        audioSessionDetector = Timer.scheduledTimer(withTimeInterval: 1,
+                                                    repeats: true,
+                                                    block: { [weak self] _ in
+            self?.detectAudioSessionEngage()
+        })
     }
 }

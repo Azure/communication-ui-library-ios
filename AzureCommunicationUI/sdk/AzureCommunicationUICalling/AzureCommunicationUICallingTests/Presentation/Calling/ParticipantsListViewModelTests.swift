@@ -141,7 +141,7 @@ class ParticipantsListViewModelTests: XCTestCase {
     // MARK: participantsList test
     func test_participantsListViewModel_update_when_lastUpdateTimeStampChangedWithParticipantOrderCheck_then_shouldBePublished() {
         let avatarViewManager = AvatarViewManager(store: storeFactory.store,
-                                                  localSettings: nil)
+                                                  localOptions: nil)
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should publish localParticipantsListCellViewModel")
         sut.$participantsList
@@ -161,6 +161,7 @@ class ParticipantsListViewModelTests: XCTestCase {
                                  isMuted: false,
                                  isRemoteUser: false,
                                  userIdentifier: "MockUUID",
+                                 status: .idle,
                                  recentSpeakingStamp: Date(),
                                  screenShareVideoStreamModel: nil,
                                  cameraVideoStreamModel: nil)
@@ -208,6 +209,7 @@ class ParticipantsListViewModelTests: XCTestCase {
                                  isMuted: false,
                                  isRemoteUser: false,
                                  userIdentifier: "MockUUID",
+                                 status: .idle,
                                  recentSpeakingStamp: Date(),
                                  screenShareVideoStreamModel: nil,
                                  cameraVideoStreamModel: nil)

@@ -47,6 +47,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (ben)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Sessize alındı";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Sesi açıldı";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Konuşma";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Beklemede";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Arka kameraya geç";

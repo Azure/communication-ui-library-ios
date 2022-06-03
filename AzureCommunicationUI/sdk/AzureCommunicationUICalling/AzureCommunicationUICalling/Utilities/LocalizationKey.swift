@@ -53,6 +53,7 @@ enum LocalizationKey: String {
             "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"
     case muted = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"
     case unmuted = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"
+    case speaking = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"
     case onHold = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"
 
     case frontCamera = "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"

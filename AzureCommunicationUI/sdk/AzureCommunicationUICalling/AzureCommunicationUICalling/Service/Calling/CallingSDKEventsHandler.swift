@@ -58,13 +58,17 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     }
 
     private func setupRemoteParticipantEventsAdapter() {
-        remoteParticipantEventAdapter.onIsMutedChanged = { [weak self] remoteParticipant in
+        let participantUpdate: ((RemoteParticipant) -> Void) = { [weak self] remoteParticipant in
             guard let self = self,
                   let userIdentifier = remoteParticipant.identifier.stringValue else {
                 return
             }
             self.updateRemoteParticipant(userIdentifier: userIdentifier, updateSpeakingStamp: false)
         }
+
+        remoteParticipantEventAdapter.onIsMutedChanged = participantUpdate
+        remoteParticipantEventAdapter.onVideoStreamsUpdated = participantUpdate
+        remoteParticipantEventAdapter.onStateChanged = participantUpdate
 
         remoteParticipantEventAdapter.onIsSpeakingChanged = { [weak self] remoteParticipant in
             guard let self = self,
@@ -73,14 +77,6 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
             }
             let updateSpeakingStamp = remoteParticipant.isSpeaking
             self.updateRemoteParticipant(userIdentifier: userIdentifier, updateSpeakingStamp: updateSpeakingStamp)
-        }
-
-        remoteParticipantEventAdapter.onVideoStreamsUpdated = { [weak self] remoteParticipant in
-            guard let self = self,
-                  let userIdentifier = remoteParticipant.identifier.stringValue else {
-                return
-            }
-            self.updateRemoteParticipant(userIdentifier: userIdentifier, updateSpeakingStamp: false)
         }
     }
 
@@ -144,6 +140,12 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
             participantsInfoListSubject.send(remoteParticipantsInfoList)
         }
     }
+
+    private func wasCallConnected() -> Bool {
+        return previousCallingStatus == .connected ||
+              previousCallingStatus == .localHold ||
+              previousCallingStatus == .remoteHold
+    }
 }
 
 extension CallingSDKEventsHandler: CallDelegate,
@@ -160,8 +162,7 @@ extension CallingSDKEventsHandler: CallDelegate,
 
     func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {
         let currentStatus = call.state.toCallingStatus()
-        let wasCallConnected = previousCallingStatus == .connected
-        let errorCode = call.callEndReason.toCompositeErrorCodeString(wasCallConnected)
+        let errorCode = call.callEndReason.toCompositeErrorCodeString(wasCallConnected())
 
         let callInfoModel = CallInfoModel(status: currentStatus, errorCode: errorCode)
         callInfoSubject.send(callInfoModel)
