@@ -64,10 +64,10 @@ public struct SupportedLocale {
     /// Turkish (Turkey)
     public static let trTR = Locale(identifier: "tr-TR")
 
-    /// Get supported languages the AzureCommunicationUICalling has predefined translations.
+    /// Get supported locales the AzureCommunicationUICalling has predefined translations.
     /// - Returns: Get supported Locales the AzureCommunicationUICalling
     ///  has predefined translations.
-    public static func getSupportedLocales() -> [Locale] {
+    public static var values: [Locale] {
         return Bundle(for: CallComposite.self).localizations.sorted()
             .map { Locale(identifier: $0) }
     }

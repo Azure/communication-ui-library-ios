@@ -11,10 +11,11 @@
 - Updated `setTarget(didFail:)` function to `onError` property and moved to `CallComposite.Events`. [#227](https://github.com/Azure/communication-ui-library-ios/pull/227)
 - Updated `supportedLocales` to `getSupportedLocale` and moved to `CallCompositeSupportedLocale`. [#214](https://github.com/Azure/communication-ui-library-ios/pull/214)
 - Renamed `LocalizationConfiguration` to `LocalizationOptions`, and `ThemeConfiguration` to `ThemeOptions`. [#215](https://github.com/Azure/communication-ui-library-ios/pull/215)
-- Added prefix for `CallCompositeSupportedLocale`, `CallCompositeErrorEvent` and `CallCompositeErrorCode`. [#216](https://github.com/Azure/communication-ui-library-ios/pull/216)
+- Added prefix for `CallCompositeSupportedLocale`, `CallCompositeError` and `CallCompositeErrorCode`. [#216](https://github.com/Azure/communication-ui-library-ios/pull/216)
 - Renamed `LocalSettings` to `LocalOptions`. [#226](https://github.com/Azure/communication-ui-library-ios/pull/226)
 - Combined `GroupCallOptions` and `TeamsMeetingOptions` to `RemoteOptions`. [#229](https://github.com/Azure/communication-ui-library-ios/pull/229)
 - Renamed `launch(with options:)` to `launch(remoteOptions:)`. [#229](https://github.com/Azure/communication-ui-library-ios/pull/229)
+- Updated `getSupportedLocales()` to `values`. [#240](https://github.com/Azure/communication-ui-library-ios/pull/240)
 
 ### Bugs Fixed
 - Fixed drawer anchor when iPad change orientation [#206](https://github.com/Azure/communication-ui-library-ios/pull/206)
