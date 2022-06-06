@@ -38,7 +38,6 @@ struct LocalUserReducer: Reducer {
         case let action as LocalUserAction.CameraOffFailed:
             cameraStatus = .error(action.error)
         case _ as LocalUserAction.CameraPausedSucceeded:
-            localVideoStreamIdentifier = nil
             cameraStatus = .paused
         case let action as LocalUserAction.CameraPausedFailed:
             cameraStatus = .error(action.error)
