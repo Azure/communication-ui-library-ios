@@ -85,7 +85,7 @@ class AvatarManagerTests: XCTestCase {
 extension AvatarManagerTests {
     private func makeSUT(_ image: UIImage) -> AvatarViewManager {
         let mockParticipantViewData = ParticipantViewData(avatar: image, displayName: "")
-        let mockLocalOptions = LocalOptions(mockParticipantViewData)
+        let mockLocalOptions = LocalOptions(participantViewData: mockParticipantViewData)
         return AvatarViewManager(store: mockStoreFactory.store,
                                  localOptions: mockLocalOptions)
 
