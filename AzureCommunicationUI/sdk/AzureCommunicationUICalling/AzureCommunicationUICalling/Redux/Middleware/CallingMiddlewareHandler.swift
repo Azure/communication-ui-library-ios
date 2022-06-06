@@ -161,7 +161,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     func enterForeground(state: ReduxState?, dispatch: @escaping ActionDispatch) {
         guard let state = state as? AppState,
-              state.callingState.status == .connected,
+              state.callingState.status == .connected || state.callingState.status == .localHold,
               state.localUserState.cameraState.operation == .paused else {
             return
         }
