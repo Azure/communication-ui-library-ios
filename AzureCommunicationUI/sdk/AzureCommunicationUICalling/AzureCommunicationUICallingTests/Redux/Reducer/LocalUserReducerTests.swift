@@ -270,7 +270,6 @@ class LocalUserReducerTests: XCTestCase {
         }
 
         XCTAssertEqual(resultState.cameraState.operation, expectedCameraStatus)
-        XCTAssertNil(resultState.localVideoStreamIdentifier)
     }
 
     func test_localUserReducer_reduce_when_mockingAction_then_stateNotUpdate() {
