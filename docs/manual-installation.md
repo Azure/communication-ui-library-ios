@@ -79,12 +79,12 @@ The UI library won't work for devices lower than iOS 14 but it's still possible 
 
 1. Add a framework to your project’s target and set the minimum deployment target > iOS 14. 
 	* Use this framework for all needed dependencies imported through Cocoapods or manual embed.
-	* Create an UIViewController only targeted for the framework.
-	* Import needed dependency modules inside the UIViewController, add `tokenCredential`, `callCompositeOptions`, and code in the `init()` method to launch the UI library. 
-	* Set this UIViewController as the `NSPrincipalClass` for the newly added framework. 
-	* If needed, the principal class could play a complex role like returning different classes by implementing the protocol from the main target.
-2. Embed the newly added framework into your main target's "Frameworks and Libraries" section with `Embed and Sign`.
-3. In main app, use the [`Loadable Bundles in Cocoa`](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/LoadingCode/Concepts/CocoaBundles.html#//apple_ref/doc/uid/20001269-BAJCIAHA) to load the newly added UIViewController from the framework when the iOS 14 is available. Code example:
+	* Create an UI library Wrapper only targeted for the framework. The UI library Wrapper could be an UIViewController as the simplest example. 
+	* Import needed dependency modules inside the UI library Wrapper, add `tokenCredential`, `callCompositeOptions`, and code in the `init()` method to launch the UI library. 
+	* Set the UI library Wrapper as the `NSPrincipalClass` for the newly added framework. 
+	* If needed, the principal class could play a complex role by implementing the shared protocol between the main target and the newly added framework. 
+2. Drag the newly added framework into your main target's "Frameworks and Libraries" section with `Embed and Sign`.
+3. In main app, use the [`Loadable Bundles in Cocoa`](https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/LoadingCode/Concepts/CocoaBundles.html#//apple_ref/doc/uid/20001269-BAJCIAHA) to load the UI library Wrapper from the newly added framework when the iOS 14 is available. Code example:
 ```
 if #available(iOS 14.0, *) {
     if let principleClass = Bundle(identifier: "com.****.UILibraryFramework")?.principalClass as? UIViewController.Type {
