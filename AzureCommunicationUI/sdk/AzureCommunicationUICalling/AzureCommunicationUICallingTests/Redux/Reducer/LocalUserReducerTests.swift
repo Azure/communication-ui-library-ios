@@ -259,6 +259,20 @@ class LocalUserReducerTests: XCTestCase {
         XCTAssertEqual(resultState.cameraState.operation, expectedCameraStatus)
     }
 
+    func test_localUserReducer_reduce_when_localUserActionCameraPausedSucceeded_then_cameraStatusIsPaused_localVideoStreamIdNil() {
+        let state = LocalUserState()
+        let expectedCameraStatus = LocalUserState.CameraOperationalStatus.paused
+        let action = LocalUserAction.CameraPausedSucceeded()
+        let sut = getSUT()
+        guard let resultState = sut.reduce(state, action) as? LocalUserState else {
+            XCTFail("Failed with state validation")
+            return
+        }
+
+        XCTAssertEqual(resultState.cameraState.operation, expectedCameraStatus)
+        XCTAssertNil(resultState.localVideoStreamIdentifier)
+    }
+
     func test_localUserReducer_reduce_when_mockingAction_then_stateNotUpdate() {
         let expectedVideoId = "expected"
 

@@ -407,6 +407,27 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_callingMiddlewareHandler_enterForeground_when_callLocalHold_cameraStatusOn_noError_then_updateCameraStatusOnUpdate() {
+        let expectation = XCTestExpectation(description: "Dispatch the new action")
+        let id = "identifier"
+        func dispatch(action: Action) {
+            XCTAssertTrue(action is LocalUserAction.CameraOnSucceeded)
+            switch action {
+            case let action as LocalUserAction.CameraOnSucceeded:
+                XCTAssertEqual(action.videoStreamIdentifier, id)
+                expectation.fulfill()
+            default:
+                XCTFail("Should not be default \(action)")
+            }
+        }
+        mockCallingService.videoStreamId = id
+        callingMiddlewareHandler.enterForeground(state: getState(callingState: .localHold,
+                                                                 cameraStatus: .paused,
+                                                                 cameraDeviceStatus: .front),
+                                                 dispatch: dispatch)
+        wait(for: [expectation], timeout: 1)
+    }
+
     func test_callingMiddlewareHandler_enterForeground_when_callConnected_cameraStatusOn_returnsError_then_updateCameraStatusIsError() {
         let error = getError()
         func dispatch(action: Action) {
