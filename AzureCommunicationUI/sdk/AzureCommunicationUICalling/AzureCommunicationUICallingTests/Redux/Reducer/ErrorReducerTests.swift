@@ -14,7 +14,7 @@ class ErrorReducerTests: XCTestCase {
 
     func test_handleErrorReducer_reduce_when_notErrorState_then_return() {
         let state = StateMocking()
-        let action = ErrorAction.FatalErrorUpdated(error: CallCompositeErrorEvent(code: "",
+        let action = ErrorAction.FatalErrorUpdated(error: CallCompositeError(code: "",
                                                                      error: nil))
         let sut = getSUT()
 
@@ -23,10 +23,10 @@ class ErrorReducerTests: XCTestCase {
     }
 
     func test_handleErrorReducer_reduce_when_fatalErrorUpdated_then_returnErrorState_categoryFatal() {
-        let state = ErrorState(error: CallCompositeErrorEvent(code: CallCompositeErrorCode.callJoin,
+        let state = ErrorState(error: CallCompositeError(code: CallCompositeErrorCode.callJoin,
                                                  error: nil),
                                errorCategory: .callState)
-        let errorEvent = CallCompositeErrorEvent(code: CallCompositeErrorCode.callJoin, error: nil)
+        let errorEvent = CallCompositeError(code: CallCompositeErrorCode.callJoin, error: nil)
 
         let action = ErrorAction.FatalErrorUpdated(error: errorEvent)
         let sut = getSUT()
@@ -43,10 +43,10 @@ class ErrorReducerTests: XCTestCase {
     }
 
     func test_handleErrorReducer_reduce_when_statusErrorAndCallReset_then_returnErrorState_categoryCallState() {
-        let state = ErrorState(error: CallCompositeErrorEvent(code: CallCompositeErrorCode.callJoin,
+        let state = ErrorState(error: CallCompositeError(code: CallCompositeErrorCode.callJoin,
                                                  error: nil),
                                errorCategory: .callState)
-        let errorEvent = CallCompositeErrorEvent(code: CallCompositeErrorCode.callJoin, error: nil)
+        let errorEvent = CallCompositeError(code: CallCompositeErrorCode.callJoin, error: nil)
 
         let action = ErrorAction.StatusErrorAndCallReset(error: errorEvent)
         let sut = getSUT()
@@ -64,10 +64,10 @@ class ErrorReducerTests: XCTestCase {
     }
 
     func test_handleErrorReducer_reduce_when_statusErrorCallEvictionAndCallReset_then_returnErrorState_categoryCallState() {
-        let state = ErrorState(error: CallCompositeErrorEvent(code: CallCompositeErrorCode.callEvicted,
+        let state = ErrorState(error: CallCompositeError(code: CallCompositeErrorCode.callEvicted,
                                                  error: nil),
                                errorCategory: .callState)
-        let errorEvent = CallCompositeErrorEvent(code: CallCompositeErrorCode.callEvicted, error: nil)
+        let errorEvent = CallCompositeError(code: CallCompositeErrorCode.callEvicted, error: nil)
 
         let action = ErrorAction.StatusErrorAndCallReset(error: errorEvent)
         let sut = getSUT()
@@ -84,10 +84,10 @@ class ErrorReducerTests: XCTestCase {
     }
 
     func test_handleErrorReducer_reduce_when_statusErrorCallDeniedAndCallReset_then_returnErrorState_categoryCallState() {
-        let state = ErrorState(error: CallCompositeErrorEvent(code: CallCompositeErrorCode.callDenied,
+        let state = ErrorState(error: CallCompositeError(code: CallCompositeErrorCode.callDenied,
                                                  error: nil),
                                errorCategory: .callState)
-        let errorEvent = CallCompositeErrorEvent(code: CallCompositeErrorCode.callDenied, error: nil)
+        let errorEvent = CallCompositeError(code: CallCompositeErrorCode.callDenied, error: nil)
 
         let action = ErrorAction.StatusErrorAndCallReset(error: errorEvent)
         let sut = getSUT()
@@ -104,7 +104,7 @@ class ErrorReducerTests: XCTestCase {
     }
 
     func test_handleErrorReducer_reduce_when_callStartRequested_then_cleanup() {
-        let error = CallCompositeErrorEvent(code: "", error: nil)
+        let error = CallCompositeError(code: "", error: nil)
         let state = ErrorState(error: error,
                                errorCategory: .callState)
 
