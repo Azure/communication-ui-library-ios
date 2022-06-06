@@ -5,8 +5,8 @@
 import Foundation
 import SwiftUI
 
-/// CallCompositeSupportedLocale representing the supported locales.
-public struct CallCompositeSupportedLocale {
+/// SupportedLocale representing the supported locales.
+public struct SupportedLocale {
     /// Chinese, Simplified
     public static let zh = Locale(identifier: "zh")
     /// Chinese, Simplified

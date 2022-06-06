@@ -13,7 +13,7 @@ public struct LocalOptions {
     /// Create an instance of LocalOptions. All information in this object is only stored locally in the composite.
     /// - Parameters:
     ///    - participantViewData: The ParticipantViewData to be displayed for local participants avatar
-    public init(_ participantViewData: ParticipantViewData) {
+    public init(participantViewData: ParticipantViewData) {
         self.participantViewData = participantViewData
     }
 }

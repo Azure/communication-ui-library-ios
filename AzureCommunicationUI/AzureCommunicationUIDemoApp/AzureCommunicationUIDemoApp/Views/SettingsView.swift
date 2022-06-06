@@ -93,7 +93,7 @@ struct SettingsView: View {
 
 struct LocalePicker: View {
     @Binding var selection: Locale
-    let supportedLanguage: [Locale] = [Locale(identifier: "")] + CallCompositeSupportedLocale.getSupportedLocales()
+    let supportedLanguage: [Locale] = [Locale(identifier: "")] + SupportedLocale.getSupportedLocales()
 
     var body: some View {
             Picker("Language", selection: $selection) {

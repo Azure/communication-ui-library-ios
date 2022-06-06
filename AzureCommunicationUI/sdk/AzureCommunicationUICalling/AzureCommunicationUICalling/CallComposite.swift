@@ -14,7 +14,7 @@ public class CallComposite {
     /// The class to configure events closures for Call Composite.
     public class Events {
         /// Closure to execute when error event occurs inside Call Composite.
-        public var onError: ((CallCompositeErrorEvent) -> Void)?
+        public var onError: ((CallCompositeError) -> Void)?
         /// Closures to execute when participant has joined a call inside Call Composite.
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
     }
