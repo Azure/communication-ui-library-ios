@@ -5,8 +5,8 @@
 import Foundation
 import SwiftUI
 
-/// CallCompositeSupportedLocale representing the supported locales.
-public struct CallCompositeSupportedLocale {
+/// SupportedLocale representing the supported locales.
+public struct SupportedLocale {
     /// Chinese, Simplified
     public static let zh = Locale(identifier: "zh")
     /// Chinese, Simplified
@@ -64,10 +64,10 @@ public struct CallCompositeSupportedLocale {
     /// Turkish (Turkey)
     public static let trTR = Locale(identifier: "tr-TR")
 
-    /// Get supported languages the AzureCommunicationUICalling has predefined translations.
+    /// Get supported locales the AzureCommunicationUICalling has predefined translations.
     /// - Returns: Get supported Locales the AzureCommunicationUICalling
     ///  has predefined translations.
-    public static func getSupportedLocales() -> [Locale] {
+    public static var values: [Locale] {
         return Bundle(for: CallComposite.self).localizations.sorted()
             .map { Locale(identifier: $0) }
     }
