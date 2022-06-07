@@ -168,6 +168,21 @@ class CallingViewModelTests: XCTestCase {
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
+
+    func test_callingViewModel_receive_when_callingStateStatusIsLocalHold_then_isOnHoldOverlayDisplayed_shouldBeTrue() {
+
+        let sut = makeSUT()
+        let appState = AppState(callingState: CallingState(status: .localHold))
+        sut.receive(appState)
+        XCTAssertEqual(sut.onHoldOverlayViewModel.isDisplayed, true)
+    }
+
+    func test_callingViewModel_update_when_callingStateStatusIsConnected_then_isOnHoldOverlayDisplayed_shouldBeFalse() {
+        let sut = makeSUT()
+        let appState = AppState(callingState: CallingState(status: .connected))
+        sut.receive(appState)
+        XCTAssertFalse(sut.lobbyOverlayViewModel.isDisplayed)
+    }
 }
 
 extension CallingViewModelTests {
