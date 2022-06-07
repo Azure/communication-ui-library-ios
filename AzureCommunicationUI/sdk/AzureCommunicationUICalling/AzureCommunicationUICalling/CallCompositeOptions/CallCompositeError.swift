@@ -30,7 +30,7 @@ public struct CallCompositeErrorCode {
 }
 
 /// The error thrown after Call Composite launching.
-public struct CallCompositeErrorEvent {
+public struct CallCompositeError {
 
     /// The string representing the CallCompositeErrorCode.
     public let code: String
@@ -39,8 +39,8 @@ public struct CallCompositeErrorEvent {
     public var error: Error?
 }
 
-extension CallCompositeErrorEvent: Equatable {
-    public static func == (lhs: CallCompositeErrorEvent, rhs: CallCompositeErrorEvent) -> Bool {
+extension CallCompositeError: Equatable {
+    public static func == (lhs: CallCompositeError, rhs: CallCompositeError) -> Bool {
         if let error1 = lhs.error as NSError?,
            let error2 = rhs.error as NSError? {
             return error1.domain == error2.domain
