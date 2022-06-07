@@ -184,7 +184,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
 
         let error = getError()
-        let expectedStatus = CallCompositeErrorEvent(code: CallCompositeErrorCode.callEnd, error: error)
+        let expectedStatus = CallCompositeError(code: CallCompositeErrorCode.callEnd, error: error)
 
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
@@ -205,7 +205,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
 
         let error = CompositeError.invalidSDKWrapper
-        let expectedError = CallCompositeErrorEvent(code: CallCompositeErrorCode.callEnd, error: error)
+        let expectedError = CallCompositeError(code: CallCompositeErrorCode.callEnd, error: error)
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
             switch action {
@@ -224,7 +224,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_startCall_when_returnsNSError_then_updateCallingCoreError() {
         let error = getError()
         let expectation = XCTestExpectation(description: "Dispatch the new action")
-        let expectedStatus = CallCompositeErrorEvent(code: CallCompositeErrorCode.callJoin, error: error)
+        let expectedStatus = CallCompositeError(code: CallCompositeErrorCode.callJoin, error: error)
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
             switch action {
@@ -243,7 +243,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_startCall_when_returnsCompositeError_then_updateClientError() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
         let error = CompositeError.invalidSDKWrapper
-        let expectedError = CallCompositeErrorEvent(code: CallCompositeErrorCode.callJoin, error: error)
+        let expectedError = CallCompositeError(code: CallCompositeErrorCode.callJoin, error: error)
 
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
@@ -300,7 +300,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_setupCall_when_returnsError_then_updateCallingCoreError() {
         let error = getError()
         let expectation = XCTestExpectation(description: "Dispatch the new action")
-        let expectedStatus = CallCompositeErrorEvent(code: CallCompositeErrorCode.callJoin, error: error)
+        let expectedStatus = CallCompositeError(code: CallCompositeErrorCode.callJoin, error: error)
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
             switch action {
@@ -401,6 +401,27 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         }
         mockCallingService.videoStreamId = id
         callingMiddlewareHandler.enterForeground(state: getState(callingState: .connected,
+                                                                 cameraStatus: .paused,
+                                                                 cameraDeviceStatus: .front),
+                                                 dispatch: dispatch)
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_callingMiddlewareHandler_enterForeground_when_callLocalHold_cameraStatusOn_noError_then_updateCameraStatusOnUpdate() {
+        let expectation = XCTestExpectation(description: "Dispatch the new action")
+        let id = "identifier"
+        func dispatch(action: Action) {
+            XCTAssertTrue(action is LocalUserAction.CameraOnSucceeded)
+            switch action {
+            case let action as LocalUserAction.CameraOnSucceeded:
+                XCTAssertEqual(action.videoStreamIdentifier, id)
+                expectation.fulfill()
+            default:
+                XCTFail("Should not be default \(action)")
+            }
+        }
+        mockCallingService.videoStreamId = id
+        callingMiddlewareHandler.enterForeground(state: getState(callingState: .localHold,
                                                                  cameraStatus: .paused,
                                                                  cameraDeviceStatus: .front),
                                                  dispatch: dispatch)

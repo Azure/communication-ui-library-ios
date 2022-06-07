@@ -127,7 +127,7 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
-    func onError(_ error: CallCompositeErrorEvent) {
+    func onError(_ error: CallCompositeError) {
         print("::::UIKitDemoView::getEventsHandler::onError \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
     }
@@ -175,7 +175,7 @@ class UIKitDemoViewController: UIViewController {
                                 nil : envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
-        let localOptions = LocalOptions(participantViewData)
+        let localOptions = LocalOptions(participantViewData: participantViewData)
 
         if let credential = try? getTokenCredential() {
             switch selectedMeetingType {
