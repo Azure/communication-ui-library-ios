@@ -130,9 +130,9 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
             displayedRemoteParticipantsRendererView.append(forKey: cacheKey,
                                                            value: cache)
 
-//            if videoStream.mediaStreamType == .screenSharing {
+            if videoStream.mediaStreamType == .screenSharing {
                 newRenderer.delegate = self
-//            }
+            }
 
             return ParticipantRendererViewInfo(rendererView: newRendererView, streamSize: .zero)
         } catch let error {
@@ -184,7 +184,6 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
     func videoStreamRenderer(didRenderFirstFrame renderer: VideoStreamRenderer) {
         let size = CGSize(width: Int(renderer.size.width), height: Int(renderer.size.height))
         didRenderFirstFrame?(size)
-        print("!!!! didRenderFirstFrame")
     }
 
     func videoStreamRenderer(didFailToStart renderer: VideoStreamRenderer) {

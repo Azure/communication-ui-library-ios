@@ -41,24 +41,8 @@ struct ParticipantGridCellView: View {
             .accessibilityLabel(Text(viewModel.accessibilityLabel))
         }
         .onReceive(viewModel.$videoViewModel) { model in
-            print("!!! viewModel.$videoViewModel \(model)")
-            this is also called when orientation is changed
             displayedParticipantRendererViewInfo = getRendererViewInfo(for: model?.videoStreamId)
-//            let cachedVideoStreamId = displayedVideoStreamId
-//            if model?.videoStreamId != displayedVideoStreamId {
-//                displayedVideoStreamId = model?.videoStreamId
-//            }
-
-//            if model?.videoStreamId != cachedVideoStreamId,
-//               model?.videoStreamId != nil {
-//                // workaround to force rendererView being recreated
-//                isVideoChanging = true
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-//                    isVideoChanging = false
-//                }
-//            }
         }
-//        check if camera was turned off and after that turned on
         .onReceive(viewModel.$participantIdentifier) {
             updateParticipantViewData(for: $0)
         }
@@ -78,7 +62,6 @@ struct ParticipantGridCellView: View {
 
         let info = rendererViewManager?.getRemoteParticipantVideoRendererView(remoteParticipantVideoViewId)
 
-        print("!!! getRendererViewInfo \(remoteParticipantVideoViewId) \(info)")
         return info
     }
 
@@ -107,17 +90,6 @@ struct ParticipantGridCellView: View {
 
         viewModel.updateParticipantNameIfNeeded(with: participantViewData.displayName)
     }
-
-//    private func getRemoteParticipantVideoViewId() -> RemoteParticipantVideoViewId? {
-//        print("!!! getRemoteParticipantVideoViewId")
-//        guard let videoStreamId = viewModel.videoViewModel?.videoStreamId,
-//              !videoStreamId.isEmpty else {
-//            return nil
-//        }
-//        let userId = viewModel.participantIdentifier
-//        return RemoteParticipantVideoViewId(userIdentifier: userId,
-//                                            videoStreamIdentifier: videoStreamId)
-//    }
 
     var avatarView: some View {
         return VStack(alignment: .center, spacing: 5) {

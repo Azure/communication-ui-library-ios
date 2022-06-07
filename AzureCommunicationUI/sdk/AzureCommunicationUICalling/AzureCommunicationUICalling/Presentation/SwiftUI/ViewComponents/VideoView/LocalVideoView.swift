@@ -62,13 +62,14 @@ struct LocalVideoView: View {
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     @State private var avatarImage: UIImage?
+    @State private var rendererView: UIView?
 
     var body: some View {
         Group {
             GeometryReader { geometry in
                 if viewModel.cameraOperationalStatus == .on,
-                   let localVideoStreamId = viewModel.localVideoStreamId,
-                   let rendererView = viewManager.getLocalVideoRendererView(localVideoStreamId) {
+                   let rendererView = rendererView {
+
                     ZStack(alignment: viewType.cameraSwitchButtonAlignment) {
                         VideoRendererView(rendererView: rendererView)
                             .scaledToFill()
@@ -104,6 +105,11 @@ struct LocalVideoView: View {
             }
         }.onReceive(viewModel.$localVideoStreamId) {
             viewManager.updateDisplayedLocalVideoStream($0)
+            guard let streamId = $0 else {
+                rendererView = nil
+                return
+            }
+            rendererView = viewManager.getLocalVideoRendererView(streamId)
         }.onReceive(avatarManager.$localOptions) {
             avatarImage = $0?.participantViewData.avatarImage
         }
