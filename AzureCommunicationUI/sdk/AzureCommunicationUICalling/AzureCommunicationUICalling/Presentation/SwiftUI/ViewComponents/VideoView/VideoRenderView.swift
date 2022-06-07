@@ -8,6 +8,7 @@ import SwiftUI
 import Combine
 
 struct VideoRendererView: UIViewRepresentable {
+    
     let rendererView: UIView
 
     func makeUIView(context: Context) -> UIView {
