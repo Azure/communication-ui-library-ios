@@ -12,8 +12,8 @@ struct ParticipantGridCellView: View {
     let rendererViewManager: RendererViewManager?
     let avatarViewManager: AvatarViewManager
     @State var avatarImage: UIImage?
-//    @State var displayedVideoStreamId: String?
-    @State var displayedParticipantRendererViewInfo: ParticipantRendererViewInfo?
+    @State var displayedVideoStreamId: String?
+//    @State var displayedParticipantRendererViewInfo: ParticipantRendererViewInfo?
     @State var isVideoChanging: Bool = false
     let avatarSize: CGFloat = 56
 
@@ -23,7 +23,7 @@ struct ParticipantGridCellView: View {
 //                if isVideoChanging {
 //                    EmptyView()
 //                } else
-                if let rendererViewInfo = displayedParticipantRendererViewInfo {
+                if let rendererViewInfo = getRendererViewInfo(for: displayedVideoStreamId) {
                     let zoomable = viewModel.videoViewModel?.videoStreamType == .screenSharing
                     ParticipantGridCellVideoView(videoRendererViewInfo: rendererViewInfo,
                                                  rendererViewManager: rendererViewManager,
@@ -41,7 +41,20 @@ struct ParticipantGridCellView: View {
             .accessibilityLabel(Text(viewModel.accessibilityLabel))
         }
         .onReceive(viewModel.$videoViewModel) { model in
-            displayedParticipantRendererViewInfo = getRendererViewInfo(for: model?.videoStreamId)
+//            displayedParticipantRendererViewInfo = getRendererViewInfo(for: model?.videoStreamId)
+            let cachedVideoStreamId = displayedVideoStreamId
+            if model?.videoStreamId != displayedVideoStreamId {
+                displayedVideoStreamId = model?.videoStreamId
+            }
+
+//            if model?.videoStreamId != cachedVideoStreamId,
+//               model?.videoStreamId != nil {
+//                // workaround to force rendererView being recreated
+//                isVideoChanging = true
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+//                    isVideoChanging = false
+//                }
+//            }
         }
         .onReceive(viewModel.$participantIdentifier) {
             updateParticipantViewData(for: $0)
