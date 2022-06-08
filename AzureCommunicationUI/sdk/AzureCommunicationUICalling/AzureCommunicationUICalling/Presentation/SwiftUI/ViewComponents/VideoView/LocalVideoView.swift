@@ -108,12 +108,9 @@ struct LocalVideoView: View {
             }
         }.onReceive(viewModel.$localVideoStreamId) {
             viewManager.updateDisplayedLocalVideoStream($0)
-            localVideoStreamId = $0
-//            guard let streamId = $0 else {
-//                rendererView = nil
-//                return
-//            }
-//            rendererView = viewManager.getLocalVideoRendererView(streamId)
+            if localVideoStreamId != $0 {
+                localVideoStreamId = $0
+            }
         }.onReceive(avatarManager.$localOptions) {
             avatarImage = $0?.participantViewData.avatarImage
         }
