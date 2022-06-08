@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1B315123284EA8630043231B /* OnHoldOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */; };
+		1B3A8EED285129CC002ED55A /* AudioSessionReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */; };
 		1B5F169D27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */; };
 		1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F169E27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift */; };
 		1B5F16A127FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F16A027FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift */; };
@@ -256,6 +257,7 @@
 
 /* Begin PBXFileReference section */
 		1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModelTests.swift; sourceTree = "<group>"; };
+		1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionReducerTests.swift; sourceTree = "<group>"; };
 		1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLeaveCallConfirmationList.swift; sourceTree = "<group>"; };
 		1B5F169E27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveCallConfirmationListViewController.swift; sourceTree = "<group>"; };
 		1B5F16A027FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLeaveCallConfirmationListCell.swift; sourceTree = "<group>"; };
@@ -1059,6 +1061,7 @@
 				1F9184B326B4A2EF0049EF5B /* CallingReducerTests.swift */,
 				1F9184B526B4A3340049EF5B /* NavigationReducerTests.swift */,
 				88701EB32742D54C00660EAB /* ErrorReducerTests.swift */,
+				1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */,
 			);
 			path = Reducer;
 			sourceTree = "<group>";
@@ -1552,6 +1555,7 @@
 				50B390D127D82D7E0010A2ED /* LocalizationProviderMocking.swift in Sources */,
 				FA40424A27E3E86700875368 /* ParticipantsListViewModelMocking.swift in Sources */,
 				50FA4616268D13E9001844AC /* LocalUserReducerTests.swift in Sources */,
+				1B3A8EED285129CC002ED55A /* AudioSessionReducerTests.swift in Sources */,
 				1F4A24BC26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift in Sources */,
 				503300FE27079FC900289BB5 /* BannerTextViewModelTests.swift in Sources */,
 				1F8E0B74268697B700DDD18E /* CallingMiddlewareHandlerMocking.swift in Sources */,
