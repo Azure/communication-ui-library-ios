@@ -33,7 +33,7 @@ class AudioSessionReducerTests: XCTestCase {
             return
         }
         XCTAssertEqual(resultState.status, expectedAudioStatus)
-    }   
+    }
 
     func test_audioSessionReducer_reduce_when_audioEngaged_then_stateUpdated() {
         let expectedAudioStatus: AudioSessionStatus = .active
