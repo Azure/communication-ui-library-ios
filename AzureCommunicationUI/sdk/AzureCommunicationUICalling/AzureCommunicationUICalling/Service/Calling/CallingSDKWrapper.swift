@@ -44,7 +44,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         return setupCallAgent()
             .flatMap { [weak self] _ -> AnyPublisher<Void, Error> in
                 guard let self = self else {
-                    let error = CompositeError.invalidSDKWrapper
+                    let error = CallCompositeInternalError.callJoinFailed
                     return Fail(error: error).eraseToAnyPublisher()
                 }
                 return self.joinCall(isCameraPreferred: isCameraPreferred,
@@ -76,7 +76,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
             self.callAgent?.join(with: joinLocator, joinCallOptions: joinCallOptions) { [weak self] (call, error) in
                 guard let self = self else {
-                    return promise(.failure(CompositeError.invalidSDKWrapper))
+                    return promise(.failure(CallCompositeInternalError.callJoinFailed))
                 }
 
                 if let error = error {
@@ -86,7 +86,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
                 guard let call = call else {
                     self.logger.error( "Join call failed")
-                    return promise(.failure(CompositeError.invalidSDKWrapper))
+                    return promise(.failure(CallCompositeInternalError.callJoinFailed))
                 }
 
                 call.delegate = self.callingEventsHandler
@@ -161,7 +161,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
     func switchCamera() -> AnyPublisher<CameraDevice, Error> {
         guard let videoStream = self.localVideoStream else {
-            let error = CompositeError.invalidLocalVideoStream
+            let error = CallCompositeInternalError.invalidLocalVideoStream
             self.logger.error( "\(error)")
             return Fail(error: error).eraseToAnyPublisher()
         }
@@ -172,7 +172,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         return getVideoDeviceInfo(flippedFacing)
             .flatMap { [weak self] deviceInfo -> AnyPublisher<Void, Error> in
                 guard let self = self else {
-                    let error = CompositeError.invalidSDKWrapper
+                    let error = CallCompositeInternalError.cameraSwitchFailed
                     return Fail(error: error).eraseToAnyPublisher()
                 }
                 return self.change(videoStream, source: deviceInfo).eraseToAnyPublisher()
@@ -275,7 +275,7 @@ extension CallingSDKWrapper {
             self.callClient?.createCallAgent(userCredential: self.callConfiguration.credential,
                                              options: options) { [weak self] (agent, error) in
                 guard let self = self else {
-                    return promise(.failure(CompositeError.invalidSDKWrapper))
+                    return promise(.failure(CallCompositeInternalError.callJoinFailed))
                 }
 
                 if let error = error {
@@ -303,7 +303,7 @@ extension CallingSDKWrapper {
         Future { promise in
             let localVideoStreamId = self.getLocalVideoStreamIdentifier() ?? ""
             guard let call = self.call else {
-                let error = CompositeError.invalidLocalVideoStream
+                let error = CallCompositeInternalError.invalidLocalVideoStream
                 self.logger.error( "Start call video stream failed")
                 return promise(.failure(error))
             }

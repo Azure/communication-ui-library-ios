@@ -12,7 +12,7 @@ class ErrorInfoViewModel: ObservableObject {
     @Published private(set) var subtitle: String
 
     private let localizationProvider: LocalizationProviderProtocol
-    private var previousErrorType: String = ""
+    private var previousError: CallCompositeInternalError?
 
     init(localizationProvider: LocalizationProviderProtocol,
          title: String = "",
@@ -41,26 +41,26 @@ class ErrorInfoViewModel: ObservableObject {
     }
 
     func update(errorState: ErrorState) {
-        let errorType = errorState.error?.code ?? ""
-        guard errorType != previousErrorType else {
+        let error = errorState.error
+        guard error != previousError else {
             return
         }
 
-        previousErrorType = errorState.error?.code ?? ""
-        guard !errorType.isEmpty else {
+        previousError = error
+        guard let error = error else {
             isDisplayed = false
             return
         }
 
         isDisplayed = true
-        switch errorState.error?.code {
-        case CallCompositeErrorCode.callJoin:
+        switch error {
+        case .callJoinFailed:
             title = localizationProvider.getLocalizedString(.snackBarErrorJoinCall)
-        case CallCompositeErrorCode.callEnd:
+        case .callEndFailed:
             title = localizationProvider.getLocalizedString(.snackBarErrorCallEnd)
-        case CallCompositeErrorCode.callEvicted:
+        case .callEvicted:
             title = localizationProvider.getLocalizedString(.snackBarErrorCallEvicted)
-        case CallCompositeErrorCode.callDenied:
+        case .callDenied:
             title = localizationProvider.getLocalizedString(.snackBarErrorCallDenied)
         default:
             title = localizationProvider.getLocalizedString(.snackBarError)

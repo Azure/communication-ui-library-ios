@@ -12,7 +12,7 @@ protocol ErrorManagerProtocol {
 class CompositeErrorManager: ErrorManagerProtocol {
     private let store: Store<AppState>
     private let eventsHandler: CallComposite.Events
-    private var error: CallCompositeError?
+    private var error: CallCompositeInternalError?
 
     var cancellables = Set<AnyCancellable>()
 

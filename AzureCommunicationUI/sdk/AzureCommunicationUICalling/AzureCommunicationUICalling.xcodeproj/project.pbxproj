@@ -74,7 +74,6 @@
 		1F94DAE626740D4400691D1E /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAE526740D4400691D1E /* AppState.swift */; };
 		1F94DAE82676885700691D1E /* AppStateReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAE72676885700691D1E /* AppStateReducer.swift */; };
 		1F94DAF326772B3C00691D1E /* UIWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAF226772B3C00691D1E /* UIWindowExtension.swift */; };
-		1F94DAF52677D48400691D1E /* CallCompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAF42677D48400691D1E /* CallCompositeError.swift */; };
 		1FA23F9E265DA21400B4A080 /* VideoStreamInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA23F9D265DA21400B4A080 /* VideoStreamInfoModel.swift */; };
 		1FA24BAD2666F0CC00B4A080 /* ColorThemeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FA24BAC2666F0CC00B4A080 /* ColorThemeProvider.swift */; };
 		1FB0A1C128412A5100D57B0F /* ACSParticipantStateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FB0A1C028412A5000D57B0F /* ACSParticipantStateExtension.swift */; };
@@ -94,7 +93,7 @@
 		1FD299642723345B0084B9ED /* DefaultLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD299632723345B0084B9ED /* DefaultLogger.swift */; };
 		1FD299662728B72B0084B9ED /* CallingSDKEventsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD299652728B72B0084B9ED /* CallingSDKEventsHandler.swift */; };
 		1FDBF9F1281F8D2F00B92273 /* ACSCallEndReasonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */; };
-		1FE1BE7F26FE38C9000A8D18 /* CompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1BE7E26FE38C9000A8D18 /* CompositeError.swift */; };
+		1FE1BE7F26FE38C9000A8D18 /* CallCompositeInternalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1BE7E26FE38C9000A8D18 /* CallCompositeInternalError.swift */; };
 		1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */; };
 		1FFEA01426A68D0D00E90816 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEA01326A68D0D00E90816 /* FontExtension.swift */; };
 		337789566FB3398301666ADF /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC5A1FE3C2622411DFF98147 /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework */; };
@@ -342,7 +341,7 @@
 		1FD299632723345B0084B9ED /* DefaultLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultLogger.swift; sourceTree = "<group>"; };
 		1FD299652728B72B0084B9ED /* CallingSDKEventsHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKEventsHandler.swift; sourceTree = "<group>"; };
 		1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACSCallEndReasonExtension.swift; sourceTree = "<group>"; };
-		1FE1BE7E26FE38C9000A8D18 /* CompositeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeError.swift; sourceTree = "<group>"; };
+		1FE1BE7E26FE38C9000A8D18 /* CallCompositeInternalError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeInternalError.swift; sourceTree = "<group>"; };
 		1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoiningCallActivityView.swift; sourceTree = "<group>"; };
 		1FFEA01326A68D0D00E90816 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
 		500C0F1E2847DE18000BA2DC /* RemoteOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteOptions.swift; sourceTree = "<group>"; };
@@ -800,7 +799,7 @@
 				1FC30845266949E8007EC537 /* ColorExtension.swift */,
 				1F94DAF226772B3C00691D1E /* UIWindowExtension.swift */,
 				1F09A11C26BB5B0D00BACED7 /* ArrayExtension.swift */,
-				1FE1BE7E26FE38C9000A8D18 /* CompositeError.swift */,
+				1FE1BE7E26FE38C9000A8D18 /* CallCompositeInternalError.swift */,
 				1B70D52727191073007CC933 /* DeviceExtension.swift */,
 				1B79BD4F273F2D87002D5A36 /* UIViewControllerExtension.swift */,
 				883D12D92784F0B1005021E2 /* StringConstants.swift */,
@@ -1664,14 +1663,13 @@
 				50C6DECC270E48BE0085D04B /* BannerInfoType.swift in Sources */,
 				1F03D3D22638A6B70055C456 /* CallingViewModel.swift in Sources */,
 				50FA45FE26813FCE001844AC /* ParticipantGridViewModel.swift in Sources */,
-				1F94DAF52677D48400691D1E /* CallCompositeError.swift in Sources */,
 				1F94DAE626740D4400691D1E /* AppState.swift in Sources */,
 				8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */,
 				1F3F0C69283E860600C66054 /* AudioSessionReducer.swift in Sources */,
 				50137D0626A7479C00AB843E /* EnvironmentValuesExtension.swift in Sources */,
 				1FD299642723345B0084B9ED /* DefaultLogger.swift in Sources */,
 				1F2BEDA92632530D00D98266 /* Action.swift in Sources */,
-				1FE1BE7F26FE38C9000A8D18 /* CompositeError.swift in Sources */,
+				1FE1BE7F26FE38C9000A8D18 /* CallCompositeInternalError.swift in Sources */,
 				985DF374269D096000CFDA55 /* SetupControlBarView.swift in Sources */,
 				1FA24BAD2666F0CC00B4A080 /* ColorThemeProvider.swift in Sources */,
 				A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */,

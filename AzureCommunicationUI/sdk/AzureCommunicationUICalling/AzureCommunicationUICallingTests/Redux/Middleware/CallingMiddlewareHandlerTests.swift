@@ -204,7 +204,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_endCall_when_returnsCompositeError_then_updateClientError() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
 
-        let error = CompositeError.invalidSDKWrapper
+        let error = CallCompositeInternalError.invalidSDKWrapper
         let expectedError = CallCompositeError(code: CallCompositeErrorCode.callEnd, error: error)
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
@@ -242,7 +242,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
     func test_callingMiddlewareHandler_startCall_when_returnsCompositeError_then_updateClientError() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
-        let error = CompositeError.invalidSDKWrapper
+        let error = CallCompositeInternalError.invalidSDKWrapper
         let expectedError = CallCompositeError(code: CallCompositeErrorCode.callJoin, error: error)
 
         func dispatch(action: Action) {

@@ -36,11 +36,11 @@ struct ParticipantListUpdated: Action {
 
 struct ErrorAction: Action {
     struct FatalErrorUpdated: Action {
-        let error: CallCompositeError
+        let error: CallCompositeInternalError
     }
 
     struct StatusErrorAndCallReset: Action {
-        let error: CallCompositeError
+        let error: CallCompositeInternalError
     }
 }
 
