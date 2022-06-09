@@ -14,6 +14,7 @@ class LocalVideoViewModel: ObservableObject {
     @Published var localVideoStreamId: String?
     @Published var displayName: String?
     @Published var isMuted: Bool = false
+    @Published var cameraOperationalStatus: LocalUserState.CameraOperationalStatus = .off
 
     var cameraSwitchButtonPipViewModel: IconButtonViewModel!
     var cameraSwitchButtonFullViewModel: IconButtonViewModel!
@@ -58,6 +59,10 @@ class LocalVideoViewModel: ObservableObject {
 
         if displayName != localUserState.displayName {
             displayName = localUserState.displayName
+        }
+
+        if cameraOperationalStatus != localUserState.cameraState.operation {
+            cameraOperationalStatus = localUserState.cameraState.operation
         }
 
         cameraSwitchButtonPipViewModel.update(isDisabled: localUserState.cameraState.device == .switching)

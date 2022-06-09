@@ -32,7 +32,7 @@ final class DependencyContainer {
 
     func registerDependencies(_ callConfiguration: CallConfiguration,
                               localOptions: LocalOptions?,
-                              callCompositeEventsHandler: CallCompositeEventsHandling) {
+                              callCompositeEventsHandler: CallComposite.Events) {
         register(CallingSDKEventsHandler(logger: resolve()) as CallingSDKEventsHandling)
         register(CallingSDKWrapper(logger: resolve(),
                                    callingEventsHandler: resolve(),
@@ -77,6 +77,7 @@ final class DependencyContainer {
         let appStateReducer = AppStateReducer(permissionReducer: PermissionReducer(),
                                               localUserReducer: LocalUserReducer(),
                                               lifeCycleReducer: LifeCycleReducer(),
+                                              audioSessionReducer: AudioSessionReducer(),
                                               callingReducer: CallingReducer(),
                                               navigationReducer: NavigationReducer(),
                                               errorReducer: ErrorReducer())

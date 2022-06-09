@@ -66,7 +66,8 @@ struct LocalVideoView: View {
     var body: some View {
         Group {
             GeometryReader { geometry in
-                if let localVideoStreamId = viewModel.localVideoStreamId,
+                if viewModel.cameraOperationalStatus == .on,
+                   let localVideoStreamId = viewModel.localVideoStreamId,
                    let rendererView = viewManager.getLocalVideoRendererView(localVideoStreamId) {
                     ZStack(alignment: viewType.cameraSwitchButtonAlignment) {
                         VideoRendererView(rendererView: rendererView)

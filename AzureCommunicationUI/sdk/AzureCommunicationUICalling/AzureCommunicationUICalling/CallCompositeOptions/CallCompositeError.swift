@@ -21,10 +21,16 @@ public struct CallCompositeErrorCode {
 
     /// Error when a participant is denied from entering the call
     static let callDenied: String = "callDenied"
+
+    /// Error when local user fails to hold a call.
+    static let callHold: String = "callHold"
+
+    /// Error when local user fails to resume a call.
+    static let callResume: String = "callResume"
 }
 
 /// The error thrown after Call Composite launching.
-public struct CallCompositeErrorEvent {
+public struct CallCompositeError {
 
     /// The string representing the CallCompositeErrorCode.
     public let code: String
@@ -33,8 +39,8 @@ public struct CallCompositeErrorEvent {
     public var error: Error?
 }
 
-extension CallCompositeErrorEvent: Equatable {
-    public static func == (lhs: CallCompositeErrorEvent, rhs: CallCompositeErrorEvent) -> Bool {
+extension CallCompositeError: Equatable {
+    public static func == (lhs: CallCompositeError, rhs: CallCompositeError) -> Bool {
         if let error1 = lhs.error as NSError?,
            let error2 = rhs.error as NSError? {
             return error1.domain == error2.domain

@@ -8,6 +8,7 @@ import Foundation
 class ParticipantsListCellViewModel {
     let participantId: String?
     let isMuted: Bool
+    let isHold: Bool
     let isLocalParticipant: Bool
     let localizationProvider: LocalizationProviderProtocol
     private let displayName: String
@@ -19,6 +20,7 @@ class ParticipantsListCellViewModel {
         self.displayName = localUserState.displayName ?? ""
         self.isMuted = localUserState.audioState.operation != .on
         self.isLocalParticipant = true
+        self.isHold = false
     }
 
     init(participantInfoModel: ParticipantInfoModel,
@@ -27,6 +29,7 @@ class ParticipantsListCellViewModel {
         self.localizationProvider = localizationProvider
         self.displayName = participantInfoModel.displayName
         self.isMuted = participantInfoModel.isMuted
+        self.isHold = participantInfoModel.status == .hold
         self.isLocalParticipant = false
     }
 
@@ -67,5 +70,9 @@ class ParticipantsListCellViewModel {
             name = displayName
         }
         return name
+    }
+
+    func getOnHoldString() -> String {
+        localizationProvider.getLocalizedString(.onHold)
     }
 }

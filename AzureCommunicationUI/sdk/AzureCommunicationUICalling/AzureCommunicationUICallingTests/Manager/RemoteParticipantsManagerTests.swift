@@ -12,7 +12,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
     var avatarViewManager: AvatarViewManagerMocking!
     var mockStoreFactory: StoreFactoryMocking!
     var callingSDKWrapper: CallingSDKWrapperMocking!
-    var eventsHandler: CallCompositeEventsHandling!
+    var eventsHandler: CallComposite.Events!
     var remoteParticipantsJoinedExpectation: XCTestExpectation!
     var expectedIds: [String] = []
 
@@ -21,7 +21,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
         sut = nil
         remoteParticipantsJoinedExpectation = XCTestExpectation(description: "DidRemoteParticipantsJoin event expectation")
         mockStoreFactory = StoreFactoryMocking()
-        eventsHandler = CallCompositeEventsHandler()
+        eventsHandler = CallComposite.Events()
         callingSDKWrapper = CallingSDKWrapperMocking()
         avatarViewManager = AvatarViewManagerMocking(store: mockStoreFactory.store,
                                                      localOptions: nil)
@@ -36,6 +36,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -45,6 +46,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier2",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -69,6 +71,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -86,6 +89,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -104,6 +108,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -126,6 +131,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isMuted: false,
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
+            status: .idle,
             recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
@@ -151,6 +157,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
                 isMuted: false,
                 isRemoteUser: true,
                 userIdentifier: "testUserIdentifier\(i)",
+                status: .idle,
                 recentSpeakingStamp: Date(),
                 screenShareVideoStreamModel: nil,
                 cameraVideoStreamModel: nil))
@@ -172,7 +179,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
 extension RemoteParticipantsManagerTests {
     func makeSUT(isParticipantsJoinHandlerSet: Bool = true) {
         if isParticipantsJoinHandlerSet {
-            eventsHandler.didRemoteParticipantsJoin = { [weak self] _ in
+            eventsHandler.onRemoteParticipantJoined = { [weak self] _ in
                 guard let self = self else {
                     return
                 }

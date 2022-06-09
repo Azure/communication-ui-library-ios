@@ -26,8 +26,8 @@ class DependencyContainerTests: XCTestCase {
                                                   credential: communicationTokenCredential!,
                                                   displayName: displayName)
         let participantViewData = ParticipantViewData(avatar: nil, displayName: nil)
-        let localOptions = LocalOptions(participantViewData)
-        let callCompositeEventsHandler = CallCompositeEventsHandler()
+        let localOptions = LocalOptions(participantViewData: participantViewData)
+        let callCompositeEventsHandler = CallComposite.Events()
 
         dependencyContainer.registerDependencies(callConfiguration,
                                                  localOptions: localOptions,
