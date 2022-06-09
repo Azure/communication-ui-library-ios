@@ -6,16 +6,49 @@
 import Foundation
 
 enum CallCompositeInternalError: String, LocalizedError, Equatable {
-    case callTokenFailed = "callTokenFailed"
-    case callJoinFailed = "callJoinFailed"
-    case callEndFailed = "callEndFailed"
-    case callHoldFailed = "callHoldFailed"
-    case callResumeFailed = "callResumeFailed"
-    case callEvicted = "callEvicted"
-    case callDenied = "callDenied"
-    case cameraSwitchFailed = "cameraSwitchFailed"
-
-    case invalidLocalVideoStream = "InvalidLocalVideoStream"
+    case callTokenFailed
+    case callJoinFailed
+    case callEndFailed
+    case callHoldFailed
+    case callResumeFailed
+    case callEvicted
+    case callDenied
+    case cameraSwitchFailed
+    case cameraOnFailed
 
     var localizedDescription: String { return NSLocalizedString(self.rawValue, comment: "") }
+
+    func toCallCompositeErrorCode() -> String? {
+        switch self {
+        case .callTokenFailed:
+            return CallCompositeErrorCode.tokenExpired
+        case .callJoinFailed:
+            return CallCompositeErrorCode.callJoin
+        case .callEndFailed:
+            return CallCompositeErrorCode.callEnd
+        case .callHoldFailed,
+                .callResumeFailed,
+                .callEvicted,
+                .callDenied,
+                .cameraSwitchFailed,
+                .cameraOnFailed:
+            return nil
+        }
+    }
+
+    func isFatalError() -> Bool {
+        switch self {
+        case .callTokenFailed,
+                .callJoinFailed,
+                .callEndFailed:
+            return true
+        case .callHoldFailed,
+                .callResumeFailed,
+                .callEvicted,
+                .callDenied,
+                .cameraSwitchFailed,
+                .cameraOnFailed:
+            return false
+        }
+    }
 }

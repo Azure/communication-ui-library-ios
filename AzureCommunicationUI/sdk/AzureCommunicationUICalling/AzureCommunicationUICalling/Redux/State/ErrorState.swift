@@ -12,17 +12,20 @@ enum ErrorCategory {
 }
 
 class ErrorState: ReduxState, Equatable {
-    let error: CallCompositeInternalError?
+    // errorType would be nil for no error status
+    let internalError: CallCompositeInternalError?
+    let error: Error?
     let errorCategory: ErrorCategory
-    let error
 
-    init(error: CallCompositeInternalError? = nil,
+    init(internalError: CallCompositeInternalError? = nil,
+         error: Error? = nil,
          errorCategory: ErrorCategory = .none) {
+        self.internalError = internalError
         self.error = error
         self.errorCategory = errorCategory
     }
 
     static func == (lhs: ErrorState, rhs: ErrorState) -> Bool {
-        return (lhs.error?.rawValue == rhs.error?.rawValue)
+        return (lhs.internalError?.rawValue == rhs.internalError?.rawValue)
     }
 }

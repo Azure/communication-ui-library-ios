@@ -49,11 +49,6 @@ extension CallCompositeError: Equatable {
                 && lhs.code == rhs.code
         }
 
-        if let error1 = lhs.error as? CallCompositeInternalError?,
-           let error2 = rhs.error as? CallCompositeInternalError? {
-            return error1 == error2 && lhs.code == rhs.code
-        }
-
         return false
     }
 }

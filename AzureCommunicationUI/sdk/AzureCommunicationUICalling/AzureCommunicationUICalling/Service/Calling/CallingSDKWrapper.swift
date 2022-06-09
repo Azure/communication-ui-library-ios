@@ -161,8 +161,8 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
     func switchCamera() -> AnyPublisher<CameraDevice, Error> {
         guard let videoStream = self.localVideoStream else {
-            let error = CallCompositeInternalError.invalidLocalVideoStream
-            self.logger.error( "\(error)")
+            let error = CallCompositeInternalError.cameraSwitchFailed
+            self.logger.error("\(error)")
             return Fail(error: error).eraseToAnyPublisher()
         }
 
@@ -303,7 +303,7 @@ extension CallingSDKWrapper {
         Future { promise in
             let localVideoStreamId = self.getLocalVideoStreamIdentifier() ?? ""
             guard let call = self.call else {
-                let error = CallCompositeInternalError.invalidLocalVideoStream
+                let error = CallCompositeInternalError.cameraOnFailed
                 self.logger.error( "Start call video stream failed")
                 return promise(.failure(error))
             }

@@ -183,14 +183,16 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_endCall_when_returnNSError_then_updateCallError() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
 
-        let error = getError()
-        let expectedStatus = CallCompositeError(code: CallCompositeErrorCode.callEnd, error: error)
+        let errorCode = 50
+        let error = getError(code: errorCode)
 
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
             switch action {
             case let action as ErrorAction.FatalErrorUpdated:
-                XCTAssertEqual(action.error.code, expectedStatus.code)
+                let nserror = action.error as? NSError
+                XCTAssertEqual(nserror!.code, errorCode)
+                XCTAssertEqual(action.internalError, .callEndFailed)
                 expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
@@ -204,13 +206,14 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_endCall_when_returnsCompositeError_then_updateClientError() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
 
-        let error = CallCompositeInternalError.invalidSDKWrapper
-        let expectedError = CallCompositeError(code: CallCompositeErrorCode.callEnd, error: error)
+        let error = CallCompositeInternalError.cameraSwitchFailed
+
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
             switch action {
             case let action as ErrorAction.FatalErrorUpdated:
-                XCTAssertEqual(action.error.code, expectedError.code)
+                XCTAssertEqual(action.internalError, error)
+                XCTAssertNil(action.error)
                 expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
@@ -222,14 +225,16 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     }
 
     func test_callingMiddlewareHandler_startCall_when_returnsNSError_then_updateCallingCoreError() {
-        let error = getError()
         let expectation = XCTestExpectation(description: "Dispatch the new action")
-        let expectedStatus = CallCompositeError(code: CallCompositeErrorCode.callJoin, error: error)
+        let errorCode = 50
+        let error = getError(code: errorCode)
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
             switch action {
             case let action as ErrorAction.FatalErrorUpdated:
-                XCTAssertEqual(action.error.code, expectedStatus.code)
+                let nserror = action.error as? NSError
+                XCTAssertEqual(nserror!.code, errorCode)
+                XCTAssertEqual(action.internalError, .callJoinFailed)
                 expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
@@ -240,16 +245,15 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_callingMiddlewareHandler_startCall_when_returnsCompositeError_then_updateClientError() {
+    func test_callingMiddlewareHandler_startCall_when_returnsCompositeError_then_updateClientErrorCompositeError() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
-        let error = CallCompositeInternalError.invalidSDKWrapper
-        let expectedError = CallCompositeError(code: CallCompositeErrorCode.callJoin, error: error)
+        let error = CallCompositeInternalError.callEndFailed
 
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
             switch action {
             case let action as ErrorAction.FatalErrorUpdated:
-                XCTAssertEqual(action.error.code, expectedError.code)
+                XCTAssertEqual(action.internalError, error)
                 expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
@@ -298,14 +302,17 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     }
 
     func test_callingMiddlewareHandler_setupCall_when_returnsError_then_updateCallingCoreError() {
-        let error = getError()
         let expectation = XCTestExpectation(description: "Dispatch the new action")
-        let expectedStatus = CallCompositeError(code: CallCompositeErrorCode.callJoin, error: error)
+        let errorCode = 50
+        let error = getError(code: errorCode)
+
         func dispatch(action: Action) {
             XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
             switch action {
             case let action as ErrorAction.FatalErrorUpdated:
-                XCTAssertEqual(action.error.code, expectedStatus.code)
+                let nserror = action.error as? NSError
+                XCTAssertEqual(nserror!.code, errorCode)
+                XCTAssertEqual(action.internalError, .callJoinFailed)
                 expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
@@ -502,8 +509,8 @@ extension CallingMiddlewareHandlerTests {
         return { _ in }
     }
 
-    private func getError() -> Error {
-        return NSError(domain: "", code: 100, userInfo: [
+    private func getError(code: Int = 100) -> Error {
+        return NSError(domain: "", code: code, userInfo: [
             NSLocalizedDescriptionKey: "Error"
         ])
     }

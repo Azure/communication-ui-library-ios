@@ -94,6 +94,7 @@
 		1FD299662728B72B0084B9ED /* CallingSDKEventsHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD299652728B72B0084B9ED /* CallingSDKEventsHandler.swift */; };
 		1FDBF9F1281F8D2F00B92273 /* ACSCallEndReasonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */; };
 		1FE1BE7F26FE38C9000A8D18 /* CallCompositeInternalError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1BE7E26FE38C9000A8D18 /* CallCompositeInternalError.swift */; };
+		1FEA2A09285271F3006A6736 /* CallCompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAF42677D48400691D1E /* CallCompositeError.swift */; };
 		1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */; };
 		1FFEA01426A68D0D00E90816 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEA01326A68D0D00E90816 /* FontExtension.swift */; };
 		337789566FB3398301666ADF /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC5A1FE3C2622411DFF98147 /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework */; };
@@ -1737,6 +1738,7 @@
 				1B5F16A127FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift in Sources */,
 				5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */,
 				5A3142646DD55C66CF290F7A /* LocalVideoViewModel.swift in Sources */,
+				1FEA2A09285271F3006A6736 /* CallCompositeError.swift in Sources */,
 				5A314059D7E61D1083A8C473 /* LocalVideoView.swift in Sources */,
 				5A3140EA80ACDCB14140A060 /* CompositeViewFactory.swift in Sources */,
 				5A3142DAFAB4EE338ABF2196 /* CompositeViewModelFactory.swift in Sources */,

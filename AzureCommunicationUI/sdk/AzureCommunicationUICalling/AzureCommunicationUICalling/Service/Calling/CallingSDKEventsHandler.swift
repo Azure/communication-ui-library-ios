@@ -162,9 +162,16 @@ extension CallingSDKEventsHandler: CallDelegate,
 
     func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {
         let currentStatus = call.state.toCallingStatus()
-        let errorCode = call.callEndReason.toCompositeErrorCodeString(wasCallConnected())
+        let internalError = call.callEndReason.toCompositeErrorCodeString(wasCallConnected())
 
-        let callInfoModel = CallInfoModel(status: currentStatus, errorCode: errorCode)
+        if internalError != nil {
+            let code = call.callEndReason.code
+            let subcode = call.callEndReason.subcode
+            logger.error("Receive vaildate CallEndReason:\(code), subcode:\(subcode)")
+        }
+
+        let callInfoModel = CallInfoModel(status: currentStatus,
+                                          internalError: internalError)
         callInfoSubject.send(callInfoModel)
         self.previousCallingStatus = currentStatus
     }

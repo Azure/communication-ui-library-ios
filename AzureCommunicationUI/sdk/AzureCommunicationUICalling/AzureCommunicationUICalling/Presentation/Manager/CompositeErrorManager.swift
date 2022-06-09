@@ -12,7 +12,7 @@ protocol ErrorManagerProtocol {
 class CompositeErrorManager: ErrorManagerProtocol {
     private let store: Store<AppState>
     private let eventsHandler: CallComposite.Events
-    private var error: CallCompositeInternalError?
+    private var previousError: CallCompositeInternalError?
 
     var cancellables = Set<AnyCancellable>()
 
@@ -28,44 +28,39 @@ class CompositeErrorManager: ErrorManagerProtocol {
     }
 
     private func receive(_ state: AppState) {
-        if let error = state.errorState.error {
-            switch state.errorState.errorCategory {
-            case .fatal:
-                update(error: error)
-                respondToFatalError(code: error.code)
-            case .callState:
-                update(error: error)
-            case .none:
-                break
-            }
-        }
-    }
-
-    private func update(error: CallCompositeError) {
-        guard self.error != error else {
+        let errorState = state.errorState
+        guard previousError != errorState.internalError else {
             return
         }
+        previousError = errorState.internalError
+        updateEventHandler(state.errorState)
+        updateFatalError(state.errorState)
+    }
 
-        self.error = error
-        guard !isInternalErrorCode(error.code),
+    private func updateEventHandler(_ errorState: ErrorState) {
+        guard let compositeError = getCallCompositeError(errorState: errorState),
               let didFail = eventsHandler.onError else {
             return
         }
-        didFail(error)
+        didFail(compositeError)
     }
 
-    private func respondToFatalError(code: String) {
-        if code == CallCompositeErrorCode.tokenExpired ||
-            code == CallCompositeErrorCode.callJoin ||
-            code == CallCompositeErrorCode.callEnd {
-            store.dispatch(action: CompositeExitAction())
+    private func updateFatalError(_ errorState: ErrorState) {
+        guard let internalError = errorState.internalError,
+              errorState.errorCategory == .fatal,
+              internalError.isFatalError() else {
+            return
         }
+        store.dispatch(action: CompositeExitAction())
     }
 
-    private func isInternalErrorCode(_ errorCode: String) -> Bool {
-        return errorCode == CallCompositeErrorCode.callEvicted ||
-        errorCode == CallCompositeErrorCode.callDenied ||
-        errorCode == CallCompositeErrorCode.callResume ||
-        errorCode == CallCompositeErrorCode.callHold
+    private func getCallCompositeError(errorState: ErrorState) -> CallCompositeError? {
+        guard let internalError = errorState.internalError,
+              let errorCode = internalError.toCallCompositeErrorCode() else {
+            return nil
+        }
+
+        return CallCompositeError(code: errorCode,
+                                  error: errorState.error)
     }
 }
