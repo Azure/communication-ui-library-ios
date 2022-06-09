@@ -10,6 +10,7 @@ class AccessibilityProviderMocking: AccessibilityProviderProtocol {
     var postQueuedAnnouncementBlock: ((String) -> Void)?
     var moveFocusToFirstElementBlock: (() -> Void)?
     var subscribeToVoiceOverStatusDidChangeNotificationBlock: ((AccessibilityProviderNotificationsObserver) -> Void)?
+    var subscribeToUIFocusDidUpdateNotificationBlock: ((AccessibilityProviderNotificationsObserver) -> Void)?
 
     var isVoiceOverEnabled: Bool = false
 
@@ -23,5 +24,9 @@ class AccessibilityProviderMocking: AccessibilityProviderProtocol {
 
     func subscribeToVoiceOverStatusDidChangeNotification(_ observer: AccessibilityProviderNotificationsObserver) {
         subscribeToVoiceOverStatusDidChangeNotificationBlock?(observer)
+    }
+
+    func subscribeToUIFocusDidUpdateNotification(_ observer: AccessibilityProviderNotificationsObserver) {
+        subscribeToUIFocusDidUpdateNotificationBlock?(observer)
     }
 }
