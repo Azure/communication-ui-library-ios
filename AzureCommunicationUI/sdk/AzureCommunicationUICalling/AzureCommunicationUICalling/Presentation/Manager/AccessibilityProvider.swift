@@ -20,6 +20,10 @@ protocol AccessibilityProviderProtocol {
     /// Add observer for voiceOverStatusDidChangeNotification
     /// - Parameter completion: completion that will be executed when receiving a notification
     func subscribeToVoiceOverStatusDidChangeNotification(_ observer: AccessibilityProviderNotificationsObserver)
+
+    /// Add observer for UIFocusDidUpdateNotification
+    /// - Parameter completion: completion that will be executed when receiving a notification
+    func subscribeToUIFocusDidUpdateNotification(_ observer: AccessibilityProviderNotificationsObserver)
 }
 
 struct AccessibilityProvider: AccessibilityProviderProtocol {
@@ -44,6 +48,14 @@ struct AccessibilityProvider: AccessibilityProviderProtocol {
         NotificationCenter.default.addObserver(observer,
                                                selector: selector,
                                                name: UIAccessibility.voiceOverStatusDidChangeNotification,
+                                               object: nil)
+    }
+
+    func subscribeToUIFocusDidUpdateNotification(_ observer: AccessibilityProviderNotificationsObserver) {
+        let selector = #selector(AccessibilityProviderNotificationsObserver.didUIFocusUpdateNotification)
+        NotificationCenter.default.addObserver(observer,
+                                               selector: selector,
+                                               name: UIFocusSystem.didUpdateNotification,
                                                object: nil)
     }
 }
