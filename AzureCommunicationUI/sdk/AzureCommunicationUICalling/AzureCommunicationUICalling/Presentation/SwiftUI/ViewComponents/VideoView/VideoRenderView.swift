@@ -33,8 +33,7 @@ class VideoRendererUIView: UIView {
 
     func update(rendererView: UIView) {
         guard rendererView !== self.rendererView ||
-              rendererView.superview !== self
-        else {
+              rendererView.superview !== self else {
             if self.rendererView?.frame != bounds {
                 self.rendererView?.frame = bounds
             }
