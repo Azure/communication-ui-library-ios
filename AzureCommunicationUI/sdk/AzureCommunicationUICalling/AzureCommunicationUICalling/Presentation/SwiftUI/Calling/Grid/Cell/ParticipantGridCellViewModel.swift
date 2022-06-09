@@ -46,6 +46,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     func update(participantModel: ParticipantInfoModel) {
         self.participantIdentifier = participantModel.userIdentifier
         let videoViewModel = getDisplayingVideoStreamModel(participantModel)
+        
         if self.videoViewModel?.videoStreamId != videoViewModel.videoStreamId ||
             self.videoViewModel?.videoStreamType != videoViewModel.videoStreamType {
             let newIsScreenSharing = videoViewModel.videoStreamType == .screenSharing

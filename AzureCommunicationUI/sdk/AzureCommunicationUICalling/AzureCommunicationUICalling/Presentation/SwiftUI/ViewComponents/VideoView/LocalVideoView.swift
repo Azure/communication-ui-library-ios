@@ -62,14 +62,12 @@ struct LocalVideoView: View {
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     @State private var avatarImage: UIImage?
-//    @State private var rendererViewId: UIView?
-        @State private var localVideoStreamId: String?
+    @State private var localVideoStreamId: String?
 
     var body: some View {
         Group {
             GeometryReader { geometry in
                 if viewModel.cameraOperationalStatus == .on,
-//                   let rendererView = rendererView
                    let streamId = localVideoStreamId,
                    let rendererView = viewManager.getLocalVideoRendererView(streamId) {
 
