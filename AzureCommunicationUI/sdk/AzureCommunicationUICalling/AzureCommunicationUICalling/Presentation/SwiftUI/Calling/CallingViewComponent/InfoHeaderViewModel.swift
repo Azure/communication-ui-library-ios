@@ -47,6 +47,7 @@ class InfoHeaderViewModel: ObservableObject {
                 self.showParticipantListButtonTapped()
         }
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
+        self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
         updateInfoHeaderAvailability()
     }
 
@@ -131,6 +132,10 @@ class InfoHeaderViewModel: ObservableObject {
 }
 
 extension InfoHeaderViewModel: AccessibilityProviderNotificationsObserver {
+    func didUIFocusUpdateNotification(_ notification: NSNotification) {
+        updateInfoHeaderAvailability()
+    }
+
     func didChangeVoiceOverStatus(_ notification: NSNotification) {
         guard isVoiceOverEnabled != accessibilityProvider.isVoiceOverEnabled else {
             return
