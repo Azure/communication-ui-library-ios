@@ -16,6 +16,7 @@
 		1B70D52827191073007CC933 /* DeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B70D52727191073007CC933 /* DeviceExtension.swift */; };
 		1B79BD50273F2D87002D5A36 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B79BD4F273F2D87002D5A36 /* UIViewControllerExtension.swift */; };
 		1B7ABF82278CFFC400D79DF7 /* ZoomableVideoRenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7ABF81278CFFC400D79DF7 /* ZoomableVideoRenderView.swift */; };
+		1B9668AF2852A114002F5783 /* OnHoldOverlayViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9668AE2852A114002F5783 /* OnHoldOverlayViewModelMocking.swift */; };
 		1BAD44BC283DAF2100C9E6A9 /* DraggableLocalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAD44BB283DAF2100C9E6A9 /* DraggableLocalVideoView.swift */; };
 		1BAD44BE28404D1800C9E6A9 /* OrientationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAD44BD28404D1800C9E6A9 /* OrientationManager.swift */; };
 		1F03D3CE2638A6AE0055C456 /* CallingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D3CD2638A6AE0055C456 /* CallingView.swift */; };
@@ -265,6 +266,7 @@
 		1B70D52727191073007CC933 /* DeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceExtension.swift; sourceTree = "<group>"; };
 		1B79BD4F273F2D87002D5A36 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		1B7ABF81278CFFC400D79DF7 /* ZoomableVideoRenderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomableVideoRenderView.swift; sourceTree = "<group>"; };
+		1B9668AE2852A114002F5783 /* OnHoldOverlayViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModelMocking.swift; sourceTree = "<group>"; };
 		1BAD44BB283DAF2100C9E6A9 /* DraggableLocalVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableLocalVideoView.swift; sourceTree = "<group>"; };
 		1BAD44BD28404D1800C9E6A9 /* OrientationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationManager.swift; sourceTree = "<group>"; };
 		1F03D3CD2638A6AE0055C456 /* CallingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingView.swift; sourceTree = "<group>"; };
@@ -1268,6 +1270,7 @@
 				FAC1FEC027C94D9200D95845 /* AudioDeviceListViewModelMocking.swift */,
 				FA40424927E3E86700875368 /* ParticipantsListViewModelMocking.swift */,
 				FAC3128E27F24A8B00A4F1D0 /* IconButtonViewModelMocking.swift */,
+				1B9668AE2852A114002F5783 /* OnHoldOverlayViewModelMocking.swift */,
 			);
 			name = ViewModels;
 			path = Mocking/ViewModels;
@@ -1548,6 +1551,7 @@
 				FAC1FED027C98FC200D95845 /* BannerTextViewModelMocking.swift in Sources */,
 				1F09A11426BA484000BACED7 /* CallingViewModelTests.swift in Sources */,
 				FA62233727DAD9AF008B5466 /* AccessibilityProviderMocking.swift in Sources */,
+				1B9668AF2852A114002F5783 /* OnHoldOverlayViewModelMocking.swift in Sources */,
 				FAC1FECC27C98FC200D95845 /* BannerViewModelMocking.swift in Sources */,
 				50E2D6A926FA52A3006B0EF4 /* ParticipantsListViewModelTests.swift in Sources */,
 				FA03CC8327C8189900986D4E /* SetupControlBarViewModelMocking.swift in Sources */,

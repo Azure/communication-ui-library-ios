@@ -19,7 +19,7 @@ class OnHoldOverlayViewModelTests: XCTestCase {
         logger = LoggerMocking()
         storeFactory = StoreFactoryMocking()
         localizationProvider = LocalizationProviderMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         accessibilityProvider = AccessibilityProviderMocking()
     }
 
@@ -40,6 +40,16 @@ class OnHoldOverlayViewModelTests: XCTestCase {
         XCTAssertEqual(sut.errorInfoViewModel?.title, localizationProvider.getLocalizedString(.snackBarErrorOnHoldTitle))
         XCTAssertEqual(sut.errorInfoViewModel?.subtitle, localizationProvider.getLocalizedString(.snackBarErrorOnHoldSubtitle))
     }
+
+    func test_onHoldOverlayViewModel_tapActionPeformed_when_actionButton_isTapped() {
+        var buttonTapped = false
+        let resumeActionMock = {
+            buttonTapped = true
+        }
+        let sut = makeSUT(withAction: resumeActionMock)
+        sut.mockResumeAction()
+        XCTAssertTrue(buttonTapped)
+    }
 }
 
 extension OnHoldOverlayViewModelTests {
@@ -57,5 +67,13 @@ extension OnHoldOverlayViewModelTests {
                                       logger: LoggerMocking(),
                                       accessibilityProvider: accessibilityProvider,
                                       resumeAction: {})
+    }
+
+    func makeSUT(withAction action: @escaping (() -> Void)) -> OnHoldOverlayViewModelMocking {
+        return OnHoldOverlayViewModelMocking(localizationProvider: LocalizationProvider(logger: LoggerMocking()),
+                                                  compositeViewModelFactory: factoryMocking,
+                                                  logger: LoggerMocking(),
+                                                  accessibilityProvider: accessibilityProvider,
+                                                  resumeAction: action)
     }
 }

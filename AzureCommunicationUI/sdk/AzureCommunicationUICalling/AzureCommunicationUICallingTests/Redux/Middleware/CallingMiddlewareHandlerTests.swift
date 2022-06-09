@@ -421,8 +421,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
     func test_callingMiddlewareHandler_resumeCall_then_resumeCallCalled() {
         guard let state: AppState = getState(callingState: .localHold,
-                                       cameraStatus: .off,
-                                       cameraDeviceStatus: .front,
+                                             cameraStatus: .off,
+                                             cameraDeviceStatus: .front,
                                              cameraPermission: .notAsked) as? AppState else {
             XCTFail("Failed with state validation")
             return
