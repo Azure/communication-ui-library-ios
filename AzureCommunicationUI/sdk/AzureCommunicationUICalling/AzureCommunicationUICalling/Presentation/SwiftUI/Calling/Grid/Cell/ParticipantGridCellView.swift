@@ -54,24 +54,14 @@ struct ParticipantGridCellView: View {
         }
     }
 
-    func getRendererViewInfo(with id: RemoteParticipantVideoViewId?) -> ParticipantRendererViewInfo? {
-        guard let remoteParticipantVideoViewId = id else {
-            return nil
-        }
-
-        let info = rendererViewManager?.getRemoteParticipantVideoRendererView(remoteParticipantVideoViewId)
-
-        return info
-    }
-
     func getRendererViewInfo(for videoStreamId: String) -> ParticipantRendererViewInfo? {
         guard !videoStreamId.isEmpty else {
             return nil
         }
         let userId = viewModel.participantIdentifier
         let remoteParticipantVideoViewId = RemoteParticipantVideoViewId(userIdentifier: userId,
-                                            videoStreamIdentifier: videoStreamId)
-        return getRendererViewInfo(with: remoteParticipantVideoViewId)
+                                                                              videoStreamIdentifier: videoStreamId)
+        return rendererViewManager?.getRemoteParticipantVideoRendererView(remoteParticipantVideoViewId)
     }
 
     private func updateParticipantViewData(for identifier: String) {
