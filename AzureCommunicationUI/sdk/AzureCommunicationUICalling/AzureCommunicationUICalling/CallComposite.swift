@@ -19,6 +19,14 @@ public class CallComposite {
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
     }
 
+    /// CallComposite Locator for locating call destination
+    public enum JoinLocator {
+        /// Group Call with UUID groupId
+        case groupCall(groupId: UUID)
+        /// Teams Meeting with string teamsLink URI
+        case teamsMeeting(teamsLink: String)
+    }
+
     /// The events handler for Call Composite
     public let events: Events
     private var logger: Logger?
