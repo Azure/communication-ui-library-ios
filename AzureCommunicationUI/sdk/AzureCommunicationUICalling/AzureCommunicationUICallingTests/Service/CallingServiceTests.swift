@@ -93,4 +93,16 @@ class CallingServiceTests: XCTestCase {
         _ = callingService.requestCameraPreviewOn()
         XCTAssertTrue(callingSDKWrapper.startPreviewVideoStreamCalled)
     }
+
+    func test_callingService_holdCall_then_holdCallWasCalled() {
+        _ = callingService.holdCall()
+
+        XCTAssertTrue(callingSDKWrapper.holdCallCalled)
+    }
+
+    func test_callingService_resumeCall_then_resumeCallWasCalled() {
+        _ = callingService.resumeCall()
+
+        XCTAssertTrue(callingSDKWrapper.resumeCallCalled)
+    }
 }
