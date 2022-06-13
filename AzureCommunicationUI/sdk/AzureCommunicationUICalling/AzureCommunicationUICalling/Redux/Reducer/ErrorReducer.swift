@@ -12,28 +12,28 @@ struct ErrorReducer: Reducer {
         }
 
         var errorType = state.internalError
-        var callingError = state.error
+        var error = state.error
         var errorCategory = state.errorCategory
 
         switch action {
         case let action as ErrorAction.FatalErrorUpdated:
             errorType = action.internalError
-            callingError = action.error
+            error = action.error
             errorCategory = .fatal
         case let action as ErrorAction.StatusErrorAndCallReset:
             errorType = action.internalError
-            callingError = action.error
+            error = action.error
             errorCategory = .callState
         case _ as CallingAction.CallStartRequested:
             errorType = nil
-            callingError = nil
+            error = nil
             errorCategory = .none
         default:
             return state
         }
 
         return ErrorState(internalError: errorType,
-                          error: callingError,
+                          error: error,
                           errorCategory: errorCategory)
     }
 }

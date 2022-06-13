@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum CallCompositeInternalError: String, LocalizedError, Equatable {
+enum CallCompositeInternalError: String, Error {
     case callTokenFailed
     case callJoinFailed
     case callEndFailed
@@ -15,8 +15,6 @@ enum CallCompositeInternalError: String, LocalizedError, Equatable {
     case callDenied
     case cameraSwitchFailed
     case cameraOnFailed
-
-    var localizedDescription: String { return NSLocalizedString(self.rawValue, comment: "") }
 
     func toCallCompositeErrorCode() -> String? {
         switch self {

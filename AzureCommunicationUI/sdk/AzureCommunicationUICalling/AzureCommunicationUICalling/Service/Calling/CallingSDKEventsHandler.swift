@@ -162,7 +162,7 @@ extension CallingSDKEventsHandler: CallDelegate,
 
     func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {
         let currentStatus = call.state.toCallingStatus()
-        let internalError = call.callEndReason.toCompositeErrorCodeString(wasCallConnected())
+        let internalError = call.callEndReason.toCompositeInternalError(wasCallConnected())
 
         if internalError != nil {
             let code = call.callEndReason.code

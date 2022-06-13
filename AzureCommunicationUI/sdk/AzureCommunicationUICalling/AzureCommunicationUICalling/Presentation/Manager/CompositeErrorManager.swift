@@ -38,8 +38,8 @@ class CompositeErrorManager: ErrorManagerProtocol {
     }
 
     private func updateEventHandler(_ errorState: ErrorState) {
-        guard let compositeError = getCallCompositeError(errorState: errorState),
-              let didFail = eventsHandler.onError else {
+        guard let didFail = eventsHandler.onError,
+              let compositeError = getCallCompositeError(errorState: errorState) else {
             return
         }
         didFail(compositeError)

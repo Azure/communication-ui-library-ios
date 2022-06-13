@@ -7,31 +7,31 @@ import Foundation
 import AzureCommunicationCalling
 
 extension CallEndReason {
-    func toCompositeErrorCodeString(_ wasCallConnected: Bool) -> CallCompositeInternalError? {
+    func toCompositeInternalError(_ wasCallConnected: Bool) -> CallCompositeInternalError? {
         let callEndErrorCode = self.code
         let callEndErrorSubCode = self.subcode
 
-        var compositeErrorCodeString: CallCompositeInternalError?
+        var internalError: CallCompositeInternalError?
         switch callEndErrorCode {
         case 0 :
             if (callEndErrorSubCode == 5300 || callEndErrorSubCode == 5000),
                wasCallConnected {
-                compositeErrorCodeString = CallCompositeInternalError.callEvicted
+                internalError = CallCompositeInternalError.callEvicted
             } else if callEndErrorSubCode == 5854 {
-                compositeErrorCodeString = CallCompositeInternalError.callDenied
+                internalError = CallCompositeInternalError.callDenied
             }
         case 401:
-            compositeErrorCodeString = CallCompositeInternalError.callTokenFailed
+            internalError = CallCompositeInternalError.callTokenFailed
         case 487:
             // Call cancelled by user as a happy path
             break
         default:
             // For all other errorCodes:
             // https://docs.microsoft.com/en-us/azure/communication-services/concepts/troubleshooting-info
-            compositeErrorCodeString = wasCallConnected ? CallCompositeInternalError.callEndFailed
+            internalError = wasCallConnected ? CallCompositeInternalError.callEndFailed
             : CallCompositeInternalError.callJoinFailed
         }
 
-        return compositeErrorCodeString
+        return internalError
     }
 }
