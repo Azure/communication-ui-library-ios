@@ -4,7 +4,7 @@
 //
 extension CallingMiddlewareHandler {
     func handle(error: Error, errorCode: String, dispatch: @escaping ActionDispatch) {
-        let compositeError = CommunicationUIErrorEvent(code: errorCode, error: error)
+        let compositeError = CallCompositeError(code: errorCode, error: error)
         let action = ErrorAction.FatalErrorUpdated(error: compositeError)
         dispatch(action)
     }
@@ -14,7 +14,7 @@ extension CallingMiddlewareHandler {
             return
         }
         let action: Action
-        let error = CommunicationUIErrorEvent(code: errorCode, error: nil)
+        let error = CallCompositeError(code: errorCode, error: nil)
         if errorCode == CallCompositeErrorCode.tokenExpired {
             action = ErrorAction.FatalErrorUpdated(error: error)
         } else {

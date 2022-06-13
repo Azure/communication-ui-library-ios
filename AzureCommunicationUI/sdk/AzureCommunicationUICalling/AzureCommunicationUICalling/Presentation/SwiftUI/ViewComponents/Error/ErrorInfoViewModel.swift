@@ -7,24 +7,37 @@ import Foundation
 import Combine
 
 class ErrorInfoViewModel: ObservableObject {
-    @Published var isDisplayed: Bool = false
-    @Published private(set) var message: String = ""
-    @Published private(set) var accessibilityLabel: String = ""
-    @Published private(set) var dismissButtonAccessibilityLabel: String = ""
-    @Published private(set) var dismissButtonAccessibilityHint: String = ""
+    @Published private(set) var isDisplayed: Bool = false
+    @Published private(set) var title: String
+    @Published private(set) var subtitle: String
 
     private let localizationProvider: LocalizationProviderProtocol
     private var previousErrorType: String = ""
 
-    init(localizationProvider: LocalizationProviderProtocol) {
+    init(localizationProvider: LocalizationProviderProtocol,
+         title: String = "",
+         subtitle: String = "") {
         self.localizationProvider = localizationProvider
-
-        dismissButtonAccessibilityLabel = localizationProvider.getLocalizedString(.snackBarDismissAccessibilityLabel)
-        dismissButtonAccessibilityHint = localizationProvider.getLocalizedString(.snackBarDismissAccessibilityHint)
+        self.title = title
+        self.subtitle = subtitle
     }
 
     var dismissContent: String {
-        return localizationProvider.getLocalizedString(.snackBarDismiss)
+        localizationProvider.getLocalizedString(.snackBarDismiss)
+    }
+    var dismissAccessibilitylabel: String {
+        localizationProvider.getLocalizedString(.snackBarDismissAccessibilityLabel)
+    }
+    var dismissAccessibilityHint: String {
+        localizationProvider.getLocalizedString(.snackBarDismissAccessibilityHint)
+    }
+
+    func dismiss() {
+        isDisplayed = false
+    }
+
+    func show() {
+        isDisplayed = true
     }
 
     func update(errorState: ErrorState) {
@@ -42,14 +55,15 @@ class ErrorInfoViewModel: ObservableObject {
         isDisplayed = true
         switch errorState.error?.code {
         case CallCompositeErrorCode.callJoin:
-            message = localizationProvider.getLocalizedString(.snackBarErrorJoinCall)
+            title = localizationProvider.getLocalizedString(.snackBarErrorJoinCall)
         case CallCompositeErrorCode.callEnd:
-            message = localizationProvider.getLocalizedString(.snackBarErrorCallEnd)
+            title = localizationProvider.getLocalizedString(.snackBarErrorCallEnd)
         case CallCompositeErrorCode.callEvicted:
-            message = localizationProvider.getLocalizedString(.snackBarErrorCallEvicted)
+            title = localizationProvider.getLocalizedString(.snackBarErrorCallEvicted)
+        case CallCompositeErrorCode.callDenied:
+            title = localizationProvider.getLocalizedString(.snackBarErrorCallDenied)
         default:
-            message = localizationProvider.getLocalizedString(.snackBarError)
+            title = localizationProvider.getLocalizedString(.snackBarError)
         }
-        accessibilityLabel = message
     }
 }

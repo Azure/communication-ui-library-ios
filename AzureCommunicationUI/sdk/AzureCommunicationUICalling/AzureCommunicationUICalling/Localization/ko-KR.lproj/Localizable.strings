@@ -34,6 +34,10 @@
 "AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="호스트 대기 중"; // host (people not server) of a meeting
 "AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"="모임에 참가한 사용자가 곧 참가할 수 있습니다.";
 
+/* OnHoldView */
+"AzureCommunicationUICalling.OnHoldView.Text.OnHold"="대기 중입니다.";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume"="다시 시작";
+
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="다른 사용자의 참여를 기다리는 중";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="1명의 사용자와 통화";
@@ -43,6 +47,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@(나)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="음소거";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="음소거 해제됨";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="말하기";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="대기 중";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="후면 카메라로 전환";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="전면 카메라로 전환";
@@ -89,3 +95,6 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="오류로 인해 통화에서 제외되었습니다.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="통화에서 제거되었습니다.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="오류가 발생했습니다.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="통화를 다시 시작할 수 없음";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="다른 앱에서 마이크를 사용 중입니다.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="통화에 대한 액세스가 거부되었습니다.";

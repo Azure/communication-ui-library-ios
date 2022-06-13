@@ -34,6 +34,10 @@
 "AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="En attente de l’hôte"; // host (people not server) of a meeting
 "AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"="Une personne participant à la réunion vous permettra d’y participer prochainement";
 
+/* OnHoldView */
+"AzureCommunicationUICalling.OnHoldView.Text.OnHold"="Vous avez été mis(e) en attente.";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume"="Reprendre";
+
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="En attente des autres participants";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="Appeler avec 1 personne";
@@ -43,6 +47,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (moi)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Son désactivé";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Micro activé";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Parlant";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="En attente";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Basculer vers la caméra arrière";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Basculer vers la caméra avant";
@@ -89,3 +95,6 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Vous avez été supprimé de l’appel en raison d’une erreur.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Vous avez été déconnecté de l’appel.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Nous avons rencontré une erreur.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Nous ne pouvons pas effectuer d’appel";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Votre micro est utilisé par une autre application";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Vous n’avez pas eu accès à la réunion.";

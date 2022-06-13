@@ -34,6 +34,10 @@
 "AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="正在等待主机"; // host (people not server) of a meeting
 "AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"="会议中的某人将很快允许你加入";
 
+/* OnHoldView */
+"AzureCommunicationUICalling.OnHoldView.Text.OnHold"="你的通话处于保留状态";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume"="继续";
+
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="正在等待其他人加入";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="与 1 个人通话";
@@ -43,6 +47,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (我)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="已静音";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="已取消静音";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="正在讲话";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="切换到后置摄像头";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="切换到前置摄像头";
@@ -89,3 +95,6 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="由于出现错误，你已从通话中删除。";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="已将你从通话中移除。";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="出现错误。";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="无法继续呼叫";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="其他应用正在使用你的麦克风";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="你被拒绝接听电话。";

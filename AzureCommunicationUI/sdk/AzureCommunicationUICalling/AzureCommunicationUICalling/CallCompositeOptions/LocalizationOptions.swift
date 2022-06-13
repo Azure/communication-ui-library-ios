@@ -5,8 +5,8 @@
 import Foundation
 import SwiftUI
 
-/// CommunicationUISupportedLocale representing the supported locales.
-public struct CommunicationUISupportedLocale {
+/// SupportedLocale representing the supported locales.
+public struct SupportedLocale {
     /// Chinese, Simplified
     public static let zh = Locale(identifier: "zh")
     /// Chinese, Simplified
@@ -63,15 +63,23 @@ public struct CommunicationUISupportedLocale {
     public static let tr = Locale(identifier: "tr")
     /// Turkish (Turkey)
     public static let trTR = Locale(identifier: "tr-TR")
+
+    /// Get supported locales the AzureCommunicationUICalling has predefined translations.
+    /// - Returns: Get supported Locales the AzureCommunicationUICalling
+    ///  has predefined translations.
+    public static var values: [Locale] {
+        return Bundle(for: CallComposite.self).localizations.sorted()
+            .map { Locale(identifier: $0) }
+    }
 }
 
-/// A configuration to allow customizing localization.
-public struct LocalizationConfiguration {
+/// Options to allow customizing localization.
+public struct LocalizationOptions {
     let languageCode: String
     let localizableFilename: String
     let layoutDirection: LayoutDirection
 
-    /// Creates an instance of `LocalizationConfiguration` with related parameters. Allow
+    /// Creates an instance of `LocalizationOptions` with related parameters. Allow
     /// overriding strings of localization keys with Localizable.strings file or other localizable filename.
     /// - Parameter locale: Locale struct representing the language identifier (ie. en, fr, fr-FR,
     /// zh-Hant, zh-Hans, ...), with or without region. If Locale identifier is not valid, will default to `en`.
@@ -87,13 +95,5 @@ public struct LocalizationConfiguration {
         self.languageCode = locale.collatorIdentifier ?? "en"
         self.localizableFilename = localizableFilename
         self.layoutDirection = layoutDirection
-    }
-
-    /// Get supported languages the AzureCommunicationUICalling has predefined translations.
-    /// - Returns: Get supported Locales the AzureCommunicationUICalling
-    ///  has predefined translations.
-    public static var supportedLocales: [Locale] {
-        return Bundle(for: CallComposite.self).localizations.sorted()
-            .map { Locale(identifier: $0) }
     }
 }

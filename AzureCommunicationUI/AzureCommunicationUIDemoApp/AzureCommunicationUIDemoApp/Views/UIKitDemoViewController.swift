@@ -127,20 +127,30 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
-    func didFail(_ error: CommunicationUIErrorEvent) {
-        print("::::UIkitDemoView::getEventsHandler::didFail \(error)")
-        print("::::UIkitDemoView error.code \(error.code)")
+    func onError(_ error: CallCompositeError) {
+        print("::::UIKitDemoView::getEventsHandler::onError \(error)")
+        print("::::UIKitDemoView error.code \(error.code)")
+    }
+
+    func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+        print("::::UIKitDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
+        guard envConfigSubject.useCustomRemoteParticipantViewData else {
+            return
+        }
+
+        RemoteParticipantAvatarHelper.onRemoteParticipantJoined(to: callComposite,
+                                                                identifiers: identifiers)
     }
 
     func startExperience(with link: String) {
-        var localizationConfig: LocalizationConfiguration?
+        var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         if !envConfigSubject.localeIdentifier.isEmpty {
             let locale = Locale(identifier: envConfigSubject.localeIdentifier)
-            localizationConfig = LocalizationConfiguration(locale: locale,
+            localizationConfig = LocalizationOptions(locale: locale,
                                                            layoutDirection: layoutDirection)
         } else if !envConfigSubject.locale.identifier.isEmpty {
-            localizationConfig = LocalizationConfiguration(
+            localizationConfig = LocalizationOptions(
                 locale: envConfigSubject.locale,
                 layoutDirection: layoutDirection)
         }
@@ -151,27 +161,35 @@ class UIKitDemoViewController: UIViewController {
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
+        let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
+            guard let composite = callComposite else {
+                return
+            }
+            self.onRemoteParticipantJoined(to: composite,
+                                           identifiers: ids)
+        }
 
-        callComposite.setTarget(didFail: didFail)
+        callComposite.events.onError = onError
+        callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
-                                                 renderDisplayName: renderDisplayName)
-        let localSettings = LocalSettings(participantViewData)
+                                                      displayName: renderDisplayName)
+        let localOptions = LocalOptions(participantViewData: participantViewData)
 
-        if let communicationTokenCredential = try? getTokenCredential() {
+        if let credential = try? getTokenCredential() {
             switch selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
-                let parameters = GroupCallOptions(credential: communicationTokenCredential,
-                                                  groupId: uuid,
-                                                  displayName: getDisplayName())
-                callComposite.launch(with: parameters, localSettings: localSettings)
+                callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
+                                                                  credential: credential,
+                                                                  displayName: getDisplayName()),
+                                     localOptions: localOptions)
             case .teamsMeeting:
-                let parameters = TeamsMeetingOptions(credential: communicationTokenCredential,
-                                                     meetingLink: link,
-                                                     displayName: getDisplayName())
-                callComposite.launch(with: parameters, localSettings: localSettings)
+                callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                                                                  credential: credential,
+                                                                  displayName: getDisplayName()),
+                                     localOptions: localOptions)
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())

@@ -12,11 +12,11 @@ enum ErrorCategory {
 }
 
 class ErrorState: ReduxState, Equatable {
-    let error: CommunicationUIErrorEvent?
+    let error: CallCompositeError?
     let errorCategory: ErrorCategory
 
-    public init(error: CommunicationUIErrorEvent? = nil,
-                errorCategory: ErrorCategory = .none) {
+    init(error: CallCompositeError? = nil,
+         errorCategory: ErrorCategory = .none) {
         self.error = error
         self.errorCategory = errorCategory
     }

@@ -30,8 +30,8 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     private var remoteParticipantEventAdapter = RemoteParticipantsEventsAdapter()
     private var recordingCallFeature: RecordingCallFeature?
     private var transcriptionCallFeature: TranscriptionCallFeature?
-    private var remoteParticipants = MappedSequence<String, RemoteParticipant>()
     private var previousCallingStatus: CallingStatus = .none
+    private var remoteParticipants = MappedSequence<String, RemoteParticipant>()
 
     init(logger: Logger) {
         self.logger = logger
@@ -58,13 +58,17 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     }
 
     private func setupRemoteParticipantEventsAdapter() {
-        remoteParticipantEventAdapter.onIsMutedChanged = { [weak self] remoteParticipant in
+        let participantUpdate: ((RemoteParticipant) -> Void) = { [weak self] remoteParticipant in
             guard let self = self,
                   let userIdentifier = remoteParticipant.identifier.stringValue else {
                 return
             }
             self.updateRemoteParticipant(userIdentifier: userIdentifier, updateSpeakingStamp: false)
         }
+
+        remoteParticipantEventAdapter.onIsMutedChanged = participantUpdate
+        remoteParticipantEventAdapter.onVideoStreamsUpdated = participantUpdate
+        remoteParticipantEventAdapter.onStateChanged = participantUpdate
 
         remoteParticipantEventAdapter.onIsSpeakingChanged = { [weak self] remoteParticipant in
             guard let self = self,
@@ -73,14 +77,6 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
             }
             let updateSpeakingStamp = remoteParticipant.isSpeaking
             self.updateRemoteParticipant(userIdentifier: userIdentifier, updateSpeakingStamp: updateSpeakingStamp)
-        }
-
-        remoteParticipantEventAdapter.onVideoStreamsUpdated = { [weak self] remoteParticipant in
-            guard let self = self,
-                  let userIdentifier = remoteParticipant.identifier.stringValue else {
-                return
-            }
-            self.updateRemoteParticipant(userIdentifier: userIdentifier, updateSpeakingStamp: false)
         }
     }
 
@@ -94,6 +90,9 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     }
 
     private func removeRemoteParticipantsInfoModel(_ remoteParticipants: [RemoteParticipant]) {
+        guard !remoteParticipants.isEmpty
+        else { return }
+
         var remoteParticipantsInfoList = participantsInfoListSubject.value
         remoteParticipantsInfoList =
             remoteParticipantsInfoList.filter { infoModel in
@@ -115,6 +114,9 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     }
 
     private func addRemoteParticipantsInfoModel(_ remoteParticipants: [RemoteParticipant]) {
+        guard !remoteParticipants.isEmpty
+        else { return }
+
         var remoteParticipantsInfoList = participantsInfoListSubject.value
         remoteParticipants.forEach {
             let infoModel = $0.toParticipantInfoModel(recentSpeakingStamp: Date(timeIntervalSince1970: 0))
@@ -138,20 +140,29 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
             participantsInfoListSubject.send(remoteParticipantsInfoList)
         }
     }
+
+    private func wasCallConnected() -> Bool {
+        return previousCallingStatus == .connected ||
+              previousCallingStatus == .localHold ||
+              previousCallingStatus == .remoteHold
+    }
 }
 
 extension CallingSDKEventsHandler: CallDelegate,
     RecordingCallFeatureDelegate,
     TranscriptionCallFeatureDelegate {
     func call(_ call: Call, didUpdateRemoteParticipant args: ParticipantsUpdatedEventArgs) {
-        removeRemoteParticipants(args.removedParticipants)
-        addRemoteParticipants(args.addedParticipants)
+        if !args.removedParticipants.isEmpty {
+            removeRemoteParticipants(args.removedParticipants)
+        }
+        if !args.addedParticipants.isEmpty {
+            addRemoteParticipants(args.addedParticipants)
+        }
     }
 
     func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {
         let currentStatus = call.state.toCallingStatus()
-        let wasCallConnected = previousCallingStatus == .connected
-        let errorCode = call.callEndReason.toCompositeErrorCodeString(wasCallConnected)
+        let errorCode = call.callEndReason.toCompositeErrorCodeString(wasCallConnected())
 
         let callInfoModel = CallInfoModel(status: currentStatus, errorCode: errorCode)
         callInfoSubject.send(callInfoModel)

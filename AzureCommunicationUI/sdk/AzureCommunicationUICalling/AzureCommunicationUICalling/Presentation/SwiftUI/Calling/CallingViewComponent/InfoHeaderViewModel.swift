@@ -72,6 +72,8 @@ class InfoHeaderViewModel: ObservableObject {
     func update(localUserState: LocalUserState,
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState) {
+        isHoldingCall(callingState: callingState)
+
         callingStatus = callingState.status
         let newDisplayInfoHeaderValue = callingStatus != .inLobby
         if isVoiceOverEnabled && newDisplayInfoHeaderValue != shouldDisplayInfoHeader {
@@ -83,6 +85,20 @@ class InfoHeaderViewModel: ObservableObject {
         }
         participantsListViewModel.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
+    }
+
+    private func isHoldingCall(callingState: CallingState) {
+        guard callingState.status == .localHold,
+              callingStatus != callingState.status else {
+
+            return
+        }
+        if isInfoHeaderDisplayed {
+            isInfoHeaderDisplayed = false
+        }
+        if isParticipantsListDisplayed {
+            isParticipantsListDisplayed = false
+        }
     }
 
     private func updateInfoLabel() {

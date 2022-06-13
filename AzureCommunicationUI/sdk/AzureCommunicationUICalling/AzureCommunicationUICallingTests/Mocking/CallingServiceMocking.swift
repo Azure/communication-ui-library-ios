@@ -14,6 +14,9 @@ class CallingServiceMocking: CallingServiceProtocol {
     var setupCallCalled: Bool = false
     var startCallCalled: Bool = false
     var endCallCalled: Bool = false
+    var holdCallCalled: Bool = false
+    var resumeCallCalled: Bool = false
+
     var localCameraStream: String = "MockCameraStream"
 
     var startLocalVideoStreamCalled: Bool = false
@@ -119,6 +122,28 @@ class CallingServiceMocking: CallingServiceProtocol {
                 return promise(.failure(error))
             }
             return promise(.success((self.localCameraStream)))
+        }.eraseToAnyPublisher()
+    }
+
+    func holdCall() -> AnyPublisher<Void, Error> {
+        holdCallCalled = true
+
+        return Future<Void, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success(()))
+        }.eraseToAnyPublisher()
+    }
+
+    func resumeCall() -> AnyPublisher<Void, Error> {
+        resumeCallCalled = true
+
+        return Future<Void, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success(()))
         }.eraseToAnyPublisher()
     }
 }

@@ -10,26 +10,33 @@ import AzureCommunicationCalling
 
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
+
+    /// The class to configure events closures for Call Composite.
+    public class Events {
+        /// Closure to execute when error event occurs inside Call Composite.
+        public var onError: ((CallCompositeError) -> Void)?
+        /// Closures to execute when participant has joined a call inside Call Composite.
+        public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
+    }
+
+    /// The events handler for Call Composite
+    public let events: Events
     private var logger: Logger?
-    private let themeConfiguration: ThemeConfiguration?
-    private let localizationConfiguration: LocalizationConfiguration?
-    private let callCompositeEventsHandler = CallCompositeEventsHandler()
+    private let themeOptions: ThemeOptions?
+    private let localizationOptions: LocalizationOptions?
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
     private var audioSessionManager: AudioSessionManagerProtocol?
+    private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
+    private var avatarViewManager: AvatarViewManagerProtocol?
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
-        themeConfiguration = options?.themeConfiguration
-        localizationConfiguration = options?.localizationConfiguration
-    }
-
-    /// Assign closure to execute when an error occurs inside Call Composite.
-    /// - Parameter action: The closure returning the error thrown from Call Composite.
-    public func setTarget(didFail action: ((CommunicationUIErrorEvent) -> Void)?) {
-        callCompositeEventsHandler.didFail = action
+        events = Events()
+        themeOptions = options?.themeOptions
+        localizationOptions = options?.localizationOptions
     }
 
     deinit {
@@ -37,12 +44,14 @@ public class CallComposite {
     }
 
     private func launch(_ callConfiguration: CallConfiguration,
-                        localSettings: LocalSettings?) {
+                        localOptions: LocalOptions?) {
         let dependencyContainer = DependencyContainer()
         logger = dependencyContainer.resolve() as Logger
         logger?.debug("launch composite experience")
 
-        dependencyContainer.registerDependencies(callConfiguration, localSettings: localSettings)
+        dependencyContainer.registerDependencies(callConfiguration,
+                                                 localOptions: localOptions,
+                                                 callCompositeEventsHandler: events)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)
@@ -50,56 +59,48 @@ public class CallComposite {
                                                                     logger: dependencyContainer.resolve(),
                                                                     viewFactory: dependencyContainer.resolve(),
                                                                     isRightToLeft: localizationProvider.isRightToLeft)
-        setupManagers(store: dependencyContainer.resolve(),
-                      containerHostingController: toolkitHostingController,
-                      logger: dependencyContainer.resolve())
+        setupManagers(with: dependencyContainer)
         present(toolkitHostingController)
     }
 
-    /// Start call composite experience with joining a group call.
-    /// - Parameter options: The GroupCallOptions used to locate the group call.
-    /// - Parameter localSettings: LocalSettings used to set the user participants information for the call.
+    /// Start call composite experience with joining a Teams meeting.
+    /// - Parameter remoteOptions: RemoteOptions used to send to ACS to locate the call.
+    /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This is data is not sent up to ACS.
-    public func launch(with options: GroupCallOptions,
-                       localSettings: LocalSettings? = nil) {
-        let callConfiguration = CallConfiguration(
-            credential: options.credential,
-            groupId: options.groupId,
-            displayName: options.displayName)
+    public func launch(remoteOptions: RemoteOptions,
+                       localOptions: LocalOptions? = nil) {
+        let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
+                                                  credential: remoteOptions.credential,
+                                                  displayName: remoteOptions.displayName)
 
-        launch(callConfiguration, localSettings: localSettings)
+        launch(callConfiguration, localOptions: localOptions)
     }
 
-    /// Start call composite experience with joining a Teams meeting..
-    /// - Parameter options: The TeamsMeetingOptions used to locate the Teams meetings.
-    /// - Parameter localSettings: LocalSettings used to set the user participants information for the call.
-    ///                            This is data is not sent up to ACS.
-    public func launch(with options: TeamsMeetingOptions,
-                       localSettings: LocalSettings? = nil) {
-        let callConfiguration = CallConfiguration(
-            credential: options.credential,
-            meetingLink: options.meetingLink,
-            displayName: options.displayName)
-
-        launch(callConfiguration, localSettings: localSettings)
+    /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.
+    /// - Parameters:
+    ///   - remoteParticipantViewData: ParticipantViewData used to set the participant's information for the call.
+    ///   - identifier: The communication identifier for the remote participant.
+    ///   - completionHandler: The completion handler that receives `Result` enum value with either
+    ///                        a `Void` or an `SetParticipantViewDataError`.
+    public func set(remoteParticipantViewData: ParticipantViewData,
+                    for identifier: CommunicationIdentifier,
+                    completionHandler: ((Result<Void, SetParticipantViewDataError>) -> Void)? = nil) {
+        guard let avatarManager = avatarViewManager else {
+            completionHandler?(.failure(SetParticipantViewDataError.participantNotInCall))
+            return
+        }
+        avatarManager.set(remoteParticipantViewData: remoteParticipantViewData,
+                          for: identifier,
+                          completionHandler: completionHandler)
     }
 
-    private func setupManagers(store: Store<AppState>,
-                               containerHostingController: ContainerUIHostingController,
-                               logger: Logger) {
-        let errorManager = CompositeErrorManager(store: store,
-                                                 callCompositeEventsHandler: callCompositeEventsHandler)
-        self.errorManager = errorManager
-
-        let lifeCycleManager = UIKitAppLifeCycleManager(store: store, logger: logger)
-        self.lifeCycleManager = lifeCycleManager
-
-        let permissionManager = PermissionsManager(store: store)
-        self.permissionManager = permissionManager
-
-        let audioSessionManager = AudioSessionManager(store: store,
-                                                         logger: logger)
-        self.audioSessionManager = audioSessionManager
+    private func setupManagers(with dependencyContainer: DependencyContainer) {
+        self.errorManager = dependencyContainer.resolve() as ErrorManagerProtocol
+        self.lifeCycleManager = dependencyContainer.resolve() as LifeCycleManagerProtocol
+        self.permissionManager = dependencyContainer.resolve() as PermissionsManagerProtocol
+        self.audioSessionManager = dependencyContainer.resolve() as AudioSessionManagerProtocol
+        self.avatarViewManager = dependencyContainer.resolve() as AvatarViewManager
+        self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManager
     }
 
     private func cleanUpManagers() {
@@ -107,6 +108,8 @@ public class CallComposite {
         self.lifeCycleManager = nil
         self.permissionManager = nil
         self.audioSessionManager = nil
+        self.avatarViewManager = nil
+        self.remoteParticipantsManager = nil
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,
@@ -142,7 +145,7 @@ public class CallComposite {
     }
 
     private func setupColorTheming() {
-        let colorProvider = ColorThemeProvider(themeConfiguration: themeConfiguration)
+        let colorProvider = ColorThemeProvider(themeOptions: themeOptions)
         StyleProvider.color = colorProvider
         DispatchQueue.main.async {
             if let window = UIWindow.keyWindow {
@@ -152,8 +155,8 @@ public class CallComposite {
     }
 
     private func setupLocalization(with provider: LocalizationProviderProtocol) {
-        if let localizationConfiguration = localizationConfiguration {
-            provider.apply(localeConfig: localizationConfiguration)
+        if let localizationOptions = localizationOptions {
+            provider.apply(localeConfig: localizationOptions)
         }
     }
 

@@ -22,17 +22,21 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var displayName: String?
     @Published var isSpeaking: Bool
     @Published var isMuted: Bool
-
-    var participantIdentifier: String
+    @Published var isHold: Bool
+    @Published var participantIdentifier: String
     private var isScreenSharing: Bool = false
+    private var participantName: String
+    private var renderDisplayName: String?
 
     init(localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          participantModel: ParticipantInfoModel) {
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
+        self.participantName = participantModel.displayName
         self.displayName = participantModel.displayName
         self.isSpeaking = participantModel.isSpeaking
+        self.isHold = participantModel.status == .hold
         self.participantIdentifier = participantModel.userIdentifier
         self.isMuted = participantModel.isMuted
         self.videoViewModel = getDisplayingVideoStreamModel(participantModel)
@@ -58,12 +62,13 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
                                                  videoStreamId: videoViewModel.videoStreamId)
         }
 
-        if self.displayName != participantModel.displayName || self.isMuted != participantModel.isMuted {
+        if self.participantName != participantModel.displayName || self.isMuted != participantModel.isMuted {
             self.accessibilityLabel = getAccessibilityLabel(participantModel: participantModel)
         }
 
-        if self.displayName != participantModel.displayName {
-            self.displayName = participantModel.displayName
+        if self.participantName != participantModel.displayName {
+            self.participantName = participantModel.displayName
+            updateParticipantNameIfNeeded(with: renderDisplayName)
         }
 
         if self.isSpeaking != participantModel.isSpeaking {
@@ -73,11 +78,38 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         if self.isMuted != participantModel.isMuted {
             self.isMuted = participantModel.isMuted
         }
+
+        let isOnHold = participantModel.status == .hold
+
+        if self.isHold != isOnHold {
+            self.isHold = isOnHold
+        }
+    }
+
+    func updateParticipantNameIfNeeded(with renderDisplayName: String?) {
+        self.renderDisplayName = renderDisplayName
+        guard renderDisplayName != displayName else {
+            return
+        }
+
+        let name: String
+        if let renderDisplayName = renderDisplayName {
+            let isRendererNameEmpty = renderDisplayName.trimmingCharacters(in: .whitespaces).isEmpty
+            name = isRendererNameEmpty ? participantName : renderDisplayName
+        } else {
+            name = participantName
+        }
+        displayName = name
+    }
+
+    func getOnHoldString() -> String {
+        localizationProvider.getLocalizedString(.onHold)
     }
 
     private func getAccessibilityLabel(participantModel: ParticipantInfoModel) -> String {
-        return participantModel.displayName
-        + localizationProvider.getLocalizedString(participantModel.isMuted ? .muted : .unmuted)
+        let status = localizationProvider.getLocalizedString(
+            participantModel.isSpeaking ? .speaking : participantModel.isMuted ? .muted : .unmuted)
+        return "\(participantModel.displayName) \(status)"
     }
 
     private func getDisplayingVideoStreamModel(_ participantModel: ParticipantInfoModel)

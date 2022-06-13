@@ -24,6 +24,10 @@ struct AppPhaseKey: EnvironmentKey {
     static let defaultValue: AppStatus = .foreground
 }
 
+struct OrientationKey: EnvironmentKey {
+    static let defaultValue: OrientationManager = .shared
+}
+
 extension EnvironmentValues {
     var screenSizeClass: ScreenSizeClassType {
         get { self[ScreenSizeClassKey.self] }
@@ -33,5 +37,10 @@ extension EnvironmentValues {
     var appPhase: AppStatus {
         get { self[AppPhaseKey.self] }
         set { self[AppPhaseKey.self] = newValue }
+    }
+
+    var orientation: OrientationManager {
+        get { return self[OrientationKey.self] }
+        set { self[OrientationKey.self] = newValue }
     }
 }

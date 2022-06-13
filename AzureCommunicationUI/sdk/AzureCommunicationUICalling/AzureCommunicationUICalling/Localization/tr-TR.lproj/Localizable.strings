@@ -34,6 +34,10 @@
 "AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="Oturum sahibi bekleniyor"; // host (people not server) of a meeting
 "AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"="Katılımcılardan biri sizi kısa süre sonra toplantıya alacak";
 
+/* OnHoldView */
+"AzureCommunicationUICalling.OnHoldView.Text.OnHold"="Aramanız beklemeye alındı";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume"="Sürdür";
+
 /* CallingView */
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Diğerlerinin katılması bekleniyor";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="1 kişi ile arama";
@@ -43,6 +47,8 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (ben)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Sessize alındı";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Sesi açıldı";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Konuşma";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Beklemede";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Arka kameraya geç";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Ön kameraya geç";
@@ -89,3 +95,6 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="Bir hata nedeniyle aramadan çıkarıldınız.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="Aramadan çıkarıldınız.";
 "AzureCommunicationUICalling.SnackBar.Text.Error"="Bir hata oluştu.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Arama sürdürülemiyor";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Mikrofonunuz başka bir uygulama tarafından kullanılıyor";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Aramaya erişiminiz reddedildi.";

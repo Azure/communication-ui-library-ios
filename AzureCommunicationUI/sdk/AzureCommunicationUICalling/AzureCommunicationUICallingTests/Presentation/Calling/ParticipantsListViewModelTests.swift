@@ -12,13 +12,14 @@ class ParticipantsListViewModelTests: XCTestCase {
     private var localizationProvider: LocalizationProviderMocking!
     private var logger: LoggerMocking!
     private var factoryMocking: CompositeViewModelFactoryMocking!
+    private var storeFactory: StoreFactoryMocking!
 
     override func setUp() {
         super.setUp()
         logger = LoggerMocking()
         cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
-        let storeFactory = StoreFactoryMocking()
+        storeFactory = StoreFactoryMocking()
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
     }
 
@@ -139,6 +140,8 @@ class ParticipantsListViewModelTests: XCTestCase {
 
     // MARK: participantsList test
     func test_participantsListViewModel_update_when_lastUpdateTimeStampChangedWithParticipantOrderCheck_then_shouldBePublished() {
+        let avatarViewManager = AvatarViewManager(store: storeFactory.store,
+                                                  localOptions: nil)
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should publish localParticipantsListCellViewModel")
         sut.$participantsList
@@ -158,6 +161,7 @@ class ParticipantsListViewModelTests: XCTestCase {
                                  isMuted: false,
                                  isRemoteUser: false,
                                  userIdentifier: "MockUUID",
+                                 status: .idle,
                                  recentSpeakingStamp: Date(),
                                  screenShareVideoStreamModel: nil,
                                  cameraVideoStreamModel: nil)
@@ -176,10 +180,11 @@ class ParticipantsListViewModelTests: XCTestCase {
         sut.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
         XCTAssertEqual(sut.participantsList.count, 1)
-        XCTAssertEqual(localParticipant.displayName, "")
+        XCTAssertEqual(localParticipant.getParticipantName(with: nil), "")
         XCTAssertEqual(localParticipant.isLocalParticipant, true)
-        XCTAssertEqual(sut.sortedParticipants().first?.displayName, localParticipant.displayName)
-        XCTAssertEqual(sut.sortedParticipants().last?.displayName, remoteParticipantsState.participantInfoList.first!.displayName)
+        let sortedParticipants = sut.sortedParticipants(with: avatarViewManager)
+        XCTAssertEqual(sortedParticipants.first?.getParticipantName(with: nil), localParticipant.getParticipantName(with: nil))
+        XCTAssertEqual(sortedParticipants.last?.getParticipantName(with: nil), remoteParticipantsState.participantInfoList.first!.displayName)
         wait(for: [expectation], timeout: 1)
     }
 
@@ -204,6 +209,7 @@ class ParticipantsListViewModelTests: XCTestCase {
                                  isMuted: false,
                                  isRemoteUser: false,
                                  userIdentifier: "MockUUID",
+                                 status: .idle,
                                  recentSpeakingStamp: Date(),
                                  screenShareVideoStreamModel: nil,
                                  cameraVideoStreamModel: nil)
@@ -230,11 +236,11 @@ class ParticipantsListViewModelTests: XCTestCase {
                                                    device: .receiverSelected)
         let localUserState = LocalUserState(audioState: audioState,
                                             displayName: "Updated display name")
-        XCTAssertNotEqual(sut.localParticipantsListCellViewModel.displayName,
+        XCTAssertNotEqual(sut.localParticipantsListCellViewModel.getParticipantName(with: nil),
                           localUserState.displayName)
         sut.update(localUserState: localUserState,
                    remoteParticipantsState: RemoteParticipantsState())
-        XCTAssertEqual(sut.localParticipantsListCellViewModel.displayName,
+        XCTAssertEqual(sut.localParticipantsListCellViewModel.getParticipantName(with: nil),
                        localUserState.displayName)
     }
 
@@ -254,7 +260,7 @@ class ParticipantsListViewModelTests: XCTestCase {
         }
         sut.update(localUserState: LocalUserState(),
                    remoteParticipantsState: remoteParticipantsState)
-        XCTAssertEqual(sut.participantsList.map { $0.displayName },
+        XCTAssertEqual(sut.participantsList.map { $0.getParticipantName(with: nil) },
                        participantInfoList.map { $0.displayName })
         wait(for: [expectation], timeout: 1)
     }

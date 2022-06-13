@@ -56,15 +56,18 @@ enum LocalVideoViewType {
 
 struct LocalVideoView: View {
     @ObservedObject var viewModel: LocalVideoViewModel
-    var participantViewData: ParticipantViewData?
     let viewManager: VideoViewManager
     let viewType: LocalVideoViewType
+    let avatarManager: AvatarViewManager
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
+
+    @State private var avatarImage: UIImage?
 
     var body: some View {
         Group {
             GeometryReader { geometry in
-                if let localVideoStreamId = viewModel.localVideoStreamId,
+                if viewModel.cameraOperationalStatus == .on,
+                   let localVideoStreamId = viewModel.localVideoStreamId,
                    let rendererView = viewManager.getLocalVideoRendererView(localVideoStreamId) {
                     ZStack(alignment: viewType.cameraSwitchButtonAlignment) {
                         VideoRendererView(rendererView: rendererView)
@@ -79,9 +82,10 @@ struct LocalVideoView: View {
                 } else {
                     VStack(alignment: .center, spacing: 5) {
                         CompositeAvatar(displayName: $viewModel.displayName,
+                                        avatarImage: $avatarImage,
                                         isSpeaking: false,
-                                        avatarSize: viewType.avatarSize,
-                                        avatarImage: participantViewData?.avatarImage)
+                                        avatarSize: viewType.avatarSize)
+
                         if viewType.showDisplayNameTitleView {
                             Spacer().frame(height: 10)
                             ParticipantTitleView(displayName: $viewModel.displayName,
@@ -100,6 +104,8 @@ struct LocalVideoView: View {
             }
         }.onReceive(viewModel.$localVideoStreamId) {
             viewManager.updateDisplayedLocalVideoStream($0)
+        }.onReceive(avatarManager.$localOptions) {
+            avatarImage = $0?.participantViewData.avatarImage
         }
     }
 
