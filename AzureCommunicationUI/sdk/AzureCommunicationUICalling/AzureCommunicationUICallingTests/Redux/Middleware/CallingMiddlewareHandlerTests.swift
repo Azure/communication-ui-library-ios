@@ -407,6 +407,30 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_callingMiddlewareHandler_holdCall_then_holdCallCalled() {
+        guard let state: AppState = getState(callingState: .connected,
+                                       cameraStatus: .off,
+                                       cameraDeviceStatus: .front,
+                                             cameraPermission: .notAsked) as? AppState else {
+            XCTFail("Failed with state validation")
+            return
+        }
+        callingMiddlewareHandler.holdCall(state: state, dispatch: getEmptyDispatch())
+        XCTAssertTrue(mockCallingService.holdCallCalled)
+    }
+
+    func test_callingMiddlewareHandler_resumeCall_then_resumeCallCalled() {
+        guard let state: AppState = getState(callingState: .localHold,
+                                             cameraStatus: .off,
+                                             cameraDeviceStatus: .front,
+                                             cameraPermission: .notAsked) as? AppState else {
+            XCTFail("Failed with state validation")
+            return
+        }
+        callingMiddlewareHandler.resumeCall(state: state, dispatch: getEmptyDispatch())
+        XCTAssertTrue(mockCallingService.resumeCallCalled)
+    }
+
     func test_callingMiddlewareHandler_enterForeground_when_callLocalHold_cameraStatusOn_noError_then_updateCameraStatusOnUpdate() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
         let id = "identifier"
