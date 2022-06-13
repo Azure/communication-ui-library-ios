@@ -73,7 +73,7 @@ public struct SupportedLocale {
     }
 }
 
-/// A configuration to allow customizing localization.
+/// A options to allow customizing localization.
 public struct LocalizationOptions {
     let languageCode: String
     let localizableFilename: String
