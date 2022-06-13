@@ -16,6 +16,30 @@ struct ControlBarView: View {
 
     var body: some View {
         Group {
+            if screenSizeClass == .ipadScreenSize {
+                centeredStack
+            } else {
+                nonCenteredStack
+            }
+        }
+        .padding()
+        .background(Color(StyleProvider.color.backgroundColor))
+        .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
+            audioDeviceSelectionListView
+                .accessibilityElement(children: .contain)
+                .accessibilityAddTraits(.isModal)
+        })
+        .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveListDisplayed) {
+            exitConfirmationDrawer
+                .accessibility(hidden: !viewModel.isConfirmLeaveListDisplayed)
+                .accessibilityElement(children: .contain)
+                .accessibility(addTraits: .isModal)
+        })
+    }
+
+    /// A stack view that has item item are centered aligned horizontally
+    var centeredStack: some View {
+        Group {
             if screenSizeClass != .iphoneLandscapeScreenSize {
                 HStack {
                     Spacer()
@@ -36,19 +60,33 @@ struct ControlBarView: View {
                 }
             }
         }
-        .padding()
-        .background(Color(StyleProvider.color.backgroundColor))
-        .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
-            audioDeviceSelectionListView
-                .accessibilityElement(children: .contain)
-                .accessibilityAddTraits(.isModal)
-        })
-        .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveListDisplayed) {
-            exitConfirmationDrawer
-                .accessibility(hidden: !viewModel.isConfirmLeaveListDisplayed)
-                .accessibilityElement(children: .contain)
-                .accessibility(addTraits: .isModal)
-        })
+    }
+
+    /// A stack view that has item item taht takes the stakview space evenly
+    var nonCenteredStack: some View {
+        Group {
+            if screenSizeClass != .iphoneLandscapeScreenSize {
+                HStack {
+                    videoButton
+                    Spacer()
+                    micButton
+                    Spacer()
+                    audioDeviceButton
+                    Spacer()
+                    hangUpButton
+                }
+            } else {
+                VStack {
+                    hangUpButton
+                    Spacer()
+                    audioDeviceButton
+                    Spacer()
+                    micButton
+                    Spacer()
+                    videoButton
+                }
+            }
+        }
     }
 
     var videoButton: some View {
