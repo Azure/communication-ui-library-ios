@@ -5,5 +5,5 @@
 
 struct CallInfoModel {
     let status: CallingStatus
-    let errorCode: String
+    let internalError: CallCompositeInternalError?
 }

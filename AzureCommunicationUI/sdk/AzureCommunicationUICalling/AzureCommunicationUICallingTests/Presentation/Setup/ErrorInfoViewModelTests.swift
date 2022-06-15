@@ -22,8 +22,9 @@ class ErrorInfoViewModelTests: XCTestCase {
 
     func test_errorInfoViewModel_update_when_errorStateCallJoinSet_then_snackBarErrorJoinCallMessageDisplayed() {
         let sut = makeSUT()
-        let event = CallCompositeError(code: CallCompositeErrorCode.callJoin)
-        let state = ErrorState(error: event, errorCategory: .callState)
+        let state = ErrorState(internalError: .callJoinFailed,
+                               error: nil,
+                               errorCategory: .callState)
 
         sut.update(errorState: state)
         XCTAssertEqual(sut.isDisplayed, true)
@@ -32,8 +33,9 @@ class ErrorInfoViewModelTests: XCTestCase {
 
     func test_errorInfoViewModel_update_when_errorStateCallEnd_then_snackBarErrorCallEndMessage() {
         let sut = makeSUT()
-        let event = CallCompositeError(code: CallCompositeErrorCode.callEnd)
-        let state = ErrorState(error: event, errorCategory: .callState)
+        let state = ErrorState(internalError: .callEndFailed,
+                               error: nil,
+                               errorCategory: .callState)
 
         sut.update(errorState: state)
         XCTAssertEqual(sut.isDisplayed, true)
@@ -42,8 +44,9 @@ class ErrorInfoViewModelTests: XCTestCase {
 
     func test_errorInfoViewModel_update_when_errorStateCallEvictionSet_then_snackBarErrorCallEvictedMessageDisplayed() {
         let sut = makeSUT()
-        let event = CallCompositeError(code: CallCompositeErrorCode.callEvicted)
-        let state = ErrorState(error: event, errorCategory: .callState)
+        let state = ErrorState(internalError: .callEvicted,
+                               error: nil,
+                               errorCategory: .callState)
 
         sut.update(errorState: state)
         XCTAssertEqual(sut.isDisplayed, true)
@@ -52,8 +55,9 @@ class ErrorInfoViewModelTests: XCTestCase {
 
     func test_errorInfoViewModel_update_when_errorStateCallDeniedSet_then_snackBarErrorCallDeniedMessageDisplayed() {
         let sut = makeSUT()
-        let event = CallCompositeError(code: CallCompositeErrorCode.callDenied)
-        let state = ErrorState(error: event, errorCategory: .callState)
+        let state = ErrorState(internalError: .callDenied,
+                               error: nil,
+                               errorCategory: .callState)
 
         sut.update(errorState: state)
         XCTAssertEqual(sut.isDisplayed, true)
@@ -62,8 +66,9 @@ class ErrorInfoViewModelTests: XCTestCase {
 
     func test_errorInfoViewModel_update_when_errorTypeIsEmpty_then_isDisplayEqualFalse() {
         let sut = makeSUT()
-        let event = CallCompositeError(code: CallCompositeErrorCode.callJoin)
-        let state = ErrorState(error: event, errorCategory: .callState)
+        let state = ErrorState(internalError: .callJoinFailed,
+                               error: nil,
+                               errorCategory: .callState)
 
         sut.update(errorState: state)
         XCTAssertEqual(sut.isDisplayed, true)

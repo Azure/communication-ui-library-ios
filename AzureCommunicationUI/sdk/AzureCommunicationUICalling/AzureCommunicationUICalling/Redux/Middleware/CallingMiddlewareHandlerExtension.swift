@@ -3,29 +3,37 @@
 //  Licensed under the MIT License.
 //
 extension CallingMiddlewareHandler {
-    func handle(error: Error, errorCode: String, dispatch: @escaping ActionDispatch) {
-        let compositeError = CallCompositeError(code: errorCode, error: error)
-        let action = ErrorAction.FatalErrorUpdated(error: compositeError)
+    func handle(error: Error?,
+                errorType: CallCompositeInternalError,
+                dispatch: @escaping ActionDispatch) {
+        let action: Action
+        if let error = error as? CallCompositeInternalError {
+            action = ErrorAction.FatalErrorUpdated(internalError: error,
+                                                   error: nil)
+        } else {
+            action = ErrorAction.FatalErrorUpdated(internalError: errorType,
+                                                   error: error)
+        }
         dispatch(action)
     }
 
-    func handle(errorCode: String, dispatch: @escaping ActionDispatch, completion: (() -> Void)? = nil ) {
-        guard !errorCode.isEmpty else {
-            return
-        }
+    func handleCallInfo(internalError: CallCompositeInternalError,
+                        dispatch: @escaping ActionDispatch,
+                        completion: (() -> Void)? = nil ) {
         let action: Action
-        let error = CallCompositeError(code: errorCode, error: nil)
-        if errorCode == CallCompositeErrorCode.tokenExpired {
-            action = ErrorAction.FatalErrorUpdated(error: error)
+        if internalError == .callTokenFailed {
+            action = ErrorAction.FatalErrorUpdated(internalError: internalError,
+                                                   error: nil)
         } else {
-            action = ErrorAction.StatusErrorAndCallReset(error: error)
+            action = ErrorAction.StatusErrorAndCallReset(internalError: internalError,
+                                                         error: nil)
         }
-
         dispatch(action)
         completion?()
     }
 
-    func handle(callingStatus: CallingStatus, dispatch: @escaping ActionDispatch) {
+    func handle(callingStatus: CallingStatus,
+                dispatch: @escaping ActionDispatch) {
         dispatch(CallingAction.StateUpdated(status: callingStatus))
 
         switch callingStatus {

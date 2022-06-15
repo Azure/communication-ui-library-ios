@@ -179,8 +179,8 @@ class AppStateReducerTests: XCTestCase {
 
     func test_appStateReducer_reduce_when_StatusErrorAndCallReset_then_remoteParticipantStateCleanup() {
         let userId = UUID().uuidString
-        let action = ErrorAction.StatusErrorAndCallReset(error: CallCompositeError(code: "",
-                                                                            error: nil))
+        let action = ErrorAction.StatusErrorAndCallReset(internalError: .callJoinFailed,
+                                                         error: nil)
         let sut = getSUT()
         let participant = ParticipantInfoModel(displayName: "displayname",
                                                isSpeaking: false,
