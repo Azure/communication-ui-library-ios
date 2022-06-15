@@ -10,6 +10,10 @@ extension XCUIElement {
         tap()
         UIPasteboard.general.string = text
         guard UIPasteboard.general.hasStrings else {
+            // Workaround for a few iOS test devices, to be sure tap happens on the text field
+            sleep(1)
+            tap()
+            tap()
             typeText(text ?? "")
             return
         }
