@@ -14,7 +14,7 @@ struct CallConfiguration {
     let displayName: String?
     let diagnosticConfig: DiagnosticConfig
 
-    init(locator: CallCompositeLocator,
+    init(locator: JoinLocator,
          credential: CommunicationTokenCredential,
          displayName: String?) {
         switch locator {

@@ -86,6 +86,20 @@ class CallingMiddlewareTests: XCTestCase {
         XCTAssertTrue(mockMiddlewareHandler.requestCameraOffCalled)
     }
 
+    func test_callingMiddleware_apply_when_holdCallRequestAction_then_handlerHoldCall() {
+        let middlewareDispatch = getEmptyCallingMiddlewareFunction()
+        middlewareDispatch(getEmptyDispatch())(CallingAction.HoldRequested())
+
+        XCTAssertTrue(mockMiddlewareHandler.requestHoldCalled)
+    }
+
+    func test_callingMiddleware_apply_when_resumeCallRequestAction_then_handlerResumeCall() {
+        let middlewareDispatch = getEmptyCallingMiddlewareFunction()
+        middlewareDispatch(getEmptyDispatch())(CallingAction.ResumeRequested())
+
+        XCTAssertTrue(mockMiddlewareHandler.requestResumeCalled)
+    }
+
     func test_callingMiddleware_apply_when_requestCameraOn_then_nextActionDispatchCameraOnTriggered() {
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
 
