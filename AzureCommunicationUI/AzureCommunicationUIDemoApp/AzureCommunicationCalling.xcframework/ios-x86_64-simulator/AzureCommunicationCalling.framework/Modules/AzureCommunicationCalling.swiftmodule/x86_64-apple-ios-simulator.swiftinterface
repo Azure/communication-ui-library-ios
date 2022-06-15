@@ -1,0 +1,16 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)
+// swift-module-flags: -target x86_64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name AzureCommunicationCalling
+@_exported import AzureCommunicationCalling
+import Foundation
+import Swift
+@_hasMissingDesignatedInitializers public class CallFeatureFactory<T> where T : AzureCommunicationCalling.CallFeature {
+  @objc deinit
+}
+extension Call {
+  public func feature<TCallFeature>(_ factory: AzureCommunicationCalling.CallFeatureFactory<TCallFeature>) -> TCallFeature where TCallFeature : AzureCommunicationCalling.CallFeature
+}
+extension Features {
+  public static var recording: AzureCommunicationCalling.CallFeatureFactory<AzureCommunicationCalling.RecordingCallFeature>
+  public static var transcription: AzureCommunicationCalling.CallFeatureFactory<AzureCommunicationCalling.TranscriptionCallFeature>
+}

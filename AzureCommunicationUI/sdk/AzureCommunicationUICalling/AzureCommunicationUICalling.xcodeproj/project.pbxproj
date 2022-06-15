@@ -99,6 +99,7 @@
 		1FDBF9F1281F8D2F00B92273 /* ACSCallEndReasonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */; };
 		1FE1BE7F26FE38C9000A8D18 /* CompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE1BE7E26FE38C9000A8D18 /* CompositeError.swift */; };
 		1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */; };
+		1FFE01D2285A5779001C7C12 /* AzureCommunicationCalling.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFE01D1285A5779001C7C12 /* AzureCommunicationCalling.xcframework */; };
 		1FFEA01426A68D0D00E90816 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEA01326A68D0D00E90816 /* FontExtension.swift */; };
 		337789566FB3398301666ADF /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC5A1FE3C2622411DFF98147 /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework */; };
 		500C0F1F2847DE18000BA2DC /* RemoteOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500C0F1E2847DE18000BA2DC /* RemoteOptions.swift */; };
@@ -350,6 +351,7 @@
 		1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACSCallEndReasonExtension.swift; sourceTree = "<group>"; };
 		1FE1BE7E26FE38C9000A8D18 /* CompositeError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeError.swift; sourceTree = "<group>"; };
 		1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoiningCallActivityView.swift; sourceTree = "<group>"; };
+		1FFE01D1285A5779001C7C12 /* AzureCommunicationCalling.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AzureCommunicationCalling.xcframework; path = ../../AzureCommunicationUIDemoApp/AzureCommunicationCalling.xcframework; sourceTree = "<group>"; };
 		1FFEA01326A68D0D00E90816 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
 		500C0F1E2847DE18000BA2DC /* RemoteOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteOptions.swift; sourceTree = "<group>"; };
 		500C0F202847E30E000BA2DC /* RemoteOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteOptionsTests.swift; sourceTree = "<group>"; };
@@ -546,6 +548,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FB22A9D340197CA3DC74EEBB /* Pods_AzureCommunicationUICalling.framework in Frameworks */,
+				1FFE01D2285A5779001C7C12 /* AzureCommunicationCalling.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1245,6 +1248,7 @@
 		D925FB8A0861AF0C1415C6C4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1FFE01D1285A5779001C7C12 /* AzureCommunicationCalling.xcframework */,
 				1FBCB682264522F200F57EEA /* XCTest.framework */,
 				C580DBF67D8B5AEF7A801F90 /* Pods_AzureCommunicationUICalling.framework */,
 				EC5A1FE3C2622411DFF98147 /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework */,

@@ -293,7 +293,7 @@ extension CallingSDKWrapper {
     private func makeCallClient() -> CallClient {
         let clientOptions = CallClientOptions()
         let appendingTag = self.callConfiguration.diagnosticConfig.tags
-        let diagnostics = clientOptions.diagnostics ?? DiagnosticOptions()
+        let diagnostics = clientOptions.diagnostics ?? CallDiagnosticsOptions()
         diagnostics.tags.append(contentsOf: appendingTag)
         clientOptions.diagnostics = diagnostics
         return CallClient(options: clientOptions)

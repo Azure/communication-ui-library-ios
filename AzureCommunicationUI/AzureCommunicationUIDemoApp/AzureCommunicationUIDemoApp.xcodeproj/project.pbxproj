@@ -13,6 +13,9 @@
 		1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift */; };
 		1F8881CA2798D5E7001427F0 /* TextFieldClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881C92798D5E7001427F0 /* TextFieldClearButton.swift */; };
 		1F8881CD279B456E001427F0 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881CC279B456E001427F0 /* Extension.swift */; };
+		1FFE01CE285A5760001C7C12 /* AzureCommunicationCalling.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFE01CD285A575F001C7C12 /* AzureCommunicationCalling.xcframework */; };
+		1FFE01CF285A576F001C7C12 /* AzureCommunicationCalling.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFE01CD285A575F001C7C12 /* AzureCommunicationCalling.xcframework */; };
+		1FFE01D0285A576F001C7C12 /* AzureCommunicationCalling.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1FFE01CD285A575F001C7C12 /* AzureCommunicationCalling.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3507F9550C99D777E493AA92 /* Pods_AzureCommunicationUIDemoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 747FFD0380FFBF53EC331032 /* Pods_AzureCommunicationUIDemoApp.framework */; };
 		5027C1C62821A07500DC7131 /* AccessibilityId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5027C1C52821A07500DC7131 /* AccessibilityId.swift */; };
 		5027C1C72821A55E00DC7131 /* AccessibilityId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5027C1C52821A07500DC7131 /* AccessibilityId.swift */; };
@@ -55,6 +58,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				FAA448A1282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Embed Frameworks */,
+				1FFE01D0285A576F001C7C12 /* AzureCommunicationCalling.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -73,6 +77,7 @@
 		1F8881CC279B456E001427F0 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		1FBA6B1B27B4F61A00FF3835 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FEC635827588B5600EA746B /* AppConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = AppConfig.xcconfig; sourceTree = "<group>"; };
+		1FFE01CD285A575F001C7C12 /* AzureCommunicationCalling.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = AzureCommunicationCalling.xcframework; sourceTree = "<group>"; };
 		2EA3EA0A623669E62A5E601F /* Pods-AzureCommunicationUIDemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp/Pods-AzureCommunicationUIDemoApp.release.xcconfig"; sourceTree = "<group>"; };
 		5027C1C52821A07500DC7131 /* AccessibilityId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityId.swift; sourceTree = "<group>"; };
 		5075FE9C27FFA87200136B34 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -111,6 +116,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8926B039F67555DE4F89893B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework in Frameworks */,
+				1FFE01CE285A5760001C7C12 /* AzureCommunicationCalling.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +126,7 @@
 			files = (
 				FAA448A0282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Frameworks */,
 				3507F9550C99D777E493AA92 /* Pods_AzureCommunicationUIDemoApp.framework in Frameworks */,
+				1FFE01CF285A576F001C7C12 /* AzureCommunicationCalling.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,6 +194,7 @@
 		A8C69FA72728AE1A00143DB7 = {
 			isa = PBXGroup;
 			children = (
+				1FFE01CD285A575F001C7C12 /* AzureCommunicationCalling.xcframework */,
 				FAA448A32825931500BD0DC0 /* AccessibilityIdentifier.swift */,
 				A8C69FB22728AE1A00143DB7 /* AzureCommunicationUIDemoApp */,
 				1F8881BB27909E08001427F0 /* AzureCommunicationUIDemoAppUITests */,
