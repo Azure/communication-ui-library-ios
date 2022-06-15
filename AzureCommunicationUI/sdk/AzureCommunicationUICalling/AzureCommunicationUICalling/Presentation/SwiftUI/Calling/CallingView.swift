@@ -78,7 +78,8 @@ struct CallingView: View {
                     topAlertAreaView
                         .accessibilityElement(children: .contain)
                         .accessibilitySortPriority(1)
-                        .accessibilityHidden(viewModel.lobbyOverlayViewModel.isDisplayed)
+                        .accessibilityHidden(viewModel.lobbyOverlayViewModel.isDisplayed
+                                             || viewModel.onHoldOverlayViewModel.isDisplayed)
                 }
                 .contentShape(Rectangle())
                 .animation(.linear(duration: 0.167))
