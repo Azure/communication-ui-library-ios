@@ -17,7 +17,7 @@ struct OverlayView: View {
     let viewModel: OverlayViewModelProtocol
 
     var body: some View {
-        Color(StyleProvider.color.overlay)
+        Color(viewModel.background)
             .overlay(
                 ZStack(alignment: .bottom) {
                     VStack(spacing: 0) {
