@@ -10,7 +10,7 @@ struct DiagnosticConfig {
     private let callCompositeTagPrefix: String = "aci110"
     private var callCompositeTag: String {
         let version = Bundle(for: CallComposite.self).infoDictionary?["UILibrarySemVersion"]
-        let versionStr = version as? String ?? "unknown"
+        let versionStr = "GACallingSDK"
         return "\(callCompositeTagPrefix)/\(versionStr)"
     }
 
