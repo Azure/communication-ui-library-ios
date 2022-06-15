@@ -26,11 +26,6 @@
     
     1. Select Navigator and navigate to the target `AzureCommunicationUICalling` and choose `Build Phases`.
     2. Delete the script `[CP] Check Pods Manifest.lock`.
-    
-- **Buildtime issue: 'Command PhaseScriptExecution failed with a nonzero exit code' - 'SwiftLint'**
-    
-    1. Select Navigator and navigate to the target `AzureCommunicationUICalling` and choose `Build Phases`.
-    2. Delete the script `Run SwiftLint`.
 
 ### Other Dependencies Installation
 
