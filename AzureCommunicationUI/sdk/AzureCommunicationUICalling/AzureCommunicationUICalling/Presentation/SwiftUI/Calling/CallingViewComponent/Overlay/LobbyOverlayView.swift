@@ -52,6 +52,8 @@ struct OverlayView: View {
                             Spacer()
                             ErrorInfoView(viewModel: errorInfoViewModel)
                                 .padding([.bottom])
+                                .accessibilityElement(children: .contain)
+                                .accessibilityAddTraits(.isModal)
                         }
                     }
                 }
