@@ -37,7 +37,7 @@ struct ControlBarView: View {
         })
     }
 
-    /// A stack view that has item item are centered aligned horizontally
+    /// A stack view that has items centered aligned horizontally in its stack view
     var centeredStack: some View {
         Group {
             if screenSizeClass != .iphoneLandscapeScreenSize {
@@ -62,7 +62,7 @@ struct ControlBarView: View {
         }
     }
 
-    /// A stack view that has item item taht takes the stakview space evenly
+    /// A stack view that has items that take the stakview space evenly
     var nonCenteredStack: some View {
         Group {
             if screenSizeClass != .iphoneLandscapeScreenSize {
