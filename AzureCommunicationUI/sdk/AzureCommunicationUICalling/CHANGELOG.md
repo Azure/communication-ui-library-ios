@@ -1,4 +1,8 @@
 # Release History
+## 1.0.0 (Upcoming)
+### Bugs Fixed
+- Fixed issue where header was still selectable with voiceover on and overlay visible. [#256](https://github.com/Azure/communication-ui-library-ios/pull/256)
+
 ## 1.0.0-beta.2 (2022-06-13)
 ### New Features
 - Implemented adaptive layout and tailored UX for iPad. [#221](https://github.com/Azure/communication-ui-library-ios/pull/221)
