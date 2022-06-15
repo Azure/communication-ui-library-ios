@@ -1,5 +1,5 @@
 # Release History
-## 1.0.0-beta.2 (2022-06-07)
+## 1.0.0-beta.2 (2022-06-13)
 ### New Features
 - Implemented adaptive layout and tailored UX for iPad. [#221](https://github.com/Azure/communication-ui-library-ios/pull/221)
 - Implemented new event to listen for remote participants joining a call [#209](https://github.com/Azure/communication-ui-library-ios/pull/209)
