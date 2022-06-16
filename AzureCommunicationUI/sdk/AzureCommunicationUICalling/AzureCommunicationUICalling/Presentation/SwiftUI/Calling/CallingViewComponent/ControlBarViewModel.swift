@@ -10,6 +10,7 @@ class ControlBarViewModel: ObservableObject {
     private let logger: Logger
     private let localizationProvider: LocalizationProviderProtocol
     private let dispatch: ActionDispatch
+    private var isCameraStateUpdating: Bool = false
     private(set) var cameraButtonViewModel: IconButtonViewModel!
 
     @Published var cameraPermission: AppPermission.Status = .unknown
@@ -102,6 +103,11 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func cameraButtonTapped() {
+        guard !isCameraStateUpdating else {
+            return
+        }
+
+        isCameraStateUpdating = true
         let action: Action = cameraState.operation == .on ?
             LocalUserAction.CameraOffTriggered() : LocalUserAction.CameraOnTriggered()
         dispatch(action)
@@ -122,7 +128,8 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func isCameraDisabled() -> Bool {
-        cameraPermission == .denied || cameraState.operation == .pending || callingStatus == .localHold
+        cameraPermission == .denied || cameraState.operation == .pending ||
+        callingStatus == .localHold || isCameraStateUpdating
     }
 
     func isMicDisabled() -> Bool {
@@ -180,6 +187,9 @@ class ControlBarViewModel: ObservableObject {
         }
 
         cameraState = localUserState.cameraState
+        if isCameraStateUpdating {
+            isCameraStateUpdating = cameraState.operation != .on && cameraState.operation != .off
+        }
         cameraButtonViewModel.update(iconName: cameraState.operation == .on ? .videoOn : .videoOff)
         cameraButtonViewModel.update(accessibilityLabel: cameraState.operation == .on
                                      ? localizationProvider.getLocalizedString(.videoOnAccessibilityLabel)

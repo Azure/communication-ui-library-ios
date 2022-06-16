@@ -29,7 +29,6 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
     private let logger: Logger
     private let cancelBag = CancelBag()
     private let subscription = CancelBag()
-    private var isCameraTurningOn: Bool = false
 
     init(callingService: CallingServiceProtocol, logger: Logger) {
         self.callingService = callingService
@@ -169,6 +168,86 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         requestCameraOn(state: state, dispatch: dispatch)
     }
 
+    func requestCameraPreviewOn(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+        guard let state = state as? AppState else {
+            return
+        }
+
+        if state.permissionState.cameraPermission == .notAsked {
+            dispatch(PermissionAction.CameraPermissionRequested())
+        } else {
+            callingService.requestCameraPreviewOn().map { videoStream in
+                LocalUserAction.CameraOnSucceeded(videoStreamIdentifier: videoStream)
+            }.sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    dispatch(LocalUserAction.CameraOnFailed(error: error))
+                }
+            }, receiveValue: { newAction in
+                dispatch(newAction)
+            }).store(in: cancelBag)
+        }
+    }
+
+    func requestCameraOn(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+        guard let state = state as? AppState else {
+            return
+        }
+        if state.permissionState.cameraPermission == .notAsked {
+            dispatch(PermissionAction.CameraPermissionRequested())
+        } else {
+            callingService.startLocalVideoStream()
+                .delay(for: 1.0, scheduler: DispatchQueue.main)
+                .map { videoStream in
+                    LocalUserAction.CameraOnSucceeded(videoStreamIdentifier: videoStream)
+                }.sink(receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let error):
+                        dispatch(LocalUserAction.CameraOnFailed(error: error))
+                    case .finished:
+                        break
+                    }
+                }, receiveValue: { newAction in
+                    dispatch(newAction)
+                }).store(in: cancelBag)
+        }
+    }
+
+    func requestCameraOff(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+        callingService.stopLocalVideoStream()
+            .map {
+                LocalUserAction.CameraOffSucceeded()
+            }.sink(receiveCompletion: {completion in
+                switch completion {
+                case .failure(let error):
+                    dispatch(LocalUserAction.CameraOffFailed(error: error))
+                case .finished:
+                    break
+                }
+            }, receiveValue: { newAction in
+                dispatch(newAction)
+            }).store(in: cancelBag)
+    }
+
+    func requestCameraSwitch(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+        callingService.switchCamera()
+            .delay(for: 1.0, scheduler: DispatchQueue.main)
+            .map { cameraDevice in
+                LocalUserAction.CameraSwitchSucceeded(cameraDevice: cameraDevice)
+            }.sink(receiveCompletion: {completion in
+                switch completion {
+                case .failure(let error):
+                    dispatch(LocalUserAction.CameraSwitchFailed(error: error))
+                case .finished:
+                    break
+                }
+            }, receiveValue: { newAction in
+                dispatch(newAction)
+            }).store(in: cancelBag)
+    }
+
     func requestMicrophoneMute(state: ReduxState?, dispatch: @escaping ActionDispatch) {
         callingService.muteLocalMic()
             .sink(receiveCompletion: { completion in
@@ -214,95 +293,6 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
 
         dispatch(CallingAction.HoldRequested())
-    }
-}
-
-extension CallingMiddlewareHandler {
-    func requestCameraPreviewOn(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        guard let state = state as? AppState else {
-            return
-        }
-
-        if state.permissionState.cameraPermission == .notAsked {
-            dispatch(PermissionAction.CameraPermissionRequested())
-        } else {
-            callingService.requestCameraPreviewOn().map { videoStream in
-                LocalUserAction.CameraOnSucceeded(videoStreamIdentifier: videoStream)
-            }.sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    dispatch(LocalUserAction.CameraOnFailed(error: error))
-                }
-            }, receiveValue: { newAction in
-                dispatch(newAction)
-            }).store(in: cancelBag)
-        }
-    }
-
-    func requestCameraOn(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        guard let state = state as? AppState,
-              !isCameraTurningOn else {
-            return
-        }
-        isCameraTurningOn = true
-        if state.permissionState.cameraPermission == .notAsked {
-            dispatch(PermissionAction.CameraPermissionRequested())
-        } else {
-            callingService.startLocalVideoStream()
-                .delay(for: 1.0, scheduler: DispatchQueue.main)
-                .map { videoStream in
-                    LocalUserAction.CameraOnSucceeded(videoStreamIdentifier: videoStream)
-                }.sink(receiveCompletion: { [weak self] completion in
-                    self?.isCameraTurningOn = false
-                    switch completion {
-                    case .failure(let error):
-                        dispatch(LocalUserAction.CameraOnFailed(error: error))
-                    case .finished:
-                        break
-                    }
-                }, receiveValue: { newAction in
-                    dispatch(newAction)
-                }).store(in: cancelBag)
-        }
-    }
-
-    func requestCameraOff(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        guard !isCameraTurningOn else {
-            return
-        }
-
-        callingService.stopLocalVideoStream()
-            .map {
-                LocalUserAction.CameraOffSucceeded()
-            }.sink(receiveCompletion: {completion in
-                switch completion {
-                case .failure(let error):
-                    dispatch(LocalUserAction.CameraOffFailed(error: error))
-                case .finished:
-                    break
-                }
-            }, receiveValue: { newAction in
-                dispatch(newAction)
-            }).store(in: cancelBag)
-    }
-
-    func requestCameraSwitch(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        callingService.switchCamera()
-            .delay(for: 1.0, scheduler: DispatchQueue.main)
-            .map { cameraDevice in
-                LocalUserAction.CameraSwitchSucceeded(cameraDevice: cameraDevice)
-            }.sink(receiveCompletion: {completion in
-                switch completion {
-                case .failure(let error):
-                    dispatch(LocalUserAction.CameraSwitchFailed(error: error))
-                case .finished:
-                    break
-                }
-            }, receiveValue: { newAction in
-                dispatch(newAction)
-            }).store(in: cancelBag)
     }
 }
 
