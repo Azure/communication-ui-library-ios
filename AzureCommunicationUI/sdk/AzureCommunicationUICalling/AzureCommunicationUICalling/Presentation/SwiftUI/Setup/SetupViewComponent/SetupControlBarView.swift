@@ -52,7 +52,7 @@ struct SetupControlBarView: View {
     var audioDeviceButton: some View {
         IconWithLabelButton(viewModel: viewModel.audioDeviceButtonViewModel)
             .background(SourceViewSpace(sourceView: audioDeviceButtonSourceView))
-            .accessibility(identifier: LocalizationKey.deviceAccesibiiltyLabel.rawValue)
+            .accessibility(identifier: AccessibilityIdentifier.toggleAudioDeviceAccesibiiltyID.rawValue)
     }
 
     var audioDeviceSelectionListView: some View {

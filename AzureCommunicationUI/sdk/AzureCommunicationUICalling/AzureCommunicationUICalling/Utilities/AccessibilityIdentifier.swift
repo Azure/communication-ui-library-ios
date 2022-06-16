@@ -10,6 +10,8 @@ enum AccessibilityIdentifier: String {
     case joinCallAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.JoinCall.AccessibilityID"
     case toggleVideoAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.Video.AccessibilityID"
     case togglMicAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.Mic.AccessibilityID"
+    case toggleAudioDeviceAccesibiiltyID = "AzureCommunicationUICalling.SetupView.Button.AudioDevice.AccessibilityID"
+    case dismisButtonAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityID"
     case videoAccessibilityID = "AzureCommunicationUICalling.CallingView.ControlButton.Video.AccessibilityID"
     case micAccessibilityID = "AzureCommunicationUICalling.CallingView.ControlButton.Microphone.AccessibilityID"
     case audioDeviceAccessibilityID =
