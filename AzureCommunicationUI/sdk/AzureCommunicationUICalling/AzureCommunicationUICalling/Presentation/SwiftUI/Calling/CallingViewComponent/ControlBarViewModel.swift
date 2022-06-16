@@ -10,10 +10,8 @@ class ControlBarViewModel: ObservableObject {
     private let logger: Logger
     private let localizationProvider: LocalizationProviderProtocol
     private let dispatch: ActionDispatch
-    private var cancellables = Set<AnyCancellable>()
     private(set) var cameraButtonViewModel: IconButtonViewModel!
 
-    @Published var isCameraOn: Bool
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var isAudioDeviceSelectionDisplayed: Bool = false
     @Published var isConfirmLeaveListDisplayed: Bool = false
@@ -41,7 +39,6 @@ class ControlBarViewModel: ObservableObject {
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
         self.displayEndCallConfirm = endCallConfirm
-        isCameraOn = cameraState.operation == .on
 
         audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
@@ -98,18 +95,6 @@ class ControlBarViewModel: ObservableObject {
         }
         hangUpButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .leaveCall)
-        $isCameraOn
-            .throttle(for: 0.75, scheduler: DispatchQueue.main, latest: true)
-            .sink { [weak self] isCameraOn in
-                let wasCameraOn = self?.cameraState.operation == .on
-                if wasCameraOn == isCameraOn {
-                    return
-                } else {
-                    let action: Action = isCameraOn ?
-                                         LocalUserAction.CameraOnTriggered() : LocalUserAction.CameraOffTriggered()
-                    self?.dispatch(action)
-                }
-            }.store(in: &cancellables)
     }
 
     func endCallButtonTapped() {
@@ -117,9 +102,9 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func cameraButtonTapped() {
-        isCameraOn.toggle()
-//        cameraAction = cameraState.operation == .on ?
-//            LocalUserAction.CameraOffTriggered() : LocalUserAction.CameraOnTriggered()
+        let action: Action = cameraState.operation == .on ?
+            LocalUserAction.CameraOffTriggered() : LocalUserAction.CameraOnTriggered()
+        dispatch(action)
     }
 
     func microphoneButtonTapped() {
@@ -195,7 +180,6 @@ class ControlBarViewModel: ObservableObject {
         }
 
         cameraState = localUserState.cameraState
-        isCameraOn = cameraState.operation == .on
         cameraButtonViewModel.update(iconName: cameraState.operation == .on ? .videoOn : .videoOff)
         cameraButtonViewModel.update(accessibilityLabel: cameraState.operation == .on
                                      ? localizationProvider.getLocalizedString(.videoOnAccessibilityLabel)

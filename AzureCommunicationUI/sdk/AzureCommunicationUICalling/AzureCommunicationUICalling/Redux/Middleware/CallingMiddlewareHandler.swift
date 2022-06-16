@@ -29,6 +29,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
     private let logger: Logger
     private let cancelBag = CancelBag()
     private let subscription = CancelBag()
+    private var isCameraTurningOn: Bool = false
 
     init(callingService: CallingServiceProtocol, logger: Logger) {
         self.callingService = callingService
@@ -192,16 +193,20 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
     }
 
     func requestCameraOn(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        guard let state = state as? AppState else {
+        guard let state = state as? AppState,
+              !isCameraTurningOn else {
             return
         }
+        isCameraTurningOn = true
         if state.permissionState.cameraPermission == .notAsked {
             dispatch(PermissionAction.CameraPermissionRequested())
         } else {
             callingService.startLocalVideoStream()
+                .delay(for: 1.0, scheduler: RunLoop.main)
                 .map { videoStream in
                     LocalUserAction.CameraOnSucceeded(videoStreamIdentifier: videoStream)
-                }.sink(receiveCompletion: {completion in
+                }.sink(receiveCompletion: { [weak self] completion in
+                    self?.isCameraTurningOn = false
                     switch completion {
                     case .failure(let error):
                         dispatch(LocalUserAction.CameraOnFailed(error: error))
@@ -215,6 +220,10 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
     }
 
     func requestCameraOff(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+        guard !isCameraTurningOn else {
+            return
+        }
+
         callingService.stopLocalVideoStream()
             .map {
                 LocalUserAction.CameraOffSucceeded()
@@ -232,6 +241,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     func requestCameraSwitch(state: ReduxState?, dispatch: @escaping ActionDispatch) {
         callingService.switchCamera()
+            .delay(for: 1.0, scheduler: RunLoop.main)
             .map { cameraDevice in
                 LocalUserAction.CameraSwitchSucceeded(cameraDevice: cameraDevice)
             }.sink(receiveCompletion: {completion in
