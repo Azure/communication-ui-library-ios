@@ -1,3 +1,3 @@
 # Release History
 
-[AzureCommunicationUICalling](sdk/AzureCommunicationUICalling/CHANGELOG.md)
+[AzureCommunicationUICalling](AzureCommunicationUI/sdk/AzureCommunicationUICalling/CHANGELOG.md)
