@@ -5,7 +5,6 @@
 
 import Combine
 import Foundation
-import SwiftUI
 
 protocol CallingMiddlewareHandling {
     func setupCall(state: ReduxState?, dispatch: @escaping ActionDispatch)
