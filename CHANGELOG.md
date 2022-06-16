@@ -1,3 +1,3 @@
 # Release History
 
-[AzureCommunicationUICalling](https://github.com/Azure/communication-ui-library-ios/tree/main/AzureCommunicationUI/sdk/AzureCommunicationUICalling/CHANGELOG.md)
+[AzureCommunicationUICalling](sdk/AzureCommunicationUICalling/CHANGELOG.md)
