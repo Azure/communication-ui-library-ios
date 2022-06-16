@@ -117,7 +117,7 @@ struct CallingView: View {
                     }
                     infoHeaderView
                         .frame(width: infoHeaderViewWidth, height: Constants.infoHeaderViewHeight, alignment: .leading)
-                        .padding(.horizontal, Constants.infoHeaderViewHorizontalPadding)
+                        .padding(.leading, Constants.infoHeaderViewHorizontalPadding)
                     Spacer()
                 }
                 Spacer()
