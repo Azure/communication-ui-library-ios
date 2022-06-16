@@ -1,4 +1,5 @@
-# Release History
+# Azure Communication UI Calling Release History
+
 ## 1.0.0 (Upcoming)
 ### Bugs Fixed
 - Fixed issue where header was still selectable with voiceover on and overlay visible. [#256](https://github.com/Azure/communication-ui-library-ios/pull/256)
