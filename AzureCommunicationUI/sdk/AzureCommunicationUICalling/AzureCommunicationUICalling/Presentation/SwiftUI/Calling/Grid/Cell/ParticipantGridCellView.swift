@@ -108,6 +108,7 @@ struct ParticipantGridCellView: View {
             Spacer().frame(height: 10)
             ParticipantTitleView(displayName: $viewModel.displayName,
                                  isMuted: $viewModel.isMuted,
+                                 isHold: $viewModel.isHold,
                                  titleFont: Fonts.caption1.font,
                                  mutedIconSize: 16)
             .opacity(viewModel.isHold ? 0.6 : 1)
@@ -126,6 +127,7 @@ struct ParticipantGridCellView: View {
 struct ParticipantTitleView: View {
     @Binding var displayName: String?
     @Binding var isMuted: Bool
+    @Binding var isHold: Bool
     let titleFont: Font
     let mutedIconSize: CGFloat
     private let hSpace: CGFloat = 4
@@ -142,7 +144,7 @@ struct ParticipantTitleView: View {
                     .lineLimit(1)
                     .foregroundColor(Color(StyleProvider.color.onBackground))
             }
-            if isMuted {
+            if isMuted && !isHold {
                 Icon(name: .micOff, size: mutedIconSize)
                     .accessibility(hidden: true)
             }
