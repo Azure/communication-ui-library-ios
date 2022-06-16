@@ -323,7 +323,9 @@ extension CallingMiddlewareHandler {
                         self.logger.debug("Subscription cancelled with Error Code: \(internalError)")
                         self.subscription.cancel()
                     }
-                } else if callingStatus == .disconnected {
+                // to fix the bug that resume call won't work without Internet
+                // we exit the UI library when we receive the wrong status .remoteHold
+                } else if callingStatus == .disconnected || callingStatus == .remoteHold {
                     self.logger.debug("Subscription cancel happy path")
                     dispatch(CompositeExitAction())
                     self.subscription.cancel()
