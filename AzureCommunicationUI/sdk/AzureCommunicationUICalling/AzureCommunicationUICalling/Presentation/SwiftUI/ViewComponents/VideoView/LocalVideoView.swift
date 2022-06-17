@@ -92,6 +92,7 @@ struct LocalVideoView: View {
                             Spacer().frame(height: 10)
                             ParticipantTitleView(displayName: $viewModel.displayName,
                                                  isMuted: $viewModel.isMuted,
+                                                 isHold: .constant(false),
                                                  titleFont: Fonts.caption1.font,
                                                  mutedIconSize: 16)
                         } else if screenSizeClass == .iphonePortraitScreenSize {
