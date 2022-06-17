@@ -33,39 +33,14 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     }
 
     func makeUIView(context: Context) -> UIScrollView {
-
-        // Creates a content view for scrollview, that holds on to the rendererView
-        let contentView = UIView()
-        contentView.translatesAutoresizingMaskIntoConstraints = true
-        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-
         // Setup scrollview and render view
         let scrollView = UIScrollView()
-        scrollView.delegate = context.coordinator
-        scrollView.maximumZoomScale = Constants.initialMaxZoomScale
-        scrollView.minimumZoomScale = Constants.initialMinZoomScale
-        scrollView.bouncesZoom = false
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.showsHorizontalScrollIndicator = false
-        scrollView.decelerationRate = .fast
 
-        videoRendererViewInfo.rendererView.translatesAutoresizingMaskIntoConstraints = true
-        videoRendererViewInfo.rendererView.frame = scrollView.bounds
-        videoRendererViewInfo.rendererView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        // Setup scrollview and render view
+        setupScrollView(scrollView, context: context)
 
-        contentView.addSubview(videoRendererViewInfo.rendererView)
-        scrollView.addSubview(contentView)
-        scrollView.contentSize = videoRendererViewInfo.rendererView.bounds.size
-        scrollView.zoomScale = Constants.initialMinZoomScale
-
-        // Double tap action
-        let doubleTapGesture = UITapGestureRecognizer(target: context.coordinator,
-                                                      action: #selector(Coordinator.doubleTapped))
-        doubleTapGesture.numberOfTapsRequired = Constants.maxTapRequired
-        doubleTapGesture.delegate = context.coordinator
-        rendererViewManager?.didRenderFirstFrame = context.coordinator.videoStreamRenderer(didRenderFirstFrameWithSize:)
-
-        scrollView.addGestureRecognizer(doubleTapGesture)
+        // Add double tap action
+        addDoubleTapGestureRecognizer(for: scrollView, coordinator: context.coordinator)
         return scrollView
     }
 
@@ -79,8 +54,9 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
            currentContentView.subviews.first === videoRendererViewInfo.rendererView {
             return
         }
-
+        // Remove rendererView from superview
         videoRendererViewInfo.rendererView.removeFromSuperview()
+        // Remove subviews from the scroll view
         for view in scrollView.subviews {
             view.removeFromSuperview()
             for innerView in view.subviews {
@@ -89,6 +65,38 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         }
 
         // Setup scrollview and render view
+        setupScrollView(scrollView, context: context)
+
+        // Remove double tap action is already added
+        if let gestures = scrollView.gestureRecognizers,
+           let tapGestureRecognizer = gestures.first(where: { $0.numberOfTouches == Constants.maxTapRequired }) {
+            scrollView.removeGestureRecognizer(tapGestureRecognizer)
+        }
+
+        // Add double tap action
+        addDoubleTapGestureRecognizer(for: scrollView, coordinator: context.coordinator)
+    }
+
+    static func dismantleUIView(_ uiView: UIScrollView, coordinator: Coordinator) {
+        uiView.delegate = nil
+        for view in uiView.subviews {
+            view.removeFromSuperview()
+        }
+    }
+
+    private func addDoubleTapGestureRecognizer(for scrollView: UIScrollView,
+                                               coordinator: Coordinator) {
+        let doubleTapGesture = UITapGestureRecognizer(target: coordinator,
+                                                      action: #selector(Coordinator.doubleTapped))
+        doubleTapGesture.numberOfTapsRequired = Constants.maxTapRequired
+        doubleTapGesture.delegate = coordinator
+        rendererViewManager?.didRenderFirstFrame = coordinator.videoStreamRenderer(didRenderFirstFrameWithSize:)
+
+        scrollView.addGestureRecognizer(doubleTapGesture)
+    }
+
+    private func setupScrollView(_ scrollView: UIScrollView,
+                                 context: Context) {
         scrollView.delegate = context.coordinator
         scrollView.maximumZoomScale = Constants.initialMaxZoomScale
         scrollView.minimumZoomScale = Constants.initialMinZoomScale
@@ -97,35 +105,20 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         scrollView.showsHorizontalScrollIndicator = false
         scrollView.decelerationRate = .fast
 
+        // Creates a content view for scrollview, that contains the rendererView
         let contentView = UIView()
-
         scrollView.addSubview(contentView)
         scrollView.contentSize = scrollView.bounds.size
+
+        // ZoomScale should be set before contentView.frame in order to resize contentView correctly
         scrollView.zoomScale = Constants.initialMinZoomScale
-            contentView.translatesAutoresizingMaskIntoConstraints = true
+        contentView.translatesAutoresizingMaskIntoConstraints = true
         contentView.frame = scrollView.bounds
-            contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         videoRendererViewInfo.rendererView.translatesAutoresizingMaskIntoConstraints = true
         videoRendererViewInfo.rendererView.frame = scrollView.bounds
         videoRendererViewInfo.rendererView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         contentView.addSubview(videoRendererViewInfo.rendererView)
-
-        // Double tap action
-        let doubleTapGesture = UITapGestureRecognizer(target: context.coordinator,
-                                                      action: #selector(Coordinator.doubleTapped))
-        doubleTapGesture.numberOfTapsRequired = Constants.maxTapRequired
-        doubleTapGesture.delegate = context.coordinator
-        rendererViewManager?.didRenderFirstFrame = context.coordinator.videoStreamRenderer(didRenderFirstFrameWithSize:)
-// need to remove? gesture recognizer
-        
-        scrollView.addGestureRecognizer(doubleTapGesture)
-    }
-
-    static func dismantleUIView(_ uiView: UIScrollView, coordinator: Coordinator) {
-        uiView.delegate = nil
-        for view in uiView.subviews {
-            view.removeFromSuperview()
-        }
     }
 
     // MARK: - Coordinator
