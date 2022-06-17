@@ -186,10 +186,12 @@ class ControlBarViewModel: ObservableObject {
             cameraPermission = permissionState.cameraPermission
         }
 
-        cameraState = localUserState.cameraState
-        if isCameraStateUpdating {
-            isCameraStateUpdating = cameraState.operation != .on && cameraState.operation != .off
+        if isCameraStateUpdating,
+           cameraState.operation != localUserState.cameraState.operation {
+            isCameraStateUpdating = localUserState.cameraState.operation != .on &&
+                                    localUserState.cameraState.operation != .off
         }
+        cameraState = localUserState.cameraState
         cameraButtonViewModel.update(iconName: cameraState.operation == .on ? .videoOn : .videoOff)
         cameraButtonViewModel.update(accessibilityLabel: cameraState.operation == .on
                                      ? localizationProvider.getLocalizedString(.videoOnAccessibilityLabel)
