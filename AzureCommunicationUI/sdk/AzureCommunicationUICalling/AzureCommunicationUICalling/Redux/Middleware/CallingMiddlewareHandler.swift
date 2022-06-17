@@ -199,9 +199,10 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             dispatch(PermissionAction.CameraPermissionRequested())
         } else {
             callingService.startLocalVideoStream()
+                .delay(for: .seconds(1.0), scheduler: DispatchQueue.main)
                 .map { videoStream in
                     LocalUserAction.CameraOnSucceeded(videoStreamIdentifier: videoStream)
-                }.sink(receiveCompletion: {completion in
+                }.sink(receiveCompletion: { completion in
                     switch completion {
                     case .failure(let error):
                         dispatch(LocalUserAction.CameraOnFailed(error: error))
@@ -232,6 +233,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     func requestCameraSwitch(state: ReduxState?, dispatch: @escaping ActionDispatch) {
         callingService.switchCamera()
+            .delay(for: .seconds(1.0), scheduler: DispatchQueue.main)
             .map { cameraDevice in
                 LocalUserAction.CameraSwitchSucceeded(cameraDevice: cameraDevice)
             }.sink(receiveCompletion: {completion in

@@ -341,9 +341,11 @@ class ControlBarViewModelTests: XCTestCase {
                 XCTAssertTrue(self?.storeFactory.actions.first is LocalUserAction.CameraOffTriggered)
                 expectation.fulfill()
             }.store(in: cancellable)
-        sut.cameraState = LocalUserState.CameraState(operation: .on,
-                                                                     device: .front,
-                                                                     transmission: .local)
+        sut.update(localUserState: LocalUserState(cameraState: LocalUserState.CameraState(operation: .on,
+                                                                                          device: .front,
+                                                                                          transmission: .local)),
+                   permissionState: PermissionState(),
+                   callingState: CallingState())
         sut.cameraButtonTapped()
         wait(for: [expectation], timeout: 1)
     }
