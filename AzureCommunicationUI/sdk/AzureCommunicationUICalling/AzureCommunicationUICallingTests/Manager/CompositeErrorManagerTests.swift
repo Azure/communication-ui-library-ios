@@ -41,7 +41,9 @@ class CompositeErrorManagerTests: XCTestCase {
     func test_errorManager_receiveState_when_fatalErrorCallJoin_then_receiveDidFail() {
         let fatalError = CallCompositeError(code: CallCompositeErrorCode.callJoin, error: nil)
         self.expectedError = fatalError
-        let errorState = ErrorState(error: fatalError, errorCategory: .callState)
+        let errorState = ErrorState(internalError: .callJoinFailed,
+                                    error: nil,
+                                    errorCategory: .callState)
         let newState = getAppState(errorState: errorState)
 
         mockStoreFactory.setState(newState)
@@ -51,7 +53,9 @@ class CompositeErrorManagerTests: XCTestCase {
     func test_errorManager_receiveState_when_fatalErrorTokenExpired_then_receiveEmergencyExitAction() {
         let fatalError = CallCompositeError(code: CallCompositeErrorCode.tokenExpired, error: nil)
         self.expectedError = fatalError
-        let errorState = ErrorState.init(error: fatalError, errorCategory: .fatal)
+        let errorState = ErrorState(internalError: .callTokenFailed,
+                                    error: nil,
+                                    errorCategory: .fatal)
         let newState = getAppState(errorState: errorState)
         let actionExpectation = XCTestExpectation(description: "Dispatch the new emergency exit action")
 

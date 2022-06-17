@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import UIKit
 
 class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
@@ -15,6 +16,10 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
 
     var title: String {
         return localizationProvider.getLocalizedString(.onHoldMessage)
+    }
+
+    var background: UIColor {
+        return StyleProvider.color.onHoldBackground
     }
 
     var errorInfoViewModel: ErrorInfoViewModel?

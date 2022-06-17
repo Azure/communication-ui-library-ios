@@ -20,6 +20,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var participantGridViewModel: ParticipantGridViewModel?
     var participantsListViewModel: ParticipantsListViewModel?
     var bannerViewModel: BannerViewModel?
+    var onHoldOverlayViewModel: OnHoldOverlayViewModel?
     var previewAreaViewModel: PreviewAreaViewModel?
     var setupControlBarViewModel: SetupControlBarViewModel?
     var errorInfoViewModel: ErrorInfoViewModel?
@@ -114,7 +115,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                 subtitle: String) -> ErrorInfoViewModel {
         return errorInfoViewModel ?? ErrorInfoViewModel(localizationProvider: LocalizationProviderMocking(),
                                                         title: title,
-                                                        subtitle: title)
+                                                        subtitle: subtitle)
     }
 
     func makeAudioDevicesListCellViewModel(icon: CompositeIcon,
@@ -211,7 +212,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
-        return OnHoldOverlayViewModel(localizationProvider: LocalizationProviderMocking(),
+        return onHoldOverlayViewModel ?? OnHoldOverlayViewModel(localizationProvider: LocalizationProviderMocking(),
                                       compositeViewModelFactory: self,
                                       logger: LoggerMocking(),
                                       accessibilityProvider: AccessibilityProviderMocking(),

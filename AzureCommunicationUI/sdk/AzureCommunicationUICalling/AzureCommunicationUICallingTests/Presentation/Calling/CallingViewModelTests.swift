@@ -168,6 +168,32 @@ class CallingViewModelTests: XCTestCase {
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
+
+    func test_callingViewModel_receive_when_callingStateStatusIsLocalHold_then_isOnHoldOverlayDisplayed_shouldBeTrue() {
+
+        let sut = makeSUT()
+        let appState = AppState(callingState: CallingState(status: .localHold))
+        sut.receive(appState)
+        XCTAssertTrue(sut.onHoldOverlayViewModel.isDisplayed)
+    }
+
+    func test_callingViewModel_update_when_callingStateStatusIsConnected_then_isOnHoldOverlayDisplayed_shouldBeFalse() {
+        let sut = makeSUT()
+        let appState = AppState(callingState: CallingState(status: .connected))
+        sut.receive(appState)
+        XCTAssertFalse(sut.lobbyOverlayViewModel.isDisplayed)
+    }
+
+    func test_callingViewModel_receive_when_statusUpdated_then_onHoldOverlayViewModelUpdated() {
+        let expectation = XCTestExpectation(description: "OnHoldOverlayViewModel is updated")
+        let appState = AppState(callingState: CallingState(status: .localHold))
+        let sut = makeSUT(state: appState, updateOnHoldOverlayViewModel: { callingStatus in
+            XCTAssertEqual(appState.callingState.status, callingStatus)
+            expectation.fulfill()
+        })
+        sut.receive(appState)
+        wait(for: [expectation], timeout: timeout)
+    }
 }
 
 extension CallingViewModelTests {
@@ -276,6 +302,27 @@ extension CallingViewModelTests {
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         factoryMocking.bannerViewModel = BannerViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                 updateState: updateBannerViewModel)
+        return CallingViewModel(compositeViewModelFactory: factoryMocking,
+                                logger: logger,
+                                store: storeFactory.store,
+                                localizationProvider: LocalizationProviderMocking(),
+                                accessibilityProvider: AccessibilityProvider(),
+                                isIpadInterface: false)
+    }
+
+    func makeSUT(state: AppState? = nil, updateOnHoldOverlayViewModel: @escaping ((CallingStatus) -> Void)) -> CallingViewModel {
+        let storeFactory = StoreFactoryMocking()
+        if let state = state {
+            storeFactory.store.state = state
+        }
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+
+        factoryMocking.onHoldOverlayViewModel = OnHoldOverlayViewModelMocking(localizationProvider: LocalizationProviderMocking(),
+                                                                              compositeViewModelFactory: factoryMocking,
+                                                                              logger: logger,
+                                                                              accessibilityProvider: AccessibilityProvider(),
+                                                                              resumeAction: {},
+                                                                              updateState: updateOnHoldOverlayViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
