@@ -4,7 +4,10 @@
 ### Bugs Fixed
 - Fixed issue where header was still selectable with voiceover on and overlay visible. [#256](https://github.com/Azure/communication-ui-library-ios/pull/256)
 - Fixed hold overlay to have a solid colour. [#262](https://github.com/Azure/communication-ui-library-ios/pull/262) 
-- Fix the issue that resume a call without internet could stop user from exit. [#268](https://github.com/Azure/communication-ui-library-ios/pull/268
+- Fixed the issue that resume a call without internet could stop user from exit. [#268](https://github.com/Azure/communication-ui-library-ios/pull/268)
+
+### Other Changes
+- Added delay for camera status update. [#270](https://github.com/Azure/communication-ui-library-ios/pull/270)
 
 ## 1.0.0-beta.2 (2022-06-13)
 ### New Features
