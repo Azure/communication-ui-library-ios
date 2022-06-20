@@ -58,8 +58,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
             expectation.fulfill()
         }
         guard let state: AppState = getState(callingState: .connected,
-                                       cameraStatus: .off,
-                                       cameraDeviceStatus: .front,
+                                             cameraStatus: .off,
+                                             cameraDeviceStatus: .front,
                                              cameraPermission: .notAsked) as? AppState else {
             XCTFail("Failed with state validation")
             return
@@ -323,6 +323,22 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_callingMiddlewareHandler_setupCall_when_internalErrorNotNil_then_shouldNotDispatch() {
+        let expectation = XCTestExpectation(description: "Dispatch the new action")
+        expectation.isInverted = true
+
+        func dispatch(action: Action) {
+            XCTFail("Should not dispatch")
+        }
+        callingMiddlewareHandler.setupCall(state: getState(callingState: .none,
+                                                           cameraStatus: .off,
+                                                           cameraDeviceStatus: .front,
+                                                           cameraPermission: .granted,
+                                                           internalError: .callEvicted),
+                                           dispatch: dispatch)
+        wait(for: [expectation], timeout: 1)
+    }
+
     func test_callingMiddlewareHandler_enterBackground_when_callConnected_cameraStatusOn_then_stopLocalVideoStreamCalled() {
         callingMiddlewareHandler.enterBackground(state: getState(callingState: .connected,
                                                                  cameraStatus: .on,
@@ -416,8 +432,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
     func test_callingMiddlewareHandler_holdCall_then_holdCallCalled() {
         guard let state: AppState = getState(callingState: .connected,
-                                       cameraStatus: .off,
-                                       cameraDeviceStatus: .front,
+                                             cameraStatus: .off,
+                                             cameraDeviceStatus: .front,
                                              cameraPermission: .notAsked) as? AppState else {
             XCTFail("Failed with state validation")
             return
@@ -477,7 +493,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         }
         callingMiddlewareHandler.onCameraPermissionIsSet(state: getState(cameraPermission: .requesting,
                                                                          cameraTransmissionStatus: .local),
-                                                 dispatch: dispatch)
+                                                         dispatch: dispatch)
     }
 
     func test_callingMiddlewareHandler_onCameraPermissionIsSet_when_callTransmissionRemote_cameraPermissionRequesting_then_updateCameraOnTriggered() {
@@ -486,7 +502,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         }
         callingMiddlewareHandler.onCameraPermissionIsSet(state: getState(cameraPermission: .requesting,
                                                                          cameraTransmissionStatus: .remote),
-                                                 dispatch: dispatch)
+                                                         dispatch: dispatch)
     }
 
     func test_callingMiddlewareHandler_onCameraPermissionIsSet_when_callTransmissionRemote_cameraPermissionNotRequesting_then_updateCameraOnTriggered() {
@@ -495,7 +511,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         }
         callingMiddlewareHandler.onCameraPermissionIsSet(state: getState(cameraPermission: .granted,
                                                                          cameraTransmissionStatus: .remote),
-                                                 dispatch: dispatch)
+                                                         dispatch: dispatch)
     }
 }
 
@@ -509,7 +525,8 @@ extension CallingMiddlewareHandlerTests {
                           cameraStatus: LocalUserState.CameraOperationalStatus = .on,
                           cameraDeviceStatus: LocalUserState.CameraDeviceSelectionStatus = .front,
                           cameraPermission: AppPermission.Status = .unknown,
-                          cameraTransmissionStatus: LocalUserState.CameraTransmissionStatus = .local) -> ReduxState {
+                          cameraTransmissionStatus: LocalUserState.CameraTransmissionStatus = .local,
+                          internalError: CallCompositeInternalError? = nil) -> ReduxState {
         let callState = CallingState(status: callingState)
         let cameraState = LocalUserState.CameraState(operation: cameraStatus,
                                                      device: cameraDeviceStatus,
@@ -522,11 +539,13 @@ extension CallingMiddlewareHandlerTests {
                                         localVideoStreamIdentifier: nil)
         let permissionState = PermissionState(audioPermission: .unknown,
                                               cameraPermission: cameraPermission)
+        let errorState = ErrorState(internalError: internalError)
         return AppState(callingState: callState,
                         permissionState: permissionState,
                         localUserState: localState,
                         lifeCycleState: LifeCycleState(),
-                        remoteParticipantsState: .init())
+                        remoteParticipantsState: .init(),
+                        errorState: errorState)
     }
 
     private func getEmptyDispatch() -> ActionDispatch {
