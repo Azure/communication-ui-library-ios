@@ -58,8 +58,7 @@ struct ParticipantGridCellView: View {
         guard !videoStreamId.isEmpty else {
             return nil
         }
-        let userId = viewModel.participantIdentifier
-        let remoteParticipantVideoViewId = RemoteParticipantVideoViewId(userIdentifier: userId,
+        let remoteParticipantVideoViewId = RemoteParticipantVideoViewId(userIdentifier: viewModel.participantIdentifier,
                                                                         videoStreamIdentifier: videoStreamId)
         return rendererViewManager?.getRemoteParticipantVideoRendererView(remoteParticipantVideoViewId)
     }
