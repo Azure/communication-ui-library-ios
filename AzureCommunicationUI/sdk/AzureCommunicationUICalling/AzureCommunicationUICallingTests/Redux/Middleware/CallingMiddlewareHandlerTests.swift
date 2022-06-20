@@ -105,7 +105,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
             }
         }
         callingMiddlewareHandler.requestCameraOn(state: getEmptyState(), dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 1.5)
     }
 
     func test_callingMiddlewareHandler_requestCameraOff_when_returnsError_then_updateCameraStatusIsError() {
@@ -129,7 +129,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         }
         mockCallingService.error = error
         callingMiddlewareHandler.requestCameraOn(state: getEmptyState(), dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 1.5)
     }
 
     func test_callingMiddlewareHandler_requestCameraSwitch_then_switchCameraCalled() {
@@ -153,7 +153,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
             }
         }
         callingMiddlewareHandler.requestCameraSwitch(state: getEmptyState(), dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 1.5)
     }
 
     func test_callingMiddlewareHandler_requestCameraSwitch_when_returnsError_then_updateCameraDeviceStatusIsError() {
@@ -165,7 +165,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         }
         mockCallingService.error = error
         callingMiddlewareHandler.requestCameraSwitch(state: getEmptyState(), dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 1.5)
     }
 
     func test_callingMiddlewareHandler_endCall_then_endCallCalled() {
@@ -411,7 +411,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
                                                                  cameraStatus: .paused,
                                                                  cameraDeviceStatus: .front),
                                                  dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 1.5)
     }
 
     func test_callingMiddlewareHandler_holdCall_then_holdCallCalled() {
@@ -456,7 +456,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
                                                                  cameraStatus: .paused,
                                                                  cameraDeviceStatus: .front),
                                                  dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+        wait(for: [expectation], timeout: 1.5)
     }
 
     func test_callingMiddlewareHandler_enterForeground_when_callConnected_cameraStatusOn_returnsError_then_updateCameraStatusIsError() {
