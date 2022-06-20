@@ -52,7 +52,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 }
             }, receiveValue: {
                 if state.permissionState.cameraPermission == .granted,
-                   state.localUserState.cameraState.operation == .off {
+                   state.localUserState.cameraState.operation == .off,
+                   state.errorState.internalError == nil {
                     dispatch(LocalUserAction.CameraPreviewOnTriggered())
                 }
             })
