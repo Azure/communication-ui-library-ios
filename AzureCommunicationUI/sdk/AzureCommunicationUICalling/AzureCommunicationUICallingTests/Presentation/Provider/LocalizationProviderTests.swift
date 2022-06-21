@@ -16,6 +16,11 @@ class LocalizationProviderTests: XCTestCase {
         logger = LoggerMocking()
     }
 
+    override func tearDown() {
+        super.tearDown()
+        logger = nil
+    }
+
     func test_localizationProvider_applyRTL_when_layoutDirectionRightToLeft_then_shouldRTLReturnTrue() {
         let sut = makeSUT()
         let locale: Locale = SupportedLocale.en

@@ -7,11 +7,16 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class ErrorInfoViewModelTests: XCTestCase {
-    private var localizationProvier: LocalizationProviderMocking!
+    private var localizationProvider: LocalizationProviderMocking!
 
     override func setUp() {
         super.setUp()
-        localizationProvier = LocalizationProviderMocking()
+        localizationProvider = LocalizationProviderMocking()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        localizationProvider = nil
     }
 
     func test_errorInfoViewModel_dismissContent_alwaysReturns_snackBarDismissContent() {
@@ -79,6 +84,6 @@ class ErrorInfoViewModelTests: XCTestCase {
     }
 
     func makeSUT() -> ErrorInfoViewModel {
-        return ErrorInfoViewModel(localizationProvider: localizationProvier)
+        return ErrorInfoViewModel(localizationProvider: localizationProvider)
     }
 }

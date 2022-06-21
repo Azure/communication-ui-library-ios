@@ -19,6 +19,13 @@ class NavigationRouterTests: XCTestCase {
         swiftUIRouter = NavigationRouter(store: storeFactory.store, logger: logger)
     }
 
+    override func tearDown() {
+        super.tearDown()
+        storeFactory = nil
+        logger = nil
+        swiftUIRouter = nil
+    }
+
     func test_router_navigate_whenNavigateToNewView_shouldCallLog() {
         let state = AppState(navigationState: NavigationState(status: .inCall))
 

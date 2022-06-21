@@ -23,6 +23,15 @@ class OnHoldOverlayViewModelTests: XCTestCase {
         accessibilityProvider = AccessibilityProviderMocking()
     }
 
+    override func tearDown() {
+        super.tearDown()
+        logger = nil
+        storeFactory = nil
+        localizationProvider = nil
+        factoryMocking = nil
+        accessibilityProvider = nil
+    }
+
     func test_onHoldOverlayViewModel_displays_title_from_AppLocalization() {
         let sut = makeSUT()
         XCTAssertEqual(sut.title, "You're on hold")
@@ -54,9 +63,9 @@ class OnHoldOverlayViewModelTests: XCTestCase {
 
 extension OnHoldOverlayViewModelTests {
     func makeSUT() -> OnHoldOverlayViewModel {
-        return OnHoldOverlayViewModel(localizationProvider: LocalizationProvider(logger: LoggerMocking()),
+        return OnHoldOverlayViewModel(localizationProvider: LocalizationProvider(logger: logger),
                                       compositeViewModelFactory: factoryMocking,
-                                      logger: LoggerMocking(),
+                                      logger: logger,
                                       accessibilityProvider: accessibilityProvider,
                                       resumeAction: {})
     }
@@ -64,15 +73,15 @@ extension OnHoldOverlayViewModelTests {
     func makeSUTLocalizationMocking() -> OnHoldOverlayViewModel {
         return OnHoldOverlayViewModel(localizationProvider: localizationProvider,
                                       compositeViewModelFactory: factoryMocking,
-                                      logger: LoggerMocking(),
+                                      logger: logger,
                                       accessibilityProvider: accessibilityProvider,
                                       resumeAction: {})
     }
 
     func makeSUT(withAction action: @escaping (() -> Void)) -> OnHoldOverlayViewModelMocking {
-        return OnHoldOverlayViewModelMocking(localizationProvider: LocalizationProvider(logger: LoggerMocking()),
+        return OnHoldOverlayViewModelMocking(localizationProvider: LocalizationProvider(logger: logger),
                                                   compositeViewModelFactory: factoryMocking,
-                                                  logger: LoggerMocking(),
+                                                  logger: logger,
                                                   accessibilityProvider: accessibilityProvider,
                                                   resumeAction: action)
     }

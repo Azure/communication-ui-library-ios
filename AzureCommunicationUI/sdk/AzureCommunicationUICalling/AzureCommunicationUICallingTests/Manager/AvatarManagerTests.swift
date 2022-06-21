@@ -9,10 +9,16 @@ import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
 
 class AvatarManagerTests: XCTestCase {
-    var mockStoreFactory = StoreFactoryMocking()
+    var mockStoreFactory: StoreFactoryMocking!
 
     override func setUp() {
         super.setUp()
+        mockStoreFactory = StoreFactoryMocking()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        mockStoreFactory = nil
     }
 
     func test_avatarManager_when_setLocalAvatar_then_getLocalAvatar_returnsSameUIImage() {

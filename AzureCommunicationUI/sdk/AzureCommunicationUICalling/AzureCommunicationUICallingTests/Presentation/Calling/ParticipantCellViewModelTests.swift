@@ -8,7 +8,17 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class ParticipantCellViewModelTests: XCTestCase {
-    var cancellable = CancelBag()
+    var cancellable: CancelBag!
+
+    override func setUp() {
+        super.setUp()
+        cancellable = CancelBag()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        cancellable = nil
+    }
 
     func test_participantCellViewModel_init_then_getCorrectRendererViewModel() {
         let expectedParticipantIdentifier = "expectedParticipantIdentifier"
