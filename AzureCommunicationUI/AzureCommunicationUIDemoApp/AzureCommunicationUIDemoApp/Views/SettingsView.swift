@@ -26,7 +26,7 @@ struct SettingsView: View {
     }
 
     @ObservedObject var envConfigSubject: EnvConfigSubject
-
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     let avatarChoices: [String] = ["cat", "fox", "koala", "monkey", "mouse", "octopus"]
 
     var body: some View {
@@ -36,7 +36,14 @@ struct SettingsView: View {
                 avatarSettings
                 remoteParticipantsAvatarsSettings
                 themeSettings
-            }.navigationTitle("UI Library - Settings")
+            }
+            .navigationTitle("UI Library - Settings")
+            .toolbar {
+                Button(
+                    action: { self.presentationMode.wrappedValue.dismiss() },
+                    label: { Image(systemName: "xmark") }
+                )
+            }
         }
     }
 
