@@ -19,9 +19,8 @@ struct ParticipantGridCellView: View {
     var body: some View {
         Group {
             GeometryReader { geometry in
-                if isVideoChanging {
-                    EmptyView()
-                } else if let rendererViewInfo = getRendererViewInfo() {
+                if let videoStreamId = displayedVideoStreamId,
+                   let rendererViewInfo = getRendererViewInfo(for: videoStreamId) {
                     let zoomable = viewModel.videoViewModel?.videoStreamType == .screenSharing
                     ParticipantGridCellVideoView(videoRendererViewInfo: rendererViewInfo,
                                                  rendererViewManager: rendererViewManager,
@@ -39,18 +38,8 @@ struct ParticipantGridCellView: View {
             .accessibilityLabel(Text(viewModel.accessibilityLabel))
         }
         .onReceive(viewModel.$videoViewModel) { model in
-            let cachedVideoStreamId = displayedVideoStreamId
             if model?.videoStreamId != displayedVideoStreamId {
                 displayedVideoStreamId = model?.videoStreamId
-            }
-
-            if model?.videoStreamId != cachedVideoStreamId,
-               model?.videoStreamId != nil {
-                // workaround to force rendererView being recreated
-                isVideoChanging = true
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    isVideoChanging = false
-                }
             }
         }
         .onReceive(viewModel.$participantIdentifier) {
@@ -65,11 +54,12 @@ struct ParticipantGridCellView: View {
         }
     }
 
-    func getRendererViewInfo() -> ParticipantRendererViewInfo? {
-        guard let remoteParticipantVideoViewId = getRemoteParticipantVideoViewId() else {
+    func getRendererViewInfo(for videoStreamId: String) -> ParticipantRendererViewInfo? {
+        guard !videoStreamId.isEmpty else {
             return nil
         }
-
+        let remoteParticipantVideoViewId = RemoteParticipantVideoViewId(userIdentifier: viewModel.participantIdentifier,
+                                                                        videoStreamIdentifier: videoStreamId)
         return rendererViewManager?.getRemoteParticipantVideoRendererView(remoteParticipantVideoViewId)
     }
 
@@ -88,16 +78,6 @@ struct ParticipantGridCellView: View {
         viewModel.updateParticipantNameIfNeeded(with: participantViewData.displayName)
     }
 
-    private func getRemoteParticipantVideoViewId() -> RemoteParticipantVideoViewId? {
-        guard let videoStreamId = viewModel.videoViewModel?.videoStreamId,
-              !videoStreamId.isEmpty else {
-            return nil
-        }
-        let userId = viewModel.participantIdentifier
-        return RemoteParticipantVideoViewId(userIdentifier: userId,
-                                            videoStreamIdentifier: videoStreamId)
-    }
-
     var avatarView: some View {
         return VStack(alignment: .center, spacing: 5) {
             CompositeAvatar(displayName: $viewModel.displayName,
@@ -108,6 +88,7 @@ struct ParticipantGridCellView: View {
             Spacer().frame(height: 10)
             ParticipantTitleView(displayName: $viewModel.displayName,
                                  isMuted: $viewModel.isMuted,
+                                 isHold: $viewModel.isHold,
                                  titleFont: Fonts.caption1.font,
                                  mutedIconSize: 16)
             .opacity(viewModel.isHold ? 0.6 : 1)
@@ -126,6 +107,7 @@ struct ParticipantGridCellView: View {
 struct ParticipantTitleView: View {
     @Binding var displayName: String?
     @Binding var isMuted: Bool
+    @Binding var isHold: Bool
     let titleFont: Font
     let mutedIconSize: CGFloat
     private let hSpace: CGFloat = 4
@@ -142,7 +124,7 @@ struct ParticipantTitleView: View {
                     .lineLimit(1)
                     .foregroundColor(Color(StyleProvider.color.onBackground))
             }
-            if isMuted {
+            if isMuted && !isHold {
                 Icon(name: .micOff, size: mutedIconSize)
                     .accessibility(hidden: true)
             }

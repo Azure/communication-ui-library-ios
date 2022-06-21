@@ -46,13 +46,14 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 }
                 switch completion {
                 case .failure(let error):
-                    self.handle(error: error, errorCode: CallCompositeErrorCode.callJoin, dispatch: dispatch)
+                    self.handle(error: error, errorType: .callJoinFailed, dispatch: dispatch)
                 case .finished:
                     break
                 }
             }, receiveValue: {
                 if state.permissionState.cameraPermission == .granted,
-                   state.localUserState.cameraState.operation == .off {
+                   state.localUserState.cameraState.operation == .off,
+                   state.errorState.internalError == nil {
                     dispatch(LocalUserAction.CameraPreviewOnTriggered())
                 }
             })
@@ -71,7 +72,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             }
             switch completion {
             case .failure(let error):
-                self.handle(error: error, errorCode: CallCompositeErrorCode.callJoin, dispatch: dispatch)
+                self.handle(error: error, errorType: .callJoinFailed, dispatch: dispatch)
             case .finished:
                 break
             }
@@ -89,7 +90,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
                 switch completion {
                 case .failure(let error):
-                    self.handle(error: error, errorCode: CallCompositeErrorCode.callEnd, dispatch: dispatch)
+                    self.handle(error: error, errorType: .callEndFailed, dispatch: dispatch)
                 case .finished:
                     break
                 }
@@ -109,7 +110,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 }
                 switch completion {
                 case .failure(let error):
-                    self.handle(error: error, errorCode: CallCompositeErrorCode.callHold, dispatch: dispatch)
+                    self.handle(error: error, errorType: .callHoldFailed, dispatch: dispatch)
                 case .finished:
                     break
                 }
@@ -130,7 +131,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 }
                 switch completion {
                 case .failure(let error):
-                    self.handle(error: error, errorCode: CallCompositeErrorCode.callResume, dispatch: dispatch)
+                    self.handle(error: error, errorType: .callResumeFailed, dispatch: dispatch)
                 case .finished:
                     break
                 }
@@ -199,9 +200,10 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             dispatch(PermissionAction.CameraPermissionRequested())
         } else {
             callingService.startLocalVideoStream()
+                .delay(for: .seconds(1.0), scheduler: DispatchQueue.main)
                 .map { videoStream in
                     LocalUserAction.CameraOnSucceeded(videoStreamIdentifier: videoStream)
-                }.sink(receiveCompletion: {completion in
+                }.sink(receiveCompletion: { completion in
                     switch completion {
                     case .failure(let error):
                         dispatch(LocalUserAction.CameraOnFailed(error: error))
@@ -232,6 +234,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     func requestCameraSwitch(state: ReduxState?, dispatch: @escaping ActionDispatch) {
         callingService.switchCamera()
+            .delay(for: .seconds(1.0), scheduler: DispatchQueue.main)
             .map { cameraDevice in
                 LocalUserAction.CameraSwitchSucceeded(cameraDevice: cameraDevice)
             }.sink(receiveCompletion: {completion in
@@ -309,23 +312,26 @@ extension CallingMiddlewareHandler {
                 guard let self = self else {
                     return
                 }
-                let errorCode = callInfoModel.errorCode
+                let internalError = callInfoModel.internalError
                 let callingStatus = callInfoModel.status
 
                 self.handle(callingStatus: callingStatus, dispatch: dispatch)
                 self.logger.debug("Dispatch State Update: \(callingStatus)")
 
-                self.handle(errorCode: errorCode, dispatch: dispatch) {
-                    self.logger.debug("Subscription cancelled with Error Code: \(errorCode) ")
-                    self.subscription.cancel()
-                }
-
-                if callingStatus == .disconnected,
-                   errorCode.isEmpty {
+                if let internalError = internalError {
+                    self.handleCallInfo(internalError: internalError,
+                                        dispatch: dispatch) {
+                        self.logger.debug("Subscription cancelled with Error Code: \(internalError)")
+                        self.subscription.cancel()
+                    }
+                // to fix the bug that resume call won't work without Internet
+                // we exit the UI library when we receive the wrong status .remoteHold
+                } else if callingStatus == .disconnected || callingStatus == .remoteHold {
                     self.logger.debug("Subscription cancel happy path")
                     dispatch(CompositeExitAction())
                     self.subscription.cancel()
                 }
+
             }.store(in: subscription)
 
         callingService.isRecordingActiveSubject

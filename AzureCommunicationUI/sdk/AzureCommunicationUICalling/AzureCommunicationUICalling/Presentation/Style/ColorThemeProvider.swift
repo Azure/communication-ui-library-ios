@@ -37,6 +37,7 @@ class ColorThemeProvider {
     let gradientColor = UIColor.compositeColor(.gradientColor)
     let hangup = UIColor.compositeColor(.hangup)
     let overlay = UIColor.compositeColor(.overlay)
+    let onHoldBackground = UIColor.compositeColor(.onHoldBackground)
 
     init(themeOptions: ThemeOptions?) {
         self.colorSchemeOverride = themeOptions?.colorSchemeOverride ?? .unspecified
