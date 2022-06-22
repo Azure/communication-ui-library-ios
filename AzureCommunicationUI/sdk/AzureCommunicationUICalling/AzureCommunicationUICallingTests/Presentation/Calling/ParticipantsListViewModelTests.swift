@@ -254,7 +254,6 @@ class ParticipantsListViewModelTests: XCTestCase {
     }
 
     func test_participantsListViewModel_update_when_remoteParticipantsStateChanged_then_participantsListUpdated() {
-        let sut = makeSUT()
         let participantInfoList = [ParticipantInfoModelBuilder.get(displayName: "Name 1"),
                                    ParticipantInfoModelBuilder.get(displayName: "Name 2"),
                                    ParticipantInfoModelBuilder.get(displayName: "Name 3")]
@@ -267,6 +266,7 @@ class ParticipantsListViewModelTests: XCTestCase {
             return ParticipantsListCellViewModel(participantInfoModel: infoModel,
                                                  localizationProvider: self?.localizationProvider ?? LocalizationProviderMocking())
         }
+        let sut = makeSUT()
         sut.update(localUserState: LocalUserState(),
                    remoteParticipantsState: remoteParticipantsState)
         XCTAssertEqual(sut.participantsList.map { $0.getParticipantName(with: nil) },

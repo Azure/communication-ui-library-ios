@@ -13,6 +13,7 @@ class CallingViewModelTests: XCTestCase {
     var cancellable: CancelBag!
     var logger: LoggerMocking!
     var localizationProvider: LocalizationProviderMocking!
+    var accessibilityProvider: AccessibilityProviderMocking!
 
     private let timeout: TimeInterval = 10.0
 
@@ -22,9 +23,11 @@ class CallingViewModelTests: XCTestCase {
         logger = LoggerMocking()
         storeFactory = StoreFactoryMocking()
         localizationProvider = LocalizationProviderMocking()
+        accessibilityProvider = AccessibilityProviderMocking()
 
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
                                                           store: storeFactory.store,
+                                                          accessibilityProvider: accessibilityProvider,
                                                           localizationProvider: localizationProvider)
     }
 
@@ -33,12 +36,13 @@ class CallingViewModelTests: XCTestCase {
         cancellable = nil
         storeFactory = nil
         localizationProvider = nil
+        accessibilityProvider = nil
         logger = nil
         factoryMocking = nil
     }
 
     func test_callingViewModel_endCall_when_confirmLeaveOverlayIsDisplayed_shouldEndCall() {
-        let sut = makeSUT(storeFactory: storeFactory)
+        let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Verify Call End is Requested")
         storeFactory.store.$state
             .dropFirst(1)
@@ -177,11 +181,10 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_receive_when_callingStateStatusUpdated_then_accessibilityFocusUpdated() {
         let expectation = XCTestExpectation(description: "Accessibility focus is updated")
         let appState = AppState(callingState: CallingState(status: .inLobby))
-        let accessibilityProvider = AccessibilityProviderMocking()
         accessibilityProvider.moveFocusToFirstElementBlock = {
             expectation.fulfill()
         }
-        let sut = makeSUT(accessibilityProvider: accessibilityProvider)
+        let sut = makeSUT()
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
@@ -229,11 +232,7 @@ class CallingViewModelTests: XCTestCase {
 }
 
 extension CallingViewModelTests {
-    func makeSUT(storeFactory: StoreFactoryMocking = StoreFactoryMocking(),
-                 accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()) -> CallingViewModel {
-//        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
-//                                                              store: storeFactory.store,
-//                                                              accessibilityProvider: accessibilityProvider)
+    func makeSUT() -> CallingViewModel {
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
@@ -247,7 +246,7 @@ extension CallingViewModelTests {
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: localizationProvider,
-                                accessibilityProvider: AccessibilityProvider(),
+                                accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false)
     }
 
@@ -263,7 +262,7 @@ extension CallingViewModelTests {
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: localizationProvider,
-                                accessibilityProvider: AccessibilityProvider(),
+                                accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false)
     }
 
@@ -271,13 +270,13 @@ extension CallingViewModelTests {
         factoryMocking.infoHeaderViewModel = InfoHeaderViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                         logger: logger,
                                                                         localUserState: storeFactory.store.state.localUserState,
-                                                                        accessibilityProvider: AccessibilityProviderMocking(),
+                                                                        accessibilityProvider: accessibilityProvider,
                                                                         updateState: updateInfoHeaderViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: localizationProvider,
-                                accessibilityProvider: AccessibilityProvider(),
+                                accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false)
     }
 
@@ -291,20 +290,20 @@ extension CallingViewModelTests {
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: localizationProvider,
-                                accessibilityProvider: AccessibilityProvider(),
+                                accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false)
     }
 
     func makeSUT(updateParticipantGridViewModel: @escaping ((CallingState, RemoteParticipantsState) -> Void)) -> CallingViewModel {
         factoryMocking.participantGridViewModel = ParticipantGridViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                                   localizationProvider: localizationProvider,
-                                                                                  accessibilityProvider: AccessibilityProviderMocking(),
+                                                                                  accessibilityProvider: accessibilityProvider,
                                                                                   updateState: updateParticipantGridViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: localizationProvider,
-                                accessibilityProvider: AccessibilityProvider(),
+                                accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false)
     }
 
@@ -315,7 +314,7 @@ extension CallingViewModelTests {
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: localizationProvider,
-                                accessibilityProvider: AccessibilityProvider(),
+                                accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false)
     }
 
@@ -323,14 +322,14 @@ extension CallingViewModelTests {
         factoryMocking.onHoldOverlayViewModel = OnHoldOverlayViewModelMocking(localizationProvider: localizationProvider,
                                                                               compositeViewModelFactory: factoryMocking,
                                                                               logger: logger,
-                                                                              accessibilityProvider: AccessibilityProvider(),
+                                                                              accessibilityProvider: accessibilityProvider,
                                                                               resumeAction: {},
                                                                               updateState: updateOnHoldOverlayViewModel)
         return CallingViewModel(compositeViewModelFactory: factoryMocking,
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: localizationProvider,
-                                accessibilityProvider: AccessibilityProvider(),
+                                accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false)
     }
 }
