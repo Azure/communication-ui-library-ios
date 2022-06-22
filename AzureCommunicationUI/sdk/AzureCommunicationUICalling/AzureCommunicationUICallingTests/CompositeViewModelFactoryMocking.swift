@@ -7,7 +7,7 @@ import Foundation
 import FluentUI
 @testable import AzureCommunicationUICalling
 
-class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
+struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     private let logger: Logger
     private let store: Store<AppState>
