@@ -84,12 +84,12 @@ class CallingViewModel: ObservableObject {
     }
 
     func endCall() {
-        store.dispatch(action: CallingAction.CallEndRequested())
+        store.dispatch(action: .callingAction(.callEndRequested))
         dismissConfirmLeaveDrawerList()
     }
 
     func resumeOnHold() {
-        store.dispatch(action: CallingAction.ResumeRequested())
+        store.dispatch(action: .callingAction(.resumeRequested))
     }
 
     func receive(_ state: AppState) {

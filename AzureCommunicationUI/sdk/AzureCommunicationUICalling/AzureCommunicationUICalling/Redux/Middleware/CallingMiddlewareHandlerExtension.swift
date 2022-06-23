@@ -6,35 +6,35 @@ extension CallingMiddlewareHandler {
     func handle(error: Error?,
                 errorType: CallCompositeInternalError,
                 dispatch: @escaping ActionDispatch) {
-        let action: Action
+        let action: ErrorAction
         if let error = error as? CallCompositeInternalError {
-            action = ErrorAction.FatalErrorUpdated(internalError: error,
+            action = .fatalErrorUpdated(internalError: error,
                                                    error: nil)
         } else {
-            action = ErrorAction.FatalErrorUpdated(internalError: errorType,
+            action = .fatalErrorUpdated(internalError: errorType,
                                                    error: error)
         }
-        dispatch(action)
+        dispatch(.errorAction(action))
     }
 
     func handleCallInfo(internalError: CallCompositeInternalError,
                         dispatch: @escaping ActionDispatch,
                         completion: (() -> Void)? = nil ) {
-        let action: Action
+        let action: ErrorAction
         if internalError == .callTokenFailed {
-            action = ErrorAction.FatalErrorUpdated(internalError: internalError,
-                                                   error: nil)
+            action = .fatalErrorUpdated(internalError: internalError,
+                                       error: nil)
         } else {
-            action = ErrorAction.StatusErrorAndCallReset(internalError: internalError,
-                                                         error: nil)
+            action = .statusErrorAndCallReset(internalError: internalError,
+                                              error: nil)
         }
-        dispatch(action)
+        dispatch(.errorAction(action))
         completion?()
     }
 
     func handle(callingStatus: CallingStatus,
                 dispatch: @escaping ActionDispatch) {
-        dispatch(CallingAction.StateUpdated(status: callingStatus))
+        dispatch(.callingAction(.stateUpdated(status: callingStatus)))
 
         switch callingStatus {
         case .none,
@@ -48,7 +48,7 @@ extension CallingMiddlewareHandler {
             break
         case .connected,
              .inLobby:
-            dispatch(CallingViewLaunched())
+            dispatch(.lifecycleAction(.callingViewLaunched))
         }
 
     }

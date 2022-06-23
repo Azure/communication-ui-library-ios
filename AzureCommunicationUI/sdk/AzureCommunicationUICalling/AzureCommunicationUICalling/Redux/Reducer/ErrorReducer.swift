@@ -5,35 +5,30 @@
 
 import Combine
 
-struct ErrorReducer: Reducer {
-    func reduce(_ state: ReduxState, _ action: Action) -> ReduxState {
-        guard let state = state as? ErrorState else {
-            return state
-        }
+let errorReducer = Reducer<ErrorState, Actions> { state, action in
 
-        var errorType = state.internalError
-        var error = state.error
-        var errorCategory = state.errorCategory
+    var errorType = state.internalError
+    var error = state.error
+    var errorCategory = state.errorCategory
 
-        switch action {
-        case let action as ErrorAction.FatalErrorUpdated:
-            errorType = action.internalError
-            error = action.error
-            errorCategory = .fatal
-        case let action as ErrorAction.StatusErrorAndCallReset:
-            errorType = action.internalError
-            error = action.error
-            errorCategory = .callState
-        case _ as CallingAction.CallStartRequested:
-            errorType = nil
-            error = nil
-            errorCategory = .none
-        default:
-            return state
-        }
-
-        return ErrorState(internalError: errorType,
-                          error: error,
-                          errorCategory: errorCategory)
+    switch action {
+    case let .errorAction(.fatalErrorUpdated(internalError, rawError)):
+        errorType = internalError
+        error = rawError
+        errorCategory = .fatal
+    case let .errorAction(.statusErrorAndCallReset(internalError, rawError)):
+        errorType = internalError
+        error = rawError
+        errorCategory = .callState
+    case .callingAction(.callStartRequested):
+        errorType = nil
+        error = nil
+        errorCategory = .none
+    default:
+        return state
     }
+
+    return ErrorState(internalError: errorType,
+                      error: error,
+                      errorCategory: errorCategory)
 }

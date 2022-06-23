@@ -6,59 +6,35 @@
 import Foundation
 import Combine
 
-struct LocalUserAction {
-    struct CameraPreviewOnTriggered: Action {}
-    struct CameraOnTriggered: Action {}
-    struct CameraOnSucceeded: Action {
-        var videoStreamIdentifier: String
-    }
-    struct CameraOnFailed: Action {
-        var error: Error
-    }
+enum LocalUserAction {
+    case cameraPreviewOnTriggered
+    case cameraOnTriggered
+    case cameraOnSucceeded(videoStreamIdentifier: String)
+    case cameraOnFailed(error: Error)
 
-    struct CameraOffTriggered: Action {}
-    struct CameraOffSucceeded: Action {}
-    struct CameraOffFailed: Action {
-        var error: Error
-    }
+    case cameraOffTriggered
+    case cameraOffSucceeded
+    case cameraOffFailed(error: Error)
 
-    struct CameraPausedSucceeded: Action {}
-    struct CameraPausedFailed: Action {
-        var error: Error
-    }
+    case cameraPausedSucceeded
+    case cameraPausedFailed(error: Error)
 
-    struct CameraSwitchTriggered: Action {}
-    struct CameraSwitchSucceeded: Action {
-        var cameraDevice: CameraDevice
-    }
-    struct CameraSwitchFailed: Action {
-        var error: Error
-    }
+    case cameraSwitchTriggered
+    case cameraSwitchSucceeded(cameraDevice: CameraDevice)
+    case cameraSwitchFailed(error: Error)
 
-    struct MicrophoneOnTriggered: Action {}
-    struct MicrophoneOnFailed: Action {
-        var error: Error
-    }
+    case microphoneOnTriggered
+    case microphoneOnFailed(error: Error)
 
-    struct MicrophoneOffTriggered: Action {}
-    struct MicrophoneOffFailed: Action {
-        var error: Error
-    }
+    case microphoneOffTriggered
+    case microphoneOffFailed(error: Error)
 
-    struct MicrophoneMuteStateUpdated: Action {
-        let isMuted: Bool
-    }
+    case microphoneMuteStateUpdated(isMuted: Bool)
 
-    struct MicrophonePreviewOn: Action {}
-    struct MicrophonePreviewOff: Action {}
+    case microphonePreviewOn
+    case microphonePreviewOff
 
-    struct AudioDeviceChangeRequested: Action {
-        var device: AudioDeviceType
-    }
-    struct AudioDeviceChangeSucceeded: Action {
-        var device: AudioDeviceType
-    }
-    struct AudioDeviceChangeFailed: Action {
-        var error: Error
-    }
+    case audioDeviceChangeRequested(device: AudioDeviceType)
+    case audioDeviceChangeSucceeded(device: AudioDeviceType)
+    case audioDeviceChangeFailed(error: Error)
 }

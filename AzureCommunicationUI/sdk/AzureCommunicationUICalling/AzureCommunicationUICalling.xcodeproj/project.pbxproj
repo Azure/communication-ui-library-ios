@@ -38,11 +38,9 @@
 		1F2BED68262F86F400D98266 /* SetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BED67262F86F400D98266 /* SetupViewModel.swift */; };
 		1F2BED6C262F8B7000D98266 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BED6B262F8B7000D98266 /* Store.swift */; };
 		1F2BED72262F8F4D00D98266 /* Reducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BED71262F8F4D00D98266 /* Reducer.swift */; };
-		1F2BED76262F944500D98266 /* ReduxState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BED75262F944500D98266 /* ReduxState.swift */; };
 		1F2BED882631EB7900D98266 /* PermissionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BED872631EB7900D98266 /* PermissionsManager.swift */; };
 		1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BED982631FA6C00D98266 /* PermissionState.swift */; };
 		1F2BEDA5263252E100D98266 /* Middleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BEDA4263252E100D98266 /* Middleware.swift */; };
-		1F2BEDA92632530D00D98266 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BEDA82632530D00D98266 /* Action.swift */; };
 		1F2BEDBB26328EBA00D98266 /* PermissionReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BEDBA26328EBA00D98266 /* PermissionReducer.swift */; };
 		1F2BEDC026328F2700D98266 /* CallingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BEDBF26328F2700D98266 /* CallingState.swift */; };
 		1F2BEDCD26329E5600D98266 /* PermissionAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F2BEDCC26329E5600D98266 /* PermissionAction.swift */; };
@@ -149,6 +147,7 @@
 		5A31497E0DEBAB0256AD0B91 /* ErrorMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3146B0B684264EB57EDA69 /* ErrorMocking.swift */; };
 		5A314D26A09E235A6509C1C7 /* ACSCameraFacingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */; };
 		5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */; };
+		752B953C2863A40F001C52E8 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752B953B2863A40E001C52E8 /* Actions.swift */; };
 		8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */; };
 		8815B6E427DA9B350065A184 /* LobbyOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */; };
 		881D8F7027F2327B008EC897 /* ErrorInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D8F6F27F2327B008EC897 /* ErrorInfoViewModelTests.swift */; };
@@ -160,7 +159,7 @@
 		88A70180270E50D100F817B8 /* PopupModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88A7017F270E50D100F817B8 /* PopupModalView.swift */; };
 		88B87C572755911B00290DD1 /* CallInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88B87C562755911B00290DD1 /* CallInfoModel.swift */; };
 		88BC24C12832D29D00818446 /* AvatarManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D8F7527FCA8C4008EC897 /* AvatarManagerTests.swift */; };
-		88D8EFF6E3700EA13007CA9A /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		88D8EFF6E3700EA13007CA9A /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		88F6EE1A2735F5CB001AD3E9 /* ErrorReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F6EE192735F5CB001AD3E9 /* ErrorReducer.swift */; };
 		88F6EE1C2735F8E8001AD3E9 /* ErrorState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88F6EE1B2735F8E8001AD3E9 /* ErrorState.swift */; };
 		981ACABC2685459400CD6A40 /* IconProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981ACABB2685459400CD6A40 /* IconProvider.swift */; };
@@ -287,11 +286,9 @@
 		1F2BED67262F86F400D98266 /* SetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupViewModel.swift; sourceTree = "<group>"; };
 		1F2BED6B262F8B7000D98266 /* Store.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		1F2BED71262F8F4D00D98266 /* Reducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reducer.swift; sourceTree = "<group>"; };
-		1F2BED75262F944500D98266 /* ReduxState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReduxState.swift; sourceTree = "<group>"; };
 		1F2BED872631EB7900D98266 /* PermissionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsManager.swift; sourceTree = "<group>"; };
 		1F2BED982631FA6C00D98266 /* PermissionState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionState.swift; sourceTree = "<group>"; };
 		1F2BEDA4263252E100D98266 /* Middleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Middleware.swift; sourceTree = "<group>"; };
-		1F2BEDA82632530D00D98266 /* Action.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		1F2BEDBA26328EBA00D98266 /* PermissionReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionReducer.swift; sourceTree = "<group>"; };
 		1F2BEDBF26328F2700D98266 /* CallingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingState.swift; sourceTree = "<group>"; };
 		1F2BEDCC26329E5600D98266 /* PermissionAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionAction.swift; sourceTree = "<group>"; };
@@ -428,6 +425,7 @@
 		5A314A985811198B09DA2688 /* LocalVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoView.swift; sourceTree = "<group>"; };
 		5A314F041B5D1869C41C242E /* DependencyContainerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyContainerTests.swift; sourceTree = "<group>"; };
 		69FC33B2B556CC3B9164A78E /* Pods-AzureCommunicationUICalling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling/Pods-AzureCommunicationUICalling.release.xcconfig"; sourceTree = "<group>"; };
+		752B953B2863A40E001C52E8 /* Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
 		8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyOverlayViewModel.swift; sourceTree = "<group>"; };
 		8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		881D8F6F27F2327B008EC897 /* ErrorInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorInfoViewModelTests.swift; sourceTree = "<group>"; };
@@ -536,7 +534,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1FBCB69F2645285100F57EEA /* AzureCommunicationUICalling.framework in Frameworks */,
-				88D8EFF6E3700EA13007CA9A /* BuildFile in Frameworks */,
+				88D8EFF6E3700EA13007CA9A /* (null) in Frameworks */,
 				337789566FB3398301666ADF /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -723,15 +721,15 @@
 		1F2BEDB526328E9D00D98266 /* Reducer */ = {
 			isa = PBXGroup;
 			children = (
-				1F2BED71262F8F4D00D98266 /* Reducer.swift */,
-				1F2BEDBA26328EBA00D98266 /* PermissionReducer.swift */,
-				1FBCB6D82655825200F57EEA /* LocalUserReducer.swift */,
-				A874EDC9266167E5003C7D92 /* LifeCycleReducer.swift */,
 				1F94DAE72676885700691D1E /* AppStateReducer.swift */,
-				1F13D36F26AB293700E31666 /* NavigationReducer.swift */,
-				88F6EE192735F5CB001AD3E9 /* ErrorReducer.swift */,
-				1F83813E26803ADF0096A454 /* CallingReducer.swift */,
 				1F3F0C68283E860600C66054 /* AudioSessionReducer.swift */,
+				1F83813E26803ADF0096A454 /* CallingReducer.swift */,
+				88F6EE192735F5CB001AD3E9 /* ErrorReducer.swift */,
+				A874EDC9266167E5003C7D92 /* LifeCycleReducer.swift */,
+				1FBCB6D82655825200F57EEA /* LocalUserReducer.swift */,
+				1F13D36F26AB293700E31666 /* NavigationReducer.swift */,
+				1F2BEDBA26328EBA00D98266 /* PermissionReducer.swift */,
+				1F2BED71262F8F4D00D98266 /* Reducer.swift */,
 			);
 			path = Reducer;
 			sourceTree = "<group>";
@@ -739,16 +737,15 @@
 		1F2BEDBE26328EFA00D98266 /* State */ = {
 			isa = PBXGroup;
 			children = (
-				1F3F0C66283E858600C66054 /* AudioSessionState.swift */,
-				1F2BED75262F944500D98266 /* ReduxState.swift */,
-				1F2BED982631FA6C00D98266 /* PermissionState.swift */,
-				1F2BEDBF26328F2700D98266 /* CallingState.swift */,
-				1FBCB6D62654765D00F57EEA /* LocalUserState.swift */,
 				A874EDC526616728003C7D92 /* AppLifeCycleState.swift */,
 				1F94DAE526740D4400691D1E /* AppState.swift */,
-				1F13D36D26AA82D400E31666 /* NavigationState.swift */,
-				1F13D36B26A8B83300E31666 /* RemoteParticipantsState.swift */,
+				1F3F0C66283E858600C66054 /* AudioSessionState.swift */,
+				1F2BEDBF26328F2700D98266 /* CallingState.swift */,
 				88F6EE1B2735F8E8001AD3E9 /* ErrorState.swift */,
+				1FBCB6D62654765D00F57EEA /* LocalUserState.swift */,
+				1F13D36D26AA82D400E31666 /* NavigationState.swift */,
+				1F2BED982631FA6C00D98266 /* PermissionState.swift */,
+				1F13D36B26A8B83300E31666 /* RemoteParticipantsState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -756,7 +753,7 @@
 		1F2BEDCB26329E4600D98266 /* Action */ = {
 			isa = PBXGroup;
 			children = (
-				1F2BEDA82632530D00D98266 /* Action.swift */,
+				752B953B2863A40E001C52E8 /* Actions.swift */,
 				1F2BEDCC26329E5600D98266 /* PermissionAction.swift */,
 				1F2BEDD026329E7C00D98266 /* CallingAction.swift */,
 				A874EDC726616792003C7D92 /* LifecycleAction.swift */,
@@ -1671,7 +1668,6 @@
 				1BAD44BE28404D1800C9E6A9 /* OrientationManager.swift in Sources */,
 				9852C2D526EFD19300435252 /* ParticipantsListViewController.swift in Sources */,
 				503F4B672704EDC800C17DA6 /* BannerView.swift in Sources */,
-				1F2BED76262F944500D98266 /* ReduxState.swift in Sources */,
 				98B186A327C85FAD00B837E6 /* AudioDevicesListCellViewModel.swift in Sources */,
 				50C6DECC270E48BE0085D04B /* BannerInfoType.swift in Sources */,
 				1F03D3D22638A6B70055C456 /* CallingViewModel.swift in Sources */,
@@ -1681,7 +1677,6 @@
 				1F3F0C69283E860600C66054 /* AudioSessionReducer.swift in Sources */,
 				50137D0626A7479C00AB843E /* EnvironmentValuesExtension.swift in Sources */,
 				1FD299642723345B0084B9ED /* DefaultLogger.swift in Sources */,
-				1F2BEDA92632530D00D98266 /* Action.swift in Sources */,
 				1FE1BE7F26FE38C9000A8D18 /* CallCompositeInternalError.swift in Sources */,
 				985DF374269D096000CFDA55 /* SetupControlBarView.swift in Sources */,
 				1FA24BAD2666F0CC00B4A080 /* ColorThemeProvider.swift in Sources */,
@@ -1752,6 +1747,7 @@
 				5A3142646DD55C66CF290F7A /* LocalVideoViewModel.swift in Sources */,
 				1FEA2A09285271F3006A6736 /* CallCompositeError.swift in Sources */,
 				5A314059D7E61D1083A8C473 /* LocalVideoView.swift in Sources */,
+				752B953C2863A40F001C52E8 /* Actions.swift in Sources */,
 				5A3140EA80ACDCB14140A060 /* CompositeViewFactory.swift in Sources */,
 				5A3142DAFAB4EE338ABF2196 /* CompositeViewModelFactory.swift in Sources */,
 				5A314D26A09E235A6509C1C7 /* ACSCameraFacingExtension.swift in Sources */,

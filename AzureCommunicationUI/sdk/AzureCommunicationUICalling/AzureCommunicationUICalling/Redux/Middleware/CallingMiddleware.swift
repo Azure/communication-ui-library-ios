@@ -5,54 +5,73 @@
 
 import Combine
 
-struct CallingMiddleware: Middleware {
-    private let actionHandler: CallingMiddlewareHandling
+func callingMiddleware(callingMiddlewareHandler actionHandler: CallingMiddlewareHandling)
+-> Middleware<AppState> {
 
-    init(callingMiddlewareHandler: CallingMiddlewareHandling) {
-        self.actionHandler = callingMiddlewareHandler
-    }
+    return Middleware<AppState>(
+        apply: { dispatch, getState in
+            return { next in
+                return { action in
+                    switch action {
+                    case .callingAction(let callingAction):
+                        switch callingAction {
+                        case .setupCall:
+                            actionHandler.setupCall(state: getState(), dispatch: dispatch)
+                        case .callStartRequested:
+                            actionHandler.startCall(state: getState(), dispatch: dispatch)
+                        case .callEndRequested:
+                            actionHandler.endCall(state: getState(), dispatch: dispatch)
+                        case .holdRequested:
+                            actionHandler.holdCall(state: getState(), dispatch: dispatch)
+                        case .resumeRequested:
+                            actionHandler.resumeCall(state: getState(), dispatch: dispatch)
+                        default:
+                            break
+                        }
 
-    func apply(dispatch: @escaping ActionDispatch,
-               getState: @escaping () -> ReduxState?) -> (@escaping ActionDispatch) -> ActionDispatch {
-        return { next in
-            return { action in
-                switch action {
-                case _ as CallingAction.SetupCall:
-                    actionHandler.setupCall(state: getState(), dispatch: dispatch)
-                case _ as CallingAction.CallStartRequested:
-                    actionHandler.startCall(state: getState(), dispatch: dispatch)
-                case _ as CallingAction.CallEndRequested:
-                    actionHandler.endCall(state: getState(), dispatch: dispatch)
-                case _ as CallingAction.HoldRequested:
-                    actionHandler.holdCall(state: getState(), dispatch: dispatch)
-                case _ as CallingAction.ResumeRequested:
-                    actionHandler.resumeCall(state: getState(), dispatch: dispatch)
-                case _ as LocalUserAction.CameraPreviewOnTriggered:
-                    actionHandler.requestCameraPreviewOn(state: getState(), dispatch: dispatch)
-                case _ as LocalUserAction.CameraOnTriggered:
-                    actionHandler.requestCameraOn(state: getState(), dispatch: dispatch)
-                case _ as LocalUserAction.CameraOffTriggered:
-                    actionHandler.requestCameraOff(state: getState(), dispatch: dispatch)
-                case _ as LocalUserAction.CameraSwitchTriggered:
-                    actionHandler.requestCameraSwitch(state: getState(), dispatch: dispatch)
-                case _ as LocalUserAction.MicrophoneOffTriggered:
-                    actionHandler.requestMicrophoneMute(state: getState(), dispatch: dispatch)
-                case _ as LocalUserAction.MicrophoneOnTriggered:
-                    actionHandler.requestMicrophoneUnmute(state: getState(), dispatch: dispatch)
-                case _ as PermissionAction.CameraPermissionGranted:
-                    actionHandler.onCameraPermissionIsSet(state: getState(), dispatch: dispatch)
-                case _ as LifecycleAction.BackgroundEntered:
-                    actionHandler.enterBackground(state: getState(), dispatch: dispatch)
-                case _ as LifecycleAction.ForegroundEntered:
-                    actionHandler.enterForeground(state: getState(), dispatch: dispatch)
-                case _ as AudioInterrupted:
-                    actionHandler.audioSessionInterrupted(state: getState(), dispatch: dispatch)
-                default:
-                    break
+                    case .localUserAction(let localUserAction):
+                        switch localUserAction {
+                        case .cameraPreviewOnTriggered:
+                            actionHandler.requestCameraPreviewOn(state: getState(), dispatch: dispatch)
+                        case .cameraOnTriggered:
+                            actionHandler.requestCameraOn(state: getState(), dispatch: dispatch)
+                        case .cameraOffTriggered:
+                            actionHandler.requestCameraOff(state: getState(), dispatch: dispatch)
+                        case .cameraSwitchTriggered:
+                            actionHandler.requestCameraSwitch(state: getState(), dispatch: dispatch)
+                        case .microphoneOffTriggered:
+                            actionHandler.requestMicrophoneMute(state: getState(), dispatch: dispatch)
+                        case .microphoneOnTriggered:
+                            actionHandler.requestMicrophoneUnmute(state: getState(), dispatch: dispatch)
+                        default:
+                            break
+                        }
+
+                    case .permissionAction(let permissionAction):
+                        switch permissionAction {
+                        case .cameraPermissionGranted:
+                            actionHandler.onCameraPermissionIsSet(state: getState(), dispatch: dispatch)
+                        default:
+                            break
+                        }
+
+                    case .lifecycleAction(let lifecycleAction):
+                        switch lifecycleAction {
+                        case .backgroundEntered:
+                            actionHandler.enterBackground(state: getState(), dispatch: dispatch)
+                        case .foregroundEntered:
+                            actionHandler.enterForeground(state: getState(), dispatch: dispatch)
+                        default:
+                            break
+                        }
+                    case .audioSessionAction(.audioInterrupted):
+                        actionHandler.audioSessionInterrupted(state: getState(), dispatch: dispatch)
+                    default:
+                        break
+                    }
+                    return next(action)
                 }
-                return next(action)
             }
         }
-    }
-
+    )
 }

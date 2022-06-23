@@ -5,49 +5,23 @@
 
 import Foundation
 
-struct CallingAction {
-    struct CallStartRequested: Action {}
+enum CallingAction {
+    case callStartRequested
+    case callEndRequested
+    case stateUpdated(status: CallingStatus)
 
-    struct CallEndRequested: Action {}
+    case setupCall
+    case dismissSetup
+    case recordingStateUpdated(isRecordingActive: Bool)
 
-    struct StateUpdated: Action {
-        let status: CallingStatus
-    }
+    case transcriptionStateUpdated(isTranscriptionActive: Bool)
 
-    struct SetupCall: Action {}
-
-    struct DismissSetup: Action {}
-
-    struct RecordingStateUpdated: Action {
-        let isRecordingActive: Bool
-    }
-
-    struct TranscriptionStateUpdated: Action {
-        let isTranscriptionActive: Bool
-    }
-
-    struct ResumeRequested: Action {}
-    struct HoldRequested: Action {}
+    case resumeRequested
+    case holdRequested
+    case participantListUpdated(participants: [ParticipantInfoModel])
 }
 
-struct ParticipantListUpdated: Action {
-    let participantsInfoList: [ParticipantInfoModel]
-}
-
-struct ErrorAction: Action {
-    struct FatalErrorUpdated: Action {
-        let internalError: CallCompositeInternalError
-        let error: Error?
-    }
-
-    struct StatusErrorAndCallReset: Action {
-        let internalError: CallCompositeInternalError
-        let error: Error?
-
-    }
-}
-
-struct CompositeExitAction: Action {}
-
-struct CallingViewLaunched: Action {
+enum ErrorAction {
+    case fatalErrorUpdated(internalError: CallCompositeInternalError, error: Error?)
+    case statusErrorAndCallReset(internalError: CallCompositeInternalError, error: Error?)
 }

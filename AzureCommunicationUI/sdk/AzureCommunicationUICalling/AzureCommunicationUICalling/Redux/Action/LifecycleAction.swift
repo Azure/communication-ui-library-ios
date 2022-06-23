@@ -5,7 +5,9 @@
 
 import Foundation
 
-struct LifecycleAction {
-    struct ForegroundEntered: Action {}
-    struct BackgroundEntered: Action {}
+enum LifecycleAction {
+    case foregroundEntered
+    case backgroundEntered
+    case compositeExitAction
+    case callingViewLaunched
 }

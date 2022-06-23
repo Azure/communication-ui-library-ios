@@ -11,7 +11,7 @@ enum ErrorCategory {
     case none
 }
 
-class ErrorState: ReduxState, Equatable {
+struct ErrorState: Equatable {
     // errorType would be nil for no error status
     let internalError: CallCompositeInternalError?
     let error: Error?

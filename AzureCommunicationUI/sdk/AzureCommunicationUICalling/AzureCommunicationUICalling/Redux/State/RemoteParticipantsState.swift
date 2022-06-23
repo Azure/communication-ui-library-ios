@@ -5,7 +5,7 @@
 
 import Foundation
 
-class RemoteParticipantsState: ReduxState {
+class RemoteParticipantsState {
     let participantInfoList: [ParticipantInfoModel]
     let lastUpdateTimeStamp: Date
 

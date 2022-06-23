@@ -5,21 +5,15 @@
 
 import Foundation
 
-struct AudioSessionReducer: Reducer {
-    func reduce(_ state: ReduxState, _ action: Action) -> ReduxState {
-        guard let audioSessionState = state as? AudioSessionState else {
-            return state
-        }
-        var audioSessionStatus = audioSessionState.status
-        switch action {
-        case _ as AudioEngaged,
-            _ as AudioInterruptEnded:
-            audioSessionStatus = .active
-        case _ as AudioInterrupted:
-            audioSessionStatus = .interrupted
-        default:
-            return audioSessionState
-        }
-        return AudioSessionState(status: audioSessionStatus)
+let audioSessionReducer = Reducer<AudioSessionState, AudioSessionAction> { audioSessionState, action in
+
+    var audioSessionStatus = audioSessionState.status
+    switch action {
+    case .audioEngaged,
+            .audioInterruptEnded:
+        audioSessionStatus = .active
+    case .audioInterrupted:
+        audioSessionStatus = .interrupted
     }
+    return AudioSessionState(status: audioSessionStatus)
 }

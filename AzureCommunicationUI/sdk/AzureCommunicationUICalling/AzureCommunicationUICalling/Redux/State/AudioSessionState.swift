@@ -10,12 +10,11 @@ enum AudioSessionStatus {
     case interrupted
 }
 
-class AudioSessionState: ReduxState {
+struct AudioSessionState {
 
     let status: AudioSessionStatus
 
     init(status: AudioSessionStatus = .active) {
         self.status = status
     }
-
 }

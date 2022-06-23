@@ -6,40 +6,40 @@
 import Foundation
 import Combine
 
-struct PermissionAction {
-    struct AudioPermissionRequested: Action {}
-    struct AudioPermissionGranted: Action {}
-    struct AudioPermissionDenied: Action {}
-    struct AudioPermissionNotAsked: Action {}
+enum PermissionAction {
+    case audioPermissionRequested
+    case audioPermissionGranted
+    case audioPermissionDenied
+    case audioPermissionNotAsked
 
-    struct CameraPermissionRequested: Action {}
-    struct CameraPermissionGranted: Action {}
-    struct CameraPermissionDenied: Action {}
-    struct CameraPermissionNotAsked: Action {}
+    case cameraPermissionRequested
+    case cameraPermissionGranted
+    case cameraPermissionDenied
+    case cameraPermissionNotAsked
 
-    static func generateAction(permission: AppPermission, state: AppPermission.Status) -> Action {
+    static func generateAction(permission: AppPermission, state: AppPermission.Status) -> PermissionAction {
         switch permission {
         case .audioPermission:
             switch state {
             case .granted:
-                return AudioPermissionGranted()
+                return .audioPermissionGranted
             case .denied:
-                return AudioPermissionDenied()
+                return .audioPermissionDenied
             case .notAsked:
-                return AudioPermissionNotAsked()
+                return .audioPermissionNotAsked
             default:
-                return AudioPermissionDenied()
+                return .audioPermissionDenied
             }
         case .cameraPermission:
             switch state {
             case .granted:
-                return CameraPermissionGranted()
+                return .cameraPermissionGranted
             case .denied:
-                return CameraPermissionDenied()
+                return .cameraPermissionDenied
             case .notAsked:
-                return CameraPermissionNotAsked()
+                return .cameraPermissionNotAsked
             default:
-                return CameraPermissionDenied()
+                return .cameraPermissionDenied
             }
         }
     }

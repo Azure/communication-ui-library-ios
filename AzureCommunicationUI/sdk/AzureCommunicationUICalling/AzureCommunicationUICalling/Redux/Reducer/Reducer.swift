@@ -6,6 +6,6 @@
 import Combine
 import Foundation
 
-protocol Reducer {
-    func reduce(_ state: ReduxState, _ action: Action) -> ReduxState
+struct Reducer<State, Action> {
+    var reduce: (_ state: State, _ action: Action) -> State
 }

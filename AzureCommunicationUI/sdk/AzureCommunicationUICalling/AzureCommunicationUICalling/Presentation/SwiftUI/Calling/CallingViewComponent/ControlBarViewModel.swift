@@ -108,15 +108,15 @@ class ControlBarViewModel: ObservableObject {
         }
 
         isCameraStateUpdating = true
-        let action: Action = cameraState.operation == .on ?
-            LocalUserAction.CameraOffTriggered() : LocalUserAction.CameraOnTriggered()
-        dispatch(action)
+        let action: LocalUserAction = cameraState.operation == .on ?
+            LocalUserAction.cameraOffTriggered : LocalUserAction.cameraOnTriggered
+        dispatch(.localUserAction(action))
     }
 
     func microphoneButtonTapped() {
-        let action: Action = audioState.operation == .on ?
-            LocalUserAction.MicrophoneOffTriggered() : LocalUserAction.MicrophoneOnTriggered()
-        dispatch(action)
+        let action: LocalUserAction = audioState.operation == .on ?
+        .microphoneOffTriggered : .microphoneOnTriggered
+        dispatch(.localUserAction(action))
     }
 
     func selectAudioDeviceButtonTapped() {

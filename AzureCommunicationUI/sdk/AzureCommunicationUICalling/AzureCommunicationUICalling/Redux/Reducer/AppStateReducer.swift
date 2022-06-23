@@ -5,88 +5,51 @@
 
 import Combine
 
-struct AppStateReducer: Reducer {
-    let permissionReducer: Reducer
-    let localUserReducer: Reducer
-    let lifeCycleReducer: Reducer
-    let audioSessionReducer: Reducer
-    let callingReducer: Reducer
-    let navigationReducer: Reducer
-    let errorReducer: Reducer
+let appStateReducer = Reducer<AppState, Actions> { state, action in
 
-    init(permissionReducer: Reducer,
-         localUserReducer: Reducer,
-         lifeCycleReducer: Reducer,
-         audioSessionReducer: Reducer,
-         callingReducer: Reducer,
-         navigationReducer: Reducer,
-         errorReducer: Reducer) {
-        self.permissionReducer = permissionReducer
-        self.localUserReducer = localUserReducer
-        self.lifeCycleReducer = lifeCycleReducer
-        self.audioSessionReducer = audioSessionReducer
-        self.callingReducer = callingReducer
-        self.navigationReducer = navigationReducer
-        self.errorReducer = errorReducer
+    var permissionState = state.permissionState
+    var localUserState = state.localUserState
+    var lifeCycleState = state.lifeCycleState
+    var callingState = state.callingState
+    var remoteParticipantState = state.remoteParticipantsState
+    var navigationState = state.navigationState
+    var errorState = state.errorState
+    var audioSessionState = state.audioSessionState
+
+    if case let .permissionAction(permAction) = action {
+        permissionState = permissionsReducer.reduce(state.permissionState, permAction)
     }
 
-    func reduce(_ state: ReduxState, _ action: Action) -> ReduxState {
-        guard let state = state as? AppState else {
-            return state
-        }
-
-        var permissionState = state.permissionState
-        var localUserState = state.localUserState
-        var lifeCycleState = state.lifeCycleState
-        var callingState = state.callingState
-        var remoteParticipantState = state.remoteParticipantsState
-        var navigationState = state.navigationState
-        var errorState = state.errorState
-        var audioSessionState = state.audioSessionState
-
-        if let newPermissionState = permissionReducer.reduce(state.permissionState, action) as? PermissionState {
-            permissionState = newPermissionState
-        }
-
-        if let newLocalUserState = localUserReducer.reduce(state.localUserState, action) as? LocalUserState {
-            localUserState = newLocalUserState
-        }
-
-        if let newLifeCycleState = lifeCycleReducer.reduce(state.lifeCycleState, action) as? LifeCycleState {
-            lifeCycleState = newLifeCycleState
-        }
-
-        if let newCallingState = callingReducer.reduce(state.callingState, action) as? CallingState {
-            callingState = newCallingState
-        }
-
-        if let newNaviState = navigationReducer.reduce(state.navigationState, action) as? NavigationState {
-            navigationState = newNaviState
-        }
-
-        if let newErrorState = errorReducer.reduce(state.errorState, action) as? ErrorState {
-            errorState = newErrorState
-        }
-
-        if let newAudioState = audioSessionReducer.reduce(state.audioSessionState, action) as? AudioSessionState {
-            audioSessionState = newAudioState
-        }
-
-        switch action {
-        case let action as ParticipantListUpdated:
-            remoteParticipantState = RemoteParticipantsState(participantInfoList: action.participantsInfoList)
-        case _ as ErrorAction.StatusErrorAndCallReset:
-            remoteParticipantState = RemoteParticipantsState(participantInfoList: [])
-        default:
-            break
-        }
-        return AppState(callingState: callingState,
-                        permissionState: permissionState,
-                        localUserState: localUserState,
-                        lifeCycleState: lifeCycleState,
-                        audioSessionState: audioSessionState,
-                        navigationState: navigationState,
-                        remoteParticipantsState: remoteParticipantState,
-                        errorState: errorState)
+    if case let .localUserAction(localUserAction) = action {
+        localUserState = localUserReducer.reduce(state.localUserState, localUserAction)
     }
+
+    if case let .lifecycleAction(lifecycleAction) = action {
+        lifeCycleState = lifecycleReducer.reduce(state.lifeCycleState, lifecycleAction)
+    }
+
+    callingState = callingReducer.reduce(state.callingState, action)
+    navigationState = navigationReducer.reduce(state.navigationState, action)
+    errorState = errorReducer.reduce(state.errorState, action)
+
+    if case let .audioSessionAction(audioAction) = action {
+        audioSessionState = audioSessionReducer.reduce(state.audioSessionState, audioAction)
+    }
+
+    switch action {
+    case .callingAction(.participantListUpdated(participants: let newParticipants)):
+        remoteParticipantState = RemoteParticipantsState(participantInfoList: newParticipants)
+    case .errorAction(.statusErrorAndCallReset):
+        remoteParticipantState = RemoteParticipantsState(participantInfoList: [])
+    default:
+        break
+    }
+    return AppState(callingState: callingState,
+                    permissionState: permissionState,
+                    localUserState: localUserState,
+                    lifeCycleState: lifeCycleState,
+                    audioSessionState: audioSessionState,
+                    navigationState: navigationState,
+                    remoteParticipantsState: remoteParticipantState,
+                    errorState: errorState)
 }

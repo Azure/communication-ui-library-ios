@@ -34,13 +34,11 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
 
     @objc func willDeactivate(_ notification: Notification) {
         logger.debug("Will Deactivate")
-        let appLifeCycleAction = LifecycleAction.BackgroundEntered()
-        store.dispatch(action: appLifeCycleAction)
+        store.dispatch(action: .lifecycleAction(.backgroundEntered))
     }
+
     @objc func didActivate(_ notification: Notification) {
         logger.debug("Did Activate")
-
-        let appLifeCycleAction = LifecycleAction.ForegroundEntered()
-        store.dispatch(action: appLifeCycleAction)
+        store.dispatch(action: .lifecycleAction(.foregroundEntered))
     }
 }

@@ -18,7 +18,7 @@ enum CallingStatus: Int {
     case remoteHold
 }
 
-class CallingState: ReduxState, Equatable {
+struct CallingState: Equatable {
     let status: CallingStatus
     let isRecordingActive: Bool
     let isTranscriptionActive: Bool

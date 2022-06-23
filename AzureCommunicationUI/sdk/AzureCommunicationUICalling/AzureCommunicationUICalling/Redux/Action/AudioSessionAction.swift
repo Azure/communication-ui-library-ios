@@ -5,6 +5,8 @@
 
 import Foundation
 
-struct AudioInterrupted: Action {}
-struct AudioInterruptEnded: Action {}
-struct AudioEngaged: Action {}
+enum AudioSessionAction {
+    case audioInterrupted
+    case audioInterruptEnded
+    case audioEngaged
+}
