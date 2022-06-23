@@ -19,7 +19,7 @@ What kind of change does this Pull Request introduce?
 - [ ] Documentation content changes
 - [ ] Other... Please describe:
 
-### Pull request checklist
+## Pull request checklist
 
 This PR has considered:
 - [ ] Color Theming
