@@ -5,7 +5,7 @@
 
 import Foundation
 
-let permissionsReducer = Reducer<PermissionState, PermissionAction> { permissionState, action in
+let livePermissionsReducer = Reducer<PermissionState, PermissionAction> { permissionState, action in
 
     var cameraPermission = permissionState.cameraPermission
     var audioPermission = permissionState.audioPermission

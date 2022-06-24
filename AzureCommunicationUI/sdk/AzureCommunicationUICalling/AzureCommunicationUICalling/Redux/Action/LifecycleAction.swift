@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum LifecycleAction {
+enum LifecycleAction: Equatable {
     case foregroundEntered
     case backgroundEntered
     case compositeExitAction

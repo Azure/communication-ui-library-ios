@@ -5,7 +5,7 @@
 
 import Combine
 
-let errorReducer = Reducer<ErrorState, Actions> { state, action in
+let liveErrorReducer = Reducer<ErrorState, Actions> { state, action in
 
     var errorType = state.internalError
     var error = state.error

@@ -17,7 +17,7 @@ class LocalVideoViewModelTests: XCTestCase {
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
 
-        func dispatch(action: Action) {
+        func dispatch(action: Actions) {
             storeFactory.store.dispatch(action: action)
         }
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
@@ -51,7 +51,7 @@ class LocalVideoViewModelTests: XCTestCase {
         storeFactory.store.$state
             .dropFirst(1)
             .sink { [weak self] _ in  XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.first is LocalUserAction.CameraSwitchTriggered)
+                XCTAssertTrue(self?.storeFactory.actions.first == .localUserAction(.cameraSwitchTriggered)
                 expectation.fulfill()
             }.store(in: cancellable)
 

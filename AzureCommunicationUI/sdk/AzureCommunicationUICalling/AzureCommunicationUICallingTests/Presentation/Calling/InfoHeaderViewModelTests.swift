@@ -23,7 +23,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         localizationProvider = LocalizationProviderMocking()
         factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
 
-        func dispatch(action: Action) {
+        func dispatch(action: Actions) {
             storeFactory.store.dispatch(action: action)
         }
     }

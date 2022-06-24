@@ -5,7 +5,7 @@
 
 import Combine
 
-let callingReducer = Reducer<CallingState, Actions> { callingState, action in
+let liveCallingReducer = Reducer<CallingState, Actions> { callingState, action in
 
     var callingStatus = callingState.status
     var isRecordingActive = callingState.isRecordingActive

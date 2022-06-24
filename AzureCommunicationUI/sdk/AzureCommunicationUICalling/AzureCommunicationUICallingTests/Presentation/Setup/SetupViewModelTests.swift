@@ -30,7 +30,7 @@ class SetupViewModelTests: XCTestCase {
             .dropFirst(2)
             .sink { [weak self] _ in
                 XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.last is PermissionAction.AudioPermissionRequested)
+                XCTAssertTrue(self?.storeFactory.actions.last is Actions.permissionAction(.audioPermissionRequested)
 
                 expectation.fulfill()
             }.store(in: cancellable)

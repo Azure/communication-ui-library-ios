@@ -97,7 +97,7 @@ class AudioDevicesListViewModelTests: XCTestCase {
 
 extension AudioDevicesListViewModelTests {
     func makeSUT() -> AudioDevicesListViewModel {
-        func dispatch(action: Action) {
+        func dispatch(action: Actions) {
             storeFactory.store.dispatch(action: action)
         }
         return AudioDevicesListViewModel(compositeViewModelFactory: factoryMocking,

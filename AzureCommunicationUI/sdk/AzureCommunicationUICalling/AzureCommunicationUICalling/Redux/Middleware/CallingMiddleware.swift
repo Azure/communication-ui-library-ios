@@ -5,7 +5,7 @@
 
 import Combine
 
-func callingMiddleware(callingMiddlewareHandler actionHandler: CallingMiddlewareHandling)
+func liveCallingMiddleware(callingMiddlewareHandler actionHandler: CallingMiddlewareHandling)
 -> Middleware<AppState> {
 
     return Middleware<AppState>(

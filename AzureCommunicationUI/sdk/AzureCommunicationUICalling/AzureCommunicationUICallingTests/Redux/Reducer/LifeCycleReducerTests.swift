@@ -8,58 +8,49 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class LifeCycleReducerTests: XCTestCase {
-    func test_lifeCycleReducer_reduce_when_notLocalUserState_then_return() {
-        let state = StateMocking()
-        let action = LocalUserAction.MicrophoneOffTriggered()
-        let sut = getSUT()
-        let resultState = sut.reduce(state, action)
-
-        XCTAssert(resultState is StateMocking)
-    }
+    // No longer possible with compile time type-checking
+//    func test_lifeCycleReducer_reduce_when_notLocalUserState_then_return() {
+//        let state = StateMocking()
+//        let action = .microphoneOffTriggered()
+//        let sut = getSUT()
+//        let resultState = sut.reduce(state, action)
+//
+//        XCTAssert(resultState is StateMocking)
+//    }
 
     func test_lifeCycleReducer_reduce_when_foregroundEnteredAction_then_stateUpdated() {
         let expectedState = AppStatus.foreground
         let state = LifeCycleState(currentStatus: .background)
-        let action = LifecycleAction.ForegroundEntered()
+        let action = LifecycleAction.foregroundEntered
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
-        guard let resultState = resultState as? LifeCycleState else {
-            XCTFail("Failed with state validation")
-            return
-        }
+
         XCTAssertEqual(resultState.currentStatus, expectedState)
     }
 
     func test_lifeCycleReducer_reduce_when_backgroundEnteredAction_then_stateUpdated() {
         let expectedState = AppStatus.background
         let state = LifeCycleState(currentStatus: .foreground)
-        let action = LifecycleAction.BackgroundEntered()
+        let action = LifecycleAction.backgroundEntered
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
-        guard let resultState = resultState as? LifeCycleState else {
-            XCTFail("Failed with state validation")
-            return
-        }
+
         XCTAssertEqual(resultState.currentStatus, expectedState)
     }
 
-    func test_lifeCycleReducer_reduce_when_mockingAction_then_stateNotUpdate() {
+    func test_lifeCycleReducer_reduce_when_unhandledAction_then_stateNotUpdate() {
         let expectedState = AppStatus.background
         let state = LifeCycleState(currentStatus: expectedState)
-        let action = ActionMocking()
+        let action = LifecycleAction.compositeExitAction    // Currently not handled in reducer
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
-        guard let resultState = resultState as? LifeCycleState else {
-            XCTFail("Failed with state validation")
-            return
-        }
+
         XCTAssertEqual(resultState.currentStatus, expectedState)
     }
 }
 
 extension LifeCycleReducerTests {
-    func getSUT() -> LifeCycleReducer {
-        return LifeCycleReducer()
+    func getSUT() -> Reducer<LifeCycleState, LifecycleAction> {
+        return liveLifecycleReducer
     }
-
 }

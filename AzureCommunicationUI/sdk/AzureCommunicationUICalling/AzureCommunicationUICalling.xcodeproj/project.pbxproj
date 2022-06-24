@@ -65,7 +65,6 @@
 		1F8E0B722684EBC100DDD18E /* CallingMiddlewareHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8E0B712684EBC100DDD18E /* CallingMiddlewareHandler.swift */; };
 		1F8E0B74268697B700DDD18E /* CallingMiddlewareHandlerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8E0B73268697B700DDD18E /* CallingMiddlewareHandlerMocking.swift */; };
 		1F8E0B78268D0EF000DDD18E /* CompositeErrorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8E0B77268D0EF000DDD18E /* CompositeErrorManager.swift */; };
-		1F91849926B31B640049EF5B /* ActionMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F91849826B31B640049EF5B /* ActionMocking.swift */; };
 		1F9184AD26B491840049EF5B /* LifeCycleReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9184AC26B491840049EF5B /* LifeCycleReducerTests.swift */; };
 		1F9184B426B4A2EF0049EF5B /* CallingReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9184B326B4A2EF0049EF5B /* CallingReducerTests.swift */; };
 		1F9184B626B4A3340049EF5B /* NavigationReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9184B526B4A3340049EF5B /* NavigationReducerTests.swift */; };
@@ -201,7 +200,6 @@
 		A869A63926546A2E003CC4F2 /* LoggerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A869A63026546A2D003CC4F2 /* LoggerMocking.swift */; };
 		A869A63A26546A2E003CC4F2 /* MiddlewareMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A869A63126546A2D003CC4F2 /* MiddlewareMocking.swift */; };
 		A869A63B26546A2E003CC4F2 /* PermissionsManagerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A869A63226546A2D003CC4F2 /* PermissionsManagerMocking.swift */; };
-		A869A63C26546A2E003CC4F2 /* StateMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A869A63326546A2D003CC4F2 /* StateMocking.swift */; };
 		A869A63D26546A2E003CC4F2 /* ReducerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A869A63426546A2D003CC4F2 /* ReducerMocking.swift */; };
 		A869A63E26546A2E003CC4F2 /* CallingSDKWrapperMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A869A63526546A2D003CC4F2 /* CallingSDKWrapperMocking.swift */; };
 		A869A63F26546A2E003CC4F2 /* VideoViewManagerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = A869A63626546A2E003CC4F2 /* VideoViewManagerMocking.swift */; };
@@ -313,7 +311,6 @@
 		1F8E0B712684EBC100DDD18E /* CallingMiddlewareHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallingMiddlewareHandler.swift; sourceTree = "<group>"; };
 		1F8E0B73268697B700DDD18E /* CallingMiddlewareHandlerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingMiddlewareHandlerMocking.swift; sourceTree = "<group>"; };
 		1F8E0B77268D0EF000DDD18E /* CompositeErrorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeErrorManager.swift; sourceTree = "<group>"; };
-		1F91849826B31B640049EF5B /* ActionMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionMocking.swift; sourceTree = "<group>"; };
 		1F9184AC26B491840049EF5B /* LifeCycleReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeCycleReducerTests.swift; sourceTree = "<group>"; };
 		1F9184B326B4A2EF0049EF5B /* CallingReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingReducerTests.swift; sourceTree = "<group>"; };
 		1F9184B526B4A3340049EF5B /* NavigationReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationReducerTests.swift; sourceTree = "<group>"; };
@@ -480,7 +477,6 @@
 		A869A63026546A2D003CC4F2 /* LoggerMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoggerMocking.swift; path = Mocking/LoggerMocking.swift; sourceTree = "<group>"; };
 		A869A63126546A2D003CC4F2 /* MiddlewareMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MiddlewareMocking.swift; path = Mocking/MiddlewareMocking.swift; sourceTree = "<group>"; };
 		A869A63226546A2D003CC4F2 /* PermissionsManagerMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PermissionsManagerMocking.swift; path = Mocking/PermissionsManagerMocking.swift; sourceTree = "<group>"; };
-		A869A63326546A2D003CC4F2 /* StateMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StateMocking.swift; path = Mocking/StateMocking.swift; sourceTree = "<group>"; };
 		A869A63426546A2D003CC4F2 /* ReducerMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReducerMocking.swift; path = Mocking/ReducerMocking.swift; sourceTree = "<group>"; };
 		A869A63526546A2D003CC4F2 /* CallingSDKWrapperMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CallingSDKWrapperMocking.swift; path = Mocking/CallingSDKWrapperMocking.swift; sourceTree = "<group>"; };
 		A869A63626546A2E003CC4F2 /* VideoViewManagerMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VideoViewManagerMocking.swift; path = Mocking/VideoViewManagerMocking.swift; sourceTree = "<group>"; };
@@ -778,8 +774,6 @@
 			children = (
 				A869A63126546A2D003CC4F2 /* MiddlewareMocking.swift */,
 				A869A63426546A2D003CC4F2 /* ReducerMocking.swift */,
-				A869A63326546A2D003CC4F2 /* StateMocking.swift */,
-				1F91849826B31B640049EF5B /* ActionMocking.swift */,
 				A869A63726546A2E003CC4F2 /* StoreFactoryMocking.swift */,
 			);
 			name = Redux;
@@ -1053,14 +1047,14 @@
 		A830C30F264D810A00766E3D /* Reducer */ = {
 			isa = PBXGroup;
 			children = (
-				A830C30B264D7C0900766E3D /* PermissionReducerTests.swift */,
 				A830C305264C3B6400766E3D /* AppStateReducerTests.swift */,
-				50FA4615268D13E9001844AC /* LocalUserReducerTests.swift */,
-				1F9184AC26B491840049EF5B /* LifeCycleReducerTests.swift */,
-				1F9184B326B4A2EF0049EF5B /* CallingReducerTests.swift */,
-				1F9184B526B4A3340049EF5B /* NavigationReducerTests.swift */,
-				88701EB32742D54C00660EAB /* ErrorReducerTests.swift */,
 				1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */,
+				1F9184B326B4A2EF0049EF5B /* CallingReducerTests.swift */,
+				88701EB32742D54C00660EAB /* ErrorReducerTests.swift */,
+				1F9184AC26B491840049EF5B /* LifeCycleReducerTests.swift */,
+				50FA4615268D13E9001844AC /* LocalUserReducerTests.swift */,
+				1F9184B526B4A3340049EF5B /* NavigationReducerTests.swift */,
+				A830C30B264D7C0900766E3D /* PermissionReducerTests.swift */,
 			);
 			path = Reducer;
 			sourceTree = "<group>";
@@ -1535,7 +1529,6 @@
 				1F9184B426B4A2EF0049EF5B /* CallingReducerTests.swift in Sources */,
 				1F4B0EF8269BD17600E87014 /* CompositeErrorManagerTests.swift in Sources */,
 				A869A63826546A2E003CC4F2 /* CallingServiceMocking.swift in Sources */,
-				A869A63C26546A2E003CC4F2 /* StateMocking.swift in Sources */,
 				1F09A11326BA484000BACED7 /* ParticipantCellViewModelTests.swift in Sources */,
 				50FA46182696214D001844AC /* CallingMiddlewareHandlerTests.swift in Sources */,
 				50E2D68926D9495B006B0EF4 /* InfoHeaderViewModelTests.swift in Sources */,
@@ -1562,7 +1555,6 @@
 				1F8E0B74268697B700DDD18E /* CallingMiddlewareHandlerMocking.swift in Sources */,
 				A869A63A26546A2E003CC4F2 /* MiddlewareMocking.swift in Sources */,
 				FAC1FECB27C98FC200D95845 /* LocalVideoViewModelMocking.swift in Sources */,
-				1F91849926B31B640049EF5B /* ActionMocking.swift in Sources */,
 				500C0F212847E30E000BA2DC /* RemoteOptionsTests.swift in Sources */,
 				50C6DECF270E4F020085D04B /* BannerInfoTypeTests.swift in Sources */,
 				FAD845442819FFE6007DAFE1 /* CallingSDKEventsHandlerMocking.swift in Sources */,

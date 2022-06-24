@@ -5,7 +5,7 @@
 
 import Foundation
 
-let lifecycleReducer = Reducer<LifeCycleState, LifecycleAction> { appLifeCycleCurrentState, action in
+let liveLifecycleReducer = Reducer<LifeCycleState, LifecycleAction> { appLifeCycleCurrentState, action in
 
     var currentStatus = appLifeCycleCurrentState.currentStatus
     switch action {

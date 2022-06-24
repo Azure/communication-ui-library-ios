@@ -72,11 +72,11 @@ final class DependencyContainer {
 
     private func makeStore(displayName: String?) -> Store<AppState> {
         let middlewaresHandler = CallingMiddlewareHandler(callingService: resolve(), logger: resolve())
-        let middlewares: [Middleware] = [ callingMiddleware(callingMiddlewareHandler: middlewaresHandler)
+        let middlewares: [Middleware] = [ liveCallingMiddleware(callingMiddlewareHandler: middlewaresHandler)
         ]
 
         let localUserState = LocalUserState(displayName: displayName)
-        return Store<AppState>(reducer: appStateReducer,
+        return Store<AppState>(reducer: Reducer<AppState, Actions>.appStateReducer(),
                                middlewares: middlewares,
                                state: AppState(localUserState: localUserState))
     }

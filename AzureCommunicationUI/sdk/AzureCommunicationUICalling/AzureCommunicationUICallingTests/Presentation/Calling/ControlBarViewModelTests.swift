@@ -86,7 +86,7 @@ class ControlBarViewModelTests: XCTestCase {
         storeFactory.store.$state
             .dropFirst(1)
             .sink { [weak self] _ in  XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.first is LocalUserAction.MicrophoneOnTriggered)
+                XCTAssertTrue(self?.storeFactory.actions.first == .localUserAction(.microphoneOnTriggered))
                 expectation.fulfill()
             }.store(in: cancellable)
         sut.microphoneButtonTapped()
@@ -103,7 +103,7 @@ class ControlBarViewModelTests: XCTestCase {
         storeFactory.store.$state
             .dropFirst(1)
             .sink { [weak self] _ in  XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.first is LocalUserAction.MicrophoneOffTriggered)
+                XCTAssertTrue(self?.storeFactory.actions.first == .localUserAction(.microphoneOffTriggered))
                 expectation.fulfill()
             }.store(in: cancellable)
         sut.microphoneButtonTapped()
@@ -322,7 +322,7 @@ class ControlBarViewModelTests: XCTestCase {
         storeFactory.store.$state
             .dropFirst(1)
             .sink { [weak self] _ in  XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.first is LocalUserAction.CameraOnTriggered)
+                XCTAssertTrue(self?.storeFactory.actions.first == .localUserAction(.cameraOnTriggered))
                 expectation.fulfill()
             }.store(in: cancellable)
         sut.cameraState = LocalUserState.CameraState(operation: .off,
@@ -338,7 +338,7 @@ class ControlBarViewModelTests: XCTestCase {
         storeFactory.store.$state
             .dropFirst(1)
             .sink { [weak self] _ in  XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.first is LocalUserAction.CameraOffTriggered)
+                XCTAssertTrue(self?.storeFactory.actions.first == .localUserAction(.cameraOffTriggered))
                 expectation.fulfill()
             }.store(in: cancellable)
         sut.update(localUserState: LocalUserState(cameraState: LocalUserState.CameraState(operation: .on,

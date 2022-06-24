@@ -35,8 +35,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
     func test_callingMiddlewareHandler_requestMicMute_when_returnsError_then_updateMicrophoneStatusIsError() {
         let error = getError()
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.MicrophoneOffFailed)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.microphoneOffFailed(error: error)))
         }
         mockCallingService.error = error
         callingMiddlewareHandler.requestMicrophoneMute(state: getEmptyState(), dispatch: dispatch)
@@ -44,8 +44,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
     func test_callingMiddlewareHandler_requestMicUnmute_when_returnsError_then_updateMicrophoneStatusIsError() {
         let error = getError()
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.MicrophoneOnFailed)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.microphoneOffFailed(error: error)))
         }
         mockCallingService.error = error
         callingMiddlewareHandler.requestMicrophoneUnmute(state: getEmptyState(), dispatch: dispatch)
@@ -53,17 +53,15 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
     func test_callingMiddlewareHandler_requestCameraOn_when_cameraPermissionNotAsked_then_shouldDispatchCameraPermissionRequested() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is PermissionAction.CameraPermissionRequested)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.permissionAction(.cameraPermissionRequested))
             expectation.fulfill()
         }
-        guard let state: AppState = getState(callingState: .connected,
+        let state: AppState = getState(callingState: .connected,
                                              cameraStatus: .off,
                                              cameraDeviceStatus: .front,
-                                             cameraPermission: .notAsked) as? AppState else {
-            XCTFail("Failed with state validation")
-            return
-        }
+                                             cameraPermission: .notAsked)
+
         callingMiddlewareHandler.requestCameraOn(state: state, dispatch: dispatch)
         wait(for: [expectation], timeout: 1)
     }
@@ -75,8 +73,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
     func test_callingMiddlewareHandler_requestCameraOff_when_permissionNotAsked_then_updateCameraStatusOffUpdate() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.CameraOffSucceeded)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.cameraOffSucceeded))
             expectation.fulfill()
         }
         callingMiddlewareHandler.requestCameraOff(state: getEmptyState(), dispatch: dispatch)
@@ -94,12 +92,14 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
         let videoId = "Identifier"
         mockCallingService.videoStreamId = videoId
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.CameraOnSucceeded)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.cameraOnSucceeded(videoStreamIdentifier: videoId)))
             switch action {
-            case let action as LocalUserAction.CameraOnSucceeded:
-                XCTAssertEqual(action.videoStreamIdentifier, videoId)
-                expectation.fulfill()
+            case .localUserAction(let localUserAction):
+                if case let LocalUserAction.cameraOnSucceeded(videoStreamIdentifier) = localUserAction {
+                    XCTAssertEqual(videoStreamIdentifier, videoId)
+                    expectation.fulfill()
+                }
             default:
                 XCTFail("Should not be default \(action)")
             }
@@ -159,7 +159,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_requestCameraSwitch_when_returnsError_then_updateCameraDeviceStatusIsError() {
         let expectation = XCTestExpectation(description: "Request Camera Switch Dispatch Action Should Return Error")
         let error = getError()
-        func dispatch(action: Action) {
+        func dispatch(action: Actions) {
             XCTAssertTrue(action is LocalUserAction.CameraSwitchFailed)
             expectation.fulfill()
         }
@@ -506,7 +506,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     }
 
     func test_callingMiddlewareHandler_onCameraPermissionIsSet_when_callTransmissionRemote_cameraPermissionNotRequesting_then_updateCameraOnTriggered() {
-        func dispatch(action: Action) {
+        func dispatch(action: Actions) {
             XCTFail("Failed with unknown action dispatched")
         }
         callingMiddlewareHandler.onCameraPermissionIsSet(state: getState(cameraPermission: .granted,
@@ -517,7 +517,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
 extension CallingMiddlewareHandlerTests {
 
-    private func getEmptyState() -> ReduxState? {
+    private func getEmptyState() -> AppState {
         return AppState()
     }
 
@@ -526,7 +526,7 @@ extension CallingMiddlewareHandlerTests {
                           cameraDeviceStatus: LocalUserState.CameraDeviceSelectionStatus = .front,
                           cameraPermission: AppPermission.Status = .unknown,
                           cameraTransmissionStatus: LocalUserState.CameraTransmissionStatus = .local,
-                          internalError: CallCompositeInternalError? = nil) -> ReduxState {
+                          internalError: CallCompositeInternalError? = nil) -> AppState {
         let callState = CallingState(status: callingState)
         let cameraState = LocalUserState.CameraState(operation: cameraStatus,
                                                      device: cameraDeviceStatus,

@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum CallingAction {
+enum CallingAction: Equatable {
     case callStartRequested
     case callEndRequested
     case stateUpdated(status: CallingStatus)
@@ -21,7 +21,20 @@ enum CallingAction {
     case participantListUpdated(participants: [ParticipantInfoModel])
 }
 
-enum ErrorAction {
+enum ErrorAction: Equatable {
+    static func == (lhs: ErrorAction, rhs: ErrorAction) -> Bool {
+        switch (lhs, rhs) {
+        case let (.fatalErrorUpdated(internalError: lErr, error: _),
+                  .fatalErrorUpdated(internalError: rErr, error: _)):
+            return lErr == rErr
+        case let (.statusErrorAndCallReset(internalError: lErr, error: _),
+                  .statusErrorAndCallReset(internalError: rErr, error: _)):
+            return lErr == rErr
+        default:
+            return false
+        }
+    }
+
     case fatalErrorUpdated(internalError: CallCompositeInternalError, error: Error?)
     case statusErrorAndCallReset(internalError: CallCompositeInternalError, error: Error?)
 }

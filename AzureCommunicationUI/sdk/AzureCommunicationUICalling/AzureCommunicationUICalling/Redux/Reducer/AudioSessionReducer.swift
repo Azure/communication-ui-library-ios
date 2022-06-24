@@ -5,7 +5,7 @@
 
 import Foundation
 
-let audioSessionReducer = Reducer<AudioSessionState, AudioSessionAction> { audioSessionState, action in
+let liveAudioSessionReducer = Reducer<AudioSessionState, AudioSessionAction> { audioSessionState, action in
 
     var audioSessionStatus = audioSessionState.status
     switch action {

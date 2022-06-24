@@ -6,7 +6,7 @@
 import Combine
 import Foundation
 
-let localUserReducer = Reducer<LocalUserState, LocalUserAction> { localUserState, action in
+let liveLocalUserReducer = Reducer<LocalUserState, LocalUserAction> { localUserState, action in
 
     var cameraStatus = localUserState.cameraState.operation
     var cameraDeviceStatus = localUserState.cameraState.device

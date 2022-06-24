@@ -5,7 +5,7 @@
 
 import Combine
 
-let navigationReducer = Reducer<NavigationState, Actions> { state, action in
+let liveNavigationReducer = Reducer<NavigationState, Actions> { state, action in
     var navigationStatus = state.status
     switch action {
     case .lifecycleAction(.callingViewLaunched):

@@ -13,7 +13,7 @@ class AudioSessionReducerTests: XCTestCase {
         let expectedAudioStatus: AudioSessionStatus = .interrupted
         let currentAudioStatus: AudioSessionStatus = .active
         let currentAudioState = AudioSessionState(status: currentAudioStatus)
-        let action = AudioInterrupted()
+        let action = AudioSessionAction.audioInterrupted
         let sut = getSUT()
         guard let resultState = sut.reduce(currentAudioState, action) as? AudioSessionState else {
             XCTFail("Failed with state validation")
@@ -26,7 +26,7 @@ class AudioSessionReducerTests: XCTestCase {
         let expectedAudioStatus: AudioSessionStatus = .active
         let currentAudioStatus: AudioSessionStatus = .interrupted
         let currentAudioState = AudioSessionState(status: currentAudioStatus)
-        let action = AudioInterruptEnded()
+        let action = AudioSessionAction.audioInterruptEnded
         let sut = getSUT()
         guard let resultState = sut.reduce(currentAudioState, action) as? AudioSessionState else {
             XCTFail("Failed with state validation")
@@ -39,7 +39,7 @@ class AudioSessionReducerTests: XCTestCase {
         let expectedAudioStatus: AudioSessionStatus = .active
         let currentAudioStatus: AudioSessionStatus = .interrupted
         let currentAudioState = AudioSessionState(status: currentAudioStatus)
-        let action = AudioEngaged()
+        let action = AudioSessionAction.audioEngaged
         let sut = getSUT()
         guard let resultState = sut.reduce(currentAudioState, action) as? AudioSessionState else {
             XCTFail("Failed with state validation")
@@ -52,7 +52,7 @@ class AudioSessionReducerTests: XCTestCase {
         let expectedAudioStatus: AudioSessionStatus = .active
         let currentAudioStatus = expectedAudioStatus
         let currentAudioState = AudioSessionState(status: currentAudioStatus)
-        let action = AudioEngaged()
+        let action = AudioSessionAction.audioEngaged
         let sut = getSUT()
         guard let resultState = sut.reduce(currentAudioState, action) as? AudioSessionState else {
             XCTFail("Failed with state validation")
@@ -64,7 +64,7 @@ class AudioSessionReducerTests: XCTestCase {
 }
 
 extension AudioSessionReducerTests {
-    func getSUT() -> AudioSessionReducer {
-        return AudioSessionReducer()
+    func getSUT() -> Reducer<AudioSessionState, AudioSessionAction> {
+        return liveAudioSessionReducer
     }
 }
