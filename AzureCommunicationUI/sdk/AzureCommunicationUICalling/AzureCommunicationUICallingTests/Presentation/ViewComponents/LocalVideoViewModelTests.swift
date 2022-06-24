@@ -51,7 +51,7 @@ class LocalVideoViewModelTests: XCTestCase {
         storeFactory.store.$state
             .dropFirst(1)
             .sink { [weak self] _ in  XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.first == .localUserAction(.cameraSwitchTriggered)
+                XCTAssertTrue(self?.storeFactory.actions.first == Actions.localUserAction(.cameraSwitchTriggered))
                 expectation.fulfill()
             }.store(in: cancellable)
 

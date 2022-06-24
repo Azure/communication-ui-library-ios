@@ -70,7 +70,7 @@ class AppStateReducerTests: XCTestCase {
 
         let state = getAppState(lifeCycleState: oldLifeCycleState)
         let sut = getSUT(lifeCycleReducer: mockSubReducer)
-        let result = sut.reduce(state, LifecycleAction.backgroundEntered)
+        let result = sut.reduce(state, Actions.lifecycleAction(.backgroundEntered))
 
         XCTAssertEqual(result.lifeCycleState.currentStatus, expectedState)
     }
@@ -78,10 +78,8 @@ class AppStateReducerTests: XCTestCase {
     func test_appStateReducer_reduceCallingState_then_callingStateReducerCalled_stateUpdated() {
         let oldState = CallingState(status: .connected)
         let expectedState = CallingStatus.disconnected
-        let mockSubReducer = Reducer<CallingState, Actions>.mockReducer(outputState: expectedState)
-
         let newState = CallingState(status: expectedState)
-        mockSubReducer.outputState = newState
+        let mockSubReducer: Reducer<CallingState, Actions> = .mockReducer(outputState: newState)
 
         let state = getAppState(callingState: oldState)
         let sut = getSUT(callingReducer: mockSubReducer)
@@ -93,22 +91,19 @@ class AppStateReducerTests: XCTestCase {
     func test_appStateReducer_reduceNaviState_then_naviStateReducerCalled_stateUpdated() {
         let oldState = NavigationState(status: .setup)
         let expectedState = NavigationState(status: .inCall)
-        let mockSubReducer = Reducer<NavigationState, Actions>.mockReducer(outputState: expectedState)
+        let mockSubReducer: Reducer<NavigationState, Actions> = .mockReducer(outputState: expectedState)
 
         let state = getAppState(navigationState: oldState)
         let sut = getSUT(navigationReducer: mockSubReducer)
         let result = sut.reduce(state, Actions.localUserAction(.cameraOnTriggered))
-        guard let result = result as? AppState else {
-            XCTFail("Failed with state validation")
-            return
-        }
+
         XCTAssertEqual(result.navigationState, expectedState)
     }
 
     func test_appStateReducer_reduceErrorState_then_errorStateReducerCalled_stateUpdated() {
         let oldState = ErrorState()
         let expectedState = ErrorState(error: nil, errorCategory: .callState)
-        let mockSubReducer = Reducer<ErrorState, Actions>.mockReducer(outputState: expectedState)
+        let mockSubReducer: Reducer<ErrorState, Actions> = .mockReducer(outputState: expectedState)
 
         let state = getAppState(errorState: oldState)
         let sut = getSUT(errorReducer: mockSubReducer)

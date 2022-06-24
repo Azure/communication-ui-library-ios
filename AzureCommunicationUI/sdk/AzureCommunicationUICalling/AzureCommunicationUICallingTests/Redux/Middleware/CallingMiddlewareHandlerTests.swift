@@ -111,8 +111,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_requestCameraOff_when_returnsError_then_updateCameraStatusIsError() {
         let expectation = XCTestExpectation(description: "Request Camera Off Dispatch Action Should Return Error")
         let error = getError()
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.CameraOffFailed)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.cameraOffFailed(error: error)))
             expectation.fulfill()
         }
         mockCallingService.error = error
@@ -123,8 +123,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_requestCameraOn_when_returnsError_then_updateCameraStatusIsError() {
         let expectation = XCTestExpectation(description: "Request Camera On Dispatch Action Should Return Error")
         let error = getError()
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.CameraOnFailed)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.cameraOnFailed(error: error)))
             expectation.fulfill()
         }
         mockCallingService.error = error
@@ -142,11 +142,11 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
         let cameraDevice = CameraDevice.front
         mockCallingService.cameraDevice = cameraDevice
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.CameraSwitchSucceeded)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.cameraSwitchSucceeded(cameraDevice: cameraDevice)))
             switch action {
-            case let action as LocalUserAction.CameraSwitchSucceeded:
-                XCTAssertEqual(action.cameraDevice, cameraDevice)
+            case let .localUserAction(.cameraSwitchSucceeded(device)):
+                XCTAssertEqual(device, cameraDevice)
                 expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
@@ -160,7 +160,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Request Camera Switch Dispatch Action Should Return Error")
         let error = getError()
         func dispatch(action: Actions) {
-            XCTAssertTrue(action is LocalUserAction.CameraSwitchFailed)
+            XCTAssertTrue(action == Actions.localUserAction(.cameraSwitchFailed(error: error)))
             expectation.fulfill()
         }
         mockCallingService.error = error
@@ -186,13 +186,13 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         let errorCode = 50
         let error = getError(code: errorCode)
 
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.errorAction(.fatalErrorUpdated(internalError: .callEndFailed, error: error)))
             switch action {
-            case let action as ErrorAction.FatalErrorUpdated:
-                let nserror = action.error as? NSError
-                XCTAssertEqual(nserror!.code, errorCode)
-                XCTAssertEqual(action.internalError, .callEndFailed)
+            case let .errorAction(.fatalErrorUpdated(internalError, err)):
+                let nserror = err as? NSError
+                XCTAssertEqual(nserror?.code, errorCode)
+                XCTAssertEqual(internalError, .callEndFailed)
                 expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
@@ -208,12 +208,12 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
         let error = CallCompositeInternalError.cameraSwitchFailed
 
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.errorAction(.fatalErrorUpdated(internalError: error, error: nil)))
             switch action {
-            case let action as ErrorAction.FatalErrorUpdated:
-                XCTAssertEqual(action.internalError, error)
-                XCTAssertNil(action.error)
+            case let .errorAction(.fatalErrorUpdated(internalError, err)):
+                XCTAssertEqual(internalError, error)
+                XCTAssertNil(err)
                 expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
@@ -228,13 +228,13 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
         let errorCode = 50
         let error = getError(code: errorCode)
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.errorAction(.fatalErrorUpdated(internalError: .callJoinFailed, error: error)))
             switch action {
-            case let action as ErrorAction.FatalErrorUpdated:
-                let nserror = action.error as? NSError
-                XCTAssertEqual(nserror!.code, errorCode)
-                XCTAssertEqual(action.internalError, .callJoinFailed)
+            case let .errorAction(.fatalErrorUpdated(internalError, err)):
+                let nserror = err as? NSError
+                XCTAssertEqual(nserror?.code, errorCode)
+                XCTAssertEqual(internalError, .callJoinFailed)
                 expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
@@ -249,11 +249,11 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
         let error = CallCompositeInternalError.callEndFailed
 
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.errorAction(.fatalErrorUpdated(internalError: error, error: nil)))
             switch action {
-            case let action as ErrorAction.FatalErrorUpdated:
-                XCTAssertEqual(action.internalError, error)
+            case let .errorAction(.fatalErrorUpdated(internalError, _)):
+                XCTAssertEqual(internalError, error)
                 expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
@@ -273,8 +273,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_setupCall_when_cameraPermissionGranted_then_cameraOnTriggered() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
 
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.CameraPreviewOnTriggered)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.cameraPreviewOnTriggered))
             expectation.fulfill()
         }
         callingMiddlewareHandler.setupCall(state: getState(callingState: .connected,
@@ -289,8 +289,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
         expectation.isInverted = true
 
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.CameraOnTriggered)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.cameraOnTriggered))
             expectation.fulfill()
         }
         callingMiddlewareHandler.setupCall(state: getState(callingState: .connected,
@@ -306,13 +306,12 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         let errorCode = 50
         let error = getError(code: errorCode)
 
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is ErrorAction.FatalErrorUpdated)
+        func dispatch(action: Actions) {
             switch action {
-            case let action as ErrorAction.FatalErrorUpdated:
-                let nserror = action.error as? NSError
+            case let .errorAction(.fatalErrorUpdated(internalErr, err)):
+                let nserror = err as? NSError
                 XCTAssertEqual(nserror!.code, errorCode)
-                XCTAssertEqual(action.internalError, .callJoinFailed)
+                XCTAssertEqual(internalErr, .callJoinFailed)
                 expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
@@ -327,7 +326,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
         expectation.isInverted = true
 
-        func dispatch(action: Action) {
+        func dispatch(action: Actions) {
             XCTFail("Should not dispatch")
         }
         callingMiddlewareHandler.setupCall(state: getState(callingState: .none,
@@ -364,8 +363,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     }
 
     func test_callingMiddlewareHandler_enterBackground_when_callConnected_cameraStatusOn_noError_then_updateCameraStatusPauseUpdate() {
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.CameraPausedSucceeded)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.cameraPausedSucceeded))
         }
         callingMiddlewareHandler.enterBackground(state: getState(callingState: .connected,
                                                                  cameraStatus: .on,
@@ -375,8 +374,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
     func test_callingMiddlewareHandler_enterBackground_when_callConnected_cameraStatusOn_returnsError_then_updateCameraStatusIsError() {
         let error = getError()
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.CameraPausedFailed)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.cameraPausedFailed(error: error)))
         }
         mockCallingService.error = error
         callingMiddlewareHandler.enterBackground(state: getState(callingState: .connected,
@@ -412,11 +411,11 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_enterForeground_when_callConnected_cameraStatusOn_noError_then_updateCameraStatusOnUpdate() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
         let id = "identifier"
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.CameraOnSucceeded)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.cameraOnSucceeded(videoStreamIdentifier: id)))
             switch action {
-            case let action as LocalUserAction.CameraOnSucceeded:
-                XCTAssertEqual(action.videoStreamIdentifier, id)
+            case let .localUserAction(.cameraOnSucceeded(videoStreamIdentifier)):
+                XCTAssertEqual(videoStreamIdentifier, id)
                 expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
@@ -431,25 +430,21 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     }
 
     func test_callingMiddlewareHandler_holdCall_then_holdCallCalled() {
-        guard let state: AppState = getState(callingState: .connected,
-                                             cameraStatus: .off,
-                                             cameraDeviceStatus: .front,
-                                             cameraPermission: .notAsked) as? AppState else {
-            XCTFail("Failed with state validation")
-            return
-        }
+        let state: AppState = getState(callingState: .connected,
+                                       cameraStatus: .off,
+                                       cameraDeviceStatus: .front,
+                                       cameraPermission: .notAsked)
+
         callingMiddlewareHandler.holdCall(state: state, dispatch: getEmptyDispatch())
         XCTAssertTrue(mockCallingService.holdCallCalled)
     }
 
     func test_callingMiddlewareHandler_resumeCall_then_resumeCallCalled() {
-        guard let state: AppState = getState(callingState: .localHold,
-                                             cameraStatus: .off,
-                                             cameraDeviceStatus: .front,
-                                             cameraPermission: .notAsked) as? AppState else {
-            XCTFail("Failed with state validation")
-            return
-        }
+        let state: AppState = getState(callingState: .localHold,
+                                       cameraStatus: .off,
+                                       cameraDeviceStatus: .front,
+                                       cameraPermission: .notAsked)
+
         callingMiddlewareHandler.resumeCall(state: state, dispatch: getEmptyDispatch())
         XCTAssertTrue(mockCallingService.resumeCallCalled)
     }
@@ -457,11 +452,11 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_enterForeground_when_callLocalHold_cameraStatusOn_noError_then_updateCameraStatusOnUpdate() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
         let id = "identifier"
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.CameraOnSucceeded)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.cameraOnSucceeded(videoStreamIdentifier: id)))
             switch action {
-            case let action as LocalUserAction.CameraOnSucceeded:
-                XCTAssertEqual(action.videoStreamIdentifier, id)
+            case let Actions.localUserAction(.cameraOnSucceeded(videoStreamIdentifier)):
+                XCTAssertEqual(videoStreamIdentifier, id)
                 expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
@@ -477,8 +472,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
     func test_callingMiddlewareHandler_enterForeground_when_callConnected_cameraStatusOn_returnsError_then_updateCameraStatusIsError() {
         let error = getError()
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.CameraOnFailed)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.cameraOnFailed(error: error)))
         }
         mockCallingService.error = error
         callingMiddlewareHandler.enterForeground(state: getState(callingState: .connected,
@@ -488,8 +483,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     }
 
     func test_callingMiddlewareHandler_onCameraPermissionIsSet_when_callTransmissionLocal_cameraPermissionRequesting_then_updateCameraPreviewOnTriggered() {
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.CameraPreviewOnTriggered)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.cameraPreviewOnTriggered))
         }
         callingMiddlewareHandler.onCameraPermissionIsSet(state: getState(cameraPermission: .requesting,
                                                                          cameraTransmissionStatus: .local),
@@ -497,8 +492,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     }
 
     func test_callingMiddlewareHandler_onCameraPermissionIsSet_when_callTransmissionRemote_cameraPermissionRequesting_then_updateCameraOnTriggered() {
-        func dispatch(action: Action) {
-            XCTAssertTrue(action is LocalUserAction.CameraOnTriggered)
+        func dispatch(action: Actions) {
+            XCTAssertTrue(action == Actions.localUserAction(.cameraOnTriggered))
         }
         callingMiddlewareHandler.onCameraPermissionIsSet(state: getState(cameraPermission: .requesting,
                                                                          cameraTransmissionStatus: .remote),
