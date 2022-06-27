@@ -394,7 +394,7 @@ class UIKitDemoViewController: UIViewController {
         selectedAcsTokenType = envConfigSubject.selectedAcsTokenType
 
         displayNameTextField = UITextField()
-        displayNameTextField.placeholder = "Display Name"
+        displayNameTextField.placeholder = "Display Name222"
         displayNameTextField.text = envConfigSubject.displayName
         displayNameTextField.translatesAutoresizingMaskIntoConstraints = false
         displayNameTextField.delegate = self
