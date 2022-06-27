@@ -445,7 +445,7 @@ class UIKitDemoViewController: UIViewController {
                                                                     left: Constants.buttonHorizontalInset,
                                                                     bottom: Constants.buttonVerticalInset,
                                                                     right: Constants.buttonHorizontalInset)
-        startExperienceButton.layer.cornerRadius = 8
+        startExperienceButton.layer.cornerRadius = 10
         startExperienceButton.setTitle("Start Experience", for: .normal)
         startExperienceButton.sizeToFit()
         startExperienceButton.translatesAutoresizingMaskIntoConstraints = false
