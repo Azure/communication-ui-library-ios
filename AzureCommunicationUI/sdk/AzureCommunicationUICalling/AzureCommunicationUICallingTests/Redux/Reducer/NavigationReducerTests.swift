@@ -58,6 +58,6 @@ class NavigationReducerTests: XCTestCase {
 
 extension NavigationReducerTests {
     private func getSUT() -> Reducer<NavigationState, Actions> {
-        return liveNavigationReducer
+        return .liveNavigationReducer
     }
 }

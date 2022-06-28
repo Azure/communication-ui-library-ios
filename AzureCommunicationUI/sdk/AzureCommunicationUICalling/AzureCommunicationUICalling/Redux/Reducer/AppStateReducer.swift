@@ -7,13 +7,13 @@ import Combine
 
 extension Reducer {
     static func appStateReducer(
-        permissionsReducer: Reducer<PermissionState, PermissionAction> = livePermissionsReducer,
-        localUserReducer: Reducer<LocalUserState, LocalUserAction> = liveLocalUserReducer,
-        lifeCycleReducer: Reducer<LifeCycleState, LifecycleAction> = liveLifecycleReducer,
-        audioSessionReducer: Reducer<AudioSessionState, AudioSessionAction> = liveAudioSessionReducer,
-        callingReducer: Reducer<CallingState, Actions> = liveCallingReducer,
-        navigationReducer: Reducer<NavigationState, Actions> = liveNavigationReducer,
-        errorReducer: Reducer<ErrorState, Actions> = liveErrorReducer
+        permissionsReducer: Reducer<PermissionState, PermissionAction> = .livePermissionsReducer,
+        localUserReducer: Reducer<LocalUserState, LocalUserAction> = .liveLocalUserReducer,
+        lifeCycleReducer: Reducer<LifeCycleState, LifecycleAction> = .liveLifecycleReducer,
+        audioSessionReducer: Reducer<AudioSessionState, AudioSessionAction> = .liveAudioSessionReducer,
+        callingReducer: Reducer<CallingState, Actions> = .liveCallingReducer,
+        navigationReducer: Reducer<NavigationState, Actions> = .liveNavigationReducer,
+        errorReducer: Reducer<ErrorState, Actions> = .liveErrorReducer
     ) -> Reducer<AppState, Actions> {
 
         return Reducer<AppState, Actions> { state, action in

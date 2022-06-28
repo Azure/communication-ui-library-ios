@@ -5,16 +5,19 @@
 
 import Foundation
 
-let liveLifecycleReducer = Reducer<LifeCycleState, LifecycleAction> { appLifeCycleCurrentState, action in
+extension Reducer where State == LifeCycleState,
+                        Action == LifecycleAction {
+    static var liveLifecycleReducer: Self = Reducer { appLifeCycleCurrentState, action in
 
-    var currentStatus = appLifeCycleCurrentState.currentStatus
-    switch action {
-    case .foregroundEntered:
-        currentStatus = .foreground
-    case .backgroundEntered:
-        currentStatus = .background
-    default:
-        return appLifeCycleCurrentState
+        var currentStatus = appLifeCycleCurrentState.currentStatus
+        switch action {
+        case .foregroundEntered:
+            currentStatus = .foreground
+        case .backgroundEntered:
+            currentStatus = .background
+        default:
+            return appLifeCycleCurrentState
+        }
+        return LifeCycleState(currentStatus: currentStatus)
     }
-    return LifeCycleState(currentStatus: currentStatus)
 }

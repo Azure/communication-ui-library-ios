@@ -67,6 +67,6 @@ class PermissionReducerTests: XCTestCase {
 
 extension PermissionReducerTests {
     private func getSUT() -> Reducer<PermissionState, PermissionAction> {
-        return livePermissionsReducer
+        return .livePermissionsReducer
     }
 }

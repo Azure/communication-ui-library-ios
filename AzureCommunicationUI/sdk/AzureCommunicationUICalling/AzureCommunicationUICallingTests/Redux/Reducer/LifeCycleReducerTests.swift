@@ -51,6 +51,6 @@ class LifeCycleReducerTests: XCTestCase {
 
 extension LifeCycleReducerTests {
     func getSUT() -> Reducer<LifeCycleState, LifecycleAction> {
-        return liveLifecycleReducer
+        return .liveLifecycleReducer
     }
 }

@@ -17,7 +17,7 @@ class CallingMiddlewareTests: XCTestCase {
     override func setUp() {
         super.setUp()
         mockMiddlewareHandler = CallingMiddlewareHandlerMocking()
-        mockMiddleware = liveCallingMiddleware(callingMiddlewareHandler: mockMiddlewareHandler)
+        mockMiddleware = .liveCallingMiddleware(callingMiddlewareHandler: mockMiddlewareHandler)
     }
 
     func test_callingMiddleware_apply_when_setupCallCallingAction_then_handlerSetupCallBeingCalled() {

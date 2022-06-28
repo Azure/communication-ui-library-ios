@@ -90,6 +90,6 @@ class ErrorReducerTests: XCTestCase {
 
 extension ErrorReducerTests {
     private func getSUT() -> Reducer<ErrorState, Actions> {
-        return liveErrorReducer
+        return .liveErrorReducer
     }
 }

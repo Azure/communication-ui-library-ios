@@ -8,15 +8,6 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class LocalUserReducerTests: XCTestCase {
-    // Not possible with type-safed parameters
-//    func test_localUserReducer_reduce_when_notLocalUserState_then_return() {
-//        let state = StateMocking()
-//        let action = .microphoneOffTriggered
-//        let sut = getSUT()
-//        let resultState = sut.reduce(state, action)
-//
-//        XCTAssert(resultState is StateMocking)
-//    }
 
     func test_localUserReducer_reduce_when_localUserActionUpdateMicStateUpdated_then_localUserMuted() {
         let state = LocalUserState()
@@ -212,39 +203,10 @@ class LocalUserReducerTests: XCTestCase {
 
         XCTAssertEqual(resultState.cameraState.operation, expectedCameraStatus)
     }
-
-    // No longer possible with type-checking at compile time, all cases handled in reducer
-//    func test_localUserReducer_reduce_when_mockingAction_then_stateNotUpdate() {
-//        let expectedVideoId = "expected"
-//
-//        let expectedCameraStatus = LocalUserState.CameraOperationalStatus.off
-//        let expectedCameraDeviceStatus = LocalUserState.CameraDeviceSelectionStatus.front
-//        let expectedMicStatus = LocalUserState.AudioOperationalStatus.off
-//        let expectedCameraState = LocalUserState.CameraState(operation: expectedCameraStatus,
-//                                                             device: expectedCameraDeviceStatus,
-//                                                             transmission: .local)
-//        let expectedAudioState = LocalUserState.AudioState(operation: expectedMicStatus,
-//                                                           device: .receiverSelected)
-//        let state = LocalUserState(cameraState: expectedCameraState,
-//                                   audioState: expectedAudioState,
-//                                   displayName: "",
-//                                   localVideoStreamIdentifier: expectedVideoId)
-//        let action = ActionMocking()
-//        let sut = getSUT()
-//        let resultState = sut.reduce(state, action)
-//        guard let resultState = resultState as? LocalUserState else {
-//            XCTFail("Failed with state validation")
-//            return
-//        }
-//        XCTAssertEqual(resultState.cameraState.operation, expectedCameraStatus)
-//        XCTAssertEqual(resultState.cameraState.device, expectedCameraDeviceStatus)
-//        XCTAssertEqual(resultState.audioState.operation, expectedMicStatus)
-//        XCTAssertEqual(resultState.localVideoStreamIdentifier, expectedVideoId)
-//    }
 }
 
 extension LocalUserReducerTests {
     func getSUT() -> Reducer<LocalUserState, LocalUserAction> {
-        return liveLocalUserReducer
+        return .liveLocalUserReducer
     }
 }

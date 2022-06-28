@@ -8,16 +8,6 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class CallingReducerTests: XCTestCase {
-    // No longer possible when type safety enforced at comptile time.
-//    func test_callingReducer_reduce_when_notCallingState_then_return() {
-//        let state = StateMocking()
-//        let action = Actions.callingAction(.stateUpdated(status: .connected))
-//        let sut = getSUT()
-//        let resultState = sut.reduce(state, action)
-//
-//        XCTAssert(resultState is StateMocking)
-//    }
-
     func test_callingReducer_reduce_when_callingActionStateUpdated_then_stateUpdated() {
         let expectedState = CallingStatus.connected
         let state = CallingState(status: .disconnected)
@@ -25,10 +15,6 @@ class CallingReducerTests: XCTestCase {
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
-        guard let resultState = resultState as? CallingState else {
-            XCTFail("Failed with state validation")
-            return
-        }
         XCTAssertEqual(resultState.status, expectedState)
     }
 
@@ -38,10 +24,7 @@ class CallingReducerTests: XCTestCase {
         let action = Actions.permissionAction(.audioPermissionNotAsked)
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
-//        guard let resultState = resultState as? CallingState else {
-//            XCTFail("Failed with state validation")
-//            return
-//        }
+
         XCTAssertEqual(resultState.status, expectedState)
     }
 
@@ -98,10 +81,6 @@ class CallingReducerTests: XCTestCase {
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
-        guard let resultState = resultState as? CallingState else {
-            XCTFail("Failed with state validation")
-            return
-        }
         XCTAssertEqual(resultState, expectedState)
     }
 
@@ -132,10 +111,6 @@ class CallingReducerTests: XCTestCase {
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
-        guard let resultState = resultState as? CallingState else {
-            XCTFail("Failed with state validation")
-            return
-        }
         XCTAssertEqual(resultState, expectedState)
     }
 
@@ -157,6 +132,6 @@ class CallingReducerTests: XCTestCase {
 
 extension CallingReducerTests {
     private func getSUT() -> Reducer<CallingState, Actions> {
-        return liveCallingReducer
+        return .liveCallingReducer
     }
 }
