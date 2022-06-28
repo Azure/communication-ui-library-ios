@@ -17,7 +17,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
             accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue,
             shouldWait: false)
         app.tap()
-        let toggle = app.switches[AccessibilityId.expiredAcstokenToggleAccessibilityID.rawValue]
+        let toggle = app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue]
         if toggle.waitForExistence(timeout: 3) {
             toggle.tap()
         }
@@ -115,9 +115,9 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
 extension AzureCommunicationUIDemoAppLaunchTests {
     private func tapDismissButtonIfNeeded() {
-        let dismissbtn1 = app.buttons["Dismiss"]
-        if dismissbtn1.waitForExistence(timeout: 3) {
-            dismissbtn1.tap()
+        let dismissBtn = app.buttons["Dismiss"]
+        if dismissBtn.waitForExistence(timeout: 3) {
+            dismissBtn.tap()
         }
     }
 }

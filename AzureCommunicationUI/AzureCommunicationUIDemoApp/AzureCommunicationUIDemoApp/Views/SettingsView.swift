@@ -51,7 +51,7 @@ struct SettingsView: View {
     var localParticipantSettings: some View {
         Section(header: Text("Local Participant Settings")) {
             Toggle("Use expired token", isOn: $envConfigSubject.useExpiredToken)
-                .accessibilityIdentifier(AccessibilityId.expiredAcstokenToggleAccessibilityID.rawValue)
+                .accessibilityIdentifier(AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue)
         }
     }
 

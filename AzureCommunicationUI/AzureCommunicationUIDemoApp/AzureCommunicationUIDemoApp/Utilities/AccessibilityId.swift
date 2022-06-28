@@ -15,6 +15,6 @@ enum AccessibilityId: String {
             "AzureCommunicationUICalling.DemoView.Settings.AccessibilityID"
 
     /* SettingsView */
-    case expiredAcstokenToggleAccessibilityID =
+    case expiredAcsTokenToggleAccessibilityID =
             "AzureCommunicationUICalling.SettingsView.expiredAcstokenToggle.AccessibilityID"
 }
