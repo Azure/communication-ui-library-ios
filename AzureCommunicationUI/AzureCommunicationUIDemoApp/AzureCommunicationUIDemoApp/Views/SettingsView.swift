@@ -52,6 +52,15 @@ struct SettingsView: View {
         Section(header: Text("Local Participant Settings")) {
             Toggle("Use expired token", isOn: $envConfigSubject.useExpiredToken)
                 .accessibilityIdentifier(AccessibilityId.expiredAcstokenToggleAccessibilityID.rawValue)
+            Button("Generate a new token") {
+                let url = URL(string: envConfigSubject.acsTokenUrl)!
+                AuthenticationHelper.getCommunicationToken(tokenUrl: url)() { token, error in
+                    if let token = token {
+                        debugPrint("hay! token has been manually updated: \(token), error is \(error)")
+                        envConfigSubject.acsToken = token
+                    }
+                }
+            }.accessibilityIdentifier(AccessibilityId.getNewAcstokenButtonAccessibilityID.rawValue)
         }
     }
 

@@ -18,5 +18,7 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>acsTokenUrl</key>
+	<string>${acsTokenUrl}</string>
 </dict>
 </plist>

@@ -13,15 +13,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
     func testCallCompositeWithExpiredToken() {
         tapInterfaceFor(.swiftUI)
-        tapButton(
-            accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue,
-            shouldWait: false)
-        app.tap()
-        let toggle = app.switches[AccessibilityId.expiredAcstokenToggleAccessibilityID.rawValue]
-        if toggle.waitForExistence(timeout: 3) {
-            toggle.tap()
-        }
-        app.swipeDown(velocity: .fast)
+        enterExpiredAcsToken()
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
             shouldWait: true)
@@ -62,6 +54,10 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
     func testCallCompositeJoinCallGroupCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
+        tapButton(
+            accessibilityIdentifier: AccessibilityId.clearTokenTextFieldAccessibilityID.rawValue,
+            shouldWait: false)
+        enterNewAcsToken()
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
             shouldWait: true)
@@ -69,11 +65,13 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
             accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
             shouldWait: true)
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityID.rawValue, shouldWait: true)
+        toggleLeaveCallDrawer(leaveCall: false)
     }
 
     func testCallCompositeJoinCallTeamsCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
         tapMeetingType(.teamsCall)
+        enterNewAcsToken()
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
             shouldWait: true)
@@ -83,6 +81,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         tapButton(
             accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityID.rawValue,
             shouldWait: true)
+        toggleLeaveCallDrawer(leaveCall: false)
     }
 
     func testCallCompositeJoinCallGroupCallUIKit() {
@@ -96,11 +95,13 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         tapButton(
             accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityID.rawValue,
             shouldWait: true)
+        toggleLeaveCallDrawer(leaveCall: false)
     }
 
     func testCallCompositeJoinCallTeamsCallUIKit() {
         tapInterfaceFor(.uiKit)
         tapMeetingType(.teamsCall)
+        app.buttons["Token URL"].tap()
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
             shouldWait: true)
@@ -110,6 +111,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         tapButton(
             accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityID.rawValue,
             shouldWait: true)
+        toggleLeaveCallDrawer(leaveCall: false)
     }
 }
 
@@ -118,6 +120,39 @@ extension AzureCommunicationUIDemoAppLaunchTests {
         let dismissbtn1 = app.buttons["Dismiss"]
         if dismissbtn1.waitForExistence(timeout: 3) {
             dismissbtn1.tap()
+        }
+    }
+
+    private func enterNewAcsToken() {
+        tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue,
+                    shouldWait: false)
+        tapButton(accessibilityIdentifier: AccessibilityId.getNewAcstokenButtonAccessibilityID.rawValue,
+                    shouldWait: false)
+        app.waitForExistence(timeout: 1)
+        app.buttons["Close"].tap()
+    }
+
+    private func enterExpiredAcsToken() {
+        tapButton(
+            accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue,
+            shouldWait: false)
+        app.tap()
+        let toggle = app.switches[AccessibilityId.expiredAcstokenToggleAccessibilityID.rawValue]
+        if toggle.waitForExistence(timeout: 3) {
+            toggle.tap()
+        }
+        app.buttons["Close"].tap()
+    }
+
+    /// Toggles the leave call overlay  in the calling screen
+    private func toggleLeaveCallDrawer(leaveCall: Bool) {
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityID.rawValue, shouldWait: true)
+
+        if leaveCall {
+            let cell = app.tables.cells[AccessibilityIdentifier.leaveCallAccessibilityID.rawValue]
+            if cell.waitForExistence(timeout: 3) {
+                cell.tap()
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeEndCallGroupCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
+        app.buttons["Token URL"].tap()
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
             shouldWait: true)
@@ -23,6 +24,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeEndCallTeamsCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
+        app.buttons["Token URL"].tap()
         tapMeetingType(.teamsCall)
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
@@ -35,6 +37,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeEndCallGroupCallUIKit() {
         tapInterfaceFor(.uiKit)
+        app.buttons["Token URL"].tap()
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
             shouldWait: true)
@@ -46,6 +49,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeEndCallTeamsCallUIKit() {
         tapInterfaceFor(.uiKit)
+        app.buttons["Token URL"].tap()
         tapMeetingType(.teamsCall)
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,

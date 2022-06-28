@@ -470,6 +470,8 @@ class UIKitDemoViewController: UIViewController {
         settingsButtonHStack.distribution = .fill
         settingsButtonHStack.translatesAutoresizingMaskIntoConstraints = false
 
+        settingsButton.accessibilityIdentifier = AccessibilityId.settingsButtonAccessibilityID.rawValue
+
         let startButtonHSpacer1 = UIView()
         startButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
         startButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
