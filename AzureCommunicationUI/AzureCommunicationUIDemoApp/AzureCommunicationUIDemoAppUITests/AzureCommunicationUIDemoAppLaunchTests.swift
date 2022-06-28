@@ -117,9 +117,9 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
 extension AzureCommunicationUIDemoAppLaunchTests {
     private func tapDismissButtonIfNeeded() {
-        let dismissbtn1 = app.buttons["Dismiss"]
-        if dismissbtn1.waitForExistence(timeout: 3) {
-            dismissbtn1.tap()
+        let dismissBtn = app.buttons["Dismiss"]
+        if dismissBtn.waitForExistence(timeout: 3) {
+            dismissBtn.tap()
         }
     }
 

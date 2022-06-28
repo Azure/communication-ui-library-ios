@@ -51,7 +51,7 @@ struct SettingsView: View {
     var localParticipantSettings: some View {
         Section(header: Text("Local Participant Settings")) {
             Toggle("Use expired token", isOn: $envConfigSubject.useExpiredToken)
-                .accessibilityIdentifier(AccessibilityId.expiredAcstokenToggleAccessibilityID.rawValue)
+                .accessibilityIdentifier(AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue)
             Button("Generate a new token") {
                 let url = URL(string: envConfigSubject.acsTokenUrl)!
                 AuthenticationHelper.getCommunicationToken(tokenUrl: url)() { token, error in

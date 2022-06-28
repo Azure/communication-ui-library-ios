@@ -8,11 +8,6 @@ import FluentUI
 import Combine
 
 struct ParticipantGridCellVideoView: View {
-
-    private struct Constants {
-        static let borderColor = Color(StyleProvider.color.primaryColor)
-    }
-
     var videoRendererViewInfo: ParticipantRendererViewInfo!
     let rendererViewManager: RendererViewManager?
     let zoomable: Bool
@@ -46,7 +41,7 @@ struct ParticipantGridCellVideoView: View {
 
         }.overlay(
             isSpeaking && !isMuted ? RoundedRectangle(cornerRadius: 4)
-                .strokeBorder(Constants.borderColor, lineWidth: 4) : nil
+                .strokeBorder(Color(StyleProvider.color.primaryColor), lineWidth: 4) : nil
         ).animation(.default)
     }
 
