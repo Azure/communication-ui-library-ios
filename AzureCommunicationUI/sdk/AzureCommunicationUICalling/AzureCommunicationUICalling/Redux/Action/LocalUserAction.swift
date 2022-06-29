@@ -63,7 +63,7 @@ enum LocalUserAction: Equatable {
             (.microphonePreviewOn, .microphonePreviewOn),
             (.microphonePreviewOff, .microphonePreviewOff):
             return true
-            
+
         case let (.audioDeviceChangeRequested(lDev), .audioDeviceChangeRequested(rDev)),
             let (.audioDeviceChangeSucceeded(lDev), .audioDeviceChangeSucceeded(rDev)):
             return lDev == rDev
