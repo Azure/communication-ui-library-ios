@@ -23,6 +23,14 @@ class SetupViewModelTests: XCTestCase {
                                                           store: storeFactory.store)
     }
 
+    override func tearDown() {
+        super.tearDown()
+        storeFactory = nil
+        cancellable = nil
+        logger = nil
+        factoryMocking = nil
+    }
+
     func test_setupViewModel_when_setupViewLoaded_then_shouldAskAudioPermission() {
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Verify Last Action is Request Audio")

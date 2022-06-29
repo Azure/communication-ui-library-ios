@@ -26,6 +26,15 @@ class SetupControlBarViewModelTests: XCTestCase {
                                                           store: storeFactory.store)
     }
 
+    override func tearDown() {
+        super.tearDown()
+        storeFactory = nil
+        cancellable = nil
+        logger = nil
+        localizationProvider = nil
+        factoryMocking = nil
+    }
+
     func test_setupControlBarViewModel_when_videoButtonTapped_then_requestCameraOnIfPreviouslyOff() {
         let expectation = XCTestExpectation(description: "Verify Camera On")
         let cameraState = LocalUserState.CameraState(operation: .off,
@@ -346,7 +355,7 @@ class SetupControlBarViewModelTests: XCTestCase {
         let audioDevicesListViewModel = AudioDevicesListViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                          dispatchAction: storeFactory.store.dispatch,
                                                                          localUserState: localUserState,
-                                                                         localizationProvider: LocalizationProviderMocking())
+                                                                         localizationProvider: localizationProvider)
 
         audioDevicesListViewModel.updateState = { status in
             XCTAssertEqual(status, localUserState.audioState.device)

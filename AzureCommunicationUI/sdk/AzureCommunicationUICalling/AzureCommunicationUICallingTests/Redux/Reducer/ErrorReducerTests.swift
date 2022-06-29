@@ -8,10 +8,6 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class ErrorReducerTests: XCTestCase {
-    override func setUp() {
-        super.setUp()
-    }
-
     func test_handleErrorReducer_reduce_when_notErrorState_then_return() {
         let state = StateMocking()
         let action = ErrorAction.FatalErrorUpdated(internalError: .callJoinFailed,
@@ -120,7 +116,6 @@ class ErrorReducerTests: XCTestCase {
 
         XCTAssertEqual(errorState.internalError, nil)
         XCTAssertEqual(errorState.errorCategory, .none)
-
     }
 }
 

@@ -26,6 +26,15 @@ class ControlBarViewModelTests: XCTestCase {
         localizationProvider = LocalizationProviderMocking()
     }
 
+    override func tearDown() {
+        super.tearDown()
+        storeFactory = nil
+        cancellable = nil
+        logger = nil
+        factoryMocking = nil
+        localizationProvider = nil
+    }
+
     // MARK: Leave Call / Cancel test
     func test_controlBarViewModel_getLeaveCallButtonViewModel_shouldReturnLeaveCallButtonViewModel() {
         let sut = makeSUT()

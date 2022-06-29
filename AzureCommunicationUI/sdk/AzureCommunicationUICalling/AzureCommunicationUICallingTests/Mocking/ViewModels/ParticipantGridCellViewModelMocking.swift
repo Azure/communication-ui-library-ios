@@ -9,8 +9,7 @@ import Foundation
 class ParticipantGridCellViewModelMocking: ParticipantGridCellViewModel {
     private let updateParticipantModelCompletion: ((ParticipantInfoModel) -> Void)?
 
-    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
-         participantModel: ParticipantInfoModel,
+    init(participantModel: ParticipantInfoModel,
          updateParticipantModelCompletion: ((ParticipantInfoModel) -> Void)?) {
         self.updateParticipantModelCompletion = updateParticipantModelCompletion
         super.init(localizationProvider: LocalizationProviderMocking(),

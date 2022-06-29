@@ -20,6 +20,12 @@ class CallingMiddlewareTests: XCTestCase {
         callingMiddleware = CallingMiddleware(callingMiddlewareHandler: mockMiddlewareHandler)
     }
 
+    override func tearDown() {
+        super.tearDown()
+        mockMiddlewareHandler = nil
+        callingMiddleware = nil
+    }
+
     func test_callingMiddleware_apply_when_setupCallCallingAction_then_handlerSetupCallBeingCalled() {
 
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()

@@ -21,11 +21,16 @@ class InfoHeaderViewModelTests: XCTestCase {
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+    }
 
-        func dispatch(action: Action) {
-            storeFactory.store.dispatch(action: action)
-        }
+    override func tearDown() {
+        super.tearDown()
+        logger = nil
+        storeFactory = nil
+        cancellable = nil
+        localizationProvider = nil
+        factoryMocking = nil
     }
 
     func test_infoHeaderViewModel_update_when_participantInfoListCountSame_then_shouldNotBePublished() {
@@ -315,7 +320,7 @@ class InfoHeaderViewModelTests: XCTestCase {
 extension InfoHeaderViewModelTests {
     func makeSUT(accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()) -> InfoHeaderViewModel {
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
-                                   logger: LoggerMocking(),
+                                   logger: logger,
                                    localUserState: LocalUserState(),
                                    localizationProvider: LocalizationProvider(logger: logger),
                                    accessibilityProvider: accessibilityProvider)

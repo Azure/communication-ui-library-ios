@@ -22,6 +22,14 @@ class PreviewAreaViewModelTests: XCTestCase {
                                                           store: storeFactory.store)
     }
 
+    override func tearDown() {
+        super.tearDown()
+        storeFactory = nil
+        logger = nil
+        localizationProvider = nil
+        factoryMocking = nil
+    }
+
     func test_previewAreaViewModel_when_audioPermissionDenied_then_shouldWarnAudioDisabled() {
         let cameraState = LocalUserState.CameraState(operation: .off,
                                                      device: .front,
@@ -161,7 +169,6 @@ class PreviewAreaViewModelTests: XCTestCase {
         XCTAssertEqual(sut.getPermissionWarningIcon(), expectedIcon)
         XCTAssertEqual(sut.getPermissionWarningText(), expectedTextKey)
     }
-
 }
 
 extension PreviewAreaViewModelTests {

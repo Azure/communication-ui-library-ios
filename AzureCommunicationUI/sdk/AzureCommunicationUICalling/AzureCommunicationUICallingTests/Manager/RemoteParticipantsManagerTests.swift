@@ -14,17 +14,27 @@ class RemoteParticipantsManagerTests: XCTestCase {
     var callingSDKWrapper: CallingSDKWrapperMocking!
     var eventsHandler: CallComposite.Events!
     var remoteParticipantsJoinedExpectation: XCTestExpectation!
-    var expectedIds: [String] = []
+    var expectedIds: [String]!
 
     override func setUp() {
         super.setUp()
-        sut = nil
         remoteParticipantsJoinedExpectation = XCTestExpectation(description: "DidRemoteParticipantsJoin event expectation")
         mockStoreFactory = StoreFactoryMocking()
         eventsHandler = CallComposite.Events()
         callingSDKWrapper = CallingSDKWrapperMocking()
         avatarViewManager = AvatarViewManagerMocking(store: mockStoreFactory.store,
                                                      localOptions: nil)
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        sut = nil
+        remoteParticipantsJoinedExpectation = nil
+        mockStoreFactory = nil
+        eventsHandler = nil
+        callingSDKWrapper = nil
+        avatarViewManager = nil
+        expectedIds = []
     }
 
     func test_remoteParticipantsManager_receive_when_stateUpdated_and_participantRemoved_then_avatarViewManagerUpdateStorageCalled() {

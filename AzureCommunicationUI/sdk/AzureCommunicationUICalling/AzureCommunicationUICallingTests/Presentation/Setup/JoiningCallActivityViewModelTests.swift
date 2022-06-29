@@ -15,6 +15,11 @@ class JoiningCallActivityViewModelTests: XCTestCase {
         localizationProvider = LocalizationProviderMocking()
     }
 
+    override func tearDown() {
+        super.tearDown()
+        localizationProvider = nil
+    }
+
     func test_joiningCallActivityViewModel_when_getTitle_then_shouldLocalizedPlaceholderString() {
         let sut = makeSUT()
         XCTAssertEqual(sut.title, "AzureCommunicationUICalling.SetupView.Button.JoiningCall")

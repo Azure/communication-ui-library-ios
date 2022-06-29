@@ -15,6 +15,11 @@ class BannerInfoTypeTests: XCTestCase {
         localizationProvider = LocalizationProvider(logger: LoggerMocking())
     }
 
+    override func tearDown() {
+        super.tearDown()
+        localizationProvider = nil
+    }
+
     func test_bannerInfoType_when_recordingAndTranscriptionStarted_then_shouldEqualExpectedString() {
         let bannerInfoType: BannerInfoType = .recordingAndTranscriptionStarted
         let expectedTitle = "Recording and transcription have started."
