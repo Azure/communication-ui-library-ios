@@ -51,7 +51,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 if state.permissionState.cameraPermission == .granted,
                    state.localUserState.cameraState.operation == .off,
                    state.errorState.internalError == nil {
-                    dispatch(.localUserAction(.cameraOnTriggered))
+                    dispatch(.localUserAction(.cameraPreviewOnTriggered))
                 }
             })
             .store(in: cancelBag)

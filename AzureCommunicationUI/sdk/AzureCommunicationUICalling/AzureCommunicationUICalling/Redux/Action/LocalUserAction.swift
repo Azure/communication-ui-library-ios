@@ -7,27 +7,6 @@ import Foundation
 import Combine
 
 enum LocalUserAction: Equatable {
-    static func == (lhs: LocalUserAction, rhs: LocalUserAction) -> Bool {
-        guard type(of: lhs) == type(of: rhs) else {
-            return false
-        }
-
-        // now handle cases where errors need to be compared
-        switch (lhs, rhs) {
-        case let (.cameraOnFailed(lErr), .cameraOnFailed(rErr)),
-            let (.cameraOffFailed(lErr), .cameraOffFailed(rErr)),
-            let (.cameraPausedFailed(lErr), .cameraPausedFailed(rErr)),
-            let (.cameraSwitchFailed(lErr), .cameraSwitchFailed(rErr)),
-            let (.microphoneOnFailed(lErr), .microphoneOnFailed(rErr)),
-            let (.microphoneOffFailed(lErr), .microphoneOffFailed(rErr)),
-            let (.audioDeviceChangeFailed(lErr), .audioDeviceChangeFailed(rErr)):
-
-            return (lErr as NSError).code == (rErr as NSError).code
-
-        default:
-            return true
-        }
-    }
 
     case cameraPreviewOnTriggered
     case cameraOnTriggered
@@ -59,4 +38,12 @@ enum LocalUserAction: Equatable {
     case audioDeviceChangeRequested(device: AudioDeviceType)
     case audioDeviceChangeSucceeded(device: AudioDeviceType)
     case audioDeviceChangeFailed(error: Error)
+
+    static func == (lhs: LocalUserAction, rhs: LocalUserAction) -> Bool {
+        return lhs.typeString == rhs.typeString
+    }
+
+    private var typeString: String {
+        String(describing: self)
+    }
 }

@@ -45,7 +45,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     func test_callingMiddlewareHandler_requestMicUnmute_when_returnsError_then_updateMicrophoneStatusIsError() {
         let error = getError()
         func dispatch(action: Actions) {
-            XCTAssertTrue(action == Actions.localUserAction(.microphoneOffFailed(error: error)))
+            XCTAssertTrue(action == Actions.localUserAction(.microphoneOnFailed(error: error)))
         }
         mockCallingService.error = error
         callingMiddlewareHandler.requestMicrophoneUnmute(state: getEmptyState(), dispatch: dispatch)
