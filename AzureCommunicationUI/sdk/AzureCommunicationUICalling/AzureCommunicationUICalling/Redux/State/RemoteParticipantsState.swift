@@ -5,7 +5,7 @@
 
 import Foundation
 
-class RemoteParticipantsState {
+struct RemoteParticipantsState {
     let participantInfoList: [ParticipantInfoModel]
     let lastUpdateTimeStamp: Date
 
