@@ -17,7 +17,22 @@ extension Reducer where State == NavigationState,
             navigationStatus = .exit
         case .errorAction(.statusErrorAndCallReset):
             navigationStatus = .setup
-        default:
+
+            // Exhaustive unimplemented actions
+        case .audioSessionAction(_),
+                .callingAction(.callStartRequested),
+                .callingAction(.callEndRequested),
+                .callingAction(.stateUpdated(status: _)),
+                .callingAction(.setupCall),
+                .callingAction(.recordingStateUpdated(isRecordingActive: _)),
+                .callingAction(.transcriptionStateUpdated(isTranscriptionActive: _)),
+                .callingAction(.resumeRequested),
+                .callingAction(.holdRequested),
+                .callingAction(.participantListUpdated(participants: _)),
+                .errorAction(.fatalErrorUpdated(internalError: _, error: _)),
+                .lifecycleAction(_),
+                .localUserAction(_),
+                .permissionAction(_):
             return state
         }
         return NavigationState(status: navigationStatus)

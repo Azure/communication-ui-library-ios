@@ -27,8 +27,24 @@ extension Reducer where State == ErrorState,
             error = nil
             errorCategory = .none
 
-        default:
+            // Exhaustive unimplemented actions
+        case .audioSessionAction(_),
+                .callingAction(.callEndRequested),
+                .callingAction(.stateUpdated(status: _)),
+                .callingAction(.setupCall),
+                .callingAction(.dismissSetup),
+                .callingAction(.recordingStateUpdated(isRecordingActive: _)),
+                .callingAction(.transcriptionStateUpdated(isTranscriptionActive: _)),
+                .callingAction(.resumeRequested),
+                .callingAction(.holdRequested),
+                .callingAction(.participantListUpdated(participants: _)),
+                .lifecycleAction(_),
+                .localUserAction(_),
+                .permissionAction(_),
+                .compositeExitAction,
+                .callingViewLaunched:
             return state
+
         }
 
         return ErrorState(internalError: errorType,
