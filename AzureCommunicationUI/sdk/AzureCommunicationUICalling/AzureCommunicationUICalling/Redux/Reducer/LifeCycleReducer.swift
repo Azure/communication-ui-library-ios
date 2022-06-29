@@ -15,8 +15,6 @@ extension Reducer where State == LifeCycleState,
             currentStatus = .foreground
         case .backgroundEntered:
             currentStatus = .background
-        default:
-            return appLifeCycleCurrentState
         }
         return LifeCycleState(currentStatus: currentStatus)
     }

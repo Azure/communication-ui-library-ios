@@ -67,7 +67,7 @@ class CompositeErrorManagerTests: XCTestCase {
                     XCTFail("self is nil")
                     return
                 }
-                XCTAssertTrue(self.mockStoreFactory.actions.first == Actions.lifecycleAction(.compositeExitAction))
+                XCTAssertTrue(self.mockStoreFactory.actions.first == Actions.compositeExitAction)
                 actionExpectation.fulfill()
             }.store(in: cancellable)
 

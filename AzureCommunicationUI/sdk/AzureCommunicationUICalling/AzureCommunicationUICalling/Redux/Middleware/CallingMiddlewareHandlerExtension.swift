@@ -48,7 +48,7 @@ extension CallingMiddlewareHandler {
             break
         case .connected,
              .inLobby:
-            dispatch(.lifecycleAction(.callingViewLaunched))
+            dispatch(.callingViewLaunched)
         }
 
     }

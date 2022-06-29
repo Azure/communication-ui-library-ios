@@ -8,14 +8,6 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class NavigationReducerTests: XCTestCase {
-//    func test_navigationReducer_reduce_when_notNavigationStatus_then_return() {
-//        let state = ErrorState()
-//        let action = Actions.lifecycleAction(.callingViewLaunched)
-//        let sut = getSUT()
-//        let resultState = sut.reduce(state, action)
-//
-//        XCTAssert(resultState is StateMocking)
-//    }
 
     func test_navigationReducer_reduce_when_callingActionStateUpdatedNotDisconnected_then_stateNotUpdated() {
         let expectedState = NavigationState(status: .setup)
@@ -30,7 +22,7 @@ class NavigationReducerTests: XCTestCase {
     func test_navigationReducer_reduce_when_compositexitaction_then_stateExitUpdated() {
         let expectedState = NavigationState(status: .exit)
         let state = NavigationState(status: .setup)
-        let action = Actions.lifecycleAction(.compositeExitAction)
+        let action = Actions.compositeExitAction
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
@@ -40,7 +32,7 @@ class NavigationReducerTests: XCTestCase {
     func test_navigationReducer_reduce_when_callingViewLaunched_then_stateinCallUpdated() {
         let expectedState = NavigationState(status: .inCall)
         let state = NavigationState(status: .exit)
-        let action = Actions.lifecycleAction(.callingViewLaunched)
+        let action = Actions.callingViewLaunched
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 

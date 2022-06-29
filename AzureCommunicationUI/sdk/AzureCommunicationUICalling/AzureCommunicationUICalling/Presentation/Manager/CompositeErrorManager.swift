@@ -51,7 +51,7 @@ class CompositeErrorManager: ErrorManagerProtocol {
               internalError.isFatalError() else {
             return
         }
-        store.dispatch(action: .lifecycleAction(.compositeExitAction))
+        store.dispatch(action: .compositeExitAction)
     }
 
     private func getCallCompositeError(errorState: ErrorState) -> CallCompositeError? {

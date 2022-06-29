@@ -51,7 +51,6 @@ class AudioSessionReducerTests: XCTestCase {
 
         XCTAssertEqual(resultState.status, expectedAudioStatus)
     }
-
 }
 
 extension AudioSessionReducerTests {

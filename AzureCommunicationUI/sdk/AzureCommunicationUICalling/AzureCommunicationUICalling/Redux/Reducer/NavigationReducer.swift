@@ -10,10 +10,10 @@ extension Reducer where State == NavigationState,
     static var liveNavigationReducer: Self = Reducer { state, action in
         var navigationStatus = state.status
         switch action {
-        case .lifecycleAction(.callingViewLaunched):
+        case .callingViewLaunched:
             navigationStatus = .inCall
         case .callingAction(.dismissSetup),
-                .lifecycleAction(.compositeExitAction):
+                .compositeExitAction:
             navigationStatus = .exit
         case .errorAction(.statusErrorAndCallReset):
             navigationStatus = .setup

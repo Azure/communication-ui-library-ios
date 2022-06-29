@@ -316,7 +316,7 @@ extension CallingMiddlewareHandler {
                     // we exit the UI library when we receive the wrong status .remoteHold
                 } else if callingStatus == .disconnected || callingStatus == .remoteHold {
                     self.logger.debug("Subscription cancel happy path")
-                    dispatch(.lifecycleAction(.compositeExitAction))
+                    dispatch(.compositeExitAction)
                     self.subscription.cancel()
                 }
 

@@ -12,17 +12,6 @@ class ErrorReducerTests: XCTestCase {
         super.setUp()
     }
 
-    // No longer possible with compile time state checking
-//    func test_handleErrorReducer_reduce_when_notErrorState_then_return() {
-//        let state = StateMocking()
-//        let action = Actions.errorAction(.fatalErrorUpdated(internalError: .callJoinFailed,
-//                                                   error: nil))
-//        let sut = getSUT()
-//
-//        let resultState = sut.reduce(state, action)
-//        XCTAssert(resultState is StateMocking)
-//    }
-
     func test_handleErrorReducer_reduce_when_fatalErrorUpdated_then_returnErrorState_categoryFatal() {
         let state = ErrorState()
         let action = Actions.errorAction(.fatalErrorUpdated(internalError: .callJoinFailed,
@@ -59,13 +48,8 @@ class ErrorReducerTests: XCTestCase {
 
     func test_handleErrorReducer_reduce_when_statusErrorCallDeniedAndCallReset_then_returnErrorState_categoryCallState() {
         let state = ErrorState()
-        // Should set the initial state to something other than the expected state so we know the reducer did something
-//        let state = ErrorState(internalError: .callDenied,
-//                               error: nil,
-//                               errorCategory: .callState)
-
         let action = Actions.errorAction(.statusErrorAndCallReset(internalError: .callDenied,
-                                                         error: nil))
+                                                                  error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
