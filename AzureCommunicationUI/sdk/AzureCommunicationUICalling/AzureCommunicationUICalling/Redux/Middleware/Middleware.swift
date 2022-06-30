@@ -5,7 +5,7 @@
 
 import Combine
 
-typealias ActionDispatch = (Actions) -> Void
+typealias ActionDispatch = (Action) -> Void
 
 struct Middleware<State> {
     var apply: (_ actionDispatch: @escaping ActionDispatch, _ getState: @escaping () -> State) ->

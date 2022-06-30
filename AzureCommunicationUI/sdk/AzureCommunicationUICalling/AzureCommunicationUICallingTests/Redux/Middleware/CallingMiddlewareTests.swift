@@ -103,7 +103,7 @@ class CallingMiddlewareTests: XCTestCase {
     func test_callingMiddleware_apply_when_requestCameraOn_then_nextActionDispatchCameraOnTriggered() {
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
 
-        let action = Actions.localUserAction(.cameraOnTriggered)
+        let action = Action.localUserAction(.cameraOnTriggered)
         let expectation = XCTestExpectation(description: "Verify is same action Type")
         let nextDispatch = getAssertSameActionDispatch(action: action, expectation: expectation)
         middlewareDispatch(nextDispatch)(action)
@@ -113,7 +113,7 @@ class CallingMiddlewareTests: XCTestCase {
     func test_callingMiddleware_apply_when_requestMicOn_then_nextActionDispatchMicrophoneOnTriggered() {
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
 
-        let action = Actions.localUserAction(.microphoneOnTriggered)
+        let action = Action.localUserAction(.microphoneOnTriggered)
         let expectation = XCTestExpectation(description: "Verify is same action Type")
         let nextDispatch = getAssertSameActionDispatch(action: action, expectation: expectation)
         middlewareDispatch(nextDispatch)(action)
@@ -123,7 +123,7 @@ class CallingMiddlewareTests: XCTestCase {
     func test_callingMiddleware_apply_when_enterForeground_then_nextActionDispatchEnterForeground() {
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
 
-        let action = Actions.lifecycleAction(.foregroundEntered)
+        let action = Action.lifecycleAction(.foregroundEntered)
         let expectation = XCTestExpectation(description: "Verify is same action Type")
         let nextDispatch = getAssertSameActionDispatch(action: action, expectation: expectation)
         middlewareDispatch(nextDispatch)(action)
@@ -145,7 +145,7 @@ extension CallingMiddlewareTests {
         return mockMiddleware.apply(getEmptyDispatch(), getEmptyState)
     }
 
-    private func getAssertSameActionDispatch(action: Actions, expectation: XCTestExpectation) -> ActionDispatch {
+    private func getAssertSameActionDispatch(action: Action, expectation: XCTestExpectation) -> ActionDispatch {
         return { nextAction in
             XCTAssertTrue(type(of: action) == type(of: nextAction))
             expectation.fulfill()

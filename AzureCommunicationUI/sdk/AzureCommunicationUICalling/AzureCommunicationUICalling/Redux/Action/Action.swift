@@ -6,9 +6,9 @@
 import Foundation
 
 ///
-/// Actions for the entire library. All actions are defined here as a heirarchy of enum types
+/// Action for the entire library. All actions are defined here as a heirarchy of enum types
 /// 
-enum Actions: Equatable {
+enum Action: Equatable {
     case audioSessionAction(AudioSessionAction)
     case callingAction(CallingAction)
     case errorAction(ErrorAction)

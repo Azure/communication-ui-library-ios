@@ -6,6 +6,6 @@
 import Combine
 import Foundation
 
-struct Reducer<State, Action> {
-    let reduce: (_ state: State, _ action: Action) -> State
+struct Reducer<State, Actions> {
+    let reduce: (_ state: State, _ action: Actions) -> State
 }

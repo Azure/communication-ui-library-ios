@@ -77,7 +77,7 @@ final class DependencyContainer {
         ]
 
         let localUserState = LocalUserState(displayName: displayName)
-        return Store<AppState>(reducer: Reducer<AppState, Actions>.appStateReducer(),
+        return Store<AppState>(reducer: Reducer<AppState, Action>.appStateReducer(),
                                middlewares: middlewares,
                                state: AppState(localUserState: localUserState))
     }

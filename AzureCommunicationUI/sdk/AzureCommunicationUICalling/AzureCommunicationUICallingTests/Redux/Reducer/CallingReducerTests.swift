@@ -11,7 +11,7 @@ class CallingReducerTests: XCTestCase {
     func test_callingReducer_reduce_when_callingActionStateUpdated_then_stateUpdated() {
         let expectedState = CallingStatus.connected
         let state = CallingState(status: .disconnected)
-        let action = Actions.callingAction(.stateUpdated(status: expectedState))
+        let action = Action.callingAction(.stateUpdated(status: expectedState))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
@@ -21,7 +21,7 @@ class CallingReducerTests: XCTestCase {
     func test_callingReducer_reduce_when_unhandledAction_then_stateNotUpdate() {
         let expectedState = CallingStatus.disconnected
         let state = CallingState(status: expectedState)
-        let action = Actions.permissionAction(.audioPermissionNotAsked)
+        let action = Action.permissionAction(.audioPermissionNotAsked)
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
@@ -35,7 +35,7 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .connected,
                                  isRecordingActive: false,
                                  isTranscriptionActive: false)
-        let action = Actions.callingAction(.recordingStateUpdated(isRecordingActive: true))
+        let action = Action.callingAction(.recordingStateUpdated(isRecordingActive: true))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
@@ -49,7 +49,7 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .connected,
                                  isRecordingActive: true,
                                  isTranscriptionActive: false)
-        let action = Actions.callingAction(.recordingStateUpdated(isRecordingActive: false))
+        let action = Action.callingAction(.recordingStateUpdated(isRecordingActive: false))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
@@ -63,7 +63,7 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .connected,
                                  isRecordingActive: false,
                                  isTranscriptionActive: false)
-        let action = Actions.callingAction(.transcriptionStateUpdated(isTranscriptionActive: true))
+        let action = Action.callingAction(.transcriptionStateUpdated(isTranscriptionActive: true))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
@@ -77,7 +77,7 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .connected,
                                  isRecordingActive: false,
                                  isTranscriptionActive: true)
-        let action = Actions.callingAction(.transcriptionStateUpdated(isTranscriptionActive: false))
+        let action = Action.callingAction(.transcriptionStateUpdated(isTranscriptionActive: false))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
@@ -91,7 +91,7 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .connected,
                                  isRecordingActive: true,
                                  isTranscriptionActive: true)
-        let action = Actions.errorAction(.statusErrorAndCallReset(internalError: .callDenied,
+        let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callDenied,
                                                          error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
@@ -106,7 +106,7 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .disconnected,
                                  isRecordingActive: true,
                                  isTranscriptionActive: true)
-        let action = Actions.errorAction(.statusErrorAndCallReset(internalError: .callEvicted,
+        let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callEvicted,
                                                          error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
@@ -121,7 +121,7 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .disconnected,
                                  isRecordingActive: false,
                                  isTranscriptionActive: false)
-        let action = Actions.errorAction(.statusErrorAndCallReset(internalError: .callDenied,
+        let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callDenied,
                                                          error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
@@ -131,7 +131,7 @@ class CallingReducerTests: XCTestCase {
 }
 
 extension CallingReducerTests {
-    private func getSUT() -> Reducer<CallingState, Actions> {
+    private func getSUT() -> Reducer<CallingState, Action> {
         return .liveCallingReducer
     }
 }

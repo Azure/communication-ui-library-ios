@@ -6,7 +6,7 @@
 import Foundation
 
 extension Reducer where State == LifeCycleState,
-                        Action == LifecycleAction {
+                        Actions == LifecycleAction {
     static var liveLifecycleReducer: Self = Reducer { appLifeCycleCurrentState, action in
 
         var currentStatus = appLifeCycleCurrentState.currentStatus

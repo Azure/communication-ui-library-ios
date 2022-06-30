@@ -17,7 +17,7 @@ class AppStateReducerTests: XCTestCase {
 
         let state = getAppState(permissionState: oldPermissionState)
         let sut = getSUT(permissionReducer: mockSubReducer)
-        let result = sut.reduce(state, Actions.permissionAction(.audioPermissionNotAsked))    // Not asked should not cause the mocked state change
+        let result = sut.reduce(state, Action.permissionAction(.audioPermissionNotAsked))    // Not asked should not cause the mocked state change
 
         XCTAssertEqual(result.permissionState.cameraPermission, expectedPermissionState)
         XCTAssertEqual(result.permissionState.audioPermission, expectedPermissionState)
@@ -53,7 +53,7 @@ class AppStateReducerTests: XCTestCase {
 
         let state = getAppState(localUserState: oldLocalUserState)
         let sut = getSUT(localUserReducer: mockSubReducer)
-        let result = sut.reduce(state, Actions.localUserAction(.cameraOffTriggered))
+        let result = sut.reduce(state, Action.localUserAction(.cameraOffTriggered))
 
         XCTAssertEqual(result.localUserState.cameraState.operation, expectedCameraStatus)
         XCTAssertEqual(result.localUserState.cameraState.device, expectedCameraDeviceStatus)
@@ -70,7 +70,7 @@ class AppStateReducerTests: XCTestCase {
 
         let state = getAppState(lifeCycleState: oldLifeCycleState)
         let sut = getSUT(lifeCycleReducer: mockSubReducer)
-        let result = sut.reduce(state, Actions.lifecycleAction(.backgroundEntered))
+        let result = sut.reduce(state, Action.lifecycleAction(.backgroundEntered))
 
         XCTAssertEqual(result.lifeCycleState.currentStatus, expectedState)
     }
@@ -79,11 +79,11 @@ class AppStateReducerTests: XCTestCase {
         let oldState = CallingState(status: .connected)
         let expectedState = CallingStatus.disconnected
         let newState = CallingState(status: expectedState)
-        let mockSubReducer: Reducer<CallingState, Actions> = .mockReducer(outputState: newState)
+        let mockSubReducer: Reducer<CallingState, Action> = .mockReducer(outputState: newState)
 
         let state = getAppState(callingState: oldState)
         let sut = getSUT(callingReducer: mockSubReducer)
-        let result = sut.reduce(state, Actions.localUserAction(.cameraOnTriggered))
+        let result = sut.reduce(state, Action.localUserAction(.cameraOnTriggered))
 
         XCTAssertEqual(result.callingState.status, expectedState)
     }
@@ -91,11 +91,11 @@ class AppStateReducerTests: XCTestCase {
     func test_appStateReducer_reduceNaviState_then_naviStateReducerCalled_stateUpdated() {
         let oldState = NavigationState(status: .setup)
         let expectedState = NavigationState(status: .inCall)
-        let mockSubReducer: Reducer<NavigationState, Actions> = .mockReducer(outputState: expectedState)
+        let mockSubReducer: Reducer<NavigationState, Action> = .mockReducer(outputState: expectedState)
 
         let state = getAppState(navigationState: oldState)
         let sut = getSUT(navigationReducer: mockSubReducer)
-        let result = sut.reduce(state, Actions.localUserAction(.cameraOnTriggered))
+        let result = sut.reduce(state, Action.localUserAction(.cameraOnTriggered))
 
         XCTAssertEqual(result.navigationState, expectedState)
     }
@@ -103,11 +103,11 @@ class AppStateReducerTests: XCTestCase {
     func test_appStateReducer_reduceErrorState_then_errorStateReducerCalled_stateUpdated() {
         let oldState = ErrorState()
         let expectedState = ErrorState(error: nil, errorCategory: .callState)
-        let mockSubReducer: Reducer<ErrorState, Actions> = .mockReducer(outputState: expectedState)
+        let mockSubReducer: Reducer<ErrorState, Action> = .mockReducer(outputState: expectedState)
 
         let state = getAppState(errorState: oldState)
         let sut = getSUT(errorReducer: mockSubReducer)
-        let result = sut.reduce(state, Actions.localUserAction(.cameraOnTriggered))
+        let result = sut.reduce(state, Action.localUserAction(.cameraOnTriggered))
 
         XCTAssertEqual(result.errorState, expectedState)
     }
@@ -119,7 +119,7 @@ class AppStateReducerTests: XCTestCase {
                                                         displayName: "",
                                                         isSpeaking: false,
                                                         recentSpeakingStamp: Date())
-        let action = Actions.callingAction(.participantListUpdated(participants: [infoModel]))
+        let action = Action.callingAction(.participantListUpdated(participants: [infoModel]))
         let sut = getSUT()
         let state = getAppState()
         let result = sut.reduce(state, action)
@@ -130,7 +130,7 @@ class AppStateReducerTests: XCTestCase {
 
     func test_appStateReducer_reduce_when_StatusErrorAndCallReset_then_remoteParticipantStateCleanup() {
         let userId = UUID().uuidString
-        let action = Actions.errorAction(.statusErrorAndCallReset(internalError: .callJoinFailed,
+        let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callJoinFailed,
                                                          error: nil))
         let sut = getSUT()
         let participant = ParticipantInfoModel(displayName: "displayname",
@@ -155,11 +155,11 @@ extension AppStateReducerTests {
                 localUserReducer: Reducer<LocalUserState, LocalUserAction> = .mockReducer(),
                 lifeCycleReducer: Reducer<LifeCycleState, LifecycleAction> = .mockReducer(),
                 audioSessionReducer: Reducer<AudioSessionState, AudioSessionAction> = .mockReducer(),
-                callingReducer: Reducer<CallingState, Actions> = .mockReducer(),
-                navigationReducer: Reducer<NavigationState, Actions> = .mockReducer(),
-                errorReducer: Reducer<ErrorState, Actions> = .mockReducer()
-    ) -> Reducer<AppState, Actions> {
-        return Reducer<AppState, Actions>.appStateReducer(
+                callingReducer: Reducer<CallingState, Action> = .mockReducer(),
+                navigationReducer: Reducer<NavigationState, Action> = .mockReducer(),
+                errorReducer: Reducer<ErrorState, Action> = .mockReducer()
+    ) -> Reducer<AppState, Action> {
+        return Reducer<AppState, Action>.appStateReducer(
             permissionsReducer: permissionReducer,
             localUserReducer: localUserReducer,
             lifeCycleReducer: lifeCycleReducer,

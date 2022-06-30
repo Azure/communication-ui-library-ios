@@ -7,7 +7,7 @@ import Combine
 import Foundation
 
 extension Reducer where State == LocalUserState,
-                        Action == LocalUserAction {
+                        Actions == LocalUserAction {
     static var liveLocalUserReducer: Self = Reducer { localUserState, action in
 
         var cameraStatus = localUserState.cameraState.operation

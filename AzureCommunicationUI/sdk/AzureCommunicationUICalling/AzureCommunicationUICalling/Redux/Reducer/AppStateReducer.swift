@@ -11,12 +11,12 @@ extension Reducer {
         localUserReducer: Reducer<LocalUserState, LocalUserAction> = .liveLocalUserReducer,
         lifeCycleReducer: Reducer<LifeCycleState, LifecycleAction> = .liveLifecycleReducer,
         audioSessionReducer: Reducer<AudioSessionState, AudioSessionAction> = .liveAudioSessionReducer,
-        callingReducer: Reducer<CallingState, Actions> = .liveCallingReducer,
-        navigationReducer: Reducer<NavigationState, Actions> = .liveNavigationReducer,
-        errorReducer: Reducer<ErrorState, Actions> = .liveErrorReducer
-    ) -> Reducer<AppState, Actions> {
+        callingReducer: Reducer<CallingState, Action> = .liveCallingReducer,
+        navigationReducer: Reducer<NavigationState, Action> = .liveNavigationReducer,
+        errorReducer: Reducer<ErrorState, Action> = .liveErrorReducer
+    ) -> Reducer<AppState, Action> {
 
-        return Reducer<AppState, Actions> { state, action in
+        return Reducer<AppState, Action> { state, action in
 
             var permissionState = state.permissionState
             var localUserState = state.localUserState

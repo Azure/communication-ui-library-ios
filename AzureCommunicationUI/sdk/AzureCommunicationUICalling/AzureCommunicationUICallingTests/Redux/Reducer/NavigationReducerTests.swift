@@ -12,7 +12,7 @@ class NavigationReducerTests: XCTestCase {
     func test_navigationReducer_reduce_when_callingActionStateUpdatedNotDisconnected_then_stateNotUpdated() {
         let expectedState = NavigationState(status: .setup)
         let state = NavigationState(status: .setup)
-        let action = Actions.callingAction(.stateUpdated(status: .connected))
+        let action = Action.callingAction(.stateUpdated(status: .connected))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
@@ -22,7 +22,7 @@ class NavigationReducerTests: XCTestCase {
     func test_navigationReducer_reduce_when_compositexitaction_then_stateExitUpdated() {
         let expectedState = NavigationState(status: .exit)
         let state = NavigationState(status: .setup)
-        let action = Actions.compositeExitAction
+        let action = Action.compositeExitAction
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
@@ -32,7 +32,7 @@ class NavigationReducerTests: XCTestCase {
     func test_navigationReducer_reduce_when_callingViewLaunched_then_stateinCallUpdated() {
         let expectedState = NavigationState(status: .inCall)
         let state = NavigationState(status: .exit)
-        let action = Actions.callingViewLaunched
+        let action = Action.callingViewLaunched
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
@@ -41,7 +41,7 @@ class NavigationReducerTests: XCTestCase {
 
     func test_navigationReducer_reduce_when_action_not_applicable_then_stateNotUpdate() {
         let expectedState = NavigationState(status: .inCall)
-        let action = Actions.audioSessionAction(.audioInterruptEnded)
+        let action = Action.audioSessionAction(.audioInterruptEnded)
         let sut = getSUT()
         let resultState = sut.reduce(expectedState, action)
         XCTAssertEqual(resultState, expectedState)
@@ -49,7 +49,7 @@ class NavigationReducerTests: XCTestCase {
 }
 
 extension NavigationReducerTests {
-    private func getSUT() -> Reducer<NavigationState, Actions> {
+    private func getSUT() -> Reducer<NavigationState, Action> {
         return .liveNavigationReducer
     }
 }

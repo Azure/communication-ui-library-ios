@@ -6,7 +6,7 @@
 import Foundation
 
 extension Reducer where State == PermissionState,
-                        Action == PermissionAction {
+                        Actions == PermissionAction {
     static var livePermissionsReducer: Self = Reducer { permissionState, action in
 
         var cameraPermission = permissionState.cameraPermission

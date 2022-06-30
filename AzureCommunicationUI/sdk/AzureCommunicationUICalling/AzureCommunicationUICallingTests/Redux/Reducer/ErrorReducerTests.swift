@@ -14,7 +14,7 @@ class ErrorReducerTests: XCTestCase {
 
     func test_handleErrorReducer_reduce_when_fatalErrorUpdated_then_returnErrorState_categoryFatal() {
         let state = ErrorState()
-        let action = Actions.errorAction(.fatalErrorUpdated(internalError: .callJoinFailed,
+        let action = Action.errorAction(.fatalErrorUpdated(internalError: .callJoinFailed,
                                                    error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
@@ -25,7 +25,7 @@ class ErrorReducerTests: XCTestCase {
 
     func test_handleErrorReducer_reduce_when_statusErrorAndCallReset_then_returnErrorState_categoryCallState() {
         let state = ErrorState()
-        let action = Actions.errorAction(.statusErrorAndCallReset(internalError: .callJoinFailed,
+        let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callJoinFailed,
                                                          error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
@@ -37,7 +37,7 @@ class ErrorReducerTests: XCTestCase {
     func test_handleErrorReducer_reduce_when_statusErrorCallEvictionAndCallReset_then_returnErrorState_categoryCallState() {
         let state = ErrorState()
 
-        let action = Actions.errorAction(.statusErrorAndCallReset(internalError: .callEvicted,
+        let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callEvicted,
                                                          error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
@@ -48,7 +48,7 @@ class ErrorReducerTests: XCTestCase {
 
     func test_handleErrorReducer_reduce_when_statusErrorCallDeniedAndCallReset_then_returnErrorState_categoryCallState() {
         let state = ErrorState()
-        let action = Actions.errorAction(.statusErrorAndCallReset(internalError: .callDenied,
+        let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callDenied,
                                                                   error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
@@ -62,7 +62,7 @@ class ErrorReducerTests: XCTestCase {
                                error: nil,
                                errorCategory: .callState)
 
-        let action = Actions.callingAction(.callStartRequested)
+        let action = Action.callingAction(.callStartRequested)
         let sut = getSUT()
 
         let resultState = sut.reduce(state, action)
@@ -73,7 +73,7 @@ class ErrorReducerTests: XCTestCase {
 }
 
 extension ErrorReducerTests {
-    private func getSUT() -> Reducer<ErrorState, Actions> {
+    private func getSUT() -> Reducer<ErrorState, Action> {
         return .liveErrorReducer
     }
 }

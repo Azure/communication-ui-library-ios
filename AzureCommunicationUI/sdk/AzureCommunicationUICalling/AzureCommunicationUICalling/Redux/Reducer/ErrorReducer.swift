@@ -6,7 +6,7 @@
 import Combine
 
 extension Reducer where State == ErrorState,
-                        Action == Actions {
+                        Actions == Action {
     static var liveErrorReducer: Self = Reducer { state, action in
 
         var errorType = state.internalError

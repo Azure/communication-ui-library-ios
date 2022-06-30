@@ -6,7 +6,7 @@
 import Combine
 
 extension Reducer where State == NavigationState,
-                        Action == Actions {
+                        Actions == Action {
     static var liveNavigationReducer: Self = Reducer { state, action in
         var navigationStatus = state.status
         switch action {

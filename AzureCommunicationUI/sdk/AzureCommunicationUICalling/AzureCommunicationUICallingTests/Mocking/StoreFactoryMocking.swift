@@ -8,8 +8,8 @@ import Foundation
 
 class StoreFactoryMocking {
     var store: Store<AppState>!
-    var actions = [Actions]()
-    var firstAction: Actions? { return actions.first }
+    var actions = [Action]()
+    var firstAction: Action? { return actions.first }
     var didRecordAction: Bool { return !actions.isEmpty }
 
     init() {

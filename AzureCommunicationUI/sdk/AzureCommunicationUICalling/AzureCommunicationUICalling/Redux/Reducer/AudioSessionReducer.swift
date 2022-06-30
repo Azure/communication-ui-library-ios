@@ -6,7 +6,7 @@
 import Foundation
 
 extension Reducer where State == AudioSessionState,
-                        Action == AudioSessionAction {
+                        Actions == AudioSessionAction {
     static var liveAudioSessionReducer: Self = Reducer { audioSessionState, action in
 
         var audioSessionStatus = audioSessionState.status

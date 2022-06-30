@@ -6,7 +6,7 @@
 import Combine
 
 extension Reducer where State == CallingState,
-                        Action == Actions {
+                        Actions == Action {
     static var liveCallingReducer: Self = Reducer { callingState, action in
 
         var callingStatus = callingState.status

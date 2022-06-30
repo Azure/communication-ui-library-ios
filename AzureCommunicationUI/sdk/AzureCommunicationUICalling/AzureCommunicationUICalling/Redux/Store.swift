@@ -11,10 +11,10 @@ class Store<State>: ObservableObject {
     @Published var state: State
 
     private var dispatchFunction: ActionDispatch!
-    private let reducer: Reducer<State, Actions>
+    private let reducer: Reducer<State, Action>
     private let actionDispatchQueue = DispatchQueue(label: "ActionDispatchQueue")
 
-    init(reducer: Reducer<State, Actions>,
+    init(reducer: Reducer<State, Action>,
          middlewares: [Middleware<State>],
          state: State) {
         self.reducer = reducer
@@ -24,19 +24,19 @@ class Store<State>: ObservableObject {
             .reduce({ [unowned self] action in
                 self._dispatch(action: action)
             }, { nextDispatch, middleware in
-                let dispatch: (Actions) -> Void = { [unowned self] in self.dispatch(action: $0) }
+                let dispatch: (Action) -> Void = { [unowned self] in self.dispatch(action: $0) }
                 let getState = { [unowned self] in self.state }
                 return middleware.apply(dispatch, getState)(nextDispatch)
             })
     }
 
-    func dispatch(action: Actions) {
+    func dispatch(action: Action) {
         actionDispatchQueue.async {
             self.dispatchFunction(action)
         }
     }
 
-    private func _dispatch(action: Actions) {
+    private func _dispatch(action: Action) {
         state = reducer.reduce(state, action)
     }
 }
