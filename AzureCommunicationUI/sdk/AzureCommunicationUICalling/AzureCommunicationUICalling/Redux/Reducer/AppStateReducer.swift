@@ -27,16 +27,18 @@ extension Reducer {
             var errorState = state.errorState
             var audioSessionState = state.audioSessionState
 
-            if case let .permissionAction(permAction) = action {
+            switch action {
+            case let .permissionAction(permAction):
                 permissionState = permissionsReducer.reduce(state.permissionState, permAction)
-            }
 
-            if case let .localUserAction(localUserAction) = action {
+            case let .localUserAction(localUserAction):
                 localUserState = localUserReducer.reduce(state.localUserState, localUserAction)
-            }
 
-            if case let .lifecycleAction(lifecycleAction) = action {
+            case let .lifecycleAction(lifecycleAction):
                 lifeCycleState = lifeCycleReducer.reduce(state.lifeCycleState, lifecycleAction)
+
+            default:
+                break
             }
 
             callingState = callingReducer.reduce(state.callingState, action)
