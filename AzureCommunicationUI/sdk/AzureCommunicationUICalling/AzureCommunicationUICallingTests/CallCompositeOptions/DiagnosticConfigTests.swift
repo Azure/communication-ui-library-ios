@@ -19,7 +19,6 @@ class DiagnosticConfigTests: XCTestCase {
         }
 
         XCTAssertEqual(tag, expectedCompositeTag)
-
     }
 
     func test_init_when_init_then_returnRegExValidTags() {
@@ -31,7 +30,6 @@ class DiagnosticConfigTests: XCTestCase {
         let validationRegEx = "aci110/[0-9][0-9]?.[0-9][0-9]?.[0-9][0-9]?(-(alpha|beta)(.[0-9][0-9]?)?)?"
         let validationPred = NSPredicate(format: "SELF MATCHES %@", validationRegEx)
         XCTAssertTrue(validationPred.evaluate(with: tag))
-
     }
 }
 

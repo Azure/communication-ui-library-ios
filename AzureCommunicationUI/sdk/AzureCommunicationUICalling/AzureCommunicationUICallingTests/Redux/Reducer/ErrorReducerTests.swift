@@ -8,6 +8,7 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class ErrorReducerTests: XCTestCase {
+
     override func setUp() {
         super.setUp()
     }

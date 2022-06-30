@@ -8,7 +8,17 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class ParticipantGridViewModelTests: XCTestCase {
-    var cancellable = CancelBag()
+    var cancellable: CancelBag!
+
+    override func setUp() {
+        super.setUp()
+        cancellable = CancelBag()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        cancellable = nil
+    }
 
     // MARK: Sorting participant
     func test_participantGridsViewModel_updateParticipantsState_when_newSevenInfoModels_then_participantViewModelsSortedByRecentSpeakingTimeStamp() {
@@ -537,13 +547,12 @@ extension ParticipantGridViewModelTests {
     func makeSUT(participantGridCellViewUpdateCompletion: ((ParticipantInfoModel) -> Void)? = nil) -> ParticipantGridViewModel {
         let storeFactory = StoreFactoryMocking()
         let accessibilityProvider = AccessibilityProvider()
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
+        var factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
                                                               store: storeFactory.store,
                                                               accessibilityProvider: accessibilityProvider)
-        factoryMocking.createMockParticipantGridCellViewModel = { [unowned factoryMocking] infoModel in
+        factoryMocking.createMockParticipantGridCellViewModel = { infoModel in
             if let completion = participantGridCellViewUpdateCompletion {
-                return ParticipantGridCellViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                           participantModel: infoModel,
+                return ParticipantGridCellViewModelMocking(participantModel: infoModel,
                                                            updateParticipantModelCompletion: completion)
             }
             return nil

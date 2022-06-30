@@ -8,18 +8,29 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class CompositeErrorManagerTests: XCTestCase {
-    var mockStoreFactory = StoreFactoryMocking()
+    var mockStoreFactory: StoreFactoryMocking!
     var cancellable: CancelBag!
     var compositeManager: CompositeErrorManager!
 
-    var handlerCallExpectation = XCTestExpectation(description: "Delegate expectation")
+    var handlerCallExpectation: XCTestExpectation!
     var expectedError: CallCompositeError?
 
     override func setUp() {
         super.setUp()
+        handlerCallExpectation = XCTestExpectation(description: "Delegate expectation")
+        mockStoreFactory = StoreFactoryMocking()
         cancellable = CancelBag()
         compositeManager = CompositeErrorManager(store: mockStoreFactory.store,
                                                  callCompositeEventsHandler: getEventsHandler())
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        handlerCallExpectation = nil
+        mockStoreFactory = nil
+        cancellable = nil
+        compositeManager = nil
+        expectedError = nil
     }
 
     func test_errorManager_receiveState_when_noFatalError_navigationExit_then_nodidFailEventCalled_hostingVCDismissCalled() {
