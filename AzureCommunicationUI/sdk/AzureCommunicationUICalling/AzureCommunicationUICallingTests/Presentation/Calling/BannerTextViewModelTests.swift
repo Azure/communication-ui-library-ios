@@ -15,6 +15,11 @@ class BannerTextViewModelTests: XCTestCase {
         localizationProvider = LocalizationProviderMocking()
     }
 
+    override func tearDown() {
+        super.tearDown()
+        localizationProvider = nil
+    }
+
     func test_bannerTextViewModel_update_when_withBannerInfoType_then_shouldBePublish() {
         let sut = makeSUT()
         let expectedTitle = "Recording and transcription have started."

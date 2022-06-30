@@ -20,7 +20,16 @@ class AudioDevicesListViewModelTests: XCTestCase {
         cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
         factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
-                                                          store: storeFactory.store)
+                                                          store: storeFactory.store,
+                                                          localizationProvider: localizationProvider)
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        storeFactory = nil
+        cancellable = nil
+        localizationProvider = nil
+        factoryMocking = nil
     }
 
     func test_audioDevicesListViewModel_update_when_audioDevicesListFirstInitialized_then_shouldBePublished() {

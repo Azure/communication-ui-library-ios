@@ -10,16 +10,24 @@ import XCTest
 class CompositeViewModelFactoryTests: XCTestCase {
 
     var logger: LoggerMocking!
-    var mockStoreFactory = StoreFactoryMocking()
+    var mockStoreFactory: StoreFactoryMocking!
     var compositeViewModelFactory: CompositeViewModelFactory!
 
     override func setUp() {
         super.setUp()
+        mockStoreFactory = StoreFactoryMocking()
         logger = LoggerMocking()
         compositeViewModelFactory = CompositeViewModelFactory(logger: logger,
-                                                                 store: mockStoreFactory.store,
-                                                                 localizationProvider: LocalizationProviderMocking(),
-                                                                 accessibilityProvider: AccessibilityProviderMocking())
+                                                              store: mockStoreFactory.store,
+                                                              localizationProvider: LocalizationProviderMocking(),
+                                                              accessibilityProvider: AccessibilityProviderMocking())
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        logger = nil
+        compositeViewModelFactory = nil
+        mockStoreFactory = nil
     }
 
     func test_compositeViewModelFactory_getCallingViewModel_when_setupViewModelNotNil_then_getSetupViewModel_shouldReturnDifferentSetupViewModel() {

@@ -20,11 +20,19 @@ class LocalVideoViewModelTests: XCTestCase {
         func dispatch(action: Action) {
             storeFactory.store.dispatch(action: action)
         }
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
+        let logger = LoggerMocking()
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         localVideoViewModel = LocalVideoViewModel(compositeViewModelFactory: factoryMocking,
-                                                  logger: LoggerMocking(),
+                                                  logger: logger,
                                                   localizationProvider: LocalizationProviderMocking(),
                                                   dispatchAction: dispatch)
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        storeFactory = nil
+        cancellable = nil
+        localVideoViewModel = nil
     }
 
     func test_localVideoViewModel_when_updateWithLocalVideoStreamId_then_videoSteamIdUpdated() {

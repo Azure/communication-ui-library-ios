@@ -61,5 +61,4 @@ extension LifeCycleReducerTests {
     func getSUT() -> LifeCycleReducer {
         return LifeCycleReducer()
     }
-
 }

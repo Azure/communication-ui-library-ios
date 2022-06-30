@@ -7,11 +7,12 @@ import Foundation
 import FluentUI
 @testable import AzureCommunicationUICalling
 
-class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
+struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     private let logger: Logger
     private let store: Store<AppState>
     private let accessibilityProvider: AccessibilityProviderProtocol
+    private let localizationProvider: LocalizationProviderProtocol
 
     var bannerTextViewModel: BannerTextViewModel?
     var controlBarViewModel: ControlBarViewModel?
@@ -40,24 +41,26 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     init(logger: Logger,
          store: Store<AppState>,
-         accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking()) {
+         accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking(),
+         localizationProvider: LocalizationProviderProtocol = LocalizationProviderMocking()) {
         self.logger = logger
         self.store = store
         self.accessibilityProvider = accessibilityProvider
+        self.localizationProvider = localizationProvider
     }
 
     func getSetupViewModel() -> SetupViewModel {
         return setupViewModel ?? SetupViewModel(compositeViewModelFactory: self,
                                                 logger: logger,
                                                 store: store,
-                                                localizationProvider: LocalizationProviderMocking())
+                                                localizationProvider: localizationProvider)
     }
 
     func getCallingViewModel() -> CallingViewModel {
         return callingViewModel ?? CallingViewModel(compositeViewModelFactory: self,
                                                     logger: logger,
                                                     store: store,
-                                                    localizationProvider: LocalizationProviderMocking(),
+                                                    localizationProvider: localizationProvider,
                                                     accessibilityProvider: accessibilityProvider,
                                                     isIpadInterface: false)
     }
@@ -87,7 +90,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel {
         return localVideoViewModel ?? LocalVideoViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
-                                                          localizationProvider: LocalizationProviderMocking(),
+                                                          localizationProvider: localizationProvider,
                                                           dispatchAction: dispatchAction)
     }
 
@@ -108,12 +111,12 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         return audioDevicesListViewModel ?? AudioDevicesListViewModel(compositeViewModelFactory: self,
                                                                       dispatchAction: dispatchAction,
                                                                       localUserState: localUserState,
-                                                                      localizationProvider: LocalizationProviderMocking())
+                                                                      localizationProvider: localizationProvider)
     }
 
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel {
-        return errorInfoViewModel ?? ErrorInfoViewModel(localizationProvider: LocalizationProviderMocking(),
+        return errorInfoViewModel ?? ErrorInfoViewModel(localizationProvider: localizationProvider,
                                                         title: title,
                                                         subtitle: subtitle)
     }
@@ -130,7 +133,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
-        return lobbyOverlayViewModel ?? LobbyOverlayViewModel(localizationProvider: LocalizationProviderMocking(),
+        return lobbyOverlayViewModel ?? LobbyOverlayViewModel(localizationProvider: localizationProvider,
                                                               accessibilityProvider: accessibilityProvider)
     }
 
@@ -139,7 +142,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                  localUserState: LocalUserState) -> ControlBarViewModel {
         return controlBarViewModel ?? ControlBarViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
-                                                          localizationProvider: LocalizationProviderMocking(),
+                                                          localizationProvider: localizationProvider,
                                                           dispatchAction: dispatchAction,
                                                           endCallConfirm: endCallConfirm,
                                                           localUserState: localUserState)
@@ -149,20 +152,20 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         return infoHeaderViewModel ?? InfoHeaderViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localUserState: localUserState,
-                                                          localizationProvider: LocalizationProviderMocking(),
+                                                          localizationProvider: localizationProvider,
                                                           accessibilityProvider: accessibilityProvider)
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
         return createMockParticipantGridCellViewModel?(participantModel) ?? ParticipantGridCellViewModel(
-            localizationProvider: LocalizationProviderMocking(),
-            accessibilityProvider: AccessibilityProviderMocking(),
+            localizationProvider: localizationProvider,
+            accessibilityProvider: accessibilityProvider,
             participantModel: participantModel)
     }
 
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {
         return participantGridViewModel ?? ParticipantGridViewModel(compositeViewModelFactory: self,
-                                                                    localizationProvider: LocalizationProviderMocking(),
+                                                                    localizationProvider: localizationProvider,
 																	accessibilityProvider: accessibilityProvider,
                                                                     isIpadInterface: isIpadInterface)
     }
@@ -178,24 +181,24 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     func makeBannerTextViewModel() -> BannerTextViewModel {
         return bannerTextViewModel ?? BannerTextViewModel(accessibilityProvider: accessibilityProvider,
-                                                          localizationProvider: LocalizationProviderMocking())
+                                                          localizationProvider: localizationProvider)
     }
 
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel {
         localParticipantsListCellViewModel ?? ParticipantsListCellViewModel(localUserState: localUserState,
-                                                                            localizationProvider: LocalizationProviderMocking())
+                                                                            localizationProvider: localizationProvider)
     }
 
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel {
         createParticipantsListCellViewModel?(participantInfoModel) ?? ParticipantsListCellViewModel(participantInfoModel: participantInfoModel,
-                                                                                                    localizationProvider: LocalizationProviderMocking())
+                                                                                                    localizationProvider: localizationProvider)
     }
 
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel {
         return previewAreaViewModel ?? PreviewAreaViewModel(compositeViewModelFactory: self,
                                                             dispatchAction: dispatchAction,
-                                                            localizationProvider: LocalizationProviderMocking())
+                                                            localizationProvider: localizationProvider)
     }
 
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
@@ -204,18 +207,18 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                     logger: logger,
                                                                     dispatchAction: dispatchAction,
                                                                     localUserState: localUserState,
-                                                                    localizationProvider: LocalizationProviderMocking())
+                                                                    localizationProvider: localizationProvider)
     }
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
-        JoiningCallActivityViewModel(localizationProvider: LocalizationProviderMocking())
+        JoiningCallActivityViewModel(localizationProvider: localizationProvider)
     }
 
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
-        return onHoldOverlayViewModel ?? OnHoldOverlayViewModel(localizationProvider: LocalizationProviderMocking(),
+        return onHoldOverlayViewModel ?? OnHoldOverlayViewModel(localizationProvider: localizationProvider,
                                       compositeViewModelFactory: self,
-                                      logger: LoggerMocking(),
-                                      accessibilityProvider: AccessibilityProviderMocking(),
+                                      logger: logger,
+                                      accessibilityProvider: accessibilityProvider,
                                       resumeAction: {})
     }
 }

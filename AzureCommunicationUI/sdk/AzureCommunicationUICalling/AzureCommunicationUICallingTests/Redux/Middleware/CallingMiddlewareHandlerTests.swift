@@ -22,6 +22,14 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         callingMiddlewareHandler = CallingMiddlewareHandler(callingService: mockCallingService, logger: mockLogger)
     }
 
+    override func tearDown() {
+        super.tearDown()
+
+        mockCallingService = nil
+        mockLogger = nil
+        callingMiddlewareHandler = nil
+    }
+
     func test_callingMiddlewareHandler_requestMicMute_then_muteLocalMicCalled() {
         callingMiddlewareHandler.requestMicrophoneMute(state: getEmptyState(), dispatch: getEmptyDispatch())
 

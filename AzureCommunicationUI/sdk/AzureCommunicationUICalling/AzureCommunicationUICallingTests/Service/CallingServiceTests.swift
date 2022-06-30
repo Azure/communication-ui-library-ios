@@ -23,6 +23,14 @@ class CallingServiceTests: XCTestCase {
         callingService = CallingService(logger: logger, callingSDKWrapper: callingSDKWrapper)
     }
 
+    override func tearDown() {
+        super.tearDown()
+        cancellable = nil
+        logger = nil
+        callingSDKWrapper = nil
+        callingService = nil
+    }
+
     func test_callingService_setupCall_shouldCallcallingSDKWrapperSetupCall() {
         _ = callingService.setupCall()
 
