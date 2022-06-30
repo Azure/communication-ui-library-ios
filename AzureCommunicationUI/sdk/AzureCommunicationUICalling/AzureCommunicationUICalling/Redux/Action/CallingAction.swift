@@ -5,49 +5,36 @@
 
 import Foundation
 
-struct CallingAction {
-    struct CallStartRequested: Action {}
+enum CallingAction: Equatable {
+    case callStartRequested
+    case callEndRequested
+    case stateUpdated(status: CallingStatus)
 
-    struct CallEndRequested: Action {}
+    case setupCall
+    case dismissSetup
+    case recordingStateUpdated(isRecordingActive: Bool)
 
-    struct StateUpdated: Action {
-        let status: CallingStatus
-    }
+    case transcriptionStateUpdated(isTranscriptionActive: Bool)
 
-    struct SetupCall: Action {}
-
-    struct DismissSetup: Action {}
-
-    struct RecordingStateUpdated: Action {
-        let isRecordingActive: Bool
-    }
-
-    struct TranscriptionStateUpdated: Action {
-        let isTranscriptionActive: Bool
-    }
-
-    struct ResumeRequested: Action {}
-    struct HoldRequested: Action {}
+    case resumeRequested
+    case holdRequested
+    case participantListUpdated(participants: [ParticipantInfoModel])
 }
 
-struct ParticipantListUpdated: Action {
-    let participantsInfoList: [ParticipantInfoModel]
-}
-
-struct ErrorAction: Action {
-    struct FatalErrorUpdated: Action {
-        let internalError: CallCompositeInternalError
-        let error: Error?
+enum ErrorAction: Equatable {
+    static func == (lhs: ErrorAction, rhs: ErrorAction) -> Bool {
+        switch (lhs, rhs) {
+        case let (.fatalErrorUpdated(internalError: lErr, error: _),
+                  .fatalErrorUpdated(internalError: rErr, error: _)):
+            return lErr == rErr
+        case let (.statusErrorAndCallReset(internalError: lErr, error: _),
+                  .statusErrorAndCallReset(internalError: rErr, error: _)):
+            return lErr == rErr
+        default:
+            return false
+        }
     }
 
-    struct StatusErrorAndCallReset: Action {
-        let internalError: CallCompositeInternalError
-        let error: Error?
-
-    }
-}
-
-struct CompositeExitAction: Action {}
-
-struct CallingViewLaunched: Action {
+    case fatalErrorUpdated(internalError: CallCompositeInternalError, error: Error?)
+    case statusErrorAndCallReset(internalError: CallCompositeInternalError, error: Error?)
 }

@@ -6,59 +6,79 @@
 import Foundation
 import Combine
 
-struct LocalUserAction {
-    struct CameraPreviewOnTriggered: Action {}
-    struct CameraOnTriggered: Action {}
-    struct CameraOnSucceeded: Action {
-        var videoStreamIdentifier: String
-    }
-    struct CameraOnFailed: Action {
-        var error: Error
-    }
+enum LocalUserAction: Equatable {
 
-    struct CameraOffTriggered: Action {}
-    struct CameraOffSucceeded: Action {}
-    struct CameraOffFailed: Action {
-        var error: Error
-    }
+    case cameraPreviewOnTriggered
+    case cameraOnTriggered
+    case cameraOnSucceeded(videoStreamIdentifier: String)
+    case cameraOnFailed(error: Error)
 
-    struct CameraPausedSucceeded: Action {}
-    struct CameraPausedFailed: Action {
-        var error: Error
-    }
+    case cameraOffTriggered
+    case cameraOffSucceeded
+    case cameraOffFailed(error: Error)
 
-    struct CameraSwitchTriggered: Action {}
-    struct CameraSwitchSucceeded: Action {
-        var cameraDevice: CameraDevice
-    }
-    struct CameraSwitchFailed: Action {
-        var error: Error
-    }
+    case cameraPausedSucceeded
+    case cameraPausedFailed(error: Error)
 
-    struct MicrophoneOnTriggered: Action {}
-    struct MicrophoneOnFailed: Action {
-        var error: Error
-    }
+    case cameraSwitchTriggered
+    case cameraSwitchSucceeded(cameraDevice: CameraDevice)
+    case cameraSwitchFailed(error: Error)
 
-    struct MicrophoneOffTriggered: Action {}
-    struct MicrophoneOffFailed: Action {
-        var error: Error
-    }
+    case microphoneOnTriggered
+    case microphoneOnFailed(error: Error)
 
-    struct MicrophoneMuteStateUpdated: Action {
-        let isMuted: Bool
-    }
+    case microphoneOffTriggered
+    case microphoneOffFailed(error: Error)
 
-    struct MicrophonePreviewOn: Action {}
-    struct MicrophonePreviewOff: Action {}
+    case microphoneMuteStateUpdated(isMuted: Bool)
 
-    struct AudioDeviceChangeRequested: Action {
-        var device: AudioDeviceType
-    }
-    struct AudioDeviceChangeSucceeded: Action {
-        var device: AudioDeviceType
-    }
-    struct AudioDeviceChangeFailed: Action {
-        var error: Error
+    case microphonePreviewOn
+    case microphonePreviewOff
+
+    case audioDeviceChangeRequested(device: AudioDeviceType)
+    case audioDeviceChangeSucceeded(device: AudioDeviceType)
+    case audioDeviceChangeFailed(error: Error)
+
+    static func == (lhs: LocalUserAction, rhs: LocalUserAction) -> Bool {
+
+        switch (lhs, rhs) {
+        case let (.cameraOnFailed(lErr), .cameraOnFailed(rErr)),
+            let (.cameraOffFailed(lErr), .cameraOffFailed(rErr)),
+            let (.cameraPausedFailed(lErr), .cameraPausedFailed(rErr)),
+            let (.cameraSwitchFailed(lErr), .cameraSwitchFailed(rErr)),
+            let (.microphoneOnFailed(lErr), .microphoneOnFailed(rErr)),
+            let (.microphoneOffFailed(lErr), .microphoneOffFailed(rErr)),
+            let (.audioDeviceChangeFailed(lErr), .audioDeviceChangeFailed(rErr)):
+
+            return (lErr as NSError).code == (rErr as NSError).code
+
+        case (.cameraPreviewOnTriggered, .cameraPreviewOnTriggered),
+            (.cameraOnTriggered, .cameraOnTriggered),
+            ( .cameraOffTriggered, .cameraOffTriggered),
+            ( .cameraOffSucceeded, .cameraOffSucceeded),
+            (.cameraPausedSucceeded, .cameraPausedSucceeded),
+            (.cameraSwitchTriggered, .cameraSwitchTriggered),
+            (.microphoneOnTriggered, .microphoneOnTriggered),
+            (.microphoneOffTriggered, .microphoneOffTriggered),
+            (.microphonePreviewOn, .microphonePreviewOn),
+            (.microphonePreviewOff, .microphonePreviewOff):
+            return true
+
+        case let (.audioDeviceChangeRequested(lDev), .audioDeviceChangeRequested(rDev)),
+            let (.audioDeviceChangeSucceeded(lDev), .audioDeviceChangeSucceeded(rDev)):
+            return lDev == rDev
+
+        case let (.microphoneMuteStateUpdated(lMuted), .microphoneMuteStateUpdated(rMuted)):
+            return lMuted == rMuted
+
+        case let (.cameraOnSucceeded(lId), .cameraOnSucceeded(rId)):
+            return lId == rId
+
+        case let (.cameraSwitchSucceeded(lDev), .cameraSwitchSucceeded(rDev)):
+            return lDev == rDev
+
+        default:
+            return false
+        }
     }
 }

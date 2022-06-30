@@ -6,11 +6,10 @@
 import Combine
 import Foundation
 
-struct LocalUserReducer: Reducer {
-    func reduce(_ state: ReduxState, _ action: Action) -> ReduxState {
-        guard let localUserState = state as? LocalUserState else {
-            return state
-        }
+extension Reducer where State == LocalUserState,
+                        Actions == LocalUserAction {
+    static var liveLocalUserReducer: Self = Reducer { localUserState, action in
+
         var cameraStatus = localUserState.cameraState.operation
         var cameraDeviceStatus = localUserState.cameraState.device
         var cameraTransmissionStatus = localUserState.cameraState.transmission
@@ -18,56 +17,55 @@ struct LocalUserReducer: Reducer {
         var audioDeviceStatus = localUserState.audioState.device
         let displayName = localUserState.displayName
         var localVideoStreamIdentifier = localUserState.localVideoStreamIdentifier
+
         switch action {
-        case _ as LocalUserAction.CameraPreviewOnTriggered:
+        case .cameraPreviewOnTriggered:
             cameraTransmissionStatus = .local
             cameraStatus = .pending
-        case _ as LocalUserAction.CameraOnTriggered:
+        case .cameraOnTriggered:
             cameraTransmissionStatus = .remote
             cameraStatus = .pending
-        case _ as LocalUserAction.CameraOffTriggered:
+        case .cameraOffTriggered:
             cameraStatus = .pending
-        case let action as LocalUserAction.CameraOnSucceeded:
-            localVideoStreamIdentifier = action.videoStreamIdentifier
+        case .cameraOnSucceeded(let videoStreamId):
+            localVideoStreamIdentifier = videoStreamId
             cameraStatus = .on
-        case let action as LocalUserAction.CameraOnFailed:
-            cameraStatus = .error(action.error)
-        case _ as LocalUserAction.CameraOffSucceeded:
+        case .cameraOnFailed(let error):
+            cameraStatus = .error(error)
+        case .cameraOffSucceeded:
             localVideoStreamIdentifier = nil
             cameraStatus = .off
-        case let action as LocalUserAction.CameraOffFailed:
-            cameraStatus = .error(action.error)
-        case _ as LocalUserAction.CameraPausedSucceeded:
+        case .cameraOffFailed(let error):
+            cameraStatus = .error(error)
+        case .cameraPausedSucceeded:
             cameraStatus = .paused
-        case let action as LocalUserAction.CameraPausedFailed:
-            cameraStatus = .error(action.error)
-        case _ as LocalUserAction.CameraSwitchTriggered:
+        case .cameraPausedFailed(let error):
+            cameraStatus = .error(error)
+        case .cameraSwitchTriggered:
             cameraDeviceStatus = .switching
-        case let action as LocalUserAction.CameraSwitchSucceeded:
-            cameraDeviceStatus = action.cameraDevice == .front ? .front : .back
-        case let action as LocalUserAction.CameraSwitchFailed:
-            cameraDeviceStatus = .error(action.error)
-        case _ as LocalUserAction.MicrophoneOnTriggered,
-             _ as LocalUserAction.MicrophoneOffTriggered:
+        case .cameraSwitchSucceeded(let cameraDevice):
+            cameraDeviceStatus = cameraDevice == .front ? .front : .back
+        case .cameraSwitchFailed(let error):
+            cameraDeviceStatus = .error(error)
+        case .microphoneOnTriggered,
+                .microphoneOffTriggered:
             microphoneStatus = .pending
-        case _ as LocalUserAction.MicrophonePreviewOn:
+        case .microphonePreviewOn:
             microphoneStatus = .on
-        case let action as LocalUserAction.MicrophoneOnFailed:
-            microphoneStatus = .error(action.error)
-        case _ as LocalUserAction.MicrophonePreviewOff:
+        case .microphoneOnFailed(let error):
+            microphoneStatus = .error(error)
+        case .microphonePreviewOff:
             microphoneStatus = .off
-        case let action as LocalUserAction.MicrophoneMuteStateUpdated:
-            microphoneStatus = action.isMuted ? .off : .on
-        case let action as LocalUserAction.MicrophoneOffFailed:
-            microphoneStatus = .error(action.error)
-        case let action as LocalUserAction.AudioDeviceChangeRequested:
-            audioDeviceStatus = getRequestedDeviceStatus(for: action.device)
-        case let action as LocalUserAction.AudioDeviceChangeSucceeded:
-            audioDeviceStatus = getSelectedDeviceStatus(for: action.device)
-        case let action as LocalUserAction.AudioDeviceChangeFailed:
-            audioDeviceStatus = .error(action.error)
-        default:
-            return localUserState
+        case .microphoneMuteStateUpdated(let isMuted):
+            microphoneStatus = isMuted ? .off : .on
+        case .microphoneOffFailed(let error):
+            microphoneStatus = .error(error)
+        case .audioDeviceChangeRequested(let device):
+            audioDeviceStatus = getRequestedDeviceStatus(for: device)
+        case .audioDeviceChangeSucceeded(let device):
+            audioDeviceStatus = getSelectedDeviceStatus(for: device)
+        case .audioDeviceChangeFailed(let error):
+            audioDeviceStatus = .error(error)
         }
 
         let cameraState = LocalUserState.CameraState(operation: cameraStatus,
@@ -80,32 +78,32 @@ struct LocalUserReducer: Reducer {
                               displayName: displayName,
                               localVideoStreamIdentifier: localVideoStreamIdentifier)
     }
+}
 
-    private func getRequestedDeviceStatus(for audioDeviceType: AudioDeviceType)
-    -> LocalUserState.AudioDeviceSelectionStatus {
-        switch audioDeviceType {
-        case .speaker:
-            return .speakerRequested
-        case .receiver:
-            return .receiverRequested
-        case .bluetooth:
-            return .bluetoothRequested
-        case .headphones:
-            return .headphonesRequested
-        }
+private func getRequestedDeviceStatus(for audioDeviceType: AudioDeviceType)
+-> LocalUserState.AudioDeviceSelectionStatus {
+    switch audioDeviceType {
+    case .speaker:
+        return .speakerRequested
+    case .receiver:
+        return .receiverRequested
+    case .bluetooth:
+        return .bluetoothRequested
+    case .headphones:
+        return .headphonesRequested
     }
+}
 
-    private func getSelectedDeviceStatus(for audioDeviceType: AudioDeviceType)
-    -> LocalUserState.AudioDeviceSelectionStatus {
-        switch audioDeviceType {
-        case .speaker:
-            return .speakerSelected
-        case .receiver:
-            return .receiverSelected
-        case .bluetooth:
-            return .bluetoothSelected
-        case .headphones:
-            return .headphonesSelected
-        }
+private func getSelectedDeviceStatus(for audioDeviceType: AudioDeviceType)
+-> LocalUserState.AudioDeviceSelectionStatus {
+    switch audioDeviceType {
+    case .speaker:
+        return .speakerSelected
+    case .receiver:
+        return .receiverSelected
+    case .bluetooth:
+        return .bluetoothSelected
+    case .headphones:
+        return .headphonesSelected
     }
 }

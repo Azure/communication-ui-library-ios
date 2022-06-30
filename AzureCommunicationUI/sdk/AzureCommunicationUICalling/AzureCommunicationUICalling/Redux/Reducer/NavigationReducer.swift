@@ -5,21 +5,34 @@
 
 import Combine
 
-struct NavigationReducer: Reducer {
-    func reduce(_ state: ReduxState, _ action: Action) -> ReduxState {
-        guard let state = state as? NavigationState else {
-            return state
-        }
+extension Reducer where State == NavigationState,
+                        Actions == Action {
+    static var liveNavigationReducer: Self = Reducer { state, action in
         var navigationStatus = state.status
         switch action {
-        case _ as CallingViewLaunched:
+        case .callingViewLaunched:
             navigationStatus = .inCall
-        case _ as CallingAction.DismissSetup,
-             _ as CompositeExitAction:
+        case .callingAction(.dismissSetup),
+                .compositeExitAction:
             navigationStatus = .exit
-        case _ as ErrorAction.StatusErrorAndCallReset:
+        case .errorAction(.statusErrorAndCallReset):
             navigationStatus = .setup
-        default:
+
+            // Exhaustive unimplemented actions
+        case .audioSessionAction(_),
+                .callingAction(.callStartRequested),
+                .callingAction(.callEndRequested),
+                .callingAction(.stateUpdated(status: _)),
+                .callingAction(.setupCall),
+                .callingAction(.recordingStateUpdated(isRecordingActive: _)),
+                .callingAction(.transcriptionStateUpdated(isTranscriptionActive: _)),
+                .callingAction(.resumeRequested),
+                .callingAction(.holdRequested),
+                .callingAction(.participantListUpdated(participants: _)),
+                .errorAction(.fatalErrorUpdated(internalError: _, error: _)),
+                .lifecycleAction(_),
+                .localUserAction(_),
+                .permissionAction(_):
             return state
         }
         return NavigationState(status: navigationStatus)

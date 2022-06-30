@@ -6,19 +6,12 @@
 import Foundation
 @testable import AzureCommunicationUICalling
 
-struct MiddlewareMocking: Middleware {
-
-    let closure: (@escaping ActionDispatch, @escaping () -> ReduxState?) -> (@escaping ActionDispatch) -> ActionDispatch
-
-    init(applyingClosure: @escaping (
-        @escaping ActionDispatch,
-        @escaping () -> ReduxState?) -> (@escaping ActionDispatch) -> ActionDispatch) {
-        self.closure = applyingClosure
+extension Middleware {
+    static func mock<State>(
+        applyingClosure: @escaping (
+            @escaping ActionDispatch,
+            @escaping () -> State) -> (@escaping ActionDispatch) -> ActionDispatch
+    ) -> Middleware<State> {
+        return Middleware<State>(apply: applyingClosure)
     }
-
-    func apply(dispatch: @escaping ActionDispatch,
-               getState: @escaping () -> ReduxState?) -> (@escaping ActionDispatch) -> ActionDispatch {
-        return closure(dispatch, getState)
-    }
-
 }

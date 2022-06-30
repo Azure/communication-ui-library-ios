@@ -5,19 +5,16 @@
 
 import Foundation
 
-struct LifeCycleReducer: Reducer {
-    func reduce(_ state: ReduxState, _ action: Action) -> ReduxState {
-        guard let appLifeCycleCurrentState = state as? LifeCycleState else {
-            return state
-        }
+extension Reducer where State == LifeCycleState,
+                        Actions == LifecycleAction {
+    static var liveLifecycleReducer: Self = Reducer { appLifeCycleCurrentState, action in
+
         var currentStatus = appLifeCycleCurrentState.currentStatus
         switch action {
-        case _ as LifecycleAction.ForegroundEntered:
+        case .foregroundEntered:
             currentStatus = .foreground
-        case _ as LifecycleAction.BackgroundEntered:
+        case .backgroundEntered:
             currentStatus = .background
-        default:
-            return appLifeCycleCurrentState
         }
         return LifeCycleState(currentStatus: currentStatus)
     }

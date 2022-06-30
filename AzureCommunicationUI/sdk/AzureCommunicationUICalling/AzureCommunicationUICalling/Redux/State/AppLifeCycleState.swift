@@ -10,12 +10,11 @@ enum AppStatus {
     case background
 }
 
-class LifeCycleState: ReduxState {
+struct LifeCycleState {
 
     let currentStatus: AppStatus
 
     init(currentStatus: AppStatus = .foreground) {
         self.currentStatus = currentStatus
     }
-
 }

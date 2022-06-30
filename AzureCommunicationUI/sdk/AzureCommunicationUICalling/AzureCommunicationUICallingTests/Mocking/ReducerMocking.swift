@@ -6,20 +6,16 @@
 import Foundation
 @testable import AzureCommunicationUICalling
 
-class ReducerMocking: Reducer {
-    var inputAction: Action?
-    var inputState: ReduxState?
-    var outputState: ReduxState?
+extension Reducer {
+    static func mockReducer<State, Action>(
+        outputState: State? = nil
+    ) -> Reducer<State, Action> {
 
-    func reduce(_ state: ReduxState, _ action: Action) -> ReduxState {
-        self.inputState = state
-        self.inputAction = action
-
-        if let outputState = outputState {
-            return outputState
+        return Reducer<State, Action> { state, _ in
+            if let outputState = outputState {
+                return outputState
+            }
+            return state
         }
-
-        return state
-
     }
 }

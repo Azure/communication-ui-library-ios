@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum CallCompositeInternalError: String, Error {
+enum CallCompositeInternalError: String, Error, Equatable {
     case callTokenFailed
     case callJoinFailed
     case callEndFailed

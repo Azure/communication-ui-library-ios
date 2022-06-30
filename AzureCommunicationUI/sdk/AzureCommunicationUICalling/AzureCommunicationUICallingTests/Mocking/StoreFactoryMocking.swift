@@ -14,7 +14,11 @@ class StoreFactoryMocking {
 
     init() {
         let middleWare = getMiddleware()
-        self.store = Store<AppState>(reducer: ReducerMocking(), middlewares: [middleWare], state: AppState())
+        self.store = Store<AppState>(
+            reducer: .mockReducer(),
+            middlewares: [middleWare],
+            state: AppState()
+        )
     }
 
     func reset() {
@@ -25,8 +29,8 @@ class StoreFactoryMocking {
         store.state = state
     }
 
-    func getMiddleware() -> MiddlewareMocking {
-        return MiddlewareMocking { [weak self] _, _ in
+    func getMiddleware() -> Middleware<AppState> {
+        return Middleware<AppState>.mock { [weak self] _, _ in
             return { next in
                 return { action in
                     self?.actions.append(action)
@@ -35,5 +39,4 @@ class StoreFactoryMocking {
             }
         }
     }
-
 }

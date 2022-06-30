@@ -5,7 +5,7 @@
 
 import Foundation
 
-class AppState: ReduxState {
+struct AppState {
     let callingState: CallingState
     let permissionState: PermissionState
     let localUserState: LocalUserState
@@ -32,5 +32,4 @@ class AppState: ReduxState {
         self.remoteParticipantsState = remoteParticipantsState
         self.errorState = errorState
     }
-
 }

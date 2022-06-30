@@ -61,7 +61,7 @@ class PermissionsManager: PermissionsManagerProtocol {
 
     private func setPermissionState(permission: AppPermission, state: AppPermission.Status) {
         let setPermission = PermissionAction.generateAction(permission: permission, state: state)
-        self.store.dispatch(action: setPermission)
+        self.store.dispatch(action: .permissionAction(setPermission))
     }
 
     func resolveStatus(for permission: AppPermission) -> AppPermission.Status {

@@ -51,7 +51,7 @@ class SetupControlBarViewModelTests: XCTestCase {
             .dropFirst()
             .sink { [weak self] _ in
                 XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.last is LocalUserAction.CameraPreviewOnTriggered)
+                XCTAssertTrue(self?.storeFactory.actions.last == Action.localUserAction(.cameraPreviewOnTriggered))
 
                 expectation.fulfill()
             }.store(in: cancellable)
@@ -77,7 +77,7 @@ class SetupControlBarViewModelTests: XCTestCase {
             .dropFirst()
             .sink { [weak self] _ in
                 XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.last is LocalUserAction.CameraOffTriggered)
+                XCTAssertTrue(self?.storeFactory.actions.last == Action.localUserAction(.cameraOffTriggered))
 
                 expectation.fulfill()
             }.store(in: cancellable)
@@ -102,7 +102,7 @@ class SetupControlBarViewModelTests: XCTestCase {
             .dropFirst()
             .sink { [weak self] _ in
                 XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.last is LocalUserAction.MicrophonePreviewOn)
+                XCTAssertTrue(self?.storeFactory.actions.last == Action.localUserAction(.microphonePreviewOn))
 
                 expectation.fulfill()
             }.store(in: cancellable)
@@ -127,7 +127,7 @@ class SetupControlBarViewModelTests: XCTestCase {
             .dropFirst()
             .sink { [weak self] _ in
                 XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.last is LocalUserAction.MicrophonePreviewOff)
+                XCTAssertTrue(self?.storeFactory.actions.last == Action.localUserAction(.microphonePreviewOff))
 
                 expectation.fulfill()
             }.store(in: cancellable)

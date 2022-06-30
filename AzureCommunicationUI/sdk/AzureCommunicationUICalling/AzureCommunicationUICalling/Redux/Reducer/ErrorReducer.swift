@@ -5,31 +5,46 @@
 
 import Combine
 
-struct ErrorReducer: Reducer {
-    func reduce(_ state: ReduxState, _ action: Action) -> ReduxState {
-        guard let state = state as? ErrorState else {
-            return state
-        }
+extension Reducer where State == ErrorState,
+                        Actions == Action {
+    static var liveErrorReducer: Self = Reducer { state, action in
 
         var errorType = state.internalError
         var error = state.error
         var errorCategory = state.errorCategory
 
         switch action {
-        case let action as ErrorAction.FatalErrorUpdated:
-            errorType = action.internalError
-            error = action.error
+        case let .errorAction(.fatalErrorUpdated(internalError, rawError)):
+            errorType = internalError
+            error = rawError
             errorCategory = .fatal
-        case let action as ErrorAction.StatusErrorAndCallReset:
-            errorType = action.internalError
-            error = action.error
+        case let .errorAction(.statusErrorAndCallReset(internalError, rawError)):
+            errorType = internalError
+            error = rawError
             errorCategory = .callState
-        case _ as CallingAction.CallStartRequested:
+        case .callingAction(.callStartRequested):
             errorType = nil
             error = nil
             errorCategory = .none
-        default:
+
+            // Exhaustive unimplemented actions
+        case .audioSessionAction(_),
+                .callingAction(.callEndRequested),
+                .callingAction(.stateUpdated(status: _)),
+                .callingAction(.setupCall),
+                .callingAction(.dismissSetup),
+                .callingAction(.recordingStateUpdated(isRecordingActive: _)),
+                .callingAction(.transcriptionStateUpdated(isTranscriptionActive: _)),
+                .callingAction(.resumeRequested),
+                .callingAction(.holdRequested),
+                .callingAction(.participantListUpdated(participants: _)),
+                .lifecycleAction(_),
+                .localUserAction(_),
+                .permissionAction(_),
+                .compositeExitAction,
+                .callingViewLaunched:
             return state
+
         }
 
         return ErrorState(internalError: errorType,

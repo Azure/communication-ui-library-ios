@@ -5,7 +5,7 @@
 
 import Foundation
 
-class LocalUserState: ReduxState {
+struct LocalUserState {
     enum CameraOperationalStatus: Equatable {
         case on
         case off

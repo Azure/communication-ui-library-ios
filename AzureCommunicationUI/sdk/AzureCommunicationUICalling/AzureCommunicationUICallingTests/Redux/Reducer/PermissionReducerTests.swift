@@ -9,108 +9,64 @@ import XCTest
 
 class PermissionReducerTests: XCTestCase {
 
-    func test_permissionReducer_reduce_when_notPermissionState_then_return() {
-        let state = StateMocking()
-        let action = PermissionAction.AudioPermissionGranted()
-        let sut = getSUT()
-        let resultState = sut.reduce(state, action)
-
-        XCTAssert(resultState is StateMocking)
-    }
-
     func test_permissionReducer_reduce_when_audioPermissionSet_shouldReturnAudioPermissionGranted() {
         let state = PermissionState()
-        let action = PermissionAction.AudioPermissionGranted()
+        let action = PermissionAction.audioPermissionGranted
         let sut = getSUT()
-        guard let resultState = sut.reduce(state, action) as? PermissionState else {
-            XCTFail("Failed with state validation")
-            return
-        }
+        let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.audioPermission, .granted)
     }
 
     func test_permissionReducer_reduce_when_audioPermissionRequest_shouldReturnAudioPermissionRequesting() {
         let state = PermissionState()
-        let action = PermissionAction.AudioPermissionRequested()
+        let action = PermissionAction.audioPermissionRequested
         let sut = getSUT()
-        guard let resultState = sut.reduce(state, action) as? PermissionState else {
-            XCTFail("Failed with state validation")
-            return
-        }
+        let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.audioPermission, .requesting)
     }
 
     func test_permissionReducer_reduce_when_audioPermissionNotAsked_shouldReturnAudioPermissionNotAsked() {
         let state = PermissionState()
-        let action = PermissionAction.AudioPermissionNotAsked()
+        let action = PermissionAction.audioPermissionNotAsked
         let sut = getSUT()
-        guard let resultState = sut.reduce(state, action) as? PermissionState else {
-            XCTFail("Failed with state validation")
-            return
-        }
+        let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.audioPermission, .notAsked)
     }
 
     func test_permissionReducer_reduce_when_cameraPermissionSet_shouldReturnCameraPermissionGranted() {
         let state = PermissionState()
-        let action = PermissionAction.CameraPermissionGranted()
+        let action = PermissionAction.cameraPermissionGranted
         let sut = getSUT()
-        guard let resultState = sut.reduce(state, action) as? PermissionState else {
-            XCTFail("Failed with state validation")
-            return
-        }
+        let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.cameraPermission, .granted)
     }
 
     func test_permissionReducer_reduce_when_cameraPermissionRequest_shouldReturnCameraPermissionRequesting() {
         let state = PermissionState()
-        let action = PermissionAction.CameraPermissionRequested()
-
+        let action = PermissionAction.cameraPermissionRequested
         let sut = getSUT()
-        guard let resultState = sut.reduce(state, action) as? PermissionState else {
-            XCTFail("Failed with state validation")
-            return
-        }
+        let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.cameraPermission, .requesting)
     }
 
     func test_permissionReducer_reduce_when_cameraPermissionNotAsked_shouldReturnCameraPermissionNotAsked() {
         let state = PermissionState()
-        let action = PermissionAction.CameraPermissionNotAsked()
+        let action = PermissionAction.cameraPermissionNotAsked
 
-        let sut = getSUT()
-        guard let resultState = sut.reduce(state, action) as? PermissionState else {
-            XCTFail("Failed with state validation")
-            return
-        }
-
-        XCTAssertEqual(resultState.cameraPermission, .notAsked)
-    }
-
-    func test_permissionReducer_reduce_when_mockingAction_then_stateNotUpdate() {
-        let expectedState = AppPermission.Status.granted
-        let state = PermissionState(audioPermission: expectedState,
-                                    cameraPermission: expectedState)
-        let action = ActionMocking()
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
-        guard let resultState = resultState as? PermissionState else {
-            XCTFail("Failed with state validation")
-            return
-        }
-        XCTAssertEqual(resultState.cameraPermission, expectedState)
-        XCTAssertEqual(resultState.audioPermission, expectedState)
+
+        XCTAssertEqual(resultState.cameraPermission, .notAsked)
     }
 }
 
 extension PermissionReducerTests {
-    private func getSUT() -> PermissionReducer {
-        return PermissionReducer()
+    private func getSUT() -> Reducer<PermissionState, PermissionAction> {
+        return .livePermissionsReducer
     }
-
 }

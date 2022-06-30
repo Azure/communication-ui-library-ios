@@ -7,7 +7,8 @@ import Combine
 
 typealias ActionDispatch = (Action) -> Void
 
-protocol Middleware {
-    func apply(dispatch: @escaping ActionDispatch,
-               getState: @escaping () -> ReduxState?) -> (@escaping ActionDispatch) -> ActionDispatch
+struct Middleware<State> {
+    var apply: (_ actionDispatch: @escaping ActionDispatch, _ getState: @escaping () -> State) ->
+    (@escaping ActionDispatch) ->
+    ActionDispatch
 }
