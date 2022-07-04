@@ -858,7 +858,7 @@
 			path = Calling;
 			sourceTree = "<group>";
 		};
-		1FBCB69B2645285100F57EEA /* AzureCommunicationUICallingTests */ = {
+		1FBCB69B2645285100F57EEA /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				1F09A10226BA472A00BACED7 /* Builder */,
@@ -871,7 +871,7 @@
 				5A314192C1EC6B1FB3D9A707 /* CallCompositeOptions */,
 				5A31454AEB090BC1B66FB680 /* DI */,
 			);
-			path = AzureCommunicationUICallingTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		1FBCB6AD2649DA4100F57EEA /* Model */ = {
@@ -1100,8 +1100,8 @@
 		A8659FBB2602A22000C807DE = {
 			isa = PBXGroup;
 			children = (
-				A8659FC72602A22000C807DE /* AzureCommunicationUICalling */,
-				1FBCB69B2645285100F57EEA /* AzureCommunicationUICallingTests */,
+				A8659FC72602A22000C807DE /* Sources */,
+				1FBCB69B2645285100F57EEA /* Tests */,
 				A8659FC62602A22000C807DE /* Products */,
 				D925FB8A0861AF0C1415C6C4 /* Frameworks */,
 				D0F8928467AFB90CE84E93DF /* Pods */,
@@ -1117,7 +1117,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A8659FC72602A22000C807DE /* AzureCommunicationUICalling */ = {
+		A8659FC72602A22000C807DE /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				1F94DADE2673E94F00691D1E /* CallComposite.swift */,
@@ -1133,7 +1133,7 @@
 				A8659FC92602A22000C807DE /* Info.plist */,
 				1FC308432668166C007EC537 /* Assets.xcassets */,
 			);
-			path = AzureCommunicationUICalling;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		A869A62E26546A16003CC4F2 /* Mocking */ = {
@@ -1421,7 +1421,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -f \"${PODS_ROOT}/SwiftLint/swiftlint\" ]; then\n\n    ${PODS_ROOT}/SwiftLint/swiftlint lint --strict --config ../../.swiftlint.yml --path AzureCommunicationUICalling\n    \nelse \n       echo \"warning: SwiftLint not installed in Pods!\"\nfi\n\n";
+			shellScript = "if [ -f \"${PODS_ROOT}/SwiftLint/swiftlint\" ]; then\n\n    ${PODS_ROOT}/SwiftLint/swiftlint lint --strict --config ../../.swiftlint.yml --path Sources\n    \nelse \n       echo \"warning: SwiftLint not installed in Pods!\"\nfi\n\n";
 		};
 		2C50E025613BA6060BA2CE42 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1456,7 +1456,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint lint --strict --config ../../.swiftlint-tests.yml --path AzureCommunicationUICallingTests\n";
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint lint --strict --config ../../.swiftlint-tests.yml --path Tests\n";
 		};
 		60E5253384799BD37404EE5C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1803,7 +1803,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9KBH5RKYEW;
-				INFOPLIST_FILE = AzureCommunicationUICallingTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1823,7 +1823,7 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 9KBH5RKYEW;
-				INFOPLIST_FILE = AzureCommunicationUICallingTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1978,7 +1978,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = AzureCommunicationUICalling/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2008,7 +2008,7 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = AzureCommunicationUICalling/Info.plist;
+				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
