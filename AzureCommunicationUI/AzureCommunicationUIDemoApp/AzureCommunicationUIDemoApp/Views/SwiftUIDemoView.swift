@@ -32,7 +32,10 @@ struct SwiftUIDemoView: View {
             Alert(
                 title: Text("Error"),
                 message: Text(errorMessage),
-                dismissButton: .default(Text("Dismiss")))
+                dismissButton:
+                        .default(Text("Dismiss"), action: {
+                    isErrorDisplayed = false
+                }))
         }
         .sheet(isPresented: $isSettingsDisplayed) {
             SettingsView(envConfigSubject: envConfigSubject)
@@ -52,7 +55,9 @@ struct SwiftUIDemoView: View {
                     .autocapitalization(.none)
                     .textFieldStyle(.roundedBorder)
             case .token:
-                TextField("ACS Token", text: $envConfigSubject.acsToken)
+                TextField("ACS Token", text:
+                            !envConfigSubject.useExpiredToken ?
+                          $envConfigSubject.acsToken : $envConfigSubject.expiredAcsToken)
                     .modifier(TextFieldClearButton(text: $envConfigSubject.acsToken))
                     .disableAutocorrection(true)
                     .autocapitalization(.none)
@@ -103,6 +108,7 @@ struct SwiftUIDemoView: View {
             isSettingsDisplayed = true
         }
         .buttonStyle(DemoButtonStyle())
+        .accessibility(identifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
     }
 
     var startExperienceButton: some View {
@@ -115,7 +121,8 @@ struct SwiftUIDemoView: View {
     }
 
     var isStartExperienceDisabled: Bool {
-        if (envConfigSubject.selectedAcsTokenType == .token && envConfigSubject.acsToken.isEmpty)
+        let acsToken = envConfigSubject.useExpiredToken ? envConfigSubject.expiredAcsToken : envConfigSubject.acsToken
+        if (envConfigSubject.selectedAcsTokenType == .token && acsToken.isEmpty)
             || envConfigSubject.selectedAcsTokenType == .tokenUrl && envConfigSubject.acsTokenUrl.isEmpty {
             return true
         }
@@ -202,7 +209,9 @@ extension SwiftUIDemoView {
     private func getTokenCredential() throws -> CommunicationTokenCredential {
         switch envConfigSubject.selectedAcsTokenType {
         case .token:
-            if let communicationTokenCredential = try? CommunicationTokenCredential(token: envConfigSubject.acsToken) {
+            let acsToken = envConfigSubject.useExpiredToken ?
+                           envConfigSubject.expiredAcsToken : envConfigSubject.acsToken
+            if let communicationTokenCredential = try? CommunicationTokenCredential(token: acsToken) {
                 return communicationTokenCredential
             } else {
                 throw DemoError.invalidToken

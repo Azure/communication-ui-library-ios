@@ -11,4 +11,10 @@ enum AccessibilityId: String {
             "AzureCommunicationUICalling.DemoView.StartExperience.AccessibilityID"
     case clearTokenTextFieldAccessibilityID =
             "AzureCommunicationUICalling.DemoView.ClearTokenTextField.AccessibilityID"
+    case settingsButtonAccessibilityID =
+            "AzureCommunicationUICalling.DemoView.Settings.AccessibilityID"
+
+    /* SettingsView */
+    case expiredAcsTokenToggleAccessibilityID =
+            "AzureCommunicationUICalling.SettingsView.expiredAcstokenToggle.AccessibilityID"
 }

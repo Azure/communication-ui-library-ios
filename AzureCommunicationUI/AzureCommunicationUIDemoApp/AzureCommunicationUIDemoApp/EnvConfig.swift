@@ -11,6 +11,7 @@ enum EnvConfig: String {
     case appCenterSecret
     case acsToken
     case acsTokenUrl
+    case expiredAcsToken
     case displayName
     case groupCallId
     case teamsMeetingLink
@@ -27,6 +28,7 @@ enum EnvConfig: String {
 class EnvConfigSubject: ObservableObject {
     @Published var appCenterSecret: String = EnvConfig.appCenterSecret.value()
     @Published var acsToken: String = EnvConfig.acsToken.value()
+    @Published var expiredAcsToken: String = EnvConfig.expiredAcsToken.value()
     @Published var acsTokenUrl: String = EnvConfig.acsTokenUrl.value()
     @Published var displayName: String = EnvConfig.displayName.value()
     @Published var avatarImageName: String = ""
@@ -41,6 +43,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var isRightToLeft: Bool = false
     @Published var useCustomColors: Bool = false
     @Published var useCustomRemoteParticipantViewData: Bool = false
+    @Published var useExpiredToken: Bool = false
     @Published var primaryColor: Color = .blue
     @Published var tint10: Color = .blue
     @Published var tint20: Color = .blue

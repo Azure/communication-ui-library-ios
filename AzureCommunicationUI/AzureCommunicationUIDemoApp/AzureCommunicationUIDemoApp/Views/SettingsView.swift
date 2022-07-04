@@ -33,6 +33,7 @@ struct SettingsView: View {
         NavigationView {
             Form {
                 localizationSettings
+                localParticipantSettings
                 avatarSettings
                 remoteParticipantsAvatarsSettings
                 themeSettings
@@ -44,6 +45,13 @@ struct SettingsView: View {
                     label: { Image(systemName: "xmark") }
                 )
             }
+        }
+    }
+
+    var localParticipantSettings: some View {
+        Section(header: Text("Local Participant Settings")) {
+            Toggle("Use expired token", isOn: $envConfigSubject.useExpiredToken)
+                .accessibilityIdentifier(AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue)
         }
     }
 
