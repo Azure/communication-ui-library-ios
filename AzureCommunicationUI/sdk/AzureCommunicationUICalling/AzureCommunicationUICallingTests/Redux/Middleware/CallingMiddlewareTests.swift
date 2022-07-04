@@ -12,24 +12,24 @@ import Combine
 class CallingMiddlewareTests: XCTestCase {
 
     var mockMiddlewareHandler: CallingMiddlewareHandlerMocking!
-    var callingMiddleware: CallingMiddleware!
+    var mockMiddleware: Middleware<AppState>!
 
     override func setUp() {
         super.setUp()
         mockMiddlewareHandler = CallingMiddlewareHandlerMocking()
-        callingMiddleware = CallingMiddleware(callingMiddlewareHandler: mockMiddlewareHandler)
+        mockMiddleware = .liveCallingMiddleware(callingMiddlewareHandler: mockMiddlewareHandler)
     }
 
     override func tearDown() {
         super.tearDown()
         mockMiddlewareHandler = nil
-        callingMiddleware = nil
+        mockMiddleware = nil
     }
 
     func test_callingMiddleware_apply_when_setupCallCallingAction_then_handlerSetupCallBeingCalled() {
 
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
-        middlewareDispatch(getEmptyDispatch())(CallingAction.SetupCall())
+        middlewareDispatch(getEmptyDispatch())(.callingAction(.setupCall))
 
         XCTAssertTrue(mockMiddlewareHandler.setupCallWasCalled)
     }
@@ -37,7 +37,7 @@ class CallingMiddlewareTests: XCTestCase {
     func test_callingMiddleware_apply_when_startCallCallingAction_then_handlerStartCallBeingCalled() {
 
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
-        middlewareDispatch(getEmptyDispatch())(CallingAction.CallStartRequested())
+        middlewareDispatch(getEmptyDispatch())(.callingAction(.callStartRequested))
 
         XCTAssertTrue(mockMiddlewareHandler.startCallWasCalled)
     }
@@ -45,63 +45,63 @@ class CallingMiddlewareTests: XCTestCase {
     func test_callingMiddleware_apply_when_endCallCallingAction_then_handlerEndCallBeingCalled() {
 
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
-        middlewareDispatch(getEmptyDispatch())(CallingAction.CallEndRequested())
+        middlewareDispatch(getEmptyDispatch())(.callingAction(.callEndRequested))
 
         XCTAssertTrue(mockMiddlewareHandler.endCallWasCalled)
     }
 
     func test_callingMiddleware_apply_when_requestMicrophoneOffLocalUserAction_then_handlerRequestMicMuteCalled() {
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
-        middlewareDispatch(getEmptyDispatch())(LocalUserAction.MicrophoneOffTriggered())
+        middlewareDispatch(getEmptyDispatch())(.localUserAction(.microphoneOffTriggered))
 
         XCTAssertTrue(mockMiddlewareHandler.requestMicMuteCalled)
     }
 
     func test_callingMiddleware_apply_when_requestMicrophoneOnLocalUserAction_then_handlerRequestMicUnmuteCalled() {
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
-        middlewareDispatch(getEmptyDispatch())(LocalUserAction.MicrophoneOnTriggered())
+        middlewareDispatch(getEmptyDispatch())(.localUserAction(.microphoneOnTriggered))
 
         XCTAssertTrue(mockMiddlewareHandler.requestMicUnmuteCalled)
     }
 
     func test_callingMiddleware_apply_when_cameraPermissionGranted_then_handlerOnCameraPermissionIsSet() {
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
-        middlewareDispatch(getEmptyDispatch())(PermissionAction.CameraPermissionGranted())
+        middlewareDispatch(getEmptyDispatch())(.permissionAction(.cameraPermissionGranted))
 
         XCTAssertTrue(mockMiddlewareHandler.cameraPermissionSetCalled)
     }
 
     func test_callingMiddleware_apply_when_requestCameraPreviewOn_then_handlerRequestCameraPreviewOnCalled() {
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
-        middlewareDispatch(getEmptyDispatch())(LocalUserAction.CameraPreviewOnTriggered())
+        middlewareDispatch(getEmptyDispatch())(.localUserAction(.cameraPreviewOnTriggered))
 
         XCTAssertTrue(mockMiddlewareHandler.requestCameraPreviewOnCalled)
     }
 
     func test_callingMiddleware_apply_when_requestCameraOnLocalUserAction_then_handlerRequestCameraOnCalled() {
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
-        middlewareDispatch(getEmptyDispatch())(LocalUserAction.CameraOnTriggered())
+        middlewareDispatch(getEmptyDispatch())(.localUserAction(.cameraOnTriggered))
 
         XCTAssertTrue(mockMiddlewareHandler.requestCameraOnCalled)
     }
 
     func test_callingMiddleware_apply_when_requestCameraOffLocalUserAction_then_handlerRequestCameraOffCalled() {
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
-        middlewareDispatch(getEmptyDispatch())(LocalUserAction.CameraOffTriggered())
+        middlewareDispatch(getEmptyDispatch())(.localUserAction(.cameraOffTriggered))
 
         XCTAssertTrue(mockMiddlewareHandler.requestCameraOffCalled)
     }
 
     func test_callingMiddleware_apply_when_holdCallRequestAction_then_handlerHoldCall() {
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
-        middlewareDispatch(getEmptyDispatch())(CallingAction.HoldRequested())
+        middlewareDispatch(getEmptyDispatch())(.callingAction(.holdRequested))
 
         XCTAssertTrue(mockMiddlewareHandler.requestHoldCalled)
     }
 
     func test_callingMiddleware_apply_when_resumeCallRequestAction_then_handlerResumeCall() {
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
-        middlewareDispatch(getEmptyDispatch())(CallingAction.ResumeRequested())
+        middlewareDispatch(getEmptyDispatch())(.callingAction(.resumeRequested))
 
         XCTAssertTrue(mockMiddlewareHandler.requestResumeCalled)
     }
@@ -109,7 +109,7 @@ class CallingMiddlewareTests: XCTestCase {
     func test_callingMiddleware_apply_when_requestCameraOn_then_nextActionDispatchCameraOnTriggered() {
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
 
-        let action = LocalUserAction.CameraOnTriggered()
+        let action = Action.localUserAction(.cameraOnTriggered)
         let expectation = XCTestExpectation(description: "Verify is same action Type")
         let nextDispatch = getAssertSameActionDispatch(action: action, expectation: expectation)
         middlewareDispatch(nextDispatch)(action)
@@ -119,7 +119,7 @@ class CallingMiddlewareTests: XCTestCase {
     func test_callingMiddleware_apply_when_requestMicOn_then_nextActionDispatchMicrophoneOnTriggered() {
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
 
-        let action = LocalUserAction.MicrophoneOnTriggered()
+        let action = Action.localUserAction(.microphoneOnTriggered)
         let expectation = XCTestExpectation(description: "Verify is same action Type")
         let nextDispatch = getAssertSameActionDispatch(action: action, expectation: expectation)
         middlewareDispatch(nextDispatch)(action)
@@ -129,7 +129,7 @@ class CallingMiddlewareTests: XCTestCase {
     func test_callingMiddleware_apply_when_enterForeground_then_nextActionDispatchEnterForeground() {
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
 
-        let action = LifecycleAction.ForegroundEntered()
+        let action = Action.lifecycleAction(.foregroundEntered)
         let expectation = XCTestExpectation(description: "Verify is same action Type")
         let nextDispatch = getAssertSameActionDispatch(action: action, expectation: expectation)
         middlewareDispatch(nextDispatch)(action)
@@ -140,7 +140,7 @@ class CallingMiddlewareTests: XCTestCase {
 
 extension CallingMiddlewareTests {
 
-    private func getEmptyState() -> ReduxState? {
+    private func getEmptyState() -> AppState {
         return AppState()
     }
     private func getEmptyDispatch() -> ActionDispatch {
@@ -148,8 +148,7 @@ extension CallingMiddlewareTests {
     }
 
     private func getEmptyCallingMiddlewareFunction() -> (@escaping ActionDispatch) -> ActionDispatch {
-
-        return callingMiddleware.apply(dispatch: getEmptyDispatch(), getState: getEmptyState)
+        return mockMiddleware.apply(getEmptyDispatch(), getEmptyState)
     }
 
     private func getAssertSameActionDispatch(action: Action, expectation: XCTestExpectation) -> ActionDispatch {
@@ -158,5 +157,4 @@ extension CallingMiddlewareTests {
             expectation.fulfill()
         }
     }
-
 }

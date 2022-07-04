@@ -8,39 +8,23 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class CallingReducerTests: XCTestCase {
-    func test_callingReducer_reduce_when_notCallingState_then_return() {
-        let state = StateMocking()
-        let action = CallingAction.StateUpdated(status: .connected)
-        let sut = getSUT()
-        let resultState = sut.reduce(state, action)
-
-        XCTAssert(resultState is StateMocking)
-    }
-
     func test_callingReducer_reduce_when_callingActionStateUpdated_then_stateUpdated() {
         let expectedState = CallingStatus.connected
         let state = CallingState(status: .disconnected)
-        let action = CallingAction.StateUpdated(status: expectedState)
+        let action = Action.callingAction(.stateUpdated(status: expectedState))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
-        guard let resultState = resultState as? CallingState else {
-            XCTFail("Failed with state validation")
-            return
-        }
         XCTAssertEqual(resultState.status, expectedState)
     }
 
-    func test_callingReducer_reduce_when_mockingAction_then_stateNotUpdate() {
+    func test_callingReducer_reduce_when_unhandledAction_then_stateNotUpdate() {
         let expectedState = CallingStatus.disconnected
         let state = CallingState(status: expectedState)
-        let action = ActionMocking()
+        let action = Action.permissionAction(.audioPermissionNotAsked)
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
-        guard let resultState = resultState as? CallingState else {
-            XCTFail("Failed with state validation")
-            return
-        }
+
         XCTAssertEqual(resultState.status, expectedState)
     }
 
@@ -51,14 +35,10 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .connected,
                                  isRecordingActive: false,
                                  isTranscriptionActive: false)
-        let action = CallingAction.RecordingStateUpdated(isRecordingActive: true)
+        let action = Action.callingAction(.recordingStateUpdated(isRecordingActive: true))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
-        guard let resultState = resultState as? CallingState else {
-            XCTFail("Failed with state validation")
-            return
-        }
         XCTAssertEqual(resultState, expectedState)
     }
 
@@ -69,14 +49,10 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .connected,
                                  isRecordingActive: true,
                                  isTranscriptionActive: false)
-        let action = CallingAction.RecordingStateUpdated(isRecordingActive: false)
+        let action = Action.callingAction(.recordingStateUpdated(isRecordingActive: false))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
-        guard let resultState = resultState as? CallingState else {
-            XCTFail("Failed with state validation")
-            return
-        }
         XCTAssertEqual(resultState, expectedState)
     }
 
@@ -87,14 +63,10 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .connected,
                                  isRecordingActive: false,
                                  isTranscriptionActive: false)
-        let action = CallingAction.TranscriptionStateUpdated(isTranscriptionActive: true)
+        let action = Action.callingAction(.transcriptionStateUpdated(isTranscriptionActive: true))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
-        guard let resultState = resultState as? CallingState else {
-            XCTFail("Failed with state validation")
-            return
-        }
         XCTAssertEqual(resultState, expectedState)
     }
 
@@ -105,14 +77,10 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .connected,
                                  isRecordingActive: false,
                                  isTranscriptionActive: true)
-        let action = CallingAction.TranscriptionStateUpdated(isTranscriptionActive: false)
+        let action = Action.callingAction(.transcriptionStateUpdated(isTranscriptionActive: false))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
-        guard let resultState = resultState as? CallingState else {
-            XCTFail("Failed with state validation")
-            return
-        }
         XCTAssertEqual(resultState, expectedState)
     }
 
@@ -123,15 +91,11 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .connected,
                                  isRecordingActive: true,
                                  isTranscriptionActive: true)
-        let action = ErrorAction.StatusErrorAndCallReset(internalError: .callDenied,
-                                                         error: nil)
+        let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callDenied,
+                                                         error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
-        guard let resultState = resultState as? CallingState else {
-            XCTFail("Failed with state validation")
-            return
-        }
         XCTAssertEqual(resultState, expectedState)
     }
 
@@ -142,15 +106,11 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .disconnected,
                                  isRecordingActive: true,
                                  isTranscriptionActive: true)
-        let action = ErrorAction.StatusErrorAndCallReset(internalError: .callEvicted,
-                                                         error: nil)
+        let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callEvicted,
+                                                         error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
-        guard let resultState = resultState as? CallingState else {
-            XCTFail("Failed with state validation")
-            return
-        }
         XCTAssertEqual(resultState, expectedState)
     }
 
@@ -161,21 +121,17 @@ class CallingReducerTests: XCTestCase {
         let state = CallingState(status: .disconnected,
                                  isRecordingActive: false,
                                  isTranscriptionActive: false)
-        let action = ErrorAction.StatusErrorAndCallReset(internalError: .callDenied,
-                                                         error: nil)
+        let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callDenied,
+                                                         error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
-        guard let resultState = resultState as? CallingState else {
-            XCTFail("Failed with state validation")
-            return
-        }
         XCTAssertEqual(resultState, expectedState)
     }
 }
 
 extension CallingReducerTests {
-    private func getSUT() -> CallingReducer {
-        return CallingReducer()
+    private func getSUT() -> Reducer<CallingState, Action> {
+        return .liveCallingReducer
     }
 }

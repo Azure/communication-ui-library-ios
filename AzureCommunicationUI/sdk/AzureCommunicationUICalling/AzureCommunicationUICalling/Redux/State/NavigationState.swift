@@ -11,7 +11,7 @@ enum NavigationStatus {
     case exit
 }
 
-class NavigationState: ReduxState, Equatable {
+struct NavigationState: Equatable {
 
     let status: NavigationStatus
 

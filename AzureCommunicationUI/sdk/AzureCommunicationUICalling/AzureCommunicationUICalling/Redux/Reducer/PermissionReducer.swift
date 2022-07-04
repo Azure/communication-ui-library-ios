@@ -5,32 +5,30 @@
 
 import Foundation
 
-struct PermissionReducer: Reducer {
-    func reduce(_ state: ReduxState, _ action: Action) -> ReduxState {
-        guard let permissionState = state as? PermissionState else {
-            return state
-        }
+extension Reducer where State == PermissionState,
+                        Actions == PermissionAction {
+    static var livePermissionsReducer: Self = Reducer { permissionState, action in
+
         var cameraPermission = permissionState.cameraPermission
         var audioPermission = permissionState.audioPermission
+
         switch action {
-        case _ as PermissionAction.AudioPermissionRequested:
+        case .audioPermissionRequested:
             audioPermission = .requesting
-        case _ as PermissionAction.AudioPermissionGranted:
+        case .audioPermissionGranted:
             audioPermission = .granted
-        case _ as PermissionAction.AudioPermissionDenied:
+        case .audioPermissionDenied:
             audioPermission = .denied
-        case _ as PermissionAction.AudioPermissionNotAsked:
+        case .audioPermissionNotAsked:
             audioPermission = .notAsked
-        case _ as PermissionAction.CameraPermissionRequested:
+        case .cameraPermissionRequested:
             cameraPermission = .requesting
-        case _ as PermissionAction.CameraPermissionGranted:
+        case .cameraPermissionGranted:
             cameraPermission = .granted
-        case _ as PermissionAction.CameraPermissionDenied:
+        case .cameraPermissionDenied:
             cameraPermission = .denied
-        case _ as PermissionAction.CameraPermissionNotAsked:
+        case .cameraPermissionNotAsked:
             cameraPermission = .notAsked
-        default:
-            return permissionState
         }
         return PermissionState(audioPermission: audioPermission,
                                cameraPermission: cameraPermission)

@@ -7,21 +7,21 @@ import Combine
 import Foundation
 
 protocol CallingMiddlewareHandling {
-    func setupCall(state: ReduxState?, dispatch: @escaping ActionDispatch)
-    func startCall(state: ReduxState?, dispatch: @escaping ActionDispatch)
-    func endCall(state: ReduxState?, dispatch: @escaping ActionDispatch)
-    func holdCall(state: ReduxState?, dispatch: @escaping ActionDispatch)
-    func resumeCall(state: ReduxState?, dispatch: @escaping ActionDispatch)
-    func enterBackground(state: ReduxState?, dispatch: @escaping ActionDispatch)
-    func enterForeground(state: ReduxState?, dispatch: @escaping ActionDispatch)
-    func audioSessionInterrupted(state: ReduxState?, dispatch: @escaping ActionDispatch)
-    func requestCameraPreviewOn(state: ReduxState?, dispatch: @escaping ActionDispatch)
-    func requestCameraOn(state: ReduxState?, dispatch: @escaping ActionDispatch)
-    func requestCameraOff(state: ReduxState?, dispatch: @escaping ActionDispatch)
-    func requestCameraSwitch(state: ReduxState?, dispatch: @escaping ActionDispatch)
-    func requestMicrophoneMute(state: ReduxState?, dispatch: @escaping ActionDispatch)
-    func requestMicrophoneUnmute(state: ReduxState?, dispatch: @escaping ActionDispatch)
-    func onCameraPermissionIsSet(state: ReduxState?, dispatch: @escaping ActionDispatch)
+    func setupCall(state: AppState, dispatch: @escaping ActionDispatch)
+    func startCall(state: AppState, dispatch: @escaping ActionDispatch)
+    func endCall(state: AppState, dispatch: @escaping ActionDispatch)
+    func holdCall(state: AppState, dispatch: @escaping ActionDispatch)
+    func resumeCall(state: AppState, dispatch: @escaping ActionDispatch)
+    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch)
+    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch)
+    func audioSessionInterrupted(state: AppState, dispatch: @escaping ActionDispatch)
+    func requestCameraPreviewOn(state: AppState, dispatch: @escaping ActionDispatch)
+    func requestCameraOn(state: AppState, dispatch: @escaping ActionDispatch)
+    func requestCameraOff(state: AppState, dispatch: @escaping ActionDispatch)
+    func requestCameraSwitch(state: AppState, dispatch: @escaping ActionDispatch)
+    func requestMicrophoneMute(state: AppState, dispatch: @escaping ActionDispatch)
+    func requestMicrophoneUnmute(state: AppState, dispatch: @escaping ActionDispatch)
+    func onCameraPermissionIsSet(state: AppState, dispatch: @escaping ActionDispatch)
 }
 
 class CallingMiddlewareHandler: CallingMiddlewareHandling {
@@ -35,10 +35,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         self.logger = logger
     }
 
-    func setupCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        guard let state = state as? AppState else {
-            return
-        }
+    func setupCall(state: AppState, dispatch: @escaping ActionDispatch) {
         callingService.setupCall()
             .sink(receiveCompletion: { [weak self] completion in
                 guard let self = self else {
@@ -54,16 +51,13 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 if state.permissionState.cameraPermission == .granted,
                    state.localUserState.cameraState.operation == .off,
                    state.errorState.internalError == nil {
-                    dispatch(LocalUserAction.CameraPreviewOnTriggered())
+                    dispatch(.localUserAction(.cameraPreviewOnTriggered))
                 }
             })
             .store(in: cancelBag)
     }
 
-    func startCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        guard let state = state as? AppState else {
-            return
-        }
+    func startCall(state: AppState, dispatch: @escaping ActionDispatch) {
         callingService.startCall(isCameraPreferred: state.localUserState.cameraState.operation == .on,
                                  isAudioPreferred: state.localUserState.audioState.operation == .on)
         .sink(receiveCompletion: { [weak self] completion in
@@ -81,7 +75,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }).store(in: cancelBag)
     }
 
-    func endCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func endCall(state: AppState, dispatch: @escaping ActionDispatch) {
         callingService.endCall()
             .sink(receiveCompletion: { [weak self] completion in
                 guard let self = self else {
@@ -97,9 +91,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             }, receiveValue: {}).store(in: cancelBag)
     }
 
-    func holdCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        guard let state = state as? AppState,
-              state.callingState.status == .connected else {
+    func holdCall(state: AppState, dispatch: @escaping ActionDispatch) {
+        guard state.callingState.status == .connected else {
             return
         }
 
@@ -118,9 +111,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     }
 
-    func resumeCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        guard let state = state as? AppState,
-              state.callingState.status == .localHold else {
+    func resumeCall(state: AppState, dispatch: @escaping ActionDispatch) {
+        guard state.callingState.status == .localHold else {
             return
         }
 
@@ -138,162 +130,159 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             }, receiveValue: {}).store(in: cancelBag)
     }
 
-    func enterBackground(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        guard let state = state as? AppState,
-              state.callingState.status == .connected,
+    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) {
+        guard state.callingState.status == .connected,
               state.localUserState.cameraState.operation == .on else {
             return
         }
 
         callingService.stopLocalVideoStream()
             .map {
-                LocalUserAction.CameraPausedSucceeded()
-            }.sink(receiveCompletion: {completion in
+                LocalUserAction.cameraPausedSucceeded
+            }.sink(receiveCompletion: { completion in
                 switch completion {
                 case .failure(let error):
-                    dispatch(LocalUserAction.CameraPausedFailed(error: error))
+                    dispatch(.localUserAction(.cameraPausedFailed(error: error)))
                 case .finished:
                     break
                 }
             }, receiveValue: { newAction in
-                dispatch(newAction)
+                dispatch(.localUserAction(newAction))
             }).store(in: cancelBag)
     }
 
-    func enterForeground(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        guard let state = state as? AppState,
-              state.callingState.status == .connected || state.callingState.status == .localHold,
+    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) {
+        guard state.callingState.status == .connected || state.callingState.status == .localHold,
               state.localUserState.cameraState.operation == .paused else {
             return
         }
         requestCameraOn(state: state, dispatch: dispatch)
     }
 
-    func requestCameraPreviewOn(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        guard let state = state as? AppState else {
-            return
-        }
-
+    func requestCameraPreviewOn(state: AppState, dispatch: @escaping ActionDispatch) {
         if state.permissionState.cameraPermission == .notAsked {
-            dispatch(PermissionAction.CameraPermissionRequested())
+            dispatch(.permissionAction(.cameraPermissionRequested))
         } else {
             callingService.requestCameraPreviewOn().map { videoStream in
-                LocalUserAction.CameraOnSucceeded(videoStreamIdentifier: videoStream)
+                LocalUserAction.cameraOnSucceeded(videoStreamIdentifier: videoStream)
             }.sink(receiveCompletion: { completion in
                 switch completion {
                 case .finished:
                     break
                 case .failure(let error):
-                    dispatch(LocalUserAction.CameraOnFailed(error: error))
+                    dispatch(.localUserAction(.cameraOnFailed(error: error)))
                 }
             }, receiveValue: { newAction in
-                dispatch(newAction)
+                dispatch(.localUserAction(newAction))
             }).store(in: cancelBag)
         }
     }
 
-    func requestCameraOn(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        guard let state = state as? AppState else {
-            return
-        }
+    func requestCameraOn(state: AppState, dispatch: @escaping ActionDispatch) {
         if state.permissionState.cameraPermission == .notAsked {
-            dispatch(PermissionAction.CameraPermissionRequested())
+            dispatch(.permissionAction(.cameraPermissionRequested))
         } else {
             callingService.startLocalVideoStream()
                 .delay(for: .seconds(1.0), scheduler: DispatchQueue.main)
                 .map { videoStream in
-                    LocalUserAction.CameraOnSucceeded(videoStreamIdentifier: videoStream)
+                    LocalUserAction.cameraOnSucceeded(videoStreamIdentifier: videoStream)
                 }.sink(receiveCompletion: { completion in
                     switch completion {
                     case .failure(let error):
-                        dispatch(LocalUserAction.CameraOnFailed(error: error))
+                        dispatch(.localUserAction(.cameraOnFailed(error: error)))
                     case .finished:
                         break
                     }
                 }, receiveValue: { newAction in
-                    dispatch(newAction)
+                    dispatch(.localUserAction(newAction))
                 }).store(in: cancelBag)
         }
     }
 
-    func requestCameraOff(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func requestCameraOff(state: AppState, dispatch: @escaping ActionDispatch) {
         callingService.stopLocalVideoStream()
-            .map {
-                LocalUserAction.CameraOffSucceeded()
-            }.sink(receiveCompletion: {completion in
-                switch completion {
-                case .failure(let error):
-                    dispatch(LocalUserAction.CameraOffFailed(error: error))
-                case .finished:
-                    break
-                }
-            }, receiveValue: { newAction in
-                dispatch(newAction)
-            }).store(in: cancelBag)
+            .map { .cameraOffSucceeded }
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let error):
+                        dispatch(.localUserAction(.cameraOffFailed(error: error)))
+                    case .finished:
+                        break
+                    }
+                },
+                receiveValue: { dispatch(.localUserAction($0)) }
+            ).store(in: cancelBag)
     }
 
-    func requestCameraSwitch(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func requestCameraSwitch(state: AppState, dispatch: @escaping ActionDispatch) {
         callingService.switchCamera()
             .delay(for: .seconds(1.0), scheduler: DispatchQueue.main)
-            .map { cameraDevice in
-                LocalUserAction.CameraSwitchSucceeded(cameraDevice: cameraDevice)
-            }.sink(receiveCompletion: {completion in
-                switch completion {
-                case .failure(let error):
-                    dispatch(LocalUserAction.CameraSwitchFailed(error: error))
-                case .finished:
-                    break
-                }
-            }, receiveValue: { newAction in
-                dispatch(newAction)
-            }).store(in: cancelBag)
+            .map { .cameraSwitchSucceeded(cameraDevice: $0) }
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let error):
+                        dispatch(.localUserAction(.cameraSwitchFailed(error: error)) )
+                    case .finished:
+                        break
+                    }
+                },
+                receiveValue: { dispatch(.localUserAction($0)) }
+            )
+            .store(in: cancelBag)
     }
 
-    func requestMicrophoneMute(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func requestMicrophoneMute(state: AppState, dispatch: @escaping ActionDispatch) {
         callingService.muteLocalMic()
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    dispatch(LocalUserAction.MicrophoneOffFailed(error: error))
-                case .finished:
-                    break
-                }
-            }, receiveValue: {}).store(in: cancelBag)
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let error):
+                        dispatch(.localUserAction(.microphoneOffFailed(error: error)))
+                    case .finished:
+                        break
+                    }
+                }, receiveValue: {}
+            )
+            .store(in: cancelBag)
     }
 
-    func requestMicrophoneUnmute(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func requestMicrophoneUnmute(state: AppState, dispatch: @escaping ActionDispatch) {
         callingService.unmuteLocalMic()
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    dispatch(LocalUserAction.MicrophoneOnFailed(error: error))
-                case .finished:
-                    break
-                }
-            }, receiveValue: {}).store(in: cancelBag)
+            .sink(
+                receiveCompletion: { completion in
+                    switch completion {
+                    case .failure(let error):
+                        dispatch(.localUserAction(.microphoneOnFailed(error: error)))
+                    case .finished:
+                        break
+                    }
+                },
+                receiveValue: {}
+            )
+            .store(in: cancelBag)
     }
 
-    func onCameraPermissionIsSet(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        guard let state = state as? AppState,
-              state.permissionState.cameraPermission == .requesting else {
+    func onCameraPermissionIsSet(state: AppState, dispatch: @escaping ActionDispatch) {
+        guard state.permissionState.cameraPermission == .requesting else {
             return
         }
 
         switch state.localUserState.cameraState.transmission {
         case .local:
-            dispatch(LocalUserAction.CameraPreviewOnTriggered())
+            dispatch(.localUserAction(.cameraPreviewOnTriggered))
         case .remote:
-            dispatch(LocalUserAction.CameraOnTriggered())
+            dispatch(.localUserAction(.cameraOnTriggered))
         }
     }
 
-    func audioSessionInterrupted(state: ReduxState?, dispatch: @escaping ActionDispatch) {
-        guard let state = state as? AppState,
-              state.callingState.status == .connected else {
+    func audioSessionInterrupted(state: AppState, dispatch: @escaping ActionDispatch) {
+        guard state.callingState.status == .connected else {
             return
         }
 
-        dispatch(CallingAction.HoldRequested())
+        dispatch(.callingAction(.holdRequested))
     }
 }
 
@@ -303,8 +292,7 @@ extension CallingMiddlewareHandler {
         callingService.participantsInfoListSubject
             .throttle(for: 1.25, scheduler: DispatchQueue.main, latest: true)
             .sink { list in
-                let action = ParticipantListUpdated(participantsInfoList: list)
-                dispatch(action)
+                dispatch(.callingAction(.participantListUpdated(participants: list)))
             }.store(in: subscription)
 
         callingService.callInfoSubject
@@ -324,11 +312,11 @@ extension CallingMiddlewareHandler {
                         self.logger.debug("Subscription cancelled with Error Code: \(internalError)")
                         self.subscription.cancel()
                     }
-                // to fix the bug that resume call won't work without Internet
-                // we exit the UI library when we receive the wrong status .remoteHold
+                    // to fix the bug that resume call won't work without Internet
+                    // we exit the UI library when we receive the wrong status .remoteHold
                 } else if callingStatus == .disconnected || callingStatus == .remoteHold {
                     self.logger.debug("Subscription cancel happy path")
-                    dispatch(CompositeExitAction())
+                    dispatch(.compositeExitAction)
                     self.subscription.cancel()
                 }
 
@@ -337,22 +325,19 @@ extension CallingMiddlewareHandler {
         callingService.isRecordingActiveSubject
             .removeDuplicates()
             .sink { isRecordingActive in
-                let action = CallingAction.RecordingStateUpdated(isRecordingActive: isRecordingActive)
-                dispatch(action)
+                dispatch(.callingAction(.recordingStateUpdated(isRecordingActive: isRecordingActive)))
             }.store(in: subscription)
 
         callingService.isTranscriptionActiveSubject
             .removeDuplicates()
             .sink { isTranscriptionActive in
-                let action = CallingAction.TranscriptionStateUpdated(isTranscriptionActive: isTranscriptionActive)
-                dispatch(action)
+                dispatch(.callingAction(.transcriptionStateUpdated(isTranscriptionActive: isTranscriptionActive)))
             }.store(in: subscription)
 
         callingService.isLocalUserMutedSubject
             .removeDuplicates()
             .sink { isLocalUserMuted in
-                let action = LocalUserAction.MicrophoneMuteStateUpdated(isMuted: isLocalUserMuted)
-                dispatch(action)
+                dispatch(.localUserAction(.microphoneMuteStateUpdated(isMuted: isLocalUserMuted)))
             }.store(in: subscription)
     }
 }

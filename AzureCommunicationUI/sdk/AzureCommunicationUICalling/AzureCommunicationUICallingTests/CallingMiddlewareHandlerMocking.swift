@@ -23,67 +23,67 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     var requestHoldCalled: Bool = false
     var requestResumeCalled: Bool = false
 
-    func setupCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func setupCall(state: AppState, dispatch: @escaping ActionDispatch) {
         setupCallWasCalled = true
     }
 
-    func startCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func startCall(state: AppState, dispatch: @escaping ActionDispatch) {
         startCallWasCalled = true
     }
 
-    func endCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func endCall(state: AppState, dispatch: @escaping ActionDispatch) {
         endCallWasCalled = true
     }
 
-    func enterBackground(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) {
         enterBackgroundCalled = true
     }
 
-    func enterForeground(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) {
         enterForegroundCalled = true
     }
 
-    func onCameraPermissionIsSet(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func onCameraPermissionIsSet(state: AppState, dispatch: @escaping ActionDispatch) {
         cameraPermissionSetCalled = true
     }
 
-    func cameraPermissionGranted(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func cameraPermissionGranted(state: AppState, dispatch: @escaping ActionDispatch) {
         cameraPermissionGrantedCalled = true
     }
 
-    func requestCameraPreviewOn(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func requestCameraPreviewOn(state: AppState, dispatch: @escaping ActionDispatch) {
         requestCameraPreviewOnCalled = true
     }
 
-    func requestCameraOn(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func requestCameraOn(state: AppState, dispatch: @escaping ActionDispatch) {
         requestCameraOnCalled = true
     }
 
-    func requestCameraOff(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func requestCameraOff(state: AppState, dispatch: @escaping ActionDispatch) {
         requestCameraOffCalled = true
     }
 
-    func requestCameraSwitch(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func requestCameraSwitch(state: AppState, dispatch: @escaping ActionDispatch) {
         requestCameraSwitchCalled = true
     }
 
-    func requestMicrophoneMute(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func requestMicrophoneMute(state: AppState, dispatch: @escaping ActionDispatch) {
         requestMicMuteCalled = true
     }
 
-    func requestMicrophoneUnmute(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func requestMicrophoneUnmute(state: AppState, dispatch: @escaping ActionDispatch) {
         requestMicUnmuteCalled = true
     }
 
-    func holdCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func holdCall(state: AppState, dispatch: @escaping ActionDispatch) {
         requestHoldCalled = true
     }
 
-    func resumeCall(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func resumeCall(state: AppState, dispatch: @escaping ActionDispatch) {
         requestResumeCalled = true
     }
 
-    func audioSessionInterrupted(state: ReduxState?, dispatch: @escaping ActionDispatch) {
+    func audioSessionInterrupted(state: AppState, dispatch: @escaping ActionDispatch) {
 
     }
 }

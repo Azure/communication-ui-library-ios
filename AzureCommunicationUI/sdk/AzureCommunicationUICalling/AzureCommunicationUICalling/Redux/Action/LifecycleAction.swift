@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct LifecycleAction {
-    struct ForegroundEntered: Action {}
-    struct BackgroundEntered: Action {}
+enum LifecycleAction: Equatable {
+    case foregroundEntered
+    case backgroundEntered
 }

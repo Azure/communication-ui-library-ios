@@ -24,7 +24,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         self.logger = logger
         let currentAudioDevice = getCurrentAudioDevice()
         self.setupAudioSession()
-        store.dispatch(action: LocalUserAction.AudioDeviceChangeRequested(device: currentAudioDevice))
+        store.dispatch(action: .localUserAction(.audioDeviceChangeRequested(device: currentAudioDevice)))
         store.$state
             .sink { [weak self] state in
                 self?.receive(state: state)
@@ -80,9 +80,9 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         switch interruptionType {
         case .began:
             startAudioSessionDetector()
-            store.dispatch(action: AudioInterrupted())
+            store.dispatch(action: .audioSessionAction(.audioInterrupted))
         case .ended:
-            store.dispatch(action: AudioInterruptEnded())
+            store.dispatch(action: .audioSessionAction(.audioInterruptEnded))
             audioSessionDetector?.invalidate()
         default:
             break
@@ -96,7 +96,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
             return
         }
 
-        store.dispatch(action: LocalUserAction.AudioDeviceChangeSucceeded(device: currentDevice))
+        store.dispatch(action: .localUserAction(.audioDeviceChangeSucceeded(device: currentDevice)))
     }
 
     private func activateAudioSessionCategory() {
@@ -145,10 +145,10 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         do {
             try audioSession.setActive(true)
             try audioSession.overrideOutputAudioPort(audioPort)
-            store.dispatch(action: LocalUserAction.AudioDeviceChangeSucceeded(device: selectedAudioDevice))
+            store.dispatch(action: .localUserAction(.audioDeviceChangeSucceeded(device: selectedAudioDevice)))
         } catch let error {
             logger.error("Failed to select audio device, reason:\(error.localizedDescription)")
-            store.dispatch(action: LocalUserAction.AudioDeviceChangeFailed(error: error))
+            store.dispatch(action: .localUserAction(.audioDeviceChangeFailed(error: error)))
         }
     }
 
@@ -173,7 +173,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
             audioSessionDetector?.invalidate()
             return
         }
-        store.dispatch(action: AudioEngaged())
+        store.dispatch(action: .audioSessionAction(.audioEngaged))
         audioSessionDetector?.invalidate()
     }
 

@@ -38,7 +38,7 @@ class SetupViewModelTests: XCTestCase {
             .dropFirst(2)
             .sink { [weak self] _ in
                 XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.last is PermissionAction.AudioPermissionRequested)
+                XCTAssertTrue(self?.storeFactory.actions.last == Action.permissionAction(.audioPermissionRequested))
 
                 expectation.fulfill()
             }.store(in: cancellable)
@@ -57,7 +57,7 @@ class SetupViewModelTests: XCTestCase {
             .dropFirst()
             .sink { [weak self] _ in
                 XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.last is CallingAction.SetupCall)
+                XCTAssertTrue(self?.storeFactory.actions.last == Action.callingAction(.setupCall))
 
                 expectation.fulfill()
             }.store(in: cancellable)
@@ -74,7 +74,7 @@ class SetupViewModelTests: XCTestCase {
             .dropFirst()
             .sink { [weak self] _ in
                 XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.last is CallingAction.CallStartRequested)
+                XCTAssertTrue(self?.storeFactory.actions.last == Action.callingAction(.callStartRequested))
                 expectation.fulfill()
             }.store(in: cancellable)
         sut.joinCallButtonTapped()

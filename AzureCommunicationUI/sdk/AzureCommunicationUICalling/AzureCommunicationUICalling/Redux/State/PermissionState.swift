@@ -18,7 +18,7 @@ enum AppPermission {
     }
 }
 
-class PermissionState: ReduxState {
+struct PermissionState {
 
     let audioPermission: AppPermission.Status
     let cameraPermission: AppPermission.Status

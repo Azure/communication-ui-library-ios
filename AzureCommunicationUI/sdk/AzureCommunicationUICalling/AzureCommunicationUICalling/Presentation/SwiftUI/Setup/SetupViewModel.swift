@@ -86,22 +86,22 @@ class SetupViewModel: ObservableObject {
 
     func setupAudioPermissions() {
         if store.state.permissionState.audioPermission == .notAsked {
-            store.dispatch(action: PermissionAction.AudioPermissionRequested())
+            store.dispatch(action: .permissionAction(.audioPermissionRequested))
         }
     }
 
     func setupCall() {
-        store.dispatch(action: CallingAction.SetupCall())
+        store.dispatch(action: .callingAction(.setupCall))
     }
 
     func joinCallButtonTapped() {
-        store.dispatch(action: CallingAction.CallStartRequested())
+        store.dispatch(action: .callingAction(.callStartRequested))
         isJoinRequested = true
     }
 
     func dismissButtonTapped() {
         let isJoining = callingStatus != .none
-        let action: Action = isJoining ? CallingAction.CallEndRequested() : CompositeExitAction()
+        let action: Action = isJoining ? .callingAction(.callEndRequested) : .compositeExitAction
         store.dispatch(action: action)
     }
 

@@ -48,8 +48,7 @@ class LocalVideoViewModel: ObservableObject {
     }
 
     func toggleCameraSwitchTapped() {
-        let action = LocalUserAction.CameraSwitchTriggered()
-        dispatch(action)
+        dispatch(.localUserAction(.cameraSwitchTriggered))
     }
 
     func update(localUserState: LocalUserState) {
