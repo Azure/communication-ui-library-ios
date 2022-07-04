@@ -95,4 +95,4 @@ iOSInjectionProject/
 
 #AppCode
 AzureCommunicationUI/.idea
-AzureCommunicationUI/AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp/EnvConfig.xcconfig
+AzureCommunicationUI/AzureCommunicationUIDemoApp/Sources/EnvConfig.xcconfig
