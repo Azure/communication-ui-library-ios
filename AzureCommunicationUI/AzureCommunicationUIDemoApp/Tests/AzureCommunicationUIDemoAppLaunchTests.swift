@@ -21,7 +21,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         if toggle.waitForExistence(timeout: 3) {
             toggle.tap()
         }
-        app.swipeDown(velocity: .fast)
+        app.buttons["Close"].tap()
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
             shouldWait: true)
