@@ -55,10 +55,9 @@ class ParticipantsListCellViewModel {
     }
 
     func getCellAccessibilityLabel(with participantViewData: ParticipantViewData?) -> String {
-        let displayName = getCellDisplayName(with: participantViewData)
-        return isMuted
-        ? displayName + localizationProvider.getLocalizedString(.muted)
-        : displayName + localizationProvider.getLocalizedString(.unmuted)
+        let status = isHold ? getOnHoldString() :
+        localizationProvider.getLocalizedString(isMuted ? .muted : .unmuted)
+        return "\(getCellDisplayName(with: participantViewData)) \(status)"
     }
 
     func getParticipantName(with participantViewData: ParticipantViewData?) -> String {
