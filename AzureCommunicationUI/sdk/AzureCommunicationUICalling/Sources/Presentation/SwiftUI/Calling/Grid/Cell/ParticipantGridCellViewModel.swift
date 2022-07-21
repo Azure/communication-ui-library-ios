@@ -107,8 +107,9 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     }
 
     private func getAccessibilityLabel(participantModel: ParticipantInfoModel) -> String {
-        let status = localizationProvider.getLocalizedString(
-            participantModel.isSpeaking ? .speaking : participantModel.isMuted ? .muted : .unmuted)
+        let status = isHold ? getOnHoldString() :
+        localizationProvider.getLocalizedString(participantModel.isSpeaking ? .speaking :
+                                                    participantModel.isMuted ? .muted : .unmuted)
         return "\(participantModel.displayName) \(status)"
     }
 
