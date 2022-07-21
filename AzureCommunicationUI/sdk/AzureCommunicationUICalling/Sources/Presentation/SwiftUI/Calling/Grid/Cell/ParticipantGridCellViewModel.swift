@@ -64,6 +64,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
 
         if self.participantName != participantModel.displayName ||
             self.isMuted != participantModel.isMuted ||
+            self.isSpeaking != participantModel.isSpeaking ||
             self.isHold != (participantModel.status == .hold) {
             self.accessibilityLabel = getAccessibilityLabel(participantModel: participantModel)
         }
