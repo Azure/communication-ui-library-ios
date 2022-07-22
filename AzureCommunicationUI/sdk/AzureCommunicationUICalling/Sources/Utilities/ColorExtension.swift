@@ -31,6 +31,7 @@ enum CompositeColor: String {
     case hangup = "hangupColor"
     case overlay = "overlayColor"
     case onHoldBackground = "onHoldBackground"
+    case textSecondaryColor
 }
 
 extension UIColor {

@@ -50,7 +50,7 @@ class CompositeParticipantsListCell: TableViewCell {
         guard !isHold else {
             let label = Label(style: .body, colorStyle: .secondary)
             label.text = onHoldString
-            label.textColor = StyleProvider.color.mute
+            label.textColor = StyleProvider.color.textSecondaryColor
             label.sizeToFit()
             label.numberOfLines = 0
             return label

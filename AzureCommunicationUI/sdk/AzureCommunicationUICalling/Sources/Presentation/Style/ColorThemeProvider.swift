@@ -38,6 +38,7 @@ class ColorThemeProvider {
     let hangup = UIColor.compositeColor(.hangup)
     let overlay = UIColor.compositeColor(.overlay)
     let onHoldBackground = UIColor.compositeColor(.onHoldBackground)
+    let textSecondaryColor = UIColor.compositeColor(.textSecondaryColor)
 
     init(themeOptions: ThemeOptions?) {
         self.colorSchemeOverride = themeOptions?.colorSchemeOverride ?? .unspecified
