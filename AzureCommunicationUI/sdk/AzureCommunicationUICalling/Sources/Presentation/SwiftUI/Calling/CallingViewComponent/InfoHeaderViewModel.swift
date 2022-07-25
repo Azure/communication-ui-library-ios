@@ -76,7 +76,7 @@ class InfoHeaderViewModel: ObservableObject {
         isHoldingCall(callingState: callingState)
 
         callingStatus = callingState.status
-        let newDisplayInfoHeaderValue = callingStatus != .inLobby
+        let newDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingStatus)
         if isVoiceOverEnabled && newDisplayInfoHeaderValue != shouldDisplayInfoHeader {
             updateInfoHeaderAvailability()
         }
@@ -91,7 +91,6 @@ class InfoHeaderViewModel: ObservableObject {
     private func isHoldingCall(callingState: CallingState) {
         guard callingState.status == .localHold,
               callingStatus != callingState.status else {
-
             return
         }
         if isInfoHeaderDisplayed {
@@ -135,7 +134,7 @@ class InfoHeaderViewModel: ObservableObject {
     }
 
     private func updateInfoHeaderAvailability() {
-        shouldDisplayInfoHeader = callingStatus != .inLobby
+        shouldDisplayInfoHeader = shouldDisplayInfoHeader(for: callingStatus)
         isVoiceOverEnabled = accessibilityProvider.isVoiceOverEnabled
         // invalidating timer is required for setting the next timer and when VoiceOver is enabled
         infoHeaderDismissTimer?.invalidate()
@@ -144,6 +143,10 @@ class InfoHeaderViewModel: ObservableObject {
         } else if shouldDisplayInfoHeader {
             displayWithTimer()
         }
+    }
+
+    private func shouldDisplayInfoHeader(for callingStatus: CallingStatus) -> Bool {
+        return callingStatus != .inLobby && callingStatus != .localHold
     }
 }
 
