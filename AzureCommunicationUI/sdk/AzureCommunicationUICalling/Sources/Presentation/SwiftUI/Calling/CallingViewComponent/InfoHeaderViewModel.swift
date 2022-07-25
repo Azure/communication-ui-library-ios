@@ -18,7 +18,6 @@ class InfoHeaderViewModel: ObservableObject {
     private var infoHeaderDismissTimer: Timer?
     private var participantsCount: Int = 0
     private var callingStatus: CallingStatus = .none
-    private var shouldDisplayInfoHeader: Bool = true
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
@@ -74,10 +73,10 @@ class InfoHeaderViewModel: ObservableObject {
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState) {
         isHoldingCall(callingState: callingState)
-
+        let shouldDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingStatus)
+        let newDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingState.status)
         callingStatus = callingState.status
-        let newDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingStatus)
-        if isVoiceOverEnabled && newDisplayInfoHeaderValue != shouldDisplayInfoHeader {
+        if isVoiceOverEnabled && newDisplayInfoHeaderValue != shouldDisplayInfoHeaderValue {
             updateInfoHeaderAvailability()
         }
         if participantsCount != remoteParticipantsState.participantInfoList.count {
@@ -134,7 +133,7 @@ class InfoHeaderViewModel: ObservableObject {
     }
 
     private func updateInfoHeaderAvailability() {
-        shouldDisplayInfoHeader = shouldDisplayInfoHeader(for: callingStatus)
+        let shouldDisplayInfoHeader = shouldDisplayInfoHeader(for: callingStatus)
         isVoiceOverEnabled = accessibilityProvider.isVoiceOverEnabled
         // invalidating timer is required for setting the next timer and when VoiceOver is enabled
         infoHeaderDismissTimer?.invalidate()
