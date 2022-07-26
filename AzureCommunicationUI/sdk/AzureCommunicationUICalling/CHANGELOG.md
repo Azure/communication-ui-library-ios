@@ -1,5 +1,19 @@
 # Azure Communication UI Calling Release History
 
+## TBA (upcoming release)
+### Bugs Fixed
+- Fixed issue where demo app can't dismiss setting page when in landscape mode. [#280](https://github.com/Azure/communication-ui-library-ios/pull/280)
+- Fixing speaking overly custom colour [#281](https://github.com/Azure/communication-ui-library-ios/pull/281)
+- Fixed the one UITest failure reported in app center about setting text in acs text field [#282](https://github.com/Azure/communication-ui-library-ios/pull/282)
+- Fixed issue in uitest that app is not able to fully dismiss the settings page [#293](https://github.com/Azure/communication-ui-library-ios/pull/293)
+- Fixed Participant Drawer Height Calculation [#297](https://github.com/Azure/communication-ui-library-ios/pull/297)
+### Other Changes
+- Update PR template [#283](https://github.com/Azure/communication-ui-library-ios/pull/283)
+- Unit tests retain cycle fix [#284](https://github.com/Azure/communication-ui-library-ios/pull/284)
+- Convert redux actions to enumerated types [#289](https://github.com/Azure/communication-ui-library-ios/pull/289)
+- Folders rename [#291](https://github.com/Azure/communication-ui-library-ios/pull/291)
+- README update [#292](https://github.com/Azure/communication-ui-library-ios/pull/292)
+ 
 ## 1.0.0 (2022-06-21)
 ### Bugs Fixed
 - Fixed issue where header was still selectable with voiceover on and overlay visible. [#256](https://github.com/Azure/communication-ui-library-ios/pull/256)
