@@ -15,6 +15,8 @@
 - Convert redux actions to enumerated types [#289](https://github.com/Azure/communication-ui-library-ios/pull/289)
 - Folders rename [#291](https://github.com/Azure/communication-ui-library-ios/pull/291)
 - README update [#292](https://github.com/Azure/communication-ui-library-ios/pull/292)
+- Update the version to GA for CallingSDK [#298](https://github.com/Azure/communication-ui-library-ios/pull/298)
+- Update README.md with links to quickstart and sample [#294](https://github.com/Azure/communication-ui-library-ios/pull/294)
  
 ## 1.0.0 (2022-06-21)
 ### Bugs Fixed
