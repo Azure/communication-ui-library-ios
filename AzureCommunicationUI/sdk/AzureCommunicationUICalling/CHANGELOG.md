@@ -2,21 +2,13 @@
 
 ## TBA (upcoming release)
 ### Bugs Fixed
-- Fixed issue where demo app can't dismiss setting page when in landscape mode. [#280](https://github.com/Azure/communication-ui-library-ios/pull/280)
-- Fixing speaking overly custom colour [#281](https://github.com/Azure/communication-ui-library-ios/pull/281)
-- Fixed the one UITest failure reported in app center about setting text in acs text field [#282](https://github.com/Azure/communication-ui-library-ios/pull/282)
-- Fixed issue in uitest that app is not able to fully dismiss the settings page [#293](https://github.com/Azure/communication-ui-library-ios/pull/293)
-- Fixed Participant Drawer Height Calculation [#297](https://github.com/Azure/communication-ui-library-ios/pull/297)
-- Fixed VoiceOver functionality for InfoHeaderView [#296](https://github.com/Azure/communication-ui-library-ios/pull/296)
+- Fixed an issue where demo app can't dismiss setting page when in landscape mode. [#280](https://github.com/Azure/communication-ui-library-ios/pull/280)
+- Fixed speaking overlay custom colour not showing up [#281](https://github.com/Azure/communication-ui-library-ios/pull/281)
+- Fixed participant drawer height not being calculated correctly [#297](https://github.com/Azure/communication-ui-library-ios/pull/297)
+- Fixed InfoHeaderView not showing up when VoiceOver is on [#296](https://github.com/Azure/communication-ui-library-ios/pull/296)
 
 ### Other Changes
-- Update PR template [#283](https://github.com/Azure/communication-ui-library-ios/pull/283)
-- Unit tests retain cycle fix [#284](https://github.com/Azure/communication-ui-library-ios/pull/284)
-- Convert redux actions to enumerated types [#289](https://github.com/Azure/communication-ui-library-ios/pull/289)
-- Folders rename [#291](https://github.com/Azure/communication-ui-library-ios/pull/291)
-- README update [#292](https://github.com/Azure/communication-ui-library-ios/pull/292)
-- Update the version to GA for CallingSDK [#298](https://github.com/Azure/communication-ui-library-ios/pull/298)
-- Update README.md with links to quickstart and sample [#294](https://github.com/Azure/communication-ui-library-ios/pull/294)
+- Updated CallingSDK's version to GA in manual installation guide [#298](https://github.com/Azure/communication-ui-library-ios/pull/298)
  
 ## 1.0.0 (2022-06-21)
 ### Bugs Fixed
