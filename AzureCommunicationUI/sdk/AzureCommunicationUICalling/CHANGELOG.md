@@ -7,6 +7,8 @@
 - Fixed the one UITest failure reported in app center about setting text in acs text field [#282](https://github.com/Azure/communication-ui-library-ios/pull/282)
 - Fixed issue in uitest that app is not able to fully dismiss the settings page [#293](https://github.com/Azure/communication-ui-library-ios/pull/293)
 - Fixed Participant Drawer Height Calculation [#297](https://github.com/Azure/communication-ui-library-ios/pull/297)
+- Fixed VoiceOver functionality for InfoHeaderView [#296](https://github.com/Azure/communication-ui-library-ios/pull/296)
+
 ### Other Changes
 - Update PR template [#283](https://github.com/Azure/communication-ui-library-ios/pull/283)
 - Unit tests retain cycle fix [#284](https://github.com/Azure/communication-ui-library-ios/pull/284)
