@@ -18,7 +18,6 @@ class InfoHeaderViewModel: ObservableObject {
     private var infoHeaderDismissTimer: Timer?
     private var participantsCount: Int = 0
     private var callingStatus: CallingStatus = .none
-    private var shouldDisplayInfoHeader: Bool = true
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
@@ -74,10 +73,10 @@ class InfoHeaderViewModel: ObservableObject {
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState) {
         isHoldingCall(callingState: callingState)
-
+        let shouldDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingStatus)
+        let newDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingState.status)
         callingStatus = callingState.status
-        let newDisplayInfoHeaderValue = callingStatus != .inLobby
-        if isVoiceOverEnabled && newDisplayInfoHeaderValue != shouldDisplayInfoHeader {
+        if isVoiceOverEnabled && newDisplayInfoHeaderValue != shouldDisplayInfoHeaderValue {
             updateInfoHeaderAvailability()
         }
         if participantsCount != remoteParticipantsState.participantInfoList.count {
@@ -91,7 +90,6 @@ class InfoHeaderViewModel: ObservableObject {
     private func isHoldingCall(callingState: CallingState) {
         guard callingState.status == .localHold,
               callingStatus != callingState.status else {
-
             return
         }
         if isInfoHeaderDisplayed {
@@ -135,7 +133,7 @@ class InfoHeaderViewModel: ObservableObject {
     }
 
     private func updateInfoHeaderAvailability() {
-        shouldDisplayInfoHeader = callingStatus != .inLobby
+        let shouldDisplayInfoHeader = shouldDisplayInfoHeader(for: callingStatus)
         isVoiceOverEnabled = accessibilityProvider.isVoiceOverEnabled
         // invalidating timer is required for setting the next timer and when VoiceOver is enabled
         infoHeaderDismissTimer?.invalidate()
@@ -144,6 +142,10 @@ class InfoHeaderViewModel: ObservableObject {
         } else if shouldDisplayInfoHeader {
             displayWithTimer()
         }
+    }
+
+    private func shouldDisplayInfoHeader(for callingStatus: CallingStatus) -> Bool {
+        return callingStatus != .inLobby && callingStatus != .localHold
     }
 }
 
