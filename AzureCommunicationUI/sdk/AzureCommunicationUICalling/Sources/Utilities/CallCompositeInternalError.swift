@@ -58,25 +58,16 @@ enum CallCompositeInternalError: Error, Equatable {
 extension CallCompositeInternalError {
     static func == (lhs: CallCompositeInternalError, rhs: CallCompositeInternalError) -> Bool {
         switch(lhs, rhs) {
-        case (.deviceManagerFailed, .deviceManagerFailed):
-            return true
-        case (.callTokenFailed, .callTokenFailed):
-            return true
-        case (.callJoinFailed, .callJoinFailed):
-            return true
-        case (.callEndFailed, .callEndFailed):
-            return true
-        case (.callHoldFailed, .callHoldFailed):
-            return true
-        case (.callResumeFailed, .callResumeFailed):
-            return true
-        case (.callEvicted, .callEvicted):
-            return true
-        case (.callDenied, .callDenied):
-            return true
-        case (.cameraSwitchFailed, .cameraSwitchFailed):
-            return true
-        case (.cameraOnFailed, .cameraOnFailed):
+        case (.deviceManagerFailed, .deviceManagerFailed),
+            (.callTokenFailed, .callTokenFailed),
+            (.callJoinFailed, .callJoinFailed),
+            (.callEndFailed, .callEndFailed),
+            (.callHoldFailed, .callHoldFailed),
+            (.callResumeFailed, .callResumeFailed),
+            (.callEvicted, .callEvicted),
+            (.callDenied, .callDenied),
+            (.cameraSwitchFailed, .cameraSwitchFailed),
+            (.cameraOnFailed, .cameraOnFailed):
             return true
         default:
             return false
