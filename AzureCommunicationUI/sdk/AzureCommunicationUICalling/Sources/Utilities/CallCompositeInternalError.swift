@@ -5,7 +5,8 @@
 
 import Foundation
 
-enum CallCompositeInternalError: String, Error, Equatable {
+enum CallCompositeInternalError: Error, Equatable {
+    case deviceManagerFailed(Error?)
     case callTokenFailed
     case callJoinFailed
     case callEndFailed
@@ -18,6 +19,8 @@ enum CallCompositeInternalError: String, Error, Equatable {
 
     func toCallCompositeErrorCode() -> String? {
         switch self {
+        case .deviceManagerFailed:
+            return CallCompositeErrorCode.unknownError
         case .callTokenFailed:
             return CallCompositeErrorCode.tokenExpired
         case .callJoinFailed:
@@ -36,7 +39,8 @@ enum CallCompositeInternalError: String, Error, Equatable {
 
     func isFatalError() -> Bool {
         switch self {
-        case .callTokenFailed,
+        case .deviceManagerFailed,
+                .callTokenFailed,
                 .callJoinFailed,
                 .callEndFailed:
             return true
@@ -46,6 +50,35 @@ enum CallCompositeInternalError: String, Error, Equatable {
                 .callDenied,
                 .cameraSwitchFailed,
                 .cameraOnFailed:
+            return false
+        }
+    }
+}
+
+extension CallCompositeInternalError {
+    static func == (lhs: CallCompositeInternalError, rhs: CallCompositeInternalError) -> Bool {
+        switch(lhs, rhs) {
+        case (.deviceManagerFailed, .deviceManagerFailed):
+            return true
+        case (.callTokenFailed, .callTokenFailed):
+            return true
+        case (.callJoinFailed, .callJoinFailed):
+            return true
+        case (.callEndFailed, .callEndFailed):
+            return true
+        case (.callHoldFailed, .callHoldFailed):
+            return true
+        case (.callResumeFailed, .callResumeFailed):
+            return true
+        case (.callEvicted, .callEvicted):
+            return true
+        case (.callDenied, .callDenied):
+            return true
+        case (.cameraSwitchFailed, .cameraSwitchFailed):
+            return true
+        case (.cameraOnFailed, .cameraOnFailed):
+            return true
+        default:
             return false
         }
     }
