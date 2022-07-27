@@ -42,7 +42,7 @@ If you prefer importing Mobile UI Library as an Embedded Framework to your proje
 
 ### Quick Sample
 
-Replace `<GROUP_CALL_ID>` with your group id for your call, `<DISPLAY_NAME>` with your name, and `<USER_ACCESS_TOKEN>` with your token.
+Replace `<GROUP_CALL_ID>` with your group id for your call, `<DISPLAY_NAME>` with your name, and `<USER_ACCESS_TOKEN>` with your token. For full instructions check out our [quickstart](https://docs.microsoft.com/azure/communication-services/quickstarts/ui-library/get-started-composites?tabs=kotlin&pivots=platform-ios) or get the completed [sample](https://github.com/Azure-Samples/communication-services-ios-quickstarts/tree/main/ui-library-quick-start).
 
 ```swift
 let callCompositeOptions = CallCompositeOptions()
