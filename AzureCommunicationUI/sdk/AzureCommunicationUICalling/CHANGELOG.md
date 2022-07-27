@@ -1,5 +1,15 @@
 # Azure Communication UI Calling Release History
 
+## TBA (upcoming release)
+### Bugs Fixed
+- Fixed an issue where demo app can't dismiss setting page when in landscape mode. [#280](https://github.com/Azure/communication-ui-library-ios/pull/280)
+- Fixed an issue where speaking overlay custom colour did not show up properly [#281](https://github.com/Azure/communication-ui-library-ios/pull/281)
+- Fixed an issue where participant drawer height was not calculated correctly [#297](https://github.com/Azure/communication-ui-library-ios/pull/297)
+- Fixed an issue where InfoHeaderView did not show up when VoiceOver is on [#296](https://github.com/Azure/communication-ui-library-ios/pull/296)
+
+### Other Changes
+- Updated CallingSDK's version to GA in manual installation guide [#298](https://github.com/Azure/communication-ui-library-ios/pull/298)
+ 
 ## 1.0.0 (2022-06-21)
 ### Bugs Fixed
 - Fixed issue where header was still selectable with voiceover on and overlay visible. [#256](https://github.com/Azure/communication-ui-library-ios/pull/256)
