@@ -30,11 +30,13 @@ public class CallComposite {
     private var audioSessionManager: AudioSessionManagerProtocol?
     private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
     private var avatarViewManager: AvatarViewManagerProtocol?
+    internal let dependencyContainer: DependencyContainer
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
         events = Events()
+        dependencyContainer = DependencyContainer()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
     }
@@ -45,7 +47,6 @@ public class CallComposite {
 
     private func launch(_ callConfiguration: CallConfiguration,
                         localOptions: LocalOptions?) {
-        let dependencyContainer = DependencyContainer()
         logger = dependencyContainer.resolve() as Logger
         logger?.debug("launch composite experience")
 

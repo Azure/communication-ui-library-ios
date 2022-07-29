@@ -204,6 +204,13 @@ extension SwiftUIDemoView {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
         }
+
+        #if MOCK_CALLING
+        if callComposite.getCallingSDKWrapper() != nil {
+            print("ACCESS TO CALLING SDK WRAPPER")
+        }
+
+        #endif
     }
 
     private func getTokenCredential() throws -> CommunicationTokenCredential {

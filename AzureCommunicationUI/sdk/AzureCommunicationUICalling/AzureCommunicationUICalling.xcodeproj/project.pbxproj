@@ -97,6 +97,9 @@
 		1FEA2A09285271F3006A6736 /* CallCompositeError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F94DAF42677D48400691D1E /* CallCompositeError.swift */; };
 		1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */; };
 		1FFEA01426A68D0D00E90816 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEA01326A68D0D00E90816 /* FontExtension.swift */; };
+		21B6D107289447FA000D6529 /* VideoViewManager.mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6D106289447FA000D6529 /* VideoViewManager.mock.swift */; };
+		21B6D109289451BE000D6529 /* CallCompositeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6D108289451BE000D6529 /* CallCompositeExtension.swift */; };
+		21B6D10B2894538E000D6529 /* CallingSDKWrapper.mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21B6D10A2894538E000D6529 /* CallingSDKWrapper.mock.swift */; };
 		337789566FB3398301666ADF /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC5A1FE3C2622411DFF98147 /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework */; };
 		500C0F1F2847DE18000BA2DC /* RemoteOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500C0F1E2847DE18000BA2DC /* RemoteOptions.swift */; };
 		500C0F212847E30E000BA2DC /* RemoteOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500C0F202847E30E000BA2DC /* RemoteOptionsTests.swift */; };
@@ -345,6 +348,11 @@
 		1FE1BE7E26FE38C9000A8D18 /* CallCompositeInternalError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeInternalError.swift; sourceTree = "<group>"; };
 		1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoiningCallActivityView.swift; sourceTree = "<group>"; };
 		1FFEA01326A68D0D00E90816 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
+		21B6D10428943BB7000D6529 /* LibConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LibConfig.xcconfig; sourceTree = "<group>"; };
+		21B6D106289447FA000D6529 /* VideoViewManager.mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoViewManager.mock.swift; sourceTree = "<group>"; };
+		21B6D108289451BE000D6529 /* CallCompositeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeExtension.swift; sourceTree = "<group>"; };
+		21B6D10A2894538E000D6529 /* CallingSDKWrapper.mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKWrapper.mock.swift; sourceTree = "<group>"; };
+		21B6D1122894A3A2000D6529 /* MockConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MockConfig.xcconfig; sourceTree = "<group>"; };
 		500C0F1E2847DE18000BA2DC /* RemoteOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteOptions.swift; sourceTree = "<group>"; };
 		500C0F202847E30E000BA2DC /* RemoteOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteOptionsTests.swift; sourceTree = "<group>"; };
 		50137D0526A7479C00AB843E /* EnvironmentValuesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentValuesExtension.swift; sourceTree = "<group>"; };
@@ -895,6 +903,17 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		21B6D1052894477A000D6529 /* Mocking */ = {
+			isa = PBXGroup;
+			children = (
+				21B6D106289447FA000D6529 /* VideoViewManager.mock.swift */,
+				21B6D10A2894538E000D6529 /* CallingSDKWrapper.mock.swift */,
+				21B6D108289451BE000D6529 /* CallCompositeExtension.swift */,
+				21B6D1122894A3A2000D6529 /* MockConfig.xcconfig */,
+			);
+			path = Mocking;
+			sourceTree = "<group>";
+		};
 		503E361A26CC2CFE00158CB4 /* Factories */ = {
 			isa = PBXGroup;
 			children = (
@@ -1130,8 +1149,10 @@
 				1F2BED862631EB5100D98266 /* Service */,
 				1F6470AA2639FE560008B9E9 /* Utilities */,
 				505460EB27BAC6E900040467 /* Localization */,
+				21B6D1052894477A000D6529 /* Mocking */,
 				A8659FC92602A22000C807DE /* Info.plist */,
 				1FC308432668166C007EC537 /* Assets.xcassets */,
+				21B6D10428943BB7000D6529 /* LibConfig.xcconfig */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -1631,10 +1652,12 @@
 				503F4B6D2705065700C17DA6 /* BannerTextView.swift in Sources */,
 				1F94DAF326772B3C00691D1E /* UIWindowExtension.swift in Sources */,
 				88701EB8274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift in Sources */,
+				21B6D10B2894538E000D6529 /* CallingSDKWrapper.mock.swift in Sources */,
 				1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
 				1B70D52827191073007CC933 /* DeviceExtension.swift in Sources */,
+				21B6D107289447FA000D6529 /* VideoViewManager.mock.swift in Sources */,
 				FA94AF3F27D68DFD001063A6 /* AccessibilityProvider.swift in Sources */,
 				881D8F7427FCA6B3008EC897 /* AvatarViewManager.swift in Sources */,
 				1BAD44BC283DAF2100C9E6A9 /* DraggableLocalVideoView.swift in Sources */,
@@ -1670,6 +1693,7 @@
 				50137D0626A7479C00AB843E /* EnvironmentValuesExtension.swift in Sources */,
 				1FD299642723345B0084B9ED /* DefaultLogger.swift in Sources */,
 				1FE1BE7F26FE38C9000A8D18 /* CallCompositeInternalError.swift in Sources */,
+				21B6D109289451BE000D6529 /* CallCompositeExtension.swift in Sources */,
 				985DF374269D096000CFDA55 /* SetupControlBarView.swift in Sources */,
 				1FA24BAD2666F0CC00B4A080 /* ColorThemeProvider.swift in Sources */,
 				A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */,
@@ -1839,6 +1863,7 @@
 		};
 		A8659FD72602A22000C807DE /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 21B6D10428943BB7000D6529 /* LibConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;

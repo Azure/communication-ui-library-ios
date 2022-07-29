@@ -3,6 +3,9 @@
 //  Licensed under the MIT License.
 //
 
+// Default
+EXCLUDED_SOURCE_FILE_NAMES = */Mocking/*
+
 // Environment - override by creating file
 #include? "EnvConfig.xcconfig"
 

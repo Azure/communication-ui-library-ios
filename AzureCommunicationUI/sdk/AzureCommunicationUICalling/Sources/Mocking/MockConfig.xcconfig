@@ -1,0 +1,10 @@
+//
+//  Copyright (c) Microsoft Corporation. All rights reserved.
+//  Licensed under the MIT License.
+//
+
+OTHER_SWIFT_FLAGS = $(inherited) -D MOCK_CALLING
+MOCKING_FILES = */Mocking/*
+MOCKING_REPLACED_FILES = VideoViewManager.swift CallingSDKWrapper.swift
+INCLUDED_SOURCE_FILE_NAMES = $(MOCKING_FILES)
+EXCLUDED_SOURCE_FILE_NAMES = $(MOCKING_REPLACED_FILES)

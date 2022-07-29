@@ -33,7 +33,7 @@
 		A8C69FC02728AE1C00143DB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C69FBE2728AE1C00143DB7 /* LaunchScreen.storyboard */; };
 		A8FB819C272A082B00AA0930 /* DemoInputTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */; };
 		FA7B53EC282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */; };
-		FAA448A0282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; };
+		FAA448A0282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		FAA448A1282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FACEE494287364F4001D62BE /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACEE493287364F4001D62BE /* AccessibilityIdentifier.swift */; };
 /* End PBXBuildFile section */
@@ -75,6 +75,7 @@
 		1F8881CC279B456E001427F0 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		1FBA6B1B27B4F61A00FF3835 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FEC635827588B5600EA746B /* AppConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = AppConfig.xcconfig; sourceTree = "<group>"; };
+		21FD168B28A2F54B00ADFC90 /* MockConfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = MockConfig.xcconfig; sourceTree = "<group>"; };
 		2EA3EA0A623669E62A5E601F /* Pods-AzureCommunicationUIDemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp/Pods-AzureCommunicationUIDemoApp.release.xcconfig"; sourceTree = "<group>"; };
 		5027C1C52821A07500DC7131 /* AccessibilityId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityId.swift; sourceTree = "<group>"; };
 		5075FE9C27FFA87200136B34 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -166,6 +167,14 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		21FD168A28A2F52100ADFC90 /* Mocking */ = {
+			isa = PBXGroup;
+			children = (
+				21FD168B28A2F54B00ADFC90 /* MockConfig.xcconfig */,
+			);
+			path = Mocking;
+			sourceTree = "<group>";
+		};
 		5075FE9B27FFA84B00136B34 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +223,7 @@
 				1F8881CB279B4521001427F0 /* Utilities */,
 				A8FB819D272A0B3500AA0930 /* Views */,
 				5075FE9B27FFA84B00136B34 /* Localization */,
+				21FD168A28A2F52100ADFC90 /* Mocking */,
 				A8849E522732FFA10049FB1A /* AuthenticationHelper.swift */,
 				FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */,
 				A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */,
@@ -284,9 +294,9 @@
 				1FF252D427B5E44E006A113E /* Run SwiftLint */,
 				A8C69FAC2728AE1A00143DB7 /* Sources */,
 				A8C69FAD2728AE1A00143DB7 /* Frameworks */,
-				A8C69FAE2728AE1A00143DB7 /* Resources */,
 				4CA6E42B5D6299A63290DA44 /* [CP] Embed Pods Frameworks */,
 				FAA448A2282585F700BD0DC0 /* Embed Frameworks */,
+				A8C69FAE2728AE1A00143DB7 /* Resources */,
 			);
 			buildRules = (
 			);

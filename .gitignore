@@ -96,3 +96,6 @@ iOSInjectionProject/
 #AppCode
 AzureCommunicationUI/.idea
 AzureCommunicationUI/AzureCommunicationUIDemoApp/Sources/EnvConfig.xcconfig
+AzureCommunicationUI/AzureCommunicationUIDemoApp/Sources/BuildTimeGenerated.xcconfig
+AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/EnvConfig.xcconfig
+AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/BuildTimeGenerated.xcconfig
