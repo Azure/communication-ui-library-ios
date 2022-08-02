@@ -250,10 +250,10 @@ extension CallingSDKWrapper {
                 guard let self = self else {
                     return
                 }
-                if let error = error {
-                    self.logger.error("Failed to get device manager instance")
-                    return promise(.failure(error))
+                guard let deviceManager = deviceManager, error == nil else {
+                    return promise(.failure(CallCompositeInternalError.deviceManagerFailed(error)))
                 }
+
                 self.deviceManager = deviceManager
                 self.deviceManager?.delegate = self
                 return promise(.success(()))
