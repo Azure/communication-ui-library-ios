@@ -62,7 +62,10 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
                                                  videoStreamId: videoViewModel.videoStreamId)
         }
 
-        if self.participantName != participantModel.displayName || self.isMuted != participantModel.isMuted {
+        if self.participantName != participantModel.displayName ||
+            self.isMuted != participantModel.isMuted ||
+            self.isSpeaking != participantModel.isSpeaking ||
+            self.isHold != (participantModel.status == .hold) {
             self.accessibilityLabel = getAccessibilityLabel(participantModel: participantModel)
         }
 
@@ -107,8 +110,9 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     }
 
     private func getAccessibilityLabel(participantModel: ParticipantInfoModel) -> String {
-        let status = localizationProvider.getLocalizedString(
-            participantModel.isSpeaking ? .speaking : participantModel.isMuted ? .muted : .unmuted)
+        let status = participantModel.status == .hold ? getOnHoldString() :
+        localizationProvider.getLocalizedString(participantModel.isSpeaking ? .speaking :
+                                                    participantModel.isMuted ? .muted : .unmuted)
         return "\(participantModel.displayName) \(status)"
     }
 

@@ -8,8 +8,15 @@ extension CallingMiddlewareHandler {
                 dispatch: @escaping ActionDispatch) {
         let action: ErrorAction
         if let error = error as? CallCompositeInternalError {
-            action = .fatalErrorUpdated(internalError: error,
-                                                   error: nil)
+            switch error {
+            case .deviceManagerFailed(let internalError):
+                action = .fatalErrorUpdated(internalError: error,
+                                                       error: internalError)
+            default:
+                action = .fatalErrorUpdated(internalError: error,
+                                                       error: nil)
+            }
+
         } else {
             action = .fatalErrorUpdated(internalError: errorType,
                                                    error: error)
