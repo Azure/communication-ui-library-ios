@@ -54,18 +54,12 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         }
     }
 
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        resizeDrawer()
-    }
-
     func dismissDrawer(animated: Bool = false) {
         self.controller?.dismiss(animated: animated)
     }
 
     func updateDrawerList(items: [T]) {
         self.items = items
-        resizeDrawer()
     }
 
     private func showDrawerView() {
@@ -152,22 +146,10 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
 
     private func getTotalCellsHeight(tableView: UITableView,
                                      numberOfItems: Int) -> CGFloat {
-        // If we can't get all table cell heights,
-        // fall back to assumption all cells are the same height.
-        guard tableView.visibleCells.count == numberOfItems else {
-            let defaultCellHeight: CGFloat = 44
-            var firstCellHeight: CGFloat = defaultCellHeight
-            for cell in tableView.visibleCells {
-                firstCellHeight = cell.bounds.height
-                break
+        return (0..<tableView.numberOfSections).flatMap { section in
+            return (0..<tableView.numberOfRows(inSection: section)).map { row in
+                return IndexPath(row: row, section: section)
             }
-            return firstCellHeight * CGFloat(numberOfItems)
-        }
-
-        var totalCellsHeight: CGFloat = 0
-        for cell in tableView.visibleCells {
-            totalCellsHeight += cell.bounds.height
-        }
-        return totalCellsHeight
+        }.map { index in return tableView.rectForRow(at: index).height }.reduce(0, +)
     }
 }
