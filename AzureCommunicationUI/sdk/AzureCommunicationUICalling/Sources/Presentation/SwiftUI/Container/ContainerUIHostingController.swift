@@ -76,7 +76,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
                         // the same time with the steup view navigation.
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                             if UIDevice.current.orientation != .portrait {
-                                UIDevice.current.rotateTo(oritation: .portrait)
+                                UIDevice.current.rotateTo(orientation: .portrait)
                             }
                             UIDevice.current.endGeneratingDeviceOrientationNotifications()
                         }
