@@ -113,7 +113,9 @@ struct SwiftUIDemoView: View {
 
     var startExperienceButton: some View {
         Button("Start Experience") {
-            startCallComposite()
+            Task { @MainActor in
+                await startCallComposite()
+            }
         }
         .buttonStyle(DemoButtonStyle())
         .disabled(isStartExperienceDisabled)
@@ -137,7 +139,7 @@ struct SwiftUIDemoView: View {
 }
 
 extension SwiftUIDemoView {
-    func startCallComposite() {
+    func startCallComposite() async {
         let link = getMeetingLink()
 
         var localizationConfig: LocalizationOptions?
@@ -166,7 +168,10 @@ extension SwiftUIDemoView {
             self.onRemoteParticipantJoined(to: composite,
                                            identifiers: ids)
         }
-        callComposite.events.onError = onError
+
+        callComposite.events.onError = { error in
+            Task { @MainActor in onError(error) }
+        }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
@@ -174,7 +179,7 @@ extension SwiftUIDemoView {
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
         let localOptions = LocalOptions(participantViewData: participantViewData)
-        if let credential = try? getTokenCredential() {
+        if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
@@ -206,7 +211,7 @@ extension SwiftUIDemoView {
         }
     }
 
-    private func getTokenCredential() throws -> CommunicationTokenCredential {
+    private func getTokenCredential() async throws -> CommunicationTokenCredential {
         switch envConfigSubject.selectedAcsTokenType {
         case .token:
             let acsToken = envConfigSubject.useExpiredToken ?
@@ -219,7 +224,8 @@ extension SwiftUIDemoView {
         case .tokenUrl:
             if let url = URL(string: envConfigSubject.acsTokenUrl) {
                 let tokenRefresher = AuthenticationHelper.getCommunicationToken(tokenUrl: url)
-                let communicationTokenRefreshOptions = CommunicationTokenRefreshOptions(initialToken: nil,
+                let initialToken = await TokenManager().fetchInitialToken(with: tokenRefresher)
+                let communicationTokenRefreshOptions = CommunicationTokenRefreshOptions(initialToken: initialToken,
                                                                                         refreshProactively: true,
                                                                                         tokenRefresher: tokenRefresher)
                 if let credential = try? CommunicationTokenCredential(withOptions: communicationTokenRefreshOptions) {
