@@ -7,6 +7,7 @@ import Foundation
 import Combine
 import AzureCommunicationCalling
 
+// swiftlint:disable all
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -333,7 +334,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }.eraseToAnyPublisher()
     }
 
-    func unumuteLocalMic() async throws {
+    func unmuteLocalMic() async throws {
         guard let call = call else {
             return
         }
@@ -426,6 +427,7 @@ extension CallingSDKWrapper {
             callClient = client
             let deviceManager = try await client.getDeviceManager()
             deviceManager.delegate = self
+            self.deviceManager = deviceManager
         } catch {
             throw CallCompositeInternalError.deviceManagerFailed(error)
         }
