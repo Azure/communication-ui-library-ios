@@ -54,48 +54,66 @@ class CallingService: NSObject, CallingServiceProtocol {
     }
 
     func setupCall() -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.setupCall()
+        asyncToFuture(task: callingSDKWrapper.setupCall)
     }
 
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.startCall(
-            isCameraPreferred: isCameraPreferred,
-            isAudioPreferred: isAudioPreferred)
+        asyncToFuture { [self] in
+            try await callingSDKWrapper.startCall(
+                isCameraPreferred: isCameraPreferred,
+                isAudioPreferred: isAudioPreferred
+            )
+        }
     }
 
     func endCall() -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.endCall()
+        asyncToFuture(task: callingSDKWrapper.endCall)
     }
 
     func requestCameraPreviewOn() -> AnyPublisher<String, Error> {
-        return callingSDKWrapper.startPreviewVideoStream()
+        asyncToFuture(task: callingSDKWrapper.startPreviewVideoStream)
     }
 
     func startLocalVideoStream() -> AnyPublisher<String, Error> {
-        return callingSDKWrapper.startCallLocalVideoStream()
+        asyncToFuture(task: callingSDKWrapper.startCallLocalVideoStream)
     }
 
     func stopLocalVideoStream() -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.stopLocalVideoStream()
+        asyncToFuture(task: callingSDKWrapper.stopLocalVideoStream)
     }
 
     func switchCamera() -> AnyPublisher<CameraDevice, Error> {
-        return callingSDKWrapper.switchCamera()
+        asyncToFuture(task: callingSDKWrapper.switchCamera)
     }
 
     func muteLocalMic() -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.muteLocalMic()
+        asyncToFuture(task: callingSDKWrapper.muteLocalMic)
     }
 
     func unmuteLocalMic() -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.unmuteLocalMic()
+        asyncToFuture(task: callingSDKWrapper.unmuteLocalMic)
     }
 
     func holdCall() -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.holdCall()
+        asyncToFuture(task: callingSDKWrapper.holdCall)
     }
 
     func resumeCall() -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.resumeCall()
+        asyncToFuture(task: callingSDKWrapper.resumeCall)
+    }
+}
+
+extension CallingService {
+    private func asyncToFuture<Output>(task: @escaping () async throws -> Output) -> AnyPublisher<Output, Error> {
+        Future { promise in
+            Task {
+                do {
+                    promise(.success(try await task()))
+                } catch {
+                    promise(.failure(error))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
     }
 }
