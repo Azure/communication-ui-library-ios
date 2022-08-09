@@ -50,7 +50,7 @@ class CompositeParticipantsListCell: TableViewCell {
         guard !isHold else {
             let label = Label(style: .body, colorStyle: .secondary)
             label.text = onHoldString
-            label.textColor = StyleProvider.color.mute
+            label.textColor = StyleProvider.color.textSecondary
             label.sizeToFit()
             label.numberOfLines = 0
             return label
@@ -58,10 +58,10 @@ class CompositeParticipantsListCell: TableViewCell {
         var micImage: UIImage?
         if isMuted {
             micImage = StyleProvider.icon.getUIImage(for: .micOffRegular)?
-                .withTintColor(StyleProvider.color.mute, renderingMode: .alwaysOriginal)
+                .withTintColor(StyleProvider.color.iconSecondary, renderingMode: .alwaysOriginal)
         } else {
             micImage = StyleProvider.icon.getUIImage(for: .micOnRegular)?
-                .withTintColor(StyleProvider.color.mute, renderingMode: .alwaysOriginal)
+                .withTintColor(StyleProvider.color.iconSecondary, renderingMode: .alwaysOriginal)
         }
         return UIImageView(image: micImage)
     }
