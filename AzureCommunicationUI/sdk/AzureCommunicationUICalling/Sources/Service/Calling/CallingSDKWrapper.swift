@@ -37,6 +37,10 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         setupCallClientAndDeviceManager().eraseToAnyPublisher()
     }
 
+    func setupCall() async throws {
+        try await setupCallClientAndDeviceManager()
+    }
+
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) -> AnyPublisher<Void, Error> {
         logger.debug("Reset Subjects in callingEventsHandler")
         callingEventsHandler.setupProperties()
@@ -50,6 +54,18 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                 return self.joinCall(isCameraPreferred: isCameraPreferred,
                                      isAudioPreferred: isAudioPreferred).eraseToAnyPublisher()
             }.eraseToAnyPublisher()
+    }
+
+    func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
+        logger.debug("Reset Subjects in callingEventsHandler")
+        callingEventsHandler.setupProperties()
+        logger.debug( "Starting call")
+        do {
+            try await setupCallAgent()
+        } catch {
+            throw CallCompositeInternalError.callJoinFailed
+        }
+        try await joinCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
     }
 
     func joinCall(isCameraPreferred: Bool, isAudioPreferred: Bool) -> Future<Void, Error> {
@@ -98,6 +114,43 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
     }
 
+    func joinCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
+        logger.debug( "Joining call")
+        let joinCallOptions = JoinCallOptions()
+
+        if isCameraPreferred,
+           let localVideoStream = localVideoStream {
+            let localVideoStreamArray = [localVideoStream]
+            let videoOptions = VideoOptions(localVideoStreams: localVideoStreamArray)
+            joinCallOptions.videoOptions = videoOptions
+        }
+
+        joinCallOptions.audioOptions = AudioOptions()
+        joinCallOptions.audioOptions?.muted = !isAudioPreferred
+
+        var joinLocator: JoinMeetingLocator
+        if callConfiguration.compositeCallType == .groupCall,
+           let groupId = callConfiguration.groupId {
+            joinLocator = GroupCallLocator(groupId: groupId)
+        } else if let meetingLink = callConfiguration.meetingLink {
+            joinLocator = TeamsMeetingLinkLocator(meetingLink: meetingLink)
+        } else {
+            logger.error("Invalid groupID / meeting link")
+            throw CallCompositeInternalError.callJoinFailed
+        }
+
+        let joinedCall = try await callAgent?.join(with: joinLocator, joinCallOptions: joinCallOptions)
+
+        guard let joinedCall = joinedCall else {
+            logger.error( "Join call failed")
+            throw CallCompositeInternalError.callJoinFailed
+        }
+
+        joinedCall.delegate = callingEventsHandler
+        call = joinedCall
+        setupCallRecordingAndTranscriptionFeature()
+    }
+
     func endCall() -> AnyPublisher<Void, Error> {
         Future { promise in
             self.call?.hangUp(options: HangUpOptions()) { (error) in
@@ -109,6 +162,19 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                 promise(.success(()))
             }
         }.eraseToAnyPublisher()
+    }
+
+    func endCall() async throws {
+        guard call != nil else {
+            throw CallCompositeInternalError.callEndFailed
+        }
+        do {
+            try await call?.hangUp(options: HangUpOptions())
+            logger.debug("Call ended successfully")
+        } catch {
+            logger.error( "It was not possible to hangup the call.")
+            throw error
+        }
     }
 
     func getRemoteParticipant(_ identifier: String) -> RemoteParticipant? {
@@ -138,6 +204,11 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             }.eraseToAnyPublisher()
     }
 
+    func startCallLocalVideoStream() async throws -> String {
+        let stream = await getValidLocalVideoStream()
+        return try await startCallVideoStream(stream)
+    }
+
     func stopLocalVideoStream() -> AnyPublisher<Void, Error> {
         Future { promise in
             guard let call = self.call,
@@ -157,6 +228,21 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             }
 
         }.eraseToAnyPublisher()
+    }
+
+    func stopLocalVideoStream() async throws {
+        guard let call = self.call,
+              let videoStream = self.localVideoStream else {
+            logger.debug("Local video stopped successfully without call")
+            return
+        }
+        do {
+            try await call.stopVideo(stream: videoStream)
+            logger.debug("Local video stopped successfully")
+        } catch {
+            logger.error( "Local video failed to stop. \(error)")
+            throw error
+        }
     }
 
     func switchCamera() -> AnyPublisher<CameraDevice, Error> {
@@ -181,11 +267,30 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             }.eraseToAnyPublisher()
     }
 
+    func switchCamera() async throws -> CameraDevice {
+        guard let videoStream = localVideoStream else {
+            let error = CallCompositeInternalError.cameraSwitchFailed
+            logger.error("\(error)")
+            throw error
+        }
+        let currentCamera = videoStream.source
+        let flippedFacing: CameraFacing = currentCamera.cameraFacing == .front ? .back : .front
+
+        let deviceInfo = await getVideoDeviceInfo(flippedFacing)
+        try await change(videoStream, source: deviceInfo)
+        return flippedFacing.toCameraDevice()
+    }
+
     func startPreviewVideoStream() -> AnyPublisher<String, Error> {
         return self.getValidLocalVideoStream()
             .map({ [weak self] _ in
                 return self?.getLocalVideoStreamIdentifier() ?? ""
             }).eraseToAnyPublisher()
+    }
+
+    func startPreviewVideoStream() async throws -> String {
+        _ = await getValidLocalVideoStream()
+        return getLocalVideoStreamIdentifier() ?? ""
     }
 
     func muteLocalMic() -> AnyPublisher<Void, Error> {
@@ -201,6 +306,20 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }.eraseToAnyPublisher()
     }
 
+    func muteLocalMic() async throws {
+        guard let call = call else {
+            return
+        }
+
+        do {
+            try await call.mute()
+        } catch {
+            logger.error("ERROR: It was not possible to mute. \(error)")
+            throw error
+        }
+        logger.debug("Mute successful")
+    }
+
     func unmuteLocalMic() -> AnyPublisher<Void, Error> {
         Future { promise in
             self.call?.unmute { [weak self] (error) in
@@ -212,6 +331,20 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                 promise(.success(()))
             }
         }.eraseToAnyPublisher()
+    }
+
+    func unumuteLocalMic() async throws {
+        guard let call = call else {
+            return
+        }
+
+        do {
+            try await call.unmute()
+        } catch {
+            logger.error("ERROR: It was not possible to unmute. \(error)")
+            throw error
+        }
+        logger.debug("Unmute successful")
     }
 
     func holdCall() -> AnyPublisher<Void, Error> {
@@ -227,11 +360,24 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }.eraseToAnyPublisher()
     }
 
+    func holdCall() async throws {
+        guard let call = call else {
+            return
+        }
+
+        do {
+            try await call.hold()
+            logger.debug("Hold Call successful")
+        } catch {
+            logger.error("ERROR: It was not possible to hold call. \(error)")
+        }
+    }
+
     func resumeCall() -> AnyPublisher<Void, Error> {
         Future { promise in
             self.call?.resume { [weak self] (error) in
                 if error != nil {
-                    self?.logger.error( "ERROR: It was not possible to resume call. \(error!)")
+                    self?.logger.error("ERROR: It was not possible to resume call. \(error!)")
                     return promise(.failure(error!))
                 }
                 self?.logger.debug("Resume Call successful")
@@ -240,6 +386,19 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }.eraseToAnyPublisher()
     }
 
+    func resumeCall() async throws {
+        guard let call = call else {
+            return
+        }
+
+        do {
+            try await call.resume()
+            logger.debug("Resume Call successful")
+        } catch {
+            logger.error( "ERROR: It was not possible to resume call. \(error)")
+            throw error
+        }
+    }
 }
 
 extension CallingSDKWrapper {
@@ -258,6 +417,17 @@ extension CallingSDKWrapper {
                 self.deviceManager?.delegate = self
                 return promise(.success(()))
             })
+        }
+    }
+
+    private func setupCallClientAndDeviceManager() async throws {
+        do {
+            let client = makeCallClient()
+            callClient = client
+            let deviceManager = try await client.getDeviceManager()
+            deviceManager.delegate = self
+        } catch {
+            throw CallCompositeInternalError.deviceManagerFailed(error)
         }
     }
 
@@ -290,6 +460,29 @@ extension CallingSDKWrapper {
         }
     }
 
+    private func setupCallAgent() async throws {
+        guard callAgent == nil else {
+            logger.debug("Reusing call agent")
+            return
+        }
+
+        let options = CallAgentOptions()
+        if let displayName = callConfiguration.displayName {
+            options.displayName = displayName
+        }
+        do {
+            let callAgent = try await callClient?.createCallAgent(
+                userCredential: callConfiguration.credential,
+                options: options
+            )
+            self.logger.debug("Call agent successfully created.")
+            self.callAgent = callAgent
+        } catch {
+            logger.error("It was not possible to create a call agent.")
+            throw error
+        }
+    }
+
     private func makeCallClient() -> CallClient {
         let clientOptions = CallClientOptions()
         let appendingTag = self.callConfiguration.diagnosticConfig.tags
@@ -318,6 +511,23 @@ extension CallingSDKWrapper {
         }
     }
 
+    private func startCallVideoStream(_ videoStream: LocalVideoStream) async throws -> String {
+        guard let call = self.call else {
+            let error = CallCompositeInternalError.cameraOnFailed
+            self.logger.error( "Start call video stream failed")
+            throw error
+        }
+        do {
+            let localVideoStreamId = getLocalVideoStreamIdentifier() ?? ""
+            try await call.startVideo(stream: videoStream)
+            logger.debug("Local video started successfully")
+            return localVideoStreamId
+        } catch {
+            logger.error( "Local video failed to start. \(error)")
+            throw error
+        }
+    }
+
     private func change(_ videoStream: LocalVideoStream, source: VideoDeviceInfo) -> Future<Void, Error> {
         Future { promise in
             DispatchQueue.main.async {
@@ -331,6 +541,17 @@ extension CallingSDKWrapper {
                     promise(.success(()))
                 }
             }
+        }
+    }
+
+    @MainActor
+    private func change(_ videoStream: LocalVideoStream, source: VideoDeviceInfo) async throws {
+        do {
+            try await videoStream.switchSource(camera: source)
+            logger.debug("Local video switched camera successfully")
+        } catch {
+            logger.error( "Local video failed to switch camera. \(error)")
+            throw error
         }
     }
 
@@ -373,6 +594,23 @@ extension CallingSDKWrapper: DeviceManagerDelegate {
         }
     }
 
+    private func getVideoDeviceInfo(_ cameraFacing: CameraFacing) async -> VideoDeviceInfo {
+        // If we have a camera, return the value right away
+        await withCheckedContinuation({ continuation in
+            if let camera = deviceManager?.cameras
+                .first(where: { $0.cameraFacing == cameraFacing }
+                ) {
+                newVideoDeviceAddedHandler = nil
+                return continuation.resume(returning: camera)
+            }
+            newVideoDeviceAddedHandler = { deviceInfo in
+                if deviceInfo.cameraFacing == cameraFacing {
+                    continuation.resume(returning: deviceInfo)
+                }
+            }
+        })
+    }
+
     private func getValidLocalVideoStream() -> AnyPublisher<LocalVideoStream, Error> {
         if let localVideoStream = self.localVideoStream {
             return Future { promise in
@@ -386,5 +624,16 @@ extension CallingSDKWrapper: DeviceManagerDelegate {
                 self?.localVideoStream = videoStream
                 return videoStream
             }).eraseToAnyPublisher()
+    }
+
+    private func getValidLocalVideoStream() async -> LocalVideoStream {
+        if let existingVideoStream = localVideoStream {
+            return existingVideoStream
+        }
+
+        let videoDevice = await getVideoDeviceInfo(.front)
+        let videoStream = LocalVideoStream(camera: videoDevice)
+        localVideoStream = videoStream
+        return videoStream
     }
 }
