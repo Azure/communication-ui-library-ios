@@ -27,5 +27,17 @@ protocol CallingSDKWrapperProtocol {
     func holdCall() -> AnyPublisher<Void, Error>
     func resumeCall() -> AnyPublisher<Void, Error>
 
+    func startPreviewVideoStream() async throws -> String
+    func setupCall() async throws
+    func startCall() async throws
+    func endCall() async throws
+    func startCallLocalVideoStream() async throws -> String
+    func stopLocalVideoStream() async throws
+    func switchCamera() async throws -> CameraDevice
+    func muteLocalMic() async throws
+    func unumuteLocalMic() async throws
+    func holdCall() async throws
+    func resumeCall() async throws
+
     var callingEventsHandler: CallingSDKEventsHandling { get }
 }
