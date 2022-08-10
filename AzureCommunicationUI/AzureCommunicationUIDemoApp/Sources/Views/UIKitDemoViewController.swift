@@ -211,10 +211,9 @@ class UIKitDemoViewController: UIViewController {
             if let url = URL(string: acsTokenUrlTextField.text!) {
                 let tokenRefresher = AuthenticationHelper.getCommunicationToken(tokenUrl: url)
                 let initialToken = await TokenManager().fetchInitialToken(with: tokenRefresher)
-                let refreshOptions = CommunicationTokenRefreshOptions(
-                    initialToken: initialToken,
-                    refreshProactively: true,
-                    tokenRefresher: tokenRefresher)
+                let refreshOptions = CommunicationTokenRefreshOptions(initialToken: initialToken,
+                                                                      refreshProactively: true,
+                                                                      tokenRefresher: tokenRefresher)
                 if let credential = try? CommunicationTokenCredential(withOptions: refreshOptions) {
                     return credential
                 }
@@ -310,9 +309,11 @@ class UIKitDemoViewController: UIViewController {
         present(settingsViewHostingController, animated: true, completion: nil)
     }
 
-    @objc func onStartExperienceBtnPressed() async {
+    @objc func onStartExperienceBtnPressed() {
         let link = self.getMeetingLink()
-        await self.startExperience(with: link)
+        Task { @MainActor in
+            await self.startExperience(with: link)
+        }
     }
 
     private func updateAcsTokenTypeFields() {
