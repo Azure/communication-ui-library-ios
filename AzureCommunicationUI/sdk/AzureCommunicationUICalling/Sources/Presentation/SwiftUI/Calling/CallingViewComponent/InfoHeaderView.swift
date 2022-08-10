@@ -46,7 +46,7 @@ struct InfoHeaderView: View {
                 .font(Fonts.caption1.font)
                 .accessibilityLabel(Text(viewModel.accessibilityLabel))
                 .accessibilitySortPriority(1)
-                .minimumScaleFactor(sizeCategory.isAccessibilityCategory ? 0.1 : 0.75)
+                .minimumScaleFactor(sizeCategory.isAccessibilityCategory ? 0.2 : 0.75)
             Spacer()
             participantListButton
         }

@@ -123,7 +123,7 @@ struct ParticipantTitleView: View {
                 Text(displayName)
                     .font(titleFont)
                     .lineLimit(1)
-                    .minimumScaleFactor(sizeCategory.isAccessibilityCategory ? 0.1 : 0.75)
+                    .minimumScaleFactor(sizeCategory.isAccessibilityCategory ? 0.2 : 0.75)
                     .foregroundColor(Color(StyleProvider.color.onBackground))
             }
             if isMuted && !isHold {
