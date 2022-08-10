@@ -86,20 +86,6 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 handle(error: error, errorType: .callHoldFailed, dispatch: dispatch)
             }
         }
-
-        // No dispatch after success - a common occurrence
-//        callingService.holdCall()
-//            .sink(receiveCompletion: { [weak self] completion in
-//                guard let self = self else {
-//                    return
-//                }
-//                switch completion {
-//                case .failure(let error):
-//                    self.handle(error: error, errorType: .callHoldFailed, dispatch: dispatch)
-//                case .finished:
-//                    break
-//                }
-//            }, receiveValue: {}).store(in: cancelBag)
     }
 
     func resumeCall(state: AppState, dispatch: @escaping ActionDispatch) {
@@ -167,21 +153,6 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                     dispatch(.localUserAction(.cameraOnFailed(error: error)))
                 }
             }
-
-//            callingService.startLocalVideoStream()
-//                .delay(for: .seconds(1.0), scheduler: DispatchQueue.main)
-//                .map { videoStream in
-//                    LocalUserAction.cameraOnSucceeded(videoStreamIdentifier: videoStream)
-//                }.sink(receiveCompletion: { completion in
-//                    switch completion {
-//                    case .failure(let error):
-//                        dispatch(.localUserAction(.cameraOnFailed(error: error)))
-//                    case .finished:
-//                        break
-//                    }
-//                }, receiveValue: { newAction in
-//                    dispatch(.localUserAction(newAction))
-//                }).store(in: cancelBag)
         }
     }
 
@@ -206,21 +177,6 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 dispatch(.localUserAction(.cameraSwitchFailed(error: error)) )
             }
         }
-//        callingService.switchCamera()
-//            .delay(for: .seconds(1.0), scheduler: DispatchQueue.main)
-//            .map { .cameraSwitchSucceeded(cameraDevice: $0) }
-//            .sink(
-//                receiveCompletion: { completion in
-//                    switch completion {
-//                    case .failure(let error):
-//                        dispatch(.localUserAction(.cameraSwitchFailed(error: error)) )
-//                    case .finished:
-//                        break
-//                    }
-//                },
-//                receiveValue: { dispatch(.localUserAction($0)) }
-//            )
-//            .store(in: cancelBag)
     }
 
     func requestMicrophoneMute(state: AppState, dispatch: @escaping ActionDispatch) {

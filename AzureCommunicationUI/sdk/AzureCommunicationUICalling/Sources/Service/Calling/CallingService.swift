@@ -68,7 +68,7 @@ class CallingService: NSObject, CallingServiceProtocol {
     }
 
     func requestCameraPreviewOn() async throws -> String {
-        return  try await callingSDKWrapper.startPreviewVideoStream()
+        return try await callingSDKWrapper.startPreviewVideoStream()
     }
 
     func startLocalVideoStream() async throws -> String {
