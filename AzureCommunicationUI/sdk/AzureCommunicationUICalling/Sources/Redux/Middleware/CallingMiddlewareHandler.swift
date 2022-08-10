@@ -36,59 +36,42 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
     }
 
     func setupCall(state: AppState, dispatch: @escaping ActionDispatch) {
-        callingService.setupCall()
-            .sink(receiveCompletion: { [weak self] completion in
-                guard let self = self else {
-                    return
-                }
-                switch completion {
-                case .failure(let error):
-                    self.handle(error: error, errorType: .callJoinFailed, dispatch: dispatch)
-                case .finished:
-                    break
-                }
-            }, receiveValue: {
+        Task {
+            do {
+                try await callingService.setupCall()
                 if state.permissionState.cameraPermission == .granted,
                    state.localUserState.cameraState.operation == .off,
                    state.errorState.internalError == nil {
                     dispatch(.localUserAction(.cameraPreviewOnTriggered))
                 }
-            })
-            .store(in: cancelBag)
+            } catch {
+                handle(error: error, errorType: .callJoinFailed, dispatch: dispatch)
+            }
+        }
     }
 
     func startCall(state: AppState, dispatch: @escaping ActionDispatch) {
-        callingService.startCall(isCameraPreferred: state.localUserState.cameraState.operation == .on,
-                                 isAudioPreferred: state.localUserState.audioState.operation == .on)
-        .sink(receiveCompletion: { [weak self] completion in
-            guard let self = self else {
-                return
+        Task {
+            do {
+                try await callingService.startCall(
+                    isCameraPreferred: state.localUserState.cameraState.operation == .on,
+                    isAudioPreferred: state.localUserState.audioState.operation == .on
+                )
+                subscription(dispatch: dispatch)
+            } catch {
+                handle(error: error, errorType: .callJoinFailed, dispatch: dispatch)
             }
-            switch completion {
-            case .failure(let error):
-                self.handle(error: error, errorType: .callJoinFailed, dispatch: dispatch)
-            case .finished:
-                break
-            }
-        }, receiveValue: { _ in
-            self.subscription(dispatch: dispatch)
-        }).store(in: cancelBag)
+        }
     }
 
     func endCall(state: AppState, dispatch: @escaping ActionDispatch) {
-        callingService.endCall()
-            .sink(receiveCompletion: { [weak self] completion in
-                guard let self = self else {
-                    return
-                }
-
-                switch completion {
-                case .failure(let error):
-                    self.handle(error: error, errorType: .callEndFailed, dispatch: dispatch)
-                case .finished:
-                    break
-                }
-            }, receiveValue: {}).store(in: cancelBag)
+        Task {
+            do {
+                try await callingService.endCall()
+            } catch {
+                handle(error: error, errorType: .callEndFailed, dispatch: dispatch)
+            }
+        }
     }
 
     func holdCall(state: AppState, dispatch: @escaping ActionDispatch) {
@@ -96,19 +79,27 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             return
         }
 
-        callingService.holdCall()
-            .sink(receiveCompletion: { [weak self] completion in
-                guard let self = self else {
-                    return
-                }
-                switch completion {
-                case .failure(let error):
-                    self.handle(error: error, errorType: .callHoldFailed, dispatch: dispatch)
-                case .finished:
-                    break
-                }
-            }, receiveValue: {}).store(in: cancelBag)
+        Task {
+            do {
+                try await callingService.holdCall()
+            } catch {
+                handle(error: error, errorType: .callHoldFailed, dispatch: dispatch)
+            }
+        }
 
+        // No dispatch after success - a common occurrence
+//        callingService.holdCall()
+//            .sink(receiveCompletion: { [weak self] completion in
+//                guard let self = self else {
+//                    return
+//                }
+//                switch completion {
+//                case .failure(let error):
+//                    self.handle(error: error, errorType: .callHoldFailed, dispatch: dispatch)
+//                case .finished:
+//                    break
+//                }
+//            }, receiveValue: {}).store(in: cancelBag)
     }
 
     func resumeCall(state: AppState, dispatch: @escaping ActionDispatch) {
@@ -116,18 +107,13 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             return
         }
 
-        callingService.resumeCall()
-            .sink(receiveCompletion: { [weak self] completion in
-                guard let self = self else {
-                    return
-                }
-                switch completion {
-                case .failure(let error):
-                    self.handle(error: error, errorType: .callResumeFailed, dispatch: dispatch)
-                case .finished:
-                    break
-                }
-            }, receiveValue: {}).store(in: cancelBag)
+        Task {
+            do {
+                try await callingService.resumeCall()
+            } catch {
+                handle(error: error, errorType: .callResumeFailed, dispatch: dispatch)
+            }
+        }
     }
 
     func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) {
@@ -136,19 +122,13 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             return
         }
 
-        callingService.stopLocalVideoStream()
-            .map {
-                LocalUserAction.cameraPausedSucceeded
-            }.sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    dispatch(.localUserAction(.cameraPausedFailed(error: error)))
-                case .finished:
-                    break
-                }
-            }, receiveValue: { newAction in
-                dispatch(.localUserAction(newAction))
-            }).store(in: cancelBag)
+        Task {
+            do {
+                try await callingService.stopLocalVideoStream()
+            } catch {
+                dispatch(.localUserAction(.cameraPausedFailed(error: error)))
+            }
+        }
     }
 
     func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) {
@@ -163,18 +143,14 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         if state.permissionState.cameraPermission == .notAsked {
             dispatch(.permissionAction(.cameraPermissionRequested))
         } else {
-            callingService.requestCameraPreviewOn().map { videoStream in
-                LocalUserAction.cameraOnSucceeded(videoStreamIdentifier: videoStream)
-            }.sink(receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
+            Task {
+                do {
+                    let identifier = try await callingService.requestCameraPreviewOn()
+                    dispatch(.localUserAction(.cameraOnSucceeded(videoStreamIdentifier: identifier)))
+                } catch {
                     dispatch(.localUserAction(.cameraOnFailed(error: error)))
                 }
-            }, receiveValue: { newAction in
-                dispatch(.localUserAction(newAction))
-            }).store(in: cancelBag)
+            }
         }
     }
 
@@ -182,86 +158,89 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         if state.permissionState.cameraPermission == .notAsked {
             dispatch(.permissionAction(.cameraPermissionRequested))
         } else {
-            callingService.startLocalVideoStream()
-                .delay(for: .seconds(1.0), scheduler: DispatchQueue.main)
-                .map { videoStream in
-                    LocalUserAction.cameraOnSucceeded(videoStreamIdentifier: videoStream)
-                }.sink(receiveCompletion: { completion in
-                    switch completion {
-                    case .failure(let error):
-                        dispatch(.localUserAction(.cameraOnFailed(error: error)))
-                    case .finished:
-                        break
-                    }
-                }, receiveValue: { newAction in
-                    dispatch(.localUserAction(newAction))
-                }).store(in: cancelBag)
+            Task { @MainActor in
+                do {
+                    let streamId = try await callingService.startLocalVideoStream()
+                    try await Task.sleep(nanoseconds: NSEC_PER_SEC)
+                    dispatch(.localUserAction(.cameraOnSucceeded(videoStreamIdentifier: streamId)))
+                } catch {
+                    dispatch(.localUserAction(.cameraOnFailed(error: error)))
+                }
+            }
+
+//            callingService.startLocalVideoStream()
+//                .delay(for: .seconds(1.0), scheduler: DispatchQueue.main)
+//                .map { videoStream in
+//                    LocalUserAction.cameraOnSucceeded(videoStreamIdentifier: videoStream)
+//                }.sink(receiveCompletion: { completion in
+//                    switch completion {
+//                    case .failure(let error):
+//                        dispatch(.localUserAction(.cameraOnFailed(error: error)))
+//                    case .finished:
+//                        break
+//                    }
+//                }, receiveValue: { newAction in
+//                    dispatch(.localUserAction(newAction))
+//                }).store(in: cancelBag)
         }
     }
 
     func requestCameraOff(state: AppState, dispatch: @escaping ActionDispatch) {
-        callingService.stopLocalVideoStream()
-            .map { .cameraOffSucceeded }
-            .sink(
-                receiveCompletion: { completion in
-                    switch completion {
-                    case .failure(let error):
-                        dispatch(.localUserAction(.cameraOffFailed(error: error)))
-                    case .finished:
-                        break
-                    }
-                },
-                receiveValue: { dispatch(.localUserAction($0)) }
-            ).store(in: cancelBag)
+        Task {
+            do {
+                try await callingService.stopLocalVideoStream()
+                dispatch(.localUserAction(.cameraOffSucceeded))
+            } catch {
+                dispatch(.localUserAction(.cameraOffFailed(error: error)))
+            }
+        }
     }
 
     func requestCameraSwitch(state: AppState, dispatch: @escaping ActionDispatch) {
-        callingService.switchCamera()
-            .delay(for: .seconds(1.0), scheduler: DispatchQueue.main)
-            .map { .cameraSwitchSucceeded(cameraDevice: $0) }
-            .sink(
-                receiveCompletion: { completion in
-                    switch completion {
-                    case .failure(let error):
-                        dispatch(.localUserAction(.cameraSwitchFailed(error: error)) )
-                    case .finished:
-                        break
-                    }
-                },
-                receiveValue: { dispatch(.localUserAction($0)) }
-            )
-            .store(in: cancelBag)
+        Task {
+            do {
+                let device = try await callingService.switchCamera()
+                try await Task.sleep(nanoseconds: NSEC_PER_SEC)
+                dispatch(.localUserAction(.cameraSwitchSucceeded(cameraDevice: device)))
+            } catch {
+                dispatch(.localUserAction(.cameraSwitchFailed(error: error)) )
+            }
+        }
+//        callingService.switchCamera()
+//            .delay(for: .seconds(1.0), scheduler: DispatchQueue.main)
+//            .map { .cameraSwitchSucceeded(cameraDevice: $0) }
+//            .sink(
+//                receiveCompletion: { completion in
+//                    switch completion {
+//                    case .failure(let error):
+//                        dispatch(.localUserAction(.cameraSwitchFailed(error: error)) )
+//                    case .finished:
+//                        break
+//                    }
+//                },
+//                receiveValue: { dispatch(.localUserAction($0)) }
+//            )
+//            .store(in: cancelBag)
     }
 
     func requestMicrophoneMute(state: AppState, dispatch: @escaping ActionDispatch) {
-        callingService.muteLocalMic()
-            .sink(
-                receiveCompletion: { completion in
-                    switch completion {
-                    case .failure(let error):
-                        dispatch(.localUserAction(.microphoneOffFailed(error: error)))
-                    case .finished:
-                        break
-                    }
-                }, receiveValue: {}
-            )
-            .store(in: cancelBag)
+        Task {
+            do {
+                try await callingService.muteLocalMic()
+            } catch {
+                dispatch(.localUserAction(.microphoneOffFailed(error: error)))
+            }
+        }
     }
 
     func requestMicrophoneUnmute(state: AppState, dispatch: @escaping ActionDispatch) {
-        callingService.unmuteLocalMic()
-            .sink(
-                receiveCompletion: { completion in
-                    switch completion {
-                    case .failure(let error):
-                        dispatch(.localUserAction(.microphoneOnFailed(error: error)))
-                    case .finished:
-                        break
-                    }
-                },
-                receiveValue: {}
-            )
-            .store(in: cancelBag)
+        Task {
+            do {
+                try await callingService.unmuteLocalMic()
+            } catch {
+                dispatch(.localUserAction(.microphoneOnFailed(error: error)))
+            }
+        }
     }
 
     func onCameraPermissionIsSet(state: AppState, dispatch: @escaping ActionDispatch) {
