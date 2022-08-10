@@ -10,6 +10,7 @@ import AzureCommunicationCalling
 struct SwiftUIDemoView: View {
     @State var isErrorDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
+    @State var isStartExperienceLoading: Bool = false
     @State var errorMessage: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
 
@@ -113,12 +114,14 @@ struct SwiftUIDemoView: View {
 
     var startExperienceButton: some View {
         Button("Start Experience") {
+            isStartExperienceLoading = true
             Task { @MainActor in
                 await startCallComposite()
+                isStartExperienceLoading = false
             }
         }
         .buttonStyle(DemoButtonStyle())
-        .disabled(isStartExperienceDisabled)
+        .disabled(isStartExperienceDisabled || isStartExperienceLoading)
         .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
     }
 

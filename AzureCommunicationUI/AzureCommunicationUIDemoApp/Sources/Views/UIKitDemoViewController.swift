@@ -310,9 +310,14 @@ class UIKitDemoViewController: UIViewController {
     }
 
     @objc func onStartExperienceBtnPressed() {
+        startExperienceButton.isEnabled = false
+        startExperienceButton.backgroundColor = .systemGray3
+
         let link = self.getMeetingLink()
         Task { @MainActor in
             await self.startExperience(with: link)
+            startExperienceButton.isEnabled = true
+            startExperienceButton.backgroundColor = .systemBlue
         }
     }
 
