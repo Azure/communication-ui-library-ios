@@ -108,6 +108,7 @@ struct ParticipantTitleView: View {
     @Binding var displayName: String?
     @Binding var isMuted: Bool
     @Binding var isHold: Bool
+    @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     let titleFont: Font
     let mutedIconSize: CGFloat
     private let hSpace: CGFloat = 4
@@ -122,6 +123,7 @@ struct ParticipantTitleView: View {
                 Text(displayName)
                     .font(titleFont)
                     .lineLimit(1)
+                    .minimumScaleFactor(sizeCategory.isAccessibilityCategory ? 0.1 : 0.75)
                     .foregroundColor(Color(StyleProvider.color.onBackground))
             }
             if isMuted && !isHold {

@@ -8,7 +8,7 @@ import FluentUI
 
 struct InfoHeaderView: View {
     @ObservedObject var viewModel: InfoHeaderViewModel
-
+    @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @State var participantsListButtonSourceView = UIView()
     let avatarViewManager: AvatarViewManager
     let foregroundColor: Color = .white
@@ -42,9 +42,11 @@ struct InfoHeaderView: View {
                                     bottom: infoLabelHorizontalPadding,
                                     trailing: 0))
                 .foregroundColor(foregroundColor)
+                .lineLimit(1)
                 .font(Fonts.caption1.font)
                 .accessibilityLabel(Text(viewModel.accessibilityLabel))
                 .accessibilitySortPriority(1)
+                .minimumScaleFactor(sizeCategory.isAccessibilityCategory ? 0.1 : 0.75)
             Spacer()
             participantListButton
         }
