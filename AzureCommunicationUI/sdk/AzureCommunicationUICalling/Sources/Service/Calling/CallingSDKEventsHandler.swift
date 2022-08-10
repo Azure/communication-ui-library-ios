@@ -17,6 +17,12 @@ protocol CallingSDKEventsHandling: CallDelegate {
     var isRecordingActiveSubject: PassthroughSubject<Bool, Never> { get }
     var isTranscriptionActiveSubject: PassthroughSubject<Bool, Never> { get }
     var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
+
+    var participantsInfoList: AsyncStream<[ParticipantInfoModel]>! { get }
+    var callInfo: AsyncStream<CallInfoModel>! { get }
+    var isRecordingActive: AsyncStream<Bool>! { get }
+    var isTranscriptionActive: AsyncStream<Bool>! { get }
+    var isLocalUserMuted: AsyncStream<Bool>! { get }
 }
 
 class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
@@ -25,6 +31,18 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var isRecordingActiveSubject = PassthroughSubject<Bool, Never>()
     var isTranscriptionActiveSubject = PassthroughSubject<Bool, Never>()
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
+
+    var participantsInfoList: AsyncStream<[ParticipantInfoModel]>!
+    var callInfo: AsyncStream<CallInfoModel>!
+    var isRecordingActive: AsyncStream<Bool>!
+    var isTranscriptionActive: AsyncStream<Bool>!
+    var isLocalUserMuted: AsyncStream<Bool>!
+
+    private var participantInfoContinuation: AsyncStream<[ParticipantInfoModel]>.Continuation!
+    private var callInfoContinuation: AsyncStream<CallInfoModel>.Continuation!
+    private var recordingActiveContinuation: AsyncStream<Bool>.Continuation!
+    private var transcriptionActiveContinuation: AsyncStream<Bool>.Continuation!
+    private var localUserMutedContinuation: AsyncStream<Bool>.Continuation!
 
     private let logger: Logger
     private var remoteParticipantEventAdapter = RemoteParticipantsEventsAdapter()
@@ -35,8 +53,19 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
 
     init(logger: Logger) {
         self.logger = logger
+
         super.init()
+
+        setupAsyncStreams()
         setupRemoteParticipantEventsAdapter()
+    }
+
+    deinit {
+        participantInfoContinuation.finish()
+        callInfoContinuation.finish()
+        recordingActiveContinuation.finish()
+        transcriptionActiveContinuation.finish()
+        localUserMutedContinuation.finish()
     }
 
     func assign(_ recordingCallFeature: RecordingCallFeature) {
@@ -55,6 +84,28 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         transcriptionCallFeature = nil
         remoteParticipants = MappedSequence<String, RemoteParticipant>()
         previousCallingStatus = .none
+    }
+
+    private func setupAsyncStreams() {
+        participantsInfoList = AsyncStream { [unowned self] continuation in
+            self.participantInfoContinuation = continuation
+        }
+
+        callInfo = AsyncStream { [unowned self] continuation in
+            self.callInfoContinuation = continuation
+        }
+
+        isRecordingActive = AsyncStream { [unowned self] continuation in
+            self.recordingActiveContinuation = continuation
+        }
+
+        isTranscriptionActive = AsyncStream { [unowned self] continuation in
+            self.transcriptionActiveContinuation = continuation
+        }
+
+        isLocalUserMuted = AsyncStream { [unowned self] continuation in
+            self.localUserMutedContinuation = continuation
+        }
     }
 
     private func setupRemoteParticipantEventsAdapter() {
@@ -123,6 +174,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
             remoteParticipantsInfoList.append(infoModel)
         }
         participantsInfoListSubject.send(remoteParticipantsInfoList)
+        participantInfoContinuation.yield(remoteParticipantsInfoList)
     }
 
     private func updateRemoteParticipant(userIdentifier: String,
@@ -138,6 +190,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
             remoteParticipantsInfoList[index] = newInfoModel
 
             participantsInfoListSubject.send(remoteParticipantsInfoList)
+            participantInfoContinuation.yield(remoteParticipantsInfoList)
         }
     }
 
@@ -173,6 +226,7 @@ extension CallingSDKEventsHandler: CallDelegate,
         let callInfoModel = CallInfoModel(status: currentStatus,
                                           internalError: internalError)
         callInfoSubject.send(callInfoModel)
+        callInfoContinuation.yield(callInfoModel)
         self.previousCallingStatus = currentStatus
     }
 
@@ -180,16 +234,19 @@ extension CallingSDKEventsHandler: CallDelegate,
                               didChangeRecordingState args: PropertyChangedEventArgs) {
         let newRecordingActive = recordingCallFeature.isRecordingActive
         isRecordingActiveSubject.send(newRecordingActive)
+        recordingActiveContinuation.yield(newRecordingActive)
     }
 
     func transcriptionCallFeature(_ transcriptionCallFeature: TranscriptionCallFeature,
                                   didChangeTranscriptionState args: PropertyChangedEventArgs) {
         let newTranscriptionActive = transcriptionCallFeature.isTranscriptionActive
         isTranscriptionActiveSubject.send(newTranscriptionActive)
+        transcriptionActiveContinuation.yield(newTranscriptionActive)
     }
 
     func call(_ call: Call, didChangeMuteState args: PropertyChangedEventArgs) {
         isLocalUserMutedSubject.send(call.isMuted)
+        localUserMutedContinuation.yield(call.isMuted)
     }
 
 }
