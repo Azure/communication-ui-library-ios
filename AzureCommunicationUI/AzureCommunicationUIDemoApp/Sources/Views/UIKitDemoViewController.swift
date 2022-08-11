@@ -210,7 +210,7 @@ class UIKitDemoViewController: UIViewController {
         case .tokenUrl:
             if let url = URL(string: acsTokenUrlTextField.text!) {
                 let tokenRefresher = AuthenticationHelper.getCommunicationToken(tokenUrl: url)
-                let initialToken = await TokenManager().fetchInitialToken(with: tokenRefresher)
+                let initialToken = await AuthenticationHelper.fetchInitialToken(with: tokenRefresher)
                 let refreshOptions = CommunicationTokenRefreshOptions(initialToken: initialToken,
                                                                       refreshProactively: true,
                                                                       tokenRefresher: tokenRefresher)

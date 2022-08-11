@@ -227,7 +227,7 @@ extension SwiftUIDemoView {
         case .tokenUrl:
             if let url = URL(string: envConfigSubject.acsTokenUrl) {
                 let tokenRefresher = AuthenticationHelper.getCommunicationToken(tokenUrl: url)
-                let initialToken = await TokenManager().fetchInitialToken(with: tokenRefresher)
+                let initialToken = await AuthenticationHelper.fetchInitialToken(with: tokenRefresher)
                 let communicationTokenRefreshOptions = CommunicationTokenRefreshOptions(initialToken: initialToken,
                                                                                         refreshProactively: true,
                                                                                         tokenRefresher: tokenRefresher)
