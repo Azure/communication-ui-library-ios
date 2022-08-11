@@ -117,4 +117,6 @@ enum LocalizationKey: String {
     case snackBarErrorOnHoldSubtitle = "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"
     case snackBarErrorCallDenied =
             "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"
+    case snackBarErrorConnectionError =
+            "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"
 }

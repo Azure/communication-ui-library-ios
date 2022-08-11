@@ -15,7 +15,8 @@ extension Reducer where State == NavigationState,
         case .callingAction(.dismissSetup),
                 .compositeExitAction:
             navigationStatus = .exit
-        case .errorAction(.statusErrorAndCallReset):
+        case .errorAction(.statusErrorAndCallReset),
+                .errorAction(.networkLost):
             navigationStatus = .setup
 
             // Exhaustive unimplemented actions

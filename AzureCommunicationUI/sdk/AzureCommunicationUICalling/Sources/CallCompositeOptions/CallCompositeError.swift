@@ -13,6 +13,9 @@ public struct CallCompositeErrorCode {
     /// Error when a call disconnects unexpectedly or fails on ending.
     public static var callEnd: String = "callEnd"
 
+    /// Error when a network issue has occurred
+    public static let networkError: String = "networkError"
+
     /// Error when the input token is expired.
     public static let tokenExpired: String = "tokenExpired"
 

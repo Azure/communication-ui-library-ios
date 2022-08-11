@@ -35,6 +35,7 @@ enum ErrorAction: Equatable {
         }
     }
 
+    case networkLost
     case fatalErrorUpdated(internalError: CallCompositeInternalError, error: Error?)
     case statusErrorAndCallReset(internalError: CallCompositeInternalError, error: Error?)
 }

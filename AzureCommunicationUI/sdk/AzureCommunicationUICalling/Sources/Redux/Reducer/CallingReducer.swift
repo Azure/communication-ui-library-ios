@@ -20,7 +20,8 @@ extension Reducer where State == CallingState,
             isRecordingActive = newValue
         case .callingAction(.transcriptionStateUpdated(let newValue)):
             isTranscriptionActive = newValue
-        case .errorAction(.statusErrorAndCallReset):
+        case .errorAction(.statusErrorAndCallReset),
+                .errorAction(.networkLost):
             callingStatus = .none
             isRecordingActive = false
             isTranscriptionActive = false

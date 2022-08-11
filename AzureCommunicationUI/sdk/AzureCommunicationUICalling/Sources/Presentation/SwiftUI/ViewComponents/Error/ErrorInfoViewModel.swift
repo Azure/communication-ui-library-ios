@@ -62,6 +62,8 @@ class ErrorInfoViewModel: ObservableObject {
             title = localizationProvider.getLocalizedString(.snackBarErrorCallEvicted)
         case .callDenied:
             title = localizationProvider.getLocalizedString(.snackBarErrorCallDenied)
+        case .connectionFailed:
+            title = localizationProvider.getLocalizedString(.snackBarErrorConnectionError)
         default:
             title = localizationProvider.getLocalizedString(.snackBarError)
         }
