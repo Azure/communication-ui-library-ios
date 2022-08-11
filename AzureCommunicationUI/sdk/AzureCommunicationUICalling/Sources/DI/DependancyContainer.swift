@@ -51,7 +51,8 @@ final class DependencyContainer {
         register(CompositeViewModelFactory(logger: resolve(),
                                            store: resolve(),
                                            localizationProvider: resolve(),
-                                           accessibilityProvider: resolve()) as CompositeViewModelFactoryProtocol)
+                                           accessibilityProvider: resolve(),
+                                           localOptions: localOptions) as CompositeViewModelFactoryProtocol)
         register(CompositeViewFactory(logger: resolve(),
                                       avatarManager: resolve(),
                                       videoViewManager: resolve(),

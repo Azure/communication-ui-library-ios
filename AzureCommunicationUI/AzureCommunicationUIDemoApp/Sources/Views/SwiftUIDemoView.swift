@@ -173,7 +173,10 @@ extension SwiftUIDemoView {
                                 nil:envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
-        let localOptions = LocalOptions(participantViewData: participantViewData)
+        let navigationBarViewData = NavigationBarViewData(title: envConfigSubject.navigationTitle,
+                                                          subtitle: envConfigSubject.navigationSubtitle)
+        let localOptions = LocalOptions(participantViewData: participantViewData,
+                                        navigationBarViewData: navigationBarViewData)
         if let credential = try? getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:

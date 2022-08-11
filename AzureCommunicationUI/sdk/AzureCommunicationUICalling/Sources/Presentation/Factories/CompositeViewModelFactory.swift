@@ -63,6 +63,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let store: Store<AppState>
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
+    private let localOptions: LocalOptions?
 
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
@@ -70,11 +71,13 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     init(logger: Logger,
          store: Store<AppState>,
          localizationProvider: LocalizationProviderProtocol,
-         accessibilityProvider: AccessibilityProviderProtocol) {
+         accessibilityProvider: AccessibilityProviderProtocol,
+         localOptions: LocalOptions?) {
         self.logger = logger
         self.store = store
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
+        self.localOptions = localOptions
     }
 
     // MARK: CompositeViewModels
@@ -83,7 +86,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
             let viewModel = SetupViewModel(compositeViewModelFactory: self,
                                            logger: logger,
                                            store: store,
-                                           localizationProvider: localizationProvider)
+                                           localizationProvider: localizationProvider,
+                                           navigationBarViewData: localOptions?.navigationBarViewData)
             self.setupViewModel = viewModel
             self.callingViewModel = nil
             return viewModel
