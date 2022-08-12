@@ -9,14 +9,14 @@ import UIKit
 /// Object for local options for Call Composite
 public struct LocalOptions {
     /// The ParticipantViewData of the local participant when joining the call.
-    let participantViewData: ParticipantViewData
+    let participantViewData: ParticipantViewData?
     /// The NavigationBarViewData would be used to populate title and subtitle on setup view
     let navigationBarViewData: NavigationBarViewData?
     /// Create an instance of LocalOptions. All information in this object is only stored locally in the composite.
     /// - Parameters:
     ///    - participantViewData: The ParticipantViewData to be displayed for local participants avatar
     ///    - navigationBarViewData: The NavigationBarViewData to be shown on navigation bar of set up view
-    public init(participantViewData: ParticipantViewData,
+    public init(participantViewData: ParticipantViewData? = nil,
                 navigationBarViewData: NavigationBarViewData? = nil) {
         self.participantViewData = participantViewData
         self.navigationBarViewData = navigationBarViewData
