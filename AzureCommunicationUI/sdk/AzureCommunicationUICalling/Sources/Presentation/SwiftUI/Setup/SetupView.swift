@@ -137,14 +137,14 @@ struct SetupTitleView: View {
                             .font(Fonts.headline.font)
                             .foregroundColor(Color(StyleProvider.color.onBackground))
                             .lineLimit(1)
-                            .minimumScaleFactor(sizeCategory.isAccessibilityCategory ? 0.1 : 1)
+                            .minimumScaleFactor(sizeCategory.isAccessibilityCategory ? 0.4 : 1)
                             .accessibilityAddTraits(.isHeader)
                         if let subtitle = viewModel.subTitle, !subtitle.isEmpty {
                             Text(subtitle)
                                 .font(Fonts.caption1.font)
                                 .foregroundColor(Color(StyleProvider.color.subtitleColor))
                                 .lineLimit(1)
-                                .minimumScaleFactor(sizeCategory.isAccessibilityCategory ? 0.1 : 1)
+                                .minimumScaleFactor(sizeCategory.isAccessibilityCategory ? 0.4 : 1)
                                 .accessibilityAddTraits(.isHeader)
                         }
                     }
