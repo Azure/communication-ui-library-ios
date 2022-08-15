@@ -141,8 +141,8 @@ struct SetupTitleView: View {
                             .accessibilityAddTraits(.isHeader)
                         if let subtitle = viewModel.subTitle, !subtitle.isEmpty {
                             Text(subtitle)
-                                .font(Fonts.subhead.font)
-                                .foregroundColor(Color(StyleProvider.color.onBackground))
+                                .font(Fonts.caption1.font)
+                                .foregroundColor(Color(StyleProvider.color.subtitleColor))
                                 .lineLimit(1)
                                 .minimumScaleFactor(sizeCategory.isAccessibilityCategory ? 0.1 : 1)
                                 .accessibilityAddTraits(.isHeader)
@@ -150,7 +150,7 @@ struct SetupTitleView: View {
                     }
                     Spacer()
                 }.accessibilitySortPriority(1)
-                    .padding(padding)
+                 .padding(padding)
             }.frame(height: viewHeight)
             Divider()
         }
