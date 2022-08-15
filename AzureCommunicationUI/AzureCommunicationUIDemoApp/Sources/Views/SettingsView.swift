@@ -91,11 +91,9 @@ struct SettingsView: View {
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
                 .textFieldStyle(.roundedBorder)
-                .textFieldStyle(.roundedBorder)
             TextField("Navigation SubTitle", text: $envConfigSubject.navigationSubtitle)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
-                .textFieldStyle(.roundedBorder)
                 .textFieldStyle(.roundedBorder)
         }
     }
