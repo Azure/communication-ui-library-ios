@@ -10,6 +10,7 @@ import AzureCommunicationCalling
 struct SwiftUIDemoView: View {
     @State var isErrorDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
+    @State var isStartExperienceLoading: Bool = false
     @State var errorMessage: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
 
@@ -113,10 +114,14 @@ struct SwiftUIDemoView: View {
 
     var startExperienceButton: some View {
         Button("Start Experience") {
-            startCallComposite()
+            isStartExperienceLoading = true
+            Task { @MainActor in
+                await startCallComposite()
+                isStartExperienceLoading = false
+            }
         }
         .buttonStyle(DemoButtonStyle())
-        .disabled(isStartExperienceDisabled)
+        .disabled(isStartExperienceDisabled || isStartExperienceLoading)
         .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
     }
 
@@ -137,7 +142,7 @@ struct SwiftUIDemoView: View {
 }
 
 extension SwiftUIDemoView {
-    func startCallComposite() {
+    func startCallComposite() async {
         let link = getMeetingLink()
 
         var localizationConfig: LocalizationOptions?
@@ -166,7 +171,10 @@ extension SwiftUIDemoView {
             self.onRemoteParticipantJoined(to: composite,
                                            identifiers: ids)
         }
-        callComposite.events.onError = onError
+
+        callComposite.events.onError = { error in
+            Task { @MainActor in onError(error) }
+        }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
@@ -174,7 +182,7 @@ extension SwiftUIDemoView {
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
         let localOptions = LocalOptions(participantViewData: participantViewData)
-        if let credential = try? getTokenCredential() {
+        if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
@@ -206,7 +214,7 @@ extension SwiftUIDemoView {
         }
     }
 
-    private func getTokenCredential() throws -> CommunicationTokenCredential {
+    private func getTokenCredential() async throws -> CommunicationTokenCredential {
         switch envConfigSubject.selectedAcsTokenType {
         case .token:
             let acsToken = envConfigSubject.useExpiredToken ?
@@ -219,7 +227,8 @@ extension SwiftUIDemoView {
         case .tokenUrl:
             if let url = URL(string: envConfigSubject.acsTokenUrl) {
                 let tokenRefresher = AuthenticationHelper.getCommunicationToken(tokenUrl: url)
-                let communicationTokenRefreshOptions = CommunicationTokenRefreshOptions(initialToken: nil,
+                let initialToken = await AuthenticationHelper.fetchInitialToken(with: tokenRefresher)
+                let communicationTokenRefreshOptions = CommunicationTokenRefreshOptions(initialToken: initialToken,
                                                                                         refreshProactively: true,
                                                                                         tokenRefresher: tokenRefresher)
                 if let credential = try? CommunicationTokenCredential(withOptions: communicationTokenRefreshOptions) {
