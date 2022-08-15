@@ -31,7 +31,7 @@ class SetupViewModel: ObservableObject {
          logger: Logger,
          store: Store<AppState>,
          localizationProvider: LocalizationProviderProtocol,
-         navigationBarViewData: NavigationBarViewData?) {
+         navigationBarViewData: NavigationBarViewData? = nil) {
         self.store = store
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft

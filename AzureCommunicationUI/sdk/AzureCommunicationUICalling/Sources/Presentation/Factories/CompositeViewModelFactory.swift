@@ -72,7 +72,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          store: Store<AppState>,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
-         localOptions: LocalOptions?) {
+         localOptions: LocalOptions? = nil) {
         self.logger = logger
         self.store = store
         self.accessibilityProvider = accessibilityProvider
