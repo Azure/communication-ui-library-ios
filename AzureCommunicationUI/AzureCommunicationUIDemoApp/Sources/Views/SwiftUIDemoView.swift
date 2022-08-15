@@ -185,7 +185,7 @@ extension SwiftUIDemoView {
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let localOptions = LocalOptions(participantViewData: participantViewData,
                                         navigationBarViewData: navigationBarViewData)
-        if let credential = try? getTokenCredential() {
+        if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
