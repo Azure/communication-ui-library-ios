@@ -35,7 +35,7 @@ struct SetupView: View {
                                                 avatarManager: avatarManager)
                                 SetupControlBarView(viewModel: viewModel.setupControlBarViewModel)
                             }
-                            .background(Color(StyleProvider.color.surface))
+                            .background(Color(StyleProvider.color.videoBackground))
                             .cornerRadius(4)
                             joinCallView
                                 .padding(.bottom)
@@ -131,7 +131,7 @@ struct SetupTitleView: View {
                     Spacer()
                     Text(viewModel.title)
                         .font(Fonts.headline.font)
-                        .foregroundColor(Color(StyleProvider.color.onBackground))
+                        .foregroundColor(Color(StyleProvider.color.setupTitleLabel))
                         .accessibilityAddTraits(.isHeader)
                     Spacer()
                 }.accessibilitySortPriority(1)

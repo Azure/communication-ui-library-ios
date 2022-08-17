@@ -49,14 +49,14 @@ class ColorThemeProvider {
     let genericIconDisabled: UIColor = FluentUI.Colors.iconDisabled
 
     // MARK: - Setup View Colours
-    lazy var setupTitleText: UIColor = genericLabel
+    lazy var setupTitleLabel: UIColor = genericLabel
+    lazy var premissionIcon: UIColor = genericIcon
+    lazy var permissionText: UIColor = genericLabel
+    lazy var previewGradient = UIColor.black.withAlphaComponent(0.7)
     lazy var videoBackground: UIColor = {
         return dynamicColor(light: FluentUI.Colors.surfaceQuaternary,
                             dark: FluentUI.Colors.surfaceTertiary)
     }()
-    lazy var premissionIcon: UIColor = genericIcon
-    lazy var permissionText: UIColor = genericLabel
-    lazy var previewGradient = UIColor.black.withAlphaComponent(0.7)
     lazy var warningLabel: UIColor = {
         return dynamicColor(light: FluentUI.Colors.Palette.warningShade30.color,
                             dark: UIColor.black)

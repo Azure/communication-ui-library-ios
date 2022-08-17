@@ -17,13 +17,13 @@ struct ErrorInfoView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     Text(viewModel.title)
                         .font(Fonts.button1.font)
-                        .foregroundColor(Color(StyleProvider.color.onWarning))
+                        .foregroundColor(Color(StyleProvider.color.warningLabel))
                         .accessibilitySortPriority(1)
 
                     if !viewModel.subtitle.isEmpty {
                         Text(viewModel.subtitle)
                             .font(Fonts.subhead.font)
-                            .foregroundColor(Color(StyleProvider.color.onWarning))
+                            .foregroundColor(Color(StyleProvider.color.warningLabel))
                             .accessibilitySortPriority(2)
                     }
                 }.padding([.top, .leading, .bottom])
@@ -31,14 +31,14 @@ struct ErrorInfoView: View {
                 Button(action: viewModel.dismiss) {
                     Text(viewModel.dismissContent)
                         .font(Fonts.button1.font)
-                        .foregroundColor(Color(StyleProvider.color.onWarning))
+                        .foregroundColor(Color(StyleProvider.color.warningLabel))
                 }
                 .padding([.top, .bottom, .trailing])
                 .accessibilityLabel(Text(viewModel.dismissAccessibilitylabel))
                 .accessibilityHint(Text(viewModel.dismissAccessibilityHint))
                 .accessibilitySortPriority(0)
             }
-            .background(Color(StyleProvider.color.warning))
+            .background(Color(StyleProvider.color.warningBanner))
             .cornerRadius(cornerRadius)
         }
     }

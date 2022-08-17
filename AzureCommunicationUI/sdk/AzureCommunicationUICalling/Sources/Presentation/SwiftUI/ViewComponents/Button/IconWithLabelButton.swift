@@ -15,12 +15,12 @@ struct IconWithLabelButton: View {
     private let verticalSpacing: CGFloat = 8
     private let width: CGFloat = 85
     private let height: CGFloat = 85
-    private let buttonDisabledColor = Color(StyleProvider.color.disableColor)
+    private let buttonDisabledColor = Color(StyleProvider.color.genericIconDisabled)
 
     var buttonForegroundColor: Color {
         switch viewModel.buttonTypeColor {
         case .colorThemedWhite:
-            return Color(StyleProvider.color.onSurfaceColor)
+            return Color(StyleProvider.color.genericIcon)
         case .white:
             return Color(.white)
         }

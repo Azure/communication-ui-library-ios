@@ -8,7 +8,7 @@ import SwiftUI
 struct IconButton: View {
     @ObservedObject var viewModel: IconButtonViewModel
 
-    private let buttonDisabledColor = Color(StyleProvider.color.disableColor)
+    private let buttonDisabledColor = Color(StyleProvider.color.genericIconDisabled)
     private var iconImageSize: CGFloat {
         switch viewModel.buttonType {
         case .dismissButton:
@@ -60,10 +60,8 @@ struct IconButton: View {
     }
     var buttonForegroundColor: Color {
         switch viewModel.buttonType {
-        case .controlButton:
-            return Color(StyleProvider.color.onSurfaceColor)
-        case .dismissButton:
-            return Color(StyleProvider.color.onBackground)
+        case .controlButton, .dismissButton:
+            return Color(StyleProvider.color.genericIcon)
         default:
             return .white
         }

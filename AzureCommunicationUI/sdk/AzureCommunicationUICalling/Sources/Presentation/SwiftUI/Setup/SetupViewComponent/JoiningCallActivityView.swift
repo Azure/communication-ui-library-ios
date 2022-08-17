@@ -17,7 +17,7 @@ struct JoiningCallActivityView: View {
                 .isAnimating(true)
             Text(viewModel.title)
                 .font(Fonts.subhead.font)
-                .foregroundColor(Color(StyleProvider.color.onSurfaceColor))
+                .foregroundColor(Color(StyleProvider.color.genericLabel))
             Spacer()
         }.frame(height: containerHeight)
     }

@@ -148,7 +148,7 @@ struct CallingView: View {
                            viewManager: viewManager,
                            viewType: .localVideofull,
                            avatarManager: avatarManager)
-                .background(Color(StyleProvider.color.surface))
+                .background(Color(StyleProvider.color.videoBackground))
                 .edgesIgnoringSafeArea(safeAreaIgnoreArea)
         }
     }
