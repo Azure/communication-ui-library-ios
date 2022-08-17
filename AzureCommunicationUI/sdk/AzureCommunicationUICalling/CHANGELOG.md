@@ -3,6 +3,7 @@
 ## TBA (upcoming release)
 ### New Features
 - Implemented new error message `unknownError` that can be sent to developers in rare cases device manager throws an error.  
+- Implemented new error message `cameraFailure` that can be sent to developers when turning on camera fails.
 
 ### Bugs Fixed
 - Fixed an issue where demo app can't dismiss setting page when in landscape mode. [#280](https://github.com/Azure/communication-ui-library-ios/pull/280)
