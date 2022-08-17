@@ -138,7 +138,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                   state.localUserState.cameraState.operation == .paused else {
                 return
             }
-            requestCameraOn(state: state, dispatch: dispatch)
+            await requestCameraOn(state: state, dispatch: dispatch).value
         }
     }
 

@@ -412,11 +412,13 @@ class CallingMiddlewareHandlerTests: XCTestCase {
                                                  dispatch: dispatch)
     }
 
-    func test_callingMiddlewareHandler_enterForeground_when_callConnected_cameraStatusPaused_then_startLocalVideoStreamCalled() {
-        callingMiddlewareHandler.enterForeground(state: getState(callingState: .connected,
-                                                                 cameraStatus: .paused,
-                                                                 cameraDeviceStatus: .front),
-                                                 dispatch: getEmptyDispatch())
+    func test_callingMiddlewareHandler_enterForeground_when_callConnected_cameraStatusPaused_then_startLocalVideoStreamCalled() async {
+        await callingMiddlewareHandler.enterForeground(
+            state: getState(callingState: .connected,
+                            cameraStatus: .paused,
+                            cameraDeviceStatus: .front),
+            dispatch: getEmptyDispatch()
+        ).value
         XCTAssertTrue(mockCallingService.startLocalVideoStreamCalled)
     }
 

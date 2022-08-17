@@ -276,7 +276,6 @@ extension CallingSDKWrapper {
         }
     }
 
-    @MainActor
     private func change(_ videoStream: LocalVideoStream, source: VideoDeviceInfo) async throws {
         do {
             try await videoStream.switchSource(camera: source)
