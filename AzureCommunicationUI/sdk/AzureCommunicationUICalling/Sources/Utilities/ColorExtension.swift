@@ -7,11 +7,6 @@ import Foundation
 import UIKit
 
 enum CompositeColor: String {
-    case primary = "ACSPrimaryColor"
-    case onDisabled = "onDisabledColor"
-    case surfaceDarkColor = "surfaceDarkColor"
-    case surfaceLightColor = "surfaceLightColor"
-    case gradientColor = "gradientColor"
     case hangup = "hangupColor"
     case overlay = "overlayColor"
     case onHoldBackground = "onHoldBackground"
