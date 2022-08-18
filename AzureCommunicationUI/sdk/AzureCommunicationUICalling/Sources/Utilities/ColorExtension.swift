@@ -8,31 +8,13 @@ import UIKit
 
 enum CompositeColor: String {
     case primary = "ACSPrimaryColor"
-    case background = "backgroundColor"
-    case gridLayoutBackground = "gridLayoutBackgroundColor"
-    case disabled = "disabledColor"
-    case error = "errorColor"
-    case onBackground = "onBackgroundColor"
     case onDisabled = "onDisabledColor"
-    case onError = "onErrorColor"
-    case onPrimary = "onPrimaryColor"
-    case onSuccess = "onSuccessColor"
-    case onSurface = "onSurfaceColor"
-    case mute = "mute"
-    case onWarning = "onWarningColor"
-    case success = "successColor"
-    case warning = "warningColor"
-    case surface = "surfaceColor"
     case surfaceDarkColor = "surfaceDarkColor"
     case surfaceLightColor = "surfaceLightColor"
-    case drawerColor = "drawerColor"
-    case popoverColor = "popoverColor"
     case gradientColor = "gradientColor"
     case hangup = "hangupColor"
     case overlay = "overlayColor"
     case onHoldBackground = "onHoldBackground"
-    case textSecondary = "textSecondaryColor"
-    case iconSecondary = "iconSecondaryColor"
 }
 
 extension UIColor {
