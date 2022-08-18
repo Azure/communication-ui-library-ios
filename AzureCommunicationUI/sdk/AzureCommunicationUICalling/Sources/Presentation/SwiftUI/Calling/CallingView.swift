@@ -14,6 +14,9 @@ struct CallingView: View {
         static let infoHeaderViewHeight: CGFloat = 46.0
     }
 
+    let controlBarHeight: CGFloat = 92
+    let errorHorizontalPadding: CGFloat = 8
+
     @ObservedObject var viewModel: CallingViewModel
     let avatarManager: AvatarViewManager
     let viewManager: VideoViewManager
@@ -35,6 +38,7 @@ struct CallingView: View {
             } else {
                 landscapeCallingView
             }
+            errorInfoView
         }
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
@@ -160,6 +164,20 @@ struct CallingView: View {
             } else {
                 localVideoFullscreenView
             }
+        }
+    }
+
+    var errorInfoView: some View {
+        return VStack {
+            Spacer()
+            ErrorInfoView(viewModel: viewModel.errorInfoViewModel)
+                .padding(EdgeInsets(top: 0,
+                                    leading: errorHorizontalPadding,
+                                    bottom: controlBarHeight,
+                                    trailing: errorHorizontalPadding)
+                )
+                .accessibilityElement(children: .contain)
+                .accessibilityAddTraits(.isModal)
         }
     }
 }
