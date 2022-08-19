@@ -13,8 +13,8 @@ Pod::Spec.new do |spec|
 
   spec.source_files         = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling/**/*.swift'
   spec.resources            = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling/**/*.{xcassets,strings}'
-
-  spec.pod_target_xcconfig  = { "EXCLUDED_ARCHS[sdk=iphonesimulator*]": "arm64", "ENABLE_BITCODE": "NO"}
+  spec.preserve_paths            = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling/Info.plist'
+  spec.pod_target_xcconfig  = { "EXCLUDED_ARCHS[sdk=iphonesimulator*]": "arm64", "ENABLE_BITCODE": "NO", 'INFOPLIST_FILE' => '$(PODS_TARGET_SRCROOT)/AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling/Info.plist'}
   
   spec.dependency             'AzureCommunicationCalling', '2.2.0'
   spec.dependency             'MicrosoftFluentUI/Avatar_ios', '0.3.9'
