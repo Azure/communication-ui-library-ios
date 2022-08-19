@@ -142,7 +142,7 @@ class UIKitDemoViewController: UIViewController {
                                                                 identifiers: identifiers)
     }
 
-    func startExperience(with link: String) {
+    func startExperience(with link: String) async {
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         if !envConfigSubject.localeIdentifier.isEmpty {
@@ -169,7 +169,9 @@ class UIKitDemoViewController: UIViewController {
                                            identifiers: ids)
         }
 
-        callComposite.events.onError = onError
+        callComposite.events.onError = { [weak self] error in
+            Task { @MainActor in self?.onError(error) }
+        }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
@@ -177,7 +179,7 @@ class UIKitDemoViewController: UIViewController {
                                                       displayName: renderDisplayName)
         let localOptions = LocalOptions(participantViewData: participantViewData)
 
-        if let credential = try? getTokenCredential() {
+        if let credential = try? await getTokenCredential() {
             switch selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
@@ -197,7 +199,7 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
-    private func getTokenCredential() throws -> CommunicationTokenCredential {
+    private func getTokenCredential() async throws -> CommunicationTokenCredential {
         switch selectedAcsTokenType {
         case .token:
             if let communicationTokenCredential = try? CommunicationTokenCredential(token: acsTokenTextField.text!) {
@@ -208,8 +210,10 @@ class UIKitDemoViewController: UIViewController {
         case .tokenUrl:
             if let url = URL(string: acsTokenUrlTextField.text!) {
                 let tokenRefresher = AuthenticationHelper.getCommunicationToken(tokenUrl: url)
-                let refreshOptions = CommunicationTokenRefreshOptions(initialToken: nil, refreshProactively: true,
-                                                                                        tokenRefresher: tokenRefresher)
+                let initialToken = await AuthenticationHelper.fetchInitialToken(with: tokenRefresher)
+                let refreshOptions = CommunicationTokenRefreshOptions(initialToken: initialToken,
+                                                                      refreshProactively: true,
+                                                                      tokenRefresher: tokenRefresher)
                 if let credential = try? CommunicationTokenCredential(withOptions: refreshOptions) {
                     return credential
                 }
@@ -306,8 +310,15 @@ class UIKitDemoViewController: UIViewController {
     }
 
     @objc func onStartExperienceBtnPressed() {
+        startExperienceButton.isEnabled = false
+        startExperienceButton.backgroundColor = .systemGray3
+
         let link = self.getMeetingLink()
-        self.startExperience(with: link)
+        Task { @MainActor in
+            await self.startExperience(with: link)
+            startExperienceButton.isEnabled = true
+            startExperienceButton.backgroundColor = .systemBlue
+        }
     }
 
     private func updateAcsTokenTypeFields() {
