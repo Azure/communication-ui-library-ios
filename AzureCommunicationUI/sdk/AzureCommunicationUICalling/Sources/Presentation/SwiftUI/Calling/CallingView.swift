@@ -12,10 +12,9 @@ struct CallingView: View {
         static let infoHeaderViewHorizontalPadding: CGFloat = 8.0
         static let infoHeaderViewMaxWidth: CGFloat = 380.0
         static let infoHeaderViewHeight: CGFloat = 46.0
+        static let controlBarHeight: CGFloat = 92
+        static let errorHorizontalPadding: CGFloat = 8
     }
-
-    let controlBarHeight: CGFloat = 92
-    let errorHorizontalPadding: CGFloat = 8
 
     @ObservedObject var viewModel: CallingViewModel
     let avatarManager: AvatarViewManager
@@ -172,9 +171,9 @@ struct CallingView: View {
             Spacer()
             ErrorInfoView(viewModel: viewModel.errorInfoViewModel)
                 .padding(EdgeInsets(top: 0,
-                                    leading: errorHorizontalPadding,
-                                    bottom: controlBarHeight,
-                                    trailing: errorHorizontalPadding)
+                                    leading: Constants.errorHorizontalPadding,
+                                    bottom: Constants.controlBarHeight,
+                                    trailing: Constants.errorHorizontalPadding)
                 )
                 .accessibilityElement(children: .contain)
                 .accessibilityAddTraits(.isModal)
