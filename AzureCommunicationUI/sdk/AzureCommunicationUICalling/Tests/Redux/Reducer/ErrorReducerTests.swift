@@ -71,6 +71,16 @@ class ErrorReducerTests: XCTestCase {
         XCTAssertEqual(resultState.internalError, nil)
         XCTAssertEqual(resultState.errorCategory, .none)
     }
+
+    func test_handleErrorReducer_reduce_when_cameraOnFailed_then_returnErrorState_categoryCallState() {
+        let state = ErrorState()
+        let action = Action.localUserAction(.cameraOnFailed(error: CallCompositeInternalError.cameraOnFailed))
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState.internalError, .cameraOnFailed)
+        XCTAssertEqual(resultState.errorCategory, .callState)
+    }
 }
 
 extension ErrorReducerTests {
