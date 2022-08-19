@@ -13,6 +13,9 @@ public struct CallCompositeErrorCode {
     /// Error when a call disconnects unexpectedly or fails on ending.
     public static var callEnd: String = "callEnd"
 
+    /// Error when camera failed to start or stop
+    public static let cameraFailure: String = "cameraFailure"
+
     /// Error when the input token is expired.
     public static let tokenExpired: String = "tokenExpired"
 
