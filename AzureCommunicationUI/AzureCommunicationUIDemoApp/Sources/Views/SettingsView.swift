@@ -35,6 +35,7 @@ struct SettingsView: View {
                 localizationSettings
                 localParticipantSettings
                 avatarSettings
+                navigationSettings
                 remoteParticipantsAvatarsSettings
                 themeSettings
             }
@@ -78,6 +79,19 @@ struct SettingsView: View {
                 }
             }.pickerStyle(.segmented)
             TextField("Rendered Display Name", text: $envConfigSubject.renderedDisplayName)
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
+                .textFieldStyle(.roundedBorder)
+        }
+    }
+
+    var navigationSettings: some View {
+        Section(header: Text("Navigation Bar View Data")) {
+            TextField("Navigation Title", text: $envConfigSubject.navigationTitle)
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
+                .textFieldStyle(.roundedBorder)
+            TextField("Navigation SubTitle", text: $envConfigSubject.navigationSubtitle)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
                 .textFieldStyle(.roundedBorder)

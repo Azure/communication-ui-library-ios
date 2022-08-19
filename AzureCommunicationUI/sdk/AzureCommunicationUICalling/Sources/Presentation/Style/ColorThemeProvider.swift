@@ -40,6 +40,9 @@ class ColorThemeProvider {
     let onHoldBackground = UIColor.compositeColor(.onHoldBackground)
     let textSecondary = UIColor.compositeColor(.textSecondary)
     let iconSecondary = UIColor.compositeColor(.iconSecondary)
+    lazy var subtitleColor: UIColor = {
+        return dynamicColor(light: FluentUI.Colors.textSecondary, dark: UIColor.white)
+    }()
 
     init(themeOptions: ThemeOptions?) {
         self.colorSchemeOverride = themeOptions?.colorSchemeOverride ?? .unspecified
@@ -48,6 +51,10 @@ class ColorThemeProvider {
         self.primaryColorTint10 = themeOptions?.primaryColorTint10 ?? Colors.Palette.communicationBlueTint10.color
         self.primaryColorTint20 = themeOptions?.primaryColorTint20 ?? Colors.Palette.communicationBlueTint20.color
         self.primaryColorTint30 = themeOptions?.primaryColorTint30 ?? Colors.Palette.communicationBlueTint30.color
+    }
+
+    private func dynamicColor(light: UIColor, dark: UIColor) -> UIColor {
+        return UIColor { $0.userInterfaceStyle == .dark ? dark : light }
     }
 }
 
