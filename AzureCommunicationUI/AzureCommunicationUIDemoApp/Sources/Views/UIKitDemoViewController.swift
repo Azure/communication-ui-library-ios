@@ -175,9 +175,12 @@ class UIKitDemoViewController: UIViewController {
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
+        let navigationBarViewData = NavigationBarViewData(title: envConfigSubject.navigationTitle,
+                                                          subtitle: envConfigSubject.navigationSubtitle)
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
-        let localOptions = LocalOptions(participantViewData: participantViewData)
+        let localOptions = LocalOptions(participantViewData: participantViewData,
+                                        navigationBarViewData: navigationBarViewData)
 
         if let credential = try? await getTokenCredential() {
             switch selectedMeetingType {
