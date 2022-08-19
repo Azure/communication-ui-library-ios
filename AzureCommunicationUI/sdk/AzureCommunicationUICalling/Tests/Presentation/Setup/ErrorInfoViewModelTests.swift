@@ -32,7 +32,7 @@ class ErrorInfoViewModelTests: XCTestCase {
                                errorCategory: .callState)
 
         sut.update(errorState: state)
-        XCTAssertTrue(sut.isDisplayed)
+        XCTAssertEqual(sut.isDisplayed, true)
         XCTAssertEqual(sut.title, "AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin")
     }
 
@@ -90,7 +90,7 @@ class ErrorInfoViewModelTests: XCTestCase {
                                errorCategory: .callState)
 
         sut.update(errorState: state)
-        XCTAssertEqual(sut.isDisplayed, true)
+        XCTAssertTrue(sut.isDisplayed)
         XCTAssertEqual(sut.title, "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed")
     }
 
