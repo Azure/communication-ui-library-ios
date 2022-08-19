@@ -43,8 +43,9 @@ class ColorThemeProvider {
         return dynamicColor(light: Colors.Palette.gray950.color,
                             dark: Colors.textDominant)
     }()
-    lazy var subtitleColor: UIColor = {
-        return dynamicColor(light: FluentUI.Colors.textSecondary, dark: UIColor.white)
+    lazy var onNavigationSecondary: UIColor = {
+        return dynamicColor(light: Colors.textSecondary,
+                            dark: Colors.textDominant)
     }()
 
     // MARK: - Button Icon Colours
