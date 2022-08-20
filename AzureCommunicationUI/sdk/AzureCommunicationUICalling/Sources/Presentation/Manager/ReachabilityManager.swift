@@ -19,7 +19,9 @@ class ReachabilityManager: ReachabilityManagerProtocol {
             if path.status != .satisfied {
                 #warning("remove debug messages here")
                 print("network lost detected")
-                store.dispatch(action: .errorAction(.networkLost))
+                store.dispatch(action: .networkAction(.networkLost))
+            } else if path.status == .satisfied {
+                store.dispatch(action: .networkAction(.networkRestored))
             }
             print("network mointor closure ends with path = \(path.status)")
         }

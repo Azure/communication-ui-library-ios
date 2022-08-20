@@ -138,6 +138,7 @@
 		50FA46212698EA7A001844AC /* IconWithLabelButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FA46202698EA7A001844AC /* IconWithLabelButtonViewModel.swift */; };
 		50FA4623269CA1D4001844AC /* IconButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FA4622269CA1D3001844AC /* IconButtonViewModel.swift */; };
 		529C34E328A4B25400ACD918 /* ReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529C34E228A4B25400ACD918 /* ReachabilityManager.swift */; };
+		52EF8CFA28B0ADE60078DE2E /* NetworkAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EF8CF928B0ADE60078DE2E /* NetworkAction.swift */; };
 		5A314059D7E61D1083A8C473 /* LocalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314A985811198B09DA2688 /* LocalVideoView.swift */; };
 		5A3140EA80ACDCB14140A060 /* CompositeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3145FC912A71B20D5ECBF6 /* CompositeViewFactory.swift */; };
 		5A3142646DD55C66CF290F7A /* LocalVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314317E4A1B700E6BE5E2E /* LocalVideoViewModel.swift */; };
@@ -414,6 +415,7 @@
 		50FA46202698EA7A001844AC /* IconWithLabelButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithLabelButtonViewModel.swift; sourceTree = "<group>"; };
 		50FA4622269CA1D3001844AC /* IconButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtonViewModel.swift; sourceTree = "<group>"; };
 		529C34E228A4B25400ACD918 /* ReachabilityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReachabilityManager.swift; sourceTree = "<group>"; };
+		52EF8CF928B0ADE60078DE2E /* NetworkAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAction.swift; sourceTree = "<group>"; };
 		5A3141390FEFB58AD2A2E22F /* LocalVideoViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoViewModelTests.swift; sourceTree = "<group>"; };
 		5A314317E4A1B700E6BE5E2E /* LocalVideoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoViewModel.swift; sourceTree = "<group>"; };
 		5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACSCameraFacingExtension.swift; sourceTree = "<group>"; };
@@ -757,6 +759,7 @@
 				A874EDC726616792003C7D92 /* LifecycleAction.swift */,
 				1F3F0C64283E853800C66054 /* AudioSessionAction.swift */,
 				1F94DAE326740BCB00691D1E /* LocalUserAction.swift */,
+				52EF8CF928B0ADE60078DE2E /* NetworkAction.swift */,
 			);
 			path = Action;
 			sourceTree = "<group>";
@@ -1707,6 +1710,7 @@
 				503F4B6B2704EE6800C17DA6 /* BannerTextViewModel.swift in Sources */,
 				982C2833267D0C4500427246 /* CompositeButton.swift in Sources */,
 				1F13D37326AB3F1200E31666 /* ACSCallingStateExtension.swift in Sources */,
+				52EF8CFA28B0ADE60078DE2E /* NetworkAction.swift in Sources */,
 				988799912745EABE00AA3759 /* SourceViewSpace.swift in Sources */,
 				1FBCB6B12649EB1200F57EEA /* RemoteParticipantExtension.swift in Sources */,
 				88F6EE1C2735F8E8001AD3E9 /* ErrorState.swift in Sources */,

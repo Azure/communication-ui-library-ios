@@ -158,7 +158,7 @@ class AppStateReducerTests: XCTestCase {
 
         let state = getAppState(errorState: oldState)
         let sut = getSUT(errorReducer: mockSubReducer)
-        let result = sut.reduce(state, Action.errorAction(.networkLost))
+        let result = sut.reduce(state, Action.networkAction(.networkLost))
 
         XCTAssertEqual(result.errorState, expectedState)
     }

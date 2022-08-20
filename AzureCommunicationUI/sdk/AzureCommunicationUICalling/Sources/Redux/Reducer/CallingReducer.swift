@@ -21,7 +21,7 @@ extension Reducer where State == CallingState,
         case .callingAction(.transcriptionStateUpdated(let newValue)):
             isTranscriptionActive = newValue
         case .errorAction(.statusErrorAndCallReset),
-                .errorAction(.networkLost):
+                .networkAction(.networkLost):
             callingStatus = .none
             isRecordingActive = false
             isTranscriptionActive = false
@@ -40,7 +40,8 @@ extension Reducer where State == CallingState,
                 .localUserAction(_),
                 .permissionAction(_),
                 .compositeExitAction,
-                .callingViewLaunched:
+                .callingViewLaunched,
+                .networkAction(.networkRestored):
             return callingState
         }
         return CallingState(status: callingStatus,

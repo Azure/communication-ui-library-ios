@@ -98,7 +98,7 @@ class ErrorInfoViewModelTests: XCTestCase {
         let sut = makeSUT()
         let state = ErrorState(internalError: .connectionFailed,
                                error: nil,
-                               errorCategory: .fatal)
+                               errorCategory: .none)
         sut.update(errorState: state)
         XCTAssertTrue(sut.isDisplayed)
         XCTAssertEqual(sut.title, "AzureCommunicationUICalling.SnackBar.Text.ConnectionError")

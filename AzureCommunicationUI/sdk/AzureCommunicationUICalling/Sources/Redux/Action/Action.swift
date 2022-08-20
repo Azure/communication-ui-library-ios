@@ -15,6 +15,7 @@ enum Action: Equatable {
     case lifecycleAction(LifecycleAction)
     case localUserAction(LocalUserAction)
     case permissionAction(PermissionAction)
+    case networkAction(NetworkAction)
     case compositeExitAction
     case callingViewLaunched
 }

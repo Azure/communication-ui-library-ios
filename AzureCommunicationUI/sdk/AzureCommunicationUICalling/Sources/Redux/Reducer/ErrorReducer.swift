@@ -22,11 +22,12 @@ extension Reducer where State == ErrorState,
             errorType = internalError
             error = rawError
             errorCategory = .callState
-        case .errorAction(.networkLost):
+        case .networkAction(.networkLost):
             errorType = .connectionFailed
             error = nil
-            errorCategory = .fatal
-        case .callingAction(.callStartRequested):
+            errorCategory = .none
+        case .callingAction(.callStartRequested),
+                .networkAction(.networkRestored):
             errorType = nil
             error = nil
             errorCategory = .none
@@ -52,7 +53,6 @@ extension Reducer where State == ErrorState,
                 .compositeExitAction,
                 .callingViewLaunched:
             return state
-
         }
 
         return ErrorState(internalError: errorType,
