@@ -30,6 +30,10 @@ extension Reducer where State == ErrorState,
             errorType = nil
             error = nil
             errorCategory = .none
+        case .localUserAction(.cameraOnFailed):
+            errorType = .cameraOnFailed
+            error = nil
+            errorCategory = .callState
 
             // Exhaustive unimplemented actions
         case .audioSessionAction(_),

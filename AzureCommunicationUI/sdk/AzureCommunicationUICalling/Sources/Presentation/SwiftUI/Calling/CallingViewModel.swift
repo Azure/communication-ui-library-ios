@@ -30,6 +30,7 @@ class CallingViewModel: ObservableObject {
 
     var controlBarViewModel: ControlBarViewModel!
     var infoHeaderViewModel: InfoHeaderViewModel!
+    var errorInfoViewModel: ErrorInfoViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -77,6 +78,8 @@ class CallingViewModel: ObservableObject {
             }.store(in: &cancellables)
 
         updateIsLocalCameraOn(with: store.state)
+        errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel(title: "",
+                                                                              subtitle: "")
     }
 
     func dismissConfirmLeaveDrawerList() {
@@ -134,6 +137,7 @@ class CallingViewModel: ObservableObject {
         }
 
         updateIsLocalCameraOn(with: state)
+        errorInfoViewModel.update(errorState: state.errorState)
     }
 
     private func updateIsLocalCameraOn(with state: AppState) {

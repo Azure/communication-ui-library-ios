@@ -13,13 +13,13 @@ public struct CallCompositeErrorCode {
     /// Error when a call disconnects unexpectedly or fails on ending.
     public static var callEnd: String = "callEnd"
 
-    /// Error when a network issue has occurred
-    public static let networkError: String = "networkError"
+    /// Error when camera failed to start or stop
+    public static let cameraFailure: String = "cameraFailure"
 
     /// Error when the input token is expired.
     public static let tokenExpired: String = "tokenExpired"
 
-    /// Error when something unexpected has occured 
+    /// Error when something unexpected has occured
     public static let unknownError: String = "unknownError"
 
     /// Error when a participant is evicted from the call by another participant
@@ -33,6 +33,9 @@ public struct CallCompositeErrorCode {
 
     /// Error when local user fails to resume a call.
     static let callResume: String = "callResume"
+
+    /// Error when a network issue has occurred
+    public static let networkError: String = "networkError"
 }
 
 /// The error thrown after Call Composite launching.

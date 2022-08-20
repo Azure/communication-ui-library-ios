@@ -31,4 +31,15 @@ class AuthenticationHelper {
             }.resume()
         }
     }
+
+    static func fetchInitialToken(with tokenRefresher: TokenRefresher) async -> String? {
+        return await withCheckedContinuation { continuation in
+            tokenRefresher { token, error in
+                if let error = error {
+                    print("ERROR: Failed to fetch initial token. \(error.localizedDescription)")
+                }
+                continuation.resume(returning: token)
+            }
+        }
+    }
 }

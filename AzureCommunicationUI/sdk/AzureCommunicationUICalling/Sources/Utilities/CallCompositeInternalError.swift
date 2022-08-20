@@ -30,12 +30,13 @@ enum CallCompositeInternalError: Error, Equatable {
             return CallCompositeErrorCode.callJoin
         case .callEndFailed:
             return CallCompositeErrorCode.callEnd
+        case .cameraOnFailed:
+            return CallCompositeErrorCode.cameraFailure
         case .callHoldFailed,
                 .callResumeFailed,
                 .callEvicted,
                 .callDenied,
-                .cameraSwitchFailed,
-                .cameraOnFailed:
+                .cameraSwitchFailed:
             return nil
         }
     }
