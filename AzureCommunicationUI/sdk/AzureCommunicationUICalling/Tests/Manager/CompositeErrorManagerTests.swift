@@ -84,6 +84,29 @@ class CompositeErrorManagerTests: XCTestCase {
 
         wait(for: [handlerCallExpectation, actionExpectation], timeout: 1)
     }
+
+    func test_errorManager_receiveState_when_fatalErrorNetworkLost_then_receiveEmergencyExitAction() {
+        let fatalError = CallCompositeError(code: CallCompositeErrorCode.networkError, error: nil)
+        self.expectedError = fatalError
+        let errorState = ErrorState(internalError: .connectionFailed,
+                                    error: nil,
+                                    errorCategory: .fatal)
+        let newState = getAppState(errorState: errorState)
+        let actionExpectation = XCTestExpectation(description: "Dispatch the new emergency exit action")
+
+        mockStoreFactory.setState(newState)
+        mockStoreFactory.store.$state
+            .dropFirst(1)
+            .sink { [weak self] _ in
+                guard let self = self else {
+                    XCTFail("self is nil")
+                    return
+                }
+                XCTAssertTrue(self.mockStoreFactory.actions.first == Action.compositeExitAction)
+                actionExpectation.fulfill()
+            }.store(in: cancellable)
+        wait(for: [handlerCallExpectation, actionExpectation], timeout: 1)
+    }
 }
 
 extension CompositeErrorManagerTests {

@@ -25,7 +25,7 @@ extension Reducer where State == ErrorState,
         case .errorAction(.networkLost):
             errorType = .connectionFailed
             error = nil
-            errorCategory = .none
+            errorCategory = .fatal
         case .callingAction(.callStartRequested):
             errorType = nil
             error = nil

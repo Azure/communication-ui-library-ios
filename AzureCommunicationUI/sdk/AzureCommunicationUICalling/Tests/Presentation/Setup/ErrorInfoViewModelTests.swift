@@ -94,6 +94,16 @@ class ErrorInfoViewModelTests: XCTestCase {
         XCTAssertEqual(sut.title, "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed")
     }
 
+    func test_errorInfoViewModel_update_when_errorStateConnectionFailed_then_snackBarErrorConnectionErrorDisplayed() {
+        let sut = makeSUT()
+        let state = ErrorState(internalError: .connectionFailed,
+                               error: nil,
+                               errorCategory: .fatal)
+        sut.update(errorState: state)
+        XCTAssertTrue(sut.isDisplayed)
+        XCTAssertEqual(sut.title, "AzureCommunicationUICalling.SnackBar.Text.ConnectionError")
+    }
+
     func makeSUT() -> ErrorInfoViewModel {
         return ErrorInfoViewModel(localizationProvider: localizationProvider)
     }

@@ -17,6 +17,7 @@ class ReachabilityManager: ReachabilityManagerProtocol {
         self.store = store
         monitor.pathUpdateHandler = { path in
             if path.status != .satisfied {
+                #warning("remove debug messages here")
                 print("network lost detected")
                 store.dispatch(action: .errorAction(.networkLost))
             }

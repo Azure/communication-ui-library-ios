@@ -81,6 +81,16 @@ class ErrorReducerTests: XCTestCase {
         XCTAssertEqual(resultState.internalError, .cameraOnFailed)
         XCTAssertEqual(resultState.errorCategory, .callState)
     }
+
+    func test_handleErrorReducer_reduce_when_networkFailed_then_returnErrorState_ConnectionFailed() {
+        let state = ErrorState()
+        let action = Action.errorAction(.networkLost)
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState.internalError, .connectionFailed)
+        XCTAssertEqual(resultState.errorCategory, .fatal)
+    }
 }
 
 extension ErrorReducerTests {
