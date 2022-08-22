@@ -17,10 +17,6 @@
 			</array>
 		</dict>
 	</array>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>This is required for calling.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>This is required for calling.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -42,12 +38,12 @@
 	<array>
 		<string>audio</string>
 	</array>
-	<key>appCenterSecret</key>
-	<string>${appCenterSecret}</string>
 	<key>acsToken</key>
 	<string>${acsToken}</string>
 	<key>acsTokenUrl</key>
 	<string>${acsTokenUrl}</string>
+	<key>appCenterSecret</key>
+	<string>${appCenterSecret}</string>
 	<key>displayName</key>
 	<string>${displayName}</string>
 	<key>groupCallId</key>
