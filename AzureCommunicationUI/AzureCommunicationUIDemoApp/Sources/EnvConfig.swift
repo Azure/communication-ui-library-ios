@@ -33,6 +33,8 @@ class EnvConfigSubject: ObservableObject {
     @Published var displayName: String = EnvConfig.displayName.value()
     @Published var avatarImageName: String = ""
     @Published var renderedDisplayName: String = ""
+    @Published var navigationTitle: String = ""
+    @Published var navigationSubtitle: String = ""
     @Published var groupCallId: String = EnvConfig.groupCallId.value()
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
 
