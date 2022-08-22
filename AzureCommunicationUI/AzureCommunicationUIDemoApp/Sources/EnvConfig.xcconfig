@@ -1,0 +1,11 @@
+//
+//  Copyright (c) Microsoft Corporation. All rights reserved.
+//  Licensed under the MIT License.
+//
+acsToken = eyJhbGciOiJSUzI1NiIsImtpZCI6IjEwNiIsIng1dCI6Im9QMWFxQnlfR3hZU3pSaXhuQ25zdE5PU2p2cyIsInR5cCI6IkpXVCJ9.eyJza3lwZWlkIjoiYWNzOmI2YWFkYTFmLTBiMWQtNDdhYy04NjZmLTkxYWFlMDBhMWQwMV8wMDAwMDAxMi0yNmZjLTAwZjItMDJjMy01OTNhMGQwMDQwZjMiLCJzY3AiOjE3OTIsImNzaSI6IjE2NTU4MjkwNjAiLCJleHAiOjE2NTU5MTU0NjAsImFjc1Njb3BlIjoidm9pcCIsInJlc291cmNlSWQiOiJiNmFhZGExZi0wYjFkLTQ3YWMtODY2Zi05MWFhZTAwYTFkMDEiLCJpYXQiOjE2NTU4MjkwNjB9.sqKo-CxVoOSTFIiWYVmN6s75pOHBWRdOc6qwP3QOvqQjW4J6V1C2cnlTMrUjRX9Umqu8nbYe8zmpRumRz8FsfZH-fcZJRWVGYKtNrGl7UkaMLFzYyAsjGoso4p308tvIfbuHZqqht_IWRtqZTWgvk4tCSih2Q56LcXUzszxGz7ZCsYQBQOOPMOBE28yb8MiUk7KmPK1CtnQQX-5aie9pFxDHa37ykwtkXVculBfPFlcaGQhM6_OnTibXHnmZaH5oPW2_z9ADTNA13EWlGkWaBdkhqbmO4Nqfp2qpZ4e5FXeFnu6yFh_TQtqWPU5_Y0W8SuoMOskwCygYM6xbPaTQLA
+acsTokenUrl = https:/$()/acs-token-auth.azurewebsites.net/api/Auth?code=ECCHapGpOGo7KLqwsCrHZt9z5W7mKYEeCgFVnJjPxltPl1faCmfaNw==
+displayName = AMy Com
+groupCallId = d047ee00-d86a-11eb-8e92-d7baf38a4ecd
+teamsMeetingLink =  https://teams.microsoft.com/l/meetup-join/19%3ameeting_MGU1ZDk3ODgtZjRhYi00YjJhLWI1ZWQtMWQ5NTljYWFhMTRi%40thread.v2/0?context=%7b%22Tid%22%3a%2272f988bf-86f1-41af-91ab-2d7cd011db47%22%2c%22Oid%22%3a%22c93d4d38-a049-4a31-9f83-f0051b6bab2d%22%7d
+
+
