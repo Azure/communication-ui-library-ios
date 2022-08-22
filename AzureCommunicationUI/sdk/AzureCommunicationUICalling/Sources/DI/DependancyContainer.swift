@@ -68,7 +68,8 @@ final class DependencyContainer {
                                            callCompositeEventsHandler: callCompositeEventsHandler,
                                            callingSDKWrapper: resolve(),
                                            avatarViewManager: resolve()) as RemoteParticipantsManager)
-        register(ReachabilityManager(store: resolve()))
+        register(ReachabilityManager(store: resolve(),
+                                     logger: resolve()))
     }
 
     private func makeStore(displayName: String?) -> Store<AppState> {

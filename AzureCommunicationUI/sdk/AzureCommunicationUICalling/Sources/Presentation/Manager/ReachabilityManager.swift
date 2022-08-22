@@ -10,22 +10,23 @@ protocol ReachabilityManagerProtocol {}
 class ReachabilityManager: ReachabilityManagerProtocol {
 
     private let store: Store<AppState>
+    private let logger: Logger
     private let monitor = NWPathMonitor()
     private let networkMonitorQueue = DispatchQueue(label: "NetworkMonitorQueue")
 
-    init(store: Store<AppState>) {
+    init(store: Store<AppState>,
+         logger: Logger) {
         self.store = store
+        self.logger = logger
         monitor.pathUpdateHandler = { path in
             if path.status != .satisfied {
-                #warning("remove debug messages here")
-                print("network lost detected")
+                logger.debug("Network Connection: Offline")
                 store.dispatch(action: .networkAction(.networkLost))
             } else if path.status == .satisfied {
+                logger.debug("Network Connection: Online")
                 store.dispatch(action: .networkAction(.networkRestored))
             }
-            print("network mointor closure ends with path = \(path.status)")
         }
-        print("manager done set up")
         monitor.start(queue: networkMonitorQueue)
     }
 }
