@@ -49,6 +49,6 @@ class DependencyContainerTests: XCTestCase {
         XCTAssertNotNil(dependencyContainer.resolve() as AudioSessionManagerProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as AvatarViewManager)
         XCTAssertNotNil(dependencyContainer.resolve() as RemoteParticipantsManager)
-        XCTAssertNotNil(dependencyContainer.resolve() as ReachabilityManager)
+        XCTAssertNotNil(dependencyContainer.resolve() as NetworkManager)
     }
 }
