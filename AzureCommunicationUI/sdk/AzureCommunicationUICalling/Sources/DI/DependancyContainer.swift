@@ -68,7 +68,7 @@ final class DependencyContainer {
                                            callCompositeEventsHandler: callCompositeEventsHandler,
                                            callingSDKWrapper: resolve(),
                                            avatarViewManager: resolve()) as RemoteParticipantsManager)
-        register(ReachabilityManager(store: resolve(),
+        register(NetworkManager(store: resolve(),
                                      logger: resolve()))
     }
 

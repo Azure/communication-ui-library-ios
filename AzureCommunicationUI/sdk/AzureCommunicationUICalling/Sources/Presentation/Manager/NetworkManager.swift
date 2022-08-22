@@ -5,9 +5,9 @@
 
 import Network
 
-protocol ReachabilityManagerProtocol {}
+protocol NetworkManagerProtocol {}
 
-class ReachabilityManager: ReachabilityManagerProtocol {
+class NetworkManager: NetworkManagerProtocol {
 
     private let store: Store<AppState>
     private let logger: Logger
