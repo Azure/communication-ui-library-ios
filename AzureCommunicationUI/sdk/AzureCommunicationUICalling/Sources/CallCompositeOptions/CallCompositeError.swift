@@ -19,6 +19,9 @@ public struct CallCompositeErrorCode {
     /// Error when the input token is expired.
     public static let tokenExpired: String = "tokenExpired"
 
+    /// Error when a network issue has occurred
+    public static let networkError: String = "networkError"
+
     /// Error when something unexpected has occured
     public static let unknownError: String = "unknownError"
 
@@ -33,9 +36,6 @@ public struct CallCompositeErrorCode {
 
     /// Error when local user fails to resume a call.
     static let callResume: String = "callResume"
-
-    /// Error when a network issue has occurred
-    public static let networkError: String = "networkError"
 }
 
 /// The error thrown after Call Composite launching.
