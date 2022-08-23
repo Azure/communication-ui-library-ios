@@ -24,13 +24,16 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
     init(items: [T],
          sourceView: UIView,
          headerName: String? = nil,
-         showHeader: Bool = false
+         showHeader: Bool = false,
+         isRightToLeft: Bool = false
     ) {
         self.items = items
         self.sourceView = sourceView
         self.showHeader = showHeader
         self.headerName = headerName
         super.init(nibName: nil, bundle: nil)
+        UIView.appearance().semanticContentAttribute = isRightToLeft ?
+            .forceRightToLeft : .forceLeftToRight
     }
 
     required init?(coder: NSCoder) {
