@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "octopus4x-2.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "octopus4x-1.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "octopus4x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "octopus.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
