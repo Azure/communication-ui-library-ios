@@ -29,7 +29,7 @@ class CompositeAudioDevicesListCell: TableViewCell {
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
 
-        setTitleLabelTextColor(color: UIColor.compositeColor(CompositeColor.onSurface))
+        setTitleLabelTextColor(color: StyleProvider.color.onSurface)
 
         setup(title: viewModel.title,
               customView: speakerImageView,
