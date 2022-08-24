@@ -1,23 +1,15 @@
 {
   "images" : [
     {
-      "filename" : "cat4x-2.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "cat4x-1.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "cat4x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "cat.svg",
+      "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
+  },
+  "properties" : {
+    "preserves-vector-representation" : true
   }
 }
