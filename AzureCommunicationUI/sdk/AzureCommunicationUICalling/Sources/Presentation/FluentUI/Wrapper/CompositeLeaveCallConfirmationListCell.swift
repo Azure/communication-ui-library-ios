@@ -14,7 +14,7 @@ class CompositeLeaveCallConfirmationListCell: TableViewCell {
         let isNameEmpty = viewModel.title.trimmingCharacters(in: .whitespaces).isEmpty
         var micImageView: UIImageView?
         let micImage = StyleProvider.icon.getUIImage(for: viewModel.icon)?
-            .withTintColor(StyleProvider.color.iconSecondary, renderingMode: .alwaysOriginal)
+            .withTintColor(StyleProvider.color.drawerIconDark, renderingMode: .alwaysOriginal)
         micImageView = UIImageView(image: micImage)
 
         selectionStyle = .none
@@ -23,8 +23,8 @@ class CompositeLeaveCallConfirmationListCell: TableViewCell {
             : StyleProvider.color.drawerColor
 
         setTitleLabelTextColor(color: isNameEmpty
-                               ? UIColor.compositeColor(CompositeColor.mute)
-                               : UIColor.compositeColor(CompositeColor.onSurface))
+                               ? StyleProvider.color.drawerIconDark
+                               : StyleProvider.color.onSurface)
 
         setup(title: viewModel.title,
               customView: micImageView)
