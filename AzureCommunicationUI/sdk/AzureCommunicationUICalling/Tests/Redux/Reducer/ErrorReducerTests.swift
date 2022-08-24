@@ -82,16 +82,6 @@ class ErrorReducerTests: XCTestCase {
         XCTAssertEqual(resultState.errorCategory, .callState)
     }
 
-    func test_handleErrorReducer_reduce_when_networkFailed_then_returnErrorState_ConnectionFailed() {
-        let state = ErrorState()
-        let action = Action.networkAction(.networkLost)
-        let sut = getSUT()
-        let resultState = sut.reduce(state, action)
-
-        XCTAssertEqual(resultState.internalError, .connectionFailed)
-        XCTAssertEqual(resultState.errorCategory, .none)
-    }
-
     func test_handleErrorReducer_reduce_when_networkRestored_then_returnNoErrorState() {
         let state = ErrorState()
         let action = Action.networkAction(.networkRestored)

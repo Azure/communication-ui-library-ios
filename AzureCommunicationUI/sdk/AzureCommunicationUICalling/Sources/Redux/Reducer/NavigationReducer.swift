@@ -15,8 +15,7 @@ extension Reducer where State == NavigationState,
         case .callingAction(.dismissSetup),
                 .compositeExitAction:
             navigationStatus = .exit
-        case .errorAction(.statusErrorAndCallReset),
-                .networkAction(.networkLost):
+        case .errorAction(.statusErrorAndCallReset):
             navigationStatus = .setup
 
             // Exhaustive unimplemented actions
@@ -34,7 +33,7 @@ extension Reducer where State == NavigationState,
                 .lifecycleAction(_),
                 .localUserAction(_),
                 .permissionAction(_),
-                .networkAction(.networkRestored):
+                .networkAction(_):
             return state
         }
         return NavigationState(status: navigationStatus)

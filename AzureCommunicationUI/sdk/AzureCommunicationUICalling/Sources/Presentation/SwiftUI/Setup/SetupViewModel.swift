@@ -12,6 +12,7 @@ class SetupViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
 
     private var callingStatus: CallingStatus = .none
+    private var isOffline: Bool = false
 
     let isRightToLeft: Bool
     let previewAreaViewModel: PreviewAreaViewModel
@@ -105,6 +106,15 @@ class SetupViewModel: ObservableObject {
     }
 
     func joinCallButtonTapped() {
+        guard !isOffline else {
+            errorInfoViewModel.update(errorState: .init(internalError: .connectionFailed,
+                                                        error: nil,
+                                                        errorCategory: .none))
+            if !errorInfoViewModel.isDisplayed {
+                errorInfoViewModel.show()
+            }
+            return
+        }
         store.dispatch(action: .callingAction(.callStartRequested))
         isJoinRequested = true
     }
@@ -123,6 +133,7 @@ class SetupViewModel: ObservableObject {
         }
 
         callingStatus = newCallingStatus
+        isOffline = state.networkState.status == .offline
         let localUserState = state.localUserState
         let permissionState = state.permissionState
         let callingState = state.callingState
