@@ -142,7 +142,7 @@ struct SetupTitleView: View {
                         if let subtitle = viewModel.subTitle, !subtitle.isEmpty {
                             Text(subtitle)
                                 .font(Fonts.caption1.font)
-                                .foregroundColor(Color(StyleProvider.color.subtitleColor))
+                                .foregroundColor(Color(StyleProvider.color.onNavigationSecondary))
                                 .lineLimit(1)
                                 .minimumScaleFactor(sizeCategory.isAccessibilityCategory ? 0.4 : 1)
                                 .accessibilityAddTraits(.isHeader)
