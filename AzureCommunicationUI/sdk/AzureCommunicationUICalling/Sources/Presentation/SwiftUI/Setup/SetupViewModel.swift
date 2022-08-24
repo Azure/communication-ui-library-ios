@@ -15,7 +15,8 @@ class SetupViewModel: ObservableObject {
 
     let isRightToLeft: Bool
     let previewAreaViewModel: PreviewAreaViewModel
-    let title: String
+    var title: String
+    var subTitle: String?
 
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
@@ -29,13 +30,22 @@ class SetupViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState>,
-         localizationProvider: LocalizationProviderProtocol) {
+         localizationProvider: LocalizationProviderProtocol,
+         navigationBarViewData: NavigationBarViewData? = nil) {
         self.store = store
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
 
-        title = self.localizationProvider.getLocalizedString(.setupTitle)
+        if let title = navigationBarViewData?.title, !title.isEmpty {
+            // if title is not nil/empty, use given title and optional subtitle
+            self.title = title
+            self.subTitle = navigationBarViewData?.subtitle
+        } else {
+            // else if title is nil/empty, use default title and disregard given subtitle
+            self.title = self.localizationProvider.getLocalizedString(.setupTitle)
+            self.subTitle = nil
+        }
 
         previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
 

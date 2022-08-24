@@ -13,21 +13,20 @@ protocol CallingServiceProtocol {
     var isTranscriptionActiveSubject: PassthroughSubject<Bool, Never> { get }
     var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
 
-    func setupCall() -> AnyPublisher<Void, Error>
-    func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) -> AnyPublisher<Void, Error>
-    func endCall() -> AnyPublisher<Void, Error>
+    func setupCall() async throws
+    func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws
+    func endCall() async throws
 
-    func requestCameraPreviewOn() -> AnyPublisher<String, Error>
+    func requestCameraPreviewOn() async throws -> String
+    func startLocalVideoStream() async throws -> String
+    func stopLocalVideoStream() async throws
+    func switchCamera() async throws -> CameraDevice
 
-    func startLocalVideoStream() -> AnyPublisher<String, Error>
-    func stopLocalVideoStream() -> AnyPublisher<Void, Error>
-    func switchCamera() -> AnyPublisher<CameraDevice, Error>
+    func muteLocalMic() async throws
+    func unmuteLocalMic() async throws
 
-    func muteLocalMic() -> AnyPublisher<Void, Error>
-    func unmuteLocalMic() -> AnyPublisher<Void, Error>
-
-    func holdCall() -> AnyPublisher<Void, Error>
-    func resumeCall() -> AnyPublisher<Void, Error>
+    func holdCall() async throws
+    func resumeCall() async throws
 }
 
 class CallingService: NSObject, CallingServiceProtocol {
@@ -53,49 +52,50 @@ class CallingService: NSObject, CallingServiceProtocol {
         callInfoSubject = callingSDKWrapper.callingEventsHandler.callInfoSubject
     }
 
-    func setupCall() -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.setupCall()
+    func setupCall() async throws {
+        try await callingSDKWrapper.setupCall()
     }
 
-    func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.startCall(
+    func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
+        try await callingSDKWrapper.startCall(
             isCameraPreferred: isCameraPreferred,
-            isAudioPreferred: isAudioPreferred)
+            isAudioPreferred: isAudioPreferred
+        )
     }
 
-    func endCall() -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.endCall()
+    func endCall() async throws {
+       try await callingSDKWrapper.endCall()
     }
 
-    func requestCameraPreviewOn() -> AnyPublisher<String, Error> {
-        return callingSDKWrapper.startPreviewVideoStream()
+    func requestCameraPreviewOn() async throws -> String {
+        return try await callingSDKWrapper.startPreviewVideoStream()
     }
 
-    func startLocalVideoStream() -> AnyPublisher<String, Error> {
-        return callingSDKWrapper.startCallLocalVideoStream()
+    func startLocalVideoStream() async throws -> String {
+        return try await callingSDKWrapper.startCallLocalVideoStream()
     }
 
-    func stopLocalVideoStream() -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.stopLocalVideoStream()
+    func stopLocalVideoStream() async throws {
+        try await callingSDKWrapper.stopLocalVideoStream()
     }
 
-    func switchCamera() -> AnyPublisher<CameraDevice, Error> {
-        return callingSDKWrapper.switchCamera()
+    func switchCamera() async throws -> CameraDevice {
+        try await callingSDKWrapper.switchCamera()
     }
 
-    func muteLocalMic() -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.muteLocalMic()
+    func muteLocalMic() async throws {
+        try await callingSDKWrapper.muteLocalMic()
     }
 
-    func unmuteLocalMic() -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.unmuteLocalMic()
+    func unmuteLocalMic() async throws {
+        try await callingSDKWrapper.unmuteLocalMic()
     }
 
-    func holdCall() -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.holdCall()
+    func holdCall() async throws {
+        try await callingSDKWrapper.holdCall()
     }
 
-    func resumeCall() -> AnyPublisher<Void, Error> {
-        return callingSDKWrapper.resumeCall()
+    func resumeCall() async throws {
+        try await callingSDKWrapper.resumeCall()
     }
 }

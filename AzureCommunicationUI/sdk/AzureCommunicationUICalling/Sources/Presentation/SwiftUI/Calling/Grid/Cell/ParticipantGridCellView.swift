@@ -108,20 +108,36 @@ struct ParticipantTitleView: View {
     @Binding var displayName: String?
     @Binding var isMuted: Bool
     @Binding var isHold: Bool
+    @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     let titleFont: Font
     let mutedIconSize: CGFloat
-    private let hSpace: CGFloat = 4
     private var isEmpty: Bool {
         return !isMuted && displayName?.trimmingCharacters(in: .whitespaces).isEmpty == true
     }
 
+    private enum Constants {
+        static let hSpace: CGFloat = 4
+
+        // MARK: Font Minimum Scale Factor
+        // Under accessibility mode, the largest size is 35
+        // so the scale factor would be 9/35 or 0.2
+        static let accessibilityFontScale: CGFloat = 0.2
+        // UI guideline suggested min font size should be 9.
+        // Since Fonts.caption1 has font size of 12,
+        // so min scale factor should be 9/12 or 0.75 as default.
+        static let defaultFontScale: CGFloat = 0.75
+    }
+
     var body: some View {
-        HStack(alignment: .center, spacing: hSpace, content: {
+        HStack(alignment: .center, spacing: Constants.hSpace, content: {
             if let displayName = displayName,
                !displayName.trimmingCharacters(in: .whitespaces).isEmpty {
                 Text(displayName)
                     .font(titleFont)
                     .lineLimit(1)
+                    .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
+                                        Constants.accessibilityFontScale :
+                                            Constants.defaultFontScale)
                     .foregroundColor(Color(StyleProvider.color.onBackground))
             }
             if isMuted && !isHold {
