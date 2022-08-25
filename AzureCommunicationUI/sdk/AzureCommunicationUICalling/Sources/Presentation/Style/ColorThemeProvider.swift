@@ -52,17 +52,17 @@ class ColorThemeProvider {
     }()
 
     // MARK: - Button Icon Colours
+    let hangup = UIColor.compositeColor(.hangup)
+    let disableColor: UIColor = Colors.iconDisabled
+    let drawerIconDark: UIColor = Colors.iconSecondary
+
+    // MARK: - View Background Colours
     let error: UIColor = Colors.error
+    let success: UIColor = Colors.Palette.successPrimary.color
     lazy var warning: UIColor = {
         return dynamicColor(light: Colors.Palette.warningTint40.color,
                             dark: Colors.warning)
     }()
-    let hangup = UIColor.compositeColor(.hangup)
-    let disableColor: UIColor = Colors.iconDisabled
-    let drawerIconDark: UIColor = Colors.iconSecondary
-    let success: UIColor = Colors.Palette.successPrimary.color
-
-    // MARK: - View Background Colours
     let overlay = UIColor.compositeColor(.overlay)
     let gridLayoutBackground: UIColor = Colors.surfacePrimary
     let gradientColor = UIColor.black.withAlphaComponent(0.7)
