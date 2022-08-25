@@ -90,16 +90,16 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         guard call != nil else {
             throw CallCompositeInternalError.callEndFailed
         }
-        do {
-            try await call?.hangUp(options: HangUpOptions())
-            logger.debug("Call ended successfully")
-            DispatchQueue.main.async {
-                  CFRunLoopStop(CFRunLoopGetCurrent())
+        try await Task { @MainActor in
+            do {
+                try await call?.hangUp(options: HangUpOptions())
+                logger.debug("Call ended successfully")
+                CFRunLoopStop(CFRunLoopGetCurrent())
+            } catch {
+                logger.error( "It was not possible to hangup the call.")
+                throw error
             }
-        } catch {
-            logger.error( "It was not possible to hangup the call.")
-            throw error
-        }
+        }.value
     }
 
     func getRemoteParticipant(_ identifier: String) -> RemoteParticipant? {
