@@ -90,6 +90,10 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         guard call != nil else {
             throw CallCompositeInternalError.callEndFailed
         }
+        // executing the following code in main thread is because
+        // we need to break correct runloop (the main thread one)
+        // otherwise, when user force close the app, the app would
+        // hang and gets terminated by iOS with exit code 9
         try await Task { @MainActor in
             do {
                 try await call?.hangUp(options: HangUpOptions())
