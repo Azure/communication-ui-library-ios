@@ -92,7 +92,9 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
         do {
             try await call?.hangUp(options: HangUpOptions())
-            logger.debug("Call ended successfully")
+            DispatchQueue.main.async {
+                  CFRunLoopStop(CFRunLoopGetCurrent())
+            }
         } catch {
             logger.error( "It was not possible to hangup the call.")
             throw error

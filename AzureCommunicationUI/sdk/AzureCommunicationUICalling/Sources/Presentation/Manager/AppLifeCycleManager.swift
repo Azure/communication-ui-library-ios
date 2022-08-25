@@ -15,7 +15,7 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
 
     private let logger: Logger
     private let store: Store<AppState>
-    private let runLoop: CFRunLoop?
+    private var callingStatus: CallingStatus
 
     var cancellables = Set<AnyCancellable>()
 
@@ -23,7 +23,7 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
          logger: Logger) {
         self.logger = logger
         self.store = store
-        self.runLoop = CFRunLoopGetCurrent()
+        self.callingStatus = .none
         store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
@@ -44,11 +44,7 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
     }
 
     private func receive(state: AppState) {
-        guard state.callingState.status == .disconnected,
-        let loop = runLoop else {
-            return
-        }
-        CFRunLoopStop(loop)
+        callingStatus = state.callingState.status
     }
 
     @objc func willDeactivate(_ notification: Notification) {
@@ -63,7 +59,9 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
 
     @objc func willTerminate(_ notification: Notification) {
         logger.debug("Will Terminate")
-        store.dispatch(action: .lifecycleAction(.willTerminate))
-        CFRunLoopRun()
+        if callingStatus == .connected {
+            store.dispatch(action: .lifecycleAction(.willTerminate))
+            CFRunLoopRun()
+        }
     }
 }
