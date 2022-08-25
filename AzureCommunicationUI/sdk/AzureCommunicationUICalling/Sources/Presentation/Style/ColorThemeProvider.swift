@@ -17,7 +17,10 @@ class ColorThemeProvider {
 
     // MARK: Text Label Colours
     let onHoldLabel: UIColor = Colors.textSecondary
-    let onWarning: UIColor = Colors.Palette.gray950.color
+    lazy var onWarning: UIColor = {
+        return dynamicColor(light: Colors.Palette.warningShade30.color,
+                            dark: Colors.surfacePrimary)
+    }()
     let onHoldBackground = UIColor.compositeColor(.onHoldBackground)
     lazy var onError: UIColor = {
         return dynamicColor(light: Colors.surfacePrimary,
@@ -49,14 +52,17 @@ class ColorThemeProvider {
     }()
 
     // MARK: - Button Icon Colours
-    let error: UIColor = Colors.error
-    let warning: UIColor = Colors.warning
     let hangup = UIColor.compositeColor(.hangup)
     let disableColor: UIColor = Colors.iconDisabled
     let drawerIconDark: UIColor = Colors.iconSecondary
-    let success: UIColor = Colors.Palette.successPrimary.color
 
     // MARK: - View Background Colours
+    let error: UIColor = Colors.error
+    let success: UIColor = Colors.Palette.successPrimary.color
+    lazy var warning: UIColor = {
+        return dynamicColor(light: Colors.Palette.warningTint40.color,
+                            dark: Colors.warning)
+    }()
     let overlay = UIColor.compositeColor(.overlay)
     let gridLayoutBackground: UIColor = Colors.surfacePrimary
     let gradientColor = UIColor.black.withAlphaComponent(0.7)
