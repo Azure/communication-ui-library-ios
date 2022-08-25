@@ -19,7 +19,7 @@ class ColorThemeProvider {
     let onHoldLabel: UIColor = Colors.textSecondary
     lazy var onWarning: UIColor = {
         return dynamicColor(light: Colors.Palette.warningShade30.color,
-                            dark: Colors.Palette.gray950.color)
+                            dark: Colors.surfacePrimary)
     }()
     let onHoldBackground = UIColor.compositeColor(.onHoldBackground)
     lazy var onError: UIColor = {
