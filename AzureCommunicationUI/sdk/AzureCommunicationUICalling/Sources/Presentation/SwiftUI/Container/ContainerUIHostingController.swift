@@ -32,7 +32,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
         self.callComposite = callComposite
         self.environmentProperties = environmentProperties
         super.init(rootView: environmentRoot)
-        UIView.appearance().semanticContentAttribute = isRightToLeft ?
+        self.view.semanticContentAttribute = isRightToLeft ?
             .forceRightToLeft : .forceLeftToRight
         subscribeEnvironmentProperties(containerView: rootView)
         haltSetupViewOrientation(containerView: rootView)
