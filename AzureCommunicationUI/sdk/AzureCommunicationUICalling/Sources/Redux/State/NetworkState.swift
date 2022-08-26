@@ -6,13 +6,15 @@
 import Foundation
 
 enum NetworkStatus {
-    case online, offline
+    case online
+    case offline
+    case unknown
 }
 
 struct NetworkState {
     let status: NetworkStatus
 
-    init(_ status: NetworkStatus = .online) {
+    init(_ status: NetworkStatus = .unknown) {
         self.status = status
     }
 }

@@ -107,12 +107,7 @@ class SetupViewModel: ObservableObject {
 
     func joinCallButtonTapped() {
         guard !isOffline else {
-            errorInfoViewModel.update(errorState: .init(internalError: .connectionFailed,
-                                                        error: nil,
-                                                        errorCategory: .none))
-            if !errorInfoViewModel.isDisplayed {
-                errorInfoViewModel.show()
-            }
+            showOfflineError()
             return
         }
         store.dispatch(action: .callingAction(.callStartRequested))
@@ -144,5 +139,14 @@ class SetupViewModel: ObservableObject {
                                         callingState: callingState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
         errorInfoViewModel.update(errorState: state.errorState)
+    }
+
+    private func showOfflineError() {
+        errorInfoViewModel.update(errorState: .init(internalError: .connectionFailed,
+                                                    error: nil,
+                                                    errorCategory: .none))
+        if !errorInfoViewModel.isDisplayed {
+            errorInfoViewModel.show()
+        }
     }
 }
