@@ -10,6 +10,10 @@ import AzureCommunicationCalling
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
+    // Helper to access the specialized version. Swift doesn't do generic protocols
+    private var eventHandler: CallingSDKEventsHandler! {
+        callingEventsHandler as? CallingSDKEventsHandler
+    }
     private let logger: Logger
     private let callConfiguration: CallConfiguration
     private var callClient: CallClient?
@@ -39,7 +43,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
         logger.debug("Reset Subjects in callingEventsHandler")
-        callingEventsHandler.setupProperties()
+        eventHandler.setupProperties()
         logger.debug( "Starting call")
         do {
             try await setupCallAgent()
@@ -81,7 +85,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             throw CallCompositeInternalError.callJoinFailed
         }
 
-        joinedCall.delegate = callingEventsHandler
+        joinedCall.delegate = callingEventsHandler as? CallingSDKEventsHandler
         call = joinedCall
         setupCallRecordingAndTranscriptionFeature()
     }
@@ -292,8 +296,8 @@ extension CallingSDKWrapper {
         }
         let recordingCallFeature = call.feature(Features.recording)
         let transcriptionCallFeature = call.feature(Features.transcription)
-        self.callingEventsHandler.assign(recordingCallFeature)
-        self.callingEventsHandler.assign(transcriptionCallFeature)
+        eventHandler.assign(recordingCallFeature)
+        eventHandler.assign(transcriptionCallFeature)
     }
 
     private func getLocalVideoStreamIdentifier() -> String? {

@@ -30,3 +30,11 @@ protocol CallingSDKWrapperProtocol {
 
     var callingEventsHandler: CallingSDKEventsHandling { get }
 }
+
+protocol CallingSDKEventsHandling {
+    var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> { get }
+    var callInfoSubject: PassthroughSubject<CallInfoModel, Never> { get }
+    var isRecordingActiveSubject: PassthroughSubject<Bool, Never> { get }
+    var isTranscriptionActiveSubject: PassthroughSubject<Bool, Never> { get }
+    var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
+}

@@ -7,18 +7,6 @@ import Foundation
 import Combine
 import AzureCommunicationCalling
 
-protocol CallingSDKEventsHandling: CallDelegate {
-    func assign(_ recordingCallFeature: RecordingCallFeature)
-    func assign(_ transcriptionCallFeature: TranscriptionCallFeature)
-    func setupProperties()
-
-    var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> { get }
-    var callInfoSubject: PassthroughSubject<CallInfoModel, Never> { get }
-    var isRecordingActiveSubject: PassthroughSubject<Bool, Never> { get }
-    var isTranscriptionActiveSubject: PassthroughSubject<Bool, Never> { get }
-    var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
-}
-
 class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> = .init([])
     var callInfoSubject = PassthroughSubject<CallInfoModel, Never>()
