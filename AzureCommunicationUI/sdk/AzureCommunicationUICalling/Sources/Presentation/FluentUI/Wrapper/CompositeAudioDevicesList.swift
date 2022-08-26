@@ -9,6 +9,7 @@ import UIKit
 
 struct CompositeAudioDevicesList: UIViewControllerRepresentable {
     @Binding var isPresented: Bool
+    @Environment(\.layoutDirection) var layoutDirection: LayoutDirection
     @ObservedObject var viewModel: AudioDevicesListViewModel
     let sourceView: UIView
 
@@ -18,7 +19,8 @@ struct CompositeAudioDevicesList: UIViewControllerRepresentable {
 
     func makeUIViewController(context: Context) -> DrawerContainerViewController<AudioDevicesListCellViewModel> {
         let controller = AudioDevicesListViewController(items: getAudioDevicesList(),
-                                                        sourceView: sourceView)
+                                                        sourceView: sourceView,
+                                                        isRightToLeft: layoutDirection == .rightToLeft)
         controller.delegate = context.coordinator
         return controller
     }
