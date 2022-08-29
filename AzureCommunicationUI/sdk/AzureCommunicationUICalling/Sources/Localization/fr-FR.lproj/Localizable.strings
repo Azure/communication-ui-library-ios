@@ -26,6 +26,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Désactiver le son";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Appareil";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Sélectionner un périphérique audio";
+"AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Accéder aux paramètres";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Votre caméra est désactivée. Pour l’activer, accédez à Paramètres pour autoriser l’accès.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="Votre caméra et votre audio sont désactivés. Pour les activer, accédez à Paramètres pour autoriser l’accès. Vous devez activer l’audio pour démarrer cet appel.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="Votre audio est désactivé. Pour l’activer, accédez à Paramètres pour autoriser l’accès. Vous devez activer l’audio pour démarrer cet appel.";
@@ -68,7 +69,7 @@
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Démarrage de l’enregistrement et de la transcription.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStarted"="Démarrage de l’enregistrement.";
-"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="Arrêt de la transcription.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="La transcription est arrêtée.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStarted"="Démarrage de la transcription.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStopped"="La transcription est en cours d’enregistrement.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="Arrêt de l’enregistrement.";
@@ -78,10 +79,10 @@
 /* ComplianceBanner body */
 "AzureCommunicationUICalling.CallingView.BannerBody.Consent"="En participant, vous autorisez la transcription de cette réunion.";
 "AzureCommunicationUICalling.CallingView.BannerBody.Recording"="Cette réunion est désormais enregistrée uniquement.";
-"AzureCommunicationUICalling.CallingView.BannerBody.TranscriptionStopped"="Arrêt de la transcription.";
+"AzureCommunicationUICalling.CallingView.BannerBody.TranscriptionStopped"="La transcription est arrêtée.";
 "AzureCommunicationUICalling.CallingView.BannerBody.OnlyTranscribing"="Cette réunion est désormais transcrite uniquement.";
 "AzureCommunicationUICalling.CallingView.BannerBody.RecordingStopped"="Arrêt de l’enregistrement.";
-"AzureCommunicationUICalling.CallingView.BannerBody.RecordingAndTranscriptionStopped"="Arrêt de l’enregistrement et de la transcription.";
+"AzureCommunicationUICalling.CallingView.BannerBody.RecordingAndTranscriptionStopped"="L’enregistrement et la transcription sont arrêtés.";
 
 /* ComplianceBanner display link */
 "AzureCommunicationUICalling.CallingView.BannerLink.PrivacyPolicy"="Politique de confidentialité";
@@ -98,3 +99,4 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Nous ne pouvons pas effectuer d’appel";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Votre micro est utilisé par une autre application";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Vous n’avez pas eu accès à la réunion.";
+"AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Erreur lors de la désactivation de la vidéo";
