@@ -148,20 +148,6 @@ class AppStateReducerTests: XCTestCase {
 
         XCTAssertEqual(result.remoteParticipantsState.participantInfoList.count, 0)
     }
-
-    func test_appStateReducer_reduceErrorStateNetworkLost_then_stateUpdatedToConnectionFailed() {
-        let oldState = ErrorState()
-        let expectedState = ErrorState(internalError: .connectionFailed,
-                                       error: nil,
-                                       errorCategory: .fatal)
-        let mockSubReducer: Reducer<ErrorState, Action> = .mockReducer(outputState: expectedState)
-
-        let state = getAppState(errorState: oldState)
-        let sut = getSUT(errorReducer: mockSubReducer)
-        let result = sut.reduce(state, Action.networkAction(.networkLost))
-
-        XCTAssertEqual(result.errorState, expectedState)
-    }
 }
 
 extension AppStateReducerTests {

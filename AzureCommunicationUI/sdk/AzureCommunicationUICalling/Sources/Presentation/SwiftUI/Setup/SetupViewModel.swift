@@ -12,7 +12,6 @@ class SetupViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
 
     private var callingStatus: CallingStatus = .none
-    private var isOffline: Bool = false
 
     let isRightToLeft: Bool
     let previewAreaViewModel: PreviewAreaViewModel
