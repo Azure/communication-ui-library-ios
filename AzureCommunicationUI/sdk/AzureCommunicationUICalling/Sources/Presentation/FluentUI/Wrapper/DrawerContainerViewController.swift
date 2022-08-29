@@ -16,6 +16,7 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
     let headerName: String?
     private let sourceView: UIView
     private let showHeader: Bool
+    private let isRightToLeft: Bool
     private var halfScreenHeight: CGFloat {
         UIScreen.main.bounds.height / 2
     }
@@ -24,12 +25,14 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
     init(items: [T],
          sourceView: UIView,
          headerName: String? = nil,
-         showHeader: Bool = false
+         showHeader: Bool = false,
+         isRightToLeft: Bool = false
     ) {
         self.items = items
         self.sourceView = sourceView
         self.showHeader = showHeader
         self.headerName = headerName
+        self.isRightToLeft = isRightToLeft
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -93,6 +96,8 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
 
         self.controller = controller
         resizeDrawer()
+        self.controller?.contentView?.semanticContentAttribute = self.isRightToLeft ?
+                                                            .forceRightToLeft : .forceLeftToRight
         return controller
     }
 
@@ -117,7 +122,6 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
                 drawerHeight = self.halfScreenHeight
                 isScrollEnabled = true
             }
-
             drawerTableView.isScrollEnabled = isScrollEnabled
             self.controller?.preferredContentSize = CGSize(width: 400,
                                                            height: drawerHeight)

@@ -5,7 +5,7 @@
 
 /* Devices */
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iOS"="iOS";
-"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Speaker"="Spreker";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Speaker"="Luidspreker";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPhone"="iPhone";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
 "AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="Hoofdtelefoon";
@@ -26,6 +26,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Dempen";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Apparaat";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Audioapparaat selecteren";
+"AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Ga naar Instellingen";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Uw camera is uitgeschakeld. Als u deze wilt inschakelen, gaat u naar Instellingen om toegang toe te staan.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="Uw camera en audio zijn uitgeschakeld. Als u deze wilt inschakelen, gaat u naar Instellingen om toegang toe te staan. U moet audio inschakelen om dit gesprek te starten.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="Uw audio is uitgeschakeld. Als u deze wilt inschakelen, gaat u naar Instellingen om toegang toe te staan. U moet audio inschakelen om dit gesprek te starten.";
@@ -59,7 +60,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d deelnemers hebben de vergadering verlaten";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="U neemt deel aan het gesprek";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Inhoud wordt gedeeld";
-"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Delen van inhoud is beëindigd";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Inhoud delen is beëindigd";
 
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Verlaten";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Annuleren";
@@ -98,3 +99,4 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Kan gesprek niet hervatten";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Uw microfoon wordt gebruikt door een andere app";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="U hebt geen toegang tot het gesprek.";
+"AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Fout bij het in- of uitschakelen van video";
