@@ -26,6 +26,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Mute";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Device";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Select audio device";
+"AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Go to Settings";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Your camera is disabled. To enable, please go to Settings to allow access.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="Your camera and audio are disabled. To enable, please go to Settings to allow access. You must enable audio to start this call.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="Your audio is disabled. To enable, please go to Settings to allow access. You must enable audio to start this call.";
@@ -98,3 +99,4 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Unable to resume call";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Your mic is in use by another app";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="You were denied access to the call.";
+"AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Error toggling video";
