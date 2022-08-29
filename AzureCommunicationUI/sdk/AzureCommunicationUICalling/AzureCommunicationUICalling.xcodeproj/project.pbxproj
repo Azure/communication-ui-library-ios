@@ -147,6 +147,8 @@
 		5A314D26A09E235A6509C1C7 /* ACSCameraFacingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */; };
 		5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */; };
 		752B953C2863A40F001C52E8 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752B953B2863A40E001C52E8 /* Action.swift */; };
+		75576C0D28BD371B00E55551 /* ACSLocalVideoStreamExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75576C0C28BD371B00E55551 /* ACSLocalVideoStreamExtension.swift */; };
+		75576C0F28BD422600E55551 /* CallingSDKWrapperExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75576C0E28BD422600E55551 /* CallingSDKWrapperExtension.swift */; };
 		8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */; };
 		8815B6E427DA9B350065A184 /* LobbyOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */; };
 		881D8F7027F2327B008EC897 /* ErrorInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D8F6F27F2327B008EC897 /* ErrorInfoViewModelTests.swift */; };
@@ -423,6 +425,8 @@
 		5A314F041B5D1869C41C242E /* DependencyContainerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyContainerTests.swift; sourceTree = "<group>"; };
 		69FC33B2B556CC3B9164A78E /* Pods-AzureCommunicationUICalling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling/Pods-AzureCommunicationUICalling.release.xcconfig"; sourceTree = "<group>"; };
 		752B953B2863A40E001C52E8 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		75576C0C28BD371B00E55551 /* ACSLocalVideoStreamExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACSLocalVideoStreamExtension.swift; sourceTree = "<group>"; };
+		75576C0E28BD422600E55551 /* CallingSDKWrapperExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKWrapperExtension.swift; sourceTree = "<group>"; };
 		8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyOverlayViewModel.swift; sourceTree = "<group>"; };
 		8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		881D8F6F27F2327B008EC897 /* ErrorInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorInfoViewModelTests.swift; sourceTree = "<group>"; };
@@ -662,12 +666,14 @@
 		1F13D37126AB3DDB00E31666 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */,
+				1F13D37226AB3F1200E31666 /* ACSCallingStateExtension.swift */,
+				5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */,
+				75576C0C28BD371B00E55551 /* ACSLocalVideoStreamExtension.swift */,
+				1FB0A1C028412A5000D57B0F /* ACSParticipantStateExtension.swift */,
 				1F87A7BA263A7EE900F49C7E /* CommunicationIdentifierExtension.swift */,
 				1FBCB6B02649EB1200F57EEA /* RemoteParticipantExtension.swift */,
-				1F13D37226AB3F1200E31666 /* ACSCallingStateExtension.swift */,
-				1FB0A1C028412A5000D57B0F /* ACSParticipantStateExtension.swift */,
-				5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */,
-				1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */,
+				75576C0E28BD422600E55551 /* CallingSDKWrapperExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1709,6 +1715,7 @@
 				1F48CF1F283447F400A44D58 /* CallingSDKWrapperProtocol.swift in Sources */,
 				1F2BEDC026328F2700D98266 /* CallingState.swift in Sources */,
 				88F6EE1A2735F5CB001AD3E9 /* ErrorReducer.swift in Sources */,
+				75576C0F28BD422600E55551 /* CallingSDKWrapperExtension.swift in Sources */,
 				A874EDC626616728003C7D92 /* AppLifeCycleState.swift in Sources */,
 				1F3F0C65283E853800C66054 /* AudioSessionAction.swift in Sources */,
 				A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */,
@@ -1732,6 +1739,7 @@
 				883D12DA2784F0B1005021E2 /* StringConstants.swift in Sources */,
 				1F4B0F0526A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift in Sources */,
 				1F11D2B2263CA10000D33838 /* CommunicationIdentifierExtension.swift in Sources */,
+				75576C0D28BD371B00E55551 /* ACSLocalVideoStreamExtension.swift in Sources */,
 				1F4B0F0126A2025900E87014 /* ParticipantGridLayoutView.swift in Sources */,
 				A837397A261CE9FF00D46787 /* DependancyContainer.swift in Sources */,
 				1B5F16A127FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift in Sources */,

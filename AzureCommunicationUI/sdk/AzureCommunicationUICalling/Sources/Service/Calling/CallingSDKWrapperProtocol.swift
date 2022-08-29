@@ -3,18 +3,29 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import Combine
-import AzureCommunicationCalling
+import UIKit
 
 enum CameraDevice {
     case front
     case back
 }
 
+public struct CallIdentity {
+    public var identifier: String?
+}
+
 protocol CallingSDKWrapperProtocol {
-    func getRemoteParticipant(_ identifier: String) -> RemoteParticipant?
-    func getLocalVideoStream(_ identifier: String) -> LocalVideoStream?
+    func getRemoteParticipant(_ identifier: String) -> ParticipantInfoModel?
+    func getRemoteParticipantVideoRendererView(_ videoViewId: RemoteParticipantVideoViewId,
+                                               sizeCallback: ((CGSize) -> Void)?)
+                                                                -> ParticipantRendererViewInfo?
+
+    func getRemoteParticipantVideoRendererViewSize() -> CGSize?
+    func getLocalVideoStream(_ identifier: String) -> VideoStreamInfoModel?
+    func getLocalVideoRendererView(_ identifier: String) throws -> UIView?
+    func updateDisplayedLocalVideoStream(_ identifier: String?)
+    func updateDisplayedRemoteVideoStream(_ videoViewIdArray: [RemoteParticipantVideoViewId])
 
     func startPreviewVideoStream() async throws -> String
     func setupCall() async throws

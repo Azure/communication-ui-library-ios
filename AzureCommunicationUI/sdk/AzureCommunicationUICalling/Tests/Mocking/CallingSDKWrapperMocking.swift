@@ -5,14 +5,13 @@
 
 import Foundation
 import Combine
-import AzureCommunicationCalling
 @testable import AzureCommunicationUICalling
 
 class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     var error: NSError?
     var callingEventsHandler: CallingSDKEventsHandling = CallingSDKEventsHandler(logger: LoggerMocking())
 
-    func getLocalVideoStream(_ identifier: String) -> LocalVideoStream? {
+    func getLocalVideoStream(_ identifier: String) -> VideoStreamInfoModel? {
         return nil
     }
 
@@ -73,7 +72,7 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
         }.value
     }
 
-    func getRemoteParticipant(_ identifier: String) -> RemoteParticipant? {
+    func getRemoteParticipant(_ identifier: String) -> ParticipantInfoModel? {
         getRemoteParticipantCallIds.append(identifier)
         return nil
     }

@@ -7,7 +7,7 @@ import UIKit
 import Combine
 import SwiftUI
 import AzureCommunicationUICalling
-import AzureCommunicationCalling
+import AzureCommunicationCommon
 import AppCenterCrashes
 
 class UIKitDemoViewController: UIViewController {
@@ -132,7 +132,7 @@ class UIKitDemoViewController: UIViewController {
         print("::::UIKitDemoView error.code \(error.code)")
     }
 
-    func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+    func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CallIdentity]) {
         print("::::UIKitDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
@@ -161,7 +161,7 @@ class UIKitDemoViewController: UIViewController {
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
-        let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
+        let onRemoteParticipantJoinedHandler: ([CallIdentity]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
             }

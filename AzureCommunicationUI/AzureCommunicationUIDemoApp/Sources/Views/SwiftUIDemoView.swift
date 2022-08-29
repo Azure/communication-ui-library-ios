@@ -164,7 +164,7 @@ extension SwiftUIDemoView {
             localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
 
-        let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
+        let onRemoteParticipantJoinedHandler: ([CallIdentity]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
             }
@@ -267,7 +267,7 @@ extension SwiftUIDemoView {
         showError(for: error.code)
     }
 
-    func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+    func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CallIdentity]) {
         print("::::SwiftUIDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return

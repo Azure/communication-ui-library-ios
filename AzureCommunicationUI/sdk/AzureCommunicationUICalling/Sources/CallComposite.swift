@@ -6,7 +6,6 @@
 import UIKit
 import SwiftUI
 import FluentUI
-import AzureCommunicationCalling
 
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
@@ -16,7 +15,7 @@ public class CallComposite {
         /// Closure to execute when error event occurs inside Call Composite.
         public var onError: ((CallCompositeError) -> Void)?
         /// Closures to execute when participant has joined a call inside Call Composite.
-        public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
+        public var onRemoteParticipantJoined: (([CallIdentity]) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -83,7 +82,7 @@ public class CallComposite {
     ///   - completionHandler: The completion handler that receives `Result` enum value with either
     ///                        a `Void` or an `SetParticipantViewDataError`.
     public func set(remoteParticipantViewData: ParticipantViewData,
-                    for identifier: CommunicationIdentifier,
+                    for identifier: CallIdentity,
                     completionHandler: ((Result<Void, SetParticipantViewDataError>) -> Void)? = nil) {
         guard let avatarManager = avatarViewManager else {
             completionHandler?(.failure(SetParticipantViewDataError.participantNotInCall))

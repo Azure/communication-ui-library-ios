@@ -11,18 +11,30 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
     // Helper to access the specialized version. Swift doesn't do generic protocols
-    private var eventHandler: CallingSDKEventsHandler! {
+    internal var eventHandler: CallingSDKEventsHandler! {
         callingEventsHandler as? CallingSDKEventsHandler
     }
-    private let logger: Logger
-    private let callConfiguration: CallConfiguration
-    private var callClient: CallClient?
-    private var callAgent: CallAgent?
-    private var call: Call?
-    private var deviceManager: DeviceManager?
-    private var localVideoStream: LocalVideoStream?
+    internal let logger: Logger
 
+    // Call setup
+    internal let callConfiguration: CallConfiguration
+    internal var callClient: CallClient?
+    internal var callAgent: CallAgent?
+    internal var call: Call?
+    internal var deviceManager: DeviceManager?
+
+    // Video handling
+    internal var localVideoStream: LocalVideoStream?
+
+    private struct VideoStreamCache {
+        var renderer: VideoStreamRenderer
+        var rendererView: RendererView
+        var mediaStreamType: MediaStreamType
+    }
+    private var localRendererViews = MappedSequence<String, VideoStreamCache>()
+    private var displayedRemoteParticipantsRendererView = MappedSequence<String, VideoStreamCache>()
     private var newVideoDeviceAddedHandler: ((VideoDeviceInfo) -> Void)?
+    private var didRenderScreenShareFirstFrame: ((CGSize) -> Void)?
 
     init(logger: Logger,
          callingEventsHandler: CallingSDKEventsHandling,
@@ -34,98 +46,8 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     }
 
     deinit {
+        disposeViews()
         logger.debug("CallingSDKWrapper deallocated")
-    }
-
-    func setupCall() async throws {
-        try await setupCallClientAndDeviceManager()
-    }
-
-    func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
-        logger.debug("Reset Subjects in callingEventsHandler")
-        eventHandler.setupProperties()
-        logger.debug( "Starting call")
-        do {
-            try await setupCallAgent()
-        } catch {
-            throw CallCompositeInternalError.callJoinFailed
-        }
-        try await joinCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
-    }
-
-    func joinCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
-        logger.debug( "Joining call")
-        let joinCallOptions = JoinCallOptions()
-
-        if isCameraPreferred,
-           let localVideoStream = localVideoStream {
-            let localVideoStreamArray = [localVideoStream]
-            let videoOptions = VideoOptions(localVideoStreams: localVideoStreamArray)
-            joinCallOptions.videoOptions = videoOptions
-        }
-
-        joinCallOptions.audioOptions = AudioOptions()
-        joinCallOptions.audioOptions?.muted = !isAudioPreferred
-
-        var joinLocator: JoinMeetingLocator
-        if callConfiguration.compositeCallType == .groupCall,
-           let groupId = callConfiguration.groupId {
-            joinLocator = GroupCallLocator(groupId: groupId)
-        } else if let meetingLink = callConfiguration.meetingLink {
-            joinLocator = TeamsMeetingLinkLocator(meetingLink: meetingLink)
-        } else {
-            logger.error("Invalid groupID / meeting link")
-            throw CallCompositeInternalError.callJoinFailed
-        }
-
-        let joinedCall = try await callAgent?.join(with: joinLocator, joinCallOptions: joinCallOptions)
-
-        guard let joinedCall = joinedCall else {
-            logger.error( "Join call failed")
-            throw CallCompositeInternalError.callJoinFailed
-        }
-
-        joinedCall.delegate = callingEventsHandler as? CallingSDKEventsHandler
-        call = joinedCall
-        setupCallRecordingAndTranscriptionFeature()
-    }
-
-    func endCall() async throws {
-        guard call != nil else {
-            throw CallCompositeInternalError.callEndFailed
-        }
-        do {
-            try await call?.hangUp(options: HangUpOptions())
-            logger.debug("Call ended successfully")
-        } catch {
-            logger.error( "It was not possible to hangup the call.")
-            throw error
-        }
-    }
-
-    func getRemoteParticipant(_ identifier: String) -> RemoteParticipant? {
-        guard let call = call else {
-            return nil
-        }
-
-        let remote = call.remoteParticipants.first(where: {
-            $0.identifier.stringValue == identifier
-        })
-
-        return remote
-
-    }
-
-    func getLocalVideoStream(_ identifier: String) -> LocalVideoStream? {
-        guard getLocalVideoStreamIdentifier() == identifier else {
-            return nil
-        }
-        return localVideoStream
-    }
-
-    func startCallLocalVideoStream() async throws -> String {
-        let stream = await getValidLocalVideoStream()
-        return try await startCallVideoStream(stream)
     }
 
     func stopLocalVideoStream() async throws {
@@ -143,6 +65,116 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
     }
 
+    func getRemoteParticipantVideoRendererView(
+        _ videoViewId: RemoteParticipantVideoViewId,
+        sizeCallback: ((CGSize) -> Void)?)
+    -> ParticipantRendererViewInfo? {
+
+        let videoStreamId = videoViewId.videoStreamIdentifier
+        let userIdentifier = videoViewId.userIdentifier
+        let cacheKey = generateCacheKey(userIdentifier: videoViewId.userIdentifier,
+                                        videoStreamId: videoStreamId)
+        if let videoStreamCache = displayedRemoteParticipantsRendererView.value(forKey: cacheKey) {
+            let streamSize = CGSize(width: Int(videoStreamCache.renderer.size.width),
+                              height: Int(videoStreamCache.renderer.size.height))
+            return ParticipantRendererViewInfo(rendererView: videoStreamCache.rendererView,
+                                               streamSize: streamSize)
+        }
+
+        guard let participant = getRemoteAcsPartipant(userIdentifier),
+              let videoStream = participant.videoStreams.first(where: { stream in
+                  return String(stream.id) == videoStreamId
+        }) else {
+            return nil
+        }
+
+        do {
+            let options = CreateViewOptions(scalingMode: videoStream.mediaStreamType == .screenSharing ? .fit : .crop)
+            let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(remoteVideoStream: videoStream)
+            let newRendererView: RendererView = try newRenderer.createView(withOptions: options)
+
+            let cache = VideoStreamCache(renderer: newRenderer,
+                                         rendererView: newRendererView,
+                                         mediaStreamType: videoStream.mediaStreamType)
+            displayedRemoteParticipantsRendererView.append(forKey: cacheKey,
+                                                           value: cache)
+
+            if videoStream.mediaStreamType == .screenSharing {
+                didRenderScreenShareFirstFrame = sizeCallback
+                newRenderer.delegate = self
+            }
+
+            return ParticipantRendererViewInfo(rendererView: newRendererView, streamSize: .zero)
+        } catch let error {
+            logger.error("Failed to render remote video, reason:\(error.localizedDescription)")
+            return nil
+        }
+    }
+
+    func getRemoteParticipantVideoRendererViewSize() -> CGSize? {
+        if let screenShare = displayedRemoteParticipantsRendererView.first(where: { cache in
+            cache.mediaStreamType == .screenSharing
+        }) {
+            return CGSize(width: Int(screenShare.renderer.size.width), height: Int(screenShare.renderer.size.height))
+        }
+
+        return nil
+    }
+
+    func getLocalVideoStream(_ identifier: String) -> VideoStreamInfoModel? {
+        guard getLocalVideoStreamIdentifier() == identifier else {
+            return nil
+        }
+        return localVideoStream?.asVideoStream
+    }
+
+    func updateDisplayedLocalVideoStream(_ identifier: String?) {
+        localRendererViews.makeKeyIterator().forEach { [weak self] key in
+            if identifier != key {
+                self?.disposeLocalVideoRendererCache(key)
+            }
+        }
+    }
+
+    func updateDisplayedRemoteVideoStream(_ videoViewIdArray: [RemoteParticipantVideoViewId]) {
+        let displayedKeys = videoViewIdArray.map {
+            return generateCacheKey(userIdentifier: $0.userIdentifier, videoStreamId: $0.videoStreamIdentifier)
+        }
+
+        displayedRemoteParticipantsRendererView.makeKeyIterator().forEach { [weak self] key in
+            if !displayedKeys.contains(key) {
+                self?.disposeRemoteParticipantVideoRendererView(key)
+            }
+        }
+    }
+
+    func getLocalVideoRendererView(_ identifier: String) throws -> UIView? {
+        guard getLocalVideoStreamIdentifier() == identifier,
+            let videoStream = localVideoStream else {
+            return nil
+        }
+        let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(localVideoStream: videoStream)
+        let newRendererView: RendererView = try newRenderer.createView(
+            withOptions: CreateViewOptions(scalingMode: .crop))
+
+        let cache = VideoStreamCache(renderer: newRenderer,
+                                     rendererView: newRendererView,
+                                     mediaStreamType: videoStream.mediaStreamType)
+        localRendererViews.append(forKey: identifier,
+                                  value: cache)
+        return newRendererView
+    }
+
+    func startPreviewVideoStream() async throws -> String {
+        _ = await getValidLocalVideoStream()
+        return getLocalVideoStreamIdentifier() ?? ""
+    }
+
+    func startCallLocalVideoStream() async throws -> String {
+        let stream = await getValidLocalVideoStream()
+        return try await startCallVideoStream(stream)
+    }
+
     func switchCamera() async throws -> CameraDevice {
         guard let videoStream = localVideoStream else {
             let error = CallCompositeInternalError.cameraSwitchFailed
@@ -157,110 +189,40 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         return flippedFacing.toCameraDevice()
     }
 
-    func startPreviewVideoStream() async throws -> String {
-        _ = await getValidLocalVideoStream()
-        return getLocalVideoStreamIdentifier() ?? ""
+    func getRemoteParticipant(_ identifier: String) -> ParticipantInfoModel? {
+        getRemoteAcsPartipant(identifier)?.toParticipantInfoModel()
     }
 
-    func muteLocalMic() async throws {
+    private func getRemoteAcsPartipant(_ identifier: String) -> RemoteParticipant? {
         guard let call = call else {
-            return
+            return nil
         }
 
-        do {
-            try await call.mute()
-        } catch {
-            logger.error("ERROR: It was not possible to mute. \(error)")
-            throw error
-        }
-        logger.debug("Mute successful")
+        return call.remoteParticipants.first(where: {
+            $0.identifier.stringValue == identifier
+        })
     }
 
-    func unmuteLocalMic() async throws {
-        guard let call = call else {
-            return
-        }
-
-        do {
-            try await call.unmute()
-        } catch {
-            logger.error("ERROR: It was not possible to unmute. \(error)")
-            throw error
-        }
-        logger.debug("Unmute successful")
+    private func generateCacheKey(userIdentifier: String, videoStreamId: String) -> String {
+        return ("\(userIdentifier):\(videoStreamId)")
     }
 
-    func holdCall() async throws {
-        guard let call = call else {
-            return
+    private func getLocalVideoStreamIdentifier() -> String? {
+        guard localVideoStream != nil else {
+            return nil
         }
-
-        do {
-            try await call.hold()
-            logger.debug("Hold Call successful")
-        } catch {
-            logger.error("ERROR: It was not possible to hold call. \(error)")
-        }
+        return "builtinCameraVideoStream"
     }
 
-    func resumeCall() async throws {
-        guard let call = call else {
-            return
+    private func getValidLocalVideoStream() async -> LocalVideoStream {
+        if let existingVideoStream = localVideoStream {
+            return existingVideoStream
         }
 
-        do {
-            try await call.resume()
-            logger.debug("Resume Call successful")
-        } catch {
-            logger.error( "ERROR: It was not possible to resume call. \(error)")
-            throw error
-        }
-    }
-}
-
-extension CallingSDKWrapper {
-    private func setupCallClientAndDeviceManager() async throws {
-        do {
-            let client = makeCallClient()
-            callClient = client
-            let deviceManager = try await client.getDeviceManager()
-            deviceManager.delegate = self
-            self.deviceManager = deviceManager
-        } catch {
-            throw CallCompositeInternalError.deviceManagerFailed(error)
-        }
-    }
-
-    private func setupCallAgent() async throws {
-        guard callAgent == nil else {
-            logger.debug("Reusing call agent")
-            return
-        }
-
-        let options = CallAgentOptions()
-        if let displayName = callConfiguration.displayName {
-            options.displayName = displayName
-        }
-        do {
-            let callAgent = try await callClient?.createCallAgent(
-                userCredential: callConfiguration.credential,
-                options: options
-            )
-            self.logger.debug("Call agent successfully created.")
-            self.callAgent = callAgent
-        } catch {
-            logger.error("It was not possible to create a call agent.")
-            throw error
-        }
-    }
-
-    private func makeCallClient() -> CallClient {
-        let clientOptions = CallClientOptions()
-        let appendingTag = self.callConfiguration.diagnosticConfig.tags
-        let diagnostics = clientOptions.diagnostics ?? CallDiagnosticsOptions()
-        diagnostics.tags.append(contentsOf: appendingTag)
-        clientOptions.diagnostics = diagnostics
-        return CallClient(options: clientOptions)
+        let videoDevice = await getVideoDeviceInfo(.front)
+        let videoStream = LocalVideoStream(camera: videoDevice)
+        localVideoStream = videoStream
+        return videoStream
     }
 
     private func startCallVideoStream(_ videoStream: LocalVideoStream) async throws -> String {
@@ -290,21 +252,26 @@ extension CallingSDKWrapper {
         }
     }
 
-    private func setupCallRecordingAndTranscriptionFeature() {
-        guard let call = call else {
-            return
+    private func disposeViews() {
+        displayedRemoteParticipantsRendererView.makeKeyIterator().forEach { key in
+            self.disposeRemoteParticipantVideoRendererView(key)
         }
-        let recordingCallFeature = call.feature(Features.recording)
-        let transcriptionCallFeature = call.feature(Features.transcription)
-        eventHandler.assign(recordingCallFeature)
-        eventHandler.assign(transcriptionCallFeature)
+        localRendererViews.makeKeyIterator().forEach { key in
+            self.disposeLocalVideoRendererCache(key)
+        }
     }
 
-    private func getLocalVideoStreamIdentifier() -> String? {
-        guard localVideoStream != nil else {
-            return nil
+    private func disposeRemoteParticipantVideoRendererView(_ cacheId: String) {
+        if let renderer = displayedRemoteParticipantsRendererView.removeValue(forKey: cacheId) {
+            renderer.renderer.dispose()
+            renderer.renderer.delegate = nil
         }
-        return "builtinCameraVideoStream"
+    }
+
+    private func disposeLocalVideoRendererCache(_ identifier: String) {
+        if let renderer = localRendererViews.removeValue(forKey: identifier) {
+            renderer.renderer.dispose()
+        }
     }
 }
 
@@ -315,7 +282,7 @@ extension CallingSDKWrapper: DeviceManagerDelegate {
         }
     }
 
-    private func getVideoDeviceInfo(_ cameraFacing: CameraFacing) async -> VideoDeviceInfo {
+    func getVideoDeviceInfo(_ cameraFacing: CameraFacing) async -> VideoDeviceInfo {
         // If we have a camera, return the value right away
         await withCheckedContinuation({ continuation in
             if let camera = deviceManager?.cameras
@@ -331,15 +298,15 @@ extension CallingSDKWrapper: DeviceManagerDelegate {
             }
         })
     }
-
-    private func getValidLocalVideoStream() async -> LocalVideoStream {
-        if let existingVideoStream = localVideoStream {
-            return existingVideoStream
-        }
-
-        let videoDevice = await getVideoDeviceInfo(.front)
-        let videoStream = LocalVideoStream(camera: videoDevice)
-        localVideoStream = videoStream
-        return videoStream
-    }
 }
+
+ extension CallingSDKWrapper: RendererDelegate {
+    func videoStreamRenderer(didRenderFirstFrame renderer: VideoStreamRenderer) {
+        let size = CGSize(width: Int(renderer.size.width), height: Int(renderer.size.height))
+        didRenderScreenShareFirstFrame?(size)
+    }
+
+    func videoStreamRenderer(didFailToStart renderer: VideoStreamRenderer) {
+        logger.error("Failed to render remote screenshare video. \(renderer)")
+    }
+ }

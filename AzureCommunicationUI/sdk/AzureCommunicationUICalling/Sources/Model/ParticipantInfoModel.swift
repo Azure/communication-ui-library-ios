@@ -30,4 +30,13 @@ struct ParticipantInfoModel: Hashable, Equatable {
     let screenShareVideoStreamModel: VideoStreamInfoModel?
     let cameraVideoStreamModel: VideoStreamInfoModel?
 
+    func videoStreamMatchingId(_ streamId: String) -> VideoStreamInfoModel? {
+        if streamId == screenShareVideoStreamModel?.videoStreamIdentifier {
+            return screenShareVideoStreamModel
+        } else if streamId == cameraVideoStreamModel?.videoStreamIdentifier {
+            return cameraVideoStreamModel
+        }
+
+        return nil
+    }
 }

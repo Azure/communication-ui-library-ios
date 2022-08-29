@@ -7,7 +7,7 @@ import Foundation
 import AzureCommunicationCalling
 
 extension RemoteParticipant {
-    func toParticipantInfoModel(recentSpeakingStamp: Date) -> ParticipantInfoModel {
+    func toParticipantInfoModel(recentSpeakingStamp: Date = Date()) -> ParticipantInfoModel {
         let videoInfoModels: [VideoStreamInfoModel] = self.videoStreams.compactMap { videoStream in
             VideoStreamInfoModel(
                 videoStreamIdentifier: String(videoStream.id),
@@ -38,6 +38,17 @@ extension MediaStreamType {
             return VideoStreamInfoModel.MediaStreamType.cameraVideo
         @unknown default:
             return VideoStreamInfoModel.MediaStreamType.cameraVideo
+        }
+    }
+}
+
+extension VideoStreamInfoModel.MediaStreamType {
+    var asMediaStreamType: MediaStreamType {
+        switch self {
+        case .cameraVideo:
+            return .video
+        case .screenSharing:
+            return .screenSharing
         }
     }
 }
