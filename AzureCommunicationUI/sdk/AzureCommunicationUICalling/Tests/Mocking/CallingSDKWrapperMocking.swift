@@ -3,7 +3,7 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
+import UIKit
 import Combine
 @testable import AzureCommunicationUICalling
 
@@ -143,4 +143,24 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
         return switchCameraCallCount > 0
     }
 
+    func getRemoteParticipantVideoRendererView(_ videoViewId: RemoteParticipantVideoViewId,
+                                               sizeCallback: ((CGSize) -> Void)?) -> ParticipantRendererViewInfo? {
+        return nil
+    }
+
+    func getRemoteParticipantVideoRendererViewSize() -> CGSize? {
+        .zero
+    }
+
+    func getLocalVideoRendererView(_ identifier: String) throws -> UIView? {
+        return nil
+    }
+
+    func updateDisplayedRemoteVideoStream(_ videoViewIdArray: [RemoteParticipantVideoViewId]) {
+
+    }
+
+    func updateDisplayedLocalVideoStream(_ identifier: String?) {
+
+    }
 }
