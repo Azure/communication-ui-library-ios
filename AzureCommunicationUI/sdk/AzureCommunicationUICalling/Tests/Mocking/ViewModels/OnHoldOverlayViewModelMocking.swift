@@ -5,7 +5,6 @@
 
 import Foundation
 import Combine
-import AzureCommunicationCalling
 @testable import AzureCommunicationUICalling
 
 class OnHoldOverlayViewModelMocking: OnHoldOverlayViewModel {
