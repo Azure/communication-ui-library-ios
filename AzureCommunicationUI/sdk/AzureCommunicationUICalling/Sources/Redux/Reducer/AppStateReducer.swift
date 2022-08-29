@@ -13,7 +13,6 @@ extension Reducer {
         audioSessionReducer: Reducer<AudioSessionState, AudioSessionAction> = .liveAudioSessionReducer,
         callingReducer: Reducer<CallingState, Action> = .liveCallingReducer,
         navigationReducer: Reducer<NavigationState, Action> = .liveNavigationReducer,
-        networkReducer: Reducer<NetworkState, NetworkAction> = .liveNetworkReducer,
         errorReducer: Reducer<ErrorState, Action> = .liveErrorReducer
     ) -> Reducer<AppState, Action> {
 
@@ -26,7 +25,6 @@ extension Reducer {
             var remoteParticipantState = state.remoteParticipantsState
             var navigationState = state.navigationState
             var errorState = state.errorState
-            var networkState = state.networkState
             var audioSessionState = state.audioSessionState
 
             switch action {
@@ -38,9 +36,6 @@ extension Reducer {
 
             case let .lifecycleAction(lifecycleAction):
                 lifeCycleState = lifeCycleReducer.reduce(state.lifeCycleState, lifecycleAction)
-
-            case let .networkAction(networkAction):
-                networkState = networkReducer.reduce(state.networkState, networkAction)
 
             default:
                 break
@@ -69,7 +64,6 @@ extension Reducer {
                             audioSessionState: audioSessionState,
                             navigationState: navigationState,
                             remoteParticipantsState: remoteParticipantState,
-                            networkState: networkState,
                             errorState: errorState)
         }
     }

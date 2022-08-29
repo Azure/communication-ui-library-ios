@@ -9,24 +9,27 @@ protocol NetworkManagerProtocol {}
 
 class NetworkManager: NetworkManagerProtocol {
 
-    private let store: Store<AppState>
-    private let logger: Logger
-    private let monitor = NWPathMonitor()
-    private let networkMonitorQueue = DispatchQueue(label: "NetworkMonitorQueue")
+    private enum Constant {
+        static let networkQueue: String = "NetworkMonitorQueue"
+    }
 
-    init(store: Store<AppState>,
-         logger: Logger) {
-        self.store = store
-        self.logger = logger
-        monitor.pathUpdateHandler = { path in
-            if path.status != .satisfied {
-                logger.debug("Network Connection: Offline")
-                store.dispatch(action: .networkAction(.networkLost))
-            } else if path.status == .satisfied {
-                logger.debug("Network Connection: Online")
-                store.dispatch(action: .networkAction(.networkRestored))
-            }
-        }
+    private let monitor: NWPathMonitor
+    private let networkMonitorQueue: DispatchQueue
+
+    init() {
+        monitor = NWPathMonitor()
+        networkMonitorQueue = DispatchQueue(label: Constant.networkQueue)
+    }
+
+    func isOnline() -> Bool {
+        return monitor.currentPath.status == .satisfied
+    }
+
+    func startMonitor() {
         monitor.start(queue: networkMonitorQueue)
+    }
+
+    func stopMonitor() {
+        monitor.cancel()
     }
 }

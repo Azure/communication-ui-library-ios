@@ -32,8 +32,7 @@ extension Reducer where State == NavigationState,
                 .errorAction(.fatalErrorUpdated(internalError: _, error: _)),
                 .lifecycleAction(_),
                 .localUserAction(_),
-                .permissionAction(_),
-                .networkAction(_):
+                .permissionAction(_):
             return state
         }
         return NavigationState(status: navigationStatus)

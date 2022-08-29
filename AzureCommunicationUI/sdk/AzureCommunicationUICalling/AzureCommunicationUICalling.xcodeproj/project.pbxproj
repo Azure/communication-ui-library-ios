@@ -138,10 +138,6 @@
 		50FA46212698EA7A001844AC /* IconWithLabelButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FA46202698EA7A001844AC /* IconWithLabelButtonViewModel.swift */; };
 		50FA4623269CA1D4001844AC /* IconButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FA4622269CA1D3001844AC /* IconButtonViewModel.swift */; };
 		529C34E328A4B25400ACD918 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529C34E228A4B25400ACD918 /* NetworkManager.swift */; };
-		52A9071828B6C9C8002C627C /* NetworkState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A9071728B6C9C8002C627C /* NetworkState.swift */; };
-		52A9071A28B6CB75002C627C /* NetworkReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A9071928B6CB75002C627C /* NetworkReducer.swift */; };
-		52C72B3528B6D9B000982A14 /* NetworkReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A9071B28B6D780002C627C /* NetworkReducerTests.swift */; };
-		52EF8CFA28B0ADE60078DE2E /* NetworkAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EF8CF928B0ADE60078DE2E /* NetworkAction.swift */; };
 		5A314059D7E61D1083A8C473 /* LocalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314A985811198B09DA2688 /* LocalVideoView.swift */; };
 		5A3140EA80ACDCB14140A060 /* CompositeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3145FC912A71B20D5ECBF6 /* CompositeViewFactory.swift */; };
 		5A3142646DD55C66CF290F7A /* LocalVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314317E4A1B700E6BE5E2E /* LocalVideoViewModel.swift */; };
@@ -418,10 +414,6 @@
 		50FA46202698EA7A001844AC /* IconWithLabelButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithLabelButtonViewModel.swift; sourceTree = "<group>"; };
 		50FA4622269CA1D3001844AC /* IconButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtonViewModel.swift; sourceTree = "<group>"; };
 		529C34E228A4B25400ACD918 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		52A9071728B6C9C8002C627C /* NetworkState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkState.swift; sourceTree = "<group>"; };
-		52A9071928B6CB75002C627C /* NetworkReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkReducer.swift; sourceTree = "<group>"; };
-		52A9071B28B6D780002C627C /* NetworkReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkReducerTests.swift; sourceTree = "<group>"; };
-		52EF8CF928B0ADE60078DE2E /* NetworkAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAction.swift; sourceTree = "<group>"; };
 		5A3141390FEFB58AD2A2E22F /* LocalVideoViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoViewModelTests.swift; sourceTree = "<group>"; };
 		5A314317E4A1B700E6BE5E2E /* LocalVideoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoViewModel.swift; sourceTree = "<group>"; };
 		5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACSCameraFacingExtension.swift; sourceTree = "<group>"; };
@@ -736,7 +728,6 @@
 				1F13D36F26AB293700E31666 /* NavigationReducer.swift */,
 				1F2BEDBA26328EBA00D98266 /* PermissionReducer.swift */,
 				1F2BED71262F8F4D00D98266 /* Reducer.swift */,
-				52A9071928B6CB75002C627C /* NetworkReducer.swift */,
 			);
 			path = Reducer;
 			sourceTree = "<group>";
@@ -753,7 +744,6 @@
 				1F13D36D26AA82D400E31666 /* NavigationState.swift */,
 				1F2BED982631FA6C00D98266 /* PermissionState.swift */,
 				1F13D36B26A8B83300E31666 /* RemoteParticipantsState.swift */,
-				52A9071728B6C9C8002C627C /* NetworkState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -767,7 +757,6 @@
 				A874EDC726616792003C7D92 /* LifecycleAction.swift */,
 				1F3F0C64283E853800C66054 /* AudioSessionAction.swift */,
 				1F94DAE326740BCB00691D1E /* LocalUserAction.swift */,
-				52EF8CF928B0ADE60078DE2E /* NetworkAction.swift */,
 			);
 			path = Action;
 			sourceTree = "<group>";
@@ -1069,7 +1058,6 @@
 				50FA4615268D13E9001844AC /* LocalUserReducerTests.swift */,
 				1F9184B526B4A3340049EF5B /* NavigationReducerTests.swift */,
 				A830C30B264D7C0900766E3D /* PermissionReducerTests.swift */,
-				52A9071B28B6D780002C627C /* NetworkReducerTests.swift */,
 			);
 			path = Reducer;
 			sourceTree = "<group>";
@@ -1567,7 +1555,6 @@
 				1B3A8EED285129CC002ED55A /* AudioSessionReducerTests.swift in Sources */,
 				1F4A24BC26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift in Sources */,
 				503300FE27079FC900289BB5 /* BannerTextViewModelTests.swift in Sources */,
-				52C72B3528B6D9B000982A14 /* NetworkReducerTests.swift in Sources */,
 				1F8E0B74268697B700DDD18E /* CallingMiddlewareHandlerMocking.swift in Sources */,
 				A869A63A26546A2E003CC4F2 /* MiddlewareMocking.swift in Sources */,
 				FAC1FECB27C98FC200D95845 /* LocalVideoViewModelMocking.swift in Sources */,
@@ -1627,7 +1614,6 @@
 				A8810CD8263CC46500C88545 /* NavigationRouter.swift in Sources */,
 				5054610227C5977A00040467 /* LocalizationProvider.swift in Sources */,
 				1B5F16A327FBC34E00C35126 /* LeaveCallConfirmationViewModel.swift in Sources */,
-				52A9071828B6C9C8002C627C /* NetworkState.swift in Sources */,
 				982C282E267C0C7500427246 /* Icon.swift in Sources */,
 				50FA461D2698DCEC001844AC /* IconButton.swift in Sources */,
 				A837397E261CEA4300D46787 /* Logger.swift in Sources */,
@@ -1654,7 +1640,6 @@
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
 				1B70D52827191073007CC933 /* DeviceExtension.swift in Sources */,
 				FA94AF3F27D68DFD001063A6 /* AccessibilityProvider.swift in Sources */,
-				52A9071A28B6CB75002C627C /* NetworkReducer.swift in Sources */,
 				881D8F7427FCA6B3008EC897 /* AvatarViewManager.swift in Sources */,
 				1BAD44BC283DAF2100C9E6A9 /* DraggableLocalVideoView.swift in Sources */,
 				50E2D69726EBCD15006B0EF4 /* CompositeParticipantsListCell.swift in Sources */,
@@ -1722,7 +1707,6 @@
 				503F4B6B2704EE6800C17DA6 /* BannerTextViewModel.swift in Sources */,
 				982C2833267D0C4500427246 /* CompositeButton.swift in Sources */,
 				1F13D37326AB3F1200E31666 /* ACSCallingStateExtension.swift in Sources */,
-				52EF8CFA28B0ADE60078DE2E /* NetworkAction.swift in Sources */,
 				988799912745EABE00AA3759 /* SourceViewSpace.swift in Sources */,
 				1FBCB6B12649EB1200F57EEA /* RemoteParticipantExtension.swift in Sources */,
 				88F6EE1C2735F8E8001AD3E9 /* ErrorState.swift in Sources */,

@@ -39,8 +39,7 @@ extension Reducer where State == CallingState,
                 .localUserAction(_),
                 .permissionAction(_),
                 .compositeExitAction,
-                .callingViewLaunched,
-                .networkAction(_):
+                .callingViewLaunched:
             return callingState
         }
         return CallingState(status: callingStatus,

@@ -19,6 +19,7 @@ class SetupViewModel: ObservableObject {
     var title: String
     var subTitle: String?
 
+    var networkManager: NetworkManager
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
     var joinCallButtonViewModel: PrimaryButtonViewModel!
@@ -31,9 +32,12 @@ class SetupViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState>,
+         networkManager: NetworkManager,
          localizationProvider: LocalizationProviderProtocol,
          navigationBarViewData: NavigationBarViewData? = nil) {
         self.store = store
+        self.networkManager = networkManager
+        networkManager.startMonitor()
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
@@ -95,6 +99,10 @@ class SetupViewModel: ObservableObject {
         }.store(in: &cancellables)
     }
 
+    deinit {
+        networkManager.stopMonitor()
+    }
+
     func setupAudioPermissions() {
         if store.state.permissionState.audioPermission == .notAsked {
             store.dispatch(action: .permissionAction(.audioPermissionRequested))
@@ -106,7 +114,7 @@ class SetupViewModel: ObservableObject {
     }
 
     func joinCallButtonTapped() {
-        guard !isOffline else {
+        guard networkManager.isOnline() else {
             showOfflineError()
             return
         }
@@ -128,7 +136,6 @@ class SetupViewModel: ObservableObject {
         }
 
         callingStatus = newCallingStatus
-        isOffline = state.networkState.status == .offline
         let localUserState = state.localUserState
         let permissionState = state.permissionState
         let callingState = state.callingState
@@ -138,13 +145,18 @@ class SetupViewModel: ObservableObject {
                                         permissionState: permissionState,
                                         callingState: callingState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
-        errorInfoViewModel.update(errorState: state.errorState)
+        if networkManager.isOnline() {
+            errorInfoViewModel.update(errorState: state.errorState)
+        }
     }
 
     private func showOfflineError() {
         errorInfoViewModel.update(errorState: .init(internalError: .connectionFailed,
-                                                    error: nil,
-                                                    errorCategory: .none))
+                                                        error: nil,
+                                                        errorCategory: .none))
+        // if user dismiss the error banner and try to
+        // tap on "join call" again, we should show the
+        // banner
         if !errorInfoViewModel.isDisplayed {
             errorInfoViewModel.show()
         }

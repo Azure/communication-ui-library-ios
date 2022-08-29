@@ -30,9 +30,7 @@ extension Middleware {
 
                         case .errorAction(_),
                                 .compositeExitAction,
-                                .callingViewLaunched,
-                                .networkAction(.networkRestored),
-                                .networkAction(.networkLost):
+                                .callingViewLaunched:
                             break
                         }
                         return next(action)
