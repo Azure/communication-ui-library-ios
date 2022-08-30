@@ -42,19 +42,20 @@ class ErrorInfoViewModel: ObservableObject {
 
     func update(errorState: ErrorState) {
         let errorType = errorState.internalError
+
+        guard let errorType = errorType else {
+            // if no error, hide banner
+            isDisplayed = false
+            return
+        }
+
         guard errorType != previousErrorType else {
-            // for conenction failures, we want to
-            // show the banner again if user had dismissed previously
-            if errorType == .connectionFailed && !isDisplayed {
-                isDisplayed = true
-            }
+            // if new error is the same as the previous one
+            // do nothing
             return
         }
 
         previousErrorType = errorType
-        guard let errorType = errorType else {
-            return
-        }
 
         isDisplayed = true
         switch errorType {

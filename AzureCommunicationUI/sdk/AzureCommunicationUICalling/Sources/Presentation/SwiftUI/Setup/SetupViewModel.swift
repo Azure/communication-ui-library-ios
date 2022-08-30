@@ -150,5 +150,6 @@ class SetupViewModel: ObservableObject {
     private func showOfflineError() {
         store.dispatch(action: .errorAction(.statusErrorAndCallReset(internalError: .connectionFailed,
                                                                      error: nil)))
+        errorInfoViewModel.show()
     }
 }
