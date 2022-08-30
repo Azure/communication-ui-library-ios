@@ -5,8 +5,8 @@
 
 import AzureCommunicationCalling
 
-extension CommunicationIdentifier {
-    var stringValue: String? {
+public extension CommunicationIdentifier {
+     var stringValue: String? {
         switch self {
         case is CommunicationUserIdentifier:
             return (self as? CommunicationUserIdentifier)?.identifier

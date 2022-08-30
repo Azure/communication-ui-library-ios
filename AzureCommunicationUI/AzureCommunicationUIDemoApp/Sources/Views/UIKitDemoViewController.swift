@@ -132,7 +132,8 @@ class UIKitDemoViewController: UIViewController {
         print("::::UIKitDemoView error.code \(error.code)")
     }
 
-    func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CallIdentity]) {
+    func onRemoteParticipantJoined(to callComposite: CallComposite,
+                                   identifiers: [CommunicationIdentifier]) {
         print("::::UIKitDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
@@ -161,7 +162,7 @@ class UIKitDemoViewController: UIViewController {
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
-        let onRemoteParticipantJoinedHandler: ([CallIdentity]) -> Void = { [weak callComposite] ids in
+        let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
             }

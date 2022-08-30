@@ -8,10 +8,10 @@ import AzureCommunicationCommon
 import AzureCommunicationUICalling
 
 struct RemoteParticipantAvatarHelper {
-    static func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CallIdentity]) {
+    static func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         let avatars = ["cat", "fox", "koala", "monkey", "mouse", "octopus"]
         for identifier in identifiers {
-            let id = identifier.identifier
+            let id = identifier.stringValue
             let nameIdValue = id != nil ? "\(id?.suffix(4) ?? "")" : ""
             var avatarImage: UIImage?
             var selectedAvatarName = ""

@@ -11,10 +11,6 @@ enum CameraDevice {
     case back
 }
 
-public struct CallIdentity {
-    public var identifier: String?
-}
-
 protocol CallingSDKWrapperProtocol {
     func getRemoteParticipant(_ identifier: String) -> ParticipantInfoModel?
     func getRemoteParticipantVideoRendererView(_ videoViewId: RemoteParticipantVideoViewId,

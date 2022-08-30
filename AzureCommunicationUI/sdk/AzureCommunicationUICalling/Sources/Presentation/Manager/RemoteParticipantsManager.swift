@@ -71,11 +71,8 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
         }
 
         let joinedParticipantsCommunicationIds = joinedParticipantsIds
-            .compactMap {
-                CallIdentity(
-                    identifier: callingSDKWrapper.getRemoteParticipant($0)?.userIdentifier
-                )
-            }
+            .compactMap { callingSDKWrapper.getRemoteParticipant($0)?.userIdentifier }
+            .map(CommunicationUserIdentifier.init)
         didRemoteParticipantsJoin(joinedParticipantsCommunicationIds)
     }
 }

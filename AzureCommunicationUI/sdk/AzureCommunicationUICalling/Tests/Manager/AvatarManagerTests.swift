@@ -55,7 +55,7 @@ class AvatarManagerTests: XCTestCase {
         let sut = makeSUT()
         let participantViewData = ParticipantViewData(avatar: mockImage)
         sut.set(remoteParticipantViewData: participantViewData,
-                for: CallIdentity(identifier: participant.userIdentifier)) { result in
+                for: CommunicationUserIdentifier(participant.userIdentifier)) { result in
             guard case .success = result else {
                 XCTFail("Failed with result validation")
                 return
@@ -76,7 +76,7 @@ class AvatarManagerTests: XCTestCase {
         let participantViewData = ParticipantViewData(avatar: mockImage)
         let id = UUID().uuidString
         sut.set(remoteParticipantViewData: participantViewData,
-                for: CallIdentity(identifier: id)) { result in
+                for: CommunicationUserIdentifier(id)) { result in
             guard case .failure(let error) = result else {
                 XCTFail("Failed with result validation")
                 return
