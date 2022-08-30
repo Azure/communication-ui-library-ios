@@ -13,11 +13,10 @@ class NetworkManager: NetworkManagerProtocol {
         static let networkQueue: String = "NetworkMonitorQueue"
     }
 
-    private let monitor: NWPathMonitor
+    private var monitor = NWPathMonitor()
     private let networkMonitorQueue: DispatchQueue
 
     init() {
-        monitor = NWPathMonitor()
         networkMonitorQueue = DispatchQueue(label: Constant.networkQueue)
     }
 
@@ -26,10 +25,15 @@ class NetworkManager: NetworkManagerProtocol {
     }
 
     func startMonitor() {
+        monitor = NWPathMonitor()
         monitor.start(queue: networkMonitorQueue)
     }
 
     func stopMonitor() {
+        // once monitor is cancelled
+        // its path object is gone
+        // need to init monitor again at line 28
+        // https://developer.apple.com/forums/thread/124486
         monitor.cancel()
     }
 }

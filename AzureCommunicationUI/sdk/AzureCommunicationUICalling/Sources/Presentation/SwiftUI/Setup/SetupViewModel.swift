@@ -36,7 +36,7 @@ class SetupViewModel: ObservableObject {
          navigationBarViewData: NavigationBarViewData? = nil) {
         self.store = store
         self.networkManager = networkManager
-        networkManager.startMonitor()
+        self.networkManager.startMonitor()
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
@@ -144,20 +144,11 @@ class SetupViewModel: ObservableObject {
                                         permissionState: permissionState,
                                         callingState: callingState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
-        if networkManager.isOnline() {
-            errorInfoViewModel.update(errorState: state.errorState)
-        }
+        errorInfoViewModel.update(errorState: state.errorState)
     }
 
     private func showOfflineError() {
-        errorInfoViewModel.update(errorState: .init(internalError: .connectionFailed,
-                                                        error: nil,
-                                                        errorCategory: .none))
-        // if user dismiss the error banner and try to
-        // tap on "join call" again, we should show the
-        // banner
-        if !errorInfoViewModel.isDisplayed {
-            errorInfoViewModel.show()
-        }
+        store.dispatch(action: .errorAction(.statusErrorAndCallReset(internalError: .connectionFailed,
+                                                                     error: nil)))
     }
 }
