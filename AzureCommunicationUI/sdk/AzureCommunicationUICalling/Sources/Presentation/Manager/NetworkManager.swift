@@ -13,7 +13,7 @@ class NetworkManager: NetworkManagerProtocol {
         static let networkQueue: String = "NetworkMonitorQueue"
     }
 
-    private var monitor = NWPathMonitor()
+    private var monitor: NWPathMonitor?
     private let networkMonitorQueue: DispatchQueue
 
     init() {
@@ -21,12 +21,12 @@ class NetworkManager: NetworkManagerProtocol {
     }
 
     func isOnline() -> Bool {
-        return monitor.currentPath.status == .satisfied
+        return monitor?.currentPath.status == .satisfied
     }
 
     func startMonitor() {
         monitor = NWPathMonitor()
-        monitor.start(queue: networkMonitorQueue)
+        monitor?.start(queue: networkMonitorQueue)
     }
 
     func stopMonitor() {
@@ -34,6 +34,6 @@ class NetworkManager: NetworkManagerProtocol {
         // its path object is gone
         // need to init monitor again at line 28
         // https://developer.apple.com/forums/thread/124486
-        monitor.cancel()
+        monitor?.cancel()
     }
 }
