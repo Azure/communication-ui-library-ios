@@ -11,11 +11,13 @@ struct IconWithLabelButton: View {
 
     @ObservedObject var viewModel: IconWithLabelButtonViewModel
 
-    private let iconImageSize: CGFloat = 25
-    private let verticalSpacing: CGFloat = 8
-    private let width: CGFloat = 85
-    private let height: CGFloat = 85
-    private let buttonDisabledColor = Color(StyleProvider.color.disableColor)
+    enum LayoutConstants {
+        static let iconImageSize: CGFloat = 25
+        static let verticalSpacing: CGFloat = 8
+        static let width: CGFloat = 85
+        static let height: CGFloat = 85
+        static let buttonDisabledColor = Color(StyleProvider.color.disableColor)
+    }
 
     var buttonForegroundColor: Color {
         switch viewModel.buttonTypeColor {
@@ -28,8 +30,8 @@ struct IconWithLabelButton: View {
 
     var body: some View {
         Button(action: viewModel.action) {
-            VStack(alignment: .center, spacing: verticalSpacing) {
-                Icon(name: viewModel.iconName, size: iconImageSize)
+            VStack(alignment: .center, spacing: LayoutConstants.verticalSpacing) {
+                Icon(name: viewModel.iconName, size: LayoutConstants.iconImageSize)
                     .accessibilityHidden(true)
                 if let buttonLabel = viewModel.buttonLabel {
                     if sizeCategory >= ContentSizeCategory.accessibilityMedium {
@@ -44,8 +46,8 @@ struct IconWithLabelButton: View {
         }
         .animation(nil)
         .disabled(viewModel.isDisabled)
-        .foregroundColor(viewModel.isDisabled ? buttonDisabledColor : buttonForegroundColor)
-        .frame(width: width, height: height, alignment: .top)
+        .foregroundColor(viewModel.isDisabled ? LayoutConstants.buttonDisabledColor : buttonForegroundColor)
+        .frame(width: LayoutConstants.width, height: LayoutConstants.height, alignment: .top)
         .accessibilityLabel(Text(viewModel.accessibilityLabel ?? ""))
         .accessibilityValue(Text(viewModel.accessibilityValue ?? ""))
         .accessibilityHint(Text(viewModel.accessibilityHint ?? ""))
