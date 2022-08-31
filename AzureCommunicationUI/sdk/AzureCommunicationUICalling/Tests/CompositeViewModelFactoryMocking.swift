@@ -75,9 +75,10 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                            action: action)
     }
 
-    func makeIconWithLabelButtonViewModel(iconName: CompositeIcon,
-                                          buttonTypeColor: IconWithLabelButtonViewModel.ButtonTypeColor,
-                                          buttonLabel: String,
+    func makeIconWithLabelButtonViewModel<T>(
+                                          selectedButtonState: T,
+                                          localizationProvider: LocalizationProviderProtocol,
+                                          buttonTypeColor: IconWithLabelButtonViewModel<T>.ButtonTypeColor,
                                           isDisabled: Bool,
                                           action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel {
         return createIconWithLabelButtonViewModel?(iconName) ?? IconWithLabelButtonViewModel(iconName: iconName,

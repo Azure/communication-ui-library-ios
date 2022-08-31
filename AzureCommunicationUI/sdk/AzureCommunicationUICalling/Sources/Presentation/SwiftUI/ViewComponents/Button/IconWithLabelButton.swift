@@ -6,10 +6,10 @@
 import SwiftUI
 import FluentUI
 
-struct IconWithLabelButton: View {
+struct IconWithLabelButton<T: ButtonState>: View {
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
 
-    @ObservedObject var viewModel: IconWithLabelButtonViewModel
+    @ObservedObject var viewModel: IconWithLabelButtonViewModel<T>
 
     private let iconImageSize: CGFloat = 25
     private let verticalSpacing: CGFloat = 8

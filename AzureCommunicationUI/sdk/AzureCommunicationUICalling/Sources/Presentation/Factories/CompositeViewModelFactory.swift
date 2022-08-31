@@ -16,11 +16,12 @@ protocol CompositeViewModelFactoryProtocol {
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
-    func makeIconWithLabelButtonViewModel(iconName: CompositeIcon,
-                                          buttonTypeColor: IconWithLabelButtonViewModel.ButtonTypeColor,
-                                          buttonLabel: String,
+    func makeIconWithLabelButtonViewModel<T: ButtonState>(
+                                          selectedButtonState: T,
+                                          localizationProvider: LocalizationProviderProtocol,
+                                          buttonTypeColor: IconWithLabelButtonViewModel<T>.ButtonTypeColor,
                                           isDisabled: Bool,
-                                          action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel
+                                          action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<T>
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel
     func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
                                     buttonLabel: String,
@@ -120,14 +121,16 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             isDisabled: isDisabled,
                             action: action)
     }
-    func makeIconWithLabelButtonViewModel(iconName: CompositeIcon,
-                                          buttonTypeColor: IconWithLabelButtonViewModel.ButtonTypeColor,
-                                          buttonLabel: String,
+    func makeIconWithLabelButtonViewModel<T: ButtonState>(
+                                          selectedButtonState: T,
+                                          localizationProvider: LocalizationProviderProtocol,
+                                          buttonTypeColor: IconWithLabelButtonViewModel<T>.ButtonTypeColor,
                                           isDisabled: Bool,
-                                          action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel {
-        IconWithLabelButtonViewModel(iconName: iconName,
+                                          action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<T> {
+        IconWithLabelButtonViewModel(
+                                     selectedButtonState: selectedButtonState,
+                                     localizationProvider: localizationProvider,
                                      buttonTypeColor: buttonTypeColor,
-                                     buttonLabel: buttonLabel,
                                      isDisabled: isDisabled,
                                      action: action)
     }

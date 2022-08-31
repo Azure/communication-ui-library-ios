@@ -20,9 +20,9 @@ class SetupControlBarViewModel: ObservableObject {
     private var cameraStatus: LocalUserState.CameraOperationalStatus = .off
     private(set) var micStatus: LocalUserState.AudioOperationalStatus = .off
     private var localVideoStreamId: String?
-    private(set) var cameraButtonViewModel: IconWithLabelButtonViewModel!
-    private(set) var micButtonViewModel: IconWithLabelButtonViewModel!
-    private(set) var audioDeviceButtonViewModel: IconWithLabelButtonViewModel!
+    private(set) var cameraButtonViewModel: IconWithLabelButtonViewModel<CameraState>!
+    private(set) var micButtonViewModel: IconWithLabelButtonViewModel<MicState>!
+    private(set) var audioDeviceButtonViewModel: IconWithLabelButtonViewModel<AudioState>!
 
     let audioDevicesListViewModel: AudioDevicesListViewModel
 
@@ -40,10 +40,9 @@ class SetupControlBarViewModel: ObservableObject {
             localUserState: localUserState)
 
         cameraButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
-            iconName: .videoOff,
-            buttonTypeColor: .colorThemedWhite,
-            buttonLabel: self.localizationProvider
-                .getLocalizedString(.videoOff),
+            selectedButtonState: CameraState.videoOff,
+            localizationProvider: self.localizationProvider,
+            buttonTypeColor: IconWithLabelButtonViewModel<CameraState>.ButtonTypeColor.colorThemedWhite,
             isDisabled: false) { [weak self] in
                 guard let self = self else {
                     return
@@ -55,10 +54,9 @@ class SetupControlBarViewModel: ObservableObject {
             .videoOffAccessibilityLabel)
 
         micButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
-            iconName: .micOff,
-            buttonTypeColor: .colorThemedWhite,
-            buttonLabel: self.localizationProvider
-                .getLocalizedString(.micOff),
+            selectedButtonState: MicState.micOff,
+            localizationProvider: self.localizationProvider,
+            buttonTypeColor: IconWithLabelButtonViewModel<MicState>.ButtonTypeColor.colorThemedWhite,
             isDisabled: false) { [weak self] in
                 guard let self = self else {
                     return
@@ -69,10 +67,9 @@ class SetupControlBarViewModel: ObservableObject {
         micButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(.micOffAccessibilityLabel)
 
         audioDeviceButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
-            iconName: .speakerFilled,
-            buttonTypeColor: .colorThemedWhite,
-            buttonLabel: self.localizationProvider
-                .getLocalizedString(.device),
+            selectedButtonState: AudioState.speaker,
+            localizationProvider: self.localizationProvider,
+            buttonTypeColor: IconWithLabelButtonViewModel<AudioState>.ButtonTypeColor.colorThemedWhite,
             isDisabled: false) { [weak self] in
                 guard let self = self else {
                     return
@@ -159,20 +156,14 @@ class SetupControlBarViewModel: ObservableObject {
 
     private func updateButtonViewModel(localUserState: LocalUserState) {
         cameraButtonViewModel.update(
-            iconName: cameraStatus == .on ? .videoOn : .videoOff,
-            buttonLabel: cameraStatus == .on
-            ? localizationProvider.getLocalizedString(.videoOn)
-            : localizationProvider.getLocalizedString(.videoOff))
+            selectedButtonState: cameraStatus == .on ? CameraState.videoOn : CameraState.videoOff)
         cameraButtonViewModel.update(accessibilityLabel: cameraStatus == .on
                                      ? localizationProvider.getLocalizedString(.videoOnAccessibilityLabel)
                                      : localizationProvider.getLocalizedString(.videoOffAccessibilityLabel))
         cameraButtonViewModel.update(isDisabled: isCameraDisabled())
 
         micButtonViewModel.update(
-            iconName: micStatus == .on ? .micOn : .micOff,
-            buttonLabel: micStatus == .on
-            ? localizationProvider.getLocalizedString(.micOn)
-            : localizationProvider.getLocalizedString(.micOff))
+            selectedButtonState: micStatus == .on ? MicState.micOn : MicState.micOff)
         micButtonViewModel.update(accessibilityLabel: micStatus == .on
                                      ? localizationProvider.getLocalizedString(.micOnAccessibilityLabel)
                                      : localizationProvider.getLocalizedString(.micOffAccessibilityLabel))
@@ -180,17 +171,21 @@ class SetupControlBarViewModel: ObservableObject {
 
         let audioDeviceStatus = localUserState.audioState.device
         audioDeviceButtonViewModel.update(
-            iconName: audioDeviceStatus.icon,
-            buttonLabel: audioDeviceStatus.getLabel(localizationProvider: localizationProvider))
+            selectedButtonState: AudioState.getButtonState(from: audioDeviceStatus))
         audioDeviceButtonViewModel.update(
             accessibilityValue: audioDeviceStatus.getLabel(localizationProvider: localizationProvider))
     }
 
     private func updateButtonTypeColor(isLocalVideoOff: Bool) {
-        let buttonTypeColor: IconWithLabelButtonViewModel.ButtonTypeColor
-            = isLocalVideoOff ? .colorThemedWhite : .white
-        cameraButtonViewModel.update(buttonTypeColor: buttonTypeColor)
-        micButtonViewModel.update(buttonTypeColor: buttonTypeColor)
-        audioDeviceButtonViewModel.update(buttonTypeColor: buttonTypeColor)
+        let cameraButtonTypeColor: IconWithLabelButtonViewModel<CameraState>.ButtonTypeColor
+                                    = isLocalVideoOff ? .colorThemedWhite : .white
+        let micButtonTypeColor: IconWithLabelButtonViewModel<MicState>.ButtonTypeColor
+                                    = isLocalVideoOff ? .colorThemedWhite : .white
+        let audioButtonTypeColor: IconWithLabelButtonViewModel<AudioState>.ButtonTypeColor
+                                    = isLocalVideoOff ? .colorThemedWhite : .white
+
+        cameraButtonViewModel.update(buttonTypeColor: cameraButtonTypeColor)
+        micButtonViewModel.update(buttonTypeColor: micButtonTypeColor)
+        audioDeviceButtonViewModel.update(buttonTypeColor: audioButtonTypeColor)
     }
 }
