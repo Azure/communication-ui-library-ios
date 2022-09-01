@@ -43,9 +43,9 @@ public struct ParticipantViewData {
 }
 /// Object to represent the data needed to customize navigation bar
 public struct NavigationBarViewData {
-    /// The required title that would be used for the navigation bar of setup view
+    /// The title that would be used for the navigation bar of setup view
     let title: String
-    /// The optional subtitle that would be used for the navigation bar of setup view
+    /// The subtitle that would be used for the navigation bar of setup view
     let subtitle: String?
     /// Create an instance of a NavigationBarViewData.
     /// All information in this object is only stored locally in the composite.
