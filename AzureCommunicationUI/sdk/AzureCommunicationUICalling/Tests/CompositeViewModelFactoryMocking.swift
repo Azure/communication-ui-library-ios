@@ -7,7 +7,7 @@ import Foundation
 import FluentUI
 @testable import AzureCommunicationUICalling
 
-struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
+struct CompositeViewModelFactoryMocking<ButtonStateType: ButtonState>: CompositeViewModelFactoryProtocol {
 
     private let logger: Logger
     private let store: Store<AppState>
@@ -36,7 +36,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
     var createParticipantsListCellViewModel: ((ParticipantInfoModel) -> ParticipantsListCellViewModel?)?
-    var createIconWithLabelButtonViewModel: ((CompositeIcon) -> IconWithLabelButtonViewModel?)?
+    var createIconWithLabelButtonViewModel: ((ButtonStateType) -> IconWithLabelButtonViewModel<ButtonStateType>?)?
     var createIconButtonViewModel: ((CompositeIcon) -> IconButtonViewModel?)?
 
     init(logger: Logger,
@@ -75,18 +75,21 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                            action: action)
     }
 
-    func makeIconWithLabelButtonViewModel<T>(
-                                          selectedButtonState: T,
-                                          localizationProvider: LocalizationProviderProtocol,
-                                          buttonTypeColor: IconWithLabelButtonViewModel<T>.ButtonTypeColor,
-                                          isDisabled: Bool,
-                                          action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel {
-        return createIconWithLabelButtonViewModel?(iconName) ?? IconWithLabelButtonViewModel(iconName: iconName,
-                                                                                             buttonTypeColor: buttonTypeColor,
-                                                                                             buttonLabel: buttonLabel,
-                                                                                             isDisabled: isDisabled,
-                                                                                             action: action)
-    }
+    func makeIconWithLabelButtonViewModel<ButtonStateType>(
+        selectedButtonState: ButtonStateType,
+        localizationProvider: LocalizationProviderProtocol,
+        buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
+        isDisabled: Bool,
+        action: @escaping (() -> Void)
+    ) -> IconWithLabelButtonViewModel<ButtonStateType>
+    where ButtonStateType: ButtonState {
+            return createIconWithLabelButtonViewModel?(selectedButtonState) ??
+            IconWithLabelButtonViewModel(selectedButtonState: selectedButtonState,
+                                         localizationProvider: localizationProvider,
+                                         buttonTypeColor: buttonTypeColor,
+                                         isDisabled: isDisabled,
+                                         action: action)
+        }
 
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel {
         return localVideoViewModel ?? LocalVideoViewModel(compositeViewModelFactory: self,

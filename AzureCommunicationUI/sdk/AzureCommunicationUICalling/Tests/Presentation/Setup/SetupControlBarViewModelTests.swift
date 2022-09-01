@@ -9,7 +9,7 @@ import XCTest
 
 class SetupControlBarViewModelTests: XCTestCase {
     private var storeFactory: StoreFactoryMocking!
-    private var factoryMocking: CompositeViewModelFactoryMocking!
+    private var factoryMocking: CompositeViewModelFactoryMocking<CameraState>!
     private var cancellable: CancelBag!
     private var logger: LoggerMocking!
     private var localizationProvider: LocalizationProviderMocking!
@@ -188,9 +188,10 @@ class SetupControlBarViewModelTests: XCTestCase {
             guard icon == .videoOff
             else { return nil }
 
-            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(iconName: .clock,
-                                                                                   buttonTypeColor: .colorThemedWhite,
-                                                                                   buttonLabel: "buttonLabel")
+            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(
+                selectedButtonState: CameraState.videoOn,
+                localizationProvider: self.localizationProvider,
+                buttonTypeColor: .colorThemedWhite)
             iconWithLabelButtonViewModel.updateDisabledState = updateDisabledStateCompletion
             return iconWithLabelButtonViewModel
         }
@@ -259,9 +260,10 @@ class SetupControlBarViewModelTests: XCTestCase {
             guard icon == .videoOff
             else { return nil }
 
-            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(iconName: .clock,
-                                                                                   buttonTypeColor: .colorThemedWhite,
-                                                                                   buttonLabel: "buttonLabel")
+            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(
+                selectedButtonState: CameraState.videoOn,
+                localizationProvider: self.localizationProvider,
+                buttonTypeColor: .colorThemedWhite)
             iconWithLabelButtonViewModel.updateButtonInfo = updateButtonInfoCompletion
             return iconWithLabelButtonViewModel
         }
@@ -286,9 +288,10 @@ class SetupControlBarViewModelTests: XCTestCase {
             guard icon == .videoOff
             else { return nil }
 
-            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(iconName: .clock,
-                                                                                   buttonTypeColor: .colorThemedWhite,
-                                                                                   buttonLabel: "buttonLabel")
+            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(
+                selectedButtonState: CameraState.videoOn,
+                localizationProvider: self.localizationProvider,
+                buttonTypeColor: .colorThemedWhite)
             iconWithLabelButtonViewModel.updateDisabledState = updateDisabledStateCompletion
             return iconWithLabelButtonViewModel
         }
@@ -310,9 +313,10 @@ class SetupControlBarViewModelTests: XCTestCase {
             guard icon == .micOff
             else { return nil }
 
-            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(iconName: .clock,
-                                                                                   buttonTypeColor: .colorThemedWhite,
-                                                                                   buttonLabel: "buttonLabel")
+            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(
+                selectedButtonState: CameraState.videoOn,
+                localizationProvider: self.localizationProvider,
+                buttonTypeColor: .colorThemedWhite)
             iconWithLabelButtonViewModel.updateButtonInfo = updateButtonInfoCompletion
             return iconWithLabelButtonViewModel
         }
@@ -335,9 +339,10 @@ class SetupControlBarViewModelTests: XCTestCase {
             guard icon == .speakerFilled
             else { return nil }
 
-            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(iconName: .clock,
-                                                                                   buttonTypeColor: .colorThemedWhite,
-                                                                                   buttonLabel: "buttonLabel")
+            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(
+                selectedButtonState: CameraState.videoOn,
+                localizationProvider: self.localizationProvider,
+                buttonTypeColor: .colorThemedWhite)
             iconWithLabelButtonViewModel.updateButtonInfo = updateButtonInfoCompletion
             return iconWithLabelButtonViewModel
         }
@@ -380,9 +385,10 @@ class SetupControlBarViewModelTests: XCTestCase {
             guard icon == .videoOff
             else { return nil }
 
-            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(iconName: .clock,
-                                                                                   buttonTypeColor: .colorThemedWhite,
-                                                                                   buttonLabel: "buttonLabel")
+            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(
+                selectedButtonState: CameraState.videoOn,
+                localizationProvider: self.localizationProvider,
+                buttonTypeColor: .colorThemedWhite)
             iconWithLabelButtonViewModel.updateButtonInfo = updateButtonInfoCompletion
             return iconWithLabelButtonViewModel
         }

@@ -16,12 +16,12 @@ protocol CompositeViewModelFactoryProtocol {
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
-    func makeIconWithLabelButtonViewModel<T: ButtonState>(
-                                          selectedButtonState: T,
-                                          localizationProvider: LocalizationProviderProtocol,
-                                          buttonTypeColor: IconWithLabelButtonViewModel<T>.ButtonTypeColor,
-                                          isDisabled: Bool,
-                                          action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<T>
+    func makeIconWithLabelButtonViewModel<ButtonStateType>(
+        selectedButtonState: ButtonStateType,
+        localizationProvider: LocalizationProviderProtocol,
+        buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
+        isDisabled: Bool,
+        action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<ButtonStateType>
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel
     func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
                                     buttonLabel: String,
