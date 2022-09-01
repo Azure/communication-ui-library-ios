@@ -9,7 +9,7 @@ import XCTest
 
 class SetupControlBarViewModelTests: XCTestCase {
     private var storeFactory: StoreFactoryMocking!
-    private var factoryMocking: CompositeViewModelFactoryMocking<CameraState>!
+    private var factoryMocking: CompositeVmButtonFactoryMocking!
     private var cancellable: CancelBag!
     private var logger: LoggerMocking!
     private var localizationProvider: LocalizationProviderMocking!
@@ -22,7 +22,7 @@ class SetupControlBarViewModelTests: XCTestCase {
         cancellable = CancelBag()
         logger = LoggerMocking()
         localizationProvider = LocalizationProviderMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
+        factoryMocking = CompositeVmButtonFactoryMocking(logger: logger,
                                                           store: storeFactory.store)
     }
 
@@ -184,7 +184,7 @@ class SetupControlBarViewModelTests: XCTestCase {
             XCTAssertEqual(isDisabled, true)
             expectation.fulfill()
         }
-        factoryMocking.createIconWithLabelButtonViewModel = { icon in
+        factoryMocking.createCameraIconWithLabelButtonViewModel = { icon in
             guard icon == .videoOff
             else { return nil }
 
@@ -256,7 +256,7 @@ class SetupControlBarViewModelTests: XCTestCase {
             XCTAssertEqual(label, "Video on")
             expectation.fulfill()
         }
-        factoryMocking.createIconWithLabelButtonViewModel = { icon in
+        factoryMocking.createCameraIconWithLabelButtonViewModel = { icon in
             guard icon == .videoOff
             else { return nil }
 
@@ -284,7 +284,7 @@ class SetupControlBarViewModelTests: XCTestCase {
             XCTAssertEqual(isDisabled, permissionState.cameraPermission == .denied)
             expectation.fulfill()
         }
-        factoryMocking.createIconWithLabelButtonViewModel = { icon in
+        factoryMocking.createCameraIconWithLabelButtonViewModel = { icon in
             guard icon == .videoOff
             else { return nil }
 
@@ -309,12 +309,12 @@ class SetupControlBarViewModelTests: XCTestCase {
             XCTAssertEqual(label, "Mic on")
             expectation.fulfill()
         }
-        factoryMocking.createIconWithLabelButtonViewModel = { icon in
+        factoryMocking.createMicIconWithLabelButtonViewModel = { icon in
             guard icon == .micOff
             else { return nil }
 
             let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(
-                selectedButtonState: CameraState.videoOn,
+                selectedButtonState: MicState.micOn,
                 localizationProvider: self.localizationProvider,
                 buttonTypeColor: .colorThemedWhite)
             iconWithLabelButtonViewModel.updateButtonInfo = updateButtonInfoCompletion
@@ -335,12 +335,12 @@ class SetupControlBarViewModelTests: XCTestCase {
             XCTAssertEqual(label, "Speaker")
             expectation.fulfill()
         }
-        factoryMocking.createIconWithLabelButtonViewModel = { icon in
+        factoryMocking.createMicIconWithLabelButtonViewModel = { icon in
             guard icon == .speakerFilled
             else { return nil }
 
             let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(
-                selectedButtonState: CameraState.videoOn,
+                selectedButtonState: MicState.micOn,
                 localizationProvider: self.localizationProvider,
                 buttonTypeColor: .colorThemedWhite)
             iconWithLabelButtonViewModel.updateButtonInfo = updateButtonInfoCompletion
@@ -381,7 +381,7 @@ class SetupControlBarViewModelTests: XCTestCase {
             XCTAssertEqual(label, "AzureCommunicationUICalling.SetupView.Button.VideoOn")
             expectation.fulfill()
         }
-        factoryMocking.createIconWithLabelButtonViewModel = { icon in
+        factoryMocking.createCameraIconWithLabelButtonViewModel = { icon in
             guard icon == .videoOff
             else { return nil }
 

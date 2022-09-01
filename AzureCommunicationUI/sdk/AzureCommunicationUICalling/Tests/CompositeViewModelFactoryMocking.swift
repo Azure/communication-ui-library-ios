@@ -7,7 +7,7 @@ import Foundation
 import FluentUI
 @testable import AzureCommunicationUICalling
 
-struct CompositeViewModelFactoryMocking<ButtonStateType: ButtonState>: CompositeViewModelFactoryProtocol {
+class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     private let logger: Logger
     private let store: Store<AppState>
@@ -36,7 +36,6 @@ struct CompositeViewModelFactoryMocking<ButtonStateType: ButtonState>: Composite
 
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
     var createParticipantsListCellViewModel: ((ParticipantInfoModel) -> ParticipantsListCellViewModel?)?
-    var createIconWithLabelButtonViewModel: ((ButtonStateType) -> IconWithLabelButtonViewModel<ButtonStateType>?)?
     var createIconButtonViewModel: ((CompositeIcon) -> IconButtonViewModel?)?
 
     init(logger: Logger,
@@ -83,7 +82,7 @@ struct CompositeViewModelFactoryMocking<ButtonStateType: ButtonState>: Composite
         action: @escaping (() -> Void)
     ) -> IconWithLabelButtonViewModel<ButtonStateType>
     where ButtonStateType: ButtonState {
-            return createIconWithLabelButtonViewModel?(selectedButtonState) ??
+//            return createIconWithLabelButtonViewModel?(selectedButtonState) ??
             IconWithLabelButtonViewModel(selectedButtonState: selectedButtonState,
                                          localizationProvider: localizationProvider,
                                          buttonTypeColor: buttonTypeColor,
@@ -224,5 +223,14 @@ struct CompositeViewModelFactoryMocking<ButtonStateType: ButtonState>: Composite
                                       logger: logger,
                                       accessibilityProvider: accessibilityProvider,
                                       resumeAction: {})
+    }
+}
+
+class CompositeVmButtonFactoryMocking: CompositeViewModelFactoryMocking {
+    var createCameraIconWithLabelButtonViewModel: ((CameraState) -> IconWithLabelButtonViewModel<CameraState>?)?
+    var createMicIconWithLabelButtonViewModel: ((MicState) -> IconWithLabelButtonViewModel<MicState>?)?
+
+    override init(logger: Logger, store: Store<AppState>, accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking(), localizationProvider: LocalizationProviderProtocol = LocalizationProviderMocking()) {
+        super.init(logger: logger, store: store, accessibilityProvider: accessibilityProvider, localizationProvider: localizationProvider)
     }
 }
