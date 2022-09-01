@@ -100,3 +100,4 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Your mic is in use by another app";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="You were denied access to the call.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Error toggling video";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Unable to join call. Check your network connection.";
