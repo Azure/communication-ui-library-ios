@@ -538,6 +538,22 @@ class CallingMiddlewareHandlerTests: XCTestCase {
                                                                          cameraTransmissionStatus: .remote),
                                                          dispatch: dispatch)
     }
+
+    func test_callingMiddlewareHandler_setupCall_when_networkFailed_then_shouldNotDispatch() {
+        let expectation = XCTestExpectation(description: "Should Dispatch If Network Failed")
+        expectation.isInverted = true
+
+        func dispatch(action: Action) {
+            XCTFail("Should not dispatch")
+        }
+        callingMiddlewareHandler.setupCall(state: getState(callingState: .none,
+                                                           cameraStatus: .off,
+                                                           cameraDeviceStatus: .front,
+                                                           cameraPermission: .granted,
+                                                           internalError: .connectionFailed),
+                                           dispatch: dispatch)
+        wait(for: [expectation], timeout: 1)
+    }
 }
 
 extension CallingMiddlewareHandlerTests {
