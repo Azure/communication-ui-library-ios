@@ -42,15 +42,20 @@ class ErrorInfoViewModel: ObservableObject {
 
     func update(errorState: ErrorState) {
         let errorType = errorState.internalError
+
+        guard let errorType = errorType else {
+            // if no error, hide banner
+            isDisplayed = false
+            return
+        }
+
         guard errorType != previousErrorType else {
+            // if new error is the same as the previous one
+            // do nothing
             return
         }
 
         previousErrorType = errorType
-        guard let errorType = errorType else {
-            isDisplayed = false
-            return
-        }
 
         isDisplayed = true
         switch errorType {
@@ -64,6 +69,8 @@ class ErrorInfoViewModel: ObservableObject {
             title = localizationProvider.getLocalizedString(.snackBarErrorCallDenied)
         case .cameraOnFailed:
             title = localizationProvider.getLocalizedString(.snackBarErrorCameraOnFailed)
+        case .connectionFailed:
+            title = localizationProvider.getLocalizedString(.snackBarErrorConnectionError)
         default:
             title = localizationProvider.getLocalizedString(.snackBarError)
         }

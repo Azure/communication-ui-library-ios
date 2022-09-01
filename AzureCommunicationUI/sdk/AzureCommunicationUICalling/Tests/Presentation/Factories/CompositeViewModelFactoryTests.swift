@@ -19,6 +19,7 @@ class CompositeViewModelFactoryTests: XCTestCase {
         logger = LoggerMocking()
         compositeViewModelFactory = CompositeViewModelFactory(logger: logger,
                                                               store: mockStoreFactory.store,
+                                                              networkManager: NetworkManager(),
                                                               localizationProvider: LocalizationProviderMocking(),
                                                               accessibilityProvider: AccessibilityProviderMocking())
     }
