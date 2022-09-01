@@ -43,9 +43,9 @@ public struct ParticipantViewData {
 }
 /// Object to represent the data needed to customize navigation bar
 public struct NavigationBarViewData {
-    /// The title that would be used for the navigation bar of setup view
-    let title: String?
-    /// The subtitle that would be used for the navigation bar of setup view
+    /// The required title that would be used for the navigation bar of setup view
+    let title: String
+    /// The optional subtitle that would be used for the navigation bar of setup view
     let subtitle: String?
     /// Create an instance of a NavigationBarViewData.
     /// All information in this object is only stored locally in the composite.
@@ -54,7 +54,7 @@ public struct NavigationBarViewData {
     ///              If this is `nil` the default title "Setup" would be used
     ///    - subtitle: The String that would be displayed as the subtitle in setup view
     ///                   If this is `nil` the subtitle would be hidden
-    public init(title: String? = nil,
+    public init(title: String,
                 subtitle: String? = nil) {
         self.title = title
         self.subtitle = subtitle
