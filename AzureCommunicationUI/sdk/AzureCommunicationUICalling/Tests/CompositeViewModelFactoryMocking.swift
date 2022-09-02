@@ -75,15 +75,12 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeIconWithLabelButtonViewModel<ButtonStateType>(
-        selectedButtonState: ButtonStateType,
-        localizationProvider: LocalizationProviderProtocol,
-        buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
-        isDisabled: Bool,
-        action: @escaping (() -> Void)
-    ) -> IconWithLabelButtonViewModel<ButtonStateType>
-    where ButtonStateType: ButtonState {
-//            return createIconWithLabelButtonViewModel?(selectedButtonState) ??
-            IconWithLabelButtonViewModel(selectedButtonState: selectedButtonState,
+                                    selectedButtonState: ButtonStateType,
+                                    localizationProvider: LocalizationProviderProtocol,
+                                    buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
+                                    isDisabled: Bool,
+                                    action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<ButtonStateType> where ButtonStateType: ButtonState {
+                                        return IconWithLabelButtonViewModel(selectedButtonState: selectedButtonState,
                                          localizationProvider: localizationProvider,
                                          buttonTypeColor: buttonTypeColor,
                                          isDisabled: isDisabled,
@@ -229,6 +226,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 class CompositeVmButtonFactoryMocking: CompositeViewModelFactoryMocking {
     var createCameraIconWithLabelButtonViewModel: ((CameraState) -> IconWithLabelButtonViewModel<CameraState>?)?
     var createMicIconWithLabelButtonViewModel: ((MicState) -> IconWithLabelButtonViewModel<MicState>?)?
+    var createAudioIconWithLabelButtonViewModel: ((AudioState) -> IconWithLabelButtonViewModel<AudioState>?)?
 
     override init(logger: Logger, store: Store<AppState>, accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking(), localizationProvider: LocalizationProviderProtocol = LocalizationProviderMocking()) {
         super.init(logger: logger, store: store, accessibilityProvider: accessibilityProvider, localizationProvider: localizationProvider)
