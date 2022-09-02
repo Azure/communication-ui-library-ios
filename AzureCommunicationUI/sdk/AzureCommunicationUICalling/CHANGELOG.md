@@ -5,7 +5,7 @@
 - Implemented new error message `unknownError` that can be sent to developers in rare cases device manager throws an error. [#301](https://github.com/Azure/communication-ui-library-ios/pull/301)
 - Implemented new error message `cameraFailure` that can be sent to developers when turning on camera fails. [#311](https://github.com/Azure/communication-ui-library-ios/pull/311)
 - Introduced NavigationBarViewData as a new local launch option to customize title and subtitle in set up view. [#309](https://github.com/Azure/communication-ui-library-ios/pull/309)
-- User would now get an alert when joining the call with no active network connection [#328](https://github.com/Azure/communication-ui-library-ios/pull/328) 
+- An alert would now be shown when joining the call with no active network connection [#328](https://github.com/Azure/communication-ui-library-ios/pull/328) 
 
 ### Bugs Fixed
 - Fixed an issue where demo app can't dismiss setting page when in landscape mode. [#280](https://github.com/Azure/communication-ui-library-ios/pull/280)
@@ -16,7 +16,7 @@
 ### Other Changes
 - Updated CallingSDK's version to GA in manual installation guide [#298](https://github.com/Azure/communication-ui-library-ios/pull/298)
 - Updated design of error banners ("Snackbar") to latest Fluent UI colours. [#314](https://github.com/Azure/communication-ui-library-ios/pull/314)
-- Refactor codebase to adapt async-awit [#312](https://github.com/Azure/communication-ui-library-ios/pull/312)
+- Refactored codebase to adapt async-await syntax [#312](https://github.com/Azure/communication-ui-library-ios/pull/312)
 
 ## 1.0.0 (2022-06-21)
 ### Bugs Fixed
