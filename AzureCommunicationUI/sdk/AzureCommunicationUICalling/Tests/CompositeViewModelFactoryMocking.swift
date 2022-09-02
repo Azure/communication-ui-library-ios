@@ -231,4 +231,33 @@ class CompositeVmButtonFactoryMocking: CompositeViewModelFactoryMocking {
     override init(logger: Logger, store: Store<AppState>, accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking(), localizationProvider: LocalizationProviderProtocol = LocalizationProviderMocking()) {
         super.init(logger: logger, store: store, accessibilityProvider: accessibilityProvider, localizationProvider: localizationProvider)
     }
+
+    override func makeIconWithLabelButtonViewModel<ButtonStateType>(
+        selectedButtonState: ButtonStateType,
+        localizationProvider: LocalizationProviderProtocol,
+        buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
+        isDisabled: Bool,
+        action: @escaping (() -> Void)
+    ) -> IconWithLabelButtonViewModel<ButtonStateType> {
+
+        if let cameraStateClosure = createCameraIconWithLabelButtonViewModel,
+           let cameraState = selectedButtonState as? CameraState,
+           let vm = cameraStateClosure(cameraState) as? IconWithLabelButtonViewModel<ButtonStateType> {
+            return vm
+        }
+
+        if let micStateClosure = createMicIconWithLabelButtonViewModel,
+           let micState = selectedButtonState as? MicState,
+           let vm = micStateClosure(micState) as? IconWithLabelButtonViewModel<ButtonStateType> {
+            return vm
+        }
+
+        return super.makeIconWithLabelButtonViewModel(
+            selectedButtonState: selectedButtonState,
+            localizationProvider: localizationProvider,
+            buttonTypeColor: buttonTypeColor,
+            isDisabled: isDisabled,
+            action: action
+        )
+    }
 }
