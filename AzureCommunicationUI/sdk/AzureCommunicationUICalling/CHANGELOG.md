@@ -18,7 +18,6 @@
 
 ### Other Changes
 - Updated CallingSDK's version to GA in manual installation guide [#298](https://github.com/Azure/communication-ui-library-ios/pull/298)
-- Refactored codebase to adapt async-await syntax [#312](https://github.com/Azure/communication-ui-library-ios/pull/312)
 
 ## 1.0.0 (2022-06-21)
 ### Bugs Fixed
