@@ -18,6 +18,7 @@
 
 ### Other Changes
 - Updated CallingSDK's version to GA in manual installation guide [#298](https://github.com/Azure/communication-ui-library-ios/pull/298)
+- Updated the design of error banners ("Snackbar") by adapting the latest FluentUI colours. [#314](https://github.com/Azure/communication-ui-library-ios/pull/314)
 
 ## 1.0.0 (2022-06-21)
 ### Bugs Fixed
