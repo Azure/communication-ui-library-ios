@@ -4,3 +4,12 @@
 //
 
 import Foundation
+
+struct ChatState {
+
+    let localUser: LocalUserInfoModel
+
+    init(localUser: LocalUserInfoModel) {
+        self.localUser = localUser
+    }
+}

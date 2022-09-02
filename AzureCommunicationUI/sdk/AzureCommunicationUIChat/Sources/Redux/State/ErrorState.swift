@@ -4,3 +4,12 @@
 //
 
 import Foundation
+
+enum ErrorCategory {
+    case fatal
+    case chatState
+    case none
+}
+
+struct ErrorState: Equatable {
+}

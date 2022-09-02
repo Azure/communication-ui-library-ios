@@ -3,13 +3,9 @@
 //  Licensed under the MIT License.
 //
 
+import Combine
 import Foundation
 
-enum NavigationStatus {
-    case inChat
-    case headless
-    case exit
-}
-
-struct NavigationState: Equatable {
+struct Reducer<State, Actions> {
+    let reduce: (_ state: State, _ action: Actions) -> State
 }

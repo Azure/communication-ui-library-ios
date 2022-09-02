@@ -4,3 +4,6 @@
 //
 
 import Foundation
+
+struct ParticipantsState {
+}

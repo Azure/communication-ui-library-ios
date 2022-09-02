@@ -4,3 +4,17 @@
 //
 
 import Foundation
+
+enum AppStatus {
+    case foreground
+    case background
+}
+
+struct LifeCycleState {
+
+    let currentStatus: AppStatus
+
+    init(currentStatus: AppStatus = .foreground) {
+        self.currentStatus = currentStatus
+    }
+}

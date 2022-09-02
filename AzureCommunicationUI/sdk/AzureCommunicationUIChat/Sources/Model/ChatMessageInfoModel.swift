@@ -4,3 +4,10 @@
 //
 
 import Foundation
+
+public struct ChatMessageModel {
+    let id: String
+    let content: String
+    let senderId: String
+    let senderDisplayName: String
+}
