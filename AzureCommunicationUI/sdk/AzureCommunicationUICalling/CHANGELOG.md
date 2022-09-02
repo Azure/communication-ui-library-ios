@@ -8,13 +8,13 @@
 - An alert would now be shown when joining the call with no active network connection [#328](https://github.com/Azure/communication-ui-library-ios/pull/328)
 
 ### Bugs Fixed
-- Fixed an issue where demo app can't dismiss setting page when in landscape mode. [#280](https://github.com/Azure/communication-ui-library-ios/pull/280)
-- Fixed an issue where speaking overlay custom colour did not show up properly [#281](https://github.com/Azure/communication-ui-library-ios/pull/281)
-- Fixed an issue where participant drawer height was not calculated correctly [#297](https://github.com/Azure/communication-ui-library-ios/pull/297)
-- Fixed an issue where InfoHeaderView did not show up when VoiceOver is on [#296](https://github.com/Azure/communication-ui-library-ios/pull/296)
+- Fixed an issue where in demo app can't dismiss setting page when in landscape mode. [#280](https://github.com/Azure/communication-ui-library-ios/pull/280)
+- Fixed an issue where speaking overlay custom colour not showing up properly [#281](https://github.com/Azure/communication-ui-library-ios/pull/281)
+- Fixed an issue where participant drawer height not calculated correctly [#297](https://github.com/Azure/communication-ui-library-ios/pull/297)
+- Fixed an issue where InfoHeaderView not showing up when VoiceOver is on [#296](https://github.com/Azure/communication-ui-library-ios/pull/296)
 - Fixed an issue where RTF layout might not being rendered properly in demo app [#319](https://github.com/Azure/communication-ui-library-ios/pull/319)
-- Addressed an issue where text label being cutoff when accessibility large font enabled [#308](https://github.com/Azure/communication-ui-library-ios/pull/308)
-- Addressed an issue where contrast ratio of some labels/icons is too low for visually impaired users [#305](https://github.com/Azure/communication-ui-library-ios/pull/305)
+- Addressed an issue where text label being cutoff when accessibility large font feature is enabled [#308](https://github.com/Azure/communication-ui-library-ios/pull/308)
+- Addressed an issue where contrast ratio of some labels/icons being too low for visually impaired users [#305](https://github.com/Azure/communication-ui-library-ios/pull/305)
 
 ### Other Changes
 - Updated CallingSDK's version to GA in manual installation guide [#298](https://github.com/Azure/communication-ui-library-ios/pull/298)
