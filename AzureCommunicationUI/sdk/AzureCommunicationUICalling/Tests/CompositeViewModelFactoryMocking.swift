@@ -80,7 +80,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                     buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
                                     isDisabled: Bool,
                                     action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<ButtonStateType> where ButtonStateType: ButtonState {
-                                        return IconWithLabelButtonViewModel(selectedButtonState: selectedButtonState,
+        return IconWithLabelButtonViewModel(selectedButtonState: selectedButtonState,
                                          localizationProvider: localizationProvider,
                                          buttonTypeColor: buttonTypeColor,
                                          isDisabled: isDisabled,
