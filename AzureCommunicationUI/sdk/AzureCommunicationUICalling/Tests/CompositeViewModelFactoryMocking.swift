@@ -252,6 +252,12 @@ class CompositeVmButtonFactoryMocking: CompositeViewModelFactoryMocking {
             return vm
         }
 
+        if let audioStateClosure = createAudioIconWithLabelButtonViewModel,
+           let audioState = selectedButtonState as? AudioState,
+           let vm = audioStateClosure(audioState) as? IconWithLabelButtonViewModel<ButtonStateType> {
+            return vm
+        }
+
         return super.makeIconWithLabelButtonViewModel(
             selectedButtonState: selectedButtonState,
             localizationProvider: localizationProvider,
