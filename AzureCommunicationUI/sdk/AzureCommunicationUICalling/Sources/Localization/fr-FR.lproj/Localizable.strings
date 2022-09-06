@@ -100,3 +100,4 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Votre micro est utilisé par une autre application";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Vous n’avez pas eu accès à la réunion.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Erreur lors de la désactivation de la vidéo";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Impossible de rejoindre l’appel. Vérifiez votre connexion réseau.";
