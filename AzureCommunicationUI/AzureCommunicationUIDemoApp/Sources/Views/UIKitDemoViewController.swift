@@ -170,8 +170,12 @@ class UIKitDemoViewController: UIViewController {
         }
 
         callComposite.events.onError = { [weak self] error in
-            Task { @MainActor in self?.onError(error) }
+            guard let errorHandler = self?.onError else {
+                return
+            }
+            Task { @MainActor in errorHandler(error) }
         }
+
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName

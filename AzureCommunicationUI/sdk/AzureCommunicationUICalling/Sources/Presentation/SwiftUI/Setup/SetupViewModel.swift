@@ -18,6 +18,7 @@ class SetupViewModel: ObservableObject {
     var title: String
     var subTitle: String?
 
+    var networkManager: NetworkManager
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
     var joinCallButtonViewModel: PrimaryButtonViewModel!
@@ -30,9 +31,12 @@ class SetupViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState>,
+         networkManager: NetworkManager,
          localizationProvider: LocalizationProviderProtocol,
          navigationBarViewData: NavigationBarViewData? = nil) {
         self.store = store
+        self.networkManager = networkManager
+        self.networkManager.startMonitor()
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
@@ -94,6 +98,10 @@ class SetupViewModel: ObservableObject {
         }.store(in: &cancellables)
     }
 
+    deinit {
+        networkManager.stopMonitor()
+    }
+
     func setupAudioPermissions() {
         if store.state.permissionState.audioPermission == .notAsked {
             store.dispatch(action: .permissionAction(.audioPermissionRequested))
@@ -105,6 +113,10 @@ class SetupViewModel: ObservableObject {
     }
 
     func joinCallButtonTapped() {
+        guard networkManager.isOnline() else {
+            handleOffline()
+            return
+        }
         store.dispatch(action: .callingAction(.callStartRequested))
         isJoinRequested = true
     }
@@ -133,5 +145,14 @@ class SetupViewModel: ObservableObject {
                                         callingState: callingState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
         errorInfoViewModel.update(errorState: state.errorState)
+    }
+
+    private func handleOffline() {
+        store.dispatch(action: .errorAction(.statusErrorAndCallReset(internalError: .connectionFailed,
+                                                                     error: nil)))
+        // only show banner again when user taps on button explicitly
+        // banner would not reappear when other events^1 send identical error state again
+        // 1: camera on/off, audio on/off, switch to background/foreground, etc.
+        errorInfoViewModel.show()
     }
 }

@@ -4,7 +4,8 @@
 ### New Features
 - Implemented new error message `unknownError` that can be sent to developers in rare cases device manager throws an error. [#301](https://github.com/Azure/communication-ui-library-ios/pull/301)
 - Implemented new error message `cameraFailure` that can be sent to developers when turning on camera fails. [#311](https://github.com/Azure/communication-ui-library-ios/pull/311)
-- Introduced NavigationBarViewData as a new launch option to customize title and subtitle in set up view. [#309](https://github.com/Azure/communication-ui-library-ios/pull/309)
+- Introduced NavigationBarViewData as a new local launch option to customize title and subtitle in set up view. [#309](https://github.com/Azure/communication-ui-library-ios/pull/309)
+- Handled the case where user joining the call with no active network connection [#328](https://github.com/Azure/communication-ui-library-ios/pull/328) 
 
 ### Bugs Fixed
 - Fixed an issue where demo app can't dismiss setting page when in landscape mode. [#280](https://github.com/Azure/communication-ui-library-ios/pull/280)

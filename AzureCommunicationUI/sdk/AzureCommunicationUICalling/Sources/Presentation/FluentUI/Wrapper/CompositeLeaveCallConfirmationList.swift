@@ -9,6 +9,7 @@ import UIKit
 
 struct CompositeLeaveCallConfirmationList: UIViewControllerRepresentable {
     @Binding var isPresented: Bool
+    @Environment(\.layoutDirection) var layoutDirection: LayoutDirection
     var viewModel: LeaveCallConfirmationListViewModel
     let sourceView: UIView
 
@@ -20,7 +21,8 @@ struct CompositeLeaveCallConfirmationList: UIViewControllerRepresentable {
         let controller = LeaveCallConfirmationListViewController(items: getLeaveCallConfirmationList(),
                                                                  sourceView: sourceView,
                                                                  headerName: viewModel.headerName,
-                                                                 showHeader: true)
+                                                                 showHeader: true,
+                                                                 isRightToLeft: layoutDirection == .rightToLeft)
         controller.delegate = context.coordinator
         return controller
     }

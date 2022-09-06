@@ -62,6 +62,7 @@ protocol CompositeViewModelFactoryProtocol {
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let store: Store<AppState>
+    private let networkManager: NetworkManager
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let localOptions: LocalOptions?
@@ -71,11 +72,13 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
 
     init(logger: Logger,
          store: Store<AppState>,
+         networkManager: NetworkManager,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          localOptions: LocalOptions? = nil) {
         self.logger = logger
         self.store = store
+        self.networkManager = networkManager
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         self.localOptions = localOptions
@@ -87,6 +90,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
             let viewModel = SetupViewModel(compositeViewModelFactory: self,
                                            logger: logger,
                                            store: store,
+                                           networkManager: networkManager,
                                            localizationProvider: localizationProvider,
                                            navigationBarViewData: localOptions?.navigationBarViewData)
             self.setupViewModel = viewModel

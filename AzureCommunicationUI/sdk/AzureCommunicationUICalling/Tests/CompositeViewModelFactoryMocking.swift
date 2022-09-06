@@ -52,6 +52,7 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         return setupViewModel ?? SetupViewModel(compositeViewModelFactory: self,
                                                 logger: logger,
                                                 store: store,
+                                                networkManager: NetworkManager(),
                                                 localizationProvider: localizationProvider)
     }
 

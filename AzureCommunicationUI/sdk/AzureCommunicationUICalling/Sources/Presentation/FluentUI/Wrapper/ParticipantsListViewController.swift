@@ -28,10 +28,11 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
 
     init(items: [ParticipantsListCellViewModel],
          sourceView: UIView,
-         avatarViewManager: AvatarViewManager
+         avatarViewManager: AvatarViewManager,
+         isRightToLeft: Bool
     ) {
         self.avatarViewManager = avatarViewManager
-        super.init(items: items, sourceView: sourceView)
+        super.init(items: items, sourceView: sourceView, isRightToLeft: isRightToLeft)
     }
 
     required init?(coder: NSCoder) {

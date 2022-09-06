@@ -26,6 +26,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Отключить микрофон";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Устройство";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Выберите звуковое устройство";
+"AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Перейти к параметрам";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Камера отключена. Для включения перейдите в раздел \"Параметры\", чтобы разрешить доступ.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="Камера и звук отключены. Для включения перейдите в раздел \"Параметры\", чтобы разрешить доступ. Чтобы начать этот звонок, включите звук.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="Звук отключен. Для включения перейдите в раздел \"Параметры\", чтобы разрешить доступ. Чтобы начать этот звонок, включите звук.";
@@ -59,7 +60,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="Количество участников, покинувших собрание: %d";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Вы присоединились к звонку";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Идет демонстрация контента";
-"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Демонстрация контента завершена";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Общий доступ к контенту закончился";
 
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Выйти";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Отмена";
@@ -98,3 +99,4 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Не удалось возобновить звонок";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Ваш микрофон используется другим приложением";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Вам отказано в доступе к звонку.";
+"AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Ошибка переключения видео";

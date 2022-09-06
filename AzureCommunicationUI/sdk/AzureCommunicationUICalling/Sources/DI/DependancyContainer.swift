@@ -38,6 +38,7 @@ final class DependencyContainer {
                                    callingEventsHandler: resolve(),
                                    callConfiguration: callConfiguration) as CallingSDKWrapperProtocol)
         register(VideoViewManager(callingSDKWrapper: resolve(), logger: resolve()) as VideoViewManager)
+        register(NetworkManager() as NetworkManager)
         register(CallingService(logger: resolve(),
                                 callingSDKWrapper: resolve()) as CallingServiceProtocol)
         let displayName = localOptions?.participantViewData?.displayName ?? callConfiguration.displayName
@@ -50,6 +51,7 @@ final class DependencyContainer {
                                    localOptions: localOptions) as AvatarViewManager)
         register(CompositeViewModelFactory(logger: resolve(),
                                            store: resolve(),
+                                           networkManager: resolve(),
                                            localizationProvider: resolve(),
                                            accessibilityProvider: resolve(),
                                            localOptions: localOptions) as CompositeViewModelFactoryProtocol)
@@ -68,7 +70,6 @@ final class DependencyContainer {
                                            callCompositeEventsHandler: callCompositeEventsHandler,
                                            callingSDKWrapper: resolve(),
                                            avatarViewManager: resolve()) as RemoteParticipantsManager)
-
     }
 
     private func makeStore(displayName: String?) -> Store<AppState> {
