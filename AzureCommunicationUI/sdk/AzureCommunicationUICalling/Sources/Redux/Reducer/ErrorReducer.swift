@@ -48,7 +48,6 @@ extension Reducer where State == ErrorState,
                 .compositeExitAction,
                 .callingViewLaunched:
             return state
-
         }
 
         return ErrorState(internalError: errorType,
