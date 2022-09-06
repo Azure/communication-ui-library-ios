@@ -19,9 +19,6 @@ public struct CallCompositeErrorCode {
     /// Error when the input token is expired.
     public static let tokenExpired: String = "tokenExpired"
 
-    /// Error when something unexpected has occured 
-    public static let unknownError: String = "unknownError"
-
     /// Error when a participant is evicted from the call by another participant
     static let callEvicted: String = "callEvicted"
 
