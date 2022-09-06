@@ -100,3 +100,4 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Ваш микрофон используется другим приложением";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Вам отказано в доступе к звонку.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Ошибка переключения видео";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Не удалось присоединиться к звонку. Проверьте сетевое подключение.";

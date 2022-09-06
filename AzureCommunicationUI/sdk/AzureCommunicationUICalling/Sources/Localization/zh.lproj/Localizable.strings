@@ -26,12 +26,13 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="静音";
 "AzureCommunicationUICalling.SetupView.Button.Device"="设备";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="选择音频设备";
+"AzureCommunicationUICalling.SetupView.Button.GoToSettings"="转到“设置”";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="你的相机已禁用。若要启用，请转到“设置”以允许访问。";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="你的相机和音频已禁用。若要启用，请转到“设置”以允许访问。必须启用音频才能开始此通话。";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="你的音频已禁用。若要启用，请转到“设置”以允许访问。必须启用音频才能开始此通话。";
 
 /* LobbyView */
-"AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="正在等待主机"; // host (people not server) of a meeting
+"AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="正在等待主持人"; // host (people not server) of a meeting
 "AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"="会议中的某人将很快允许你加入";
 
 /* OnHoldView */
@@ -61,7 +62,7 @@
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="正在共享内容";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="内容共享已结束";
 
-"AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="离开";
+"AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="退出";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="取消";
 "AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="离开会议?";
 
@@ -98,3 +99,5 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="无法继续呼叫";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="其他应用正在使用你的麦克风";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="你被拒绝接听电话。";
+"AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="切换视频时出错";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="无法加入呼叫。请检查网络连接。";

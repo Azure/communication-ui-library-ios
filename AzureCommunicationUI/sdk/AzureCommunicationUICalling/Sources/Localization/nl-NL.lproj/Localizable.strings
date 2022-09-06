@@ -100,3 +100,4 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Uw microfoon wordt gebruikt door een andere app";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="U hebt geen toegang tot het gesprek.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Fout bij het in- of uitschakelen van video";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Kan niet deelnemen aan gesprek. Controleer de netwerkverbinding.";
