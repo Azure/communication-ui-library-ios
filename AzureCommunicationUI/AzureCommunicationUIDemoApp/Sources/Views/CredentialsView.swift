@@ -30,7 +30,6 @@ struct CredentialsView: View {
 
     let viewType: DemoViewType
 
-//    let callWithChatComposite = CallWithChatComposite(withOptions: CallWithChatCompositeOptions())
     let chatComposite = ChatComposite(withOptions: ChatCompositeOptions())
 
     var body: some View {
