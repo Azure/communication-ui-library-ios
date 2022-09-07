@@ -20,7 +20,7 @@ public class ChatComposite {
         /// Closure to execute when participant navigate back to hide Chat Composite UI
         public var onNavigateBack: (() -> Void)?
         /// Closure to execute when Chat Composite UI is hidden and receive new message
-        public var onNewUnreadMessages: ((Int) -> Void)?
+        public var onUnreadMessagesCountChanged: ((Int) -> Void)?
         /// Closure to execute when Chat Composite UI is hidden and receive new message
         public var onNewMessageReceived: ((ChatMessageModel) -> Void)?
     }
@@ -49,7 +49,7 @@ public class ChatComposite {
     ///                           This is data is not sent up to ACS.
     public func launch(remoteOptions: RemoteOptions,
                        localOptions: LocalOptions? = nil) {
-
+        // stub: to be implemented
     }
 
     /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.
@@ -61,25 +61,30 @@ public class ChatComposite {
     public func set(remoteParticipantViewData: ParticipantViewData,
                     for identifier: CommunicationIdentifier,
                     completionHandler: ((Result<Void, SetParticipantViewDataError>) -> Void)? = nil) {
+        // stub: to be implemented
     }
 
     public func showCompositeUI() throws {
         throw ChatCompositeError(code: ChatCompositeErrorCode.showComposite)
+        // stub: to be implemented
     }
 
     public func stop() {
+        // stub: to be implemented
     }
 
     /// Get Chat Composite UIViewController.
     /// - Returns: Chat Composite UIViewController
     public func getCompositeViewController() throws -> UIViewController {
         throw ChatCompositeError(code: ChatCompositeErrorCode.showComposite)
+        // stub: to be implemented
     }
 
     /// Get Chat Composite SwiftUI view.
     /// - Returns: Chat Composite view
     public func getCompositeView() throws -> some View {
         throw ChatCompositeError(code: ChatCompositeErrorCode.showComposite)
+        // stub: to be implemented
         return Group {}
     }
 }

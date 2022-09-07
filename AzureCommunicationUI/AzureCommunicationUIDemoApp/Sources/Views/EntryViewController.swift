@@ -41,7 +41,7 @@ class EntryViewController: UIViewController {
         startSwiftUIButton.backgroundColor = .systemBlue
         startSwiftUIButton.contentEdgeInsets = UIEdgeInsets.init(top: 10, left: 20, bottom: 10, right: 20)
         startSwiftUIButton.layer.cornerRadius = 8
-        startSwiftUIButton.setTitle("Swift UI", for: .normal)
+        startSwiftUIButton.setTitle("Call - Swift UI", for: .normal)
         startSwiftUIButton.sizeToFit()
         startSwiftUIButton.translatesAutoresizingMaskIntoConstraints = false
         startSwiftUIButton.addTarget(self, action: #selector(onSwiftUIPressed), for: .touchUpInside)
@@ -50,19 +50,39 @@ class EntryViewController: UIViewController {
         startUiKitButton.backgroundColor = .systemBlue
         startUiKitButton.contentEdgeInsets = UIEdgeInsets.init(top: 10, left: 20, bottom: 10, right: 20)
         startUiKitButton.layer.cornerRadius = 8
-        startUiKitButton.setTitle("UI Kit", for: .normal)
+        startUiKitButton.setTitle("Call - UI Kit", for: .normal)
         startUiKitButton.sizeToFit()
         startUiKitButton.translatesAutoresizingMaskIntoConstraints = false
         startUiKitButton.addTarget(self, action: #selector(onUIKitPressed), for: .touchUpInside)
 
-        let stackView = UIStackView(arrangedSubviews: [startSwiftUIButton,
-                                                       startUiKitButton])
-        stackView.spacing = margin
-        stackView.axis = .horizontal
-        stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(stackView)
+        let startChatButton = UIButton()
+        startChatButton.backgroundColor = .systemBlue
+        startChatButton.contentEdgeInsets = UIEdgeInsets.init(top: 10, left: 20, bottom: 10, right: 20)
+        startChatButton.layer.cornerRadius = 8
+        startChatButton.setTitle("Chat", for: .normal)
+        startChatButton.sizeToFit()
+        startChatButton.translatesAutoresizingMaskIntoConstraints = false
+        startChatButton.addTarget(self, action: #selector(onChatPressed), for: .touchUpInside)
+
+        let horizontalStackView = UIStackView(arrangedSubviews: [
+            startSwiftUIButton,
+            startUiKitButton])
+        horizontalStackView.spacing = margin
+        horizontalStackView.axis = .horizontal
+        horizontalStackView.alignment = .fill
+        horizontalStackView.distribution = .fillEqually
+        horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(horizontalStackView)
+
+        let verticalStackView = UIStackView(arrangedSubviews: [
+            horizontalStackView,
+            startChatButton])
+        verticalStackView.spacing = margin
+        verticalStackView.axis = .vertical
+        verticalStackView.alignment = .fill
+        verticalStackView.distribution = .fillEqually
+        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(verticalStackView)
 
         let versionLabel = UILabel()
         versionLabel.text = getAppVersion()
@@ -74,10 +94,10 @@ class EntryViewController: UIViewController {
             titleLabel.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: margin),
 
-            stackView.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: margins.centerYAnchor),
-            stackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: margin),
-            stackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -margin),
+            verticalStackView.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
+            verticalStackView.centerYAnchor.constraint(equalTo: margins.centerYAnchor, constant: margin * 2),
+            verticalStackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: margin),
+            verticalStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -margin),
 
             versionLabel.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
             versionLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -margin)
@@ -96,6 +116,14 @@ class EntryViewController: UIViewController {
         let uiKitDemoViewController = UIKitDemoViewController(envConfigSubject: envConfigSubject)
         uiKitDemoViewController.modalPresentationStyle = .fullScreen
         present(uiKitDemoViewController, animated: true, completion: nil)
+    }
+
+    @objc func onChatPressed() {
+        let chatDemoView = CredentialsView(envConfigSubject: envConfigSubject,
+                                           viewType: .chat)
+        let chatDemoViewHostingController = UIHostingController(rootView: chatDemoView)
+        chatDemoViewHostingController.modalPresentationStyle = .fullScreen
+        present(chatDemoViewHostingController, animated: true, completion: nil)
     }
 
     func getAppVersion() -> String {
