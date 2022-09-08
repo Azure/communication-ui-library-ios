@@ -11,16 +11,6 @@ import XCTest
 class LocalizationProviderTests: XCTestCase {
     private var logger: LoggerMocking!
 
-    override func setUp() {
-        super.setUp()
-        logger = LoggerMocking()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        logger = nil
-    }
-
     func test_localizationProvider_applyRTL_when_layoutDirectionRightToLeft_then_shouldRTLReturnTrue() {
         let sut = makeSUT()
         let locale: Locale = SupportedLocale.en
@@ -66,6 +56,11 @@ class LocalizationProviderTests: XCTestCase {
 
 extension LocalizationProviderTests {
     func makeSUT() -> LocalizationProviderProtocol {
+        setupMocking()
         return LocalizationProvider(logger: logger)
+    }
+
+    func setupMocking() {
+        logger = LoggerMocking()
     }
 }

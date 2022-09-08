@@ -14,20 +14,7 @@ class CallingMiddlewareTests: XCTestCase {
     var mockMiddlewareHandler: CallingMiddlewareHandlerMocking!
     var mockMiddleware: Middleware<AppState>!
 
-    override func setUp() {
-        super.setUp()
-        mockMiddlewareHandler = CallingMiddlewareHandlerMocking()
-        mockMiddleware = .liveCallingMiddleware(callingMiddlewareHandler: mockMiddlewareHandler)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        mockMiddlewareHandler = nil
-        mockMiddleware = nil
-    }
-
     func test_callingMiddleware_apply_when_setupCallCallingAction_then_handlerSetupCallBeingCalled() {
-
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
         let expectation = expectation(description: "setupCallWasCalled")
         mockMiddlewareHandler.setupCallWasCalled = { value in
@@ -40,7 +27,6 @@ class CallingMiddlewareTests: XCTestCase {
     }
 
     func test_callingMiddleware_apply_when_startCallCallingAction_then_handlerStartCallBeingCalled() {
-
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
         let expectation = expectation(description: "startCallWasCalled")
         mockMiddlewareHandler.startCallWasCalled = { value in
@@ -53,7 +39,6 @@ class CallingMiddlewareTests: XCTestCase {
     }
 
     func test_callingMiddleware_apply_when_endCallCallingAction_then_handlerEndCallBeingCalled() {
-
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
         let expectation = expectation(description: "endCallWasCalled")
         mockMiddlewareHandler.endCallWasCalled = { value in
@@ -66,7 +51,6 @@ class CallingMiddlewareTests: XCTestCase {
     }
 
     func test_callingMiddleware_apply_when_requestMicrophoneOffLocalUserAction_then_handlerRequestMicMuteCalled() {
-
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
         let expectation = expectation(description: "requestMicMuteCalled")
         mockMiddlewareHandler.requestMicMuteCalled = { value in
@@ -79,7 +63,6 @@ class CallingMiddlewareTests: XCTestCase {
     }
 
     func test_callingMiddleware_apply_when_requestMicrophoneOnLocalUserAction_then_handlerRequestMicUnmuteCalled() {
-
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
         let expectation = expectation(description: "requestMicUnmuteCalled")
         mockMiddlewareHandler.requestMicUnmuteCalled = { value in
@@ -116,7 +99,6 @@ class CallingMiddlewareTests: XCTestCase {
     }
 
     func test_callingMiddleware_apply_when_requestCameraOnLocalUserAction_then_handlerRequestCameraOnCalled() {
-
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
         let expectation = expectation(description: "requestCameraOnCalled")
         mockMiddlewareHandler.requestCameraOnCalled = { value in
@@ -129,7 +111,6 @@ class CallingMiddlewareTests: XCTestCase {
     }
 
     func test_callingMiddleware_apply_when_requestCameraOffLocalUserAction_then_handlerRequestCameraOffCalled() {
-
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
         let expectation = expectation(description: "requestCameraOffCalled")
         mockMiddlewareHandler.requestCameraOffCalled = { value in
@@ -142,7 +123,6 @@ class CallingMiddlewareTests: XCTestCase {
     }
 
     func test_callingMiddleware_apply_when_holdCallRequestAction_then_handlerHoldCall() {
-
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
         let expectation = expectation(description: "requestHoldCalled")
         mockMiddlewareHandler.requestHoldCalled = { value in
@@ -155,7 +135,6 @@ class CallingMiddlewareTests: XCTestCase {
     }
 
     func test_callingMiddleware_apply_when_resumeCallRequestAction_then_handlerResumeCall() {
-
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
         let expectation = expectation(description: "requestResumeCalled")
         mockMiddlewareHandler.requestResumeCalled = { value in
@@ -168,7 +147,6 @@ class CallingMiddlewareTests: XCTestCase {
     }
 
     func test_callingMiddleware_apply_when_requestCameraOn_then_nextActionDispatchCameraOnTriggered() {
-
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
         let action = Action.localUserAction(.cameraOnTriggered)
         let expectation = XCTestExpectation(description: "Verify is same action Type")
@@ -179,7 +157,6 @@ class CallingMiddlewareTests: XCTestCase {
     }
 
     func test_callingMiddleware_apply_when_requestMicOn_then_nextActionDispatchMicrophoneOnTriggered() {
-
         let middlewareDispatch = getEmptyCallingMiddlewareFunction()
         let action = Action.localUserAction(.microphoneOnTriggered)
         let expectation = XCTestExpectation(description: "Verify is same action Type")
@@ -211,6 +188,7 @@ extension CallingMiddlewareTests {
     }
 
     private func getEmptyCallingMiddlewareFunction() -> (@escaping ActionDispatch) -> ActionDispatch {
+        setupMocking()
         return mockMiddleware.apply(getEmptyDispatch(), getEmptyState)
     }
 
@@ -219,5 +197,10 @@ extension CallingMiddlewareTests {
             XCTAssertTrue(type(of: action) == type(of: nextAction))
             expectation.fulfill()
         }
+    }
+
+    private func setupMocking () {
+        mockMiddlewareHandler = CallingMiddlewareHandlerMocking()
+        mockMiddleware = .liveCallingMiddleware(callingMiddlewareHandler: mockMiddlewareHandler)
     }
 }

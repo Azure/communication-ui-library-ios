@@ -9,10 +9,6 @@ import XCTest
 
 class ErrorReducerTests: XCTestCase {
 
-    override func setUp() {
-        super.setUp()
-    }
-
     func test_handleErrorReducer_reduce_when_fatalErrorUpdated_then_returnErrorState_categoryFatal() {
         let state = ErrorState()
         let action = Action.errorAction(.fatalErrorUpdated(internalError: .callJoinFailed,
