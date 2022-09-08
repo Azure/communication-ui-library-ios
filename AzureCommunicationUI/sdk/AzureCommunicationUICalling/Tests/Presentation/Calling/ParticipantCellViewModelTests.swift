@@ -10,16 +10,6 @@ import XCTest
 class ParticipantCellViewModelTests: XCTestCase {
     var cancellable: CancelBag!
 
-    override func setUp() {
-        super.setUp()
-        cancellable = CancelBag()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        cancellable = nil
-    }
-
     func test_participantCellViewModel_init_then_getCorrectRendererViewModel() {
         let expectedParticipantIdentifier = "expectedParticipantIdentifier"
         let expectedVideoStreamId = "expectedVideoStreamId"
@@ -277,6 +267,7 @@ extension ParticipantCellViewModelTests {
                  displayName: String = "displayName",
                  isSpeaking: Bool = false,
                  isMuted: Bool = true) -> ParticipantGridCellViewModel {
+        setupMocking()
         let infoModel = ParticipantInfoModelBuilder.get(participantIdentifier: participantIdentifier,
                                                         videoStreamId: videoStreamId,
                                                         screenShareStreamId: screenShareStreamId,
@@ -286,6 +277,10 @@ extension ParticipantCellViewModelTests {
         return ParticipantGridCellViewModel(localizationProvider: LocalizationProviderMocking(),
                                             accessibilityProvider: AccessibilityProvider(),
                                             participantModel: infoModel)
+    }
+
+    func setupMocking() {
+        cancellable = CancelBag()
     }
 
 }
