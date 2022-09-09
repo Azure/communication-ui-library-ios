@@ -10,17 +10,8 @@ import XCTest
 class BannerInfoTypeTests: XCTestCase {
     private var localizationProvider: LocalizationProviderProtocol!
 
-    override func setUp() {
-        super.setUp()
-        localizationProvider = LocalizationProvider(logger: LoggerMocking())
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        localizationProvider = nil
-    }
-
     func test_bannerInfoType_when_recordingAndTranscriptionStarted_then_shouldEqualExpectedString() {
+        makeSUT()
         let bannerInfoType: BannerInfoType = .recordingAndTranscriptionStarted
         let expectedTitle = "Recording and transcription have started."
         let expectedBody = "By joining, you are giving consent for this meeting to be transcribed."
@@ -34,6 +25,7 @@ class BannerInfoTypeTests: XCTestCase {
     }
 
     func test_bannerInfoType_when_recordingStarted_then_shouldEqualExpectedString() {
+        makeSUT()
         let bannerInfoType: BannerInfoType = .recordingStarted
         let expectedTitle = "Recording has started."
         let expectedBody = "By joining, you are giving consent for this meeting to be transcribed."
@@ -47,6 +39,7 @@ class BannerInfoTypeTests: XCTestCase {
     }
 
     func test_bannerInfoType_when_transcriptionStoppedStillRecording_then_shouldEqualExpectedString() {
+        makeSUT()
         let bannerInfoType: BannerInfoType = .transcriptionStoppedStillRecording
         let expectedTitle = "Transcription has stopped."
         let expectedBody = "You are now only recording this meeting."
@@ -60,6 +53,7 @@ class BannerInfoTypeTests: XCTestCase {
     }
 
     func test_bannerInfoType_when_transcriptionStarted_then_shouldEqualExpectedString() {
+        makeSUT()
         let bannerInfoType: BannerInfoType = .transcriptionStarted
         let expectedTitle = "Transcription has started."
         let expectedBody = "By joining, you are giving consent for this meeting to be transcribed."
@@ -73,6 +67,7 @@ class BannerInfoTypeTests: XCTestCase {
     }
 
     func test_bannerInfoType_when_transcriptionStoppedAndSaved_then_shouldEqualExpectedString() {
+        makeSUT()
         let bannerInfoType: BannerInfoType = .transcriptionStoppedAndSaved
         let expectedTitle = "Transcription is being saved."
         let expectedBody = "Transcription has stopped."
@@ -86,6 +81,7 @@ class BannerInfoTypeTests: XCTestCase {
     }
 
     func test_bannerInfoType_when_recordingStoppedStillTranscribing_then_shouldEqualExpectedString() {
+        makeSUT()
         let bannerInfoType: BannerInfoType = .recordingStoppedStillTranscribing
         let expectedTitle = "Recording has stopped."
         let expectedBody = "You are now only transcribing this meeting."
@@ -99,6 +95,7 @@ class BannerInfoTypeTests: XCTestCase {
     }
 
     func test_bannerInfoType_when_recordingStopped_then_shouldEqualExpectedString() {
+        makeSUT()
         let bannerInfoType: BannerInfoType = .recordingStopped
         let expectedTitle = "Recording is being saved."
         let expectedBody = "Recording has stopped."
@@ -112,6 +109,7 @@ class BannerInfoTypeTests: XCTestCase {
     }
 
     func test_bannerInfoType_when_recordingAndTranscriptionStopped_then_shouldEqualExpectedString() {
+        makeSUT()
         let bannerInfoType: BannerInfoType = .recordingAndTranscriptionStopped
         let expectedTitle = "Recording and transcription are being saved."
         let expectedBody = "Recording and transcription have stopped."
@@ -122,5 +120,14 @@ class BannerInfoTypeTests: XCTestCase {
         XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.body), expectedBody)
         XCTAssertEqual(localizationProvider.getLocalizedString(bannerInfoType.linkDisplay), expectedLinkDisplay)
         XCTAssertEqual(bannerInfoType.link, expectedLink)
+    }
+}
+
+extension BannerInfoTypeTests {
+    func makeSUT() {
+        setupMocking()
+    }
+    func setupMocking() {
+        localizationProvider = LocalizationProvider(logger: LoggerMocking())
     }
 }
