@@ -10,63 +10,64 @@ import XCTest
 class NavigationRouterTests: XCTestCase {
     var storeFactory: StoreFactoryMocking!
     var logger: LoggerMocking!
-    var swiftUIRouter: NavigationRouter!
-
-    override func setUp() {
-        super.setUp()
-        storeFactory = StoreFactoryMocking()
-        logger = LoggerMocking()
-        swiftUIRouter = NavigationRouter(store: storeFactory.store, logger: logger)
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        storeFactory = nil
-        logger = nil
-        swiftUIRouter = nil
-    }
 
     func test_router_navigate_whenNavigateToNewView_shouldCallLog() {
+        let sut = makeSUT()
         let state = AppState(navigationState: NavigationState(status: .inCall))
 
-        swiftUIRouter.receive(state)
+        sut.receive(state)
 
         XCTAssertTrue(logger.logWasCalled(), "Log was not called")
     }
 
     func test_router_navigate_when_navigationStatusInCall_then_navigateToCallView() {
+        let sut = makeSUT()
         let naviState = NavigationState(status: .inCall)
         let state = AppState(navigationState: naviState)
 
-        swiftUIRouter.receive(state)
+        sut.receive(state)
 
         XCTAssertEqual(
-            swiftUIRouter.currentView,
+            sut.currentView,
             .callingView,
-            "\(swiftUIRouter.currentView) is not the expected navigated view for state: \(state.callingState.status)")
+            "\(sut.currentView) is not the expected navigated view for state: \(state.callingState.status)")
     }
 
     func test_router_navigate_when_navigationStatusSetupView_then_navigateToSetupView() {
+        let sut = makeSUT()
         let naviState = NavigationState(status: .setup)
         let state = AppState(navigationState: naviState)
 
-        swiftUIRouter.receive(state)
+        sut.receive(state)
 
         XCTAssertEqual(
-            swiftUIRouter.currentView,
+            sut.currentView,
             .setupView,
-            "\(swiftUIRouter.currentView) is not the expected navigated view for state: \(state.callingState.status)")
+            "\(sut.currentView) is not the expected navigated view for state: \(state.callingState.status)")
     }
 
     func test_router_navigate_when_navigationStatusExit_then_navigateToNone() {
+        let sut = makeSUT()
         let naviState = NavigationState(status: .exit)
         let state = AppState(navigationState: naviState)
 
-        swiftUIRouter.receive(state)
+        sut.receive(state)
 
         XCTAssertEqual(
-            swiftUIRouter.currentView,
+            sut.currentView,
             .setupView,
-            "\(swiftUIRouter.currentView) is not the expected navigated view for state: \(state.callingState.status)")
+            "\(sut.currentView) is not the expected navigated view for state: \(state.callingState.status)")
+    }
+}
+
+extension NavigationRouterTests {
+    func makeSUT() -> NavigationRouter {
+        setupMocking()
+        return NavigationRouter(store: storeFactory.store, logger: logger)
+    }
+
+    func setupMocking() {
+        storeFactory = StoreFactoryMocking()
+        logger = LoggerMocking()
     }
 }
