@@ -1,6 +1,6 @@
 ![Hero Image](https://github.com/Azure/communication-ui-library-ios/blob/main/docs/images/mobile-ui-library-hero-image.png?raw=true)
 
-# Azure Communication UI Mobile Library for iOS
+# Azure Communication UI Mobile Library for iOS 
 
 ![Cocoapods](https://img.shields.io/cocoapods/l/AzureCommunicationUICalling)
 ![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AzureCommunicationUICalling)
