@@ -45,9 +45,6 @@ class InfoHeaderViewModel: ObservableObject {
                 }
                 self.showParticipantListButtonTapped()
         }
-        self.participantListButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
-            .participantListAccessibilityLabel)
-
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
         updateInfoHeaderAvailability()
