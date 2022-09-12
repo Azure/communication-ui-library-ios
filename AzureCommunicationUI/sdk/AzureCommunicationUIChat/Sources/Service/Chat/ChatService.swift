@@ -4,3 +4,23 @@
 //
 
 import Foundation
+import Combine
+
+protocol ChatServiceProtocol {
+    func chatStart() -> AnyPublisher<[ChatMessageInfoModel], Error>
+}
+
+class ChatService: NSObject, ChatServiceProtocol {
+    private let logger: Logger
+    private let chatSDKWrapper: ChatSDKWrapperProtocol
+
+    init(logger: Logger,
+         chatSDKWrapper: ChatSDKWrapperProtocol ) {
+        self.logger = logger
+        self.chatSDKWrapper = chatSDKWrapper
+    }
+
+    func chatStart() -> AnyPublisher<[ChatMessageInfoModel], Error> {
+        return chatSDKWrapper.chatStart()
+    }
+}

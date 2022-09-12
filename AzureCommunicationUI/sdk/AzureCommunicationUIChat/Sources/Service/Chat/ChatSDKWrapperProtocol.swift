@@ -4,3 +4,11 @@
 //
 
 import Foundation
+import Combine
+import AzureCommunicationChat
+
+protocol ChatSDKWrapperProtocol {
+    func chatStart() -> AnyPublisher<[ChatMessageInfoModel], Error>
+
+    var chatEventsHandler: ChatSDKEventsHandling { get }
+}

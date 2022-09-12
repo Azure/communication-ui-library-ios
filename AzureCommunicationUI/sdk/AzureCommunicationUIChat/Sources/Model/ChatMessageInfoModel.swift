@@ -5,6 +5,8 @@
 
 import Foundation
 
+struct ChatMessageInfoModel {}
+
 public struct ChatMessageModel {
     let id: String
     let content: String
