@@ -7,7 +7,7 @@ import Foundation
 import Combine
 
 protocol ChatServiceProtocol {
-    func chatStart() -> AnyPublisher<[ChatMessageInfoModel], Error>
+    func chatStart() async throws -> [ChatMessageInfoModel]
 }
 
 class ChatService: NSObject, ChatServiceProtocol {
@@ -20,7 +20,7 @@ class ChatService: NSObject, ChatServiceProtocol {
         self.chatSDKWrapper = chatSDKWrapper
     }
 
-    func chatStart() -> AnyPublisher<[ChatMessageInfoModel], Error> {
-        return chatSDKWrapper.chatStart()
+    func chatStart() async throws -> [ChatMessageInfoModel] {
+        return try await chatSDKWrapper.chatStart()
     }
 }

@@ -30,16 +30,15 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         logger.debug("CallingSDKWrapper deallocated")
     }
 
-    func chatStart() -> AnyPublisher<[ChatMessageInfoModel], Error> {
-        Future { [self] promise in
-            do {
-                createChatClient()
-                createChatThreadClient()
-                startChat()
-            } catch {
-                return promise(.failure(error))
-            }
-        }.eraseToAnyPublisher()
+    func chatStart() async throws -> [ChatMessageInfoModel] {
+        do {
+            createChatClient()
+            createChatThreadClient()
+            startChat()
+            return []
+        } catch {
+            throw error
+        }
     }
 
     func createChatClient() {
