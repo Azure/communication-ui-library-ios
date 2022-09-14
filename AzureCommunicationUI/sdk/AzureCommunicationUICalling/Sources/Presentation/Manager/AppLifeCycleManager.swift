@@ -46,7 +46,7 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
 
     private func receive(state: AppState) {
         callingStatus = state.callingState.status
-        guard state.callingState.status == .exited,
+        guard callingStatus == .exited,
             let currentRunloop = runLoop else {
             return
         }
