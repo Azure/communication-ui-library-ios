@@ -128,7 +128,9 @@ private func handleLifecycleAction(_ action: LifecycleAction,
     case .foregroundEntered:
         actionHandler.enterForeground(state: getState(), dispatch: dispatch)
     case .willTerminate:
-        actionHandler.endCall(state: getState(), dispatch: dispatch)
+        if getState().callingState.status == .connected {
+            actionHandler.endCall(state: getState(), dispatch: dispatch)
+        }
     }
 }
 

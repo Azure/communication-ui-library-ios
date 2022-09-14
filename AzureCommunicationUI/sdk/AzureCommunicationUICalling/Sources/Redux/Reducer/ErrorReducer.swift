@@ -34,6 +34,7 @@ extension Reducer where State == ErrorState,
             // Exhaustive unimplemented actions
         case .audioSessionAction(_),
                 .callingAction(.callEndRequested),
+                .callingAction(.callEndCompleted),
                 .callingAction(.stateUpdated(status: _)),
                 .callingAction(.setupCall),
                 .callingAction(.dismissSetup),

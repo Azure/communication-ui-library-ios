@@ -90,21 +90,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         guard call != nil else {
             throw CallCompositeInternalError.callEndFailed
         }
-        // executing the following code in main thread because
-        // we need to break correct runloop (the one on main thread)
-        // otherwise, when user force close the app, the app would
-        // hang (runloop blocking main thread) and
-        // gets terminated by iOS with exit code 9
-        try await Task { @MainActor in
-            do {
-                try await call?.hangUp(options: HangUpOptions())
-                logger.debug("Call ended successfully")
-                CFRunLoopStop(CFRunLoopGetCurrent())
-            } catch {
-                logger.error( "It was not possible to hangup the call.")
-                throw error
-            }
-        }.value
+        do {
+            try await call?.hangUp(options: HangUpOptions())
+            logger.debug("Call ended successfully")
+        } catch {
+            logger.error( "It was not possible to hangup the call.")
+            throw error
+        }
     }
 
     func getRemoteParticipant(_ identifier: String) -> RemoteParticipant? {

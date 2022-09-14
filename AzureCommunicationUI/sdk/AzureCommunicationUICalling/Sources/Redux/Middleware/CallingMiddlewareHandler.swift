@@ -83,6 +83,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         Task {
             do {
                 try await callingService.endCall()
+                dispatch(.callingAction(.callEndCompleted))
             } catch {
                 handle(error: error, errorType: .callEndFailed, dispatch: dispatch)
             }

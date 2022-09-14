@@ -16,6 +16,7 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
     private let logger: Logger
     private let store: Store<AppState>
     private var callingStatus: CallingStatus
+    private var runLoop: CFRunLoop?
 
     var cancellables = Set<AnyCancellable>()
 
@@ -45,6 +46,11 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
 
     private func receive(state: AppState) {
         callingStatus = state.callingState.status
+        guard state.callingState.status == .exited,
+            let currentRunloop = runLoop else {
+            return
+        }
+        CFRunLoopStop(currentRunloop)
     }
 
     @objc func willDeactivate(_ notification: Notification) {
@@ -59,8 +65,9 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
 
     @objc func willTerminate(_ notification: Notification) {
         logger.debug("Will Terminate")
+        store.dispatch(action: .lifecycleAction(.willTerminate))
         if callingStatus == .connected {
-            store.dispatch(action: .lifecycleAction(.willTerminate))
+            self.runLoop = CFRunLoopGetCurrent()
             CFRunLoopRun()
         }
     }

@@ -8,6 +8,7 @@ import Foundation
 enum CallingAction: Equatable {
     case callStartRequested
     case callEndRequested
+    case callEndCompleted
     case stateUpdated(status: CallingStatus)
 
     case setupCall
