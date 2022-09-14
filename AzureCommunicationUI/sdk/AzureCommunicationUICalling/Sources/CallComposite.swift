@@ -100,7 +100,7 @@ public class CallComposite {
         self.permissionManager = dependencyContainer.resolve() as PermissionsManagerProtocol
         self.audioSessionManager = dependencyContainer.resolve() as AudioSessionManagerProtocol
         self.avatarViewManager = dependencyContainer.resolve() as AvatarViewManager
-        self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManager
+        self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManagerProtocol
     }
 
     private func cleanUpManagers() {
