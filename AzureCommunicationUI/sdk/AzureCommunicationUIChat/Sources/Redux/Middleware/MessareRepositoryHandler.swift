@@ -14,8 +14,6 @@ protocol MessageRepositoryMiddlewareHandling {
 class MessageRepositoryMiddlewareHandler: MessageRepositoryMiddlewareHandling {
     private let messageRepository: MessageRepositoryManagerProtocol
     private let logger: Logger
-    private let cancelBag = CancelBag()
-    private let subscription = CancelBag()
 
     init(messageRepository: MessageRepositoryManagerProtocol, logger: Logger) {
         self.messageRepository = messageRepository
