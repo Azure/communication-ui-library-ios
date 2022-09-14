@@ -3,9 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
-import Combine
 import AzureCommunicationChat
+import Combine
 
 protocol ChatSDKWrapperProtocol {
     func chatStart() async throws -> [ChatMessageInfoModel]

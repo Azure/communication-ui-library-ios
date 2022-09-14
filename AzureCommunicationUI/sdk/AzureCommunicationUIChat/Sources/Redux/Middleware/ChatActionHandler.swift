@@ -3,15 +3,14 @@
 //  Licensed under the MIT License.
 //
 
-import Combine
-import Foundation
 import AzureCommunicationCommon
+import Foundation
 
 protocol ChatActionHandling {
     func enterBackground(state: AppState, dispatch: @escaping ActionDispatch)
     func enterForeground(state: AppState, dispatch: @escaping ActionDispatch)
 
-    func chatStart(state: AppState, dispatch: @escaping ActionDispatch, serviceListener: ChatServiceListening)
+    func chatStart(state: AppState, dispatch: @escaping ActionDispatch, serviceListener: ChatServiceEventHandling)
 }
 
 class ChatActionHandler: ChatActionHandling {
@@ -25,7 +24,7 @@ class ChatActionHandler: ChatActionHandling {
         self.logger = logger
     }
 
-    func chatStart(state: AppState, dispatch: @escaping ActionDispatch, serviceListener: ChatServiceListening) {
+    func chatStart(state: AppState, dispatch: @escaping ActionDispatch, serviceListener: ChatServiceEventHandling) {
         chatService.chatStart()
             .map { _ in
                 // Stub action

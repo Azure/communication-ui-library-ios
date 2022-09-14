@@ -3,7 +3,7 @@
 //  Licensed under the MIT License.
 //
 
-import Combine
+import Foundation
 
 extension Reducer where State == ErrorState,
                         Actions == Action {

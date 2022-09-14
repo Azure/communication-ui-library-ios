@@ -3,7 +3,7 @@
 //  Licensed under the MIT License.
 //
 
-import Combine
+import Foundation
 
 extension Middleware {
     static func liveMessageRepositoryMiddleware(

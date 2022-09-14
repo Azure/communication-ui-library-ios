@@ -3,10 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
-import Combine
 import AzureCore
 import AzureCommunicationChat
+import Foundation
 
 class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
     let chatEventsHandler: ChatSDKEventsHandling
@@ -32,46 +31,10 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
 
     func chatStart() async throws -> [ChatMessageInfoModel] {
         do {
-            createChatClient()
-            createChatThreadClient()
-            startChat()
+            // Stub: to be implemented
             return []
         } catch {
             throw error
-        }
-    }
-
-    func createChatClient() {
-        do {
-            print("Creating Chat Client...")
-            self.chatClient = try ChatClient(
-                endpoint: self.chatConfiguration.endpoint,
-                credential: self.chatConfiguration.credential,
-                withOptions: AzureCommunicationChatClientOptions())
-        } catch {
-            print("Create Chat Client failed: \(error.localizedDescription)")
-        }
-    }
-
-    func createChatThreadClient() {
-        print("Creating Chat Thread Client...")
-        do {
-            self.chatThreadClient = try chatClient?.createClient(
-                                    forThread: self.chatConfiguration.chatThreadId)
-        } catch {
-            print("Create Chat Thread Client failed: \(error.localizedDescription)")
-        }
-    }
-
-    func startChat() {
-        self.chatClient?.startRealTimeNotifications { [self] result in
-            switch result {
-            case .success:
-                print("Real-time notifications started.")
-                self.registerEvents()
-            case .failure:
-                print("Failed to start real-time notifications.")
-            }
         }
     }
 

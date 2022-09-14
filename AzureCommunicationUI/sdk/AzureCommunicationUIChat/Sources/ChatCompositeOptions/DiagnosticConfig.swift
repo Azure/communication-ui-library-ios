@@ -7,9 +7,10 @@ import Foundation
 
 struct DiagnosticConfig {
     var tags = [String]()
+    private let semanticVersionKey: String = "UILibrarySemVersion"
     private let compositeTagPrefix: String = "aci120"
     private var compositeTag: String {
-        let version = Bundle(for: ChatComposite.self).infoDictionary?["UILibrarySemVersion"]
+        let version = Bundle(for: ChatComposite.self).infoDictionary?[semanticVersionKey]
         let versionStr = version as? String ?? "unknown"
         return "\(compositeTagPrefix)/\(versionStr)"
     }

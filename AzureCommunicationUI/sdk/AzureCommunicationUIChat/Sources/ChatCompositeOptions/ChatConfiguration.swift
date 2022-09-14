@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import AzureCommunicationCommon
+import Foundation
 
 struct ChatConfiguration {
     let chatThreadId: String
@@ -19,14 +19,14 @@ struct ChatConfiguration {
     init(locator: JoinLocator,
          communicationIdentifier: CommunicationIdentifier,
          credential: CommunicationTokenCredential,
-         displayName: String?) {
+         displayName: String?) throws {
         switch locator {
         case let .groupChat(threadId: threadId, endpoint: endpoint):
             self.chatThreadId = threadId
             self.endpoint = endpoint
             self.compositeChatType = .groupChat
         case let .teamsMeeting(teamsLink: meetingLink, endpoint: endpoint):
-            self.chatThreadId = ChatConfiguration.getThreadId(from: meetingLink)
+            self.chatThreadId = ChatConfiguration.getThreadId(from: meetingLink) ?? ""
             self.endpoint = endpoint
             self.compositeChatType = .teamsChat
         }
@@ -36,14 +36,14 @@ struct ChatConfiguration {
         self.diagnosticConfig = DiagnosticConfig()
     }
 
-    static func getThreadId(from meetingLink: String) -> String {
+    static func getThreadId(from meetingLink: String) -> String? {
         if let range = meetingLink.range(of: "meetup-join/") {
             let thread = meetingLink[range.upperBound...]
             if let endRange = thread.range(of: "/")?.lowerBound {
                 return String(thread.prefix(upTo: endRange))
             }
         }
-        return ""
+        return nil
     }
 }
 

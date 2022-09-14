@@ -3,10 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
-import Combine
 import AzureCommunicationChat
 import AzureCommunicationCommon
+import Foundation
 
 protocol ChatSDKEventsHandling {
     func handle(response: TrouterEvent)

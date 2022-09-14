@@ -3,9 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Combine
-import Foundation
 import AzureCommunicationCommon
+import Foundation
 
 protocol MessageRepositoryMiddlewareHandling {
     // local event

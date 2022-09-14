@@ -3,9 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Combine
-import Foundation
 import AzureCore
+import Foundation
 
 extension Reducer where State == ParticipantsState,
                         Actions == Action {

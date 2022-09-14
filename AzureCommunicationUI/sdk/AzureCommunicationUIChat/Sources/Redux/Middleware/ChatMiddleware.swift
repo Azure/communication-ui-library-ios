@@ -3,12 +3,12 @@
 //  Licensed under the MIT License.
 //
 
-import Combine
+import Foundation
 
 extension Middleware {
     static func liveChatMiddleware(
         chatActionHandler actionHandler: ChatActionHandling,
-        chatServiceListener serviceListener: ChatServiceListening)
+        chatServiceListener serviceListener: ChatServiceEventHandling)
     -> Middleware<AppState> {
         Middleware<AppState>(
             apply: { dispatch, getState in
@@ -45,7 +45,7 @@ private func handleLifecycleAction(_ action: LifecycleAction,
 
 private func handleChatMessageAction(_ action: ChatAction,
                                      _ actionHandler: ChatActionHandling,
-                                     _ serviceListener: ChatServiceListening,
+                                     _ serviceListener: ChatServiceEventHandling,
                                      _ getState: () -> AppState,
                                      _ dispatch: @escaping ActionDispatch) {
     print("`handleChatMessageAction` not implemented")
