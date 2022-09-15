@@ -33,7 +33,7 @@ class SetupViewModel: ObservableObject {
          store: Store<AppState>,
          networkManager: NetworkManager,
          localizationProvider: LocalizationProviderProtocol,
-         navigationBarViewData: NavigationBarViewData? = nil) {
+         setupScreenViewData: SetupScreenViewData? = nil) {
         self.store = store
         self.networkManager = networkManager
         self.networkManager.startMonitor()
@@ -41,10 +41,10 @@ class SetupViewModel: ObservableObject {
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
 
-        if let title = navigationBarViewData?.title, !title.isEmpty {
+        if let title = setupScreenViewData?.title, !title.isEmpty {
             // if title is not nil/empty, use given title and optional subtitle
             self.title = title
-            self.subTitle = navigationBarViewData?.subtitle
+            self.subTitle = setupScreenViewData?.subtitle
         } else {
             // else if title is nil/empty, use default title and disregard given subtitle
             self.title = self.localizationProvider.getLocalizedString(.setupTitle)
