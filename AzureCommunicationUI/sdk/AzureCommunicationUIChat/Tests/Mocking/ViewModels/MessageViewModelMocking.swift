@@ -3,6 +3,8 @@
 //  Licensed under the MIT License.
 //
 
+import AzureCommunicationChat
 import Foundation
+@testable import AzureCommunicationUIChat
 
-protocol ChatActionHandling {}
+class MessageViewModelMocking: MessageViewModel {}

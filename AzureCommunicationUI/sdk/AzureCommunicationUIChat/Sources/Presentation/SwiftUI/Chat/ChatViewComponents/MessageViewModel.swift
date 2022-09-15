@@ -5,4 +5,4 @@
 
 import Foundation
 
-protocol ChatActionHandling {}
+class MessageViewModel: ObservableObject {}
