@@ -71,9 +71,9 @@ class CallingMiddlewareHandlerTests: XCTestCase {
             expectation.fulfill()
         }
         let state: AppState = getState(callingState: .connected,
-                                             cameraStatus: .off,
-                                             cameraDeviceStatus: .front,
-                                             cameraPermission: .notAsked)
+                                       cameraStatus: .off,
+                                       cameraDeviceStatus: .front,
+                                       cameraPermission: .notAsked)
 
         callingMiddlewareHandler.requestCameraOn(state: state, dispatch: dispatch)
         wait(for: [expectation], timeout: 1)
@@ -225,10 +225,11 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
                 callBackCount += 1
             }
-            mockCallingService.error = error
-            callingMiddlewareHandler.endCall(state: getEmptyState(), dispatch: dispatch)
-            wait(for: [expectation], timeout: 1)
         }
+        mockCallingService.error = error
+        callingMiddlewareHandler.endCall(state: getEmptyState(), dispatch: dispatch)
+        wait(for: [expectation], timeout: 1)
+
     }
 
     func test_callingMiddlewareHandler_endCall_when_returnsCompositeError_then_firstUpdateClientError() {
@@ -250,10 +251,11 @@ class CallingMiddlewareHandlerTests: XCTestCase {
                 }
                 callBackCount += 1
             }
-            mockCallingService.error = error
-            callingMiddlewareHandler.endCall(state: getEmptyState(), dispatch: dispatch)
-            wait(for: [expectation], timeout: 1)
         }
+        mockCallingService.error = error
+        callingMiddlewareHandler.endCall(state: getEmptyState(), dispatch: dispatch)
+        wait(for: [expectation], timeout: 1)
+
     }
 
     func test_callingMiddlewareHandler_endCall_when_returnNSError_then_updateRequestFailed() {
@@ -267,11 +269,13 @@ class CallingMiddlewareHandlerTests: XCTestCase {
                 callBackCount += 1
             } else if callBackCount == 1 {
                 XCTAssertTrue(action == Action.callingAction(.requestFailed))
+                expectation.fulfill()
             }
-            mockCallingService.error = error
-            callingMiddlewareHandler.endCall(state: getEmptyState(), dispatch: dispatch)
-            wait(for: [expectation], timeout: 1)
         }
+        mockCallingService.error = error
+        callingMiddlewareHandler.endCall(state: getEmptyState(), dispatch: dispatch)
+        wait(for: [expectation], timeout: 1)
+
     }
 
     func test_callingMiddlewareHandler_startCall_when_returnsNSError_then_updateCallingCoreError() {

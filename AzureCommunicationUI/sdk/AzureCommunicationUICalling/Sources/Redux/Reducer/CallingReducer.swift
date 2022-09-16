@@ -49,6 +49,7 @@ extension Reducer where State == CallingState,
             return callingState
         }
         return CallingState(status: callingStatus,
+                            operationStatus: operationStatus,
                             isRecordingActive: isRecordingActive,
                             isTranscriptionActive: isTranscriptionActive)
     }

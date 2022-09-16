@@ -58,7 +58,8 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
         }
         operationStatus = newOperationStatus
 
-        if let currentRunloop = runLoop {
+        if operationStatus == .callEnded,
+           let currentRunloop = runLoop {
             CFRunLoopStop(currentRunloop)
         }
 

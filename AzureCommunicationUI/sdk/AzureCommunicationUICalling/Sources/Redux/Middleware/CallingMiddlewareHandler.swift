@@ -88,7 +88,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 dispatch(.callingAction(.callEnded))
             } catch {
                 handle(error: error, errorType: .callEndFailed, dispatch: dispatch)
-                dispatch(.callingAction(.callEnded))
+                dispatch(.callingAction(.requestFailed))
             }
         }
     }
