@@ -51,8 +51,7 @@ extension CallingMiddlewareHandler {
              .localHold,
              .disconnecting,
              .remoteHold,
-             .disconnected,
-             .exited:
+             .disconnected:
             break
         case .connected,
                 .inLobby:

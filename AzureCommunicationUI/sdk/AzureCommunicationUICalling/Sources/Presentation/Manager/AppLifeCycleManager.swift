@@ -15,6 +15,7 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
 
     private let logger: Logger
     private let store: Store<AppState>
+    private var operationStatus: OperationStatus
     private var callingStatus: CallingStatus
     private var runLoop: CFRunLoop?
 
@@ -24,6 +25,7 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
          logger: Logger) {
         self.logger = logger
         self.store = store
+        self.operationStatus = .none
         self.callingStatus = .none
         store.$state
             .receive(on: DispatchQueue.main)
@@ -45,12 +47,21 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
     }
 
     private func receive(state: AppState) {
-        callingStatus = state.callingState.status
-        guard callingStatus == .exited,
-            let currentRunloop = runLoop else {
+        update(callingState: state.callingState)
+    }
+
+    private func update(callingState: CallingState) {
+        callingStatus = callingState.status
+        let newOperationStatus = callingState.operationStatus
+        guard operationStatus != newOperationStatus else {
             return
         }
-        CFRunLoopStop(currentRunloop)
+        operationStatus = newOperationStatus
+
+        if let currentRunloop = runLoop {
+            CFRunLoopStop(currentRunloop)
+        }
+
     }
 
     @objc func willDeactivate(_ notification: Notification) {

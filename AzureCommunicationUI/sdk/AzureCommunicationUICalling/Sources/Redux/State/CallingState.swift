@@ -16,18 +16,26 @@ enum CallingStatus: Int {
     case disconnected
     case inLobby
     case remoteHold
-    case exited
+}
+
+enum OperationStatus: Int {
+    case none
+    case callEndRequested
+    case callEnded
 }
 
 struct CallingState: Equatable {
     let status: CallingStatus
+    let operationStatus: OperationStatus
     let isRecordingActive: Bool
     let isTranscriptionActive: Bool
 
     init(status: CallingStatus = .none,
+         operationStatus: OperationStatus = .none,
          isRecordingActive: Bool = false,
          isTranscriptionActive: Bool = false) {
         self.status = status
+        self.operationStatus = operationStatus
         self.isRecordingActive = isRecordingActive
         self.isTranscriptionActive = isTranscriptionActive
     }

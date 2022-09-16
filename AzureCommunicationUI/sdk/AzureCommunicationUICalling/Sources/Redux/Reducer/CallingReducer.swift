@@ -10,6 +10,7 @@ extension Reducer where State == CallingState,
     static var liveCallingReducer: Self = Reducer { callingState, action in
 
         var callingStatus = callingState.status
+        var operationStatus = callingState.operationStatus
         var isRecordingActive = callingState.isRecordingActive
         var isTranscriptionActive = callingState.isTranscriptionActive
 
@@ -20,17 +21,20 @@ extension Reducer where State == CallingState,
             isRecordingActive = newValue
         case .callingAction(.transcriptionStateUpdated(let newValue)):
             isTranscriptionActive = newValue
-        case .callingAction(.callEndCompleted):
-            callingStatus = .exited
+        case .callingAction(.callEndRequested):
+            operationStatus = .callEndRequested
+        case .callingAction(.callEnded):
+            operationStatus = .callEnded
+        case .callingAction(.requestFailed):
+            operationStatus = .none
         case .errorAction(.statusErrorAndCallReset):
             callingStatus = .none
+            operationStatus = .none
             isRecordingActive = false
             isTranscriptionActive = false
-
         // Exhaustive un-implemented actions
         case .audioSessionAction,
                 .callingAction(.callStartRequested),
-                .callingAction(.callEndRequested),
                 .callingAction(.setupCall),
                 .callingAction(.dismissSetup),
                 .callingAction(.resumeRequested),
