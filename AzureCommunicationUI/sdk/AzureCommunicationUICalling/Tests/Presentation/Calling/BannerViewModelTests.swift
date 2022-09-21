@@ -291,7 +291,7 @@ extension BannerViewModelTests {
     func makeSut(callingStateArray: [CallingState],
                  mockingBannerViewModel: BannerTextViewModelMocking) -> BannerViewModel {
         let storeFactory = StoreFactoryMocking()
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
+        var factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
                                                               store: storeFactory.store)
         factoryMocking.bannerTextViewModel = mockingBannerViewModel
         let sut = BannerViewModel(compositeViewModelFactory: factoryMocking)

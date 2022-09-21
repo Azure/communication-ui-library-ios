@@ -547,7 +547,7 @@ extension ParticipantGridViewModelTests {
     func makeSUT(participantGridCellViewUpdateCompletion: ((ParticipantInfoModel) -> Void)? = nil) -> ParticipantGridViewModel {
         let storeFactory = StoreFactoryMocking()
         let accessibilityProvider = AccessibilityProvider()
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
+        var factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
                                                               store: storeFactory.store,
                                                               accessibilityProvider: accessibilityProvider)
         factoryMocking.createMockParticipantGridCellViewModel = { infoModel in
