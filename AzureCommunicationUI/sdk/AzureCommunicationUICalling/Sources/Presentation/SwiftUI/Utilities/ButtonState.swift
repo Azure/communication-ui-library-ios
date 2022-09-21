@@ -26,9 +26,9 @@ enum CameraButtonState: ButtonState {
     var localizationKey: LocalizationKey {
         switch self {
         case .videoOn:
-            return LocalizationKey.videoOn
+            return .videoOn
         case .videoOff:
-            return LocalizationKey.videoOff
+            return .videoOff
         }
     }
 
@@ -50,9 +50,9 @@ enum MicButtonState: ButtonState {
     var localizationKey: LocalizationKey {
         switch self {
         case .micOn:
-            return LocalizationKey.micOn
+            return .micOn
         case .micOff:
-            return LocalizationKey.micOff
+            return .micOff
         }
     }
 }

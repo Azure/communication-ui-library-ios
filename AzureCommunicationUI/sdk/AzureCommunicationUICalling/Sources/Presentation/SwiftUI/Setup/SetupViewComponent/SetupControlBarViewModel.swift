@@ -42,7 +42,7 @@ class SetupControlBarViewModel: ObservableObject {
         cameraButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
             selectedButtonState: CameraButtonState.videoOff,
             localizationProvider: self.localizationProvider,
-            buttonTypeColor: IconWithLabelButtonViewModel<CameraButtonState>.ButtonTypeColor.colorThemedWhite,
+            buttonTypeColor: .colorThemedWhite,
             isDisabled: false) { [weak self] in
                 guard let self = self else {
                     return
@@ -56,7 +56,7 @@ class SetupControlBarViewModel: ObservableObject {
         micButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
             selectedButtonState: MicButtonState.micOff,
             localizationProvider: self.localizationProvider,
-            buttonTypeColor: IconWithLabelButtonViewModel<MicButtonState>.ButtonTypeColor.colorThemedWhite,
+            buttonTypeColor: .colorThemedWhite,
             isDisabled: false) { [weak self] in
                 guard let self = self else {
                     return
@@ -69,7 +69,7 @@ class SetupControlBarViewModel: ObservableObject {
         audioDeviceButtonViewModel = compositeViewModelFactory.makeIconWithLabelButtonViewModel(
             selectedButtonState: AudioButtonState.speaker,
             localizationProvider: self.localizationProvider,
-            buttonTypeColor: IconWithLabelButtonViewModel<AudioButtonState>.ButtonTypeColor.colorThemedWhite,
+            buttonTypeColor: .colorThemedWhite,
             isDisabled: false) { [weak self] in
                 guard let self = self else {
                     return
