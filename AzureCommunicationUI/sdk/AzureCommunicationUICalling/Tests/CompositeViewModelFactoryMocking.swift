@@ -38,9 +38,9 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var createParticipantsListCellViewModel: ((ParticipantInfoModel) -> ParticipantsListCellViewModel?)?
     var createIconButtonViewModel: ((CompositeIcon) -> IconButtonViewModel?)?
 
-    var createCameraIconWithLabelButtonViewModel: ((CameraState) -> IconWithLabelButtonViewModel<CameraState>?)?
-    var createMicIconWithLabelButtonViewModel: ((MicState) -> IconWithLabelButtonViewModel<MicState>?)?
-    var createAudioIconWithLabelButtonViewModel: ((AudioState) -> IconWithLabelButtonViewModel<AudioState>?)?
+    var createCameraIconWithLabelButtonViewModel: ((CameraButtonState) -> IconWithLabelButtonViewModel<CameraButtonState>?)?
+    var createMicIconWithLabelButtonViewModel: ((MicButtonState) -> IconWithLabelButtonViewModel<MicButtonState>?)?
+    var createAudioIconWithLabelButtonViewModel: ((AudioButtonState) -> IconWithLabelButtonViewModel<AudioButtonState>?)?
 
     init(logger: Logger,
          store: Store<AppState>,
@@ -86,17 +86,17 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                  isDisabled: Bool,
                                  action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<ButtonStateType> where ButtonStateType: ButtonState {
         if let cameraStateClosure = createCameraIconWithLabelButtonViewModel,
-            let cameraState = selectedButtonState as? CameraState,
+            let cameraState = selectedButtonState as? CameraButtonState,
             let vm = cameraStateClosure(cameraState) as? IconWithLabelButtonViewModel<ButtonStateType> {
             return vm
         }
         if let micStateClosure = createMicIconWithLabelButtonViewModel,
-            let micState = selectedButtonState as? MicState,
+            let micState = selectedButtonState as? MicButtonState,
             let vm = micStateClosure(micState) as? IconWithLabelButtonViewModel<ButtonStateType> {
             return vm
         }
         if let audioStateClosure = createAudioIconWithLabelButtonViewModel,
-            let audioState = selectedButtonState as? AudioState,
+            let audioState = selectedButtonState as? AudioButtonState,
             let vm = audioStateClosure(audioState) as? IconWithLabelButtonViewModel<ButtonStateType> {
             return vm
         }

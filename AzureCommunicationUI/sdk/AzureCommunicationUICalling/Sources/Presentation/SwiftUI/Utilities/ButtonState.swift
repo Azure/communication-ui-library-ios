@@ -1,6 +1,6 @@
 //
-//  Copyright (c) Microsoft Corporation. All rights reserved.
-//  Licensed under the MIT License.
+//  Copyright (c) Microsoft Corporation. All rights reserved.
+//  Licensed under the MIT License.
 //
 
 import Foundation
@@ -10,7 +10,7 @@ protocol ButtonState: Equatable {
     var localizationKey: LocalizationKey { get }
 }
 
-enum CameraState: ButtonState {
+enum CameraButtonState: ButtonState {
     case videoOn
     case videoOff
 
@@ -34,7 +34,7 @@ enum CameraState: ButtonState {
 
 }
 
-enum MicState: ButtonState {
+enum MicButtonState: ButtonState {
     case micOn
     case micOff
 
@@ -57,7 +57,7 @@ enum MicState: ButtonState {
     }
 }
 
-enum AudioState: ButtonState {
+enum AudioButtonState: ButtonState {
     case speaker
     case receiver
     case bluetooth
@@ -89,7 +89,7 @@ enum AudioState: ButtonState {
         }
     }
 
-    static func getButtonState(from audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> AudioState {
+    static func getButtonState(from audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus) -> AudioButtonState {
         switch audioDeviceStatus {
         case .speakerSelected,
                 .speakerRequested:
