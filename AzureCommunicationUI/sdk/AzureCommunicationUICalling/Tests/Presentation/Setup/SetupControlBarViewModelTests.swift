@@ -9,7 +9,7 @@ import XCTest
 
 class SetupControlBarViewModelTests: XCTestCase {
     private var storeFactory: StoreFactoryMocking!
-    private var factoryMocking: CompositeVmButtonFactoryMocking!
+    private var factoryMocking: CompositeViewModelFactoryMocking!
     private var cancellable: CancelBag!
     private var logger: LoggerMocking!
     private var localizationProvider: LocalizationProviderMocking!
@@ -22,7 +22,7 @@ class SetupControlBarViewModelTests: XCTestCase {
         cancellable = CancelBag()
         logger = LoggerMocking()
         localizationProvider = LocalizationProviderMocking()
-        factoryMocking = CompositeVmButtonFactoryMocking(logger: logger,
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
                                                           store: storeFactory.store)
     }
 

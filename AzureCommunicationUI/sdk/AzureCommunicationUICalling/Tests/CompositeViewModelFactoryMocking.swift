@@ -7,7 +7,7 @@ import Foundation
 import FluentUI
 @testable import AzureCommunicationUICalling
 
-class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
+struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     private let logger: Logger
     private let store: Store<AppState>
@@ -37,6 +37,10 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
     var createParticipantsListCellViewModel: ((ParticipantInfoModel) -> ParticipantsListCellViewModel?)?
     var createIconButtonViewModel: ((CompositeIcon) -> IconButtonViewModel?)?
+
+    var createCameraIconWithLabelButtonViewModel: ((CameraState) -> IconWithLabelButtonViewModel<CameraState>?)?
+    var createMicIconWithLabelButtonViewModel: ((MicState) -> IconWithLabelButtonViewModel<MicState>?)?
+    var createAudioIconWithLabelButtonViewModel: ((AudioState) -> IconWithLabelButtonViewModel<AudioState>?)?
 
     init(logger: Logger,
          store: Store<AppState>,
@@ -76,17 +80,33 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeIconWithLabelButtonViewModel<ButtonStateType>(
-                                    selectedButtonState: ButtonStateType,
-                                    localizationProvider: LocalizationProviderProtocol,
-                                    buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
-                                    isDisabled: Bool,
-                                    action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<ButtonStateType> where ButtonStateType: ButtonState {
-        return IconWithLabelButtonViewModel(selectedButtonState: selectedButtonState,
-                                         localizationProvider: localizationProvider,
-                                         buttonTypeColor: buttonTypeColor,
-                                         isDisabled: isDisabled,
-                                         action: action)
+                                 selectedButtonState: ButtonStateType,
+                                 localizationProvider: LocalizationProviderProtocol,
+                                 buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
+                                 isDisabled: Bool,
+                                 action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<ButtonStateType> where ButtonStateType: ButtonState {
+        if let cameraStateClosure = createCameraIconWithLabelButtonViewModel,
+            let cameraState = selectedButtonState as? CameraState,
+            let vm = cameraStateClosure(cameraState) as? IconWithLabelButtonViewModel<ButtonStateType> {
+            return vm
         }
+        if let micStateClosure = createMicIconWithLabelButtonViewModel,
+            let micState = selectedButtonState as? MicState,
+            let vm = micStateClosure(micState) as? IconWithLabelButtonViewModel<ButtonStateType> {
+            return vm
+        }
+        if let audioStateClosure = createAudioIconWithLabelButtonViewModel,
+            let audioState = selectedButtonState as? AudioState,
+            let vm = audioStateClosure(audioState) as? IconWithLabelButtonViewModel<ButtonStateType> {
+            return vm
+        }
+        return IconWithLabelButtonViewModel(
+                                selectedButtonState: selectedButtonState,
+                                localizationProvider: localizationProvider,
+                                buttonTypeColor: buttonTypeColor,
+                                isDisabled: isDisabled,
+                                action: action)
+    }
 
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel {
         return localVideoViewModel ?? LocalVideoViewModel(compositeViewModelFactory: self,
@@ -221,50 +241,5 @@ class CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                       logger: logger,
                                       accessibilityProvider: accessibilityProvider,
                                       resumeAction: {})
-    }
-}
-
-class CompositeVmButtonFactoryMocking: CompositeViewModelFactoryMocking {
-    var createCameraIconWithLabelButtonViewModel: ((CameraState) -> IconWithLabelButtonViewModel<CameraState>?)?
-    var createMicIconWithLabelButtonViewModel: ((MicState) -> IconWithLabelButtonViewModel<MicState>?)?
-    var createAudioIconWithLabelButtonViewModel: ((AudioState) -> IconWithLabelButtonViewModel<AudioState>?)?
-
-    override init(logger: Logger, store: Store<AppState>, accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking(), localizationProvider: LocalizationProviderProtocol = LocalizationProviderMocking()) {
-        super.init(logger: logger, store: store, accessibilityProvider: accessibilityProvider, localizationProvider: localizationProvider)
-    }
-
-    override func makeIconWithLabelButtonViewModel<ButtonStateType>(
-        selectedButtonState: ButtonStateType,
-        localizationProvider: LocalizationProviderProtocol,
-        buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
-        isDisabled: Bool,
-        action: @escaping (() -> Void)
-    ) -> IconWithLabelButtonViewModel<ButtonStateType> {
-
-        if let cameraStateClosure = createCameraIconWithLabelButtonViewModel,
-           let cameraState = selectedButtonState as? CameraState,
-           let vm = cameraStateClosure(cameraState) as? IconWithLabelButtonViewModel<ButtonStateType> {
-            return vm
-        }
-
-        if let micStateClosure = createMicIconWithLabelButtonViewModel,
-           let micState = selectedButtonState as? MicState,
-           let vm = micStateClosure(micState) as? IconWithLabelButtonViewModel<ButtonStateType> {
-            return vm
-        }
-
-        if let audioStateClosure = createAudioIconWithLabelButtonViewModel,
-           let audioState = selectedButtonState as? AudioState,
-           let vm = audioStateClosure(audioState) as? IconWithLabelButtonViewModel<ButtonStateType> {
-            return vm
-        }
-
-        return super.makeIconWithLabelButtonViewModel(
-            selectedButtonState: selectedButtonState,
-            localizationProvider: localizationProvider,
-            buttonTypeColor: buttonTypeColor,
-            isDisabled: isDisabled,
-            action: action
-        )
     }
 }
