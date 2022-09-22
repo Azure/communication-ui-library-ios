@@ -11,8 +11,17 @@ import Combine
 
 class CallingMiddlewareHandlerTests: XCTestCase {
 
-    var mockLogger: LoggerMocking!
     var mockCallingService: CallingServiceMocking!
+
+    override func setUp() {
+        super.setUp()
+        mockCallingService = CallingServiceMocking()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        mockCallingService = nil
+    }
 
     func test_callingMiddlewareHandler_requestMicMute_then_muteLocalMicCalled() async {
         let sut = makeSUT()
@@ -584,13 +593,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
 
 extension CallingMiddlewareHandlerTests {
     private func makeSUT() -> CallingMiddlewareHandler {
-        setupMocking()
+        let mockLogger = LoggerMocking()
         return CallingMiddlewareHandler(callingService: mockCallingService, logger: mockLogger)
-    }
-
-    private func setupMocking() {
-        mockCallingService = CallingServiceMocking()
-        mockLogger = LoggerMocking()
     }
 
     private func getEmptyState() -> AppState {
