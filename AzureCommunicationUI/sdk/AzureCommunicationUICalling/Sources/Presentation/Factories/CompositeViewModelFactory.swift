@@ -37,6 +37,7 @@ protocol CompositeViewModelFactoryProtocol {
                                 subtitle: String) -> ErrorInfoViewModel
 
     // MARK: CallingViewModels
+    func makeDraggablePIPViewModel(dispatchAction: @escaping ActionDispatch) -> DraggablePIPViewModel
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
@@ -61,26 +62,20 @@ protocol CompositeViewModelFactoryProtocol {
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let store: Store<AppState>
-    private let networkManager: NetworkManager
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
-    private let localOptions: LocalOptions?
 
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
 
     init(logger: Logger,
          store: Store<AppState>,
-         networkManager: NetworkManager,
          localizationProvider: LocalizationProviderProtocol,
-         accessibilityProvider: AccessibilityProviderProtocol,
-         localOptions: LocalOptions? = nil) {
+         accessibilityProvider: AccessibilityProviderProtocol) {
         self.logger = logger
         self.store = store
-        self.networkManager = networkManager
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
-        self.localOptions = localOptions
     }
 
     // MARK: CompositeViewModels
@@ -89,9 +84,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
             let viewModel = SetupViewModel(compositeViewModelFactory: self,
                                            logger: logger,
                                            store: store,
-                                           networkManager: networkManager,
-                                           localizationProvider: localizationProvider,
-                                           navigationBarViewData: localOptions?.navigationBarViewData)
+                                           localizationProvider: localizationProvider)
             self.setupViewModel = viewModel
             self.callingViewModel = nil
             return viewModel
@@ -178,10 +171,17 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     // MARK: CallingViewModels
+    func makeDraggablePIPViewModel(dispatchAction: @escaping ActionDispatch) -> DraggablePIPViewModel {
+        DraggablePIPViewModel(compositeViewModelFactory: self,
+                              dispatchAction: dispatchAction,
+                              localizationProvider: localizationProvider)
+    }
+
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
         LobbyOverlayViewModel(localizationProvider: localizationProvider,
                               accessibilityProvider: accessibilityProvider)
     }
+
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
         OnHoldOverlayViewModel(localizationProvider: localizationProvider,
                                compositeViewModelFactory: self,

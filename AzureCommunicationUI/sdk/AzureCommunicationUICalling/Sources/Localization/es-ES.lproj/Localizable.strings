@@ -26,7 +26,6 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Silenciar";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Dispositivo";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Seleccionar dispositivo de audio";
-"AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Ir a Configuración";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Su cámara está deshabilitada. Para habilitarla, vaya a Configuración para permitir el acceso.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="Su cámara y su audio están deshabilitados. Para habilitarlos, vaya a Configuración para permitir el acceso. Debe habilitar el audio para iniciar esta llamada.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="Su audio está deshabilitado. Para habilitarlo, vaya a Configuración para permitir el acceso. Debe habilitar el audio para iniciar esta llamada.";
@@ -99,4 +98,3 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="No se puede reanudar la llamada";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Otra aplicación está usando el micrófono";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Se le denegó el acceso a la llamada.";
-"AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Error al alternar el vídeo";

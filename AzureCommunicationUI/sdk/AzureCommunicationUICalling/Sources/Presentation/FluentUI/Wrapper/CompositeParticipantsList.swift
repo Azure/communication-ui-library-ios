@@ -13,7 +13,6 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
     @Binding var isVoiceOverEnabled: Bool
     @ObservedObject var viewModel: ParticipantsListViewModel
     @ObservedObject var avatarViewManager: AvatarViewManager
-    @Environment(\.layoutDirection) var layoutDirection: LayoutDirection
     let sourceView: UIView
 
     func makeCoordinator() -> Coordinator {
@@ -25,8 +24,7 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> DrawerContainerViewController<ParticipantsListCellViewModel> {
         let controller = ParticipantsListViewController(items: getParticipantsList(),
                                                         sourceView: sourceView,
-                                                        avatarViewManager: avatarViewManager,
-                                                        isRightToLeft: layoutDirection == .rightToLeft)
+                                                        avatarViewManager: avatarViewManager)
         controller.delegate = context.coordinator
         return controller
     }

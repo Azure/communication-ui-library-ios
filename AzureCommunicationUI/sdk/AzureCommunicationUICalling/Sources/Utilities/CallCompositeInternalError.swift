@@ -5,9 +5,7 @@
 
 import Foundation
 
-enum CallCompositeInternalError: Error, Equatable {
-    case deviceManagerFailed(Error?)
-    case connectionFailed
+enum CallCompositeInternalError: String, Error, Equatable {
     case callTokenFailed
     case callJoinFailed
     case callEndFailed
@@ -20,30 +18,25 @@ enum CallCompositeInternalError: Error, Equatable {
 
     func toCallCompositeErrorCode() -> String? {
         switch self {
-        case .deviceManagerFailed:
-            return CallCompositeErrorCode.unknownError
         case .callTokenFailed:
             return CallCompositeErrorCode.tokenExpired
         case .callJoinFailed:
             return CallCompositeErrorCode.callJoin
         case .callEndFailed:
             return CallCompositeErrorCode.callEnd
-        case .cameraOnFailed:
-            return CallCompositeErrorCode.cameraFailure
         case .callHoldFailed,
                 .callResumeFailed,
                 .callEvicted,
                 .callDenied,
                 .cameraSwitchFailed,
-                .connectionFailed:
+                .cameraOnFailed:
             return nil
         }
     }
 
     func isFatalError() -> Bool {
         switch self {
-        case .deviceManagerFailed,
-                .callTokenFailed,
+        case .callTokenFailed,
                 .callJoinFailed,
                 .callEndFailed:
             return true
@@ -52,29 +45,7 @@ enum CallCompositeInternalError: Error, Equatable {
                 .callEvicted,
                 .callDenied,
                 .cameraSwitchFailed,
-                .cameraOnFailed,
-                .connectionFailed:
-            return false
-        }
-    }
-}
-
-extension CallCompositeInternalError {
-    static func == (lhs: CallCompositeInternalError, rhs: CallCompositeInternalError) -> Bool {
-        switch(lhs, rhs) {
-        case (.deviceManagerFailed, .deviceManagerFailed),
-            (.connectionFailed, .connectionFailed),
-            (.callTokenFailed, .callTokenFailed),
-            (.callJoinFailed, .callJoinFailed),
-            (.callEndFailed, .callEndFailed),
-            (.callHoldFailed, .callHoldFailed),
-            (.callResumeFailed, .callResumeFailed),
-            (.callEvicted, .callEvicted),
-            (.callDenied, .callDenied),
-            (.cameraSwitchFailed, .cameraSwitchFailed),
-            (.cameraOnFailed, .cameraOnFailed):
-            return true
-        default:
+                .cameraOnFailed:
             return false
         }
     }

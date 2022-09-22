@@ -14,5 +14,7 @@ extension UIFont {
 }
 
 extension Fonts {
-    static var button2Accessibility: UIFont { return Fonts.button2.withSize(20) }
+    static var button2Accessibility: UIFont {
+        return Fonts.button2.withSize(20)
+    }
 }

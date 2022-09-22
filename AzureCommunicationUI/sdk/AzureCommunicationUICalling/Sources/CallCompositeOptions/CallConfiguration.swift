@@ -15,6 +15,7 @@ struct CallConfiguration {
     let diagnosticConfig: DiagnosticConfig
 
     init(locator: JoinLocator,
+         diagnosticsOptions: DiagnosticsOptions?,
          credential: CommunicationTokenCredential,
          displayName: String?) {
         switch locator {
@@ -29,7 +30,7 @@ struct CallConfiguration {
         }
         self.credential = credential
         self.displayName = displayName
-        self.diagnosticConfig = DiagnosticConfig()
+        self.diagnosticConfig = DiagnosticConfig(diagnosticsOptions: diagnosticsOptions)
     }
 }
 

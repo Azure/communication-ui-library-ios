@@ -21,7 +21,7 @@ class CompositeAudioDevicesListCell: TableViewCell {
             let checkmarkImage = StyleProvider.icon.getUIImage(for: .checkmark)?
                 .withTintColor(StyleProvider.color.onSurface, renderingMode: .alwaysOriginal)
             checkmarkImageView = UIImageView(image: checkmarkImage)
-            accessibilityTraits.insert(.selected)
+            accessibilityTraits = .selected
         }
 
         selectionStyle = .none
@@ -29,7 +29,7 @@ class CompositeAudioDevicesListCell: TableViewCell {
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
 
-        setTitleLabelTextColor(color: StyleProvider.color.onSurface)
+        setTitleLabelTextColor(color: UIColor.compositeColor(CompositeColor.onSurface))
 
         setup(title: viewModel.title,
               customView: speakerImageView,

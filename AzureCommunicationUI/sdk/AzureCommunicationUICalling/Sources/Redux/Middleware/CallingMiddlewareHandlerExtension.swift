@@ -8,18 +8,11 @@ extension CallingMiddlewareHandler {
                 dispatch: @escaping ActionDispatch) {
         let action: ErrorAction
         if let error = error as? CallCompositeInternalError {
-            switch error {
-            case .deviceManagerFailed(let internalError):
-                action = .fatalErrorUpdated(internalError: error,
-                                            error: internalError)
-            default:
-                action = .fatalErrorUpdated(internalError: error,
-                                            error: nil)
-            }
-
+            action = .fatalErrorUpdated(internalError: error,
+                                                   error: nil)
         } else {
             action = .fatalErrorUpdated(internalError: errorType,
-                                        error: error)
+                                                   error: error)
         }
         dispatch(.errorAction(action))
     }
@@ -30,7 +23,7 @@ extension CallingMiddlewareHandler {
         let action: ErrorAction
         if internalError == .callTokenFailed {
             action = .fatalErrorUpdated(internalError: internalError,
-                                        error: nil)
+                                       error: nil)
         } else {
             action = .statusErrorAndCallReset(internalError: internalError,
                                               error: nil)
@@ -45,17 +38,18 @@ extension CallingMiddlewareHandler {
 
         switch callingStatus {
         case .none,
-             .earlyMedia,
-             .connecting,
-             .ringing,
-             .localHold,
-             .disconnecting,
-             .remoteHold,
-             .disconnected:
+            .earlyMedia,
+            .connecting,
+            .ringing,
+            .localHold,
+            .disconnecting,
+            .remoteHold,
+            .disconnected:
             break
         case .connected,
-                .inLobby:
+             .inLobby:
             dispatch(.callingViewLaunched)
         }
+
     }
 }

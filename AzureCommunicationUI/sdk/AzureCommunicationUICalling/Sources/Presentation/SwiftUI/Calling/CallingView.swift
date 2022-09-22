@@ -7,20 +7,17 @@ import SwiftUI
 import FluentUI
 
 struct CallingView: View {
-    enum InfoHeaderViewConstants {
-        static let horizontalPadding: CGFloat = 8.0
-        static let maxWidth: CGFloat = 380.0
-        static let height: CGFloat = 46.0
-    }
-
-    enum ErrorInfoConstants {
-        static let controlBarHeight: CGFloat = 92
-        static let horizontalPadding: CGFloat = 8
+    struct Constants {
+        static let infoHeaderViewHorizontalPadding: CGFloat = 8.0
+        static let infoHeaderViewMaxWidth: CGFloat = 380.0
+        static let infoHeaderViewHeight: CGFloat = 46.0
     }
 
     @ObservedObject var viewModel: CallingViewModel
+    @ObservedObject var injectedOverlayState: InjectedOverlayState
     let avatarManager: AvatarViewManager
     let viewManager: VideoViewManager
+    let headerButtonStates: [CustomButtonState]
     let leaveCallConfirmationListSourceView = UIView()
 
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
@@ -33,13 +30,75 @@ struct CallingView: View {
     }
 
     var body: some View {
-        ZStack {
-            if getSizeClass() != .iphoneLandscapeScreenSize {
-                portraitCallingView
+        Group {
+            if let viewController = injectedOverlayState.injectedViewController,
+               let overlayOptions = injectedOverlayState.overlayOptions,
+               overlayOptions.showPIP {
+                InjectedOverlayView(viewController: viewController)
+                    .overlay(GeometryReader { geometry in
+                        DraggablePIPView(containerBounds: geometry.frame(in: .local),
+                                         viewModel: viewModel.draggablePIPViewModel,
+                                         avatarManager: avatarManager,
+                                         viewManager: viewManager,
+                                         pipOptions: overlayOptions.pipViewOptions,
+                                         orientation: $orientation,
+                                         screenSize: getSizeClass())
+                        .shadow(radius: 5.0)
+                    })
+                    .transition(overlayOptions.overlayTransition)
+                    .onAppear {
+                        // when overlayOptions != nil, view or view controller should be already set
+                        guard let options = injectedOverlayState.overlayOptions,
+                              options.showPIP else {
+                            return
+                        }
+                        disposeGripVideos()
+                    }
+            } else if let injectedView = injectedOverlayState.injectedView,
+                      let overlayOptions = injectedOverlayState.overlayOptions,
+                      overlayOptions.showPIP {
+                injectedView
+                    .overlay(GeometryReader { geometry in
+                        DraggablePIPView(containerBounds: geometry.frame(in: .local),
+                                         viewModel: viewModel.draggablePIPViewModel,
+                                         avatarManager: avatarManager,
+                                         viewManager: viewManager,
+                                         pipOptions: overlayOptions.pipViewOptions,
+                                         orientation: $orientation,
+                                         screenSize: getSizeClass())
+                        .shadow(radius: 5.0)
+                    })
+                    .transition(overlayOptions.overlayTransition)
+                    .onAppear {
+                        // when overlayOptions != nil, view or view controller should be already set
+                        guard let options = injectedOverlayState.overlayOptions,
+                              options.showPIP else {
+                            return
+                        }
+                        disposeGripVideos()
+                    }
             } else {
-                landscapeCallingView
+                ZStack {
+                    if getSizeClass() != .iphoneLandscapeScreenSize {
+                        portraitCallingView
+                            .zIndex(1)
+                    } else {
+                        landscapeCallingView
+                            .zIndex(1)
+                    }
+                    if let overlayOptions = injectedOverlayState.overlayOptions,
+                       let viewController = injectedOverlayState.injectedViewController {
+                        InjectedOverlayView(viewController: viewController)
+                            .transition(overlayOptions.overlayTransition)
+                            .zIndex(2)
+                    } else if let injectedView = injectedOverlayState.injectedView,
+                              let overlayOptions = injectedOverlayState.overlayOptions {
+                        injectedView
+                            .transition(overlayOptions.overlayTransition)
+                            .zIndex(2)
+                    }
+                }
             }
-            errorInfoView
         }
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
@@ -109,9 +168,9 @@ struct CallingView: View {
         GeometryReader { geometry in
             let geoWidth: CGFloat = geometry.size.width
             let isIpad = getSizeClass() == .ipadScreenSize
-            let widthWithoutHorizontalPadding = geoWidth - 2 * InfoHeaderViewConstants.horizontalPadding
+            let widthWithoutHorizontalPadding = geoWidth - 2 * Constants.infoHeaderViewHorizontalPadding
             let infoHeaderViewWidth = isIpad ? min(widthWithoutHorizontalPadding,
-                                                   InfoHeaderViewConstants.maxWidth) : widthWithoutHorizontalPadding
+                                                   Constants.infoHeaderViewMaxWidth) : widthWithoutHorizontalPadding
             VStack {
                 bannerView
                 HStack {
@@ -121,8 +180,8 @@ struct CallingView: View {
                         EmptyView()
                     }
                     infoHeaderView
-                        .frame(width: infoHeaderViewWidth, height: InfoHeaderViewConstants.height, alignment: .leading)
-                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                        .frame(width: infoHeaderViewWidth, height: Constants.infoHeaderViewHeight, alignment: .leading)
+                        .padding(.leading, Constants.infoHeaderViewHorizontalPadding)
                     Spacer()
                 }
                 Spacer()
@@ -132,7 +191,8 @@ struct CallingView: View {
 
     var infoHeaderView: some View {
         InfoHeaderView(viewModel: viewModel.infoHeaderViewModel,
-                       avatarViewManager: avatarManager)
+                       avatarViewManager: avatarManager,
+                       customButtonStates: headerButtonStates)
     }
 
     var bannerView: some View {
@@ -144,7 +204,7 @@ struct CallingView: View {
                             avatarViewManager: avatarManager,
                             videoViewManager: viewManager,
                             screenSize: getSizeClass())
-            .edgesIgnoringSafeArea(safeAreaIgnoreArea)
+        .edgesIgnoringSafeArea(safeAreaIgnoreArea)
     }
 
     var localVideoFullscreenView: some View {
@@ -153,8 +213,8 @@ struct CallingView: View {
                            viewManager: viewManager,
                            viewType: .localVideofull,
                            avatarManager: avatarManager)
-                .background(Color(StyleProvider.color.surface))
-                .edgesIgnoringSafeArea(safeAreaIgnoreArea)
+            .background(Color(StyleProvider.color.surface))
+            .edgesIgnoringSafeArea(safeAreaIgnoreArea)
         }
     }
 
@@ -168,18 +228,18 @@ struct CallingView: View {
         }
     }
 
-    var errorInfoView: some View {
-        return VStack {
-            Spacer()
-            ErrorInfoView(viewModel: viewModel.errorInfoViewModel)
-                .padding(EdgeInsets(top: 0,
-                                    leading: ErrorInfoConstants.horizontalPadding,
-                                    bottom: ErrorInfoConstants.controlBarHeight,
-                                    trailing: ErrorInfoConstants.horizontalPadding)
-                )
-                .accessibilityElement(children: .contain)
-                .accessibilityAddTraits(.isModal)
+    func disposeGripVideos() {
+        let model = viewModel.draggablePIPViewModel.displayedParticipantInfoModel
+        let screenShareVideoStreamIdentifier = model?.screenShareVideoStreamModel?.videoStreamIdentifier
+        let cameraVideoStreamIdentifier = model?.cameraVideoStreamModel?.videoStreamIdentifier
+        guard let userId = model?.userIdentifier,
+              let videoStreamIdentifier = screenShareVideoStreamIdentifier ?? cameraVideoStreamIdentifier else {
+            return
         }
+
+        let videoViewId = RemoteParticipantVideoViewId(userIdentifier: userId,
+                                                       videoStreamIdentifier: videoStreamIdentifier)
+        viewManager.updateDisplayedRemoteVideoStream([videoViewId])
     }
 }
 
@@ -189,7 +249,7 @@ extension CallingView {
         case (.compact, .regular):
             return .iphonePortraitScreenSize
         case (.compact, .compact),
-             (.regular, .compact):
+            (.regular, .compact):
             return .iphoneLandscapeScreenSize
         default:
             return .ipadScreenSize
@@ -198,10 +258,10 @@ extension CallingView {
 
     private func updateChildViewIfNeededWith(newOrientation: UIDeviceOrientation) {
         guard !viewModel.controlBarViewModel.isAudioDeviceSelectionDisplayed,
-                  !viewModel.controlBarViewModel.isConfirmLeaveListDisplayed,
-                  !viewModel.infoHeaderViewModel.isParticipantsListDisplayed else {
-                return
-            }
+              !viewModel.controlBarViewModel.isConfirmLeaveListDisplayed,
+              !viewModel.infoHeaderViewModel.isParticipantsListDisplayed else {
+            return
+        }
         let areAllOrientationsSupported = SupportedOrientationsPreferenceKey.defaultValue == .all
         if newOrientation != orientation
             && newOrientation != .unknown

@@ -16,22 +16,17 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
         return nil
     }
 
-    func startCallLocalVideoStream() async throws -> String {
-        return try await Task<String, Error> {
-            ""
-        }.value
+    func startCallLocalVideoStream() -> AnyPublisher<String, Error> {
+        return AnyPublisher<String, Error>.init(Result<String, Error>.Publisher(("")))
     }
 
-    func stopLocalVideoStream() async throws {
-        try await Task<Void, Error> {
-        }.value
+    func stopLocalVideoStream() -> AnyPublisher<Void, Error> {
+        return AnyPublisher<Void, Error>.init(Result<Void, Error>.Publisher(()))
     }
 
-    func switchCamera() async throws -> CameraDevice {
+    func switchCamera() -> AnyPublisher<CameraDevice, Error> {
         switchCameraCallCount += 1
-        return try await Task<CameraDevice, Error> {
-            .front
-        }.value
+        return AnyPublisher<CameraDevice, Error>.init(Result<CameraDevice, Error>.Publisher((.front)))
     }
 
     var setupCallCallCount: Int = 0
@@ -50,27 +45,26 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     var isCameraPreferred: Bool?
     var isAudioPreferred: Bool?
 
-    private func possibleErrorTask(onSuccess: @escaping () -> Void) throws -> Task<Void, Error> {
-        Task<Void, Error> {
-            if let error = self.error {
-                throw error
-            }
-            onSuccess()
-        }
-    }
-
-    func muteLocalMic() async throws {
+    func muteLocalMic() -> AnyPublisher<Void, Error> {
         muteLocalMicCalled = true
-        return try await possibleErrorTask {
-            self.isMuted = true
-        }.value
+        isMuted = true
+        return Future<Void, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success(()))
+        }.eraseToAnyPublisher()
     }
 
-    func unmuteLocalMic() async throws {
+    func unmuteLocalMic() -> AnyPublisher<Void, Error> {
         unmuteLocalMicCalled = true
-        return try await possibleErrorTask { [self] in
-            isMuted = false
-        }.value
+        isMuted = false
+        return Future<Void, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success(()))
+        }.eraseToAnyPublisher()
     }
 
     func getRemoteParticipant(_ identifier: String) -> RemoteParticipant? {
@@ -78,46 +72,59 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
         return nil
     }
 
-    func startPreviewVideoStream() async throws -> String {
+    func startPreviewVideoStream() -> AnyPublisher<String, Error> {
         startPreviewVideoStreamCalled = true
-        return try await Task<String, Error> {
-            ""
-        }.value
+        return AnyPublisher<String, Error>.init(Result<String, Error>.Publisher(("")))
     }
 
-    func setupCall() async throws {
+    func setupCall() -> AnyPublisher<Void, Error> {
         setupCallCallCount += 1
-        try await Task<Void, Error> {}.value
+
+        return AnyPublisher<Void, Error>.init(Result<Void, Error>.Publisher(()))
     }
 
     func setupCallWasCalled() -> Bool {
         return setupCallCallCount > 0
     }
 
-    func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
+    func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) -> AnyPublisher<Void, Error> {
         startCallCallCount += 1
         self.isCameraPreferred = isCameraPreferred
         self.isAudioPreferred = isAudioPreferred
-        try await Task<Void, Error> {}.value
+
+        return AnyPublisher<Void, Error>.init(Result<Void, Error>.Publisher(()))
     }
 
-    func holdCall() async throws {
+    func holdCall() -> AnyPublisher<Void, Error> {
         holdCallCalled = true
-        try await possibleErrorTask {}.value
+
+        return Future<Void, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success(()))
+        }.eraseToAnyPublisher()
     }
 
-    func resumeCall() async throws {
+    func resumeCall() -> AnyPublisher<Void, Error> {
         resumeCallCalled = true
-        try await possibleErrorTask {}.value
+
+        return Future<Void, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success(()))
+        }.eraseToAnyPublisher()
     }
 
     func startCallWasCalled() -> Bool {
         return startCallCallCount > 0
     }
 
-    func endCall() async throws {
+    func endCall() -> AnyPublisher<Void, Error> {
         endCallCallCount += 1
-        try await Task<Void, Error> {}.value
+
+        return AnyPublisher<Void, Error>.init(Result<Void, Error>.Publisher(()))
     }
 
     func endCallWasCalled() -> Bool {

@@ -11,6 +11,8 @@
 		1B3E3B4F285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */; };
 		1F18191727B39F36006AF3B3 /* XCUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18191627B39F36006AF3B3 /* XCUITestBase.swift */; };
 		1F18191A27B45050006AF3B3 /* XCUIElementExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18191927B45050006AF3B3 /* XCUIElementExtension.swift */; };
+		1F1B747228A560F00099E29D /* AzureCommunicationUICallWithChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1B747128A560F00099E29D /* AzureCommunicationUICallWithChat.framework */; };
+		1F1B747328A560F00099E29D /* AzureCommunicationUICallWithChat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 1F1B747128A560F00099E29D /* AzureCommunicationUICallWithChat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift */; };
 		1F8881CA2798D5E7001427F0 /* TextFieldClearButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881C92798D5E7001427F0 /* TextFieldClearButton.swift */; };
 		1F8881CD279B456E001427F0 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881CC279B456E001427F0 /* Extension.swift */; };
@@ -18,7 +20,10 @@
 		5027C1C62821A07500DC7131 /* AccessibilityId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5027C1C52821A07500DC7131 /* AccessibilityId.swift */; };
 		5027C1C72821A55E00DC7131 /* AccessibilityId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5027C1C52821A07500DC7131 /* AccessibilityId.swift */; };
 		5075FEA127FFA8C200136B34 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5075FEA327FFA8C200136B34 /* Localizable.strings */; };
+		50AF7268287CCF5B00FEF011 /* AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AF7267287CCF5B00FEF011 /* AzureCommunicationUIChat.framework */; };
+		50AF7269287CCF5B00FEF011 /* AzureCommunicationUIChat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 50AF7267287CCF5B00FEF011 /* AzureCommunicationUIChat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		50B390CF27D2996E0010A2ED /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390CE27D2996E0010A2ED /* SettingsView.swift */; };
+		50B8A464287CC079003746D6 /* CredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B8A463287CC079003746D6 /* CredentialsView.swift */; };
 		8926B039F67555DE4F89893B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026F091CB7F97EBA5A39610B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework */; };
 		A85DDCB12728B12D001297B4 /* EnvConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCAF2728B12D001297B4 /* EnvConfig.swift */; };
 		A85DDCB32728B140001297B4 /* ThemeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCB22728B140001297B4 /* ThemeOptions.swift */; };
@@ -56,6 +61,8 @@
 			dstSubfolderSpec = 10;
 			files = (
 				FAA448A1282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Embed Frameworks */,
+				1F1B747328A560F00099E29D /* AzureCommunicationUICallWithChat.framework in Embed Frameworks */,
+				50AF7269287CCF5B00FEF011 /* AzureCommunicationUIChat.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -69,6 +76,7 @@
 		1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppSetupViewTests.swift; sourceTree = "<group>"; };
 		1F18191627B39F36006AF3B3 /* XCUITestBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUITestBase.swift; sourceTree = "<group>"; };
 		1F18191927B45050006AF3B3 /* XCUIElementExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCUIElementExtension.swift; sourceTree = "<group>"; };
+		1F1B747128A560F00099E29D /* AzureCommunicationUICallWithChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AzureCommunicationUICallWithChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F8881BA27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzureCommunicationUIDemoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppLaunchTests.swift; sourceTree = "<group>"; };
 		1F8881C92798D5E7001427F0 /* TextFieldClearButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldClearButton.swift; sourceTree = "<group>"; };
@@ -84,7 +92,9 @@
 		5075FEA527FFA8C800136B34 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5075FEA627FFA8C900136B34 /* fr-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fr-CA"; path = "fr-CA.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		5075FEA727FFA9D700136B34 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		50AF7267287CCF5B00FEF011 /* AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B390CE27D2996E0010A2ED /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		50B8A463287CC079003746D6 /* CredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsView.swift; sourceTree = "<group>"; };
 		55177298464F41939884F1C8 /* Pods-AzureCommunicationUIDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp/Pods-AzureCommunicationUIDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		645D1D3003E302ECA00BB66C /* Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		747FFD0380FFBF53EC331032 /* Pods_AzureCommunicationUIDemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIDemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -121,7 +131,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				FAA448A0282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Frameworks */,
+				1F1B747228A560F00099E29D /* AzureCommunicationUICallWithChat.framework in Frameworks */,
 				3507F9550C99D777E493AA92 /* Pods_AzureCommunicationUIDemoApp.framework in Frameworks */,
+				50AF7268287CCF5B00FEF011 /* AzureCommunicationUIChat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +245,7 @@
 			children = (
 				1F8881C82798D5C2001427F0 /* ViewModifier */,
 				A87CEABB2729ECA600F3AE16 /* EntryViewController.swift */,
+				50B8A463287CC079003746D6 /* CredentialsView.swift */,
 				A85DDCB52728B23B001297B4 /* SwiftUIDemoView.swift */,
 				A85DDCB42728B23A001297B4 /* UIKitDemoViewController.swift */,
 				50B390CE27D2996E0010A2ED /* SettingsView.swift */,
@@ -245,6 +258,8 @@
 		F74ACD1C99B1428891E02585 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1F1B747128A560F00099E29D /* AzureCommunicationUICallWithChat.framework */,
+				50AF7267287CCF5B00FEF011 /* AzureCommunicationUIChat.framework */,
 				FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */,
 				747FFD0380FFBF53EC331032 /* Pods_AzureCommunicationUIDemoApp.framework */,
 				026F091CB7F97EBA5A39610B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework */,
@@ -507,6 +522,7 @@
 				A8C69FB62728AE1A00143DB7 /* SceneDelegate.swift in Sources */,
 				A87CEABC2729ECA600F3AE16 /* EntryViewController.swift in Sources */,
 				1F8881CA2798D5E7001427F0 /* TextFieldClearButton.swift in Sources */,
+				50B8A464287CC079003746D6 /* CredentialsView.swift in Sources */,
 				A8849E532732FFA10049FB1A /* AuthenticationHelper.swift in Sources */,
 				50B390CF27D2996E0010A2ED /* SettingsView.swift in Sources */,
 			);

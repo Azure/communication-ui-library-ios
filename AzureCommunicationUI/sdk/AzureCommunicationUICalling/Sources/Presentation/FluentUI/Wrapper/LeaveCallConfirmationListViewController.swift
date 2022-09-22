@@ -7,14 +7,14 @@ import FluentUI
 import UIKit
 
 class LeaveCallConfirmationListViewController: DrawerContainerViewController<LeaveCallConfirmationViewModel> {
-    private enum SectionConstants {
-        static let headerHeight: CGFloat = 36.0
+    private struct Constants {
+        static let sectionHeaderHeight: CGFloat = 36.0
     }
 
     private lazy var leaveCalConfirmationTableView: UITableView? = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = backgroundColor
-        tableView.sectionHeaderHeight = SectionConstants.headerHeight
+        tableView.sectionHeaderHeight = Constants.sectionHeaderHeight
         tableView.sectionFooterHeight = 0
         tableView.separatorStyle = .none
         tableView.allowsSelection = true
@@ -43,20 +43,20 @@ extension LeaveCallConfirmationListViewController: UITableViewDataSource, UITabl
         let headerView = UIView.init(frame: CGRect.init(x: 0,
                                                         y: 0,
                                                         width: tableView.frame.width,
-                                                        height: SectionConstants.headerHeight))
+                                                        height: Constants.sectionHeaderHeight))
 
         let label = UILabel()
         label.frame = headerView.frame
         label.text = headerName
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 17, weight: .semibold)
-        label.textColor = StyleProvider.color.onSurface
+        label.textColor = UIColor.compositeColor(CompositeColor.onSurface)
         headerView.addSubview(label)
         return headerView
     }
 
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return SectionConstants.headerHeight
+        return Constants.sectionHeaderHeight
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

@@ -5,7 +5,6 @@
 
 import Foundation
 import Combine
-import UIKit
 
 class PreviewAreaViewModel: ObservableObject {
     private var cameraPermission: AppPermission.Status = .unknown
@@ -13,7 +12,6 @@ class PreviewAreaViewModel: ObservableObject {
 
     @Published var isPermissionsDenied: Bool = false
 
-    var goToSettingsButtonViewModel: PrimaryButtonViewModel!
     let localVideoViewModel: LocalVideoViewModel!
     private let localizationProvider: LocalizationProviderProtocol
 
@@ -22,20 +20,6 @@ class PreviewAreaViewModel: ObservableObject {
          localizationProvider: LocalizationProviderProtocol) {
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: dispatchAction)
         self.localizationProvider = localizationProvider
-
-        goToSettingsButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
-            buttonStyle: .primaryOutline,
-            buttonLabel: self.localizationProvider
-                .getLocalizedString(.goToSettings),
-            iconName: .none,
-            isDisabled: false) { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                self.goToSettingsButtonTapped()
-        }
-        goToSettingsButtonViewModel.update(
-            accessibilityLabel: self.localizationProvider.getLocalizedString(.goToSettings))
     }
 
     func getPermissionWarningIcon() -> CompositeIcon {
@@ -76,12 +60,5 @@ class PreviewAreaViewModel: ObservableObject {
         if isPermissionDenied != self.isPermissionsDenied {
             self.isPermissionsDenied = isPermissionDenied
         }
-    }
-
-    private func goToSettingsButtonTapped() {
-        guard let url = URL(string: UIApplication.openSettingsURLString), UIApplication.shared.canOpenURL(url) else {
-            return
-        }
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 }

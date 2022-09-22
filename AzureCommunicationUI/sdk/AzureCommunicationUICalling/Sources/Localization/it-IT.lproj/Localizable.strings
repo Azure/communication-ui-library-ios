@@ -26,7 +26,6 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Disattiva audio";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Dispositivo";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Seleziona dispositivo audio";
-"AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Vai a Impostazioni";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="La videocamera è disabilitata. Per abilitarla, passa alle Impostazioni per consentire l'accesso.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="La videocamera e l'audio sono disabilitati. Per abilitarli, passa alle Impostazioni per consentire l'accesso. Per avviare la chiamata, è necessario abilitare l'audio.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="L'audio è disabilitato. Per abilitarlo, passa alle Impostazioni per consentire l'accesso. Per avviare la chiamata, è necessario abilitare l'audio.";
@@ -60,7 +59,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d partecipanti hanno abbandonato la riunione";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Hai partecipato alla chiamata";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Condivisione contenuto in corso";
-"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Condivisione dei contenuti terminata";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Condivisione del contenuto terminata";
 
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Abbandona";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Annulla";
@@ -99,4 +98,3 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Non è possibile riprendere la chiamata";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Il microfono è usato da un'altra app";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Ti è stato negato l'accesso alla chiamata.";
-"AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Errore durante l'attivazione/disattivazione del video";

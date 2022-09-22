@@ -32,7 +32,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
         self.callComposite = callComposite
         self.environmentProperties = environmentProperties
         super.init(rootView: environmentRoot)
-        self.view.semanticContentAttribute = isRightToLeft ?
+        UIView.appearance().semanticContentAttribute = isRightToLeft ?
             .forceRightToLeft : .forceLeftToRight
         subscribeEnvironmentProperties(containerView: rootView)
         haltSetupViewOrientation(containerView: rootView)
@@ -76,7 +76,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
                         // the same time with the steup view navigation.
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
                             if UIDevice.current.orientation != .portrait {
-                                UIDevice.current.rotateTo(orientation: .portrait)
+                                UIDevice.current.rotateTo(oritation: .portrait)
                             }
                             UIDevice.current.endGeneratingDeviceOrientationNotifications()
                         }

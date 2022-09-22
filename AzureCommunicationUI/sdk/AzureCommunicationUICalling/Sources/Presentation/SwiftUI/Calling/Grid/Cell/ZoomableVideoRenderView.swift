@@ -8,26 +8,21 @@ import SwiftUI
 
 struct ZoomableVideoRenderView: UIViewRepresentable {
 
-    private enum SmallScreenConstants {
-        static let maxScale: CGFloat = 2.0
-        static let minScale: CGFloat = 0.5
-        static let maxLength: CGFloat = 850
-    }
+    private struct Constants {
+        static let smallScreenMaxScale: CGFloat = 2.0
+        static let smallScreenMinScale: CGFloat = 0.5
+        static let smallScreenMaxLength: CGFloat = 850
 
-    private enum GeneralScreenConstants {
         static let maxScale: CGFloat = 4.0
         static let minScale: CGFloat = 1.0
 
         static let defaultAspectRatio: CGFloat = 1.6 // 16: 10 aspect ratio
-        static let tapCount: Int = 2
-    }
+        static let maxTapRequired: Int = 2
 
-    private enum InitialZoomScaleConstants {
-        static let isSmallScreen: Bool = UIScreen.isScreenSmall(SmallScreenConstants.maxLength)
-        static let minScale: CGFloat = isSmallScreen ? SmallScreenConstants.minScale : GeneralScreenConstants.minScale
-        static let maxScale: CGFloat = isSmallScreen ? SmallScreenConstants.maxScale : GeneralScreenConstants.maxScale
+        static let isSmallScreen: Bool = UIScreen.isScreenSmall(Constants.smallScreenMaxLength)
+        static let initialMinZoomScale: CGFloat = isSmallScreen ? Constants.smallScreenMinScale : Constants.minScale
+        static let initialMaxZoomScale: CGFloat = isSmallScreen ? Constants.smallScreenMaxScale : Constants.maxScale
     }
-
     let videoRendererViewInfo: ParticipantRendererViewInfo!
     weak var rendererViewManager: RendererViewManager?
 
@@ -74,7 +69,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
 
         // Remove double tap action is already added
         if let gestures = scrollView.gestureRecognizers,
-           let tapGestureRecognizer = gestures.first(where: { $0.numberOfTouches == GeneralScreenConstants.tapCount }) {
+           let tapGestureRecognizer = gestures.first(where: { $0.numberOfTouches == Constants.maxTapRequired }) {
             scrollView.removeGestureRecognizer(tapGestureRecognizer)
         }
 
@@ -93,7 +88,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
                                                coordinator: Coordinator) {
         let doubleTapGesture = UITapGestureRecognizer(target: coordinator,
                                                       action: #selector(Coordinator.doubleTapped))
-        doubleTapGesture.numberOfTapsRequired = GeneralScreenConstants.tapCount
+        doubleTapGesture.numberOfTapsRequired = Constants.maxTapRequired
         doubleTapGesture.delegate = coordinator
         rendererViewManager?.didRenderFirstFrame = coordinator.videoStreamRenderer(didRenderFirstFrameWithSize:)
 
@@ -103,8 +98,8 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
     private func setupScrollView(_ scrollView: UIScrollView,
                                  context: Context) {
         scrollView.delegate = context.coordinator
-        scrollView.maximumZoomScale = InitialZoomScaleConstants.maxScale
-        scrollView.minimumZoomScale = InitialZoomScaleConstants.minScale
+        scrollView.maximumZoomScale = Constants.initialMaxZoomScale
+        scrollView.minimumZoomScale = Constants.initialMinZoomScale
         scrollView.bouncesZoom = false
         scrollView.showsVerticalScrollIndicator = false
         scrollView.showsHorizontalScrollIndicator = false
@@ -116,7 +111,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         scrollView.contentSize = scrollView.bounds.size
 
         // ZoomScale should be set before contentView.frame in order to resize contentView correctly
-        scrollView.zoomScale = InitialZoomScaleConstants.minScale
+        scrollView.zoomScale = Constants.initialMinZoomScale
         contentView.translatesAutoresizingMaskIntoConstraints = true
         contentView.frame = scrollView.bounds
         contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -144,12 +139,12 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
         }
 
         func scrollViewDidZoom(_ scrollView: UIScrollView) {
-            let initialMinZoomScale = InitialZoomScaleConstants.minScale
+            let initialMinZoomScale = Constants.initialMinZoomScale
             let boundedZoomScale = min(scrollView.zoomScale, scrollView.maximumZoomScale) * (1 / initialMinZoomScale)
 
             if boundedZoomScale > 1 {
                 let aspectRatioVideoStream = self.streamSize != .zero ?
-                self.streamSize.width / self.streamSize.height : GeneralScreenConstants.defaultAspectRatio
+                self.streamSize.width / self.streamSize.height : Constants.defaultAspectRatio
 
                 let spectRatioScrollView = scrollView.bounds.width / scrollView.bounds.height
                 let scrollViewHasNarrowAspectRatio = spectRatioScrollView < aspectRatioVideoStream
@@ -193,8 +188,8 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
             let point = gesture.location(in: gesture.view)
 
             let currentScale = scrollView.zoomScale
-            let minScale = InitialZoomScaleConstants.minScale
-            let maxScale = InitialZoomScaleConstants.maxScale
+            let minScale = Constants.initialMinZoomScale
+            let maxScale = Constants.initialMaxZoomScale
 
             let finalScale = (currentScale == minScale) ? maxScale : minScale
 
@@ -228,7 +223,7 @@ struct ZoomableVideoRenderView: UIViewRepresentable {
             if scale == scrollView.maximumZoomScale {
                 scrollView.zoom(to: zoomRect, animated: true)
             } else {
-                scrollView.setZoomScale(InitialZoomScaleConstants.minScale,
+                scrollView.setZoomScale(Constants.initialMinZoomScale,
                                         animated: true)
             }
         }

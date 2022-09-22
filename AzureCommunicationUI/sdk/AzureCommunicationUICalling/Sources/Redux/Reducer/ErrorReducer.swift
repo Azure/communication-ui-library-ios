@@ -26,10 +26,6 @@ extension Reducer where State == ErrorState,
             errorType = nil
             error = nil
             errorCategory = .none
-        case .localUserAction(.cameraOnFailed):
-            errorType = .cameraOnFailed
-            error = nil
-            errorCategory = .callState
 
             // Exhaustive unimplemented actions
         case .audioSessionAction(_),
@@ -48,6 +44,7 @@ extension Reducer where State == ErrorState,
                 .compositeExitAction,
                 .callingViewLaunched:
             return state
+
         }
 
         return ErrorState(internalError: errorType,

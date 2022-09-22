@@ -10,6 +10,7 @@ enum LocalVideoViewType {
     case preview
     case localVideoPip
     case localVideofull
+    case overlay
 
     var cameraSwitchButtonAlignment: Alignment {
         switch self {
@@ -17,7 +18,8 @@ enum LocalVideoViewType {
             return .topTrailing
         case .localVideofull:
             return .bottomTrailing
-        case .preview:
+        case .preview,
+             .overlay:
             return .trailing
         }
     }
@@ -27,7 +29,8 @@ enum LocalVideoViewType {
         case .localVideofull,
              .preview:
             return .xxlarge
-        case .localVideoPip:
+        case .localVideoPip,
+             .overlay:
             return .large
         }
     }
@@ -35,7 +38,8 @@ enum LocalVideoViewType {
     var showDisplayNameTitleView: Bool {
         switch self {
         case .localVideoPip,
-             .preview:
+             .preview,
+             .overlay:
             return false
         case .localVideofull:
             return true
@@ -45,7 +49,8 @@ enum LocalVideoViewType {
     var hasGradient: Bool {
         switch self {
         case .localVideoPip,
-             .localVideofull:
+             .localVideofull,
+             .overlay:
             return false
         case .preview:
             return true
@@ -111,7 +116,7 @@ struct LocalVideoView: View {
                 localVideoStreamId = $0
             }
         }.onReceive(avatarManager.$localOptions) {
-            avatarImage = $0?.participantViewData?.avatarImage
+            avatarImage = $0?.participantViewData.avatarImage
         }
     }
 

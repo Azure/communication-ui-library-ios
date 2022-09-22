@@ -26,6 +26,6 @@ struct ErrorState: Equatable {
     }
 
     static func == (lhs: ErrorState, rhs: ErrorState) -> Bool {
-        return (lhs.internalError == rhs.internalError)
+        return (lhs.internalError?.rawValue == rhs.internalError?.rawValue)
     }
 }

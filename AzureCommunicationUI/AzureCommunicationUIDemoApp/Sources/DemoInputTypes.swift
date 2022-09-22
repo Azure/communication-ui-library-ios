@@ -11,6 +11,11 @@ enum MeetingType: Int {
     case teamsMeeting
 }
 
+enum ChatType: Int {
+    case groupChat
+    case teamsChat
+}
+
 enum ACSTokenType: Int {
     case tokenUrl
     case token

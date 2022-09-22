@@ -12,10 +12,10 @@ import AppCenterCrashes
 
 class UIKitDemoViewController: UIViewController {
 
-    enum LayoutConstants {
-        static let verticalSpacing: CGFloat = 8.0
-        static let stackViewSpacingPortrait: CGFloat = 18.0
-        static let stackViewSpacingLandscape: CGFloat = 12.0
+    struct Constants {
+        static let viewVerticalSpacing: CGFloat = 8.0
+        static let stackViewInterItemSpacingPortrait: CGFloat = 18.0
+        static let stackViewInterItemSpacingLandscape: CGFloat = 12.0
         static let buttonHorizontalInset: CGFloat = 20.0
         static let buttonVerticalInset: CGFloat = 10.0
     }
@@ -63,10 +63,10 @@ class UIKitDemoViewController: UIViewController {
         updateUIBasedOnUserInterfaceStyle()
 
         if UIDevice.current.orientation.isPortrait {
-            stackView.spacing = LayoutConstants.stackViewSpacingPortrait
+            stackView.spacing = Constants.stackViewInterItemSpacingPortrait
             titleLabelConstraint.constant = 32
         } else if UIDevice.current.orientation.isLandscape {
-            stackView.spacing = LayoutConstants.stackViewSpacingLandscape
+            stackView.spacing = Constants.stackViewInterItemSpacingLandscape
             titleLabelConstraint.constant = 16.0
         }
     }
@@ -96,7 +96,7 @@ class UIKitDemoViewController: UIViewController {
         scrollView.layoutIfNeeded()
         let emptySpace = stackView.customSpacing(after: stackView.arrangedSubviews.first!)
         let spaceToFill = (scrollView.frame.height - (stackView.frame.height - emptySpace)) / 2
-        stackView.setCustomSpacing(spaceToFill + LayoutConstants.verticalSpacing,
+        stackView.setCustomSpacing(spaceToFill + Constants.viewVerticalSpacing,
                                    after: stackView.arrangedSubviews.first!)
     }
 
@@ -142,7 +142,7 @@ class UIKitDemoViewController: UIViewController {
                                                                 identifiers: identifiers)
     }
 
-    func startExperience(with link: String) async {
+    func startExperience(with link: String) {
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         if !envConfigSubject.localeIdentifier.isEmpty {
@@ -169,24 +169,15 @@ class UIKitDemoViewController: UIViewController {
                                            identifiers: ids)
         }
 
-        callComposite.events.onError = { [weak self] error in
-            guard let errorHandler = self?.onError else {
-                return
-            }
-            Task { @MainActor in errorHandler(error) }
-        }
-
+        callComposite.events.onError = onError
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
-        let navigationBarViewData = NavigationBarViewData(title: envConfigSubject.navigationTitle,
-                                                          subtitle: envConfigSubject.navigationSubtitle)
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
-        let localOptions = LocalOptions(participantViewData: participantViewData,
-                                        navigationBarViewData: navigationBarViewData)
+        let localOptions = LocalOptions(participantViewData: participantViewData)
 
-        if let credential = try? await getTokenCredential() {
+        if let credential = try? getTokenCredential() {
             switch selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
@@ -206,7 +197,7 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
-    private func getTokenCredential() async throws -> CommunicationTokenCredential {
+    private func getTokenCredential() throws -> CommunicationTokenCredential {
         switch selectedAcsTokenType {
         case .token:
             if let communicationTokenCredential = try? CommunicationTokenCredential(token: acsTokenTextField.text!) {
@@ -217,10 +208,8 @@ class UIKitDemoViewController: UIViewController {
         case .tokenUrl:
             if let url = URL(string: acsTokenUrlTextField.text!) {
                 let tokenRefresher = AuthenticationHelper.getCommunicationToken(tokenUrl: url)
-                let initialToken = await AuthenticationHelper.fetchInitialToken(with: tokenRefresher)
-                let refreshOptions = CommunicationTokenRefreshOptions(initialToken: initialToken,
-                                                                      refreshProactively: true,
-                                                                      tokenRefresher: tokenRefresher)
+                let refreshOptions = CommunicationTokenRefreshOptions(initialToken: nil, refreshProactively: true,
+                                                                                        tokenRefresher: tokenRefresher)
                 if let credential = try? CommunicationTokenCredential(withOptions: refreshOptions) {
                     return credential
                 }
@@ -317,15 +306,8 @@ class UIKitDemoViewController: UIViewController {
     }
 
     @objc func onStartExperienceBtnPressed() {
-        startExperienceButton.isEnabled = false
-        startExperienceButton.backgroundColor = .systemGray3
-
         let link = self.getMeetingLink()
-        Task { @MainActor in
-            await self.startExperience(with: link)
-            startExperienceButton.isEnabled = true
-            startExperienceButton.backgroundColor = .systemBlue
-        }
+        self.startExperience(with: link)
     }
 
     private func updateAcsTokenTypeFields() {
@@ -379,7 +361,7 @@ class UIKitDemoViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         titleLabelConstraint = titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor,
-                                                               constant: LayoutConstants.stackViewSpacingPortrait)
+                                                               constant: Constants.stackViewInterItemSpacingPortrait)
         titleLabelConstraint.isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor).isActive = true
 
@@ -450,19 +432,19 @@ class UIKitDemoViewController: UIViewController {
         settingsButton.backgroundColor = .systemBlue
         settingsButton.addTarget(self, action: #selector(onSettingsPressed), for: .touchUpInside)
         settingsButton.layer.cornerRadius = 8
-        settingsButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
-                                                             left: LayoutConstants.buttonHorizontalInset,
-                                                             bottom: LayoutConstants.buttonVerticalInset,
-                                                             right: LayoutConstants.buttonHorizontalInset)
+        settingsButton.contentEdgeInsets = UIEdgeInsets.init(top: Constants.buttonVerticalInset,
+                                                             left: Constants.buttonHorizontalInset,
+                                                             bottom: Constants.buttonVerticalInset,
+                                                             right: Constants.buttonHorizontalInset)
 
         startExperienceButton = UIButton()
         startExperienceButton.backgroundColor = .systemBlue
         startExperienceButton.setTitleColor(UIColor.white, for: .normal)
         startExperienceButton.setTitleColor(UIColor.systemGray6, for: .disabled)
-        startExperienceButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
-                                                                    left: LayoutConstants.buttonHorizontalInset,
-                                                                    bottom: LayoutConstants.buttonVerticalInset,
-                                                                    right: LayoutConstants.buttonHorizontalInset)
+        startExperienceButton.contentEdgeInsets = UIEdgeInsets.init(top: Constants.buttonVerticalInset,
+                                                                    left: Constants.buttonHorizontalInset,
+                                                                    bottom: Constants.buttonVerticalInset,
+                                                                    right: Constants.buttonHorizontalInset)
         startExperienceButton.layer.cornerRadius = 8
         startExperienceButton.setTitle("Start Experience", for: .normal)
         startExperienceButton.sizeToFit()
@@ -517,7 +499,7 @@ class UIKitDemoViewController: UIViewController {
                                                    teamsMeetingTextField,
                                                    settingsButtonHStack,
                                                    startButtonHStack])
-        stackView.spacing = LayoutConstants.stackViewSpacingPortrait
+        stackView.spacing = Constants.stackViewInterItemSpacingPortrait
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.distribution = .fill
@@ -527,7 +509,7 @@ class UIKitDemoViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         scrollView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,
-                                        constant: LayoutConstants.verticalSpacing).isActive = true
+                                        constant: Constants.viewVerticalSpacing).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor).isActive = true
         scrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
         scrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
@@ -541,9 +523,9 @@ class UIKitDemoViewController: UIViewController {
 
         stackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
-                                           constant: LayoutConstants.stackViewSpacingPortrait).isActive = true
+                                           constant: Constants.stackViewInterItemSpacingPortrait).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
-                                            constant: LayoutConstants.stackViewSpacingPortrait).isActive = true
+                                            constant: -Constants.stackViewInterItemSpacingPortrait).isActive = true
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
 
         settingButtonHSpacer2.widthAnchor.constraint(equalTo: settingButtonHSpacer1.widthAnchor).isActive = true

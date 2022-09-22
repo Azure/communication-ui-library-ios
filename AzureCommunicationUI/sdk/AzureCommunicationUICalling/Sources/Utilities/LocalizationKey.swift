@@ -29,7 +29,6 @@ enum LocalizationKey: String {
     case micOnAccessibilityLabel = "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"
     case device = "AzureCommunicationUICalling.SetupView.Button.Device"
     case deviceAccesibiiltyLabel = "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"
-    case goToSettings = "AzureCommunicationUICalling.SetupView.Button.GoToSettings"
     case cameraDisabled = "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"
     case audioAndCameraDisabled = "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"
     case audioDisabled = "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"
@@ -47,8 +46,6 @@ enum LocalizationKey: String {
     case callWith1Person = "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"
     // %d is for number of people in call
     case callWithNPerson = "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"
-    case participantListAccessibilityLabel =
-            "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"
 
     case unnamedParticipant = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"
     // %@ is local participant name
@@ -120,7 +117,4 @@ enum LocalizationKey: String {
     case snackBarErrorOnHoldSubtitle = "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"
     case snackBarErrorCallDenied =
             "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"
-    case snackBarErrorCameraOnFailed = "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"
-    case snackBarErrorConnectionError =
-            "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"
 }

@@ -10,7 +10,6 @@ import AzureCommunicationCalling
 struct SwiftUIDemoView: View {
     @State var isErrorDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
-    @State var isStartExperienceLoading: Bool = false
     @State var errorMessage: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
 
@@ -114,14 +113,10 @@ struct SwiftUIDemoView: View {
 
     var startExperienceButton: some View {
         Button("Start Experience") {
-            isStartExperienceLoading = true
-            Task { @MainActor in
-                await startCallComposite()
-                isStartExperienceLoading = false
-            }
+            startCallComposite()
         }
         .buttonStyle(DemoButtonStyle())
-        .disabled(isStartExperienceDisabled || isStartExperienceLoading)
+        .disabled(isStartExperienceDisabled)
         .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
     }
 
@@ -142,7 +137,7 @@ struct SwiftUIDemoView: View {
 }
 
 extension SwiftUIDemoView {
-    func startCallComposite() async {
+    func startCallComposite() {
         let link = getMeetingLink()
 
         var localizationConfig: LocalizationOptions?
@@ -156,11 +151,11 @@ extension SwiftUIDemoView {
                 locale: envConfigSubject.locale,
                 layoutDirection: layoutDirection)
         }
-
+        let themeOption: ThemeOptions = envConfigSubject.useCustomColors
+        ? CustomColorTheming(envConfigSubject: envConfigSubject)
+        : Theming(envConfigSubject: envConfigSubject)
         let callCompositeOptions = CallCompositeOptions(
-            theme: envConfigSubject.useCustomColors
-            ? CustomColorTheming(envConfigSubject: envConfigSubject)
-            : Theming(envConfigSubject: envConfigSubject),
+            theme: themeOption,
             localization: localizationConfig)
         let callComposite = CallComposite(withOptions: callCompositeOptions)
 
@@ -171,21 +166,15 @@ extension SwiftUIDemoView {
             self.onRemoteParticipantJoined(to: composite,
                                            identifiers: ids)
         }
-
-        callComposite.events.onError = { error in
-            Task { @MainActor in onError(error) }
-        }
+        callComposite.events.onError = onError
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
-        let navigationBarViewData = NavigationBarViewData(title: envConfigSubject.navigationTitle,
-                                                          subtitle: envConfigSubject.navigationSubtitle)
-        let localOptions = LocalOptions(participantViewData: participantViewData,
-                                        navigationBarViewData: navigationBarViewData)
-        if let credential = try? await getTokenCredential() {
+        let localOptions = LocalOptions(participantViewData: participantViewData)
+        if let credential = try? getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
@@ -217,7 +206,7 @@ extension SwiftUIDemoView {
         }
     }
 
-    private func getTokenCredential() async throws -> CommunicationTokenCredential {
+    private func getTokenCredential() throws -> CommunicationTokenCredential {
         switch envConfigSubject.selectedAcsTokenType {
         case .token:
             let acsToken = envConfigSubject.useExpiredToken ?
@@ -230,8 +219,7 @@ extension SwiftUIDemoView {
         case .tokenUrl:
             if let url = URL(string: envConfigSubject.acsTokenUrl) {
                 let tokenRefresher = AuthenticationHelper.getCommunicationToken(tokenUrl: url)
-                let initialToken = await AuthenticationHelper.fetchInitialToken(with: tokenRefresher)
-                let communicationTokenRefreshOptions = CommunicationTokenRefreshOptions(initialToken: initialToken,
+                let communicationTokenRefreshOptions = CommunicationTokenRefreshOptions(initialToken: nil,
                                                                                         refreshProactively: true,
                                                                                         tokenRefresher: tokenRefresher)
                 if let credential = try? CommunicationTokenCredential(withOptions: communicationTokenRefreshOptions) {

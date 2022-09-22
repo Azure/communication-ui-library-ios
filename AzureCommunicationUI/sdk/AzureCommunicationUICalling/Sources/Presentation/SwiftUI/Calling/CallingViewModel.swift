@@ -22,6 +22,7 @@ class CallingViewModel: ObservableObject {
     private var callHasConnected: Bool = false
 
     let localVideoViewModel: LocalVideoViewModel
+    let draggablePIPViewModel: DraggablePIPViewModel
     let participantGridsViewModel: ParticipantGridViewModel
     let bannerViewModel: BannerViewModel
     let lobbyOverlayViewModel: LobbyOverlayViewModel
@@ -30,7 +31,6 @@ class CallingViewModel: ObservableObject {
 
     var controlBarViewModel: ControlBarViewModel!
     var infoHeaderViewModel: InfoHeaderViewModel!
-    var errorInfoViewModel: ErrorInfoViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -50,6 +50,7 @@ class CallingViewModel: ObservableObject {
                                                                                                 isIpadInterface)
         bannerViewModel = compositeViewModelFactory.makeBannerViewModel()
         lobbyOverlayViewModel = compositeViewModelFactory.makeLobbyOverlayViewModel()
+        draggablePIPViewModel = compositeViewModelFactory.makeDraggablePIPViewModel(dispatchAction: actionDispatch)
 
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
@@ -78,8 +79,6 @@ class CallingViewModel: ObservableObject {
             }.store(in: &cancellables)
 
         updateIsLocalCameraOn(with: store.state)
-        errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel(title: "",
-                                                                              subtitle: "")
     }
 
     func dismissConfirmLeaveDrawerList() {
@@ -104,6 +103,8 @@ class CallingViewModel: ObservableObject {
             return
         }
 
+        draggablePIPViewModel.update(localUserState: state.localUserState,
+                                     remoteParticipantsState: state.remoteParticipantsState)
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState)
@@ -137,7 +138,6 @@ class CallingViewModel: ObservableObject {
         }
 
         updateIsLocalCameraOn(with: state)
-        errorInfoViewModel.update(errorState: state.errorState)
     }
 
     private func updateIsLocalCameraOn(with state: AppState) {

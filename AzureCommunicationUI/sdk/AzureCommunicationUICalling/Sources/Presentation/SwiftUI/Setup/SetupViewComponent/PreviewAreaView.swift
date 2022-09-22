@@ -15,8 +15,7 @@ struct PreviewAreaView: View {
         Group {
             if viewModel.isPermissionsDenied {
                 PermissionWarningView(displayIcon: viewModel.getPermissionWarningIcon(),
-                                      displayText: viewModel.getPermissionWarningText(),
-                                      goToSettingsButtonViewModel: viewModel.goToSettingsButtonViewModel)
+                                      displayText: viewModel.getPermissionWarningText())
             } else {
                 localVideoPreviewView
             }
@@ -34,7 +33,6 @@ struct PreviewAreaView: View {
 struct PermissionWarningView: View {
     let displayIcon: CompositeIcon
     let displayText: String
-    let goToSettingsButtonViewModel: PrimaryButtonViewModel
 
     let verticalSpacing: CGFloat = 20
     let iconSize: CGFloat = 50
@@ -50,9 +48,6 @@ struct PermissionWarningView: View {
                     .font(Fonts.subhead.font)
                     .multilineTextAlignment(.center)
                     .foregroundColor(Color(StyleProvider.color.onSurface))
-                PrimaryButton(viewModel: goToSettingsButtonViewModel)
-                    .accessibilityIdentifier(AccessibilityIdentifier.goToSettingsAccessibilityID.rawValue)
-                    .padding()
             }.frame(width: geometry.size.width,
                     height: geometry.size.height)
             .accessibilityElement(children: .combine)

@@ -23,10 +23,9 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="麥克風關閉";
 "AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="啟用通知";
 "AzureCommunicationUICalling.SetupView.Button.MicOn"="麥克風開啟";
-"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="靜音";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="停用通知";
 "AzureCommunicationUICalling.SetupView.Button.Device"="裝置";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="選取音訊裝置";
-"AzureCommunicationUICalling.SetupView.Button.GoToSettings"="移至 [設定]";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="您的相機已停用。若要啟用，請移至 [設定] 以允許存取。";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="您的相機和音訊已停用。若要啟用，請移至 [設定] 以允許存取。您必須啟用音訊才能開始此通話。";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="您的音訊已停用。若要啟用，請移至 [設定] 以允許存取。您必須啟用音訊才能開始此通話。";
@@ -60,7 +59,7 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d 個參與者已離開會議";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="您已加入通話";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="正在分享內容";
-"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="已結束內容分享";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="已結束內容共用";
 
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="離開";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="取消";
@@ -99,4 +98,3 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="無法繼續通話";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="您的麥克風正由另一個應用程式使用中";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="您被拒絕存取通話。";
-"AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="切換影片時發生錯誤";

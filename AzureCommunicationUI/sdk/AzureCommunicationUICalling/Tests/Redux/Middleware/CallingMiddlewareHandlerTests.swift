@@ -11,7 +11,7 @@ import Combine
 
 class CallingMiddlewareHandlerTests: XCTestCase {
 
-    var callingMiddlewareHandler: CallingMiddlewareHandling!
+    var callingMiddlewareHandler: CallingMiddlewareHandler!
     var mockLogger: LoggerMocking!
     var mockCallingService: CallingServiceMocking!
 
@@ -30,19 +30,14 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         callingMiddlewareHandler = nil
     }
 
-    func test_callingMiddlewareHandler_requestMicMute_then_muteLocalMicCalled() async {
-        await callingMiddlewareHandler.requestMicrophoneMute(
-            state: getEmptyState(), dispatch: getEmptyDispatch()
-        ).value
+    func test_callingMiddlewareHandler_requestMicMute_then_muteLocalMicCalled() {
+        callingMiddlewareHandler.requestMicrophoneMute(state: getEmptyState(), dispatch: getEmptyDispatch())
 
         XCTAssertTrue(mockCallingService.muteLocalMicCalled)
     }
 
-    func test_callingMiddlewareHandler_requestMicUnmute_then_unmuteLocalMicCalled() async {
-        await callingMiddlewareHandler.requestMicrophoneUnmute(
-            state: getEmptyState(), dispatch: getEmptyDispatch()
-        ).value
-
+    func test_callingMiddlewareHandler_requestMicUnmute_then_unmuteLocalMicCalled() {
+        callingMiddlewareHandler.requestMicrophoneUnmute(state: getEmptyState(), dispatch: getEmptyDispatch())
         XCTAssertTrue(mockCallingService.unmuteLocalMicCalled)
     }
 
@@ -79,11 +74,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_callingMiddlewareHandler_requestCameraOff_then_stopLocalVideoStreamCalled() async {
-        await callingMiddlewareHandler.requestCameraOff(
-            state: getEmptyState(), dispatch: getEmptyDispatch()
-        ).value
-
+    func test_callingMiddlewareHandler_requestCameraOff_then_stopLocalVideoStreamCalled() {
+        callingMiddlewareHandler.requestCameraOff(state: getEmptyState(), dispatch: getEmptyDispatch())
         XCTAssertTrue(mockCallingService.stopLocalVideoStreamCalled)
     }
 
@@ -98,9 +90,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_callingMiddlewareHandler_requestCameraOn_then_startLocalVideoStreamCalled() async {
-        await callingMiddlewareHandler.requestCameraOn(state: getEmptyState(), dispatch: getEmptyDispatch()).value
-
+    func test_callingMiddlewareHandler_requestCameraOn_then_startLocalVideoStreamCalled() {
+        callingMiddlewareHandler.requestCameraOn(state: getEmptyState(), dispatch: getEmptyDispatch())
         XCTAssertTrue(mockCallingService.startLocalVideoStreamCalled)
     }
 
@@ -149,11 +140,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1.5)
     }
 
-    func test_callingMiddlewareHandler_requestCameraSwitch_then_switchCameraCalled() async {
-        await callingMiddlewareHandler.requestCameraSwitch(
-            state: getEmptyState(), dispatch: getEmptyDispatch()
-        ).value
-
+    func test_callingMiddlewareHandler_requestCameraSwitch_then_switchCameraCalled() {
+        callingMiddlewareHandler.requestCameraSwitch(state: getEmptyState(), dispatch: getEmptyDispatch())
         XCTAssertTrue(mockCallingService.switchCameraCalled)
     }
 
@@ -188,18 +176,14 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1.5)
     }
 
-    func test_callingMiddlewareHandler_endCall_then_endCallCalled() async {
-        await callingMiddlewareHandler.endCall(
-            state: getEmptyState(), dispatch: getEmptyDispatch()
-        ).value
+    func test_callingMiddlewareHandler_endCall_then_endCallCalled() {
+        callingMiddlewareHandler.endCall(state: getEmptyState(), dispatch: getEmptyDispatch())
 
         XCTAssertTrue(mockCallingService.endCallCalled)
     }
 
-    func test_callingMiddlewareHandler_startCall_then_startCallCalled() async {
-        await callingMiddlewareHandler.startCall(
-            state: getEmptyState(), dispatch: getEmptyDispatch()
-        ).value
+    func test_callingMiddlewareHandler_startCall_then_startCallCalled() {
+        callingMiddlewareHandler.startCall(state: getEmptyState(), dispatch: getEmptyDispatch())
 
         XCTAssertTrue(mockCallingService.startCallCalled)
     }
@@ -288,10 +272,9 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_callingMiddlewareHandler_setupCall_then_setupCallCalled() async {
-        await callingMiddlewareHandler.setupCall(
-            state: getEmptyState(), dispatch: getEmptyDispatch()
-        ).value
+    func test_callingMiddlewareHandler_setupCall_then_setupCallCalled() {
+        callingMiddlewareHandler.setupCall(state: getEmptyState(), dispatch: getEmptyDispatch())
+
         XCTAssertTrue(mockCallingService.setupCallCalled)
     }
 
@@ -363,14 +346,11 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_callingMiddlewareHandler_enterBackground_when_callConnected_cameraStatusOn_then_stopLocalVideoStreamCalled() async {
-        await callingMiddlewareHandler.enterBackground(
-            state: getState(
-                callingState: .connected,
-                cameraStatus: .on,
-                cameraDeviceStatus: .front),
-            dispatch: getEmptyDispatch()
-        ).value
+    func test_callingMiddlewareHandler_enterBackground_when_callConnected_cameraStatusOn_then_stopLocalVideoStreamCalled() {
+        callingMiddlewareHandler.enterBackground(state: getState(callingState: .connected,
+                                                                 cameraStatus: .on,
+                                                                 cameraDeviceStatus: .front),
+                                                 dispatch: getEmptyDispatch())
         XCTAssertTrue(mockCallingService.stopLocalVideoStreamCalled)
     }
 
@@ -412,13 +392,11 @@ class CallingMiddlewareHandlerTests: XCTestCase {
                                                  dispatch: dispatch)
     }
 
-    func test_callingMiddlewareHandler_enterForeground_when_callConnected_cameraStatusPaused_then_startLocalVideoStreamCalled() async {
-        await callingMiddlewareHandler.enterForeground(
-            state: getState(callingState: .connected,
-                            cameraStatus: .paused,
-                            cameraDeviceStatus: .front),
-            dispatch: getEmptyDispatch()
-        ).value
+    func test_callingMiddlewareHandler_enterForeground_when_callConnected_cameraStatusPaused_then_startLocalVideoStreamCalled() {
+        callingMiddlewareHandler.enterForeground(state: getState(callingState: .connected,
+                                                                 cameraStatus: .paused,
+                                                                 cameraDeviceStatus: .front),
+                                                 dispatch: getEmptyDispatch())
         XCTAssertTrue(mockCallingService.startLocalVideoStreamCalled)
     }
 
@@ -459,23 +437,23 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1.5)
     }
 
-    func test_callingMiddlewareHandler_holdCall_then_holdCallCalled() async {
+    func test_callingMiddlewareHandler_holdCall_then_holdCallCalled() {
         let state: AppState = getState(callingState: .connected,
                                        cameraStatus: .off,
                                        cameraDeviceStatus: .front,
                                        cameraPermission: .notAsked)
 
-        await callingMiddlewareHandler.holdCall(state: state, dispatch: getEmptyDispatch()).value
+        callingMiddlewareHandler.holdCall(state: state, dispatch: getEmptyDispatch())
         XCTAssertTrue(mockCallingService.holdCallCalled)
     }
 
-    func test_callingMiddlewareHandler_resumeCall_then_resumeCallCalled() async {
+    func test_callingMiddlewareHandler_resumeCall_then_resumeCallCalled() {
         let state: AppState = getState(callingState: .localHold,
                                        cameraStatus: .off,
                                        cameraDeviceStatus: .front,
                                        cameraPermission: .notAsked)
 
-        await callingMiddlewareHandler.resumeCall(state: state, dispatch: getEmptyDispatch()).value
+        callingMiddlewareHandler.resumeCall(state: state, dispatch: getEmptyDispatch())
         XCTAssertTrue(mockCallingService.resumeCallCalled)
     }
 
@@ -537,22 +515,6 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         callingMiddlewareHandler.onCameraPermissionIsSet(state: getState(cameraPermission: .granted,
                                                                          cameraTransmissionStatus: .remote),
                                                          dispatch: dispatch)
-    }
-
-    func test_callingMiddlewareHandler_setupCall_when_networkFailed_then_shouldNotDispatch() {
-        let expectation = XCTestExpectation(description: "Should Dispatch If Network Failed")
-        expectation.isInverted = true
-
-        func dispatch(action: Action) {
-            XCTFail("Should not dispatch")
-        }
-        callingMiddlewareHandler.setupCall(state: getState(callingState: .none,
-                                                           cameraStatus: .off,
-                                                           cameraDeviceStatus: .front,
-                                                           cameraPermission: .granted,
-                                                           internalError: .connectionFailed),
-                                           dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
     }
 }
 

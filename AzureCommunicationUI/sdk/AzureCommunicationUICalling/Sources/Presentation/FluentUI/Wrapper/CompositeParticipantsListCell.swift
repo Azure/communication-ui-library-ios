@@ -32,8 +32,9 @@ class CompositeParticipantsListCell: TableViewCell {
         accessibilityTraits.remove(.button)
 
         setTitleLabelTextColor(color: isNameEmpty ?
-                               StyleProvider.color.drawerIconDark :
-                               StyleProvider.color.onSurface)
+                                UIColor.compositeColor(CompositeColor.mute)
+                               :
+                                UIColor.compositeColor(CompositeColor.onSurface))
         let customAccessoryView = getCustomAccessoryView(isHold: viewModel.isHold,
                                                          onHoldString: viewModel.getOnHoldString(),
                                                          isMuted: viewModel.isMuted)
@@ -49,7 +50,7 @@ class CompositeParticipantsListCell: TableViewCell {
         guard !isHold else {
             let label = Label(style: .body, colorStyle: .secondary)
             label.text = onHoldString
-            label.textColor = StyleProvider.color.onHoldLabel
+            label.textColor = StyleProvider.color.mute
             label.sizeToFit()
             label.numberOfLines = 0
             return label
@@ -57,10 +58,10 @@ class CompositeParticipantsListCell: TableViewCell {
         var micImage: UIImage?
         if isMuted {
             micImage = StyleProvider.icon.getUIImage(for: .micOffRegular)?
-                .withTintColor(StyleProvider.color.drawerIconDark, renderingMode: .alwaysOriginal)
+                .withTintColor(StyleProvider.color.mute, renderingMode: .alwaysOriginal)
         } else {
             micImage = StyleProvider.icon.getUIImage(for: .micOnRegular)?
-                .withTintColor(StyleProvider.color.drawerIconDark, renderingMode: .alwaysOriginal)
+                .withTintColor(StyleProvider.color.mute, renderingMode: .alwaysOriginal)
         }
         return UIImageView(image: micImage)
     }

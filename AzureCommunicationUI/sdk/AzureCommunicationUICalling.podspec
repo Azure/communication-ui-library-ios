@@ -13,9 +13,9 @@ Pod::Spec.new do |spec|
 
   spec.source_files         = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling/**/*.swift'
   spec.resources            = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling/**/*.{xcassets,strings}'
-  spec.pod_target_xcconfig  = { "EXCLUDED_ARCHS[sdk=iphonesimulator*]": "arm64", "ENABLE_BITCODE": "NO"}
-  spec.info_plist           = {'UILibrarySemVersion' => "#{spec.version}"}
 
+  spec.pod_target_xcconfig  = { "EXCLUDED_ARCHS[sdk=iphonesimulator*]": "arm64", "ENABLE_BITCODE": "NO"}
+  
   spec.dependency             'AzureCommunicationCalling', '2.2.0'
   spec.dependency             'MicrosoftFluentUI/Avatar_ios', '0.3.9'
   spec.dependency             'MicrosoftFluentUI/BottomSheet_ios', '0.3.9'

@@ -56,5 +56,11 @@
 	<string>${groupCallId}</string>
 	<key>teamsMeetingLink</key>
 	<string>${teamsMeetingLink}</string>
+	<key>userId</key>
+	<string>$(userId)</string>
+	<key>threadId</key>
+	<string>$(threadId)</string>
+	<key>endpointUrl</key>
+	<string>$(endpointUrl)</string>
 </dict>
 </plist>

@@ -32,16 +32,17 @@ final class DependencyContainer {
 
     func registerDependencies(_ callConfiguration: CallConfiguration,
                               localOptions: LocalOptions?,
+                              customizationOptions: CustomizationOptions?,
+                              injectedOverlayState: InjectedOverlayState,
                               callCompositeEventsHandler: CallComposite.Events) {
         register(CallingSDKEventsHandler(logger: resolve()) as CallingSDKEventsHandling)
         register(CallingSDKWrapper(logger: resolve(),
                                    callingEventsHandler: resolve(),
                                    callConfiguration: callConfiguration) as CallingSDKWrapperProtocol)
         register(VideoViewManager(callingSDKWrapper: resolve(), logger: resolve()) as VideoViewManager)
-        register(NetworkManager() as NetworkManager)
         register(CallingService(logger: resolve(),
                                 callingSDKWrapper: resolve()) as CallingServiceProtocol)
-        let displayName = localOptions?.participantViewData?.displayName ?? callConfiguration.displayName
+        let displayName = localOptions?.participantViewData.displayName ?? callConfiguration.displayName
         register(makeStore(displayName: displayName) as Store<AppState>)
         register(NavigationRouter(store: resolve(),
                                   logger: resolve()) as NavigationRouter)
@@ -51,13 +52,13 @@ final class DependencyContainer {
                                    localOptions: localOptions) as AvatarViewManager)
         register(CompositeViewModelFactory(logger: resolve(),
                                            store: resolve(),
-                                           networkManager: resolve(),
                                            localizationProvider: resolve(),
-                                           accessibilityProvider: resolve(),
-                                           localOptions: localOptions) as CompositeViewModelFactoryProtocol)
+                                           accessibilityProvider: resolve()) as CompositeViewModelFactoryProtocol)
         register(CompositeViewFactory(logger: resolve(),
                                       avatarManager: resolve(),
                                       videoViewManager: resolve(),
+                                      customizationOptions: customizationOptions,
+                                      injectedOverlayState: injectedOverlayState,
                                       compositeViewModelFactory: resolve()) as CompositeViewFactoryProtocol)
         register(CompositeErrorManager(store: resolve(),
                                        callCompositeEventsHandler: callCompositeEventsHandler) as ErrorManagerProtocol)
@@ -69,7 +70,8 @@ final class DependencyContainer {
         register(RemoteParticipantsManager(store: resolve(),
                                            callCompositeEventsHandler: callCompositeEventsHandler,
                                            callingSDKWrapper: resolve(),
-                                           avatarViewManager: resolve()) as RemoteParticipantsManagerProtocol)
+                                           avatarViewManager: resolve()) as RemoteParticipantsManager)
+
     }
 
     private func makeStore(displayName: String?) -> Store<AppState> {

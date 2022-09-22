@@ -26,49 +26,54 @@ class CallingServiceMocking: CallingServiceProtocol {
     var muteLocalMicCalled: Bool = false
     var unmuteLocalMicCalled: Bool = false
 
-    private func possibleErrorTask() throws -> Task<Void, Error> {
-        Task<Void, Error> {
-            if let error = self.error {
-                throw error
-            }
-        }
-    }
-
-    func startLocalVideoStream() async throws -> String {
+    func startLocalVideoStream() -> AnyPublisher<String, Error> {
         startLocalVideoStreamCalled = true
-        let task = Task<String, Error> {
+        return Future<String, Error> { promise in
             if let error = self.error {
-                throw error
+                return promise(.failure(error))
             }
-            return videoStreamId ?? ""
-        }
-        return try await task.value
+            return promise(.success(self.videoStreamId ?? ""))
+        }.eraseToAnyPublisher()
     }
 
-    func stopLocalVideoStream() async throws {
+    func stopLocalVideoStream() -> AnyPublisher<Void, Error> {
         stopLocalVideoStreamCalled = true
-        try await possibleErrorTask().value
-    }
-
-    func switchCamera() async throws -> CameraDevice {
-        switchCameraCalled = true
-        let task = Task<CameraDevice, Error> {
+        return Future<Void, Error> { promise in
             if let error = self.error {
-                throw error
+                return promise(.failure(error))
             }
-            return self.cameraDevice
-        }
-        return try await task.value
+            return promise(.success(()))
+        }.eraseToAnyPublisher()
     }
 
-    func muteLocalMic() async throws {
+    func switchCamera() -> AnyPublisher<CameraDevice, Error> {
+        switchCameraCalled = true
+        return Future<CameraDevice, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success((self.cameraDevice)))
+        }.eraseToAnyPublisher()
+    }
+
+    func muteLocalMic() -> AnyPublisher<Void, Error> {
         muteLocalMicCalled = true
-        try await possibleErrorTask().value
+        return Future<Void, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success(()))
+        }.eraseToAnyPublisher()
     }
 
-    func unmuteLocalMic() async throws {
+    func unmuteLocalMic() -> AnyPublisher<Void, Error> {
         unmuteLocalMicCalled = true
-        try await possibleErrorTask().value
+        return Future<Void, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success(()))
+        }.eraseToAnyPublisher()
     }
 
     var participantsInfoListSubject = CurrentValueSubject<[ParticipantInfoModel], Never>([])
@@ -78,38 +83,67 @@ class CallingServiceMocking: CallingServiceProtocol {
 
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
 
-    func setupCall() async throws {
+    func setupCall() -> AnyPublisher<Void, Error> {
         setupCallCalled = true
-        try await possibleErrorTask().value
-    }
 
-    func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
-        startCallCalled = true
-        try await possibleErrorTask().value
-    }
-
-    func endCall() async throws {
-        endCallCalled = true
-        try await possibleErrorTask().value
-    }
-
-    func requestCameraPreviewOn() async throws -> String {
-        let task = Task<String, Error> {
+        return Future<Void, Error> { promise in
             if let error = self.error {
-                throw error
+                return promise(.failure(error))
             }
-            return localCameraStream
-        }
-        return try await task.value
+            return promise(.success(()))
+        }.eraseToAnyPublisher()
     }
 
-    func holdCall() async throws {
+    func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) -> AnyPublisher<Void, Error> {
+        startCallCalled = true
+
+        return Future<Void, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success(()))
+        }.eraseToAnyPublisher()
+    }
+
+    func endCall() -> AnyPublisher<Void, Error> {
+        endCallCalled = true
+
+        return Future<Void, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success(()))
+        }.eraseToAnyPublisher()
+    }
+
+    func requestCameraPreviewOn() -> AnyPublisher<String, Error> {
+        return Future<String, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success((self.localCameraStream)))
+        }.eraseToAnyPublisher()
+    }
+
+    func holdCall() -> AnyPublisher<Void, Error> {
         holdCallCalled = true
-        try await possibleErrorTask().value
+
+        return Future<Void, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success(()))
+        }.eraseToAnyPublisher()
     }
 
-    func resumeCall() async throws {
+    func resumeCall() -> AnyPublisher<Void, Error> {
         resumeCallCalled = true
-        try await possibleErrorTask().value
+
+        return Future<Void, Error> { promise in
+            if let error = self.error {
+                return promise(.failure(error))
+            }
+            return promise(.success(()))
+        }.eraseToAnyPublisher()
     }
 }

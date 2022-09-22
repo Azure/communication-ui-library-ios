@@ -2,10 +2,16 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:sdk/AzureCommunicationUICallWithChat/AzureCommunicationUICallWithChat.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj">
+      location = "group:sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">

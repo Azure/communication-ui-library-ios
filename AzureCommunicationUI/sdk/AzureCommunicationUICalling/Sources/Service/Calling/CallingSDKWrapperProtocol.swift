@@ -14,19 +14,18 @@ enum CameraDevice {
 
 protocol CallingSDKWrapperProtocol {
     func getRemoteParticipant(_ identifier: String) -> RemoteParticipant?
+    func startPreviewVideoStream() -> AnyPublisher<String, Error>
     func getLocalVideoStream(_ identifier: String) -> LocalVideoStream?
-
-    func startPreviewVideoStream() async throws -> String
-    func setupCall() async throws
-    func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws
-    func endCall() async throws
-    func startCallLocalVideoStream() async throws -> String
-    func stopLocalVideoStream() async throws
-    func switchCamera() async throws -> CameraDevice
-    func muteLocalMic() async throws
-    func unmuteLocalMic() async throws
-    func holdCall() async throws
-    func resumeCall() async throws
+    func setupCall() -> AnyPublisher<Void, Error>
+    func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) -> AnyPublisher<Void, Error>
+    func endCall() -> AnyPublisher<Void, Error>
+    func startCallLocalVideoStream() -> AnyPublisher<String, Error>
+    func stopLocalVideoStream() -> AnyPublisher<Void, Error>
+    func switchCamera() -> AnyPublisher<CameraDevice, Error>
+    func muteLocalMic() -> AnyPublisher<Void, Error>
+    func unmuteLocalMic() -> AnyPublisher<Void, Error>
+    func holdCall() -> AnyPublisher<Void, Error>
+    func resumeCall() -> AnyPublisher<Void, Error>
 
     var callingEventsHandler: CallingSDKEventsHandling { get }
 }

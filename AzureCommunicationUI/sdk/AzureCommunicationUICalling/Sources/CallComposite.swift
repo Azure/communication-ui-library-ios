@@ -24,12 +24,15 @@ public class CallComposite {
     private var logger: Logger?
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
+    private let customizationOptions: CustomizationOptions?
+    private let diagnosticsOptions: DiagnosticsOptions?
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
     private var audioSessionManager: AudioSessionManagerProtocol?
     private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
     private var avatarViewManager: AvatarViewManagerProtocol?
+    private var injectedOverlayState: InjectedOverlayState
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
@@ -37,6 +40,9 @@ public class CallComposite {
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
+        customizationOptions = options?.customizationOptions
+        injectedOverlayState = InjectedOverlayState()
+        diagnosticsOptions = options?.diagnosticsOptions
     }
 
     deinit {
@@ -51,6 +57,8 @@ public class CallComposite {
 
         dependencyContainer.registerDependencies(callConfiguration,
                                                  localOptions: localOptions,
+                                                 customizationOptions: customizationOptions,
+                                                 injectedOverlayState: injectedOverlayState,
                                                  callCompositeEventsHandler: events)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
@@ -70,6 +78,7 @@ public class CallComposite {
     public func launch(remoteOptions: RemoteOptions,
                        localOptions: LocalOptions? = nil) {
         let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
+                                                  diagnosticsOptions: diagnosticsOptions,
                                                   credential: remoteOptions.credential,
                                                   displayName: remoteOptions.displayName)
 
@@ -94,13 +103,41 @@ public class CallComposite {
                           completionHandler: completionHandler)
     }
 
+    /// Set overlay to be displayed on top of the call view.
+    /// - Parameters:
+    ///   - overlay: The overlay to be shown
+    ///   - overlayOptions: OverlayOptions used to customize overlay
+    public func setOverlay(_ overlay: UIViewController,
+                           overlayOptions: OverlayOptions) {
+        withAnimation {
+            injectedOverlayState.set(injectedViewController: overlay,
+                                     options: overlayOptions)
+        }
+    }
+
+    public func setOverlay<V>(overlayOptions: OverlayOptions,
+                              @ViewBuilder overlay: () -> V) where V: View {
+        withAnimation {
+            let view = overlay()
+            injectedOverlayState.set(injectedView: AnyView(view),
+                                     options: overlayOptions)
+        }
+    }
+
+    /// Remove added overlay
+    public func removeOverlay() {
+        withAnimation {
+            injectedOverlayState.cleanState()
+        }
+    }
+
     private func setupManagers(with dependencyContainer: DependencyContainer) {
         self.errorManager = dependencyContainer.resolve() as ErrorManagerProtocol
         self.lifeCycleManager = dependencyContainer.resolve() as LifeCycleManagerProtocol
         self.permissionManager = dependencyContainer.resolve() as PermissionsManagerProtocol
         self.audioSessionManager = dependencyContainer.resolve() as AudioSessionManagerProtocol
         self.avatarViewManager = dependencyContainer.resolve() as AvatarViewManager
-        self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManagerProtocol
+        self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManager
     }
 
     private func cleanUpManagers() {

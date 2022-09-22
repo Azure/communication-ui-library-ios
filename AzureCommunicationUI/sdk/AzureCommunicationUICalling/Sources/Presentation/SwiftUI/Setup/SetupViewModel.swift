@@ -15,10 +15,8 @@ class SetupViewModel: ObservableObject {
 
     let isRightToLeft: Bool
     let previewAreaViewModel: PreviewAreaViewModel
-    var title: String
-    var subTitle: String?
+    let title: String
 
-    var networkManager: NetworkManager
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
     var joinCallButtonViewModel: PrimaryButtonViewModel!
@@ -31,25 +29,13 @@ class SetupViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState>,
-         networkManager: NetworkManager,
-         localizationProvider: LocalizationProviderProtocol,
-         navigationBarViewData: NavigationBarViewData? = nil) {
+         localizationProvider: LocalizationProviderProtocol) {
         self.store = store
-        self.networkManager = networkManager
-        self.networkManager.startMonitor()
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
 
-        if let title = navigationBarViewData?.title, !title.isEmpty {
-            // if title is not nil/empty, use given title and optional subtitle
-            self.title = title
-            self.subTitle = navigationBarViewData?.subtitle
-        } else {
-            // else if title is nil/empty, use default title and disregard given subtitle
-            self.title = self.localizationProvider.getLocalizedString(.setupTitle)
-            self.subTitle = nil
-        }
+        title = self.localizationProvider.getLocalizedString(.setupTitle)
 
         previewAreaViewModel = compositeViewModelFactory.makePreviewAreaViewModel(dispatchAction: store.dispatch)
 
@@ -98,10 +84,6 @@ class SetupViewModel: ObservableObject {
         }.store(in: &cancellables)
     }
 
-    deinit {
-        networkManager.stopMonitor()
-    }
-
     func setupAudioPermissions() {
         if store.state.permissionState.audioPermission == .notAsked {
             store.dispatch(action: .permissionAction(.audioPermissionRequested))
@@ -113,10 +95,6 @@ class SetupViewModel: ObservableObject {
     }
 
     func joinCallButtonTapped() {
-        guard networkManager.isOnline() else {
-            handleOffline()
-            return
-        }
         store.dispatch(action: .callingAction(.callStartRequested))
         isJoinRequested = true
     }
@@ -145,14 +123,5 @@ class SetupViewModel: ObservableObject {
                                         callingState: callingState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
         errorInfoViewModel.update(errorState: state.errorState)
-    }
-
-    private func handleOffline() {
-        store.dispatch(action: .errorAction(.statusErrorAndCallReset(internalError: .connectionFailed,
-                                                                     error: nil)))
-        // only show banner again when user taps on button explicitly
-        // banner would not reappear when other events^1 send identical error state again
-        // 1: camera on/off, audio on/off, switch to background/foreground, etc.
-        errorInfoViewModel.show()
     }
 }
