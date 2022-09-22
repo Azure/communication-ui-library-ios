@@ -10,6 +10,16 @@ import XCTest
 class BannerViewModelTests: XCTestCase {
     var cancellable: CancelBag!
 
+    override func setUp() {
+        super.setUp()
+        cancellable = CancelBag()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        cancellable = nil
+    }
+
     func test_bannerViewModel_isBannerDisplayedPublished_when_displayBannerWithRecordingOnAndTranscriptionOn_then_shouldBecomeTrueAndPublish() {
         let bannerViewModel = makeSut()
         let expectation = XCTestExpectation(description: "Should publish isBannerDisplayed")
@@ -273,7 +283,6 @@ class BannerViewModelTests: XCTestCase {
 extension BannerViewModelTests {
 
     func makeSut() -> BannerViewModel {
-        setupMocking()
         let storeFactory = StoreFactoryMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
         return BannerViewModel(compositeViewModelFactory: factoryMocking)
@@ -281,7 +290,6 @@ extension BannerViewModelTests {
 
     func makeSut(callingStateArray: [CallingState],
                  mockingBannerViewModel: BannerTextViewModelMocking) -> BannerViewModel {
-        setupMocking()
         let storeFactory = StoreFactoryMocking()
         var factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
                                                               store: storeFactory.store)
@@ -321,9 +329,5 @@ extension BannerViewModelTests {
         return CallingState(status: .connected,
                             isRecordingActive: recording,
                             isTranscriptionActive: transcription)
-    }
-
-    func setupMocking() {
-        cancellable = CancelBag()
     }
 }

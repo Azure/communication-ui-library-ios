@@ -10,6 +10,16 @@ import XCTest
 class BannerTextViewModelTests: XCTestCase {
     private var localizationProvider: LocalizationProviderMocking!
 
+    override func setUp() {
+        super.setUp()
+        localizationProvider = LocalizationProviderMocking()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        localizationProvider = nil
+    }
+
     func test_bannerTextViewModel_update_when_withBannerInfoType_then_shouldBePublish() {
         let sut = makeSUT()
         let expectedTitle = "Recording and transcription have started."
@@ -98,18 +108,12 @@ class BannerTextViewModelTests: XCTestCase {
 
 extension BannerTextViewModelTests {
     func makeSUT(accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()) -> BannerTextViewModel {
-        setupMocking()
-        return BannerTextViewModel(accessibilityProvider: accessibilityProvider,
+        BannerTextViewModel(accessibilityProvider: accessibilityProvider,
                             localizationProvider: LocalizationProvider(logger: LoggerMocking()))
     }
 
     func makeSUTLocalizationMocking() -> BannerTextViewModel {
-        setupMocking()
         return BannerTextViewModel(accessibilityProvider: AccessibilityProvider(),
                                    localizationProvider: localizationProvider)
-    }
-
-    func setupMocking() {
-        localizationProvider = LocalizationProviderMocking()
     }
 }
