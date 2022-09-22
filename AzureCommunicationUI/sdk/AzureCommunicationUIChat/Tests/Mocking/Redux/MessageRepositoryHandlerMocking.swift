@@ -4,5 +4,6 @@
 //
 
 import Foundation
+@testable import AzureCommunicationUIChat
 
-protocol ChatActionHandling {}
+class MessageRepositoryHandlerMocking: MessageRepositoryHandling {}

@@ -4,5 +4,3 @@
 //
 
 import Foundation
-
-protocol ChatActionHandling {}
