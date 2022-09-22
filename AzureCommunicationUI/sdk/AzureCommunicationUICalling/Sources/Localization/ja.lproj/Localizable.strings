@@ -26,6 +26,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="ミュート";
 "AzureCommunicationUICalling.SetupView.Button.Device"="デバイス";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="オーディオ デバイスを選択";
+"AzureCommunicationUICalling.SetupView.Button.GoToSettings"="設定に移動";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="カメラが無効になっています。有効にするには、[設定] に移動してアクセスを許可してください。";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="カメラとオーディオが無効になっています。有効にするには、[設定] に移動してアクセスを許可してください。この通話を開始するには、オーディオを有効にする必要があります。";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="オーディオが無効になっています。有効にするには、[設定] に移動してアクセスを許可してください。この通話を開始するには、オーディオを有効にする必要があります。";
@@ -98,3 +99,5 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="通話を再開できません";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="マイクは別のアプリで使用されています";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="通話へのアクセスが拒否されました。";
+"AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="ビデオの切り替え中にエラーが発生しました";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="通話に参加できません。ネットワーク接続を確認してください。";
