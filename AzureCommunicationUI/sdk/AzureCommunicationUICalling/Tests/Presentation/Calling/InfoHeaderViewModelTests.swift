@@ -9,12 +9,29 @@ import XCTest
 
 class InfoHeaderViewModelTests: XCTestCase {
 
-    typealias ParticipantsListViewModelUpdateStates = (LocalUserState, RemoteParticipantsState) -> Void
     var logger: LoggerMocking!
     var storeFactory: StoreFactoryMocking!
     var cancellable: CancelBag!
     var localizationProvider: LocalizationProviderMocking!
     var factoryMocking: CompositeViewModelFactoryMocking!
+
+    override func setUp() {
+        super.setUp()
+        logger = LoggerMocking()
+        storeFactory = StoreFactoryMocking()
+        cancellable = CancelBag()
+        localizationProvider = LocalizationProviderMocking()
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        logger = nil
+        storeFactory = nil
+        cancellable = nil
+        localizationProvider = nil
+        factoryMocking = nil
+    }
 
     func test_infoHeaderViewModel_update_when_participantInfoListCountSame_then_shouldNotBePublished() {
         let sut = makeSUT()
@@ -124,13 +141,16 @@ class InfoHeaderViewModelTests: XCTestCase {
         let remoteParticipantsStateValue = RemoteParticipantsState(participantInfoList: participantList,
                                                                    lastUpdateTimeStamp: Date())
         let localUserStateValue = LocalUserState(displayName: "Updated Name")
-        let updateStates: ParticipantsListViewModelUpdateStates = { localUserState, remoteParticipantsState in
+        let participantsListViewModel = ParticipantsListViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                         localUserState: LocalUserState())
+        participantsListViewModel.updateStates = { localUserState, remoteParticipantsState in
             XCTAssertEqual(localUserState.displayName, localUserStateValue.displayName)
             XCTAssertEqual(remoteParticipantsStateValue.participantInfoList,
                            remoteParticipantsState.participantInfoList)
             expectation.fulfill()
         }
-        let sut = makeSUTFactoryMocking(updateStates: updateStates)
+        factoryMocking.participantsListViewModel = participantsListViewModel
+        let sut = makeSUT()
         sut.update(localUserState: localUserStateValue,
                    remoteParticipantsState: remoteParticipantsStateValue,
                    callingState: CallingState())
@@ -299,7 +319,6 @@ class InfoHeaderViewModelTests: XCTestCase {
 
 extension InfoHeaderViewModelTests {
     func makeSUT(accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()) -> InfoHeaderViewModel {
-        setupMocking()
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
                                    localUserState: LocalUserState(),
@@ -308,33 +327,10 @@ extension InfoHeaderViewModelTests {
     }
 
     func makeSUTLocalizationMocking() -> InfoHeaderViewModel {
-        setupMocking()
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
                                    localUserState: LocalUserState(),
                                    localizationProvider: localizationProvider,
                                    accessibilityProvider: AccessibilityProvider())
-    }
-
-    func makeSUTFactoryMocking(updateStates: @escaping ParticipantsListViewModelUpdateStates) -> InfoHeaderViewModel {
-        setupMocking()
-        let participantsListViewModel = ParticipantsListViewModelMocking(
-                                                            compositeViewModelFactory: factoryMocking,
-                                                            localUserState: LocalUserState())
-        participantsListViewModel.updateStates = updateStates
-        factoryMocking.participantsListViewModel = participantsListViewModel
-        return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
-                                   logger: logger,
-                                   localUserState: LocalUserState(),
-                                   localizationProvider: LocalizationProvider(logger: logger),
-                                   accessibilityProvider: AccessibilityProvider())
-    }
-
-    func setupMocking() {
-        logger = LoggerMocking()
-        storeFactory = StoreFactoryMocking()
-        cancellable = CancelBag()
-        localizationProvider = LocalizationProviderMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
     }
 }
