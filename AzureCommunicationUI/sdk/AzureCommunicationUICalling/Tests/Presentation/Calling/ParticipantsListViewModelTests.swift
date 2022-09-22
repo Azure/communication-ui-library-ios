@@ -8,14 +8,29 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class ParticipantsListViewModelTests: XCTestCase {
-
-    typealias CreateParticipantsListCellViewModel = (ParticipantInfoModel) -> ParticipantsListCellViewModel?
-
     private var cancellable: CancelBag!
     private var localizationProvider: LocalizationProviderMocking!
     private var logger: LoggerMocking!
     private var factoryMocking: CompositeViewModelFactoryMocking!
     private var storeFactory: StoreFactoryMocking!
+
+    override func setUp() {
+        super.setUp()
+        logger = LoggerMocking()
+        cancellable = CancelBag()
+        localizationProvider = LocalizationProviderMocking()
+        storeFactory = StoreFactoryMocking()
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        logger = nil
+        cancellable = nil
+        localizationProvider = nil
+        storeFactory = nil
+        factoryMocking = nil
+    }
 
     // MARK: localParticipantsListCellViewModel test
     func test_participantsListViewModel_update_when_localUserStateMicOnAndUpdateWithMicOff_then_shouldBePublished() {
@@ -134,6 +149,8 @@ class ParticipantsListViewModelTests: XCTestCase {
 
     // MARK: participantsList test
     func test_participantsListViewModel_update_when_lastUpdateTimeStampChangedWithParticipantOrderCheck_then_shouldBePublished() {
+        let avatarViewManager = AvatarViewManager(store: storeFactory.store,
+                                                  localOptions: nil)
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should publish localParticipantsListCellViewModel")
         sut.$participantsList
@@ -174,8 +191,6 @@ class ParticipantsListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.participantsList.count, 1)
         XCTAssertEqual(localParticipant.getParticipantName(with: nil), "")
         XCTAssertEqual(localParticipant.isLocalParticipant, true)
-        let avatarViewManager = AvatarViewManager(store: storeFactory.store,
-                                                  localOptions: nil)
         let sortedParticipants = sut.sortedParticipants(with: avatarViewManager)
         XCTAssertEqual(sortedParticipants.first?.getParticipantName(with: nil), localParticipant.getParticipantName(with: nil))
         XCTAssertEqual(sortedParticipants.last?.getParticipantName(with: nil), remoteParticipantsState.participantInfoList.first!.displayName)
@@ -246,12 +261,12 @@ class ParticipantsListViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "ParticipantsListCellViewModel should be created")
         expectation.assertForOverFulfill = true
         expectation.expectedFulfillmentCount = remoteParticipantsState.participantInfoList.count
-        let createParticipantsListCellViewModel: CreateParticipantsListCellViewModel = { [weak self] infoModel in
+        factoryMocking.createParticipantsListCellViewModel = { [weak self] infoModel in
             expectation.fulfill()
             return ParticipantsListCellViewModel(participantInfoModel: infoModel,
                                                  localizationProvider: self?.localizationProvider ?? LocalizationProviderMocking())
         }
-        let sut = makeSUTFactoryMocking(createParticipantsListCellViewModel: createParticipantsListCellViewModel)
+        let sut = makeSUT()
         sut.update(localUserState: LocalUserState(),
                    remoteParticipantsState: remoteParticipantsState)
         XCTAssertEqual(sut.participantsList.map { $0.getParticipantName(with: nil) },
@@ -262,23 +277,7 @@ class ParticipantsListViewModelTests: XCTestCase {
 
 extension ParticipantsListViewModelTests {
     func makeSUT() -> ParticipantsListViewModel {
-        setupMocking()
         return ParticipantsListViewModel(compositeViewModelFactory: factoryMocking,
                                          localUserState: LocalUserState())
-    }
-
-    func makeSUTFactoryMocking(createParticipantsListCellViewModel: @escaping CreateParticipantsListCellViewModel) -> ParticipantsListViewModel {
-        setupMocking()
-        factoryMocking.createParticipantsListCellViewModel = createParticipantsListCellViewModel
-        return ParticipantsListViewModel(compositeViewModelFactory: factoryMocking,
-                                         localUserState: LocalUserState())
-    }
-
-    func setupMocking() {
-        logger = LoggerMocking()
-        cancellable = CancelBag()
-        localizationProvider = LocalizationProviderMocking()
-        storeFactory = StoreFactoryMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
     }
 }

@@ -10,6 +10,16 @@ import XCTest
 class ParticipantGridViewModelTests: XCTestCase {
     var cancellable: CancelBag!
 
+    override func setUp() {
+        super.setUp()
+        cancellable = CancelBag()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        cancellable = nil
+    }
+
     // MARK: Sorting participant
     func test_participantGridsViewModel_updateParticipantsState_when_newSevenInfoModels_then_participantViewModelsSortedByRecentSpeakingTimeStamp() {
         var inputInfoModelArr = [ParticipantInfoModel]()
@@ -535,7 +545,6 @@ class ParticipantGridViewModelTests: XCTestCase {
 
 extension ParticipantGridViewModelTests {
     func makeSUT(participantGridCellViewUpdateCompletion: ((ParticipantInfoModel) -> Void)? = nil) -> ParticipantGridViewModel {
-        setupMocking()
         let storeFactory = StoreFactoryMocking()
         let accessibilityProvider = AccessibilityProvider()
         var factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
@@ -556,7 +565,6 @@ extension ParticipantGridViewModelTests {
 
     func makeSUT(accessibilityProvider: AccessibilityProviderProtocol,
                  localizationProvider: LocalizationProviderProtocol) -> ParticipantGridViewModel {
-        setupMocking()
         let storeFactory = StoreFactoryMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
                                                               store: storeFactory.store,
@@ -571,9 +579,5 @@ extension ParticipantGridViewModelTests {
                                     date: Date = Date()) -> RemoteParticipantsState {
         return RemoteParticipantsState(participantInfoList: ParticipantInfoModelBuilder.getArray(count: count),
                                        lastUpdateTimeStamp: date)
-    }
-
-    func setupMocking() {
-        cancellable = CancelBag()
     }
 }
