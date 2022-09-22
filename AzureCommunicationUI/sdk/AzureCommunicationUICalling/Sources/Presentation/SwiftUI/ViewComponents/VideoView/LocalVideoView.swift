@@ -58,7 +58,7 @@ struct LocalVideoView: View {
     @ObservedObject var viewModel: LocalVideoViewModel
     let viewManager: VideoViewManager
     let viewType: LocalVideoViewType
-    let avatarManager: AvatarViewManager
+    let avatarManager: AvatarViewManagerProtocol
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     @State private var avatarImage: UIImage?
@@ -110,8 +110,8 @@ struct LocalVideoView: View {
             if localVideoStreamId != $0 {
                 localVideoStreamId = $0
             }
-        }.onReceive(avatarManager.$localOptions) {
-            avatarImage = $0?.participantViewData?.avatarImage
+        }.onReceive(avatarManager.participantViewData) {
+            avatarImage = $0?.avatarImage
         }
     }
 

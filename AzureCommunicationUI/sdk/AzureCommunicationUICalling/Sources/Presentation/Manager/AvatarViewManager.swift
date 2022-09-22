@@ -8,22 +8,27 @@ import AzureCommunicationCommon
 import Combine
 
 protocol AvatarViewManagerProtocol {
+    var updatedId: PassthroughSubject<String?, Never> { get }
+    var avatarStorage: MappedSequence<String, ParticipantViewData> { get }
+    var participantViewData: CurrentValueSubject<ParticipantViewData?, Never> { get }
+
     func set(remoteParticipantViewData: ParticipantViewData,
              for identifier: CommunicationIdentifier,
              completionHandler: ((Result<Void, SetParticipantViewDataError>) -> Void)?)
+    func updateStorage(with removedParticipantsIds: [String])
 }
 
 class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
-    @Published var updatedId: String?
-    @Published private(set) var localOptions: LocalOptions?
+    var updatedId = PassthroughSubject<String?, Never>()
+    var participantViewData: CurrentValueSubject<ParticipantViewData?, Never>
     private let store: Store<AppState>
     private(set) var avatarStorage = MappedSequence<String, ParticipantViewData>()
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState>,
-         localOptions: LocalOptions?) {
+         participantViewData: ParticipantViewData?) {
         self.store = store
-        self.localOptions = localOptions
+        self.participantViewData = CurrentValueSubject<ParticipantViewData?, Never>(participantViewData)
         store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
@@ -66,7 +71,7 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
         }
         avatarStorage.append(forKey: idStringValue,
                              value: remoteParticipantViewData)
-        updatedId = idStringValue
+        updatedId.send(idStringValue)
         completionHandler?(.success(Void()))
     }
 }
