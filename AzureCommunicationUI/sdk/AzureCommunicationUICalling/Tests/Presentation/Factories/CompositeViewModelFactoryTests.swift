@@ -9,9 +9,6 @@ import XCTest
 
 class CompositeViewModelFactoryTests: XCTestCase {
 
-    var logger: LoggerMocking!
-    var mockStoreFactory: StoreFactoryMocking!
-
     func test_compositeViewModelFactory_getCallingViewModel_when_setupViewModelNotNil_then_getSetupViewModel_shouldReturnDifferentSetupViewModel() {
         let sut = makeSUT()
         let setupViewModel1 = sut.getSetupViewModel()
@@ -37,17 +34,13 @@ class CompositeViewModelFactoryTests: XCTestCase {
 
 extension CompositeViewModelFactoryTests {
     func makeSUT() -> CompositeViewModelFactory {
-        setupMocking()
+        let mockStoreFactory = StoreFactoryMocking()
+        let logger = LoggerMocking()
         return CompositeViewModelFactory(logger: logger,
                                                               store: mockStoreFactory.store,
                                                               networkManager: NetworkManager(),
                                                               localizationProvider: LocalizationProviderMocking(),
                                                               accessibilityProvider: AccessibilityProviderMocking())
-    }
-
-    func setupMocking() {
-        logger = LoggerMocking()
-        mockStoreFactory = StoreFactoryMocking()
     }
 }
 
