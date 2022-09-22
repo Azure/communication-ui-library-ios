@@ -10,6 +10,16 @@ import XCTest
 class LobbyOverlayViewModelTests: XCTestCase {
     private var localizationProvider: LocalizationProviderMocking!
 
+    override func setUp() {
+        super.setUp()
+        localizationProvider = LocalizationProviderMocking()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        localizationProvider = nil
+    }
+
     func test_lobbyOverlayViewModel_displays_title_from_AppLocalization() {
         let sut = makeSUT()
         XCTAssertEqual(sut.title, "Waiting for host")
@@ -29,19 +39,13 @@ class LobbyOverlayViewModelTests: XCTestCase {
 
 extension LobbyOverlayViewModelTests {
     func makeSUT() -> LobbyOverlayViewModel {
-        setupMocking()
         return LobbyOverlayViewModel(localizationProvider:
                                         LocalizationProvider(logger: LoggerMocking()),
                                      accessibilityProvider: AccessibilityProviderMocking())
     }
 
     func makeSUTLocalizationMocking() -> LobbyOverlayViewModel {
-        setupMocking()
         return LobbyOverlayViewModel(localizationProvider: localizationProvider,
                                      accessibilityProvider: AccessibilityProviderMocking())
-    }
-
-    func setupMocking() {
-        localizationProvider = LocalizationProviderMocking()
     }
 }
