@@ -16,6 +16,27 @@ class RemoteParticipantsManagerTests: XCTestCase {
     var remoteParticipantsJoinedExpectation: XCTestExpectation!
     var expectedIds: [String]!
 
+    override func setUp() {
+        super.setUp()
+        remoteParticipantsJoinedExpectation = XCTestExpectation(description: "DidRemoteParticipantsJoin event expectation")
+        mockStoreFactory = StoreFactoryMocking()
+        eventsHandler = CallComposite.Events()
+        callingSDKWrapper = CallingSDKWrapperMocking()
+        avatarViewManager = AvatarViewManagerMocking(store: mockStoreFactory.store,
+                                                     localOptions: nil)
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        sut = nil
+        remoteParticipantsJoinedExpectation = nil
+        mockStoreFactory = nil
+        eventsHandler = nil
+        callingSDKWrapper = nil
+        avatarViewManager = nil
+        expectedIds = []
+    }
+
     func test_remoteParticipantsManager_receive_when_stateUpdated_and_participantRemoved_then_avatarViewManagerUpdateStorageCalled() {
         let storageUpdatedExpectation = XCTestExpectation(description: "AvatarViewManager storage update expectation")
         makeSUT(isParticipantsJoinHandlerSet: false)
@@ -167,7 +188,6 @@ class RemoteParticipantsManagerTests: XCTestCase {
 
 extension RemoteParticipantsManagerTests {
     func makeSUT(isParticipantsJoinHandlerSet: Bool = true) {
-        setupMocking()
         if isParticipantsJoinHandlerSet {
             eventsHandler.onRemoteParticipantJoined = { [weak self] _ in
                 guard let self = self else {
@@ -183,14 +203,5 @@ extension RemoteParticipantsManagerTests {
                                         callCompositeEventsHandler: eventsHandler,
                                         callingSDKWrapper: callingSDKWrapper,
                                         avatarViewManager: avatarViewManager)
-    }
-
-    func setupMocking() {
-        remoteParticipantsJoinedExpectation = XCTestExpectation(description: "DidRemoteParticipantsJoin event expectation")
-        mockStoreFactory = StoreFactoryMocking()
-        eventsHandler = CallComposite.Events()
-        callingSDKWrapper = CallingSDKWrapperMocking()
-        avatarViewManager = AvatarViewManagerMocking(store: mockStoreFactory.store,
-                                                     localOptions: nil)
     }
 }
