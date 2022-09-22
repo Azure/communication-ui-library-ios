@@ -8,16 +8,28 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class SetupViewModelTests: XCTestCase {
-
-    typealias UpdatePreviewAreaViewModel = (LocalUserState, PermissionState) -> Void
-    typealias UpdateSetupControlBarViewModel = (LocalUserState, PermissionState, CallingState) -> Void
-
     private var storeFactory: StoreFactoryMocking!
     private var factoryMocking: CompositeViewModelFactoryMocking!
     private var cancellable: CancelBag!
     private var logger: LoggerMocking!
-    private var setupControlBarViewModel: SetupControlBarViewModelMocking!
     private let timeout: TimeInterval = 10.0
+
+    override func setUp() {
+        super.setUp()
+        storeFactory = StoreFactoryMocking()
+        cancellable = CancelBag()
+        logger = LoggerMocking()
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
+                                                          store: storeFactory.store)
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        storeFactory = nil
+        cancellable = nil
+        logger = nil
+        factoryMocking = nil
+    }
 
     func test_setupViewModel_when_setupViewLoaded_then_shouldAskAudioPermission() {
         let sut = makeSUT()
@@ -119,12 +131,15 @@ class SetupViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted),
                                 localUserState: LocalUserState(displayName: "DisplayName"))
         let expectation = XCTestExpectation(description: "PreviewAreaViewModel is updated")
-        let updatePreviewAreaViewModel: UpdatePreviewAreaViewModel = { userState, permissionsState in
+        let updatePreviewAreaViewModel: ((LocalUserState, PermissionState) -> Void) = { userState, permissionsState in
             XCTAssertEqual(userState.displayName, appState.localUserState.displayName)
             XCTAssertEqual(permissionsState.audioPermission, appState.permissionState.audioPermission)
             expectation.fulfill()
         }
-        let sut = makeSUT(updatePreviewAreaViewModel: updatePreviewAreaViewModel)
+        factoryMocking.previewAreaViewModel = PreviewAreaViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                          dispatchAction: storeFactory.store.dispatch,
+                                                                          updateState: updatePreviewAreaViewModel)
+        let sut = makeSUT()
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
@@ -140,15 +155,25 @@ class SetupViewModelTests: XCTestCase {
             XCTAssertEqual(callingState, appState.callingState)
             expectation.fulfill()
         }
-
-        let sut = makeSUT(updateSetupControlBarViewModel: updateSetupControlBarViewModel)
+        factoryMocking.setupControlBarViewModel = SetupControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                                  logger: logger,
+                                                                                  dispatchAction: storeFactory.store.dispatch,
+                                                                                  localUserState: LocalUserState(),
+                                                                                  updateState: updateSetupControlBarViewModel)
+        let sut = makeSUT()
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
 
     func test_setupViewModel_receive_when_isJoinRequestedTrue_then_setupControlBarViewModelUpdatedTrue() {
         let expectation = XCTestExpectation(description: "SetupControlBarViewModel is updated")
-        let sut = makeSUT(updateSetupControlBarViewModel: nil)
+
+        let setupControlBarViewModel = SetupControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                       logger: logger,
+                                                                       dispatchAction: storeFactory.store.dispatch,
+                                                                       localUserState: LocalUserState())
+        factoryMocking.setupControlBarViewModel = setupControlBarViewModel
+        let sut = makeSUT()
         let updateIsJoinRequested: ((Bool) -> Void) = { isJoinRequested in
             XCTAssertTrue(isJoinRequested)
             expectation.fulfill()
@@ -165,10 +190,10 @@ class SetupViewModelTests: XCTestCase {
             XCTAssertEqual(isDisabled, appState.permissionState.audioPermission == .denied)
             expectation.fulfill()
         }
-        let primaryButtonViewModel = PrimaryButtonViewModelMocking(buttonStyle: .primaryFilled,
+        factoryMocking.primaryButtonViewModel = PrimaryButtonViewModelMocking(buttonStyle: .primaryFilled,
                                                                               buttonLabel: "buttonLabel",
                                                                               updateState: updateJoinCallButtonViewModel)
-        let sut = makeSUT(primaryButtonViewModel: primaryButtonViewModel)
+        let sut = makeSUT()
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
@@ -180,8 +205,8 @@ class SetupViewModelTests: XCTestCase {
             XCTAssertEqual(errorState, appState.errorState)
             expectation.fulfill()
         }
-        let errorInfoViewModel = ErrorInfoViewModelMocking(updateState: updateErrorInfoViewModel)
-        let sut = makeSUT(errorInfoViewModel: errorInfoViewModel)
+        factoryMocking.errorInfoViewModel = ErrorInfoViewModelMocking(updateState: updateErrorInfoViewModel)
+        let sut = makeSUT()
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
@@ -189,73 +214,16 @@ class SetupViewModelTests: XCTestCase {
 
 extension SetupViewModelTests {
     func getCallingState(_ statue: CallingStatus = .none) -> CallingState {
-        setupMocking()
         return CallingState(status: statue,
                             isRecordingActive: false,
                             isTranscriptionActive: false)
     }
 
     func makeSUT() -> SetupViewModel {
-        setupMocking()
         return SetupViewModel(compositeViewModelFactory: factoryMocking,
                               logger: logger,
                               store: storeFactory.store,
                               networkManager: NetworkManager(),
                               localizationProvider: LocalizationProviderMocking())
-    }
-
-    func makeSUT(errorInfoViewModel: ErrorInfoViewModel) -> SetupViewModel {
-        setupMocking()
-        factoryMocking.errorInfoViewModel = errorInfoViewModel
-        return SetupViewModel(compositeViewModelFactory: factoryMocking,
-                              logger: logger,
-                              store: storeFactory.store,
-                              networkManager: NetworkManager(),
-                              localizationProvider: LocalizationProviderMocking())
-    }
-
-    func makeSUT(primaryButtonViewModel: PrimaryButtonViewModelMocking) -> SetupViewModel {
-        setupMocking()
-        factoryMocking.primaryButtonViewModel = primaryButtonViewModel
-        return SetupViewModel(compositeViewModelFactory: factoryMocking,
-                              logger: logger,
-                              store: storeFactory.store,
-                              networkManager: NetworkManager(),
-                              localizationProvider: LocalizationProviderMocking())
-    }
-
-    func makeSUT(updatePreviewAreaViewModel: @escaping UpdatePreviewAreaViewModel) -> SetupViewModel {
-        setupMocking()
-        factoryMocking.previewAreaViewModel = PreviewAreaViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                          dispatchAction: storeFactory.store.dispatch,
-                                                                          updateState: updatePreviewAreaViewModel)
-        return SetupViewModel(compositeViewModelFactory: factoryMocking,
-                              logger: logger,
-                              store: storeFactory.store,
-                              networkManager: NetworkManager(),
-                              localizationProvider: LocalizationProviderMocking())
-    }
-
-    func makeSUT(updateSetupControlBarViewModel: UpdateSetupControlBarViewModel?) -> SetupViewModel {
-        setupMocking()
-        setupControlBarViewModel = SetupControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                                  logger: logger,
-                                                                                  dispatchAction: storeFactory.store.dispatch,
-                                                                                  localUserState: LocalUserState(),
-                                                                                  updateState: updateSetupControlBarViewModel)
-        factoryMocking.setupControlBarViewModel = setupControlBarViewModel
-        return SetupViewModel(compositeViewModelFactory: factoryMocking,
-                              logger: logger,
-                              store: storeFactory.store,
-                              networkManager: NetworkManager(),
-                              localizationProvider: LocalizationProviderMocking())
-    }
-
-    func setupMocking() {
-        storeFactory = StoreFactoryMocking()
-        cancellable = CancelBag()
-        logger = LoggerMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
-                                                          store: storeFactory.store)
     }
 }
