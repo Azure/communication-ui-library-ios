@@ -84,7 +84,9 @@ struct LocalVideoView: View {
                 } else {
                     VStack(alignment: .center, spacing: 5) {
                         CompositeAvatar(displayName: $viewModel.displayName,
-                                        avatarImage: $avatarImage,
+                                        avatarImage: Binding.constant(avatarManager
+                                            .localParticipantViewData?
+                                            .avatarImage),
                                         isSpeaking: false,
                                         avatarSize: viewType.avatarSize)
 
@@ -110,8 +112,6 @@ struct LocalVideoView: View {
             if localVideoStreamId != $0 {
                 localVideoStreamId = $0
             }
-        }.onReceive(avatarManager.participantViewData) {
-            avatarImage = $0?.avatarImage
         }
     }
 

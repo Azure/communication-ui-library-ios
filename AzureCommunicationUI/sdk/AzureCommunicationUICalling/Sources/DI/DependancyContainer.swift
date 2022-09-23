@@ -48,7 +48,8 @@ final class DependencyContainer {
         register(AccessibilityProvider() as AccessibilityProviderProtocol)
         register(LocalizationProvider(logger: resolve()) as LocalizationProviderProtocol)
         register(AvatarViewManager(store: resolve(),
-                                   participantViewData: localOptions?.participantViewData) as AvatarViewManagerProtocol)
+                                   localParticipantViewData: localOptions?.participantViewData) as
+                 AvatarViewManagerProtocol)
         register(CompositeViewModelFactory(logger: resolve(),
                                            store: resolve(),
                                            networkManager: resolve(),

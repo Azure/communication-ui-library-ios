@@ -10,7 +10,7 @@ import Combine
 protocol AvatarViewManagerProtocol {
     var updatedId: PassthroughSubject<String?, Never> { get }
     var avatarStorage: MappedSequence<String, ParticipantViewData> { get }
-    var participantViewData: CurrentValueSubject<ParticipantViewData?, Never> { get }
+    var localParticipantViewData: ParticipantViewData? { get }
 
     func set(remoteParticipantViewData: ParticipantViewData,
              for identifier: CommunicationIdentifier,
@@ -20,15 +20,15 @@ protocol AvatarViewManagerProtocol {
 
 class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
     var updatedId = PassthroughSubject<String?, Never>()
-    var participantViewData: CurrentValueSubject<ParticipantViewData?, Never>
+    var localParticipantViewData: ParticipantViewData?
     private let store: Store<AppState>
     private(set) var avatarStorage = MappedSequence<String, ParticipantViewData>()
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState>,
-         participantViewData: ParticipantViewData?) {
+         localParticipantViewData: ParticipantViewData?) {
         self.store = store
-        self.participantViewData = CurrentValueSubject<ParticipantViewData?, Never>(participantViewData)
+        self.localParticipantViewData = localParticipantViewData
         store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
@@ -72,6 +72,7 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
         avatarStorage.append(forKey: idStringValue,
                              value: remoteParticipantViewData)
         updatedId.send(idStringValue)
+        objectWillChange.send()
         completionHandler?(.success(Void()))
     }
 }
