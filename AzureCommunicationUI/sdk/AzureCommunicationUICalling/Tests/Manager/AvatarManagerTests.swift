@@ -9,7 +9,6 @@ import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
 
 class AvatarManagerTests: XCTestCase {
-    var mockStoreFactory: StoreFactoryMocking!
 
     func test_avatarManager_when_setLocalAvatar_then_getLocalAvatar_returnsSameUIImage() {
         guard let mockImage = UIImage.make(withColor: .red) else {
@@ -80,7 +79,7 @@ class AvatarManagerTests: XCTestCase {
 
 extension AvatarManagerTests {
     private func makeSUT(_ image: UIImage) -> AvatarViewManager {
-        setupMocking()
+        let mockStoreFactory = StoreFactoryMocking()
         let mockParticipantViewData = ParticipantViewData(avatar: image, displayName: "")
         let mockLocalOptions = LocalOptions(participantViewData: mockParticipantViewData)
         return AvatarViewManager(store: mockStoreFactory.store,
@@ -89,16 +88,12 @@ extension AvatarManagerTests {
     }
 
     private func makeSUT(state: AppState? = nil) -> AvatarViewManager {
-        setupMocking()
+        let mockStoreFactory = StoreFactoryMocking()
         if let state = state {
             mockStoreFactory.setState(state)
         }
         return AvatarViewManager(store: mockStoreFactory.store,
                                  localOptions: nil)
-    }
-
-    private func setupMocking() {
-        mockStoreFactory = StoreFactoryMocking()
     }
 }
 

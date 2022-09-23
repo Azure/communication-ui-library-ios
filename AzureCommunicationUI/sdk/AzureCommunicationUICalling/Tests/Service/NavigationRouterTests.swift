@@ -8,8 +8,17 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class NavigationRouterTests: XCTestCase {
-    var storeFactory: StoreFactoryMocking!
     var logger: LoggerMocking!
+
+    override func setUp() {
+        super.setUp()
+        logger = LoggerMocking()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        logger = nil
+    }
 
     func test_router_navigate_whenNavigateToNewView_shouldCallLog() {
         let sut = makeSUT()
@@ -62,12 +71,7 @@ class NavigationRouterTests: XCTestCase {
 
 extension NavigationRouterTests {
     func makeSUT() -> NavigationRouter {
-        setupMocking()
+        let storeFactory = StoreFactoryMocking()
         return NavigationRouter(store: storeFactory.store, logger: logger)
-    }
-
-    func setupMocking() {
-        storeFactory = StoreFactoryMocking()
-        logger = LoggerMocking()
     }
 }

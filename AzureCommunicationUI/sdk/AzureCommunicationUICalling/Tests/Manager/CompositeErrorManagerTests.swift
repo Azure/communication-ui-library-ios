@@ -15,8 +15,25 @@ class CompositeErrorManagerTests: XCTestCase {
     var handlerCallExpectation: XCTestExpectation!
     var expectedError: CallCompositeError?
 
+    override func setUp() {
+        super.setUp()
+        handlerCallExpectation = XCTestExpectation(description: "Delegate expectation")
+        mockStoreFactory = StoreFactoryMocking()
+        cancellable = CancelBag()
+        compositeManager = CompositeErrorManager(store: mockStoreFactory.store,
+                                                 callCompositeEventsHandler: getEventsHandler())
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        handlerCallExpectation = nil
+        mockStoreFactory = nil
+        cancellable = nil
+        compositeManager = nil
+        expectedError = nil
+    }
+
     func test_errorManager_receiveState_when_noFatalError_navigationExit_then_nodidFailEventCalled_hostingVCDismissCalled() {
-        setupMocking()
         handlerCallExpectation.isInverted = true
         let newState = getAppState(naviState: NavigationState(status: .exit))
         mockStoreFactory.setState(newState)
@@ -25,7 +42,6 @@ class CompositeErrorManagerTests: XCTestCase {
     }
 
     func test_errorManager_receiveState_when_noFatalError_callNotExisted_then_nodidFailEventCalled_hostingVCDismissCalled() {
-        setupMocking()
         handlerCallExpectation.isInverted = true
         let newState = getAppState(naviState: NavigationState(status: .inCall))
         mockStoreFactory.setState(newState)
@@ -34,7 +50,6 @@ class CompositeErrorManagerTests: XCTestCase {
     }
 
     func test_errorManager_receiveState_when_fatalErrorCallJoin_then_receiveDidFail() {
-        setupMocking()
         let fatalError = CallCompositeError(code: CallCompositeErrorCode.callJoin, error: nil)
         self.expectedError = fatalError
         let errorState = ErrorState(internalError: .callJoinFailed,
@@ -47,7 +62,6 @@ class CompositeErrorManagerTests: XCTestCase {
     }
 
     func test_errorManager_receiveState_when_fatalErrorTokenExpired_then_receiveEmergencyExitAction() {
-        setupMocking()
         let fatalError = CallCompositeError(code: CallCompositeErrorCode.tokenExpired, error: nil)
         self.expectedError = fatalError
         let errorState = ErrorState(internalError: .callTokenFailed,
@@ -105,13 +119,5 @@ extension CompositeErrorManagerTests {
 
         }
         return handler
-    }
-
-    func setupMocking() {
-        handlerCallExpectation = XCTestExpectation(description: "Delegate expectation")
-        mockStoreFactory = StoreFactoryMocking()
-        cancellable = CancelBag()
-        compositeManager = CompositeErrorManager(store: mockStoreFactory.store,
-                                                 callCompositeEventsHandler: getEventsHandler())
     }
 }

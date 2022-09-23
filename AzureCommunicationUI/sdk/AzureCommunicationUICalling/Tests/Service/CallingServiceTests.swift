@@ -10,9 +10,17 @@ import Combine
 
 class CallingServiceTests: XCTestCase {
 
-    var logger: LoggerMocking!
     var callingSDKWrapper: CallingSDKWrapperMocking!
-    var cancellable: CancelBag!
+
+    override func setUp() {
+        super.setUp()
+        callingSDKWrapper = CallingSDKWrapperMocking()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        callingSDKWrapper = nil
+    }
 
     func test_callingService_setupCall_shouldCallcallingSDKWrapperSetupCall() async throws {
         let sut = makeSUT()
@@ -113,12 +121,7 @@ class CallingServiceTests: XCTestCase {
 
 extension CallingServiceTests {
     func makeSUT() -> CallingService {
-        setupMocking()
+        let logger = LoggerMocking()
         return CallingService(logger: logger, callingSDKWrapper: callingSDKWrapper)
-    }
-    func setupMocking() {
-        cancellable = CancelBag()
-        logger = LoggerMocking()
-        callingSDKWrapper = CallingSDKWrapperMocking()
     }
 }

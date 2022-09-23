@@ -10,8 +10,18 @@ import XCTest
 class LocalVideoViewModelTests: XCTestCase {
     var storeFactory: StoreFactoryMocking!
     var cancellable: CancelBag!
-    var factoryMocking: CompositeViewModelFactoryMocking!
-    var logger: LoggerMocking!
+
+    override func setUp() {
+        super.setUp()
+        storeFactory = StoreFactoryMocking()
+        cancellable = CancelBag()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        storeFactory = nil
+        cancellable = nil
+    }
 
     func test_localVideoViewModel_when_updateWithLocalVideoStreamId_then_videoSteamIdUpdated() {
         let sut = makeSUT()
@@ -50,20 +60,16 @@ class LocalVideoViewModelTests: XCTestCase {
 
 extension LocalVideoViewModelTests {
     func makeSUT() -> LocalVideoViewModel {
-        setupMocking()
+
         func dispatch(action: Action) {
             storeFactory.store.dispatch(action: action)
         }
+        let logger = LoggerMocking()
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+
         return LocalVideoViewModel(compositeViewModelFactory: factoryMocking,
                                                   logger: logger,
                                                   localizationProvider: LocalizationProviderMocking(),
                                                   dispatchAction: dispatch)
-    }
-
-    func setupMocking() {
-        storeFactory = StoreFactoryMocking()
-        cancellable = CancelBag()
-        logger = LoggerMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
     }
 }

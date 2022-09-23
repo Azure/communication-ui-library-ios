@@ -14,6 +14,24 @@ class AudioDevicesListViewModelTests: XCTestCase {
     private var localizationProvider: LocalizationProviderMocking!
     private var factoryMocking: CompositeViewModelFactoryMocking!
 
+    override func setUp() {
+        super.setUp()
+        storeFactory = StoreFactoryMocking()
+        cancellable = CancelBag()
+        localizationProvider = LocalizationProviderMocking()
+        factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
+                                                          store: storeFactory.store,
+                                                          localizationProvider: localizationProvider)
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        storeFactory = nil
+        cancellable = nil
+        localizationProvider = nil
+        factoryMocking = nil
+    }
+
     func test_audioDevicesListViewModel_update_when_audioDevicesListFirstInitialized_then_shouldBePublished() {
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should publish audioDevicesList")
@@ -88,7 +106,6 @@ class AudioDevicesListViewModelTests: XCTestCase {
 
 extension AudioDevicesListViewModelTests {
     func makeSUT() -> AudioDevicesListViewModel {
-        setupMocking()
         func dispatch(action: Action) {
             storeFactory.store.dispatch(action: action)
         }
@@ -96,14 +113,5 @@ extension AudioDevicesListViewModelTests {
                                          dispatchAction: dispatch,
                                          localUserState: LocalUserState(),
                                          localizationProvider: localizationProvider)
-    }
-
-    func setupMocking() {
-        storeFactory = StoreFactoryMocking()
-        cancellable = CancelBag()
-        localizationProvider = LocalizationProviderMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
-                                                          store: storeFactory.store,
-                                                          localizationProvider: localizationProvider)
     }
 }

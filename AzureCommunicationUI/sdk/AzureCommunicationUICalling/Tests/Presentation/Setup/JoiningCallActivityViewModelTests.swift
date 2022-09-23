@@ -8,7 +8,6 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class JoiningCallActivityViewModelTests: XCTestCase {
-    private var localizationProvider: LocalizationProviderProtocol!
 
     func test_joiningCallActivityViewModel_when_getTitle_then_shouldLocalizedPlaceholderString() {
         let sut = makeSUT()
@@ -18,11 +17,7 @@ class JoiningCallActivityViewModelTests: XCTestCase {
 
 extension JoiningCallActivityViewModelTests {
     func makeSUT() -> JoiningCallActivityViewModel {
-        setupMocking()
+        let localizationProvider = LocalizationProviderMocking()
         return JoiningCallActivityViewModel(localizationProvider: localizationProvider)
-    }
-
-    func setupMocking() {
-        localizationProvider = LocalizationProviderMocking()
     }
 }
