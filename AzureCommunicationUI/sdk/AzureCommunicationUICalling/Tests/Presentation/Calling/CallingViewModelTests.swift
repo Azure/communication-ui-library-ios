@@ -181,10 +181,10 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_receive_when_callingStateStatusUpdated_then_accessibilityFocusUpdated() {
         let expectation = XCTestExpectation(description: "Accessibility focus is updated")
         let appState = AppState(callingState: CallingState(status: .inLobby))
-        accessibilityProvider.moveFocusToFirstElementBlock = {
+        let moveFocusToFirstElementBlock: () -> Void = {
             expectation.fulfill()
         }
-        let sut = makeSUT()
+        let sut = makeSUT(moveFocusToFirstElementBlock: moveFocusToFirstElementBlock)
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
@@ -329,6 +329,16 @@ extension CallingViewModelTests {
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: localizationProvider,
+                                accessibilityProvider: accessibilityProvider,
+                                isIpadInterface: false)
+    }
+
+    func makeSUT(moveFocusToFirstElementBlock: @escaping () -> Void) -> CallingViewModel {
+        accessibilityProvider.moveFocusToFirstElementBlock = moveFocusToFirstElementBlock
+        return CallingViewModel(compositeViewModelFactory: factoryMocking,
+                                logger: logger,
+                                store: storeFactory.store,
+                                localizationProvider: LocalizationProvider(logger: logger),
                                 accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false)
     }
