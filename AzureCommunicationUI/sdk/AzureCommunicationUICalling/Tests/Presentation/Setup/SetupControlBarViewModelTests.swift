@@ -12,12 +12,21 @@ class SetupControlBarViewModelTests: XCTestCase {
     typealias AudioDevicesListViewModelUpdateState = ((LocalUserState.AudioDeviceSelectionStatus) -> Void)?
 
     private var storeFactory: StoreFactoryMocking!
-    private var factoryMocking: CompositeViewModelFactoryMocking!
     private var cancellable: CancelBag!
-    private var logger: LoggerMocking!
-    private var localizationProvider: LocalizationProviderMocking!
 
     private let timeout: TimeInterval = 10.0
+
+    override func setUp() {
+        super.setUp()
+        storeFactory = StoreFactoryMocking()
+        cancellable = CancelBag()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        storeFactory = nil
+        cancellable = nil
+    }
 
     func test_setupControlBarViewModel_when_videoButtonTapped_then_requestCameraOnIfPreviouslyOff() {
         let expectation = XCTestExpectation(description: "Verify Camera On")
@@ -377,7 +386,10 @@ class SetupControlBarViewModelTests: XCTestCase {
 
 extension SetupControlBarViewModelTests {
     func makeSUT() -> SetupControlBarViewModel {
-        setupMocking()
+        let logger = LoggerMocking()
+        let localizationProvider = LocalizationProviderMocking()
+        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
+                                                          store: storeFactory.store)
         return SetupControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                         logger: logger,
                                         dispatchAction: storeFactory.store.dispatch,
@@ -386,7 +398,10 @@ extension SetupControlBarViewModelTests {
     }
 
     func makeSUT(createIconWithLabelButtonViewModel: CreateIconWithLabelButtonViewModel, state: AppState? = nil) -> SetupControlBarViewModel {
-        setupMocking()
+        let logger = LoggerMocking()
+        let localizationProvider = LocalizationProviderMocking()
+        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
+                                                          store: storeFactory.store)
         if let state = state {
             storeFactory.store.state = state
         }
@@ -399,7 +414,10 @@ extension SetupControlBarViewModelTests {
     }
 
     func makeSUT(audioDevicesListViewModelUpdateState: AudioDevicesListViewModelUpdateState, localUserState: LocalUserState) -> SetupControlBarViewModel {
-        setupMocking()
+        let logger = LoggerMocking()
+        let localizationProvider = LocalizationProviderMocking()
+        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
+                                                          store: storeFactory.store)
         let audioDevicesListViewModel = AudioDevicesListViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                          dispatchAction: storeFactory.store.dispatch,
                                                                          localUserState: localUserState,
@@ -415,7 +433,10 @@ extension SetupControlBarViewModelTests {
     }
 
     func makeSUTLocalizationMocking() -> SetupControlBarViewModel {
-        setupMocking()
+        let logger = LoggerMocking()
+        let localizationProvider = LocalizationProviderMocking()
+        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
+                                                          store: storeFactory.store)
         return SetupControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                         logger: logger,
                                         dispatchAction: storeFactory.store.dispatch,
@@ -424,21 +445,15 @@ extension SetupControlBarViewModelTests {
     }
 
     func makeSUTLocalizationMocking(createIconWithLabelButtonViewModel: CreateIconWithLabelButtonViewModel) -> SetupControlBarViewModel {
-        setupMocking()
+        let logger = LoggerMocking()
+        let localizationProvider = LocalizationProviderMocking()
+        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
+                                                          store: storeFactory.store)
         factoryMocking.createIconWithLabelButtonViewModel = createIconWithLabelButtonViewModel
         return SetupControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                         logger: logger,
                                         dispatchAction: storeFactory.store.dispatch,
                                         localUserState: LocalUserState(),
                                         localizationProvider: localizationProvider)
-    }
-
-    func setupMocking() {
-        storeFactory = StoreFactoryMocking()
-        cancellable = CancelBag()
-        logger = LoggerMocking()
-        localizationProvider = LocalizationProviderMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
-                                                          store: storeFactory.store)
     }
 }
