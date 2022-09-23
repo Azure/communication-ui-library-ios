@@ -8,28 +8,16 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class OnHoldOverlayViewModelTests: XCTestCase {
-    var logger: LoggerMocking!
-    var storeFactory: StoreFactoryMocking!
     var localizationProvider: LocalizationProviderMocking!
-    var factoryMocking: CompositeViewModelFactoryMocking!
-    var accessibilityProvider: AccessibilityProviderMocking!
 
     override func setUp() {
         super.setUp()
-        logger = LoggerMocking()
-        storeFactory = StoreFactoryMocking()
         localizationProvider = LocalizationProviderMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
-        accessibilityProvider = AccessibilityProviderMocking()
     }
 
     override func tearDown() {
         super.tearDown()
-        logger = nil
-        storeFactory = nil
         localizationProvider = nil
-        factoryMocking = nil
-        accessibilityProvider = nil
     }
 
     func test_onHoldOverlayViewModel_displays_title_from_AppLocalization() {
@@ -63,6 +51,10 @@ class OnHoldOverlayViewModelTests: XCTestCase {
 
 extension OnHoldOverlayViewModelTests {
     func makeSUT() -> OnHoldOverlayViewModel {
+        let logger = LoggerMocking()
+        let storeFactory = StoreFactoryMocking()
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        let accessibilityProvider = AccessibilityProviderMocking()
         return OnHoldOverlayViewModel(localizationProvider: LocalizationProvider(logger: logger),
                                       compositeViewModelFactory: factoryMocking,
                                       logger: logger,
@@ -71,6 +63,10 @@ extension OnHoldOverlayViewModelTests {
     }
 
     func makeSUTLocalizationMocking() -> OnHoldOverlayViewModel {
+        let logger = LoggerMocking()
+        let storeFactory = StoreFactoryMocking()
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        let accessibilityProvider = AccessibilityProviderMocking()
         return OnHoldOverlayViewModel(localizationProvider: localizationProvider,
                                       compositeViewModelFactory: factoryMocking,
                                       logger: logger,
@@ -79,6 +75,10 @@ extension OnHoldOverlayViewModelTests {
     }
 
     func makeSUT(withAction action: @escaping (() -> Void)) -> OnHoldOverlayViewModelMocking {
+        let logger = LoggerMocking()
+        let storeFactory = StoreFactoryMocking()
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+        let accessibilityProvider = AccessibilityProviderMocking()
         return OnHoldOverlayViewModelMocking(localizationProvider: LocalizationProvider(logger: logger),
                                                   compositeViewModelFactory: factoryMocking,
                                                   logger: logger,
