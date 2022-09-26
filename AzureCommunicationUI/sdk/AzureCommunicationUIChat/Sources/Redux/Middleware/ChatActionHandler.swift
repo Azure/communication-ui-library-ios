@@ -10,7 +10,7 @@ protocol ChatActionHandling {
     func enterBackground(state: AppState, dispatch: @escaping ActionDispatch)
     func enterForeground(state: AppState, dispatch: @escaping ActionDispatch)
 
-    func chatStart(state: AppState, dispatch: @escaping ActionDispatch, serviceListener: ChatServiceEventHandling)
+    func initialize(state: AppState, dispatch: @escaping ActionDispatch, serviceListener: ChatServiceEventHandling)
 }
 
 class ChatActionHandler: ChatActionHandling {
@@ -24,7 +24,7 @@ class ChatActionHandler: ChatActionHandling {
         self.logger = logger
     }
 
-    func chatStart(state: AppState, dispatch: @escaping ActionDispatch, serviceListener: ChatServiceEventHandling) {
+    func initialize(state: AppState, dispatch: @escaping ActionDispatch, serviceListener: ChatServiceEventHandling) {
         chatService.chatStart()
             .map { _ in
                 // Stub action

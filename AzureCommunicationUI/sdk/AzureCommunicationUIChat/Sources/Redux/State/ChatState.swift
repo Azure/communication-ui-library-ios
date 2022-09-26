@@ -6,10 +6,15 @@
 import Foundation
 
 struct ChatState {
+    let localUser: ParticipantInfoModel
+    let threadId: String
+    let topic: String
 
-    let localUser: LocalUserInfoModel
-
-    init(localUser: LocalUserInfoModel) {
+    init(localUser: ParticipantInfoModel,
+         threadId: String,
+         topic: String = "") {
         self.localUser = localUser
+        self.threadId = threadId
+        self.topic = topic
     }
 }
