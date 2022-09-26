@@ -184,13 +184,14 @@ class SetupControlBarViewModelTests: XCTestCase {
             XCTAssertEqual(isDisabled, true)
             expectation.fulfill()
         }
-        factoryMocking.createIconWithLabelButtonViewModel = { icon in
-            guard icon == .videoOff
+        factoryMocking.createCameraIconWithLabelButtonViewModel = { buttonState in
+            guard buttonState == .videoOff
             else { return nil }
 
-            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(iconName: .clock,
-                                                                                   buttonTypeColor: .colorThemedWhite,
-                                                                                   buttonLabel: "buttonLabel")
+            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(
+                selectedButtonState: CameraButtonState.videoOff,
+                localizationProvider: self.localizationProvider,
+                buttonTypeColor: .colorThemedWhite)
             iconWithLabelButtonViewModel.updateDisabledState = updateDisabledStateCompletion
             return iconWithLabelButtonViewModel
         }
@@ -213,7 +214,7 @@ class SetupControlBarViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isAudioDisabled())
     }
 
-    func test_setupControlBarViewModel_when_updateJoinRequestedFalse_AudiAndVideoAreDenied_then_audioAndVideoAreDisabled() {
+    func test_setupControlBarViewModel_when_updateJoinRequestedFalse_AudioAndVideoAreDenied_then_audioAndVideoAreDisabled() {
         let sut = makeSUT()
         sut.update(localUserState: LocalUserState(),
                    permissionState: PermissionState(audioPermission: .denied,
@@ -225,7 +226,7 @@ class SetupControlBarViewModelTests: XCTestCase {
         XCTAssertTrue(sut.isAudioDisabled())
     }
 
-    func test_setupControlBarViewModel_when_updateJoinRequestedFalse_AudiAndVideoAreGranted_then_audioAndVideoAreDisabled() {
+    func test_setupControlBarViewModel_when_updateJoinRequestedFalse_AudioAndVideoAreGranted_then_audioAndVideoAreDisabled() {
         let sut = makeSUT()
         sut.update(localUserState: LocalUserState(),
                    permissionState: PermissionState(audioPermission: .granted,
@@ -250,18 +251,19 @@ class SetupControlBarViewModelTests: XCTestCase {
 
     func test_setupControlBarViewModel_updateStates_when_stateUpdated_then_cameraButtonViewModelButtonInfoUpdated() {
         let expectation = XCTestExpectation(description: "CameraButtonViewModel button info is updated")
-        let updateButtonInfoCompletion: ((CompositeIcon?, String?) -> Void) = { icon, label in
-            XCTAssertEqual(icon, .videoOn)
-            XCTAssertEqual(label, "Video on")
+        let updateButtonInfoCompletion: ((CameraButtonState) -> Void) = { buttonState in
+            XCTAssertEqual(buttonState.iconName, .videoOn)
+            XCTAssertEqual(buttonState.localizationKey, .videoOn)
             expectation.fulfill()
         }
-        factoryMocking.createIconWithLabelButtonViewModel = { icon in
-            guard icon == .videoOff
+        factoryMocking.createCameraIconWithLabelButtonViewModel = { buttonState in
+            guard buttonState == .videoOff
             else { return nil }
 
-            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(iconName: .clock,
-                                                                                   buttonTypeColor: .colorThemedWhite,
-                                                                                   buttonLabel: "buttonLabel")
+            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(
+                selectedButtonState: CameraButtonState.videoOff,
+                localizationProvider: self.localizationProvider,
+                buttonTypeColor: .colorThemedWhite)
             iconWithLabelButtonViewModel.updateButtonInfo = updateButtonInfoCompletion
             return iconWithLabelButtonViewModel
         }
@@ -282,13 +284,14 @@ class SetupControlBarViewModelTests: XCTestCase {
             XCTAssertEqual(isDisabled, permissionState.cameraPermission == .denied)
             expectation.fulfill()
         }
-        factoryMocking.createIconWithLabelButtonViewModel = { icon in
-            guard icon == .videoOff
+        factoryMocking.createCameraIconWithLabelButtonViewModel = { buttonState in
+            guard buttonState == .videoOff
             else { return nil }
 
-            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(iconName: .clock,
-                                                                                   buttonTypeColor: .colorThemedWhite,
-                                                                                   buttonLabel: "buttonLabel")
+            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(
+                selectedButtonState: CameraButtonState.videoOff,
+                localizationProvider: self.localizationProvider,
+                buttonTypeColor: .colorThemedWhite)
             iconWithLabelButtonViewModel.updateDisabledState = updateDisabledStateCompletion
             return iconWithLabelButtonViewModel
         }
@@ -301,18 +304,20 @@ class SetupControlBarViewModelTests: XCTestCase {
 
     func test_setupControlBarViewModel_updateStates_when_stateUpdated_then_micButtonViewModelButtonInfoUpdated() {
         let expectation = XCTestExpectation(description: "MicButtonViewModel button info is updated")
-        let updateButtonInfoCompletion: ((CompositeIcon?, String?) -> Void) = { icon, label in
-            XCTAssertEqual(icon, .micOn)
-            XCTAssertEqual(label, "Mic on")
+        let updateButtonInfoCompletion: ((MicButtonState) -> Void) = { buttonState in
+            XCTAssertEqual(buttonState.iconName, .micOn)
+            XCTAssertEqual(buttonState.localizationKey, .micOn)
             expectation.fulfill()
         }
-        factoryMocking.createIconWithLabelButtonViewModel = { icon in
-            guard icon == .micOff
+
+        factoryMocking.createMicIconWithLabelButtonViewModel = { buttonState in
+            guard buttonState == .micOff
             else { return nil }
 
-            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(iconName: .clock,
-                                                                                   buttonTypeColor: .colorThemedWhite,
-                                                                                   buttonLabel: "buttonLabel")
+            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(
+                selectedButtonState: MicButtonState.micOff,
+                localizationProvider: self.localizationProvider,
+                buttonTypeColor: .colorThemedWhite)
             iconWithLabelButtonViewModel.updateButtonInfo = updateButtonInfoCompletion
             return iconWithLabelButtonViewModel
         }
@@ -326,18 +331,19 @@ class SetupControlBarViewModelTests: XCTestCase {
 
     func test_setupControlBarViewModel_updateStates_when_stateUpdated_then_audioDeviceButtonViewModelButtonInfoUpdated() {
         let expectation = XCTestExpectation(description: "AudioDeviceButtonViewModel button info is updated")
-        let updateButtonInfoCompletion: ((CompositeIcon?, String?) -> Void) = { icon, label in
-            XCTAssertEqual(icon, .speakerFilled)
-            XCTAssertEqual(label, "Speaker")
+        let updateButtonInfoCompletion: ((AudioButtonState) -> Void) = { buttonState in
+            XCTAssertEqual(buttonState.iconName, .speakerFilled)
+            XCTAssertEqual(buttonState.localizationKey, .speaker)
             expectation.fulfill()
         }
-        factoryMocking.createIconWithLabelButtonViewModel = { icon in
-            guard icon == .speakerFilled
+        factoryMocking.createAudioIconWithLabelButtonViewModel = { buttonState in
+            guard buttonState == .speaker
             else { return nil }
 
-            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(iconName: .clock,
-                                                                                   buttonTypeColor: .colorThemedWhite,
-                                                                                   buttonLabel: "buttonLabel")
+            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(
+                selectedButtonState: AudioButtonState.bluetooth,
+                localizationProvider: self.localizationProvider,
+                buttonTypeColor: .colorThemedWhite)
             iconWithLabelButtonViewModel.updateButtonInfo = updateButtonInfoCompletion
             return iconWithLabelButtonViewModel
         }
@@ -371,18 +377,19 @@ class SetupControlBarViewModelTests: XCTestCase {
 
     func test_setupControlBarViewModel_display_videoButtonLabel__from_LocalizationMocking() {
         let expectation = XCTestExpectation(description: "CameraButtonViewModel button info is updated")
-        let updateButtonInfoCompletion: ((CompositeIcon?, String?) -> Void) = { icon, label in
-            XCTAssertEqual(icon, .videoOn)
-            XCTAssertEqual(label, "AzureCommunicationUICalling.SetupView.Button.VideoOn")
+        let updateButtonInfoCompletion: ((CameraButtonState) -> Void) = { buttonState in
+            XCTAssertEqual(buttonState.iconName, .videoOn)
+            XCTAssertEqual(buttonState.localizationKey, .videoOn)
             expectation.fulfill()
         }
-        factoryMocking.createIconWithLabelButtonViewModel = { icon in
-            guard icon == .videoOff
+        factoryMocking.createCameraIconWithLabelButtonViewModel = { buttonState in
+            guard buttonState == .videoOff
             else { return nil }
 
-            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(iconName: .clock,
-                                                                                   buttonTypeColor: .colorThemedWhite,
-                                                                                   buttonLabel: "buttonLabel")
+            let iconWithLabelButtonViewModel = IconWithLabelButtonViewModelMocking(
+                selectedButtonState: CameraButtonState.videoOn,
+                localizationProvider: self.localizationProvider,
+                buttonTypeColor: .colorThemedWhite)
             iconWithLabelButtonViewModel.updateButtonInfo = updateButtonInfoCompletion
             return iconWithLabelButtonViewModel
         }
