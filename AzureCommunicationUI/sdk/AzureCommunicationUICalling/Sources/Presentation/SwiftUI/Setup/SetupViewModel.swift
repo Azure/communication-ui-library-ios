@@ -46,7 +46,7 @@ class SetupViewModel: ObservableObject {
             self.title = title
             self.subTitle = setupScreenViewData?.subtitle
         } else {
-            // else if title is nil/empty, use default title and disregard given subtitle
+            // else if title is nil/empty, use default title
             self.title = self.localizationProvider.getLocalizedString(.setupTitle)
             self.subTitle = nil
         }
