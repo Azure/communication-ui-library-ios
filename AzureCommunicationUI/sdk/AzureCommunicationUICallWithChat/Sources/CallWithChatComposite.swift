@@ -84,9 +84,9 @@ public class CallWithChatComposite {
 
     }
 
-    private func createCustomizationOption() -> CustomizationOptions {
+    private func createCustomizationOption() -> ControlsOptions {
         let messageBtnState = getMessageButtonViewData()
-        return CustomizationOptions(customButtonViewData: [messageBtnState])
+        return ControlsOptions(customButtonViewData: [messageBtnState])
     }
 
     private func getMessageButtonViewData() -> CustomButtonViewData {

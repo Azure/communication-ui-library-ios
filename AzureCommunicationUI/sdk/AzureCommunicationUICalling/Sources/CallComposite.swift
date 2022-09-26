@@ -17,6 +17,8 @@ public class CallComposite {
         public var onError: ((CallCompositeError) -> Void)?
         /// Closures to execute when participant has joined a call inside Call Composite.
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
+
+        public var onStatusUpdate: ((CallCompositeStatus) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -24,7 +26,7 @@ public class CallComposite {
     private var logger: Logger?
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
-    private let customizationOptions: CustomizationOptions?
+    private let customizationOptions: ControlsOptions?
     private let diagnosticsOptions: DiagnosticsOptions?
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
@@ -40,7 +42,7 @@ public class CallComposite {
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
-        customizationOptions = options?.customizationOptions
+        customizationOptions = options?.controlsOptions
         injectedOverlayState = InjectedOverlayState()
         diagnosticsOptions = options?.diagnosticsOptions
     }

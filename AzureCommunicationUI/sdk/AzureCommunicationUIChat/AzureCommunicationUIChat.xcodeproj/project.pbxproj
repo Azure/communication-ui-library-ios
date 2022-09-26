@@ -86,12 +86,6 @@
 		BD3822E028A19B0B00996F7B /* SystemMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3822DF28A19B0B00996F7B /* SystemMessageView.swift */; };
 		BD3822E328A19D1900996F7B /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3822E228A19D1900996F7B /* MessageViewModel.swift */; };
 		BD3822E528A19D4F00996F7B /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3822E428A19D4F00996F7B /* MessageView.swift */; };
-		FA021AFC28820CE400CEDD02 /* LocalizationProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA021AFA28820CDE00CEDD02 /* LocalizationProviderTests.swift */; };
-		FA021B0228820DB300CEDD02 /* LoggerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA021B0128820DB300CEDD02 /* LoggerMocking.swift */; };
-		FA021B122882108100CEDD02 /* ReducerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA021B0F2882108100CEDD02 /* ReducerMocking.swift */; };
-		FA021B132882108100CEDD02 /* MiddlewareMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA021B102882108100CEDD02 /* MiddlewareMocking.swift */; };
-		FA021B142882108100CEDD02 /* StoreFactoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA021B112882108100CEDD02 /* StoreFactoryMocking.swift */; };
-		FA021B1D2882118D00CEDD02 /* DiagnosticConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA021B1C2882118D00CEDD02 /* DiagnosticConfigTests.swift */; };
 		FA021B24288215FE00CEDD02 /* LocalizationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA021B23288215FD00CEDD02 /* LocalizationOptions.swift */; };
 		FA021B312882194F00CEDD02 /* DiagnosticConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA021B302882194F00CEDD02 /* DiagnosticConfig.swift */; };
 		FA021B3528821A4700CEDD02 /* IconProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA021B3428821A4700CEDD02 /* IconProvider.swift */; };
@@ -596,43 +590,6 @@
 			path = CustomViews;
 			sourceTree = "<group>";
 		};
-		FA021AF828820CDE00CEDD02 /* Presentation */ = {
-			isa = PBXGroup;
-			children = (
-				FA021AF928820CDE00CEDD02 /* Provider */,
-			);
-			name = Presentation;
-			path = ../../common/CallingAndChat/Tests/Presentation;
-			sourceTree = "<group>";
-		};
-		FA021AF928820CDE00CEDD02 /* Provider */ = {
-			isa = PBXGroup;
-			children = (
-				FA021AFA28820CDE00CEDD02 /* LocalizationProviderTests.swift */,
-			);
-			path = Provider;
-			sourceTree = "<group>";
-		};
-		FA021B0028820DB300CEDD02 /* Mocking */ = {
-			isa = PBXGroup;
-			children = (
-				FA021B0E2882108100CEDD02 /* Redux */,
-				FA021B0128820DB300CEDD02 /* LoggerMocking.swift */,
-			);
-			name = Mocking;
-			path = ../../common/CallingAndChat/Tests/Mocking;
-			sourceTree = "<group>";
-		};
-		FA021B0E2882108100CEDD02 /* Redux */ = {
-			isa = PBXGroup;
-			children = (
-				FA021B0F2882108100CEDD02 /* ReducerMocking.swift */,
-				FA021B102882108100CEDD02 /* MiddlewareMocking.swift */,
-				FA021B112882108100CEDD02 /* StoreFactoryMocking.swift */,
-			);
-			path = Redux;
-			sourceTree = "<group>";
-		};
 		FA021B1B2882118000CEDD02 /* ChatCompositeOptions */ = {
 			isa = PBXGroup;
 			children = (
@@ -935,8 +892,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 50C021972874EA910044EF31 /* Build configuration list for PBXNativeTarget "AzureCommunicationUIChatTests" */;
 			buildPhases = (
-				FA181BF828AC115300A08AB8 /* Temporarily workaround for tests frameworks linking */,
 				271277CC78A8DAAF0EC307C9 /* [CP] Check Pods Manifest.lock */,
+				FA181BF828AC115300A08AB8 /* Temporarily workaround for tests frameworks linking */,
 				50C0219B2874EC210044EF31 /* Swift Lint */,
 				50C021862874EA910044EF31 /* Sources */,
 				50C021872874EA910044EF31 /* Frameworks */,
@@ -1144,8 +1101,6 @@
 				FA0FD61E28AB09C4000C8111 /* ViewModifer.swift in Sources */,
 				50C022102874F4450044EF31 /* NavigationState.swift in Sources */,
 				BD3822E028A19B0B00996F7B /* SystemMessageView.swift in Sources */,
-				FA1ACE6F28822C4C000F9D5E /* ThemeOptions.swift in Sources */,
-				FA1ACE7028822C4C000F9D5E /* LocalOptions.swift in Sources */,
 				50C0222C2874F75F0044EF31 /* ChatSDKEventsHandler.swift in Sources */,
 				BD24D26728887F0E0015C90B /* RefreshableScrollView.swift in Sources */,
 				FA0FD61528AB09C4000C8111 /* Store.swift in Sources */,
@@ -1161,7 +1116,6 @@
 				50C0224C2878C9FC0044EF31 /* LocalUserInfoModel.swift in Sources */,
 				50C0222A2874F5B20044EF31 /* ChatSDKWrapperProtocol.swift in Sources */,
 				BD3822E528A19D4F00996F7B /* MessageView.swift in Sources */,
-				FA1ACE7F28822C7F000F9D5E /* ViewModifer.swift in Sources */,
 				50C021E02874F2690044EF31 /* ChatCompositeError.swift in Sources */,
 				50C021FE2874F38D0044EF31 /* Action.swift in Sources */,
 				FA0FD60D28AB09C4000C8111 /* DefaultLogger.swift in Sources */,
@@ -1180,7 +1134,6 @@
 				FA021B3528821A4700CEDD02 /* IconProvider.swift in Sources */,
 				FA0FD61928AB09C4000C8111 /* OrientationManager.swift in Sources */,
 				BD3822E328A19D1900996F7B /* MessageViewModel.swift in Sources */,
-				FA1ACE8128822C7F000F9D5E /* ViewExtension.swift in Sources */,
 				A8C28BD328A0A956001DE561 /* MessageInputView.swift in Sources */,
 				50C021E22874F27C0044EF31 /* ChatConfiguration.swift in Sources */,
 				50C0219D2874EC9E0044EF31 /* ChatComposite.swift in Sources */,
@@ -1218,20 +1171,16 @@
 				50C022362874F7E30044EF31 /* DeviceExtension.swift in Sources */,
 				FA0FD62028AB09C4000C8111 /* ThemeOptions.swift in Sources */,
 				50B8A462287CAD54003746D6 /* TrouterEventExtension.swift in Sources */,
-				FA2723072885C5DC003400A8 /* Logger.swift in Sources */,
-				FA1ACE9328822CD3000F9D5E /* UIViewControllerExtension.swift in Sources */,
 				A8C28BCF289E028D001DE561 /* ThreadView.swift in Sources */,
-				FA1ACE8A28822CB6000F9D5E /* Middleware.swift in Sources */,
 				50C021C72874F0840044EF31 /* AvatarViewManager.swift in Sources */,
 				50C022242874F5740044EF31 /* ChatMessageInfoModel.swift in Sources */,
 				A8C28BD528A0A96D001DE561 /* MessageInputViewModel.swift in Sources */,
-				50C021F62874F34E0044EF31 /* ChatMiddlewareHandler.swift in Sources */,
+				50C021F62874F34E0044EF31 /* ChatActionHandler.swift in Sources */,
 				50C021F62874F34E0044EF31 /* ChatActionHandler.swift in Sources */,
 				50C0224628763EF10044EF31 /* ErrorAction.swift in Sources */,
 				50C022082874F4030044EF31 /* AppState.swift in Sources */,
 				FA0FD61428AB09C4000C8111 /* Reducer.swift in Sources */,
 				507FADCA287CEDD400105DB8 /* CommunicationIdentifierExtension.swift in Sources */,
-				FA1ACE8028822C7F000F9D5E /* EnvironmentValuesExtension.swift in Sources */,
 				A8C28BD728A0BFDF001DE561 /* TypingParticipantsView.swift in Sources */,
 				FA0FD61828AB09C4000C8111 /* AccessibilityProvider.swift in Sources */,
 				FA0FD61D28AB09C4000C8111 /* ViewExtension.swift in Sources */,

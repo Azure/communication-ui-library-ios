@@ -103,6 +103,10 @@ public class ChatComposite {
         }
     }
 
+    public func hideCompositeUI() {
+        // Public API interface placeholder for API view
+    }
+
     /// Get Chat Composite UIViewController.
     /// - Returns: Chat Composite UIViewController
     public func getCompositeViewController() throws -> UIViewController {
@@ -156,7 +160,7 @@ public class ChatComposite {
         dependencyContainer = dependencyCon
         compositeManager?.start()
 
-//        guard !(localOptions?.isBackgroundMode ?? false) else {
+//        guard !(localOptions?.isLaunchingWithUI ?? false) else {
 //            return
 //        }
 //

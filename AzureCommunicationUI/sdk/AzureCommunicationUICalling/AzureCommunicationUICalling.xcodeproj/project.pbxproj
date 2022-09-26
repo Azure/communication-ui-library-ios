@@ -17,6 +17,7 @@
 		1B7ABF82278CFFC400D79DF7 /* ZoomableVideoRenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B7ABF81278CFFC400D79DF7 /* ZoomableVideoRenderView.swift */; };
 		1B9668AF2852A114002F5783 /* OnHoldOverlayViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9668AE2852A114002F5783 /* OnHoldOverlayViewModelMocking.swift */; };
 		1BAD44BC283DAF2100C9E6A9 /* DraggableLocalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BAD44BB283DAF2100C9E6A9 /* DraggableLocalVideoView.swift */; };
+		1F00702028E2383900827B3E /* CallCompositeStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F00701F28E2383900827B3E /* CallCompositeStatus.swift */; };
 		1F03D3CE2638A6AE0055C456 /* CallingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D3CD2638A6AE0055C456 /* CallingView.swift */; };
 		1F03D3D22638A6B70055C456 /* CallingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F03D3D12638A6B70055C456 /* CallingViewModel.swift */; };
 		1F09A10426BA472A00BACED7 /* ParticipantInfoModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F09A10326BA472A00BACED7 /* ParticipantInfoModelBuilder.swift */; };
@@ -226,7 +227,7 @@
 		FA0FD5C028AB09B4000C8111 /* StoreFactoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FD59428AB09B4000C8111 /* StoreFactoryMocking.swift */; };
 		FA0FD5C128AB09B4000C8111 /* LocalizationProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FD59728AB09B4000C8111 /* LocalizationProviderTests.swift */; };
 		FA0FD5D428AB09B4000C8111 /* DiagnosticConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA0FD5B828AB09B4000C8111 /* DiagnosticConfigTests.swift */; };
-		FA154F3528AD4E0400F00959 /* CustomizationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA154F3428AD4E0400F00959 /* CustomizationOptions.swift */; };
+		FA154F3528AD4E0400F00959 /* ControlsOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA154F3428AD4E0400F00959 /* ControlsOptions.swift */; };
 		FA154F3728AD4E1500F00959 /* CustomButtonViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA154F3628AD4E1500F00959 /* CustomButtonViewData.swift */; };
 		FA154F3828AD4E4200F00959 /* CustomIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F1B746F28A303C60099E29D /* CustomIconButton.swift */; };
 		FA378672284152CA005B6288 /* SetParticipantViewDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA378671284152CA005B6288 /* SetParticipantViewDataError.swift */; };
@@ -274,6 +275,7 @@
 		1B7ABF81278CFFC400D79DF7 /* ZoomableVideoRenderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomableVideoRenderView.swift; sourceTree = "<group>"; };
 		1B9668AE2852A114002F5783 /* OnHoldOverlayViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModelMocking.swift; sourceTree = "<group>"; };
 		1BAD44BB283DAF2100C9E6A9 /* DraggableLocalVideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraggableLocalVideoView.swift; sourceTree = "<group>"; };
+		1F00701F28E2383900827B3E /* CallCompositeStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeStatus.swift; sourceTree = "<group>"; };
 		1F03D3CD2638A6AE0055C456 /* CallingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingView.swift; sourceTree = "<group>"; };
 		1F03D3D12638A6B70055C456 /* CallingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingViewModel.swift; sourceTree = "<group>"; };
 		1F09A10326BA472A00BACED7 /* ParticipantInfoModelBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParticipantInfoModelBuilder.swift; sourceTree = "<group>"; };
@@ -519,7 +521,7 @@
 		FA0FD59428AB09B4000C8111 /* StoreFactoryMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoreFactoryMocking.swift; sourceTree = "<group>"; };
 		FA0FD59728AB09B4000C8111 /* LocalizationProviderTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationProviderTests.swift; sourceTree = "<group>"; };
 		FA0FD5B828AB09B4000C8111 /* DiagnosticConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiagnosticConfigTests.swift; sourceTree = "<group>"; };
-		FA154F3428AD4E0400F00959 /* CustomizationOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomizationOptions.swift; sourceTree = "<group>"; };
+		FA154F3428AD4E0400F00959 /* ControlsOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControlsOptions.swift; sourceTree = "<group>"; };
 		FA154F3628AD4E1500F00959 /* CustomButtonViewData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButtonViewData.swift; sourceTree = "<group>"; };
 		FA378671284152CA005B6288 /* SetParticipantViewDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetParticipantViewDataError.swift; sourceTree = "<group>"; };
 		FA40424927E3E86700875368 /* ParticipantsListViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsListViewModelMocking.swift; sourceTree = "<group>"; };
@@ -1076,7 +1078,7 @@
 			isa = PBXGroup;
 			children = (
 				FA154F3628AD4E1500F00959 /* CustomButtonViewData.swift */,
-				FA154F3428AD4E0400F00959 /* CustomizationOptions.swift */,
+				FA154F3428AD4E0400F00959 /* ControlsOptions.swift */,
 				1F1B7469289980C20099E29D /* LocalOptions.swift */,
 				FA021B2C2882190300CEDD02 /* DiagnosticConfig.swift */,
 				FA021B272882163100CEDD02 /* LocalizationOptions.swift */,
@@ -1085,10 +1087,10 @@
 				A810038A26A0C1740015C26E /* CallConfiguration.swift */,
 				500C0F1E2847DE18000BA2DC /* RemoteOptions.swift */,
 				FA378671284152CA005B6288 /* SetParticipantViewDataError.swift */,
-				1F1B746B289C65F80099E29D /* CustomButtonState.swift */,
 				FAD40E0628AD9C53004B299E /* OverlayOptions.swift */,
 				FAD40E0828ADA087004B299E /* InjectedOverlayState.swift */,
 				1F59B60D28ABF305009697B3 /* DiagnosticsOptions.swift */,
+				1F00701F28E2383900827B3E /* CallCompositeStatus.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1519,8 +1521,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1FBCB6A22645285100F57EEA /* Build configuration list for PBXNativeTarget "AzureCommunicationUICallingTests" */;
 			buildPhases = (
-				FA181BF928AC11D900A08AB8 /* Temporarily workaround for tests frameworks linking */,
 				60E5253384799BD37404EE5C /* [CP] Check Pods Manifest.lock */,
+				FA181BF928AC11D900A08AB8 /* Temporarily workaround for tests frameworks linking */,
 				508E82962670110100ED93C6 /* Run SwiftLint */,
 				1FBCB6962645285100F57EEA /* Sources */,
 				1FBCB6972645285100F57EEA /* Frameworks */,
@@ -1926,7 +1928,7 @@
 				1F03D3D22638A6B70055C456 /* CallingViewModel.swift in Sources */,
 				50FA45FE26813FCE001844AC /* ParticipantGridViewModel.swift in Sources */,
 				FA021B2D2882190300CEDD02 /* DiagnosticConfig.swift in Sources */,
-				FA154F3528AD4E0400F00959 /* CustomizationOptions.swift in Sources */,
+				FA154F3528AD4E0400F00959 /* ControlsOptions.swift in Sources */,
 				1F94DAE626740D4400691D1E /* AppState.swift in Sources */,
 				8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */,
 				1F3F0C69283E860600C66054 /* AudioSessionReducer.swift in Sources */,
@@ -1968,6 +1970,7 @@
 				88F6EE1C2735F8E8001AD3E9 /* ErrorState.swift in Sources */,
 				1F48CF1F283447F400A44D58 /* CallingSDKWrapperProtocol.swift in Sources */,
 				1F2BEDC026328F2700D98266 /* CallingState.swift in Sources */,
+				1F00702028E2383900827B3E /* CallCompositeStatus.swift in Sources */,
 				88F6EE1A2735F5CB001AD3E9 /* ErrorReducer.swift in Sources */,
 				A874EDC626616728003C7D92 /* AppLifeCycleState.swift in Sources */,
 				FA0FD53A28AB097F000C8111 /* EnvironmentValuesExtension.swift in Sources */,

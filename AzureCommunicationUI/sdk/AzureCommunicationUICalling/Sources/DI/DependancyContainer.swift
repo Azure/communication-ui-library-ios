@@ -32,7 +32,7 @@ final class DependencyContainer {
 
     func registerDependencies(_ callConfiguration: CallConfiguration,
                               localOptions: LocalOptions?,
-                              customizationOptions: CustomizationOptions?,
+                              customizationOptions: ControlsOptions?,
                               injectedOverlayState: InjectedOverlayState,
                               callCompositeEventsHandler: CallComposite.Events) {
         register(CallingSDKEventsHandler(logger: resolve()) as CallingSDKEventsHandling)

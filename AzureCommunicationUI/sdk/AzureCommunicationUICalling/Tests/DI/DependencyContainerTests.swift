@@ -23,6 +23,7 @@ class DependencyContainerTests: XCTestCase {
         let displayName = ""
         let groupId = UUID()
         let callConfiguration = CallConfiguration(locator: .groupCall(groupId: groupId),
+                                                  diagnosticsOptions: nil,
                                                   credential: communicationTokenCredential!,
                                                   displayName: displayName)
         let participantViewData = ParticipantViewData(avatar: nil, displayName: nil)

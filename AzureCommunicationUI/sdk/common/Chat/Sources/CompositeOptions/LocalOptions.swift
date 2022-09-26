@@ -8,16 +8,16 @@ import UIKit
 
 /// Object for local options for the Composite
 public struct LocalOptions {
-    let isBackgroundMode: Bool
+    let isLaunchingWithUI: Bool
     /// The ParticipantViewData of the local participant.
     let participantViewData: ParticipantViewData
     /// Create an instance of LocalOptions. All information in this object is only stored locally in the composite.
     /// - Parameters:
     ///    - participantViewData: The ParticipantViewData to be displayed for local participants avatar
     public init(participantViewData: ParticipantViewData,
-                isBackgroundMode: Bool = false) {
+                isLaunchingWithUI: Bool = false) {
         self.participantViewData = participantViewData
-        self.isBackgroundMode = isBackgroundMode
+        self.isLaunchingWithUI = isLaunchingWithUI
     }
 }
 /// Object to represent participants data

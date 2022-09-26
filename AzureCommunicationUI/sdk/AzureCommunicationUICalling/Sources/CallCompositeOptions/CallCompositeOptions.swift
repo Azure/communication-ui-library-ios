@@ -10,7 +10,7 @@ import UIKit
 public struct CallCompositeOptions {
     let themeOptions: ThemeOptions?
     let localizationOptions: LocalizationOptions?
-    let customizationOptions: CustomizationOptions?
+    let controlsOptions: ControlsOptions?
     let diagnosticsOptions: DiagnosticsOptions?
 
     /// Creates an instance of CallCompositeOptions with related options.
@@ -20,11 +20,11 @@ public struct CallCompositeOptions {
     ///  localization customization. Default value is `nil`.
     public init(theme: ThemeOptions? = nil,
                 localization: LocalizationOptions? = nil,
-                customizationOptions: CustomizationOptions? = nil,
+                controlsOptions: ControlsOptions? = nil,
                 diagnosticsOptions: DiagnosticsOptions? = nil) {
         self.themeOptions = theme
         self.localizationOptions = localization
-        self.customizationOptions = customizationOptions
+        self.controlsOptions = controlsOptions
         self.diagnosticsOptions = diagnosticsOptions
     }
 }

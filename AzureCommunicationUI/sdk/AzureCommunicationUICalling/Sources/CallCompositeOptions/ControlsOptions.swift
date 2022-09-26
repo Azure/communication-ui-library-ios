@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct CustomizationOptions {
+public struct ControlsOptions {
     let customButtonViewData: [CustomButtonViewData]
 
     public init(customButtonViewData: [CustomButtonViewData]) {

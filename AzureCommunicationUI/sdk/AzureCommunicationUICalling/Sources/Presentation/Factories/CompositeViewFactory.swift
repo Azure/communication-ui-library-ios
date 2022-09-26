@@ -15,13 +15,13 @@ struct CompositeViewFactory: CompositeViewFactoryProtocol {
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let avatarManager: AvatarViewManager
     private let videoViewManager: VideoViewManager
-    private let customizationOptions: CustomizationOptions?
+    private let customizationOptions: ControlsOptions?
     private let injectedOverlayState: InjectedOverlayState
 
     init(logger: Logger,
          avatarManager: AvatarViewManager,
          videoViewManager: VideoViewManager,
-         customizationOptions: CustomizationOptions?,
+         customizationOptions: ControlsOptions?,
          injectedOverlayState: InjectedOverlayState,
          compositeViewModelFactory: CompositeViewModelFactoryProtocol) {
         self.logger = logger
