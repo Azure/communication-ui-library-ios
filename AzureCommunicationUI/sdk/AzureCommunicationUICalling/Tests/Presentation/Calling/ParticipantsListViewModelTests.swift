@@ -9,8 +9,6 @@ import XCTest
 
 class ParticipantsListViewModelTests: XCTestCase {
 
-    typealias CreateParticipantsListCellViewModel = (ParticipantInfoModel) -> ParticipantsListCellViewModel?
-
     private var cancellable: CancelBag!
     private var localizationProvider: LocalizationProviderMocking!
     private var storeFactory: StoreFactoryMocking!
@@ -264,12 +262,11 @@ class ParticipantsListViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "ParticipantsListCellViewModel should be created")
         expectation.assertForOverFulfill = true
         expectation.expectedFulfillmentCount = remoteParticipantsState.participantInfoList.count
-        let createParticipantsListCellViewModel: CreateParticipantsListCellViewModel = { [weak self] infoModel in
+        factoryMocking.createParticipantsListCellViewModel = { [weak self] infoModel in
             expectation.fulfill()
             return ParticipantsListCellViewModel(participantInfoModel: infoModel,
                                                  localizationProvider: self?.localizationProvider ?? LocalizationProviderMocking())
         }
-        factoryMocking.createParticipantsListCellViewModel = createParticipantsListCellViewModel
 
         let sut = makeSUT()
         sut.update(localUserState: LocalUserState(),

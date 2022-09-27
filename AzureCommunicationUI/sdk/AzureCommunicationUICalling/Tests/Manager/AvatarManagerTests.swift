@@ -9,6 +9,17 @@ import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
 
 class AvatarManagerTests: XCTestCase {
+    var mockStoreFactory: StoreFactoryMocking!
+
+    override func setUp() {
+        super.setUp()
+        mockStoreFactory = StoreFactoryMocking()
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        mockStoreFactory = nil
+    }
 
     func test_avatarManager_when_setLocalAvatar_then_getLocalAvatar_returnsSameUIImage() {
         guard let mockImage = UIImage.make(withColor: .red) else {
@@ -40,8 +51,8 @@ class AvatarManagerTests: XCTestCase {
             cameraVideoStreamModel: nil)
         let remoteParticipantsState = RemoteParticipantsState(participantInfoList: [participant],
                                                               lastUpdateTimeStamp: Date())
-        let state = AppState(remoteParticipantsState: remoteParticipantsState)
-        let sut = makeSUT(state: state)
+        mockStoreFactory.setState(AppState(remoteParticipantsState: remoteParticipantsState))
+        let sut = makeSUT()
         let participantViewData = ParticipantViewData(avatar: mockImage)
         sut.set(remoteParticipantViewData: participantViewData,
                 for: CommunicationUserIdentifier(participant.userIdentifier)) { result in
@@ -79,7 +90,6 @@ class AvatarManagerTests: XCTestCase {
 
 extension AvatarManagerTests {
     private func makeSUT(_ image: UIImage) -> AvatarViewManager {
-        let mockStoreFactory = StoreFactoryMocking()
         let mockParticipantViewData = ParticipantViewData(avatar: image, displayName: "")
         let mockLocalOptions = LocalOptions(participantViewData: mockParticipantViewData)
         return AvatarViewManager(store: mockStoreFactory.store,
@@ -87,11 +97,7 @@ extension AvatarManagerTests {
 
     }
 
-    private func makeSUT(state: AppState? = nil) -> AvatarViewManager {
-        let mockStoreFactory = StoreFactoryMocking()
-        if let state = state {
-            mockStoreFactory.setState(state)
-        }
+    private func makeSUT() -> AvatarViewManager {
         return AvatarViewManager(store: mockStoreFactory.store,
                                  localOptions: nil)
     }

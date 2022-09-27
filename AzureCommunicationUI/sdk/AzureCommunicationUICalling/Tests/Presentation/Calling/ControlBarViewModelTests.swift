@@ -9,9 +9,6 @@ import XCTest
 
 class ControlBarViewModelTests: XCTestCase {
 
-    typealias CreateIconButtonViewModel = (CompositeIcon) -> IconButtonViewModel?
-    typealias AudioDeviceListVMUpdateState = ((LocalUserState.AudioDeviceSelectionStatus) -> Void)?
-
     var storeFactory: StoreFactoryMocking!
     var cancellable: CancelBag!
     var localizationProvider: LocalizationProviderMocking!
@@ -490,7 +487,7 @@ class ControlBarViewModelTests: XCTestCase {
     func test_controlBarViewModel_update_when_statesUpdated_then_cameraButtonViewModelIconUpdated() {
         let expectation = XCTestExpectation(description: "Camera button icon should be updated")
         expectation.assertForOverFulfill = true
-        let createIconButtonViewModel: CreateIconButtonViewModel = { icon in
+        factoryMocking.createIconButtonViewModel = { icon in
             guard icon == .videoOff
             else { return nil }
 
@@ -501,7 +498,6 @@ class ControlBarViewModelTests: XCTestCase {
             }
             return iconButtonViewModel
         }
-        factoryMocking.createIconButtonViewModel = createIconButtonViewModel
         let sut = makeSUT()
         let cameraState = LocalUserState.CameraState(operation: .on,
                                                      device: .front,
@@ -516,7 +512,7 @@ class ControlBarViewModelTests: XCTestCase {
     func test_controlBarViewModel_update_when_statesUpdated_then_cameraButtonViewModelDisabledStateUpdated() {
         let expectation = XCTestExpectation(description: "Camera button disabled state should be updated")
         expectation.assertForOverFulfill = true
-        let createIconButtonViewModel: CreateIconButtonViewModel = { icon in
+        factoryMocking.createIconButtonViewModel = { icon in
             guard icon == .videoOff
             else { return nil }
 
@@ -527,7 +523,6 @@ class ControlBarViewModelTests: XCTestCase {
             }
             return iconButtonViewModel
         }
-        factoryMocking.createIconButtonViewModel = createIconButtonViewModel
         let sut = makeSUT()
         let permissionState = PermissionState(cameraPermission: .granted)
         sut.update(localUserState: LocalUserState(),
@@ -539,7 +534,7 @@ class ControlBarViewModelTests: XCTestCase {
     func test_controlBarViewModel_update_when_statesUpdated_then_micButtonViewModelIconUpdated() {
         let expectation = XCTestExpectation(description: "Mic button icon should be updated")
         expectation.assertForOverFulfill = true
-        let createIconButtonViewModel: CreateIconButtonViewModel = { icon in
+        factoryMocking.createIconButtonViewModel = { icon in
             guard icon == .micOff
             else { return nil }
 
@@ -550,7 +545,6 @@ class ControlBarViewModelTests: XCTestCase {
             }
             return iconButtonViewModel
         }
-        factoryMocking.createIconButtonViewModel = createIconButtonViewModel
         let sut = makeSUT()
         let audioState = LocalUserState.AudioState(operation: .on,
                                                    device: .speakerSelected)
@@ -564,7 +558,7 @@ class ControlBarViewModelTests: XCTestCase {
     func test_controlBarViewModel_update_when_statesUpdated_then_micButtonViewModelDisabledStateUpdated() {
         let expectation = XCTestExpectation(description: "Mic button disabled state should be updated")
         expectation.assertForOverFulfill = true
-        let createIconButtonViewModel: CreateIconButtonViewModel = { icon in
+        factoryMocking.createIconButtonViewModel = { icon in
             guard icon == .micOff
             else { return nil }
 
@@ -575,7 +569,6 @@ class ControlBarViewModelTests: XCTestCase {
             }
             return iconButtonViewModel
         }
-        factoryMocking.createIconButtonViewModel = createIconButtonViewModel
         let sut = makeSUT()
         let permissionState = PermissionState(audioPermission: .granted)
         sut.update(localUserState: LocalUserState(),
@@ -587,7 +580,7 @@ class ControlBarViewModelTests: XCTestCase {
     func test_controlBarViewModel_update_when_statesUpdated_then_audioDeviceButtonViewModelIconUpdated() {
         let expectation = XCTestExpectation(description: "Mic button disabled state should be updated")
         expectation.assertForOverFulfill = true
-        let createIconButtonViewModel: CreateIconButtonViewModel = { icon in
+        factoryMocking.createIconButtonViewModel = { icon in
             guard icon == .speakerFilled
             else { return nil }
 
@@ -598,7 +591,6 @@ class ControlBarViewModelTests: XCTestCase {
             }
             return iconButtonViewModel
         }
-        factoryMocking.createIconButtonViewModel = createIconButtonViewModel
         let sut = makeSUT()
         let audioState = LocalUserState.AudioState(operation: .on,
                                                    device: .bluetoothSelected)
@@ -612,15 +604,14 @@ class ControlBarViewModelTests: XCTestCase {
     func test_controlBarViewModel_update_when_statesUpdated_then_audioDeviceListViewModelUpdated() {
         let expectation = XCTestExpectation(description: "AudioDevicesListViewModel should be updated")
         let localUserState = LocalUserState(audioState: LocalUserState.AudioState(operation: .on, device: .speakerSelected))
-        let updateState: AudioDeviceListVMUpdateState = { status in
-            XCTAssertEqual(status, localUserState.audioState.device)
-            expectation.fulfill()
-        }
         let audioDevicesListViewModel = AudioDevicesListViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                          dispatchAction: storeFactory.store.dispatch,
                                                                          localUserState: localUserState,
                                                                          localizationProvider: LocalizationProviderMocking())
-        audioDevicesListViewModel.updateState = updateState
+        audioDevicesListViewModel.updateState = { status in
+            XCTAssertEqual(status, localUserState.audioState.device)
+            expectation.fulfill()
+        }
         factoryMocking.audioDevicesListViewModel = audioDevicesListViewModel
         let sut = makeSUT()
         sut.update(localUserState: localUserState,

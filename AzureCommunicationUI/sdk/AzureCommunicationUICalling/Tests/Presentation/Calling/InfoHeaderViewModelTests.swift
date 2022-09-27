@@ -332,8 +332,6 @@ extension InfoHeaderViewModelTests {
     }
 
     func makeSUTLocalizationMocking() -> InfoHeaderViewModel {
-        let logger = LoggerMocking()
-        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
                                    localUserState: LocalUserState(),
