@@ -12,10 +12,10 @@ import AppCenterCrashes
 
 class UIKitDemoViewController: UIViewController {
 
-    struct Constants {
-        static let viewVerticalSpacing: CGFloat = 8.0
-        static let stackViewInterItemSpacingPortrait: CGFloat = 18.0
-        static let stackViewInterItemSpacingLandscape: CGFloat = 12.0
+    enum LayoutConstants {
+        static let verticalSpacing: CGFloat = 8.0
+        static let stackViewSpacingPortrait: CGFloat = 18.0
+        static let stackViewSpacingLandscape: CGFloat = 12.0
         static let buttonHorizontalInset: CGFloat = 20.0
         static let buttonVerticalInset: CGFloat = 10.0
     }
@@ -63,10 +63,10 @@ class UIKitDemoViewController: UIViewController {
         updateUIBasedOnUserInterfaceStyle()
 
         if UIDevice.current.orientation.isPortrait {
-            stackView.spacing = Constants.stackViewInterItemSpacingPortrait
+            stackView.spacing = LayoutConstants.stackViewSpacingPortrait
             titleLabelConstraint.constant = 32
         } else if UIDevice.current.orientation.isLandscape {
-            stackView.spacing = Constants.stackViewInterItemSpacingLandscape
+            stackView.spacing = LayoutConstants.stackViewSpacingLandscape
             titleLabelConstraint.constant = 16.0
         }
     }
@@ -96,7 +96,7 @@ class UIKitDemoViewController: UIViewController {
         scrollView.layoutIfNeeded()
         let emptySpace = stackView.customSpacing(after: stackView.arrangedSubviews.first!)
         let spaceToFill = (scrollView.frame.height - (stackView.frame.height - emptySpace)) / 2
-        stackView.setCustomSpacing(spaceToFill + Constants.viewVerticalSpacing,
+        stackView.setCustomSpacing(spaceToFill + LayoutConstants.verticalSpacing,
                                    after: stackView.arrangedSubviews.first!)
     }
 
@@ -379,7 +379,7 @@ class UIKitDemoViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         titleLabelConstraint = titleLabel.topAnchor.constraint(equalTo: safeArea.topAnchor,
-                                                               constant: Constants.stackViewInterItemSpacingPortrait)
+                                                               constant: LayoutConstants.stackViewSpacingPortrait)
         titleLabelConstraint.isActive = true
         titleLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor).isActive = true
 
@@ -450,19 +450,19 @@ class UIKitDemoViewController: UIViewController {
         settingsButton.backgroundColor = .systemBlue
         settingsButton.addTarget(self, action: #selector(onSettingsPressed), for: .touchUpInside)
         settingsButton.layer.cornerRadius = 8
-        settingsButton.contentEdgeInsets = UIEdgeInsets.init(top: Constants.buttonVerticalInset,
-                                                             left: Constants.buttonHorizontalInset,
-                                                             bottom: Constants.buttonVerticalInset,
-                                                             right: Constants.buttonHorizontalInset)
+        settingsButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
+                                                             left: LayoutConstants.buttonHorizontalInset,
+                                                             bottom: LayoutConstants.buttonVerticalInset,
+                                                             right: LayoutConstants.buttonHorizontalInset)
 
         startExperienceButton = UIButton()
         startExperienceButton.backgroundColor = .systemBlue
         startExperienceButton.setTitleColor(UIColor.white, for: .normal)
         startExperienceButton.setTitleColor(UIColor.systemGray6, for: .disabled)
-        startExperienceButton.contentEdgeInsets = UIEdgeInsets.init(top: Constants.buttonVerticalInset,
-                                                                    left: Constants.buttonHorizontalInset,
-                                                                    bottom: Constants.buttonVerticalInset,
-                                                                    right: Constants.buttonHorizontalInset)
+        startExperienceButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
+                                                                    left: LayoutConstants.buttonHorizontalInset,
+                                                                    bottom: LayoutConstants.buttonVerticalInset,
+                                                                    right: LayoutConstants.buttonHorizontalInset)
         startExperienceButton.layer.cornerRadius = 8
         startExperienceButton.setTitle("Start Experience", for: .normal)
         startExperienceButton.sizeToFit()
@@ -517,7 +517,7 @@ class UIKitDemoViewController: UIViewController {
                                                    teamsMeetingTextField,
                                                    settingsButtonHStack,
                                                    startButtonHStack])
-        stackView.spacing = Constants.stackViewInterItemSpacingPortrait
+        stackView.spacing = LayoutConstants.stackViewSpacingPortrait
         stackView.axis = .vertical
         stackView.alignment = .fill
         stackView.distribution = .fill
@@ -527,7 +527,7 @@ class UIKitDemoViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         scrollView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor,
-                                        constant: Constants.viewVerticalSpacing).isActive = true
+                                        constant: LayoutConstants.verticalSpacing).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor).isActive = true
         scrollView.leadingAnchor.constraint(equalTo: safeArea.leadingAnchor).isActive = true
         scrollView.trailingAnchor.constraint(equalTo: safeArea.trailingAnchor).isActive = true
@@ -541,9 +541,9 @@ class UIKitDemoViewController: UIViewController {
 
         stackView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
-                                           constant: Constants.stackViewInterItemSpacingPortrait).isActive = true
+                                           constant: LayoutConstants.stackViewSpacingPortrait).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
-                                            constant: -Constants.stackViewInterItemSpacingPortrait).isActive = true
+                                            constant: LayoutConstants.stackViewSpacingPortrait).isActive = true
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
 
         settingButtonHSpacer2.widthAnchor.constraint(equalTo: settingButtonHSpacer1.widthAnchor).isActive = true

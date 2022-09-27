@@ -59,6 +59,7 @@ struct InfoHeaderView: View {
                 .font(Fonts.caption1.font)
                 .accessibilityLabel(Text(viewModel.accessibilityLabel))
                 .accessibilitySortPriority(1)
+                .scaledToFill()
                 .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
                                     Constants.accessibilityFontScale :
                                         Constants.defaultFontScale)

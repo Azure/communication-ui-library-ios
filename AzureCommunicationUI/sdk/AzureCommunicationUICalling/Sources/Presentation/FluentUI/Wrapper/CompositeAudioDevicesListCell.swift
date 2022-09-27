@@ -21,7 +21,7 @@ class CompositeAudioDevicesListCell: TableViewCell {
             let checkmarkImage = StyleProvider.icon.getUIImage(for: .checkmark)?
                 .withTintColor(StyleProvider.color.onSurface, renderingMode: .alwaysOriginal)
             checkmarkImageView = UIImageView(image: checkmarkImage)
-            accessibilityTraits = .selected
+            accessibilityTraits.insert(.selected)
         }
 
         selectionStyle = .none
