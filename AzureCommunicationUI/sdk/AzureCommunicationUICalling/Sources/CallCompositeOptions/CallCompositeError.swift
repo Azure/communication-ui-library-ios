@@ -34,9 +34,8 @@ public struct CallCompositeError: Error {
 
     /// The string representing the CallCompositeErrorCode.
     public let code: String
-
     /// The NSError returned from Azure Communication SDK.
-    public var error: Error?
+    public let error: Error?
 }
 
 extension CallCompositeError: Equatable {

@@ -210,7 +210,7 @@ extension CredentialsView {
             displayName: envConfigSubject.displayName)
         let localOptions = AzureCommunicationUIChat.LocalOptions(
             participantViewData: ParticipantViewData(),
-            isBackgroundMode: headless)
+            isLaunchingWithUI: headless)
 
         chatComposite.launch(
             remoteOptions: remoteOptions,

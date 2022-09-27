@@ -6,20 +6,20 @@
 import UIKit
 
 public struct CallStatusCode {
-    static let none: String = "none"
-    static let connected: String = "connected"
+    public static let none: String = "none"
+    public static let connected: String = "connected"
 
 }
 
 public struct NavigationStatusCode {
-    static let none: String = "none"
-    static let setup: String = "setup"
-    static let call: String = "call"
-    static let exit: String = "exit"
+    public static let none: String = "none"
+    public static let setup: String = "setup"
+    public static let call: String = "call"
+    public static let exit: String = "exit"
 
 }
 
 public struct CallCompositeStatus {
     public let callStatusCode: String
-    public var navigationStatusCode: Error
+    public let navigationStatusCode: Error
 }

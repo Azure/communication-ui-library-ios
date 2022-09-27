@@ -63,7 +63,7 @@ public class CallWithChatComposite {
         let callLocalizationOptions = localizationOptions?.getCallCompositeLocalizationOptions()
         let options = CallCompositeOptions(theme: callThemeOption,
                                            localization: callLocalizationOptions,
-                                           customizationOptions: createCustomizationOption())
+                                           controlsOptions: createCustomizationOption())
         callComposite = CallComposite(withOptions: options)
         callComposite?.launch(remoteOptions: remoteOptions.getCallCompositeRemoteOptions(),
                               localOptions: localOptions?.getCallCompositeLocalOptions())
