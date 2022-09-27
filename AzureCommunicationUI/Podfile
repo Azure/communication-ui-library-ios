@@ -48,6 +48,7 @@ post_install do |installer|
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
       end
     end
+    # Fix up using the simulator on M1 macs due to the calling library.
     target.build_configurations.each do |config|
       config.build_settings["EXCLUDED_ARCHS[sdk=iphonesimulator*]"] = "arm64"
     end
