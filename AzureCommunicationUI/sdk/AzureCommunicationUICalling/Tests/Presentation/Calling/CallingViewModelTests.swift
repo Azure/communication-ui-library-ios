@@ -117,11 +117,19 @@ class CallingViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "ControlBarViewModel is updated")
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted),
                                 localUserState: LocalUserState(displayName: "DisplayName"))
-        let sut = makeSUT(updateControlBarViewModel: { userState, permissionState in
+        let updateControlBarViewModel: (LocalUserState, PermissionState) -> Void = { userState, permissionState in
             XCTAssertEqual(appState.localUserState.displayName, userState.displayName)
             XCTAssertEqual(appState.permissionState.audioPermission, permissionState.audioPermission)
             expectation.fulfill()
-        })
+        }
+        factoryMocking.controlBarViewModel = ControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                        logger: logger,
+                                                                        localizationProvider: localizationProvider,
+                                                                        dispatchAction: storeFactory.store.dispatch,
+                                                                        endCallConfirm: {},
+                                                                        localUserState: storeFactory.store.state.localUserState,
+                                                                        updateState: updateControlBarViewModel)
+        let sut = makeSUT()
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
@@ -135,12 +143,21 @@ class CallingViewModelTests: XCTestCase {
         let appState = AppState(callingState: CallingState(status: .connected),
                                 localUserState: LocalUserState(displayName: "DisplayName"),
                                 remoteParticipantsState: RemoteParticipantsState(lastUpdateTimeStamp: date))
-        let sut = makeSUT(updateInfoHeaderViewModel: { userState, remoteParticipantsState, callingState in
+        let updateInfoHeaderViewModel: (LocalUserState, RemoteParticipantsState, CallingState) -> Void = { userState, remoteParticipantsState, callingState in
             XCTAssertEqual(appState.localUserState.displayName, userState.displayName)
             XCTAssertEqual(appState.remoteParticipantsState.lastUpdateTimeStamp, remoteParticipantsState.lastUpdateTimeStamp)
             XCTAssertEqual(appState.callingState.status, callingState.status)
             expectation.fulfill()
-        })
+        }
+
+        factoryMocking.infoHeaderViewModel = InfoHeaderViewModelMocking(
+                                                                        compositeViewModelFactory: factoryMocking,
+                                                                        logger: logger,
+                                                                        localUserState: storeFactory.store.state.localUserState,
+                                                                        accessibilityProvider: accessibilityProvider,
+                                                                        updateState: updateInfoHeaderViewModel)
+
+        let sut = makeSUT()
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
@@ -148,10 +165,18 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_receive_when_statusUpdated_then_localVideoViewModelUpdated() {
         let expectation = XCTestExpectation(description: "LocalVideoViewModel is updated")
         let appState = AppState(localUserState: LocalUserState(displayName: "DisplayName"))
-        let sut = makeSUT(updateLocalVideoViewModel: { userState in
+        let updateLocalVideoViewModel: (LocalUserState) -> Void = { userState in
             XCTAssertEqual(appState.localUserState.displayName, userState.displayName)
             expectation.fulfill()
-        })
+        }
+        factoryMocking.localVideoViewModel = LocalVideoViewModelMocking(
+                                                                        compositeViewModelFactory: factoryMocking,
+                                                                        logger: logger,
+                                                                        localizationProvider: localizationProvider,
+                                                                        dispatchAction: storeFactory.store.dispatch,
+                                                                        updateState: updateLocalVideoViewModel)
+
+        let sut = makeSUT()
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
@@ -159,10 +184,17 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_receive_when_statusUpdated_then_participantGridViewModelUpdated() {
         let expectation = XCTestExpectation(description: "ParticipantGridViewModel is updated")
         let appState = AppState()
-        let sut = makeSUT(updateParticipantGridViewModel: { _, remoteParticipantsState in
+        let updateParticipantGridViewModel: (CallingState, RemoteParticipantsState) -> Void = { _, remoteParticipantsState in
             XCTAssertEqual(appState.remoteParticipantsState.lastUpdateTimeStamp, remoteParticipantsState.lastUpdateTimeStamp)
             expectation.fulfill()
-        })
+        }
+        factoryMocking.participantGridViewModel = ParticipantGridViewModelMocking(
+                                                                                  compositeViewModelFactory: factoryMocking,
+                                                                                  localizationProvider: localizationProvider,
+                                                                                  accessibilityProvider: accessibilityProvider,
+                                                                                  updateState: updateParticipantGridViewModel)
+
+        let sut = makeSUT()
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
@@ -170,10 +202,13 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_receive_when_statusUpdated_then_bannerViewModelUpdated() {
         let expectation = XCTestExpectation(description: "BannerViewModel is updated")
         let appState = AppState(callingState: CallingState(status: .connected))
-        let sut = makeSUT(updateBannerViewModel: { callingState in
+        let updateBannerViewModel: (CallingState) -> Void = { callingState in
             XCTAssertEqual(appState.callingState.status, callingState.status)
             expectation.fulfill()
-        })
+        }
+        factoryMocking.bannerViewModel = BannerViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                updateState: updateBannerViewModel)
+        let sut = makeSUT()
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
@@ -184,7 +219,8 @@ class CallingViewModelTests: XCTestCase {
         let moveFocusToFirstElementBlock: () -> Void = {
             expectation.fulfill()
         }
-        let sut = makeSUT(moveFocusToFirstElementBlock: moveFocusToFirstElementBlock)
+        accessibilityProvider.moveFocusToFirstElementBlock = moveFocusToFirstElementBlock
+        let sut = makeSUT()
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
@@ -206,10 +242,19 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_receive_when_statusUpdated_then_onHoldOverlayViewModelUpdated() {
         let expectation = XCTestExpectation(description: "OnHoldOverlayViewModel is updated")
         let appState = AppState(callingState: CallingState(status: .localHold))
-        let sut = makeSUT(updateOnHoldOverlayViewModel: { callingStatus in
+
+        let updateOnHoldOverlayViewModel: (CallingStatus) -> Void = { callingStatus in
             XCTAssertEqual(appState.callingState.status, callingStatus)
             expectation.fulfill()
-        })
+        }
+        factoryMocking.onHoldOverlayViewModel = OnHoldOverlayViewModelMocking(localizationProvider: localizationProvider,
+                                                                              compositeViewModelFactory: factoryMocking,
+                                                                              logger: logger,
+                                                                              accessibilityProvider: accessibilityProvider,
+                                                                              resumeAction: {},
+                                                                              updateState: updateOnHoldOverlayViewModel)
+
+        let sut = makeSUT()
         sut.receive(appState)
         wait(for: [expectation], timeout: timeout)
     }
@@ -246,99 +291,6 @@ extension CallingViewModelTests {
                                 logger: logger,
                                 store: storeFactory.store,
                                 localizationProvider: localizationProvider,
-                                accessibilityProvider: accessibilityProvider,
-                                isIpadInterface: false)
-    }
-
-    func makeSUT(updateControlBarViewModel: @escaping ((LocalUserState, PermissionState) -> Void)) -> CallingViewModel {
-        factoryMocking.controlBarViewModel = ControlBarViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                        logger: logger,
-                                                                        localizationProvider: localizationProvider,
-                                                                        dispatchAction: storeFactory.store.dispatch,
-                                                                        endCallConfirm: {},
-                                                                        localUserState: storeFactory.store.state.localUserState,
-                                                                        updateState: updateControlBarViewModel)
-        return CallingViewModel(compositeViewModelFactory: factoryMocking,
-                                logger: logger,
-                                store: storeFactory.store,
-                                localizationProvider: localizationProvider,
-                                accessibilityProvider: accessibilityProvider,
-                                isIpadInterface: false)
-    }
-
-    func makeSUT(updateInfoHeaderViewModel: @escaping ((LocalUserState, RemoteParticipantsState, CallingState) -> Void)) -> CallingViewModel {
-        factoryMocking.infoHeaderViewModel = InfoHeaderViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                        logger: logger,
-                                                                        localUserState: storeFactory.store.state.localUserState,
-                                                                        accessibilityProvider: accessibilityProvider,
-                                                                        updateState: updateInfoHeaderViewModel)
-        return CallingViewModel(compositeViewModelFactory: factoryMocking,
-                                logger: logger,
-                                store: storeFactory.store,
-                                localizationProvider: localizationProvider,
-                                accessibilityProvider: accessibilityProvider,
-                                isIpadInterface: false)
-    }
-
-    func makeSUT(updateLocalVideoViewModel: @escaping ((LocalUserState) -> Void)) -> CallingViewModel {
-        factoryMocking.localVideoViewModel = LocalVideoViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                        logger: logger,
-                                                                        localizationProvider: localizationProvider,
-                                                                        dispatchAction: storeFactory.store.dispatch,
-                                                                        updateState: updateLocalVideoViewModel)
-        return CallingViewModel(compositeViewModelFactory: factoryMocking,
-                                logger: logger,
-                                store: storeFactory.store,
-                                localizationProvider: localizationProvider,
-                                accessibilityProvider: accessibilityProvider,
-                                isIpadInterface: false)
-    }
-
-    func makeSUT(updateParticipantGridViewModel: @escaping ((CallingState, RemoteParticipantsState) -> Void)) -> CallingViewModel {
-        factoryMocking.participantGridViewModel = ParticipantGridViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                                  localizationProvider: localizationProvider,
-                                                                                  accessibilityProvider: accessibilityProvider,
-                                                                                  updateState: updateParticipantGridViewModel)
-        return CallingViewModel(compositeViewModelFactory: factoryMocking,
-                                logger: logger,
-                                store: storeFactory.store,
-                                localizationProvider: localizationProvider,
-                                accessibilityProvider: accessibilityProvider,
-                                isIpadInterface: false)
-    }
-
-    func makeSUT(updateBannerViewModel: @escaping ((CallingState) -> Void)) -> CallingViewModel {
-        factoryMocking.bannerViewModel = BannerViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                updateState: updateBannerViewModel)
-        return CallingViewModel(compositeViewModelFactory: factoryMocking,
-                                logger: logger,
-                                store: storeFactory.store,
-                                localizationProvider: localizationProvider,
-                                accessibilityProvider: accessibilityProvider,
-                                isIpadInterface: false)
-    }
-
-    func makeSUT(updateOnHoldOverlayViewModel: @escaping ((CallingStatus) -> Void)) -> CallingViewModel {
-        factoryMocking.onHoldOverlayViewModel = OnHoldOverlayViewModelMocking(localizationProvider: localizationProvider,
-                                                                              compositeViewModelFactory: factoryMocking,
-                                                                              logger: logger,
-                                                                              accessibilityProvider: accessibilityProvider,
-                                                                              resumeAction: {},
-                                                                              updateState: updateOnHoldOverlayViewModel)
-        return CallingViewModel(compositeViewModelFactory: factoryMocking,
-                                logger: logger,
-                                store: storeFactory.store,
-                                localizationProvider: localizationProvider,
-                                accessibilityProvider: accessibilityProvider,
-                                isIpadInterface: false)
-    }
-
-    func makeSUT(moveFocusToFirstElementBlock: @escaping () -> Void) -> CallingViewModel {
-        accessibilityProvider.moveFocusToFirstElementBlock = moveFocusToFirstElementBlock
-        return CallingViewModel(compositeViewModelFactory: factoryMocking,
-                                logger: logger,
-                                store: storeFactory.store,
-                                localizationProvider: LocalizationProvider(logger: logger),
                                 accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false)
     }

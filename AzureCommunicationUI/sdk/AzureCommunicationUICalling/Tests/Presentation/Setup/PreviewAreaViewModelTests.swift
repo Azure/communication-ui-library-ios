@@ -9,7 +9,26 @@ import XCTest
 
 class PreviewAreaViewModelTests: XCTestCase {
 
-    typealias LocalVideoViewModelUpdateState = ((LocalUserState) -> Void)?
+    private var localizationProvider: LocalizationProviderMocking!
+    private var storeFactory: StoreFactoryMocking!
+    private var logger: LoggerMocking!
+    private var factoryMocking: CompositeViewModelFactoryMocking!
+
+    override func setUp() {
+        super.setUp()
+        localizationProvider = LocalizationProviderMocking()
+        storeFactory = StoreFactoryMocking()
+        logger = LoggerMocking()
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+    }
+
+    override func tearDown() {
+        super.tearDown()
+        localizationProvider = nil
+        storeFactory = nil
+        logger = nil
+        factoryMocking = nil
+    }
 
     func test_previewAreaViewModel_when_audioPermissionDenied_then_shouldWarnAudioDisabled() {
         let cameraState = LocalUserState.CameraState(operation: .off,
@@ -120,11 +139,18 @@ class PreviewAreaViewModelTests: XCTestCase {
     func test_previewAreaViewModel_update_when_statesUpdated_then_localVideoViewModelUpdated() {
         let expectation = XCTestExpectation(description: "LocalVideoViewModel is updated")
         let localUserState = LocalUserState(displayName: "UpdatedDisplayName")
-        let updateState: LocalVideoViewModelUpdateState = { localState in
+        let updateState: (LocalUserState) -> Void = { localState in
             XCTAssertEqual(localUserState.displayName, localState.displayName)
             expectation.fulfill()
         }
-        let sut = makeSUT(localVideoViewModelUpdateState: updateState)
+
+        factoryMocking.localVideoViewModel = LocalVideoViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                        logger: logger,
+                                                                        localizationProvider: localizationProvider,
+                                                                        dispatchAction: storeFactory.store.dispatch,
+                                                                        updateState: updateState)
+
+        let sut = makeSUT()
         sut.update(localUserState: localUserState, permissionState: PermissionState())
         wait(for: [expectation], timeout: 1.0)
     }
@@ -150,39 +176,12 @@ class PreviewAreaViewModelTests: XCTestCase {
 
 extension PreviewAreaViewModelTests {
     func makeSUT() -> PreviewAreaViewModel {
-        let storeFactory = StoreFactoryMocking()
-        let logger = LoggerMocking()
-        let localizationProvider = LocalizationProviderMocking()
-        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
-                                                          store: storeFactory.store)
-        return PreviewAreaViewModel(compositeViewModelFactory: factoryMocking,
-                                    dispatchAction: storeFactory.store.dispatch,
-                                    localizationProvider: LocalizationProvider(logger: logger))
-    }
-
-    func makeSUT(localVideoViewModelUpdateState: LocalVideoViewModelUpdateState) -> PreviewAreaViewModel {
-        let storeFactory = StoreFactoryMocking()
-        let logger = LoggerMocking()
-        let localizationProvider = LocalizationProviderMocking()
-        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
-                                                          store: storeFactory.store)
-        let localVideoViewModel = LocalVideoViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                        logger: logger,
-                                                                        localizationProvider: localizationProvider,
-                                                                        dispatchAction: storeFactory.store.dispatch,
-                                                                        updateState: localVideoViewModelUpdateState)
-        factoryMocking.localVideoViewModel = localVideoViewModel
         return PreviewAreaViewModel(compositeViewModelFactory: factoryMocking,
                                     dispatchAction: storeFactory.store.dispatch,
                                     localizationProvider: LocalizationProvider(logger: logger))
     }
 
     func makeSUTLocalizationMocking() -> PreviewAreaViewModel {
-        let storeFactory = StoreFactoryMocking()
-        let logger = LoggerMocking()
-        let localizationProvider = LocalizationProviderMocking()
-        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
-                                                          store: storeFactory.store)
         return PreviewAreaViewModel(compositeViewModelFactory: factoryMocking,
                                     dispatchAction: storeFactory.store.dispatch,
                                     localizationProvider: localizationProvider)

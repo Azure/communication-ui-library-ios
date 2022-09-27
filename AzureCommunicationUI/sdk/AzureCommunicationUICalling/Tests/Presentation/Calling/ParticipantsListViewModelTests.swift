@@ -14,12 +14,16 @@ class ParticipantsListViewModelTests: XCTestCase {
     private var cancellable: CancelBag!
     private var localizationProvider: LocalizationProviderMocking!
     private var storeFactory: StoreFactoryMocking!
+    private var logger: LoggerMocking!
+    private var factoryMocking: CompositeViewModelFactoryMocking!
 
     override func setUp() {
         super.setUp()
         cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
         storeFactory = StoreFactoryMocking()
+        logger = LoggerMocking()
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
     }
 
     override func tearDown() {
@@ -27,6 +31,8 @@ class ParticipantsListViewModelTests: XCTestCase {
         cancellable = nil
         localizationProvider = nil
         storeFactory = nil
+        logger = nil
+        factoryMocking = nil
     }
 
     // MARK: localParticipantsListCellViewModel test
@@ -263,7 +269,9 @@ class ParticipantsListViewModelTests: XCTestCase {
             return ParticipantsListCellViewModel(participantInfoModel: infoModel,
                                                  localizationProvider: self?.localizationProvider ?? LocalizationProviderMocking())
         }
-        let sut = makeSUTFactoryMocking(createParticipantsListCellViewModel: createParticipantsListCellViewModel)
+        factoryMocking.createParticipantsListCellViewModel = createParticipantsListCellViewModel
+
+        let sut = makeSUT()
         sut.update(localUserState: LocalUserState(),
                    remoteParticipantsState: remoteParticipantsState)
         XCTAssertEqual(sut.participantsList.map { $0.getParticipantName(with: nil) },
@@ -274,16 +282,6 @@ class ParticipantsListViewModelTests: XCTestCase {
 
 extension ParticipantsListViewModelTests {
     func makeSUT() -> ParticipantsListViewModel {
-        let logger = LoggerMocking()
-        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
-        return ParticipantsListViewModel(compositeViewModelFactory: factoryMocking,
-                                         localUserState: LocalUserState())
-    }
-
-    func makeSUTFactoryMocking(createParticipantsListCellViewModel: @escaping CreateParticipantsListCellViewModel) -> ParticipantsListViewModel {
-        let logger = LoggerMocking()
-        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
-        factoryMocking.createParticipantsListCellViewModel = createParticipantsListCellViewModel
         return ParticipantsListViewModel(compositeViewModelFactory: factoryMocking,
                                          localUserState: LocalUserState())
     }

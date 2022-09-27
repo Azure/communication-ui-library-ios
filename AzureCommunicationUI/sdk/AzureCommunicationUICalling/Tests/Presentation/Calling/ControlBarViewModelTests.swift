@@ -15,6 +15,8 @@ class ControlBarViewModelTests: XCTestCase {
     var storeFactory: StoreFactoryMocking!
     var cancellable: CancelBag!
     var localizationProvider: LocalizationProviderMocking!
+    var logger: LoggerMocking!
+    var factoryMocking: CompositeViewModelFactoryMocking!
 
     private let timeout: TimeInterval = 10.0
 
@@ -23,6 +25,8 @@ class ControlBarViewModelTests: XCTestCase {
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
+        logger = LoggerMocking()
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
     }
 
     override func tearDown() {
@@ -30,6 +34,8 @@ class ControlBarViewModelTests: XCTestCase {
         storeFactory = nil
         cancellable = nil
         localizationProvider = nil
+        logger = nil
+        factoryMocking = nil
     }
 
     // MARK: Leave Call / Cancel test
@@ -495,7 +501,8 @@ class ControlBarViewModelTests: XCTestCase {
             }
             return iconButtonViewModel
         }
-        let sut = makeSUTFactoryMocking(createIconButtonViewModel: createIconButtonViewModel)
+        factoryMocking.createIconButtonViewModel = createIconButtonViewModel
+        let sut = makeSUT()
         let cameraState = LocalUserState.CameraState(operation: .on,
                                                      device: .front,
                                                      transmission: .local)
@@ -520,7 +527,8 @@ class ControlBarViewModelTests: XCTestCase {
             }
             return iconButtonViewModel
         }
-        let sut = makeSUTFactoryMocking(createIconButtonViewModel: createIconButtonViewModel)
+        factoryMocking.createIconButtonViewModel = createIconButtonViewModel
+        let sut = makeSUT()
         let permissionState = PermissionState(cameraPermission: .granted)
         sut.update(localUserState: LocalUserState(),
                    permissionState: permissionState,
@@ -542,7 +550,8 @@ class ControlBarViewModelTests: XCTestCase {
             }
             return iconButtonViewModel
         }
-        let sut = makeSUTFactoryMocking(createIconButtonViewModel: createIconButtonViewModel)
+        factoryMocking.createIconButtonViewModel = createIconButtonViewModel
+        let sut = makeSUT()
         let audioState = LocalUserState.AudioState(operation: .on,
                                                    device: .speakerSelected)
         let localUserState = LocalUserState(audioState: audioState)
@@ -566,7 +575,8 @@ class ControlBarViewModelTests: XCTestCase {
             }
             return iconButtonViewModel
         }
-        let sut = makeSUTFactoryMocking(createIconButtonViewModel: createIconButtonViewModel)
+        factoryMocking.createIconButtonViewModel = createIconButtonViewModel
+        let sut = makeSUT()
         let permissionState = PermissionState(audioPermission: .granted)
         sut.update(localUserState: LocalUserState(),
                    permissionState: permissionState,
@@ -588,7 +598,8 @@ class ControlBarViewModelTests: XCTestCase {
             }
             return iconButtonViewModel
         }
-        let sut = makeSUTFactoryMocking(createIconButtonViewModel: createIconButtonViewModel)
+        factoryMocking.createIconButtonViewModel = createIconButtonViewModel
+        let sut = makeSUT()
         let audioState = LocalUserState.AudioState(operation: .on,
                                                    device: .bluetoothSelected)
         let localUserState = LocalUserState(audioState: audioState)
@@ -605,7 +616,13 @@ class ControlBarViewModelTests: XCTestCase {
             XCTAssertEqual(status, localUserState.audioState.device)
             expectation.fulfill()
         }
-        let sut = makeSUTAudioDevicesListViewModelMocking(updateState: updateState, localUserState: localUserState)
+        let audioDevicesListViewModel = AudioDevicesListViewModelMocking(compositeViewModelFactory: factoryMocking,
+                                                                         dispatchAction: storeFactory.store.dispatch,
+                                                                         localUserState: localUserState,
+                                                                         localizationProvider: LocalizationProviderMocking())
+        audioDevicesListViewModel.updateState = updateState
+        factoryMocking.audioDevicesListViewModel = audioDevicesListViewModel
+        let sut = makeSUT()
         sut.update(localUserState: localUserState,
                    permissionState: PermissionState(),
                    callingState: CallingState())
@@ -615,8 +632,6 @@ class ControlBarViewModelTests: XCTestCase {
 
 extension ControlBarViewModelTests {
     func makeSUT() -> ControlBarViewModel {
-        let logger = LoggerMocking()
-        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
                                    localizationProvider: LocalizationProvider(logger: logger),
@@ -626,37 +641,6 @@ extension ControlBarViewModelTests {
     }
 
     func makeSUTLocalizationMocking() -> ControlBarViewModel {
-        let logger = LoggerMocking()
-        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
-        return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
-                                   logger: logger,
-                                   localizationProvider: localizationProvider,
-                                   dispatchAction: storeFactory.store.dispatch,
-                                   endCallConfirm: {},
-                                   localUserState: storeFactory.store.state.localUserState)
-    }
-
-    func makeSUTFactoryMocking(createIconButtonViewModel: @escaping CreateIconButtonViewModel) -> ControlBarViewModel {
-        let logger = LoggerMocking()
-        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
-        factoryMocking.createIconButtonViewModel = createIconButtonViewModel
-        return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
-                                   logger: logger,
-                                   localizationProvider: localizationProvider,
-                                   dispatchAction: storeFactory.store.dispatch,
-                                   endCallConfirm: {},
-                                   localUserState: storeFactory.store.state.localUserState)
-    }
-
-    func makeSUTAudioDevicesListViewModelMocking(updateState: AudioDeviceListVMUpdateState, localUserState: LocalUserState) -> ControlBarViewModel {
-        let logger = LoggerMocking()
-        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
-        let audioDevicesListViewModel = AudioDevicesListViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                         dispatchAction: storeFactory.store.dispatch,
-                                                                         localUserState: localUserState,
-                                                                         localizationProvider: LocalizationProviderMocking())
-        audioDevicesListViewModel.updateState = updateState
-        factoryMocking.audioDevicesListViewModel = audioDevicesListViewModel
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
                                    localizationProvider: localizationProvider,

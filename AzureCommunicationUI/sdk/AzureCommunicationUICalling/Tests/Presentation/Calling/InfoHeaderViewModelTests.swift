@@ -13,12 +13,16 @@ class InfoHeaderViewModelTests: XCTestCase {
     var storeFactory: StoreFactoryMocking!
     var cancellable: CancelBag!
     var localizationProvider: LocalizationProviderMocking!
+    var logger: LoggerMocking!
+    var factoryMocking: CompositeViewModelFactoryMocking!
 
     override func setUp() {
         super.setUp()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
+        logger = LoggerMocking()
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
     }
 
     override func tearDown() {
@@ -26,6 +30,8 @@ class InfoHeaderViewModelTests: XCTestCase {
         storeFactory = nil
         cancellable = nil
         localizationProvider = nil
+        logger = nil
+        factoryMocking = nil
     }
 
     func test_infoHeaderViewModel_update_when_participantInfoListCountSame_then_shouldNotBePublished() {
@@ -142,7 +148,14 @@ class InfoHeaderViewModelTests: XCTestCase {
                            remoteParticipantsState.participantInfoList)
             expectation.fulfill()
         }
-        let sut = makeSUTFactoryMocking(updateStates: updateStates)
+
+        let participantsListViewModel = ParticipantsListViewModelMocking(
+                                                            compositeViewModelFactory: factoryMocking,
+                                                            localUserState: LocalUserState())
+        participantsListViewModel.updateStates = updateStates
+        factoryMocking.participantsListViewModel = participantsListViewModel
+
+        let sut = makeSUT()
         sut.update(localUserState: localUserStateValue,
                    remoteParticipantsState: remoteParticipantsStateValue,
                    callingState: CallingState())
@@ -311,8 +324,6 @@ class InfoHeaderViewModelTests: XCTestCase {
 
 extension InfoHeaderViewModelTests {
     func makeSUT(accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()) -> InfoHeaderViewModel {
-        let logger = LoggerMocking()
-        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
                                    localUserState: LocalUserState(),
@@ -327,21 +338,6 @@ extension InfoHeaderViewModelTests {
                                    logger: logger,
                                    localUserState: LocalUserState(),
                                    localizationProvider: localizationProvider,
-                                   accessibilityProvider: AccessibilityProvider())
-    }
-
-    func makeSUTFactoryMocking(updateStates: @escaping ParticipantsListViewModelUpdateStates) -> InfoHeaderViewModel {
-        let logger = LoggerMocking()
-        var factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
-        let participantsListViewModel = ParticipantsListViewModelMocking(
-                                                            compositeViewModelFactory: factoryMocking,
-                                                            localUserState: LocalUserState())
-        participantsListViewModel.updateStates = updateStates
-        factoryMocking.participantsListViewModel = participantsListViewModel
-        return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
-                                   logger: logger,
-                                   localUserState: LocalUserState(),
-                                   localizationProvider: LocalizationProvider(logger: logger),
                                    accessibilityProvider: AccessibilityProvider())
     }
 }
