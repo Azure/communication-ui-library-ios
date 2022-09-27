@@ -13,7 +13,7 @@ struct AppState {
     let errorState: ErrorState
 
     init(lifeCycleState: LifeCycleState = .init(),
-         chatState: ChatState = .init(localUser: .init()),
+         chatState: ChatState = .init(),
          navigationState: NavigationState = .init(),
          participantsState: ParticipantsState = .init(),
          errorState: ErrorState = .init()) {

@@ -29,9 +29,17 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         logger.debug("CallingSDKWrapper deallocated")
     }
 
-    func chatStart() async throws -> [ChatMessageInfoModel] {
+    func initializeChat() async throws {
         do {
-            // Stub: to be implemented
+            print("ChatSDKWrapper `initializeChat` not implemented")
+        } catch {
+            throw error
+        }
+    }
+
+    func getInitialMessages() async throws -> [ChatMessageInfoModel] {
+        do {
+            print("ChatSDKWrapper `getInitialMessages` not implemented")
             return []
         } catch {
             throw error

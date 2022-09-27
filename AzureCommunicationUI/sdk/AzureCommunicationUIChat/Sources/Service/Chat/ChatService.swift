@@ -6,10 +6,12 @@
 import Foundation
 
 protocol ChatServiceProtocol {
-    func chatStart() async throws -> [ChatMessageInfoModel]
+    func initalize() async throws
+    func getInitialMessages() async throws -> [ChatMessageInfoModel]
 }
 
 class ChatService: NSObject, ChatServiceProtocol {
+
     private let logger: Logger
     private let chatSDKWrapper: ChatSDKWrapperProtocol
 
@@ -19,7 +21,12 @@ class ChatService: NSObject, ChatServiceProtocol {
         self.chatSDKWrapper = chatSDKWrapper
     }
 
-    func chatStart() async throws -> [ChatMessageInfoModel] {
-        return try await chatSDKWrapper.chatStart()
+    func initalize() async throws {
+        try await chatSDKWrapper.initializeChat()
     }
+
+    func getInitialMessages() async throws -> [ChatMessageInfoModel] {
+        return try await chatSDKWrapper.getInitialMessages()
+    }
+
 }

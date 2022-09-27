@@ -10,39 +10,31 @@ protocol ChatActionHandling {
     func enterBackground(state: AppState, dispatch: @escaping ActionDispatch)
     func enterForeground(state: AppState, dispatch: @escaping ActionDispatch)
 
-    func initialize(state: AppState, dispatch: @escaping ActionDispatch, serviceListener: ChatServiceEventHandling)
+    func initialize(state: AppState,
+                    dispatch: @escaping ActionDispatch,
+                    serviceListener: ChatServiceEventHandling) -> Task<Void, Never>
 }
 
 class ChatActionHandler: ChatActionHandling {
     private let chatService: ChatServiceProtocol
     private let logger: Logger
-    private let cancelBag = CancelBag()
-    private let subscription = CancelBag()
 
     init(chatService: ChatServiceProtocol, logger: Logger) {
         self.chatService = chatService
         self.logger = logger
     }
 
-    func initialize(state: AppState, dispatch: @escaping ActionDispatch, serviceListener: ChatServiceEventHandling) {
-        chatService.chatStart()
-            .map { _ in
-                // Stub action
-                ChatAction.chatStartRequested
+    func initialize(state: AppState,
+                    dispatch: @escaping ActionDispatch,
+                    serviceListener: ChatServiceEventHandling) -> Task<Void, Never> {
+        Task {
+            do {
+                try await chatService.initalize()
+                let initialMessages = try await chatService.getInitialMessages()
+            } catch {
+                print("ChatActionHandler `initialize` catch not implemented")
             }
-            .sink(receiveCompletion: { completion in
-                switch completion {
-                case .failure(let error):
-                    print("middlewareHandler failed: \(error)")
-                case .finished:
-                    print("middlewareHandler finished")
-                }
-            }, receiveValue: {
-                // when to start listenting to events? moved to middleware?
-                serviceListener.subscription(dispatch: dispatch)
-                dispatch(.chatAction($0))
-            })
-            .store(in: cancelBag)
+        }
     }
 
     // MARK: LifeCycleHandler

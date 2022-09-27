@@ -10,6 +10,7 @@ extension Reducer where State == ChatState,
                         Actions == Action {
     static var liveChatReducer: Self = Reducer { chatState, action in
         var localUser = chatState.localUser
+        var threadId = chatState.threadId
 
         switch action {
         case .chatAction(.chatStartRequested):
@@ -17,6 +18,7 @@ extension Reducer where State == ChatState,
         default:
             return chatState
         }
-        return ChatState(localUser: localUser)
+        return ChatState(localUser: localUser,
+                         threadId: threadId)
     }
 }
