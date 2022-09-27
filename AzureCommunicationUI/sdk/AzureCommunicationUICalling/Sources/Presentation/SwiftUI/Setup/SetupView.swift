@@ -15,20 +15,25 @@ struct SetupView: View {
     @Orientation var orientation: UIDeviceOrientation
     let avatarManager: AvatarViewManager
 
-    let layoutSpacing: CGFloat = 24
-    let layoutSpacingLarge: CGFloat = 40
-    let startCallButtonHeight: CGFloat = 52
-    let errorHorizontalPadding: CGFloat = 8
-    private let setupViewiPadLarge: CGFloat = 469.0
-    private let setupViewiPadSmall: CGFloat = 375.0
+    enum LayoutConstant {
+        static let spacing: CGFloat = 24
+        static let spacingLarge: CGFloat = 40
+        static let startCallButtonHeight: CGFloat = 52
+        static let errorHorizontalPadding: CGFloat = 8
+        static let iPadLarge: CGFloat = 469.0
+        static let iPadSmall: CGFloat = 375.0
+        static let iPadSmallHeightWithMargin: CGFloat = iPadSmall + spacingLarge + startCallButtonHeight
+        static let iPadLargeHeightWithMargin: CGFloat = iPadLarge + spacingLarge + startCallButtonHeight
+    }
 
     var body: some View {
         ZStack {
-            VStack(spacing: layoutSpacing) {
+            VStack(spacing: LayoutConstant.spacing) {
                 SetupTitleView(viewModel: viewModel)
                 GeometryReader { geometry in
                     ZStack(alignment: .bottomLeading) {
-                        VStack(spacing: getSizeClass() == .ipadScreenSize ? layoutSpacingLarge : layoutSpacing) {
+                        VStack(spacing: getSizeClass() == .ipadScreenSize ?
+                               LayoutConstant.spacingLarge : LayoutConstant.spacing) {
                             ZStack(alignment: .bottom) {
                                 PreviewAreaView(viewModel: viewModel.previewAreaViewModel,
                                                 viewManager: viewManager,
@@ -70,9 +75,9 @@ struct SetupView: View {
             Spacer()
             ErrorInfoView(viewModel: viewModel.errorInfoViewModel)
                 .padding(EdgeInsets(top: 0,
-                                    leading: errorHorizontalPadding,
-                                    bottom: startCallButtonHeight + layoutSpacing,
-                                    trailing: errorHorizontalPadding)
+                                    leading: LayoutConstant.errorHorizontalPadding,
+                                    bottom: LayoutConstant.startCallButtonHeight + LayoutConstant.spacing,
+                                    trailing: LayoutConstant.errorHorizontalPadding)
                 )
                 .accessibilityElement(children: .contain)
                 .accessibilityAddTraits(.isModal)
@@ -85,7 +90,8 @@ struct SetupView: View {
             return 16
         }
         let isLandscape = orientation.isLandscape
-        let horizontalPadding = (parentSize.width - (isLandscape ? setupViewiPadLarge : setupViewiPadSmall)) / 2.0
+        let screenSize = isLandscape ? LayoutConstant.iPadLarge : LayoutConstant.iPadSmall
+        let horizontalPadding = (parentSize.width - screenSize) / 2.0
         return horizontalPadding
     }
 
@@ -95,11 +101,9 @@ struct SetupView: View {
             return 16
         }
         let isLandscape = orientation.isLandscape
-        let setupViewiPadSmallHeightWithMargin = setupViewiPadSmall + layoutSpacingLarge + startCallButtonHeight
-        let setupViewiPadLargeHeightWithMargin = setupViewiPadLarge + layoutSpacingLarge + startCallButtonHeight
         let verticalPadding = (parentSize.height - (isLandscape ?
-                                                    setupViewiPadSmallHeightWithMargin
-                                                    : setupViewiPadLargeHeightWithMargin)) / 2.0
+                                                    LayoutConstant.iPadSmallHeightWithMargin
+                                                    : LayoutConstant.iPadLargeHeightWithMargin)) / 2.0
         return verticalPadding
     }
 

@@ -7,13 +7,15 @@ import SwiftUI
 import FluentUI
 
 struct CallingView: View {
+    enum InfoHeaderViewConstants {
+        static let horizontalPadding: CGFloat = 8.0
+        static let maxWidth: CGFloat = 380.0
+        static let height: CGFloat = 46.0
+    }
 
-    struct Constants {
-        static let infoHeaderViewHorizontalPadding: CGFloat = 8.0
-        static let infoHeaderViewMaxWidth: CGFloat = 380.0
-        static let infoHeaderViewHeight: CGFloat = 46.0
+    enum ErrorInfoConstants {
         static let controlBarHeight: CGFloat = 92
-        static let errorHorizontalPadding: CGFloat = 8
+        static let horizontalPadding: CGFloat = 8
     }
 
     @ObservedObject var viewModel: CallingViewModel
@@ -107,9 +109,9 @@ struct CallingView: View {
         GeometryReader { geometry in
             let geoWidth: CGFloat = geometry.size.width
             let isIpad = getSizeClass() == .ipadScreenSize
-            let widthWithoutHorizontalPadding = geoWidth - 2 * Constants.infoHeaderViewHorizontalPadding
+            let widthWithoutHorizontalPadding = geoWidth - 2 * InfoHeaderViewConstants.horizontalPadding
             let infoHeaderViewWidth = isIpad ? min(widthWithoutHorizontalPadding,
-                                                   Constants.infoHeaderViewMaxWidth) : widthWithoutHorizontalPadding
+                                                   InfoHeaderViewConstants.maxWidth) : widthWithoutHorizontalPadding
             VStack {
                 bannerView
                 HStack {
@@ -119,8 +121,8 @@ struct CallingView: View {
                         EmptyView()
                     }
                     infoHeaderView
-                        .frame(width: infoHeaderViewWidth, height: Constants.infoHeaderViewHeight, alignment: .leading)
-                        .padding(.leading, Constants.infoHeaderViewHorizontalPadding)
+                        .frame(width: infoHeaderViewWidth, height: InfoHeaderViewConstants.height, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
                     Spacer()
                 }
                 Spacer()
@@ -171,9 +173,9 @@ struct CallingView: View {
             Spacer()
             ErrorInfoView(viewModel: viewModel.errorInfoViewModel)
                 .padding(EdgeInsets(top: 0,
-                                    leading: Constants.errorHorizontalPadding,
-                                    bottom: Constants.controlBarHeight,
-                                    trailing: Constants.errorHorizontalPadding)
+                                    leading: ErrorInfoConstants.horizontalPadding,
+                                    bottom: ErrorInfoConstants.controlBarHeight,
+                                    trailing: ErrorInfoConstants.horizontalPadding)
                 )
                 .accessibilityElement(children: .contain)
                 .accessibilityAddTraits(.isModal)
