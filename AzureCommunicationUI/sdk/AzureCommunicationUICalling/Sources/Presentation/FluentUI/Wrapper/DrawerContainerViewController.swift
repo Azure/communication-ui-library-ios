@@ -57,12 +57,18 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         }
     }
 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        resizeDrawer()
+    }
+
     func dismissDrawer(animated: Bool = false) {
         self.controller?.dismiss(animated: animated)
     }
 
     func updateDrawerList(items: [T]) {
         self.items = items
+        resizeDrawer()
     }
 
     private func showDrawerView() {
