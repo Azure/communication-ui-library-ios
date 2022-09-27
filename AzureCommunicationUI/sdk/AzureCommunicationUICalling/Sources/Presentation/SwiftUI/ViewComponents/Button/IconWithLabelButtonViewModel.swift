@@ -6,12 +6,13 @@
 import Foundation
 import Combine
 
-class IconWithLabelButtonViewModel: ObservableObject {
+class IconWithLabelButtonViewModel<T: ButtonState>: ObservableObject {
     enum ButtonTypeColor {
         case colorThemedWhite
         case white
     }
-
+    @Published var selectedButtonState: T
+    @Published var localizationProvider: LocalizationProviderProtocol
     @Published var iconName: CompositeIcon
     @Published var buttonTypeColor: ButtonTypeColor
     @Published var buttonLabel: String
@@ -21,24 +22,25 @@ class IconWithLabelButtonViewModel: ObservableObject {
     @Published var isDisabled: Bool
     var action: (() -> Void)
 
-    init(iconName: CompositeIcon,
+    init(selectedButtonState: T,
+         localizationProvider: LocalizationProviderProtocol,
          buttonTypeColor: ButtonTypeColor,
-         buttonLabel: String,
          isDisabled: Bool = false,
          action: @escaping (() -> Void) = {}) {
-        self.iconName = iconName
+        self.selectedButtonState = selectedButtonState
+        self.localizationProvider = localizationProvider
+        self.iconName = selectedButtonState.iconName
         self.buttonTypeColor = buttonTypeColor
-        self.buttonLabel = buttonLabel
+        self.buttonLabel = localizationProvider.getLocalizedString(selectedButtonState.localizationKey)
         self.isDisabled = isDisabled
         self.action = action
     }
 
-    func update(iconName: CompositeIcon?, buttonLabel: String?) {
-        if iconName != nil && self.iconName != iconName {
-            self.iconName = iconName!
-        }
-        if buttonLabel != nil && self.buttonLabel != buttonLabel {
-            self.buttonLabel = buttonLabel!
+    func update(selectedButtonState: T) {
+        if self.selectedButtonState.localizationKey != selectedButtonState.localizationKey {
+            self.selectedButtonState = selectedButtonState
+            self.buttonLabel = localizationProvider.getLocalizedString(selectedButtonState.localizationKey)
+            self.iconName = selectedButtonState.iconName
         }
     }
 
