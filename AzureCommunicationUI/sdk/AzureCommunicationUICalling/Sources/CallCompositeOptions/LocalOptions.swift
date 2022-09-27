@@ -10,7 +10,7 @@ import UIKit
 public struct LocalOptions {
     /// The ParticipantViewData of the local participant when joining the call.
     let participantViewData: ParticipantViewData?
-    /// The SetupScreenViewData would be used for setup screen
+    /// The SetupScreenViewData is used for call setup screen
     let setupScreenViewData: SetupScreenViewData?
     /// Create an instance of LocalOptions. All information in this object is only stored locally in the composite.
     /// - Parameters:
@@ -41,7 +41,7 @@ public struct ParticipantViewData {
         self.displayName = displayName
     }
 }
-/// Object to represent the data needed to customize the setup screen's view data
+/// Object to represent the data needed to customize the call setup screen's view data
 public struct SetupScreenViewData {
     /// The title that would be used for the navigation bar on setup screen
     let title: String
