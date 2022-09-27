@@ -622,21 +622,16 @@ class ControlBarViewModelTests: XCTestCase {
 }
 
 extension ControlBarViewModelTests {
-    func makeSUT() -> ControlBarViewModel {
+    func makeSUT(localizationProvider: LocalizationProviderMocking? = nil) -> ControlBarViewModel {
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
-                                   localizationProvider: LocalizationProvider(logger: logger),
+                                   localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                    dispatchAction: storeFactory.store.dispatch,
                                    endCallConfirm: {},
                                    localUserState: storeFactory.store.state.localUserState)
     }
 
     func makeSUTLocalizationMocking() -> ControlBarViewModel {
-        return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
-                                   logger: logger,
-                                   localizationProvider: localizationProvider,
-                                   dispatchAction: storeFactory.store.dispatch,
-                                   endCallConfirm: {},
-                                   localUserState: storeFactory.store.state.localUserState)
+        return makeSUT(localizationProvider: localizationProvider)
     }
 }

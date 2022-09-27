@@ -175,15 +175,13 @@ class PreviewAreaViewModelTests: XCTestCase {
 }
 
 extension PreviewAreaViewModelTests {
-    func makeSUT() -> PreviewAreaViewModel {
+    func makeSUT(localizationProvider: LocalizationProviderMocking? = nil) -> PreviewAreaViewModel {
         return PreviewAreaViewModel(compositeViewModelFactory: factoryMocking,
                                     dispatchAction: storeFactory.store.dispatch,
-                                    localizationProvider: LocalizationProvider(logger: logger))
+                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger))
     }
 
     func makeSUTLocalizationMocking() -> PreviewAreaViewModel {
-        return PreviewAreaViewModel(compositeViewModelFactory: factoryMocking,
-                                    dispatchAction: storeFactory.store.dispatch,
-                                    localizationProvider: localizationProvider)
+        return makeSUT(localizationProvider: localizationProvider)
     }
 }

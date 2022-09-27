@@ -50,12 +50,13 @@ class OnHoldOverlayViewModelTests: XCTestCase {
 }
 
 extension OnHoldOverlayViewModelTests {
-    func makeSUT() -> OnHoldOverlayViewModel {
+    func makeSUT(localizationProvider: LocalizationProviderMocking? = nil) -> OnHoldOverlayViewModel {
         let logger = LoggerMocking()
         let storeFactory = StoreFactoryMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
         let accessibilityProvider = AccessibilityProviderMocking()
-        return OnHoldOverlayViewModel(localizationProvider: LocalizationProvider(logger: logger),
+        return OnHoldOverlayViewModel(
+                                      localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                       compositeViewModelFactory: factoryMocking,
                                       logger: logger,
                                       accessibilityProvider: accessibilityProvider,
@@ -63,15 +64,7 @@ extension OnHoldOverlayViewModelTests {
     }
 
     func makeSUTLocalizationMocking() -> OnHoldOverlayViewModel {
-        let logger = LoggerMocking()
-        let storeFactory = StoreFactoryMocking()
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
-        let accessibilityProvider = AccessibilityProviderMocking()
-        return OnHoldOverlayViewModel(localizationProvider: localizationProvider,
-                                      compositeViewModelFactory: factoryMocking,
-                                      logger: logger,
-                                      accessibilityProvider: accessibilityProvider,
-                                      resumeAction: {})
+        return makeSUT(localizationProvider: localizationProvider)
     }
 
     func makeSUT(withAction action: @escaping (() -> Void)) -> OnHoldOverlayViewModelMocking {
