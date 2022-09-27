@@ -285,13 +285,4 @@ extension CallingViewModelTests {
                                 accessibilityProvider: accessibilityProvider,
                                 isIpadInterface: false)
     }
-
-    func makeSUTLocalizationMocking(storeFactory: StoreFactoryMocking = StoreFactoryMocking()) -> CallingViewModel {
-        return CallingViewModel(compositeViewModelFactory: factoryMocking,
-                                logger: logger,
-                                store: storeFactory.store,
-                                localizationProvider: localizationProvider,
-                                accessibilityProvider: accessibilityProvider,
-                                isIpadInterface: false)
-    }
 }
