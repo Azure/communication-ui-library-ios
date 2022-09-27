@@ -150,6 +150,8 @@ class ParticipantsListViewModelTests: XCTestCase {
 
     // MARK: participantsList test
     func test_participantsListViewModel_update_when_lastUpdateTimeStampChangedWithParticipantOrderCheck_then_shouldBePublished() {
+        let avatarViewManager = AvatarViewManager(store: storeFactory.store,
+                                                  localParticipantViewData: nil)
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should publish localParticipantsListCellViewModel")
         sut.$participantsList
@@ -190,8 +192,6 @@ class ParticipantsListViewModelTests: XCTestCase {
         XCTAssertEqual(sut.participantsList.count, 1)
         XCTAssertEqual(localParticipant.getParticipantName(with: nil), "")
         XCTAssertEqual(localParticipant.isLocalParticipant, true)
-        let avatarViewManager = AvatarViewManager(store: storeFactory.store,
-                                                  localOptions: nil)
         let sortedParticipants = sut.sortedParticipants(with: avatarViewManager)
         XCTAssertEqual(sortedParticipants.first?.getParticipantName(with: nil), localParticipant.getParticipantName(with: nil))
         XCTAssertEqual(sortedParticipants.last?.getParticipantName(with: nil), remoteParticipantsState.participantInfoList.first!.displayName)
