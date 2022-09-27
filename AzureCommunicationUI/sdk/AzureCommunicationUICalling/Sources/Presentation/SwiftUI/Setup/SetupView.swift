@@ -13,7 +13,7 @@ struct SetupView: View {
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
     @Orientation var orientation: UIDeviceOrientation
-    let avatarManager: AvatarViewManager
+    let avatarManager: AvatarViewManagerProtocol
 
     enum LayoutConstant {
         static let spacing: CGFloat = 24
