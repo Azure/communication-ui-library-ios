@@ -53,6 +53,16 @@
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "50CB81C928C26E0C00680566"
+               BuildableName = "AzureCommunicationUIChatTests.xctest"
+               BlueprintName = "AzureCommunicationUIChatTests"
+               ReferencedContainer = "container:AzureCommunicationUIChat.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
