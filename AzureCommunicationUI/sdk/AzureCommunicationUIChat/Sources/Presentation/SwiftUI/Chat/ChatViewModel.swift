@@ -4,3 +4,5 @@
 //
 
 import Foundation
+
+class ChatViewModel: ObservableObject {}

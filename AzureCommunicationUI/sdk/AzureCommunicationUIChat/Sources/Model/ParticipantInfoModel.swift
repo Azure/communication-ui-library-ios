@@ -17,7 +17,7 @@ struct ParticipantInfoModel: Equatable {
 
     init(identifier: CommunicationIdentifier,
          displayName: String,
-         sharedHistoryTime: Iso8601Date?) {
+         sharedHistoryTime: Iso8601Date? = nil) {
         self.id = identifier.stringValue
         self.identifier = identifier
         self.displayName = displayName

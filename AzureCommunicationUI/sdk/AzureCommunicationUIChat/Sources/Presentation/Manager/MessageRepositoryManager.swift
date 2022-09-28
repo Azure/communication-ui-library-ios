@@ -9,8 +9,10 @@ import AzureCore
 protocol MessageRepositoryManagerProtocol {
     var messages: [ChatMessageInfoModel] { get }
 
-    // local event
+    // MARK: sending local events
     func addInitialMessages(initialMessages: [ChatMessageInfoModel])
+
+    // MARK: receiving remote events
 }
 
 class MessageRepositoryManager: MessageRepositoryManagerProtocol {

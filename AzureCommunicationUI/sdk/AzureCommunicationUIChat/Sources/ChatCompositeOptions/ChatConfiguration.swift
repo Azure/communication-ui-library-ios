@@ -26,7 +26,10 @@ struct ChatConfiguration {
             self.endpoint = endpoint
             self.compositeChatType = .groupChat
         case let .teamsMeeting(teamsLink: meetingLink, endpoint: endpoint):
-            self.chatThreadId = ChatConfiguration.getThreadId(from: meetingLink) ?? ""
+            guard let threadId = ChatConfiguration.getThreadId(from: meetingLink) else {
+                throw ChatCompositeInternalError.parseThreadIdFailed
+            }
+            self.chatThreadId = threadId
             self.endpoint = endpoint
             self.compositeChatType = .teamsChat
         }

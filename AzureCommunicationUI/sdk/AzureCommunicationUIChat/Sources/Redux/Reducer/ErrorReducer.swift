@@ -22,7 +22,7 @@ extension Reducer where State == ErrorState,
             errorType = internalError
             error = rawError
             errorCategory = .chatState
-        case .chatAction(.chatStartRequested):
+        case .chatAction(.initializeChat):
             errorType = nil
             error = nil
             errorCategory = .none

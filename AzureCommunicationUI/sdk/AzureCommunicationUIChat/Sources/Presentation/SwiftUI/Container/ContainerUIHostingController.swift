@@ -3,10 +3,36 @@
 //  Licensed under the MIT License.
 //
 
+import Foundation
 import SwiftUI
 
-struct ContainerUIHostingController: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+class ContainerUIHostingController: UIHostingController<ContainerUIHostingController.Root> {
+
+    private let chatComposite: ChatComposite
+    private let cancelBag = CancelBag()
+
+    init(rootView: ContainerView,
+         chatComposite: ChatComposite,
+         isRightToLeft: Bool) {
+        self.chatComposite = chatComposite
+        super.init(rootView: Root(containerView: rootView))
+        UIView.appearance().semanticContentAttribute = isRightToLeft ?
+            .forceRightToLeft : .forceLeftToRight
     }
+
+    @objc required dynamic init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    struct Root: View {
+        let containerView: ContainerView
+
+        var body: some View {
+            containerView
+        }
+    }
+
+    // MARK: Prefers Home Indicator Auto Hidden
 }
+
+ extension ContainerUIHostingController: UIViewControllerTransitioningDelegate {}

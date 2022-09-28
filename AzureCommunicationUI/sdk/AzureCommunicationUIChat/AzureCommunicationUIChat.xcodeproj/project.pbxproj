@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3C8A38C00C940E491F39B0A2 /* Pods_AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A63BF349E7BC31AD5300412A /* Pods_AzureCommunicationUIChat.framework */; };
 		50CB81CB28C26E0C00680566 /* AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB81C228C26E0C00680566 /* AzureCommunicationUIChat.framework */; };
-		50CB81D028C26E0C00680566 /* AzureCommunicationUIChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB81CF28C26E0C00680566 /* AzureCommunicationUIChatTests.swift */; };
 		50CB81DB28C26EEB00680566 /* ChatComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB81DA28C26EEB00680566 /* ChatComposite.swift */; };
 		50CB81DD28C26FA100680566 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50CB81DC28C26FA100680566 /* Assets.xcassets */; };
 		50CB81E728C2701C00680566 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50CB81E628C2701C00680566 /* Localizable.strings */; };
@@ -96,7 +95,7 @@
 		50F0C58528D387E5009D7176 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C58428D387E5009D7176 /* MessageView.swift */; };
 		50F0C58728D38812009D7176 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C58628D38812009D7176 /* MessageViewModel.swift */; };
 		50F0C58928D388E4009D7176 /* ChatActionHandlerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C58828D388E4009D7176 /* ChatActionHandlerMocking.swift */; };
-		50F0C58B28D388FE009D7176 /* ChatServiceListenerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C58A28D388FE009D7176 /* ChatServiceListenerMocking.swift */; };
+		50F0C58B28D388FE009D7176 /* ChatServiceEventHandlerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C58A28D388FE009D7176 /* ChatServiceEventHandlerMocking.swift */; };
 		50F0C58D28D3891D009D7176 /* MessageRepositoryHandlerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C58C28D3891D009D7176 /* MessageRepositoryHandlerMocking.swift */; };
 		50F0C58F28D38A83009D7176 /* ChatCompositeMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C58E28D38A83009D7176 /* ChatCompositeMocking.swift */; };
 		50F0C59128D38ACA009D7176 /* CompositeViewModelFactoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C59028D38ACA009D7176 /* CompositeViewModelFactoryMocking.swift */; };
@@ -145,7 +144,6 @@
 		1B9C157344D512A9F069F9CC /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB81C228C26E0C00680566 /* AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB81CA28C26E0C00680566 /* AzureCommunicationUIChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzureCommunicationUIChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		50CB81CF28C26E0C00680566 /* AzureCommunicationUIChatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIChatTests.swift; sourceTree = "<group>"; };
 		50CB81DA28C26EEB00680566 /* ChatComposite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatComposite.swift; sourceTree = "<group>"; };
 		50CB81DC28C26FA100680566 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		50CB81E628C2701C00680566 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
@@ -233,7 +231,7 @@
 		50F0C58428D387E5009D7176 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		50F0C58628D38812009D7176 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
 		50F0C58828D388E4009D7176 /* ChatActionHandlerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatActionHandlerMocking.swift; sourceTree = "<group>"; };
-		50F0C58A28D388FE009D7176 /* ChatServiceListenerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceListenerMocking.swift; sourceTree = "<group>"; };
+		50F0C58A28D388FE009D7176 /* ChatServiceEventHandlerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceEventHandlerMocking.swift; sourceTree = "<group>"; };
 		50F0C58C28D3891D009D7176 /* MessageRepositoryHandlerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRepositoryHandlerMocking.swift; sourceTree = "<group>"; };
 		50F0C58E28D38A83009D7176 /* ChatCompositeMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCompositeMocking.swift; sourceTree = "<group>"; };
 		50F0C59028D38ACA009D7176 /* CompositeViewModelFactoryMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeViewModelFactoryMocking.swift; sourceTree = "<group>"; };
@@ -335,7 +333,6 @@
 		50CB81CE28C26E0C00680566 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				50CB81CF28C26E0C00680566 /* AzureCommunicationUIChatTests.swift */,
 				50CB827228C2A14700680566 /* Builder */,
 				50CB827328C2A1CB00680566 /* Mocking */,
 				50CB827B28C2A22E00680566 /* Redux */,
@@ -630,7 +627,7 @@
 			isa = PBXGroup;
 			children = (
 				50F0C58828D388E4009D7176 /* ChatActionHandlerMocking.swift */,
-				50F0C58A28D388FE009D7176 /* ChatServiceListenerMocking.swift */,
+				50F0C58A28D388FE009D7176 /* ChatServiceEventHandlerMocking.swift */,
 				50F0C58C28D3891D009D7176 /* MessageRepositoryHandlerMocking.swift */,
 			);
 			path = Redux;
@@ -1253,10 +1250,9 @@
 				50F0C59D28D38B37009D7176 /* LocalizationProviderMocking.swift in Sources */,
 				50F0C59B28D38B2B009D7176 /* AccessibilityProviderMocking.swift in Sources */,
 				50F0C58D28D3891D009D7176 /* MessageRepositoryHandlerMocking.swift in Sources */,
-				50F0C58B28D388FE009D7176 /* ChatServiceListenerMocking.swift in Sources */,
+				50F0C58B28D388FE009D7176 /* ChatServiceEventHandlerMocking.swift in Sources */,
 				50F0C5A828D38BD7009D7176 /* ChatActionHandlerTests.swift in Sources */,
 				50F0C5AE28D38BF7009D7176 /* MessageRepositoryHandlerTests.swift in Sources */,
-				50CB81D028C26E0C00680566 /* AzureCommunicationUIChatTests.swift in Sources */,
 				50F0C59528D38AF5009D7176 /* ChatSDKWrapperMocking.swift in Sources */,
 				50F0C58928D388E4009D7176 /* ChatActionHandlerMocking.swift in Sources */,
 				50F0C5B228D38C1F009D7176 /* LifeCycleReducerTests.swift in Sources */,

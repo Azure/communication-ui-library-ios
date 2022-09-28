@@ -41,10 +41,11 @@ struct CredentialsView: View {
             endpointUrlField
             meetingSelector
             startExperience
-            if viewType == .chat {
-                Divider()
-                showCompositeUI
-            }
+            // Comment out for public preview
+//            if viewType == .chat {
+//                Divider()
+//                showCompositeUI
+//            }
             Spacer()
         }
         .padding()
@@ -147,13 +148,14 @@ struct CredentialsView: View {
                 .disabled(isStartExperienceDisabled)
                 .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
 
-                if viewType == .chat {
-                    Button("Start Headless") {
-                        startChatComposite(headless: true)
-                    }
-                    .buttonStyle(DemoButtonStyle())
-                    .accessibility(identifier: AccessibilityId.stopChatAccessibilityID.rawValue)
-                }
+                // Comment out for public preview
+//                if viewType == .chat {
+//                    Button("Start Headless") {
+//                        startChatComposite(headless: true)
+//                    }
+//                    .buttonStyle(DemoButtonStyle())
+//                    .accessibility(identifier: AccessibilityId.stopChatAccessibilityID.rawValue)
+//                }
             }
         }
     }
