@@ -134,7 +134,7 @@ class CallingReducerTests: XCTestCase {
                                          operationStatus: .callEnded,
                                          isRecordingActive: false,
                                          isTranscriptionActive: false)
-        let state = CallingState(status: .disconnected,
+        let state = CallingState(status: .none,
                                  isRecordingActive: false,
                                  isTranscriptionActive: false)
         let action = Action.callingAction(.callEnded)
@@ -149,7 +149,7 @@ class CallingReducerTests: XCTestCase {
                                          operationStatus: .callEndRequested,
                                          isRecordingActive: false,
                                          isTranscriptionActive: false)
-        let state = CallingState(status: .disconnected,
+        let state = CallingState(status: .none,
                                  isRecordingActive: false,
                                  isTranscriptionActive: false)
         let action = Action.callingAction(.callEndRequested)
@@ -158,12 +158,13 @@ class CallingReducerTests: XCTestCase {
 
         XCTAssertEqual(resultState, expectedState)
     }
+
     func test_callingReducer_reduce_when_callRequestFailed_then_OperationStatusNone() {
         let expectedState = CallingState(status: .none,
                                          operationStatus: .none,
                                          isRecordingActive: false,
                                          isTranscriptionActive: false)
-        let state = CallingState(status: .disconnected,
+        let state = CallingState(status: .none,
                                  isRecordingActive: false,
                                  isTranscriptionActive: false)
         let action = Action.callingAction(.requestFailed)
