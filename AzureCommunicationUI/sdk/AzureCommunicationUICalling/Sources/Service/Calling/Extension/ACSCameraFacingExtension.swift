@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import AzureCommunicationCalling
+import Foundation
 
 extension CameraFacing {
     func toCameraDevice() -> CameraDevice {
@@ -15,6 +15,18 @@ extension CameraFacing {
             return .back
         default:
             return .front
+        }
+    }
+}
+
+extension LocalVideoStream {
+    static func nativeAccMediaStreamType(type: MediaStreamType)
+    -> AzureCommunicationCalling.MediaStreamType {
+        switch type {
+        case .cameraVideo:
+            return AzureCommunicationCalling.MediaStreamType.video
+        case .screenSharing:
+            return AzureCommunicationCalling.MediaStreamType.screenSharing
         }
     }
 }

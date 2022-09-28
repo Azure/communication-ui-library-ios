@@ -73,18 +73,21 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
             return localRenderCache.rendererView
         }
 
-        guard let videoStream = callingSDKWrapper.getLocalVideoStream(videoStreamId) else {
+        guard let videoStream = callingSDKWrapper.getLocalVideoStream(videoStreamId),
+              let nativeVideoStream = videoStream.wrappedObject as? AzureCommunicationCalling.LocalVideoStream else {
             return nil
         }
 
         do {
-            let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(localVideoStream: videoStream)
+            let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(localVideoStream: nativeVideoStream)
             let newRendererView: RendererView = try newRenderer.createView(
                 withOptions: CreateViewOptions(scalingMode: .crop))
 
-            let cache = VideoStreamCache(renderer: newRenderer,
-                                         rendererView: newRendererView,
-                                         mediaStreamType: videoStream.mediaStreamType)
+            let cache = VideoStreamCache(
+                renderer: newRenderer,
+                rendererView: newRendererView,
+                mediaStreamType: videoStream.mediaStreamType
+            )
             localRendererViews.append(forKey: videoStreamId,
                                       value: cache)
             return newRendererView
@@ -115,13 +118,14 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
         guard let participant = callingSDKWrapper.getRemoteParticipant(userIdentifier),
               let videoStream = participant.videoStreams.first(where: { stream in
                   return String(stream.id) == videoStreamId
-              }) else {
+              }),
+            let nativeStream = videoStream.wrappedObject as? AzureCommunicationCalling.RemoteVideoStream else {
             return nil
         }
 
         do {
             let options = CreateViewOptions(scalingMode: videoStream.mediaStreamType == .screenSharing ? .fit : .crop)
-            let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(remoteVideoStream: videoStream)
+            let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(remoteVideoStream: nativeStream)
             let newRendererView: RendererView = try newRenderer.createView(withOptions: options)
 
             let cache = VideoStreamCache(renderer: newRenderer,

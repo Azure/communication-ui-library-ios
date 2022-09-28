@@ -16,7 +16,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     private var callAgent: CallAgent?
     private var call: Call?
     private var deviceManager: DeviceManager?
-    private var localVideoStream: LocalVideoStream?
+    private var localVideoStream: AzureCommunicationCalling.LocalVideoStream?
 
     private var newVideoDeviceAddedHandler: ((VideoDeviceInfo) -> Void)?
 
@@ -39,7 +39,10 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
         logger.debug("Reset Subjects in callingEventsHandler")
-        callingEventsHandler.setupProperties()
+        if let callingEventsHandler = self.callingEventsHandler
+            as? CallingSDKEventsHandler {
+            callingEventsHandler.setupProperties()
+        }
         logger.debug( "Starting call")
         do {
             try await setupCallAgent()
@@ -81,7 +84,9 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             throw CallCompositeInternalError.callJoinFailed
         }
 
-        joinedCall.delegate = callingEventsHandler
+        if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
+            joinedCall.delegate = callingEventsHandler
+        }
         call = joinedCall
         setupCallRecordingAndTranscriptionFeature()
     }
@@ -116,7 +121,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         guard getLocalVideoStreamIdentifier() == identifier else {
             return nil
         }
-        return localVideoStream
+        guard let videoStream = localVideoStream else {
+            return nil
+        }
+        return LocalVideoStream(
+            mediaStreamType: videoStream.mediaStreamType.asUiMediaStreamType,
+            wrappedObject: videoStream
+        )
     }
 
     func startCallLocalVideoStream() async throws -> String {
@@ -292,8 +303,10 @@ extension CallingSDKWrapper {
         }
         let recordingCallFeature = call.feature(Features.recording)
         let transcriptionCallFeature = call.feature(Features.transcription)
-        self.callingEventsHandler.assign(recordingCallFeature)
-        self.callingEventsHandler.assign(transcriptionCallFeature)
+        if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
+            callingEventsHandler.assign(recordingCallFeature)
+            callingEventsHandler.assign(transcriptionCallFeature)
+        }
     }
 
     private func getLocalVideoStreamIdentifier() -> String? {

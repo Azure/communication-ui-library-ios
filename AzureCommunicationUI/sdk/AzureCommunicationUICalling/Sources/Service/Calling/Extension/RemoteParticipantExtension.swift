@@ -3,10 +3,10 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import AzureCommunicationCalling
+import Foundation
 
-extension RemoteParticipant {
+extension AzureCommunicationCalling.RemoteParticipant {
     func toParticipantInfoModel(recentSpeakingStamp: Date) -> ParticipantInfoModel {
         let videoInfoModels: [VideoStreamInfoModel] = self.videoStreams.compactMap { videoStream in
             VideoStreamInfoModel(
@@ -29,7 +29,7 @@ extension RemoteParticipant {
     }
 }
 
-extension MediaStreamType {
+extension AzureCommunicationCalling.MediaStreamType {
     func converted() -> VideoStreamInfoModel.MediaStreamType {
         switch self {
         case .screenSharing:
@@ -38,6 +38,17 @@ extension MediaStreamType {
             return VideoStreamInfoModel.MediaStreamType.cameraVideo
         @unknown default:
             return VideoStreamInfoModel.MediaStreamType.cameraVideo
+        }
+    }
+
+    var asUiMediaStreamType: MediaStreamType {
+        switch self {
+        case .screenSharing:
+            return .screenSharing
+        case .video:
+            return .cameraVideo
+        @unknown default:
+            return .cameraVideo
         }
     }
 }
