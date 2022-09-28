@@ -28,6 +28,7 @@ class LifeCycleReducerTests: XCTestCase {
 
         XCTAssertEqual(resultState.currentStatus, expectedState)
     }
+
 }
 
 extension LifeCycleReducerTests {
