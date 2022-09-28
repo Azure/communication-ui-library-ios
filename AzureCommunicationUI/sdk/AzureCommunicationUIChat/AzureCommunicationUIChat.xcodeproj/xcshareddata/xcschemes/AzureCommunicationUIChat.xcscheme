@@ -46,9 +46,9 @@
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "50CB81C928C26E0C00680566"
-            BuildableName = "AzureCommunicationUIChatTests.xctest"
-            BlueprintName = "AzureCommunicationUIChatTests"
+            BlueprintIdentifier = "50CB81C128C26E0C00680566"
+            BuildableName = "AzureCommunicationUIChat.framework"
+            BlueprintName = "AzureCommunicationUIChat"
             ReferencedContainer = "container:AzureCommunicationUIChat.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>
