@@ -86,7 +86,7 @@ struct SettingsView: View {
     }
 
     var navigationSettings: some View {
-        Section(header: Text("Navigation Bar View Data")) {
+        Section(header: Text("Setup View Data")) {
             TextField("Navigation Title", text: $envConfigSubject.navigationTitle)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
