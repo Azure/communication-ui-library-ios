@@ -70,7 +70,7 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
             return
         }
 
-        let joinedParticipantsCommunicationIds = joinedParticipantsIds
+        let joinedParticipantsCommunicationIds: [CommunicationIdentifier] = joinedParticipantsIds
             .compactMap {
                 let participant: RemoteParticipant< AzureCommunicationCalling.RemoteParticipant,
                                                    AzureCommunicationCalling.RemoteVideoStream>? =
