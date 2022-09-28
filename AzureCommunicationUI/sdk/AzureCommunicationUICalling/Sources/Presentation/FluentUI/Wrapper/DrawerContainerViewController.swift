@@ -57,17 +57,18 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         }
     }
 
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-        super.viewWillTransition(to: size, with: coordinator)
-        resizeDrawer()
-    }
-
     func dismissDrawer(animated: Bool = false) {
         self.controller?.dismiss(animated: animated)
     }
 
     func updateDrawerList(items: [T]) {
         self.items = items
+        // if table view is not ready, do nothing
+        guard let tableView = drawerTableView,
+                tableView.contentSize != CGSize.zero else {
+            return
+        }
+        // otherwise, set preferredContentSize in FluentUI
         resizeDrawer()
     }
 
