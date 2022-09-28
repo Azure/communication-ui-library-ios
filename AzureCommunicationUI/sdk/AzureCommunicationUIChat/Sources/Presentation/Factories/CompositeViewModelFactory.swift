@@ -24,7 +24,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
 
     private weak var chatViewModel: ChatViewModel?
 
-    // Unit test needed
+    // unit test needed
     // - only skeleton code to show view, class not finalized yet
     init(messageRepository: MessageRepositoryManagerProtocol,
          logger: Logger,
