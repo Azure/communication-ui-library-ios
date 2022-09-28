@@ -11,14 +11,14 @@ enum CameraDevice {
     case back
 }
 
-class RemoteParticipant {
+class RemoteParticipant<WrappedType, VideoStreamType> {
     var identifier: CommunicationIdentifier
-    var videoStreams: [RemoteVideoStream]
-    var wrappedObject: AnyObject
+    var videoStreams: [RemoteVideoStream<VideoStreamType>]
+    var wrappedObject: WrappedType
 
     init(id: CommunicationIdentifier,
-         videoStreams: [RemoteVideoStream],
-         wrappedObject: AnyObject) {
+         videoStreams: [RemoteVideoStream<VideoStreamType>],
+         wrappedObject: WrappedType) {
         self.identifier = id
         self.videoStreams = videoStreams
         self.wrappedObject = wrappedObject
@@ -30,31 +30,32 @@ enum MediaStreamType {
     case screenSharing
 }
 
-class RemoteVideoStream {
+class RemoteVideoStream<WrappedType> {
     var id: Int
     var mediaStreamType: MediaStreamType = .cameraVideo
-    var wrappedObject: AnyObject
+    var wrappedObject: WrappedType
 
-    init(id: Int, mediaStreamType: MediaStreamType, wrappedObject: AnyObject) {
+    init(id: Int, mediaStreamType: MediaStreamType, wrappedObject: WrappedType) {
         self.id = id
         self.mediaStreamType = mediaStreamType
         self.wrappedObject = wrappedObject
     }
 }
 
-class LocalVideoStream {
+class LocalVideoStream<WrappedType> {
     var mediaStreamType: MediaStreamType = .cameraVideo
-    var wrappedObject: AnyObject
+    var wrappedObject: WrappedType
 
-    init(mediaStreamType: MediaStreamType, wrappedObject: AnyObject) {
+    init(mediaStreamType: MediaStreamType, wrappedObject: WrappedType) {
         self.mediaStreamType = mediaStreamType
         self.wrappedObject = wrappedObject
     }
 }
 
 protocol CallingSDKWrapperProtocol {
-    func getRemoteParticipant(_ identifier: String) -> RemoteParticipant?
-    func getLocalVideoStream(_ identifier: String) -> LocalVideoStream?
+    func getRemoteParticipant<ParticipantType, StreamType>(_ identifier: String)
+    -> RemoteParticipant<ParticipantType, StreamType>?
+    func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String) -> LocalVideoStream<LocalVideoStreamType>?
 
     func startPreviewVideoStream() async throws -> String
     func setupCall() async throws

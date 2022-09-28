@@ -12,7 +12,8 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     var error: NSError?
     var callingEventsHandler: CallingSDKEventsHandling = CallingSDKEventsHandler(logger: LoggerMocking())
 
-    func getLocalVideoStream(_ identifier: String) -> LocalVideoStream? {
+    func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String) ->
+    LocalVideoStream<LocalVideoStreamType>? {
         return nil
     }
 
@@ -73,7 +74,8 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
         }.value
     }
 
-    func getRemoteParticipant(_ identifier: String) -> RemoteParticipant? {
+    func getRemoteParticipant<ParticipantType, StreamType>(_ identifier: String) ->
+    RemoteParticipant<ParticipantType, StreamType>? {
         getRemoteParticipantCallIds.append(identifier)
         return nil
     }

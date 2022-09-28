@@ -30,7 +30,8 @@ extension AzureCommunicationCalling.RemoteParticipant {
 
     static func toUiRemoteParticipant(
         acsRemoteParticipant: AzureCommunicationCalling.RemoteParticipant?
-    ) -> RemoteParticipant? {
+    ) -> RemoteParticipant< AzureCommunicationCalling.RemoteParticipant,
+                            AzureCommunicationCalling.RemoteVideoStream>? {
         guard let remote = acsRemoteParticipant else {
             return nil
         }
@@ -48,7 +49,7 @@ extension AzureCommunicationCalling.RemoteParticipant {
 extension AzureCommunicationCalling.RemoteVideoStream {
     static func toUiRemoteVideoStream(
         acsRemoteVideoStream: AzureCommunicationCalling.RemoteVideoStream
-    ) -> RemoteVideoStream {
+    ) -> RemoteVideoStream<AzureCommunicationCalling.RemoteVideoStream> {
         RemoteVideoStream(
             id: Int(acsRemoteVideoStream.id),
             mediaStreamType: acsRemoteVideoStream.mediaStreamType.asUiMediaStreamType,

@@ -73,11 +73,11 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
             return localRenderCache.rendererView
         }
 
-        guard let videoStream = callingSDKWrapper.getLocalVideoStream(videoStreamId),
-              let nativeVideoStream = videoStream.wrappedObject as? AzureCommunicationCalling.LocalVideoStream else {
+        guard let videoStream: LocalVideoStream<AzureCommunicationCalling.LocalVideoStream> =
+                callingSDKWrapper.getLocalVideoStream(videoStreamId) else {
             return nil
         }
-
+        let nativeVideoStream = videoStream.wrappedObject
         do {
             let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(localVideoStream: nativeVideoStream)
             let newRendererView: RendererView = try newRenderer.createView(
@@ -115,14 +115,16 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
                                                streamSize: streamSize)
         }
 
-        guard let participant = callingSDKWrapper.getRemoteParticipant(userIdentifier),
+        guard let participant: RemoteParticipant< AzureCommunicationCalling.RemoteParticipant,
+                                                  AzureCommunicationCalling.RemoteVideoStream> =
+                callingSDKWrapper.getRemoteParticipant(userIdentifier),
               let videoStream = participant.videoStreams.first(where: { stream in
                   return String(stream.id) == videoStreamId
-              }),
-            let nativeStream = videoStream.wrappedObject as? AzureCommunicationCalling.RemoteVideoStream else {
+              }) else {
             return nil
         }
 
+        let nativeStream = videoStream.wrappedObject
         do {
             let options = CreateViewOptions(scalingMode: videoStream.mediaStreamType == .screenSharing ? .fit : .crop)
             let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(remoteVideoStream: nativeStream)
