@@ -149,6 +149,7 @@
 		5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */; };
 		696AD14928DBAFCE0043F807 /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696AD14828DBAFCE0043F807 /* ButtonState.swift */; };
 		752B953C2863A40F001C52E8 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752B953B2863A40E001C52E8 /* Action.swift */; };
+		75C1EE0F28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C1EE0E28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift */; };
 		8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */; };
 		8815B6E427DA9B350065A184 /* LobbyOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */; };
 		881D8F7027F2327B008EC897 /* ErrorInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D8F6F27F2327B008EC897 /* ErrorInfoViewModelTests.swift */; };
@@ -427,6 +428,7 @@
 		696AD14828DBAFCE0043F807 /* ButtonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonState.swift; sourceTree = "<group>"; };
 		69FC33B2B556CC3B9164A78E /* Pods-AzureCommunicationUICalling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling/Pods-AzureCommunicationUICalling.release.xcconfig"; sourceTree = "<group>"; };
 		752B953B2863A40E001C52E8 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		75C1EE0E28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalVideoStreamExtension.swift; sourceTree = "<group>"; };
 		8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyOverlayViewModel.swift; sourceTree = "<group>"; };
 		8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		881D8F6F27F2327B008EC897 /* ErrorInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorInfoViewModelTests.swift; sourceTree = "<group>"; };
@@ -667,12 +669,8 @@
 		1F13D37126AB3DDB00E31666 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				75C1EE0D28E4BEF600FF78B1 /* AzureCommunicationCalling */,
 				1F87A7BA263A7EE900F49C7E /* CommunicationIdentifierExtension.swift */,
-				1FBCB6B02649EB1200F57EEA /* RemoteParticipantExtension.swift */,
-				1F13D37226AB3F1200E31666 /* ACSCallingStateExtension.swift */,
-				1FB0A1C028412A5000D57B0F /* ACSParticipantStateExtension.swift */,
-				5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */,
-				1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -990,6 +988,19 @@
 				5A314F041B5D1869C41C242E /* DependencyContainerTests.swift */,
 			);
 			path = DI;
+			sourceTree = "<group>";
+		};
+		75C1EE0D28E4BEF600FF78B1 /* AzureCommunicationCalling */ = {
+			isa = PBXGroup;
+			children = (
+				1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */,
+				1F13D37226AB3F1200E31666 /* ACSCallingStateExtension.swift */,
+				5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */,
+				1FB0A1C028412A5000D57B0F /* ACSParticipantStateExtension.swift */,
+				75C1EE0E28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift */,
+				1FBCB6B02649EB1200F57EEA /* RemoteParticipantExtension.swift */,
+			);
+			path = AzureCommunicationCalling;
 			sourceTree = "<group>";
 		};
 		982C282C267BF07300427246 /* FluentUI */ = {
@@ -1694,6 +1705,7 @@
 				50FA46212698EA7A001844AC /* IconWithLabelButtonViewModel.swift in Sources */,
 				50E2D69926F4FA05006B0EF4 /* ParticipantsListCellViewModel.swift in Sources */,
 				1F09A11D26BB5B0D00BACED7 /* ArrayExtension.swift in Sources */,
+				75C1EE0F28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift in Sources */,
 				98B1869B27C858B400B837E6 /* CompositeAudioDevicesList.swift in Sources */,
 				A874EDC4266152AA003C7D92 /* AppLifeCycleManager.swift in Sources */,
 				1F8E0B78268D0EF000DDD18E /* CompositeErrorManager.swift in Sources */,
