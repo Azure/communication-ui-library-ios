@@ -4,7 +4,7 @@
 //
 
 import Foundation
-import AzureCommunicationCalling
+
 @testable import AzureCommunicationUICalling
 
 class VideoViewManagerMocking {

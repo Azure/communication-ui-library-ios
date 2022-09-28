@@ -5,7 +5,7 @@
 
 import SwiftUI
 import AzureCommunicationUICalling
-import AzureCommunicationCalling
+import AzureCommunicationCommon
 
 struct SettingsView: View {
     private enum ThemeMode: String, CaseIterable, Identifiable {

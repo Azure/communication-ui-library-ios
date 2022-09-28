@@ -5,7 +5,7 @@
 
 import SwiftUI
 import AzureCommunicationUICalling
-import AzureCommunicationCalling
+import AzureCommunicationCommon
 
 struct SwiftUIDemoView: View {
     @State var isErrorDisplayed: Bool = false
