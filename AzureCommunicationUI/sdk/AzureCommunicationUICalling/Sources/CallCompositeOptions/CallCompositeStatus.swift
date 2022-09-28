@@ -3,23 +3,23 @@
 //  Licensed under the MIT License.
 //
 
-import UIKit
+public struct CallCompositeStatus {
+    public let callStatusCode: String
+    public let navigationStatusCode: Error
+}
 
 public struct CallStatusCode {
-    public static let none: String = "none"
+    public static let none0: String = "none"
     public static let connected: String = "connected"
 
 }
 
 public struct NavigationStatusCode {
-    public static let none: String = "none"
+    public static let none0: String = "none"
     public static let setup: String = "setup"
     public static let call: String = "call"
     public static let exit: String = "exit"
 
 }
 
-public struct CallCompositeStatus {
-    public let callStatusCode: String
-    public let navigationStatusCode: Error
-}
+

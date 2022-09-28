@@ -47,13 +47,14 @@ public class CustomButtonViewData {
         }
     }
 
-    public var onClick: ((_ sender: CustomButtonViewData) -> Void)? = nil {
+    public var onClick: ((_ sender: CustomButtonViewData) -> Void)? = nil
+    {
         didSet {
             state.action = { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                self.onClick?(self)
+//                guard let self = self else {
+//                    return
+//                }
+                self?.onClick?(self?)
             }
         }
     }
@@ -70,10 +71,10 @@ public class CustomButtonViewData {
                                        label: label,
                                        badgeNumber: badgeNumber)
         self.state.action = { [weak self] in
-            guard let self = self else {
-                return
-            }
-            onClick?(self)
+//            guard let self = self else {
+//                return
+//            }
+            onClick?(self?)
         }
     }
 }

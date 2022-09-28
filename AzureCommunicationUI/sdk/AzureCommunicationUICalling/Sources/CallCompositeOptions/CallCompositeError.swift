@@ -11,7 +11,7 @@ public struct CallCompositeErrorCode {
     public static let callJoin: String = "callJoin"
 
     /// Error when a call disconnects unexpectedly or fails on ending.
-    public static var callEnd: String = "callEnd"
+    public static let callEnd: String = "callEnd"
 
     /// Error when the input token is expired.
     public static let tokenExpired: String = "tokenExpired"
