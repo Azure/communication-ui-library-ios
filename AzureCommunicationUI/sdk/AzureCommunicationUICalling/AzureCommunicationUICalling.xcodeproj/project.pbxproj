@@ -669,7 +669,6 @@
 		1F13D37126AB3DDB00E31666 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
-				75C1EE0D28E4BEF600FF78B1 /* AzureCommunicationCalling */,
 				1F87A7BA263A7EE900F49C7E /* CommunicationIdentifierExtension.swift */,
 			);
 			path = Extension;
@@ -852,12 +851,10 @@
 		1F9B3B2D2643A3D1000CED4B /* Calling */ = {
 			isa = PBXGroup;
 			children = (
+				75C1EE0D28E4BEF600FF78B1 /* AzureCommunicationCalling */,
 				1F13D37126AB3DDB00E31666 /* Extension */,
 				1F6470A82639DCFA0008B9E9 /* CallingService.swift */,
-				1FBCB6AB2649993500F57EEA /* CallingSDKWrapper.swift */,
 				1F48CF1E283447F400A44D58 /* CallingSDKWrapperProtocol.swift */,
-				1F4B0F0426A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift */,
-				1FD299652728B72B0084B9ED /* CallingSDKEventsHandler.swift */,
 			);
 			path = Calling;
 			sourceTree = "<group>";
@@ -997,8 +994,11 @@
 				1F13D37226AB3F1200E31666 /* ACSCallingStateExtension.swift */,
 				5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */,
 				1FB0A1C028412A5000D57B0F /* ACSParticipantStateExtension.swift */,
+				1FD299652728B72B0084B9ED /* CallingSDKEventsHandler.swift */,
+				1FBCB6AB2649993500F57EEA /* CallingSDKWrapper.swift */,
 				75C1EE0E28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift */,
 				1FBCB6B02649EB1200F57EEA /* RemoteParticipantExtension.swift */,
+				1F4B0F0426A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift */,
 			);
 			path = AzureCommunicationCalling;
 			sourceTree = "<group>";
