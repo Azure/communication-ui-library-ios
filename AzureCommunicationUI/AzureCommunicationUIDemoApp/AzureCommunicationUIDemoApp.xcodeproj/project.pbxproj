@@ -102,6 +102,8 @@
 		A8C69FBF2728AE1C00143DB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8C69FC12728AE1C00143DB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoInputTypes.swift; sourceTree = "<group>"; };
+		BDAA751E28E4BDC4008C2789 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		BDAA751F28E4BDC4008C2789 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantAvatarHelper.swift; sourceTree = "<group>"; };
 		FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AzureCommunicationUICalling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FACEE493287364F4001D62BE /* AccessibilityIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccessibilityIdentifier.swift; path = ../sdk/AzureCommunicationUICalling/Sources/Utilities/AccessibilityIdentifier.swift; sourceTree = "<group>"; };
@@ -326,6 +328,7 @@
 				fr,
 				"fr-CA",
 				"zh-Hant",
+				it,
 			);
 			mainGroup = A8C69FA72728AE1A00143DB7;
 			productRefGroup = A8C69FB12728AE1A00143DB7 /* Products */;
@@ -530,6 +533,7 @@
 				5075FEA527FFA8C800136B34 /* fr */,
 				5075FEA627FFA8C900136B34 /* fr-CA */,
 				5075FEA727FFA9D700136B34 /* zh-Hant */,
+				BDAA751F28E4BDC4008C2789 /* it */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -541,6 +545,7 @@
 				5075FE9C27FFA87200136B34 /* fr */,
 				5075FE9D27FFA87600136B34 /* fr-CA */,
 				5075FE9E27FFA87C00136B34 /* zh-Hant */,
+				BDAA751E28E4BDC4008C2789 /* it */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
