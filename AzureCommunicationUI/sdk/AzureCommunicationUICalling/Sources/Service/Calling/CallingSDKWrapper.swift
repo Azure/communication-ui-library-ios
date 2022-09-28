@@ -113,8 +113,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             $0.identifier.stringValue == identifier
         })
 
-        return remote
-
+        return AzureCommunicationCalling.RemoteParticipant.toUiRemoteParticipant(acsRemoteParticipant: remote)
     }
 
     func getLocalVideoStream(_ identifier: String) -> LocalVideoStream? {
@@ -270,7 +269,9 @@ extension CallingSDKWrapper {
         return CallClient(options: clientOptions)
     }
 
-    private func startCallVideoStream(_ videoStream: LocalVideoStream) async throws -> String {
+    private func startCallVideoStream(
+        _ videoStream: AzureCommunicationCalling.LocalVideoStream
+    ) async throws -> String {
         guard let call = self.call else {
             let error = CallCompositeInternalError.cameraOnFailed
             self.logger.error( "Start call video stream failed")
@@ -287,7 +288,9 @@ extension CallingSDKWrapper {
         }
     }
 
-    private func change(_ videoStream: LocalVideoStream, source: VideoDeviceInfo) async throws {
+    private func change(
+        _ videoStream: AzureCommunicationCalling.LocalVideoStream, source: VideoDeviceInfo
+    ) async throws {
         do {
             try await videoStream.switchSource(camera: source)
             logger.debug("Local video switched camera successfully")
@@ -341,13 +344,13 @@ extension CallingSDKWrapper: DeviceManagerDelegate {
         })
     }
 
-    private func getValidLocalVideoStream() async -> LocalVideoStream {
+    private func getValidLocalVideoStream() async -> AzureCommunicationCalling.LocalVideoStream {
         if let existingVideoStream = localVideoStream {
             return existingVideoStream
         }
 
         let videoDevice = await getVideoDeviceInfo(.front)
-        let videoStream = LocalVideoStream(camera: videoDevice)
+        let videoStream = AzureCommunicationCalling.LocalVideoStream(camera: videoDevice)
         localVideoStream = videoStream
         return videoStream
     }

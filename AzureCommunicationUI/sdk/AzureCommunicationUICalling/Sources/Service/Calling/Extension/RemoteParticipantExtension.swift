@@ -27,6 +27,34 @@ extension AzureCommunicationCalling.RemoteParticipant {
                                     screenShareVideoStreamModel: screenShareVideoStreamModel,
                                     cameraVideoStreamModel: cameraVideoStreamModel)
     }
+
+    static func toUiRemoteParticipant(
+        acsRemoteParticipant: AzureCommunicationCalling.RemoteParticipant?
+    ) -> RemoteParticipant? {
+        guard let remote = acsRemoteParticipant else {
+            return nil
+        }
+
+        return RemoteParticipant(
+            id: remote.identifier,
+            videoStreams: remote.videoStreams
+                .map(AzureCommunicationCalling.RemoteVideoStream.toUiRemoteVideoStream(acsRemoteVideoStream:)
+                    ),
+            wrappedObject: remote
+        )
+    }
+}
+
+extension AzureCommunicationCalling.RemoteVideoStream {
+    static func toUiRemoteVideoStream(
+        acsRemoteVideoStream: AzureCommunicationCalling.RemoteVideoStream
+    ) -> RemoteVideoStream {
+        RemoteVideoStream(
+            id: Int(acsRemoteVideoStream.id),
+            mediaStreamType: acsRemoteVideoStream.mediaStreamType.asUiMediaStreamType,
+            wrappedObject: acsRemoteVideoStream
+        )
+    }
 }
 
 extension AzureCommunicationCalling.MediaStreamType {
