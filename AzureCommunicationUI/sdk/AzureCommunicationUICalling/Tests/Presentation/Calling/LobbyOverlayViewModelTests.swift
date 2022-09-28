@@ -38,14 +38,13 @@ class LobbyOverlayViewModelTests: XCTestCase {
 }
 
 extension LobbyOverlayViewModelTests {
-    func makeSUT() -> LobbyOverlayViewModel {
-        return LobbyOverlayViewModel(localizationProvider:
+    func makeSUT(localizationProvider: LocalizationProviderMocking? = nil) -> LobbyOverlayViewModel {
+        return LobbyOverlayViewModel(localizationProvider: localizationProvider ??
                                         LocalizationProvider(logger: LoggerMocking()),
                                      accessibilityProvider: AccessibilityProviderMocking())
     }
 
     func makeSUTLocalizationMocking() -> LobbyOverlayViewModel {
-        return LobbyOverlayViewModel(localizationProvider: localizationProvider,
-                                     accessibilityProvider: AccessibilityProviderMocking())
+        return makeSUT(localizationProvider: localizationProvider)
     }
 }

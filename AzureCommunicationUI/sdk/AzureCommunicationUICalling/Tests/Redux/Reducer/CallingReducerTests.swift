@@ -12,7 +12,7 @@ class CallingReducerTests: XCTestCase {
         let expectedState = CallingStatus.connected
         let state = CallingState(status: .disconnected)
         let action = Action.callingAction(.stateUpdated(status: expectedState))
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.status, expectedState)
@@ -22,7 +22,7 @@ class CallingReducerTests: XCTestCase {
         let expectedState = CallingStatus.disconnected
         let state = CallingState(status: expectedState)
         let action = Action.permissionAction(.audioPermissionNotAsked)
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.status, expectedState)
@@ -36,7 +36,7 @@ class CallingReducerTests: XCTestCase {
                                  isRecordingActive: false,
                                  isTranscriptionActive: false)
         let action = Action.callingAction(.recordingStateUpdated(isRecordingActive: true))
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState, expectedState)
@@ -50,7 +50,7 @@ class CallingReducerTests: XCTestCase {
                                  isRecordingActive: true,
                                  isTranscriptionActive: false)
         let action = Action.callingAction(.recordingStateUpdated(isRecordingActive: false))
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState, expectedState)
@@ -64,7 +64,7 @@ class CallingReducerTests: XCTestCase {
                                  isRecordingActive: false,
                                  isTranscriptionActive: false)
         let action = Action.callingAction(.transcriptionStateUpdated(isTranscriptionActive: true))
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState, expectedState)
@@ -78,7 +78,7 @@ class CallingReducerTests: XCTestCase {
                                  isRecordingActive: false,
                                  isTranscriptionActive: true)
         let action = Action.callingAction(.transcriptionStateUpdated(isTranscriptionActive: false))
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState, expectedState)
@@ -93,7 +93,7 @@ class CallingReducerTests: XCTestCase {
                                  isTranscriptionActive: true)
         let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callDenied,
                                                          error: nil))
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState, expectedState)
@@ -108,7 +108,7 @@ class CallingReducerTests: XCTestCase {
                                  isTranscriptionActive: true)
         let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callEvicted,
                                                          error: nil))
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState, expectedState)
@@ -123,7 +123,7 @@ class CallingReducerTests: XCTestCase {
                                  isTranscriptionActive: false)
         let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callDenied,
                                                          error: nil))
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState, expectedState)
@@ -131,7 +131,7 @@ class CallingReducerTests: XCTestCase {
 }
 
 extension CallingReducerTests {
-    private func getSUT() -> Reducer<CallingState, Action> {
+    private func makeSUT() -> Reducer<CallingState, Action> {
         return .liveCallingReducer
     }
 }
