@@ -10,7 +10,7 @@ import Combine
 struct ParticipantGridCellView: View {
     @ObservedObject var viewModel: ParticipantGridCellViewModel
     let rendererViewManager: RendererViewManager?
-    let avatarViewManager: AvatarViewManager
+    let avatarViewManager: AvatarViewManagerProtocol
     @State var avatarImage: UIImage?
     @State var displayedVideoStreamId: String?
     @State var isVideoChanging: Bool = false
@@ -45,7 +45,7 @@ struct ParticipantGridCellView: View {
         .onReceive(viewModel.$participantIdentifier) {
             updateParticipantViewData(for: $0)
         }
-        .onReceive(avatarViewManager.$updatedId) {
+        .onReceive(avatarViewManager.updatedId) {
             guard $0 == viewModel.participantIdentifier else {
                 return
             }

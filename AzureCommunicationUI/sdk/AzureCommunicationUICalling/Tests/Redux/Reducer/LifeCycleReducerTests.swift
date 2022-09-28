@@ -13,7 +13,7 @@ class LifeCycleReducerTests: XCTestCase {
         let expectedState = AppStatus.foreground
         let state = LifeCycleState(currentStatus: .background)
         let action = LifecycleAction.foregroundEntered
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.currentStatus, expectedState)
@@ -23,7 +23,7 @@ class LifeCycleReducerTests: XCTestCase {
         let expectedState = AppStatus.background
         let state = LifeCycleState(currentStatus: .foreground)
         let action = LifecycleAction.backgroundEntered
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.currentStatus, expectedState)
@@ -32,7 +32,7 @@ class LifeCycleReducerTests: XCTestCase {
 }
 
 extension LifeCycleReducerTests {
-    func getSUT() -> Reducer<LifeCycleState, LifecycleAction> {
+    func makeSUT() -> Reducer<LifeCycleState, LifecycleAction> {
         return .liveLifecycleReducer
     }
 }

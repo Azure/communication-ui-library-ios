@@ -9,19 +9,26 @@ import XCTest
 
 class BannerViewModelTests: XCTestCase {
     var cancellable: CancelBag!
+    var storeFactory: StoreFactoryMocking!
+    var factoryMocking: CompositeViewModelFactoryMocking!
 
     override func setUp() {
         super.setUp()
         cancellable = CancelBag()
+        storeFactory = StoreFactoryMocking()
+        factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
+                                                              store: storeFactory.store)
     }
 
     override func tearDown() {
         super.tearDown()
         cancellable = nil
+        storeFactory = nil
+        factoryMocking = nil
     }
 
     func test_bannerViewModel_isBannerDisplayedPublished_when_displayBannerWithRecordingOnAndTranscriptionOn_then_shouldBecomeTrueAndPublish() {
-        let bannerViewModel = makeSut()
+        let bannerViewModel = makeSUT()
         let expectation = XCTestExpectation(description: "Should publish isBannerDisplayed")
         bannerViewModel.$isBannerDisplayed
             .dropFirst()
@@ -55,8 +62,8 @@ class BannerViewModelTests: XCTestCase {
             let callStatesArr = createCallStates(recordingState: initialRecordingState,
                                                  transcriptionState: initialTranscriptionState)
             let mockingBannerViewModel = BannerTextViewModelMocking()
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr,
-                                          mockingBannerViewModel: mockingBannerViewModel)
+            factoryMocking.bannerTextViewModel = mockingBannerViewModel
+            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
 
             let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
                 XCTAssertEqual(bannerInfoType, expectedType)
@@ -82,8 +89,8 @@ class BannerViewModelTests: XCTestCase {
             let callStatesArr = createCallStates(recordingState: initialRecordingState,
                                                  transcriptionState: initialTranscriptionState)
             let mockingBannerViewModel = BannerTextViewModelMocking()
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr,
-                                          mockingBannerViewModel: mockingBannerViewModel)
+            factoryMocking.bannerTextViewModel = mockingBannerViewModel
+            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
 
             let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
                 XCTAssertEqual(bannerInfoType, expectedType)
@@ -110,8 +117,8 @@ class BannerViewModelTests: XCTestCase {
             let callStatesArr = createCallStates(recordingState: initialRecordingState,
                                                  transcriptionState: initialTranscriptionState)
             let mockingBannerViewModel = BannerTextViewModelMocking()
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr,
-                                          mockingBannerViewModel: mockingBannerViewModel)
+            factoryMocking.bannerTextViewModel = mockingBannerViewModel
+            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
 
             let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
                 XCTAssertEqual(bannerInfoType, expectedType)
@@ -137,8 +144,8 @@ class BannerViewModelTests: XCTestCase {
             let callStatesArr = createCallStates(recordingState: initialRecordingState,
                                                  transcriptionState: initialTranscriptionState)
             let mockingBannerViewModel = BannerTextViewModelMocking()
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr,
-                                          mockingBannerViewModel: mockingBannerViewModel)
+            factoryMocking.bannerTextViewModel = mockingBannerViewModel
+            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
 
             let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
                 XCTAssertEqual(bannerInfoType, expectedType)
@@ -162,8 +169,8 @@ class BannerViewModelTests: XCTestCase {
             let callStatesArr = createCallStates(recordingState: initialRecordingState,
                                                  transcriptionState: initialTranscriptionState)
             let mockingBannerViewModel = BannerTextViewModelMocking()
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr,
-                                          mockingBannerViewModel: mockingBannerViewModel)
+            factoryMocking.bannerTextViewModel = mockingBannerViewModel
+            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
 
             let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
                 XCTAssertEqual(bannerInfoType, expectedType)
@@ -187,8 +194,8 @@ class BannerViewModelTests: XCTestCase {
             let callStatesArr = createCallStates(recordingState: initialRecordingState,
                                                  transcriptionState: initialTranscriptionState)
             let mockingBannerViewModel = BannerTextViewModelMocking()
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr,
-                                          mockingBannerViewModel: mockingBannerViewModel)
+            factoryMocking.bannerTextViewModel = mockingBannerViewModel
+            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
 
             let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
                 XCTAssertEqual(bannerInfoType, expectedType)
@@ -215,8 +222,8 @@ class BannerViewModelTests: XCTestCase {
             let callStatesArr = createCallStates(recordingState: initialRecordingState,
                                                  transcriptionState: initialTranscriptionState)
             let mockingBannerViewModel = BannerTextViewModelMocking()
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr,
-                                          mockingBannerViewModel: mockingBannerViewModel)
+            factoryMocking.bannerTextViewModel = mockingBannerViewModel
+            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
 
             let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
                 XCTAssertEqual(bannerInfoType, expectedType)
@@ -240,8 +247,8 @@ class BannerViewModelTests: XCTestCase {
             let callStatesArr = createCallStates(recordingState: initialRecordingState,
                                                  transcriptionState: initialTranscriptionState)
             let mockingBannerViewModel = BannerTextViewModelMocking()
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr,
-                                          mockingBannerViewModel: mockingBannerViewModel)
+            factoryMocking.bannerTextViewModel = mockingBannerViewModel
+            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
 
             let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
                 XCTAssertEqual(bannerInfoType, expectedType)
@@ -267,8 +274,8 @@ class BannerViewModelTests: XCTestCase {
             let callStatesArr = createCallStates(recordingState: initialRecordingState,
                                                  transcriptionState: initialTranscriptionState)
             let mockingBannerViewModel = BannerTextViewModelMocking()
-            let bannerViewModel = makeSut(callingStateArray: callStatesArr,
-                                          mockingBannerViewModel: mockingBannerViewModel)
+            factoryMocking.bannerTextViewModel = mockingBannerViewModel
+            let bannerViewModel = makeSut(callingStateArray: callStatesArr)
 
             let expectationClosure: ((BannerInfoType?) -> Void) = { bannerInfoType in
                 XCTAssertEqual(bannerInfoType, expectedType)
@@ -282,19 +289,12 @@ class BannerViewModelTests: XCTestCase {
 
 extension BannerViewModelTests {
 
-    func makeSut() -> BannerViewModel {
-        let storeFactory = StoreFactoryMocking()
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(), store: storeFactory.store)
+    func makeSUT() -> BannerViewModel {
         return BannerViewModel(compositeViewModelFactory: factoryMocking)
     }
 
-    func makeSut(callingStateArray: [CallingState],
-                 mockingBannerViewModel: BannerTextViewModelMocking) -> BannerViewModel {
-        let storeFactory = StoreFactoryMocking()
-        var factoryMocking = CompositeViewModelFactoryMocking(logger: LoggerMocking(),
-                                                              store: storeFactory.store)
-        factoryMocking.bannerTextViewModel = mockingBannerViewModel
-        let sut = BannerViewModel(compositeViewModelFactory: factoryMocking)
+    func makeSut(callingStateArray: [CallingState]) -> BannerViewModel {
+        let sut = makeSUT()
         for callState in callingStateArray {
             sut.update(callingState: callState)
         }
