@@ -4,3 +4,7 @@
 //
 
 import Foundation
+
+enum ChatAction: Equatable {
+    case chatStartRequested
+}

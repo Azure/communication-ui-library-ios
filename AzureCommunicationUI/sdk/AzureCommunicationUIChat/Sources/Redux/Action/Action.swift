@@ -10,6 +10,10 @@ import Foundation
 ///
 enum Action: Equatable {
     case lifecycleAction(LifecycleAction)
+    case chatAction(ChatAction)
+    case participantsAction(ParticipantsAction)
+    case errorAction(ErrorAction)
+
     case compositeExitAction
     case chatViewLaunched
     case chatViewHeadless

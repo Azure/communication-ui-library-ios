@@ -12,4 +12,14 @@ enum NavigationStatus {
 }
 
 struct NavigationState: Equatable {
+
+    let status: NavigationStatus
+
+    init(status: NavigationStatus = .inChat) {
+        self.status = status
+    }
+
+    static func == (lhs: NavigationState, rhs: NavigationState) -> Bool {
+        return lhs.status == rhs.status
+    }
 }

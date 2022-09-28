@@ -4,3 +4,7 @@
 //
 
 import Foundation
+
+enum ParticipantsAction: Equatable {
+    case leaveChatSuccess
+}
