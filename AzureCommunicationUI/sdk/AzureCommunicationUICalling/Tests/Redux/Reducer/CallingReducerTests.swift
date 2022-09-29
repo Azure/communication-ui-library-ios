@@ -128,6 +128,51 @@ class CallingReducerTests: XCTestCase {
 
         XCTAssertEqual(resultState, expectedState)
     }
+
+    func test_callingReducer_reduce_when_callEnded_then_OperationStatusEnded() {
+        let expectedState = CallingState(status: .none,
+                                         operationStatus: .callEnded,
+                                         isRecordingActive: false,
+                                         isTranscriptionActive: false)
+        let state = CallingState(status: .none,
+                                 isRecordingActive: false,
+                                 isTranscriptionActive: false)
+        let action = Action.callingAction(.callEnded)
+        let sut = makeSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState, expectedState)
+    }
+
+    func test_callingReducer_reduce_when_callEndRequested_then_OperationStatusCallEndRequested() {
+        let expectedState = CallingState(status: .none,
+                                         operationStatus: .callEndRequested,
+                                         isRecordingActive: false,
+                                         isTranscriptionActive: false)
+        let state = CallingState(status: .none,
+                                 isRecordingActive: false,
+                                 isTranscriptionActive: false)
+        let action = Action.callingAction(.callEndRequested)
+        let sut = makeSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState, expectedState)
+    }
+
+    func test_callingReducer_reduce_when_callRequestFailed_then_OperationStatusNone() {
+        let expectedState = CallingState(status: .none,
+                                         operationStatus: .none,
+                                         isRecordingActive: false,
+                                         isTranscriptionActive: false)
+        let state = CallingState(status: .none,
+                                 isRecordingActive: false,
+                                 isTranscriptionActive: false)
+        let action = Action.callingAction(.requestFailed)
+        let sut = makeSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState, expectedState)
+    }
 }
 
 extension CallingReducerTests {
