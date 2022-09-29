@@ -162,7 +162,6 @@ public class ChatComposite {
             if canDismiss {
                 toolkitHostingController?.dismissSelf()
             }
-            self?.events.onNavigateBack?()
         }
 
         return toolkitHostingController
