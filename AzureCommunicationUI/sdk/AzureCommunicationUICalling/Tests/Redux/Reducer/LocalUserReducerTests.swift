@@ -12,7 +12,7 @@ class LocalUserReducerTests: XCTestCase {
     func test_localUserReducer_reduce_when_localUserActionUpdateMicStateUpdated_then_localUserMuted() {
         let state = LocalUserState()
         let action = LocalUserAction.microphoneMuteStateUpdated(isMuted: true)
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.audioState.operation, .off)
@@ -21,7 +21,7 @@ class LocalUserReducerTests: XCTestCase {
     func test_localUserReducer_reduce_when_localUserActionUpdateMicStateUpdated_then_localUserUnMuted() {
         let state = LocalUserState()
         let action = LocalUserAction.microphoneMuteStateUpdated(isMuted: false)
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.audioState.operation, .on)
@@ -31,7 +31,7 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let expectedVideoId = "expected"
         let action = LocalUserAction.cameraOnSucceeded(videoStreamIdentifier: expectedVideoId)
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.cameraState.operation, .on)
@@ -41,7 +41,7 @@ class LocalUserReducerTests: XCTestCase {
     func test_localUserReducer_reduce_when_localUserActionUpdateCameraStatusOff_then_micStatusIsOff() {
         let state = LocalUserState()
         let action = LocalUserAction.cameraOffSucceeded
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.cameraState.operation, .off)
@@ -50,7 +50,7 @@ class LocalUserReducerTests: XCTestCase {
     func test_localUserReducer_reduce_when_localUserActionMicrophoneOnRequested_then_micStatusSwitching() {
         let state = LocalUserState()
         let action = LocalUserAction.microphoneOnTriggered
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.audioState.operation, .pending)
@@ -59,7 +59,7 @@ class LocalUserReducerTests: XCTestCase {
     func test_localUserReducer_reduce_when_localUserActionMicrophoneOffRequested_then_micStatusSwitching() {
         let state = LocalUserState()
         let action = LocalUserAction.microphoneOffTriggered
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.audioState.operation, .pending)
@@ -68,7 +68,7 @@ class LocalUserReducerTests: XCTestCase {
     func test_localUserReducer_reduce_when_localUserActionMicrophonePreviewOn_then_micStatusOn() {
         let state = LocalUserState()
         let action = LocalUserAction.microphonePreviewOn
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.audioState.operation, .on)
@@ -77,7 +77,7 @@ class LocalUserReducerTests: XCTestCase {
     func test_localUserReducer_reduce_when_localUserActionMicrophonePreviewOff_then_micStatusOff() {
         let state = LocalUserState()
         let action = LocalUserAction.microphonePreviewOff
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.audioState.operation, .off)
@@ -87,7 +87,7 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let expectedCameraDeviceStatus = LocalUserState.CameraDeviceSelectionStatus.switching
         let action = LocalUserAction.cameraSwitchTriggered
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.cameraState.device, expectedCameraDeviceStatus)
@@ -97,7 +97,7 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let expectedCameraDeviceStatus = LocalUserState.CameraDeviceSelectionStatus.back
         let action = LocalUserAction.cameraSwitchSucceeded(cameraDevice: .back)
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.cameraState.device, expectedCameraDeviceStatus)
@@ -107,7 +107,7 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let expectedCameraDeviceStatus = LocalUserState.CameraDeviceSelectionStatus.error(ErrorMocking.mockError)
         let action = LocalUserAction.cameraSwitchFailed(error: ErrorMocking.mockError)
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.cameraState.device, expectedCameraDeviceStatus)
@@ -116,7 +116,7 @@ class LocalUserReducerTests: XCTestCase {
     func test_localUserReducer_reduce_when_localUserActionAudioDeviceChangeRequested_then_audioDeviceStatusIsSpeakerRequested() {
         let state = LocalUserState()
         let action = LocalUserAction.audioDeviceChangeRequested(device: .speaker)
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.audioState.device, .speakerRequested)
@@ -125,7 +125,7 @@ class LocalUserReducerTests: XCTestCase {
     func test_localUserReducer_reduce_when_localUserAudioDeviceChangeRequested_then_audioDeviceStatusIsReceiverRequested() {
         let state = LocalUserState()
         let action = LocalUserAction.audioDeviceChangeRequested(device: .receiver)
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.audioState.device, .receiverRequested)
@@ -134,7 +134,7 @@ class LocalUserReducerTests: XCTestCase {
     func test_localUserReducer_reduce_when_localUserActionAudioDeviceChangeSucceeded_then_audioDeviceStatusIsSpeakerSelected() {
         let state = LocalUserState()
         let action = LocalUserAction.audioDeviceChangeSucceeded(device: .speaker)
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.audioState.device, .speakerSelected)
@@ -143,7 +143,7 @@ class LocalUserReducerTests: XCTestCase {
     func test_localUserReducer_reduce_when_localUserActionAudioDeviceChangeSucceeded_then_audioDeviceStatusIsReceiverSelected() {
         let state = LocalUserState()
         let action = LocalUserAction.audioDeviceChangeSucceeded(device: .receiver)
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.audioState.device, .receiverSelected)
@@ -153,7 +153,7 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let expectedAudioDeviceStatus = LocalUserState.AudioDeviceSelectionStatus.error(ErrorMocking.mockError)
         let action = LocalUserAction.audioDeviceChangeFailed(error: ErrorMocking.mockError)
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.audioState.device, expectedAudioDeviceStatus)
@@ -164,7 +164,7 @@ class LocalUserReducerTests: XCTestCase {
         let expectedCameraTransmissionStatus = LocalUserState.CameraTransmissionStatus.local
         let expectedCameraStatus = LocalUserState.CameraOperationalStatus.pending
         let action = LocalUserAction.cameraPreviewOnTriggered
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.cameraState.transmission, expectedCameraTransmissionStatus)
@@ -177,7 +177,7 @@ class LocalUserReducerTests: XCTestCase {
         let expectedCameraTransmissionStatus = LocalUserState.CameraTransmissionStatus.remote
         let expectedCameraStatus = LocalUserState.CameraOperationalStatus.pending
         let action = LocalUserAction.cameraOnTriggered
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.cameraState.transmission, expectedCameraTransmissionStatus)
@@ -188,7 +188,7 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let expectedCameraStatus = LocalUserState.CameraOperationalStatus.pending
         let action = LocalUserAction.cameraOffTriggered
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.cameraState.operation, expectedCameraStatus)
@@ -198,7 +198,7 @@ class LocalUserReducerTests: XCTestCase {
         let state = LocalUserState()
         let expectedCameraStatus = LocalUserState.CameraOperationalStatus.paused
         let action = LocalUserAction.cameraPausedSucceeded
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.cameraState.operation, expectedCameraStatus)
@@ -206,7 +206,7 @@ class LocalUserReducerTests: XCTestCase {
 }
 
 extension LocalUserReducerTests {
-    func getSUT() -> Reducer<LocalUserState, LocalUserAction> {
+    func makeSUT() -> Reducer<LocalUserState, LocalUserAction> {
         return .liveLocalUserReducer
     }
 }
