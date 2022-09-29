@@ -28,6 +28,17 @@ class LifeCycleReducerTests: XCTestCase {
 
         XCTAssertEqual(resultState.currentStatus, expectedState)
     }
+
+    func test_lifeCycleReducer_reduce_when_willTerminateAction_then_stateUpdated() {
+        let expectedState = AppStatus.willTerminate
+        let state = LifeCycleState(currentStatus: .willTerminate)
+        let action = LifecycleAction.willTerminate
+        let sut = makeSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState.currentStatus, expectedState)
+    }
+
 }
 
 extension LifeCycleReducerTests {
