@@ -69,9 +69,9 @@ class CallingMiddlewareHandlerTests: XCTestCase {
             expectation.fulfill()
         }
         let state: AppState = getState(callingState: .connected,
-                                             cameraStatus: .off,
-                                             cameraDeviceStatus: .front,
-                                             cameraPermission: .notAsked)
+                                       cameraStatus: .off,
+                                       cameraDeviceStatus: .front,
+                                       cameraPermission: .notAsked)
 
         _ = sut.requestCameraOn(state: state, dispatch: dispatch)
         wait(for: [expectation], timeout: 1)
@@ -213,50 +213,80 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         XCTAssertTrue(mockCallingService.startCallCalled)
     }
 
-    func test_callingMiddlewareHandler_endCall_when_returnNSError_then_updateCallError() {
+    func test_callingMiddlewareHandler_endCall_when_returnNSError_then_firstUpdateCallError() {
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Dispatch the new action")
 
         let errorCode = 50
         let error = getError(code: errorCode)
-
+        var callBackCount: Int = 0
         func dispatch(action: Action) {
-            XCTAssertTrue(action == Action.errorAction(.fatalErrorUpdated(internalError: .callEndFailed, error: error)))
-            switch action {
-            case let .errorAction(.fatalErrorUpdated(internalError, err)):
-                let nserror = err as? NSError
-                XCTAssertEqual(nserror?.code, errorCode)
-                XCTAssertEqual(internalError, .callEndFailed)
-                expectation.fulfill()
-            default:
-                XCTFail("Should not be default \(action)")
+            if callBackCount == 0 {
+                XCTAssertTrue(action == Action.errorAction(.fatalErrorUpdated(internalError: .callEndFailed, error: error)))
+                switch action {
+                case let .errorAction(.fatalErrorUpdated(internalError, err)):
+                    let nserror = err as? NSError
+                    XCTAssertEqual(nserror?.code, errorCode)
+                    XCTAssertEqual(internalError, .callEndFailed)
+                    expectation.fulfill()
+                default:
+                    XCTFail("Should not be default \(action)")
+                }
+
+                callBackCount += 1
             }
         }
         mockCallingService.error = error
         _ = sut.endCall(state: getEmptyState(), dispatch: dispatch)
         wait(for: [expectation], timeout: 1)
+
     }
 
-    func test_callingMiddlewareHandler_endCall_when_returnsCompositeError_then_updateClientError() {
+    func test_callingMiddlewareHandler_endCall_when_returnsCompositeError_then_firstUpdateClientError() {
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Dispatch the new action")
 
         let error = CallCompositeInternalError.cameraSwitchFailed
 
+        var callBackCount: Int = 0
         func dispatch(action: Action) {
-            XCTAssertTrue(action == Action.errorAction(.fatalErrorUpdated(internalError: error, error: nil)))
-            switch action {
-            case let .errorAction(.fatalErrorUpdated(internalError, err)):
-                XCTAssertEqual(internalError, error)
-                XCTAssertNil(err)
-                expectation.fulfill()
-            default:
-                XCTFail("Should not be default \(action)")
+            if callBackCount == 0 {
+                XCTAssertTrue(action == Action.errorAction(.fatalErrorUpdated(internalError: error, error: nil)))
+                switch action {
+                case let .errorAction(.fatalErrorUpdated(internalError, err)):
+                    XCTAssertEqual(internalError, error)
+                    XCTAssertNil(err)
+                    expectation.fulfill()
+                default:
+                    XCTFail("Should not be default \(action)")
+                }
+                callBackCount += 1
             }
         }
         mockCallingService.error = error
         _ = sut.endCall(state: getEmptyState(), dispatch: dispatch)
         wait(for: [expectation], timeout: 1)
+
+    }
+
+    func test_callingMiddlewareHandler_endCall_when_returnNSError_then_updateRequestFailed() {
+        let expectation = XCTestExpectation(description: "Dispatch the new action")
+        let sut = makeSUT()
+        let errorCode = 50
+        let error = getError(code: errorCode)
+        var callBackCount: Int = 0
+        func dispatch(action: Action) {
+            if callBackCount == 0 {
+                callBackCount += 1
+            } else if callBackCount == 1 {
+                XCTAssertTrue(action == Action.callingAction(.requestFailed))
+                expectation.fulfill()
+            }
+        }
+        mockCallingService.error = error
+        _ = sut.endCall(state: getEmptyState(), dispatch: dispatch)
+        wait(for: [expectation], timeout: 1)
+
     }
 
     func test_callingMiddlewareHandler_startCall_when_returnsNSError_then_updateCallingCoreError() {
