@@ -55,12 +55,12 @@ public class CallComposite {
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)
-        let toolkitHostingController = makeToolkitHostingController(router: dependencyContainer.resolve(),
+        let containerUIHostingController = makeContainerUIHostingController(router: dependencyContainer.resolve(),
                                                                     logger: dependencyContainer.resolve(),
                                                                     viewFactory: dependencyContainer.resolve(),
                                                                     isRightToLeft: localizationProvider.isRightToLeft)
         setupManagers(with: dependencyContainer)
-        present(toolkitHostingController)
+        present(containerUIHostingController)
     }
 
     /// Start call composite experience with joining a Teams meeting.
@@ -112,25 +112,25 @@ public class CallComposite {
         self.remoteParticipantsManager = nil
     }
 
-    private func makeToolkitHostingController(router: NavigationRouter,
-                                              logger: Logger,
-                                              viewFactory: CompositeViewFactoryProtocol,
-                                              isRightToLeft: Bool) -> ContainerUIHostingController {
+    private func makeContainerUIHostingController(router: NavigationRouter,
+                                                  logger: Logger,
+                                                  viewFactory: CompositeViewFactoryProtocol,
+                                                  isRightToLeft: Bool) -> ContainerUIHostingController {
         let rootView = ContainerView(router: router,
                                      logger: logger,
                                      viewFactory: viewFactory,
                                      isRightToLeft: isRightToLeft)
-        let toolkitHostingController = ContainerUIHostingController(rootView: rootView,
+        let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
                                                                     callComposite: self,
                                                                     isRightToLeft: isRightToLeft)
-        toolkitHostingController.modalPresentationStyle = .fullScreen
+        containerUIHostingController.modalPresentationStyle = .fullScreen
 
-        router.setDismissComposite { [weak toolkitHostingController, weak self] in
-            toolkitHostingController?.dismissSelf()
+        router.setDismissComposite { [weak containerUIHostingController, weak self] in
+            containerUIHostingController?.dismissSelf()
             self?.cleanUpManagers()
         }
 
-        return toolkitHostingController
+        return containerUIHostingController
     }
 
     private func present(_ viewController: UIViewController) {

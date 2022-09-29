@@ -85,12 +85,12 @@ public class ChatComposite {
 
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
 
-        let toolkitHostingController = makeToolkitHostingController(router: dependencyContainer.resolve(),
+        let containerUIHostingController = makeContainerUIHostingController(router: dependencyContainer.resolve(),
                                                                     logger: dependencyContainer.resolve(),
                                                                     viewFactory: dependencyContainer.resolve(),
                                                                     isRightToLeft: localizationProvider.isRightToLeft,
                                                                     canDismiss: true)
-        try present(toolkitHostingController)
+        try present(containerUIHostingController)
     }
 
     public func stop() {
@@ -144,27 +144,27 @@ public class ChatComposite {
         self.compositeManager = dependencyContainer.resolve() as CompositeManagerProtocol
     }
 
-    private func makeToolkitHostingController(router: NavigationRouter,
-                                              logger: Logger,
-                                              viewFactory: CompositeViewFactoryProtocol,
-                                              isRightToLeft: Bool,
-                                              canDismiss: Bool) -> ContainerUIHostingController {
+    private func makeContainerUIHostingController(router: NavigationRouter,
+                                                  logger: Logger,
+                                                  viewFactory: CompositeViewFactoryProtocol,
+                                                  isRightToLeft: Bool,
+                                                  canDismiss: Bool) -> ContainerUIHostingController {
         let rootView = ContainerView(router: router,
                                      logger: logger,
                                      viewFactory: viewFactory,
                                      isRightToLeft: isRightToLeft)
-        let toolkitHostingController = ContainerUIHostingController(rootView: rootView,
+        let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
                                                                     chatComposite: self,
                                                                     isRightToLeft: isRightToLeft)
-        toolkitHostingController.modalPresentationStyle = .fullScreen
+        containerUIHostingController.modalPresentationStyle = .fullScreen
 
-        router.setDismissComposite { [weak toolkitHostingController, weak self] in
+        router.setDismissComposite { [weak containerUIHostingController, weak self] in
             if canDismiss {
-                toolkitHostingController?.dismissSelf()
+                containerUIHostingController?.dismissSelf()
             }
         }
 
-        return toolkitHostingController
+        return containerUIHostingController
     }
 
     private func present(_ viewController: UIViewController) throws {
