@@ -75,3 +75,14 @@ class ParticipantsListCellViewModel {
         localizationProvider.getLocalizedString(.onHold)
     }
 }
+
+extension ParticipantsListCellViewModel: Equatable {
+    static func == (lhs: ParticipantsListCellViewModel,
+                    rhs: ParticipantsListCellViewModel) -> Bool {
+        lhs.participantId == rhs.participantId &&
+        lhs.isMuted == rhs.isMuted &&
+        lhs.isHold == rhs.isHold &&
+        lhs.isLocalParticipant == rhs.isLocalParticipant &&
+        lhs.displayName == rhs.displayName
+    }
+}

@@ -21,3 +21,12 @@ class AudioDevicesListCellViewModel {
         self.switchAudioDevice = onSelected
     }
 }
+
+extension AudioDevicesListCellViewModel: Equatable {
+    static func == (lhs: AudioDevicesListCellViewModel,
+                    rhs: AudioDevicesListCellViewModel) -> Bool {
+        return lhs.title == rhs.title &&
+        lhs.isSelected == rhs.isSelected &&
+        lhs.icon == rhs.icon
+    }
+}

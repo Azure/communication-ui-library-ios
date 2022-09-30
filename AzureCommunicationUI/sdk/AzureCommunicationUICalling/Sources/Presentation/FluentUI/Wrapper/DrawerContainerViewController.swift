@@ -6,7 +6,7 @@
 import FluentUI
 import UIKit
 
-class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelegate {
+class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerControllerDelegate {
     weak var delegate: DrawerControllerDelegate?
     lazy var drawerTableView: UITableView? = nil
     let backgroundColor: UIColor = UIDevice.current.userInterfaceIdiom == .pad
@@ -57,18 +57,31 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         }
     }
 
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        resizeDrawer()
+    }
+
     func dismissDrawer(animated: Bool = false) {
         self.controller?.dismiss(animated: animated)
     }
 
     func updateDrawerList(items: [T]) {
-        self.items = items
-        // if table view is not ready, do nothing
-        guard let tableView = drawerTableView,
-                tableView.contentSize != CGSize.zero else {
+        // if contents are identical, do nothing
+        guard self.items != items else {
             return
         }
-        // otherwise, set preferredContentSize in FluentUI
+        // if contents are different but total count stays the same
+        // reload table and skip height update
+        guard self.items.count != items.count else {
+            self.items = items
+            DispatchQueue.main.async {
+                self.drawerTableView?.reloadData()
+            }
+            return
+        }
+        // else reload table and update drawer height
+        self.items = items
         resizeDrawer()
     }
 
@@ -113,7 +126,9 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         var isScrollEnabled = !isiPhoneLayout
 
         DispatchQueue.main.async { [weak self] in
-            guard let self = self, let drawerTableView = self.drawerTableView else {
+            guard let self = self,
+                  let drawerTableView = self.drawerTableView,
+                  drawerTableView.contentSize != CGSize.zero else {
                 return
             }
 
