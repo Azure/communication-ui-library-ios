@@ -105,7 +105,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     }
 
     func getRemoteParticipant<ParticipantType, StreamType>(_ identifier: String)
-    -> RemoteParticipant<ParticipantType, StreamType>? {
+    -> CompositeRemoteParticipant<ParticipantType, StreamType>? {
         guard let call = call else {
             return nil
         }
@@ -115,15 +115,15 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         })
 
         let remoteParticipant = AzureCommunicationCalling.RemoteParticipant
-            .toUiRemoteParticipant(acsRemoteParticipant: remote)
-        guard let castValue = remoteParticipant as? RemoteParticipant<ParticipantType, StreamType> else {
+            .toCompositeRemoteParticipant(acsRemoteParticipant: remote)
+        guard let castValue = remoteParticipant as? CompositeRemoteParticipant<ParticipantType, StreamType> else {
             return nil
         }
         return castValue
     }
 
     func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String)
-    -> LocalVideoStream<LocalVideoStreamType>? {
+    -> CompositeLocalVideoStream<LocalVideoStreamType>? {
 
         guard getLocalVideoStreamIdentifier() == identifier else {
             return nil
@@ -135,8 +135,8 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         guard videoStream is LocalVideoStreamType else {
             return nil
         }
-        return LocalVideoStream(
-            mediaStreamType: videoStream.mediaStreamType.asUiMediaStreamType,
+        return CompositeLocalVideoStream(
+            mediaStreamType: videoStream.mediaStreamType.asCompositeMediaStreamType,
             wrappedObject: castVideoStream
         )
     }

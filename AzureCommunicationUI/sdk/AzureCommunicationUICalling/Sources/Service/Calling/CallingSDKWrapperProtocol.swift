@@ -15,13 +15,13 @@ protocol RemoteParticipantIdentifable {
     var identifier: CommunicationIdentifier { get }
 }
 
-class RemoteParticipant<WrappedType, VideoStreamType>: RemoteParticipantIdentifable {
+class CompositeRemoteParticipant<WrappedType, VideoStreamType>: RemoteParticipantIdentifable {
     var identifier: CommunicationIdentifier
-    var videoStreams: [RemoteVideoStream<VideoStreamType>]
+    var videoStreams: [CompositeRemoteVideoStream<VideoStreamType>]
     var wrappedObject: WrappedType
 
     init(id: CommunicationIdentifier,
-         videoStreams: [RemoteVideoStream<VideoStreamType>],
+         videoStreams: [CompositeRemoteVideoStream<VideoStreamType>],
          wrappedObject: WrappedType) {
         self.identifier = id
         self.videoStreams = videoStreams
@@ -29,28 +29,28 @@ class RemoteParticipant<WrappedType, VideoStreamType>: RemoteParticipantIdentifa
     }
 }
 
-enum MediaStreamType {
+enum CompositeMediaStreamType {
     case cameraVideo
     case screenSharing
 }
 
-class RemoteVideoStream<WrappedType> {
+class CompositeRemoteVideoStream<WrappedType> {
     var id: Int
-    var mediaStreamType: MediaStreamType = .cameraVideo
+    var mediaStreamType: CompositeMediaStreamType = .cameraVideo
     var wrappedObject: WrappedType
 
-    init(id: Int, mediaStreamType: MediaStreamType, wrappedObject: WrappedType) {
+    init(id: Int, mediaStreamType: CompositeMediaStreamType, wrappedObject: WrappedType) {
         self.id = id
         self.mediaStreamType = mediaStreamType
         self.wrappedObject = wrappedObject
     }
 }
 
-class LocalVideoStream<WrappedType> {
-    var mediaStreamType: MediaStreamType = .cameraVideo
+class CompositeLocalVideoStream<WrappedType> {
+    var mediaStreamType: CompositeMediaStreamType = .cameraVideo
     var wrappedObject: WrappedType
 
-    init(mediaStreamType: MediaStreamType, wrappedObject: WrappedType) {
+    init(mediaStreamType: CompositeMediaStreamType, wrappedObject: WrappedType) {
         self.mediaStreamType = mediaStreamType
         self.wrappedObject = wrappedObject
     }
@@ -58,8 +58,9 @@ class LocalVideoStream<WrappedType> {
 
 protocol CallingSDKWrapperProtocol {
     func getRemoteParticipant<ParticipantType, StreamType>(_ identifier: String)
-    -> RemoteParticipant<ParticipantType, StreamType>?
-    func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String) -> LocalVideoStream<LocalVideoStreamType>?
+    -> CompositeRemoteParticipant<ParticipantType, StreamType>?
+    func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String)
+    -> CompositeLocalVideoStream<LocalVideoStreamType>?
 
     func startPreviewVideoStream() async throws -> String
     func setupCall() async throws

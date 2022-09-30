@@ -6,8 +6,8 @@
 import AzureCommunicationCalling
 import Foundation
 
-extension LocalVideoStream {
-    static func nativeAccMediaStreamType(type: MediaStreamType)
+extension CompositeLocalVideoStream {
+    static func nativeAccMediaStreamType(type: CompositeMediaStreamType)
     -> AzureCommunicationCalling.MediaStreamType {
         switch type {
         case .cameraVideo:

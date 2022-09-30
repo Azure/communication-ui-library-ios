@@ -28,18 +28,18 @@ extension AzureCommunicationCalling.RemoteParticipant {
                                     cameraVideoStreamModel: cameraVideoStreamModel)
     }
 
-    static func toUiRemoteParticipant(
+    static func toCompositeRemoteParticipant(
         acsRemoteParticipant: AzureCommunicationCalling.RemoteParticipant?
-    ) -> RemoteParticipant< AzureCommunicationCalling.RemoteParticipant,
+    ) -> CompositeRemoteParticipant< AzureCommunicationCalling.RemoteParticipant,
                             AzureCommunicationCalling.RemoteVideoStream>? {
         guard let remote = acsRemoteParticipant else {
             return nil
         }
 
-        return RemoteParticipant(
+        return CompositeRemoteParticipant(
             id: remote.identifier,
             videoStreams: remote.videoStreams
-                .map(AzureCommunicationCalling.RemoteVideoStream.toUiRemoteVideoStream(acsRemoteVideoStream:)
+                .map(AzureCommunicationCalling.RemoteVideoStream.toCompositeRemoteVideoStream(acsRemoteVideoStream:)
                     ),
             wrappedObject: remote
         )
@@ -47,12 +47,12 @@ extension AzureCommunicationCalling.RemoteParticipant {
 }
 
 extension AzureCommunicationCalling.RemoteVideoStream {
-    static func toUiRemoteVideoStream(
+    static func toCompositeRemoteVideoStream(
         acsRemoteVideoStream: AzureCommunicationCalling.RemoteVideoStream
-    ) -> RemoteVideoStream<AzureCommunicationCalling.RemoteVideoStream> {
-        RemoteVideoStream(
+    ) -> CompositeRemoteVideoStream<AzureCommunicationCalling.RemoteVideoStream> {
+        CompositeRemoteVideoStream(
             id: Int(acsRemoteVideoStream.id),
-            mediaStreamType: acsRemoteVideoStream.mediaStreamType.asUiMediaStreamType,
+            mediaStreamType: acsRemoteVideoStream.mediaStreamType.asCompositeMediaStreamType,
             wrappedObject: acsRemoteVideoStream
         )
     }
@@ -70,7 +70,7 @@ extension AzureCommunicationCalling.MediaStreamType {
         }
     }
 
-    var asUiMediaStreamType: MediaStreamType {
+    var asCompositeMediaStreamType: CompositeMediaStreamType {
         switch self {
         case .screenSharing:
             return .screenSharing

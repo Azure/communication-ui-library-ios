@@ -29,7 +29,7 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
     struct VideoStreamCache {
         var renderer: VideoStreamRenderer
         var rendererView: RendererView
-        var mediaStreamType: MediaStreamType
+        var mediaStreamType: CompositeMediaStreamType
     }
     private let logger: Logger
     private var displayedRemoteParticipantsRendererView = MappedSequence<String, VideoStreamCache>()
@@ -73,7 +73,7 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
             return localRenderCache.rendererView
         }
 
-        guard let videoStream: LocalVideoStream<AzureCommunicationCalling.LocalVideoStream> =
+        guard let videoStream: CompositeLocalVideoStream<AzureCommunicationCalling.LocalVideoStream> =
                 callingSDKWrapper.getLocalVideoStream(videoStreamId) else {
             return nil
         }
@@ -115,7 +115,7 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
                                                streamSize: streamSize)
         }
 
-        guard let participant: RemoteParticipant< AzureCommunicationCalling.RemoteParticipant,
+        guard let participant: CompositeRemoteParticipant< AzureCommunicationCalling.RemoteParticipant,
                                                   AzureCommunicationCalling.RemoteVideoStream> =
                 callingSDKWrapper.getRemoteParticipant(userIdentifier),
               let videoStream = participant.videoStreams.first(where: { stream in
