@@ -30,6 +30,12 @@ struct CompositeButton: UIViewRepresentable {
         return button
     }
 
-    func updateUIView(_ uiView: FluentUI.Button, context: Context) {
+    func updateUIView(_ button: FluentUI.Button, context: Context) {
+        let sizeCategory = UIApplication.shared.preferredContentSizeCategory
+        if sizeCategory >= UIContentSizeCategory.accessibilityMedium {
+            button.titleLabel?.font = Fonts.button1Accessibility
+        } else {
+            button.titleLabel?.font = Fonts.button1
+        }
     }
 }
