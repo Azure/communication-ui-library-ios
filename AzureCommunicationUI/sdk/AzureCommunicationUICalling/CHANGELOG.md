@@ -1,6 +1,6 @@
 # Azure Communication UI Calling Release History
 
-## 1.1.0-beta.1 (TBA)
+## 1.1.0-beta.1 (2022-10-03)
 ### New Features
 - Implemented new error message `cameraFailure` that can be sent to developers when:
     - turning on camera fails. [#311](https://github.com/Azure/communication-ui-library-ios/pull/311)
