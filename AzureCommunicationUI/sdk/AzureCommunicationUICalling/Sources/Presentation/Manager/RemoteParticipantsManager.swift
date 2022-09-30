@@ -72,8 +72,8 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
 
         let joinedParticipantsCommunicationIds: [CommunicationIdentifier] = joinedParticipantsIds
             .compactMap {
-                let participant: RemoteParticipant< AzureCommunicationCalling.RemoteParticipant,
-                                                   AzureCommunicationCalling.RemoteVideoStream>? =
+                let participant: RemoteParticipant< RemoteParticipantIdentifable,
+                                                   AnyObject>? =
                 callingSDKWrapper.getRemoteParticipant($0)
                 return participant?.identifier
             }

@@ -11,7 +11,11 @@ enum CameraDevice {
     case back
 }
 
-class RemoteParticipant<WrappedType, VideoStreamType> {
+protocol RemoteParticipantIdentifable {
+    var identifier: CommunicationIdentifier { get }
+}
+
+class RemoteParticipant<WrappedType, VideoStreamType>: RemoteParticipantIdentifable {
     var identifier: CommunicationIdentifier
     var videoStreams: [RemoteVideoStream<VideoStreamType>]
     var wrappedObject: WrappedType
