@@ -18,7 +18,11 @@ struct LockPhoneOrientation: ViewModifier {
         case .iphonePortraitScreenSize:
             return .portrait
         case .iphoneLandscapeScreenSize:
-            return UIDevice.current.orientation == .landscapeLeft ? .landscapeRight : .landscapeLeft
+            if UIDevice.current.orientation.isLandscape {
+                return UIDevice.current.orientation == .landscapeLeft ? .landscapeRight : .landscapeLeft
+            } else {
+                return .landscape
+            }
         default:
             return SupportedOrientationsPreferenceKey.defaultValue
         }
