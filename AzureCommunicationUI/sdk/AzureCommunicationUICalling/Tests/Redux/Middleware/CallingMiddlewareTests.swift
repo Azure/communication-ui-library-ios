@@ -12,18 +12,15 @@ import Combine
 class CallingMiddlewareTests: XCTestCase {
 
     var mockMiddlewareHandler: CallingMiddlewareHandlerMocking!
-    var mockMiddleware: Middleware<AppState>!
 
     override func setUp() {
         super.setUp()
         mockMiddlewareHandler = CallingMiddlewareHandlerMocking()
-        mockMiddleware = .liveCallingMiddleware(callingMiddlewareHandler: mockMiddlewareHandler)
     }
 
     override func tearDown() {
         super.tearDown()
         mockMiddlewareHandler = nil
-        mockMiddleware = nil
     }
 
     func test_callingMiddleware_apply_when_setupCallCallingAction_then_handlerSetupCallBeingCalled() {
@@ -211,6 +208,7 @@ extension CallingMiddlewareTests {
     }
 
     private func getEmptyCallingMiddlewareFunction() -> (@escaping ActionDispatch) -> ActionDispatch {
+        let mockMiddleware: Middleware<AppState> = .liveCallingMiddleware(callingMiddlewareHandler: mockMiddlewareHandler)
         return mockMiddleware.apply(getEmptyDispatch(), getEmptyState)
     }
 
