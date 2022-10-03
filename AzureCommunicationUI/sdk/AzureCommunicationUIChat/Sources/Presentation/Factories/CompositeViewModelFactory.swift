@@ -16,31 +16,33 @@ protocol CompositeViewModelFactoryProtocol {
 }
 
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
-    private let messageRepository: MessageRepositoryManagerProtocol
     private let logger: Logger
-    private let store: Store<AppState>
-    private let accessibilityProvider: AccessibilityProviderProtocol
-    private let localizationProvider: LocalizationProviderProtocol
 
-    private weak var chatViewModel: ChatViewModel?
+    private weak var setupViewModel: SetupViewModel?
 
     // unit test needed
     // - only skeleton code to show view, class not finalized yet
-    init(messageRepository: MessageRepositoryManagerProtocol,
-         logger: Logger,
-         store: Store<AppState>,
-         localizationProvider: LocalizationProviderProtocol,
-         accessibilityProvider: AccessibilityProviderProtocol) {
-        self.messageRepository = messageRepository
+    init(logger: Logger) {
         self.logger = logger
-        self.store = store
-        self.accessibilityProvider = accessibilityProvider
-        self.localizationProvider = localizationProvider
     }
 
     // MARK: CompositeViewModels
     func getChatViewModel() -> ChatViewModel {
-        return ChatViewModel()
+        guard let viewModel = self.setupViewModel else {
+            let viewModel = SetupViewModel(compositeViewModelFactory: self,
+                                           logger: logger,
+                                           store: store,
+                                           networkManager: networkManager,
+                                           localizationProvider: localizationProvider,
+                                           navigationBarViewData: localOptions?.navigationBarViewData)
+            self.setupViewModel = viewModel
+            self.callingViewModel = nil
+            return viewModel
+        }
+        return viewModel
+        return ChatViewModel(
+            compositeViewModelFactory: compositeViewModelFactory,
+            logger: logger)
     }
 
     // MARK: ComponentViewModels

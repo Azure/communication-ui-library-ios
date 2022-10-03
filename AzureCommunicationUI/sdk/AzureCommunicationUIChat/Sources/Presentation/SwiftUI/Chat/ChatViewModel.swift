@@ -4,5 +4,21 @@
 //
 
 import Foundation
+import Combine
 
-class ChatViewModel: ObservableObject {}
+class ChatViewModel: ObservableObject {
+    private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
+    private let logger: Logger
+
+    private var cancellables = Set<AnyCancellable>()
+
+    var participantsLastUpdatedTimestamp = Date()
+
+    @Published var participants: [ParticipantInfoModel] = []
+
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
+         logger: Logger) {
+        self.compositeViewModelFactory = compositeViewModelFactory
+        self.logger = logger
+    }
+}

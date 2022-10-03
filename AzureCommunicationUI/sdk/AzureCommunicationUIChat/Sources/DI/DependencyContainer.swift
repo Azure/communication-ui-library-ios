@@ -56,11 +56,8 @@ final class DependencyContainer {
                                   chatCompositeEventsHandler: chatCompositeEventsHandler) as NavigationRouter)
         register(AccessibilityProvider() as AccessibilityProviderProtocol)
         register(LocalizationProvider(logger: resolve()) as LocalizationProviderProtocol)
-        register(CompositeViewModelFactory(messageRepository: resolve(),
-                                           logger: resolve(),
-                                           store: resolve(),
-                                           localizationProvider: resolve(),
-                                           accessibilityProvider: resolve()) as CompositeViewModelFactoryProtocol)
+        register(CompositeViewModelFactory(logger: resolve(),
+                                          ) as CompositeViewModelFactoryProtocol)
         register(CompositeViewFactory(logger: resolve(),
                                       compositeViewModelFactory: resolve()) as CompositeViewFactoryProtocol)
         register(ErrorManager(store: resolve(),
