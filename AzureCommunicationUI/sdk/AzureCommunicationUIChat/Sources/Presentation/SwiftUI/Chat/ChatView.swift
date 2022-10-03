@@ -10,8 +10,9 @@ struct ChatView: View {
 
     var body: some View {
         VStack {
-            titleHeader
+            topBar
             Divider()
+            Spacer()
 //            messages
 //            TypingParticipantsView(viewModel: viewModel.typingParticipantsViewModel)
         }
@@ -20,22 +21,30 @@ struct ChatView: View {
         }
     }
 
-    var titleHeader: some View {
+    var topBar: some View {
         ZStack {
             HStack {
-                Button(action: {
-                    // Go back
-                }, label: {
-                    Text("Back")
-                        .padding()
-                })
+                backButton
                 Spacer()
             }
-            VStack {
-                Text("Chat")
-                    .font(.body)
-                numberOfParticipants
-            }
+            header
+        }
+    }
+
+    var backButton: some View {
+        Button(action: {
+            // Go back
+        }, label: {
+            Text("Back")
+                .padding()
+        })
+    }
+
+    var header: some View {
+        VStack {
+            Text("Chat")
+                .font(.body)
+            numberOfParticipants
         }
     }
 

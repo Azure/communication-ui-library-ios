@@ -9,6 +9,7 @@ import Combine
 class ChatViewModel: ObservableObject {
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
+    private let store: Store<AppState>
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -17,8 +18,19 @@ class ChatViewModel: ObservableObject {
     @Published var participants: [ParticipantInfoModel] = []
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
-         logger: Logger) {
+         logger: Logger,
+         store: Store<AppState>) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.logger = logger
+        self.store = store
+
+        store.$state
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                self?.receive(state)
+            }.store(in: &cancellables)
+    }
+
+    func receive(_ state: AppState) {
     }
 }

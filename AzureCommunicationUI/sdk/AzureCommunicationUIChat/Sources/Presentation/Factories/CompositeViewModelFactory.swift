@@ -17,32 +17,28 @@ protocol CompositeViewModelFactoryProtocol {
 
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
+    private let store: Store<AppState>
 
-    private weak var setupViewModel: SetupViewModel?
+    private weak var chatViewModel: ChatViewModel?
 
     // unit test needed
     // - only skeleton code to show view, class not finalized yet
-    init(logger: Logger) {
+    init(logger: Logger,
+         store: Store<AppState>) {
         self.logger = logger
+        self.store = store
     }
 
     // MARK: CompositeViewModels
     func getChatViewModel() -> ChatViewModel {
-        guard let viewModel = self.setupViewModel else {
-            let viewModel = SetupViewModel(compositeViewModelFactory: self,
+        guard let viewModel = self.chatViewModel else {
+            let viewModel = ChatViewModel(compositeViewModelFactory: self,
                                            logger: logger,
-                                           store: store,
-                                           networkManager: networkManager,
-                                           localizationProvider: localizationProvider,
-                                           navigationBarViewData: localOptions?.navigationBarViewData)
-            self.setupViewModel = viewModel
-            self.callingViewModel = nil
+                                           store: store)
+            self.chatViewModel = viewModel
             return viewModel
         }
         return viewModel
-        return ChatViewModel(
-            compositeViewModelFactory: compositeViewModelFactory,
-            logger: logger)
     }
 
     // MARK: ComponentViewModels
