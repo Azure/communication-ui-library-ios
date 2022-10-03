@@ -77,9 +77,9 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
                 callingSDKWrapper.getLocalVideoStream(videoStreamId) else {
             return nil
         }
-        let nativeVideoStream = videoStream.wrappedObject
+        let wrappedVideoStream = videoStream.wrappedObject
         do {
-            let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(localVideoStream: nativeVideoStream)
+            let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(localVideoStream: wrappedVideoStream)
             let newRendererView: RendererView = try newRenderer.createView(
                 withOptions: CreateViewOptions(scalingMode: .crop))
 
@@ -124,10 +124,10 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
             return nil
         }
 
-        let nativeStream = videoStream.wrappedObject
+        let wrappedVideoStream = videoStream.wrappedObject
         do {
             let options = CreateViewOptions(scalingMode: videoStream.mediaStreamType == .screenSharing ? .fit : .crop)
-            let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(remoteVideoStream: nativeStream)
+            let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(remoteVideoStream: wrappedVideoStream)
             let newRendererView: RendererView = try newRenderer.createView(withOptions: options)
 
             let cache = VideoStreamCache(renderer: newRenderer,
