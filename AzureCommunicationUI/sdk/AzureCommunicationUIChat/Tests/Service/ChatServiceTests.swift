@@ -33,7 +33,7 @@ class ChatServiceTests: XCTestCase {
     }
 
     func test_chatService_initialize_shouldCallchatSDKWrapperinitialize() async throws {
-        _ = try await chatService.initalize()
+        try await chatService.initalize()
 
         XCTAssertTrue(chatSDKWrapper.initializeCalled)
     }

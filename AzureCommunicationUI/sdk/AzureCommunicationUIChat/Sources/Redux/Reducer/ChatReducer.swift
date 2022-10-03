@@ -14,7 +14,7 @@ extension Reducer where State == ChatState,
         var topic = chatState.topic
 
         switch action {
-        case .chatAction(.topicUpdated(let newTopic)):
+        case .chatAction(.topicRetrieved(let newTopic)):
             topic = newTopic
         default:
             return chatState

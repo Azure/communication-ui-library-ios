@@ -7,5 +7,5 @@ import Foundation
 
 enum ChatAction: Equatable {
     case initializeChat
-    case topicUpdated(topic: String)
+    case topicRetrieved(topic: String)
 }

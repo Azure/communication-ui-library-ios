@@ -29,13 +29,17 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         logger.debug("CallingSDKWrapper deallocated")
     }
 
-    func initializeChat() async throws -> String {
+    func initializeChat() async throws {
         do {
             try createChatClient()
             try createChatThreadClient()
+
+            // Make request to ChatSDK to verfy token
+            // Sideeffect: topic send through Subject to middleware
             let topic = try await retrieveThreadTopic()
+            print("topic: \(topic)")
+
             try registerRealTimeNotifications()
-            return topic
         } catch {
             throw error
         }

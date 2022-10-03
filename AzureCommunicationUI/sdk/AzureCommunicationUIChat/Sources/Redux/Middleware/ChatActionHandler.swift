@@ -31,8 +31,7 @@ class ChatActionHandler: ChatActionHandling {
                     serviceListener: ChatServiceEventHandling) -> Task<Void, Never> {
         Task {
             do {
-                let topic = try await chatService.initalize()
-                dispatch(.chatAction(.topicUpdated(topic: topic)))
+                try await chatService.initalize()
             } catch {
                 // to do error handling if for invalid token
                 print("ChatActionHandler `initialize` catch not implemented")

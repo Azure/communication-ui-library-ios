@@ -16,16 +16,9 @@ class ChatServiceMocking: ChatServiceProtocol {
     var initializeCalled: Bool = false
     var getInitialMessagesCalled: Bool = false
 
-    func initalize() async throws -> String {
+    func initalize() async throws {
         initializeCalled = true
         try await possibleErrorTask().value
-        let task = Task<String, Error> {
-            if let error = self.error {
-                throw error
-            }
-            return self.topic
-        }
-        return try await task.value
     }
 
     func getInitialMessages() async throws -> [ChatMessageInfoModel] {
