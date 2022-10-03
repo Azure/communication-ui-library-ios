@@ -11,11 +11,7 @@ enum CameraDevice {
     case back
 }
 
-protocol RemoteParticipantIdentifable {
-    var identifier: CommunicationIdentifier { get }
-}
-
-class CompositeRemoteParticipant<WrappedType, VideoStreamType>: RemoteParticipantIdentifable {
+class CompositeRemoteParticipant<WrappedType, VideoStreamType> {
     var identifier: CommunicationIdentifier
     var videoStreams: [CompositeRemoteVideoStream<VideoStreamType>]
     var wrappedObject: WrappedType
@@ -61,6 +57,7 @@ protocol CallingSDKWrapperProtocol {
     -> CompositeRemoteParticipant<ParticipantType, StreamType>?
     func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String)
     -> CompositeLocalVideoStream<LocalVideoStreamType>?
+    func communicationIdForParticipant(identifier: String) -> CommunicationIdentifier?
 
     func startPreviewVideoStream() async throws -> String
     func setupCall() async throws
