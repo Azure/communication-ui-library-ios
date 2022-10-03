@@ -6,8 +6,8 @@
 import Foundation
 @testable import AzureCommunicationUIChat
 
-class MessageRepositoryHandlerMocking: MessageRepositoryMiddlewareHandling {
-    func loadInitialMessage(messages: [ChatMessageInfoModel]) {
+class ChatServiceEventHandlerMocking: ChatServiceEventHandling {
+    func subscription(dispatch: @escaping ActionDispatch) {
         // stub: to be implemented
     }
 }

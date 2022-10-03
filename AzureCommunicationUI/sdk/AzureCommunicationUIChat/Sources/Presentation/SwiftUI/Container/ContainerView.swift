@@ -6,7 +6,26 @@
 import SwiftUI
 
 struct ContainerView: View {
+
+    @ObservedObject var router: NavigationRouter
+
+    let logger: Logger
+    let viewFactory: CompositeViewFactoryProtocol
+    let isRightToLeft: Bool
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Group {
+            switch router.currentView {
+            case .chatView:
+                chatView
+            }
+        }
+        .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
     }
+
+    var chatView: ChatView {
+        logger.debug("Displaying view: chatView")
+        return viewFactory.makeChatView()
+    }
+
 }

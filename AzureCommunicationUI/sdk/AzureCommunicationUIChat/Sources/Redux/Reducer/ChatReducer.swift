@@ -13,8 +13,8 @@ extension Reducer where State == ChatState,
         var threadId = chatState.threadId
 
         switch action {
-        case .chatAction(.chatStartRequested):
-            print("ChatReducer `chatStartRequested` not implemented")
+        case .chatAction(.initializeChat):
+            print("ChatReducer `initializeChat` not implemented")
         default:
             return chatState
         }

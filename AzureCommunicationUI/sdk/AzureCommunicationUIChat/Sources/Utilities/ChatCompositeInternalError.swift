@@ -11,6 +11,7 @@ enum ChatCompositeInternalError: String, Error, Equatable {
     case chatEndFailed
     case chatEvicted
     case chatDenied
+    case parseThreadIdFailed
 
     func toChatCompositeErrorCode() -> String? {
         switch self {
@@ -20,6 +21,8 @@ enum ChatCompositeInternalError: String, Error, Equatable {
             return ChatCompositeErrorCode.chatJoin
         case .chatEndFailed:
             return ChatCompositeErrorCode.chatEnd
+        case .parseThreadIdFailed:
+            return ChatCompositeErrorCode.parseThreadIdFailed
         case .chatEvicted,
                 .chatDenied:
             return nil
@@ -30,7 +33,8 @@ enum ChatCompositeInternalError: String, Error, Equatable {
         switch self {
         case .chatTokenFailed,
                 .chatJoinFailed,
-                .chatEndFailed:
+                .chatEndFailed,
+                .parseThreadIdFailed:
             return true
         case .chatEvicted,
                 .chatDenied:

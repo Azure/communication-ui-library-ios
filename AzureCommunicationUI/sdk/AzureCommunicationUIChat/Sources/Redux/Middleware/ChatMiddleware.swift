@@ -8,7 +8,7 @@ import Foundation
 extension Middleware {
     static func liveChatMiddleware(
         chatActionHandler actionHandler: ChatActionHandling,
-        chatServiceListener serviceListener: ChatServiceEventHandling)
+        chatServiceEventHandler serviceEventHandler: ChatServiceEventHandling)
     -> Middleware<AppState> {
         Middleware<AppState>(
             apply: { dispatch, getState in
@@ -18,7 +18,7 @@ extension Middleware {
                         case .lifecycleAction(let lifecycleAction):
                             handleLifecycleAction(lifecycleAction, actionHandler, getState, dispatch)
                         case .chatAction(let chatAction):
-                            handleChatMessageAction(chatAction, actionHandler, serviceListener, getState, dispatch)
+                            handleChatMessageAction(chatAction, actionHandler, serviceEventHandler, getState, dispatch)
                         case .participantsAction(let participantsAction):
                             handleParticipantsAction(participantsAction, actionHandler, getState, dispatch)
                         case .errorAction(_),
