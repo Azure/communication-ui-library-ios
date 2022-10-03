@@ -3,7 +3,8 @@
 ## TBA (upcoming release)
 ### New Features
 - Implemented new feature that remove the local user from the participant list when the app will be terminated [#352](https://github.com/Azure/communication-ui-library-ios/pull/352)
-    
+### Bugs Fixed
+- Fixed issue that the error is mutable inside CallCompositeError [#364](https://github.com/Azure/communication-ui-library-ios/pull/364)
     
 ## 1.1.0-beta.1 (TBA)
 ### New Features
