@@ -29,9 +29,13 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         logger.debug("CallingSDKWrapper deallocated")
     }
 
-    func initializeChat() async throws {
+    func initializeChat() async throws -> String {
         do {
-            print("ChatSDKWrapper `initializeChat` not implemented")
+            try createChatClient()
+            try createChatThreadClient()
+            let topic = try await retrieveThreadTopic()
+            try registerRealTimeNotifications()
+            return topic
         } catch {
             throw error
         }
@@ -46,7 +50,55 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         }
     }
 
-    func registerEvents() {
+    private func createChatClient() throws {
+        do {
+            print("Creating Chat Client...")
+            self.chatClient = try ChatClient(
+                endpoint: self.chatConfiguration.endpoint,
+                credential: self.chatConfiguration.credential,
+                withOptions: AzureCommunicationChatClientOptions())
+        } catch {
+            logger.error( "Create Chat Client failed: \(error)")
+            throw error
+        }
+    }
+
+    private func createChatThreadClient() throws {
+        do {
+            print("Creating Chat Thread Client...")
+            self.chatThreadClient = try chatClient?.createClient(
+                forThread: self.chatConfiguration.chatThreadId)
+        } catch {
+            logger.error("Create Chat Thread Client failed: \(error)")
+            throw error
+        }
+    }
+
+    private func retrieveThreadTopic() async throws -> String {
+        // Make request to get `topic` to verify valid credential
+        do {
+            return try await withCheckedThrowingContinuation { continuation in
+                chatThreadClient?.getProperties { result, _ in
+                    switch result {
+                    case .success(let threadProperties):
+                        continuation.resume(returning: threadProperties.topic)
+                    case .failure(let error):
+                        self.logger.error("Retrieve Thread Topic failed: \(error.errorDescription)")
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        } catch {
+            logger.error("Retrieve Thread Topic failed: \(error)")
+            throw error
+        }
+    }
+
+    private func registerRealTimeNotifications() throws {
+        print("Register real time notification not implemented")
+    }
+
+    private func registerEvents() {
         print("Register events not implemented")
     }
 }

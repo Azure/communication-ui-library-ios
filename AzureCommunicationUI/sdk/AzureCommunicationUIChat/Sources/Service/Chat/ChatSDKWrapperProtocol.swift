@@ -7,7 +7,7 @@ import AzureCommunicationChat
 import Combine
 
 protocol ChatSDKWrapperProtocol {
-    func initializeChat() async throws
+    func initializeChat() async throws -> String
     func getInitialMessages() async throws -> [ChatMessageInfoModel]
 
     var chatEventsHandler: ChatSDKEventsHandling { get }

@@ -21,6 +21,8 @@ extension Middleware {
                             handleChatMessageAction(chatAction, actionHandler, serviceEventHandler, getState, dispatch)
                         case .participantsAction(let participantsAction):
                             handleParticipantsAction(participantsAction, actionHandler, getState, dispatch)
+                        case .repositoryAction(let repositoryAction):
+                            handleRepositoryAction(repositoryAction, actionHandler, getState, dispatch)
                         case .errorAction(_),
                                 .compositeExitAction,
                                 .chatViewLaunched:
@@ -48,7 +50,14 @@ private func handleChatMessageAction(_ action: ChatAction,
                                      _ serviceListener: ChatServiceEventHandling,
                                      _ getState: () -> AppState,
                                      _ dispatch: @escaping ActionDispatch) {
-    print("`handleChatMessageAction` not implemented")
+    switch action {
+    case .initializeChat:
+        actionHandler.initialize(state: getState(),
+                                 dispatch: dispatch,
+                                 serviceListener: serviceListener)
+    default:
+        break
+    }
 }
 
 private func handleParticipantsAction(_ action: ParticipantsAction,
@@ -56,4 +65,11 @@ private func handleParticipantsAction(_ action: ParticipantsAction,
                                       _ getState: () -> AppState,
                                       _ dispatch: @escaping ActionDispatch) {
     print("`handleParticipantsAction` not implemented")
+}
+
+private func handleRepositoryAction(_ action: RepositoryAction,
+                                    _ actionHandler: ChatActionHandling,
+                                    _ getState: () -> AppState,
+                                    _ dispatch: @escaping ActionDispatch) {
+    print("`handleRepositoryAction` not implemented")
 }

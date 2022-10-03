@@ -4,3 +4,9 @@
 //
 
 import Foundation
+import AzureCommunicationChat
+@testable import AzureCommunicationUIChat
+
+class ChatSDKEventsHandlerMocking: NSObject, ChatSDKEventsHandling {
+    func handle(response: TrouterEvent) {}
+}
