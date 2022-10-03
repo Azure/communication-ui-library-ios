@@ -8,6 +8,7 @@ import Foundation
 enum AppStatus {
     case foreground
     case background
+    case willTerminate
 }
 
 struct LifeCycleState {
