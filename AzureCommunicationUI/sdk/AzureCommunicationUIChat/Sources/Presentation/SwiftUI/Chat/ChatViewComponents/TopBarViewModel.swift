@@ -14,7 +14,7 @@ class TopBarViewModel: ObservableObject {
          participantsState: ParticipantsState) {
         self.localizationProvider = localizationProvider
 
-        updateNumberOfParticipantsLabel(numberOfParticpants: participantsState.numberOfParticipants)
+        update(participantsState: participantsState)
     }
 
     private func updateNumberOfParticipantsLabel(numberOfParticpants: Int) {

@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3C8A38C00C940E491F39B0A2 /* Pods_AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A63BF349E7BC31AD5300412A /* Pods_AzureCommunicationUIChat.framework */; };
 		50370C6528EB542100ACD234 /* RepositoryReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6428EB542100ACD234 /* RepositoryReducer.swift */; };
-		50370C6728EB543200ACD234 /* RepositoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6628EB543200ACD234 /* RepositoryState.swift */; };
 		50370C6928EB544400ACD234 /* RepositoryAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6828EB544400ACD234 /* RepositoryAction.swift */; };
 		50370CB928EB5DBE00ACD234 /* LoggerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CB828EB5DBE00ACD234 /* LoggerMocking.swift */; };
 		50370CBB28EB5DF000ACD234 /* MiddlewareMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CBA28EB5DF000ACD234 /* MiddlewareMocking.swift */; };
@@ -139,6 +138,7 @@
 		85D6F5E7707CE2A8E51E5451 /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9C157344D512A9F069F9CC /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework */; };
 		BD1A6A3C28ECDEAE005E0B70 /* ThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A6A3B28ECDEAE005E0B70 /* ThreadView.swift */; };
 		BD1A6A3E28ECDFAB005E0B70 /* ThreadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A6A3D28ECDFAB005E0B70 /* ThreadViewModel.swift */; };
+		BD1A6A3F28ECF008005E0B70 /* RepositoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6628EB543200ACD234 /* RepositoryState.swift */; };
 		BD80293328EC9BDF00A55CAC /* ChatViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80293228EC9BDF00A55CAC /* ChatViewModelMocking.swift */; };
 		BD80293828ECA7D700A55CAC /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80293428ECA68700A55CAC /* MessageInputView.swift */; };
 		BD80293928ECA7DC00A55CAC /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80293628ECA6C600A55CAC /* TopBarView.swift */; };
@@ -1222,6 +1222,7 @@
 				50CB824128C29ADA00680566 /* ParticipantsState.swift in Sources */,
 				50CB826128C29E0600680566 /* ChatSDKWrapperProtocol.swift in Sources */,
 				50CB821128C286D400680566 /* IconProvider.swift in Sources */,
+				BD1A6A3F28ECF008005E0B70 /* RepositoryState.swift in Sources */,
 				50CB823728C29A3E00680566 /* ParticipantsAction.swift in Sources */,
 				BD80293B28ECA84200A55CAC /* TopBarViewModel.swift in Sources */,
 				50CB82BC28C2AD2300680566 /* CancelBag.swift in Sources */,
@@ -1502,7 +1503,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Sources/Info.plist";
+				INFOPLIST_FILE = Sources/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1536,7 +1537,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Sources/Info.plist";
+				INFOPLIST_FILE = Sources/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (

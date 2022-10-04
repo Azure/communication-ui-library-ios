@@ -16,4 +16,7 @@ class ThreadViewModel: ObservableObject {
         self.messageRepositoryManager = messageRepositoryManager
         self.logger = logger
     }
+
+    func update() {
+    }
 }
