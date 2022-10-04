@@ -100,3 +100,4 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="其他应用正在使用你的麦克风";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="你被拒绝接听电话。";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="切换视频时出错";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="无法加入呼叫。请检查网络连接。";

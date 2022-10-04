@@ -100,3 +100,4 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Seu microfone está sendo usado por outro aplicativo";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="O acesso à chamada foi negado.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Erro ao alternar o vídeo";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Não é possível ingressar na chamada. Verifique sua conexão de rede.";
