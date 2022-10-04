@@ -51,7 +51,14 @@ extension LeaveCallConfirmationListViewController: UITableViewDataSource, UITabl
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 17, weight: .semibold)
         label.textColor = StyleProvider.color.onSurface
+        label.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(label)
+        NSLayoutConstraint.activate([
+            headerView.leadingAnchor.constraint(equalTo: label.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: label.trailingAnchor),
+            headerView.topAnchor.constraint(equalTo: label.topAnchor),
+            headerView.bottomAnchor.constraint(equalTo: label.bottomAnchor)
+        ])
         return headerView
     }
 
