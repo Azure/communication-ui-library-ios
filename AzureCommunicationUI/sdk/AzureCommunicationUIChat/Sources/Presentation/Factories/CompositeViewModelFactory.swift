@@ -40,7 +40,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
 
     // MARK: CompositeViewModels
     func getChatViewModel() -> ChatViewModel {
-        return ChatViewModel()
+        return ChatViewModel(
+            store: store,
+            messageRepository: messageRepository)
     }
 
     // MARK: ComponentViewModels

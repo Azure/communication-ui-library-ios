@@ -18,7 +18,7 @@ extension Middleware {
                         case .lifecycleAction(let lifecycleAction):
                             handleLifecycleAction(lifecycleAction, actionHandler, getState, dispatch)
                         case .chatAction(let chatAction):
-                            handleChatMessageAction(chatAction, actionHandler, serviceEventHandler, getState, dispatch)
+                            handleChatAction(chatAction, actionHandler, serviceEventHandler, getState, dispatch)
                         case .participantsAction(let participantsAction):
                             handleParticipantsAction(participantsAction, actionHandler, getState, dispatch)
                         case .repositoryAction(let repositoryAction):
@@ -45,13 +45,13 @@ private func handleLifecycleAction(_ action: LifecycleAction,
     print("`handleLifecycleAction` not implemented")
 }
 
-private func handleChatMessageAction(_ action: ChatAction,
-                                     _ actionHandler: ChatActionHandling,
-                                     _ serviceListener: ChatServiceEventHandling,
-                                     _ getState: () -> AppState,
-                                     _ dispatch: @escaping ActionDispatch) {
+private func handleChatAction(_ action: ChatAction,
+                              _ actionHandler: ChatActionHandling,
+                              _ serviceListener: ChatServiceEventHandling,
+                              _ getState: () -> AppState,
+                              _ dispatch: @escaping ActionDispatch) {
     switch action {
-    case .initializeChat:
+    case .initializeChatTriggered:
         actionHandler.initialize(state: getState(),
                                  dispatch: dispatch,
                                  serviceListener: serviceListener)
@@ -71,5 +71,11 @@ private func handleRepositoryAction(_ action: RepositoryAction,
                                     _ actionHandler: ChatActionHandling,
                                     _ getState: () -> AppState,
                                     _ dispatch: @escaping ActionDispatch) {
-    print("`handleRepositoryAction` not implemented")
+    switch action {
+    case .fetchInitialMessagesTriggered:
+        actionHandler.getInitialMessages(state: getState(),
+                                         dispatch: dispatch)
+    default:
+        break
+    }
 }

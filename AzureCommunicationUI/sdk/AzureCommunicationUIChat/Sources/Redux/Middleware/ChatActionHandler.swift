@@ -15,6 +15,8 @@ protocol ChatActionHandling {
     func initialize(state: AppState,
                     dispatch: @escaping ActionDispatch,
                     serviceListener: ChatServiceEventHandling) -> Task<Void, Never>
+    @discardableResult
+    func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 }
 
 class ChatActionHandler: ChatActionHandling {
@@ -33,8 +35,8 @@ class ChatActionHandler: ChatActionHandling {
             do {
                 try await chatService.initalize()
             } catch {
-                // to do error handling if for invalid token
-                print("ChatActionHandler `initialize` catch not implemented")
+                // dispatch error if invalid token *not handled*
+                dispatch(.chatAction(.initializeChatFailed(error: error)))
             }
         }
     }
@@ -57,4 +59,17 @@ class ChatActionHandler: ChatActionHandling {
     // MARK: Chat Handler
 
     // MARK: Participants Handler
+
+    // MARK: Repository Handler
+    func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            do {
+                let initialMessages = try await chatService.getInitialMessages()
+                dispatch(.repositoryAction(.fetchInitialMessagesSuccess(messages: initialMessages)))
+            } catch {
+                // dispatch error *not handled*
+                dispatch(.repositoryAction(.fetchInitialMessagesFailed(error: error)))
+            }
+        }
+    }
 }

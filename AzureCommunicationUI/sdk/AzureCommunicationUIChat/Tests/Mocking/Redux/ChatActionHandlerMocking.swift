@@ -10,6 +10,7 @@ class ChatActionHandlerMocking: ChatActionHandling {
     var enterBackgroundCalled: ((Bool) -> Void)?
     var enterForegroundCalled: ((Bool) -> Void)?
     var initializeCalled: ((Bool) -> Void)?
+    var getInitialMessagesCalled: ((Bool) -> Void)?
 
     func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
@@ -26,6 +27,12 @@ class ChatActionHandlerMocking: ChatActionHandling {
     func initialize(state: AppState, dispatch: @escaping ActionDispatch, serviceListener: ChatServiceEventHandling) -> Task<Void, Never> {
         Task {
             initializeCalled?(true)
+        }
+    }
+
+    func getInitialMessages(state: AzureCommunicationUIChat.AppState, dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            getInitialMessagesCalled?(true)
         }
     }
 }

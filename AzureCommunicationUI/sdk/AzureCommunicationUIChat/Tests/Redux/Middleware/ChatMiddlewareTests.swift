@@ -27,10 +27,11 @@ class ChatMiddlewareTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         mockChatActionHandler = nil
+        mockChatServiceEventHandler = nil
         mockMiddleware = nil
     }
 
-    func test_chatMiddleware_apply_when_initializeChatChatAction_then_handlerSetupCallBeingCalled() {
+    func test_chatMiddleware_apply_when_initializeChatTriggeredChatAction_then_handlerInitializeBeingCalled() {
 
         let middlewareDispatch = getEmptyChatMiddlewareFunction()
         let expectation = expectation(description: "initializeWasCalled")
@@ -39,7 +40,20 @@ class ChatMiddlewareTests: XCTestCase {
             expectation.fulfill()
         }
 
-        middlewareDispatch(getEmptyDispatch())(.chatAction(.initializeChat))
+        middlewareDispatch(getEmptyDispatch())(.chatAction(.initializeChatTriggered))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_chatMiddleware_apply_when_fetchInitialMessagesTriggeredRepositoryAction_then_handlerGetInitialMessagesBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "getInitialMessagesWasCalled")
+        mockChatActionHandler.getInitialMessagesCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.repositoryAction(.fetchInitialMessagesTriggered))
         wait(for: [expectation], timeout: 1)
     }
 }

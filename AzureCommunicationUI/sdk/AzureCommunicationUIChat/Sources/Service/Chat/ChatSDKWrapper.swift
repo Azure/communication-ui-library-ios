@@ -47,9 +47,24 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
 
     func getInitialMessages() async throws -> [ChatMessageInfoModel] {
         do {
-            print("ChatSDKWrapper `getInitialMessages` not implemented")
-            return []
+            let listChatMessagesOptions = ListChatMessagesOptions(
+                maxPageSize: chatConfiguration.pageSize)
+            return try await withCheckedThrowingContinuation { continuation in
+                chatThreadClient?.listMessages(withOptions: listChatMessagesOptions) { result, _ in
+                    switch result {
+                    case .success(let messagesResult):
+                        self.pagedCollection = messagesResult
+                        let messages = self.pagedCollection?.pageItems?
+                            .map({ $0.toChatMessageInfoModel() })
+                        continuation.resume(returning: messages?.reversed() ?? [])
+                    case .failure(let error):
+                        self.logger.error("Get Initial Messages failed: \(error)")
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
         } catch {
+            logger.error("Retrieve Thread Topic failed: \(error)")
             throw error
         }
     }

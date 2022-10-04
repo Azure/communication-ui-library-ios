@@ -79,13 +79,13 @@ final class DependencyContainer {
         let chatActionHandler = ChatActionHandler(chatService: resolve(), logger: resolve())
         let chatServiceEventHandler = ChatServiceEventHandler(chatService: resolve(), logger: resolve())
 
-        let messageMiddlewareHandler = MessageRepositoryMiddlewareHandler(messageRepository: resolve(),
+        let repositoryMiddlewareHandler = RepositoryMiddlewareHandler(messageRepository: resolve(),
                                                                           logger: resolve())
         let middlewares: [Middleware] = [
             Middleware<AppState>.liveChatMiddleware(
                 chatActionHandler: chatActionHandler,
                 chatServiceEventHandler: chatServiceEventHandler),
-            Middleware<AppState>.liveMessageRepositoryMiddleware(messageMiddlewareHandler: messageMiddlewareHandler)
+            Middleware<AppState>.liveRepositoryMiddleware(repositoryMiddlewareHandler: repositoryMiddlewareHandler)
         ]
 
         guard let localUserId = localUserIdentifier else {
