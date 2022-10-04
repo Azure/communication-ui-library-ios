@@ -1,5 +1,11 @@
 # Azure Communication UI Calling Release History
 
+## TBA (upcoming release)
+ ### New Features
+ - Implemented new feature that remove the local user from the participant list when the app will be terminated [#352](https://github.com/Azure/communication-ui-library-ios/pull/352)
+ ### Bugs Fixed
+ - Fixed issue that the error is mutable inside CallCompositeError [#364](https://github.com/Azure/communication-ui-library-ios/pull/364)
+
 ## 1.1.0-beta.1 (2022-10-03)
 ### New Features
 - Implemented new error message `cameraFailure` that can be sent to developers when:
@@ -9,7 +15,6 @@
 - Introduced NavigationBarViewData as a new local launch option to customize title and subtitle in set up view. [#309](https://github.com/Azure/communication-ui-library-ios/pull/309)
 - An alert would now be shown when joining the call with no active network connection [#328](https://github.com/Azure/communication-ui-library-ios/pull/328)
 - A new link to system settings was added to change camera and video permission directly [313](https://github.com/Azure/communication-ui-library-ios/pull/313)
-- Implemented new feature that removes the local user from the participant list when the app will be terminated [#352](https://github.com/Azure/communication-ui-library-ios/pull/352)
 
 ### Bugs Fixed
 - Fixed an issue where demo app's settings page can't be dismissed in landscape mode. [#280](https://github.com/Azure/communication-ui-library-ios/pull/280)
@@ -21,7 +26,6 @@
 - Fixed an issue where contrast ratio of some labels/icons being too low for visually impaired users [#305](https://github.com/Azure/communication-ui-library-ios/pull/305)
 - Fixed an issue where InfoHeaderView doesn't support large front size text [#331](https://github.com/Azure/communication-ui-library-ios/pull/331)
 - Fixed an issue where there was no accessibility label for the participants button [#345](https://github.com/Azure/communication-ui-library-ios/pull/345)
-- Fixed an issue where the error is mutable inside CallCompositeError [#364](https://github.com/Azure/communication-ui-library-ios/pull/364)
 
 ### Other Changes
 - Updated CallingSDK's version to GA in manual installation guide [#298](https://github.com/Azure/communication-ui-library-ios/pull/298)
