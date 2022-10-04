@@ -6,52 +6,33 @@
 import SwiftUI
 
 struct ChatView: View {
-    @ObservedObject var viewModel: ChatViewModel
+    @StateObject var viewModel: ChatViewModel
 
     var body: some View {
         VStack {
-            topBar
+            TopBarView(viewModel: viewModel.topBarViewModel)
             Divider()
             Spacer()
-//            messages
-//            TypingParticipantsView(viewModel: viewModel.typingParticipantsViewModel)
-        }
-        .onAppear {
-//            viewModel.startChat()
+//            MessagesView()
+            messageInputView
         }
     }
 
-    var topBar: some View {
-        ZStack {
-            HStack {
-                backButton
-                Spacer()
+    var messageInputView: some View {
+        Group {
+            if #available(iOS 15, *) {
+                MessageInputView(viewModel: viewModel.messageInputViewModel)
+            } else {
+                // Use Custom legacy textfeld to handle focusing on iOS 14 and lower
             }
-            header
         }
-    }
-
-    var backButton: some View {
-        Button(action: {
-            // Go back
-        }, label: {
-            Text("Back")
-                .padding()
-        })
-    }
-
-    var header: some View {
-        VStack {
-            Text("Chat")
-                .font(.body)
-            numberOfParticipants
-        }
-    }
-
-    var numberOfParticipants: some View {
-        // Should we filter out admin user in redux/service layer?
-        Text(String(format: "%d People", viewModel.participants.filter {$0.displayName != "admin"}.count))
-            .foregroundColor(Color(StyleProvider.color.textSecondary))
-            .font(.caption)
     }
 }
+
+// struct ChatView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let compositeViewModelFactory
+//    let viewModel = ChatViewModel(
+//        ChatView(viewModel: <#T##ChatViewModel#>)
+//    }
+// }

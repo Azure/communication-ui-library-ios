@@ -13,9 +13,8 @@ class ChatViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
 
-    var participantsLastUpdatedTimestamp = Date()
-
-    @Published var participants: [ParticipantInfoModel] = []
+    let topBarViewModel: TopBarViewModel
+    let messageInputViewModel: MessageInputViewModel
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -23,6 +22,12 @@ class ChatViewModel: ObservableObject {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.logger = logger
         self.store = store
+
+        self.topBarViewModel =
+        compositeViewModelFactory.makeTopBarViewModel(
+            participantsState: store.state.participantsState)
+        self.messageInputViewModel =
+        compositeViewModelFactory.makeMessageInputViewModel()
 
         store.$state
             .receive(on: DispatchQueue.main)

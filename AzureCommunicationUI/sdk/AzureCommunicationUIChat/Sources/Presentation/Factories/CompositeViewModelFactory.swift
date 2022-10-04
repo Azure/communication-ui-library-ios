@@ -13,10 +13,14 @@ protocol CompositeViewModelFactoryProtocol {
     // MARK: ComponentViewModels
 
     // MARK: ChatViewModels
+    func makeTopBarViewModel(participantsState: ParticipantsState) -> TopBarViewModel
+    func makeMessageInputViewModel() -> MessageInputViewModel
 }
 
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
+    private let localizationProvider: LocalizationProviderProtocol
+    private let accessibilityProvider: AccessibilityProviderProtocol
     private let store: Store<AppState>
 
     private weak var chatViewModel: ChatViewModel?
@@ -24,8 +28,12 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     // unit test needed
     // - only skeleton code to show view, class not finalized yet
     init(logger: Logger,
+         localizationProvider: LocalizationProviderProtocol,
+         accessibilityProvider: AccessibilityProviderProtocol,
          store: Store<AppState>) {
         self.logger = logger
+        self.localizationProvider = localizationProvider
+        self.accessibilityProvider = accessibilityProvider
         self.store = store
     }
 
@@ -44,4 +52,12 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     // MARK: ComponentViewModels
 
     // MARK: ChatViewModels
+    func makeTopBarViewModel(participantsState: ParticipantsState) -> TopBarViewModel {
+        TopBarViewModel(localizationProvider: localizationProvider,
+                        participantsState: participantsState)
+    }
+
+    func makeMessageInputViewModel() -> MessageInputViewModel {
+        MessageInputViewModel()
+    }
 }
