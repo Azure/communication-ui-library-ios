@@ -9,7 +9,7 @@ import FluentUI
 struct PreviewAreaView: View {
     @ObservedObject var viewModel: PreviewAreaViewModel
     let viewManager: VideoViewManager
-    let avatarManager: AvatarViewManager
+    let avatarManager: AvatarViewManagerProtocol
 
     var body: some View {
         Group {
