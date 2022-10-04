@@ -147,6 +147,7 @@
 		5A31497E0DEBAB0256AD0B91 /* ErrorMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3146B0B684264EB57EDA69 /* ErrorMocking.swift */; };
 		5A314D26A09E235A6509C1C7 /* ACSCameraFacingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */; };
 		5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */; };
+		696AD14928DBAFCE0043F807 /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696AD14828DBAFCE0043F807 /* ButtonState.swift */; };
 		752B953C2863A40F001C52E8 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752B953B2863A40E001C52E8 /* Action.swift */; };
 		8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */; };
 		8815B6E427DA9B350065A184 /* LobbyOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */; };
@@ -423,6 +424,7 @@
 		5A3148FC4DC06C7515E1E8D9 /* CompositeViewModelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeViewModelFactory.swift; sourceTree = "<group>"; };
 		5A314A985811198B09DA2688 /* LocalVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoView.swift; sourceTree = "<group>"; };
 		5A314F041B5D1869C41C242E /* DependencyContainerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyContainerTests.swift; sourceTree = "<group>"; };
+		696AD14828DBAFCE0043F807 /* ButtonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonState.swift; sourceTree = "<group>"; };
 		69FC33B2B556CC3B9164A78E /* Pods-AzureCommunicationUICalling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling/Pods-AzureCommunicationUICalling.release.xcconfig"; sourceTree = "<group>"; };
 		752B953B2863A40E001C52E8 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyOverlayViewModel.swift; sourceTree = "<group>"; };
@@ -604,6 +606,7 @@
 				A83F35BD28203EA9008C1ECE /* ViewModifer.swift */,
 				985DF371269D065400CFDA55 /* ViewExtension.swift */,
 				1BAD44BD28404D1800C9E6A9 /* OrientationManager.swift */,
+				696AD14828DBAFCE0043F807 /* ButtonState.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1634,6 +1637,7 @@
 				50FA460E26829345001844AC /* InfoHeaderViewModel.swift in Sources */,
 				503F4B6D2705065700C17DA6 /* BannerTextView.swift in Sources */,
 				1F94DAF326772B3C00691D1E /* UIWindowExtension.swift in Sources */,
+				696AD14928DBAFCE0043F807 /* ButtonState.swift in Sources */,
 				88701EB8274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift in Sources */,
 				1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,

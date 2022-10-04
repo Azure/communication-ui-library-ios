@@ -6,12 +6,12 @@
 import Foundation
 @testable import AzureCommunicationUICalling
 
-class IconWithLabelButtonViewModelMocking: IconWithLabelButtonViewModel {
-    var updateButtonInfo: ((CompositeIcon?, String?) -> Void)?
+class IconWithLabelButtonViewModelMocking<T: ButtonState>: IconWithLabelButtonViewModel<T> {
+    var updateButtonInfo: ((T) -> Void)?
     var updateDisabledState: ((Bool) -> Void)?
 
-    override func update(iconName: CompositeIcon?, buttonLabel: String?) {
-        updateButtonInfo?(iconName, buttonLabel)
+    override func update(selectedButtonState: T) {
+        updateButtonInfo?(selectedButtonState)
     }
 
     override func update(isDisabled: Bool) {

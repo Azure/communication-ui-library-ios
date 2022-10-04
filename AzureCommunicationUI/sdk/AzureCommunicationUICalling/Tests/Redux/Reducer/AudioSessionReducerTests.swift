@@ -14,7 +14,7 @@ class AudioSessionReducerTests: XCTestCase {
         let currentAudioStatus: AudioSessionStatus = .active
         let currentAudioState = AudioSessionState(status: currentAudioStatus)
         let action = AudioSessionAction.audioInterrupted
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(currentAudioState, action)
         XCTAssertEqual(resultState.status, expectedAudioStatus)
     }
@@ -24,7 +24,7 @@ class AudioSessionReducerTests: XCTestCase {
         let currentAudioStatus: AudioSessionStatus = .interrupted
         let currentAudioState = AudioSessionState(status: currentAudioStatus)
         let action = AudioSessionAction.audioInterruptEnded
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(currentAudioState, action)
 
         XCTAssertEqual(resultState.status, expectedAudioStatus)
@@ -35,7 +35,7 @@ class AudioSessionReducerTests: XCTestCase {
         let currentAudioStatus: AudioSessionStatus = .interrupted
         let currentAudioState = AudioSessionState(status: currentAudioStatus)
         let action = AudioSessionAction.audioEngaged
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(currentAudioState, action)
 
         XCTAssertEqual(resultState.status, expectedAudioStatus)
@@ -46,7 +46,7 @@ class AudioSessionReducerTests: XCTestCase {
         let currentAudioStatus = expectedAudioStatus
         let currentAudioState = AudioSessionState(status: currentAudioStatus)
         let action = AudioSessionAction.audioEngaged
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(currentAudioState, action)
 
         XCTAssertEqual(resultState.status, expectedAudioStatus)
@@ -54,7 +54,7 @@ class AudioSessionReducerTests: XCTestCase {
 }
 
 extension AudioSessionReducerTests {
-    func getSUT() -> Reducer<AudioSessionState, AudioSessionAction> {
+    func makeSUT() -> Reducer<AudioSessionState, AudioSessionAction> {
         return .liveAudioSessionReducer
     }
 }

@@ -6,18 +6,16 @@
 import SwiftUI
 import FluentUI
 
-struct IconWithLabelButton: View {
+struct IconWithLabelButton<T: ButtonState>: View {
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
 
-    @ObservedObject var viewModel: IconWithLabelButtonViewModel
+    @ObservedObject var viewModel: IconWithLabelButtonViewModel<T>
 
-    enum LayoutConstants {
-        static let iconImageSize: CGFloat = 25
-        static let verticalSpacing: CGFloat = 8
-        static let width: CGFloat = 85
-        static let height: CGFloat = 85
-        static let buttonDisabledColor = Color(StyleProvider.color.disableColor)
-    }
+    let iconImageSize: CGFloat = 25
+    let verticalSpacing: CGFloat = 8
+    let width: CGFloat = 85
+    let height: CGFloat = 85
+    let buttonDisabledColor = Color(StyleProvider.color.disableColor)
 
     var buttonForegroundColor: Color {
         switch viewModel.buttonTypeColor {
@@ -30,8 +28,8 @@ struct IconWithLabelButton: View {
 
     var body: some View {
         Button(action: viewModel.action) {
-            VStack(alignment: .center, spacing: LayoutConstants.verticalSpacing) {
-                Icon(name: viewModel.iconName, size: LayoutConstants.iconImageSize)
+            VStack(alignment: .center, spacing: verticalSpacing) {
+                Icon(name: viewModel.iconName, size: iconImageSize)
                     .accessibilityHidden(true)
                 if let buttonLabel = viewModel.buttonLabel {
                     if sizeCategory >= ContentSizeCategory.accessibilityMedium {
@@ -46,8 +44,8 @@ struct IconWithLabelButton: View {
         }
         .animation(nil)
         .disabled(viewModel.isDisabled)
-        .foregroundColor(viewModel.isDisabled ? LayoutConstants.buttonDisabledColor : buttonForegroundColor)
-        .frame(width: LayoutConstants.width, height: LayoutConstants.height, alignment: .top)
+        .foregroundColor(viewModel.isDisabled ? buttonDisabledColor : buttonForegroundColor)
+        .frame(width: width, height: height, alignment: .top)
         .accessibilityLabel(Text(viewModel.accessibilityLabel ?? ""))
         .accessibilityValue(Text(viewModel.accessibilityValue ?? ""))
         .accessibilityHint(Text(viewModel.accessibilityHint ?? ""))
