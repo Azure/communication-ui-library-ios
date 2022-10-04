@@ -13,17 +13,27 @@ struct ChatView: View {
             TopBarView(viewModel: viewModel.topBarViewModel)
             Divider()
             Spacer()
-//            MessagesView()
-            messageInputView
+            thread
+            messageInput
         }
     }
 
-    var messageInputView: some View {
+    var thread: some View {
+        Group {
+            if #available(iOS 15, *) {
+                ThreadView(viewModel: viewModel.threadViewModel)
+            } else {
+                // Use Custom legacy list to handle thread view on iOS 14
+            }
+        }
+    }
+
+    var messageInput: some View {
         Group {
             if #available(iOS 15, *) {
                 MessageInputView(viewModel: viewModel.messageInputViewModel)
             } else {
-                // Use Custom legacy textfeld to handle focusing on iOS 14 and lower
+                // Use Custom legacy textfeld to handle focusing on iOS 14
             }
         }
     }

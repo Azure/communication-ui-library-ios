@@ -6,7 +6,7 @@
 import Foundation
 
 class MessageInputViewModel: ObservableObject {
-    @Published var message: String = "" 
+    @Published var message: String = ""
     @Published var hasFocus: Bool = true
 
     func sendMessage() {

@@ -14,6 +14,7 @@ class ChatViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     let topBarViewModel: TopBarViewModel
+    let threadViewModel: ThreadViewModel
     let messageInputViewModel: MessageInputViewModel
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -26,6 +27,8 @@ class ChatViewModel: ObservableObject {
         self.topBarViewModel =
         compositeViewModelFactory.makeTopBarViewModel(
             participantsState: store.state.participantsState)
+        self.threadViewModel =
+        compositeViewModelFactory.makeThreadViewModel()
         self.messageInputViewModel =
         compositeViewModelFactory.makeMessageInputViewModel()
 
