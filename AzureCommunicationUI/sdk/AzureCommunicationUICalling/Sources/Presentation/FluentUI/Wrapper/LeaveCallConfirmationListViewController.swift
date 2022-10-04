@@ -11,7 +11,7 @@ class LeaveCallConfirmationListViewController: DrawerContainerViewController<Lea
         static let headerHeight: CGFloat = 36.0
     }
 
-    private lazy var leaveCalConfirmationTableView: UITableView? = {
+    private lazy var leaveCallConfirmationTableView: UITableView? = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = backgroundColor
         tableView.sectionHeaderHeight = SectionConstants.headerHeight
@@ -26,8 +26,8 @@ class LeaveCallConfirmationListViewController: DrawerContainerViewController<Lea
     }()
 
     override var drawerTableView: UITableView? {
-        get { return leaveCalConfirmationTableView }
-        set { leaveCalConfirmationTableView = newValue }
+        get { return leaveCallConfirmationTableView }
+        set { leaveCallConfirmationTableView = newValue }
     }
 }
 
