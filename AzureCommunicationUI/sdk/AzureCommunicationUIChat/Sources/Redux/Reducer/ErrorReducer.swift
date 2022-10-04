@@ -31,6 +31,7 @@ extension Reducer where State == ErrorState,
         case .chatAction(_),
                 .participantsAction(_),
                 .lifecycleAction(_),
+                .repositoryAction(_),
                 .compositeExitAction,
                 .chatViewLaunched,
                 .chatViewHeadless:

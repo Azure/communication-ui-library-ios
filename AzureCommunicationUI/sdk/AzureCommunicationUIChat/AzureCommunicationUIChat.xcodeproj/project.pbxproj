@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		3C8A38C00C940E491F39B0A2 /* Pods_AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A63BF349E7BC31AD5300412A /* Pods_AzureCommunicationUIChat.framework */; };
+		50370C6528EB542100ACD234 /* RepositoryReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6428EB542100ACD234 /* RepositoryReducer.swift */; };
+		50370C6728EB543200ACD234 /* RepositoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6628EB543200ACD234 /* RepositoryState.swift */; };
+		50370C6928EB544400ACD234 /* RepositoryAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6828EB544400ACD234 /* RepositoryAction.swift */; };
+		50370CB928EB5DBE00ACD234 /* LoggerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CB828EB5DBE00ACD234 /* LoggerMocking.swift */; };
+		50370CBB28EB5DF000ACD234 /* MiddlewareMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CBA28EB5DF000ACD234 /* MiddlewareMocking.swift */; };
+		50370CBD28EB5E0D00ACD234 /* ReducerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CBC28EB5E0D00ACD234 /* ReducerMocking.swift */; };
+		50370CBF28EB5E2300ACD234 /* StoreFactoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CBE28EB5E2300ACD234 /* StoreFactoryMocking.swift */; };
+		50370CC228EB5E6B00ACD234 /* LocalizationProviderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CC128EB5E6B00ACD234 /* LocalizationProviderTests.swift */; };
+		50370CC428EB5ED200ACD234 /* DiagnosticConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CC328EB5ED200ACD234 /* DiagnosticConfigTests.swift */; };
 		50CB81CB28C26E0C00680566 /* AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB81C228C26E0C00680566 /* AzureCommunicationUIChat.framework */; };
 		50CB81DB28C26EEB00680566 /* ChatComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB81DA28C26EEB00680566 /* ChatComposite.swift */; };
 		50CB81DD28C26FA100680566 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50CB81DC28C26FA100680566 /* Assets.xcassets */; };
@@ -110,7 +119,7 @@
 		50F0C5A428D38B8F009D7176 /* MessageViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5A328D38B8F009D7176 /* MessageViewModelTests.swift */; };
 		50F0C5A628D38BC5009D7176 /* ChatMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5A528D38BC5009D7176 /* ChatMiddlewareTests.swift */; };
 		50F0C5A828D38BD7009D7176 /* ChatActionHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5A728D38BD7009D7176 /* ChatActionHandlerTests.swift */; };
-		50F0C5AA28D38BE1009D7176 /* ChatServiceListenerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5A928D38BE1009D7176 /* ChatServiceListenerTests.swift */; };
+		50F0C5AA28D38BE1009D7176 /* ChatServiceEventHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5A928D38BE1009D7176 /* ChatServiceEventHandlerTests.swift */; };
 		50F0C5AC28D38BEC009D7176 /* MessageRepositoryMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5AB28D38BEC009D7176 /* MessageRepositoryMiddlewareTests.swift */; };
 		50F0C5AE28D38BF7009D7176 /* MessageRepositoryHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5AD28D38BF7009D7176 /* MessageRepositoryHandlerTests.swift */; };
 		50F0C5B028D38C0F009D7176 /* AppStateReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5AF28D38C0F009D7176 /* AppStateReducerTests.swift */; };
@@ -150,6 +159,15 @@
 
 /* Begin PBXFileReference section */
 		1B9C157344D512A9F069F9CC /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		50370C6428EB542100ACD234 /* RepositoryReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryReducer.swift; sourceTree = "<group>"; };
+		50370C6628EB543200ACD234 /* RepositoryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryState.swift; sourceTree = "<group>"; };
+		50370C6828EB544400ACD234 /* RepositoryAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryAction.swift; sourceTree = "<group>"; };
+		50370CB828EB5DBE00ACD234 /* LoggerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerMocking.swift; sourceTree = "<group>"; };
+		50370CBA28EB5DF000ACD234 /* MiddlewareMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddlewareMocking.swift; sourceTree = "<group>"; };
+		50370CBC28EB5E0D00ACD234 /* ReducerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReducerMocking.swift; sourceTree = "<group>"; };
+		50370CBE28EB5E2300ACD234 /* StoreFactoryMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreFactoryMocking.swift; sourceTree = "<group>"; };
+		50370CC128EB5E6B00ACD234 /* LocalizationProviderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProviderTests.swift; sourceTree = "<group>"; };
+		50370CC328EB5ED200ACD234 /* DiagnosticConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticConfigTests.swift; sourceTree = "<group>"; };
 		50CB81C228C26E0C00680566 /* AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB81CA28C26E0C00680566 /* AzureCommunicationUIChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzureCommunicationUIChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB81DA28C26EEB00680566 /* ChatComposite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatComposite.swift; sourceTree = "<group>"; };
@@ -254,7 +272,7 @@
 		50F0C5A328D38B8F009D7176 /* MessageViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModelTests.swift; sourceTree = "<group>"; };
 		50F0C5A528D38BC5009D7176 /* ChatMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMiddlewareTests.swift; sourceTree = "<group>"; };
 		50F0C5A728D38BD7009D7176 /* ChatActionHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatActionHandlerTests.swift; sourceTree = "<group>"; };
-		50F0C5A928D38BE1009D7176 /* ChatServiceListenerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceListenerTests.swift; sourceTree = "<group>"; };
+		50F0C5A928D38BE1009D7176 /* ChatServiceEventHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceEventHandlerTests.swift; sourceTree = "<group>"; };
 		50F0C5AB28D38BEC009D7176 /* MessageRepositoryMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRepositoryMiddlewareTests.swift; sourceTree = "<group>"; };
 		50F0C5AD28D38BF7009D7176 /* MessageRepositoryHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRepositoryHandlerTests.swift; sourceTree = "<group>"; };
 		50F0C5AF28D38C0F009D7176 /* AppStateReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateReducerTests.swift; sourceTree = "<group>"; };
@@ -307,6 +325,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		50370CC028EB5E5100ACD234 /* Provider */ = {
+			isa = PBXGroup;
+			children = (
+				50370CC128EB5E6B00ACD234 /* LocalizationProviderTests.swift */,
+			);
+			path = Provider;
+			sourceTree = "<group>";
+		};
 		50CB81B828C26E0B00680566 = {
 			isa = PBXGroup;
 			children = (
@@ -560,6 +586,7 @@
 				50CB824A28C29B0700680566 /* ChatReducer.swift */,
 				50CB824C28C29B1700680566 /* ParticipantsReducer.swift */,
 				50CB824E28C29B2000680566 /* NavigationReducer.swift */,
+				50370C6428EB542100ACD234 /* RepositoryReducer.swift */,
 				50CB825028C29B2600680566 /* ErrorReducer.swift */,
 			);
 			path = Reducer;
@@ -573,6 +600,7 @@
 				50CB823E28C29AD100680566 /* ChatState.swift */,
 				50CB824028C29ADA00680566 /* ParticipantsState.swift */,
 				50CB824228C29AE200680566 /* NavigationState.swift */,
+				50370C6628EB543200ACD234 /* RepositoryState.swift */,
 				50CB824428C29AEB00680566 /* ErrorState.swift */,
 			);
 			path = State;
@@ -585,6 +613,7 @@
 				50CB823228C2999B00680566 /* LifecycleAction.swift */,
 				50CB823428C29A3200680566 /* ChatAction.swift */,
 				50CB823628C29A3E00680566 /* ParticipantsAction.swift */,
+				50370C6828EB544400ACD234 /* RepositoryAction.swift */,
 				50CB823828C29AB900680566 /* ErrorAction.swift */,
 			);
 			path = Action;
@@ -636,6 +665,7 @@
 				50CB827428C2A1D300680566 /* Redux */,
 				50F0C58E28D38A83009D7176 /* ChatCompositeMocking.swift */,
 				50F0C59028D38ACA009D7176 /* CompositeViewModelFactoryMocking.swift */,
+				50370CB828EB5DBE00ACD234 /* LoggerMocking.swift */,
 				50F0C59228D38AE3009D7176 /* ChatServiceMocking.swift */,
 				50F0C59428D38AF5009D7176 /* ChatSDKWrapperMocking.swift */,
 				50F0C59628D38B08009D7176 /* ChatSDKEventsHandlerMocking.swift */,
@@ -649,6 +679,9 @@
 		50CB827428C2A1D300680566 /* Redux */ = {
 			isa = PBXGroup;
 			children = (
+				50370CBA28EB5DF000ACD234 /* MiddlewareMocking.swift */,
+				50370CBC28EB5E0D00ACD234 /* ReducerMocking.swift */,
+				50370CBE28EB5E2300ACD234 /* StoreFactoryMocking.swift */,
 				50F0C58828D388E4009D7176 /* ChatActionHandlerMocking.swift */,
 				50F0C58A28D388FE009D7176 /* ChatServiceEventHandlerMocking.swift */,
 				50F0C58C28D3891D009D7176 /* MessageRepositoryHandlerMocking.swift */,
@@ -677,6 +710,7 @@
 			isa = PBXGroup;
 			children = (
 				50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */,
+				50370CC328EB5ED200ACD234 /* DiagnosticConfigTests.swift */,
 			);
 			path = ChatCompositeOptions;
 			sourceTree = "<group>";
@@ -704,6 +738,7 @@
 		50CB827A28C2A22700680566 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				50370CC028EB5E5100ACD234 /* Provider */,
 				50CB828028C2A25600680566 /* Factories */,
 				50CB827F28C2A25200680566 /* Chat */,
 				50CB827E28C2A24B00680566 /* ViewComponents */,
@@ -738,7 +773,7 @@
 			children = (
 				50F0C5A528D38BC5009D7176 /* ChatMiddlewareTests.swift */,
 				50F0C5A728D38BD7009D7176 /* ChatActionHandlerTests.swift */,
-				50F0C5A928D38BE1009D7176 /* ChatServiceListenerTests.swift */,
+				50F0C5A928D38BE1009D7176 /* ChatServiceEventHandlerTests.swift */,
 				50F0C5AB28D38BEC009D7176 /* MessageRepositoryMiddlewareTests.swift */,
 				50F0C5AD28D38BF7009D7176 /* MessageRepositoryHandlerTests.swift */,
 			);
@@ -1200,6 +1235,7 @@
 				50CB822728C2995A00680566 /* ChatMiddleware.swift in Sources */,
 				50CB82C828C2AD2300680566 /* EnvironmentValuesExtension.swift in Sources */,
 				50CB826928C29E7400680566 /* DeviceExtension.swift in Sources */,
+				50370C6528EB542100ACD234 /* RepositoryReducer.swift in Sources */,
 				50F0C58528D387E5009D7176 /* MessageView.swift in Sources */,
 				BD80293D28ECA8E400A55CAC /* MessageInputViewModel.swift in Sources */,
 				50CB820028C2865100680566 /* CompositeViewFactory.swift in Sources */,
@@ -1261,6 +1297,7 @@
 				50CB81FA28C2861300680566 /* ChatCompositeOptions.swift in Sources */,
 				50CB825328C29B4800680566 /* ParticipantInfoModel.swift in Sources */,
 				50CB826B28C29E7B00680566 /* StringConstants.swift in Sources */,
+				50370C6928EB544400ACD234 /* RepositoryAction.swift in Sources */,
 				50CB821F28C2876900680566 /* ChatViewModel.swift in Sources */,
 				50CB826328C29E1500680566 /* ChatSDKEventsHandler.swift in Sources */,
 				BD1A6A3E28ECDFAB005E0B70 /* ThreadViewModel.swift in Sources */,
@@ -1278,6 +1315,8 @@
 				50F0C5BC28D38C63009D7176 /* ChatServiceTests.swift in Sources */,
 				50F0C5C028D38CB8009D7176 /* ErrorManagerTests.swift in Sources */,
 				50F0C5BA28D38C4E009D7176 /* ErrorReducerTests.swift in Sources */,
+				50370CBB28EB5DF000ACD234 /* MiddlewareMocking.swift in Sources */,
+				50370CB928EB5DBE00ACD234 /* LoggerMocking.swift in Sources */,
 				50F0C59D28D38B37009D7176 /* LocalizationProviderMocking.swift in Sources */,
 				50F0C59B28D38B2B009D7176 /* AccessibilityProviderMocking.swift in Sources */,
 				50F0C58D28D3891D009D7176 /* MessageRepositoryHandlerMocking.swift in Sources */,
@@ -1295,12 +1334,16 @@
 				50F0C5B428D38C2E009D7176 /* ChatReducerTests.swift in Sources */,
 				50F0C5A428D38B8F009D7176 /* MessageViewModelTests.swift in Sources */,
 				50F0C5C828D38CF1009D7176 /* RemoteOptionsTests.swift in Sources */,
-				50F0C5AA28D38BE1009D7176 /* ChatServiceListenerTests.swift in Sources */,
+				50F0C5AA28D38BE1009D7176 /* ChatServiceEventHandlerTests.swift in Sources */,
+				50370CC228EB5E6B00ACD234 /* LocalizationProviderTests.swift in Sources */,
 				50F0C59728D38B08009D7176 /* ChatSDKEventsHandlerMocking.swift in Sources */,
+				50370CBD28EB5E0D00ACD234 /* ReducerMocking.swift in Sources */,
 				50F0C5C628D38CE4009D7176 /* MessageRepositoryManagerTests.swift in Sources */,
 				50F0C59928D38B20009D7176 /* ErrorMocking.swift in Sources */,
 				50F0C5C228D38CC9009D7176 /* AvatarManagerTests.swift in Sources */,
 				50F0C58328D38770009D7176 /* MessageViewModelMocking.swift in Sources */,
+				50370CC428EB5ED200ACD234 /* DiagnosticConfigTests.swift in Sources */,
+				50370CBF28EB5E2300ACD234 /* StoreFactoryMocking.swift in Sources */,
 				50F0C5CA28D38D00009D7176 /* DependencyContainerTests.swift in Sources */,
 				50F0C5A628D38BC5009D7176 /* ChatMiddlewareTests.swift in Sources */,
 				50F0C5A228D38B7F009D7176 /* ChatViewModelTests.swift in Sources */,
@@ -1459,6 +1502,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Sources/Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1492,6 +1536,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Sources/Info.plist";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1519,6 +1564,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9KBH5RKYEW;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.Chat.AzureCommunicationUIChatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1537,6 +1583,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9KBH5RKYEW;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.Chat.AzureCommunicationUIChatTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -7,9 +7,11 @@ import AzureCommunicationCommon
 import Foundation
 
 protocol ChatActionHandling {
-    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch)
-    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch)
-
+    @discardableResult
+    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
     func initialize(state: AppState,
                     dispatch: @escaping ActionDispatch,
                     serviceListener: ChatServiceEventHandling) -> Task<Void, Never>
@@ -30,22 +32,26 @@ class ChatActionHandler: ChatActionHandling {
         Task {
             do {
                 try await chatService.initalize()
-                let initialMessages = try await chatService.getInitialMessages()
             } catch {
+                // to do error handling if for invalid token
                 print("ChatActionHandler `initialize` catch not implemented")
             }
         }
     }
 
     // MARK: LifeCycleHandler
-    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) {
+    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         // Pause UI update
-        print("ChatActionHandler `enterBackground` not implemented")
+        Task {
+            print("ChatActionHandler `enterBackground` not implemented")
+        }
     }
 
-    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) {
+    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         // rehydrate UI based on latest state, move to last unread message
-        print("ChatActionHandler `enterForeground` not implemented")
+        Task {
+            print("ChatActionHandler `enterForeground` not implemented")
+        }
     }
 
     // MARK: Chat Handler

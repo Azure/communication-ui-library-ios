@@ -5,7 +5,6 @@
 
 import Foundation
 
-enum ChatAction: Equatable {
-    case initializeChat
-    case topicRetrieved(topic: String)
+enum RepositoryAction: Equatable {
+    case repositoryUpdated
 }

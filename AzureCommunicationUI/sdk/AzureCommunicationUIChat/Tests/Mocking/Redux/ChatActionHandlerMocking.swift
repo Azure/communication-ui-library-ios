@@ -7,17 +7,25 @@ import Foundation
 @testable import AzureCommunicationUIChat
 
 class ChatActionHandlerMocking: ChatActionHandling {
-    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) {
-        // stub: to be implemented
+    var enterBackgroundCalled: ((Bool) -> Void)?
+    var enterForegroundCalled: ((Bool) -> Void)?
+    var initializeCalled: ((Bool) -> Void)?
+
+    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            enterBackgroundCalled?(true)
+        }
     }
 
-    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) {
-        // stub: to be implemented
+    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            enterForegroundCalled?(true)
+        }
     }
 
     func initialize(state: AppState, dispatch: @escaping ActionDispatch, serviceListener: ChatServiceEventHandling) -> Task<Void, Never> {
         Task {
-            // stub: to be implemented
+            initializeCalled?(true)
         }
     }
 }
