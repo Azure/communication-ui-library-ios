@@ -12,6 +12,7 @@ enum Action: Equatable {
     case lifecycleAction(LifecycleAction)
     case chatAction(ChatAction)
     case participantsAction(ParticipantsAction)
+    case repositoryAction(RepositoryAction)
     case errorAction(ErrorAction)
 
     case compositeExitAction

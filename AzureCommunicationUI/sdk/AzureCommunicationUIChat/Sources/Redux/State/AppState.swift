@@ -10,17 +10,20 @@ struct AppState {
     let chatState: ChatState
     let participantsState: ParticipantsState
     let navigationState: NavigationState
+    let repositoryState: RepositoryState
     let errorState: ErrorState
 
     init(lifeCycleState: LifeCycleState = .init(),
          chatState: ChatState = .init(),
-         navigationState: NavigationState = .init(),
          participantsState: ParticipantsState = .init(),
+         navigationState: NavigationState = .init(),
+         repositoryState: RepositoryState = .init(),
          errorState: ErrorState = .init()) {
         self.lifeCycleState = lifeCycleState
         self.chatState = chatState
-        self.navigationState = navigationState
         self.participantsState = participantsState
+        self.navigationState = navigationState
+        self.repositoryState = repositoryState
         self.errorState = errorState
     }
 }

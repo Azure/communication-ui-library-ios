@@ -11,14 +11,16 @@ extension Reducer where State == ChatState,
     static var liveChatReducer: Self = Reducer { chatState, action in
         var localUser = chatState.localUser
         var threadId = chatState.threadId
+        var topic = chatState.topic
 
         switch action {
-        case .chatAction(.initializeChat):
-            print("ChatReducer `initializeChat` not implemented")
+        case .chatAction(.topicRetrieved(let newTopic)):
+            topic = newTopic
         default:
             return chatState
         }
         return ChatState(localUser: localUser,
-                         threadId: threadId)
+                         threadId: threadId,
+                         topic: topic)
     }
 }
