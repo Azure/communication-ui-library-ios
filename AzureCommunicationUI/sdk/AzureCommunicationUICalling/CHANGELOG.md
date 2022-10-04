@@ -1,9 +1,10 @@
 # Azure Communication UI Calling Release History
 
 ## TBA (upcoming release)
- ### New Features
+### New Features
  - Implemented new feature that remove the local user from the participant list when the app will be terminated [#352](https://github.com/Azure/communication-ui-library-ios/pull/352)
- ### Bugs Fixed
+
+### Bugs Fixed
  - Fixed issue that the error is mutable inside CallCompositeError [#364](https://github.com/Azure/communication-ui-library-ios/pull/364)
 
 ## 1.1.0-beta.1 (2022-10-03)
