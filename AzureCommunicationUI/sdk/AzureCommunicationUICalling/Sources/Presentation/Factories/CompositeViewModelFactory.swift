@@ -92,7 +92,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                            store: store,
                                            networkManager: networkManager,
                                            localizationProvider: localizationProvider,
-                                           navigationBarViewData: localOptions?.navigationBarViewData)
+                                           setupScreenViewData: localOptions?.setupScreenViewData)
             self.setupViewModel = viewModel
             self.callingViewModel = nil
             return viewModel
