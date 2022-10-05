@@ -4,7 +4,7 @@
 //
 
 import Foundation
-import AzureCommunicationCalling
+import AzureCommunicationCommon
 
 class AuthenticationHelper {
     static func getCommunicationToken(tokenUrl: URL) -> TokenRefresher {

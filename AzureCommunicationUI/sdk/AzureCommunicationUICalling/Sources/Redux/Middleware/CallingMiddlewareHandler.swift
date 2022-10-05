@@ -130,6 +130,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
             do {
                 try await callingService.stopLocalVideoStream()
+                dispatch(.localUserAction(.cameraPausedSucceeded))
             } catch {
                 dispatch(.localUserAction(.cameraPausedFailed(error: error)))
             }
