@@ -7,7 +7,7 @@ import UIKit
 import Combine
 import SwiftUI
 import AzureCommunicationUICalling
-import AzureCommunicationCalling
+import AzureCommunicationCommon
 import AppCenterCrashes
 
 class UIKitDemoViewController: UIViewController {
@@ -179,12 +179,12 @@ class UIKitDemoViewController: UIViewController {
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
-        let navigationBarViewData = NavigationBarViewData(title: envConfigSubject.navigationTitle,
+        let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
         let localOptions = LocalOptions(participantViewData: participantViewData,
-                                        navigationBarViewData: navigationBarViewData)
+                                        setupScreenViewData: setupScreenViewData)
 
         if let credential = try? await getTokenCredential() {
             switch selectedMeetingType {

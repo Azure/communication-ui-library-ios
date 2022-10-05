@@ -100,3 +100,4 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="您的麥克風正由另一個應用程式使用中";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="您被拒絕存取通話。";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="切換影片時發生錯誤";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="無法加入通話。檢查您的網路連線。";
