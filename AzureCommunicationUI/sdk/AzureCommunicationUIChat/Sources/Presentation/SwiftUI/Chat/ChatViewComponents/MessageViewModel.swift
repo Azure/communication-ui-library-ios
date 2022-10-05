@@ -5,4 +5,14 @@
 
 import Foundation
 
-class MessageViewModel: ObservableObject {}
+class MessageViewModel: ObservableObject, Hashable {
+    private let id: String = ""
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    static func == (lhs: MessageViewModel, rhs: MessageViewModel) -> Bool {
+        true
+    }
+}

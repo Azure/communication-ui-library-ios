@@ -6,9 +6,33 @@
 import SwiftUI
 
 struct ChatView: View {
-    @ObservedObject var viewModel: ChatViewModel
+    @StateObject var viewModel: ChatViewModel
 
     var body: some View {
-        Text("Hello, World! ChatView")
+        VStack {
+            TopBarView(viewModel: viewModel.topBarViewModel)
+            Divider()
+            Spacer()
+            ThreadView(viewModel: viewModel.threadViewModel)
+            messageInput
+        }
+    }
+
+    var messageInput: some View {
+        Group {
+            if #available(iOS 15, *) {
+                MessageInputView(viewModel: viewModel.messageInputViewModel)
+            } else {
+                // Use Custom legacy textfeld to handle focusing on iOS 14
+            }
+        }
     }
 }
+
+// struct ChatView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let compositeViewModelFactory
+//    let viewModel = ChatViewModel(
+//        ChatView(viewModel: <#T##ChatViewModel#>)
+//    }
+// }

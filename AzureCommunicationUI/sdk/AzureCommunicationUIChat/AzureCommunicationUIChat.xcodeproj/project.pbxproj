@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C3489934A394B375D970846 /* MessageInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1DDECF511E75D24C2EB17DA0 /* MessageInputViewModel.swift */; };
+		2EADD453BE7187059777F944 /* BubbleMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9877ED4B368F493CBEAF3B /* BubbleMessageView.swift */; };
 		3C8A38C00C940E491F39B0A2 /* Pods_AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A63BF349E7BC31AD5300412A /* Pods_AzureCommunicationUIChat.framework */; };
 		50370C6528EB542100ACD234 /* RepositoryReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6428EB542100ACD234 /* RepositoryReducer.swift */; };
 		50370C6728EB543200ACD234 /* RepositoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6628EB543200ACD234 /* RepositoryState.swift */; };
@@ -137,7 +139,13 @@
 		50F0C5C828D38CF1009D7176 /* RemoteOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */; };
 		50F0C5CA28D38D00009D7176 /* DependencyContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */; };
 		52437C6F28EE197B00402C3B /* TrouterEventExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52437C6E28EE197B00402C3B /* TrouterEventExtension.swift */; };
+		620016E20B3D5534032F8E43 /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6CC57B0C40FE76512D0B9C8 /* MessageInputView.swift */; };
 		85D6F5E7707CE2A8E51E5451 /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9C157344D512A9F069F9CC /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework */; };
+		BD6259E5BF2F7BCEAB198C06 /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AECBEB77FE89161ADCBC58B /* TopBarView.swift */; };
+		C8F3B948CAD3D3754EBBFE9D /* ThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07CAE4CD16CB5E0105FABDDC /* ThreadView.swift */; };
+		E686052732E944BA7AE96082 /* TopBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48A0475801A38214DBEDD07 /* TopBarViewModel.swift */; };
+		E79E52AF731AFDD7B22C67D2 /* ThreadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C852A0DD59385A5C7723A664 /* ThreadViewModel.swift */; };
+		EF7F978EC68E3EC15803BE61 /* ChatViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2894D464F4092787FFC37B60 /* ChatViewModelMocking.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,7 +159,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		07CAE4CD16CB5E0105FABDDC /* ThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadView.swift; sourceTree = "<group>"; };
 		1B9C157344D512A9F069F9CC /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1DDECF511E75D24C2EB17DA0 /* MessageInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputViewModel.swift; sourceTree = "<group>"; };
+		2894D464F4092787FFC37B60 /* ChatViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModelMocking.swift; sourceTree = "<group>"; };
 		50370C6428EB542100ACD234 /* RepositoryReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryReducer.swift; sourceTree = "<group>"; };
 		50370C6628EB543200ACD234 /* RepositoryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryState.swift; sourceTree = "<group>"; };
 		50370C6828EB544400ACD234 /* RepositoryAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryAction.swift; sourceTree = "<group>"; };
@@ -284,10 +295,15 @@
 		50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainerTests.swift; sourceTree = "<group>"; };
 		52437C6E28EE197B00402C3B /* TrouterEventExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrouterEventExtension.swift; sourceTree = "<group>"; };
 		5BE15140BA042B0F23F23BE3 /* Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; sourceTree = "<group>"; };
+		6D9877ED4B368F493CBEAF3B /* BubbleMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleMessageView.swift; sourceTree = "<group>"; };
 		78EED6E1D0BF91A2966AC0C7 /* Pods-AzureCommunicationUIChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat/Pods-AzureCommunicationUIChat.debug.xcconfig"; sourceTree = "<group>"; };
+		8AECBEB77FE89161ADCBC58B /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
 		A63BF349E7BC31AD5300412A /* Pods_AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6CC57B0C40FE76512D0B9C8 /* MessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputView.swift; sourceTree = "<group>"; };
 		BECFADBDC7D74929D47C8991 /* Pods-AzureCommunicationUIChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat/Pods-AzureCommunicationUIChat.release.xcconfig"; sourceTree = "<group>"; };
 		BFC0C6F04FC967AAE75719FF /* Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C852A0DD59385A5C7723A664 /* ThreadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadViewModel.swift; sourceTree = "<group>"; };
+		E48A0475801A38214DBEDD07 /* TopBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -553,6 +569,13 @@
 			children = (
 				50F0C58428D387E5009D7176 /* MessageView.swift */,
 				50F0C58628D38812009D7176 /* MessageViewModel.swift */,
+				6D9877ED4B368F493CBEAF3B /* BubbleMessageView.swift */,
+				A6CC57B0C40FE76512D0B9C8 /* MessageInputView.swift */,
+				1DDECF511E75D24C2EB17DA0 /* MessageInputViewModel.swift */,
+				07CAE4CD16CB5E0105FABDDC /* ThreadView.swift */,
+				C852A0DD59385A5C7723A664 /* ThreadViewModel.swift */,
+				8AECBEB77FE89161ADCBC58B /* TopBarView.swift */,
+				E48A0475801A38214DBEDD07 /* TopBarViewModel.swift */,
 			);
 			path = ChatViewComponents;
 			sourceTree = "<group>";
@@ -673,6 +696,7 @@
 			isa = PBXGroup;
 			children = (
 				50F0C58228D38770009D7176 /* MessageViewModelMocking.swift */,
+				2894D464F4092787FFC37B60 /* ChatViewModelMocking.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1278,6 +1302,13 @@
 				50CB82C128C2AD2300680566 /* Reducer.swift in Sources */,
 				50F0C58728D38812009D7176 /* MessageViewModel.swift in Sources */,
 				50CB820D28C286AA00680566 /* MessageRepositoryManager.swift in Sources */,
+				E686052732E944BA7AE96082 /* TopBarViewModel.swift in Sources */,
+				0C3489934A394B375D970846 /* MessageInputViewModel.swift in Sources */,
+				BD6259E5BF2F7BCEAB198C06 /* TopBarView.swift in Sources */,
+				620016E20B3D5534032F8E43 /* MessageInputView.swift in Sources */,
+				2EADD453BE7187059777F944 /* BubbleMessageView.swift in Sources */,
+				C8F3B948CAD3D3754EBBFE9D /* ThreadView.swift in Sources */,
+				E79E52AF731AFDD7B22C67D2 /* ThreadViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1325,6 +1356,7 @@
 				50F0C5B628D38C39009D7176 /* ParticipantsReducerTests.swift in Sources */,
 				50F0C5AC28D38BEC009D7176 /* MessageRepositoryMiddlewareTests.swift in Sources */,
 				50F0C5BE28D38C6E009D7176 /* NavigationRouterTests.swift in Sources */,
+				EF7F978EC68E3EC15803BE61 /* ChatViewModelMocking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
