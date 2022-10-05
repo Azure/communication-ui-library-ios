@@ -210,6 +210,9 @@ extension CallingView {
             && (areAllOrientationsSupported || (!areAllOrientationsSupported
                                                 && newOrientation != .portraitUpsideDown)) {
             orientation = newOrientation
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                UIViewController.attemptRotationToDeviceOrientation()
+            }
         }
     }
 }
