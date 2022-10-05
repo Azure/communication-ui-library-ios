@@ -22,6 +22,8 @@ protocol CallingMiddlewareHandling {
     @discardableResult
     func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
+    func willTerminate(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
     func audioSessionInterrupted(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func requestCameraPreviewOn(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
@@ -83,8 +85,10 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         Task {
             do {
                 try await callingService.endCall()
+                dispatch(.callingAction(.callEnded))
             } catch {
                 handle(error: error, errorType: .callEndFailed, dispatch: dispatch)
+                dispatch(.callingAction(.requestFailed))
             }
         }
     }
@@ -140,6 +144,15 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 return
             }
             await requestCameraOn(state: state, dispatch: dispatch).value
+        }
+    }
+
+    func willTerminate(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.status == .connected else {
+                return
+            }
+            dispatch(.callingAction(.callEndRequested))
         }
     }
 

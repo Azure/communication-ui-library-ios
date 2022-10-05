@@ -24,20 +24,20 @@ class VideoRendererUIView: UIView {
 
     init(rendererView: UIView) {
         super.init(frame: .zero)
-        update(rendererView: rendererView)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        rendererView?.frame = bounds
+    }
+
     func update(rendererView: UIView) {
         guard rendererView !== self.rendererView ||
               rendererView.superview !== self else {
-            if self.rendererView?.frame != bounds {
-                self.rendererView?.frame = bounds
-            }
-
             return
         }
 
@@ -45,11 +45,6 @@ class VideoRendererUIView: UIView {
         for view in subviews {
             view.removeFromSuperview()
         }
-        // the frame should be updated manually
-        // as setting constrains may cause updateUIView(_ uiView: VideoRendererUIView, context: Context) call
-        rendererView.translatesAutoresizingMaskIntoConstraints = true
-        rendererView.frame = bounds
-        rendererView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         addSubview(rendererView)
         self.rendererView = rendererView
     }

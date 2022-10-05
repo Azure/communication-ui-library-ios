@@ -58,7 +58,7 @@ struct LocalVideoView: View {
     @ObservedObject var viewModel: LocalVideoViewModel
     let viewManager: VideoViewManager
     let viewType: LocalVideoViewType
-    let avatarManager: AvatarViewManager
+    let avatarManager: AvatarViewManagerProtocol
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     @State private var avatarImage: UIImage?
@@ -73,7 +73,6 @@ struct LocalVideoView: View {
 
                     ZStack(alignment: viewType.cameraSwitchButtonAlignment) {
                         VideoRendererView(rendererView: rendererView)
-                            .scaledToFill()
                             .frame(width: geometry.size.width,
                                    height: geometry.size.height)
                         if viewType.hasGradient {
@@ -84,7 +83,9 @@ struct LocalVideoView: View {
                 } else {
                     VStack(alignment: .center, spacing: 5) {
                         CompositeAvatar(displayName: $viewModel.displayName,
-                                        avatarImage: $avatarImage,
+                                        avatarImage: Binding.constant(avatarManager
+                                            .localParticipantViewData?
+                                            .avatarImage),
                                         isSpeaking: false,
                                         avatarSize: viewType.avatarSize)
 
@@ -110,8 +111,6 @@ struct LocalVideoView: View {
             if localVideoStreamId != $0 {
                 localVideoStreamId = $0
             }
-        }.onReceive(avatarManager.$localOptions) {
-            avatarImage = $0?.participantViewData?.avatarImage
         }
     }
 

@@ -28,7 +28,7 @@ class AvatarManagerTests: XCTestCase {
         }
         let mockAvatarManager = makeSUT(mockImage)
         let mockImageData = mockImage.cgImage?.bitsPerPixel
-        let setAvatar = mockAvatarManager.localOptions?.participantViewData?.avatarImage
+        let setAvatar = mockAvatarManager.localParticipantViewData?.avatarImage
         let setAvatarImageData = setAvatar?.cgImage?.bitsPerPixel
         XCTAssertEqual(mockImageData, setAvatarImageData)
     }
@@ -93,13 +93,13 @@ extension AvatarManagerTests {
         let mockParticipantViewData = ParticipantViewData(avatar: image, displayName: "")
         let mockLocalOptions = LocalOptions(participantViewData: mockParticipantViewData)
         return AvatarViewManager(store: mockStoreFactory.store,
-                                 localOptions: mockLocalOptions)
+                                 localParticipantViewData: mockLocalOptions.participantViewData)
 
     }
 
     private func makeSUT() -> AvatarViewManager {
         return AvatarViewManager(store: mockStoreFactory.store,
-                                 localOptions: nil)
+                                 localParticipantViewData: nil)
     }
 }
 

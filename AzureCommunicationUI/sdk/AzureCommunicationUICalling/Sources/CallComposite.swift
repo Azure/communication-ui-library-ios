@@ -3,10 +3,10 @@
 //  Licensed under the MIT License.
 //
 
+import AzureCommunicationCommon
 import UIKit
 import SwiftUI
 import FluentUI
-import AzureCommunicationCalling
 
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
@@ -99,7 +99,7 @@ public class CallComposite {
         self.lifeCycleManager = dependencyContainer.resolve() as LifeCycleManagerProtocol
         self.permissionManager = dependencyContainer.resolve() as PermissionsManagerProtocol
         self.audioSessionManager = dependencyContainer.resolve() as AudioSessionManagerProtocol
-        self.avatarViewManager = dependencyContainer.resolve() as AvatarViewManager
+        self.avatarViewManager = dependencyContainer.resolve() as AvatarViewManagerProtocol
         self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManagerProtocol
     }
 
