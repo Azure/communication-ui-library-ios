@@ -115,6 +115,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
             do {
                 try await callingService.resumeCall()
+                await requestCameraOn(state: state, dispatch: dispatch).value
             } catch {
                 handle(error: error, errorType: .callResumeFailed, dispatch: dispatch)
             }
