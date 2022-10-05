@@ -27,6 +27,7 @@ enum CompositeIcon: String {
     case dismiss = "ic_fluent_dismiss_16_regular"
     case clock = "ic_fluent_clock_24_filled"
     case checkmark = "ic_fluent_checkmark_24_regular"
+    case info = "ic_fluent_info_24_regular"
 }
 
 struct IconProvider {
