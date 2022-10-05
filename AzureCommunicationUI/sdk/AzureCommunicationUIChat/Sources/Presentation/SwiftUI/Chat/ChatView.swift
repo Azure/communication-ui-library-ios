@@ -6,13 +6,28 @@
 import SwiftUI
 
 struct ChatView: View {
-    @ObservedObject var viewModel: ChatViewModel
+    @StateObject var viewModel: ChatViewModel
 
     var body: some View {
-        Text("Hello, World! ChatView")
-            .onAppear {
-                viewModel.getInitialMessages()
+        VStack {
+            TopBarView(viewModel: viewModel.topBarViewModel)
+            Divider()
+            Spacer()
+            ThreadView(viewModel: viewModel.threadViewModel)
+            messageInput
+        }
+        .onAppear {
+            viewModel.getInitialMessages()
+        }
+    }
+
+    var messageInput: some View {
+        Group {
+            if #available(iOS 15, *) {
+                MessageInputView(viewModel: viewModel.messageInputViewModel)
+            } else {
+                // Use Custom legacy textfeld to handle focusing on iOS 14
             }
-        Text("Message Count: \(viewModel.chatMessages.count)")
+        }
     }
 }

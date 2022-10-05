@@ -6,4 +6,5 @@
 import Foundation
 
 struct ParticipantsState {
+    let numberOfParticipants: Int = 3
 }

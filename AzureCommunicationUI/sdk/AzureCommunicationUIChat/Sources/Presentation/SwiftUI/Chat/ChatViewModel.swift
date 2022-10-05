@@ -7,16 +7,31 @@ import Foundation
 import Combine
 
 class ChatViewModel: ObservableObject {
+    private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
+    private let logger: Logger
     private let store: Store<AppState>
-    private var cancellables = Set<AnyCancellable>()
-    private var messageRepository: MessageRepositoryManagerProtocol
-    private var repositoryUpdatedTimestamp: Date = .distantPast
-    @Published var chatMessages: [ChatMessageInfoModel] = []
 
-    init(store: Store<AppState>,
-         messageRepository: MessageRepositoryManagerProtocol) {
+    private var cancellables = Set<AnyCancellable>()
+
+    let topBarViewModel: TopBarViewModel
+    let threadViewModel: ThreadViewModel
+    let messageInputViewModel: MessageInputViewModel
+
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
+         logger: Logger,
+         store: Store<AppState>) {
+        self.compositeViewModelFactory = compositeViewModelFactory
+        self.logger = logger
         self.store = store
-        self.messageRepository = messageRepository
+
+        self.topBarViewModel =
+        compositeViewModelFactory.makeTopBarViewModel(
+            participantsState: store.state.participantsState)
+        self.threadViewModel =
+        compositeViewModelFactory.makeThreadViewModel()
+        self.messageInputViewModel =
+        compositeViewModelFactory.makeMessageInputViewModel(dispatch: store.dispatch)
+
         store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
@@ -30,9 +45,6 @@ class ChatViewModel: ObservableObject {
     }
 
     func receive(_ state: AppState) {
-        if self.repositoryUpdatedTimestamp < state.repositoryState.lastUpdatedTimestamp {
-            self.repositoryUpdatedTimestamp = state.repositoryState.lastUpdatedTimestamp
-            self.chatMessages = messageRepository.messages
-        }
+        threadViewModel.update(repositoryState: state.repositoryState)
     }
 }
