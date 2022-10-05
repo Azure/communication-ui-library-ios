@@ -22,16 +22,17 @@
 "AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Desligar a Câmera";
 "AzureCommunicationUICalling.SetupView.Button.MicOff"="Microfone desativado";
 "AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Desativar mudo";
-"AzureCommunicationUICalling.SetupView.Button.MicOn"="Microfone ativado";
+"AzureCommunicationUICalling.SetupView.Button.MicOn"="Microfone ligado";
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Ativar mudo";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Dispositivo";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Selecionar dispositivo de áudio";
+"AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Acesse Configurações";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Sua câmera está desabilitada. Para habilitar, vá para Configurações para permitir o acesso.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="A câmera e o áudio estão desabilitados. Para habilitar, vá para Configurações para permitir o acesso. Habilite o áudio para iniciar esta chamada.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="O áudio está desabilitado. Para habilitar, vá para Configurações para permitir o acesso. Habilite o áudio para iniciar esta chamada.";
 
 /* LobbyView */
-"AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="Aguardando o host"; // host (people not server) of a meeting
+"AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="Esperando pelo anfitrião"; // host (people not server) of a meeting
 "AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"="Alguém na reunião permitirá que você entre em breve";
 
 /* OnHoldView */
@@ -43,10 +44,10 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="Chamada com 1 pessoa";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Chamada com %d pessoas"; // %d is for number of people in call
 
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Participante sem nome";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Participante Sem Nome";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (eu)"; // %@ is local participant name
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Mudo Ativado";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Mudo Desativado";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Mudo ativado";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Mudo desativado";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Falando";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Em espera";
 
@@ -98,3 +99,5 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Não é possível retomar a chamada";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Seu microfone está sendo usado por outro aplicativo";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="O acesso à chamada foi negado.";
+"AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Erro ao alternar o vídeo";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Não é possível ingressar na chamada. Verifique sua conexão de rede.";
