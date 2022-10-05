@@ -6,6 +6,15 @@
 import Foundation
 
 class MessageInputViewModel: ObservableObject {
+    private let logger: Logger
+    private let dispatch: ActionDispatch
+
+    init(logger: Logger,
+         dispatch: @escaping ActionDispatch) {
+        self.logger = logger
+        self.dispatch = dispatch
+    }
+
     @Published var message: String = ""
     @Published var hasFocus: Bool = true
 
@@ -14,7 +23,7 @@ class MessageInputViewModel: ObservableObject {
         guard !message.isEmpty else {
             return
         }
-        // Insert send message action
+//        dispatch(.chatAction(.))
         message = ""
     }
 }

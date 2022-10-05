@@ -30,7 +30,7 @@ class ChatViewModel: ObservableObject {
         self.threadViewModel =
         compositeViewModelFactory.makeThreadViewModel()
         self.messageInputViewModel =
-        compositeViewModelFactory.makeMessageInputViewModel()
+        compositeViewModelFactory.makeMessageInputViewModel(dispatch: store.dispatch)
 
         store.$state
             .receive(on: DispatchQueue.main)

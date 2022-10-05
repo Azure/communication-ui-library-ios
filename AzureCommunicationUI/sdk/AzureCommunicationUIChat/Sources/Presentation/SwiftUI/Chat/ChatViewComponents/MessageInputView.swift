@@ -41,6 +41,7 @@ struct MessageInputView: View {
            self.hasFocus = viewModel.hasFocus
         }
     }
+
     var sendButton: some View {
         Button(action: viewModel.sendMessage) {
             // Replace with icon
