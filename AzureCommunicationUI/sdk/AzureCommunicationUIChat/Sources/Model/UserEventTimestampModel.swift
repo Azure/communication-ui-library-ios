@@ -9,15 +9,16 @@ import Foundation
 
 struct UserEventTimestampModel: Equatable {
     let id: String
-    let identifier: CommunicationIdentifier?
+    let identifier: CommunicationIdentifier
     let timestamp: Iso8601Date
 
-    init?(userIdentifier: CommunicationIdentifier?, timestamp: Iso8601Date) {
-        guard let id = userIdentifier?.stringValue else {
+    init?(userIdentifier: CommunicationIdentifier?, timestamp: Iso8601Date?) {
+        guard let identifier = userIdentifier,
+                let timestamp = timestamp else {
             return nil
         }
-        self.id = id
-        self.identifier = userIdentifier
+        self.id = identifier.stringValue
+        self.identifier = identifier
         self.timestamp = timestamp
     }
 

@@ -10,6 +10,6 @@ extension TypingIndicatorReceivedEvent {
     func toUserEventTimestampModel() -> UserEventTimestampModel? {
         return UserEventTimestampModel(
             userIdentifier: self.sender,
-            timestamp: self.receivedOn ?? Iso8601Date())
+            timestamp: self.receivedOn)
     }
 }
