@@ -411,6 +411,17 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_callingMiddlewareHandler_enterBackground_when_callConnected_cameraStatusOn_then_cameraPausedDispatched() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.localUserAction(.cameraPausedSucceeded))
+        }
+        await sut.enterBackground(state: getState(
+            callingState: .connected,
+            cameraStatus: .on,
+            cameraDeviceStatus: .front), dispatch: dispatch).value
+    }
+
     func test_callingMiddlewareHandler_enterBackground_when_callConnected_cameraStatusOn_then_stopLocalVideoStreamCalled() async {
         let sut = makeSUT()
         await sut.enterBackground(
