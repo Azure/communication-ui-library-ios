@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3C8A38C00C940E491F39B0A2 /* Pods_AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A63BF349E7BC31AD5300412A /* Pods_AzureCommunicationUIChat.framework */; };
 		50370C6528EB542100ACD234 /* RepositoryReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6428EB542100ACD234 /* RepositoryReducer.swift */; };
-		50370C6728EB543200ACD234 /* RepositoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6628EB543200ACD234 /* RepositoryState.swift */; };
 		50370C6928EB544400ACD234 /* RepositoryAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6828EB544400ACD234 /* RepositoryAction.swift */; };
 		50370CB928EB5DBE00ACD234 /* LoggerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CB828EB5DBE00ACD234 /* LoggerMocking.swift */; };
 		50370CBB28EB5DF000ACD234 /* MiddlewareMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CBA28EB5DF000ACD234 /* MiddlewareMocking.swift */; };
@@ -137,6 +136,15 @@
 		50F0C5C828D38CF1009D7176 /* RemoteOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */; };
 		50F0C5CA28D38D00009D7176 /* DependencyContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */; };
 		85D6F5E7707CE2A8E51E5451 /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9C157344D512A9F069F9CC /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework */; };
+		BD1A6A3C28ECDEAE005E0B70 /* ThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A6A3B28ECDEAE005E0B70 /* ThreadView.swift */; };
+		BD1A6A3E28ECDFAB005E0B70 /* ThreadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A6A3D28ECDFAB005E0B70 /* ThreadViewModel.swift */; };
+		BD1A6A3F28ECF008005E0B70 /* RepositoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6628EB543200ACD234 /* RepositoryState.swift */; };
+		BD80293328EC9BDF00A55CAC /* ChatViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80293228EC9BDF00A55CAC /* ChatViewModelMocking.swift */; };
+		BD80293828ECA7D700A55CAC /* MessageInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80293428ECA68700A55CAC /* MessageInputView.swift */; };
+		BD80293928ECA7DC00A55CAC /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80293628ECA6C600A55CAC /* TopBarView.swift */; };
+		BD80293B28ECA84200A55CAC /* TopBarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80293A28ECA84200A55CAC /* TopBarViewModel.swift */; };
+		BD80293D28ECA8E400A55CAC /* MessageInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80293C28ECA8E400A55CAC /* MessageInputViewModel.swift */; };
+		BD80293F28ECCD7800A55CAC /* BubbleMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80293E28ECCD7800A55CAC /* BubbleMessageView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -284,6 +292,14 @@
 		5BE15140BA042B0F23F23BE3 /* Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		78EED6E1D0BF91A2966AC0C7 /* Pods-AzureCommunicationUIChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat/Pods-AzureCommunicationUIChat.debug.xcconfig"; sourceTree = "<group>"; };
 		A63BF349E7BC31AD5300412A /* Pods_AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD1A6A3B28ECDEAE005E0B70 /* ThreadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadView.swift; sourceTree = "<group>"; };
+		BD1A6A3D28ECDFAB005E0B70 /* ThreadViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadViewModel.swift; sourceTree = "<group>"; };
+		BD80293228EC9BDF00A55CAC /* ChatViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModelMocking.swift; sourceTree = "<group>"; };
+		BD80293428ECA68700A55CAC /* MessageInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputView.swift; sourceTree = "<group>"; };
+		BD80293628ECA6C600A55CAC /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
+		BD80293A28ECA84200A55CAC /* TopBarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarViewModel.swift; sourceTree = "<group>"; };
+		BD80293C28ECA8E400A55CAC /* MessageInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageInputViewModel.swift; sourceTree = "<group>"; };
+		BD80293E28ECCD7800A55CAC /* BubbleMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleMessageView.swift; sourceTree = "<group>"; };
 		BECFADBDC7D74929D47C8991 /* Pods-AzureCommunicationUIChat.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat/Pods-AzureCommunicationUIChat.release.xcconfig"; sourceTree = "<group>"; };
 		BFC0C6F04FC967AAE75719FF /* Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -549,8 +565,15 @@
 		50CB821B28C2874000680566 /* ChatViewComponents */ = {
 			isa = PBXGroup;
 			children = (
+				BD80293E28ECCD7800A55CAC /* BubbleMessageView.swift */,
 				50F0C58428D387E5009D7176 /* MessageView.swift */,
 				50F0C58628D38812009D7176 /* MessageViewModel.swift */,
+				BD80293428ECA68700A55CAC /* MessageInputView.swift */,
+				BD80293C28ECA8E400A55CAC /* MessageInputViewModel.swift */,
+				BD1A6A3B28ECDEAE005E0B70 /* ThreadView.swift */,
+				BD1A6A3D28ECDFAB005E0B70 /* ThreadViewModel.swift */,
+				BD80293628ECA6C600A55CAC /* TopBarView.swift */,
+				BD80293A28ECA84200A55CAC /* TopBarViewModel.swift */,
 			);
 			path = ChatViewComponents;
 			sourceTree = "<group>";
@@ -670,6 +693,7 @@
 			isa = PBXGroup;
 			children = (
 				50F0C58228D38770009D7176 /* MessageViewModelMocking.swift */,
+				BD80293228EC9BDF00A55CAC /* ChatViewModelMocking.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1198,7 +1222,9 @@
 				50CB824128C29ADA00680566 /* ParticipantsState.swift in Sources */,
 				50CB826128C29E0600680566 /* ChatSDKWrapperProtocol.swift in Sources */,
 				50CB821128C286D400680566 /* IconProvider.swift in Sources */,
+				BD1A6A3F28ECF008005E0B70 /* RepositoryState.swift in Sources */,
 				50CB823728C29A3E00680566 /* ParticipantsAction.swift in Sources */,
+				BD80293B28ECA84200A55CAC /* TopBarViewModel.swift in Sources */,
 				50CB82BC28C2AD2300680566 /* CancelBag.swift in Sources */,
 				50CB81FC28C2862000680566 /* LocalizationOptions.swift in Sources */,
 				50CB824928C29B0100680566 /* LifeCycleReducer.swift in Sources */,
@@ -1212,6 +1238,7 @@
 				50CB826928C29E7400680566 /* DeviceExtension.swift in Sources */,
 				50370C6528EB542100ACD234 /* RepositoryReducer.swift in Sources */,
 				50F0C58528D387E5009D7176 /* MessageView.swift in Sources */,
+				BD80293D28ECA8E400A55CAC /* MessageInputViewModel.swift in Sources */,
 				50CB820028C2865100680566 /* CompositeViewFactory.swift in Sources */,
 				50CB820728C2868000680566 /* CompositeManager.swift in Sources */,
 				50CB82CD28C2AD2300680566 /* ThemeOptions.swift in Sources */,
@@ -1236,13 +1263,14 @@
 				50CB822F28C2998900680566 /* MessareRepositoryHandler.swift in Sources */,
 				50CB82BB28C2AD2300680566 /* Logger.swift in Sources */,
 				50CB820F28C286BF00680566 /* NavigationRouter.swift in Sources */,
+				BD80293928ECA7DC00A55CAC /* TopBarView.swift in Sources */,
 				50CB825128C29B2600680566 /* ErrorReducer.swift in Sources */,
 				50CB82C728C2AD2300680566 /* PreferenceKey.swift in Sources */,
 				50CB822128C28CD600680566 /* DependencyContainer.swift in Sources */,
 				50CB820928C2868A00680566 /* AvatarViewManager.swift in Sources */,
 				50CB823B28C29AC100680566 /* AppState.swift in Sources */,
 				50CB82CB28C2AD2300680566 /* ViewModifer.swift in Sources */,
-				50370C6728EB543200ACD234 /* RepositoryState.swift in Sources */,
+				BD80293828ECA7D700A55CAC /* MessageInputView.swift in Sources */,
 				50CB824D28C29B1700680566 /* ParticipantsReducer.swift in Sources */,
 				50CB825D28C29DEF00680566 /* ChatService.swift in Sources */,
 				50CB824528C29AEB00680566 /* ErrorState.swift in Sources */,
@@ -1259,11 +1287,13 @@
 				50CB82C028C2AD2300680566 /* Middleware.swift in Sources */,
 				50CB823D28C29AC900680566 /* AppLifeCycleState.swift in Sources */,
 				50CB82BF28C2AD2300680566 /* MappedSequence.swift in Sources */,
+				BD80293F28ECCD7800A55CAC /* BubbleMessageView.swift in Sources */,
 				50CB81DB28C26EEB00680566 /* ChatComposite.swift in Sources */,
 				50CB81F628C285F300680566 /* ChatConfiguration.swift in Sources */,
 				50CB81FE28C2863100680566 /* DiagnosticConfig.swift in Sources */,
 				50CB825728C29B5A00680566 /* LocalUserInfoModel.swift in Sources */,
 				50CB823528C29A3200680566 /* ChatAction.swift in Sources */,
+				BD1A6A3C28ECDEAE005E0B70 /* ThreadView.swift in Sources */,
 				50CB826728C29E6B00680566 /* ChatCompositeInternalError.swift in Sources */,
 				50CB81FA28C2861300680566 /* ChatCompositeOptions.swift in Sources */,
 				50CB825328C29B4800680566 /* ParticipantInfoModel.swift in Sources */,
@@ -1271,6 +1301,7 @@
 				50370C6928EB544400ACD234 /* RepositoryAction.swift in Sources */,
 				50CB821F28C2876900680566 /* ChatViewModel.swift in Sources */,
 				50CB826328C29E1500680566 /* ChatSDKEventsHandler.swift in Sources */,
+				BD1A6A3E28ECDFAB005E0B70 /* ThreadViewModel.swift in Sources */,
 				50CB82C128C2AD2300680566 /* Reducer.swift in Sources */,
 				50F0C58728D38812009D7176 /* MessageViewModel.swift in Sources */,
 				50CB820D28C286AA00680566 /* MessageRepositoryManager.swift in Sources */,
@@ -1293,6 +1324,7 @@
 				50F0C58B28D388FE009D7176 /* ChatServiceEventHandlerMocking.swift in Sources */,
 				50F0C5A828D38BD7009D7176 /* ChatActionHandlerTests.swift in Sources */,
 				50F0C5AE28D38BF7009D7176 /* MessageRepositoryHandlerTests.swift in Sources */,
+				BD80293328EC9BDF00A55CAC /* ChatViewModelMocking.swift in Sources */,
 				50F0C59528D38AF5009D7176 /* ChatSDKWrapperMocking.swift in Sources */,
 				50F0C58928D388E4009D7176 /* ChatActionHandlerMocking.swift in Sources */,
 				50F0C5B228D38C1F009D7176 /* LifeCycleReducerTests.swift in Sources */,
@@ -1471,7 +1503,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Sources/Info.plist";
+				INFOPLIST_FILE = Sources/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1505,7 +1537,7 @@
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				ENABLE_BITCODE = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "Sources/Info.plist";
+				INFOPLIST_FILE = Sources/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (

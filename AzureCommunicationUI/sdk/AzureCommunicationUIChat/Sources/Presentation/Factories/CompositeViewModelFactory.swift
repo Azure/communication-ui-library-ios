@@ -13,37 +13,61 @@ protocol CompositeViewModelFactoryProtocol {
     // MARK: ComponentViewModels
 
     // MARK: ChatViewModels
+    func makeTopBarViewModel(participantsState: ParticipantsState) -> TopBarViewModel
+    func makeThreadViewModel() -> ThreadViewModel
+    func makeMessageInputViewModel(dispatch: @escaping ActionDispatch) -> MessageInputViewModel
 }
 
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
-    private let messageRepository: MessageRepositoryManagerProtocol
     private let logger: Logger
-    private let store: Store<AppState>
-    private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
+    private let accessibilityProvider: AccessibilityProviderProtocol
+    private let messageRepositoryManager: MessageRepositoryManagerProtocol
+    private let store: Store<AppState>
 
     private weak var chatViewModel: ChatViewModel?
 
     // unit test needed
     // - only skeleton code to show view, class not finalized yet
-    init(messageRepository: MessageRepositoryManagerProtocol,
-         logger: Logger,
-         store: Store<AppState>,
+    init(logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
-         accessibilityProvider: AccessibilityProviderProtocol) {
-        self.messageRepository = messageRepository
+         accessibilityProvider: AccessibilityProviderProtocol,
+         messageRepositoryManager: MessageRepositoryManagerProtocol,
+         store: Store<AppState>) {
         self.logger = logger
-        self.store = store
-        self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
+        self.accessibilityProvider = accessibilityProvider
+        self.messageRepositoryManager = messageRepositoryManager
+        self.store = store
     }
 
     // MARK: CompositeViewModels
     func getChatViewModel() -> ChatViewModel {
-        return ChatViewModel()
+        guard let viewModel = self.chatViewModel else {
+            let viewModel = ChatViewModel(compositeViewModelFactory: self,
+                                           logger: logger,
+                                           store: store)
+            self.chatViewModel = viewModel
+            return viewModel
+        }
+        return viewModel
     }
 
     // MARK: ComponentViewModels
 
     // MARK: ChatViewModels
+    func makeTopBarViewModel(participantsState: ParticipantsState) -> TopBarViewModel {
+        TopBarViewModel(localizationProvider: localizationProvider,
+                        participantsState: participantsState)
+    }
+
+    func makeThreadViewModel() -> ThreadViewModel {
+        ThreadViewModel(messageRepositoryManager: messageRepositoryManager,
+                        logger: logger)
+    }
+
+    func makeMessageInputViewModel(dispatch: @escaping ActionDispatch) -> MessageInputViewModel {
+        MessageInputViewModel(logger: logger,
+                              dispatch: dispatch)
+    }
 }
