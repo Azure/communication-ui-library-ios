@@ -3,10 +3,10 @@
 //  Licensed under the MIT License.
 //
 
+import AzureCommunicationCommon
 import UIKit
 import SwiftUI
 import FluentUI
-import AzureCommunicationCalling
 
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {

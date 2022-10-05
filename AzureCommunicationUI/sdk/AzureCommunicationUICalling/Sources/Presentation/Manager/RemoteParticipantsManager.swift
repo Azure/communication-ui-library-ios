@@ -3,9 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
+import AzureCommunicationCalling
 import Combine
-import AzureCommunicationCommon
+import Foundation
 
 protocol RemoteParticipantsManagerProtocol {
 }
@@ -70,8 +70,12 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
             return
         }
 
-        let joinedParticipantsCommunicationIds = joinedParticipantsIds
-            .compactMap { callingSDKWrapper.getRemoteParticipant($0)?.identifier }
+        let joinedParticipantsCommunicationIds: [CommunicationIdentifier] = joinedParticipantsIds
+            .compactMap {
+                callingSDKWrapper.communicationIdForParticipant(
+                    identifier: $0
+                )
+            }
         didRemoteParticipantsJoin(joinedParticipantsCommunicationIds)
     }
 }
