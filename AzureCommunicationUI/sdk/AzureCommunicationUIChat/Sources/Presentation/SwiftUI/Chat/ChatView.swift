@@ -13,18 +13,8 @@ struct ChatView: View {
             TopBarView(viewModel: viewModel.topBarViewModel)
             Divider()
             Spacer()
-            thread
+            ThreadView(viewModel: viewModel.threadViewModel)
             messageInput
-        }
-    }
-
-    var thread: some View {
-        Group {
-            if #available(iOS 15, *) {
-                ThreadView(viewModel: viewModel.threadViewModel)
-            } else {
-                // Use Custom legacy list to handle thread view on iOS 14
-            }
         }
     }
 

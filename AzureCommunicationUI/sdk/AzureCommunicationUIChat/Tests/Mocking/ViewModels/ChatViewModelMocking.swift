@@ -3,14 +3,14 @@
 //  Licensed under the MIT License.
 //
 
-//import Foundation
-//@testable import AzureCommunicationUIChat
+// import Foundation
+// @testable import AzureCommunicationUIChat
 //
-//class ChatViewModelMocking: ChatViewModel {
+// class ChatViewModelMocking: ChatViewModel {
 //    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
 //         logger: Logger) {
 //        super.init(compositeViewModelFactory: compositeViewModelFactory,
 //                   logger: logger,
 //                   store: )
 //    }
-//}
+// }
