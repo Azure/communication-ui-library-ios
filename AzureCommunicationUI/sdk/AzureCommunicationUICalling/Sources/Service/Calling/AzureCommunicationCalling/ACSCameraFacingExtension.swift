@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import AzureCommunicationCalling
+import Foundation
 
 extension CameraFacing {
     func toCameraDevice() -> CameraDevice {
