@@ -125,10 +125,10 @@ class AudioSessionManager: AudioSessionManagerProtocol {
             case .builtInSpeaker:
                 return .speaker
             default:
-                return .receiver
+                return .speaker
             }
         }
-        return .receiver
+        return .speaker
     }
 
     private func switchAudioDevice(to selectedAudioDevice: AudioDeviceType) {
