@@ -94,6 +94,10 @@ public class CallComposite {
                           completionHandler: completionHandler)
     }
 
+    public func getCurrentDiagnosticInfo​() -> DiagnosticsInfo {
+        return DiagnosticsInfo(callId: "")
+    }
+
     private func setupManagers(with dependencyContainer: DependencyContainer) {
         self.errorManager = dependencyContainer.resolve() as ErrorManagerProtocol
         self.lifeCycleManager = dependencyContainer.resolve() as LifeCycleManagerProtocol
