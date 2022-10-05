@@ -5,7 +5,7 @@
 
 import Foundation
 import Combine
-import AzureCommunicationCalling
+
 @testable import AzureCommunicationUICalling
 
 class CallingSDKEventsHandlerMocking: NSObject, CallingSDKEventsHandling {
@@ -14,10 +14,4 @@ class CallingSDKEventsHandlerMocking: NSObject, CallingSDKEventsHandling {
     var isRecordingActiveSubject = PassthroughSubject<Bool, Never>()
     var isTranscriptionActiveSubject = PassthroughSubject<Bool, Never>()
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
-
-    func assign(_ recordingCallFeature: RecordingCallFeature) {}
-
-    func assign(_ transcriptionCallFeature: TranscriptionCallFeature) {}
-
-    func setupProperties() {}
 }
