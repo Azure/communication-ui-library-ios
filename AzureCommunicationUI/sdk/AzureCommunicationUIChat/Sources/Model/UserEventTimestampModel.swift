@@ -3,4 +3,25 @@
 //  Licensed under the MIT License.
 //
 
+import AzureCommunicationCommon
+import AzureCore
 import Foundation
+
+struct UserEventTimestampModel: Equatable {
+    let id: String
+    let identifier: CommunicationIdentifier?
+    let timestamp: Iso8601Date
+
+    init?(userIdentifier: CommunicationIdentifier?, timestamp: Iso8601Date) {
+        guard let id = userIdentifier?.stringValue else {
+            return nil
+        }
+        self.id = id
+        self.identifier = userIdentifier
+        self.timestamp = timestamp
+    }
+
+    static func == (lhs: UserEventTimestampModel, rhs: UserEventTimestampModel) -> Bool {
+        return lhs.id == rhs.id
+    }
+}

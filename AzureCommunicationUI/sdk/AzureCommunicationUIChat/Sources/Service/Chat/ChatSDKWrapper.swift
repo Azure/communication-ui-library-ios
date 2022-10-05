@@ -103,6 +103,10 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
     }
 
     private func registerEvents() {
-        print("Register events not implemented")
+        guard let client = self.chatClient else {
+            return
+        }
+        client.register(event: .typingIndicatorReceived,
+                        handler: chatEventsHandler.handle)
     }
 }

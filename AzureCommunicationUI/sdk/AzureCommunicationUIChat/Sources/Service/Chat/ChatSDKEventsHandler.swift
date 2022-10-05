@@ -5,6 +5,7 @@
 
 import AzureCommunicationChat
 import AzureCommunicationCommon
+import Combine
 import Foundation
 
 protocol ChatSDKEventsHandling {
@@ -15,6 +16,9 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
     private let logger: Logger
     private let threadId: String
     private let localUserId: CommunicationIdentifier
+
+    // MARK: - Event Subjects
+    let typingIndicatorSubject = PassthroughSubject<UserEventTimestampModel, Never>()
 
     init(logger: Logger,
          threadId: String,
@@ -27,8 +31,10 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
     func handle(response: TrouterEvent) {
         switch response {
         case let .typingIndicatorReceived(event):
-            // Stub: not implemented
-            print("Received a TypingIndicatorReceivedEvent: \(event)")
+            guard event.threadId == self.threadId else {
+                return
+            }
+            didReceive(typingIndicator: event)
         case let .readReceiptReceived(event):
             // Stub: not implemented
             print("Received a ReadReceiptReceivedEvent: \(event)")
@@ -56,6 +62,16 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
         default:
             print("Event received will not handled \(response)")
             return
+        }
+    }
+
+    func didReceive(typingIndicator event: TypingIndicatorReceivedEvent) {
+        guard let sender = event.sender else {
+            return
+        }
+        if sender.stringValue != self.localUserId.stringValue,
+            let userEventTimestamp = event.toUserEventTimestampModel() {
+            typingIndicatorSubject.send(userEventTimestamp)
         }
     }
 }
