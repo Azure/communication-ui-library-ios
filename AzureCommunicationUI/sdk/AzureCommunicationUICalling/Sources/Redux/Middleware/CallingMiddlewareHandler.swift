@@ -101,6 +101,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
             do {
                 try await callingService.holdCall()
+                await requestCameraOff(state: state, dispatch: dispatch).value
             } catch {
                 handle(error: error, errorType: .callHoldFailed, dispatch: dispatch)
             }
