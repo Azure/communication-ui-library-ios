@@ -117,8 +117,8 @@ class SetupViewModel: ObservableObject {
             handleOffline()
             return
         }
-        store.dispatch(action: .callingAction(.callStartRequested))
         isJoinRequested = true
+        store.dispatch(action: .callingAction(.callStartRequested))
     }
 
     func dismissButtonTapped() {
