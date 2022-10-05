@@ -6,27 +6,27 @@
 import AzureCommunicationCalling
 
 class RemoteParticipantsEventsAdapter: NSObject, RemoteParticipantDelegate {
-    var onVideoStreamsUpdated: ((RemoteParticipant) -> Void) = {_ in }
-    var onIsSpeakingChanged: ((RemoteParticipant) -> Void) = {_ in }
-    var onIsMutedChanged: ((RemoteParticipant) -> Void) = {_ in }
-    var onStateChanged: ((RemoteParticipant) -> Void) = {_ in }
+    var onVideoStreamsUpdated: ((AzureCommunicationCalling.RemoteParticipant) -> Void) = {_ in }
+    var onIsSpeakingChanged: ((AzureCommunicationCalling.RemoteParticipant) -> Void) = {_ in }
+    var onIsMutedChanged: ((AzureCommunicationCalling.RemoteParticipant) -> Void) = {_ in }
+    var onStateChanged: ((AzureCommunicationCalling.RemoteParticipant) -> Void) = {_ in }
 
-    func remoteParticipant(_ remoteParticipant: RemoteParticipant,
+    func remoteParticipant(_ remoteParticipant: AzureCommunicationCalling.RemoteParticipant,
                            didUpdateVideoStreams args: RemoteVideoStreamsEventArgs) {
         onVideoStreamsUpdated(remoteParticipant)
     }
 
-    func remoteParticipant(_ remoteParticipant: RemoteParticipant,
+    func remoteParticipant(_ remoteParticipant: AzureCommunicationCalling.RemoteParticipant,
                            didChangeSpeakingState args: PropertyChangedEventArgs) {
         onIsSpeakingChanged(remoteParticipant)
     }
 
-    func remoteParticipant(_ remoteParticipant: RemoteParticipant,
+    func remoteParticipant(_ remoteParticipant: AzureCommunicationCalling.RemoteParticipant,
                            didChangeMuteState args: PropertyChangedEventArgs) {
         onIsMutedChanged(remoteParticipant)
     }
 
-    func remoteParticipant(_ remoteParticipant: RemoteParticipant,
+    func remoteParticipant(_ remoteParticipant: AzureCommunicationCalling.RemoteParticipant,
                            didChangeState args: PropertyChangedEventArgs) {
 
         onStateChanged(remoteParticipant)

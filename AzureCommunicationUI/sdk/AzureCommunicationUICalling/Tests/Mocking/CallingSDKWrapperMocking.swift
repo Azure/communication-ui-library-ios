@@ -3,16 +3,18 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
+import AzureCommunicationCommon
 import Combine
-import AzureCommunicationCalling
+import Foundation
+
 @testable import AzureCommunicationUICalling
 
 class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     var error: NSError?
     var callingEventsHandler: CallingSDKEventsHandling = CallingSDKEventsHandler(logger: LoggerMocking())
 
-    func getLocalVideoStream(_ identifier: String) -> LocalVideoStream? {
+    func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String) ->
+    CompositeLocalVideoStream<LocalVideoStreamType>? {
         return nil
     }
 
@@ -73,7 +75,13 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
         }.value
     }
 
-    func getRemoteParticipant(_ identifier: String) -> RemoteParticipant? {
+    func getRemoteParticipant<ParticipantType, StreamType>(_ identifier: String) ->
+    CompositeRemoteParticipant<ParticipantType, StreamType>? {
+        _ = communicationIdForParticipant(identifier: identifier)
+        return nil
+    }
+
+    func communicationIdForParticipant(identifier: String) -> CommunicationIdentifier? {
         getRemoteParticipantCallIds.append(identifier)
         return nil
     }
