@@ -6,7 +6,7 @@
 import FluentUI
 import UIKit
 
-class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelegate {
+class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerControllerDelegate {
     weak var delegate: DrawerControllerDelegate?
     lazy var drawerTableView: UITableView? = nil
     let backgroundColor: UIColor = UIDevice.current.userInterfaceIdiom == .pad
@@ -67,6 +67,9 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
     }
 
     func updateDrawerList(items: [T]) {
+        guard self.items != items else {
+            return
+        }
         guard self.items.count != items.count else {
             self.items = items
             self.drawerTableView?.reloadData()
