@@ -67,6 +67,11 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
     }
 
     func updateDrawerList(items: [T]) {
+        guard self.items.count != items.count else {
+            self.items = items
+            self.drawerTableView?.reloadData()
+            return
+        }
         self.items = items
         resizeDrawer()
     }
@@ -115,8 +120,11 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
             guard let self = self, let drawerTableView = self.drawerTableView else {
                 return
             }
-
             drawerTableView.reloadData()
+
+            if drawerTableView.frame == CGRect.zero {
+                self.setTableViewFrame(isiPhoneLayout)
+            }
 
             var drawerHeight = self.getDrawerHeight(
                 tableView: drawerTableView,
@@ -161,5 +169,15 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
                 return IndexPath(row: row, section: section)
             }
         }.map { index in return tableView.rectForRow(at: index).height }.reduce(0, +)
+    }
+
+    private func setTableViewFrame(_ isiPhoneLayout: Bool) {
+        guard let tableView = self.drawerTableView else {
+            return
+        }
+        let resizeBarHeight: CGFloat = isiPhoneLayout ? 20 : 0
+        let width = UIScreen.main.bounds.width
+        tableView.frame = CGRect(x: 0.0, y: resizeBarHeight, width: width, height: 0.0)
+        tableView.setNeedsDisplay()
     }
 }
