@@ -67,14 +67,18 @@ class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerContr
     }
 
     func updateDrawerList(items: [T]) {
+        // if contents are identical, do nothing
         guard self.items != items else {
             return
         }
+        // if contents are different but total count stays the same
+        // reload table and skip height update
         guard self.items.count != items.count else {
             self.items = items
             self.drawerTableView?.reloadData()
             return
         }
+        // else reload table and update drawer height
         self.items = items
         resizeDrawer()
     }
