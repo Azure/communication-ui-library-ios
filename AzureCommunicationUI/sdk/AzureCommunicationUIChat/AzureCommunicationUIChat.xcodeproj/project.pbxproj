@@ -20,6 +20,9 @@
 		50370CC928ECAAAB00ACD234 /* ChatParticipantExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CC828ECAAAB00ACD234 /* ChatParticipantExtension.swift */; };
 		50370CCB28ECD14100ACD234 /* RepositoryReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CCA28ECD14100ACD234 /* RepositoryReducerTests.swift */; };
 		50370CCD28ECE28D00ACD234 /* MessageRepositoryManagerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CCC28ECE28D00ACD234 /* MessageRepositoryManagerMocking.swift */; };
+		50370CCF28EE4AA800ACD234 /* BaseInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CCE28EE4AA800ACD234 /* BaseInfoModel.swift */; };
+		50370CD128EE4AD900ACD234 /* ChatEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CD028EE4AD900ACD234 /* ChatEventModel.swift */; };
+		50370CD328EE507A00ACD234 /* TrouterEventExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CD228EE507A00ACD234 /* TrouterEventExtension.swift */; };
 		50CB81CB28C26E0C00680566 /* AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB81C228C26E0C00680566 /* AzureCommunicationUIChat.framework */; };
 		50CB81DB28C26EEB00680566 /* ChatComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB81DA28C26EEB00680566 /* ChatComposite.swift */; };
 		50CB81DD28C26FA100680566 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50CB81DC28C26FA100680566 /* Assets.xcassets */; };
@@ -176,6 +179,9 @@
 		50370CC828ECAAAB00ACD234 /* ChatParticipantExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatParticipantExtension.swift; sourceTree = "<group>"; };
 		50370CCA28ECD14100ACD234 /* RepositoryReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryReducerTests.swift; sourceTree = "<group>"; };
 		50370CCC28ECE28D00ACD234 /* MessageRepositoryManagerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRepositoryManagerMocking.swift; sourceTree = "<group>"; };
+		50370CCE28EE4AA800ACD234 /* BaseInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoModel.swift; sourceTree = "<group>"; };
+		50370CD028EE4AD900ACD234 /* ChatEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatEventModel.swift; sourceTree = "<group>"; };
+		50370CD228EE507A00ACD234 /* TrouterEventExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrouterEventExtension.swift; sourceTree = "<group>"; };
 		50CB81C228C26E0C00680566 /* AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB81CA28C26E0C00680566 /* AzureCommunicationUIChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzureCommunicationUIChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB81DA28C26EEB00680566 /* ChatComposite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatComposite.swift; sourceTree = "<group>"; };
@@ -439,6 +445,8 @@
 		50CB81E228C26FE100680566 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				50370CCE28EE4AA800ACD234 /* BaseInfoModel.swift */,
+				50370CD028EE4AD900ACD234 /* ChatEventModel.swift */,
 				50CB825228C29B4800680566 /* ParticipantInfoModel.swift */,
 				50CB825428C29B5100680566 /* ChatMessageInfoModel.swift */,
 				50CB825628C29B5A00680566 /* LocalUserInfoModel.swift */,
@@ -654,6 +662,7 @@
 		50CB825B28C29DE400680566 /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				50370CD228EE507A00ACD234 /* TrouterEventExtension.swift */,
 				50CB82D128C2B2B800680566 /* CommunicationIdentifierExtension.swift */,
 				50370CC628ECA2DB00ACD234 /* ChatMessageExtension.swift */,
 				50370CC828ECAAAB00ACD234 /* ChatParticipantExtension.swift */,
@@ -1243,6 +1252,7 @@
 				50CB81F428C285E300680566 /* RemoteOptions.swift in Sources */,
 				50CB82BE28C2AD2300680566 /* UIWindowExtension.swift in Sources */,
 				50CB821D28C2875D00680566 /* ChatView.swift in Sources */,
+				50370CD328EE507A00ACD234 /* TrouterEventExtension.swift in Sources */,
 				50CB82CE28C2AD2300680566 /* LocalOptions.swift in Sources */,
 				50CB824B28C29B0700680566 /* ChatReducer.swift in Sources */,
 				50CB822728C2995A00680566 /* ChatMiddleware.swift in Sources */,
@@ -1259,6 +1269,7 @@
 				50CB82BA28C2AD2300680566 /* DefaultLogger.swift in Sources */,
 				50CB822928C2996200680566 /* ChatActionHandler.swift in Sources */,
 				50CB822B28C2996D00680566 /* ChatServiceEventHandler.swift in Sources */,
+				50370CD128EE4AD900ACD234 /* ChatEventModel.swift in Sources */,
 				50CB824F28C29B2000680566 /* NavigationReducer.swift in Sources */,
 				50CB820528C2867700680566 /* ErrorManager.swift in Sources */,
 				50CB823928C29AB900680566 /* ErrorAction.swift in Sources */,
@@ -1282,6 +1293,7 @@
 				50CB82C728C2AD2300680566 /* PreferenceKey.swift in Sources */,
 				50CB822128C28CD600680566 /* DependencyContainer.swift in Sources */,
 				50CB820928C2868A00680566 /* AvatarViewManager.swift in Sources */,
+				50370CCF28EE4AA800ACD234 /* BaseInfoModel.swift in Sources */,
 				50CB823B28C29AC100680566 /* AppState.swift in Sources */,
 				50CB82CB28C2AD2300680566 /* ViewModifer.swift in Sources */,
 				BD80293828ECA7D700A55CAC /* MessageInputView.swift in Sources */,

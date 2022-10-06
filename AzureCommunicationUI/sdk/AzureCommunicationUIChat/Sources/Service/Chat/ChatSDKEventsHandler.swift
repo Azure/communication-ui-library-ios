@@ -5,16 +5,20 @@
 
 import AzureCommunicationChat
 import AzureCommunicationCommon
+import Combine
 import Foundation
 
 protocol ChatSDKEventsHandling {
     func handle(response: TrouterEvent)
+    var chatEventSubject: PassthroughSubject<ChatEventModel, Never> { get }
 }
 
 class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
     private let logger: Logger
     private let threadId: String
     private let localUserId: CommunicationIdentifier
+
+    var chatEventSubject = PassthroughSubject<ChatEventModel, Never>()
 
     init(logger: Logger,
          threadId: String,
@@ -33,8 +37,11 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
             // Stub: not implemented
             print("Received a ReadReceiptReceivedEvent: \(event)")
         case let .chatMessageReceivedEvent(event):
-            // Stub: not implemented
             print("Received a ChatMessageReceivedEvent: \(event)")
+            let chatMessage = event.toChatMessageInfoModel()
+            let chatMessageEvent = ChatEventModel(
+                eventType: .chatMessageReceived, infoModel: chatMessage)
+            chatEventSubject.send(chatMessageEvent)
         case let .chatMessageEdited(event):
             // Stub: not implemented
             print("Received a ChatMessageEditedEvent: \(event)")

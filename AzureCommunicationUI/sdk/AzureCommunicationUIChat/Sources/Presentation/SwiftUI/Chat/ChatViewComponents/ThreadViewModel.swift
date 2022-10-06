@@ -25,9 +25,7 @@ class ThreadViewModel: ObservableObject {
         if self.repositoryUpdatedTimestamp < repositoryState.lastUpdatedTimestamp {
             self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
             // for testing
-            for _ in messageRepositoryManager.messages {
-                messages.append(MessageViewModel())
-            }
+            print("Messages count: \(messageRepositoryManager.messages.count)")
 //            self.messages = messageRepositoryManager.messages.toMessageViewModel
         }
     }

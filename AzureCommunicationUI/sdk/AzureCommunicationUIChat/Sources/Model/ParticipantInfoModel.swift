@@ -8,7 +8,7 @@ import AzureCore
 import AzureCommunicationCommon
 import AzureCommunicationChat
 
-struct ParticipantInfoModel: Equatable {
+struct ParticipantInfoModel: BaseInfoModel, Equatable {
     // String id work-around until rawId is implemented
     let id: String
     let identifier: CommunicationIdentifier

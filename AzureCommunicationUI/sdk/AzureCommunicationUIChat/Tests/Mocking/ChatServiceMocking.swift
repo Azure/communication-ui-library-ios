@@ -9,6 +9,7 @@ import Combine
 
 class ChatServiceMocking: ChatServiceProtocol {
     var error: Error?
+    var chatEventSubject = PassthroughSubject<ChatEventModel, Never>()
 
     var topic: String = "topic"
     var initialMessages: [ChatMessageInfoModel] = []

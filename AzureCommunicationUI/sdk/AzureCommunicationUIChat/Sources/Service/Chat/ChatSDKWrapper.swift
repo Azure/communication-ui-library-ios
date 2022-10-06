@@ -115,9 +115,26 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
 
     private func registerRealTimeNotifications() throws {
         print("Register real time notification not implemented")
+        self.chatClient?.startRealTimeNotifications { [self] result in
+            switch result {
+            case .success:
+                print("Real-time notifications started.")
+                self.registerEvents()
+            case .failure(let error):
+                print("Failed to start real-time notifications. \(error)")
+            }
+        }
     }
 
     private func registerEvents() {
         print("Register events not implemented")
+        self.chatClient?.register(event: .chatMessageReceived, handler: chatEventsHandler.handle)
+        self.chatClient?.register(event: .typingIndicatorReceived, handler: chatEventsHandler.handle)
+        self.chatClient?.register(event: .readReceiptReceived, handler: chatEventsHandler.handle)
+        self.chatClient?.register(event: .chatMessageEdited, handler: chatEventsHandler.handle)
+        self.chatClient?.register(event: .chatMessageDeleted, handler: chatEventsHandler.handle)
+        self.chatClient?.register(event: .chatThreadDeleted, handler: chatEventsHandler.handle)
+        self.chatClient?.register(event: .participantsAdded, handler: chatEventsHandler.handle)
+        self.chatClient?.register(event: .participantsRemoved, handler: chatEventsHandler.handle)
     }
 }

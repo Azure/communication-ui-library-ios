@@ -34,6 +34,7 @@ class ChatActionHandler: ChatActionHandling {
         Task {
             do {
                 try await chatService.initalize()
+                serviceListener.subscription(dispatch: dispatch)
             } catch {
                 // dispatch error if invalid token *not handled*
                 dispatch(.chatAction(.initializeChatFailed(error: error)))

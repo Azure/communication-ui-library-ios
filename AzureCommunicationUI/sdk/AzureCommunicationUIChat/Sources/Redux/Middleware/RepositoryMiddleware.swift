@@ -49,6 +49,8 @@ private func handleRepositoryAction(
         switch action {
         case .fetchInitialMessagesSuccess(let messages):
             actionHandler.loadInitialMessages(messages: messages)
+        case .chatMessageReceived(let message):
+            actionHandler.addReceivedMessage(message: message)
         default:
             break
         }
