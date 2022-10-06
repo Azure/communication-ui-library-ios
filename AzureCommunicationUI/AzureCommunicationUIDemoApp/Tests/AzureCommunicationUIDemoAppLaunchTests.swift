@@ -89,7 +89,6 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
     func testCallCompositeJoinCallGroupCallUIKit() {
         tapInterfaceFor(.uiKit)
-        app.buttons["Token URL"].tap()
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
             shouldWait: true)
@@ -103,7 +102,6 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
     func testCallCompositeJoinCallTeamsCallUIKit() {
         tapInterfaceFor(.uiKit)
-        app.buttons["Token URL"].tap()
         tapMeetingType(.teamsCall)
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
