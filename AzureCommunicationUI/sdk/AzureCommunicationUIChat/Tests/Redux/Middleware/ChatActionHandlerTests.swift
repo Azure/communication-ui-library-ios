@@ -11,7 +11,6 @@ import Combine
 
 class ChatActionHandlerTests: XCTestCase {
 
-    var chatActionHandler: ChatActionHandler!
     var mockLogger: LoggerMocking!
     var mockChatService: ChatServiceMocking!
     var mockChatServiceEventHandler: ChatServiceEventHandlerMocking!
@@ -21,9 +20,6 @@ class ChatActionHandlerTests: XCTestCase {
         mockChatService = ChatServiceMocking()
         mockChatServiceEventHandler = ChatServiceEventHandlerMocking()
         mockLogger = LoggerMocking()
-        chatActionHandler = ChatActionHandler(
-            chatService: mockChatService,
-            logger: mockLogger)
     }
 
     override func tearDown() {
@@ -31,11 +27,11 @@ class ChatActionHandlerTests: XCTestCase {
         mockChatService = nil
         mockChatServiceEventHandler = nil
         mockLogger = nil
-        chatActionHandler = nil
     }
 
     func test_chatActionHandler_initialize_then_initializeCalled() async {
-        await chatActionHandler.initialize(
+        let sut = makeSUT()
+        await sut.initialize(
             state: getEmptyState(),
             dispatch: getEmptyDispatch(),
             serviceListener: mockChatServiceEventHandler).value
@@ -43,7 +39,8 @@ class ChatActionHandlerTests: XCTestCase {
     }
 
     func test_chatActionHandler_getInitialMessages_then_getInitialMessagesCalled() async {
-        await chatActionHandler.getInitialMessages(
+        let sut = makeSUT()
+        await sut.getInitialMessages(
             state: getEmptyState(),
             dispatch: getEmptyDispatch()).value
 
@@ -52,6 +49,12 @@ class ChatActionHandlerTests: XCTestCase {
 }
 
 extension ChatActionHandlerTests {
+
+    func makeSUT() -> ChatActionHandler {
+        return ChatActionHandler(
+            chatService: mockChatService,
+            logger: mockLogger)
+    }
 
     private func getEmptyState() -> AppState {
         return AppState()
