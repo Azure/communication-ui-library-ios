@@ -6,8 +6,8 @@
 import Foundation
 
 extension Middleware {
-    static func liveMessageRepositoryMiddleware(
-        messageMiddlewareHandler actionHandler: MessageRepositoryMiddlewareHandling)
+    static func liveRepositoryMiddleware(
+        repositoryMiddlewareHandler actionHandler: RepositoryMiddlewareHandling)
     -> Middleware<AppState> {
         Middleware<AppState>(
             apply: { _, _ in
@@ -15,9 +15,11 @@ extension Middleware {
                     return { action in
                         switch action {
                         case .chatAction(let chatAction):
-                            handleChatMessageAction(chatAction, actionHandler)
+                            handleChatAction(chatAction, actionHandler)
                         case .participantsAction(let participantsAction):
                             handleParticipantsAction(participantsAction, actionHandler)
+                        case .repositoryAction(let repositoryAction):
+                            handleRepositoryAction(repositoryAction, actionHandler)
                         default:
                             break
                         }
@@ -29,14 +31,25 @@ extension Middleware {
     }
 }
 
-private func handleChatMessageAction(
+private func handleChatAction(
     _ action: ChatAction,
-    _ actionHandler: MessageRepositoryMiddlewareHandling) {
-        print("`handleChatMessageAction` not implemented")
+    _ actionHandler: RepositoryMiddlewareHandling) {
+        print("`handleChatAction` not implemented")
     }
 
 private func handleParticipantsAction(
     _ action: ParticipantsAction,
-    _ actionHandler: MessageRepositoryMiddlewareHandling) {
+    _ actionHandler: RepositoryMiddlewareHandling) {
         print("`handleParticipantsAction` not implemented")
+    }
+
+private func handleRepositoryAction(
+    _ action: RepositoryAction,
+    _ actionHandler: RepositoryMiddlewareHandling) {
+        switch action {
+        case .fetchInitialMessagesSuccess(let messages):
+            actionHandler.loadInitialMessages(messages: messages)
+        default:
+            break
+        }
     }

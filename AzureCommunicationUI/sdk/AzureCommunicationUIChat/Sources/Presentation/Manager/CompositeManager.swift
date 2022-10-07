@@ -20,6 +20,6 @@ class CompositeManager: CompositeManagerProtocol {
     }
 
     func start() {
-        store.dispatch(action: .chatAction(.initializeChat))
+        store.dispatch(action: .chatAction(.initializeChatTriggered))
     }
 }

@@ -6,12 +6,11 @@
 import AzureCommunicationCommon
 import Foundation
 
-protocol MessageRepositoryMiddlewareHandling {
-    // local event
-    func loadInitialMessage(messages: [ChatMessageInfoModel])
+protocol RepositoryMiddlewareHandling {
+    func loadInitialMessages(messages: [ChatMessageInfoModel]) -> Task<Void, Never>
 }
 
-class MessageRepositoryMiddlewareHandler: MessageRepositoryMiddlewareHandling {
+class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
     private let messageRepository: MessageRepositoryManagerProtocol
     private let logger: Logger
 
@@ -20,7 +19,9 @@ class MessageRepositoryMiddlewareHandler: MessageRepositoryMiddlewareHandling {
         self.logger = logger
     }
 
-    func loadInitialMessage(messages: [ChatMessageInfoModel]) {
-        messageRepository.addInitialMessages(initialMessages: messages)
+    func loadInitialMessages(messages: [ChatMessageInfoModel]) -> Task<Void, Never> {
+        Task {
+            messageRepository.addInitialMessages(initialMessages: messages)
+        }
     }
 }

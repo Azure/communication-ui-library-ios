@@ -39,6 +39,12 @@ class ChatViewModel: ObservableObject {
             }.store(in: &cancellables)
     }
 
+    // For testing
+    func getInitialMessages() {
+        store.dispatch(action: .repositoryAction(.fetchInitialMessagesTriggered))
+    }
+
     func receive(_ state: AppState) {
+        threadViewModel.update(repositoryState: state.repositoryState)
     }
 }

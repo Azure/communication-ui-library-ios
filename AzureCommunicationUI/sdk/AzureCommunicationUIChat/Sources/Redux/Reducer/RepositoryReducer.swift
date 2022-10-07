@@ -8,13 +8,16 @@ import Foundation
 extension Reducer where State == RepositoryState,
                         Actions == Action {
     static var liveRepositoryReducer: Self = Reducer { repositoryState, action in
+        var lastUpdated = repositoryState.lastUpdatedTimestamp
 
         switch action {
         case .repositoryAction(.repositoryUpdated):
             print("RepositoryAction `repositoryUpdated` not implemented")
+        case .repositoryAction(.fetchInitialMessagesSuccess):
+                lastUpdated = Date()
         default:
             return repositoryState
         }
-        return RepositoryState()
+        return RepositoryState(lastUpdatedTimestamp: lastUpdated)
     }
 }

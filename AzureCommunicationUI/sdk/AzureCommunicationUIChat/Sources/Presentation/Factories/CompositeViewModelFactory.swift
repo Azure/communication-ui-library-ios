@@ -45,8 +45,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     func getChatViewModel() -> ChatViewModel {
         guard let viewModel = self.chatViewModel else {
             let viewModel = ChatViewModel(compositeViewModelFactory: self,
-                                           logger: logger,
-                                           store: store)
+                                          logger: logger,
+                                          store: store)
             self.chatViewModel = viewModel
             return viewModel
         }

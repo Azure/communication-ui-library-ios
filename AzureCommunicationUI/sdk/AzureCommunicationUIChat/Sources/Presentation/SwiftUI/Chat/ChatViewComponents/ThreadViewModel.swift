@@ -8,7 +8,7 @@ import Foundation
 class ThreadViewModel: ObservableObject {
     private let messageRepositoryManager: MessageRepositoryManagerProtocol
     private let logger: Logger
-
+    private var repositoryUpdatedTimestamp: Date = .distantPast
     @Published var messages: [MessageViewModel] = []
 
     init(messageRepositoryManager: MessageRepositoryManagerProtocol,
@@ -21,6 +21,14 @@ class ThreadViewModel: ObservableObject {
         messages.append(MessageViewModel())
     }
 
-    func update() {
+    func update(repositoryState: RepositoryState) {
+        if self.repositoryUpdatedTimestamp < repositoryState.lastUpdatedTimestamp {
+            self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
+            // for testing
+            for _ in messageRepositoryManager.messages {
+                messages.append(MessageViewModel())
+            }
+//            self.messages = messageRepositoryManager.messages.toMessageViewModel
+        }
     }
 }

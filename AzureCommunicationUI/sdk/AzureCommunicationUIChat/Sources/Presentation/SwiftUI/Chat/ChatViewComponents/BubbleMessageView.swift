@@ -73,14 +73,3 @@ struct BubbleMessageView: View {
         }
     }
 }
-
-// Crashes?
-// struct BubbleMessageView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        Text("Test")
-//        BubbleMessageView(message: "Hello World",
-//                          createdOn: Date(),
-//                          displayName: "John Smith",
-//                          isSelf: true)
-//    }
-// }

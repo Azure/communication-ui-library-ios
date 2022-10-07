@@ -16,6 +16,9 @@ struct ChatView: View {
             ThreadView(viewModel: viewModel.threadViewModel)
             messageInput
         }
+        .onAppear {
+            viewModel.getInitialMessages()
+        }
     }
 
     var messageInput: some View {
@@ -28,11 +31,3 @@ struct ChatView: View {
         }
     }
 }
-
-// struct ChatView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let compositeViewModelFactory
-//    let viewModel = ChatViewModel(
-//        ChatView(viewModel: <#T##ChatViewModel#>)
-//    }
-// }

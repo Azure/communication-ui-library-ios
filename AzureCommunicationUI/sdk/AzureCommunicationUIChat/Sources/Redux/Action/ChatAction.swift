@@ -6,6 +6,23 @@
 import Foundation
 
 enum ChatAction: Equatable {
-    case initializeChat
+    case initializeChatTriggered
+    case initializeChatFailed(error: Error)
     case topicRetrieved(topic: String)
+
+    static func == (lhs: ChatAction, rhs: ChatAction) -> Bool {
+        switch (lhs, rhs) {
+        case let (.initializeChatFailed(lErr), .initializeChatFailed(rErr)):
+            return (lErr as NSError).code == (rErr as NSError).code
+
+        case (.initializeChatTriggered, .initializeChatTriggered):
+            return true
+
+        case let (.topicRetrieved(lStr), .topicRetrieved(rStr)):
+            return lStr == rStr
+
+        default:
+            return false
+        }
+    }
 }
