@@ -11,7 +11,7 @@ import Combine
 
 class ChatActionHandlerTests: XCTestCase {
 
-    var chatActionHandler: ChatActionHandling!
+    var chatActionHandler: ChatActionHandler!
     var mockLogger: LoggerMocking!
     var mockChatService: ChatServiceMocking!
     var mockChatServiceEventHandler: ChatServiceEventHandlerMocking!
