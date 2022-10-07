@@ -58,7 +58,7 @@ class AudioDevicesListViewModel: ObservableObject {
                 } else if isHeadphonesConnected {
                     systemDefaultAudio = .headphones
                 } else {
-                    systemDefaultAudio = .speaker
+                    systemDefaultAudio = .receiver
                 }
             } else {
                 systemDefaultAudio = .speaker

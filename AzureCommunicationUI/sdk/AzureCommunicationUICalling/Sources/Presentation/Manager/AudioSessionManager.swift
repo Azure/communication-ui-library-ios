@@ -123,7 +123,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
             case .headphones, .headsetMic:
                 return .headphones
             case .builtInSpeaker:
-                return .speaker
+                return .receiver
             default:
                 return .speaker
             }
