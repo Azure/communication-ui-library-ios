@@ -17,18 +17,22 @@ class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerContr
     private let sourceView: UIView
     private let showHeader: Bool
     private let isRightToLeft: Bool
+    private weak var controller: DrawerController?
+
+    // MARK: Constants
     private var halfScreenHeight: CGFloat {
         UIScreen.main.bounds.height / 2
     }
-    private weak var controller: DrawerController?
+    private var resizeBarHeight: CGFloat {
+        UIDevice.current.userInterfaceIdiom == .phone ? 20 : 0
+    }
+    private let drawerWidth: CGFloat = 400.0
 
-    init(items: [T],
-         sourceView: UIView,
+    init(sourceView: UIView,
          headerName: String? = nil,
          showHeader: Bool = false,
          isRightToLeft: Bool = false
     ) {
-        self.items = items
         self.sourceView = sourceView
         self.showHeader = showHeader
         self.headerName = headerName
@@ -144,7 +148,7 @@ class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerContr
                 isScrollEnabled = true
             }
             drawerTableView.isScrollEnabled = isScrollEnabled
-            self.controller?.preferredContentSize = CGSize(width: 400,
+            self.controller?.preferredContentSize = CGSize(width: self.drawerWidth,
                                                            height: drawerHeight)
         }
     }
@@ -154,7 +158,6 @@ class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerContr
                                  showHeader: Bool,
                                  isiPhoneLayout: Bool) -> CGFloat {
         let headerHeight = self.getHeaderHeight(tableView: tableView, isiPhoneLayout: isiPhoneLayout)
-        let resizeBarHeight: CGFloat = isiPhoneLayout ? 20 : 0
         let dividerOffsetHeight = CGFloat(numberOfItems * 3)
 
         var drawerHeight: CGFloat = getTotalCellsHeight(tableView: tableView, numberOfItems: numberOfItems)
@@ -182,9 +185,8 @@ class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerContr
         guard let tableView = self.drawerTableView else {
             return
         }
-        let resizeBarHeight: CGFloat = isiPhoneLayout ? 20 : 0
-        let width = UIScreen.main.bounds.width
-        tableView.frame = CGRect(x: 0.0, y: resizeBarHeight, width: width, height: 0.0)
+        let initialWidth = isiPhoneLayout ? UIScreen.main.bounds.width : drawerWidth
+        tableView.frame = CGRect(x: 0, y: resizeBarHeight, width: initialWidth, height: 0)
         tableView.setNeedsDisplay()
     }
 }
