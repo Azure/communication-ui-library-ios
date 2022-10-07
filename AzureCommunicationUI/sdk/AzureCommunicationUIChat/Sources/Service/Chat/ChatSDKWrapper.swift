@@ -59,6 +59,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                         continuation.resume(returning: messages?.reversed() ?? [])
                     case .failure(let error):
                         self.logger.error("Get Initial Messages failed: \(error)")
+                        self.pagedCollection = nil
                         continuation.resume(throwing: error)
                     }
                 }

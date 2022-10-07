@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import AzureCore
 import AzureCommunicationChat
 
 extension ChatMessage {

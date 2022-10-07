@@ -21,5 +21,4 @@ class MessageRepositoryManagerMocking: MessageRepositoryManagerProtocol {
         addReceivedMessageCalled = true
         messages.append(message)
     }
-
 }
