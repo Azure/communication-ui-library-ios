@@ -13,6 +13,7 @@ protocol MessageRepositoryManagerProtocol {
     func addInitialMessages(initialMessages: [ChatMessageInfoModel])
 
     // MARK: receiving remote events
+    func addReceivedMessage(message: ChatMessageInfoModel)
 }
 
 class MessageRepositoryManager: MessageRepositoryManagerProtocol {
@@ -27,4 +28,9 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
     func addInitialMessages(initialMessages: [ChatMessageInfoModel]) {
         messages = initialMessages
     }
+
+    func addReceivedMessage(message: ChatMessageInfoModel) {
+        messages.append(message)
+    }
+
 }

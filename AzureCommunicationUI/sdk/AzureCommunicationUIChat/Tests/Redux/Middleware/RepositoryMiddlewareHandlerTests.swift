@@ -35,6 +35,12 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
         await repositoryMiddlewareHandler.loadInitialMessages(messages: []).value
         XCTAssertTrue(mockMessageRepositoryManager.addInitialMessagesCalled)
     }
+
+    func test_repositoryMiddlewareHandler_addReceivedMessage_then_addReceivedMessageCalled() async {
+        let message = ChatMessageInfoModel()
+        await repositoryMiddlewareHandler.addReceivedMessage(message: message).value
+        XCTAssertTrue(mockMessageRepositoryManager.addReceivedMessageCalled)
+    }
 }
 
 extension RepositoryMiddlewareHandlerTests {

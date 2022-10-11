@@ -7,7 +7,10 @@ import AzureCommunicationCommon
 import Foundation
 
 protocol RepositoryMiddlewareHandling {
+    @discardableResult
     func loadInitialMessages(messages: [ChatMessageInfoModel]) -> Task<Void, Never>
+    @discardableResult
+    func addReceivedMessage(message: ChatMessageInfoModel) -> Task<Void, Never>
 }
 
 class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
@@ -22,6 +25,12 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
     func loadInitialMessages(messages: [ChatMessageInfoModel]) -> Task<Void, Never> {
         Task {
             messageRepository.addInitialMessages(initialMessages: messages)
+        }
+    }
+
+    func addReceivedMessage(message: ChatMessageInfoModel) -> Task<Void, Never> {
+        Task {
+            messageRepository.addReceivedMessage(message: message)
         }
     }
 }

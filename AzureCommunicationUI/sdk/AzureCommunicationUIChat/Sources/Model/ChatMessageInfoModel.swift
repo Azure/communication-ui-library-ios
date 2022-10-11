@@ -14,7 +14,7 @@ enum MessageType: Equatable {
     case participantsRemoved
 }
 
-struct ChatMessageInfoModel: Identifiable, Equatable, Hashable {
+struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
     var id: String
     let internalId: String
     let version: String

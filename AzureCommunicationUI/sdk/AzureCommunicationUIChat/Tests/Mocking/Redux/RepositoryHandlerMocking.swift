@@ -8,10 +8,17 @@ import Foundation
 
 class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
     var loadInitialMessagesCalled: ((Bool) -> Void)?
+    var addReceivedMessageCalled: ((Bool) -> Void)?
 
     func loadInitialMessages(messages: [ChatMessageInfoModel]) -> Task<Void, Never> {
         Task {
             loadInitialMessagesCalled?(true)
+        }
+    }
+
+    func addReceivedMessage(message: ChatMessageInfoModel) -> Task<Void, Never> {
+        Task {
+            addReceivedMessageCalled?(true)
         }
     }
 }

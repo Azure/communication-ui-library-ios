@@ -40,6 +40,20 @@ class RepositoryMiddlewareTests: XCTestCase {
         middlewareDispatch(getEmptyDispatch())(.repositoryAction(.fetchInitialMessagesSuccess(messages: messages)))
         wait(for: [expectation], timeout: 1)
     }
+
+    func test_repositoryMiddleware_apply_when_chatMessageReceivedRepositoryAction_then_handleraddReceivedMessageBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "addReceivedMessageCalled")
+        mockRepositoryHandler.addReceivedMessageCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        let message = ChatMessageInfoModel()
+        middlewareDispatch(getEmptyDispatch())(.repositoryAction(.chatMessageReceived(message: message)))
+        wait(for: [expectation], timeout: 1)
+    }
 }
 
 extension RepositoryMiddlewareTests {

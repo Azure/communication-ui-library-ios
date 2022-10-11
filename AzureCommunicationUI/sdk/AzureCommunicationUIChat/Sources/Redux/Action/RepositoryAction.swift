@@ -6,10 +6,16 @@
 import Foundation
 
 enum RepositoryAction: Equatable {
+
+    // MARK: user action send to chat
     case fetchInitialMessagesTriggered
     case fetchInitialMessagesSuccess(messages: [ChatMessageInfoModel])
     case fetchInitialMessagesFailed(error: Error)
+
     case repositoryUpdated
+
+    // MARK: user action receive from chat
+    case chatMessageReceived(message: ChatMessageInfoModel)
 
     static func == (lhs: RepositoryAction, rhs: RepositoryAction) -> Bool {
         switch (lhs, rhs) {
@@ -22,6 +28,9 @@ enum RepositoryAction: Equatable {
 
         case let (.fetchInitialMessagesSuccess(lMsgArr), .fetchInitialMessagesSuccess(rMsgArr)):
             return lMsgArr == rMsgArr
+
+        case let (.chatMessageReceived(lMsg), .chatMessageReceived(rMsg)):
+            return lMsg == rMsg
 
         default:
             return false
