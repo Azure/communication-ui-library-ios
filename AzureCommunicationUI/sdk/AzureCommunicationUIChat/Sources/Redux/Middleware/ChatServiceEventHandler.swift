@@ -24,14 +24,14 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
         logger.debug("Subscribe to chat service subjects")
 
         chatService.chatEventSubject
-            .sink { chatEvent in
+            .sink { [weak self] chatEvent in
                 let eventType = chatEvent.eventType
                 let infoModel = chatEvent.infoModel
 
                 switch (eventType, infoModel) {
                 case (.chatMessageReceived,
                       let chatMessage as ChatMessageInfoModel):
-                    self.handleChatMessageReceived(dispatch: dispatch, chatMessage: chatMessage)
+                    self?.handleChatMessageReceived(dispatch: dispatch, chatMessage: chatMessage)
                 // add more cases here
                 default:
                     print("ChatServiceEventHandler subscription switch: default case")

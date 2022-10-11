@@ -9,11 +9,11 @@ import AzureCore
 
 struct UserEventTimestampModel: BaseInfoModel, Equatable {
     let id: String
-    let identifier: CommunicationIdentifier?
+    let identifier: CommunicationIdentifier
     let timestamp: Iso8601Date
 
-    init(userIdentifier: CommunicationIdentifier?, timestamp: Iso8601Date) {
-        self.id = userIdentifier?.stringValue ?? ""
+    init(userIdentifier: CommunicationIdentifier, timestamp: Iso8601Date) {
+        self.id = userIdentifier.stringValue
         self.identifier = userIdentifier
         self.timestamp = timestamp
     }
