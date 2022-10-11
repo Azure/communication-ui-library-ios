@@ -25,7 +25,8 @@ class DiagnosticsManager: DiagnosticsManagerProtocol {
     }
     
     private func receive(_ state: AppState) {
-        
+        // Receive the callid from callstate
+        // Assign CallId to local property
     }
     
     func getCallId() -> String {
