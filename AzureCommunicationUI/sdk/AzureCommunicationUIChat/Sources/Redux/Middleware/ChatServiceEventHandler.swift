@@ -27,11 +27,16 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
             .sink { [weak self] chatEvent in
                 let eventType = chatEvent.eventType
                 let infoModel = chatEvent.infoModel
+                guard let self = self else {
+                    return
+                }
 
                 switch (eventType, infoModel) {
                 case (.chatMessageReceived,
                       let chatMessage as ChatMessageInfoModel):
-                    self?.handleChatMessageReceived(dispatch: dispatch, chatMessage: chatMessage)
+                    self.handleChatMessageReceived(dispatch: dispatch, chatMessage: chatMessage)
+                case (.typingIndicatorReceived, let timestamp as UserEventTimestampModel):
+                    self.handleTypingIndicatorRecieved(dispatch: dispatch, timestamp: timestamp)
                 // add more cases here
                 default:
                     print("ChatServiceEventHandler subscription switch: default case")
@@ -42,6 +47,11 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
     func handleChatMessageReceived(dispatch: @escaping ActionDispatch,
                                    chatMessage: ChatMessageInfoModel) {
         dispatch(.repositoryAction(.chatMessageReceived(message: chatMessage)))
+    }
+
+    func handleTypingIndicatorRecieved(dispatch: @escaping ActionDispatch,
+                                       timestamp: UserEventTimestampModel) {
+        dispatch(.participantsAction(.typingIndicatorReceived(userEventTimestamp: timestamp)))
     }
 
 }
