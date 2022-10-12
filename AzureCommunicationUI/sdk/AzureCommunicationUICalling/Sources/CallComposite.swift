@@ -100,7 +100,7 @@ public class CallComposite {
             return DiagnosticsInfo(lastKnownCallId: "")
         }
 
-        let callId = diagnosticsManager.getCallId()
+        let callId = diagnosticsManager.callId
         let diagnosticsInfo = DiagnosticsInfo(lastKnownCallId: callId)
 
         return diagnosticsInfo
