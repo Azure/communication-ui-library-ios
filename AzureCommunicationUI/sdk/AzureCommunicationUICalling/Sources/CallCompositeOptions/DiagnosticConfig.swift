@@ -31,5 +31,5 @@ struct DiagnosticConfig {
 }
 
 public struct DiagnosticsInfo {
-    let callId: String
+    let lastKnownCallId: String
 }

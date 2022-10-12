@@ -97,11 +97,11 @@ public class CallComposite {
 
     public func getCurrentDiagnosticInfo​() -> DiagnosticsInfo {
         guard let diagnosticsManager = diagnosticsManager else {
-            return DiagnosticsInfo(callId: "")
+            return DiagnosticsInfo(lastKnownCallId: "")
         }
 
         let callId = diagnosticsManager.getCallId()
-        let diagnosticsInfo = DiagnosticsInfo(callId: callId)
+        let diagnosticsInfo = DiagnosticsInfo(lastKnownCallId: callId)
 
         return diagnosticsInfo
     }
