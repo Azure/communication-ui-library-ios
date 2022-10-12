@@ -12,10 +12,13 @@ struct UserEventTimestampModel: BaseInfoModel, Equatable {
     let identifier: CommunicationIdentifier
     let timestamp: Iso8601Date
 
-    init(userIdentifier: CommunicationIdentifier, timestamp: Iso8601Date) {
-        self.id = userIdentifier.stringValue
-        self.identifier = userIdentifier
-        self.timestamp = timestamp
+    init?(userIdentifier: CommunicationIdentifier?, timestamp: Iso8601Date?) {
+        guard let identifier = userIdentifier, let time = timestamp else {
+            return nil
+        }
+        self.id = identifier.stringValue
+        self.identifier = identifier
+        self.timestamp = time
     }
 
     static func == (lhs: UserEventTimestampModel, rhs: UserEventTimestampModel) -> Bool {

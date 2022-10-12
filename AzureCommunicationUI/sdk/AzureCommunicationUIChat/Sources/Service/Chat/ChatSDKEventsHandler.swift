@@ -31,8 +31,10 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
     func handle(response: TrouterEvent) {
         switch response {
         case let .typingIndicatorReceived(event):
-            // Stub: not implemented
-            print("Received a TypingIndicatorReceivedEvent: \(event)")
+            guard event.threadId == self.threadId else {
+                return
+            }
+            didReceive(typingIndicator: event)
         case let .readReceiptReceived(event):
             // Stub: not implemented
             print("Received a ReadReceiptReceivedEvent: \(event)")
@@ -64,5 +66,13 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
             print("Event received will not handled \(response)")
             return
         }
+    }
+
+    func didReceive(typingIndicator event: TypingIndicatorReceivedEvent) {
+        guard let userEventTimestamp = event.toUserEventTimestampModel() else {
+                    return
+        }
+        chatEventSubject.send(ChatEventModel(eventType: .typingIndicatorReceived,
+                                    infoModel: userEventTimestamp))
     }
 }

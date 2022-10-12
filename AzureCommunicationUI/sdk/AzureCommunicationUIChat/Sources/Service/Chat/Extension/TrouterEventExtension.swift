@@ -19,3 +19,11 @@ extension ChatMessageReceivedEvent {
             createdOn: self.createdOn)
     }
 }
+
+extension TypingIndicatorReceivedEvent {
+    func toUserEventTimestampModel() -> UserEventTimestampModel? {
+        return UserEventTimestampModel(
+            userIdentifier: self.sender,
+            timestamp: self.receivedOn)
+    }
+}
