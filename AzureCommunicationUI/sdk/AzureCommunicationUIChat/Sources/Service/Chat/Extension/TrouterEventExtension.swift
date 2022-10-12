@@ -23,7 +23,7 @@ extension ChatMessageReceivedEvent {
 extension ChatThreadDeletedEvent {
     func toChatThreadInfoModel() -> ChatThreadInfoModel {
         return ChatThreadInfoModel(
-            receivedOn: self.deletedOn)
+            receivedOn: self.deletedOn ?? Iso8601Date())
     }
 }
 
@@ -31,7 +31,7 @@ extension ChatThreadPropertiesUpdatedEvent {
     func toChatThreadInfoModel() -> ChatThreadInfoModel {
         return ChatThreadInfoModel(
             topic: self.properties?.topic,
-            receivedOn: self.updatedOn)
+            receivedOn: self.updatedOn ?? Iso8601Date())
     }
 }
 

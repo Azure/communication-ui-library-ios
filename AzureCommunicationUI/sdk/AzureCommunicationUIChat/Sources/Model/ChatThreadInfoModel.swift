@@ -10,8 +10,8 @@ struct ChatThreadInfoModel: BaseInfoModel {
     let topic: String?
     let receivedOn: Iso8601Date
 
-    init(topic: String? = nil, receivedOn: Iso8601Date?) {
+    init(topic: String? = nil, receivedOn: Iso8601Date) {
         self.topic = topic
-        self.receivedOn = receivedOn ?? Iso8601Date()
+        self.receivedOn = receivedOn
     }
 }
