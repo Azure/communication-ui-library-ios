@@ -6,7 +6,7 @@
 import SwiftUI
 
 @available(iOS 15.0, *)
-struct MessageInputView: View {
+struct BottomBarView: View {
     private enum Constants {
         static let minimumHeight: CGFloat = 50
         static let focusDelay: CGFloat = 1.0
@@ -14,7 +14,7 @@ struct MessageInputView: View {
 
     @FocusState private var hasFocus: Bool
 
-    @StateObject var viewModel: MessageInputViewModel
+    @StateObject var viewModel: BottomBarViewModel
 
     var body: some View {
         HStack {

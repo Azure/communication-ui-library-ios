@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct BubbleMessageView: View {
+struct TextMessageView: View {
     private enum Constants {
         static let cornerRadius: CGFloat = 5
     }
@@ -55,6 +55,7 @@ struct BubbleMessageView: View {
             }
         }
     }
+
     var timeStamp: some View {
         Group {
             if createdOn != nil {
@@ -64,6 +65,7 @@ struct BubbleMessageView: View {
             }
         }
     }
+
     var readReceipt: some View {
         Group {
             if isRead {

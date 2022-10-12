@@ -5,7 +5,7 @@
 
 import Foundation
 
-class MessageInputViewModel: ObservableObject {
+class BottomBarViewModel: ObservableObject {
     private let logger: Logger
     private let dispatch: ActionDispatch
 
