@@ -23,6 +23,8 @@
 		50370CCF28EE4AA800ACD234 /* BaseInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CCE28EE4AA800ACD234 /* BaseInfoModel.swift */; };
 		50370CD128EE4AD900ACD234 /* ChatEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CD028EE4AD900ACD234 /* ChatEventModel.swift */; };
 		50370CD328EE507A00ACD234 /* TrouterEventExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CD228EE507A00ACD234 /* TrouterEventExtension.swift */; };
+		5085BF1E28F729990057586D /* ChatThreadInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085BF1D28F729990057586D /* ChatThreadInfoModel.swift */; };
+		5085BF2028F72E0D0057586D /* ParticipantsInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085BF1F28F72E0D0057586D /* ParticipantsInfoModel.swift */; };
 		50CB81CB28C26E0C00680566 /* AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB81C228C26E0C00680566 /* AzureCommunicationUIChat.framework */; };
 		50CB81DB28C26EEB00680566 /* ChatComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB81DA28C26EEB00680566 /* ChatComposite.swift */; };
 		50CB81DD28C26FA100680566 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 50CB81DC28C26FA100680566 /* Assets.xcassets */; };
@@ -182,6 +184,8 @@
 		50370CCE28EE4AA800ACD234 /* BaseInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoModel.swift; sourceTree = "<group>"; };
 		50370CD028EE4AD900ACD234 /* ChatEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatEventModel.swift; sourceTree = "<group>"; };
 		50370CD228EE507A00ACD234 /* TrouterEventExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrouterEventExtension.swift; sourceTree = "<group>"; };
+		5085BF1D28F729990057586D /* ChatThreadInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatThreadInfoModel.swift; sourceTree = "<group>"; };
+		5085BF1F28F72E0D0057586D /* ParticipantsInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsInfoModel.swift; sourceTree = "<group>"; };
 		50CB81C228C26E0C00680566 /* AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB81CA28C26E0C00680566 /* AzureCommunicationUIChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzureCommunicationUIChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB81DA28C26EEB00680566 /* ChatComposite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatComposite.swift; sourceTree = "<group>"; };
@@ -448,8 +452,10 @@
 				50370CCE28EE4AA800ACD234 /* BaseInfoModel.swift */,
 				50370CD028EE4AD900ACD234 /* ChatEventModel.swift */,
 				50CB825228C29B4800680566 /* ParticipantInfoModel.swift */,
+				5085BF1F28F72E0D0057586D /* ParticipantsInfoModel.swift */,
 				50CB825428C29B5100680566 /* ChatMessageInfoModel.swift */,
 				50CB825628C29B5A00680566 /* LocalUserInfoModel.swift */,
+				5085BF1D28F729990057586D /* ChatThreadInfoModel.swift */,
 				50CB825828C29B7200680566 /* UserEventTimestampModel.swift */,
 			);
 			path = Model;
@@ -1267,6 +1273,7 @@
 				50CB826D28C29E8400680566 /* LocalizationKey.swift in Sources */,
 				50CB82C628C2AD2300680566 /* OrientationManager.swift in Sources */,
 				50CB82BA28C2AD2300680566 /* DefaultLogger.swift in Sources */,
+				5085BF1E28F729990057586D /* ChatThreadInfoModel.swift in Sources */,
 				50CB822928C2996200680566 /* ChatActionHandler.swift in Sources */,
 				50CB822B28C2996D00680566 /* ChatServiceEventHandler.swift in Sources */,
 				50370CD128EE4AD900ACD234 /* ChatEventModel.swift in Sources */,
@@ -1329,6 +1336,7 @@
 				50CB826328C29E1500680566 /* ChatSDKEventsHandler.swift in Sources */,
 				BD1A6A3E28ECDFAB005E0B70 /* ThreadViewModel.swift in Sources */,
 				50CB82C128C2AD2300680566 /* Reducer.swift in Sources */,
+				5085BF2028F72E0D0057586D /* ParticipantsInfoModel.swift in Sources */,
 				50F0C58728D38812009D7176 /* MessageViewModel.swift in Sources */,
 				50CB820D28C286AA00680566 /* MessageRepositoryManager.swift in Sources */,
 			);

@@ -128,13 +128,15 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
     }
 
     private func registerEvents() {
-        print("Register events not implemented")
+        self.chatClient?.register(event: .realTimeNotificationConnected, handler: chatEventsHandler.handle)
+        self.chatClient?.register(event: .realTimeNotificationDisconnected, handler: chatEventsHandler.handle)
         self.chatClient?.register(event: .chatMessageReceived, handler: chatEventsHandler.handle)
-        self.chatClient?.register(event: .typingIndicatorReceived, handler: chatEventsHandler.handle)
-        self.chatClient?.register(event: .readReceiptReceived, handler: chatEventsHandler.handle)
         self.chatClient?.register(event: .chatMessageEdited, handler: chatEventsHandler.handle)
         self.chatClient?.register(event: .chatMessageDeleted, handler: chatEventsHandler.handle)
+        self.chatClient?.register(event: .typingIndicatorReceived, handler: chatEventsHandler.handle)
+        self.chatClient?.register(event: .readReceiptReceived, handler: chatEventsHandler.handle)
         self.chatClient?.register(event: .chatThreadDeleted, handler: chatEventsHandler.handle)
+        self.chatClient?.register(event: .chatThreadPropertiesUpdated, handler: chatEventsHandler.handle)
         self.chatClient?.register(event: .participantsAdded, handler: chatEventsHandler.handle)
         self.chatClient?.register(event: .participantsRemoved, handler: chatEventsHandler.handle)
     }

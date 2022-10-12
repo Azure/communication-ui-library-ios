@@ -6,5 +6,6 @@
 import Foundation
 
 enum ParticipantsAction: Equatable {
-    case leaveChatSuccess
+    case participantsAdded(participants: [ParticipantInfoModel])
+    case participantsRemoved(participants: [ParticipantInfoModel])
 }

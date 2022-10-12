@@ -19,3 +19,38 @@ extension ChatMessageReceivedEvent {
             createdOn: self.createdOn)
     }
 }
+
+extension ChatThreadDeletedEvent {
+    func toChatThreadInfoModel() -> ChatThreadInfoModel {
+        return ChatThreadInfoModel(
+            receivedOn: self.deletedOn)
+    }
+}
+
+extension ChatThreadPropertiesUpdatedEvent {
+    func toChatThreadInfoModel() -> ChatThreadInfoModel {
+        return ChatThreadInfoModel(
+            topic: self.properties?.topic,
+            receivedOn: self.updatedOn)
+    }
+}
+
+extension ParticipantsAddedEvent {
+    func toParticipantsInfo(_ participantsAdded: [SignalingChatParticipant]) -> ParticipantsInfoModel {
+        let participants = participantsAdded.map {
+            $0.toParticipantInfoModel()
+        }
+        return ParticipantsInfoModel(
+            participants: participants)
+    }
+}
+
+extension ParticipantsRemovedEvent {
+    func toParticipantsInfo(_ participantsAdded: [SignalingChatParticipant]) -> ParticipantsInfoModel {
+        let participants = participantsAdded.map {
+            $0.toParticipantInfoModel()
+        }
+        return ParticipantsInfoModel(
+            participants: participants)
+    }
+}
