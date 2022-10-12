@@ -134,7 +134,7 @@ class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerContr
             drawerTableView.reloadData()
 
             if drawerTableView.frame == CGRect.zero {
-                self.setTableViewFrame(isiPhoneLayout)
+                self.setInitialTableViewFrame(isiPhoneLayout)
             }
 
             var drawerHeight = self.getDrawerHeight(
@@ -181,7 +181,7 @@ class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerContr
         }.map { index in return tableView.rectForRow(at: index).height }.reduce(0, +)
     }
 
-    private func setTableViewFrame(_ isiPhoneLayout: Bool) {
+    private func setInitialTableViewFrame(_ isiPhoneLayout: Bool) {
         guard let tableView = self.drawerTableView else {
             return
         }
