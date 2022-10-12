@@ -1,17 +1,17 @@
 # Azure Communication UI Calling Release History
 
-## TBA (upcoming release)
+## Upcoming Release (TBA)
 ### New Features
-- Implemented new feature that remove the local user from the participant list when the app will be terminated [#352](https://github.com/Azure/communication-ui-library-ios/pull/352)
+- Implemented new feature where local user would be removed from the participant list when the app is terminated [#352](https://github.com/Azure/communication-ui-library-ios/pull/352)
 ### Bugs Fixed
-- Fixed issue that the error is mutable inside CallCompositeError [#364](https://github.com/Azure/communication-ui-library-ios/pull/364)
-    
-## 1.1.0-beta.1 (TBA)
+- Fixed an issue where the error is mutable inside CallCompositeError [#364](https://github.com/Azure/communication-ui-library-ios/pull/364)
+
+## 1.1.0-beta.1 (2022-10-03)
 ### New Features
 - Implemented new error message `cameraFailure` that can be sent to developers when:
     - turning on camera fails. [#311](https://github.com/Azure/communication-ui-library-ios/pull/311)
     - in rare cases device manager throws an error [#301](https://github.com/Azure/communication-ui-library-ios/pull/301) [#334](https://github.com/Azure/communication-ui-library-ios/pull/334)
-    
+
 - Introduced NavigationBarViewData as a new local launch option to customize title and subtitle in set up view. [#309](https://github.com/Azure/communication-ui-library-ios/pull/309)
 - An alert would now be shown when joining the call with no active network connection [#328](https://github.com/Azure/communication-ui-library-ios/pull/328)
 - A new link to system settings was added to change camera and video permission directly [313](https://github.com/Azure/communication-ui-library-ios/pull/313)

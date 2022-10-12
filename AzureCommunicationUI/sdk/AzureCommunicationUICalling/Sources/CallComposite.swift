@@ -3,10 +3,10 @@
 //  Licensed under the MIT License.
 //
 
+import AzureCommunicationCommon
 import UIKit
 import SwiftUI
 import FluentUI
-import AzureCommunicationCalling
 
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
@@ -30,6 +30,7 @@ public class CallComposite {
     private var audioSessionManager: AudioSessionManagerProtocol?
     private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
     private var avatarViewManager: AvatarViewManagerProtocol?
+    private var diagnosticsManager: DiagnosticsManagerProtocol?
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
@@ -94,6 +95,17 @@ public class CallComposite {
                           completionHandler: completionHandler)
     }
 
+    public func getCurrentDiagnosticInfo​() -> DiagnosticsInfo {
+        guard let diagnosticsManager = diagnosticsManager else {
+            return DiagnosticsInfo(lastKnownCallId: "")
+        }
+
+        let callId = diagnosticsManager.getCallId()
+        let diagnosticsInfo = DiagnosticsInfo(lastKnownCallId: callId)
+
+        return diagnosticsInfo
+    }
+
     private func setupManagers(with dependencyContainer: DependencyContainer) {
         self.errorManager = dependencyContainer.resolve() as ErrorManagerProtocol
         self.lifeCycleManager = dependencyContainer.resolve() as LifeCycleManagerProtocol
@@ -101,6 +113,7 @@ public class CallComposite {
         self.audioSessionManager = dependencyContainer.resolve() as AudioSessionManagerProtocol
         self.avatarViewManager = dependencyContainer.resolve() as AvatarViewManagerProtocol
         self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManagerProtocol
+        self.diagnosticsManager = dependencyContainer.resolve() as DiagnosticsManagerProtocol
     }
 
     private func cleanUpManagers() {

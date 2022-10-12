@@ -29,3 +29,7 @@ struct DiagnosticConfig {
     }
 
 }
+
+public struct DiagnosticsInfo {
+    public let lastKnownCallId: String
+}
