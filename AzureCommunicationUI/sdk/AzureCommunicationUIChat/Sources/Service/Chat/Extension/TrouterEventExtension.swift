@@ -54,3 +54,11 @@ extension ParticipantsRemovedEvent {
             participants: participants)
     }
 }
+
+extension TypingIndicatorReceivedEvent {
+    func toUserEventTimestampModel() -> UserEventTimestampModel? {
+        return UserEventTimestampModel(
+            userIdentifier: self.sender,
+            timestamp: self.receivedOn)
+    }
+}

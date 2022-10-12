@@ -10,6 +10,14 @@ import AzureCommunicationChat
 
 class ChatSDKEventsHandlerMocking: NSObject, ChatSDKEventsHandling {
     var chatEventSubject = PassthroughSubject<ChatEventModel, Never>()
+    var typingIndicatorReceived: Bool = false
 
-    func handle(response: TrouterEvent) {}
+    func handle(response: TrouterEvent) {
+        switch response {
+        case .typingIndicatorReceived(_):
+            typingIndicatorReceived = true
+        default:
+            print("Event received will not handled \(response)")
+        }
+    }
 }

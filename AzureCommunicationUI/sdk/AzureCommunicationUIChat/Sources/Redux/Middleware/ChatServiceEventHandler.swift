@@ -27,39 +27,42 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
             .sink { [weak self] chatEvent in
                 let eventType = chatEvent.eventType
                 let infoModel = chatEvent.infoModel
+                guard let self = self else {
+                    return
+                }
 
                 switch (eventType, infoModel) {
                 case (.realTimeNotificationConnected, _):
-                    self?.handleRealTimeNotificationConnected(dispatch: dispatch)
+                    self.handleRealTimeNotificationConnected(dispatch: dispatch)
                 case (.realTimeNotificationDisconnected, _):
-                    self?.handleRealTimeNotificationDisconnected(dispatch: dispatch)
+                    self.handleRealTimeNotificationDisconnected(dispatch: dispatch)
                 case (.chatMessageReceived,
                       let chatMessage as ChatMessageInfoModel):
-                    self?.handleChatMessageReceived(dispatch: dispatch, chatMessage: chatMessage)
+                    self.handleChatMessageReceived(dispatch: dispatch, chatMessage: chatMessage)
                 case (.chatMessageEdited,
                       let chatMessage as ChatMessageInfoModel):
-                    self?.handleChatMessageEdited(dispatch: dispatch, chatMessage: chatMessage)
+                    self.handleChatMessageEdited(dispatch: dispatch, chatMessage: chatMessage)
                 case (.chatMessageDeleted,
                       let chatMessage as ChatMessageInfoModel):
-                    self?.handleChatMessageDeleted(dispatch: dispatch, chatMessage: chatMessage)
+                    self.handleChatMessageDeleted(dispatch: dispatch, chatMessage: chatMessage)
                 case (.typingIndicatorReceived,
                       let userEventTimestamp as UserEventTimestampModel):
-                    self?.handleTypingIndicatorReceived(dispatch: dispatch, userEventTimestamp: userEventTimestamp)
+                    self.handleTypingIndicatorReceived(dispatch: dispatch, userEventTimestamp: userEventTimestamp)
                 case (.readReceiptReceived,
                       let userEventTimestamp as UserEventTimestampModel):
-                    self?.handleReadReceiptReceived(dispatch: dispatch, userEventTimestamp: userEventTimestamp)
+                    self.handleReadReceiptReceived(dispatch: dispatch, userEventTimestamp: userEventTimestamp)
                 case (.chatThreadDeleted,
                       let chatThreadInfo as ChatThreadInfoModel):
-                    self?.handleChatThreadDeleted(dispatch: dispatch, threadInfo: chatThreadInfo)
+                    self.handleChatThreadDeleted(dispatch: dispatch, threadInfo: chatThreadInfo)
                 case (.chatThreadPropertiesUpdated,
                       let chatThreadInfo as ChatThreadInfoModel):
-                    self?.handleChatThreadPropertiesUpdated(dispatch: dispatch, threadInfo: chatThreadInfo)
+                    self.handleChatThreadPropertiesUpdated(dispatch: dispatch, threadInfo: chatThreadInfo)
                 case (.participantsAdded,
                       let participantsInfo as ParticipantsInfoModel):
-                    self?.handleParticipantsAdded(dispatch: dispatch, participantsInfo: participantsInfo)
+                    self.handleParticipantsAdded(dispatch: dispatch, participantsInfo: participantsInfo)
                 case (.participantsRemoved,
                       let participantsInfo as ParticipantsInfoModel):
-                    self?.handleParticipantsRemoved(dispatch: dispatch, participantsInfo: participantsInfo)
+                    self.handleParticipantsRemoved(dispatch: dispatch, participantsInfo: participantsInfo)
                 default:
                     print("ChatServiceEventHandler subscription switch: default case")
                 }
@@ -91,7 +94,7 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
 
     func handleTypingIndicatorReceived(dispatch: @escaping ActionDispatch,
                                        userEventTimestamp: UserEventTimestampModel) {
-        // stub: to be implemented
+        dispatch(.participantsAction(.typingIndicatorReceived(userEventTimestamp: userEventTimestamp)))
     }
 
     func handleReadReceiptReceived(dispatch: @escaping ActionDispatch,

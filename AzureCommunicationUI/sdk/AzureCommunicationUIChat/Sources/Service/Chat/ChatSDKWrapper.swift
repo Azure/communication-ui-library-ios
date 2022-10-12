@@ -128,16 +128,19 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
     }
 
     private func registerEvents() {
-        self.chatClient?.register(event: .realTimeNotificationConnected, handler: chatEventsHandler.handle)
-        self.chatClient?.register(event: .realTimeNotificationDisconnected, handler: chatEventsHandler.handle)
-        self.chatClient?.register(event: .chatMessageReceived, handler: chatEventsHandler.handle)
-        self.chatClient?.register(event: .chatMessageEdited, handler: chatEventsHandler.handle)
-        self.chatClient?.register(event: .chatMessageDeleted, handler: chatEventsHandler.handle)
-        self.chatClient?.register(event: .typingIndicatorReceived, handler: chatEventsHandler.handle)
-        self.chatClient?.register(event: .readReceiptReceived, handler: chatEventsHandler.handle)
-        self.chatClient?.register(event: .chatThreadDeleted, handler: chatEventsHandler.handle)
-        self.chatClient?.register(event: .chatThreadPropertiesUpdated, handler: chatEventsHandler.handle)
-        self.chatClient?.register(event: .participantsAdded, handler: chatEventsHandler.handle)
-        self.chatClient?.register(event: .participantsRemoved, handler: chatEventsHandler.handle)
+        guard let client = self.chatClient else {
+                     return
+        }
+        client.register(event: .realTimeNotificationConnected, handler: chatEventsHandler.handle)
+        client.register(event: .realTimeNotificationDisconnected, handler: chatEventsHandler.handle)
+        client.register(event: .chatMessageReceived, handler: chatEventsHandler.handle)
+        client.register(event: .chatMessageEdited, handler: chatEventsHandler.handle)
+        client.register(event: .chatMessageDeleted, handler: chatEventsHandler.handle)
+        client.register(event: .typingIndicatorReceived, handler: chatEventsHandler.handle)
+        client.register(event: .readReceiptReceived, handler: chatEventsHandler.handle)
+        client.register(event: .chatThreadDeleted, handler: chatEventsHandler.handle)
+        client.register(event: .chatThreadPropertiesUpdated, handler: chatEventsHandler.handle)
+        client.register(event: .participantsAdded, handler: chatEventsHandler.handle)
+        client.register(event: .participantsRemoved, handler: chatEventsHandler.handle)
     }
 }
