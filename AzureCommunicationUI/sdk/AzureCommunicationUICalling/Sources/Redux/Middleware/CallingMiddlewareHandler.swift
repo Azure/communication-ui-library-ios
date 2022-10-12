@@ -308,5 +308,11 @@ extension CallingMiddlewareHandler {
             .sink { isLocalUserMuted in
                 dispatch(.localUserAction(.microphoneMuteStateUpdated(isMuted: isLocalUserMuted)))
             }.store(in: subscription)
+
+        callingService.callIdSubject
+            .removeDuplicates()
+            .sink { callId in
+                dispatch(.callingAction(.callIdUpdated(callId: callId)))
+            }.store(in: subscription)
     }
 }

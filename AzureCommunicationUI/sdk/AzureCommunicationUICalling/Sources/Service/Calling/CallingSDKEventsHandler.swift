@@ -17,6 +17,7 @@ protocol CallingSDKEventsHandling: CallDelegate {
     var isRecordingActiveSubject: PassthroughSubject<Bool, Never> { get }
     var isTranscriptionActiveSubject: PassthroughSubject<Bool, Never> { get }
     var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
+    var callIdSubject: PassthroughSubject<String, Never> { get }
 }
 
 class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
@@ -25,6 +26,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var isRecordingActiveSubject = PassthroughSubject<Bool, Never>()
     var isTranscriptionActiveSubject = PassthroughSubject<Bool, Never>()
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
+    var callIdSubject = PassthroughSubject<String, Never>()
 
     private let logger: Logger
     private var remoteParticipantEventAdapter = RemoteParticipantsEventsAdapter()
@@ -151,6 +153,10 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
 extension CallingSDKEventsHandler: CallDelegate,
     RecordingCallFeatureDelegate,
     TranscriptionCallFeatureDelegate {
+    func call(_ call: Call, didChangeId args: PropertyChangedEventArgs) {
+        callIdSubject.send(call.id)
+    }
+
     func call(_ call: Call, didUpdateRemoteParticipant args: ParticipantsUpdatedEventArgs) {
         if !args.removedParticipants.isEmpty {
             removeRemoteParticipants(args.removedParticipants)
@@ -161,13 +167,15 @@ extension CallingSDKEventsHandler: CallDelegate,
     }
 
     func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {
+        callIdSubject.send(call.id)
+
         let currentStatus = call.state.toCallingStatus()
         let internalError = call.callEndReason.toCompositeInternalError(wasCallConnected())
-
         if internalError != nil {
             let code = call.callEndReason.code
             let subcode = call.callEndReason.subcode
             logger.error("Receive vaildate CallEndReason:\(code), subcode:\(subcode)")
+
         }
 
         let callInfoModel = CallInfoModel(status: currentStatus,
