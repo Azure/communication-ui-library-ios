@@ -30,6 +30,7 @@ public class CallComposite {
     private var audioSessionManager: AudioSessionManagerProtocol?
     private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
     private var avatarViewManager: AvatarViewManagerProtocol?
+    private var diagnosticsManager: DiagnosticsManagerProtocol?
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
@@ -95,7 +96,14 @@ public class CallComposite {
     }
 
     public func getCurrentDiagnosticInfo​() -> DiagnosticsInfo {
-        return DiagnosticsInfo(callId: "")
+        guard let diagnosticsManager = diagnosticsManager else {
+            return DiagnosticsInfo(callId: "")
+        }
+
+        let callId = diagnosticsManager.getCallId()
+        let diagnosticsInfo = DiagnosticsInfo(callId: callId)
+
+        return diagnosticsInfo
     }
 
     private func setupManagers(with dependencyContainer: DependencyContainer) {
@@ -105,6 +113,7 @@ public class CallComposite {
         self.audioSessionManager = dependencyContainer.resolve() as AudioSessionManagerProtocol
         self.avatarViewManager = dependencyContainer.resolve() as AvatarViewManagerProtocol
         self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManagerProtocol
+        self.diagnosticsManager = dependencyContainer.resolve() as DiagnosticsManagerProtocol
     }
 
     private func cleanUpManagers() {
