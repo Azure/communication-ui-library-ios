@@ -21,7 +21,6 @@ class InfoHeaderViewModel: ObservableObject {
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
-    var callInfoViewModel: IconButtonViewModel!
     var isPad: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -48,15 +47,6 @@ class InfoHeaderViewModel: ObservableObject {
         }
         self.participantListButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .participantListAccessibilityLabel)
-        self.callInfoViewModel = compositeViewModelFactory.makeIconButtonViewModel(
-            iconName: .info,
-            buttonType: .infoButton,
-            isDisabled: false) {
-//                [weak self] in
-//                guard let self = self else {
-//                    return
-//                }
-        }
 
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)

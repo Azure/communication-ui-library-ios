@@ -10,7 +10,6 @@ struct InfoHeaderView: View {
     @ObservedObject var viewModel: InfoHeaderViewModel
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @State var participantsListButtonSourceView = UIView()
-    @State var callInfoSourceView = UIView()
     let avatarViewManager: AvatarViewManagerProtocol
 
     private enum Constants {
@@ -65,11 +64,7 @@ struct InfoHeaderView: View {
                                     Constants.accessibilityFontScale :
                                         Constants.defaultFontScale)
             Spacer()
-            callInfoButton
-                .background(Color.blue)
-            Spacer().frame(width: 0)
             participantListButton
-                .background(Color.red)
         }
         .padding(EdgeInsets(top: 0,
                             leading: Constants.hStackHorizontalPadding,
@@ -82,11 +77,6 @@ struct InfoHeaderView: View {
     var participantListButton: some View {
         IconButton(viewModel: viewModel.participantListButtonViewModel)
             .background(SourceViewSpace(sourceView: participantsListButtonSourceView))
-    }
-
-    var callInfoButton: some View {
-        IconButton(viewModel: viewModel.callInfoViewModel)
-            .background(SourceViewSpace(sourceView: callInfoSourceView))
     }
 
     var participantsListView: some View {
