@@ -20,6 +20,41 @@ extension ChatMessageReceivedEvent {
     }
 }
 
+extension ChatThreadDeletedEvent {
+    func toChatThreadInfoModel() -> ChatThreadInfoModel {
+        return ChatThreadInfoModel(
+            receivedOn: self.deletedOn ?? Iso8601Date())
+    }
+}
+
+extension ChatThreadPropertiesUpdatedEvent {
+    func toChatThreadInfoModel() -> ChatThreadInfoModel {
+        return ChatThreadInfoModel(
+            topic: self.properties?.topic,
+            receivedOn: self.updatedOn ?? Iso8601Date())
+    }
+}
+
+extension ParticipantsAddedEvent {
+    func toParticipantsInfo(_ participantsAdded: [SignalingChatParticipant]) -> ParticipantsInfoModel {
+        let participants = participantsAdded.map {
+            $0.toParticipantInfoModel()
+        }
+        return ParticipantsInfoModel(
+            participants: participants)
+    }
+}
+
+extension ParticipantsRemovedEvent {
+    func toParticipantsInfo(_ participantsRemoved: [SignalingChatParticipant]) -> ParticipantsInfoModel {
+        let participants = participantsRemoved.map {
+            $0.toParticipantInfoModel()
+        }
+        return ParticipantsInfoModel(
+            participants: participants)
+    }
+}
+
 extension TypingIndicatorReceivedEvent {
     func toUserEventTimestampModel() -> UserEventTimestampModel? {
         return UserEventTimestampModel(

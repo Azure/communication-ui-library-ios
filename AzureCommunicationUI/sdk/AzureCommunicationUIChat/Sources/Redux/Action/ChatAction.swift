@@ -10,6 +10,12 @@ enum ChatAction: Equatable {
     case initializeChatFailed(error: Error)
     case topicRetrieved(topic: String)
 
+    // MARK: Events from SDK
+    case realTimeNotificationConnected
+    case realTimeNotificationDisconnected
+    case chatThreadDeleted
+    case chatTopicUpdated(topic: String)
+
     static func == (lhs: ChatAction, rhs: ChatAction) -> Bool {
         switch (lhs, rhs) {
         case let (.initializeChatFailed(lErr), .initializeChatFailed(rErr)):
