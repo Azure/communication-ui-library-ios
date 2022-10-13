@@ -95,9 +95,9 @@ public class CallComposite {
                           completionHandler: completionHandler)
     }
 
-    public func getCurrentDiagnosticInfo​() -> DiagnosticsInfo {
+    public func getDiagnosticInfo​() -> DiagnosticsInfo {
         guard let diagnosticsManager = diagnosticsManager else {
-            return DiagnosticsInfo(lastKnownCallId: "")
+            return DiagnosticsInfo()
         }
 
         let callId = diagnosticsManager.callId
