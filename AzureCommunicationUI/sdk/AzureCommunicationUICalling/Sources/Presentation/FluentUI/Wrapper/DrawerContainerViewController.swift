@@ -74,21 +74,15 @@ class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerContr
         self.controller?.dismiss(animated: animated)
     }
 
-    func updateDrawerList(items: [T]) {
+    func updateDrawerList(items updatedItems: [T]) {
         // if contents are identical, do nothing
-        guard self.items != items else {
+        guard self.items != updatedItems else {
             return
         }
-        // if contents are different but total count stays the same
-        // reload table and skip height update
-        guard self.items.count != items.count else {
-            self.items = items
-            self.drawerTableView?.reloadData()
-            return
-        }
-        // else reload table and update drawer height
-        self.items = items
-        resizeDrawer()
+        // should update layout if items count increases/decreases
+        let shouldUpdateLayout = self.items.count != updatedItems.count
+        self.items = updatedItems
+        resizeDrawer(withLayoutUpdate: shouldUpdateLayout)
     }
 
     private func showDrawerView() {
@@ -127,7 +121,7 @@ class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerContr
         return controller
     }
 
-    private func resizeDrawer() {
+    private func resizeDrawer(withLayoutUpdate shouldUpdateLayout: Bool = true) {
         let isiPhoneLayout = UIDevice.current.userInterfaceIdiom == .phone
         var isScrollEnabled = !isiPhoneLayout
 
@@ -136,6 +130,10 @@ class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerContr
                 return
             }
             drawerTableView.reloadData()
+
+            guard shouldUpdateLayout else {
+                return
+            }
 
             if drawerTableView.frame == CGRect.zero {
                 self.setInitialTableViewFrame(isiPhoneLayout)
