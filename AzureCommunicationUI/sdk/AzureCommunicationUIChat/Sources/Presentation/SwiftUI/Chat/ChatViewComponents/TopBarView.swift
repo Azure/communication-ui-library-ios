@@ -11,20 +11,16 @@ struct TopBarView: View {
     var body: some View {
         ZStack {
             HStack {
-                backButton
+                dismissButton
                 Spacer()
             }
             header
         }
     }
 
-    var backButton: some View {
-        Button(action: {
-            // Insert go back action
-        }, label: {
-            Text("Back")
-                .padding()
-        })
+    var dismissButton: some View {
+        IconButton(viewModel: viewModel.dismissButtonViewModel)
+            .flipsForRightToLeftLayoutDirection(true)
     }
 
     var header: some View {

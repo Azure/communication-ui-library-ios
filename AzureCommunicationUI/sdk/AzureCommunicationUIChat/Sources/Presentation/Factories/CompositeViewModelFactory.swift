@@ -11,9 +11,14 @@ protocol CompositeViewModelFactoryProtocol {
     func getChatViewModel() -> ChatViewModel
 
     // MARK: ComponentViewModels
+    func makeIconButtonViewModel(iconName: CompositeIcon,
+                                 buttonType: IconButtonViewModel.ButtonType,
+                                 isDisabled: Bool,
+                                 action: @escaping (() -> Void)) -> IconButtonViewModel
 
     // MARK: ChatViewModels
-    func makeTopBarViewModel(participantsState: ParticipantsState) -> TopBarViewModel
+    func makeTopBarViewModel(dispatch: @escaping ActionDispatch,
+                             participantsState: ParticipantsState) -> TopBarViewModel
     func makeMessageListViewModel() -> MessageListViewModel
     func makeBottomBarViewModel(dispatch: @escaping ActionDispatch) -> BottomBarViewModel
 }
@@ -54,10 +59,22 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     // MARK: ComponentViewModels
+    func makeIconButtonViewModel(iconName: CompositeIcon,
+                                 buttonType: IconButtonViewModel.ButtonType = .controlButton,
+                                 isDisabled: Bool,
+                                 action: @escaping (() -> Void)) -> IconButtonViewModel {
+        IconButtonViewModel(iconName: iconName,
+                            buttonType: buttonType,
+                            isDisabled: isDisabled,
+                            action: action)
+    }
 
     // MARK: ChatViewModels
-    func makeTopBarViewModel(participantsState: ParticipantsState) -> TopBarViewModel {
-        TopBarViewModel(localizationProvider: localizationProvider,
+    func makeTopBarViewModel(dispatch: @escaping ActionDispatch,
+                             participantsState: ParticipantsState) -> TopBarViewModel {
+        TopBarViewModel(compositeViewModelFactory: self,
+                        localizationProvider: localizationProvider,
+                        dispatch: dispatch,
                         participantsState: participantsState)
     }
 
