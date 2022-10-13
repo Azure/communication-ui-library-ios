@@ -77,6 +77,12 @@ class XCUITestBase: XCTestCase {
                 return true
             }
 
+            let dismissBtn = springboard.buttons["Dismiss"]
+            if dismissBtn.waitForExistence(timeout: 2) {
+                dismissBtn.tap()
+                return true
+            }
+
             return true
         }
         app.tap()
