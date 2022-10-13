@@ -84,6 +84,50 @@ class ChatServiceEventHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_chatServiceEventHandler_subscription_when_receiveChatMessageEditedEvent_then_dispatchChatMessageEditedReceivedAction() {
+        let expectation = XCTestExpectation(description: "Dispatch the new action")
+        let expectedMessageId = "messageId"
+        func dispatch(action: Action) {
+            switch action {
+            case .repositoryAction(.chatMessageEditedReceived(let message)):
+                XCTAssertEqual(message.id, expectedMessageId)
+                XCTAssertNotNil(message.editedOn)
+                expectation.fulfill()
+            default:
+                XCTExpectFailure("Should not reach default case.")
+            }
+        }
+        chatServiceEventHandler.subscription(dispatch: dispatch)
+        let chatEventModel = ChatEventModel(
+            eventType: .chatMessageEdited,
+            infoModel: ChatMessageInfoModel(id: "messageId",
+                                            editedOn: Iso8601Date()))
+        mockChatService.chatEventSubject.send(chatEventModel)
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_chatServiceEventHandler_subscription_when_receiveChatMessageDeletedEvent_then_dispatchChatMessageDeletedReceivedAction() {
+        let expectation = XCTestExpectation(description: "Dispatch the new action")
+        let expectedMessageId = "messageId"
+        func dispatch(action: Action) {
+            switch action {
+            case .repositoryAction(.chatMessageDeletedReceived(let message)):
+                XCTAssertEqual(message.id, expectedMessageId)
+                XCTAssertNotNil(message.deletedOn)
+                expectation.fulfill()
+            default:
+                XCTExpectFailure("Should not reach default case.")
+            }
+        }
+        chatServiceEventHandler.subscription(dispatch: dispatch)
+        let chatEventModel = ChatEventModel(
+            eventType: .chatMessageDeleted,
+            infoModel: ChatMessageInfoModel(id: "messageId",
+                                            deletedOn: Iso8601Date()))
+        mockChatService.chatEventSubject.send(chatEventModel)
+        wait(for: [expectation], timeout: 1)
+    }
+
     func test_chatServiceEventHandler_subscription_when_receiveTypingIndicatorReceivedEvent_then_dispatchTypingIndicatorReceivedAction() {
         let expectation = XCTestExpectation(description: "Dispatch Typing Indicator Received Action")
         let expectedUserId = "identifier"

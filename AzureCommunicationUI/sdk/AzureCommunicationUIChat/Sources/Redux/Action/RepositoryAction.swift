@@ -16,6 +16,8 @@ enum RepositoryAction: Equatable {
 
     // MARK: user action receive from chat
     case chatMessageReceived(message: ChatMessageInfoModel)
+    case chatMessageEditedReceived(message: ChatMessageInfoModel)
+    case chatMessageDeletedReceived(message: ChatMessageInfoModel)
 
     static func == (lhs: RepositoryAction, rhs: RepositoryAction) -> Bool {
         switch (lhs, rhs) {
@@ -29,7 +31,9 @@ enum RepositoryAction: Equatable {
         case let (.fetchInitialMessagesSuccess(lMsgArr), .fetchInitialMessagesSuccess(rMsgArr)):
             return lMsgArr == rMsgArr
 
-        case let (.chatMessageReceived(lMsg), .chatMessageReceived(rMsg)):
+        case let (.chatMessageReceived(lMsg), .chatMessageReceived(rMsg)),
+            let (.chatMessageEditedReceived(lMsg), .chatMessageEditedReceived(rMsg)),
+            let (.chatMessageDeletedReceived(lMsg), .chatMessageDeletedReceived(rMsg)):
             return lMsg == rMsg
 
         default:

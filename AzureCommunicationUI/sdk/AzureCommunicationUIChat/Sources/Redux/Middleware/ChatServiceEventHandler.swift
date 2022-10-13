@@ -84,12 +84,12 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
 
     func handleChatMessageEdited(dispatch: @escaping ActionDispatch,
                                  chatMessage: ChatMessageInfoModel) {
-        // stub: to be implemented
+        dispatch(.repositoryAction(.chatMessageEditedReceived(message: chatMessage)))
     }
 
     func handleChatMessageDeleted(dispatch: @escaping ActionDispatch,
                                   chatMessage: ChatMessageInfoModel) {
-        // stub: to be implemented
+        dispatch(.repositoryAction(.chatMessageDeletedReceived(message: chatMessage)))
     }
 
     func handleTypingIndicatorReceived(dispatch: @escaping ActionDispatch,
