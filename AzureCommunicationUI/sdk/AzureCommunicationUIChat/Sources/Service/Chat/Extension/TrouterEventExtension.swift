@@ -20,6 +20,33 @@ extension ChatMessageReceivedEvent {
     }
 }
 
+extension ChatMessageEditedEvent {
+    func toChatMessageInfoModel() -> ChatMessageInfoModel {
+        return ChatMessageInfoModel(
+            id: self.id,
+            version: self.version,
+            type: self.type.toMessageType(),
+            senderId: self.sender?.stringValue,
+            senderDisplayName: self.senderDisplayName,
+            content: self.message,
+            createdOn: self.createdOn,
+            editedOn: self.editedOn)
+    }
+}
+
+extension ChatMessageDeletedEvent {
+    func toChatMessageInfoModel() -> ChatMessageInfoModel {
+        return ChatMessageInfoModel(
+            id: self.id,
+            version: self.version,
+            type: self.type.toMessageType(),
+            senderId: self.sender?.stringValue,
+            senderDisplayName: self.senderDisplayName,
+            createdOn: self.createdOn,
+            deletedOn: self.deletedOn)
+    }
+}
+
 extension ChatThreadDeletedEvent {
     func toChatThreadInfoModel() -> ChatThreadInfoModel {
         return ChatThreadInfoModel(

@@ -45,11 +45,15 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
                 eventType: .chatMessageReceived,
                 infoModel: event.toChatMessageInfoModel())
         case let .chatMessageEdited(event):
-            // Stub: not implemented
             logger.info("Received a ChatMessageEditedEvent: \(event)")
+            eventModel = ChatEventModel(
+                eventType: .chatMessageEdited,
+                infoModel: event.toChatMessageInfoModel())
         case let .chatMessageDeleted(event):
-            // Stub: not implemented
             logger.info("Received a ChatMessageDeletedEvent: \(event)")
+            eventModel = ChatEventModel(
+                eventType: .chatMessageDeleted,
+                infoModel: event.toChatMessageInfoModel())
         case let .typingIndicatorReceived(event):
             logger.info("Received a TypingIndicatorReceivedEvent: \(event)")
             guard event.threadId == self.threadId,
