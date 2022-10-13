@@ -46,8 +46,8 @@ extension ParticipantsAddedEvent {
 }
 
 extension ParticipantsRemovedEvent {
-    func toParticipantsInfo(_ participantsAdded: [SignalingChatParticipant]) -> ParticipantsInfoModel {
-        let participants = participantsAdded.map {
+    func toParticipantsInfo(_ participantsRemoved: [SignalingChatParticipant]) -> ParticipantsInfoModel {
+        let participants = participantsRemoved.map {
             $0.toParticipantInfoModel()
         }
         return ParticipantsInfoModel(
