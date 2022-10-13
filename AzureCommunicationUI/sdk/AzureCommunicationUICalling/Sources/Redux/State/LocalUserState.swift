@@ -143,7 +143,7 @@ struct LocalUserState {
                                                 device: .front,
                                                 transmission: .local),
          audioState: AudioState = AudioState(operation: .off,
-                                             device: .receiverSelected),
+                                             device: .speakerSelected),
          displayName: String? = nil,
          localVideoStreamIdentifier: String? = nil) {
         self.cameraState = cameraState

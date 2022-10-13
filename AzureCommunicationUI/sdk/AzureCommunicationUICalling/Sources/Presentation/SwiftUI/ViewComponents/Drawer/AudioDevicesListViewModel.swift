@@ -61,7 +61,7 @@ class AudioDevicesListViewModel: ObservableObject {
                     systemDefaultAudio = .receiver
                 }
             } else {
-                systemDefaultAudio = .receiver
+                systemDefaultAudio = .speaker
             }
         }
         previousConnectedDevice = systemDefaultAudio

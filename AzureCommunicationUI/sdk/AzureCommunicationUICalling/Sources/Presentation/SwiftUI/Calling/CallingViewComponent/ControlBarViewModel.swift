@@ -27,7 +27,7 @@ class ControlBarViewModel: ObservableObject {
                                                  device: .front,
                                                  transmission: .local)
     var audioState = LocalUserState.AudioState(operation: .off,
-                                               device: .receiverSelected)
+                                               device: .speakerSelected)
     var displayEndCallConfirm: (() -> Void)
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,

@@ -128,7 +128,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
                 return .receiver
             }
         }
-        return .receiver
+        return .speaker
     }
 
     private func switchAudioDevice(to selectedAudioDevice: AudioDeviceType) {
