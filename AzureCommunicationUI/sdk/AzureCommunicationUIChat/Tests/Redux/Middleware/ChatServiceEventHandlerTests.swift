@@ -66,9 +66,11 @@ class ChatServiceEventHandlerTests: XCTestCase {
 
     func test_chatServiceEventHandler_subscription_when_receiveChatMessageReceivedEvent_then_dispatchChatMessageReceivedAction() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
+        let expectedMessageId = "messageId"
         func dispatch(action: Action) {
             switch action {
-            case .repositoryAction(.chatMessageReceived(_)):
+            case .repositoryAction(.chatMessageReceived(let message)):
+                XCTAssertEqual(message.id, expectedMessageId)
                 expectation.fulfill()
             default:
                 XCTExpectFailure("Should not reach default case.")
@@ -77,16 +79,18 @@ class ChatServiceEventHandlerTests: XCTestCase {
         chatServiceEventHandler.subscription(dispatch: dispatch)
         let chatEventModel = ChatEventModel(
             eventType: .chatMessageReceived,
-            infoModel: ChatMessageInfoModel())
+            infoModel: ChatMessageInfoModel(id: "messageId"))
         mockChatService.chatEventSubject.send(chatEventModel)
         wait(for: [expectation], timeout: 1)
     }
 
     func test_chatServiceEventHandler_subscription_when_receiveTypingIndicatorReceivedEvent_then_dispatchTypingIndicatorReceivedAction() {
         let expectation = XCTestExpectation(description: "Dispatch Typing Indicator Received Action")
+        let expectedUserId = "identifier"
         func dispatch(action: Action) {
             switch action {
-            case .participantsAction(.typingIndicatorReceived(_)):
+            case .participantsAction(.typingIndicatorReceived(let userTimestamp)):
+                XCTAssertEqual(userTimestamp.identifier.stringValue, expectedUserId)
                 expectation.fulfill()
             default:
                 XCTExpectFailure("typingIndicatorReceived was not dispatched")
@@ -121,9 +125,11 @@ class ChatServiceEventHandlerTests: XCTestCase {
 
     func test_chatServiceEventHandler_subscription_when_receiveChatThreadPropertiesUpdatedEvent_then_dispatchChatTopicUpdatedAction() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
+        let expectedTopic = "topic"
         func dispatch(action: Action) {
             switch action {
-            case .chatAction(.chatTopicUpdated(_)):
+            case .chatAction(.chatTopicUpdated(let topic)):
+                XCTAssertEqual(topic, expectedTopic)
                 expectation.fulfill()
             default:
                 XCTExpectFailure("Should not reach default case.")
@@ -140,9 +146,11 @@ class ChatServiceEventHandlerTests: XCTestCase {
 
     func test_chatServiceEventHandler_subscription_when_receiveParticipantsAddedEvent_then_dispatchParticipantsAddedAction() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
+        let expectedUserId = "identifier"
         func dispatch(action: Action) {
             switch action {
-            case .participantsAction(.participantsAdded(_)):
+            case .participantsAction(.participantsAdded(let participants)):
+                XCTAssertEqual(participants.first?.identifier.stringValue, expectedUserId)
                 expectation.fulfill()
             default:
                 XCTExpectFailure("Should not reach default case.")
@@ -150,7 +158,7 @@ class ChatServiceEventHandlerTests: XCTestCase {
         }
         chatServiceEventHandler.subscription(dispatch: dispatch)
         let participant = ParticipantInfoModel(
-            identifier: CommunicationUserIdentifier("Identifier"),
+            identifier: CommunicationUserIdentifier("identifier"),
             displayName: "DisplayName")
         let chatEventModel = ChatEventModel(
             eventType: .participantsAdded,
@@ -161,9 +169,11 @@ class ChatServiceEventHandlerTests: XCTestCase {
 
     func test_chatServiceEventHandler_subscription_when_receiveParticipantsRemovedEvent_then_dispatchParticipantsRemovedAction() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
+        let expectedUserId = "identifier"
         func dispatch(action: Action) {
             switch action {
-            case .participantsAction(.participantsRemoved(_)):
+            case .participantsAction(.participantsRemoved(let participants)):
+                XCTAssertEqual(participants.first?.identifier.stringValue, expectedUserId)
                 expectation.fulfill()
             default:
                 XCTExpectFailure("Should not reach default case.")
@@ -171,7 +181,7 @@ class ChatServiceEventHandlerTests: XCTestCase {
         }
         chatServiceEventHandler.subscription(dispatch: dispatch)
         let participant = ParticipantInfoModel(
-            identifier: CommunicationUserIdentifier("Identifier"),
+            identifier: CommunicationUserIdentifier("identifier"),
             displayName: "DisplayName")
         let chatEventModel = ChatEventModel(
             eventType: .participantsRemoved,

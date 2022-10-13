@@ -64,7 +64,7 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
                       let participantsInfo as ParticipantsInfoModel):
                     self.handleParticipantsRemoved(dispatch: dispatch, participantsInfo: participantsInfo)
                 default:
-                    print("ChatServiceEventHandler subscription switch: default case")
+                    self.logger.warning("ChatServiceEventHandler subscription switch: default case")
                 }
             }.store(in: cancelBag)
     }
