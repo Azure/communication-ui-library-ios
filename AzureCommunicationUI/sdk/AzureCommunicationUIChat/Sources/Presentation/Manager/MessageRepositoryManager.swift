@@ -37,7 +37,7 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
 
     func replaceMessageId(internalId: String, actualId: String) {
         if let index = messages.firstIndex(where: {
-            $0.internalId == internalId
+            $0.id == internalId
         }) {
             var msg = messages[index]
             msg.replace(id: actualId)

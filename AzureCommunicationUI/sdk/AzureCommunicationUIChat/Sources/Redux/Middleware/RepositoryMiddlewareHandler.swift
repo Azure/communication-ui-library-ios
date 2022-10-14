@@ -61,7 +61,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
                 return
             }
             let message = ChatMessageInfoModel(
-                internalId: internalId,
+                id: internalId,
                 type: .text,
                 senderId: localUserId,
                 senderDisplayName: displayName,

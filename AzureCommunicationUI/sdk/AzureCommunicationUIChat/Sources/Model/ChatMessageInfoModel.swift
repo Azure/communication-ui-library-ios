@@ -16,7 +16,6 @@ enum MessageType: Equatable {
 
 struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
     var id: String
-    let internalId: String
     let version: String
     let type: MessageType
     var senderId: String?
@@ -30,7 +29,6 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
     var participants: [ParticipantInfoModel]
 
     init(id: String? = nil,
-         internalId: String? = nil,
          version: String = "",
          type: MessageType = .text,
          senderId: String? = nil,
@@ -40,8 +38,7 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
          editedOn: Iso8601Date? = nil,
          deletedOn: Iso8601Date? = nil,
          participants: [ParticipantInfoModel] = []) {
-        self.id = id ?? internalId ?? UUID().uuidString
-        self.internalId = internalId ?? UUID().uuidString
+        self.id = id ?? UUID().uuidString
         self.version = version
         self.type = type
         self.senderId = senderId
@@ -58,7 +55,7 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
     }
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(internalId)
+        hasher.combine(id)
     }
 }
 

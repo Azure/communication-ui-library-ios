@@ -62,7 +62,7 @@ class MessageRepositoryManagerTests: XCTestCase {
             ChatMessageInfoModel(),
             ChatMessageInfoModel()
         ]
-        guard let internalId = initialMessages.last?.internalId else {
+        guard let internalId = initialMessages.last?.id else {
             XCTFail("Should have at least one message")
             return
         }
@@ -80,7 +80,7 @@ class MessageRepositoryManagerTests: XCTestCase {
             ChatMessageInfoModel(),
             ChatMessageInfoModel()
         ]
-        guard let internalId = initialMessages.last?.internalId else {
+        guard let internalId = initialMessages.last?.id else {
             XCTFail("Should have at least one message")
             return
         }
