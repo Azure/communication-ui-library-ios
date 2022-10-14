@@ -53,8 +53,8 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
         self.participants = participants
     }
 
-    mutating func replaceDummyId(realMessageId: String) {
-        self.id = realMessageId
+    mutating func replace(id: String) {
+        self.id = id
     }
 
     func hash(into hasher: inout Hasher) {

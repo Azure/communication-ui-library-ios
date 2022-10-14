@@ -12,6 +12,12 @@ enum RepositoryAction: Equatable {
     case fetchInitialMessagesSuccess(messages: [ChatMessageInfoModel])
     case fetchInitialMessagesFailed(error: Error)
 
+    case sendMessageTriggered(internalId: String,
+                              content: String)
+    case sendMessageSuccess(internalId: String,
+                            actualId: String)
+    case sendMessageFailed(error: Error)
+
     case repositoryUpdated
 
     // MARK: user action receive from chat

@@ -3,10 +3,10 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
-
-import XCTest
+import AzureCommunicationCommon
 import Combine
+import Foundation
+import XCTest
 @testable import AzureCommunicationUIChat
 
 class RepositoryMiddlewareHandlerTests: XCTestCase {
@@ -32,13 +32,37 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
     }
 
     func test_repositoryMiddlewareHandler_loadInitialMessages_then_addInitialMessagesCalled() async {
-        await repositoryMiddlewareHandler.loadInitialMessages(messages: []).value
+        await repositoryMiddlewareHandler.loadInitialMessages(
+            messages: [],
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
         XCTAssertTrue(mockMessageRepositoryManager.addInitialMessagesCalled)
+    }
+
+    func test_repositoryMiddlewareHandler_addNewSentMessage_then_addNewSentMessageCalled() async {
+        await repositoryMiddlewareHandler.addNewSentMessage(
+            internalId: "internalId",
+            content: "content",
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockMessageRepositoryManager.addNewSentMessageCalled)
+    }
+
+    func test_repositoryMiddlewareHandler_updateSentMessageId_then_replaceMessageIdCalled() async {
+        await repositoryMiddlewareHandler.updateSentMessageId(
+            internalId: "internalId",
+            actualId: "actualId",
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockMessageRepositoryManager.replaceMessageIdCalled)
     }
 
     func test_repositoryMiddlewareHandler_addReceivedMessage_then_addReceivedMessageCalled() async {
         let message = ChatMessageInfoModel()
-        await repositoryMiddlewareHandler.addReceivedMessage(message: message).value
+        await repositoryMiddlewareHandler.addReceivedMessage(
+            message: message,
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
         XCTAssertTrue(mockMessageRepositoryManager.addReceivedMessageCalled)
     }
 }
@@ -46,7 +70,11 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
 extension RepositoryMiddlewareHandlerTests {
 
     private func getEmptyState() -> AppState {
-        return AppState()
+        let localUser = ParticipantInfoModel(
+            identifier: CommunicationUserIdentifier("identifier"),
+            displayName: "displayName")
+        let chatState = ChatState(localUser: localUser)
+        return AppState(chatState: chatState)
     }
 
     private func getEmptyDispatch() -> ActionDispatch {

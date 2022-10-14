@@ -10,7 +10,7 @@ extension Middleware {
         repositoryMiddlewareHandler actionHandler: RepositoryMiddlewareHandling)
     -> Middleware<AppState> {
         Middleware<AppState>(
-            apply: { _, _ in
+            apply: { dispatch, getState in
                 return { next in
                     return { action in
                         switch action {
@@ -19,7 +19,7 @@ extension Middleware {
                         case .participantsAction(let participantsAction):
                             handleParticipantsAction(participantsAction, actionHandler)
                         case .repositoryAction(let repositoryAction):
-                            handleRepositoryAction(repositoryAction, actionHandler)
+                            handleRepositoryAction(repositoryAction, actionHandler, getState, dispatch)
                         default:
                             break
                         }
@@ -45,12 +45,34 @@ private func handleParticipantsAction(
 
 private func handleRepositoryAction(
     _ action: RepositoryAction,
-    _ actionHandler: RepositoryMiddlewareHandling) {
+    _ actionHandler: RepositoryMiddlewareHandling,
+    _ getState: () -> AppState,
+    _ dispatch: @escaping ActionDispatch) {
         switch action {
+
+            // MARK: local events
+
         case .fetchInitialMessagesSuccess(let messages):
-            actionHandler.loadInitialMessages(messages: messages)
+            actionHandler.loadInitialMessages(messages: messages,
+                                              state: getState(),
+                                              dispatch: dispatch)
+        case .sendMessageTriggered(let internalId, let content):
+            actionHandler.addNewSentMessage(internalId: internalId,
+                                            content: content,
+                                            state: getState(),
+                                            dispatch: dispatch)
+        case .sendMessageSuccess(let internalId, let actualId):
+            actionHandler.updateSentMessageId(internalId: internalId,
+                                              actualId: actualId,
+                                              state: getState(),
+                                              dispatch: dispatch)
+
+            // MARK: receiving remote events
+
         case .chatMessageReceived(let message):
-            actionHandler.addReceivedMessage(message: message)
+            actionHandler.addReceivedMessage(message: message,
+                                             state: getState(),
+                                             dispatch: dispatch)
         default:
             break
         }

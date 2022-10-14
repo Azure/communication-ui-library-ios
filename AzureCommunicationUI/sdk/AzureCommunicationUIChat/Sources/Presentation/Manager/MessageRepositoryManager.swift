@@ -11,6 +11,8 @@ protocol MessageRepositoryManagerProtocol {
 
     // MARK: sending local events
     func addInitialMessages(initialMessages: [ChatMessageInfoModel])
+    func addNewSentMessage(message: ChatMessageInfoModel)
+    func replaceMessageId(internalId: String, actualId: String)
 
     // MARK: receiving remote events
     func addReceivedMessage(message: ChatMessageInfoModel)
@@ -29,8 +31,27 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
         messages = initialMessages
     }
 
-    func addReceivedMessage(message: ChatMessageInfoModel) {
+    func addNewSentMessage(message: ChatMessageInfoModel) {
         messages.append(message)
     }
 
+    func replaceMessageId(internalId: String, actualId: String) {
+        if let index = messages.firstIndex(where: {
+            $0.internalId == internalId
+        }) {
+            var msg = messages[index]
+            msg.replace(id: actualId)
+            messages[index] = msg
+        }
+    }
+
+    func addReceivedMessage(message: ChatMessageInfoModel) {
+        if let index = messages.firstIndex(where: {
+            $0.id == message.id
+        }) {
+            messages[index] = message
+        } else {
+            messages.append(message)
+        }
+    }
 }

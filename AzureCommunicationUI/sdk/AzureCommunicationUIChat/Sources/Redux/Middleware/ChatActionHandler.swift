@@ -17,6 +17,11 @@ protocol ChatActionHandling {
                     serviceListener: ChatServiceEventHandling) -> Task<Void, Never>
     @discardableResult
     func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func sendMessage(internalId: String,
+                     content: String,
+                     state: AppState,
+                     dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 }
 
 class ChatActionHandler: ChatActionHandling {
@@ -70,6 +75,28 @@ class ChatActionHandler: ChatActionHandling {
             } catch {
                 // dispatch error *not handled*
                 dispatch(.repositoryAction(.fetchInitialMessagesFailed(error: error)))
+            }
+        }
+    }
+
+    func sendMessage(internalId: String,
+                     content: String,
+                     state: AppState,
+                     dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            do {
+                guard let displayName = state.chatState.localUser?.displayName else {
+                    return
+                }
+                let actualId = try await chatService.sendMessage(
+                    content: content,
+                    senderDisplayName: displayName)
+                dispatch(.repositoryAction(.sendMessageSuccess(
+                    internalId: internalId,
+                    actualId: actualId)))
+            } catch {
+                // dispatch error *not handled*
+                dispatch(.repositoryAction(.sendMessageFailed(error: error)))
             }
         }
     }
