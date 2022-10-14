@@ -6,6 +6,12 @@
 import SwiftUI
 
 struct TopBarView: View {
+    private enum Constants {
+        static let horizontalPadding: CGFloat = 10
+        static let verticalPadding: CGFloat = 10
+        static let cornerRadius: CGFloat = 5
+    }
+
     @StateObject var viewModel: TopBarViewModel
 
     var body: some View {
@@ -16,6 +22,8 @@ struct TopBarView: View {
             }
             header
         }
+        .padding([.leading, .trailing], Constants.horizontalPadding)
+        .padding([.top], Constants.verticalPadding)
     }
 
     var dismissButton: some View {

@@ -84,7 +84,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     func makeBottomBarViewModel(dispatch: @escaping ActionDispatch) -> BottomBarViewModel {
-        BottomBarViewModel(logger: logger,
+        BottomBarViewModel(compositeViewModelFactory: self,
+                           logger: logger,
                            dispatch: dispatch)
     }
 }

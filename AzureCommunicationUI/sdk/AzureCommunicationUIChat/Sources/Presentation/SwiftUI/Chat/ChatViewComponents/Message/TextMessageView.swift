@@ -7,6 +7,8 @@ import SwiftUI
 
 struct TextMessageView: View {
     private enum Constants {
+        static let horizontalPadding: CGFloat = 10
+        static let verticalPadding: CGFloat = 8
         static let cornerRadius: CGFloat = 5
     }
 
@@ -38,7 +40,8 @@ struct TextMessageView: View {
             Text(message)
                 .font(.body)
         }
-        .padding()
+        .padding([.leading, .trailing], Constants.horizontalPadding)
+        .padding([.top, .bottom], Constants.verticalPadding)
         .background(isSelf
                     ? Color(StyleProvider.color.primaryColorTint30)
                     : Color(StyleProvider.color.surfaceTertiary))

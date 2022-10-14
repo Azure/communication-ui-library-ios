@@ -9,27 +9,30 @@ extension IconButtonViewModel.ButtonType {
     var iconImageSize: CGFloat {
         switch self {
         default:
-            return 24
+            return 20
         }
     }
 
     var width: CGFloat {
         switch self {
-        case .controlButton:
-            return 60
+        case .controlButton,
+                .sendButton:
+            return 24
         }
     }
 
     var height: CGFloat {
         switch self {
-        case .controlButton:
-            return 60
+        case .controlButton,
+                .sendButton:
+            return 24
         }
     }
 
     var buttonBackgroundColor: Color {
         switch self {
-        case .controlButton:
+        case .controlButton,
+                .sendButton:
             return .clear
         }
     }
@@ -38,6 +41,8 @@ extension IconButtonViewModel.ButtonType {
         switch self {
         case .controlButton:
             return Color(StyleProvider.color.textDominant)
+        case .sendButton:
+            return Color(StyleProvider.color.primaryColor)
         }
     }
 

@@ -9,6 +9,7 @@ import Combine
 class IconButtonViewModel: ObservableObject {
     enum ButtonType {
         case controlButton
+        case sendButton
     }
 
     @Published var iconName: CompositeIcon

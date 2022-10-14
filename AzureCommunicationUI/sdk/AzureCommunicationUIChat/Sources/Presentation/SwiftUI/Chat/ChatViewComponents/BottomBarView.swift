@@ -43,9 +43,7 @@ struct BottomBarView: View {
     }
 
     var sendButton: some View {
-        Button(action: viewModel.sendMessage) {
-            // Replace with icon
-            Text("Send")
-        }
+        IconButton(viewModel: viewModel.sendButtonViewModel)
+            .flipsForRightToLeftLayoutDirection(true)
     }
 }

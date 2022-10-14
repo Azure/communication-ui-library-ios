@@ -38,10 +38,8 @@ struct MessageListView: View {
         ScrollViewReader { value in
             LazyVStack {
                 ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
-                    HStack {
-                        MessageView(viewModel: message)
-                        .id(index)
-                    }
+                    MessageView(viewModel: message)
+                    .id(index)
                 }
                 .onChange(of: viewModel.messages.count) { _ in
                     value.scrollTo(viewModel.messages.count - 1)

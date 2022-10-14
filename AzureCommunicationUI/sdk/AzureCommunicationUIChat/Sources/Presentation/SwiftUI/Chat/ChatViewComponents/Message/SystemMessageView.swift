@@ -10,6 +10,7 @@ struct SystemMessageView: View {
 
     var body: some View {
         Text(message)
-            .font(.body)
+            .font(.caption2)
+            .foregroundColor(Color(StyleProvider.color.textSecondary))
     }
 }
