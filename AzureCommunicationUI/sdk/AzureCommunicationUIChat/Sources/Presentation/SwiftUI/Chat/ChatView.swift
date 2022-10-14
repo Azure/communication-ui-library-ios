@@ -15,6 +15,7 @@ struct ChatView: View {
             Spacer()
             ThreadView(viewModel: viewModel.threadViewModel)
             messageInput
+            TypingParticipantsView(viewModel: viewModel.typingParticipantsViewModel)
         }
         .onAppear {
             viewModel.getInitialMessages()

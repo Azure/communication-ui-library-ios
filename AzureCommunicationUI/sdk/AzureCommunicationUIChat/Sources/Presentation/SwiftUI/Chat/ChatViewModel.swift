@@ -17,6 +17,8 @@ class ChatViewModel: ObservableObject {
     let threadViewModel: ThreadViewModel
     let messageInputViewModel: MessageInputViewModel
 
+    let typingParticipantsViewModel: TypingParticipantsViewModel
+
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState>) {
@@ -31,6 +33,8 @@ class ChatViewModel: ObservableObject {
         compositeViewModelFactory.makeThreadViewModel()
         self.messageInputViewModel =
         compositeViewModelFactory.makeMessageInputViewModel(dispatch: store.dispatch)
+        self.typingParticipantsViewModel =
+        compositeViewModelFactory.makeTypingParticipantsViewModel()
 
         store.$state
             .receive(on: DispatchQueue.main)
@@ -46,5 +50,6 @@ class ChatViewModel: ObservableObject {
 
     func receive(_ state: AppState) {
         threadViewModel.update(repositoryState: state.repositoryState)
+        typingParticipantsViewModel.update(participantsState: state.participantsState)
     }
 }

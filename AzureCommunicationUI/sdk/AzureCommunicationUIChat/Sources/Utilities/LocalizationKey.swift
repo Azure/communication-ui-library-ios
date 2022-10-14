@@ -11,4 +11,8 @@ enum LocalizationKey: String {
     case chatWith1Person = "AzureCommunicationUIChat.ChatView.TopBarView.CallWith1Person"
     // %d is for number of people in call
     case chatWithNPerson = "AzureCommunicationUIChat.ChatView.TopBarView.CallWithNPeople"
+
+    /* TypingParticipantsView */
+    case participantsAreTyping = "AzureCommunicationUIChat.ChatView.TypingParticipantsView.AreTyping"
+    case participantIsTyping = "AzureCommunicationUIChat.ChatView.TypingParticipantsView.IsTyping"
 }

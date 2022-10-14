@@ -16,6 +16,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeTopBarViewModel(participantsState: ParticipantsState) -> TopBarViewModel
     func makeThreadViewModel() -> ThreadViewModel
     func makeMessageInputViewModel(dispatch: @escaping ActionDispatch) -> MessageInputViewModel
+    func makeTypingParticipantsViewModel() -> TypingParticipantsViewModel
 }
 
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
@@ -69,5 +70,11 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     func makeMessageInputViewModel(dispatch: @escaping ActionDispatch) -> MessageInputViewModel {
         MessageInputViewModel(logger: logger,
                               dispatch: dispatch)
+    }
+
+    // MARK: Typing Indicators
+    func makeTypingParticipantsViewModel() -> TypingParticipantsViewModel {
+        TypingParticipantsViewModel(logger: logger,
+                                    localizationProvider: localizationProvider)
     }
 }

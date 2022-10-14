@@ -15,6 +15,7 @@ enum ChatAction: Equatable {
     case realTimeNotificationDisconnected
     case chatThreadDeleted
     case chatTopicUpdated(topic: String)
+    case messageReceived(message: ChatMessageInfoModel)
 
     static func == (lhs: ChatAction, rhs: ChatAction) -> Bool {
         switch (lhs, rhs) {
