@@ -29,50 +29,76 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
     }
 
     func handle(response: TrouterEvent) {
+        var eventModel: ChatEventModel?
         switch response {
+        case .realTimeNotificationConnected:
+            logger.info("Received a RealTimeNotificationConnected event")
+            eventModel = ChatEventModel(
+                eventType: .realTimeNotificationConnected)
+        case .realTimeNotificationDisconnected:
+            logger.info("Received a RealTimeNotificationDisconnected event")
+            eventModel = ChatEventModel(
+                eventType: .realTimeNotificationDisconnected)
+        case let .chatMessageReceivedEvent(event):
+            logger.info("Received a ChatMessageReceivedEvent: \(event.type)")
+            eventModel = ChatEventModel(
+                eventType: .chatMessageReceived,
+                infoModel: event.toChatMessageInfoModel())
+        case let .chatMessageEdited(event):
+            logger.info("Received a ChatMessageEditedEvent: \(event)")
+            eventModel = ChatEventModel(
+                eventType: .chatMessageEdited,
+                infoModel: event.toChatMessageInfoModel())
+        case let .chatMessageDeleted(event):
+            logger.info("Received a ChatMessageDeletedEvent: \(event)")
+            eventModel = ChatEventModel(
+                eventType: .chatMessageDeleted,
+                infoModel: event.toChatMessageInfoModel())
         case let .typingIndicatorReceived(event):
-            guard event.threadId == self.threadId else {
+            logger.info("Received a TypingIndicatorReceivedEvent: \(event)")
+            guard event.threadId == self.threadId,
+                let userEventTimestamp = event.toUserEventTimestampModel() else {
                 return
             }
-            didReceive(typingIndicator: event)
+            eventModel = ChatEventModel(eventType: .typingIndicatorReceived,
+                                        infoModel: userEventTimestamp)
         case let .readReceiptReceived(event):
             // Stub: not implemented
-            print("Received a ReadReceiptReceivedEvent: \(event)")
-        case let .chatMessageReceivedEvent(event):
-            print("Received a ChatMessageReceivedEvent: \(event)")
-            let chatMessage = event.toChatMessageInfoModel()
-            let chatMessageEvent = ChatEventModel(
-                eventType: .chatMessageReceived, infoModel: chatMessage)
-            chatEventSubject.send(chatMessageEvent)
-        case let .chatMessageEdited(event):
-            // Stub: not implemented
-            print("Received a ChatMessageEditedEvent: \(event)")
-        case let .chatMessageDeleted(event):
-            // Stub: not implemented
-            print("Received a ChatMessageDeletedEvent: \(event)")
-        case let .chatThreadPropertiesUpdated(event):
-            // Stub: not implemented
-            print("Received a ChatThreadPropertiesUpdatedEvent: \(event)")
+            logger.info("Received a ReadReceiptReceivedEvent: \(event)")
         case let .chatThreadDeleted(event):
-            // Stub: not implemented
-            print("Received a ChatThreadDeletedEvent: \(event)")
+            logger.info("Received a ChatThreadDeletedEvent: \(event)")
+            eventModel = ChatEventModel(
+                eventType: .chatThreadDeleted,
+                infoModel: event.toChatThreadInfoModel())
+        case let .chatThreadPropertiesUpdated(event):
+            logger.info("Received a ChatThreadPropertiesUpdatedEvent: \(event)")
+            eventModel = ChatEventModel(
+                eventType: .chatThreadPropertiesUpdated,
+                infoModel: event.toChatThreadInfoModel())
         case let .participantsAdded(event):
-            // Stub: not implemented
-            print("Received a ParticipantsAddedEvent: \(event)")
+            logger.info("Received a ParticipantsAddedEvent: \(event)")
+            guard let participants = event.participantsAdded else {
+                return
+            }
+            eventModel = ChatEventModel(
+                eventType: .participantsAdded,
+                infoModel: event.toParticipantsInfo(participants))
         case let .participantsRemoved(event):
-            // Stub: not implemented
-            print("Received a ParticipantsRemovedEvent: \(event)")
+            logger.info("Received a ParticipantsRemovedEvent: \(event)")
+            guard let participants = event.participantsRemoved else {
+                return
+            }
+            eventModel = ChatEventModel(
+                eventType: .participantsRemoved,
+                infoModel: event.toParticipantsInfo(participants))
         default:
-            print("Event received will not handled \(response)")
+            logger.info("Event received will not handled \(response)")
             return
         }
-    }
 
-    func didReceive(typingIndicator event: TypingIndicatorReceivedEvent) {
-        guard let userEventTimestamp = event.toUserEventTimestampModel() else {
-                    return
+        guard let chatEventModel = eventModel else {
+            return
         }
-        chatEventSubject.send(ChatEventModel(eventType: .typingIndicatorReceived,
-                                    infoModel: userEventTimestamp))
+        chatEventSubject.send(chatEventModel)
     }
 }

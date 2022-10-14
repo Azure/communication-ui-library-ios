@@ -11,8 +11,10 @@ extension Reducer where State == ParticipantsState,
     static var liveParticipantsReducer: Self = Reducer { participantsState, action in
 
         switch action {
-        case .participantsAction(.leaveChatSuccess):
-            print("ParticipantsReducer `leaveChatSuccess` not implemented")
+        case .participantsAction(.participantsAdded(let participants)):
+            print("ParticipantsReducer `participantsAdded` not implemented")
+        case .participantsAction(.participantsRemoved(let participants)):
+            print("ParticipantsReducer `participantsRemoved` not implemented")
         default:
             return participantsState
         }

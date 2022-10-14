@@ -6,6 +6,8 @@
 import Foundation
 
 enum ChatEventType: Equatable {
+    case realTimeNotificationConnected
+    case realTimeNotificationDisconnected
     case chatMessageReceived
     case chatMessageEdited
     case chatMessageDeleted
@@ -19,5 +21,10 @@ enum ChatEventType: Equatable {
 
 struct ChatEventModel {
     let eventType: ChatEventType
-    let infoModel: BaseInfoModel
+    let infoModel: BaseInfoModel?
+
+    init(eventType: ChatEventType, infoModel: BaseInfoModel? = nil) {
+        self.eventType = eventType
+        self.infoModel = infoModel
+    }
 }
