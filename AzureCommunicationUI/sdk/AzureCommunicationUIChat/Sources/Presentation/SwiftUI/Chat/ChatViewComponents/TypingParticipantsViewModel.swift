@@ -13,7 +13,7 @@ class TypingParticipantsViewModel: ObservableObject {
     private var typingIndicatorTimer: Timer?
     private var participantsLastUpdatedTimestamp = Date()
     private var typingIndicatorLastUpdatedTimestamp = Date()
-    private var participants: [ParticipantInfoModel] = []
+    var participants: [ParticipantInfoModel] = []
 
     @Published var typingParticipants: String = Constants.defaultParticipant
 

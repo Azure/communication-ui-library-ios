@@ -4,14 +4,21 @@
 //
 
 import SwiftUI
+import FluentUI
 
 struct TypingParticipantsView: View {
     @ObservedObject var viewModel: TypingParticipantsViewModel
 
     var body: some View {
         HStack {
-            Text(viewModel.typingParticipants ?? "")
+            /* participantAvatars */
+            Text(viewModel.typingParticipants)
                 .fontWeight(.light)
         }
     }
+
+    /*
+    var participantAvatars: some View {
+        // To be added
+    }*/
 }

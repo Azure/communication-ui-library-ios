@@ -8,7 +8,7 @@ import AzureCore
 import AzureCommunicationCommon
 import AzureCommunicationChat
 
-struct ParticipantInfoModel: BaseInfoModel, Equatable, Hashable {
+struct ParticipantInfoModel: BaseInfoModel, Equatable {
     // String id work-around until rawId is implemented
     let id: String
     let identifier: CommunicationIdentifier
@@ -26,9 +26,5 @@ struct ParticipantInfoModel: BaseInfoModel, Equatable, Hashable {
 
     static func == (lhs: ParticipantInfoModel, rhs: ParticipantInfoModel) -> Bool {
         return lhs.id == rhs.id
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
     }
 }
