@@ -31,5 +31,9 @@ struct DiagnosticConfig {
 }
 
 public struct DiagnosticsInfo {
-    public let lastKnownCallId: String
+    public let lastKnownCallId: String?
+
+    init(lastKnownCallId: String? = nil) {
+        self.lastKnownCallId = lastKnownCallId
+    }
 }

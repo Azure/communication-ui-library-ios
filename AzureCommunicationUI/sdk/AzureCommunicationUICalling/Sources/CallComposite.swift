@@ -95,12 +95,12 @@ public class CallComposite {
                           completionHandler: completionHandler)
     }
 
-    public func getCurrentDiagnosticInfo​() -> DiagnosticsInfo {
+    public func getDiagnosticInfo​() -> DiagnosticsInfo {
         guard let diagnosticsManager = diagnosticsManager else {
-            return DiagnosticsInfo(lastKnownCallId: "")
+            return DiagnosticsInfo()
         }
 
-        let callId = diagnosticsManager.getCallId()
+        let callId = diagnosticsManager.callId
         let diagnosticsInfo = DiagnosticsInfo(lastKnownCallId: callId)
 
         return diagnosticsInfo
@@ -123,6 +123,7 @@ public class CallComposite {
         self.audioSessionManager = nil
         self.avatarViewManager = nil
         self.remoteParticipantsManager = nil
+        self.diagnosticsManager = nil
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,

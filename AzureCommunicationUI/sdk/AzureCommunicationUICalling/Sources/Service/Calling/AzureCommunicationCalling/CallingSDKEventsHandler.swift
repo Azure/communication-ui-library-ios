@@ -13,6 +13,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var isRecordingActiveSubject = PassthroughSubject<Bool, Never>()
     var isTranscriptionActiveSubject = PassthroughSubject<Bool, Never>()
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
+    var callIdSubject = PassthroughSubject<String, Never>()
 
     private let logger: Logger
     private var remoteParticipantEventAdapter = RemoteParticipantsEventsAdapter()
@@ -148,6 +149,10 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
 extension CallingSDKEventsHandler: CallDelegate,
     RecordingCallFeatureDelegate,
     TranscriptionCallFeatureDelegate {
+    func call(_ call: Call, didChangeId args: PropertyChangedEventArgs) {
+        callIdSubject.send(call.id)
+    }
+
     func call(_ call: Call, didUpdateRemoteParticipant args: ParticipantsUpdatedEventArgs) {
         if !args.removedParticipants.isEmpty {
             removeRemoteParticipants(args.removedParticipants)
@@ -158,9 +163,10 @@ extension CallingSDKEventsHandler: CallDelegate,
     }
 
     func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {
+        callIdSubject.send(call.id)
+
         let currentStatus = call.state.toCallingStatus()
         let internalError = call.callEndReason.toCompositeInternalError(wasCallConnected())
-
         if internalError != nil {
             let code = call.callEndReason.code
             let subcode = call.callEndReason.subcode
