@@ -11,7 +11,7 @@ class LeaveCallConfirmationListViewController: DrawerContainerViewController<Lea
         static let headerHeight: CGFloat = 36.0
     }
 
-    private lazy var leaveCalConfirmationTableView: UITableView? = {
+    private lazy var leaveCallConfirmationTableView: UITableView? = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = backgroundColor
         tableView.sectionHeaderHeight = SectionConstants.headerHeight
@@ -26,8 +26,8 @@ class LeaveCallConfirmationListViewController: DrawerContainerViewController<Lea
     }()
 
     override var drawerTableView: UITableView? {
-        get { return leaveCalConfirmationTableView }
-        set { leaveCalConfirmationTableView = newValue }
+        get { return leaveCallConfirmationTableView }
+        set { leaveCallConfirmationTableView = newValue }
     }
 }
 
@@ -51,7 +51,14 @@ extension LeaveCallConfirmationListViewController: UITableViewDataSource, UITabl
         label.textAlignment = .center
         label.font = .systemFont(ofSize: 17, weight: .semibold)
         label.textColor = StyleProvider.color.onSurface
+        label.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(label)
+        NSLayoutConstraint.activate([
+            headerView.leadingAnchor.constraint(equalTo: label.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: label.trailingAnchor),
+            headerView.topAnchor.constraint(equalTo: label.topAnchor),
+            headerView.bottomAnchor.constraint(equalTo: label.bottomAnchor)
+        ])
         return headerView
     }
 
