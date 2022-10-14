@@ -123,6 +123,7 @@ public class CallComposite {
         self.audioSessionManager = nil
         self.avatarViewManager = nil
         self.remoteParticipantsManager = nil
+        self.diagnosticsManager = nil
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,
