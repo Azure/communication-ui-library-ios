@@ -56,5 +56,7 @@
 	<string>${groupCallId}</string>
 	<key>teamsMeetingLink</key>
 	<string>${teamsMeetingLink}</string>
+	<key>aadToken</key>
+	<string>${aadToken}</string>
 </dict>
 </plist>

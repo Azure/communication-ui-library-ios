@@ -36,6 +36,20 @@ class XCUITestBase: XCTestCase {
         }
     }
 
+    enum CompositeConnectionType {
+        case acsTokenUrl
+        case acsToken
+
+        var name: String {
+            switch self {
+            case .acsTokenUrl:
+                return "Token URL"
+            case .acsToken:
+                return "Token"
+            }
+        }
+    }
+
     var app: XCUIApplication!
 
     override func setUp() {
@@ -121,6 +135,12 @@ extension XCUITestBase {
     /// - Note: Only call this function before entering composite.
     func tapMeetingType(_ meetingType: CompositeMeetingType) {
         app.buttons[meetingType.name].tap()
+    }
+
+    /// Selects the call connection type before entering the composite
+    /// - Note: Only call this function before entering composite.
+    func tapConnectionTokenType(_ connectionType: CompositeConnectionType) {
+        app.buttons[connectionType.name].tap()
     }
 
     func takeScreenshot(name: String = "App Screenshot - \(Date().description)",
