@@ -11,6 +11,7 @@ class InfoHeaderViewModel: ObservableObject {
     @Published var infoLabel: String
     @Published var isInfoHeaderDisplayed: Bool = true
     @Published var isParticipantsListDisplayed: Bool = false
+    @Published var isCallInfoDisplayed: Bool = false
     @Published var isVoiceOverEnabled: Bool = false
     private let logger: Logger
     private let accessibilityProvider: AccessibilityProviderProtocol
@@ -22,6 +23,8 @@ class InfoHeaderViewModel: ObservableObject {
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
     var callInfoViewModel: IconButtonViewModel!
+    let callInfoListViewModel: CallInfoListViewModel
+
     var isPad: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -35,6 +38,7 @@ class InfoHeaderViewModel: ObservableObject {
         let title = localizationProvider.getLocalizedString(.callWith0Person)
         self.infoLabel = title
         self.accessibilityLabel = title
+        self.callInfoListViewModel = compositeViewModelFactory.makeCallInfoListViewModel()
         self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
             localUserState: localUserState)
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
@@ -52,15 +56,24 @@ class InfoHeaderViewModel: ObservableObject {
             iconName: .info,
             buttonType: .infoButton,
             isDisabled: false) {
-//                [weak self] in
-//                guard let self = self else {
-//                    return
-//                }
+                [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.showCallInfoButtonTapped()
         }
 
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
         updateInfoHeaderAvailability()
+    }
+
+    func showCallInfoButtonTapped() {
+        logger.debug("Show call info button tapped")
+        if isPad {
+            infoHeaderDismissTimer?.invalidate()
+        }
+        isCallInfoDisplayed = true
     }
 
     func showParticipantListButtonTapped() {

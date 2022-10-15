@@ -67,6 +67,11 @@
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Cancel";
 "AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="Leave call?";
 
+"AzureCommunicationUICalling.CallingView.CallInfoDrawer.Info" = "Info";
+"AzureCommunicationUICalling.CallingView.CallInfoDrawer.CallId" = "Call ID";
+"AzureCommunicationUICalling.CallingView.CallInfoDrawer.CallId.AccessibilityLabel"="Call ID is %@";
+"AzureCommunicationUICalling.CallingView.CallInfoDrawer.CopyCallInfo" = "Copy call info";
+
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Recording and transcription have started.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStarted"="Recording has started.";

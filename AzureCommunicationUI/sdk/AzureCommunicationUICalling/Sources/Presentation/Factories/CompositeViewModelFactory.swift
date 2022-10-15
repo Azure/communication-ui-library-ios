@@ -51,6 +51,11 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
+    func makeCallInfoListViewModel() -> CallInfoListViewModel
+    func makeCallInfoListCellViewModel(icon: CompositeIcon,
+                                       title: String,
+                                       detailTitle: String?,
+                                       action: (() -> Void)?) -> CallInfoListCellViewModel
 
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
@@ -65,6 +70,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let networkManager: NetworkManager
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
+    private let diagnosticsManager: DiagnosticsManagerProtocol
     private let localOptions: LocalOptions?
 
     private weak var setupViewModel: SetupViewModel?
@@ -75,12 +81,14 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          networkManager: NetworkManager,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
+         diagnosticsManager: DiagnosticsManagerProtocol,
          localOptions: LocalOptions? = nil) {
         self.logger = logger
         self.store = store
         self.networkManager = networkManager
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
+        self.diagnosticsManager = diagnosticsManager
         self.localOptions = localOptions
     }
 
@@ -243,6 +251,22 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     -> ParticipantsListCellViewModel {
         ParticipantsListCellViewModel(participantInfoModel: participantInfoModel,
                                       localizationProvider: localizationProvider)
+    }
+
+    func makeCallInfoListViewModel() -> CallInfoListViewModel {
+        CallInfoListViewModel(compositeViewModelFactory: self,
+                              localizationProvider: localizationProvider,
+                              diagnosticsManager: diagnosticsManager)
+    }
+
+    func makeCallInfoListCellViewModel(icon: CompositeIcon,
+                                       title: String,
+                                       detailTitle: String?,
+                                       action: (() -> Void)?) -> CallInfoListCellViewModel {
+        CallInfoListCellViewModel(icon: icon,
+                                  title: title,
+                                  detailTitle: detailTitle,
+                                  action: action)
     }
 
     // MARK: SetupViewModels
