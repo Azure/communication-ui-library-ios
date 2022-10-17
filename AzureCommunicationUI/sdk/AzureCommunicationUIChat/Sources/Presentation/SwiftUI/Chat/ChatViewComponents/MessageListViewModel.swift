@@ -10,7 +10,7 @@ class MessageListViewModel: ObservableObject {
     private let logger: Logger
 
     private var repositoryUpdatedTimestamp: Date = .distantPast
-    
+
     @Published var messages: [MessageViewModel] = []
 
     init(messageRepositoryManager: MessageRepositoryManagerProtocol,
@@ -43,7 +43,7 @@ class MessageListViewModel: ObservableObject {
         let showTime = lastMessage.senderId ?? "" != message.senderId ?? ""
         let showDateHeader = true // lastMessage.createdOn?.dayOfYear != message.createdOn?.dayOfYear,
 
-        return MessageViewModel(message: message,
+        return TextMessageViewModel(message: message,
                                 showUsername: showUsername,
                                 showTime: showTime,
                                 showDateHeader: showDateHeader,

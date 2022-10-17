@@ -21,7 +21,6 @@ struct MessageListView: View {
         ScrollViewReader { value in
             List {
                 ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
-                    let messageViewModel = MessageViewModel()
                     MessageView(viewModel: message)
                     .id(index)
                     .listRowSeparator(.hidden)

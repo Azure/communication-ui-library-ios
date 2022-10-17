@@ -12,20 +12,16 @@ struct TextMessageView: View {
         static let cornerRadius: CGFloat = 5
     }
 
-    let message: String
-    let createdOn: Date?
-    let displayName: String?
-    let isSelf: Bool
-    let isRead: Bool = false
+    @StateObject var viewModel: TextMessageViewModel
 
     var body: some View {
         HStack {
-            if isSelf {
+            if viewModel.isLocalUser {
                 Spacer()
             }
             bubble
             readReceipt
-            if !isSelf {
+            if viewModel.isLocalUser {
                 Spacer()
             }
         }
@@ -37,12 +33,12 @@ struct TextMessageView: View {
                 name
                 timeStamp
             }
-            Text(message)
+            Text(viewModel.message.content ?? "") // Handle nil?
                 .font(.body)
         }
         .padding([.leading, .trailing], Constants.horizontalPadding)
         .padding([.top, .bottom], Constants.verticalPadding)
-        .background(isSelf
+        .background(viewModel.isLocalUser
                     ? Color(StyleProvider.color.primaryColorTint30)
                     : Color(StyleProvider.color.surfaceTertiary))
         .cornerRadius(Constants.cornerRadius)
@@ -50,8 +46,8 @@ struct TextMessageView: View {
 
     var name: some View {
         Group {
-            if !isSelf && displayName != nil {
-                Text(displayName!)
+            if viewModel.showUsername && viewModel.message.senderDisplayName != nil { // Can be nil?
+                Text(viewModel.message.senderDisplayName!)
                     .font(.caption)
                     .fontWeight(.bold)
                     .foregroundColor(Color(StyleProvider.color.textSecondary))
@@ -61,8 +57,8 @@ struct TextMessageView: View {
 
     var timeStamp: some View {
         Group {
-            if createdOn != nil {
-                Text(createdOn!, style: .time)
+            if viewModel.showTime {
+                Text(viewModel.message.createdOn.value, style: .time)
                     .font(.caption)
                     .foregroundColor(Color(StyleProvider.color.textDisabled))
             }
@@ -70,7 +66,8 @@ struct TextMessageView: View {
     }
 
     var readReceipt: some View {
-        Group {
+        let isRead = false
+        return Group {
             if isRead {
                 // Replace with icon
                 Text("Read")

@@ -9,10 +9,13 @@ struct MessageView: View {
     @StateObject var viewModel: MessageViewModel
 
     var body: some View {
-        TextMessageView(message: "Hello World",
-                          createdOn: Date(),
-                          displayName: "John Smith",
-                          isSelf: true)
-        SystemMessageView(message: "System Message")
+        switch viewModel {
+        case let textMessageViewModel as TextMessageViewModel:
+            TextMessageView(viewModel: textMessageViewModel)
+        case let systemMessageViewModel as SystemMessageViewModel:
+            SystemMessageView(viewModel: systemMessageViewModel)
+        default:
+            EmptyView()
+        }
     }
 }

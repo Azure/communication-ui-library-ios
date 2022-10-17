@@ -6,10 +6,10 @@
 import SwiftUI
 
 struct SystemMessageView: View {
-    let message: String
+    @StateObject var viewModel: SystemMessageViewModel
 
     var body: some View {
-        Text(message)
+        Text(viewModel.message.content ?? "")
             .font(.caption2)
             .foregroundColor(Color(StyleProvider.color.textSecondary))
     }

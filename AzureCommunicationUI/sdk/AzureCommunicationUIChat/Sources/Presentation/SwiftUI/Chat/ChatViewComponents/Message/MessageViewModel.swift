@@ -8,18 +8,10 @@ import Foundation
 class MessageViewModel: ObservableObject, Hashable {
     private let id: String = ""
 
-    @Published message: ChatMessageInfoModel
-    let showUsername: Bool
-    let showTime: Bool
-    let showDateHeader: Bool
-    let isLocalUser: Bool
+    let message: ChatMessageInfoModel
 
-    init(message: ChatMessageInfoModel, showUsername: Bool, showTime: Bool, showDateHeader: Bool, isLocalUser: Bool) {
+    init(message: ChatMessageInfoModel) {
         self.message = message
-        self.showUsername = showUsername
-        self.showTime = showTime
-        self.showDateHeader = showDateHeader
-        self.isLocalUser = isLocalUser
     }
 
     func hash(into hasher: inout Hasher) {
@@ -29,4 +21,25 @@ class MessageViewModel: ObservableObject, Hashable {
     static func == (lhs: MessageViewModel, rhs: MessageViewModel) -> Bool {
         true
     }
+}
+
+class TextMessageViewModel: MessageViewModel {
+
+    init(message: ChatMessageInfoModel, showUsername: Bool, showTime: Bool, showDateHeader: Bool, isLocalUser: Bool) {
+        self.showUsername = showUsername
+        self.showTime = showTime
+        self.showDateHeader = showDateHeader
+        self.isLocalUser = isLocalUser
+
+        super.init(message: message)
+    }
+
+    let showUsername: Bool
+    let showTime: Bool
+    let showDateHeader: Bool
+    let isLocalUser: Bool
+}
+
+class SystemMessageViewModel: MessageViewModel {
+
 }
