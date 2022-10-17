@@ -33,20 +33,27 @@ class MessageListViewModel: ObservableObject {
     }
 
     func createViewModel(messages: [ChatMessageInfoModel], index: Int) -> MessageViewModel {
-        let localUserIdentifier = "INSERT LOCAL USER ID" // REPLACE
-
-        let lastMessage = messages[index - 1]
 
         let message = messages[index]
-        let isLocalUser = message.senderId == localUserIdentifier
-        let showUsername = !isLocalUser && lastMessage.senderId ?? "" != message.senderId ?? ""
-        let showTime = lastMessage.senderId ?? "" != message.senderId ?? ""
-        let showDateHeader = true // lastMessage.createdOn?.dayOfYear != message.createdOn?.dayOfYear,
 
-        return TextMessageViewModel(message: message,
-                                showUsername: showUsername,
-                                showTime: showTime,
-                                showDateHeader: showDateHeader,
-                                isLocalUser: isLocalUser)
+        if messages[index].type == .text {
+            let localUserIdentifier = "INSERT LOCAL USER ID" // REPLACE
+
+            let lastMessageIndex = index == 0 ? 0 : index - 1
+            let lastMessage = messages[lastMessageIndex]
+            let isLocalUser = message.senderId == localUserIdentifier
+            let showUsername = !isLocalUser && lastMessage.senderId ?? "" != message.senderId ?? ""
+            let showTime = lastMessage.senderId ?? "" != message.senderId ?? ""
+            let showDateHeader = true // lastMessage.createdOn?.dayOfYear != message.createdOn?.dayOfYear,
+
+            return TextMessageViewModel(message: message,
+                                    showUsername: showUsername,
+                                    showTime: showTime,
+                                    showDateHeader: showDateHeader,
+                                    isLocalUser: isLocalUser)
+        } else {
+            // System
+            return SystemMessageViewModel(message: message)
+        }
     }
 }
