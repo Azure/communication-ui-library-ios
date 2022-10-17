@@ -16,6 +16,7 @@ class ChatServiceMocking: ChatServiceProtocol {
 
     var initializeCalled: Bool = false
     var getInitialMessagesCalled: Bool = false
+    var sendMessageCalled: Bool = false
 
     func initalize() async throws {
         initializeCalled = true
@@ -29,6 +30,17 @@ class ChatServiceMocking: ChatServiceProtocol {
                 throw error
             }
             return initialMessages
+        }
+        return try await task.value
+    }
+
+    func sendMessage(content: String, senderDisplayName: String) async throws -> String {
+        sendMessageCalled = true
+        let task = Task<String, Error> {
+            if let error = self.error {
+                throw error
+            }
+            return "messageId"
         }
         return try await task.value
     }

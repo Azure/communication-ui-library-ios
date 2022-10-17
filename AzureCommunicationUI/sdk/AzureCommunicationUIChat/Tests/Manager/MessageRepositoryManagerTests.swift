@@ -37,6 +37,61 @@ class MessageRepositoryManagerTests: XCTestCase {
         XCTAssertEqual(sut.messages.count, initialMessages.count)
     }
 
+    func test_messageRepositoryManager_addNewSentMessage_when_nonEmptyInitialMessages_then_messagesCountWillBeIncrementByOne() {
+        let initialMessages = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        let sut = makeSUT(messages: initialMessages)
+        let message = ChatMessageInfoModel()
+        sut.addNewSendingMessage(message: message)
+        XCTAssertEqual(sut.messages.count, initialMessages.count + 1)
+    }
+
+    func test_messageRepositoryManager_addNewSentMessage_when_zeroInitialMessages_then_messagesCountWillBeIncrementByOne() {
+        let sut = makeSUT()
+        let message = ChatMessageInfoModel()
+        sut.addNewSendingMessage(message: message)
+        XCTAssertEqual(sut.messages.count, 1)
+    }
+
+    func test_messageRepositoryManager_replaceMessageId_when_foundMatchingInternalId_then_actualIdWillBeUpdated() {
+        let initialMessages = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        guard let internalId = initialMessages.last?.id else {
+            XCTFail("Should have at least one message")
+            return
+        }
+        let expectedActualId = "actualMessageId"
+        let sut = makeSUT(messages: initialMessages)
+        let message = ChatMessageInfoModel()
+        sut.replaceMessageId(internalId: internalId, actualId: "actualMessageId")
+        XCTAssertEqual(sut.messages.count, initialMessages.count)
+        XCTAssertEqual(sut.messages.last?.id, expectedActualId)
+    }
+
+    func test_messageRepositoryManager_replaceMessageId_when_notFoundMatchingInternalId_then_messagesNotChanged() {
+        let initialMessages = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        guard let internalId = initialMessages.last?.id else {
+            XCTFail("Should have at least one message")
+            return
+        }
+        let expectedActualId = "actualMessageId"
+        let sut = makeSUT(messages: initialMessages)
+        let message = ChatMessageInfoModel()
+        sut.replaceMessageId(internalId: internalId + "notFound", actualId: "actualMessageId")
+        XCTAssertEqual(sut.messages.count, initialMessages.count)
+        XCTAssertNotEqual(sut.messages.last?.id, expectedActualId)
+    }
+
     func test_messageRepositoryManager_addReceivedMessage_when_zeroInitialMessages_then_messagesCountWillBeIncrementByOne() {
         let sut = makeSUT()
         let message = ChatMessageInfoModel()

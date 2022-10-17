@@ -14,6 +14,8 @@ extension Reducer where State == RepositoryState,
         case .repositoryAction(.repositoryUpdated):
             print("RepositoryAction `repositoryUpdated` not implemented")
         case .repositoryAction(.fetchInitialMessagesSuccess),
+                .repositoryAction(.sendMessageTriggered),
+                .repositoryAction(.sendMessageSuccess),
                 .repositoryAction(.chatMessageReceived):
                 lastUpdated = Date()
         default:

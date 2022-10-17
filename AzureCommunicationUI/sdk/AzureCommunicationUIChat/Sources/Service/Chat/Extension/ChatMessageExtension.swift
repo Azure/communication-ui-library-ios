@@ -10,7 +10,6 @@ extension ChatMessage {
     func toChatMessageInfoModel() -> ChatMessageInfoModel {
         return ChatMessageInfoModel(
             id: self.id,
-            internalId: UUID().uuidString,
             version: self.version,
             type: self.type.toMessageType(),
             senderId: self.sender?.stringValue,
