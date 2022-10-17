@@ -3,8 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
+@_spi(common) import AzureUICommunicationCommon
 import Combine
+import Foundation
 
 class CallingViewModel: ObservableObject {
     @Published var isConfirmLeaveListDisplayed: Bool = false

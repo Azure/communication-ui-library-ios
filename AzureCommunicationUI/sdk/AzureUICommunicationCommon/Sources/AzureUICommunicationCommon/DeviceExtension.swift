@@ -6,11 +6,11 @@
 import Foundation
 import UIKit
 
-extension UIDevice {
+@_spi(common) public extension UIDevice {
 
     /// Returns `true` if the device has a home bar in landscape
     var hasHomeBar: Bool {
-        guard #available(iOS 11.0, *), let window =
+        guard let window =
             UIApplication.shared.windows.filter({$0.isKeyWindow}).first
         else {
             return false
@@ -28,7 +28,7 @@ extension UIDevice {
     }
 }
 
-extension UIScreen {
+@_spi(common) public extension UIScreen {
     static func isScreenSmall(_ length: CGFloat) -> Bool {
         let maxLength = max(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
         return maxLength < length

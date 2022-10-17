@@ -3,9 +3,10 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import AzureCommunicationCommon
+@_spi(common) import AzureUICommunicationCommon
 import Combine
+import Foundation
 
 protocol AvatarViewManagerProtocol {
     var updatedId: PassthroughSubject<String?, Never> { get }

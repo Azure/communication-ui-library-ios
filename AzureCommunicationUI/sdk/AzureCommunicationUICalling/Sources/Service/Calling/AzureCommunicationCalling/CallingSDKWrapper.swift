@@ -3,9 +3,10 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
-import Combine
 import AzureCommunicationCalling
+@_spi(common) import AzureUICommunicationCommon
+import Combine
+import Foundation
 
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling

@@ -3,8 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
+@_spi(common) import AzureUICommunicationCommon
 import Combine
+import Foundation
 
 class ControlBarViewModel: ObservableObject {
     private let logger: Logger

@@ -5,14 +5,17 @@
 
 import Combine
 
-final class CancelBag {
+@_spi(common) public final class CancelBag {
+
+    public init() { }
+    
     fileprivate(set) var subscriptions = Set<AnyCancellable>()
 
-    func cancel() {
+    public func cancel() {
         subscriptions.removeAll()
     }
 
-    func collect(@Builder _ cancellables: () -> [AnyCancellable]) {
+    public func collect(@Builder _ cancellables: () -> [AnyCancellable]) {
         subscriptions.formUnion(cancellables())
     }
 
@@ -26,7 +29,7 @@ final class CancelBag {
 
 extension AnyCancellable {
 
-    func store(in cancelBag: CancelBag) {
+    @_spi(common) public func store(in cancelBag: CancelBag) {
         cancelBag.subscriptions.insert(self)
     }
 }

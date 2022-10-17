@@ -4,6 +4,7 @@
 //
 
 import AzureCommunicationCalling
+@_spi(common) import AzureUICommunicationCommon
 import Foundation
 
 struct RemoteParticipantVideoViewId {

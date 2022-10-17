@@ -3,8 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
+@_spi(common) import AzureUICommunicationCommon
 import FluentUI
+import Foundation
 
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
