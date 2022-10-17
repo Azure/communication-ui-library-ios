@@ -9,7 +9,7 @@ struct ChatView: View {
     @StateObject var viewModel: ChatViewModel
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack {
             TopBarView(viewModel: viewModel.topBarViewModel)
             Divider()
             Spacer()
