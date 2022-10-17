@@ -5,6 +5,7 @@
 
 import Foundation
 
+import AzureCommunicationCommon
 import XCTest
 import Combine
 @testable import AzureCommunicationUIChat
@@ -46,6 +47,17 @@ class ChatActionHandlerTests: XCTestCase {
 
         XCTAssertTrue(mockChatService.getInitialMessagesCalled)
     }
+
+    func test_chatActionHandler_sendMessage_then_getInitialMessagesCalled() async {
+        let sut = makeSUT()
+        await sut.sendMessage(
+            internalId: "internalId",
+            content: "content",
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
+
+        XCTAssertTrue(mockChatService.sendMessageCalled)
+    }
 }
 
 extension ChatActionHandlerTests {
@@ -57,7 +69,11 @@ extension ChatActionHandlerTests {
     }
 
     private func getEmptyState() -> AppState {
-        return AppState()
+        let localUser = ParticipantInfoModel(
+            identifier: CommunicationUserIdentifier("identifier"),
+            displayName: "displayName")
+        let chatState = ChatState(localUser: localUser)
+        return AppState(chatState: chatState)
     }
 
     private func getEmptyDispatch() -> ActionDispatch {

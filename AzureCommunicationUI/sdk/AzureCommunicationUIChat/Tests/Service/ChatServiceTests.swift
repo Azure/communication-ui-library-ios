@@ -43,4 +43,10 @@ class ChatServiceTests: XCTestCase {
 
         XCTAssertTrue(chatSDKWrapper.getInitialMessagesCalled)
     }
+
+    func test_chatService_sendMessage_shouldCallchatSDKWrappersendMessage() async throws {
+        _ = try await chatService.sendMessage(content: "content", senderDisplayName: "displayName")
+
+        XCTAssertTrue(chatSDKWrapper.sendMessageCalled)
+    }
 }

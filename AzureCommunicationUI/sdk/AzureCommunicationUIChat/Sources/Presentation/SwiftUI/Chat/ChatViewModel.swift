@@ -14,8 +14,8 @@ class ChatViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     let topBarViewModel: TopBarViewModel
-    let threadViewModel: ThreadViewModel
-    let messageInputViewModel: MessageInputViewModel
+    let messageListViewModel: MessageListViewModel
+    let bottomBarViewModel: BottomBarViewModel
 
     let typingParticipantsViewModel: TypingParticipantsViewModel
 
@@ -26,16 +26,11 @@ class ChatViewModel: ObservableObject {
         self.logger = logger
         self.store = store
 
-        self.topBarViewModel =
-        compositeViewModelFactory.makeTopBarViewModel(
-            participantsState: store.state.participantsState)
-        self.threadViewModel =
-        compositeViewModelFactory.makeThreadViewModel()
-        self.messageInputViewModel =
-        compositeViewModelFactory.makeMessageInputViewModel(dispatch: store.dispatch)
-        self.typingParticipantsViewModel =
-        compositeViewModelFactory.makeTypingParticipantsViewModel()
-
+        self.topBarViewModel = compositeViewModelFactory
+            .makeTopBarViewModel(dispatch: store.dispatch, participantsState: store.state.participantsState)
+        self.messageListViewModel = compositeViewModelFactory.makeMessageListViewModel()
+        self.bottomBarViewModel = compositeViewModelFactory.makeBottomBarViewModel(dispatch: store.dispatch)
+        self.typingParticipantsViewModel = compositeViewModelFactory.makeTypingParticipantsViewModel()
         store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
@@ -49,7 +44,7 @@ class ChatViewModel: ObservableObject {
     }
 
     func receive(_ state: AppState) {
-        threadViewModel.update(repositoryState: state.repositoryState)
+        messageListViewModel.update(repositoryState: state.repositoryState)
         typingParticipantsViewModel.update(participantsState: state.participantsState)
     }
 }

@@ -9,9 +9,10 @@ struct MessageView: View {
     let viewModel: MessageViewModel
 
     var body: some View {
-        BubbleMessageView(message: "Hello World",
+        TextMessageView(message: "Hello World",
                           createdOn: Date(),
                           displayName: "John Smith",
                           isSelf: true)
+        SystemMessageView(message: "System Message")
     }
 }

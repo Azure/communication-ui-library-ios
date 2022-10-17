@@ -5,7 +5,7 @@
 
 import Foundation
 
-class ThreadViewModel: ObservableObject {
+class MessageListViewModel: ObservableObject {
     private let messageRepositoryManager: MessageRepositoryManagerProtocol
     private let logger: Logger
     private var repositoryUpdatedTimestamp: Date = .distantPast
@@ -25,7 +25,10 @@ class ThreadViewModel: ObservableObject {
         if self.repositoryUpdatedTimestamp < repositoryState.lastUpdatedTimestamp {
             self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
             // for testing
-            print("Messages count: \(messageRepositoryManager.messages.count)")
+            print("*Messages count: \(messageRepositoryManager.messages.count)")
+            for m in messageRepositoryManager.messages {
+                print("--*Messages: \(m.id) \(m.content)")
+            }
 //            self.messages = messageRepositoryManager.messages.toMessageViewModel
         }
     }

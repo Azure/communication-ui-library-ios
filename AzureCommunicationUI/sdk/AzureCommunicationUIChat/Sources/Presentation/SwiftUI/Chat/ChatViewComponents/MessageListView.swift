@@ -5,19 +5,19 @@
 
 import SwiftUI
 
-struct ThreadView: View {
-    @StateObject var viewModel: ThreadViewModel
+struct MessageListView: View {
+    @StateObject var viewModel: MessageListViewModel
 
     var body: some View {
         if #available(iOS 15, *) {
-            thread
+            messageList
         } else {
-            legacyThread
+            legacyMessageList
         }
     }
 
     @available(iOS 15.0, *)
-    var thread: some View {
+    var messageList: some View {
         ScrollViewReader { value in
             List {
                 ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
@@ -34,14 +34,12 @@ struct ThreadView: View {
     }
 
     // iOS 14
-    var legacyThread: some View {
+    var legacyMessageList: some View {
         ScrollViewReader { value in
             LazyVStack {
                 ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
-                    HStack {
-                        MessageView(viewModel: message)
-                        .id(index)
-                    }
+                    MessageView(viewModel: message)
+                    .id(index)
                 }
                 .onChange(of: viewModel.messages.count) { _ in
                     value.scrollTo(viewModel.messages.count - 1)
