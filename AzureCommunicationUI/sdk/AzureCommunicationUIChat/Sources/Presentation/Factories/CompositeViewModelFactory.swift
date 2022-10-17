@@ -11,11 +11,16 @@ protocol CompositeViewModelFactoryProtocol {
     func getChatViewModel() -> ChatViewModel
 
     // MARK: ComponentViewModels
+    func makeIconButtonViewModel(iconName: CompositeIcon,
+                                 buttonType: IconButtonViewModel.ButtonType,
+                                 isDisabled: Bool,
+                                 action: @escaping (() -> Void)) -> IconButtonViewModel
 
     // MARK: ChatViewModels
-    func makeTopBarViewModel(participantsState: ParticipantsState) -> TopBarViewModel
-    func makeThreadViewModel() -> ThreadViewModel
-    func makeMessageInputViewModel(dispatch: @escaping ActionDispatch) -> MessageInputViewModel
+    func makeTopBarViewModel(dispatch: @escaping ActionDispatch,
+                             participantsState: ParticipantsState) -> TopBarViewModel
+    func makeMessageListViewModel() -> MessageListViewModel
+    func makeBottomBarViewModel(dispatch: @escaping ActionDispatch) -> BottomBarViewModel
 }
 
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
@@ -54,20 +59,33 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     // MARK: ComponentViewModels
+    func makeIconButtonViewModel(iconName: CompositeIcon,
+                                 buttonType: IconButtonViewModel.ButtonType = .controlButton,
+                                 isDisabled: Bool,
+                                 action: @escaping (() -> Void)) -> IconButtonViewModel {
+        IconButtonViewModel(iconName: iconName,
+                            buttonType: buttonType,
+                            isDisabled: isDisabled,
+                            action: action)
+    }
 
     // MARK: ChatViewModels
-    func makeTopBarViewModel(participantsState: ParticipantsState) -> TopBarViewModel {
-        TopBarViewModel(localizationProvider: localizationProvider,
+    func makeTopBarViewModel(dispatch: @escaping ActionDispatch,
+                             participantsState: ParticipantsState) -> TopBarViewModel {
+        TopBarViewModel(compositeViewModelFactory: self,
+                        localizationProvider: localizationProvider,
+                        dispatch: dispatch,
                         participantsState: participantsState)
     }
 
-    func makeThreadViewModel() -> ThreadViewModel {
-        ThreadViewModel(messageRepositoryManager: messageRepositoryManager,
-                        logger: logger)
+    func makeMessageListViewModel() -> MessageListViewModel {
+        MessageListViewModel(messageRepositoryManager: messageRepositoryManager,
+                             logger: logger)
     }
 
-    func makeMessageInputViewModel(dispatch: @escaping ActionDispatch) -> MessageInputViewModel {
-        MessageInputViewModel(logger: logger,
-                              dispatch: dispatch)
+    func makeBottomBarViewModel(dispatch: @escaping ActionDispatch) -> BottomBarViewModel {
+        BottomBarViewModel(compositeViewModelFactory: self,
+                           logger: logger,
+                           dispatch: dispatch)
     }
 }

@@ -5,7 +5,7 @@
 
 import Foundation
 
-class ThreadViewModel: ObservableObject {
+class MessageListViewModel: ObservableObject {
     private let messageRepositoryManager: MessageRepositoryManagerProtocol
     private let logger: Logger
     private var repositoryUpdatedTimestamp: Date = .distantPast

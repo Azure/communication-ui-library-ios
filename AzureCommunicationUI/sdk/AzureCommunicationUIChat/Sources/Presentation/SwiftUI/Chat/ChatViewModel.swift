@@ -14,8 +14,8 @@ class ChatViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     let topBarViewModel: TopBarViewModel
-    let threadViewModel: ThreadViewModel
-    let messageInputViewModel: MessageInputViewModel
+    let messageListViewModel: MessageListViewModel
+    let bottomBarViewModel: BottomBarViewModel
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -24,13 +24,10 @@ class ChatViewModel: ObservableObject {
         self.logger = logger
         self.store = store
 
-        self.topBarViewModel =
-        compositeViewModelFactory.makeTopBarViewModel(
-            participantsState: store.state.participantsState)
-        self.threadViewModel =
-        compositeViewModelFactory.makeThreadViewModel()
-        self.messageInputViewModel =
-        compositeViewModelFactory.makeMessageInputViewModel(dispatch: store.dispatch)
+        self.topBarViewModel = compositeViewModelFactory
+            .makeTopBarViewModel(dispatch: store.dispatch, participantsState: store.state.participantsState)
+        self.messageListViewModel = compositeViewModelFactory.makeMessageListViewModel()
+        self.bottomBarViewModel = compositeViewModelFactory.makeBottomBarViewModel(dispatch: store.dispatch)
 
         store.$state
             .receive(on: DispatchQueue.main)
@@ -45,6 +42,6 @@ class ChatViewModel: ObservableObject {
     }
 
     func receive(_ state: AppState) {
-        threadViewModel.update(repositoryState: state.repositoryState)
+        messageListViewModel.update(repositoryState: state.repositoryState)
     }
 }

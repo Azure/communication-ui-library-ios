@@ -7,14 +7,36 @@ import Foundation
 
 class TopBarViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
+    private let dispatch: ActionDispatch
+
+    var dismissButtonViewModel: IconButtonViewModel!
 
     @Published var numberOfParticipantsLabel: String = ""
 
-    init(localizationProvider: LocalizationProviderProtocol,
+    init(compositeViewModelFactory: CompositeViewModelFactory,
+         localizationProvider: LocalizationProviderProtocol,
+         dispatch: @escaping ActionDispatch,
          participantsState: ParticipantsState) {
         self.localizationProvider = localizationProvider
+        self.dispatch = dispatch
+
+        dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
+            iconName: .leftArrow,
+            buttonType: .controlButton,
+            isDisabled: false) { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.dismissButtonTapped()
+        }
+//        dismissButtonViewModel.update(
+//            accessibilityLabel: self.localizationProvider.getLocalizedString(.dismissAccessibilityLabel))
 
         update(participantsState: participantsState)
+    }
+
+    func dismissButtonTapped() {
+        dispatch(.compositeExitAction)
     }
 
     private func updateNumberOfParticipantsLabel(numberOfParticpants: Int) {

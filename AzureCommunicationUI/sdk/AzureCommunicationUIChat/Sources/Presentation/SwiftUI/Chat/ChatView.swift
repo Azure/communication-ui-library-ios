@@ -13,7 +13,7 @@ struct ChatView: View {
             TopBarView(viewModel: viewModel.topBarViewModel)
             Divider()
             Spacer()
-            ThreadView(viewModel: viewModel.threadViewModel)
+            MessageListView(viewModel: viewModel.messageListViewModel)
             messageInput
         }
         .onAppear {
@@ -24,7 +24,7 @@ struct ChatView: View {
     var messageInput: some View {
         Group {
             if #available(iOS 15, *) {
-                MessageInputView(viewModel: viewModel.messageInputViewModel)
+                BottomBarView(viewModel: viewModel.bottomBarViewModel)
             } else {
                 // Use Custom legacy textfeld to handle focusing on iOS 14
             }

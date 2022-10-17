@@ -94,7 +94,9 @@ public class ChatComposite {
     }
 
     public func stop() {
-        // stub: to be implemented
+        compositeManager?.stop() { [weak self] in
+            self?.cleanUpComposite()
+        }
     }
 
     /// Get Chat Composite UIViewController.
@@ -142,6 +144,13 @@ public class ChatComposite {
         self.errorManager = dependencyContainer.resolve() as ErrorManagerProtocol
         self.lifeCycleManager = dependencyContainer.resolve() as LifeCycleManagerProtocol
         self.compositeManager = dependencyContainer.resolve() as CompositeManagerProtocol
+    }
+
+    private func cleanUpComposite() {
+        self.errorManager = nil
+        self.lifeCycleManager = nil
+        self.compositeManager = nil
+        self.dependencyContainer = nil
     }
 
     private func makeContainerUIHostingController(router: NavigationRouter,
