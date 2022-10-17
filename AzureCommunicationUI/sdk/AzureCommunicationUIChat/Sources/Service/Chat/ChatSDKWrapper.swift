@@ -70,6 +70,29 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         }
     }
 
+    func sendMessage(content: String, senderDisplayName: String) async throws -> String {
+        do {
+            let messageRequest = SendChatMessageRequest(
+                content: content,
+                senderDisplayName: senderDisplayName
+            )
+            return try await withCheckedThrowingContinuation { continuation in
+                chatThreadClient?.send(message: messageRequest) { result, _ in
+                    switch result {
+                    case let .success(result):
+                        continuation.resume(returning: result.id)
+                    case .failure(let error):
+                        self.logger.error("Failed to send message: \(error)")
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        } catch {
+            logger.error("Retrieve Thread Topic failed: \(error)")
+            throw error
+        }
+    }
+
     private func createChatClient() throws {
         do {
             print("Creating Chat Client...")

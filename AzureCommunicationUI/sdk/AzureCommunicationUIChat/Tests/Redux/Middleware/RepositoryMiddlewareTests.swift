@@ -41,6 +41,36 @@ class RepositoryMiddlewareTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_repositoryMiddleware_apply_when_sendMessageTriggeredRepositoryAction_then_handlerLoadInitialMessagesCalledBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "addNewSentMessageCalled")
+        mockRepositoryHandler.addNewSentMessageCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.repositoryAction(.sendMessageTriggered(
+            internalId: "internalId",
+            content: "content")))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_repositoryMiddleware_apply_when_sendMessageSuccessRepositoryAction_then_handlerLoadInitialMessagesCalledBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "updateSentMessageIdCalled")
+        mockRepositoryHandler.updateSentMessageIdCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.repositoryAction(.sendMessageSuccess(
+            internalId: "internalId",
+            actualId: "actualId")))
+        wait(for: [expectation], timeout: 1)
+    }
+
     func test_repositoryMiddleware_apply_when_chatMessageReceivedRepositoryAction_then_handleraddReceivedMessageBeingCalled() {
 
         let middlewareDispatch = getEmptyChatMiddlewareFunction()
