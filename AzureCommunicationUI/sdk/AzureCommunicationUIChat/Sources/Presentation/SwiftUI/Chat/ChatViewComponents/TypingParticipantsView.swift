@@ -7,7 +7,7 @@ import SwiftUI
 import FluentUI
 
 struct TypingParticipantsView: View {
-    @StateObject var viewModel: TypingParticipantsViewModel
+    @ObservedObject var viewModel: TypingParticipantsViewModel
 
     private enum Constants {
         static let padding: CGFloat = 10.0
