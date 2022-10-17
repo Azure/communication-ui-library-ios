@@ -14,7 +14,6 @@ struct ChatView: View {
             Divider()
             Spacer()
             ThreadView(viewModel: viewModel.threadViewModel)
-            Divider()
             TypingParticipantsView(viewModel: viewModel.typingParticipantsViewModel)
             Divider()
             messageInput

@@ -11,7 +11,6 @@ struct TypingParticipantAvatarGroupContainer: UIViewRepresentable {
     var avatarGroup = TypingParticipantAvatarGroup()
 
     func makeUIView(context: Context) -> TypingParticipantAvatarGroup {
-        avatarGroup.avatars = participantList
         avatarGroup.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return avatarGroup
     }

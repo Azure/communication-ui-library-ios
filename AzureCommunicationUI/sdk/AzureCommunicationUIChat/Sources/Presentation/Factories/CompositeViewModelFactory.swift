@@ -72,7 +72,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                               dispatch: dispatch)
     }
 
-    // MARK: Typing Indicators
     func makeTypingParticipantsViewModel() -> TypingParticipantsViewModel {
         TypingParticipantsViewModel(logger: logger,
                                     localizationProvider: localizationProvider)
