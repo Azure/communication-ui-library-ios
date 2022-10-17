@@ -4,8 +4,8 @@
 //
 
 import SwiftUI
-import FluentUI
 import UIKit
+import FluentUI
 
 struct CompositeAvatar: View {
     @Binding var displayName: String?

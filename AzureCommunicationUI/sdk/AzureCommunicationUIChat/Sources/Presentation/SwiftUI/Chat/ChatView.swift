@@ -9,13 +9,15 @@ struct ChatView: View {
     @StateObject var viewModel: ChatViewModel
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             TopBarView(viewModel: viewModel.topBarViewModel)
             Divider()
             Spacer()
             ThreadView(viewModel: viewModel.threadViewModel)
-            messageInput
+            Divider()
             TypingParticipantsView(viewModel: viewModel.typingParticipantsViewModel)
+            Divider()
+            messageInput
         }
         .onAppear {
             viewModel.getInitialMessages()

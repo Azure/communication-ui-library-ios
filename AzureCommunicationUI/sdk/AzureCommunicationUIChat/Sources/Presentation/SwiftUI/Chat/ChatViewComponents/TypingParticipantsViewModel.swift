@@ -5,6 +5,7 @@
 
 import Combine
 import Foundation
+import AzureCommunicationCommon
 
 class TypingParticipantsViewModel: ObservableObject {
     private let logger: Logger
@@ -13,7 +14,8 @@ class TypingParticipantsViewModel: ObservableObject {
     private var typingIndicatorTimer: Timer?
     private var participantsLastUpdatedTimestamp = Date()
     private var typingIndicatorLastUpdatedTimestamp = Date()
-    var participants: [ParticipantInfoModel] = []
+    var participants: [ParticipantInfoModel] = [
+        ParticipantInfoModel(identifier: CommunicationUserIdentifier("2843y8hd"), displayName: "John Peng")]
 
     @Published var typingParticipants: String = Constants.defaultParticipant
 

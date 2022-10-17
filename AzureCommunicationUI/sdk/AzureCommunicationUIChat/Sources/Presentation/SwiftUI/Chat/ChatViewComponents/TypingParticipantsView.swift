@@ -7,18 +7,33 @@ import SwiftUI
 import FluentUI
 
 struct TypingParticipantsView: View {
-    @ObservedObject var viewModel: TypingParticipantsViewModel
+    @StateObject var viewModel: TypingParticipantsViewModel
 
-    var body: some View {
-        HStack {
-            /* participantAvatars */
-            Text(viewModel.typingParticipants)
-                .fontWeight(.light)
-        }
+    private enum Constants {
+        static let padding: CGFloat = 10.0
+        static let sectionHeight: CGFloat = 10.0
+        static let avatarHeight: CGFloat = 16.0
     }
 
-    /*
-    var participantAvatars: some View {
-        // To be added
-    }*/
+    var body: some View {
+        Spacer()
+        HStack {
+            VStack(spacing: 0) {
+                Spacer()
+                TypingParticipantAvatarGroupContainer(participantList: viewModel.participants)
+                    .frame(width: CGFloat(viewModel.participants.count) * Constants.avatarHeight,
+                           alignment: .leading)
+                    .padding(.leading, Constants.padding)
+                    .padding(.trailing, Constants.padding)
+                Spacer()
+            }
+            Text("John and Chris are typing...")
+                .fontWeight(.light)
+            Spacer()
+        }
+        .frame(width: UIScreen.main.bounds.size.width,
+               height: Constants.sectionHeight)
+        .padding(.leading, Constants.padding)
+        Spacer()
+    }
 }

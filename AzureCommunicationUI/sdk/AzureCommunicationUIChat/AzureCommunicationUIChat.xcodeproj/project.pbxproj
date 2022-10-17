@@ -143,8 +143,10 @@
 		50F0C5C628D38CE4009D7176 /* MessageRepositoryManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C528D38CE4009D7176 /* MessageRepositoryManagerTests.swift */; };
 		50F0C5C828D38CF1009D7176 /* RemoteOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */; };
 		50F0C5CA28D38D00009D7176 /* DependencyContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */; };
+		521A023D28FDDB53002CAD8E /* TypingParticipantAvatarGroupContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A023C28FDDB53002CAD8E /* TypingParticipantAvatarGroupContainer.swift */; };
 		5238850B28F9FC0700CAC632 /* TypingParticipantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238850A28F9FC0700CAC632 /* TypingParticipantsView.swift */; };
 		5238850D28F9FC2300CAC632 /* TypingParticipantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5238850C28F9FC2300CAC632 /* TypingParticipantsViewModel.swift */; };
+		5279345828FDDA6800D73EF9 /* TypingParticipantAvatarGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5279345728FDDA6800D73EF9 /* TypingParticipantAvatarGroup.swift */; };
 		85D6F5E7707CE2A8E51E5451 /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9C157344D512A9F069F9CC /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework */; };
 		BD1A6A3C28ECDEAE005E0B70 /* ThreadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A6A3B28ECDEAE005E0B70 /* ThreadView.swift */; };
 		BD1A6A3E28ECDFAB005E0B70 /* ThreadViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A6A3D28ECDFAB005E0B70 /* ThreadViewModel.swift */; };
@@ -307,8 +309,10 @@
 		50F0C5C528D38CE4009D7176 /* MessageRepositoryManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRepositoryManagerTests.swift; sourceTree = "<group>"; };
 		50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteOptionsTests.swift; sourceTree = "<group>"; };
 		50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainerTests.swift; sourceTree = "<group>"; };
+		521A023C28FDDB53002CAD8E /* TypingParticipantAvatarGroupContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantAvatarGroupContainer.swift; sourceTree = "<group>"; };
 		5238850A28F9FC0700CAC632 /* TypingParticipantsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingParticipantsView.swift; sourceTree = "<group>"; };
 		5238850C28F9FC2300CAC632 /* TypingParticipantsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingParticipantsViewModel.swift; sourceTree = "<group>"; };
+		5279345728FDDA6800D73EF9 /* TypingParticipantAvatarGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingParticipantAvatarGroup.swift; sourceTree = "<group>"; };
 		5BE15140BA042B0F23F23BE3 /* Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		78EED6E1D0BF91A2966AC0C7 /* Pods-AzureCommunicationUIChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat/Pods-AzureCommunicationUIChat.debug.xcconfig"; sourceTree = "<group>"; };
 		A63BF349E7BC31AD5300412A /* Pods_AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -410,11 +414,11 @@
 		50CB81DE28C26FB300680566 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				5279344B28FDD97A00D73EF9 /* FluentUI */,
 				50CB81EF28C2855300680566 /* Factories */,
 				50CB81EE28C2854C00680566 /* Manager */,
 				50CB81ED28C2854500680566 /* Navigation */,
 				50CB81EC28C2854100680566 /* Style */,
-				50CB81EB28C2853A00680566 /* FluentUI */,
 				50CB81EA28C2853500680566 /* SwiftUI */,
 			);
 			path = Presentation;
@@ -505,14 +509,6 @@
 			path = SwiftUI;
 			sourceTree = "<group>";
 		};
-		50CB81EB28C2853A00680566 /* FluentUI */ = {
-			isa = PBXGroup;
-			children = (
-				50CB81F028C2856800680566 /* Wrapper */,
-			);
-			path = FluentUI;
-			sourceTree = "<group>";
-		};
 		50CB81EC28C2854100680566 /* Style */ = {
 			isa = PBXGroup;
 			children = (
@@ -550,13 +546,6 @@
 				50CB820128C2866200680566 /* CompositeViewModelFactory.swift */,
 			);
 			path = Factories;
-			sourceTree = "<group>";
-		};
-		50CB81F028C2856800680566 /* Wrapper */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Wrapper;
 			sourceTree = "<group>";
 		};
 		50CB81F128C285AF00680566 /* Chat */ = {
@@ -1006,6 +995,23 @@
 			path = CompositeOptions;
 			sourceTree = "<group>";
 		};
+		5279344B28FDD97A00D73EF9 /* FluentUI */ = {
+			isa = PBXGroup;
+			children = (
+				5279344C28FDD98800D73EF9 /* Wrapper */,
+			);
+			path = FluentUI;
+			sourceTree = "<group>";
+		};
+		5279344C28FDD98800D73EF9 /* Wrapper */ = {
+			isa = PBXGroup;
+			children = (
+				521A023C28FDDB53002CAD8E /* TypingParticipantAvatarGroupContainer.swift */,
+				5279345728FDDA6800D73EF9 /* TypingParticipantAvatarGroup.swift */,
+			);
+			path = Wrapper;
+			sourceTree = "<group>";
+		};
 		9D8BF2E46CAA862B4F8E87A8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1263,6 +1269,7 @@
 				50CB821D28C2875D00680566 /* ChatView.swift in Sources */,
 				50370CD328EE507A00ACD234 /* TrouterEventExtension.swift in Sources */,
 				50CB82CE28C2AD2300680566 /* LocalOptions.swift in Sources */,
+				521A023D28FDDB53002CAD8E /* TypingParticipantAvatarGroupContainer.swift in Sources */,
 				50CB824B28C29B0700680566 /* ChatReducer.swift in Sources */,
 				50CB822728C2995A00680566 /* ChatMiddleware.swift in Sources */,
 				50CB82C828C2AD2300680566 /* EnvironmentValuesExtension.swift in Sources */,
@@ -1330,6 +1337,7 @@
 				50CB81FE28C2863100680566 /* DiagnosticConfig.swift in Sources */,
 				50CB825728C29B5A00680566 /* LocalUserInfoModel.swift in Sources */,
 				50CB823528C29A3200680566 /* ChatAction.swift in Sources */,
+				5279345828FDDA6800D73EF9 /* TypingParticipantAvatarGroup.swift in Sources */,
 				BD1A6A3C28ECDEAE005E0B70 /* ThreadView.swift in Sources */,
 				50CB826728C29E6B00680566 /* ChatCompositeInternalError.swift in Sources */,
 				50CB81FA28C2861300680566 /* ChatCompositeOptions.swift in Sources */,
