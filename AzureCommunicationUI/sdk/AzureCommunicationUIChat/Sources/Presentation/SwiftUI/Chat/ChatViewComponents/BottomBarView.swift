@@ -27,8 +27,6 @@ struct BottomBarView: View {
 
     var messageTextField: some View {
         TextField("Message...", text: $viewModel.message, onCommit: {
-            // Send message when enter key is pressed on textfield.
-            // This isnt working right now for some reason.
             viewModel.sendMessage()
         })
         .submitLabel(.send)

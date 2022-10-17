@@ -10,13 +10,17 @@ class MessageListViewModel: ObservableObject {
     private let logger: Logger
 
     private var repositoryUpdatedTimestamp: Date = .distantPast
+    private var localUserId: String? // Remove optional?
 
     @Published var messages: [MessageViewModel] = []
 
     init(messageRepositoryManager: MessageRepositoryManagerProtocol,
-         logger: Logger) {
+         logger: Logger,
+         chatState: ChatState) {
         self.messageRepositoryManager = messageRepositoryManager
         self.logger = logger
+
+        self.localUserId = chatState.localUser?.id // Only take in local User ID?
     }
 
     func update(repositoryState: RepositoryState) {
@@ -37,11 +41,9 @@ class MessageListViewModel: ObservableObject {
         let message = messages[index]
 
         if messages[index].type == .text {
-            let localUserIdentifier = "INSERT LOCAL USER ID" // REPLACE
-
             let lastMessageIndex = index == 0 ? 0 : index - 1
             let lastMessage = messages[lastMessageIndex]
-            let isLocalUser = message.senderId == localUserIdentifier
+            let isLocalUser = message.senderId == localUserId
             let showUsername = !isLocalUser && lastMessage.senderId ?? "" != message.senderId ?? ""
             let showTime = lastMessage.senderId ?? "" != message.senderId ?? ""
             let showDateHeader = true // lastMessage.createdOn?.dayOfYear != message.createdOn?.dayOfYear,
