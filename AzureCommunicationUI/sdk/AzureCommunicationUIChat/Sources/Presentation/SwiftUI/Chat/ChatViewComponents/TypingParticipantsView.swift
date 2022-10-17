@@ -27,7 +27,7 @@ struct TypingParticipantsView: View {
                     .padding(.trailing, Constants.padding)
                 Spacer()
             }
-            Text("John and Chris are typing...")
+            Text(viewModel.typingParticipants)
                 .fontWeight(.light)
             Spacer()
         }

@@ -14,8 +14,7 @@ class TypingParticipantsViewModel: ObservableObject {
     private var typingIndicatorTimer: Timer?
     private var participantsLastUpdatedTimestamp = Date()
     private var typingIndicatorLastUpdatedTimestamp = Date()
-    var participants: [ParticipantInfoModel] = [
-        ParticipantInfoModel(identifier: CommunicationUserIdentifier("2843y8hd"), displayName: "John Peng")]
+    var participants: [ParticipantInfoModel] = []
 
     @Published var typingParticipants: String = Constants.defaultParticipant
 
