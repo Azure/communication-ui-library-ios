@@ -38,7 +38,9 @@ class BottomBarViewModel: ObservableObject {
         guard !message.isEmpty else {
             return
         }
-//        dispatch(.chatAction(.))
+        dispatch(.repositoryAction(.sendMessageTriggered(
+            internalId: UUID().uuidString,
+            content: message)))
         message = ""
     }
 }
