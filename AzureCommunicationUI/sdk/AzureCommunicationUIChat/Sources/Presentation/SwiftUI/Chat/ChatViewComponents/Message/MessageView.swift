@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct MessageView: View {
-    let viewModel: MessageViewModel
+    @StateObject var viewModel: MessageViewModel
 
     var body: some View {
         TextMessageView(message: "Hello World",
