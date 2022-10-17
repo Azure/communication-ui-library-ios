@@ -19,7 +19,7 @@ class MessageRepositoryManagerMocking: MessageRepositoryManagerProtocol {
         messages = initialMessages
     }
 
-    func addNewSentMessage(message: ChatMessageInfoModel) {
+    func addNewSendingMessage(message: ChatMessageInfoModel) {
         addNewSentMessageCalled = true
         messages.append(message)
     }

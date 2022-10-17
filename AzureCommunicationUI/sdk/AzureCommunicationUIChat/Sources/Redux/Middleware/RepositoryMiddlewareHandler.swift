@@ -66,7 +66,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
                 senderId: localUserId,
                 senderDisplayName: displayName,
                 content: content)
-            messageRepository.addNewSentMessage(message: message)
+            messageRepository.addNewSendingMessage(message: message)
             dispatch(.repositoryAction(.repositoryUpdated))
         }
     }

@@ -45,14 +45,14 @@ class MessageRepositoryManagerTests: XCTestCase {
         ]
         let sut = makeSUT(messages: initialMessages)
         let message = ChatMessageInfoModel()
-        sut.addNewSentMessage(message: message)
+        sut.addNewSendingMessage(message: message)
         XCTAssertEqual(sut.messages.count, initialMessages.count + 1)
     }
 
     func test_messageRepositoryManager_addNewSentMessage_when_zeroInitialMessages_then_messagesCountWillBeIncrementByOne() {
         let sut = makeSUT()
         let message = ChatMessageInfoModel()
-        sut.addNewSentMessage(message: message)
+        sut.addNewSendingMessage(message: message)
         XCTAssertEqual(sut.messages.count, 1)
     }
 
