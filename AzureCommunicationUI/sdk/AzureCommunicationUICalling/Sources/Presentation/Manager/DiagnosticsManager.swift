@@ -25,6 +25,12 @@ class DiagnosticsManager: DiagnosticsManagerProtocol {
     }
 
     private func receive(_ state: AppState) {
+        // call id should be persisted after a call is finished
+        guard let updatedCallId = state.callingState.callId,
+              !updatedCallId.isEmpty else {
+            return
+        }
+
         callId = state.callingState.callId
     }
 }
