@@ -3,8 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import AzureCommunicationCommon
+@_spi(common) import AzureCommunicationUICommon
+import Foundation
 import Combine
 
 protocol AvatarViewManagerProtocol {

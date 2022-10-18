@@ -3,9 +3,11 @@
 //  Licensed under the MIT License.
 //
 
+@_spi(common) import AzureCommunicationUICommon
+import Combine
 import Foundation
 import XCTest
-import Combine
+
 @testable import AzureCommunicationUICalling
 
 class CallingServiceTests: XCTestCase {

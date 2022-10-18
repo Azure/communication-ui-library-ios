@@ -3,7 +3,7 @@
 //  Licensed under the MIT License.
 //
 
-class MappedSequence<S: Hashable, T>: Sequence {
+@_spi(common) public class MappedSequence<S: Hashable, T>: Sequence {
     private class Node<S, T> {
         var key: S
         var value: T
@@ -16,7 +16,7 @@ class MappedSequence<S: Hashable, T>: Sequence {
         }
     }
 
-    var count: Int {
+    public var count: Int {
         return keyNodeMap.count
     }
 
@@ -24,7 +24,9 @@ class MappedSequence<S: Hashable, T>: Sequence {
     private var first: Node<S, T>?
     private var last: Node<S, T>?
 
-    func makeIterator() -> AnyIterator<T> {
+    public init() { }
+
+    public func makeIterator() -> AnyIterator<T> {
         var current: Node? = first
         return AnyIterator<T> { () -> T? in
             let value = current?.value
@@ -33,7 +35,7 @@ class MappedSequence<S: Hashable, T>: Sequence {
         }
     }
 
-    func makeKeyIterator() -> AnyIterator<S> {
+    public func makeKeyIterator() -> AnyIterator<S> {
         var current: Node? = first
         return AnyIterator<S> { () -> S? in
             let value = current?.key
@@ -42,7 +44,7 @@ class MappedSequence<S: Hashable, T>: Sequence {
         }
     }
 
-    func prepend(forKey: S, value: T) {
+    public func prepend(forKey: S, value: T) {
         if keyNodeMap[forKey] != nil {
             return
         }
@@ -60,7 +62,7 @@ class MappedSequence<S: Hashable, T>: Sequence {
         }
     }
 
-    func append(forKey: S, value: T) {
+    public func append(forKey: S, value: T) {
         if keyNodeMap[forKey] != nil {
             return
         }
@@ -78,13 +80,14 @@ class MappedSequence<S: Hashable, T>: Sequence {
         }
     }
 
-    func toArray() -> [T] {
+    public func toArray() -> [T] {
         var array = [T]()
         self.forEach {array.append($0)}
         return array
     }
 
-    @discardableResult func removeValue(forKey: S) -> T? {
+    @discardableResult
+    public func removeValue(forKey: S) -> T? {
         var value: T?
 
         if let nodeToRemove = keyNodeMap[forKey] {
@@ -113,7 +116,8 @@ class MappedSequence<S: Hashable, T>: Sequence {
         return value
     }
 
-    @discardableResult func removeLast() -> T? {
+    @discardableResult
+    public func removeLast() -> T? {
         var value: T?
 
         if let lastKey = last?.key {
@@ -123,7 +127,7 @@ class MappedSequence<S: Hashable, T>: Sequence {
         return value
     }
 
-    func value(forKey: S) -> T? {
+    public func value(forKey: S) -> T? {
         if let node = keyNodeMap[forKey] {
             return node.value
         }

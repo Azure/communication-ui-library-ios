@@ -3,9 +3,11 @@
 //  Licensed under the MIT License.
 //
 
-import XCTest
-import UIKit
+@_spi(common) import AzureCommunicationUICommon
 import AzureCommunicationCommon
+import UIKit
+import XCTest
+
 @testable import AzureCommunicationUICalling
 
 class AvatarManagerTests: XCTestCase {

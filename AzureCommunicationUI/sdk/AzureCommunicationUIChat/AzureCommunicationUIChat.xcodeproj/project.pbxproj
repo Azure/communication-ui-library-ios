@@ -85,10 +85,6 @@
 		50CB826928C29E7400680566 /* DeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB826828C29E7400680566 /* DeviceExtension.swift */; };
 		50CB826B28C29E7B00680566 /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB826A28C29E7B00680566 /* StringConstants.swift */; };
 		50CB826D28C29E8400680566 /* LocalizationKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB826C28C29E8400680566 /* LocalizationKey.swift */; };
-		50CB82BC28C2AD2300680566 /* CancelBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829228C2AD2300680566 /* CancelBag.swift */; };
-		50CB82BD28C2AD2300680566 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829328C2AD2300680566 /* UIViewControllerExtension.swift */; };
-		50CB82BE28C2AD2300680566 /* UIWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829428C2AD2300680566 /* UIWindowExtension.swift */; };
-		50CB82BF28C2AD2300680566 /* MappedSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829528C2AD2300680566 /* MappedSequence.swift */; };
 		50CB82C028C2AD2300680566 /* Middleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829828C2AD2300680566 /* Middleware.swift */; };
 		50CB82C128C2AD2300680566 /* Reducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829A28C2AD2300680566 /* Reducer.swift */; };
 		50CB82C228C2AD2300680566 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829B28C2AD2300680566 /* Store.swift */; };
@@ -251,10 +247,6 @@
 		50CB826A28C29E7B00680566 /* StringConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		50CB826C28C29E8400680566 /* LocalizationKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationKey.swift; sourceTree = "<group>"; };
 		50CB827028C2A02500680566 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		50CB829228C2AD2300680566 /* CancelBag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancelBag.swift; sourceTree = "<group>"; };
-		50CB829328C2AD2300680566 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
-		50CB829428C2AD2300680566 /* UIWindowExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIWindowExtension.swift; sourceTree = "<group>"; };
-		50CB829528C2AD2300680566 /* MappedSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappedSequence.swift; sourceTree = "<group>"; };
 		50CB829828C2AD2300680566 /* Middleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Middleware.swift; sourceTree = "<group>"; };
 		50CB829A28C2AD2300680566 /* Reducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reducer.swift; sourceTree = "<group>"; };
 		50CB829B28C2AD2300680566 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
@@ -851,30 +843,10 @@
 		50CB828D28C2AD2300680566 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				50CB828E28C2AD2300680566 /* Logger */,
-				50CB829128C2AD2300680566 /* Utilities */,
 				50CB829628C2AD2300680566 /* Redux */,
 				50CB829C28C2AD2300680566 /* Presentation */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		50CB828E28C2AD2300680566 /* Logger */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Logger;
-			sourceTree = "<group>";
-		};
-		50CB829128C2AD2300680566 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				50CB829228C2AD2300680566 /* CancelBag.swift */,
-				50CB829328C2AD2300680566 /* UIViewControllerExtension.swift */,
-				50CB829428C2AD2300680566 /* UIWindowExtension.swift */,
-				50CB829528C2AD2300680566 /* MappedSequence.swift */,
-			);
-			path = Utilities;
 			sourceTree = "<group>";
 		};
 		50CB829628C2AD2300680566 /* Redux */ = {
@@ -1290,7 +1262,6 @@
 			files = (
 				50CB822D28C2997700680566 /* RepositoryMiddleware.swift in Sources */,
 				50CB824328C29AE200680566 /* NavigationState.swift in Sources */,
-				50CB82BD28C2AD2300680566 /* UIViewControllerExtension.swift in Sources */,
 				50CB82C228C2AD2300680566 /* Store.swift in Sources */,
 				50CB81F828C2860200680566 /* ChatCompositeError.swift in Sources */,
 				50CB82D028C2AD9900680566 /* SetParticipantViewDataError.swift in Sources */,
@@ -1300,11 +1271,9 @@
 				BD1A6A3F28ECF008005E0B70 /* RepositoryState.swift in Sources */,
 				50CB823728C29A3E00680566 /* ParticipantsAction.swift in Sources */,
 				BD80293B28ECA84200A55CAC /* TopBarViewModel.swift in Sources */,
-				50CB82BC28C2AD2300680566 /* CancelBag.swift in Sources */,
 				50CB81FC28C2862000680566 /* LocalizationOptions.swift in Sources */,
 				50CB824928C29B0100680566 /* LifeCycleReducer.swift in Sources */,
 				50CB81F428C285E300680566 /* RemoteOptions.swift in Sources */,
-				50CB82BE28C2AD2300680566 /* UIWindowExtension.swift in Sources */,
 				50CB821D28C2875D00680566 /* ChatView.swift in Sources */,
 				50370CD328EE507A00ACD234 /* TrouterEventExtension.swift in Sources */,
 				50CB82CE28C2AD2300680566 /* LocalOptions.swift in Sources */,
@@ -1368,7 +1337,6 @@
 				50CB821928C2872600680566 /* ContainerUIHostingController.swift in Sources */,
 				50CB82C028C2AD2300680566 /* Middleware.swift in Sources */,
 				50CB823D28C29AC900680566 /* AppLifeCycleState.swift in Sources */,
-				50CB82BF28C2AD2300680566 /* MappedSequence.swift in Sources */,
 				BD80293F28ECCD7800A55CAC /* TextMessageView.swift in Sources */,
 				50CB81DB28C26EEB00680566 /* ChatComposite.swift in Sources */,
 				50CB81F628C285F300680566 /* ChatConfiguration.swift in Sources */,

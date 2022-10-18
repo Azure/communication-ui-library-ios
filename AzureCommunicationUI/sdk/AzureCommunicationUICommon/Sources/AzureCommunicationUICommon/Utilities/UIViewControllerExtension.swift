@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-extension UIViewController {
+@_spi(common) public extension UIViewController {
 
     func dismissSelf(completion: (() -> Void)? = nil) {
         if let presentingVc = presentingViewController {

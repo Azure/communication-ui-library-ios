@@ -3,9 +3,10 @@
 //  Licensed under the MIT License.
 //
 
-import SwiftUI
-import FluentUI
+@_spi(common) import AzureCommunicationUICommon
 import Combine
+import FluentUI
+import SwiftUI
 
 struct ParticipantGridCellView: View {
     @ObservedObject var viewModel: ParticipantGridCellViewModel

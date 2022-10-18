@@ -5,7 +5,7 @@
 
 import UIKit
 
-extension UIWindow {
+@_spi(common) public extension UIWindow {
 
     static var keyWindow: UIWindow? {
         return UIApplication.shared.windows.filter {$0.isKeyWindow}.first
