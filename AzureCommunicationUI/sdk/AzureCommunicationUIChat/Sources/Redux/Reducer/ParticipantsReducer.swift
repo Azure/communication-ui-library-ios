@@ -37,8 +37,8 @@ extension Reducer where State == ParticipantsState,
             if typingIndicatorTimestamp < typingExpiringTimestamp {
                 typingIndicatorTimestamp = typingExpiringTimestamp
             }
-        case .chatAction(.messageReceived(let message)):
-            if let participantId = message.senderId, message.type == .text {
+        case .repositoryAction(.chatMessageReceived(let message)):
+            if let participantId = message.senderId {
                 typingIndicatorMap.removeValue(forKey: participantId)
                 typingIndicatorTimestamp = currentTimestamp
             }
