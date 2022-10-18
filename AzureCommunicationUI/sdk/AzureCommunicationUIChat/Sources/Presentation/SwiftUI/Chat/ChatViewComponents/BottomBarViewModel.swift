@@ -36,7 +36,6 @@ class BottomBarViewModel: ObservableObject {
     func sendMessage() {
         // Added for testing to trigger action
         if message == "fetch" {
-            print("Fetching previous *Messages*")
             dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
             return
         }

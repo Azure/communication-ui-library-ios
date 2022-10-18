@@ -85,9 +85,7 @@ class ChatActionHandler: ChatActionHandling {
         Task {
             do {
                 let previousMessages = try await chatService.getPreviousMessages()
-                print("!isEmpty previousMessage \(!previousMessages.isEmpty)")
                 if !previousMessages.isEmpty {
-                    print("isEmpty if statement being called")
                     dispatch(.repositoryAction(.fetchPreviousMessagesSuccess(messages: previousMessages)))
                 }
             } catch {

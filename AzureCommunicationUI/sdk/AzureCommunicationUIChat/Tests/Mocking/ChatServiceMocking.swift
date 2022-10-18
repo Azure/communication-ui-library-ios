@@ -42,7 +42,6 @@ class ChatServiceMocking: ChatServiceProtocol {
             if let error = self.error {
                 throw error
             }
-            print("----previousMessages count: \(previousMessages.count)")
             return previousMessages
         }
         return try await task.value

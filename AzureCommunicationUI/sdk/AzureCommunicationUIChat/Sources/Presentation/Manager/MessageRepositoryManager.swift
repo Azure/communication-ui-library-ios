@@ -33,8 +33,7 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
     }
 
     func addPreviousMessages(previousMessages: [ChatMessageInfoModel]) {
-        // work around for duplicate message
-        // will use more efficient data structure in MessageRepo PR
+        // Workaround: improve data structure in MessageRepo user story
         for m in previousMessages {
             if let index = messages.firstIndex(where: {
                 $0.id == m.id
