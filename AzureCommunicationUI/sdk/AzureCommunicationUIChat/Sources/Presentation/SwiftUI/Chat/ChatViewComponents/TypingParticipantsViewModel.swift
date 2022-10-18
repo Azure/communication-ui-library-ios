@@ -14,11 +14,10 @@ class TypingParticipantsViewModel: ObservableObject {
     private var typingIndicatorLastUpdatedTimestamp = Date()
     var participants: [ParticipantInfoModel] = []
 
-    @Published var typingParticipants: String = Constants.defaultParticipant
+    @Published var typingIndicatorLabel: String?
+    var shouldShowIndicator: Bool = false
 
     private enum Constants {
-        static let defaultParticipant: String = ""
-        static let participantSeparator: String = ", "
         static let defaultTimeInterval: TimeInterval = 8.0
     }
 
@@ -52,16 +51,17 @@ class TypingParticipantsViewModel: ObservableObject {
 
     private func displayWithTimer(latestTypingTimestamp: Date,
                                   participants: [ParticipantInfoModel]) {
-        if participants.isEmpty {
-            hideTypingIndicator()
-        } else {
-            typingParticipants = getLocalizedTypingIndicatorText(participants: participants)
-            resetTimer(timeInterval: Date().timeIntervalSince(latestTypingTimestamp))
+        guard !participants.isEmpty else {
+            return
         }
+        shouldShowIndicator = true
+        typingIndicatorLabel = getLocalizedTypingIndicatorText(participants: participants)
+        resetTimer(timeInterval: Date().timeIntervalSince(latestTypingTimestamp))
     }
 
     @objc private func hideTypingIndicator() {
-        typingParticipants = Constants.defaultParticipant
+        shouldShowIndicator = false
+        typingIndicatorLabel = nil
         typingIndicatorTimer?.invalidate()
     }
 
@@ -72,17 +72,17 @@ class TypingParticipantsViewModel: ObservableObject {
                                                            participants[0].displayName)
         // X and Y are typing
         } else if participants.count == 2 {
-            return localizationProvider.getLocalizedString(.oneParticipantIsTyping,
+            return localizationProvider.getLocalizedString(.twoParticipantsAreTyping,
                                                            participants[0].displayName,
                                                            participants[1].displayName)
         // X, Y and 1 other are typing
         } else if participants.count == 3 {
-                return localizationProvider.getLocalizedString(.oneParticipantIsTyping,
+                return localizationProvider.getLocalizedString(.threeParticipantsAreTyping,
                                                                participants[0].displayName,
                                                                participants[1].displayName)
         // X, Y and Z others are typing
         } else if participants.count > 3 {
-            return localizationProvider.getLocalizedString(.oneParticipantIsTyping,
+            return localizationProvider.getLocalizedString(.multipleParticipantsAreTyping,
                                                            participants[0].displayName,
                                                            participants[1].displayName,
                                                            participants.count - 2)

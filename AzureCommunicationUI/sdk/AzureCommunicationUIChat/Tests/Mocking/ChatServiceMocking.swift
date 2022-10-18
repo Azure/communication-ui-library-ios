@@ -8,6 +8,7 @@ import Combine
 @testable import AzureCommunicationUIChat
 
 class ChatServiceMocking: ChatServiceProtocol {
+    
     var error: Error?
     var chatEventSubject = PassthroughSubject<ChatEventModel, Never>()
 
@@ -47,6 +48,14 @@ class ChatServiceMocking: ChatServiceProtocol {
 
     // for future void functions
     private func possibleErrorTask() throws -> Task<Void, Error> {
+        Task<Void, Error> {
+            if let error = self.error {
+                throw error
+            }
+        }
+    }
+
+    func sendTypingIndicator() async throws {
         Task<Void, Error> {
             if let error = self.error {
                 throw error
