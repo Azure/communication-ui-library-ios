@@ -17,7 +17,7 @@ class TypingParticipantAvatarGroup: UIView {
     }
 
     private enum Constants {
-        static let avatarHeight: CGFloat = 16.0
+        static let avatarWidth: CGFloat = 16.0
         static let maxAvatarAllowed: Int = 3
         static let overflowCount: Int = 0
     }
@@ -35,10 +35,6 @@ class TypingParticipantAvatarGroup: UIView {
 
 extension TypingParticipantAvatarGroup {
     private func initAvatarGroup() {
-        group.view.frame = CGRect(x: 0,
-                                  y: 0,
-                                  width: Constants.avatarHeight * CGFloat(avatars.count),
-                                  height: self.frame.height)
         group.state.overflowCount = Constants.overflowCount
         group.state.style = .stack
         // Max avatar shown would be 4
