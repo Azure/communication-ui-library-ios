@@ -3,9 +3,9 @@
 //  Licensed under the MIT License.
 //
 
+import FluentUI
 import SwiftUI
 import UIKit
-import FluentUI
 
 struct CompositeAvatar: View {
     @Binding var displayName: String?

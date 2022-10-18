@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import SwiftUI
 import FluentUI
+import SwiftUI
 
 struct TypingParticipantsView: View {
     @ObservedObject var viewModel: TypingParticipantsViewModel
