@@ -1,4 +1,4 @@
-// swift-tools-version: 5.5
+// swift-tools-version: 5.6
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -12,11 +12,10 @@ let package = Package(
             targets: ["AzureCommunicationUICommon"]),
     ],
     dependencies: [
+        // Can't do this; compile issues with older versions.
 //        .package(
 //            url: "https://github.com/microsoft/fluentui-apple.git",
-//            .exact(
-//                .init(0, 4, 0)
-//            )
+//            exact: .init(0, 4, 0)
 //        )
     ],
     targets: [
