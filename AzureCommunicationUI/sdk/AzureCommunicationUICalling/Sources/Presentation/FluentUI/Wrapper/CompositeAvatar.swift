@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import FluentUI
 import SwiftUI
+import FluentUI
 import UIKit
 
 struct CompositeAvatar: View {
