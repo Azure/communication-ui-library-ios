@@ -3,8 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import AzureCommunicationCalling
+@_spi(common) import AzureCommunicationUICommon
+import Foundation
 
 struct RemoteParticipantVideoViewId {
     let userIdentifier: String

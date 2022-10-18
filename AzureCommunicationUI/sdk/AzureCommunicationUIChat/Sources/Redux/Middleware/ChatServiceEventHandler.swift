@@ -4,6 +4,7 @@
 //
 
 import AzureCommunicationCommon
+@_spi(common) import AzureCommunicationUICommon
 import Foundation
 
 protocol ChatServiceEventHandling {

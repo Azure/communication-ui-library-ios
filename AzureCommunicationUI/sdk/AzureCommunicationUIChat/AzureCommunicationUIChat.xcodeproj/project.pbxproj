@@ -85,8 +85,6 @@
 		50CB826928C29E7400680566 /* DeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB826828C29E7400680566 /* DeviceExtension.swift */; };
 		50CB826B28C29E7B00680566 /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB826A28C29E7B00680566 /* StringConstants.swift */; };
 		50CB826D28C29E8400680566 /* LocalizationKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB826C28C29E8400680566 /* LocalizationKey.swift */; };
-		50CB82BA28C2AD2300680566 /* DefaultLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB828F28C2AD2300680566 /* DefaultLogger.swift */; };
-		50CB82BB28C2AD2300680566 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829028C2AD2300680566 /* Logger.swift */; };
 		50CB82BC28C2AD2300680566 /* CancelBag.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829228C2AD2300680566 /* CancelBag.swift */; };
 		50CB82BD28C2AD2300680566 /* UIViewControllerExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829328C2AD2300680566 /* UIViewControllerExtension.swift */; };
 		50CB82BE28C2AD2300680566 /* UIWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829428C2AD2300680566 /* UIWindowExtension.swift */; };
@@ -143,6 +141,7 @@
 		50F0C5C628D38CE4009D7176 /* MessageRepositoryManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C528D38CE4009D7176 /* MessageRepositoryManagerTests.swift */; };
 		50F0C5C828D38CF1009D7176 /* RemoteOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */; };
 		50F0C5CA28D38D00009D7176 /* DependencyContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */; };
+		75CFF35828FF3DE4000009FD /* AzureCommunicationUICommon in Frameworks */ = {isa = PBXBuildFile; productRef = 75CFF35728FF3DE4000009FD /* AzureCommunicationUICommon */; };
 		85D6F5E7707CE2A8E51E5451 /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9C157344D512A9F069F9CC /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework */; };
 		A8BB978028F770FE008142DB /* SystemMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BB977F28F770FE008142DB /* SystemMessageView.swift */; };
 		BD1A6A3C28ECDEAE005E0B70 /* MessageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A6A3B28ECDEAE005E0B70 /* MessageListView.swift */; };
@@ -252,8 +251,6 @@
 		50CB826A28C29E7B00680566 /* StringConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		50CB826C28C29E8400680566 /* LocalizationKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationKey.swift; sourceTree = "<group>"; };
 		50CB827028C2A02500680566 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		50CB828F28C2AD2300680566 /* DefaultLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultLogger.swift; sourceTree = "<group>"; };
-		50CB829028C2AD2300680566 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		50CB829228C2AD2300680566 /* CancelBag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancelBag.swift; sourceTree = "<group>"; };
 		50CB829328C2AD2300680566 /* UIViewControllerExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewControllerExtension.swift; sourceTree = "<group>"; };
 		50CB829428C2AD2300680566 /* UIWindowExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIWindowExtension.swift; sourceTree = "<group>"; };
@@ -311,6 +308,7 @@
 		50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteOptionsTests.swift; sourceTree = "<group>"; };
 		50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainerTests.swift; sourceTree = "<group>"; };
 		5BE15140BA042B0F23F23BE3 /* Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; sourceTree = "<group>"; };
+		75CFF35428FF3DCD000009FD /* AzureCommunicationUICommon */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AzureCommunicationUICommon; path = ../AzureCommunicationUICommon; sourceTree = "<group>"; };
 		78EED6E1D0BF91A2966AC0C7 /* Pods-AzureCommunicationUIChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat/Pods-AzureCommunicationUIChat.debug.xcconfig"; sourceTree = "<group>"; };
 		A63BF349E7BC31AD5300412A /* Pods_AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8BB977F28F770FE008142DB /* SystemMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMessageView.swift; sourceTree = "<group>"; };
@@ -335,6 +333,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75CFF35828FF3DE4000009FD /* AzureCommunicationUICommon in Frameworks */,
 				3C8A38C00C940E491F39B0A2 /* Pods_AzureCommunicationUIChat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -362,6 +361,7 @@
 		50CB81B828C26E0B00680566 = {
 			isa = PBXGroup;
 			children = (
+				7589F02128FF3B35002ACADE /* Packages */,
 				50CB81C428C26E0C00680566 /* Sources */,
 				50CB81CE28C26E0C00680566 /* Tests */,
 				50CB81C328C26E0C00680566 /* Products */,
@@ -862,8 +862,6 @@
 		50CB828E28C2AD2300680566 /* Logger */ = {
 			isa = PBXGroup;
 			children = (
-				50CB828F28C2AD2300680566 /* DefaultLogger.swift */,
-				50CB829028C2AD2300680566 /* Logger.swift */,
 			);
 			path = Logger;
 			sourceTree = "<group>";
@@ -1003,6 +1001,14 @@
 			path = CompositeOptions;
 			sourceTree = "<group>";
 		};
+		7589F02128FF3B35002ACADE /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				75CFF35428FF3DCD000009FD /* AzureCommunicationUICommon */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
 		9D8BF2E46CAA862B4F8E87A8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1087,8 +1093,12 @@
 			buildRules = (
 			);
 			dependencies = (
+				75CFF35628FF3DD7000009FD /* PBXTargetDependency */,
 			);
 			name = AzureCommunicationUIChat;
+			packageProductDependencies = (
+				75CFF35728FF3DE4000009FD /* AzureCommunicationUICommon */,
+			);
 			productName = AzureCommunicationUIChat;
 			productReference = 50CB81C228C26E0C00680566 /* AzureCommunicationUIChat.framework */;
 			productType = "com.apple.product-type.framework";
@@ -1196,6 +1206,7 @@
 		};
 		50CB81E828C270D500680566 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -1214,6 +1225,7 @@
 		};
 		50CB81E928C273DF00680566 /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -1309,7 +1321,6 @@
 				50CB82CD28C2AD2300680566 /* ThemeOptions.swift in Sources */,
 				50CB826D28C29E8400680566 /* LocalizationKey.swift in Sources */,
 				50CB82C628C2AD2300680566 /* OrientationManager.swift in Sources */,
-				50CB82BA28C2AD2300680566 /* DefaultLogger.swift in Sources */,
 				5085BF1E28F729990057586D /* ChatThreadInfoModel.swift in Sources */,
 				50CB822928C2996200680566 /* ChatActionHandler.swift in Sources */,
 				50CB822B28C2996D00680566 /* ChatServiceEventHandler.swift in Sources */,
@@ -1331,7 +1342,6 @@
 				50370CC728ECA2DB00ACD234 /* ChatMessageExtension.swift in Sources */,
 				50CB823F28C29AD100680566 /* ChatState.swift in Sources */,
 				50CB822F28C2998900680566 /* RepositoryMiddlewareHandler.swift in Sources */,
-				50CB82BB28C2AD2300680566 /* Logger.swift in Sources */,
 				50CB820F28C286BF00680566 /* NavigationRouter.swift in Sources */,
 				BD80293928ECA7DC00A55CAC /* TopBarView.swift in Sources */,
 				50CB825128C29B2600680566 /* ErrorReducer.swift in Sources */,
@@ -1439,6 +1449,10 @@
 			isa = PBXTargetDependency;
 			target = 50CB81C128C26E0C00680566 /* AzureCommunicationUIChat */;
 			targetProxy = 50CB81CC28C26E0C00680566 /* PBXContainerItemProxy */;
+		};
+		75CFF35628FF3DD7000009FD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 75CFF35528FF3DD7000009FD /* AzureCommunicationUICommon */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1701,6 +1715,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		75CFF35528FF3DD7000009FD /* AzureCommunicationUICommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AzureCommunicationUICommon;
+		};
+		75CFF35728FF3DE4000009FD /* AzureCommunicationUICommon */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = AzureCommunicationUICommon;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 50CB81B928C26E0B00680566 /* Project object */;
 }

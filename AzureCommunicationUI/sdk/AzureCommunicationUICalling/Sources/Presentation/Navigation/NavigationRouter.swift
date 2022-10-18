@@ -3,8 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import SwiftUI
+@_spi(common) import AzureCommunicationUICommon
 import Combine
+import SwiftUI
 
 enum ViewType {
     case setupView

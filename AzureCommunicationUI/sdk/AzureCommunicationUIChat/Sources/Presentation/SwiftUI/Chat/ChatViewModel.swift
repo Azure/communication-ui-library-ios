@@ -3,8 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
+@_spi(common) import AzureCommunicationUICommon
 import Combine
+import Foundation
 
 class ChatViewModel: ObservableObject {
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol

@@ -3,9 +3,10 @@
 //  Licensed under the MIT License.
 //
 
+import AzureCommunicationCommon
+@_spi(common) import AzureCommunicationUICommon
 import Foundation
 import XCTest
-import AzureCommunicationCommon
 @testable import AzureCommunicationUIChat
 
 class DependencyContainerTests: XCTestCase {

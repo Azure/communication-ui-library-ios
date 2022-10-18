@@ -5,6 +5,7 @@
 
 import AVFoundation
 import Combine
+@_spi(common) import AzureCommunicationUICommon
 
 protocol AudioSessionManagerProtocol {
 

@@ -3,8 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
+@_spi(common) import AzureCommunicationUICommon
 import Combine
+import Foundation
 
 protocol CallingServiceProtocol {
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> { get }

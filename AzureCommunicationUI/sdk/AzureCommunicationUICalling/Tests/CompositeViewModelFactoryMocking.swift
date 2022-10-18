@@ -3,8 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
+@_spi(common) import AzureCommunicationUICommon
 import FluentUI
+import Foundation
 @testable import AzureCommunicationUICalling
 
 struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {

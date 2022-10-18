@@ -3,7 +3,9 @@
 //  Licensed under the MIT License.
 //
 
+@_spi(common) import AzureCommunicationUICommon
 import Foundation
+
 @testable import AzureCommunicationUICalling
 
 class SetupControlBarViewModelMocking: SetupControlBarViewModel {

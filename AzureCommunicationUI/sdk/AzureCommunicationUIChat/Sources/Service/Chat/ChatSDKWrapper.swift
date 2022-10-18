@@ -3,8 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import AzureCore
 import AzureCommunicationChat
+@_spi(common) import AzureCommunicationUICommon
+import AzureCore
 import Foundation
 
 class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {

@@ -3,9 +3,11 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
-import Combine
+@_spi(common) import AzureCommunicationUICommon
 import AzureCommunicationCalling
+import Combine
+import Foundation
+
 @testable import AzureCommunicationUICalling
 
 class OnHoldOverlayViewModelMocking: OnHoldOverlayViewModel {

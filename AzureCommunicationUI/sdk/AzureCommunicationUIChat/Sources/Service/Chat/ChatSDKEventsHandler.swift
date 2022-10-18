@@ -5,6 +5,7 @@
 
 import AzureCommunicationChat
 import AzureCommunicationCommon
+@_spi(common) import AzureCommunicationUICommon
 import Combine
 import Foundation
 

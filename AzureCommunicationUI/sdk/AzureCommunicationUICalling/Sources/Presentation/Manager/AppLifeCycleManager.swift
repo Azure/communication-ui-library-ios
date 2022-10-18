@@ -3,9 +3,10 @@
 //  Licensed under the MIT License.
 //
 
+@_spi(common) import AzureCommunicationUICommon
+import Combine
 import Foundation
 import UIKit
-import Combine
 
 protocol LifeCycleManagerProtocol {
 

@@ -3,9 +3,10 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
-import Combine
 import AzureCommunicationCommon
+@_spi(common) import AzureCommunicationUICommon
+import Combine
+import Foundation
 @testable import AzureCommunicationUIChat
 
 class ChatSDKWrapperMocking: ChatSDKWrapperProtocol {

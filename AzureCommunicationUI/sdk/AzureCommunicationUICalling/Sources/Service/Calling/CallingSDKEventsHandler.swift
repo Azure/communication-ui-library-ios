@@ -3,9 +3,10 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
-import Combine
 import AzureCommunicationCalling
+@_spi(common) import AzureCommunicationUICommon
+import Combine
+import Foundation
 
 protocol CallingSDKEventsHandling: CallDelegate {
     func assign(_ recordingCallFeature: RecordingCallFeature)
