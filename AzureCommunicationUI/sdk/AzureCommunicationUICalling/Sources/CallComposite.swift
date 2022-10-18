@@ -32,7 +32,7 @@ public class CallComposite {
     private var avatarViewManager: AvatarViewManagerProtocol?
     private var diagnosticsManager: DiagnosticsManagerProtocol?
 
-    /// Create an instance of CallComposite with options.
+    /// Create an instance of Call Composite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
         events = Events()
@@ -64,7 +64,7 @@ public class CallComposite {
         present(toolkitHostingController)
     }
 
-    /// Start call composite experience with joining a Teams meeting.
+    /// Start Call Composite experience with joining a Teams meeting.
     /// - Parameter remoteOptions: RemoteOptions used to send to ACS to locate the call.
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This is data is not sent up to ACS.
@@ -95,7 +95,9 @@ public class CallComposite {
                           completionHandler: completionHandler)
     }
 
-    public func getDiagnosticInfo​() -> DiagnosticsInfo {
+    /// Get Call Composite diagnostics information.
+    /// - Returns: The DiagnosticsInfo object with Call Composite diagnostics information.
+    public func getDiagnosticsInfo() -> DiagnosticsInfo {
         guard let diagnosticsManager = diagnosticsManager else {
             return DiagnosticsInfo()
         }

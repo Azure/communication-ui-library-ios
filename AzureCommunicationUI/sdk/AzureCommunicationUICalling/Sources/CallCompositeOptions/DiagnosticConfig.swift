@@ -30,7 +30,9 @@ struct DiagnosticConfig {
 
 }
 
+/// A Call Composite diagnostics information.
 public struct DiagnosticsInfo {
+    /// The last known call id.
     public let lastKnownCallId: String?
 
     init(lastKnownCallId: String? = nil) {
