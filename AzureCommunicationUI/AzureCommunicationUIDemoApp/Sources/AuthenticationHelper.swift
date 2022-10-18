@@ -7,13 +7,17 @@ import Foundation
 import AzureCommunicationCommon
 
 class AuthenticationHelper {
-    static func getCommunicationToken(tokenUrl: URL) -> TokenRefresher {
+    static func getCommunicationToken(tokenUrl: URL, aadToken: String? = nil) -> TokenRefresher {
         return { completionHandler in
             struct TokenResponse: Decodable {
                 let token: String
             }
             var urlRequest = URLRequest(url: tokenUrl, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 10)
             urlRequest.httpMethod = "GET"
+            if let aadToken = aadToken {
+                let value = "Bearer \(aadToken)"
+                urlRequest.setValue(value, forHTTPHeaderField: "Authorization")
+            }
             URLSession.shared.dataTask(with: urlRequest) { (data, _, error) in
                 if let error = error {
                     print(error)
