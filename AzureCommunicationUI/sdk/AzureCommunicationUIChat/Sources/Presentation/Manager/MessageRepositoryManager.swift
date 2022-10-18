@@ -11,6 +11,7 @@ protocol MessageRepositoryManagerProtocol {
 
     // MARK: sending local events
     func addInitialMessages(initialMessages: [ChatMessageInfoModel])
+    func addPreviousMessages(previousMessages: [ChatMessageInfoModel])
     func addNewSendingMessage(message: ChatMessageInfoModel)
     func replaceMessageId(internalId: String, actualId: String)
 
@@ -29,6 +30,26 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
 
     func addInitialMessages(initialMessages: [ChatMessageInfoModel]) {
         messages = initialMessages
+    }
+
+    func addPreviousMessages(previousMessages: [ChatMessageInfoModel]) {
+        // work around for duplicate message
+        // will use more efficient data structure in MessageRepo PR
+        for m in previousMessages {
+            if let index = messages.firstIndex(where: {
+                $0.id == m.id
+            }) {
+                messages[index] = m
+            } else {
+                messages.append(m)
+            }
+        }
+
+        messages.sort { lhs, rhs -> Bool in
+            // createdOn does not have milliseconds
+            return lhs.createdOn == rhs.createdOn ?
+            lhs.id < rhs.id : lhs.createdOn < rhs.createdOn
+        }
     }
 
     func addNewSendingMessage(message: ChatMessageInfoModel) {

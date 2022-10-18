@@ -8,6 +8,7 @@ import Foundation
 
 class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
     var loadInitialMessagesCalled: ((Bool) -> Void)?
+    var addPreviousMessagesCalled: ((Bool) -> Void)?
     var addNewSentMessageCalled: ((Bool) -> Void)?
     var updateSentMessageIdCalled: ((Bool) -> Void)?
     var addReceivedMessageCalled: ((Bool) -> Void)?
@@ -15,6 +16,12 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
     func loadInitialMessages(messages: [ChatMessageInfoModel], state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             loadInitialMessagesCalled?(true)
+        }
+    }
+
+    func addPreviousMessages(messages: [ChatMessageInfoModel], state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            addPreviousMessagesCalled?(true)
         }
     }
 

@@ -70,6 +70,35 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         }
     }
 
+    func getPreviousMessages() async throws -> [ChatMessageInfoModel] {
+        do {
+            guard let messagePagedCollection = self.pagedCollection else {
+                print("!!! pagedCollection is nil *Message")
+                return try await self.getInitialMessages()
+            }
+            return try await withCheckedThrowingContinuation { continuation in
+                messagePagedCollection.nextPage { result in
+                    switch result {
+                    case .success(let messagesResult):
+                        let previousMessages = messagesResult.map({
+                            $0.toChatMessageInfoModel()
+                        })
+                        for m in previousMessages {
+                            print("###*Messages Previous: \(m.id) \(m.createdOn.value) \(m.content)")
+                        }
+                        continuation.resume(returning: previousMessages)
+                    case .failure(let error):
+                        self.logger.error("Failed to get previous messages")
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        } catch {
+            logger.error("Retrieve Thread Topic failed: \(error)")
+            throw error
+        }
+    }
+
     func sendMessage(content: String, senderDisplayName: String) async throws -> String {
         do {
             let messageRequest = SendChatMessageRequest(

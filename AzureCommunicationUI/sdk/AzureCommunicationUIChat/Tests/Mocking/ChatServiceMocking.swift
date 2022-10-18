@@ -13,9 +13,11 @@ class ChatServiceMocking: ChatServiceProtocol {
 
     var topic: String = "topic"
     var initialMessages: [ChatMessageInfoModel] = []
+    var previousMessages: [ChatMessageInfoModel] = []
 
     var initializeCalled: Bool = false
     var getInitialMessagesCalled: Bool = false
+    var getPreviousMessagesCalled: Bool = false
     var sendMessageCalled: Bool = false
 
     func initalize() async throws {
@@ -30,6 +32,18 @@ class ChatServiceMocking: ChatServiceProtocol {
                 throw error
             }
             return initialMessages
+        }
+        return try await task.value
+    }
+
+    func getPreviousMessages() async throws -> [ChatMessageInfoModel] {
+        getPreviousMessagesCalled = true
+        let task = Task<[ChatMessageInfoModel], Error> {
+            if let error = self.error {
+                throw error
+            }
+            print("----previousMessages count: \(previousMessages.count)")
+            return previousMessages
         }
         return try await task.value
     }

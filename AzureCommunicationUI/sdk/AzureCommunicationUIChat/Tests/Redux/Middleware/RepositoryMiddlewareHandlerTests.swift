@@ -39,6 +39,14 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
         XCTAssertTrue(mockMessageRepositoryManager.addInitialMessagesCalled)
     }
 
+    func test_repositoryMiddlewareHandler_addPreviousMessages_then_addPreviousMessagesCalled() async {
+        await repositoryMiddlewareHandler.addPreviousMessages(
+            messages: [ChatMessageInfoModel()],
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockMessageRepositoryManager.addPreviousMessagesCalled)
+    }
+
     func test_repositoryMiddlewareHandler_addNewSentMessage_then_addNewSentMessageCalled() async {
         await repositoryMiddlewareHandler.addNewSentMessage(
             internalId: "internalId",
