@@ -22,6 +22,8 @@ protocol ChatActionHandling {
                      content: String,
                      state: AppState,
                      dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func sendReadReceipt(messageId: String, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 }
 
 class ChatActionHandler: ChatActionHandling {
@@ -97,6 +99,18 @@ class ChatActionHandler: ChatActionHandling {
             } catch {
                 // dispatch error *not handled*
                 dispatch(.repositoryAction(.sendMessageFailed(error: error)))
+            }
+        }
+    }
+
+    func sendReadReceipt(messageId: String, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            do {
+                try await chatService.sendReadReceipt(messageId: messageId)
+                dispatch(.chatAction(.sendReadReceiptSuccess))
+            } catch {
+                logger.error("ChatActionHandler sendReadReceipt failed: \(error)")
+                dispatch(.chatAction(.sendReadReceiptFailed(error: error)))
             }
         }
     }

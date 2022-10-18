@@ -55,6 +55,8 @@ private func handleChatAction(_ action: ChatAction,
         actionHandler.initialize(state: getState(),
                                  dispatch: dispatch,
                                  serviceListener: serviceListener)
+    case .sendReadReceiptTriggered(let messageId):
+        actionHandler.sendReadReceipt(messageId: messageId, dispatch: dispatch)
     default:
         break
     }
@@ -75,11 +77,13 @@ private func handleRepositoryAction(_ action: RepositoryAction,
     case .fetchInitialMessagesTriggered:
         actionHandler.getInitialMessages(state: getState(),
                                          dispatch: dispatch)
+
     case .sendMessageTriggered(let internalId, let content):
         actionHandler.sendMessage(internalId: internalId,
                                   content: content,
                                   state: getState(),
                                   dispatch: dispatch)
+
     default:
         break
     }

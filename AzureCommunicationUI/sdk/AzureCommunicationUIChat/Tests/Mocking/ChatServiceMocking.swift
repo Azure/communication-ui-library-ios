@@ -45,6 +45,14 @@ class ChatServiceMocking: ChatServiceProtocol {
         return try await task.value
     }
 
+    func sendReadReceipt(messageId: String) async throws {
+        Task<Void, Error> {
+            if let error = self.error {
+                throw error
+            }
+        }
+    }
+
     // for future void functions
     private func possibleErrorTask() throws -> Task<Void, Error> {
         Task<Void, Error> {
