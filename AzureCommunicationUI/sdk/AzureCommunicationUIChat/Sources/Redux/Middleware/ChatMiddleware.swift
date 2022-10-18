@@ -55,6 +55,9 @@ private func handleChatAction(_ action: ChatAction,
         actionHandler.initialize(state: getState(),
                                  dispatch: dispatch,
                                  serviceListener: serviceListener)
+    case .sendTypingIndicatorTriggered:
+        actionHandler.sendTypingIndicator(state: getState(),
+                                          dispatch: dispatch)
     default:
         break
     }

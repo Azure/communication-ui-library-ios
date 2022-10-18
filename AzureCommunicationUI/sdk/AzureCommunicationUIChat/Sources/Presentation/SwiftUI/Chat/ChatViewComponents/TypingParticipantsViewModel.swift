@@ -55,12 +55,7 @@ class TypingParticipantsViewModel: ObservableObject {
         if participants.isEmpty {
             hideTypingIndicator()
         } else {
-            typingParticipants = participants.compactMap { p in
-                p.displayName
-            }.joined(separator: Constants.participantSeparator)
-            typingParticipants += participants.count == 1 ?
-            localizationProvider.getLocalizedString(.participantIsTyping):
-            localizationProvider.getLocalizedString(.participantsAreTyping)
+            typingParticipants = getLocalizedTypingIndicatorText(participants: participants)
             resetTimer(timeInterval: Date().timeIntervalSince(latestTypingTimestamp))
         }
     }
@@ -68,6 +63,32 @@ class TypingParticipantsViewModel: ObservableObject {
     @objc private func hideTypingIndicator() {
         typingParticipants = Constants.defaultParticipant
         typingIndicatorTimer?.invalidate()
+    }
+
+    private func getLocalizedTypingIndicatorText(participants: [ParticipantInfoModel]) -> String {
+        // X is typing
+        if participants.count == 1 {
+            return localizationProvider.getLocalizedString(.oneParticipantIsTyping,
+                                                           participants[0].displayName)
+        // X and Y are typing
+        } else if participants.count == 2 {
+            return localizationProvider.getLocalizedString(.oneParticipantIsTyping,
+                                                           participants[0].displayName,
+                                                           participants[1].displayName)
+        // X, Y and 1 other are typing
+        } else if participants.count == 3 {
+                return localizationProvider.getLocalizedString(.oneParticipantIsTyping,
+                                                               participants[0].displayName,
+                                                               participants[1].displayName)
+        // X, Y and Z others are typing
+        } else if participants.count > 3 {
+            return localizationProvider.getLocalizedString(.oneParticipantIsTyping,
+                                                           participants[0].displayName,
+                                                           participants[1].displayName,
+                                                           participants.count - 2)
+        } else {
+            return ""
+        }
     }
 
     private func resetTimer(timeInterval: TimeInterval = Constants.defaultTimeInterval) {

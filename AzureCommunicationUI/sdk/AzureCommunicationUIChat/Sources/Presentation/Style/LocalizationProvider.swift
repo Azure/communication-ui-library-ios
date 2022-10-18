@@ -9,6 +9,7 @@ import SwiftUI
 protocol LocalizationProviderProtocol {
     var isRightToLeft: Bool { get }
     func getLocalizedString(_ key: LocalizationKey) -> String
+    func getLocalizedString(_ key: LocalizationKey, _ args: CVarArg...) -> String
 }
 
 class LocalizationProvider: LocalizationProviderProtocol {
@@ -37,6 +38,11 @@ class LocalizationProvider: LocalizationProviderProtocol {
             }
         }
         return getPredefinedLocalizedString(key.rawValue)
+    }
+
+    func getLocalizedString(_ key: LocalizationKey, _ args: CVarArg...) -> String {
+        let stringFormat = getLocalizedString(key)
+        return String(format: stringFormat, arguments: args)
     }
 }
 

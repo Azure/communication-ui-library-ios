@@ -17,12 +17,19 @@ enum ChatAction: Equatable {
     case chatTopicUpdated(topic: String)
     case messageReceived(message: ChatMessageInfoModel)
 
+    case sendTypingIndicatorTriggered
+    case sendTypingIndicatorSuccess
+    case sendTypingIndicatorFailed(error: Error)
+
     static func == (lhs: ChatAction, rhs: ChatAction) -> Bool {
         switch (lhs, rhs) {
-        case let (.initializeChatFailed(lErr), .initializeChatFailed(rErr)):
+        case let (.initializeChatFailed(lErr), .initializeChatFailed(rErr)),
+            let (.sendTypingIndicatorFailed(lErr), .sendTypingIndicatorFailed(rErr)):
             return (lErr as NSError).code == (rErr as NSError).code
 
-        case (.initializeChatTriggered, .initializeChatTriggered):
+        case (.initializeChatTriggered, .initializeChatTriggered),
+            (.sendTypingIndicatorTriggered, .sendTypingIndicatorTriggered),
+            (.sendTypingIndicatorSuccess, .sendTypingIndicatorSuccess):
             return true
 
         case let (.topicRetrieved(lStr), .topicRetrieved(rStr)):
