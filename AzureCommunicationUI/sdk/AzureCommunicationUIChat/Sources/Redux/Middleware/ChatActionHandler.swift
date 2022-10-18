@@ -71,7 +71,6 @@ class ChatActionHandler: ChatActionHandling {
             do {
                 try await chatService.sendTypingIndicator()
                 dispatch(.chatAction(.sendTypingIndicatorSuccess))
-                logger.error("ChatActionHandler sendTypingIndicator success")
             } catch {
                 logger.error("ChatActionHandler sendTypingIndicator failed: \(error)")
                 dispatch(.chatAction(.sendTypingIndicatorFailed(error: error)))
