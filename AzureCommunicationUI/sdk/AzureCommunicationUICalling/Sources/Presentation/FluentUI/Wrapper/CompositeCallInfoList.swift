@@ -22,8 +22,7 @@ struct CompositeCallInfoList: UIViewControllerRepresentable {
     }
 
     func makeUIViewController(context: Context) -> DrawerContainerViewController<CallInfoListCellViewModel> {
-        let controller = CallInfoListViewController(items: viewModel.getListItemsViewModels(),
-                                                    sourceView: sourceView,
+        let controller = CallInfoListViewController(sourceView: sourceView,
                                                     headerName: viewModel.headerName,
                                                     isRightToLeft: layoutDirection == .rightToLeft)
         controller.delegate = context.coordinator

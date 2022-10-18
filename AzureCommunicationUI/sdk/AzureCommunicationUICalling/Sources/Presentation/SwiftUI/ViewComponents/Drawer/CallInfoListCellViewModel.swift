@@ -24,3 +24,13 @@ class CallInfoListCellViewModel {
         self.action = action
     }
 }
+
+extension CallInfoListCellViewModel: Equatable {
+     static func == (lhs: CallInfoListCellViewModel,
+                     rhs: CallInfoListCellViewModel) -> Bool {
+         return lhs.title == rhs.title &&
+         lhs.detailTitle == rhs.detailTitle &&
+//         lhs.accessibilityIdentifier == rhs.accessibilityIdentifier &&
+         lhs.icon == rhs.icon
+     }
+ }
