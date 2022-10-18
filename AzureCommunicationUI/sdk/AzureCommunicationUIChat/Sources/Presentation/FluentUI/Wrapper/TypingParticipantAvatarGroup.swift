@@ -18,7 +18,7 @@ class TypingParticipantAvatarGroup: UIView {
 
     private enum Constants {
         static let avatarWidth: CGFloat = 16.0
-        static let maxAvatarAllowed: Int = 3
+        static let maxAvatarAllowed: Int = 2
         static let overflowCount: Int = 0
     }
 
@@ -37,7 +37,7 @@ extension TypingParticipantAvatarGroup {
     private func initAvatarGroup() {
         group.state.overflowCount = Constants.overflowCount
         group.state.style = .stack
-        // Max avatar shown would be 4
+        // Max avatar shown would be 3
         group.state.maxDisplayedAvatars = Constants.maxAvatarAllowed
         group.isAccessibilityElement = false
         addSubview(group.view)
