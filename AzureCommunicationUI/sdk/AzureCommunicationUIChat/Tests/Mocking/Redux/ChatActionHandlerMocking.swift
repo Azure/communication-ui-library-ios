@@ -7,7 +7,7 @@ import Foundation
 @testable import AzureCommunicationUIChat
 
 class ChatActionHandlerMocking: ChatActionHandling {
-    
+
     var enterBackgroundCalled: ((Bool) -> Void)?
     var enterForegroundCalled: ((Bool) -> Void)?
     var initializeCalled: ((Bool) -> Void)?

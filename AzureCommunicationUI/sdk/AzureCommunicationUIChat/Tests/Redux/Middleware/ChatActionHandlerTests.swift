@@ -58,6 +58,25 @@ class ChatActionHandlerTests: XCTestCase {
 
         XCTAssertTrue(mockChatService.sendMessageCalled)
     }
+
+    func test_chatActionHandler_sendTypingIndicator_then_sendTypingIndicatorCalled() async {
+        let sut = makeSUT()
+        await sut.sendTypingIndicator(state: getEmptyState(),
+                                      dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockChatService.sendTypingIndicatorCalled)
+    }
+
+    func test_chatActionHandler_sendTypingIndicator_then_sendTypingIndicatorDispatched() async {
+        let expectation = XCTestExpectation(description: "Dispatch Send Typing Indicator Success")
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.chatAction(.sendTypingIndicatorSuccess))
+            expectation.fulfill()
+        }
+        let sut = makeSUT()
+        await sut.sendTypingIndicator(state: getEmptyState(),
+                                      dispatch: dispatch).value
+        wait(for: [expectation], timeout: 1)
+    }
 }
 
 extension ChatActionHandlerTests {
