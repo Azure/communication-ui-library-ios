@@ -44,8 +44,9 @@ class ChatActionHandlerMocking: ChatActionHandling {
         }
     }
 
-    func sendReadReceipt(messageId: String,
-                             dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
+    func sendReadReceipt(
+              messageId: String,
+              dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
         Task {
             sendReadReceiptCalled?(true)
         }
