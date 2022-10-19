@@ -1,0 +1,9 @@
+//
+//  Copyright (c) Microsoft Corporation. All rights reserved.
+//  Licensed under the MIT License.
+//
+
+/* TopBarView */
+"AzureCommunicationUIChat.ChatView.TopBarView.WaitingForOthersToJoin"="Waiting for others to join";
+"AzureCommunicationUIChat.ChatView.TopBarView.ChatWith1Person"="Chat with 1 person";
+"AzureCommunicationUIChat.ChatView.TopBarView.ChatWithNPeople"="Chat with %d people"; // %d is for number of people in call
