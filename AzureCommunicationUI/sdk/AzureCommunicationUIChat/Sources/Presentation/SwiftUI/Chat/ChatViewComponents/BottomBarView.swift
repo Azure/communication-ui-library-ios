@@ -26,17 +26,20 @@ struct BottomBarView: View {
     }
 
     var messageTextField: some View {
-        TextField("Message...", text: $viewModel.message, onCommit: {
-            viewModel.sendMessage()
-        })
+        TextField("Message...",
+                  text: $viewModel.message,
+                  onCommit: viewModel.sendMessage)
         .submitLabel(.send)
         .textFieldStyle(RoundedBorderTextFieldStyle())
         .focused($hasFocus)
+        .onChange(of: viewModel.hasFocus) {
+            hasFocus = $0
+        }
         .onChange(of: hasFocus) {
             viewModel.hasFocus = $0
         }
         .onAppear {
-           self.hasFocus = viewModel.hasFocus
+           viewModel.hasFocus = true
         }
     }
 

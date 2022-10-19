@@ -11,6 +11,9 @@ class BottomBarViewModel: ObservableObject {
 
     var sendButtonViewModel: IconButtonViewModel!
 
+    @Published var message: String = ""
+    @Published var hasFocus: Bool = false
+
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
          dispatch: @escaping ActionDispatch) {
@@ -29,9 +32,6 @@ class BottomBarViewModel: ObservableObject {
 //        sendButtonViewModel.update(
 //            accessibilityLabel: self.localizationProvider.getLocalizedString(.sendAccessibilityLabel))
     }
-
-    @Published var message: String = ""
-    @Published var hasFocus: Bool = true
 
     func sendMessage() {
         hasFocus = true

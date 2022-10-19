@@ -35,6 +35,7 @@ class MessageListViewModel: ObservableObject {
         }
     }
 
+    // Replace with factory
     func createViewModel(messages: [ChatMessageInfoModel], index: Int) -> MessageViewModel {
 
         let message = messages[index]
