@@ -6,6 +6,12 @@
 import SwiftUI
 
 struct MessageListView: View {
+    private enum Constants {
+        static let horizontalPadding: CGFloat = 10
+        static let verticalPadding: CGFloat = 8
+        static let verticalConsecutivePadding: CGFloat = 4
+    }
+
     @StateObject var viewModel: MessageListViewModel
 
     var body: some View {
@@ -21,21 +27,23 @@ struct MessageListView: View {
         ScrollViewReader { value in
             List {
                 ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
-                    // MessageView(viewModel: message)
-                    Text(message.message.content ?? "")
+                    MessageView(viewModel: message)
                     .id(index)
                     .listRowSeparator(.hidden)
-                    .background(.red)
-                    .padding(0)
-                    .frame(height: 5)
+                    .listRowInsets(EdgeInsets(
+                        top: message.isConsecutive
+                        ? Constants.verticalConsecutivePadding
+                        : Constants.verticalPadding,
+                        leading: Constants.horizontalPadding,
+                        bottom: 0,
+                        trailing: Constants.horizontalPadding))
                 }
-                .padding(0)
                 .onChange(of: viewModel.messages.count) { _ in
                     value.scrollTo(viewModel.messages.count - 1)
                 }
             }
             .listStyle(.plain)
-            .environment(\.defaultMinListRowHeight, 0)
+            .environment(\.defaultMinListRowHeight, 10) // Override min height on cells
         }
     }
 

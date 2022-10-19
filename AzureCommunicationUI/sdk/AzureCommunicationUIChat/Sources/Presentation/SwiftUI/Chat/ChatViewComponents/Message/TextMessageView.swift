@@ -20,9 +20,8 @@ struct TextMessageView: View {
                 Spacer()
             }
             bubble
-                .padding(0)
             readReceipt
-        }.padding(0)
+        }
     }
 
     var bubble: some View {

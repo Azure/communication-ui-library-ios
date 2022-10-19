@@ -8,15 +8,11 @@ import SwiftUI
 struct MessageView: View {
     @StateObject var viewModel: MessageViewModel
 
-    private enum Constants {
-        static let verticalPadding: CGFloat = 4
-    }
-
     var body: some View {
         VStack {
             dateHeader
             message
-        }.padding(0)
+        }
     }
 
     var dateHeader: some View {
@@ -34,13 +30,11 @@ struct MessageView: View {
             switch viewModel {
             case let textMessageViewModel as TextMessageViewModel:
                 TextMessageView(viewModel: textMessageViewModel)
-                    .padding(0)
             case let systemMessageViewModel as SystemMessageViewModel:
                 SystemMessageView(viewModel: systemMessageViewModel)
             default:
                 EmptyView()
             }
         }
-        .padding(0)
     }
 }
