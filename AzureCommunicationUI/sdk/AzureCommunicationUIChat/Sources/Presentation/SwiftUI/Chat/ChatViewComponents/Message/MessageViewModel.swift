@@ -40,29 +40,6 @@ class MessageViewModel: ObservableObject, Hashable {
     }
 }
 
-class TextMessageViewModel: MessageViewModel {
-    let showUsername: Bool
-    let showTime: Bool
-    let isLocalUser: Bool
-
-    init(message: ChatMessageInfoModel,
-         showDateHeader: Bool,
-         showUsername: Bool,
-         showTime: Bool,
-         isLocalUser: Bool,
-         isConsecutive: Bool) {
-        self.showUsername = showUsername
-        self.showTime = showTime
-        self.isLocalUser = isLocalUser
-
-        super.init(message: message, showDateHeader: showDateHeader, isConsecutive: isConsecutive)
-    }
-}
-
-class SystemMessageViewModel: MessageViewModel {
-
-}
-
 extension Date {
     func days(from date: Date) -> Int {
         return Calendar.current.dateComponents([.day], from: date, to: self).day ?? 0

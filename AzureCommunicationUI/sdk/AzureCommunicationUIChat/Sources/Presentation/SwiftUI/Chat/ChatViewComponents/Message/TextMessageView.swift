@@ -43,7 +43,7 @@ struct TextMessageView: View {
 
     var name: some View {
         Group {
-            if viewModel.showUsername && viewModel.message.senderDisplayName != nil { // Can be nil?
+            if viewModel.showUsername && viewModel.message.senderDisplayName != nil {
                 Text(viewModel.message.senderDisplayName!)
                     .font(.caption)
                     .fontWeight(.bold)
