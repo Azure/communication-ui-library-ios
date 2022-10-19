@@ -3,6 +3,8 @@
 //  Licensed under the MIT License.
 //
 
+@_spi(common) import AzureCommunicationUICommon
+
 extension Reducer {
     static func appStateReducer(
         lifeCycleReducer: Reducer<LifeCycleState, Action> = .liveLifecycleReducer,

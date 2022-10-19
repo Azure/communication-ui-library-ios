@@ -7,7 +7,7 @@ import Foundation
 
 class TopBarViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
-    private let dispatch: ActionDispatch
+    private let dispatch: ChatActionDispatch
 
     var dismissButtonViewModel: IconButtonViewModel!
 
@@ -15,7 +15,7 @@ class TopBarViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          localizationProvider: LocalizationProviderProtocol,
-         dispatch: @escaping ActionDispatch,
+         dispatch: @escaping ChatActionDispatch,
          participantsState: ParticipantsState) {
         self.localizationProvider = localizationProvider
         self.dispatch = dispatch

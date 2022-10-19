@@ -3,8 +3,10 @@
 //  Licensed under the MIT License.
 //
 
+@_spi(common) import AzureCommunicationUICommon
 import Foundation
 
+typealias ChatActionDispatch = ActionDispatch<Action>
 ///
 /// Action for the entire library. All actions are defined here as a heirarchy of enum types
 ///

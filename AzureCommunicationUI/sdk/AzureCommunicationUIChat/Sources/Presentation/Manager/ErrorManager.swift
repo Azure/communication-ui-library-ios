@@ -3,20 +3,21 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
+@_spi(common) import AzureCommunicationUICommon
 import Combine
+import Foundation
 
 protocol ErrorManagerProtocol {
 }
 
 class ErrorManager: ErrorManagerProtocol {
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
     private let eventsHandler: ChatComposite.Events
     private var previousError: ChatCompositeInternalError?
 
     var cancellables = Set<AnyCancellable>()
 
-    init(store: Store<AppState>,
+    init(store: Store<AppState, Action>,
          chatCompositeEventsHandler: ChatComposite.Events) {
         self.store = store
         self.eventsHandler = chatCompositeEventsHandler

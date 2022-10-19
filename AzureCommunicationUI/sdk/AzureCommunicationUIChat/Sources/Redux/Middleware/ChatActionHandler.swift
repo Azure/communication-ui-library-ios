@@ -9,20 +9,20 @@ import Foundation
 
 protocol ChatActionHandling {
     @discardableResult
-    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func enterBackground(state: AppState, dispatch: @escaping ChatActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func enterForeground(state: AppState, dispatch: @escaping ChatActionDispatch) -> Task<Void, Never>
     @discardableResult
     func initialize(state: AppState,
-                    dispatch: @escaping ActionDispatch,
+                    dispatch: @escaping ChatActionDispatch,
                     serviceListener: ChatServiceEventHandling) -> Task<Void, Never>
     @discardableResult
-    func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func getInitialMessages(state: AppState, dispatch: @escaping ChatActionDispatch) -> Task<Void, Never>
     @discardableResult
     func sendMessage(internalId: String,
                      content: String,
                      state: AppState,
-                     dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+                     dispatch: @escaping ChatActionDispatch) -> Task<Void, Never>
 }
 
 class ChatActionHandler: ChatActionHandling {
@@ -35,7 +35,7 @@ class ChatActionHandler: ChatActionHandling {
     }
 
     func initialize(state: AppState,
-                    dispatch: @escaping ActionDispatch,
+                    dispatch: @escaping ChatActionDispatch,
                     serviceListener: ChatServiceEventHandling) -> Task<Void, Never> {
         Task {
             do {
@@ -49,14 +49,14 @@ class ChatActionHandler: ChatActionHandling {
     }
 
     // MARK: LifeCycleHandler
-    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func enterBackground(state: AppState, dispatch: @escaping ChatActionDispatch) -> Task<Void, Never> {
         // Pause UI update
         Task {
             print("ChatActionHandler `enterBackground` not implemented")
         }
     }
 
-    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func enterForeground(state: AppState, dispatch: @escaping ChatActionDispatch) -> Task<Void, Never> {
         // rehydrate UI based on latest state, move to last unread message
         Task {
             print("ChatActionHandler `enterForeground` not implemented")
@@ -68,7 +68,7 @@ class ChatActionHandler: ChatActionHandling {
     // MARK: Participants Handler
 
     // MARK: Repository Handler
-    func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func getInitialMessages(state: AppState, dispatch: @escaping ChatActionDispatch) -> Task<Void, Never> {
         Task {
             do {
                 let initialMessages = try await chatService.getInitialMessages()
@@ -83,7 +83,7 @@ class ChatActionHandler: ChatActionHandling {
     func sendMessage(internalId: String,
                      content: String,
                      state: AppState,
-                     dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+                     dispatch: @escaping ChatActionDispatch) -> Task<Void, Never> {
         Task {
             do {
                 guard let displayName = state.chatState.localUser?.displayName else {

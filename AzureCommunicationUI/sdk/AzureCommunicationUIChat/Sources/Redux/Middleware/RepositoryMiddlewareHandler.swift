@@ -12,25 +12,25 @@ protocol RepositoryMiddlewareHandling {
     func loadInitialMessages(
         messages: [ChatMessageInfoModel],
         state: AppState,
-        dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+        dispatch: @escaping ChatActionDispatch) -> Task<Void, Never>
     @discardableResult
     func addNewSentMessage(
         internalId: String,
         content: String,
         state: AppState,
-        dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+        dispatch: @escaping ChatActionDispatch) -> Task<Void, Never>
     @discardableResult
     func updateSentMessageId(
         internalId: String,
         actualId: String,
         state: AppState,
-        dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+        dispatch: @escaping ChatActionDispatch) -> Task<Void, Never>
 
     @discardableResult
     func addReceivedMessage(
         message: ChatMessageInfoModel,
         state: AppState,
-        dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+        dispatch: @escaping ChatActionDispatch) -> Task<Void, Never>
 }
 
 class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
@@ -45,7 +45,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
     func loadInitialMessages(
         messages: [ChatMessageInfoModel],
         state: AppState,
-        dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        dispatch: @escaping ChatActionDispatch) -> Task<Void, Never> {
         Task {
             messageRepository.addInitialMessages(initialMessages: messages)
         }
@@ -55,7 +55,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         internalId: String,
         content: String,
         state: AppState,
-        dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        dispatch: @escaping ChatActionDispatch) -> Task<Void, Never> {
         Task {
             guard let localUserId = state.chatState.localUser?.identifier.stringValue,
                   let displayName = state.chatState.localUser?.displayName else {
@@ -76,7 +76,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         internalId: String,
         actualId: String,
         state: AppState,
-        dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        dispatch: @escaping ChatActionDispatch) -> Task<Void, Never> {
         Task {
             messageRepository.replaceMessageId(internalId: internalId,
                                                actualId: actualId)
@@ -86,7 +86,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
     func addReceivedMessage(
         message: ChatMessageInfoModel,
         state: AppState,
-        dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        dispatch: @escaping ChatActionDispatch) -> Task<Void, Never> {
         Task {
             messageRepository.addReceivedMessage(message: message)
         }

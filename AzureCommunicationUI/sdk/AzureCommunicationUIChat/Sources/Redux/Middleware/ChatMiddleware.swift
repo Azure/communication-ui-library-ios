@@ -3,14 +3,15 @@
 //  Licensed under the MIT License.
 //
 
+@_spi(common) import AzureCommunicationUICommon
 import Foundation
 
-extension Middleware {
+extension Middleware<AppState, Action> {
     static func liveChatMiddleware(
         chatActionHandler actionHandler: ChatActionHandling,
         chatServiceEventHandler serviceEventHandler: ChatServiceEventHandling)
-    -> Middleware<AppState> {
-        Middleware<AppState>(
+    -> Middleware<AppState, Action> {
+        Middleware<AppState, Action>(
             apply: { dispatch, getState in
                 return { next in
                     return { action in
@@ -41,7 +42,7 @@ extension Middleware {
 private func handleLifecycleAction(_ action: LifecycleAction,
                                    _ actionHandler: ChatActionHandling,
                                    _ getState: () -> AppState,
-                                   _ dispatch: @escaping ActionDispatch) {
+                                   _ dispatch: @escaping ChatActionDispatch) {
     print("`handleLifecycleAction` not implemented")
 }
 
@@ -49,7 +50,7 @@ private func handleChatAction(_ action: ChatAction,
                               _ actionHandler: ChatActionHandling,
                               _ serviceListener: ChatServiceEventHandling,
                               _ getState: () -> AppState,
-                              _ dispatch: @escaping ActionDispatch) {
+                              _ dispatch: @escaping ChatActionDispatch) {
     switch action {
     case .initializeChatTriggered:
         actionHandler.initialize(state: getState(),
@@ -63,14 +64,14 @@ private func handleChatAction(_ action: ChatAction,
 private func handleParticipantsAction(_ action: ParticipantsAction,
                                       _ actionHandler: ChatActionHandling,
                                       _ getState: () -> AppState,
-                                      _ dispatch: @escaping ActionDispatch) {
+                                      _ dispatch: @escaping ChatActionDispatch) {
     print("`handleParticipantsAction` not implemented")
 }
 
 private func handleRepositoryAction(_ action: RepositoryAction,
                                     _ actionHandler: ChatActionHandling,
                                     _ getState: () -> AppState,
-                                    _ dispatch: @escaping ActionDispatch) {
+                                    _ dispatch: @escaping ChatActionDispatch) {
     switch action {
     case .fetchInitialMessagesTriggered:
         actionHandler.getInitialMessages(state: getState(),

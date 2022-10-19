@@ -85,9 +85,6 @@
 		50CB826928C29E7400680566 /* DeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB826828C29E7400680566 /* DeviceExtension.swift */; };
 		50CB826B28C29E7B00680566 /* StringConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB826A28C29E7B00680566 /* StringConstants.swift */; };
 		50CB826D28C29E8400680566 /* LocalizationKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB826C28C29E8400680566 /* LocalizationKey.swift */; };
-		50CB82C028C2AD2300680566 /* Middleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829828C2AD2300680566 /* Middleware.swift */; };
-		50CB82C128C2AD2300680566 /* Reducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829A28C2AD2300680566 /* Reducer.swift */; };
-		50CB82C228C2AD2300680566 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829B28C2AD2300680566 /* Store.swift */; };
 		50CB82C328C2AD2300680566 /* StyleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829E28C2AD2300680566 /* StyleProvider.swift */; };
 		50CB82C428C2AD2300680566 /* AppLifeCycleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82A028C2AD2300680566 /* AppLifeCycleManager.swift */; };
 		50CB82C528C2AD2300680566 /* AccessibilityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82A128C2AD2300680566 /* AccessibilityProvider.swift */; };
@@ -247,9 +244,6 @@
 		50CB826A28C29E7B00680566 /* StringConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringConstants.swift; sourceTree = "<group>"; };
 		50CB826C28C29E8400680566 /* LocalizationKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationKey.swift; sourceTree = "<group>"; };
 		50CB827028C2A02500680566 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		50CB829828C2AD2300680566 /* Middleware.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Middleware.swift; sourceTree = "<group>"; };
-		50CB829A28C2AD2300680566 /* Reducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reducer.swift; sourceTree = "<group>"; };
-		50CB829B28C2AD2300680566 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		50CB829E28C2AD2300680566 /* StyleProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleProvider.swift; sourceTree = "<group>"; };
 		50CB82A028C2AD2300680566 /* AppLifeCycleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLifeCycleManager.swift; sourceTree = "<group>"; };
 		50CB82A128C2AD2300680566 /* AccessibilityProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityProvider.swift; sourceTree = "<group>"; };
@@ -843,36 +837,9 @@
 		50CB828D28C2AD2300680566 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				50CB829628C2AD2300680566 /* Redux */,
 				50CB829C28C2AD2300680566 /* Presentation */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		50CB829628C2AD2300680566 /* Redux */ = {
-			isa = PBXGroup;
-			children = (
-				50CB829728C2AD2300680566 /* Middleware */,
-				50CB829928C2AD2300680566 /* Reducer */,
-				50CB829B28C2AD2300680566 /* Store.swift */,
-			);
-			path = Redux;
-			sourceTree = "<group>";
-		};
-		50CB829728C2AD2300680566 /* Middleware */ = {
-			isa = PBXGroup;
-			children = (
-				50CB829828C2AD2300680566 /* Middleware.swift */,
-			);
-			path = Middleware;
-			sourceTree = "<group>";
-		};
-		50CB829928C2AD2300680566 /* Reducer */ = {
-			isa = PBXGroup;
-			children = (
-				50CB829A28C2AD2300680566 /* Reducer.swift */,
-			);
-			path = Reducer;
 			sourceTree = "<group>";
 		};
 		50CB829C28C2AD2300680566 /* Presentation */ = {
@@ -1262,7 +1229,6 @@
 			files = (
 				50CB822D28C2997700680566 /* RepositoryMiddleware.swift in Sources */,
 				50CB824328C29AE200680566 /* NavigationState.swift in Sources */,
-				50CB82C228C2AD2300680566 /* Store.swift in Sources */,
 				50CB81F828C2860200680566 /* ChatCompositeError.swift in Sources */,
 				50CB82D028C2AD9900680566 /* SetParticipantViewDataError.swift in Sources */,
 				50CB824128C29ADA00680566 /* ParticipantsState.swift in Sources */,
@@ -1335,7 +1301,6 @@
 				50CB821728C2870500680566 /* ContainerView.swift in Sources */,
 				50CB82C328C2AD2300680566 /* StyleProvider.swift in Sources */,
 				50CB821928C2872600680566 /* ContainerUIHostingController.swift in Sources */,
-				50CB82C028C2AD2300680566 /* Middleware.swift in Sources */,
 				50CB823D28C29AC900680566 /* AppLifeCycleState.swift in Sources */,
 				BD80293F28ECCD7800A55CAC /* TextMessageView.swift in Sources */,
 				50CB81DB28C26EEB00680566 /* ChatComposite.swift in Sources */,
@@ -1353,7 +1318,6 @@
 				50CB821F28C2876900680566 /* ChatViewModel.swift in Sources */,
 				50CB826328C29E1500680566 /* ChatSDKEventsHandler.swift in Sources */,
 				BD1A6A3E28ECDFAB005E0B70 /* MessageListViewModel.swift in Sources */,
-				50CB82C128C2AD2300680566 /* Reducer.swift in Sources */,
 				5085BF2028F72E0D0057586D /* ParticipantsInfoModel.swift in Sources */,
 				50F0C58728D38812009D7176 /* MessageViewModel.swift in Sources */,
 				50CB820D28C286AA00680566 /* MessageRepositoryManager.swift in Sources */,
