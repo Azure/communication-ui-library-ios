@@ -51,7 +51,7 @@ final class DependencyContainer {
         let displayName = localOptions?.participantViewData.displayName ?? chatConfiguration.displayName
         register(makeStore(displayName: displayName,
                            localUserIdentifier: chatConfiguration.communicationIdentifier,
-                           chatThreadId: chatConfiguration.chatThreadId) as Store<AppState> )
+                           chatThreadId: chatConfiguration.chatThreadId) as Store<AppState, Action> )
         register(NavigationRouter(store: resolve(),
                                   logger: resolve(),
                                   chatCompositeEventsHandler: chatCompositeEventsHandler) as NavigationRouter)
@@ -76,22 +76,23 @@ final class DependencyContainer {
 
     private func makeStore(displayName: String?,
                            localUserIdentifier: CommunicationIdentifier?,
-                           chatThreadId: String?) -> Store<AppState> {
+                           chatThreadId: String?) -> Store<AppState, Action> {
         let chatActionHandler = ChatActionHandler(chatService: resolve(), logger: resolve())
         let chatServiceEventHandler = ChatServiceEventHandler(chatService: resolve(), logger: resolve())
 
         let repositoryMiddlewareHandler = RepositoryMiddlewareHandler(messageRepository: resolve(),
                                                                           logger: resolve())
         let middlewares: [Middleware] = [
-            Middleware<AppState>.liveChatMiddleware(
+            Middleware<AppState, Action>.liveChatMiddleware(
                 chatActionHandler: chatActionHandler,
                 chatServiceEventHandler: chatServiceEventHandler),
-            Middleware<AppState>.liveRepositoryMiddleware(repositoryMiddlewareHandler: repositoryMiddlewareHandler)
+            Middleware<AppState, Action>
+                .liveRepositoryMiddleware(repositoryMiddlewareHandler: repositoryMiddlewareHandler)
         ]
 
         guard let localUserId = localUserIdentifier else {
             // to do handle communication identifier nil
-            return Store<AppState>(reducer: Reducer<AppState, Action>.appStateReducer(),
+            return Store<AppState, Action>(reducer: Reducer<AppState, Action>.appStateReducer(),
                                    middlewares: middlewares,
                                    state: AppState())
         }
@@ -102,7 +103,7 @@ final class DependencyContainer {
             localUser: localUserInfoModel,
             threadId: chatThreadId ?? "")
         let appState = AppState(chatState: chatState)
-        return Store<AppState>(reducer: Reducer<AppState, Action>.appStateReducer(),
+        return Store<AppState, Action>(reducer: Reducer<AppState, Action>.appStateReducer(),
                                middlewares: middlewares,
                                state: appState)
     }

@@ -13,11 +13,11 @@ protocol CompositeManagerProtocol {
 
 class CompositeManager: CompositeManagerProtocol {
     private let logger: Logger
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
 
     private var compositeCompletionHandler: (() -> Void)?
 
-    init(store: Store<AppState>,
+    init(store: Store<AppState, Action>,
          logger: Logger) {
         self.logger = logger
         self.store = store

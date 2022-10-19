@@ -4,6 +4,7 @@
 //
 
 import AzureCommunicationCommon
+import Foundation
 
 extension CommunicationIdentifier {
     var stringValue: String {

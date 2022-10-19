@@ -8,13 +8,13 @@ import Foundation
 
 class BottomBarViewModel: ObservableObject {
     private let logger: Logger
-    private let dispatch: ActionDispatch
+    private let dispatch: ChatActionDispatch
 
     var sendButtonViewModel: IconButtonViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
-         dispatch: @escaping ActionDispatch) {
+         dispatch: @escaping ChatActionDispatch) {
         self.logger = logger
         self.dispatch = dispatch
 

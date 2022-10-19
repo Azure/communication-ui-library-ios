@@ -18,10 +18,10 @@ protocol CompositeViewModelFactoryProtocol {
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
 
     // MARK: ChatViewModels
-    func makeTopBarViewModel(dispatch: @escaping ActionDispatch,
+    func makeTopBarViewModel(dispatch: @escaping ChatActionDispatch,
                              participantsState: ParticipantsState) -> TopBarViewModel
     func makeMessageListViewModel() -> MessageListViewModel
-    func makeBottomBarViewModel(dispatch: @escaping ActionDispatch) -> BottomBarViewModel
+    func makeBottomBarViewModel(dispatch: @escaping ChatActionDispatch) -> BottomBarViewModel
 }
 
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
@@ -29,7 +29,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let messageRepositoryManager: MessageRepositoryManagerProtocol
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
 
     private weak var chatViewModel: ChatViewModel?
 
@@ -39,7 +39,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          messageRepositoryManager: MessageRepositoryManagerProtocol,
-         store: Store<AppState>) {
+         store: Store<AppState, Action>) {
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
@@ -71,7 +71,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     // MARK: ChatViewModels
-    func makeTopBarViewModel(dispatch: @escaping ActionDispatch,
+    func makeTopBarViewModel(dispatch: @escaping ChatActionDispatch,
                              participantsState: ParticipantsState) -> TopBarViewModel {
         TopBarViewModel(compositeViewModelFactory: self,
                         localizationProvider: localizationProvider,
@@ -84,7 +84,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                              logger: logger)
     }
 
-    func makeBottomBarViewModel(dispatch: @escaping ActionDispatch) -> BottomBarViewModel {
+    func makeBottomBarViewModel(dispatch: @escaping ChatActionDispatch) -> BottomBarViewModel {
         BottomBarViewModel(compositeViewModelFactory: self,
                            logger: logger,
                            dispatch: dispatch)

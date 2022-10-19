@@ -8,7 +8,7 @@ import AzureCommunicationCommon
 import Foundation
 
 protocol ChatServiceEventHandling {
-    func subscription(dispatch: @escaping ActionDispatch)
+    func subscription(dispatch: @escaping ChatActionDispatch)
 }
 
 class ChatServiceEventHandler: ChatServiceEventHandling {
@@ -21,7 +21,7 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
         self.logger = logger
     }
 
-    func subscription(dispatch: @escaping ActionDispatch) {
+    func subscription(dispatch: @escaping ChatActionDispatch) {
         logger.debug("Subscribe to chat service subjects")
 
         chatService.chatEventSubject
@@ -70,45 +70,45 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
             }.store(in: cancelBag)
     }
 
-    func handleRealTimeNotificationConnected(dispatch: @escaping ActionDispatch) {
+    func handleRealTimeNotificationConnected(dispatch: @escaping ChatActionDispatch) {
         dispatch(.chatAction(.realTimeNotificationConnected))
     }
 
-    func handleRealTimeNotificationDisconnected(dispatch: @escaping ActionDispatch) {
+    func handleRealTimeNotificationDisconnected(dispatch: @escaping ChatActionDispatch) {
         dispatch(.chatAction(.realTimeNotificationDisconnected))
     }
 
-    func handleChatMessageReceived(dispatch: @escaping ActionDispatch,
+    func handleChatMessageReceived(dispatch: @escaping ChatActionDispatch,
                                    chatMessage: ChatMessageInfoModel) {
         dispatch(.repositoryAction(.chatMessageReceived(message: chatMessage)))
     }
 
-    func handleChatMessageEdited(dispatch: @escaping ActionDispatch,
+    func handleChatMessageEdited(dispatch: @escaping ChatActionDispatch,
                                  chatMessage: ChatMessageInfoModel) {
         dispatch(.repositoryAction(.chatMessageEditedReceived(message: chatMessage)))
     }
 
-    func handleChatMessageDeleted(dispatch: @escaping ActionDispatch,
+    func handleChatMessageDeleted(dispatch: @escaping ChatActionDispatch,
                                   chatMessage: ChatMessageInfoModel) {
         dispatch(.repositoryAction(.chatMessageDeletedReceived(message: chatMessage)))
     }
 
-    func handleTypingIndicatorReceived(dispatch: @escaping ActionDispatch,
+    func handleTypingIndicatorReceived(dispatch: @escaping ChatActionDispatch,
                                        userEventTimestamp: UserEventTimestampModel) {
         dispatch(.participantsAction(.typingIndicatorReceived(userEventTimestamp: userEventTimestamp)))
     }
 
-    func handleReadReceiptReceived(dispatch: @escaping ActionDispatch,
+    func handleReadReceiptReceived(dispatch: @escaping ChatActionDispatch,
                                    userEventTimestamp: UserEventTimestampModel) {
         // stub: to be implemented
     }
 
-    func handleChatThreadDeleted(dispatch: @escaping ActionDispatch,
+    func handleChatThreadDeleted(dispatch: @escaping ChatActionDispatch,
                                  threadInfo: ChatThreadInfoModel) {
         dispatch(.chatAction(.chatThreadDeleted))
     }
 
-    func handleChatThreadPropertiesUpdated(dispatch: @escaping ActionDispatch,
+    func handleChatThreadPropertiesUpdated(dispatch: @escaping ChatActionDispatch,
                                            threadInfo: ChatThreadInfoModel) {
         guard let topic = threadInfo.topic else {
             return
@@ -116,13 +116,13 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
         dispatch(.chatAction(.chatTopicUpdated(topic: topic)))
     }
 
-    func handleParticipantsAdded(dispatch: @escaping ActionDispatch,
+    func handleParticipantsAdded(dispatch: @escaping ChatActionDispatch,
                                  participantsInfo: ParticipantsInfoModel) {
         dispatch(.participantsAction(.participantsAdded(participants: participantsInfo.participants)))
 
     }
 
-    func handleParticipantsRemoved(dispatch: @escaping ActionDispatch,
+    func handleParticipantsRemoved(dispatch: @escaping ChatActionDispatch,
                                    participantsInfo: ParticipantsInfoModel) {
         dispatch(.participantsAction(.participantsRemoved(participants: participantsInfo.participants)))
     }

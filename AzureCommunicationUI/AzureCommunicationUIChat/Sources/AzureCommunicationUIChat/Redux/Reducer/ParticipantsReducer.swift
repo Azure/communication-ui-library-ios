@@ -3,6 +3,7 @@
 //  Licensed under the MIT License.
 //
 
+@_spi(common) import AzureCommunicationUICommon
 import AzureCore
 import Foundation
 

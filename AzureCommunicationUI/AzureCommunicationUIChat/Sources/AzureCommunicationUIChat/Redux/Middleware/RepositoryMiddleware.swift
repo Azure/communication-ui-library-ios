@@ -3,13 +3,14 @@
 //  Licensed under the MIT License.
 //
 
+@_spi(common) import AzureCommunicationUICommon
 import Foundation
 
-extension Middleware {
+extension Middleware<AppState, Action> {
     static func liveRepositoryMiddleware(
         repositoryMiddlewareHandler actionHandler: RepositoryMiddlewareHandling)
-    -> Middleware<AppState> {
-        Middleware<AppState>(
+    -> Middleware<AppState, Action> {
+        Middleware<AppState, Action>(
             apply: { dispatch, getState in
                 return { next in
                     return { action in
@@ -47,7 +48,7 @@ private func handleRepositoryAction(
     _ action: RepositoryAction,
     _ actionHandler: RepositoryMiddlewareHandling,
     _ getState: () -> AppState,
-    _ dispatch: @escaping ActionDispatch) {
+    _ dispatch: @escaping ChatActionDispatch) {
         switch action {
 
             // MARK: local events
