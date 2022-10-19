@@ -4,6 +4,7 @@
 //
 
 import AzureCore
+import Foundation
 
 enum MessageType: Equatable {
     case custom(String)
