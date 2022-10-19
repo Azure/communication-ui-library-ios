@@ -60,11 +60,12 @@ class TypingParticipantsViewModel: ObservableObject {
 
     private func displayWithTimer(latestTypingTimestamp: Date,
                                   participants: [ParticipantInfoModel]) {
-        guard !participants.isEmpty else {
+        guard !participants.isEmpty,
+              let label = getLocalizedTypingIndicatorText(participants: participants) else {
             return
         }
         shouldShowIndicator = true
-        typingIndicatorLabel = getLocalizedTypingIndicatorText(participants: participants)
+        typingIndicatorLabel = label
         resetTimer(timeInterval: Date().timeIntervalSince(latestTypingTimestamp))
     }
 
