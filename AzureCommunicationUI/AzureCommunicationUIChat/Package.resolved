@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Azure/SwiftPM-AzureCommunicationChat.git",
       "state" : {
-        "revision" : "a09a03164ff9bd5c896e13bf721067a000fb0b0b",
-        "version" : "1.2.0"
+        "revision" : "f54feef2b5145909f46fcb4ffc86e316e61f01e4",
+        "version" : "1.3.0"
       }
     },
     {

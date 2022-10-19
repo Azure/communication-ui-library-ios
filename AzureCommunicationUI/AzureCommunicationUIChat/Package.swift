@@ -19,11 +19,11 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/Azure/SwiftPM-AzureCommunicationChat.git",
-            exact: .init(1, 2, 0)
+            from: .init(1, 2, 0)
         ),
         .package(
             url: "https://github.com/Azure/SwiftPM-AzureCommunicationCommon.git",
-            exact: .init(1, 1, 0)
+            from: .init(1, 1, 0)
         ),
         .package(path: "../sdk/AzureCommunicationUICommon")
     ],
