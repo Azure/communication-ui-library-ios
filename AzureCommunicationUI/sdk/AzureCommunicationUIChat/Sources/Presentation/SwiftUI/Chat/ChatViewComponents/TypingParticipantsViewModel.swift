@@ -21,6 +21,14 @@ class TypingParticipantsViewModel: ObservableObject {
         static let defaultTimeInterval: TimeInterval = 8.0
     }
 
+    private enum TypingParticipantCount: Int {
+        case none
+        case singleTyping
+        case twoTyping
+        case threeTyping
+        case mutipleTyping
+    }
+
     init(logger: Logger,
          localizationProvider: LocalizationProviderProtocol) {
         self.logger = logger
@@ -43,6 +51,7 @@ class TypingParticipantsViewModel: ObservableObject {
                 .compactMap { userId, _ in
                     participantsState.participantsInfoMap[userId]
                 }
+                .sorted(by: { $0.displayName < $1.displayName })
             displayWithTimer(
                 latestTypingTimestamp: participantsState.typingIndicatorMap.values.max() ?? Date(),
                 participants: typingParticipants)
@@ -65,29 +74,32 @@ class TypingParticipantsViewModel: ObservableObject {
         typingIndicatorTimer?.invalidate()
     }
 
-    private func getLocalizedTypingIndicatorText(participants: [ParticipantInfoModel]) -> String {
-        // X is typing
-        if participants.count == 1 {
+    private func getLocalizedTypingIndicatorText(participants: [ParticipantInfoModel]) -> String? {
+        var participantList = participants
+        var participantCount = TypingParticipantCount(rawValue: participants.count) ?? .mutipleTyping
+        switch participantCount {
+        case .singleTyping:
+            // X is typing
             return localizationProvider.getLocalizedString(.oneParticipantIsTyping,
-                                                           participants[0].displayName)
-        // X and Y are typing
-        } else if participants.count == 2 {
+                                                           participantList.removeFirst().displayName)
+        case .twoTyping:
+            // X and Y are typing
             return localizationProvider.getLocalizedString(.twoParticipantsAreTyping,
-                                                           participants[0].displayName,
-                                                           participants[1].displayName)
-        // X, Y and 1 other are typing
-        } else if participants.count == 3 {
-                return localizationProvider.getLocalizedString(.threeParticipantsAreTyping,
-                                                               participants[0].displayName,
-                                                               participants[1].displayName)
-        // X, Y and Z others are typing
-        } else if participants.count > 3 {
+                                                           participantList.removeFirst().displayName,
+                                                           participantList.removeFirst().displayName)
+        case .threeTyping:
+            // X, Y and 1 other are typing
+            return localizationProvider.getLocalizedString(.threeParticipantsAreTyping,
+                                                               participantList.removeFirst().displayName,
+                                                               participantList.removeFirst().displayName)
+        case .mutipleTyping:
+            // X, Y and N others are typing
             return localizationProvider.getLocalizedString(.multipleParticipantsAreTyping,
-                                                           participants[0].displayName,
-                                                           participants[1].displayName,
-                                                           participants.count - 2)
-        } else {
-            return ""
+                                                           participantList.removeFirst().displayName,
+                                                           participantList.removeFirst().displayName,
+                                                           participants.count)
+        default:
+            return nil
         }
     }
 
