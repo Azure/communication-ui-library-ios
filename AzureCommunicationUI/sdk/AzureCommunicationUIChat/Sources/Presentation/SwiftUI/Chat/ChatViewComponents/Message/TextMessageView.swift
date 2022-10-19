@@ -20,11 +20,9 @@ struct TextMessageView: View {
                 Spacer()
             }
             bubble
+                .padding(0)
             readReceipt
-            if viewModel.isLocalUser {
-                Spacer()
-            }
-        }
+        }.padding(0)
     }
 
     var bubble: some View {
@@ -33,7 +31,7 @@ struct TextMessageView: View {
                 name
                 timeStamp
             }
-            Text(viewModel.message.content ?? "") // Handle nil?
+            Text(viewModel.message.content ?? "No Content") // Handle nil?
                 .font(.body)
         }
         .padding([.leading, .trailing], Constants.horizontalPadding)

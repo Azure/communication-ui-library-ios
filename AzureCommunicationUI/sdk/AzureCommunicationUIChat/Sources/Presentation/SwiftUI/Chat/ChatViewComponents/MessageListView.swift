@@ -21,15 +21,21 @@ struct MessageListView: View {
         ScrollViewReader { value in
             List {
                 ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
-                    MessageView(viewModel: message)
+                    // MessageView(viewModel: message)
+                    Text(message.message.content ?? "")
                     .id(index)
                     .listRowSeparator(.hidden)
+                    .background(.red)
+                    .padding(0)
+                    .frame(height: 5)
                 }
+                .padding(0)
                 .onChange(of: viewModel.messages.count) { _ in
                     value.scrollTo(viewModel.messages.count - 1)
                 }
             }
             .listStyle(.plain)
+            .environment(\.defaultMinListRowHeight, 0)
         }
     }
 

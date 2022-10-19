@@ -26,11 +26,10 @@ class MessageListViewModel: ObservableObject {
     func update(repositoryState: RepositoryState) {
         if self.repositoryUpdatedTimestamp < repositoryState.lastUpdatedTimestamp {
             self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
-            // for testing
             messages = []
-            print("*Messages count: \(messageRepositoryManager.messages.count)")
+            print("*Messages count: \(messageRepositoryManager.messages.count)") // for testing
             for (index, message) in messageRepositoryManager.messages.enumerated() {
-                print("--*Messages: \(message.id) \(String(describing: message.content))")
+                print("--*Messages: \(message.id) \(String(describing: message.content))") // for testing
                 messages.append(createViewModel(messages: messageRepositoryManager.messages, index: index))
             }
         }
@@ -39,23 +38,26 @@ class MessageListViewModel: ObservableObject {
     func createViewModel(messages: [ChatMessageInfoModel], index: Int) -> MessageViewModel {
 
         let message = messages[index]
+        let lastMessageIndex = index == 0 ? 0 : index - 1
+        let lastMessage = messages[lastMessageIndex]
+        let showDateHeader = message.createdOn.dayOfYear - lastMessage.createdOn.dayOfYear > 0
+        let isConsecutive = message.senderId == lastMessage.senderId
 
         if messages[index].type == .text {
-            let lastMessageIndex = index == 0 ? 0 : index - 1
-            let lastMessage = messages[lastMessageIndex]
             let isLocalUser = message.senderId == localUserId
             let showUsername = !isLocalUser && lastMessage.senderId ?? "" != message.senderId ?? ""
             let showTime = lastMessage.senderId ?? "" != message.senderId ?? ""
-            let showDateHeader = true // lastMessage.createdOn?.dayOfYear != message.createdOn?.dayOfYear,
 
             return TextMessageViewModel(message: message,
+                                    showDateHeader: showDateHeader,
                                     showUsername: showUsername,
                                     showTime: showTime,
-                                    showDateHeader: showDateHeader,
-                                    isLocalUser: isLocalUser)
+                                    isLocalUser: isLocalUser,
+                                    isConsecutive: isConsecutive)
         } else {
-            // System
-            return SystemMessageViewModel(message: message)
+            return SystemMessageViewModel(message: message,
+                                          showDateHeader: showDateHeader,
+                                          isConsecutive: isConsecutive)
         }
     }
 }

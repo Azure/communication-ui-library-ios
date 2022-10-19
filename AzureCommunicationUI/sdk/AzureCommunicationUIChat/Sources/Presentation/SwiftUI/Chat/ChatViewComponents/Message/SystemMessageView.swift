@@ -9,7 +9,7 @@ struct SystemMessageView: View {
     @StateObject var viewModel: SystemMessageViewModel
 
     var body: some View {
-        Text(viewModel.message.content ?? "")
+        Text(viewModel.message.content ?? "No Content") // Handle no content
             .font(.caption2)
             .foregroundColor(Color(StyleProvider.color.textSecondary))
     }
