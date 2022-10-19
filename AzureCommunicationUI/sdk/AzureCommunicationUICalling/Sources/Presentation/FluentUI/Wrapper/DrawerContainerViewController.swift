@@ -34,11 +34,10 @@ class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerContr
     }
     init(sourceView: UIView,
          headerName: String? = nil,
-         showHeader: Bool = false,
          isRightToLeft: Bool = false
     ) {
         self.sourceView = sourceView
-        self.showHeader = showHeader
+        self.showHeader = headerName != nil && headerName?.isEmpty == false
         self.headerName = headerName
         self.isRightToLeft = isRightToLeft
         super.init(nibName: nil, bundle: nil)

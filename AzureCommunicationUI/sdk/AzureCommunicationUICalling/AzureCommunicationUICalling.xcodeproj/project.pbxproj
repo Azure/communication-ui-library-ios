@@ -226,6 +226,7 @@
 		FA03CC8527C8189900986D4E /* ErrorInfoViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC7A27C8189900986D4E /* ErrorInfoViewModelMocking.swift */; };
 		FA03CC8927C8189900986D4E /* PrimaryButtonViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC7E27C8189900986D4E /* PrimaryButtonViewModelMocking.swift */; };
 		FA03CC8D27C8420300986D4E /* IconWithLabelButtonViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC8C27C8420300986D4E /* IconWithLabelButtonViewModelMocking.swift */; };
+		FA25C13E28FF711E00417715 /* DiagnosticsManagerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA25C13D28FF711E00417715 /* DiagnosticsManagerMocking.swift */; };
 		FA378672284152CA005B6288 /* SetParticipantViewDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA378671284152CA005B6288 /* SetParticipantViewDataError.swift */; };
 		FA40424A27E3E86700875368 /* ParticipantsListViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA40424927E3E86700875368 /* ParticipantsListViewModelMocking.swift */; };
 		FA62233327DAC7BC008B5466 /* AccessibilityProviderNotificationsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62233227DAC7BC008B5466 /* AccessibilityProviderNotificationsObserver.swift */; };
@@ -517,6 +518,7 @@
 		FA03CC7A27C8189900986D4E /* ErrorInfoViewModelMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorInfoViewModelMocking.swift; sourceTree = "<group>"; };
 		FA03CC7E27C8189900986D4E /* PrimaryButtonViewModelMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrimaryButtonViewModelMocking.swift; sourceTree = "<group>"; };
 		FA03CC8C27C8420300986D4E /* IconWithLabelButtonViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithLabelButtonViewModelMocking.swift; sourceTree = "<group>"; };
+		FA25C13D28FF711E00417715 /* DiagnosticsManagerMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DiagnosticsManagerMocking.swift; path = Mocking/DiagnosticsManagerMocking.swift; sourceTree = "<group>"; };
 		FA378671284152CA005B6288 /* SetParticipantViewDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetParticipantViewDataError.swift; sourceTree = "<group>"; };
 		FA40424927E3E86700875368 /* ParticipantsListViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsListViewModelMocking.swift; sourceTree = "<group>"; };
 		FA62233227DAC7BC008B5466 /* AccessibilityProviderNotificationsObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderNotificationsObserver.swift; sourceTree = "<group>"; };
@@ -1189,6 +1191,7 @@
 				50B390D027D82D7E0010A2ED /* LocalizationProviderMocking.swift */,
 				FAD845432819FFE6007DAFE1 /* CallingSDKEventsHandlerMocking.swift */,
 				FAFA427C28380F7500053EA7 /* AvatarViewManagerMocking.swift */,
+				FA25C13D28FF711E00417715 /* DiagnosticsManagerMocking.swift */,
 			);
 			name = Mocking;
 			sourceTree = "<group>";
@@ -1568,6 +1571,7 @@
 				A869A63826546A2E003CC4F2 /* CallingServiceMocking.swift in Sources */,
 				1F09A11326BA484000BACED7 /* ParticipantCellViewModelTests.swift in Sources */,
 				50FA46182696214D001844AC /* CallingMiddlewareHandlerTests.swift in Sources */,
+				FA25C13E28FF711E00417715 /* DiagnosticsManagerMocking.swift in Sources */,
 				50E2D68926D9495B006B0EF4 /* InfoHeaderViewModelTests.swift in Sources */,
 				98E8564826FA609D00ECA304 /* AudioDevicesListViewModelTests.swift in Sources */,
 				1F48B40327496E2800B6E5F9 /* DiagnosticConfigTests.swift in Sources */,
