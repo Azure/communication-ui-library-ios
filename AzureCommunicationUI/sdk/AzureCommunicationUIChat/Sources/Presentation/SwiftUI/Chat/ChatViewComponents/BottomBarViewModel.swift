@@ -34,6 +34,12 @@ class BottomBarViewModel: ObservableObject {
     }
 
     func sendMessage() {
+        // Added for testing to trigger action
+        if message == "fetch" {
+            dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
+            return
+        }
+
         hasFocus = true
         guard !message.isEmpty else {
             return

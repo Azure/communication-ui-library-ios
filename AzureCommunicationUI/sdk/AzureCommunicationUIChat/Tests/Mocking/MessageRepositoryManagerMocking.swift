@@ -10,6 +10,7 @@ class MessageRepositoryManagerMocking: MessageRepositoryManagerProtocol {
     var messages: [ChatMessageInfoModel] = []
 
     var addInitialMessagesCalled: Bool = false
+    var addPreviousMessagesCalled: Bool = false
     var addNewSentMessageCalled: Bool = false
     var replaceMessageIdCalled: Bool = false
     var addReceivedMessageCalled: Bool = false
@@ -17,6 +18,11 @@ class MessageRepositoryManagerMocking: MessageRepositoryManagerProtocol {
     func addInitialMessages(initialMessages: [ChatMessageInfoModel]) {
         addInitialMessagesCalled = true
         messages = initialMessages
+    }
+
+    func addPreviousMessages(previousMessages: [ChatMessageInfoModel]) {
+        addPreviousMessagesCalled = true
+        messages = previousMessages + messages
     }
 
     func addNewSendingMessage(message: ChatMessageInfoModel) {
