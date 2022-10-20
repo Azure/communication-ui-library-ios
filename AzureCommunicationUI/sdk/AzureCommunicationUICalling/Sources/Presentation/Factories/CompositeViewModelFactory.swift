@@ -5,7 +5,7 @@
 
 @_spi(common) import AzureCommunicationUICommon
 import FluentUI
-import Foundation
+import UIKit
 
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
@@ -22,13 +22,13 @@ protocol CompositeViewModelFactoryProtocol {
                                           buttonLabel: String,
                                           isDisabled: Bool,
                                           action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel
-    func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel
+    func makeLocalVideoViewModel(dispatchAction: @escaping CallActionDispatch) -> LocalVideoViewModel
     func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
                                     buttonLabel: String,
                                     iconName: CompositeIcon?,
                                     isDisabled: Bool,
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel
-    func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
+    func makeAudioDevicesListViewModel(dispatchAction: @escaping CallActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
     func makeAudioDevicesListCellViewModel(icon: CompositeIcon,
                                            title: String,
@@ -40,7 +40,7 @@ protocol CompositeViewModelFactoryProtocol {
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel
-    func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
+    func makeControlBarViewModel(dispatchAction: @escaping CallActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel
     func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel
@@ -53,15 +53,15 @@ protocol CompositeViewModelFactoryProtocol {
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
 
     // MARK: SetupViewModels
-    func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
-    func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
+    func makePreviewAreaViewModel(dispatchAction: @escaping CallActionDispatch) -> PreviewAreaViewModel
+    func makeSetupControlBarViewModel(dispatchAction: @escaping CallActionDispatch,
                                       localUserState: LocalUserState) -> SetupControlBarViewModel
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel
 }
 
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
     private let networkManager: NetworkManager
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
@@ -71,7 +71,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private weak var callingViewModel: CallingViewModel?
 
     init(logger: Logger,
-         store: Store<AppState>,
+         store: Store<AppState, Action>,
          networkManager: NetworkManager,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
@@ -136,7 +136,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                      isDisabled: isDisabled,
                                      action: action)
     }
-    func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel {
+    func makeLocalVideoViewModel(dispatchAction: @escaping CallActionDispatch) -> LocalVideoViewModel {
         LocalVideoViewModel(compositeViewModelFactory: self,
                             logger: logger,
                             localizationProvider: localizationProvider,
@@ -153,7 +153,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                isDisabled: isDisabled,
                                action: action)
     }
-    func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
+    func makeAudioDevicesListViewModel(dispatchAction: @escaping CallActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel {
         AudioDevicesListViewModel(compositeViewModelFactory: self,
                                   dispatchAction: dispatchAction,
@@ -190,7 +190,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                accessibilityProvider: accessibilityProvider,
                                resumeAction: resumeAction)
     }
-    func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
+    func makeControlBarViewModel(dispatchAction: @escaping CallActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel {
         ControlBarViewModel(compositeViewModelFactory: self,
@@ -244,13 +244,13 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     // MARK: SetupViewModels
-    func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel {
+    func makePreviewAreaViewModel(dispatchAction: @escaping CallActionDispatch) -> PreviewAreaViewModel {
         PreviewAreaViewModel(compositeViewModelFactory: self,
                              dispatchAction: dispatchAction,
                              localizationProvider: localizationProvider)
     }
 
-    func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
+    func makeSetupControlBarViewModel(dispatchAction: @escaping CallActionDispatch,
                                       localUserState: LocalUserState) -> SetupControlBarViewModel {
         SetupControlBarViewModel(compositeViewModelFactory: self,
                                  logger: logger,

@@ -38,7 +38,7 @@ class DependencyContainerTests: XCTestCase {
         XCTAssertNotNil(dependencyContainer.resolve() as CallingSDKWrapperProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as VideoViewManager)
         XCTAssertNotNil(dependencyContainer.resolve() as CallingServiceProtocol)
-        XCTAssertNotNil(dependencyContainer.resolve() as Store<AppState>)
+        XCTAssertNotNil(dependencyContainer.resolve() as Store<AppState, Action>)
         XCTAssertNotNil(dependencyContainer.resolve() as NavigationRouter)
         XCTAssertNotNil(dependencyContainer.resolve() as CompositeViewModelFactoryProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as CompositeViewFactoryProtocol)

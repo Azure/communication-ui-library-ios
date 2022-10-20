@@ -3,16 +3,17 @@
 //  Licensed under the MIT License.
 //
 
+@_spi(common) import AzureCommunicationUICommon
 import Foundation
-
 import XCTest
-import Combine
+// import Combine
+
 @testable import AzureCommunicationUICalling
 
 class CallingMiddlewareTests: XCTestCase {
 
     var mockMiddlewareHandler: CallingMiddlewareHandlerMocking!
-    var mockMiddleware: Middleware<AppState>!
+    var mockMiddleware: Middleware<AppState, Action>!
 
     override func setUp() {
         super.setUp()
@@ -206,15 +207,15 @@ extension CallingMiddlewareTests {
     private func getEmptyState() -> AppState {
         return AppState()
     }
-    private func getEmptyDispatch() -> ActionDispatch {
+    private func getEmptyDispatch() -> CallActionDispatch {
         return { _ in }
     }
 
-    private func getEmptyCallingMiddlewareFunction() -> (@escaping ActionDispatch) -> ActionDispatch {
+    private func getEmptyCallingMiddlewareFunction() -> (@escaping CallActionDispatch) -> CallActionDispatch {
         return mockMiddleware.apply(getEmptyDispatch(), getEmptyState)
     }
 
-    private func getAssertSameActionDispatch(action: Action, expectation: XCTestExpectation) -> ActionDispatch {
+    private func getAssertSameActionDispatch(action: Action, expectation: XCTestExpectation) -> CallActionDispatch {
         return { nextAction in
             XCTAssertTrue(type(of: action) == type(of: nextAction))
             expectation.fulfill()

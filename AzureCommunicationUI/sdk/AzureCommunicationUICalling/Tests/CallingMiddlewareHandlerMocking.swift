@@ -23,98 +23,98 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     var requestHoldCalled: ((Bool) -> Void)?
     var requestResumeCalled: ((Bool) -> Void)?
 
-    func setupCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func setupCall(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             setupCallWasCalled?(true)
         }
     }
 
-    func startCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func startCall(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             startCallWasCalled?(true)
         }
     }
 
-    func endCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func endCall(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             endCallWasCalled?(true)
         }
     }
 
-    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func enterBackground(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             enterBackgroundCalled?(true)
         }
     }
 
-    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func enterForeground(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             enterForegroundCalled?(true)
         }
     }
 
-    func onCameraPermissionIsSet(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func onCameraPermissionIsSet(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             cameraPermissionSetCalled?(true)
         }
     }
 
-    func cameraPermissionGranted(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func cameraPermissionGranted(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             cameraPermissionGrantedCalled?(true)
         }
     }
 
-    func requestCameraPreviewOn(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func requestCameraPreviewOn(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             requestCameraPreviewOnCalled?(true)
         }
     }
 
     func requestCameraOn(
-        state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
             Task {
                 requestCameraOnCalled?(true)
             }
         }
 
-    func requestCameraOff(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func requestCameraOff(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             requestCameraOffCalled?(true)
         }
     }
 
-    func requestCameraSwitch(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func requestCameraSwitch(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             requestCameraSwitchCalled?(true)
         }
     }
 
-    func requestMicrophoneMute(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func requestMicrophoneMute(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             requestMicMuteCalled?(true)
         }
     }
 
-    func requestMicrophoneUnmute(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func requestMicrophoneUnmute(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             requestMicUnmuteCalled?(true)
         }
     }
 
-    func holdCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func holdCall(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             requestHoldCalled?(true)
         }
     }
 
-    func resumeCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func resumeCall(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             requestResumeCalled?(true)
         }
     }
 
-    func audioSessionInterrupted(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func audioSessionInterrupted(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {}
     }
 }

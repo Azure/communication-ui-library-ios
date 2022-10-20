@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
+@_spi(common) import AzureCommunicationUICommon
 import Foundation
-import Combine
 
 class ParticipantGridViewModel: ObservableObject {
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol

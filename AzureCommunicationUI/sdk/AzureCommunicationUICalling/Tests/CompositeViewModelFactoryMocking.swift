@@ -6,12 +6,13 @@
 @_spi(common) import AzureCommunicationUICommon
 import FluentUI
 import Foundation
+
 @testable import AzureCommunicationUICalling
 
 struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     private let logger: Logger
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
 
@@ -41,7 +42,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var createIconButtonViewModel: ((CompositeIcon) -> IconButtonViewModel?)?
 
     init(logger: Logger,
-         store: Store<AppState>,
+         store: Store<AppState, Action>,
          accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking(),
          localizationProvider: LocalizationProviderProtocol = LocalizationProviderMocking()) {
         self.logger = logger
@@ -89,7 +90,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                                              action: action)
     }
 
-    func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel {
+    func makeLocalVideoViewModel(dispatchAction: @escaping CallActionDispatch) -> LocalVideoViewModel {
         return localVideoViewModel ?? LocalVideoViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localizationProvider: localizationProvider,
@@ -108,7 +109,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                 action: action)
     }
 
-    func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
+    func makeAudioDevicesListViewModel(dispatchAction: @escaping CallActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel {
         return audioDevicesListViewModel ?? AudioDevicesListViewModel(compositeViewModelFactory: self,
                                                                       dispatchAction: dispatchAction,
@@ -139,7 +140,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                               accessibilityProvider: accessibilityProvider)
     }
 
-    func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
+    func makeControlBarViewModel(dispatchAction: @escaping CallActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel {
         return controlBarViewModel ?? ControlBarViewModel(compositeViewModelFactory: self,
@@ -197,13 +198,13 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     // MARK: SetupViewModels
-    func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel {
+    func makePreviewAreaViewModel(dispatchAction: @escaping CallActionDispatch) -> PreviewAreaViewModel {
         return previewAreaViewModel ?? PreviewAreaViewModel(compositeViewModelFactory: self,
                                                             dispatchAction: dispatchAction,
                                                             localizationProvider: localizationProvider)
     }
 
-    func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
+    func makeSetupControlBarViewModel(dispatchAction: @escaping CallActionDispatch,
                                       localUserState: LocalUserState) -> SetupControlBarViewModel {
         return setupControlBarViewModel ?? SetupControlBarViewModel(compositeViewModelFactory: self,
                                                                     logger: logger,

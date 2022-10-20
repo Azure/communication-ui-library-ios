@@ -3,15 +3,16 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
-import Combine
+@_spi(common) import AzureCommunicationUICommon
 import AzureCommunicationCommon
+import Combine
+import Foundation
 
 protocol RemoteParticipantsManagerProtocol {
 }
 
 class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
     private let eventsHandler: CallComposite.Events
     private let callingSDKWrapper: CallingSDKWrapperProtocol
     private let avatarViewManager: AvatarViewManager
@@ -20,7 +21,7 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
 
     var cancellables = Set<AnyCancellable>()
 
-    init(store: Store<AppState>,
+    init(store: Store<AppState, Action>,
          callCompositeEventsHandler: CallComposite.Events,
          callingSDKWrapper: CallingSDKWrapperProtocol,
          avatarViewManager: AvatarViewManager) {

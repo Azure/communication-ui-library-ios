@@ -3,15 +3,17 @@
 //  Licensed under the MIT License.
 //
 
+@_spi(common) import AzureCommunicationUICommon
 import Foundation
+
 @testable import AzureCommunicationUICalling
 
 extension Reducer {
-    static func mockReducer<State, Action>(
+    static func mockReducer(
         outputState: State? = nil
-    ) -> Reducer<State, Action> {
+    ) -> Reducer<State, Actions> {
 
-        return Reducer<State, Action> { state, _ in
+        return Reducer<State, Actions> { state, _ in
             if let outputState = outputState {
                 return outputState
             }

@@ -17,11 +17,11 @@ protocol AvatarViewManagerProtocol {
 class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
     @Published var updatedId: String?
     @Published private(set) var localOptions: LocalOptions?
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
     private(set) var avatarStorage = MappedSequence<String, ParticipantViewData>()
     var cancellables = Set<AnyCancellable>()
 
-    init(store: Store<AppState>,
+    init(store: Store<AppState, Action>,
          localOptions: LocalOptions?) {
         self.store = store
         self.localOptions = localOptions

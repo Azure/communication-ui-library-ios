@@ -5,7 +5,7 @@
 extension CallingMiddlewareHandler {
     func handle(error: Error?,
                 errorType: CallCompositeInternalError,
-                dispatch: @escaping ActionDispatch) {
+                dispatch: @escaping CallActionDispatch) {
         let action: ErrorAction
         if let error = error as? CallCompositeInternalError {
             switch error {
@@ -25,7 +25,7 @@ extension CallingMiddlewareHandler {
     }
 
     func handleCallInfo(internalError: CallCompositeInternalError,
-                        dispatch: @escaping ActionDispatch,
+                        dispatch: @escaping CallActionDispatch,
                         completion: (() -> Void)? = nil ) {
         let action: ErrorAction
         if internalError == .callTokenFailed {
@@ -40,7 +40,7 @@ extension CallingMiddlewareHandler {
     }
 
     func handle(callingStatus: CallingStatus,
-                dispatch: @escaping ActionDispatch) {
+                dispatch: @escaping CallActionDispatch) {
         dispatch(.callingAction(.stateUpdated(status: callingStatus)))
 
         switch callingStatus {

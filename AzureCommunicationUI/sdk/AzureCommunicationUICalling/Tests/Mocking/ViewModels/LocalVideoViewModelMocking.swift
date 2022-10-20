@@ -14,7 +14,7 @@ class LocalVideoViewModelMocking: LocalVideoViewModel {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
-         dispatchAction: @escaping ActionDispatch,
+         dispatchAction: @escaping CallActionDispatch,
          updateState: ((LocalUserState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,

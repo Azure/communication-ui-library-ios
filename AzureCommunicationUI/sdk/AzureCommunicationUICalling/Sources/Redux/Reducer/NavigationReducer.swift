@@ -3,7 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Combine
+@_spi(common) import AzureCommunicationUICommon
+import Foundation
 
 extension Reducer where State == NavigationState,
                         Actions == Action {

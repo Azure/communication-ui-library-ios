@@ -589,7 +589,7 @@ extension CallingMiddlewareHandlerTests {
                         errorState: errorState)
     }
 
-    private func getEmptyDispatch() -> ActionDispatch {
+    private func getEmptyDispatch() -> CallActionDispatch {
         return { _ in }
     }
 

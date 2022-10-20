@@ -6,7 +6,7 @@
 @_spi(common) import AzureCommunicationUICommon
 import Foundation
 
-extension Reducer where State == NavigationState,
+extension Reducer<NavigationState, Action> where State == NavigationState,
                         Actions == Action {
     static var liveNavigationReducer: Self = Reducer { state, action in
         var navigationStatus = state.status

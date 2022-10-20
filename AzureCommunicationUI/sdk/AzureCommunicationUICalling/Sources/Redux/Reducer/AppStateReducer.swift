@@ -3,9 +3,11 @@
 //  Licensed under the MIT License.
 //
 
-import Combine
+@_spi(common) import AzureCommunicationUICommon
+import Foundation
 
-extension Reducer {
+extension Reducer where State == AppState,
+                        Actions == Action {
     static func appStateReducer(
         permissionsReducer: Reducer<PermissionState, PermissionAction> = .livePermissionsReducer,
         localUserReducer: Reducer<LocalUserState, LocalUserAction> = .liveLocalUserReducer,

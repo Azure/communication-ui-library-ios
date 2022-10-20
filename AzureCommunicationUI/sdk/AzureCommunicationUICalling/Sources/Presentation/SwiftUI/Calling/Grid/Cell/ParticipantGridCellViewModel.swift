@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
+@_spi(common) import AzureCommunicationUICommon
 import Foundation
-import Combine
 
 struct ParticipantVideoViewInfoModel {
     let videoStreamType: VideoStreamInfoModel.MediaStreamType?

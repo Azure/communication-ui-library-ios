@@ -18,7 +18,7 @@ class PreviewAreaViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
-         dispatchAction: @escaping ActionDispatch,
+         dispatchAction: @escaping CallActionDispatch,
          localizationProvider: LocalizationProviderProtocol) {
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: dispatchAction)
         self.localizationProvider = localizationProvider

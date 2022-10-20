@@ -3,15 +3,17 @@
 //  Licensed under the MIT License.
 //
 
+@_spi(common) import AzureCommunicationUICommon
 import Foundation
+
 @testable import AzureCommunicationUICalling
 
-extension Middleware {
-    static func mock<State>(
+extension Middleware<AppState, Action> {
+    static func mock(
         applyingClosure: @escaping (
-            @escaping ActionDispatch,
-            @escaping () -> State) -> (@escaping ActionDispatch) -> ActionDispatch
-    ) -> Middleware<State> {
-        return Middleware<State>(apply: applyingClosure)
+            @escaping CallActionDispatch,
+            @escaping () -> State) -> (@escaping CallActionDispatch) -> CallActionDispatch
+    ) -> Middleware<AppState, Action> {
+        return Middleware<AppState, Action>(apply: applyingClosure)
     }
 }

@@ -9,35 +9,35 @@ import Foundation
 
 protocol CallingMiddlewareHandling {
     @discardableResult
-    func setupCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func setupCall(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func startCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func startCall(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func endCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func endCall(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func holdCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func holdCall(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func resumeCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func resumeCall(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func enterBackground(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func enterForeground(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func audioSessionInterrupted(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func audioSessionInterrupted(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func requestCameraPreviewOn(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func requestCameraPreviewOn(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func requestCameraOn(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func requestCameraOn(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func requestCameraOff(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func requestCameraOff(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func requestCameraSwitch(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func requestCameraSwitch(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func requestMicrophoneMute(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func requestMicrophoneMute(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func requestMicrophoneUnmute(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func requestMicrophoneUnmute(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func onCameraPermissionIsSet(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func onCameraPermissionIsSet(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never>
 }
 
 class CallingMiddlewareHandler: CallingMiddlewareHandling {
@@ -51,7 +51,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         self.logger = logger
     }
 
-    func setupCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func setupCall(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             do {
                 try await callingService.setupCall()
@@ -66,7 +66,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func startCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func startCall(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             do {
                 try await callingService.startCall(
@@ -80,7 +80,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func endCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func endCall(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             do {
                 try await callingService.endCall()
@@ -90,7 +90,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func holdCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func holdCall(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             guard state.callingState.status == .connected else {
                 return
@@ -104,7 +104,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func resumeCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func resumeCall(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             guard state.callingState.status == .localHold else {
                 return
@@ -118,7 +118,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func enterBackground(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             guard state.callingState.status == .connected,
                   state.localUserState.cameraState.operation == .on else {
@@ -133,7 +133,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func enterForeground(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             guard state.callingState.status == .connected || state.callingState.status == .localHold,
                   state.localUserState.cameraState.operation == .paused else {
@@ -143,7 +143,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func requestCameraPreviewOn(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func requestCameraPreviewOn(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             if state.permissionState.cameraPermission == .notAsked {
                 dispatch(.permissionAction(.cameraPermissionRequested))
@@ -158,7 +158,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func requestCameraOn(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func requestCameraOn(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             if state.permissionState.cameraPermission == .notAsked {
                 dispatch(.permissionAction(.cameraPermissionRequested))
@@ -174,7 +174,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func requestCameraOff(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func requestCameraOff(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             do {
                 try await callingService.stopLocalVideoStream()
@@ -185,7 +185,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func requestCameraSwitch(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func requestCameraSwitch(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             do {
                 let device = try await callingService.switchCamera()
@@ -197,7 +197,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func requestMicrophoneMute(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func requestMicrophoneMute(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             do {
                 try await callingService.muteLocalMic()
@@ -207,7 +207,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func requestMicrophoneUnmute(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func requestMicrophoneUnmute(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             do {
                 try await callingService.unmuteLocalMic()
@@ -217,7 +217,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func onCameraPermissionIsSet(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func onCameraPermissionIsSet(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             guard state.permissionState.cameraPermission == .requesting else {
                 return
@@ -232,7 +232,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         }
     }
 
-    func audioSessionInterrupted(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func audioSessionInterrupted(state: AppState, dispatch: @escaping CallActionDispatch) -> Task<Void, Never> {
         Task {
             guard state.callingState.status == .connected else {
                 return
@@ -244,7 +244,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 }
 
 extension CallingMiddlewareHandler {
-    private func subscription(dispatch: @escaping ActionDispatch) {
+    private func subscription(dispatch: @escaping CallActionDispatch) {
         logger.debug("Subscribe to calling service subjects")
         callingService.participantsInfoListSubject
             .throttle(for: 1.25, scheduler: DispatchQueue.main, latest: true)

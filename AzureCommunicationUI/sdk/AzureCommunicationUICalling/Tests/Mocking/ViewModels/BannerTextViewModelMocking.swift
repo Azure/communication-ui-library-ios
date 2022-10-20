@@ -3,9 +3,10 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
-import Combine
+@_spi(common) import AzureCommunicationUICommon
 import AzureCommunicationCalling
+import Foundation
+
 @testable import AzureCommunicationUICalling
 
 class BannerTextViewModelMocking: BannerTextViewModel {

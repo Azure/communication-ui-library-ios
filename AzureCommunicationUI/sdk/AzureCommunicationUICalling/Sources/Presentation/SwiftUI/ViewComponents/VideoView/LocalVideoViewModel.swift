@@ -10,7 +10,7 @@ import Foundation
 class LocalVideoViewModel: ObservableObject {
     private let logger: Logger
     private let localizationProvider: LocalizationProviderProtocol
-    private let dispatch: ActionDispatch
+    private let dispatch: CallActionDispatch
 
     @Published var localVideoStreamId: String?
     @Published var displayName: String?
@@ -23,7 +23,7 @@ class LocalVideoViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
-         dispatchAction: @escaping ActionDispatch) {
+         dispatchAction: @escaping CallActionDispatch) {
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction

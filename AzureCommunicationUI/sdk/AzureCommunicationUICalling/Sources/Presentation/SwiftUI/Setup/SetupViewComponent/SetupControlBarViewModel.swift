@@ -13,7 +13,7 @@ class SetupControlBarViewModel: ObservableObject {
     @Published var isAudioDeviceSelectionDisplayed: Bool = false
 
     private let logger: Logger
-    private let dispatch: ActionDispatch
+    private let dispatch: CallActionDispatch
     private let localizationProvider: LocalizationProviderProtocol
 
     private var isJoinRequested: Bool = false
@@ -29,7 +29,7 @@ class SetupControlBarViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
-         dispatchAction: @escaping ActionDispatch,
+         dispatchAction: @escaping CallActionDispatch,
          localUserState: LocalUserState,
          localizationProvider: LocalizationProviderProtocol) {
         self.logger = logger

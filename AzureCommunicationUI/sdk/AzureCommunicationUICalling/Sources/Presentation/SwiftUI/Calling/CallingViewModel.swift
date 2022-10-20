@@ -15,7 +15,7 @@ class CallingViewModel: ObservableObject {
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
 
@@ -35,7 +35,7 @@ class CallingViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
-         store: Store<AppState>,
+         store: Store<AppState, Action>,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          isIpadInterface: Bool) {

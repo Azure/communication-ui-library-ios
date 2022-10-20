@@ -3,8 +3,10 @@
 //  Licensed under the MIT License.
 //
 
+@_spi(common) import AzureCommunicationUICommon
 import Foundation
 import XCTest
+
 @testable import AzureCommunicationUICalling
 
 class AppStateReducerTests: XCTestCase {
@@ -131,7 +133,7 @@ class AppStateReducerTests: XCTestCase {
     func test_appStateReducer_reduce_when_StatusErrorAndCallReset_then_remoteParticipantStateCleanup() {
         let userId = UUID().uuidString
         let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callJoinFailed,
-                                                         error: nil))
+                                                                 error: nil))
         let sut = getSUT()
         let participant = ParticipantInfoModel(displayName: "displayname",
                                                isSpeaking: false,

@@ -10,7 +10,7 @@ class PreviewAreaViewModelMocking: PreviewAreaViewModel {
     private let updateState: ((LocalUserState, PermissionState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
-         dispatchAction: @escaping ActionDispatch,
+         dispatchAction: @escaping CallActionDispatch,
          updateState: ((LocalUserState, PermissionState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,

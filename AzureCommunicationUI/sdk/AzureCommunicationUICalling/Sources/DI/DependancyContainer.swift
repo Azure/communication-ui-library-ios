@@ -28,7 +28,7 @@ final class DependencyContainer {
     }
 
     private func registerDefaultDependencies() {
-        register(DefaultLogger() as Logger)
+        register(DefaultLogger(category: "Calling") as Logger)
     }
 
     func registerDependencies(_ callConfiguration: CallConfiguration,
@@ -43,7 +43,7 @@ final class DependencyContainer {
         register(CallingService(logger: resolve(),
                                 callingSDKWrapper: resolve()) as CallingServiceProtocol)
         let displayName = localOptions?.participantViewData?.displayName ?? callConfiguration.displayName
-        register(makeStore(displayName: displayName) as Store<AppState>)
+        register(makeStore(displayName: displayName) as Store<AppState, Action>)
         register(NavigationRouter(store: resolve(),
                                   logger: resolve()) as NavigationRouter)
         register(AccessibilityProvider() as AccessibilityProviderProtocol)
@@ -73,14 +73,14 @@ final class DependencyContainer {
                                            avatarViewManager: resolve()) as RemoteParticipantsManager)
     }
 
-    private func makeStore(displayName: String?) -> Store<AppState> {
+    private func makeStore(displayName: String?) -> Store<AppState, Action> {
         let middlewaresHandler = CallingMiddlewareHandler(callingService: resolve(), logger: resolve())
         let middlewares: [Middleware] = [
-            Middleware<AppState>.liveCallingMiddleware(callingMiddlewareHandler: middlewaresHandler)
+            Middleware<AppState, Action>.liveCallingMiddleware(callingMiddlewareHandler: middlewaresHandler)
         ]
 
         let localUserState = LocalUserState(displayName: displayName)
-        return Store<AppState>(reducer: Reducer<AppState, Action>.appStateReducer(),
+        return Store<AppState, Action>(reducer: Reducer<AppState, Action>.appStateReducer(),
                                middlewares: middlewares,
                                state: AppState(localUserState: localUserState))
     }

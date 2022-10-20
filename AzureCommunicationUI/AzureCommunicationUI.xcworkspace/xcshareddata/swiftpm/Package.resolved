@@ -1,0 +1,50 @@
+{
+  "pins" : [
+    {
+      "identity" : "fluentui-apple",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/microsoft/fluentui-apple.git",
+      "state" : {
+        "revision" : "747454f821b67cd1e3c8c9ba29634bb788e231d9",
+        "version" : "0.4.9"
+      }
+    },
+    {
+      "identity" : "swiftpm-azurecommunicationchat",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Azure/SwiftPM-AzureCommunicationChat.git",
+      "state" : {
+        "revision" : "a09a03164ff9bd5c896e13bf721067a000fb0b0b",
+        "version" : "1.2.0"
+      }
+    },
+    {
+      "identity" : "swiftpm-azurecommunicationcommon",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Azure/SwiftPM-AzureCommunicationCommon.git",
+      "state" : {
+        "revision" : "6344154a31c2e5d9b274b28b6545d06eac91e884",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "swiftpm-azurecore",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Azure/SwiftPM-AzureCore.git",
+      "state" : {
+        "revision" : "df1a503fb5673e41ce69c8b929fa10de04009b8e",
+        "version" : "1.0.0-beta.15"
+      }
+    },
+    {
+      "identity" : "trouter-client-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/microsoft/trouter-client-ios.git",
+      "state" : {
+        "revision" : "7f67490122352813f187599b0362a95d59ebb65f",
+        "version" : "0.1.0"
+      }
+    }
+  ],
+  "version" : 2
+}

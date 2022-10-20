@@ -3,12 +3,13 @@
 //  Licensed under the MIT License.
 //
 
+@_spi(common) import AzureCommunicationUICommon
 import Combine
 
-extension Middleware {
+extension Middleware<AppState, Action> {
     static func liveCallingMiddleware(callingMiddlewareHandler actionHandler: CallingMiddlewareHandling)
-    -> Middleware<AppState> {
-        Middleware<AppState>(
+    -> Middleware<AppState, Action> {
+        Middleware<AppState, Action>(
             apply: { dispatch, getState in
                 return { next in
                     return { action in
@@ -44,7 +45,7 @@ extension Middleware {
 private func handleCallingAction(_ action: CallingAction,
                                  _ actionHandler: CallingMiddlewareHandling,
                                  _ getState: () -> AppState,
-                                 _ dispatch: @escaping ActionDispatch) {
+                                 _ dispatch: @escaping CallActionDispatch) {
     switch action {
     case .setupCall:
         actionHandler.setupCall(state: getState(), dispatch: dispatch)
@@ -64,7 +65,7 @@ private func handleCallingAction(_ action: CallingAction,
 private func handleLocalUserAction(_ action: LocalUserAction,
                                    _ actionHandler: CallingMiddlewareHandling,
                                    _ getState: () -> AppState,
-                                   _ dispatch: @escaping ActionDispatch) {
+                                   _ dispatch: @escaping CallActionDispatch) {
     switch action {
     case .cameraPreviewOnTriggered:
         actionHandler.requestCameraPreviewOn(state: getState(), dispatch: dispatch)
@@ -102,7 +103,7 @@ private func handleLocalUserAction(_ action: LocalUserAction,
 private func handlePermissionAction(_ action: PermissionAction,
                                     _ actionHandler: CallingMiddlewareHandling,
                                     _ getState: () -> AppState,
-                                    _ dispatch: @escaping ActionDispatch) {
+                                    _ dispatch: @escaping CallActionDispatch) {
     switch action {
     case .cameraPermissionGranted:
         actionHandler.onCameraPermissionIsSet(state: getState(), dispatch: dispatch)
@@ -121,7 +122,7 @@ private func handlePermissionAction(_ action: PermissionAction,
 private func handleLifecycleAction(_ action: LifecycleAction,
                                    _ actionHandler: CallingMiddlewareHandling,
                                    _ getState: () -> AppState,
-                                   _ dispatch: @escaping ActionDispatch) {
+                                   _ dispatch: @escaping CallActionDispatch) {
     switch action {
     case .backgroundEntered:
         actionHandler.enterBackground(state: getState(), dispatch: dispatch)
@@ -133,7 +134,7 @@ private func handleLifecycleAction(_ action: LifecycleAction,
 private func handleAudioSessionAction(_ action: AudioSessionAction,
                                       _ actionHandler: CallingMiddlewareHandling,
                                       _ getState: () -> AppState,
-                                      _ dispatch: @escaping ActionDispatch) {
+                                      _ dispatch: @escaping CallActionDispatch) {
     switch action {
     case .audioInterrupted:
         actionHandler.audioSessionInterrupted(state: getState(), dispatch: dispatch)

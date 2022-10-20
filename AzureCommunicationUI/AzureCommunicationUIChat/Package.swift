@@ -7,7 +7,6 @@ let package = Package(
     name: "AzureCommunicationUIChat",
     platforms: [.iOS(.v14)],
     products: [
-        // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "AzureCommunicationUIChat",
             targets: ["AzureCommunicationUIChat"]),
@@ -28,13 +27,9 @@ let package = Package(
         .package(path: "../sdk/AzureCommunicationUICommon")
     ],
     targets: [
-        // Targets are the basic building blocks of a package. A target can define a module or a test suite.
-        // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "AzureCommunicationUIChat",
             dependencies: [
-                .product(name: "FluentUI", package: "fluentui-apple"),
-                .product(name: "AzureCommunicationCommon", package: "SwiftPM-AzureCommunicationCommon"),
                 .product(name: "AzureCommunicationChat", package: "SwiftPM-AzureCommunicationChat"),
                 .product(name: "AzureCommunicationUICommon", package: "AzureCommunicationUICommon")
             ],
@@ -47,5 +42,6 @@ let package = Package(
         .testTarget(
             name: "AzureCommunicationUIChatTests",
             dependencies: ["AzureCommunicationUIChat"]),
-    ]
+    ],
+    swiftLanguageVersions: [.v5]
 )

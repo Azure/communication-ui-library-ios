@@ -12,17 +12,15 @@ let package = Package(
             targets: ["AzureCommunicationUICommon"]),
     ],
     dependencies: [
-        // Can't do this; compile issues with older versions.
-//        .package(
-//            url: "https://github.com/microsoft/fluentui-apple.git",
-//            exact: .init(0, 4, 0)
-//        )
+        .package(
+            url: "https://github.com/microsoft/fluentui-apple.git",
+            exact: .init(0, 4, 9)
+        )
     ],
     targets: [
         .target(
             name: "AzureCommunicationUICommon",
             dependencies: [
-//                .product(name: "FluentUI", package: "fluentui-apple")
             ],
             swiftSettings: [
                 .unsafeFlags(
@@ -33,5 +31,6 @@ let package = Package(
         .testTarget(
             name: "AzureCommunicationUICommonTests",
             dependencies: ["AzureCommunicationUICommon"]),
-    ]
+    ],
+    swiftLanguageVersions: [.v5]
 )

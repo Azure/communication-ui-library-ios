@@ -29,7 +29,7 @@ final class DependencyContainer {
     }
 
     private func registerDefaultDependencies() {
-        register(DefaultLogger() as Logger)
+        register(DefaultLogger(category: "Chat") as Logger)
     }
 
     func registerDependencies(_ chatConfiguration: ChatConfiguration,

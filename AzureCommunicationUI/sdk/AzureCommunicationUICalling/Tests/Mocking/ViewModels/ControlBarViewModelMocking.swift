@@ -14,7 +14,7 @@ class ControlBarViewModelMocking: ControlBarViewModel {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
-         dispatchAction: @escaping ActionDispatch,
+         dispatchAction: @escaping CallActionDispatch,
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState,
          updateState: ((LocalUserState, PermissionState) -> Void)? = nil) {

@@ -9,7 +9,7 @@ import Foundation
 
 class SetupViewModel: ObservableObject {
     private let logger: Logger
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
     private let localizationProvider: LocalizationProviderProtocol
 
     private var callingStatus: CallingStatus = .none
@@ -31,7 +31,7 @@ class SetupViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
-         store: Store<AppState>,
+         store: Store<AppState, Action>,
          networkManager: NetworkManager,
          localizationProvider: LocalizationProviderProtocol,
          navigationBarViewData: NavigationBarViewData? = nil) {

@@ -3,9 +3,10 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
+@_spi(common) import AzureCommunicationUICommon
 import AVFoundation
 import Combine
+import Foundation
 
 protocol PermissionsManagerProtocol {
     func resolveStatus(for permission: AppPermission) -> AppPermission.Status
@@ -15,10 +16,10 @@ protocol PermissionsManagerProtocol {
 class PermissionsManager: PermissionsManagerProtocol {
     private var audioPermission: AppPermission.Status?
     private var cameraPermission: AppPermission.Status?
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
     var cancellables = Set<AnyCancellable>()
 
-    init(store: Store<AppState>) {
+    init(store: Store<AppState, Action>) {
         self.store = store
         store.$state
             .sink { [weak self] state in

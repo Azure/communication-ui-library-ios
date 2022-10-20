@@ -3,9 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import AzureCommunicationCommon
 import AzureCommunicationUICalling
+import UIKit
 
 struct RemoteParticipantAvatarHelper {
     private static func getRemoteParticipantId(_ identifier: CommunicationIdentifier) -> String? {

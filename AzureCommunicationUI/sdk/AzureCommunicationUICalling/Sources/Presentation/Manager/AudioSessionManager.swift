@@ -13,13 +13,13 @@ protocol AudioSessionManagerProtocol {
 
 class AudioSessionManager: AudioSessionManagerProtocol {
     private let logger: Logger
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
     private var localUserAudioDeviceState: LocalUserState.AudioDeviceSelectionStatus?
     private var audioSessionState: AudioSessionStatus = .active
     private var audioSessionDetector: Timer?
     var cancellables = Set<AnyCancellable>()
 
-    init(store: Store<AppState>,
+    init(store: Store<AppState, Action>,
          logger: Logger) {
         self.store = store
         self.logger = logger

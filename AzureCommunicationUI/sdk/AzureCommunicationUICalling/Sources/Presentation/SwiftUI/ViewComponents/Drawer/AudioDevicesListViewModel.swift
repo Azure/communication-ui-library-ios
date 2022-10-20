@@ -11,12 +11,12 @@ class AudioDevicesListViewModel: ObservableObject {
 
     private var audioDeviceStatus: LocalUserState.AudioDeviceSelectionStatus
     private var previousConnectedDevice: AudioDeviceType?
-    private let dispatch: ActionDispatch
+    private let dispatch: CallActionDispatch
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
-         dispatchAction: @escaping ActionDispatch,
+         dispatchAction: @escaping CallActionDispatch,
          localUserState: LocalUserState,
          localizationProvider: LocalizationProviderProtocol) {
         self.dispatch = dispatchAction

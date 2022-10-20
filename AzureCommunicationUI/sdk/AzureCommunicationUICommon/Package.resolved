@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "fluentui-apple",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/microsoft/fluentui-apple.git",
+      "state" : {
+        "revision" : "747454f821b67cd1e3c8c9ba29634bb788e231d9",
+        "version" : "0.4.9"
+      }
+    }
+  ],
+  "version" : 2
+}

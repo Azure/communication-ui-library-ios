@@ -219,7 +219,7 @@ extension CredentialsView {
             communicationIdentifier: communicationIdentifier,
             credential: communicationTokenCredential,
             displayName: envConfigSubject.displayName)
-        let localOptions = AzureCommunicationUIChat.LocalOptions(
+        let localOptions = LocalOptions(
             participantViewData: ParticipantViewData(),
             isBackgroundMode: headless)
 

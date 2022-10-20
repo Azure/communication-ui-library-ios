@@ -14,7 +14,7 @@ class SetupControlBarViewModelMocking: SetupControlBarViewModel {
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
-         dispatchAction: @escaping ActionDispatch,
+         dispatchAction: @escaping CallActionDispatch,
          localUserState: LocalUserState,
          updateState: ((LocalUserState, PermissionState, CallingState) -> Void)? = nil) {
         self.updateState = updateState

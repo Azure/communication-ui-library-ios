@@ -9,7 +9,7 @@ import Foundation
 class ControlBarViewModel: ObservableObject {
     private let logger: Logger
     private let localizationProvider: LocalizationProviderProtocol
-    private let dispatch: ActionDispatch
+    private let dispatch: CallActionDispatch
     private var isCameraStateUpdating: Bool = false
     private(set) var cameraButtonViewModel: IconButtonViewModel!
 
@@ -33,7 +33,7 @@ class ControlBarViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
-         dispatchAction: @escaping ActionDispatch,
+         dispatchAction: @escaping CallActionDispatch,
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState) {
         self.logger = logger
