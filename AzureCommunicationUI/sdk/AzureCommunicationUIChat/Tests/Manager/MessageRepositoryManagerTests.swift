@@ -38,6 +38,58 @@ class MessageRepositoryManagerTests: XCTestCase {
         XCTAssertEqual(sut.messages.count, initialMessages.count)
     }
 
+    func test_messageRepositoryManager_addPreviousMessages_with_nonEmptyPreviousMessages_then_messagesCountWillBeMatching() {
+        let initialMessages = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        let sut = makeSUT(messages: initialMessages)
+
+        let previousMessages1 = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        let previousMessages2 = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        sut.addPreviousMessages(previousMessages: previousMessages1)
+        XCTAssertEqual(sut.messages.count,
+                       initialMessages.count +
+                       previousMessages1.count)
+        sut.addPreviousMessages(previousMessages: previousMessages2)
+        XCTAssertEqual( sut.messages.count,
+                        initialMessages.count +
+                        previousMessages1.count +
+                        previousMessages2.count)
+    }
+
+    func test_messageRepositoryManager_addPreviousMessages_with_previousMessagesContainExistingMessage_then_messagesCountWillBeIgnoreExistingMessages() {
+        let initialMessages = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        let messageId1 = initialMessages[0].id
+        let messageId2 = initialMessages[1].id
+        let duplicateCount = 2
+        let sut = makeSUT(messages: initialMessages)
+
+        let previousMessages1 = [
+            ChatMessageInfoModel(id: messageId1),
+            ChatMessageInfoModel(id: messageId2),
+            ChatMessageInfoModel()
+        ]
+
+        sut.addPreviousMessages(previousMessages: previousMessages1)
+        XCTAssertEqual(sut.messages.count,
+                       initialMessages.count +
+                       previousMessages1.count -
+                       duplicateCount)
+    }
+
     func test_messageRepositoryManager_addNewSentMessage_when_nonEmptyInitialMessages_then_messagesCountWillBeIncrementByOne() {
         let initialMessages = [
             ChatMessageInfoModel(),

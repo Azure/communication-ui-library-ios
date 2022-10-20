@@ -66,6 +66,10 @@ private func handleRepositoryAction(
             actionHandler.loadInitialMessages(messages: messages,
                                               state: getState(),
                                               dispatch: dispatch)
+        case .fetchPreviousMessagesSuccess(let messages):
+            actionHandler.addPreviousMessages(messages: messages,
+                                              state: getState(),
+                                              dispatch: dispatch)
         case .sendMessageTriggered(let internalId, let content):
             actionHandler.addNewSentMessage(internalId: internalId,
                                             content: content,

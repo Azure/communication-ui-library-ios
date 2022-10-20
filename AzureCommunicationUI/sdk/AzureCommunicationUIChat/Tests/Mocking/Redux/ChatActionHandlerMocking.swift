@@ -12,6 +12,7 @@ class ChatActionHandlerMocking: ChatActionHandling {
     var onChatThreadDeletedCalled: ((Bool) -> Void)?
     var initializeCalled: ((Bool) -> Void)?
     var getInitialMessagesCalled: ((Bool) -> Void)?
+    var getPreviousMessagesCalled: ((Bool) -> Void)?
     var sendMessageCalled: ((Bool) -> Void)?
 
     func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
@@ -41,6 +42,12 @@ class ChatActionHandlerMocking: ChatActionHandling {
     func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             getInitialMessagesCalled?(true)
+        }
+    }
+
+    func getPreviousMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            getPreviousMessagesCalled?(true)
         }
     }
 

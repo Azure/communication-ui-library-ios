@@ -27,7 +27,7 @@ class MessageListViewModel: ObservableObject {
             // for testing
             print("*Messages count: \(messageRepositoryManager.messages.count)")
             for m in messageRepositoryManager.messages {
-                print("--*Messages: \(m.id) \(m.content)")
+                print("--*Messages: \(m.id) \(m.createdOn.value) \(m.content)")
             }
 //            self.messages = messageRepositoryManager.messages.toMessageViewModel
         }
