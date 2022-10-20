@@ -18,9 +18,8 @@ end
 target 'AzureCommunicationUICalling' do
   project 'sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
   use_frameworks!
-  common_pods
   pod 'AzureCommunicationCalling', '2.2.0'
-
+  common_pods
   target 'AzureCommunicationUICallingTests' do
     # Pods for testing
     pod 'SwiftLint', '0.42.0'
@@ -31,8 +30,8 @@ target 'AzureCommunicationUIChat' do
   project 'sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj'
   use_frameworks!
   pod 'AzureCommunicationChat', '1.2.0'
-  common_pods
   pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.3.9'
+  common_pods
 
   target 'AzureCommunicationUIChatTests' do
     # Pods for testing
@@ -45,6 +44,8 @@ target 'AzureCommunicationUIDemoApp' do
   use_frameworks!
   pod 'AzureCommunicationCalling', '2.2.0'
   pod 'AzureCommunicationChat', '1.2.0'
+  common_pods
+  pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.3.9'
   pod 'SwiftLint', '0.42.0'
   pod 'AppCenter/Crashes', '4.4.1'
   
