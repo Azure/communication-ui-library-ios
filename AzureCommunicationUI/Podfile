@@ -6,20 +6,17 @@ project 'sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
 project 'sdk/AzureCommunicationUICalling/AzureCommunicationUIChat.xcodeproj'
 project 'AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj'
 
-def common_pods
+target 'AzureCommunicationUICalling' do
+  project 'sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
+  use_frameworks!
+  pod 'AzureCommunicationCalling', '2.2.0'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.3.9'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.3.9'
   pod 'MicrosoftFluentUI/Button_ios', '0.3.9'
   pod 'MicrosoftFluentUI/PopupMenu_ios', '0.3.9'
   pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.3.9'
   pod 'SwiftLint', '0.42.0'
-end
 
-target 'AzureCommunicationUICalling' do
-  project 'sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
-  use_frameworks!
-  pod 'AzureCommunicationCalling', '2.2.0'
-  common_pods
   target 'AzureCommunicationUICallingTests' do
     # Pods for testing
     pod 'SwiftLint', '0.42.0'
@@ -30,8 +27,13 @@ target 'AzureCommunicationUIChat' do
   project 'sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj'
   use_frameworks!
   pod 'AzureCommunicationChat', '1.2.0'
+  pod 'MicrosoftFluentUI/Avatar_ios', '0.3.9'
+  pod 'MicrosoftFluentUI/BottomSheet_ios', '0.3.9'
+  pod 'MicrosoftFluentUI/Button_ios', '0.3.9'
+  pod 'MicrosoftFluentUI/PopupMenu_ios', '0.3.9'
+  pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.3.9'
   pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.3.9'
-  common_pods
+  pod 'SwiftLint', '0.42.0'
 
   target 'AzureCommunicationUIChatTests' do
     # Pods for testing
@@ -44,7 +46,11 @@ target 'AzureCommunicationUIDemoApp' do
   use_frameworks!
   pod 'AzureCommunicationCalling', '2.2.0'
   pod 'AzureCommunicationChat', '1.2.0'
-  common_pods
+  pod 'MicrosoftFluentUI/Avatar_ios', '0.3.9'
+  pod 'MicrosoftFluentUI/BottomSheet_ios', '0.3.9'
+  pod 'MicrosoftFluentUI/Button_ios', '0.3.9'
+  pod 'MicrosoftFluentUI/PopupMenu_ios', '0.3.9'
+  pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.3.9'
   pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.3.9'
   pod 'SwiftLint', '0.42.0'
   pod 'AppCenter/Crashes', '4.4.1'
