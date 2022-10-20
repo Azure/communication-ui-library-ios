@@ -17,7 +17,7 @@ class MessageViewModel: ObservableObject, Hashable {
     }
 
     var dateHeaderLabel: String {
-        let numberOfDaysSinceToday = message.createdOn.value.days(from: Date())
+        let numberOfDaysSinceToday = message.createdOn.value.numberOfDays()
         if numberOfDaysSinceToday == 0 {
             return "Today" // Localization
         } else if numberOfDaysSinceToday == 1 {
@@ -41,7 +41,13 @@ class MessageViewModel: ObservableObject, Hashable {
 }
 
 extension Date {
-    func days(from date: Date) -> Int {
-        return Calendar.current.dateComponents([.day], from: date, to: self).day ?? 0
+    func numberOfDays() -> Int {
+        let calendar = Calendar.current
+
+        let from = calendar.startOfDay(for: self)
+        let to = calendar.startOfDay(for: Date())
+
+        let components = calendar.dateComponents([.day], from: from, to: to)
+        return components.day!
     }
 }

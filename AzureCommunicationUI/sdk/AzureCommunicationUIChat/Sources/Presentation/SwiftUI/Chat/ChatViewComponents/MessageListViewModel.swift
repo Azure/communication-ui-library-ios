@@ -37,11 +37,10 @@ class MessageListViewModel: ObservableObject {
 
     // Replace with factory
     func createViewModel(messages: [ChatMessageInfoModel], index: Int) -> MessageViewModel {
-
         let message = messages[index]
         let lastMessageIndex = index == 0 ? 0 : index - 1
         let lastMessage = messages[lastMessageIndex]
-        let showDateHeader = message.createdOn.dayOfYear - lastMessage.createdOn.dayOfYear > 0
+        let showDateHeader = index == 0 || message.createdOn.dayOfYear - lastMessage.createdOn.dayOfYear > 0
         let isConsecutive = message.senderId == lastMessage.senderId
 
         if messages[index].type == .text {
