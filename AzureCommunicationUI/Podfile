@@ -44,7 +44,7 @@ target 'AzureCommunicationUIDemoApp' do
   project 'AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj'
   use_frameworks!
   pod 'AzureCommunicationCalling', '2.2.0'
-  common_pods
+  pod 'AzureCommunicationChat', '1.2.0'
   pod 'SwiftLint', '0.42.0'
   pod 'AppCenter/Crashes', '4.4.1'
   
