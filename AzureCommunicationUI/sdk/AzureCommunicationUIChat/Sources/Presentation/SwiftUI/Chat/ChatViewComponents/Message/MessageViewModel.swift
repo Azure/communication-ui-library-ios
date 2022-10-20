@@ -6,13 +6,48 @@
 import Foundation
 
 class MessageViewModel: ObservableObject, Hashable {
-    private let id: String = ""
+    let message: ChatMessageInfoModel
+    let showDateHeader: Bool
+    let isConsecutive: Bool
+
+    init(message: ChatMessageInfoModel, showDateHeader: Bool, isConsecutive: Bool) {
+        self.message = message
+        self.showDateHeader = showDateHeader
+        self.isConsecutive = isConsecutive
+    }
+
+    var dateHeaderLabel: String {
+        let numberOfDaysSinceToday = message.createdOn.value.numberOfDays()
+        if numberOfDaysSinceToday == 0 {
+            return "Today" // Localization
+        } else if numberOfDaysSinceToday == 1 {
+            return "Yesterday" // Locatization
+        } else {
+            let format = DateFormatter()
+            format.dateFormat = "MM-dd"
+            let formattedDate = format.string(from: message.createdOn.value)
+            return formattedDate
+        }
+        // Handle dates older than a year?
+    }
 
     func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
+        hasher.combine(message.id)
     }
 
     static func == (lhs: MessageViewModel, rhs: MessageViewModel) -> Bool {
-        true
+        lhs.message.id == rhs.message.id
+    }
+}
+
+extension Date {
+    func numberOfDays() -> Int {
+        let calendar = Calendar.current
+
+        let from = calendar.startOfDay(for: self)
+        let to = calendar.startOfDay(for: Date())
+
+        let components = calendar.dateComponents([.day], from: from, to: to)
+        return components.day!
     }
 }
