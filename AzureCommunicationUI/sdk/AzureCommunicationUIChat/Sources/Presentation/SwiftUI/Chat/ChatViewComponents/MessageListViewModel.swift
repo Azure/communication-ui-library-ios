@@ -45,8 +45,8 @@ class MessageListViewModel: ObservableObject {
 
         if messages[index].type == .text {
             let isLocalUser = message.senderId == localUserId
-            let showUsername = !isLocalUser && lastMessage.senderId ?? "" != message.senderId ?? ""
-            let showTime = lastMessage.senderId ?? "" != message.senderId ?? ""
+            let showUsername = !isLocalUser && !isConsecutive
+            let showTime = !isConsecutive
 
             return TextMessageViewModel(message: message,
                                     showDateHeader: showDateHeader,
