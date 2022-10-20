@@ -4,7 +4,7 @@
 //
 
 import AzureCommunicationCommon
-@_spi(common) import AzureUICommunicationCommon
+@_spi(common) import AzureCommunicationUICommon
 import UIKit
 import SwiftUI
 import FluentUI

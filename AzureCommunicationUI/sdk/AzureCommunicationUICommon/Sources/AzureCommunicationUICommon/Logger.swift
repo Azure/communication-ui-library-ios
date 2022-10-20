@@ -17,7 +17,7 @@ import os
 
     private let osLogger: OSLog
     @_spi(common) public init(subsystem: String = "com.azure",
-                              category: String = "AzureUICommunicationCommon") {
+                              category: String = "AzureCommunicationUICommon") {
         osLogger = OSLog(subsystem: subsystem, category: category)
     }
 

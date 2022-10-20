@@ -4,7 +4,7 @@
 //
 
 import AzureCommunicationCalling
-@_spi(common) import AzureUICommunicationCommon
+@_spi(common) import AzureCommunicationUICommon
 import Combine
 import Foundation
 

@@ -140,7 +140,7 @@
 		5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */; };
 		696AD14928DBAFCE0043F807 /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696AD14828DBAFCE0043F807 /* ButtonState.swift */; };
 		752B953C2863A40F001C52E8 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752B953B2863A40E001C52E8 /* Action.swift */; };
-		7537290E28FE09A1004227FA /* AzureUICommunicationCommon in Frameworks */ = {isa = PBXBuildFile; productRef = 7537290D28FE09A1004227FA /* AzureUICommunicationCommon */; };
+		7533135B2901DD7B00891B60 /* AzureCommunicationUICommon in Frameworks */ = {isa = PBXBuildFile; productRef = 7533135A2901DD7B00891B60 /* AzureCommunicationUICommon */; };
 		759BDEF728FF0839002B6853 /* ColorThemeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEF628FF0839002B6853 /* ColorThemeProvider.swift */; };
 		759BDEF928FF0851002B6853 /* StyleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEF828FF0851002B6853 /* StyleProvider.swift */; };
 		759BDEFD28FF0A81002B6853 /* LocalizationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEFC28FF0A81002B6853 /* LocalizationOptions.swift */; };
@@ -413,12 +413,12 @@
 		696AD14828DBAFCE0043F807 /* ButtonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonState.swift; sourceTree = "<group>"; };
 		69FC33B2B556CC3B9164A78E /* Pods-AzureCommunicationUICalling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling/Pods-AzureCommunicationUICalling.release.xcconfig"; sourceTree = "<group>"; };
 		752B953B2863A40E001C52E8 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		753313592901DD0F00891B60 /* AzureCommunicationUICommon */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AzureCommunicationUICommon; path = ../AzureCommunicationUICommon; sourceTree = "<group>"; };
 		759BDEF628FF0839002B6853 /* ColorThemeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorThemeProvider.swift; sourceTree = "<group>"; };
 		759BDEF828FF0851002B6853 /* StyleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleProvider.swift; sourceTree = "<group>"; };
 		759BDEFC28FF0A81002B6853 /* LocalizationOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationOptions.swift; sourceTree = "<group>"; };
 		759BDEFE28FF0B0A002B6853 /* LocalizationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationProvider.swift; sourceTree = "<group>"; };
 		75C1EE0E28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalVideoStreamExtension.swift; sourceTree = "<group>"; };
-		75D39EA828FE06FC00377A86 /* AzureUICommunicationCommon */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = AzureUICommunicationCommon; path = ../AzureUICommunicationCommon; sourceTree = "<group>"; };
 		8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyOverlayViewModel.swift; sourceTree = "<group>"; };
 		8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		881D8F6F27F2327B008EC897 /* ErrorInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorInfoViewModelTests.swift; sourceTree = "<group>"; };
@@ -533,7 +533,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7537290E28FE09A1004227FA /* AzureUICommunicationCommon in Frameworks */,
+				7533135B2901DD7B00891B60 /* AzureCommunicationUICommon in Frameworks */,
 				FB22A9D340197CA3DC74EEBB /* Pods_AzureCommunicationUICalling.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -990,7 +990,7 @@
 		75D39EA728FE06FC00377A86 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				75D39EA828FE06FC00377A86 /* AzureUICommunicationCommon */,
+				753313592901DD0F00891B60 /* AzureCommunicationUICommon */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -1315,11 +1315,11 @@
 			buildRules = (
 			);
 			dependencies = (
-				7537290C28FE0814004227FA /* PBXTargetDependency */,
+				7533135D2901DD8100891B60 /* PBXTargetDependency */,
 			);
 			name = AzureCommunicationUICalling;
 			packageProductDependencies = (
-				7537290D28FE09A1004227FA /* AzureUICommunicationCommon */,
+				7533135A2901DD7B00891B60 /* AzureCommunicationUICommon */,
 			);
 			productName = AzureCommunicationUI;
 			productReference = A8659FC52602A22000C807DE /* AzureCommunicationUICalling.framework */;
@@ -1758,9 +1758,9 @@
 			target = A8659FC42602A22000C807DE /* AzureCommunicationUICalling */;
 			targetProxy = 1FBCB6A02645285100F57EEA /* PBXContainerItemProxy */;
 		};
-		7537290C28FE0814004227FA /* PBXTargetDependency */ = {
+		7533135D2901DD8100891B60 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			productRef = 7537290B28FE0814004227FA /* AzureUICommunicationCommon */;
+			productRef = 7533135C2901DD8100891B60 /* AzureCommunicationUICommon */;
 		};
 /* End PBXTargetDependency section */
 
@@ -2065,13 +2065,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		7537290B28FE0814004227FA /* AzureUICommunicationCommon */ = {
+		7533135A2901DD7B00891B60 /* AzureCommunicationUICommon */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = AzureUICommunicationCommon;
+			productName = AzureCommunicationUICommon;
 		};
-		7537290D28FE09A1004227FA /* AzureUICommunicationCommon */ = {
+		7533135C2901DD8100891B60 /* AzureCommunicationUICommon */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = AzureUICommunicationCommon;
+			productName = AzureCommunicationUICommon;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
