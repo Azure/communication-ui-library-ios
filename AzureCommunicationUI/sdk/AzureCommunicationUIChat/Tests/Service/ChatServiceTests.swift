@@ -49,4 +49,9 @@ class ChatServiceTests: XCTestCase {
 
         XCTAssertTrue(chatSDKWrapper.sendMessageCalled)
     }
+
+    func test_chatService_sendTypingIndicator_shouldCallchatSDKWrapperSendTypingIndicator() async throws {
+        _ = try await chatService.sendTypingIndicator()
+        XCTAssertTrue(chatSDKWrapper.sendTypingIndicatorCalled)
+    }
 }

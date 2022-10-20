@@ -10,6 +10,7 @@ protocol ChatServiceProtocol {
     func initalize() async throws
     func getInitialMessages() async throws -> [ChatMessageInfoModel]
     func sendMessage(content: String, senderDisplayName: String) async throws -> String
+    func sendTypingIndicator() async throws
 
     var chatEventSubject: PassthroughSubject<ChatEventModel, Never> { get }
 }
@@ -38,5 +39,9 @@ class ChatService: NSObject, ChatServiceProtocol {
 
     func sendMessage(content: String, senderDisplayName: String) async throws -> String {
         return try await chatSDKWrapper.sendMessage(content: content, senderDisplayName: senderDisplayName)
+    }
+
+    func sendTypingIndicator() async throws {
+        try await chatSDKWrapper.sendTypingIndicator()
     }
 }

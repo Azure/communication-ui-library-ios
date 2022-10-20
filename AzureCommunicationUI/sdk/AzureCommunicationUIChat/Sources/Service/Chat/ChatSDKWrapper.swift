@@ -150,6 +150,25 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         }
     }
 
+    func sendTypingIndicator() async throws {
+        do {
+            return try await withCheckedThrowingContinuation { continuation in
+                self.chatThreadClient?.sendTypingNotification(from: self.chatConfiguration.displayName) { result, _ in
+                    switch result {
+                    case .success:
+                        continuation.resume(returning: Void())
+                    case .failure(let error):
+                        self.logger.error("Send Typing Indicator failed: \(error)")
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        } catch {
+            self.logger.error("Send Typing Indicator failed: \(error)")
+            throw error
+        }
+    }
+
     private func registerEvents() {
         guard let client = self.chatClient else {
                      return

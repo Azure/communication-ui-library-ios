@@ -11,6 +11,10 @@ class BottomBarViewModel: ObservableObject {
 
     var sendButtonViewModel: IconButtonViewModel!
 
+    // MARK: Typing Indicators
+    private var lastTypingIndicatorSendTimestamp = Date()
+    private let typingIndicatorDelay: TimeInterval = 8.0
+
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
          dispatch: @escaping ActionDispatch) {
@@ -42,5 +46,12 @@ class BottomBarViewModel: ObservableObject {
             internalId: UUID().uuidString,
             content: message)))
         message = ""
+    }
+
+    func sendTypingIndicator() {
+        if lastTypingIndicatorSendTimestamp < Date() - typingIndicatorDelay {
+            dispatch(.chatAction(.sendTypingIndicatorTriggered))
+            lastTypingIndicatorSendTimestamp = Date()
+        }
     }
 }

@@ -37,6 +37,12 @@ struct BottomBarView: View {
         .onChange(of: hasFocus) {
             viewModel.hasFocus = $0
         }
+        .onChange(of: viewModel.message) { newValue in
+            guard !newValue.isEmpty else {
+                return
+            }
+            viewModel.sendTypingIndicator()
+        }
         .onAppear {
            self.hasFocus = viewModel.hasFocus
         }

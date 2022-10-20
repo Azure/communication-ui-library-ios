@@ -8,5 +8,7 @@
 "AzureCommunicationUIChat.ChatView.TopBarView.ChatWith1Person"="Chat with 1 person";
 "AzureCommunicationUIChat.ChatView.TopBarView.ChatWithNPeople"="Chat with %d people"; // %d is for number of people in call
 /* TypingParticipantsView */
-"AzureCommunicationUIChat.ChatView.TypingParticipantsView.AreTyping"="are typing...";
-"AzureCommunicationUIChat.ChatView.TypingParticipantsView.IsTyping"="is typing...";
+"AzureCommunicationUIChat.ChatView.TypingParticipantsView.oneParticipantIsTyping"="%@ is typing..."; // %@ is display name
+"AzureCommunicationUIChat.ChatView.TypingParticipantsView.twoParticipantsAreTyping"="%@ and %@ are typing...";
+"AzureCommunicationUIChat.ChatView.TypingParticipantsView.threeParticipantsAreTyping"="%@, %@ and 1 other are typing...";
+"AzureCommunicationUIChat.ChatView.TypingParticipantsView.multipleParticipantsAreTyping"="%@, %@ and %d others are typing..."; // %d is remaining number of participant typing
