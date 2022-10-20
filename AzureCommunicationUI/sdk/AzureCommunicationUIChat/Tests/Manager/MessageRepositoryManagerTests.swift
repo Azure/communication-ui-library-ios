@@ -3,6 +3,7 @@
 //  Licensed under the MIT License.
 //
 
+import AzureCore
 import XCTest
 @testable import AzureCommunicationUIChat
 
@@ -68,7 +69,6 @@ class MessageRepositoryManagerTests: XCTestCase {
         }
         let expectedActualId = "actualMessageId"
         let sut = makeSUT(messages: initialMessages)
-        let message = ChatMessageInfoModel()
         sut.replaceMessageId(internalId: internalId, actualId: "actualMessageId")
         XCTAssertEqual(sut.messages.count, initialMessages.count)
         XCTAssertEqual(sut.messages.last?.id, expectedActualId)
@@ -86,10 +86,25 @@ class MessageRepositoryManagerTests: XCTestCase {
         }
         let expectedActualId = "actualMessageId"
         let sut = makeSUT(messages: initialMessages)
-        let message = ChatMessageInfoModel()
         sut.replaceMessageId(internalId: internalId + "notFound", actualId: "actualMessageId")
         XCTAssertEqual(sut.messages.count, initialMessages.count)
         XCTAssertNotEqual(sut.messages.last?.id, expectedActualId)
+    }
+
+    func test_messageRepositoryManager_addTopicUpdatedMessage_then_messagesCountWillBeIncrementByOne() {
+        let initialMessages = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        let topic = "newTopic"
+        let sut = makeSUT(messages: initialMessages)
+        let threadInfo = ChatThreadInfoModel(topic: topic,
+                                             receivedOn: Iso8601Date())
+        sut.addTopicUpdatedMessage(chatThreadInfo: threadInfo)
+        XCTAssertEqual(sut.messages.count, initialMessages.count + 1)
+        XCTAssertEqual(sut.messages.last?.type, .topicUpdated)
+        XCTAssertEqual(sut.messages.last?.content, topic)
     }
 
     func test_messageRepositoryManager_addReceivedMessage_when_zeroInitialMessages_then_messagesCountWillBeIncrementByOne() {
@@ -109,6 +124,82 @@ class MessageRepositoryManagerTests: XCTestCase {
         let message = ChatMessageInfoModel()
         sut.addReceivedMessage(message: message)
         XCTAssertEqual(sut.messages.count, initialMessages.count + 1)
+    }
+
+    func test_messageRepositoryManager_updateMessageEdited_when_foundMatchingInternalId_then_messageEditedOnNotNil() {
+        let initialMessages = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        guard let internalId = initialMessages.last?.id else {
+            XCTFail("Should have at least one message")
+            return
+        }
+        let sut = makeSUT(messages: initialMessages)
+        let message = ChatMessageInfoModel(id: internalId,
+                                           editedOn: Iso8601Date())
+        sut.updateMessageEdited(message: message)
+        XCTAssertEqual(sut.messages.count, initialMessages.count)
+        XCTAssertNotNil(sut.messages.last?.editedOn)
+    }
+
+    func test_messageRepositoryManager_updateMessageEdited_when_notFoundMatchingInternalId_then_messageEditedOnIsNil() {
+        let initialMessages = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        guard let internalId = initialMessages.last?.id else {
+            XCTFail("Should have at least one message")
+            return
+        }
+        let sut = makeSUT(messages: initialMessages)
+        let message = ChatMessageInfoModel(id: internalId + "notFound",
+                                           editedOn: Iso8601Date())
+        sut.updateMessageEdited(message: message)
+        XCTAssertEqual(sut.messages.count, initialMessages.count)
+        for m in sut.messages {
+            XCTAssertNil(m.editedOn)
+        }
+    }
+
+    func test_messageRepositoryManager_updateMessageDeleted_when_foundMatchingInternalId_then_messageDeletedOnNotNil() {
+        let initialMessages = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        guard let internalId = initialMessages.last?.id else {
+            XCTFail("Should have at least one message")
+            return
+        }
+        let sut = makeSUT(messages: initialMessages)
+        let message = ChatMessageInfoModel(id: internalId,
+                                           deletedOn: Iso8601Date())
+        sut.updateMessageDeleted(message: message)
+        XCTAssertEqual(sut.messages.count, initialMessages.count)
+        XCTAssertNotNil(sut.messages.last?.deletedOn)
+    }
+
+    func test_messageRepositoryManager_updateMessageDeleted_when_notFoundMatchingInternalId_then_messageDeletedOnIsNil() {
+        let initialMessages = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        guard let internalId = initialMessages.last?.id else {
+            XCTFail("Should have at least one message")
+            return
+        }
+        let sut = makeSUT(messages: initialMessages)
+        let message = ChatMessageInfoModel(id: internalId + "notFound",
+                                           deletedOn: Iso8601Date())
+        sut.updateMessageDeleted(message: message)
+        XCTAssertEqual(sut.messages.count, initialMessages.count)
+        for m in sut.messages {
+            XCTAssertNil(m.deletedOn)
+        }
     }
 }
 

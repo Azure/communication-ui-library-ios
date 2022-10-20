@@ -3,10 +3,10 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
-
-import XCTest
+import AzureCore
 import Combine
+import Foundation
+import XCTest
 @testable import AzureCommunicationUIChat
 
 class RepositoryMiddlewareTests: XCTestCase {
@@ -25,6 +25,20 @@ class RepositoryMiddlewareTests: XCTestCase {
         super.tearDown()
         mockRepositoryHandler = nil
         mockMiddleware = nil
+    }
+
+    func test_repositoryMiddleware_apply_when_fetchInitialMessagesSuccessRepositoryAction_then_handlerAddTopicUpdatedMessageCalledBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "addTopicUpdatedMessageCalled")
+        mockRepositoryHandler.addTopicUpdatedMessageCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        let threadInfo = ChatThreadInfoModel(topic: "newTopic", receivedOn: Iso8601Date())
+        middlewareDispatch(getEmptyDispatch())(.chatAction(.chatTopicUpdated(threadInfo: threadInfo)))
+        wait(for: [expectation], timeout: 1)
     }
 
     func test_repositoryMiddleware_apply_when_fetchInitialMessagesSuccessRepositoryAction_then_handlerLoadInitialMessagesCalledBeingCalled() {
@@ -71,7 +85,7 @@ class RepositoryMiddlewareTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_repositoryMiddleware_apply_when_chatMessageReceivedRepositoryAction_then_handleraddReceivedMessageBeingCalled() {
+    func test_repositoryMiddleware_apply_when_chatMessageReceivedRepositoryAction_then_handlerAddReceivedMessageBeingCalled() {
 
         let middlewareDispatch = getEmptyChatMiddlewareFunction()
         let expectation = expectation(description: "addReceivedMessageCalled")
@@ -82,6 +96,34 @@ class RepositoryMiddlewareTests: XCTestCase {
 
         let message = ChatMessageInfoModel()
         middlewareDispatch(getEmptyDispatch())(.repositoryAction(.chatMessageReceived(message: message)))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_repositoryMiddleware_apply_when_chatMessageEditedReceivedRepositoryAction_then_handlerUpdateReceivedEditedMessageBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "updateReceivedEditedMessageCalled")
+        mockRepositoryHandler.updateReceivedEditedMessageCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        let message = ChatMessageInfoModel()
+        middlewareDispatch(getEmptyDispatch())(.repositoryAction(.chatMessageEditedReceived(message: message)))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_repositoryMiddleware_apply_when_chatMessageDeletedReceivedRepositoryAction_then_handlerUpdateReceivedDeletedMessageCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "updateReceivedDeletedMessageCalled")
+        mockRepositoryHandler.updateReceivedDeletedMessageCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        let message = ChatMessageInfoModel()
+        middlewareDispatch(getEmptyDispatch())(.repositoryAction(.chatMessageDeletedReceived(message: message)))
         wait(for: [expectation], timeout: 1)
     }
 }

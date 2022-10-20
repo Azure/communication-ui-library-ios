@@ -4,6 +4,7 @@
 //
 
 import AzureCommunicationCommon
+import AzureCore
 import Combine
 import Foundation
 import XCTest
@@ -57,6 +58,15 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
         XCTAssertTrue(mockMessageRepositoryManager.replaceMessageIdCalled)
     }
 
+    func test_repositoryMiddlewareHandler_addTopicUpdatedMessage_then_addTopicUpdatedMessageCalled() async {
+        let threadInfo = ChatThreadInfoModel(topic: "topic", receivedOn: Iso8601Date())
+        await repositoryMiddlewareHandler.addTopicUpdatedMessage(
+            threadInfo: threadInfo,
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockMessageRepositoryManager.addTopicUpdatedMessageCalled)
+    }
+
     func test_repositoryMiddlewareHandler_addReceivedMessage_then_addReceivedMessageCalled() async {
         let message = ChatMessageInfoModel()
         await repositoryMiddlewareHandler.addReceivedMessage(
@@ -64,6 +74,24 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
             state: getEmptyState(),
             dispatch: getEmptyDispatch()).value
         XCTAssertTrue(mockMessageRepositoryManager.addReceivedMessageCalled)
+    }
+
+    func test_repositoryMiddlewareHandler_updateReceivedEditedMessage_then_updateMessageEditedCalled() async {
+        let message = ChatMessageInfoModel()
+        await repositoryMiddlewareHandler.updateReceivedEditedMessage(
+            message: message,
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockMessageRepositoryManager.updateMessageEditedCalled)
+    }
+
+    func test_repositoryMiddlewareHandler_updateReceivedDeletedMessage_then_updateMessageDeletedCalled() async {
+        let message = ChatMessageInfoModel()
+        await repositoryMiddlewareHandler.updateReceivedDeletedMessage(
+            message: message,
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockMessageRepositoryManager.updateMessageDeletedCalled)
     }
 }
 
