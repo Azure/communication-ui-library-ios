@@ -7,7 +7,7 @@ import FluentUI
 import SwiftUI
 
 struct TypingParticipantsView: View {
-    @ObservedObject var viewModel: TypingParticipantsViewModel
+    @StateObject var viewModel: TypingParticipantsViewModel
 
     private enum Constants {
         static let padding: CGFloat = 20.0
@@ -21,6 +21,7 @@ struct TypingParticipantsView: View {
             if viewModel.shouldShowIndicator {
                 Spacer()
                 HStack {
+                    // Vstack to make sure AvatarGroup stays in vertical center
                     VStack(spacing: 0) {
                         Spacer()
                         TypingParticipantAvatarGroupContainer(participantList: viewModel.participants)
@@ -33,6 +34,7 @@ struct TypingParticipantsView: View {
                         .font(.caption)
                     Spacer()
                 }
+                // give an explicit frame to constraint avatargroup layout
                 .frame(width: UIScreen.main.bounds.size.width,
                        height: Constants.sectionHeight)
                 .padding(.leading, Constants.padding)
