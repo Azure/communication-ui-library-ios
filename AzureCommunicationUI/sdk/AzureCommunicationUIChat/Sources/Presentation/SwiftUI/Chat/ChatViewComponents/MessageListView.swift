@@ -6,6 +6,15 @@
 import SwiftUI
 
 struct MessageListView: View {
+    private enum Constants {
+        static let horizontalPadding: CGFloat = 16
+        static let bottomPadding: CGFloat = 0
+        static let topPadding: CGFloat = 8
+        static let topConsecutivePadding: CGFloat = 4
+
+        static let defaultMinListRowHeight: CGFloat = 10
+    }
+
     @StateObject var viewModel: MessageListViewModel
 
     var body: some View {
@@ -18,18 +27,17 @@ struct MessageListView: View {
 
     @available(iOS 15.0, *)
     var messageList: some View {
-        ScrollViewReader { value in
+        ScrollViewReader { _ in
             List {
                 ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
                     MessageView(viewModel: message)
                     .id(index)
                     .listRowSeparator(.hidden)
-                }
-                .onChange(of: viewModel.messages.count) { _ in
-                    value.scrollTo(viewModel.messages.count - 1)
+                    .listRowInsets(getEdgeInsets(message: message))
                 }
             }
             .listStyle(.plain)
+            .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
         }
     }
 
@@ -46,5 +54,15 @@ struct MessageListView: View {
                 }
             }
         }
+    }
+
+    func getEdgeInsets(message: MessageViewModel) -> EdgeInsets {
+        EdgeInsets(
+            top: message.isConsecutive
+            ? Constants.topConsecutivePadding
+            : Constants.topPadding,
+            leading: Constants.horizontalPadding,
+            bottom: Constants.bottomPadding,
+            trailing: Constants.horizontalPadding)
     }
 }
