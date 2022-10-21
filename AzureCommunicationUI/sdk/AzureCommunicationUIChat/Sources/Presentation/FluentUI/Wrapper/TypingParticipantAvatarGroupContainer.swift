@@ -11,12 +11,12 @@ struct TypingParticipantAvatarGroupContainer: UIViewRepresentable {
     var participantListOld: [ParticipantInfoModel]
     var avatarGroup: TypingParticipantAvatarGroup
 
-    func makeUIView(context: Context) -> UIView {
+    func makeUIView(context: Context) -> TypingParticipantAvatarGroup {
         avatarGroup.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
         return avatarGroup
     }
 
-    func updateUIView(_ uiView: UIView, context: Context) {
+    func updateUIView(_ uiView: TypingParticipantAvatarGroup, context: Context) {
         avatarGroup.setAvatars(from: participantListOld, newData: participantList)
     }
 }
