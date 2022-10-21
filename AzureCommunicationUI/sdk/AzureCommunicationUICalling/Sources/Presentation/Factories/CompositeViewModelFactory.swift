@@ -54,7 +54,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeMoreCallOptionsListViewModel() -> MoreCallOptionsListViewModel
     func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
                                               title: String,
-                                              action: (() -> Void)?) -> MoreCallOptionsListCellViewModel
+                                              action: @escaping (() -> Void)) -> MoreCallOptionsListCellViewModel
 
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
@@ -205,6 +205,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         ControlBarViewModel(compositeViewModelFactory: self,
                             logger: logger,
                             localizationProvider: localizationProvider,
+                            diagnosticsManager: diagnosticsManager,
                             dispatchAction: dispatchAction,
                             endCallConfirm: endCallConfirm,
                             localUserState: localUserState)
@@ -254,13 +255,12 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
 
     func makeMoreCallOptionsListViewModel() -> MoreCallOptionsListViewModel {
         MoreCallOptionsListViewModel(compositeViewModelFactory: self,
-                                     localizationProvider: localizationProvider,
-                                     diagnosticsManager: diagnosticsManager)
+                                     localizationProvider: localizationProvider)
     }
 
     func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
                                               title: String,
-                                              action: (() -> Void)?) -> MoreCallOptionsListCellViewModel {
+                                              action: @escaping (() -> Void)) -> MoreCallOptionsListCellViewModel {
         MoreCallOptionsListCellViewModel(icon: icon,
                                          title: title,
                                          action: action)

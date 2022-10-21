@@ -41,6 +41,9 @@ struct ControlBarView: View {
                 .accessibilityElement(children: .contain)
                 .accessibilityAddTraits(.isModal)
         })
+        .sheet(isPresented: $viewModel.moreCallOptionsListViewModel.isShareActivityDisplayed) {
+            ActivityViewController(activityItems: [viewModel.getDiagnosticsInfo()])
+        }
     }
 
     /// A stack view that has items centered aligned horizontally in its stack view

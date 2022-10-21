@@ -47,4 +47,9 @@ extension MoreCallOptionsListViewController: UITableViewDataSource, UITableViewD
         cell.setup(viewModel: viewModel)
         return cell
     }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.items[indexPath.row].action()
+        dismissDrawer(animated: true)
+    }
 }

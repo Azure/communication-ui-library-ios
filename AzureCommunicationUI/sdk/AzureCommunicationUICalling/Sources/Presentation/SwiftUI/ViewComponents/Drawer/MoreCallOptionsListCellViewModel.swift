@@ -9,12 +9,12 @@ class MoreCallOptionsListCellViewModel {
     let icon: CompositeIcon
     let title: String
 //    let accessibilityIdentifier: String
-    let action: (() -> Void)?
+    let action: () -> Void
 
     init(icon: CompositeIcon,
          title: String,
 //         accessibilityIdentifier: String,
-         action: (() -> Void)?) {
+         action: @escaping () -> Void) {
         self.icon = icon
         self.title = title
 //        self.accessibilityIdentifier = accessibilityIdentifier

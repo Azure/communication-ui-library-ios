@@ -8,6 +8,8 @@ import Foundation
 
 protocol DiagnosticsManagerProtocol {
     var callId: String? { get }
+
+    func getDiagnosticsInfo() -> String
 }
 
 class DiagnosticsManager: DiagnosticsManagerProtocol {
@@ -32,5 +34,12 @@ class DiagnosticsManager: DiagnosticsManagerProtocol {
         }
 
         callId = state.callingState.callId
+    }
+
+    func getDiagnosticsInfo() -> String {
+        guard let callId = callId else {
+            return ""
+        }
+        return "Call ID: \(callId)"
     }
 }

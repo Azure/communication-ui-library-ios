@@ -227,7 +227,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
                                               title: String,
-                                              action: (() -> Void)?) -> MoreCallOptionsListCellViewModel {
+                                              action: @escaping (() -> Void)) -> MoreCallOptionsListCellViewModel {
         moreCallOptionsListCellViewModel ?? MoreCallOptionsListCellViewModel(icon: icon,
                                                                              title: title,
                                                                              action: action)

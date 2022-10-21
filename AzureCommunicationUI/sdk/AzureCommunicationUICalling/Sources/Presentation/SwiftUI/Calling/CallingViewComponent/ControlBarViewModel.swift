@@ -9,6 +9,7 @@ import Combine
 class ControlBarViewModel: ObservableObject {
     private let logger: Logger
     private let localizationProvider: LocalizationProviderProtocol
+    private let diagnosticsManager: DiagnosticsManagerProtocol
     private let dispatch: ActionDispatch
     private var isCameraStateUpdating: Bool = false
     private(set) var cameraButtonViewModel: IconButtonViewModel!
@@ -36,11 +37,13 @@ class ControlBarViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
+         diagnosticsManager: DiagnosticsManagerProtocol,
          dispatchAction: @escaping ActionDispatch,
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState) {
         self.logger = logger
         self.localizationProvider = localizationProvider
+        self.diagnosticsManager = diagnosticsManager
         self.dispatch = dispatchAction
         self.displayEndCallConfirm = endCallConfirm
 
@@ -194,6 +197,10 @@ class ControlBarViewModel: ObservableObject {
         let headerName = localizationProvider.getLocalizedString(.leaveCallListHeader)
         return LeaveCallConfirmationListViewModel(headerName: headerName,
                                                   listItemViewModel: leaveCallConfirmationVm)
+    }
+
+    func getDiagnosticsInfo() -> String {
+        return diagnosticsManager.getDiagnosticsInfo()
     }
 
     func update(localUserState: LocalUserState,
