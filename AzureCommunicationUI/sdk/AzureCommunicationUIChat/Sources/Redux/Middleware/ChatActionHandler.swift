@@ -88,7 +88,7 @@ class ChatActionHandler: ChatActionHandling {
             }
         }
     }
-  
+
     func onChatThreadDeleted(dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             // may be extracted to function in the future
