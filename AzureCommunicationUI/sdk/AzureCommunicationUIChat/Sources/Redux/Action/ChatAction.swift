@@ -16,14 +16,9 @@ enum ChatAction: Equatable {
     case chatThreadDeleted
     case chatTopicUpdated(topic: String)
 
-    case sendReadReceiptTriggered(messageId: String)
-    case sendReadReceiptSuccess(messageId: String)
-    case sendReadReceiptFailed(error: Error)
-
     static func == (lhs: ChatAction, rhs: ChatAction) -> Bool {
         switch (lhs, rhs) {
-        case let (.initializeChatFailed(lErr), .initializeChatFailed(rErr)),
-            let (.sendReadReceiptFailed(lErr), .sendReadReceiptFailed(rErr)):
+        case let (.initializeChatFailed(lErr), .initializeChatFailed(rErr)):
             return (lErr as NSError).code == (rErr as NSError).code
 
         case (.initializeChatTriggered, .initializeChatTriggered):
@@ -31,10 +26,6 @@ enum ChatAction: Equatable {
 
         case let (.topicRetrieved(lStr), .topicRetrieved(rStr)):
             return lStr == rStr
-
-        case let (.sendReadReceiptTriggered(lMsgId), .sendReadReceiptTriggered(rMsgId)),
-              let (.sendReadReceiptSuccess(lMsgId), .sendReadReceiptSuccess(rMsgId)):
-            return lMsgId == rMsgId
 
         default:
             return false

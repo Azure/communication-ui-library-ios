@@ -55,8 +55,6 @@ private func handleChatAction(_ action: ChatAction,
         actionHandler.initialize(state: getState(),
                                  dispatch: dispatch,
                                  serviceListener: serviceListener)
-    case .sendReadReceiptTriggered(let messageId):
-        actionHandler.sendReadReceipt(messageId: messageId, dispatch: dispatch)
     default:
         break
     }

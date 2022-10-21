@@ -19,6 +19,7 @@ class ChatServiceMocking: ChatServiceProtocol {
     var getInitialMessagesCalled: Bool = false
     var getPreviousMessagesCalled: Bool = false
     var sendMessageCalled: Bool = false
+    var sendReadReceiptCalled: Bool = false
 
     func initalize() async throws {
         initializeCalled = true
@@ -59,6 +60,7 @@ class ChatServiceMocking: ChatServiceProtocol {
     }
 
     func sendReadReceipt(messageId: String) async throws {
+        sendReadReceiptCalled = true
         Task<Void, Error> {
             if let error = self.error {
                 throw error
