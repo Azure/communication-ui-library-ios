@@ -6,13 +6,35 @@
 import SwiftUI
 
 struct MessageView: View {
-    let viewModel: MessageViewModel
+    @StateObject var viewModel: MessageViewModel
 
     var body: some View {
-        TextMessageView(message: "Hello World",
-                          createdOn: Date(),
-                          displayName: "John Smith",
-                          isSelf: true)
-        SystemMessageView(message: "System Message")
+        VStack {
+            dateHeader
+            message
+        }
+    }
+
+    var dateHeader: some View {
+        Group {
+            if viewModel.showDateHeader {
+                Text(viewModel.dateHeaderLabel)
+                    .font(.caption)
+                    .foregroundColor(Color(StyleProvider.color.textSecondary))
+            }
+        }
+    }
+
+    var message: some View {
+        Group {
+            switch viewModel {
+            case let textMessageViewModel as TextMessageViewModel:
+                TextMessageView(viewModel: textMessageViewModel)
+            case let systemMessageViewModel as SystemMessageViewModel:
+                SystemMessageView(viewModel: systemMessageViewModel)
+            default:
+                EmptyView()
+            }
+        }
     }
 }

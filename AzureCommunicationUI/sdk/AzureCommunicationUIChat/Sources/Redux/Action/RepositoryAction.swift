@@ -12,6 +12,10 @@ enum RepositoryAction: Equatable {
     case fetchInitialMessagesSuccess(messages: [ChatMessageInfoModel])
     case fetchInitialMessagesFailed(error: Error)
 
+    case fetchPreviousMessagesTriggered
+    case fetchPreviousMessagesSuccess(messages: [ChatMessageInfoModel])
+    case fetchPreviousMessagesFailed(error: Error)
+
     case sendMessageTriggered(internalId: String,
                               content: String)
     case sendMessageSuccess(internalId: String,
@@ -27,14 +31,17 @@ enum RepositoryAction: Equatable {
 
     static func == (lhs: RepositoryAction, rhs: RepositoryAction) -> Bool {
         switch (lhs, rhs) {
-        case let (.fetchInitialMessagesFailed(lErr), .fetchInitialMessagesFailed(rErr)):
+        case let (.fetchInitialMessagesFailed(lErr), .fetchInitialMessagesFailed(rErr)),
+            let (.fetchPreviousMessagesFailed(lErr), .fetchPreviousMessagesFailed(rErr)):
             return (lErr as NSError).code == (rErr as NSError).code
 
         case (.fetchInitialMessagesTriggered, .fetchInitialMessagesTriggered),
+            (.fetchPreviousMessagesTriggered, .fetchPreviousMessagesTriggered),
             (.repositoryUpdated, .repositoryUpdated):
             return true
 
-        case let (.fetchInitialMessagesSuccess(lMsgArr), .fetchInitialMessagesSuccess(rMsgArr)):
+        case let (.fetchInitialMessagesSuccess(lMsgArr), .fetchInitialMessagesSuccess(rMsgArr)),
+            let (.fetchPreviousMessagesSuccess(lMsgArr), .fetchPreviousMessagesSuccess(rMsgArr)):
             return lMsgArr == rMsgArr
 
         case let (.chatMessageReceived(lMsg), .chatMessageReceived(rMsg)),

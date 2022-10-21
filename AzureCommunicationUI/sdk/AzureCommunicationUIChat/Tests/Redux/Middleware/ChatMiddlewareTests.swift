@@ -57,6 +57,19 @@ class ChatMiddlewareTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_chatMiddleware_apply_when_sendMessageTriggeredRepositoryAction_then_handlerGetPreviousMessagesBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "getPreviousMessagesWasCalled")
+        mockChatActionHandler.getPreviousMessagesCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.repositoryAction(.fetchPreviousMessagesTriggered))
+        wait(for: [expectation], timeout: 1)
+    }
+
     func test_chatMiddleware_apply_when_sendMessageTriggeredRepositoryAction_then_handlerSendMessageCalledBeingCalled() {
 
         let middlewareDispatch = getEmptyChatMiddlewareFunction()

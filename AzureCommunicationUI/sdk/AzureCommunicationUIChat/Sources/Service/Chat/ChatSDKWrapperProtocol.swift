@@ -9,6 +9,7 @@ import Combine
 protocol ChatSDKWrapperProtocol {
     func initializeChat() async throws
     func getInitialMessages() async throws -> [ChatMessageInfoModel]
+    func getPreviousMessages() async throws -> [ChatMessageInfoModel]
     func sendMessage(content: String, senderDisplayName: String) async throws -> String
     func sendTypingIndicator() async throws
 

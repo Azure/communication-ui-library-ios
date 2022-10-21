@@ -13,6 +13,11 @@ protocol RepositoryMiddlewareHandling {
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
+    func addPreviousMessages(
+        messages: [ChatMessageInfoModel],
+        state: AppState,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
     func addNewSentMessage(
         internalId: String,
         content: String,
@@ -45,10 +50,21 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         messages: [ChatMessageInfoModel],
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
-        Task {
-            messageRepository.addInitialMessages(initialMessages: messages)
+            Task {
+                messageRepository.addInitialMessages(initialMessages: messages)
+                dispatch(.repositoryAction(.repositoryUpdated))
+            }
         }
-    }
+
+    func addPreviousMessages(
+        messages: [ChatMessageInfoModel],
+        state: AppState,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+            Task {
+                messageRepository.addPreviousMessages(previousMessages: messages)
+                dispatch(.repositoryAction(.repositoryUpdated))
+            }
+        }
 
     func addNewSentMessage(
         internalId: String,
@@ -88,6 +104,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             messageRepository.addReceivedMessage(message: message)
+            dispatch(.repositoryAction(.repositoryUpdated))
         }
     }
 }
