@@ -3,7 +3,7 @@
 //  Licensed under the MIT License.
 //
 
-@_spi(common) import AzureCommunicationUICommon
+// @_spi(common) import AzureCommunicationUICommon
 
 enum BannerInfoType: Equatable {
     case recordingAndTranscriptionStarted

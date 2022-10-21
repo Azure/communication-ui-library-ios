@@ -3,7 +3,7 @@
 //  Licensed under the MIT License.
 //
 
-@_spi(common) import AzureCommunicationUICommon
+// @_spi(common) import AzureCommunicationUICommon
 import FluentUI
 import Foundation
 
