@@ -75,3 +75,9 @@ public struct ChatMessageModel {
     public let senderId: String
     public let senderDisplayName: String
 }
+
+extension Iso8601Date {
+    var dayOfYear: Int {
+        return Calendar.current.ordinality(of: .day, in: .year, for: self.value)!
+    }
+}
