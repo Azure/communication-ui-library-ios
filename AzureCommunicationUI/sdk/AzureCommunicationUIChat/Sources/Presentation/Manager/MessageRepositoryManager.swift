@@ -16,7 +16,10 @@ protocol MessageRepositoryManagerProtocol {
     func replaceMessageId(internalId: String, actualId: String)
 
     // MARK: receiving remote events
+    func addTopicUpdatedMessage(chatThreadInfo: ChatThreadInfoModel)
     func addReceivedMessage(message: ChatMessageInfoModel)
+    func updateMessageEdited(message: ChatMessageInfoModel)
+    func updateMessageDeleted(message: ChatMessageInfoModel)
 }
 
 class MessageRepositoryManager: MessageRepositoryManagerProtocol {
@@ -65,6 +68,18 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
         }
     }
 
+    func addTopicUpdatedMessage(chatThreadInfo: ChatThreadInfoModel) {
+        guard let topic = chatThreadInfo.topic else {
+            return
+        }
+        let topicUpdatedSystemMessage = ChatMessageInfoModel(
+            type: .topicUpdated,
+            content: topic,
+            createdOn: chatThreadInfo.receivedOn
+        )
+        messages.append(topicUpdatedSystemMessage)
+    }
+
     func addReceivedMessage(message: ChatMessageInfoModel) {
         if let index = messages.firstIndex(where: {
             $0.id == message.id
@@ -72,6 +87,22 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
             messages[index] = message
         } else {
             messages.append(message)
+        }
+    }
+
+    func updateMessageEdited(message: ChatMessageInfoModel) {
+        if let index = messages.firstIndex(where: {
+            $0.id == message.id
+        }) {
+            messages[index] = message
+        }
+    }
+
+    func updateMessageDeleted(message: ChatMessageInfoModel) {
+        if let index = messages.firstIndex(where: {
+            $0.id == message.id
+        }) {
+            messages[index] = message
         }
     }
 }

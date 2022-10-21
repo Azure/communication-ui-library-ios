@@ -172,8 +172,8 @@ class ChatServiceEventHandlerTests: XCTestCase {
         let expectedTopic = "topic"
         func dispatch(action: Action) {
             switch action {
-            case .chatAction(.chatTopicUpdated(let topic)):
-                XCTAssertEqual(topic, expectedTopic)
+            case .chatAction(.chatTopicUpdated(let threadInfo)):
+                XCTAssertEqual(threadInfo.topic, expectedTopic)
                 expectation.fulfill()
             default:
                 XCTExpectFailure("Should not reach default case.")

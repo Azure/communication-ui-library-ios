@@ -30,6 +30,9 @@ public struct ChatCompositeErrorCode {
     /// Error when local user fails to resume a chat.
     static let chatResume: String = "chatResume"
 
+    /// Error when local user fails to send message.
+    static let sendMessage: String = "sendMessage"
+
     /// Error when failed to parse threadId from teams meeting URL
     static let parseThreadIdFailed: String = "parseThreadIdFailed"
 }

@@ -18,10 +18,6 @@ extension Reducer where State == ErrorState,
             errorType = internalError
             error = rawError
             errorCategory = .fatal
-        case let .errorAction(.statusErrorAndChatReset(internalError, rawError)):
-            errorType = internalError
-            error = rawError
-            errorCategory = .chatState
         case .chatAction(.initializeChatTriggered):
             errorType = nil
             error = nil

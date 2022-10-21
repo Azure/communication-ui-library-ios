@@ -10,6 +10,7 @@ class ChatActionHandlerMocking: ChatActionHandling {
 
     var enterBackgroundCalled: ((Bool) -> Void)?
     var enterForegroundCalled: ((Bool) -> Void)?
+    var onChatThreadDeletedCalled: ((Bool) -> Void)?
     var initializeCalled: ((Bool) -> Void)?
     var getInitialMessagesCalled: ((Bool) -> Void)?
     var getPreviousMessagesCalled: ((Bool) -> Void)?
@@ -25,6 +26,12 @@ class ChatActionHandlerMocking: ChatActionHandling {
     func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             enterForegroundCalled?(true)
+        }
+    }
+
+    func onChatThreadDeleted(dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            onChatThreadDeletedCalled?(true)
         }
     }
 

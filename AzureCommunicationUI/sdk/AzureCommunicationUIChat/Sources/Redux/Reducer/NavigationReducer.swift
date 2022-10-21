@@ -16,8 +16,6 @@ extension Reducer where State == NavigationState,
             navigationStatus = .headless
         case .compositeExitAction:
             navigationStatus = .exit
-        case .errorAction(.statusErrorAndChatReset):
-            navigationStatus = .exit
         default:
             return state
         }
