@@ -9,11 +9,15 @@ class TypingParticipantsViewModel: ObservableObject {
     private let logger: Logger
     private let localizationProvider: LocalizationProviderProtocol
 
-    private var typingIndicatorTimer: Timer?
     private var participantsLastUpdatedTimestamp = Date()
     private var typingIndicatorLastUpdatedTimestamp = Date()
-    var participants: [ParticipantInfoModel] = []
-
+    var participantsOldValue: [ParticipantInfoModel] = []
+    var participants: [ParticipantInfoModel] = [] {
+        didSet {
+            participantsOldValue = oldValue
+        }
+    }
+    var avatarGroup = TypingParticipantAvatarGroup()
     @Published var typingIndicatorLabel: String?
     var shouldShowIndicator: Bool = false
 
@@ -36,48 +40,36 @@ class TypingParticipantsViewModel: ObservableObject {
     }
 
     func update(participantsState: ParticipantsState) {
-        if self.participantsLastUpdatedTimestamp < participantsState.participantsUpdatedTimestamp {
-            self.participants = Array(participantsState.participantsInfoMap.values)
+        guard !participantsState.typingIndicatorMap.isEmpty,
+        !participantsState.participantsInfoMap.isEmpty else {
+            hideTypingIndicator()
+            return
         }
-
-        if participantsState.typingIndicatorUpdatedTimestamp != self.typingIndicatorLastUpdatedTimestamp {
-            self.typingIndicatorLastUpdatedTimestamp =
-            participantsState.typingIndicatorUpdatedTimestamp
-            let currentTimestamp = Date()
-            let typingParticipants: [ParticipantInfoModel] = participantsState.typingIndicatorMap
-                .filter {
-                    $0.value > currentTimestamp
-                }
-                .compactMap { userId, _ in
-                    participantsState.participantsInfoMap[userId]
-                }
-                .sorted(by: { $0.displayName < $1.displayName })
-            displayWithTimer(
-                latestTypingTimestamp: participantsState.typingIndicatorMap.values.max() ?? Date(),
-                participants: typingParticipants)
-        }
+        participants = participantsState.typingIndicatorMap
+            .compactMap { userId, _ in
+                participantsState.participantsInfoMap[userId]
+            }
+            .sorted(by: { $0.displayName < $1.displayName })
+        displayLabel()
     }
 
-    private func displayWithTimer(latestTypingTimestamp: Date,
-                                  participants: [ParticipantInfoModel]) {
+    private func displayLabel() {
         guard !participants.isEmpty,
               let label = getLocalizedTypingIndicatorText(participants: participants) else {
             return
         }
         shouldShowIndicator = true
         typingIndicatorLabel = label
-        resetTimer(timeInterval: Date().timeIntervalSince(latestTypingTimestamp))
     }
 
-    @objc private func hideTypingIndicator() {
+    private func hideTypingIndicator() {
         shouldShowIndicator = false
         typingIndicatorLabel = nil
-        typingIndicatorTimer?.invalidate()
     }
 
     private func getLocalizedTypingIndicatorText(participants: [ParticipantInfoModel]) -> String? {
         var participantList = participants
-        var participantCount = TypingParticipantCount(rawValue: participants.count) ?? .mutipleTyping
+        let participantCount = TypingParticipantCount(rawValue: participants.count) ?? .mutipleTyping
         switch participantCount {
         case .singleTyping:
             // X is typing
@@ -102,13 +94,5 @@ class TypingParticipantsViewModel: ObservableObject {
         default:
             return nil
         }
-    }
-
-    private func resetTimer(timeInterval: TimeInterval = Constants.defaultTimeInterval) {
-        typingIndicatorTimer = Timer.scheduledTimer(timeInterval: timeInterval,
-                                                         target: self,
-                                                         selector: #selector(hideTypingIndicator),
-                                                         userInfo: nil,
-                                                         repeats: false)
     }
 }

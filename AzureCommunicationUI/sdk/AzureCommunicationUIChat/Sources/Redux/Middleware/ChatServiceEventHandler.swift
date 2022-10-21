@@ -15,6 +15,11 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
     private let logger: Logger
     private let cancelBag = CancelBag()
 
+    private enum Constants {
+        // number of seconds before participant removed from typing indicator
+        static let typingIndicatorDisplayInterval: TimeInterval = 8.0
+    }
+
     init(chatService: ChatServiceProtocol, logger: Logger) {
         self.chatService = chatService
         self.logger = logger
@@ -94,7 +99,11 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
 
     func handleTypingIndicatorReceived(dispatch: @escaping ActionDispatch,
                                        userEventTimestamp: UserEventTimestampModel) {
-        dispatch(.participantsAction(.typingIndicatorReceived(userEventTimestamp: userEventTimestamp)))
+        let timer = Timer.scheduledTimer(withTimeInterval: Constants.typingIndicatorDisplayInterval,
+                                         repeats: false) {_ in
+            dispatch(.participantsAction(.clearTypingIndicator(id: userEventTimestamp.id)))
+        }
+        dispatch(.participantsAction(.typingIndicatorReceived(id: userEventTimestamp.id, timer: timer)))
     }
 
     func handleReadReceiptReceived(dispatch: @escaping ActionDispatch,

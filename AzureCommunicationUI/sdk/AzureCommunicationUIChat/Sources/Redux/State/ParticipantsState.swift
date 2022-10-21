@@ -11,16 +11,13 @@ struct ParticipantsState {
 
     // MARK: Typing Indicators
     let participantsUpdatedTimestamp: Date
-    let typingIndicatorMap: [String: Date]
-    let typingIndicatorUpdatedTimestamp: Date
+    let typingIndicatorMap: [String: Timer]
 
     init(participantsInfoMap: [String: ParticipantInfoModel] = [:],
          participantsUpdatedTimestamp: Date = Date(),
-         typingIndicatorMap: [String: Date] = [:],
-         typingIndicatorUpdatedTimestamp: Date = Date()) {
+         typingIndicatorMap: [String: Timer] = [:]) {
         self.participantsInfoMap = participantsInfoMap
         self.participantsUpdatedTimestamp = participantsUpdatedTimestamp
         self.typingIndicatorMap = typingIndicatorMap
-        self.typingIndicatorUpdatedTimestamp = typingIndicatorUpdatedTimestamp
     }
 }

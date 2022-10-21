@@ -24,7 +24,9 @@ struct TypingParticipantsView: View {
                     // Vstack to make sure AvatarGroup stays in vertical center
                     VStack(spacing: 0) {
                         Spacer()
-                        TypingParticipantAvatarGroupContainer(participantList: viewModel.participants)
+                        TypingParticipantAvatarGroupContainer(participantList: viewModel.participants,
+                                                              participantListOld: viewModel.participantsOldValue,
+                                                              avatarGroup: viewModel.avatarGroup)
                             .frame(width: CGFloat(min(Constants.maxAvatarShown,
                                                       viewModel.participants.count)) * Constants.avatarWidth,
                                    alignment: .leading)

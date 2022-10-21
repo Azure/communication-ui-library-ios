@@ -8,13 +8,7 @@ import UIKit
 
 class TypingParticipantAvatarGroup: UIView {
 
-    private var group = MSFAvatarGroup(style: .stack, size: .xsmall)
-
-    var avatars: [ParticipantInfoModel] = [] {
-        didSet {
-            setAvatars(data: avatars)
-        }
-    }
+    var group: MSFAvatarGroup?
 
     private enum Constants {
         static let avatarWidth: CGFloat = 16.0
@@ -35,6 +29,10 @@ class TypingParticipantAvatarGroup: UIView {
 
 extension TypingParticipantAvatarGroup {
     private func initAvatarGroup() {
+        group = MSFAvatarGroup(style: .stack, size: .xsmall)
+        guard let group = group else {
+            return
+        }
         group.state.overflowCount = Constants.overflowCount
         group.state.style = .stack
         // Max avatar shown would be 3
@@ -50,9 +48,14 @@ extension TypingParticipantAvatarGroup {
         ])
     }
 
-    private func setAvatars(data: [ParticipantInfoModel]) {
-        for participant in data {
-            let newAvatar = group.state.createAvatar()
+    func setAvatars(from oldData: [ParticipantInfoModel], newData: [ParticipantInfoModel]) {
+        guard oldData != newData else {
+            return
+        }
+        group?.view.removeFromSuperview()
+        initAvatarGroup()
+        for participant in newData {
+            let newAvatar = group!.state.createAvatar()
             newAvatar.primaryText = participant.displayName
             newAvatar.isTransparent = false
             newAvatar.isRingVisible = false

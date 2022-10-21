@@ -17,7 +17,6 @@ extension Reducer where State == ParticipantsState,
         let currentTimestamp = Date()
         let speakingDurationSeconds: TimeInterval = 8
         var typingIndicatorMap = participantsState.typingIndicatorMap
-        var typingIndicatorTimestamp = participantsState.typingIndicatorUpdatedTimestamp
 
         switch action {
         case .participantsAction(.participantsAdded(let participants)):
@@ -27,24 +26,20 @@ extension Reducer where State == ParticipantsState,
             // missing participantsInfoMap, readReceiptMap
             for p in participants {
                 participantsInfoMap.removeValue(forKey: p.id)
-                typingIndicatorMap.removeValue(forKey: p.id)
+                typingIndicatorMap[p.id]?.fire()
             }
-            participantsUpdatedTimestamp = currentTimestamp
-            typingIndicatorTimestamp = currentTimestamp
-        case .participantsAction(.typingIndicatorReceived(userEventTimestamp: let userEventTimestamp)):
-            let typingExpiringTimestamp = userEventTimestamp.timestamp.value + speakingDurationSeconds
-            typingIndicatorMap[userEventTimestamp.id] = typingExpiringTimestamp
-            if typingIndicatorTimestamp < typingExpiringTimestamp {
-                typingIndicatorTimestamp = typingExpiringTimestamp
-            }
+        case .participantsAction(.typingIndicatorReceived(let id, let timer)):
+            typingIndicatorMap[id]?.invalidate()
+            typingIndicatorMap[id] = timer
+        case .participantsAction(.clearTypingIndicator(let id)):
+            typingIndicatorMap[id] = nil
         case .repositoryAction(.chatMessageReceived(let message)):
             guard let participantId = message.senderId else {
                 return participantsState
             }
             switch message.type {
             case .custom(_), .html, .text:
-                typingIndicatorMap.removeValue(forKey: participantId)
-                typingIndicatorTimestamp = currentTimestamp
+                typingIndicatorMap[participantId]?.fire()
             default:
                 return participantsState
             }
@@ -54,7 +49,6 @@ extension Reducer where State == ParticipantsState,
 
         return ParticipantsState(participantsInfoMap: participantsInfoMap,
                                  participantsUpdatedTimestamp: participantsUpdatedTimestamp,
-                                 typingIndicatorMap: typingIndicatorMap,
-                                 typingIndicatorUpdatedTimestamp: typingIndicatorTimestamp)
+                                 typingIndicatorMap: typingIndicatorMap)
     }
 }
