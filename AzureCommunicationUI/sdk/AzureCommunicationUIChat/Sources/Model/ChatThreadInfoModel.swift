@@ -6,7 +6,7 @@
 import AzureCore
 import Foundation
 
-struct ChatThreadInfoModel: BaseInfoModel {
+struct ChatThreadInfoModel: BaseInfoModel, Equatable {
     let topic: String?
     let receivedOn: Iso8601Date
 
