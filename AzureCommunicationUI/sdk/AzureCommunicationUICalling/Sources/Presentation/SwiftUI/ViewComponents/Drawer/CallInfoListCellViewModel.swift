@@ -5,31 +5,27 @@
 
 import Foundation
 
-class CallInfoListCellViewModel {
+class MoreCallOptionsListCellViewModel {
     let icon: CompositeIcon
     let title: String
-    let detailTitle: String?
 //    let accessibilityIdentifier: String
     let action: (() -> Void)?
 
     init(icon: CompositeIcon,
          title: String,
-         detailTitle: String?,
 //         accessibilityIdentifier: String,
          action: (() -> Void)?) {
         self.icon = icon
         self.title = title
-        self.detailTitle = detailTitle
 //        self.accessibilityIdentifier = accessibilityIdentifier
         self.action = action
     }
 }
 
-extension CallInfoListCellViewModel: Equatable {
-     static func == (lhs: CallInfoListCellViewModel,
-                     rhs: CallInfoListCellViewModel) -> Bool {
+extension MoreCallOptionsListCellViewModel: Equatable {
+     static func == (lhs: MoreCallOptionsListCellViewModel,
+                     rhs: MoreCallOptionsListCellViewModel) -> Bool {
          return lhs.title == rhs.title &&
-         lhs.detailTitle == rhs.detailTitle &&
 //         lhs.accessibilityIdentifier == rhs.accessibilityIdentifier &&
          lhs.icon == rhs.icon
      }

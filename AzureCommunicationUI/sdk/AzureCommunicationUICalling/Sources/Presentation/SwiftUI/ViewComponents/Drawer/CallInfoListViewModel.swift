@@ -6,9 +6,7 @@
 import Foundation
 import AVFoundation
 
-struct CallInfoListViewModel {
-    let headerName: String?
-
+struct MoreCallOptionsListViewModel {
     private let localizationProvider: LocalizationProviderProtocol
     private let diagnosticsManager: DiagnosticsManagerProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
@@ -19,20 +17,14 @@ struct CallInfoListViewModel {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.diagnosticsManager = diagnosticsManager
-        headerName = localizationProvider.getLocalizedString(.callInfoDrawerHeader)
     }
 
-    func getListItemsViewModels() -> [CallInfoListCellViewModel] {
-        let callIdModel = compositeViewModelFactory.makeCallInfoListCellViewModel(
-            icon: .info,
-            title: localizationProvider.getLocalizedString(.callId),
-            detailTitle: diagnosticsManager.callId, action: nil)
-        let copyCallIdModel = compositeViewModelFactory.makeCallInfoListCellViewModel(
-            icon: .copy,
-            title: localizationProvider.getLocalizedString(.copyCallInfo),
-            detailTitle: nil) {
+    func getListItemsViewModels() -> [MoreCallOptionsListCellViewModel] {
+        let shareDiagnosticsInfoModel = compositeViewModelFactory.makeMoreCallOptionsListCellViewModel(
+            icon: .share,
+            title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo)) {
             // add action
         }
-        return [callIdModel, copyCallIdModel]
+        return [shareDiagnosticsInfoModel]
     }
 }

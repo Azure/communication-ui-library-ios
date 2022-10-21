@@ -10,7 +10,6 @@ struct InfoHeaderView: View {
     @ObservedObject var viewModel: InfoHeaderViewModel
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @State var participantsListButtonSourceView = UIView()
-    @State var callInfoSourceView = UIView()
     let avatarViewManager: AvatarViewManagerProtocol
 
     private enum Constants {
@@ -46,11 +45,6 @@ struct InfoHeaderView: View {
                 .accessibilityElement(children: .contain)
                 .accessibilityAddTraits(.isModal)
         })
-        .modifier(PopupModalView(isPresented: viewModel.isCallInfoDisplayed) {
-            callInfoView
-                .accessibilityElement(children: .contain)
-                .accessibilityAddTraits(.isModal)
-        })
     }
 
     var infoHeader: some View {
@@ -70,8 +64,6 @@ struct InfoHeaderView: View {
                                     Constants.accessibilityFontScale :
                                         Constants.defaultFontScale)
             Spacer()
-            callInfoButton
-            Spacer().frame(width: 0)
             participantListButton
         }
         .padding(EdgeInsets(top: 0,
@@ -87,11 +79,6 @@ struct InfoHeaderView: View {
             .background(SourceViewSpace(sourceView: participantsListButtonSourceView))
     }
 
-    var callInfoButton: some View {
-        IconButton(viewModel: viewModel.callInfoViewModel)
-            .background(SourceViewSpace(sourceView: callInfoSourceView))
-    }
-
     var participantsListView: some View {
         return Group {
             if let avatarManager = avatarViewManager as? AvatarViewManager {
@@ -105,17 +92,6 @@ struct InfoHeaderView: View {
             } else {
                 EmptyView()
             }
-        }
-    }
-
-    var callInfoView: some View {
-        return Group {
-            CompositeCallInfoList(isPresented: $viewModel.isCallInfoDisplayed,
-                                  isInfoHeaderDisplayed: $viewModel.isInfoHeaderDisplayed,
-                                  isVoiceOverEnabled: $viewModel.isVoiceOverEnabled,
-                                  viewModel: viewModel.callInfoListViewModel,
-                                  sourceView: callInfoSourceView)
-            .modifier(LockPhoneOrientation())
         }
     }
 }

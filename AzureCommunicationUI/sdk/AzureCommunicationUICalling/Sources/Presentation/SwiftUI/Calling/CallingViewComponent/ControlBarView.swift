@@ -11,6 +11,7 @@ struct ControlBarView: View {
     // anchor views for drawer views on (iPad)
     @State var audioDeviceButtonSourceView = UIView()
     @State var leaveCallConfirmationListSourceView = UIView()
+    @State var moreListSourceView = UIView()
 
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
@@ -35,6 +36,11 @@ struct ControlBarView: View {
                 .accessibilityElement(children: .contain)
                 .accessibility(addTraits: .isModal)
         })
+        .modifier(PopupModalView(isPresented: viewModel.isMoreCallOptionsListDisplayed) {
+            moreCallOptionsList
+                .accessibilityElement(children: .contain)
+                .accessibilityAddTraits(.isModal)
+        })
     }
 
     /// A stack view that has items centered aligned horizontally in its stack view
@@ -46,6 +52,7 @@ struct ControlBarView: View {
                     videoButton
                     micButton
                     audioDeviceButton
+                    moreButton
                     hangUpButton
                     Spacer()
                 }
@@ -53,6 +60,7 @@ struct ControlBarView: View {
                 VStack {
                     Spacer()
                     hangUpButton
+                    moreButton
                     audioDeviceButton
                     micButton
                     videoButton
@@ -73,11 +81,15 @@ struct ControlBarView: View {
                     Spacer()
                     audioDeviceButton
                     Spacer()
+                    moreButton
+                    Spacer()
                     hangUpButton
                 }
             } else {
                 VStack {
                     hangUpButton
+                    Spacer()
+                    moreButton
                     Spacer()
                     audioDeviceButton
                     Spacer()
@@ -125,6 +137,20 @@ struct ControlBarView: View {
                                            viewModel: viewModel.getLeaveCallConfirmationListViewModel(),
                                            sourceView: leaveCallConfirmationListSourceView)
             .modifier(LockPhoneOrientation())
+    }
+
+    var moreButton: some View {
+        IconButton(viewModel: viewModel.moreButtonViewModel)
+            .background(SourceViewSpace(sourceView: moreListSourceView))
+    }
+
+    var moreCallOptionsList: some View {
+        return Group {
+            MoreCallOptionsList(isPresented: $viewModel.isMoreCallOptionsListDisplayed,
+                                viewModel: viewModel.moreCallOptionsListViewModel,
+                                sourceView: moreListSourceView)
+            .modifier(LockPhoneOrientation())
+        }
     }
 }
 

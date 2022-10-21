@@ -33,8 +33,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var callingViewModel: CallingViewModel?
     var localParticipantsListCellViewModel: ParticipantsListCellViewModel?
     var audioDevicesListCellViewModel: AudioDevicesListCellViewModel?
-    var callInfoListViewModel: CallInfoListViewModel?
-    var callInfoListCellViewModel: CallInfoListCellViewModel?
+    var moreCallOptionsListViewModel: MoreCallOptionsListViewModel?
+    var moreCallOptionsListCellViewModel: MoreCallOptionsListCellViewModel?
 
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
     var createParticipantsListCellViewModel: ((ParticipantInfoModel) -> ParticipantsListCellViewModel?)?
@@ -219,20 +219,18 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                                                     localizationProvider: localizationProvider)
     }
 
-    func makeCallInfoListViewModel() -> CallInfoListViewModel {
-        callInfoListViewModel ?? CallInfoListViewModel(compositeViewModelFactory: self,
-                                                       localizationProvider: localizationProvider,
-                                                       diagnosticsManager: diagnosticsManager)
+    func makeMoreCallOptionsListViewModel() -> MoreCallOptionsListViewModel {
+        moreCallOptionsListViewModel ?? MoreCallOptionsListViewModel(compositeViewModelFactory: self,
+                                                                     localizationProvider: localizationProvider,
+                                                                     diagnosticsManager: diagnosticsManager)
     }
 
-    func makeCallInfoListCellViewModel(icon: CompositeIcon,
-                                       title: String,
-                                       detailTitle: String?,
-                                       action: (() -> Void)?) -> CallInfoListCellViewModel {
-        callInfoListCellViewModel ?? CallInfoListCellViewModel(icon: icon,
-                                                               title: title,
-                                                               detailTitle: detailTitle,
-                                                               action: action)
+    func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
+                                              title: String,
+                                              action: (() -> Void)?) -> MoreCallOptionsListCellViewModel {
+        moreCallOptionsListCellViewModel ?? MoreCallOptionsListCellViewModel(icon: icon,
+                                                                             title: title,
+                                                                             action: action)
     }
 
     // MARK: SetupViewModels

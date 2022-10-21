@@ -16,12 +16,15 @@ class ControlBarViewModel: ObservableObject {
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var isAudioDeviceSelectionDisplayed: Bool = false
     @Published var isConfirmLeaveListDisplayed: Bool = false
+    @Published var isMoreCallOptionsListDisplayed: Bool = false
 
     let audioDevicesListViewModel: AudioDevicesListViewModel
 
     var micButtonViewModel: IconButtonViewModel!
     var audioDeviceButtonViewModel: IconButtonViewModel!
     var hangUpButtonViewModel: IconButtonViewModel!
+    var moreButtonViewModel: IconButtonViewModel!
+    var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
     var callingStatus: CallingStatus = .none
     var cameraState = LocalUserState.CameraState(operation: .off,
                                                  device: .front,
@@ -96,6 +99,17 @@ class ControlBarViewModel: ObservableObject {
         }
         hangUpButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .leaveCall)
+        moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel()
+        moreButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
+            iconName: .more,
+            buttonType: .controlButton,
+            isDisabled: false) {
+                [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.moreButtonTapped()
+        }
     }
 
     func endCallButtonTapped() {
@@ -121,6 +135,10 @@ class ControlBarViewModel: ObservableObject {
 
     func selectAudioDeviceButtonTapped() {
         self.isAudioDeviceSelectionDisplayed = true
+    }
+
+    func moreButtonTapped() {
+        isMoreCallOptionsListDisplayed = true
     }
 
     func dismissConfirmLeaveDrawerList() {

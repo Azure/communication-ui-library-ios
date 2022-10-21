@@ -7,56 +7,42 @@ import SwiftUI
 import FluentUI
 import UIKit
 
-struct CompositeCallInfoList: UIViewControllerRepresentable {
+struct MoreCallOptionsList: UIViewControllerRepresentable {
     @Binding var isPresented: Bool
-    @Binding var isInfoHeaderDisplayed: Bool
-    @Binding var isVoiceOverEnabled: Bool
-    var viewModel: CallInfoListViewModel
+    var viewModel: MoreCallOptionsListViewModel
     @Environment(\.layoutDirection) var layoutDirection: LayoutDirection
     let sourceView: UIView
 
     func makeCoordinator() -> Coordinator {
-        Coordinator(isPresented: $isPresented,
-                    isInfoHeaderDisplayed: $isInfoHeaderDisplayed,
-                    isVoiceOverEnabled: $isVoiceOverEnabled)
+        Coordinator(isPresented: $isPresented)
     }
 
-    func makeUIViewController(context: Context) -> DrawerContainerViewController<CallInfoListCellViewModel> {
-        let controller = CallInfoListViewController(sourceView: sourceView,
-                                                    headerName: viewModel.headerName,
-                                                    isRightToLeft: layoutDirection == .rightToLeft)
+    func makeUIViewController(context: Context) -> DrawerContainerViewController<MoreCallOptionsListCellViewModel> {
+        let controller = MoreCallOptionsListViewController(sourceView: sourceView,
+                                                           isRightToLeft: layoutDirection == .rightToLeft)
         controller.delegate = context.coordinator
         return controller
     }
 
-    func updateUIViewController(_ uiViewController: DrawerContainerViewController<CallInfoListCellViewModel>,
+    func updateUIViewController(_ uiViewController: DrawerContainerViewController<MoreCallOptionsListCellViewModel>,
                                 context: Context) {
         uiViewController.updateDrawerList(items: viewModel.getListItemsViewModels())
     }
 
-    static func dismantleUIViewController(_ controller: DrawerContainerViewController<ParticipantsListCellViewModel>,
+    static func dismantleUIViewController(_ controller: DrawerContainerViewController<MoreCallOptionsListCellViewModel>,
                                           coordinator: Coordinator) {
         controller.dismissDrawer()
     }
 
     class Coordinator: NSObject, DrawerControllerDelegate {
         @Binding var isPresented: Bool
-        @Binding var isInfoHeaderDisplayed: Bool
-        @Binding var isVoiceOverEnabled: Bool
 
-        init(isPresented: Binding<Bool>,
-             isInfoHeaderDisplayed: Binding<Bool>,
-             isVoiceOverEnabled: Binding<Bool>) {
+        init(isPresented: Binding<Bool>) {
             self._isPresented = isPresented
-            self._isInfoHeaderDisplayed = isInfoHeaderDisplayed
-            self._isVoiceOverEnabled = isVoiceOverEnabled
         }
 
         func drawerControllerDidDismiss(_ controller: DrawerController) {
             isPresented = false
-            if !isVoiceOverEnabled {
-                isInfoHeaderDisplayed = false
-            }
         }
     }
 }

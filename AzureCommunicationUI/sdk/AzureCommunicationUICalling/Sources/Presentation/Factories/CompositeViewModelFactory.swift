@@ -51,11 +51,10 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
-    func makeCallInfoListViewModel() -> CallInfoListViewModel
-    func makeCallInfoListCellViewModel(icon: CompositeIcon,
-                                       title: String,
-                                       detailTitle: String?,
-                                       action: (() -> Void)?) -> CallInfoListCellViewModel
+    func makeMoreCallOptionsListViewModel() -> MoreCallOptionsListViewModel
+    func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
+                                              title: String,
+                                              action: (() -> Void)?) -> MoreCallOptionsListCellViewModel
 
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
@@ -253,20 +252,18 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                       localizationProvider: localizationProvider)
     }
 
-    func makeCallInfoListViewModel() -> CallInfoListViewModel {
-        CallInfoListViewModel(compositeViewModelFactory: self,
-                              localizationProvider: localizationProvider,
-                              diagnosticsManager: diagnosticsManager)
+    func makeMoreCallOptionsListViewModel() -> MoreCallOptionsListViewModel {
+        MoreCallOptionsListViewModel(compositeViewModelFactory: self,
+                                     localizationProvider: localizationProvider,
+                                     diagnosticsManager: diagnosticsManager)
     }
 
-    func makeCallInfoListCellViewModel(icon: CompositeIcon,
-                                       title: String,
-                                       detailTitle: String?,
-                                       action: (() -> Void)?) -> CallInfoListCellViewModel {
-        CallInfoListCellViewModel(icon: icon,
-                                  title: title,
-                                  detailTitle: detailTitle,
-                                  action: action)
+    func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
+                                              title: String,
+                                              action: (() -> Void)?) -> MoreCallOptionsListCellViewModel {
+        MoreCallOptionsListCellViewModel(icon: icon,
+                                         title: title,
+                                         action: action)
     }
 
     // MARK: SetupViewModels
