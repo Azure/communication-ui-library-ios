@@ -7,10 +7,19 @@ import AzureCommunicationCommon
 import Foundation
 
 protocol ChatActionHandling {
+    // MARK: LifeCycleHandler
     @discardableResult
     func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+
+    // MARK: ChatActionHandler
+    @discardableResult
+    func onChatThreadDeleted(dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+
+    // MARK: Participants Handler
+
+    // MARK: Repository Handler
     @discardableResult
     func initialize(state: AppState,
                     dispatch: @escaping ActionDispatch,
@@ -65,6 +74,12 @@ class ChatActionHandler: ChatActionHandling {
     }
 
     // MARK: Chat Handler
+    func onChatThreadDeleted(dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            // may be extracted to function in the future
+            dispatch(.errorAction(.fatalErrorUpdated(internalError: .chatEvicted, error: nil)))
+        }
+    }
 
     // MARK: Participants Handler
 

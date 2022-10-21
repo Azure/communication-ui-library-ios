@@ -4,7 +4,8 @@
 //
 
 import Foundation
-
+import AzureCore
 struct ParticipantsInfoModel: BaseInfoModel {
     let participants: [ParticipantInfoModel]
+    let createdOn: Iso8601Date
 }

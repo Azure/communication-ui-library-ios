@@ -44,6 +44,19 @@ class ChatMiddlewareTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_chatMiddleware_apply_when_chatThreadDeletedChatAction_then_handlerNnChatThreadDeletedCalledCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "onChatThreadDeletedCalled")
+        mockChatActionHandler.onChatThreadDeletedCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.chatAction(.chatThreadDeleted))
+        wait(for: [expectation], timeout: 1)
+    }
+
     func test_chatMiddleware_apply_when_fetchInitialMessagesTriggeredRepositoryAction_then_handlerGetInitialMessagesBeingCalled() {
 
         let middlewareDispatch = getEmptyChatMiddlewareFunction()

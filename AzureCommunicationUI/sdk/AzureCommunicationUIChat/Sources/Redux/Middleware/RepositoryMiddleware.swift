@@ -15,9 +15,11 @@ extension Middleware {
                     return { action in
                         switch action {
                         case .chatAction(let chatAction):
-                            handleChatAction(chatAction, actionHandler)
+                            handleChatAction(chatAction, actionHandler, getState, dispatch)
                         case .participantsAction(let participantsAction):
-                            handleParticipantsAction(participantsAction, actionHandler)
+                            handleParticipantsAction(participantsAction,
+                                                     actionHandler,
+                                                     dispatch)
                         case .repositoryAction(let repositoryAction):
                             handleRepositoryAction(repositoryAction, actionHandler, getState, dispatch)
                         default:
@@ -33,13 +35,31 @@ extension Middleware {
 
 private func handleChatAction(
     _ action: ChatAction,
-    _ actionHandler: RepositoryMiddlewareHandling) {
-        print("`handleChatAction` not implemented")
+    _ actionHandler: RepositoryMiddlewareHandling,
+    _ getState: () -> AppState,
+    _ dispatch: @escaping ActionDispatch) {
+        switch action {
+        case .chatTopicUpdated(let threadInfo):
+            actionHandler.addTopicUpdatedMessage(threadInfo: threadInfo,
+                                                 state: getState(),
+                                                 dispatch: dispatch)
+
+        default:
+            break
+        }
     }
 
 private func handleParticipantsAction(
     _ action: ParticipantsAction,
-    _ actionHandler: RepositoryMiddlewareHandling) {
+    _ actionHandler: RepositoryMiddlewareHandling,
+    _ dispatch: @escaping ActionDispatch) {
+        switch action {
+        case let .participantsAdded(participants: participants):
+            actionHandler.participantAdded(participants: participants,
+                                           dispatch: dispatch)
+        default:
+            break
+        }
         print("`handleParticipantsAction` not implemented")
     }
 
@@ -75,6 +95,14 @@ private func handleRepositoryAction(
 
         case .chatMessageReceived(let message):
             actionHandler.addReceivedMessage(message: message,
+                                             state: getState(),
+                                             dispatch: dispatch)
+        case .chatMessageEditedReceived(let message):
+            actionHandler.updateReceivedEditedMessage(message: message,
+                                             state: getState(),
+                                             dispatch: dispatch)
+        case .chatMessageDeletedReceived(let message):
+            actionHandler.updateReceivedDeletedMessage(message: message,
                                              state: getState(),
                                              dispatch: dispatch)
         default:
