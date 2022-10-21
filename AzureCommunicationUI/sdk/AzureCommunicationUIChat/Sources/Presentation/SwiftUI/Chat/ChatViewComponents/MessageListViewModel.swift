@@ -57,7 +57,7 @@ class MessageListViewModel: ObservableObject {
         } else {
             return SystemMessageViewModel(message: message,
                                           showDateHeader: showDateHeader,
-                                          isConsecutive: isConsecutive)
+                                          isConsecutive: false)
         }
     }
 }

@@ -9,8 +9,11 @@ struct SystemMessageView: View {
     @StateObject var viewModel: SystemMessageViewModel
 
     var body: some View {
-        Text(viewModel.content)
-            .font(.caption2)
-            .foregroundColor(Color(StyleProvider.color.textSecondary))
+        HStack {
+            Text(viewModel.content)
+                .font(.caption2)
+                .foregroundColor(Color(StyleProvider.color.textSecondary))
+            Spacer()
+        }
     }
 }

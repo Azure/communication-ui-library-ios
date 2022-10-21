@@ -22,13 +22,17 @@ class MessageViewModel: ObservableObject, Hashable {
             return "Today" // Localization
         } else if numberOfDaysSinceToday == 1 {
             return "Yesterday" // Locatization
+        } else if numberOfDaysSinceToday < 365 {
+            let format = DateFormatter()
+            format.dateFormat = "MMMM d"
+            let formattedDate = format.string(from: message.createdOn.value)
+            return formattedDate
         } else {
             let format = DateFormatter()
-            format.dateFormat = "MM-dd"
+            format.dateFormat = "MMMM d, yyyy"
             let formattedDate = format.string(from: message.createdOn.value)
             return formattedDate
         }
-        // Handle dates older than a year?
     }
 
     func hash(into hasher: inout Hasher) {
