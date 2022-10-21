@@ -9,6 +9,16 @@ import XCTest
 
 class RepositoryReducerTests: XCTestCase {
 
+    func test_repositoryReducer_reduce_when_repositoryUpdatedAction_then_stateUpdated() {
+        let initialTimestamp = Date()
+        let state = RepositoryState(lastUpdatedTimestamp: initialTimestamp)
+        let action = Action.repositoryAction(.repositoryUpdated)
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertTrue(resultState.lastUpdatedTimestamp > initialTimestamp)
+    }
+
     func test_repositoryReducer_reduce_when_fetchInitialMessagesSuccessAction_then_stateUpdated() {
         let initialTimestamp = Date()
         let state = RepositoryState(lastUpdatedTimestamp: initialTimestamp)

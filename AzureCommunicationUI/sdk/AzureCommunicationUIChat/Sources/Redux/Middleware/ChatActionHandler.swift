@@ -18,6 +18,8 @@ protocol ChatActionHandling {
     @discardableResult
     func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
+    func getPreviousMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
     func sendMessage(internalId: String,
                      content: String,
                      state: AppState,
@@ -88,6 +90,20 @@ class ChatActionHandler: ChatActionHandling {
             } catch {
                 // dispatch error *not handled*
                 dispatch(.repositoryAction(.fetchInitialMessagesFailed(error: error)))
+            }
+        }
+    }
+
+    func getPreviousMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            do {
+                let previousMessages = try await chatService.getPreviousMessages()
+                if !previousMessages.isEmpty {
+                    dispatch(.repositoryAction(.fetchPreviousMessagesSuccess(messages: previousMessages)))
+                }
+            } catch {
+                // dispatch error *not handled*
+                dispatch(.repositoryAction(.fetchPreviousMessagesFailed(error: error)))
             }
         }
     }
