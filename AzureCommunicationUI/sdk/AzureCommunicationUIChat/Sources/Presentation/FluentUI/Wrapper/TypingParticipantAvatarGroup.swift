@@ -49,7 +49,8 @@ extension TypingParticipantAvatarGroup {
         ])
     }
 
-    func setAvatars(from oldData: [ParticipantInfoModel], newData: [ParticipantInfoModel]) {
+    func setAvatars(from oldData: [ParticipantInfoModel],
+                    to newData: [ParticipantInfoModel]) {
         // prevent removing the same avatars mutiple times
         guard let group = group,
                 oldData != newData,

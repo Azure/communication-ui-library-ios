@@ -11,10 +11,10 @@ class TypingParticipantsViewModel: ObservableObject {
 
     private var participantsLastUpdatedTimestamp = Date()
     private var typingIndicatorLastUpdatedTimestamp = Date()
-    var participantsOldValue: [ParticipantInfoModel] = []
+    var previousParticipants: [ParticipantInfoModel] = []
     var participants: [ParticipantInfoModel] = [] {
         didSet {
-            participantsOldValue = oldValue
+            previousParticipants = oldValue
         }
     }
     var avatarGroup = TypingParticipantAvatarGroup()

@@ -25,7 +25,7 @@ struct TypingParticipantsView: View {
                     VStack(spacing: 0) {
                         Spacer()
                         TypingParticipantAvatarGroupContainer(participantList: viewModel.participants,
-                                                              participantListOld: viewModel.participantsOldValue,
+                                                              previousParticipants: viewModel.previousParticipants,
                                                               avatarGroup: viewModel.avatarGroup)
                             .frame(width: CGFloat(min(Constants.maxAvatarShown,
                                                       viewModel.participants.count)) * Constants.avatarWidth,

@@ -8,7 +8,7 @@ import SwiftUI
 struct TypingParticipantAvatarGroupContainer: UIViewRepresentable {
 
     var participantList: [ParticipantInfoModel]
-    var participantListOld: [ParticipantInfoModel]
+    var previousParticipants: [ParticipantInfoModel]
     var avatarGroup: TypingParticipantAvatarGroup
 
     func makeUIView(context: Context) -> TypingParticipantAvatarGroup {
@@ -17,6 +17,7 @@ struct TypingParticipantAvatarGroupContainer: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: TypingParticipantAvatarGroup, context: Context) {
-        avatarGroup.setAvatars(from: participantListOld, newData: participantList)
+        avatarGroup.setAvatars(from: previousParticipants,
+                               to: participantList)
     }
 }
