@@ -3,7 +3,7 @@
 //  Licensed under the MIT License.
 //
 
-@_spi(common) public extension Array {
+extension Array {
     func chunkedAndReversed(into size: Int, vGridLayout: Bool = true) -> [[Element]] {
         var chunkedArray = [[Element]]()
         guard self.count > 0 else {

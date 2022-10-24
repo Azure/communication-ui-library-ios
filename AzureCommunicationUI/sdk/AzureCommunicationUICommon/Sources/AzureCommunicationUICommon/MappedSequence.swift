@@ -3,7 +3,7 @@
 //  Licensed under the MIT License.
 //
 
-@_spi(common) public class MappedSequence<S: Hashable, T>: Sequence {
+class MappedSequence<S: Hashable, T>: Sequence {
     private class Node<S, T> {
         var key: S
         var value: T
@@ -16,9 +16,9 @@
         }
     }
 
-    public init() { }
+    init() { }
 
-    public var count: Int {
+    var count: Int {
         return keyNodeMap.count
     }
 
@@ -26,7 +26,7 @@
     private var first: Node<S, T>?
     private var last: Node<S, T>?
 
-    public func makeIterator() -> AnyIterator<T> {
+    func makeIterator() -> AnyIterator<T> {
         var current: Node? = first
         return AnyIterator<T> { () -> T? in
             let value = current?.value
@@ -35,7 +35,7 @@
         }
     }
 
-    public func makeKeyIterator() -> AnyIterator<S> {
+    func makeKeyIterator() -> AnyIterator<S> {
         var current: Node? = first
         return AnyIterator<S> { () -> S? in
             let value = current?.key
@@ -44,7 +44,7 @@
         }
     }
 
-    public func prepend(forKey: S, value: T) {
+    func prepend(forKey: S, value: T) {
         if keyNodeMap[forKey] != nil {
             return
         }
@@ -62,7 +62,7 @@
         }
     }
 
-    public func append(forKey: S, value: T) {
+    func append(forKey: S, value: T) {
         if keyNodeMap[forKey] != nil {
             return
         }
@@ -80,14 +80,14 @@
         }
     }
 
-    public func toArray() -> [T] {
+    func toArray() -> [T] {
         var array = [T]()
         self.forEach {array.append($0)}
         return array
     }
 
     @discardableResult
-    public func removeValue(forKey: S) -> T? {
+    func removeValue(forKey: S) -> T? {
         var value: T?
 
         if let nodeToRemove = keyNodeMap[forKey] {
@@ -117,7 +117,7 @@
     }
 
     @discardableResult
-    public func removeLast() -> T? {
+    func removeLast() -> T? {
         var value: T?
 
         if let lastKey = last?.key {
@@ -127,7 +127,7 @@
         return value
     }
 
-    public func value(forKey: S) -> T? {
+    func value(forKey: S) -> T? {
         if let node = keyNodeMap[forKey] {
             return node.value
         }

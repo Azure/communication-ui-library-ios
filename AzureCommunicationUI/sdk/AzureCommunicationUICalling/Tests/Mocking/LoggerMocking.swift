@@ -7,15 +7,13 @@
 import Foundation
 @testable import AzureCommunicationUICalling
 
-class LoggerMocking {
+class LoggerMocking: Logger {
     var logCallCount: Int = 0
 
     func logWasCalled() -> Bool {
         return logCallCount > 0
     }
-}
 
-extension LoggerMocking: Logger {
     func debug(_: @autoclosure @escaping () -> String?) {
         logCallCount += 1
 
