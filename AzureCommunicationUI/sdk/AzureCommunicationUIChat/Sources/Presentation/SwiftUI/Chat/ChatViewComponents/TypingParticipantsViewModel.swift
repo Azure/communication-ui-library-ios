@@ -90,7 +90,7 @@ class TypingParticipantsViewModel: ObservableObject {
             return localizationProvider.getLocalizedString(.multipleParticipantsAreTyping,
                                                            participantList.removeFirst().displayName,
                                                            participantList.removeFirst().displayName,
-                                                           participants.count)
+                                                           participantList.count)
         default:
             return nil
         }
