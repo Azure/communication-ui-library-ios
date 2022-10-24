@@ -90,8 +90,6 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
                           dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             for participant in participants {
-                let participantInfoModel = ParticipantsInfoModel(participants: participants,
-                                                                 createdOn: Iso8601Date())
                 let message = ChatMessageInfoModel(id: participant.id,
                                                    senderDisplayName: participant.displayName,
                                                    participants: participants)
