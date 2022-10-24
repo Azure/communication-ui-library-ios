@@ -11,6 +11,7 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
     var addPreviousMessagesCalled: ((Bool) -> Void)?
     var addNewSentMessageCalled: ((Bool) -> Void)?
     var updateSentMessageIdCalled: ((Bool) -> Void)?
+    var participantAddedCalled: ((Bool) -> Void)?
 
     var addTopicUpdatedMessageCalled: ((Bool) -> Void)?
     var addReceivedMessageCalled: ((Bool) -> Void)?
@@ -38,6 +39,13 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
     func updateSentMessageId(internalId: String, actualId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             updateSentMessageIdCalled?(true)
+        }
+    }
+
+    func participantAdded(participants: [AzureCommunicationUIChat.ParticipantInfoModel],
+                          dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            participantAddedCalled?(true)
         }
     }
 
