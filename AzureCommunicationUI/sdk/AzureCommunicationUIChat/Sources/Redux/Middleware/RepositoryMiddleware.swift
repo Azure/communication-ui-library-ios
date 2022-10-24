@@ -16,10 +16,6 @@ extension Middleware {
                         switch action {
                         case .chatAction(let chatAction):
                             handleChatAction(chatAction, actionHandler, getState, dispatch)
-                        case .participantsAction(let participantsAction):
-                            handleParticipantsAction(participantsAction,
-                                                     actionHandler,
-                                                     dispatch)
                         case .repositoryAction(let repositoryAction):
                             handleRepositoryAction(repositoryAction, actionHandler, getState, dispatch)
                         default:
@@ -47,20 +43,6 @@ private func handleChatAction(
         default:
             break
         }
-    }
-
-private func handleParticipantsAction(
-    _ action: ParticipantsAction,
-    _ actionHandler: RepositoryMiddlewareHandling,
-    _ dispatch: @escaping ActionDispatch) {
-        switch action {
-        case let .participantsAdded(participants: participants):
-            actionHandler.participantAdded(participants: participants,
-                                           dispatch: dispatch)
-        default:
-            break
-        }
-        print("`handleParticipantsAction` not implemented")
     }
 
 private func handleRepositoryAction(

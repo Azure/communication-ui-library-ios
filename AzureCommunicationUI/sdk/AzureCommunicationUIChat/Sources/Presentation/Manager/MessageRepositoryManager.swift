@@ -15,7 +15,6 @@ protocol MessageRepositoryManagerProtocol {
     func addNewSendingMessage(message: ChatMessageInfoModel)
     func replaceMessageId(internalId: String, actualId: String)
 
-    func remoteParticipantAdded(message: ChatMessageInfoModel)
     // MARK: receiving remote events
     func addTopicUpdatedMessage(chatThreadInfo: ChatThreadInfoModel)
     func addReceivedMessage(message: ChatMessageInfoModel)
@@ -66,15 +65,6 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
             var msg = messages[index]
             msg.replace(id: actualId)
             messages[index] = msg
-        }
-    }
-
-    func remoteParticipantAdded(message: ChatMessageInfoModel) {
-        switch message.type {
-        case .participantsAdded:
-            break
-        default:
-            break
         }
     }
 

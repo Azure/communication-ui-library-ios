@@ -19,9 +19,6 @@ protocol RepositoryMiddlewareHandling {
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func participantAdded(participants: [ParticipantInfoModel],
-                          dispatch: @escaping ActionDispatch) -> Task<Void, Never>
-    @discardableResult
     func addNewSentMessage(
         internalId: String,
         content: String,
@@ -86,19 +83,6 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
             }
         }
 
-    func participantAdded(participants: [ParticipantInfoModel],
-                          dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
-        Task {
-            for participant in participants {
-                let message = ChatMessageInfoModel(id: participant.id,
-                                                   senderDisplayName: participant.displayName,
-                                                   participants: participants)
-
-                messageRepository.remoteParticipantAdded(message: message)
-                dispatch(.repositoryAction(.repositoryUpdated))
-            }
-        }
-    }
     func addNewSentMessage(
         internalId: String,
         content: String,

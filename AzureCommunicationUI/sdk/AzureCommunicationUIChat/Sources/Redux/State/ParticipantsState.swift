@@ -6,5 +6,10 @@
 import Foundation
 
 struct ParticipantsState {
-    let numberOfParticipants: Int = 3
+    let numberOfParticipants: Int
+    let threadParticipants: [ParticipantInfoModel]
+    init(numberOfParticipants: Int = 0, threadParticipants: [ParticipantInfoModel] = []) {
+        self.numberOfParticipants = numberOfParticipants
+        self.threadParticipants = threadParticipants
+    }
 }

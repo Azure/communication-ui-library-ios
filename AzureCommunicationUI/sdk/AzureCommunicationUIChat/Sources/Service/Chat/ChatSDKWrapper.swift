@@ -70,6 +70,25 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         }
     }
 
+    func getListParticipants() async throws -> [ChatParticipant] {
+        do {
+            return try await withCheckedThrowingContinuation { continuation in
+                chatThreadClient?.listParticipants(completionHandler: { result, _ in
+                    switch result {
+                    case .success(let pagedCollection):
+                        let participants = pagedCollection.items ?? []
+                        continuation.resume(returning: participants)
+                    case .failure(let error):
+                        self.logger.error("Get Initial Messages failed: \(error)")
+                        continuation.resume(throwing: error)
+                    }
+                })
+            }
+        } catch {
+            throw error
+        }
+    }
+
     func getPreviousMessages() async throws -> [ChatMessageInfoModel] {
         do {
             guard let messagePagedCollection = self.pagedCollection else {

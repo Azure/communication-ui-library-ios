@@ -13,7 +13,6 @@ class MessageRepositoryManagerMocking: MessageRepositoryManagerProtocol {
     var addPreviousMessagesCalled: Bool = false
     var addNewSentMessageCalled: Bool = false
     var replaceMessageIdCalled: Bool = false
-    var remoteParticipantAddedCalled: Bool = false
     var addReceivedMessageCalled: Bool = false
     var addTopicUpdatedMessageCalled: Bool = false
     var updateMessageEditedCalled: Bool = false
@@ -36,10 +35,6 @@ class MessageRepositoryManagerMocking: MessageRepositoryManagerProtocol {
 
     func replaceMessageId(internalId: String, actualId: String) {
         replaceMessageIdCalled = true
-    }
-
-    func remoteParticipantAdded(message: AzureCommunicationUIChat.ChatMessageInfoModel) {
-        remoteParticipantAddedCalled = true
     }
 
     func addTopicUpdatedMessage(chatThreadInfo: ChatThreadInfoModel) {
