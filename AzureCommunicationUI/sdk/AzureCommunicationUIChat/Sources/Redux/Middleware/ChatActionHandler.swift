@@ -7,16 +7,27 @@ import AzureCommunicationCommon
 import Foundation
 
 protocol ChatActionHandling {
+    // MARK: LifeCycleHandler
     @discardableResult
     func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+
+    // MARK: ChatActionHandler
+    @discardableResult
+    func onChatThreadDeleted(dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+
+    // MARK: Participants Handler
+
+    // MARK: Repository Handler
     @discardableResult
     func initialize(state: AppState,
                     dispatch: @escaping ActionDispatch,
                     serviceListener: ChatServiceEventHandling) -> Task<Void, Never>
     @discardableResult
     func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func getPreviousMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func sendMessage(internalId: String,
                      content: String,
@@ -78,6 +89,13 @@ class ChatActionHandler: ChatActionHandling {
         }
     }
 
+    func onChatThreadDeleted(dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            // may be extracted to function in the future
+            dispatch(.errorAction(.fatalErrorUpdated(internalError: .chatEvicted, error: nil)))
+        }
+    }
+
     // MARK: Participants Handler
 
     // MARK: Repository Handler
@@ -89,6 +107,20 @@ class ChatActionHandler: ChatActionHandling {
             } catch {
                 // dispatch error *not handled*
                 dispatch(.repositoryAction(.fetchInitialMessagesFailed(error: error)))
+            }
+        }
+    }
+
+    func getPreviousMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            do {
+                let previousMessages = try await chatService.getPreviousMessages()
+                if !previousMessages.isEmpty {
+                    dispatch(.repositoryAction(.fetchPreviousMessagesSuccess(messages: previousMessages)))
+                }
+            } catch {
+                // dispatch error *not handled*
+                dispatch(.repositoryAction(.fetchPreviousMessagesFailed(error: error)))
             }
         }
     }

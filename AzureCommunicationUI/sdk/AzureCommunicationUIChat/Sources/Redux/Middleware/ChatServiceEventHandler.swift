@@ -121,7 +121,7 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
         guard let topic = threadInfo.topic else {
             return
         }
-        dispatch(.chatAction(.chatTopicUpdated(topic: topic)))
+        dispatch(.chatAction(.chatTopicUpdated(threadInfo: threadInfo)))
     }
 
     func handleParticipantsAdded(dispatch: @escaping ActionDispatch,

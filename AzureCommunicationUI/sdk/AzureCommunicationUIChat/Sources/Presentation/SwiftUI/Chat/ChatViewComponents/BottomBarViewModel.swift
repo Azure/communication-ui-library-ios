@@ -15,6 +15,9 @@ class BottomBarViewModel: ObservableObject {
     private var lastTypingIndicatorSendTimestamp = Date()
     private let typingIndicatorDelay: TimeInterval = 8.0
 
+    @Published var message: String = ""
+    @Published var hasFocus: Bool = false
+
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
          dispatch: @escaping ActionDispatch) {
@@ -34,10 +37,13 @@ class BottomBarViewModel: ObservableObject {
 //            accessibilityLabel: self.localizationProvider.getLocalizedString(.sendAccessibilityLabel))
     }
 
-    @Published var message: String = ""
-    @Published var hasFocus: Bool = true
-
     func sendMessage() {
+        // Added for testing to trigger action
+        if message == "fetch" {
+            dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
+            return
+        }
+
         hasFocus = true
         guard !message.isEmpty else {
             return

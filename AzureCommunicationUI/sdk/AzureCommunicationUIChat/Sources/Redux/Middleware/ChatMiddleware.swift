@@ -56,8 +56,16 @@ private func handleChatAction(_ action: ChatAction,
                                  dispatch: dispatch,
                                  serviceListener: serviceListener)
     case .sendTypingIndicatorTriggered:
-        actionHandler.sendTypingIndicator(state: getState(),
-                                          dispatch: dispatch)
+       actionHandler.sendTypingIndicator(state: getState(),
+                                         dispatch: dispatch)
+    case .realTimeNotificationConnected:
+        // stub: stop-pulling msg to be implemented for GA
+        break
+    case .realTimeNotificationDisconnected:
+        // stub: pulling msg to be implemented for GA
+        break
+    case .chatThreadDeleted:
+        actionHandler.onChatThreadDeleted(dispatch: dispatch)
     default:
         break
     }
@@ -78,6 +86,9 @@ private func handleRepositoryAction(_ action: RepositoryAction,
     case .fetchInitialMessagesTriggered:
         actionHandler.getInitialMessages(state: getState(),
                                          dispatch: dispatch)
+    case .fetchPreviousMessagesTriggered:
+        actionHandler.getPreviousMessages(state: getState(),
+                                          dispatch: dispatch)
     case .sendMessageTriggered(let internalId, let content):
         actionHandler.sendMessage(internalId: internalId,
                                   content: content,
