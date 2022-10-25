@@ -8,6 +8,28 @@ import XCTest
 
 class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
+    func testJoinCallWithMockCallCallingSDKWrapperHandler() {
+        tapInterfaceFor(.uiKit)
+        tapButton(
+            accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue,
+            shouldWait: false)
+        app.tap()
+        let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
+        if toggle.waitForExistence(timeout: 3) {
+            toggle.tap()
+        }
+        app.buttons["Close"].tap()
+        tapEnabledButton(
+            accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
+            shouldWait: true)
+        let buttonExist = app.buttons["Join call"].waitForExistence(timeout: 10)
+        XCTAssertTrue(buttonExist)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+            shouldWait: true)
+        toggleLeaveCallDrawer(leaveCall: true)
+    }
+
     // MARK: End call tests
 
     func testCallCompositeEndCallGroupCallSwiftUI() {

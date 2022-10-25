@@ -9,6 +9,12 @@
 /* Begin PBXBuildFile section */
 		1B315123284EA8630043231B /* OnHoldOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */; };
 		1B3A8EED285129CC002ED55A /* AudioSessionReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */; };
+		1B5B0D40290125DE005D24E4 /* CallingSDKWrapperInTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5B0D3F290125DE005D24E4 /* CallingSDKWrapperInTest.swift */; };
+		1B5B0D432901EE93005D24E4 /* LoggerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5B0D422901EE93005D24E4 /* LoggerMocking.swift */; };
+		1B5B0D47290213FD005D24E4 /* CallClientMockings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5B0D46290213FD005D24E4 /* CallClientMockings.swift */; };
+		1B5B0D492902190F005D24E4 /* CallConfigurationMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5B0D482902190F005D24E4 /* CallConfigurationMocking.swift */; };
+		1B5B0D4B2907B6CC005D24E4 /* DeviceManagerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5B0D4A2907B6CC005D24E4 /* DeviceManagerMocking.swift */; };
+		1B5B0D4D2907B7E9005D24E4 /* CallingSDKEventsHandlerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5B0D4C2907B7E9005D24E4 /* CallingSDKEventsHandlerMocking.swift */; };
 		1B5F169D27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */; };
 		1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F169E27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift */; };
 		1B5F16A127FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F16A027FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift */; };
@@ -259,6 +265,12 @@
 /* Begin PBXFileReference section */
 		1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionReducerTests.swift; sourceTree = "<group>"; };
+		1B5B0D3F290125DE005D24E4 /* CallingSDKWrapperInTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKWrapperInTest.swift; sourceTree = "<group>"; };
+		1B5B0D422901EE93005D24E4 /* LoggerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerMocking.swift; sourceTree = "<group>"; };
+		1B5B0D46290213FD005D24E4 /* CallClientMockings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallClientMockings.swift; sourceTree = "<group>"; };
+		1B5B0D482902190F005D24E4 /* CallConfigurationMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfigurationMocking.swift; sourceTree = "<group>"; };
+		1B5B0D4A2907B6CC005D24E4 /* DeviceManagerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceManagerMocking.swift; sourceTree = "<group>"; };
+		1B5B0D4C2907B7E9005D24E4 /* CallingSDKEventsHandlerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKEventsHandlerMocking.swift; sourceTree = "<group>"; };
 		1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLeaveCallConfirmationList.swift; sourceTree = "<group>"; };
 		1B5F169E27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeaveCallConfirmationListViewController.swift; sourceTree = "<group>"; };
 		1B5F16A027FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLeaveCallConfirmationListCell.swift; sourceTree = "<group>"; };
@@ -552,6 +564,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B5B0D45290213D8005D24E4 /* Mocking */ = {
+			isa = PBXGroup;
+			children = (
+				1B5B0D3F290125DE005D24E4 /* CallingSDKWrapperInTest.swift */,
+				1B5B0D422901EE93005D24E4 /* LoggerMocking.swift */,
+				1B5B0D46290213FD005D24E4 /* CallClientMockings.swift */,
+				1B5B0D4C2907B7E9005D24E4 /* CallingSDKEventsHandlerMocking.swift */,
+				1B5B0D4A2907B6CC005D24E4 /* DeviceManagerMocking.swift */,
+				1B5B0D482902190F005D24E4 /* CallConfigurationMocking.swift */,
+			);
+			path = Mocking;
+			sourceTree = "<group>";
+		};
 		1F03D3CC2638A6860055C456 /* Calling */ = {
 			isa = PBXGroup;
 			children = (
@@ -990,6 +1015,7 @@
 		75C1EE0D28E4BEF600FF78B1 /* AzureCommunicationCalling */ = {
 			isa = PBXGroup;
 			children = (
+				1B5B0D45290213D8005D24E4 /* Mocking */,
 				1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */,
 				1F13D37226AB3F1200E31666 /* ACSCallingStateExtension.swift */,
 				5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */,
@@ -1664,6 +1690,7 @@
 				88A70180270E50D100F817B8 /* PopupModalView.swift in Sources */,
 				A88CDFBC27505A410004E2F5 /* ErrorInfoViewModel.swift in Sources */,
 				98B1869F27C858F500B837E6 /* AudioDevicesListViewController.swift in Sources */,
+				1B5B0D4D2907B7E9005D24E4 /* CallingSDKEventsHandlerMocking.swift in Sources */,
 				A88CDFB9274FF9C10004E2F5 /* ErrorInfoView.swift in Sources */,
 				5054610427C59AD700040467 /* LocalizationOptions.swift in Sources */,
 				50E2D69526EACB74006B0EF4 /* ParticipantsListViewModel.swift in Sources */,
@@ -1677,6 +1704,7 @@
 				1FBCB6AA2645AC2F00F57EEA /* VideoRenderView.swift in Sources */,
 				1F4B0EFE26A1466D00E87014 /* ParticipantGridCellView.swift in Sources */,
 				1FBCB6D92655825200F57EEA /* LocalUserReducer.swift in Sources */,
+				1B5B0D47290213FD005D24E4 /* CallClientMockings.swift in Sources */,
 				A874EDC826616792003C7D92 /* LifecycleAction.swift in Sources */,
 				1BAD44BE28404D1800C9E6A9 /* OrientationManager.swift in Sources */,
 				9852C2D526EFD19300435252 /* ParticipantsListViewController.swift in Sources */,
@@ -1698,6 +1726,8 @@
 				50FA45F8267D466D001844AC /* InfoHeaderView.swift in Sources */,
 				1F13D37026AB293700E31666 /* NavigationReducer.swift in Sources */,
 				50FA45F5267D3BD3001844AC /* ControlBarView.swift in Sources */,
+				1B5B0D40290125DE005D24E4 /* CallingSDKWrapperInTest.swift in Sources */,
+				1B5B0D4B2907B6CC005D24E4 /* DeviceManagerMocking.swift in Sources */,
 				1FCB056B2671D8BE00126A4E /* StyleProvider.swift in Sources */,
 				1F2BEDBB26328EBA00D98266 /* PermissionReducer.swift in Sources */,
 				1FBCB6B9264BA90000F57EEA /* ParticipantGridCellVideoView.swift in Sources */,
@@ -1727,7 +1757,9 @@
 				1F13D37326AB3F1200E31666 /* ACSCallingStateExtension.swift in Sources */,
 				988799912745EABE00AA3759 /* SourceViewSpace.swift in Sources */,
 				1FBCB6B12649EB1200F57EEA /* RemoteParticipantExtension.swift in Sources */,
+				1B5B0D432901EE93005D24E4 /* LoggerMocking.swift in Sources */,
 				88F6EE1C2735F8E8001AD3E9 /* ErrorState.swift in Sources */,
+				1B5B0D492902190F005D24E4 /* CallConfigurationMocking.swift in Sources */,
 				1F48CF1F283447F400A44D58 /* CallingSDKWrapperProtocol.swift in Sources */,
 				1F2BEDC026328F2700D98266 /* CallingState.swift in Sources */,
 				88F6EE1A2735F5CB001AD3E9 /* ErrorReducer.swift in Sources */,

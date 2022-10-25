@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum ParticipantStatus: Int {
+public enum ParticipantStatus: Int {
     case idle
     case earlyMedia
     case connecting
@@ -16,7 +16,7 @@ enum ParticipantStatus: Int {
     case ringing
 }
 
-struct ParticipantInfoModel: Hashable, Equatable {
+public struct ParticipantInfoModel: Hashable, Equatable {
     let displayName: String
     let isSpeaking: Bool
     let isMuted: Bool

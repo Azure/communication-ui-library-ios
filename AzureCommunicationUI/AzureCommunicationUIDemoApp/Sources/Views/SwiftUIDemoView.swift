@@ -162,7 +162,11 @@ extension SwiftUIDemoView {
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
-        let callComposite = CallComposite(withOptions: callCompositeOptions)
+        let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
+        let callComposite = useMockCallingSDKHandler ?
+            CallComposite(withOptions: callCompositeOptions,
+                          callingSDKWrapperProtocol: CallingSDKWrapperInTest())
+            : CallComposite(withOptions: callCompositeOptions)
 
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
