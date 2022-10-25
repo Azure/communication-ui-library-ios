@@ -33,9 +33,12 @@ protocol ChatActionHandling {
                      content: String,
                      state: AppState,
                      dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func sendTypingIndicator(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 }
 
 class ChatActionHandler: ChatActionHandling {
+
     private let chatService: ChatServiceProtocol
     private let logger: Logger
 
@@ -74,6 +77,18 @@ class ChatActionHandler: ChatActionHandling {
     }
 
     // MARK: Chat Handler
+    func sendTypingIndicator(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            do {
+                try await chatService.sendTypingIndicator()
+                dispatch(.chatAction(.sendTypingIndicatorSuccess))
+            } catch {
+                logger.error("ChatActionHandler sendTypingIndicator failed: \(error)")
+                dispatch(.chatAction(.sendTypingIndicatorFailed(error: error)))
+            }
+        }
+    }
+
     func onChatThreadDeleted(dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             // may be extracted to function in the future
