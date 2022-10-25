@@ -85,6 +85,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                 })
             }
         } catch {
+            logger.error("Get List of Participants failed: \(error)")
             throw error
         }
     }

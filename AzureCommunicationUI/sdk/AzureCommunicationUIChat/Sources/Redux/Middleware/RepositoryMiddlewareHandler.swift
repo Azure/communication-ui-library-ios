@@ -4,8 +4,8 @@
 //
 
 import AzureCommunicationCommon
-import Foundation
 import AzureCore
+import Foundation
 
 protocol RepositoryMiddlewareHandling {
     @discardableResult
