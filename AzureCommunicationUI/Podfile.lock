@@ -14,6 +14,8 @@ PODS:
     - MicrosoftFluentUI/Core_ios
   - MicrosoftFluentUI/Avatar_ios (0.3.9):
     - MicrosoftFluentUI/Core_ios
+  - MicrosoftFluentUI/AvatarGroup_ios (0.3.9):
+    - MicrosoftFluentUI/Avatar_ios
   - MicrosoftFluentUI/BottomSheet_ios (0.3.9):
     - MicrosoftFluentUI/Obscurable_ios
     - MicrosoftFluentUI/ResizingHandleView_ios
@@ -52,6 +54,7 @@ DEPENDENCIES:
   - AzureCommunicationChat (= 1.2.0)
   - MicrosoftFluentUI/ActivityIndicator_ios (= 0.3.9)
   - MicrosoftFluentUI/Avatar_ios (= 0.3.9)
+  - MicrosoftFluentUI/AvatarGroup_ios (= 0.3.9)
   - MicrosoftFluentUI/BottomSheet_ios (= 0.3.9)
   - MicrosoftFluentUI/Button_ios (= 0.3.9)
   - MicrosoftFluentUI/PopupMenu_ios (= 0.3.9)
@@ -78,6 +81,6 @@ SPEC CHECKSUMS:
   SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
   Trouter: 62f6db5519829c0897832d404338c3b78ea64fa2
 
-PODFILE CHECKSUM: 6eaab49853604e2323c96f38908334fa6a3927aa
+PODFILE CHECKSUM: f465796cf2b4030940415a35bcc20bc14c80623c
 
 COCOAPODS: 1.11.3
