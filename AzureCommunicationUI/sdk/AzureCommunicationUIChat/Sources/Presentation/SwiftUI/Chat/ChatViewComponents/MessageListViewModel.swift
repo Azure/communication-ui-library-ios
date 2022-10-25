@@ -29,7 +29,7 @@ class MessageListViewModel: ObservableObject {
             messages = []
             print("*Messages count: \(messageRepositoryManager.messages.count)") // for testing
             for (index, message) in messageRepositoryManager.messages.enumerated() {
-                print("--*Messages: \(message.id) \(String(describing: message.content))") // for testing
+                print("--*Messages: \(message.id) \(String(describing: message.content))")
                 messages.append(createViewModel(messages: messageRepositoryManager.messages, index: index))
             }
         }
