@@ -15,7 +15,6 @@ extension Reducer where State == ParticipantsState,
 
         // MARK: Typing Indicator
         let currentTimestamp = Date()
-        let speakingDurationSeconds: TimeInterval = 8
         var typingIndicatorMap = participantsState.typingIndicatorMap
 
         switch action {
@@ -47,13 +46,13 @@ extension Reducer where State == ParticipantsState,
             typingIndicatorMap[id] = nil
         case .repositoryAction(.chatMessageReceived(let message)):
             guard let participantId = message.senderId else {
-                return participantsState
+                break
             }
             switch message.type {
             case .custom(_), .html, .text:
                 typingIndicatorMap[participantId]?.fire()
             default:
-                return participantsState
+                break
             }
         default:
             return participantsState
