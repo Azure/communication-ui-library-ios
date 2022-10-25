@@ -12,6 +12,8 @@ class SystemMessageViewModel: MessageViewModel {
             return "\(participants) joined the chat"
         case .participantsRemoved:
             return "\(participants) left the chat"
+        case .topicUpdated:
+            return "Topic updated"
         default:
             return "System Message"
         }

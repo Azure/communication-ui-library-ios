@@ -146,6 +146,8 @@
 		85D6F5E7707CE2A8E51E5451 /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9C157344D512A9F069F9CC /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework */; };
 		A812BA6C290093A00096ACF0 /* SystemMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A812BA6B290093A00096ACF0 /* SystemMessageViewModel.swift */; };
 		A812BA6E2900947F0096ACF0 /* TextMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A812BA6D2900947F0096ACF0 /* TextMessageViewModel.swift */; };
+		A88000ED29070F790076B0E2 /* HtmlMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88000EC29070F790076B0E2 /* HtmlMessageView.swift */; };
+		A88000EF29070F870076B0E2 /* HtmlMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88000EE29070F870076B0E2 /* HtmlMessageViewModel.swift */; };
 		A8BB978028F770FE008142DB /* SystemMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BB977F28F770FE008142DB /* SystemMessageView.swift */; };
 		BD1A6A3C28ECDEAE005E0B70 /* MessageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A6A3B28ECDEAE005E0B70 /* MessageListView.swift */; };
 		BD1A6A3E28ECDFAB005E0B70 /* MessageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A6A3D28ECDFAB005E0B70 /* MessageListViewModel.swift */; };
@@ -317,6 +319,8 @@
 		A63BF349E7BC31AD5300412A /* Pods_AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A812BA6B290093A00096ACF0 /* SystemMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMessageViewModel.swift; sourceTree = "<group>"; };
 		A812BA6D2900947F0096ACF0 /* TextMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextMessageViewModel.swift; sourceTree = "<group>"; };
+		A88000EC29070F790076B0E2 /* HtmlMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HtmlMessageView.swift; sourceTree = "<group>"; };
+		A88000EE29070F870076B0E2 /* HtmlMessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HtmlMessageViewModel.swift; sourceTree = "<group>"; };
 		A8BB977F28F770FE008142DB /* SystemMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMessageView.swift; sourceTree = "<group>"; };
 		BD1A6A3B28ECDEAE005E0B70 /* MessageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListView.swift; sourceTree = "<group>"; };
 		BD1A6A3D28ECDFAB005E0B70 /* MessageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListViewModel.swift; sourceTree = "<group>"; };
@@ -1028,6 +1032,8 @@
 				A812BA6B290093A00096ACF0 /* SystemMessageViewModel.swift */,
 				BD80293E28ECCD7800A55CAC /* TextMessageView.swift */,
 				A812BA6D2900947F0096ACF0 /* TextMessageViewModel.swift */,
+				A88000EC29070F790076B0E2 /* HtmlMessageView.swift */,
+				A88000EE29070F870076B0E2 /* HtmlMessageViewModel.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -1367,6 +1373,7 @@
 				50CB823D28C29AC900680566 /* AppLifeCycleState.swift in Sources */,
 				50CB82BF28C2AD2300680566 /* MappedSequence.swift in Sources */,
 				BD80293F28ECCD7800A55CAC /* TextMessageView.swift in Sources */,
+				A88000ED29070F790076B0E2 /* HtmlMessageView.swift in Sources */,
 				50CB81DB28C26EEB00680566 /* ChatComposite.swift in Sources */,
 				50CB81F628C285F300680566 /* ChatConfiguration.swift in Sources */,
 				50CB81FE28C2863100680566 /* DiagnosticConfig.swift in Sources */,
@@ -1375,6 +1382,7 @@
 				BD1A6A3C28ECDEAE005E0B70 /* MessageListView.swift in Sources */,
 				50CB826728C29E6B00680566 /* ChatCompositeInternalError.swift in Sources */,
 				BDB1B8CB28F8A2940000300F /* IconButtonViewModel.swift in Sources */,
+				A88000EF29070F870076B0E2 /* HtmlMessageViewModel.swift in Sources */,
 				50CB81FA28C2861300680566 /* ChatCompositeOptions.swift in Sources */,
 				50CB825328C29B4800680566 /* ParticipantInfoModel.swift in Sources */,
 				50CB826B28C29E7B00680566 /* StringConstants.swift in Sources */,

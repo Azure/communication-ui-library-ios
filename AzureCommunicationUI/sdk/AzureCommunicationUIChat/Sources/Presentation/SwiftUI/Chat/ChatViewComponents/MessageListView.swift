@@ -13,50 +13,60 @@ struct MessageListView: View {
         static let topConsecutivePadding: CGFloat = 4
 
         static let defaultMinListRowHeight: CGFloat = 10
+
+        static let minFetchIndex: Int = 40
     }
 
     @StateObject var viewModel: MessageListViewModel
 
+    @State private var position: Int = 0
+
     var body: some View {
-        if #available(iOS 15, *) {
-            messageList
-        } else {
-            legacyMessageList
-        }
+        messageList
     }
 
-    @available(iOS 15.0, *)
     var messageList: some View {
-        ScrollViewReader { _ in
-            List {
-                ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
-                    MessageView(viewModel: message)
-                    .id(index)
-                    .listRowSeparator(.hidden)
-                    .listRowInsets(getEdgeInsets(message: message))
+        ScrollViewReader { proxy in
+            ScrollView {
+                LazyVStack(spacing: 0) {
+                    ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, _ in
+                        let messageViewModel = viewModel.createViewModel(index: index)
+                        MessageView(viewModel: messageViewModel)
+                        .id(index)
+//                        .listRowSeparator(.hidden) // Use List when bug is resolved
+//                        .listRowInsets(getEdgeInsets(message: messageViewModel)) // Use List when bug is resolved
+                        .padding(getEdgeInsets(message: messageViewModel))
+                        .onAppear {
+                            // Need a more consistent way of triggering a fetch
+                            if index == Constants.minFetchIndex {
+                                viewModel.fetchMessages()
+                            }
+                        }
+                    }
                 }
+
             }
             .listStyle(.plain)
             .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
-        }
-    }
-
-    // iOS 14
-    var legacyMessageList: some View {
-        ScrollViewReader { value in
-            LazyVStack {
-                ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
-                    MessageView(viewModel: message)
-                    .id(index)
-                }
-                .onChange(of: viewModel.messages.count) { _ in
-                    value.scrollTo(viewModel.messages.count - 1)
-                }
+            .onAppear {
+                scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
+            }
+            .onChange(of: viewModel.messages.count) { _ in
+                scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
             }
         }
     }
 
-    func getEdgeInsets(message: MessageViewModel) -> EdgeInsets {
+    private func scrollToBottom(proxy: ScrollViewProxy, bottomIndex: Int) {
+        guard bottomIndex != 0 else {
+            return
+        }
+        let scrollIndex = bottomIndex - 1
+        print("SCROLL TO: \(scrollIndex)")
+        proxy.scrollTo(scrollIndex)
+    }
+
+    private func getEdgeInsets(message: MessageViewModel) -> EdgeInsets {
         EdgeInsets(
             top: message.isConsecutive
             ? Constants.topConsecutivePadding

@@ -19,7 +19,8 @@ protocol CompositeViewModelFactoryProtocol {
     // MARK: ChatViewModels
     func makeTopBarViewModel(dispatch: @escaping ActionDispatch,
                              participantsState: ParticipantsState) -> TopBarViewModel
-    func makeMessageListViewModel(chatState: ChatState) -> MessageListViewModel
+    func makeMessageListViewModel(dispatch: @escaping ActionDispatch,
+                                  chatState: ChatState) -> MessageListViewModel
     func makeBottomBarViewModel(dispatch: @escaping ActionDispatch) -> BottomBarViewModel
 }
 
@@ -78,9 +79,11 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                         participantsState: participantsState)
     }
 
-    func makeMessageListViewModel(chatState: ChatState) -> MessageListViewModel {
+    func makeMessageListViewModel(dispatch: @escaping ActionDispatch,
+                                  chatState: ChatState) -> MessageListViewModel {
         MessageListViewModel(messageRepositoryManager: messageRepositoryManager,
                              logger: logger,
+                             dispatch: dispatch,
                              chatState: chatState)
     }
 

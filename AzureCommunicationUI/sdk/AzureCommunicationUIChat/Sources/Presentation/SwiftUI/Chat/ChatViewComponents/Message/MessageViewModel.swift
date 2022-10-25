@@ -5,10 +5,11 @@
 
 import Foundation
 
-class MessageViewModel: ObservableObject, Hashable {
-    let message: ChatMessageInfoModel
+class MessageViewModel: ObservableObject, Equatable, Identifiable {
     let showDateHeader: Bool
     let isConsecutive: Bool
+
+    @Published private(set) var message: ChatMessageInfoModel
 
     init(message: ChatMessageInfoModel, showDateHeader: Bool, isConsecutive: Bool) {
         self.message = message
@@ -33,10 +34,6 @@ class MessageViewModel: ObservableObject, Hashable {
             let formattedDate = format.string(from: message.createdOn.value)
             return formattedDate
         }
-    }
-
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(message.id)
     }
 
     static func == (lhs: MessageViewModel, rhs: MessageViewModel) -> Bool {
