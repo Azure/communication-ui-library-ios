@@ -49,7 +49,7 @@ class ChatService: NSObject, ChatServiceProtocol {
     func sendReadReceipt(messageId: String) async throws {
         try await chatSDKWrapper.sendReadReceipt(messageId: messageId)
     }
-    
+
     func sendTypingIndicator() async throws {
         try await chatSDKWrapper.sendTypingIndicator()
     }
