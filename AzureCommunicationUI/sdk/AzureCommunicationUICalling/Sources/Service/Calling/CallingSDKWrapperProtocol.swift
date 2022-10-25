@@ -6,12 +6,12 @@ import AzureCommunicationCommon
 import Combine
 import Foundation
 
-public enum CameraDevice {
+enum CameraDevice {
     case front
     case back
 }
 
-public class CompositeRemoteParticipant<WrappedType, VideoStreamType> {
+class CompositeRemoteParticipant<WrappedType, VideoStreamType> {
     var identifier: CommunicationIdentifier
     var videoStreams: [CompositeRemoteVideoStream<VideoStreamType>]
     var wrappedObject: WrappedType
@@ -25,12 +25,12 @@ public class CompositeRemoteParticipant<WrappedType, VideoStreamType> {
     }
 }
 
-public enum CompositeMediaStreamType {
+enum CompositeMediaStreamType {
     case cameraVideo
     case screenSharing
 }
 
-public class CompositeRemoteVideoStream<WrappedType> {
+class CompositeRemoteVideoStream<WrappedType> {
     var id: Int
     var mediaStreamType: CompositeMediaStreamType = .cameraVideo
     var wrappedObject: WrappedType
@@ -42,7 +42,7 @@ public class CompositeRemoteVideoStream<WrappedType> {
     }
 }
 
-public class CompositeLocalVideoStream<WrappedType> {
+class CompositeLocalVideoStream<WrappedType> {
     var mediaStreamType: CompositeMediaStreamType = .cameraVideo
     var wrappedObject: WrappedType
 
@@ -52,7 +52,7 @@ public class CompositeLocalVideoStream<WrappedType> {
     }
 }
 
-public protocol CallingSDKWrapperProtocol {
+protocol CallingSDKWrapperProtocol {
     func getRemoteParticipant<ParticipantType, StreamType>(_ identifier: String)
     -> CompositeRemoteParticipant<ParticipantType, StreamType>?
     func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String)
@@ -74,7 +74,7 @@ public protocol CallingSDKWrapperProtocol {
     var callingEventsHandler: CallingSDKEventsHandling { get }
 }
 
-public protocol CallingSDKEventsHandling {
+protocol CallingSDKEventsHandling {
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> { get }
     var callInfoSubject: PassthroughSubject<CallInfoModel, Never> { get }
     var isRecordingActiveSubject: PassthroughSubject<Bool, Never> { get }

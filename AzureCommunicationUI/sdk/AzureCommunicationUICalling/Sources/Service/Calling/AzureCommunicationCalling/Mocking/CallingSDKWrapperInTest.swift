@@ -7,8 +7,8 @@ import Foundation
 import Combine
 import AzureCommunicationCalling
 
-public class CallingSDKWrapperInTest: NSObject, CallingSDKWrapperProtocol {
-    public let callingEventsHandler: CallingSDKEventsHandling
+class CallingSDKWrapperInTest: NSObject, CallingSDKWrapperProtocol {
+    let callingEventsHandler: CallingSDKEventsHandling
 
     private let logger: LoggerMocking
     private let callConfigurationMocking: CallConfigurationMocking

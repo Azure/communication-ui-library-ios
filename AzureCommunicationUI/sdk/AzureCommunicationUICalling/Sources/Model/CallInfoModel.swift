@@ -3,7 +3,7 @@
 //  Licensed under the MIT License.
 //
 
-public struct CallInfoModel {
+struct CallInfoModel {
     let status: CallingStatus
     let internalError: CallCompositeInternalError?
 }

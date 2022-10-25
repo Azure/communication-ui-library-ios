@@ -40,8 +40,8 @@ public class CallComposite {
         localizationOptions = options?.localizationOptions
     }
 
-    public init(withOptions options: CallCompositeOptions? = nil,
-                callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
+    init(withOptions options: CallCompositeOptions? = nil,
+         callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
