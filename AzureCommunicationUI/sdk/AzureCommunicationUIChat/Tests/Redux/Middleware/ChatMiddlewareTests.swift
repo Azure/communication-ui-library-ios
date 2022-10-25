@@ -95,6 +95,17 @@ class ChatMiddlewareTests: XCTestCase {
         middlewareDispatch(getEmptyDispatch())(.repositoryAction(.sendMessageTriggered(internalId: "internalId", content: "content")))
         wait(for: [expectation], timeout: 1)
     }
+
+    func test_chatMiddleware_apply_when_sendTypingIndicatorTriggered_then_handlerSendTypingIndicatorCalled() {
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "sendTypingIndicatorCalled")
+        mockChatActionHandler.sendTypingIndicatorCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+        middlewareDispatch(getEmptyDispatch())(.chatAction(.sendTypingIndicatorTriggered))
+        wait(for: [expectation], timeout: 1)
+    }
 }
 
 extension ChatMiddlewareTests {
