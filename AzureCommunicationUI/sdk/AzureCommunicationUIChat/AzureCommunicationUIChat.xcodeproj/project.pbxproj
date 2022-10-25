@@ -147,11 +147,11 @@
 		521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */; };
 		521A024528FE1E8D002CAD8E /* TypingParticipantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024328FE1E8D002CAD8E /* TypingParticipantsView.swift */; };
 		85D6F5E7707CE2A8E51E5451 /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9C157344D512A9F069F9CC /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework */; };
-		A812BA6C290093A00096ACF0 /* SystemMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A812BA6B290093A00096ACF0 /* SystemMessageViewModel.swift */; };
-		A812BA6E2900947F0096ACF0 /* TextMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A812BA6D2900947F0096ACF0 /* TextMessageViewModel.swift */; };
 		A88000ED29070F790076B0E2 /* HtmlMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88000EC29070F790076B0E2 /* HtmlMessageView.swift */; };
 		A88000EF29070F870076B0E2 /* HtmlMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88000EE29070F870076B0E2 /* HtmlMessageViewModel.swift */; };
 		A8BB978028F770FE008142DB /* SystemMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8BB977F28F770FE008142DB /* SystemMessageView.swift */; };
+		A8E5F7B5290892050080B9D5 /* TextMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A812BA6D2900947F0096ACF0 /* TextMessageViewModel.swift */; };
+		A8E5F7B62908920D0080B9D5 /* SystemMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A812BA6B290093A00096ACF0 /* SystemMessageViewModel.swift */; };
 		BD1A6A3C28ECDEAE005E0B70 /* MessageListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A6A3B28ECDEAE005E0B70 /* MessageListView.swift */; };
 		BD1A6A3E28ECDFAB005E0B70 /* MessageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A6A3D28ECDFAB005E0B70 /* MessageListViewModel.swift */; };
 		BD1A6A3F28ECF008005E0B70 /* RepositoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6628EB543200ACD234 /* RepositoryState.swift */; };
@@ -1330,8 +1330,8 @@
 				50CB820728C2868000680566 /* CompositeManager.swift in Sources */,
 				50CB82CD28C2AD2300680566 /* ThemeOptions.swift in Sources */,
 				50CB826D28C29E8400680566 /* LocalizationKey.swift in Sources */,
+				A8E5F7B62908920D0080B9D5 /* SystemMessageViewModel.swift in Sources */,
 				50CB82C628C2AD2300680566 /* OrientationManager.swift in Sources */,
-				521A024929032762002CAD8E /* TextMessageViewModel.swift in Sources */,
 				50CB82BA28C2AD2300680566 /* DefaultLogger.swift in Sources */,
 				5085BF1E28F729990057586D /* ChatThreadInfoModel.swift in Sources */,
 				50CB822928C2996200680566 /* ChatActionHandler.swift in Sources */,
@@ -1347,6 +1347,7 @@
 				50CB82C428C2AD2300680566 /* AppLifeCycleManager.swift in Sources */,
 				521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */,
 				50CB823328C2999B00680566 /* LifecycleAction.swift in Sources */,
+				A8E5F7B5290892050080B9D5 /* TextMessageViewModel.swift in Sources */,
 				50CB821528C286EA00680566 /* ColorThemeProvider.swift in Sources */,
 				50CB82C528C2AD2300680566 /* AccessibilityProvider.swift in Sources */,
 				50CB820228C2866200680566 /* CompositeViewModelFactory.swift in Sources */,
@@ -1367,7 +1368,6 @@
 				50CB82CB28C2AD2300680566 /* ViewModifer.swift in Sources */,
 				BDB1B8CA28F8A2940000300F /* IconButton.swift in Sources */,
 				BD80293828ECA7D700A55CAC /* BottomBarView.swift in Sources */,
-				521A024729032755002CAD8E /* SystemMessageViewModel.swift in Sources */,
 				50CB824D28C29B1700680566 /* ParticipantsReducer.swift in Sources */,
 				50CB825D28C29DEF00680566 /* ChatService.swift in Sources */,
 				50CB824528C29AEB00680566 /* ErrorState.swift in Sources */,
