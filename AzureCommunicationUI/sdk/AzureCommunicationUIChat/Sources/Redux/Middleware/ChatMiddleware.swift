@@ -83,7 +83,6 @@ private func handleRepositoryAction(_ action: RepositoryAction,
                                   content: content,
                                   state: getState(),
                                   dispatch: dispatch)
-
     default:
         break
     }
