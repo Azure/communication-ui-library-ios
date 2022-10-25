@@ -8,7 +8,7 @@ import Foundation
 final class DependencyContainer {
     private var dependencies = [String: AnyObject]()
 
-    init(withMockSDKWrapper wrapper: CallingSDKWrapperProtocol? = nil) {
+    init() {
         registerDefaultDependencies()
     }
 
@@ -26,11 +26,8 @@ final class DependencyContainer {
         return dependency!
     }
 
-    private func registerDefaultDependencies(wrapper: CallingSDKWrapperProtocol? = nil) {
+    private func registerDefaultDependencies() {
         register(DefaultLogger() as Logger)
-        if let wrapper = wrapper {
-            register(wrapper as CallingSDKWrapperProtocol)
-        }
     }
 
     func registerDependencies(_ callConfiguration: CallConfiguration,
