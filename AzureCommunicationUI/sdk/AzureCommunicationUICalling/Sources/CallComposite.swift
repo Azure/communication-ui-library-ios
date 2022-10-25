@@ -102,10 +102,7 @@ public class CallComposite {
             return DiagnosticsInfo()
         }
 
-        let callId = diagnosticsManager.callId
-        let diagnosticsInfo = DiagnosticsInfo(lastKnownCallId: callId)
-
-        return diagnosticsInfo
+        return diagnosticsManager.getDiagnosticsInfo()
     }
 
     private func setupManagers(with dependencyContainer: DependencyContainer) {

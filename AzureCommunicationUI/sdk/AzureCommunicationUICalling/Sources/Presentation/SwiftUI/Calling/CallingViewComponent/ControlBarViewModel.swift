@@ -200,7 +200,9 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func getDiagnosticsInfo() -> String {
-        return diagnosticsManager.getDiagnosticsInfo()
+        let diagnosticsInfo = diagnosticsManager.getDiagnosticsInfo()
+        let callId = diagnosticsInfo.lastKnownCallId ?? "UNKNOWN"
+        return "Call ID: \"\(callId)\""
     }
 
     func update(localUserState: LocalUserState,
