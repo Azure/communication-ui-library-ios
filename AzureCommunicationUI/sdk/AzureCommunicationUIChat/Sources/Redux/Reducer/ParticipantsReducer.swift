@@ -13,13 +13,25 @@ extension Reducer where State == ParticipantsState,
         switch action {
         case .participantsAction(.participantsAdded(let participants)):
             let count = participantsState.numberOfParticipants + participants.count
-            var threadParticipants = participantsState.threadParticipants
-            threadParticipants.append(contentsOf: participants)
+            var currentParticipants = participantsState.participants
+            for participant in participants {
+                currentParticipants[participant.id] = participant
+            }
             let state = ParticipantsState(numberOfParticipants: count,
-                                          threadParticipants: threadParticipants)
+                                          participants: currentParticipants)
             return state
         case .participantsAction(.participantsRemoved(let participants)):
-            print("ParticipantsReducer `participantsRemoved` not implemented")
+            let count = participantsState.numberOfParticipants - participants.count
+            var currentParticipants = participantsState.participants
+            for participant in participants {
+                guard currentParticipants[participant.id] != nil else {
+                    continue
+                }
+
+                currentParticipants.removeValue(forKey: participant.id)
+            }
+            let state = ParticipantsState(numberOfParticipants: count,
+                                          participants: currentParticipants)
         default:
             return participantsState
         }

@@ -37,6 +37,12 @@ protocol RepositoryMiddlewareHandling {
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
+    func participantAddedMessage(participants: [ParticipantInfoModel],
+                                 dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func participantRemovedMessage(participants: [ParticipantInfoModel],
+                                   dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
     func addReceivedMessage(
         message: ChatMessageInfoModel,
         state: AppState,
@@ -124,6 +130,28 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
                 dispatch(.repositoryAction(.repositoryUpdated))
             }
         }
+
+    func participantAddedMessage(participants: [ParticipantInfoModel],
+                                 dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            let message = ChatMessageInfoModel(type: .participantsAdded,
+                                               createdOn: Iso8601Date(),
+                                               participants: participants)
+            messageRepository.addParticipantAdded(message: message)
+            dispatch(.repositoryAction(.repositoryUpdated))
+        }
+    }
+
+    func participantRemovedMessage(participants: [ParticipantInfoModel],
+                                   dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            let message = ChatMessageInfoModel(type: .participantsRemoved,
+                                               createdOn: Iso8601Date(),
+                                               participants: participants)
+            messageRepository.addParticipantRemoved(message: message)
+            dispatch(.repositoryAction(.repositoryUpdated))
+        }
+    }
 
     func addReceivedMessage(
         message: ChatMessageInfoModel,

@@ -109,7 +109,7 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
 
     func handleChatThreadPropertiesUpdated(dispatch: @escaping ActionDispatch,
                                            threadInfo: ChatThreadInfoModel) {
-        guard let topic = threadInfo.topic else {
+        guard threadInfo.topic != nil else {
             return
         }
         dispatch(.chatAction(.chatTopicUpdated(threadInfo: threadInfo)))

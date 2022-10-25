@@ -7,9 +7,9 @@ import Foundation
 
 struct ParticipantsState {
     let numberOfParticipants: Int
-    let threadParticipants: [ParticipantInfoModel]
-    init(numberOfParticipants: Int = 0, threadParticipants: [ParticipantInfoModel] = []) {
+    let participants: [String: ParticipantInfoModel]
+    init(numberOfParticipants: Int = 0, participants: [String: ParticipantInfoModel] = [:]) {
         self.numberOfParticipants = numberOfParticipants
-        self.threadParticipants = threadParticipants
+        self.participants = participants
     }
 }

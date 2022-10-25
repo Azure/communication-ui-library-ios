@@ -16,6 +16,11 @@ extension Middleware {
                         switch action {
                         case .chatAction(let chatAction):
                             handleChatAction(chatAction, actionHandler, getState, dispatch)
+                        case .participantsAction(let participantAction):
+                            handleParticipantAction(participantAction,
+                                                    actionHandler,
+                                                    getState,
+                                                    dispatch)
                         case .repositoryAction(let repositoryAction):
                             handleRepositoryAction(repositoryAction, actionHandler, getState, dispatch)
                         default:
@@ -40,6 +45,23 @@ private func handleChatAction(
                                                  state: getState(),
                                                  dispatch: dispatch)
 
+        default:
+            break
+        }
+    }
+
+private func handleParticipantAction(
+    _ action: ParticipantsAction,
+    _ actionHandler: RepositoryMiddlewareHandling,
+    _ getState: () -> AppState,
+    _ dispatch: @escaping ActionDispatch) {
+        switch action {
+        case .participantsAdded(let participants):
+            actionHandler.participantAddedMessage(participants: participants,
+                                                  dispatch: dispatch)
+        case .participantsRemoved(let participants):
+            actionHandler.participantRemovedMessage(participants: participants,
+                                                    dispatch: dispatch)
         default:
             break
         }
