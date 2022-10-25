@@ -6,7 +6,6 @@
 import Foundation
 
 struct ParticipantsState {
-    let numberOfParticipants: Int
     let participants: [String: ParticipantInfoModel]
 
     // MARK: Typing Indicators
@@ -14,12 +13,14 @@ struct ParticipantsState {
     let typingIndicatorMap: [String: Date]
     let typingIndicatorUpdatedTimestamp: Date
 
-    init(numberOfParticipants: Int = 0,
-         participants: [String: ParticipantInfoModel] = [:],
+    var numberOfParticipants: Int {
+        return participants.count
+    }
+
+    init(participants: [String: ParticipantInfoModel] = [:],
          participantsUpdatedTimestamp: Date = Date(),
          typingIndicatorMap: [String: Date] = [:],
          typingIndicatorUpdatedTimestamp: Date = Date()) {
-        self.numberOfParticipants = numberOfParticipants
         self.participants = participants
 
         self.participantsUpdatedTimestamp = participantsUpdatedTimestamp

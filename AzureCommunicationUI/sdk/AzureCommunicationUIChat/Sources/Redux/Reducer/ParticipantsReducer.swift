@@ -21,16 +21,13 @@ extension Reducer where State == ParticipantsState,
 
         switch action {
         case .participantsAction(.participantsAdded(let participants)):
-            let count = participantsState.numberOfParticipants + participants.count
             var currentParticipants = participantsState.participants
             for participant in participants {
                 currentParticipants[participant.id] = participant
             }
-            let state = ParticipantsState(numberOfParticipants: count,
-                                          participants: currentParticipants)
+            let state = ParticipantsState(participants: currentParticipants)
             return state
         case .participantsAction(.participantsRemoved(let participants)):
-            let count = participantsState.numberOfParticipants - participants.count
             for participant in participants {
                 guard currentParticipants[participant.id] != nil else {
                     continue
@@ -42,8 +39,7 @@ extension Reducer where State == ParticipantsState,
             participantsUpdatedTimestamp = currentTimestamp
             typingIndicatorTimestamp = currentTimestamp
 
-            let state = ParticipantsState(numberOfParticipants: count,
-                                          participants: currentParticipants,
+            let state = ParticipantsState(participants: currentParticipants,
                                           participantsUpdatedTimestamp: participantsUpdatedTimestamp)
 
             return state
@@ -68,8 +64,7 @@ extension Reducer where State == ParticipantsState,
             return participantsState
         }
 
-        return ParticipantsState(numberOfParticipants: participantsState.numberOfParticipants,
-                                 participants: currentParticipants,
+        return ParticipantsState(participants: currentParticipants,
                                  participantsUpdatedTimestamp: participantsUpdatedTimestamp,
                                  typingIndicatorMap: typingIndicatorMap,
                                  typingIndicatorUpdatedTimestamp: typingIndicatorTimestamp)
