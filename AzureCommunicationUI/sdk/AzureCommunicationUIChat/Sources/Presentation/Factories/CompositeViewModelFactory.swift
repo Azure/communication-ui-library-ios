@@ -21,6 +21,7 @@ protocol CompositeViewModelFactoryProtocol {
                              participantsState: ParticipantsState) -> TopBarViewModel
     func makeMessageListViewModel(chatState: ChatState) -> MessageListViewModel
     func makeBottomBarViewModel(dispatch: @escaping ActionDispatch) -> BottomBarViewModel
+    func makeTypingParticipantsViewModel() -> TypingParticipantsViewModel
 }
 
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
@@ -88,5 +89,10 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         BottomBarViewModel(compositeViewModelFactory: self,
                            logger: logger,
                            dispatch: dispatch)
+    }
+
+    func makeTypingParticipantsViewModel() -> TypingParticipantsViewModel {
+        TypingParticipantsViewModel(logger: logger,
+                                    localizationProvider: localizationProvider)
     }
 }

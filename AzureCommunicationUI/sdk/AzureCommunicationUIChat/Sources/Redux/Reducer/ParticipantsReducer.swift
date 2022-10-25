@@ -9,6 +9,15 @@ import Foundation
 extension Reducer where State == ParticipantsState,
                         Actions == Action {
     static var liveParticipantsReducer: Self = Reducer { participantsState, action in
+        // MARK: Chat Participant
+        var currentParticipants = participantsState.participants
+        var participantsUpdatedTimestamp = participantsState.participantsUpdatedTimestamp
+
+        // MARK: Typing Indicator
+        let currentTimestamp = Date()
+        let speakingDurationSeconds: TimeInterval = 8
+        var typingIndicatorMap = participantsState.typingIndicatorMap
+        var typingIndicatorTimestamp = participantsState.typingIndicatorUpdatedTimestamp
 
         switch action {
         case .participantsAction(.participantsAdded(let participants)):
@@ -22,20 +31,47 @@ extension Reducer where State == ParticipantsState,
             return state
         case .participantsAction(.participantsRemoved(let participants)):
             let count = participantsState.numberOfParticipants - participants.count
-            var currentParticipants = participantsState.participants
             for participant in participants {
                 guard currentParticipants[participant.id] != nil else {
                     continue
                 }
 
                 currentParticipants.removeValue(forKey: participant.id)
+                typingIndicatorMap.removeValue(forKey: participant.id)
             }
+            participantsUpdatedTimestamp = currentTimestamp
+            typingIndicatorTimestamp = currentTimestamp
+
             let state = ParticipantsState(numberOfParticipants: count,
-                                          participants: currentParticipants)
+                                          participants: currentParticipants,
+                                          participantsUpdatedTimestamp: participantsUpdatedTimestamp)
+
+            return state
+        case .participantsAction(.typingIndicatorReceived(userEventTimestamp: let userEventTimestamp)):
+            let typingExpiringTimestamp = userEventTimestamp.timestamp.value + speakingDurationSeconds
+            typingIndicatorMap[userEventTimestamp.id] = typingExpiringTimestamp
+            if typingIndicatorTimestamp < typingExpiringTimestamp {
+                typingIndicatorTimestamp = typingExpiringTimestamp
+            }
+        case .repositoryAction(.chatMessageReceived(let message)):
+            guard let participantId = message.senderId else {
+                return participantsState
+            }
+            switch message.type {
+            case .custom(_), .html, .text:
+                typingIndicatorMap.removeValue(forKey: participantId)
+                typingIndicatorTimestamp = currentTimestamp
+            default:
+                return participantsState
+            }
         default:
             return participantsState
         }
 
-        return participantsState
+        return ParticipantsState(numberOfParticipants: participantsState.numberOfParticipants,
+                                 participants: currentParticipants,
+                                 participantsUpdatedTimestamp: participantsUpdatedTimestamp,
+                                 typingIndicatorMap: typingIndicatorMap,
+                                 typingIndicatorUpdatedTimestamp: typingIndicatorTimestamp)
     }
 }

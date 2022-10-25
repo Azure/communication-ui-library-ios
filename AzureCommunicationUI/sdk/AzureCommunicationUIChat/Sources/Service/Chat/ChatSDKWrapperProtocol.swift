@@ -11,6 +11,7 @@ protocol ChatSDKWrapperProtocol {
     func getInitialMessages() async throws -> [ChatMessageInfoModel]
     func getPreviousMessages() async throws -> [ChatMessageInfoModel]
     func sendMessage(content: String, senderDisplayName: String) async throws -> String
+    func sendTypingIndicator() async throws
 
     var chatEventsHandler: ChatSDKEventsHandling { get }
 }
