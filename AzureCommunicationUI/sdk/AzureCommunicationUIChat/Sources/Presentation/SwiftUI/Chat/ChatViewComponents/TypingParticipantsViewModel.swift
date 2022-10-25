@@ -41,13 +41,13 @@ class TypingParticipantsViewModel: ObservableObject {
 
     func update(participantsState: ParticipantsState) {
         guard !participantsState.typingIndicatorMap.isEmpty,
-        !participantsState.participantsInfoMap.isEmpty else {
+        !participantsState.participants.isEmpty else {
             hideTypingIndicator()
             return
         }
         participants = participantsState.typingIndicatorMap
             .compactMap { userId, _ in
-                participantsState.participantsInfoMap[userId]
+                participantsState.participants[userId]
             }
             .sorted(by: { $0.displayName < $1.displayName })
         displayLabel()

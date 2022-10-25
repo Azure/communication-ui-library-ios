@@ -10,7 +10,7 @@ extension Reducer where State == ParticipantsState,
                         Actions == Action {
     static var liveParticipantsReducer: Self = Reducer { participantsState, action in
         // MARK: Chat Participant
-        var participantsInfoMap = participantsState.participantsInfoMap
+        var currentParticipants = participantsState.participants
         var participantsUpdatedTimestamp = participantsState.participantsUpdatedTimestamp
 
         // MARK: Typing Indicator
@@ -20,14 +20,26 @@ extension Reducer where State == ParticipantsState,
 
         switch action {
         case .participantsAction(.participantsAdded(let participants)):
-            print("ParticipantsReducer `participantsAdded` not implemented")
-        case .participantsAction(.participantsRemoved(let participants)):
-            print("ParticipantsReducer `participantsRemoved` not implemented")
-            // missing participantsInfoMap, readReceiptMap
-            for p in participants {
-                participantsInfoMap.removeValue(forKey: p.id)
-                typingIndicatorMap[p.id]?.fire()
+            var currentParticipants = participantsState.participants
+            for participant in participants {
+                currentParticipants[participant.id] = participant
             }
+            let state = ParticipantsState(participants: currentParticipants)
+            return state
+        case .participantsAction(.participantsRemoved(let participants)):
+            for participant in participants {
+                guard currentParticipants[participant.id] != nil else {
+                    continue
+                }
+                currentParticipants.removeValue(forKey: participant.id)
+                typingIndicatorMap[participant.id]?.fire()
+            }
+            participantsUpdatedTimestamp = currentTimestamp
+
+            let state = ParticipantsState(participants: currentParticipants,
+                                          participantsUpdatedTimestamp: participantsUpdatedTimestamp)
+
+            return state
         case .participantsAction(.typingIndicatorReceived(let id, let timer)):
             typingIndicatorMap[id]?.invalidate()
             typingIndicatorMap[id] = timer
@@ -47,7 +59,7 @@ extension Reducer where State == ParticipantsState,
             return participantsState
         }
 
-        return ParticipantsState(participantsInfoMap: participantsInfoMap,
+        return ParticipantsState(participants: currentParticipants,
                                  participantsUpdatedTimestamp: participantsUpdatedTimestamp,
                                  typingIndicatorMap: typingIndicatorMap)
     }

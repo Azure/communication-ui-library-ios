@@ -68,7 +68,8 @@ extension ParticipantsAddedEvent {
             $0.toParticipantInfoModel()
         }
         return ParticipantsInfoModel(
-            participants: participants)
+            participants: participants,
+            createdOn: self.addedOn ?? Iso8601Date())
     }
 }
 
@@ -78,7 +79,8 @@ extension ParticipantsRemovedEvent {
             $0.toParticipantInfoModel()
         }
         return ParticipantsInfoModel(
-            participants: participants)
+            participants: participants,
+            createdOn: self.removedOn ?? Iso8601Date())
     }
 }
 
