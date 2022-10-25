@@ -17,7 +17,7 @@ extension Middleware {
                         case .chatAction(let chatAction):
                             handleChatAction(chatAction, actionHandler, getState, dispatch)
                         case .participantsAction(let participantAction):
-                            handleParticipantAction(participantAction,
+                            handleParticipantsAction(participantAction,
                                                     actionHandler,
                                                     getState,
                                                     dispatch)
@@ -50,7 +50,7 @@ private func handleChatAction(
         }
     }
 
-private func handleParticipantAction(
+private func handleParticipantsAction(
     _ action: ParticipantsAction,
     _ actionHandler: RepositoryMiddlewareHandling,
     _ getState: () -> AppState,
