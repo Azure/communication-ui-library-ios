@@ -17,6 +17,8 @@ class ChatViewModel: ObservableObject {
     let messageListViewModel: MessageListViewModel
     let bottomBarViewModel: BottomBarViewModel
 
+    let typingParticipantsViewModel: TypingParticipantsViewModel
+
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState>) {
@@ -29,7 +31,7 @@ class ChatViewModel: ObservableObject {
         self.messageListViewModel = compositeViewModelFactory.makeMessageListViewModel(dispatch: store.dispatch,
                                                                                        chatState: store.state.chatState)
         self.bottomBarViewModel = compositeViewModelFactory.makeBottomBarViewModel(dispatch: store.dispatch)
-
+        self.typingParticipantsViewModel = compositeViewModelFactory.makeTypingParticipantsViewModel()
         store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
@@ -44,5 +46,6 @@ class ChatViewModel: ObservableObject {
 
     func receive(_ state: AppState) {
         messageListViewModel.update(repositoryState: state.repositoryState)
+        typingParticipantsViewModel.update(participantsState: state.participantsState)
     }
 }

@@ -19,6 +19,7 @@ class ChatSDKWrapperMocking: ChatSDKWrapperProtocol {
     var getInitialMessagesCalled: Bool = false
     var getPreviousMessagesCalled: Bool = false
     var sendMessageCalled: Bool = false
+    var sendTypingIndicatorCalled: Bool = false
 
     func initializeChat() async throws {
         initializeCalled = true
@@ -44,5 +45,10 @@ class ChatSDKWrapperMocking: ChatSDKWrapperProtocol {
         return try await Task<String, Error> {
             "messageId"
         }.value
+    }
+
+    func sendTypingIndicator() async throws {
+        sendTypingIndicatorCalled = true
+        try await Task<Void, Error> {}.value
     }
 }

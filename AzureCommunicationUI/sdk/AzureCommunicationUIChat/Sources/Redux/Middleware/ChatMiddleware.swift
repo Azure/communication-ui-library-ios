@@ -55,6 +55,17 @@ private func handleChatAction(_ action: ChatAction,
         actionHandler.initialize(state: getState(),
                                  dispatch: dispatch,
                                  serviceListener: serviceListener)
+    case .sendTypingIndicatorTriggered:
+       actionHandler.sendTypingIndicator(state: getState(),
+                                         dispatch: dispatch)
+    case .realTimeNotificationConnected:
+        // stub: stop-pulling msg to be implemented for GA
+        break
+    case .realTimeNotificationDisconnected:
+        // stub: pulling msg to be implemented for GA
+        break
+    case .chatThreadDeleted:
+        actionHandler.onChatThreadDeleted(dispatch: dispatch)
     default:
         break
     }

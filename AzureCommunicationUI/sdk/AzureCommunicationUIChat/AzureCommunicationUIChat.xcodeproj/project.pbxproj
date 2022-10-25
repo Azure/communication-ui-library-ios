@@ -117,7 +117,6 @@
 		50F0C59128D38ACA009D7176 /* CompositeViewModelFactoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C59028D38ACA009D7176 /* CompositeViewModelFactoryMocking.swift */; };
 		50F0C59328D38AE3009D7176 /* ChatServiceMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C59228D38AE3009D7176 /* ChatServiceMocking.swift */; };
 		50F0C59528D38AF5009D7176 /* ChatSDKWrapperMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C59428D38AF5009D7176 /* ChatSDKWrapperMocking.swift */; };
-		50F0C59728D38B08009D7176 /* ChatSDKEventsHandlerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C59628D38B08009D7176 /* ChatSDKEventsHandlerMocking.swift */; };
 		50F0C59928D38B20009D7176 /* ErrorMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C59828D38B20009D7176 /* ErrorMocking.swift */; };
 		50F0C59B28D38B2B009D7176 /* AccessibilityProviderMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C59A28D38B2B009D7176 /* AccessibilityProviderMocking.swift */; };
 		50F0C59D28D38B37009D7176 /* LocalizationProviderMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C59C28D38B37009D7176 /* LocalizationProviderMocking.swift */; };
@@ -143,6 +142,10 @@
 		50F0C5C628D38CE4009D7176 /* MessageRepositoryManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C528D38CE4009D7176 /* MessageRepositoryManagerTests.swift */; };
 		50F0C5C828D38CF1009D7176 /* RemoteOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */; };
 		50F0C5CA28D38D00009D7176 /* DependencyContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */; };
+		521A024028FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A023E28FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift */; };
+		521A024128FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A023F28FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift */; };
+		521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */; };
+		521A024528FE1E8D002CAD8E /* TypingParticipantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024328FE1E8D002CAD8E /* TypingParticipantsView.swift */; };
 		85D6F5E7707CE2A8E51E5451 /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9C157344D512A9F069F9CC /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework */; };
 		A812BA6C290093A00096ACF0 /* SystemMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A812BA6B290093A00096ACF0 /* SystemMessageViewModel.swift */; };
 		A812BA6E2900947F0096ACF0 /* TextMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A812BA6D2900947F0096ACF0 /* TextMessageViewModel.swift */; };
@@ -288,7 +291,6 @@
 		50F0C59028D38ACA009D7176 /* CompositeViewModelFactoryMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeViewModelFactoryMocking.swift; sourceTree = "<group>"; };
 		50F0C59228D38AE3009D7176 /* ChatServiceMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceMocking.swift; sourceTree = "<group>"; };
 		50F0C59428D38AF5009D7176 /* ChatSDKWrapperMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSDKWrapperMocking.swift; sourceTree = "<group>"; };
-		50F0C59628D38B08009D7176 /* ChatSDKEventsHandlerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSDKEventsHandlerMocking.swift; sourceTree = "<group>"; };
 		50F0C59828D38B20009D7176 /* ErrorMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMocking.swift; sourceTree = "<group>"; };
 		50F0C59A28D38B2B009D7176 /* AccessibilityProviderMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderMocking.swift; sourceTree = "<group>"; };
 		50F0C59C28D38B37009D7176 /* LocalizationProviderMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationProviderMocking.swift; sourceTree = "<group>"; };
@@ -314,6 +316,10 @@
 		50F0C5C528D38CE4009D7176 /* MessageRepositoryManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRepositoryManagerTests.swift; sourceTree = "<group>"; };
 		50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteOptionsTests.swift; sourceTree = "<group>"; };
 		50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainerTests.swift; sourceTree = "<group>"; };
+		521A023E28FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantAvatarGroup.swift; sourceTree = "<group>"; };
+		521A023F28FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantAvatarGroupContainer.swift; sourceTree = "<group>"; };
+		521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantsViewModel.swift; sourceTree = "<group>"; };
+		521A024328FE1E8D002CAD8E /* TypingParticipantsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantsView.swift; sourceTree = "<group>"; };
 		5BE15140BA042B0F23F23BE3 /* Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		78EED6E1D0BF91A2966AC0C7 /* Pods-AzureCommunicationUIChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat/Pods-AzureCommunicationUIChat.debug.xcconfig"; sourceTree = "<group>"; };
 		A63BF349E7BC31AD5300412A /* Pods_AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -569,6 +575,8 @@
 		50CB81F028C2856800680566 /* Wrapper */ = {
 			isa = PBXGroup;
 			children = (
+				521A023E28FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift */,
+				521A023F28FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift */,
 			);
 			path = Wrapper;
 			sourceTree = "<group>";
@@ -602,6 +610,8 @@
 				BD1A6A3D28ECDFAB005E0B70 /* MessageListViewModel.swift */,
 				BD80293628ECA6C600A55CAC /* TopBarView.swift */,
 				BD80293A28ECA84200A55CAC /* TopBarViewModel.swift */,
+				521A024328FE1E8D002CAD8E /* TypingParticipantsView.swift */,
+				521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */,
 			);
 			path = ChatViewComponents;
 			sourceTree = "<group>";
@@ -699,7 +709,6 @@
 				50370CB828EB5DBE00ACD234 /* LoggerMocking.swift */,
 				50F0C59228D38AE3009D7176 /* ChatServiceMocking.swift */,
 				50F0C59428D38AF5009D7176 /* ChatSDKWrapperMocking.swift */,
-				50F0C59628D38B08009D7176 /* ChatSDKEventsHandlerMocking.swift */,
 				50F0C59828D38B20009D7176 /* ErrorMocking.swift */,
 				50370CCC28ECE28D00ACD234 /* MessageRepositoryManagerMocking.swift */,
 				50F0C59A28D38B2B009D7176 /* AccessibilityProviderMocking.swift */,
@@ -1293,7 +1302,6 @@
 				50CB82BD28C2AD2300680566 /* UIViewControllerExtension.swift in Sources */,
 				50CB82C228C2AD2300680566 /* Store.swift in Sources */,
 				50CB81F828C2860200680566 /* ChatCompositeError.swift in Sources */,
-				A812BA6C290093A00096ACF0 /* SystemMessageViewModel.swift in Sources */,
 				50CB82D028C2AD9900680566 /* SetParticipantViewDataError.swift in Sources */,
 				50CB824128C29ADA00680566 /* ParticipantsState.swift in Sources */,
 				50CB826128C29E0600680566 /* ChatSDKWrapperProtocol.swift in Sources */,
@@ -1302,6 +1310,7 @@
 				50CB823728C29A3E00680566 /* ParticipantsAction.swift in Sources */,
 				BD80293B28ECA84200A55CAC /* TopBarViewModel.swift in Sources */,
 				50CB82BC28C2AD2300680566 /* CancelBag.swift in Sources */,
+				521A024128FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift in Sources */,
 				50CB81FC28C2862000680566 /* LocalizationOptions.swift in Sources */,
 				50CB824928C29B0100680566 /* LifeCycleReducer.swift in Sources */,
 				50CB81F428C285E300680566 /* RemoteOptions.swift in Sources */,
@@ -1322,6 +1331,7 @@
 				50CB82CD28C2AD2300680566 /* ThemeOptions.swift in Sources */,
 				50CB826D28C29E8400680566 /* LocalizationKey.swift in Sources */,
 				50CB82C628C2AD2300680566 /* OrientationManager.swift in Sources */,
+				521A024929032762002CAD8E /* TextMessageViewModel.swift in Sources */,
 				50CB82BA28C2AD2300680566 /* DefaultLogger.swift in Sources */,
 				5085BF1E28F729990057586D /* ChatThreadInfoModel.swift in Sources */,
 				50CB822928C2996200680566 /* ChatActionHandler.swift in Sources */,
@@ -1335,6 +1345,7 @@
 				50CB823128C2999200680566 /* Action.swift in Sources */,
 				50CB825928C29B7200680566 /* UserEventTimestampModel.swift in Sources */,
 				50CB82C428C2AD2300680566 /* AppLifeCycleManager.swift in Sources */,
+				521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */,
 				50CB823328C2999B00680566 /* LifecycleAction.swift in Sources */,
 				50CB821528C286EA00680566 /* ColorThemeProvider.swift in Sources */,
 				50CB82C528C2AD2300680566 /* AccessibilityProvider.swift in Sources */,
@@ -1356,6 +1367,7 @@
 				50CB82CB28C2AD2300680566 /* ViewModifer.swift in Sources */,
 				BDB1B8CA28F8A2940000300F /* IconButton.swift in Sources */,
 				BD80293828ECA7D700A55CAC /* BottomBarView.swift in Sources */,
+				521A024729032755002CAD8E /* SystemMessageViewModel.swift in Sources */,
 				50CB824D28C29B1700680566 /* ParticipantsReducer.swift in Sources */,
 				50CB825D28C29DEF00680566 /* ChatService.swift in Sources */,
 				50CB824528C29AEB00680566 /* ErrorState.swift in Sources */,
@@ -1368,6 +1380,7 @@
 				50CB821328C286DE00680566 /* LocalizationProvider.swift in Sources */,
 				50CB821728C2870500680566 /* ContainerView.swift in Sources */,
 				50CB82C328C2AD2300680566 /* StyleProvider.swift in Sources */,
+				521A024028FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift in Sources */,
 				50CB821928C2872600680566 /* ContainerUIHostingController.swift in Sources */,
 				50CB82C028C2AD2300680566 /* Middleware.swift in Sources */,
 				50CB823D28C29AC900680566 /* AppLifeCycleState.swift in Sources */,
@@ -1393,8 +1406,8 @@
 				50CB82C128C2AD2300680566 /* Reducer.swift in Sources */,
 				5085BF2028F72E0D0057586D /* ParticipantsInfoModel.swift in Sources */,
 				50F0C58728D38812009D7176 /* MessageViewModel.swift in Sources */,
+				521A024528FE1E8D002CAD8E /* TypingParticipantsView.swift in Sources */,
 				50CB820D28C286AA00680566 /* MessageRepositoryManager.swift in Sources */,
-				A812BA6E2900947F0096ACF0 /* TextMessageViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1429,7 +1442,6 @@
 				50F0C5C828D38CF1009D7176 /* RemoteOptionsTests.swift in Sources */,
 				50F0C5AA28D38BE1009D7176 /* ChatServiceEventHandlerTests.swift in Sources */,
 				50370CC228EB5E6B00ACD234 /* LocalizationProviderTests.swift in Sources */,
-				50F0C59728D38B08009D7176 /* ChatSDKEventsHandlerMocking.swift in Sources */,
 				50370CBD28EB5E0D00ACD234 /* ReducerMocking.swift in Sources */,
 				50F0C5C628D38CE4009D7176 /* MessageRepositoryManagerTests.swift in Sources */,
 				50F0C59928D38B20009D7176 /* ErrorMocking.swift in Sources */,
