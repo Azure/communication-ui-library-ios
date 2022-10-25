@@ -38,6 +38,9 @@ struct MessageListView: View {
                         .padding(getEdgeInsets(message: messageViewModel))
                         .onAppear {
                             // Need a more consistent way of triggering a fetch
+                            // Don't scroll automatically when triggering a fetch
+                            // Pull to refresh?
+                            // Activity Indicator
                             if index == Constants.minFetchIndex {
                                 viewModel.fetchMessages()
                             }
@@ -62,7 +65,7 @@ struct MessageListView: View {
             return
         }
         let scrollIndex = bottomIndex - 1
-        print("SCROLL TO: \(scrollIndex)")
+        print("SCROLL TO: \(scrollIndex)") // Testing
         proxy.scrollTo(scrollIndex)
     }
 

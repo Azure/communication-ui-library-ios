@@ -28,7 +28,7 @@ class MessageListViewModel: ObservableObject {
     }
 
     func fetchMessages() {
-        print("SCROLL: Fetch Messages")
+        print("SCROLL: Fetch Messages") // Testing
         dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
     }
 
