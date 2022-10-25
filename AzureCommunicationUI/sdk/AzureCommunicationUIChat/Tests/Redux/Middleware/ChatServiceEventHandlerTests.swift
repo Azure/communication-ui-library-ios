@@ -172,6 +172,27 @@ class ChatServiceEventHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_chatServiceEventHandler_subscription_when_receiveParticipantsRemovedEvent_then_dispatchClearTypingIndicatorAction() {
+        let expectation = XCTestExpectation(description: "Dispatch Clearing Indicator Received Action")
+        let expectedUserId = "identifier"
+        func dispatch(action: Action) {
+            switch action {
+            case .participantsAction(.clearTypingIndicator(let id)):
+                XCTAssertEqual(id, expectedUserId)
+                expectation.fulfill()
+            default:
+                XCTExpectFailure("clearTypingIndicator was not dispatched")
+            }
+        }
+        chatServiceEventHandler.subscription(dispatch: dispatch)
+        let chatMessageReceivedEvent = ChatEventModel(
+            eventType: .participantsRemoved,
+            infoModel: UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier("identifier"),
+                                               timestamp: Iso8601Date())!)
+        mockChatService.chatEventSubject.send(chatMessageReceivedEvent)
+        wait(for: [expectation], timeout: 1)
+    }
+
     func test_chatServiceEventHandler_subscription_when_receiveChatThreadDeletedEvent_then_dispatchChatThreadDeletedAction() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
         func dispatch(action: Action) {
