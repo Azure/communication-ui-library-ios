@@ -11,7 +11,11 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
     var addPreviousMessagesCalled: ((Bool) -> Void)?
     var addNewSentMessageCalled: ((Bool) -> Void)?
     var updateSentMessageIdCalled: ((Bool) -> Void)?
+
+    var addTopicUpdatedMessageCalled: ((Bool) -> Void)?
     var addReceivedMessageCalled: ((Bool) -> Void)?
+    var updateReceivedEditedMessageCalled: ((Bool) -> Void)?
+    var updateReceivedDeletedMessageCalled: ((Bool) -> Void)?
 
     func loadInitialMessages(messages: [ChatMessageInfoModel], state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
@@ -37,9 +41,27 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
         }
     }
 
+    func addTopicUpdatedMessage(threadInfo: ChatThreadInfoModel, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            addTopicUpdatedMessageCalled?(true)
+        }
+    }
+
     func addReceivedMessage(message: ChatMessageInfoModel, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             addReceivedMessageCalled?(true)
+        }
+    }
+
+    func updateReceivedEditedMessage(message: ChatMessageInfoModel, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            updateReceivedEditedMessageCalled?(true)
+        }
+    }
+
+    func updateReceivedDeletedMessage(message: ChatMessageInfoModel, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            updateReceivedDeletedMessageCalled?(true)
         }
     }
 }

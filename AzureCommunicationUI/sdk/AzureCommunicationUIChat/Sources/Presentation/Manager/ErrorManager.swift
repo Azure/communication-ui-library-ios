@@ -28,6 +28,41 @@ class ErrorManager: ErrorManagerProtocol {
     }
 
     private func receive(_ state: AppState) {
-        // stub not implemented
+        let errorState = state.errorState
+        guard previousError != errorState.internalError else {
+            return
+        }
+        previousError = errorState.internalError
+        updateEventHandler(state.errorState)
+        updateFatalError(state.errorState)
+    }
+
+    private func updateEventHandler(_ errorState: ErrorState) {
+        guard let didFail = eventsHandler.onError,
+              let compositeError = getChatCompositeError(errorState: errorState) else {
+            return
+        }
+        didFail(compositeError)
+    }
+
+    private func updateFatalError(_ errorState: ErrorState) {
+        guard let internalError = errorState.internalError,
+              errorState.errorCategory == .fatal,
+              internalError.isFatalError() else {
+            return
+        }
+        // might require alert for accessiblity before exit
+        print("For testing: compositeExitAction error \(internalError.rawValue)")
+        store.dispatch(action: .compositeExitAction)
+    }
+
+    private func getChatCompositeError(errorState: ErrorState) -> ChatCompositeError? {
+        guard let internalError = errorState.internalError,
+              let errorCode = internalError.toChatCompositeErrorCode() else {
+            return nil
+        }
+
+        return ChatCompositeError(code: errorCode,
+                                  error: errorState.error)
     }
 }
