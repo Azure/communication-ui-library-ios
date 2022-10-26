@@ -30,7 +30,7 @@ public class CallComposite {
     private var audioSessionManager: AudioSessionManagerProtocol?
     private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
     private var avatarViewManager: AvatarViewManagerProtocol?
-    private var callingSDKWrapperProtcol: CallingSDKWrapperProtocol?
+    private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
@@ -45,7 +45,7 @@ public class CallComposite {
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
-        self.callingSDKWrapperProtcol = callingSDKWrapperProtocol
+        self.customCallingSdkWrapper = callingSDKWrapperProtocol
     }
 
     deinit {
@@ -61,7 +61,7 @@ public class CallComposite {
         dependencyContainer.registerDependencies(callConfiguration,
                                                  localOptions: localOptions,
                                                  callCompositeEventsHandler: events,
-                                                 withCallingSDKWrapper: self.callingSDKWrapperProtcol)
+                                                 withCallingSDKWrapper: self.customCallingSdkWrapper)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)
