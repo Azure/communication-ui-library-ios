@@ -19,8 +19,6 @@ struct MessageListView: View {
 
     @StateObject var viewModel: MessageListViewModel
 
-    @State private var position: Int = 0
-
     var body: some View {
         messageList
     }
