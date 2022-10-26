@@ -13,4 +13,22 @@ enum ParticipantsAction: Equatable {
     case typingIndicatorReceived(userEventTimestamp: UserEventTimestampModel)
     case participantsAdded(participants: [ParticipantInfoModel])
     case participantsRemoved(participants: [ParticipantInfoModel])
+
+    case sendReadReceiptTriggered(messageId: String)
+    case sendReadReceiptSuccess(messageId: String)
+    case sendReadReceiptFailed(error: Error)
+
+    static func == (lhs: ParticipantsAction, rhs: ParticipantsAction) -> Bool {
+        switch (lhs, rhs) {
+        case let (.sendReadReceiptFailed(lErr), .sendReadReceiptFailed(rErr)):
+            return (lErr as NSError).code == (rErr as NSError).code
+
+        case let (.sendReadReceiptTriggered(lMsgId), .sendReadReceiptTriggered(rMsgId)),
+              let (.sendReadReceiptSuccess(lMsgId), .sendReadReceiptSuccess(rMsgId)):
+            return lMsgId == rMsgId
+
+        default:
+            return false
+        }
+    }
 }

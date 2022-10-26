@@ -75,7 +75,12 @@ private func handleParticipantsAction(_ action: ParticipantsAction,
                                       _ actionHandler: ChatActionHandling,
                                       _ getState: () -> AppState,
                                       _ dispatch: @escaping ActionDispatch) {
-    print("`handleParticipantsAction` not implemented")
+    switch action {
+    case .sendReadReceiptTriggered(let messageId):
+        actionHandler.sendReadReceipt(messageId: messageId, dispatch: dispatch)
+    default:
+        break
+    }
 }
 
 private func handleRepositoryAction(_ action: RepositoryAction,

@@ -11,13 +11,13 @@ protocol ChatServiceProtocol {
     func getInitialMessages() async throws -> [ChatMessageInfoModel]
     func getPreviousMessages() async throws -> [ChatMessageInfoModel]
     func sendMessage(content: String, senderDisplayName: String) async throws -> String
+    func sendReadReceipt(messageId: String) async throws
     func sendTypingIndicator() async throws
 
     var chatEventSubject: PassthroughSubject<ChatEventModel, Never> { get }
 }
 
 class ChatService: NSObject, ChatServiceProtocol {
-
     private let logger: Logger
     private let chatSDKWrapper: ChatSDKWrapperProtocol
 
@@ -44,6 +44,10 @@ class ChatService: NSObject, ChatServiceProtocol {
 
     func sendMessage(content: String, senderDisplayName: String) async throws -> String {
         return try await chatSDKWrapper.sendMessage(content: content, senderDisplayName: senderDisplayName)
+    }
+
+    func sendReadReceipt(messageId: String) async throws {
+        try await chatSDKWrapper.sendReadReceipt(messageId: messageId)
     }
 
     func sendTypingIndicator() async throws {

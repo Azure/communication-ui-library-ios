@@ -106,6 +106,18 @@ class ChatMiddlewareTests: XCTestCase {
         middlewareDispatch(getEmptyDispatch())(.chatAction(.sendTypingIndicatorTriggered))
         wait(for: [expectation], timeout: 1)
     }
+
+    func test_chatMiddleware_apply_when_sendReadReceiptTriggered_then_handlerSendReadReceiptCalledBeingCalled() {
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "sendReadReceiptCalled")
+        mockChatActionHandler.sendReadReceiptCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.participantsAction(.sendReadReceiptTriggered(messageId: "messageId")))
+        wait(for: [expectation], timeout: 1)
+    }
 }
 
 extension ChatMiddlewareTests {
