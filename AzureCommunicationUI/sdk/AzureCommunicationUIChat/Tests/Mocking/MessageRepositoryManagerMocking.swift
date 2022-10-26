@@ -15,6 +15,8 @@ class MessageRepositoryManagerMocking: MessageRepositoryManagerProtocol {
     var replaceMessageIdCalled: Bool = false
     var addReceivedMessageCalled: Bool = false
     var addTopicUpdatedMessageCalled: Bool = false
+    var addParticipantAddedMessageCalled: Bool = false
+    var addParticipantRemovedMessageCalled: Bool = false
     var updateMessageEditedCalled: Bool = false
     var updateMessageDeletedCalled: Bool = false
 
@@ -39,6 +41,14 @@ class MessageRepositoryManagerMocking: MessageRepositoryManagerProtocol {
 
     func addTopicUpdatedMessage(chatThreadInfo: ChatThreadInfoModel) {
         addTopicUpdatedMessageCalled = true
+    }
+
+    func addParticipantAdded(message: ChatMessageInfoModel) {
+        addParticipantAddedMessageCalled = true
+    }
+
+    func addParticipantRemoved(message: ChatMessageInfoModel) {
+        addParticipantRemovedMessageCalled = true
     }
 
     func addReceivedMessage(message: ChatMessageInfoModel) {

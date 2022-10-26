@@ -206,7 +206,8 @@ class ChatServiceEventHandlerTests: XCTestCase {
             displayName: "DisplayName")
         let chatEventModel = ChatEventModel(
             eventType: .participantsAdded,
-            infoModel: ParticipantsInfoModel(participants: [participant]))
+            infoModel: ParticipantsInfoModel(participants: [participant],
+                                             createdOn: Iso8601Date()))
         mockChatService.chatEventSubject.send(chatEventModel)
         wait(for: [expectation], timeout: 1)
     }
@@ -229,7 +230,8 @@ class ChatServiceEventHandlerTests: XCTestCase {
             displayName: "DisplayName")
         let chatEventModel = ChatEventModel(
             eventType: .participantsRemoved,
-            infoModel: ParticipantsInfoModel(participants: [participant]))
+            infoModel: ParticipantsInfoModel(participants: [participant],
+                                             createdOn: Iso8601Date()))
         mockChatService.chatEventSubject.send(chatEventModel)
         wait(for: [expectation], timeout: 1)
     }

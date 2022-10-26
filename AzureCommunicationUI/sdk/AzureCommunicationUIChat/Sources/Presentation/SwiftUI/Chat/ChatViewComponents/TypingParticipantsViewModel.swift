@@ -37,7 +37,7 @@ class TypingParticipantsViewModel: ObservableObject {
 
     func update(participantsState: ParticipantsState) {
         if self.participantsLastUpdatedTimestamp < participantsState.participantsUpdatedTimestamp {
-            self.participants = Array(participantsState.participantsInfoMap.values)
+            self.participants = Array(participantsState.participants.values)
         }
 
         if participantsState.typingIndicatorUpdatedTimestamp != self.typingIndicatorLastUpdatedTimestamp {
@@ -49,7 +49,7 @@ class TypingParticipantsViewModel: ObservableObject {
                     $0.value > currentTimestamp
                 }
                 .compactMap { userId, _ in
-                    participantsState.participantsInfoMap[userId]
+                    participantsState.participants[userId]
                 }
                 .sorted(by: { $0.displayName < $1.displayName })
             displayWithTimer(
