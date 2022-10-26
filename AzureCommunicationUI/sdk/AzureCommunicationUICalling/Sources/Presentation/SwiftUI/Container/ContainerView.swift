@@ -3,7 +3,6 @@
 //  Licensed under the MIT License.
 //
 
-// @_spi(common) import AzureCommunicationUICommon
 import SwiftUI
 
 struct ContainerView: View {
