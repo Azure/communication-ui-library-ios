@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct HtmlMessageView: View {
-    @StateObject var viewModel: SystemMessageViewModel
+    @StateObject var viewModel: HtmlMessageViewModel
 
     var body: some View {
         HStack {
