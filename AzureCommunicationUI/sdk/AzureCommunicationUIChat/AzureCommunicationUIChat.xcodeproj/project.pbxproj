@@ -142,11 +142,6 @@
 		50F0C5C628D38CE4009D7176 /* MessageRepositoryManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C528D38CE4009D7176 /* MessageRepositoryManagerTests.swift */; };
 		50F0C5C828D38CF1009D7176 /* RemoteOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */; };
 		50F0C5CA28D38D00009D7176 /* DependencyContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */; };
-		69FEF078290322ED00F54FC4 /* ParticipantsActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FEF077290322ED00F54FC4 /* ParticipantsActionHandler.swift */; };
-		69FEF07A2903248A00F54FC4 /* ParticipantsMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FEF0792903248A00F54FC4 /* ParticipantsMiddleware.swift */; };
-		69FEF07C29034BE200F54FC4 /* ParticipantsActionHandlerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FEF07B29034BE200F54FC4 /* ParticipantsActionHandlerMocking.swift */; };
-		69FEF07E2907726A00F54FC4 /* ParticipantsActionHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FEF07D2907726A00F54FC4 /* ParticipantsActionHandlerTests.swift */; };
-		69FEF0802907788400F54FC4 /* ParticipantsMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FEF07F2907788400F54FC4 /* ParticipantsMiddlewareTests.swift */; };
 		521A024028FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A023E28FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift */; };
 		521A024128FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A023F28FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift */; };
 		521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */; };
@@ -326,11 +321,6 @@
 		521A024629032755002CAD8E /* SystemMessageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemMessageViewModel.swift; sourceTree = "<group>"; };
 		521A024829032762002CAD8E /* TextMessageViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageViewModel.swift; sourceTree = "<group>"; };
 		5BE15140BA042B0F23F23BE3 /* Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; sourceTree = "<group>"; };
-		69FEF077290322ED00F54FC4 /* ParticipantsActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsActionHandler.swift; sourceTree = "<group>"; };
-		69FEF0792903248A00F54FC4 /* ParticipantsMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsMiddleware.swift; sourceTree = "<group>"; };
-		69FEF07B29034BE200F54FC4 /* ParticipantsActionHandlerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsActionHandlerMocking.swift; sourceTree = "<group>"; };
-		69FEF07D2907726A00F54FC4 /* ParticipantsActionHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsActionHandlerTests.swift; sourceTree = "<group>"; };
-		69FEF07F2907788400F54FC4 /* ParticipantsMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsMiddlewareTests.swift; sourceTree = "<group>"; };
 		78EED6E1D0BF91A2966AC0C7 /* Pods-AzureCommunicationUIChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat/Pods-AzureCommunicationUIChat.debug.xcconfig"; sourceTree = "<group>"; };
 		A63BF349E7BC31AD5300412A /* Pods_AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A8BB977F28F770FE008142DB /* SystemMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMessageView.swift; sourceTree = "<group>"; };
@@ -671,8 +661,6 @@
 				50CB822A28C2996D00680566 /* ChatServiceEventHandler.swift */,
 				50CB822C28C2997700680566 /* RepositoryMiddleware.swift */,
 				50CB822E28C2998900680566 /* RepositoryMiddlewareHandler.swift */,
-				69FEF0792903248A00F54FC4 /* ParticipantsMiddleware.swift */,
-				69FEF077290322ED00F54FC4 /* ParticipantsActionHandler.swift */,
 			);
 			path = Middleware;
 			sourceTree = "<group>";
@@ -734,7 +722,6 @@
 				50F0C58828D388E4009D7176 /* ChatActionHandlerMocking.swift */,
 				50F0C58A28D388FE009D7176 /* ChatServiceEventHandlerMocking.swift */,
 				50F0C58C28D3891D009D7176 /* RepositoryHandlerMocking.swift */,
-				69FEF07B29034BE200F54FC4 /* ParticipantsActionHandlerMocking.swift */,
 			);
 			path = Redux;
 			sourceTree = "<group>";
@@ -827,8 +814,6 @@
 				50F0C5A928D38BE1009D7176 /* ChatServiceEventHandlerTests.swift */,
 				50F0C5AB28D38BEC009D7176 /* RepositoryMiddlewareTests.swift */,
 				50F0C5AD28D38BF7009D7176 /* RepositoryMiddlewareHandlerTests.swift */,
-				69FEF07F2907788400F54FC4 /* ParticipantsMiddlewareTests.swift */,
-				69FEF07D2907726A00F54FC4 /* ParticipantsActionHandlerTests.swift */,
 			);
 			path = Middleware;
 			sourceTree = "<group>";
@@ -1353,12 +1338,10 @@
 				50CB820B28C2869D00680566 /* RemoteParticipantsManager.swift in Sources */,
 				50CB823128C2999200680566 /* Action.swift in Sources */,
 				50CB825928C29B7200680566 /* UserEventTimestampModel.swift in Sources */,
-				69FEF07C29034BE200F54FC4 /* ParticipantsActionHandlerMocking.swift in Sources */,
 				50CB82C428C2AD2300680566 /* AppLifeCycleManager.swift in Sources */,
 				521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */,
 				50CB823328C2999B00680566 /* LifecycleAction.swift in Sources */,
 				50CB821528C286EA00680566 /* ColorThemeProvider.swift in Sources */,
-				69FEF078290322ED00F54FC4 /* ParticipantsActionHandler.swift in Sources */,
 				50CB82C528C2AD2300680566 /* AccessibilityProvider.swift in Sources */,
 				50CB820228C2866200680566 /* CompositeViewModelFactory.swift in Sources */,
 				50370CC928ECAAAB00ACD234 /* ChatParticipantExtension.swift in Sources */,
@@ -1381,7 +1364,6 @@
 				521A024729032755002CAD8E /* SystemMessageViewModel.swift in Sources */,
 				50CB824D28C29B1700680566 /* ParticipantsReducer.swift in Sources */,
 				50CB825D28C29DEF00680566 /* ChatService.swift in Sources */,
-				69FEF07A2903248A00F54FC4 /* ParticipantsMiddleware.swift in Sources */,
 				50CB824528C29AEB00680566 /* ErrorState.swift in Sources */,
 				50CB82CA28C2AD2300680566 /* ViewExtension.swift in Sources */,
 				50CB82D228C2B2B800680566 /* CommunicationIdentifierExtension.swift in Sources */,
@@ -1425,7 +1407,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69FEF07E2907726A00F54FC4 /* ParticipantsActionHandlerTests.swift in Sources */,
 				50F0C5B028D38C0F009D7176 /* AppStateReducerTests.swift in Sources */,
 				50F0C5BC28D38C63009D7176 /* ChatServiceTests.swift in Sources */,
 				50370CCD28ECE28D00ACD234 /* MessageRepositoryManagerMocking.swift in Sources */,
@@ -1460,7 +1441,6 @@
 				50F0C58328D38770009D7176 /* MessageViewModelMocking.swift in Sources */,
 				50370CC428EB5ED200ACD234 /* DiagnosticConfigTests.swift in Sources */,
 				50370CBF28EB5E2300ACD234 /* StoreFactoryMocking.swift in Sources */,
-				69FEF0802907788400F54FC4 /* ParticipantsMiddlewareTests.swift in Sources */,
 				50F0C5CA28D38D00009D7176 /* DependencyContainerTests.swift in Sources */,
 				50F0C5A628D38BC5009D7176 /* ChatMiddlewareTests.swift in Sources */,
 				50F0C5A228D38B7F009D7176 /* ChatViewModelTests.swift in Sources */,
