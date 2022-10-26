@@ -54,6 +54,7 @@ class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerContr
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        print("!!!! drawer viewDidDisappear")
         if isBeingDismissed || isMovingFromParent {
             sourceView.superview?.isUserInteractionEnabled = true
             sourceView.removeFromSuperview()

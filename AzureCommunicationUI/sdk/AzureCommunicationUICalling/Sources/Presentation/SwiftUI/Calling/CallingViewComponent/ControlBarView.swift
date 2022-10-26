@@ -12,11 +12,12 @@ struct ControlBarView: View {
     @State var audioDeviceButtonSourceView = UIView()
     @State var leaveCallConfirmationListSourceView = UIView()
     @State var moreListSourceView = UIView()
+    @State var diagnosticsInfoSourceView = UIView()
 
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     var body: some View {
-        Group {
+        ZStack {
             if screenSizeClass == .ipadScreenSize {
                 centeredStack
             } else {
@@ -38,6 +39,12 @@ struct ControlBarView: View {
         })
         .modifier(PopupModalView(isPresented: viewModel.isMoreCallOptionsListDisplayed) {
             moreCallOptionsList
+                .accessibilityElement(children: .contain)
+                .accessibilityAddTraits(.isModal)
+        })
+        .modifier(PopupModalView(
+            isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isShareActivityDisplayed) {
+            activityView
                 .accessibilityElement(children: .contain)
                 .accessibilityAddTraits(.isModal)
         })
@@ -142,9 +149,7 @@ struct ControlBarView: View {
     var moreButton: some View {
         IconButton(viewModel: viewModel.moreButtonViewModel)
             .background(SourceViewSpace(sourceView: moreListSourceView))
-            .popover(isPresented: $viewModel.moreCallOptionsListViewModel.isShareActivityDisplayed) {
-                ActivityViewController(activityItems: [viewModel.getDiagnosticsInfo()])
-            }
+            .background(SourceViewSpace(sourceView: diagnosticsInfoSourceView))
     }
 
     var moreCallOptionsList: some View {
@@ -152,6 +157,16 @@ struct ControlBarView: View {
             MoreCallOptionsList(isPresented: $viewModel.isMoreCallOptionsListDisplayed,
                                 viewModel: viewModel.moreCallOptionsListViewModel,
                                 sourceView: moreListSourceView)
+            .modifier(LockPhoneOrientation())
+        }
+    }
+
+    var activityView: some View {
+        return Group {
+            SharingActivityView(activityItems: [viewModel.getDiagnosticsInfo()],
+                                   isPresented: $viewModel.isShareActivityDisplayed,
+                                   sourceView: diagnosticsInfoSourceView)
+            .edgesIgnoringSafeArea(.all)
             .modifier(LockPhoneOrientation())
         }
     }

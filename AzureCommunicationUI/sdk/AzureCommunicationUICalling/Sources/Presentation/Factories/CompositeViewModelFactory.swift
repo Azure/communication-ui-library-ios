@@ -51,7 +51,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
-    func makeMoreCallOptionsListViewModel() -> MoreCallOptionsListViewModel
+    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
     func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
                                               title: String,
                                               action: @escaping (() -> Void)) -> MoreCallOptionsListCellViewModel
@@ -253,9 +253,10 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                       localizationProvider: localizationProvider)
     }
 
-    func makeMoreCallOptionsListViewModel() -> MoreCallOptionsListViewModel {
+    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
         MoreCallOptionsListViewModel(compositeViewModelFactory: self,
-                                     localizationProvider: localizationProvider)
+                                     localizationProvider: localizationProvider,
+                                     showSharingViewAction: showSharingViewAction)
     }
 
     func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,

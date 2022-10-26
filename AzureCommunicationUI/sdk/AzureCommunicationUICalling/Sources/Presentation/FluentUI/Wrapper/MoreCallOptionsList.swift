@@ -26,7 +26,7 @@ struct MoreCallOptionsList: UIViewControllerRepresentable {
 
     func updateUIViewController(_ uiViewController: DrawerContainerViewController<MoreCallOptionsListCellViewModel>,
                                 context: Context) {
-        uiViewController.updateDrawerList(items: viewModel.getListItemsViewModels())
+        uiViewController.updateDrawerList(items: viewModel.items)
     }
 
     static func dismantleUIViewController(_ controller: DrawerContainerViewController<MoreCallOptionsListCellViewModel>,
@@ -42,6 +42,7 @@ struct MoreCallOptionsList: UIViewControllerRepresentable {
         }
 
         func drawerControllerDidDismiss(_ controller: DrawerController) {
+            print("!!! drawerControllerDidDismiss")
             isPresented = false
         }
     }

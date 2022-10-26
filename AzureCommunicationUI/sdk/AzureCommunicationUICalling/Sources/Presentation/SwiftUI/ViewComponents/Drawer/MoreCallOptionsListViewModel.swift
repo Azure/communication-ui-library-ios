@@ -5,25 +5,23 @@
 
 import Foundation
 import AVFoundation
+import Combine
 
-class MoreCallOptionsListViewModel {
+class MoreCallOptionsListViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
-
-    @Published var isShareActivityDisplayed: Bool = false
+    let items: [MoreCallOptionsListCellViewModel]
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
-         localizationProvider: LocalizationProviderProtocol) {
+         localizationProvider: LocalizationProviderProtocol,
+         showSharingViewAction: @escaping () -> Void) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
-    }
 
-    func getListItemsViewModels() -> [MoreCallOptionsListCellViewModel] {
         let shareDiagnosticsInfoModel = compositeViewModelFactory.makeMoreCallOptionsListCellViewModel(
             icon: .share,
-            title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo)) { [weak self] in
-                self?.isShareActivityDisplayed = true
-        }
-        return [shareDiagnosticsInfoModel]
+            title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
+            action: showSharingViewAction)
+        items = [shareDiagnosticsInfoModel]
     }
 }

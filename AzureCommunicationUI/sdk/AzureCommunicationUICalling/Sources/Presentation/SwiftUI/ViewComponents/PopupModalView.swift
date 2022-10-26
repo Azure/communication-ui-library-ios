@@ -10,6 +10,7 @@ struct PopupModalView<T: View>: ViewModifier {
     let alignment: Alignment
 
     init(isPresented: Bool, alignment: Alignment = .center, @ViewBuilder content: () -> T) {
+        print("!!! init isPresented \(isPresented)")
         self.isPresented = isPresented
         self.alignment = alignment
         popup = content()

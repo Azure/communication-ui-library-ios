@@ -18,9 +18,9 @@ class ControlBarViewModel: ObservableObject {
     @Published var isAudioDeviceSelectionDisplayed: Bool = false
     @Published var isConfirmLeaveListDisplayed: Bool = false
     @Published var isMoreCallOptionsListDisplayed: Bool = false
+    @Published var isShareActivityDisplayed: Bool = false
 
     let audioDevicesListViewModel: AudioDevicesListViewModel
-
     var micButtonViewModel: IconButtonViewModel!
     var audioDeviceButtonViewModel: IconButtonViewModel!
     var hangUpButtonViewModel: IconButtonViewModel!
@@ -50,7 +50,6 @@ class ControlBarViewModel: ObservableObject {
         audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
             localUserState: localUserState)
-
         cameraButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .videoOff,
             buttonType: .controlButton,
@@ -102,17 +101,26 @@ class ControlBarViewModel: ObservableObject {
         }
         hangUpButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .leaveCall)
-        moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel()
         moreButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .more,
             buttonType: .controlButton,
             isDisabled: false) {
                 [weak self] in
+                print("!!! moreButtonViewModel action \(self?.isMoreCallOptionsListDisplayed)")
                 guard let self = self else {
                     return
                 }
                 self.moreButtonTapped()
         }
+
+        moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
+            showSharingViewAction: { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                print("!!!!!! isShareActivityDisplayed")
+                self.isShareActivityDisplayed = true
+            })
     }
 
     func endCallButtonTapped() {
