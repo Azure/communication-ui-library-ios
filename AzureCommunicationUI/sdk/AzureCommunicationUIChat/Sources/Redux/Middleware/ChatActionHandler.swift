@@ -35,6 +35,8 @@ protocol ChatActionHandling {
                      dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func sendTypingIndicator(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func sendReadReceipt(messageId: String, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 }
 
 class ChatActionHandler: ChatActionHandling {
@@ -97,6 +99,17 @@ class ChatActionHandler: ChatActionHandling {
     }
 
     // MARK: Participants Handler
+    func sendReadReceipt(messageId: String, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            do {
+                try await chatService.sendReadReceipt(messageId: messageId)
+                dispatch(.participantsAction(.sendReadReceiptSuccess(messageId: messageId)))
+            } catch {
+                logger.error("ChatActionHandler sendReadReceipt failed: \(error)")
+                dispatch(.participantsAction(.sendReadReceiptFailed(error: error as NSError)))
+            }
+        }
+    }
 
     // MARK: Repository Handler
     func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
