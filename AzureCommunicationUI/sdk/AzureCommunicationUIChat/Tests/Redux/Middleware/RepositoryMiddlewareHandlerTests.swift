@@ -75,6 +75,27 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
         XCTAssertTrue(mockMessageRepositoryManager.addTopicUpdatedMessageCalled)
     }
 
+    func test_repositoryMiddlewareHandler_participantAddedMessage_then_participantAddedMessageCalled() async {
+        let addParticipant = [ParticipantInfoModel(identifier: UnknownIdentifier("SomeUnknownIdentifier"),
+                                                   displayName: "MockBot")]
+        await repositoryMiddlewareHandler.participantAddedMessage(participants: addParticipant,
+                                                                  dispatch: getEmptyDispatch()).value
+        let lastMessage = mockMessageRepositoryManager.messages.last
+        XCTAssertTrue(mockMessageRepositoryManager.addParticipantAddedMessageCalled)
+        XCTAssertEqual(lastMessage?.type, .participantsAdded)
+        XCTAssertEqual(lastMessage?.participants, addParticipant)
+    }
+
+    func test_repositoryMiddlewareHandler_participantRemovedMessage_then_participantRemovedMessageCalled() async {
+        let removedParticipant = [ParticipantInfoModel(identifier: UnknownIdentifier("SomeUnknownIdentifier"),
+                                                       displayName: "MockBot")]
+        await repositoryMiddlewareHandler.participantRemovedMessage(participants: removedParticipant, dispatch: getEmptyDispatch()).value
+        let lastMessage = mockMessageRepositoryManager.messages.last
+        XCTAssertTrue(mockMessageRepositoryManager.addParticipantRemovedMessageCalled)
+        XCTAssertEqual(lastMessage?.type, .participantsRemoved)
+        XCTAssertEqual(lastMessage?.participants, removedParticipant)
+    }
+
     func test_repositoryMiddlewareHandler_addReceivedMessage_then_addReceivedMessageCalled() async {
         let message = ChatMessageInfoModel()
         await repositoryMiddlewareHandler.addReceivedMessage(

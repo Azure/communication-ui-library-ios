@@ -126,6 +126,15 @@ class ChatActionHandlerTests: XCTestCase {
                                       dispatch: dispatch).value
         wait(for: [expectation], timeout: 1)
     }
+
+    func test_chatActionHandler_sendReadReceipt_then_sendReadReceiptCalled() async {
+        let sut = makeSUT()
+        await sut.sendReadReceipt(
+            messageId: "messageId",
+            dispatch: getEmptyDispatch()).value
+
+        XCTAssertTrue(mockChatService.sendReadReceiptCalled)
+    }
 }
 
 extension ChatActionHandlerTests {
