@@ -12,6 +12,7 @@ extension Reducer where State == ChatState,
         var localUser = chatState.localUser
         var threadId = chatState.threadId
         var topic = chatState.topic
+        var lastReadReceiptSentTimestamp = chatState.lastReadReceiptSentTimestamp
 
         switch action {
         case .chatAction(.topicRetrieved(let newTopic)):
@@ -21,6 +22,8 @@ extension Reducer where State == ChatState,
                 break
             }
             topic = newTopic
+        case .participantsAction(.sendReadReceiptSuccess(messageId: let messageId)):
+            lastReadReceiptSentTimestamp = messageId.convertEpochStringToTimestamp()
         default:
             return chatState
         }

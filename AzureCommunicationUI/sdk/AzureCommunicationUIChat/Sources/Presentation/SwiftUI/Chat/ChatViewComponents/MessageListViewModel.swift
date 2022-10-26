@@ -8,18 +8,20 @@ import Foundation
 class MessageListViewModel: ObservableObject {
     private let messageRepositoryManager: MessageRepositoryManagerProtocol
     private let logger: Logger
-
+    private let dispatch: ActionDispatch
     private var repositoryUpdatedTimestamp: Date = .distantPast
     private var localUserId: String? // Remove optional?
+    private var readReceiptLocalLastSentTimestamp: Date?
 
     @Published var messages: [MessageViewModel] = []
 
     init(messageRepositoryManager: MessageRepositoryManagerProtocol,
          logger: Logger,
-         chatState: ChatState) {
+         chatState: ChatState,
+         dispatch: @escaping ActionDispatch) {
         self.messageRepositoryManager = messageRepositoryManager
         self.logger = logger
-
+        self.dispatch = dispatch
         self.localUserId = chatState.localUser?.id // Only take in local User ID?
     }
 
@@ -32,6 +34,7 @@ class MessageListViewModel: ObservableObject {
                 print("--*Messages: \(message.id) \(String(describing: message.content))")
                 messages.append(createViewModel(messages: messageRepositoryManager.messages, index: index))
             }
+            sendReadReceipt()
         }
     }
 
@@ -59,5 +62,27 @@ class MessageListViewModel: ObservableObject {
                                           showDateHeader: showDateHeader,
                                           isConsecutive: isConsecutive)
         }
+    }
+
+    func sendReadReceipt() {
+        guard let lastMessage = messageRepositoryManager.messages.last,
+              !lastMessage.id.isEmpty,
+              let messageTimestamp = lastMessage.id.convertEpochStringToTimestamp()
+        else {
+            return
+        }
+
+        guard let readReceiptLastSentTimestamp = self.readReceiptLocalLastSentTimestamp else {
+            self.readReceiptLocalLastSentTimestamp = messageTimestamp
+            dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: lastMessage.id)))
+            return
+        }
+
+        guard messageTimestamp > readReceiptLastSentTimestamp else {
+            return
+        }
+
+        self.readReceiptLocalLastSentTimestamp = messageTimestamp
+        dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: lastMessage.id)))
     }
 }
