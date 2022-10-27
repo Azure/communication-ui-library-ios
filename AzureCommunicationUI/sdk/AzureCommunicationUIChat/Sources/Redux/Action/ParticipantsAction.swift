@@ -14,6 +14,7 @@ enum ParticipantsAction: Equatable {
     case clearTypingIndicator(id: String)
     case participantsAdded(participants: [ParticipantInfoModel])
     case participantsRemoved(participants: [ParticipantInfoModel])
+    case localParticipantRemoved
 
     case sendReadReceiptTriggered(messageId: String)
     case sendReadReceiptSuccess(messageId: String)

@@ -41,6 +41,7 @@ protocol RepositoryMiddlewareHandling {
                                  dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func participantRemovedMessage(participants: [ParticipantInfoModel],
+                                   localUserID: ParticipantInfoModel?,
                                    dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func addReceivedMessage(
@@ -143,8 +144,13 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
     }
 
     func participantRemovedMessage(participants: [ParticipantInfoModel],
+                                   localUserID: ParticipantInfoModel?,
                                    dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
+            if participants.contains(where: { $0.id == localUserID?.id }) {
+                dispatch(.participantsAction(.localParticipantRemoved))
+            }
+            // need to revisit this to see if we want to update chat messages
             let message = ChatMessageInfoModel(type: .participantsRemoved,
                                                createdOn: Iso8601Date(),
                                                participants: participants)

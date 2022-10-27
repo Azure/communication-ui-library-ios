@@ -61,6 +61,7 @@ private func handleParticipantsAction(
                                                   dispatch: dispatch)
         case .participantsRemoved(let participants):
             actionHandler.participantRemovedMessage(participants: participants,
+                                                    localUserID: getState().chatState.localUser,
                                                     dispatch: dispatch)
         default:
             break
