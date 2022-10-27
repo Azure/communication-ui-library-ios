@@ -5,12 +5,12 @@
 
 import SwiftUI
 
-struct SystemMessageView: View {
-    @StateObject var viewModel: SystemMessageViewModel
+struct HtmlMessageView: View {
+    @StateObject var viewModel: HtmlMessageViewModel
 
     var body: some View {
         HStack {
-            Text(viewModel.content)
+            Text(viewModel.message.content ?? "No Content")
                 .font(.caption2)
                 .foregroundColor(Color(StyleProvider.color.textSecondary))
             Spacer()
