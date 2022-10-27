@@ -16,6 +16,7 @@ class ChatActionHandlerMocking: ChatActionHandling {
     var getPreviousMessagesCalled: ((Bool) -> Void)?
     var sendMessageCalled: ((Bool) -> Void)?
     var sendTypingIndicatorCalled: ((Bool) -> Void)?
+    var sendReadReceiptCalled: ((Bool) -> Void)?
 
     func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
@@ -63,6 +64,14 @@ class ChatActionHandlerMocking: ChatActionHandling {
                              dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
         Task {
             sendTypingIndicatorCalled?(true)
+        }
+    }
+
+    func sendReadReceipt(
+              messageId: String,
+              dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            sendReadReceiptCalled?(true)
         }
     }
 }

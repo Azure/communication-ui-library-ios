@@ -45,10 +45,12 @@ class MessageRepositoryManagerMocking: MessageRepositoryManagerProtocol {
 
     func addParticipantAdded(message: ChatMessageInfoModel) {
         addParticipantAddedMessageCalled = true
+        messages.append(message)
     }
 
     func addParticipantRemoved(message: ChatMessageInfoModel) {
         addParticipantRemovedMessageCalled = true
+        messages.append(message)
     }
 
     func addReceivedMessage(message: ChatMessageInfoModel) {

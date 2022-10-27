@@ -8,6 +8,27 @@ import AzureCommunicationChat
 import Foundation
 
 class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
+    func sendReadReceipt(messageId: String) async throws {
+        do {
+            return try await withCheckedThrowingContinuation { continuation in
+                chatThreadClient?.sendReadReceipt(
+                                        forMessage: messageId,
+                                        withOptions: SendChatReadReceiptOptions()) { result, error  in
+                    switch result {
+                    case .success():
+                        continuation.resume(returning: Void())
+                    case .failure(let error):
+                        self.logger.error("Failed to send read receipt: \(error)")
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        } catch {
+            logger.error("Failed to send read receipt: \(error)")
+            throw error
+        }
+    }
+
     let chatEventsHandler: ChatSDKEventsHandling
 
     private let logger: Logger
