@@ -36,7 +36,7 @@ protocol ChatActionHandling {
     @discardableResult
     func sendTypingIndicator(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func sendReadReceipt(messageId: String, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func sendReadReceipt(messageId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 }
 
 class ChatActionHandler: ChatActionHandling {
@@ -99,15 +99,28 @@ class ChatActionHandler: ChatActionHandling {
     }
 
     // MARK: Participants Handler
-    func sendReadReceipt(messageId: String, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func sendReadReceipt(messageId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
-            do {
-                try await chatService.sendReadReceipt(messageId: messageId)
-                dispatch(.participantsAction(.sendReadReceiptSuccess(messageId: messageId)))
-            } catch {
-                logger.error("ChatActionHandler sendReadReceipt failed: \(error)")
-                dispatch(.participantsAction(.sendReadReceiptFailed(error: error as NSError)))
+            guard let lastReadReceiptSentTimestamp = state.chatState.lastReadReceiptSentTimestamp else {
+                await sendReadReceiptToChatService(messageId: messageId, dispatch: dispatch)
+                return
             }
+
+            guard let messageTimestamp = messageId.convertEpochStringToTimestamp(),
+                  messageTimestamp > lastReadReceiptSentTimestamp else {
+                return
+            }
+            await sendReadReceiptToChatService(messageId: messageId, dispatch: dispatch)
+        }
+    }
+
+    private func sendReadReceiptToChatService(messageId: String, dispatch: @escaping ActionDispatch) async {
+        do {
+            try await chatService.sendReadReceipt(messageId: messageId)
+            dispatch(.participantsAction(.sendReadReceiptSuccess(messageId: messageId)))
+        } catch {
+            logger.error("ChatActionHandler sendReadReceipt failed: \(error)")
+            dispatch(.participantsAction(.sendReadReceiptFailed(error: error as NSError)))
         }
     }
 

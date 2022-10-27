@@ -11,7 +11,6 @@ class MessageListViewModel: ObservableObject {
     private let dispatch: ActionDispatch
     private var repositoryUpdatedTimestamp: Date = .distantPast
     private var localUserId: String? // Remove optional?
-    private var readReceiptLocalLastSentTimestamp: Date?
 
     @Published var messages: [MessageViewModel] = []
 
@@ -34,7 +33,6 @@ class MessageListViewModel: ObservableObject {
                 print("--*Messages: \(message.id) \(String(describing: message.content))")
                 messages.append(createViewModel(messages: messageRepositoryManager.messages, index: index))
             }
-            sendReadReceipt()
         }
     }
 
@@ -64,25 +62,11 @@ class MessageListViewModel: ObservableObject {
         }
     }
 
-    func sendReadReceipt() {
-        guard let lastMessage = messageRepositoryManager.messages.last,
-              !lastMessage.id.isEmpty,
-              let messageTimestamp = lastMessage.id.convertEpochStringToTimestamp()
-        else {
+    func sendReadReceipt(messageIndex: Int?) {
+        guard let messageIndex = messageIndex, messageIndex >= 0, messageIndex < messages.count else {
             return
         }
-
-        guard let readReceiptLastSentTimestamp = self.readReceiptLocalLastSentTimestamp else {
-            self.readReceiptLocalLastSentTimestamp = messageTimestamp
-            dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: lastMessage.id)))
-            return
-        }
-
-        guard messageTimestamp > readReceiptLastSentTimestamp else {
-            return
-        }
-
-        self.readReceiptLocalLastSentTimestamp = messageTimestamp
-        dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: lastMessage.id)))
+        let messageId = messages[messageIndex].message.id
+        dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: messageId)))
     }
 }

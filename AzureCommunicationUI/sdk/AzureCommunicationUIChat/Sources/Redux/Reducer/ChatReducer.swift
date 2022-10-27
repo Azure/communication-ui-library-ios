@@ -29,6 +29,7 @@ extension Reducer where State == ChatState,
         }
         return ChatState(localUser: localUser,
                          threadId: threadId,
-                         topic: topic)
+                         topic: topic,
+                         lastReadReceiptSentTimestamp: lastReadReceiptSentTimestamp)
     }
 }
