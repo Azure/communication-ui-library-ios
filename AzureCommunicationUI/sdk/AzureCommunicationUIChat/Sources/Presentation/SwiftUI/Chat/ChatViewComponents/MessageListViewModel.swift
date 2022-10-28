@@ -9,9 +9,9 @@ class MessageListViewModel: ObservableObject {
     private let messageRepositoryManager: MessageRepositoryManagerProtocol
     private let logger: Logger
     private let dispatch: ActionDispatch
+    private let sendReadReceiptInterval: Double = 5.0
     private var repositoryUpdatedTimestamp: Date = .distantPast
     private var localUserId: String? // Remove optional?
-    private let sendReadReceiptInterval: Double = 5.0
     private(set) var sendReadReceiptTimer: Timer?
     private(set) var lastReadMessageIndex: Int?
 
