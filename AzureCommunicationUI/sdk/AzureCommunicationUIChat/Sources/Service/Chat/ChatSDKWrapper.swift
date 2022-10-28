@@ -91,13 +91,18 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         }
     }
 
-    func getListParticipants() async throws -> [ChatParticipant] {
+    func getListOfParticipants() async throws -> [ParticipantInfoModel] {
         do {
             return try await withCheckedThrowingContinuation { continuation in
                 chatThreadClient?.listParticipants(completionHandler: { result, _ in
                     switch result {
                     case .success(let pagedCollection):
-                        let participants = pagedCollection.items ?? []
+                        guard let items = pagedCollection.pageItems else {
+                            continuation.resume(returning: [])
+                            return
+                        }
+
+                        let participants = items.compactMap({ $0.toParticipantInfoModel() })
                         continuation.resume(returning: participants)
                     case .failure(let error):
                         self.logger.error("Get Initial Messages failed: \(error)")

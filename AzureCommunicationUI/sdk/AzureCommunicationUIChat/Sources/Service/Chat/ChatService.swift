@@ -9,6 +9,7 @@ import Foundation
 protocol ChatServiceProtocol {
     func initalize() async throws
     func getInitialMessages() async throws -> [ChatMessageInfoModel]
+    func getListOfParticipants() async throws -> [ParticipantInfoModel]
     func getPreviousMessages() async throws -> [ChatMessageInfoModel]
     func sendMessage(content: String, senderDisplayName: String) async throws -> String
     func sendReadReceipt(messageId: String) async throws
@@ -38,6 +39,9 @@ class ChatService: NSObject, ChatServiceProtocol {
         return try await chatSDKWrapper.getInitialMessages()
     }
 
+    func getListOfParticipants() async throws -> [ParticipantInfoModel] {
+        return try await chatSDKWrapper.getListOfParticipants()
+    }
     func getPreviousMessages() async throws -> [ChatMessageInfoModel] {
         return try await chatSDKWrapper.getPreviousMessages()
     }

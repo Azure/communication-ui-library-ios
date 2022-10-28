@@ -13,6 +13,7 @@ class ChatActionHandlerMocking: ChatActionHandling {
     var onChatThreadDeletedCalled: ((Bool) -> Void)?
     var initializeCalled: ((Bool) -> Void)?
     var getInitialMessagesCalled: ((Bool) -> Void)?
+    var getListOfParticipantsCalled: ((Bool) -> Void)?
     var getPreviousMessagesCalled: ((Bool) -> Void)?
     var sendMessageCalled: ((Bool) -> Void)?
     var sendTypingIndicatorCalled: ((Bool) -> Void)?
@@ -45,6 +46,12 @@ class ChatActionHandlerMocking: ChatActionHandling {
     func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             getInitialMessagesCalled?(true)
+        }
+    }
+
+    func getListOfParticipants(state: AzureCommunicationUIChat.AppState, dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            getListOfParticipantsCalled?(true)
         }
     }
 
