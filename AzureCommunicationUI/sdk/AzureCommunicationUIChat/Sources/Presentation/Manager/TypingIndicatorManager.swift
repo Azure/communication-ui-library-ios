@@ -13,10 +13,11 @@ class TypingIndicatorManager: TypingIndicatorManagerProtocol {
     private var timer: Timer?
     private var cancellables = Set<AnyCancellable>()
 
-    private enum Constants {
-        static let timeout: Int = 8
+    // made it internal and var for unit tests
+    enum Constants {
+        static var timeout: Int = 8
         // margin of error
-        static let checkInterval: Double = 1.0
+        static var checkInterval: Double = 1.0
     }
 
     init(store: Store<AppState>) {
