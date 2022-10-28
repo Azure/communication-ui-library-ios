@@ -17,6 +17,7 @@ class CallingSDKWrapperInTest: NSObject, CallingSDKWrapperProtocol {
     private var callMocking: CallMocking?
     private var deviceManagerMocking: DeviceManagerMocking?
     private var localVideoStream: LocalVideoStreamMocking?
+
     private var newVideoDeviceAddedHandler: ((VideoDeviceInfoMocking) -> Void)?
 
     public override init() {

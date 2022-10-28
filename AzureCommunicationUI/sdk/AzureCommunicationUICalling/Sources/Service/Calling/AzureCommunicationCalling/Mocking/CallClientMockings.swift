@@ -7,10 +7,22 @@ import Foundation
 import AzureCommunicationCalling
 import Combine
 
-class CallClientOptionsMocking: CallClientOptions {}
-class CallDiagnosticsOptionsMocking: CallDiagnosticsOptions {}
+class CallClientOptionsMocking {
+    var diagnostics: CallDiagnosticsOptionsMocking?
+}
+class CallDiagnosticsOptionsMocking {
+    var appName: String = ""
+    var appVersion: String = ""
+    var tags: [String] = []
+}
 
-class CallClientMocking: CallClient {
+class CallClientMocking {
+    var options: CallClientOptionsMocking?
+
+    init(options: CallClientOptionsMocking) {
+        self.options = options
+    }
+
     func createCallAgentMocking() async throws -> CallAgentMocking? {
         return try await Task<CallAgentMocking, Error> {
             return CallAgentMocking()
@@ -32,9 +44,9 @@ class CallMocking {
     weak var delegate: CallDelegate?
 }
 
-class JoinCallOptionsMocking: JoinCallOptions {
+class JoinCallOptionsMocking {
+    var audioOptions: AudioOptionsMocking?
     public init(isAudioPreferred: Bool) {
-        super.init()
         self.audioOptions = AudioOptionsMocking()
         audioOptions?.muted = isAudioPreferred
     }
@@ -57,6 +69,9 @@ class VideoDeviceInfoMocking {
     }
 }
 
-class AudioOptionsMocking: AudioOptions {}
-class VideoOptionsMocking: VideoOptions {}
+class AudioOptionsMocking {
+    var muted: Bool = false
+}
+
+class VideoOptionsMocking {}
 class LocalVideoStreamMocking {}
