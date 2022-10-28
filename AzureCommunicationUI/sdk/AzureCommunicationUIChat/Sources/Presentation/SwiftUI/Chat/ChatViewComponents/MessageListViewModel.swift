@@ -11,6 +11,9 @@ class MessageListViewModel: ObservableObject {
     private let dispatch: ActionDispatch
     private var repositoryUpdatedTimestamp: Date = .distantPast
     private var localUserId: String? // Remove optional?
+    private let sendReadReceiptInterval: Double = 5.0
+    private(set) var sendReadReceiptTimer: Timer?
+    private(set) var lastReadMessageIndex: Int?
 
     @Published var messages: [ChatMessageInfoModel]
 
@@ -73,6 +76,23 @@ class MessageListViewModel: ObservableObject {
             return SystemMessageViewModel(message: message,
                                           showDateHeader: showDateHeader,
                                           isConsecutive: isConsecutive)
+        }
+    }
+
+    func updateLastReadMessageIndex(index: Int) {
+        guard let lastReadMessageIndex = self.lastReadMessageIndex else {
+            self.lastReadMessageIndex = index
+            return
+        }
+        if index > lastReadMessageIndex {
+            self.lastReadMessageIndex = index
+        }
+    }
+
+    func setSendReadReceiptTimer() {
+        sendReadReceiptTimer = Timer.scheduledTimer(withTimeInterval: sendReadReceiptInterval,
+                                                    repeats: true) { [weak self]_ in
+            self?.sendReadReceipt(messageIndex: self?.lastReadMessageIndex)
         }
     }
 

@@ -16,9 +16,6 @@ struct MessageListView: View {
 
         static let minFetchIndex: Int = 40
     }
-    private let sendReadReceiptInterval: Double = 5.0
-    @State private var sendReadReceiptTimer: Timer?
-    @State private var lastReadMessageIndex: Int?
 
     @StateObject var viewModel: MessageListViewModel
 
@@ -45,31 +42,21 @@ struct MessageListView: View {
                                 if index == Constants.minFetchIndex {
                                     viewModel.fetchMessages()
                                 }
-
-                                guard let lastReadMessageIndex = self.lastReadMessageIndex else {
-                                    self.lastReadMessageIndex = index
-                                    return
-                                }
-                                if index > lastReadMessageIndex {
-                                    self.lastReadMessageIndex = index
-                                }
+                                viewModel.updateLastReadMessageIndex(index: index)
                             }
                     }
                 }
                 .listStyle(.plain)
                 .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
                 .onAppear {
-                    sendReadReceiptTimer = Timer.scheduledTimer(withTimeInterval: sendReadReceiptInterval,
-                                                                repeats: true) { _ in
-                        viewModel.sendReadReceipt(messageIndex: lastReadMessageIndex)
-                    }
+                    viewModel.setSendReadReceiptTimer()
                     scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
                 }
                 .onChange(of: viewModel.messages.count) { _ in
                     scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
                 }
                 .onDisappear {
-                    sendReadReceiptTimer?.invalidate()
+                    viewModel.sendReadReceiptTimer?.invalidate()
                 }
             }
         }
