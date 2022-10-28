@@ -21,6 +21,12 @@ struct MessageListView: View {
 
     var body: some View {
         messageList
+            .onAppear {
+                viewModel.setSendReadReceiptTimer()
+            }
+            .onDisappear {
+                viewModel.sendReadReceiptTimer?.invalidate()
+            }
     }
 
     var messageList: some View {
@@ -54,9 +60,6 @@ struct MessageListView: View {
                 }
                 .onChange(of: viewModel.messages.count) { _ in
                     scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
-                }
-                .onDisappear {
-                    viewModel.sendReadReceiptTimer?.invalidate()
                 }
             }
         }
