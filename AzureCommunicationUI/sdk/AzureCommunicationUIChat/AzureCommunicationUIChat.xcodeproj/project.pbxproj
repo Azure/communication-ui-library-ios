@@ -147,7 +147,7 @@
 		521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */; };
 		521A024528FE1E8D002CAD8E /* TypingParticipantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024328FE1E8D002CAD8E /* TypingParticipantsView.swift */; };
 		52D9EC0C290BAEF700AE6D08 /* TypingIndicatorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9EC0B290BAEF700AE6D08 /* TypingIndicatorManager.swift */; };
-		52D9EC0E290C4BFE00AE6D08 /* TypingIndicatorManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9EC0D290C4BFE00AE6D08 /* TypingIndicatorManagerTests.swift */; };
+		52D9EC0E290C4BFE00AE6D08 /* TypingParticipantManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9EC0D290C4BFE00AE6D08 /* TypingParticipantManagerTests.swift */; };
 		85D6F5E7707CE2A8E51E5451 /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9C157344D512A9F069F9CC /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework */; };
 		A88000ED29070F790076B0E2 /* HtmlMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88000EC29070F790076B0E2 /* HtmlMessageView.swift */; };
 		A88000EF29070F870076B0E2 /* HtmlMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88000EE29070F870076B0E2 /* HtmlMessageViewModel.swift */; };
@@ -323,7 +323,7 @@
 		521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantsViewModel.swift; sourceTree = "<group>"; };
 		521A024328FE1E8D002CAD8E /* TypingParticipantsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantsView.swift; sourceTree = "<group>"; };
 		52D9EC0B290BAEF700AE6D08 /* TypingIndicatorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicatorManager.swift; sourceTree = "<group>"; };
-		52D9EC0D290C4BFE00AE6D08 /* TypingIndicatorManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingIndicatorManagerTests.swift; sourceTree = "<group>"; };
+		52D9EC0D290C4BFE00AE6D08 /* TypingParticipantManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingParticipantManagerTests.swift; sourceTree = "<group>"; };
 		5BE15140BA042B0F23F23BE3 /* Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		78EED6E1D0BF91A2966AC0C7 /* Pods-AzureCommunicationUIChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat/Pods-AzureCommunicationUIChat.debug.xcconfig"; sourceTree = "<group>"; };
 		A63BF349E7BC31AD5300412A /* Pods_AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -768,7 +768,7 @@
 				50F0C5C128D38CC9009D7176 /* AvatarManagerTests.swift */,
 				50F0C5C328D38CD8009D7176 /* RemoteParticipantsManagerTests.swift */,
 				50F0C5C528D38CE4009D7176 /* MessageRepositoryManagerTests.swift */,
-				52D9EC0D290C4BFE00AE6D08 /* TypingIndicatorManagerTests.swift */,
+				52D9EC0D290C4BFE00AE6D08 /* TypingParticipantManagerTests.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1462,7 +1462,7 @@
 				50F0C5C428D38CD8009D7176 /* RemoteParticipantsManagerTests.swift in Sources */,
 				50F0C59128D38ACA009D7176 /* CompositeViewModelFactoryMocking.swift in Sources */,
 				50F0C5B628D38C39009D7176 /* ParticipantsReducerTests.swift in Sources */,
-				52D9EC0E290C4BFE00AE6D08 /* TypingIndicatorManagerTests.swift in Sources */,
+				52D9EC0E290C4BFE00AE6D08 /* TypingParticipantManagerTests.swift in Sources */,
 				50F0C5AC28D38BEC009D7176 /* RepositoryMiddlewareTests.swift in Sources */,
 				50F0C5BE28D38C6E009D7176 /* NavigationRouterTests.swift in Sources */,
 			);

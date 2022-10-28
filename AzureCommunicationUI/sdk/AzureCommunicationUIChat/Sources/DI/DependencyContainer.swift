@@ -70,7 +70,7 @@ final class DependencyContainer {
 
         register(CompositeManager(store: resolve(),
                                   logger: resolve()) as CompositeManagerProtocol)
-        register(TypingIndicatorManager(store: resolve()) as TypingIndicatorManagerProtocol)
+        register(TypingParticipantsManager(store: resolve()) as TypingParticipantsManagerProtocol)
     }
 
     private func makeStore(displayName: String?,

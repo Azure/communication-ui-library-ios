@@ -6,9 +6,9 @@
 import Combine
 import Foundation
 
-protocol TypingIndicatorManagerProtocol {}
+protocol TypingParticipantsManagerProtocol {}
 
-class TypingIndicatorManager: TypingIndicatorManagerProtocol {
+class TypingParticipantsManager: TypingParticipantsManagerProtocol {
     private let store: Store<AppState>
     private var timer: Timer?
     private var cancellables = Set<AnyCancellable>()

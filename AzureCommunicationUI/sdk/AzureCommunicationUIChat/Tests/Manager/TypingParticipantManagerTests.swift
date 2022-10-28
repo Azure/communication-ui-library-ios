@@ -9,18 +9,18 @@ import XCTest
 import AzureCore
 import AzureCommunicationCommon
 
-class TypingIndicatorManagerTests: XCTestCase {
+class TypingParticipantsManagerTests: XCTestCase {
     var mockStoreFactory: StoreFactoryMocking!
     var cancellable: CancelBag!
-    var typingIndicatorManager: TypingIndicatorManager!
+    var typingIndicatorManager: TypingParticipantsManager!
 
     override func setUp() {
         super.setUp()
         mockStoreFactory = StoreFactoryMocking()
         cancellable = CancelBag()
-        typingIndicatorManager = TypingIndicatorManager(store: mockStoreFactory.store)
-        TypingIndicatorManager.Constants.timeout = 0
-        TypingIndicatorManager.Constants.checkInterval = 0
+        typingIndicatorManager = TypingParticipantsManager(store: mockStoreFactory.store)
+        TypingParticipantsManager.Constants.timeout = 0
+        TypingParticipantsManager.Constants.checkInterval = 0
     }
 
     override func tearDown() {
@@ -60,7 +60,7 @@ class TypingIndicatorManagerTests: XCTestCase {
     }
 }
 
-extension TypingIndicatorManagerTests {
+extension TypingParticipantsManagerTests {
     func getAppState(participantState: ParticipantsState = ParticipantsState()) -> AppState {
         return AppState(lifeCycleState: LifeCycleState(),
                         chatState: ChatState(),
