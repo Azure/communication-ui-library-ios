@@ -19,7 +19,6 @@ struct TypingParticipantsView: View {
     var body: some View {
         Group {
             if viewModel.shouldShowIndicator {
-                Spacer()
                 HStack {
                     // Vstack to make sure AvatarGroup stays in vertical center
                     VStack(spacing: 0) {
@@ -40,7 +39,6 @@ struct TypingParticipantsView: View {
                 .frame(width: UIScreen.main.bounds.size.width,
                        height: Constants.sectionHeight)
                 .padding(.leading, Constants.padding)
-                Spacer()
             }
         }
     }

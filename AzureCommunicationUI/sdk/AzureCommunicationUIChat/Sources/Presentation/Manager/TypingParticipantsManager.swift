@@ -30,10 +30,10 @@ class TypingParticipantsManager: TypingParticipantsManagerProtocol {
     }
 
     private func receive(_ state: AppState) {
-        clearIndicators(for: state.participantsState.typingParticipants)
+        updateParticipant(from: state.participantsState.typingParticipants)
     }
 
-    private func clearIndicators(for participants: [UserEventTimestampModel]) {
+    private func updateParticipant(from participants: [UserEventTimestampModel]) {
         timer?.invalidate()
         guard !participants.isEmpty else {
             return
@@ -45,6 +45,9 @@ class TypingParticipantsManager: TypingParticipantsManagerProtocol {
                 let timestamp = $0.timestamp.value
                 let differenceInSeconds = Int(Date().timeIntervalSince(timestamp))
                 return differenceInSeconds < Constants.timeout
+            }
+            guard filteredParticiapants != participants else {
+                return
             }
             DispatchQueue.main.async {
                 self.store.dispatch(action: .participantsAction(
