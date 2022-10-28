@@ -21,6 +21,9 @@ struct TextMessageView: View {
             }
             bubble
             readReceipt
+            if !viewModel.isLocalUser {
+                Spacer()
+            }
         }
     }
 
