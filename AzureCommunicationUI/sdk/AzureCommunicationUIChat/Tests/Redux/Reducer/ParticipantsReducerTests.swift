@@ -4,80 +4,69 @@
 //
 @testable import AzureCommunicationUIChat
 import AzureCommunicationCommon
+import AzureCore
 import XCTest
 
 class ParticipantReducerTests: XCTestCase {
     func test_participantReducer_reduce_when_typingIndicatorReceivedAction_then_participantsStateUpdated() {
         let expectedIdentifier = "ID"
-        let timer = Timer(timeInterval: 1, repeats: false, block: {_ in })
+        let model = UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier(expectedIdentifier),
+                                                  timestamp: Iso8601Date())!
         let state = ParticipantsState()
-        let action = Action.participantsAction(.typingIndicatorReceived(id: expectedIdentifier, timer: timer))
+        let action = Action.participantsAction(.typingIndicatorReceived(participant: model))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
-        XCTAssertEqual(resultState.typingIndicatorMap.count, 1)
-        XCTAssertEqual(resultState.typingIndicatorMap.first?.key, expectedIdentifier)
+        XCTAssertEqual(resultState.typingParticipants.count, 1)
+        XCTAssertEqual(resultState.typingParticipants.first?.id, expectedIdentifier)
     }
 
     func test_participantReducer_reduce_when_participantRemovedAction_then_participantsStateUpdated() {
         let expectedIdentifier = "ID"
-        let timer = Timer(timeInterval: 1, repeats: false, block: {_ in })
-        let state = ParticipantsState(typingIndicatorMap: [
-            expectedIdentifier: timer
-        ])
-        let model = ParticipantInfoModel(identifier: CommunicationUserIdentifier(expectedIdentifier),
+        let existingParticipant = UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier(expectedIdentifier),
+                                                  timestamp: Iso8601Date())!
+        let state = ParticipantsState(typingParticipants: [existingParticipant])
+        let participantToBeRemoved = ParticipantInfoModel(identifier: CommunicationUserIdentifier(expectedIdentifier),
                                          displayName: expectedIdentifier)
-        let action = Action.participantsAction(.participantsRemoved(participants: [model]))
+        let action = Action.participantsAction(.participantsRemoved(participants: [participantToBeRemoved]))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
-        XCTAssertEqual(resultState.typingIndicatorMap.count, 0)
+        XCTAssertEqual(resultState.typingParticipants.count, 0)
     }
 
     func test_participantReducer_reduce_when_newTextMessageReceivedAction_then_participantsStateUpdated() {
-        let expectation = XCTestExpectation(description: "Clearing Indicator when text message received")
         let expectedIdentifier = "ID"
-        let timer = Timer(timeInterval: 1, repeats: false, block: {_ in
-            expectation.fulfill()
-        })
-        let state = ParticipantsState(typingIndicatorMap: [
-            expectedIdentifier: timer
-        ])
+        let existingParticipant = UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier(expectedIdentifier),
+                                                  timestamp: Iso8601Date())!
+        let state = ParticipantsState(typingParticipants: [existingParticipant])
         let model = ChatMessageInfoModel(type: .text, senderId: expectedIdentifier)
         let action = Action.repositoryAction(.chatMessageReceived(message: model))
         let sut = getSUT()
-        _ = sut.reduce(state, action)
-        wait(for: [expectation], timeout: 1)
+        let resultState = sut.reduce(state, action)
+        XCTAssertEqual(resultState.typingParticipants.count, 0)
     }
 
     func test_participantReducer_reduce_when_newHTMLMessageReceivedAction_then_participantsStateUpdated() {
-        let expectation = XCTestExpectation(description: "Clearing Indicator when HTML message received")
         let expectedIdentifier = "ID"
-        let timer = Timer(timeInterval: 1, repeats: false, block: {_ in
-            expectation.fulfill()
-        })
-        let state = ParticipantsState(typingIndicatorMap: [
-            expectedIdentifier: timer
-        ])
+        let existingParticipant = UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier(expectedIdentifier),
+                                                  timestamp: Iso8601Date())!
+        let state = ParticipantsState(typingParticipants: [existingParticipant])
         let model = ChatMessageInfoModel(type: .html, senderId: expectedIdentifier)
         let action = Action.repositoryAction(.chatMessageReceived(message: model))
         let sut = getSUT()
-        _ = sut.reduce(state, action)
-        wait(for: [expectation], timeout: 1)
+        let resultState = sut.reduce(state, action)
+        XCTAssertEqual(resultState.typingParticipants.count, 0)
     }
 
     func test_participantReducer_reduce_when_newCustomMessageReceivedAction_then_participantsStateUpdated() {
-        let expectation = XCTestExpectation(description: "Clearing Indicator when custom message received")
         let expectedIdentifier = "ID"
-        let timer = Timer(timeInterval: 1, repeats: false, block: {_ in
-            expectation.fulfill()
-        })
-        let state = ParticipantsState(typingIndicatorMap: [
-            expectedIdentifier: timer
-        ])
-        let model = ChatMessageInfoModel(type: .custom("message"), senderId: expectedIdentifier)
+        let existingParticipant = UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier(expectedIdentifier),
+                                                  timestamp: Iso8601Date())!
+        let state = ParticipantsState(typingParticipants: [existingParticipant])
+        let model = ChatMessageInfoModel(type: .custom(""), senderId: expectedIdentifier)
         let action = Action.repositoryAction(.chatMessageReceived(message: model))
         let sut = getSUT()
-        _ = sut.reduce(state, action)
-        wait(for: [expectation], timeout: 1)
+        let resultState = sut.reduce(state, action)
+        XCTAssertEqual(resultState.typingParticipants.count, 0)
     }
 }
 

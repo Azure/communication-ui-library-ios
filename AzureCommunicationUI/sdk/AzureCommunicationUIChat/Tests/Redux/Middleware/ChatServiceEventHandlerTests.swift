@@ -133,34 +133,11 @@ class ChatServiceEventHandlerTests: XCTestCase {
         let expectedUserId = "identifier"
         func dispatch(action: Action) {
             switch action {
-            case .participantsAction(.typingIndicatorReceived(let id, _)):
-                XCTAssertEqual(id, expectedUserId)
+            case .participantsAction(.typingIndicatorReceived(let model)):
+                XCTAssertEqual(model.id, expectedUserId)
                 expectation.fulfill()
             default:
                 XCTExpectFailure("typingIndicatorReceived was not dispatched")
-            }
-        }
-        chatServiceEventHandler.subscription(dispatch: dispatch)
-        let chatMessageReceivedEvent = ChatEventModel(
-            eventType: .typingIndicatorReceived,
-            infoModel: UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier("identifier"),
-                                               timestamp: Iso8601Date())!)
-        mockChatService.chatEventSubject.send(chatMessageReceivedEvent)
-        wait(for: [expectation], timeout: 1)
-    }
-
-    func test_chatServiceEventHandler_subscription_when_receiveTypingIndicatorReceivedEvent_then_dispatchClearTypingIndicatorAction() {
-        let expectation = XCTestExpectation(description: "Dispatch Clearing Indicator Received Action")
-        let expectedUserId = "identifier"
-        func dispatch(action: Action) {
-            switch action {
-            case .participantsAction(.typingIndicatorReceived(_, let timer)):
-                timer.fire()
-            case .participantsAction(.clearTypingIndicator(let id)):
-                XCTAssertEqual(id, expectedUserId)
-                expectation.fulfill()
-            default:
-                XCTExpectFailure("clearTypingIndicator was not dispatched")
             }
         }
         chatServiceEventHandler.subscription(dispatch: dispatch)
