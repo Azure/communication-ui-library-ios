@@ -20,6 +20,7 @@ struct ChatView: View {
         }
         .onAppear {
             viewModel.getInitialMessages()
+            viewModel.getListOfParticipants()
         }
     }
 
