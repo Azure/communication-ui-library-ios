@@ -10,7 +10,7 @@ struct ParticipantsState {
 
     // MARK: Typing Indicators
     let participantsUpdatedTimestamp: Date
-    let typingIndicatorMap: [String: Timer]
+    let typingParticipants: [UserEventTimestampModel]
 
     var numberOfParticipants: Int {
         return participants.count
@@ -18,9 +18,9 @@ struct ParticipantsState {
 
     init(participants: [String: ParticipantInfoModel] = [:],
          participantsUpdatedTimestamp: Date = Date(),
-         typingIndicatorMap: [String: Timer] = [:]) {
+         typingParticipants: [UserEventTimestampModel] = []) {
         self.participants = participants
-        self.typingIndicatorMap = typingIndicatorMap
+        self.typingParticipants = typingParticipants
         self.participantsUpdatedTimestamp = participantsUpdatedTimestamp
     }
 }

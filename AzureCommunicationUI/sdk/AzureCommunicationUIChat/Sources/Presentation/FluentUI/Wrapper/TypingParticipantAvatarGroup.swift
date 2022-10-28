@@ -10,6 +10,7 @@ class TypingParticipantAvatarGroup: UIView {
 
     private var group: MSFAvatarGroup?
     private var lastSeen: [ParticipantInfoModel]?
+    private var avatarCount: Int = 0
 
     private enum Constants {
         static let avatarWidth: CGFloat = 16.0
@@ -49,23 +50,22 @@ extension TypingParticipantAvatarGroup {
         ])
     }
 
-    func setAvatars(from oldData: [ParticipantInfoModel],
-                    to newData: [ParticipantInfoModel]) {
-        // prevent removing the same avatars mutiple times
+    func setAvatars(to newData: [ParticipantInfoModel]) {
         guard let group = group,
-                oldData != newData,
-                oldData != lastSeen else {
+              lastSeen != newData else {
             return
         }
-        for _ in oldData.indices {
+        for _ in 0..<avatarCount {
             group.state.removeAvatar(at: 0)
         }
+        avatarCount = 0
         for participant in newData {
+            avatarCount += 1
             let newAvatar = group.state.createAvatar()
             newAvatar.primaryText = participant.displayName
             newAvatar.isTransparent = false
             newAvatar.isRingVisible = false
         }
-        lastSeen = oldData
+        lastSeen = newData
     }
 }

@@ -10,7 +10,7 @@ struct TypingParticipantsView: View {
     @StateObject var viewModel: TypingParticipantsViewModel
 
     private enum Constants {
-        static let padding: CGFloat = 20.0
+        static let padding: CGFloat = 50.0
         static let sectionHeight: CGFloat = 10.0
         static let avatarWidth: CGFloat = 16.0
         static let maxAvatarShown: Int = 3

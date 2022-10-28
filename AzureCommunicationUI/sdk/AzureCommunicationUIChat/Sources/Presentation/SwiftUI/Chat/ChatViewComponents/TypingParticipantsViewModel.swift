@@ -40,14 +40,16 @@ class TypingParticipantsViewModel: ObservableObject {
     }
 
     func update(participantsState: ParticipantsState) {
-        guard !participantsState.typingIndicatorMap.isEmpty,
-        !participantsState.participants.isEmpty else {
+        guard !participantsState.participants.isEmpty,
+        !participantsState.typingParticipants.isEmpty else {
+            participants = []
+            avatarGroup.setAvatars(to: participants)
             hideTypingIndicator()
             return
         }
-        participants = participantsState.typingIndicatorMap
-            .compactMap { userId, _ in
-                participantsState.participants[userId]
+        participants = participantsState.typingParticipants
+            .compactMap { model in
+                participantsState.participants[model.id]
             }
             .sorted(by: { $0.displayName < $1.displayName })
         displayLabel()

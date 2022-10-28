@@ -17,7 +17,6 @@ struct TypingParticipantAvatarGroupContainer: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: TypingParticipantAvatarGroup, context: Context) {
-        avatarGroup.setAvatars(from: previousParticipants,
-                               to: participantList)
+        avatarGroup.setAvatars(to: participantList)
     }
 }

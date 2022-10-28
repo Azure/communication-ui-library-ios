@@ -12,10 +12,10 @@ extension Reducer where State == ParticipantsState,
         // MARK: Chat Participant
         var currentParticipants = participantsState.participants
         var participantsUpdatedTimestamp = participantsState.participantsUpdatedTimestamp
-
-        // MARK: Typing Indicator
         let currentTimestamp = Date()
-        var typingIndicatorMap = participantsState.typingIndicatorMap
+        
+        // MARK: Typing Indicator
+        var typingParticipants = participantsState.typingParticipants
 
         switch action {
         case .participantsAction(.participantsAdded(let participants)):
@@ -30,27 +30,25 @@ extension Reducer where State == ParticipantsState,
                 guard currentParticipants[participant.id] != nil else {
                     continue
                 }
+                typingParticipants = typingParticipants.filter { $0.id != participant.id }
                 currentParticipants.removeValue(forKey: participant.id)
-                typingIndicatorMap[participant.id]?.fire()
             }
             participantsUpdatedTimestamp = currentTimestamp
-
             let state = ParticipantsState(participants: currentParticipants,
                                           participantsUpdatedTimestamp: participantsUpdatedTimestamp)
-
             return state
-        case .participantsAction(.typingIndicatorReceived(let id, let timer)):
-            typingIndicatorMap[id]?.invalidate()
-            typingIndicatorMap[id] = timer
-        case .participantsAction(.clearTypingIndicator(let id)):
-            typingIndicatorMap[id] = nil
+        case .participantsAction(.typingIndicatorReceived(let participant)):
+            typingParticipants = typingParticipants.filter { $0.id != participant.id }
+            typingParticipants.append(participant)
+        case .participantsAction(.setTypingIndicator(let newParticipants)):
+            typingParticipants = newParticipants
         case .repositoryAction(.chatMessageReceived(let message)):
             guard let participantId = message.senderId else {
                 break
             }
             switch message.type {
             case .custom(_), .html, .text:
-                typingIndicatorMap[participantId]?.fire()
+                typingParticipants = typingParticipants.filter { $0.id != participantId }
             default:
                 break
             }
@@ -60,6 +58,6 @@ extension Reducer where State == ParticipantsState,
 
         return ParticipantsState(participants: currentParticipants,
                                  participantsUpdatedTimestamp: participantsUpdatedTimestamp,
-                                 typingIndicatorMap: typingIndicatorMap)
+                                 typingParticipants: typingParticipants)
     }
 }

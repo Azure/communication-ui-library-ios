@@ -99,11 +99,7 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
 
     func handleTypingIndicatorReceived(dispatch: @escaping ActionDispatch,
                                        userEventTimestamp: UserEventTimestampModel) {
-        let timer = Timer.scheduledTimer(withTimeInterval: Constants.typingIndicatorDisplayInterval,
-                                         repeats: false) {_ in
-            dispatch(.participantsAction(.clearTypingIndicator(id: userEventTimestamp.id)))
-        }
-        dispatch(.participantsAction(.typingIndicatorReceived(id: userEventTimestamp.id, timer: timer)))
+        dispatch(.participantsAction(.typingIndicatorReceived(participant: userEventTimestamp)))
     }
 
     func handleReadReceiptReceived(dispatch: @escaping ActionDispatch,
