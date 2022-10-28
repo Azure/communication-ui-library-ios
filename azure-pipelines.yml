@@ -1,0 +1,59 @@
+# Variable 'Configuration' was defined in the Variables tab
+# Variable 'Ic3PipelineUsage' was defined in the Variables tab
+# Variable 'P12password' was defined in the Variables tab
+# Variable 'SDK' was defined in the Variables tab
+# Variable 'TestConfiguration' was defined in the Variables tab
+# Variable 'TestSDK' was defined in the Variables tab
+# Variable Group 'ServiceTreeLinkGroup' was defined in the Variables tab
+# Variable Group 'InfoSec-SecurityResults' was defined in the Variables tab
+variables:
+- name: BuildParameters.xcodeVersion
+  value: default
+- name: BuildParameters.xcodeDeveloperDir
+  value: ''
+trigger:
+  branches:
+    include:
+    - main
+    - feature/*
+  batch: True
+name: $(date:yyyyMMdd)$(rev:.r)
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/main
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    name: vsts-mac-1231-xcode-1331
+  steps:
+  - checkout: self
+    clean: true
+  - task: servicetree-link-build-task@1
+    displayName: 'ServiceTree: [$(BuildOutputUsage)] '
+    condition: always()
+    inputs:
+      ServiceTreeGateway: c29e963a-8ea3-4e6a-b28f-a035eaff83ab
+      Service: 5b23174b-8c6d-467d-862d-a3f24958fb74
+  - task: CocoaPods@0
+    displayName: pod install
+    inputs:
+      forceRepoUpdate: true
+  - task: CmdLine@2
+    displayName: Pod remove trunk if install failed
+    condition: failed()
+    inputs:
+      script: >
+        pod repo remove trunk
+  - task: Xcode@5
+    displayName: Xcode build
+    inputs:
+      configuration: Release
+      sdk: iphoneos
+      xcWorkspacePath: AzureCalling.xcworkspace
+      scheme: AzureCalling
+      xcodeVersion: $(BuildParameters.xcodeVersion)
+      xcodeDeveloperDir: $(BuildParameters.xcodeDeveloperDir)
+...
