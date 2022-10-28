@@ -13,7 +13,7 @@ extension Reducer where State == ParticipantsState,
         var currentParticipants = participantsState.participants
         var participantsUpdatedTimestamp = participantsState.participantsUpdatedTimestamp
         let currentTimestamp = Date()
-        
+
         // MARK: Typing Indicator
         var typingParticipants = participantsState.typingParticipants
 
