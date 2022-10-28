@@ -44,9 +44,6 @@ class ChatViewModel: ObservableObject {
         store.dispatch(action: .repositoryAction(.fetchInitialMessagesTriggered))
     }
 
-    func getListOfParticipants() {
-    }
-
     func receive(_ state: AppState) {
         messageListViewModel.update(repositoryState: state.repositoryState)
         typingParticipantsViewModel.update(participantsState: state.participantsState)
