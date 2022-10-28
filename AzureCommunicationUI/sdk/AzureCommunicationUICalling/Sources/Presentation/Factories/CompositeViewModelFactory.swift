@@ -54,6 +54,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
     func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
                                               title: String,
+                                              accessibilityIdentifier: String,
                                               action: @escaping (() -> Void)) -> MoreCallOptionsListCellViewModel
 
     // MARK: SetupViewModels
@@ -261,9 +262,11 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
 
     func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
                                               title: String,
+                                              accessibilityIdentifier: String,
                                               action: @escaping (() -> Void)) -> MoreCallOptionsListCellViewModel {
         MoreCallOptionsListCellViewModel(icon: icon,
                                          title: title,
+                                         accessibilityIdentifier: accessibilityIdentifier,
                                          action: action)
     }
 

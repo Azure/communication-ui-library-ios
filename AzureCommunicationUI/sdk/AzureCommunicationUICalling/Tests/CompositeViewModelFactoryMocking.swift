@@ -222,14 +222,16 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
         moreCallOptionsListViewModel ?? MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                                                      localizationProvider: localizationProvider,
-                                                                     diagnosticsManager: diagnosticsManager)
+                                                                     showSharingViewAction: showSharingViewAction)
     }
 
     func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
                                               title: String,
+                                              accessibilityIdentifier: String,
                                               action: @escaping (() -> Void)) -> MoreCallOptionsListCellViewModel {
         moreCallOptionsListCellViewModel ?? MoreCallOptionsListCellViewModel(icon: icon,
                                                                              title: title,
+                                                                             accessibilityIdentifier: accessibilityIdentifier,
                                                                              action: action)
     }
 

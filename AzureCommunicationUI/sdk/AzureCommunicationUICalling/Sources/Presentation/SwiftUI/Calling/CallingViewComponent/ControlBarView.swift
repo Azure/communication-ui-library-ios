@@ -150,6 +150,7 @@ struct ControlBarView: View {
         IconButton(viewModel: viewModel.moreButtonViewModel)
             .background(SourceViewSpace(sourceView: moreListSourceView))
             .background(SourceViewSpace(sourceView: diagnosticsInfoSourceView))
+            .accessibilityIdentifier(AccessibilityIdentifier.moreAccessibilityID.rawValue)
     }
 
     var moreCallOptionsList: some View {

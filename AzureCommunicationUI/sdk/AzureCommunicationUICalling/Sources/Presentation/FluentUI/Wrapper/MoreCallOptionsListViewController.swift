@@ -45,6 +45,7 @@ extension MoreCallOptionsListViewController: UITableViewDataSource, UITableViewD
         let viewModel = self.items[indexPath.row]
 
         cell.setup(viewModel: viewModel)
+        cell.accessibilityIdentifier = viewModel.accessibilityIdentifier
         return cell
     }
 
