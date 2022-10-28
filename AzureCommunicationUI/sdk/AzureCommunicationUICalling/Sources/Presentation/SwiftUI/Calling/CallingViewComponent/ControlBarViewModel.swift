@@ -106,7 +106,6 @@ class ControlBarViewModel: ObservableObject {
             buttonType: .controlButton,
             isDisabled: false) {
                 [weak self] in
-                print("!!! moreButtonViewModel action \(self?.isMoreCallOptionsListDisplayed)")
                 guard let self = self else {
                     return
                 }
@@ -118,7 +117,6 @@ class ControlBarViewModel: ObservableObject {
                 guard let self = self else {
                     return
                 }
-                print("!!!!!! isShareActivityDisplayed")
                 self.isShareActivityDisplayed = true
             })
     }

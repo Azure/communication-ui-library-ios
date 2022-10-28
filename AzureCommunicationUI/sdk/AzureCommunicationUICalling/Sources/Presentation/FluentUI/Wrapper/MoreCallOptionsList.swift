@@ -42,7 +42,6 @@ struct MoreCallOptionsList: UIViewControllerRepresentable {
         }
 
         func drawerControllerDidDismiss(_ controller: DrawerController) {
-            print("!!! drawerControllerDidDismiss")
             isPresented = false
         }
     }

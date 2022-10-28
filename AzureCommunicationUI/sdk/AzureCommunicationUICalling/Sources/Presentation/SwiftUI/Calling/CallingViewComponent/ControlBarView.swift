@@ -44,9 +44,9 @@ struct ControlBarView: View {
         })
         .modifier(PopupModalView(
             isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isShareActivityDisplayed) {
-            activityView
-                .accessibilityElement(children: .contain)
-                .accessibilityAddTraits(.isModal)
+                activityView
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isModal)
         })
     }
 
@@ -136,14 +136,14 @@ struct ControlBarView: View {
         CompositeAudioDevicesList(isPresented: $viewModel.isAudioDeviceSelectionDisplayed,
                                   viewModel: viewModel.audioDevicesListViewModel,
                                   sourceView: audioDeviceButtonSourceView)
-            .modifier(LockPhoneOrientation())
+        .modifier(LockPhoneOrientation())
     }
 
     var exitConfirmationDrawer: some View {
         CompositeLeaveCallConfirmationList(isPresented: $viewModel.isConfirmLeaveListDisplayed,
                                            viewModel: viewModel.getLeaveCallConfirmationListViewModel(),
                                            sourceView: leaveCallConfirmationListSourceView)
-            .modifier(LockPhoneOrientation())
+        .modifier(LockPhoneOrientation())
     }
 
     var moreButton: some View {
@@ -164,8 +164,9 @@ struct ControlBarView: View {
     var activityView: some View {
         return Group {
             SharingActivityView(activityItems: [viewModel.getDiagnosticsInfo()],
-                                   isPresented: $viewModel.isShareActivityDisplayed,
-                                   sourceView: diagnosticsInfoSourceView)
+                                applicationActivities: nil,
+                                sourceView: diagnosticsInfoSourceView,
+                                isPresented: $viewModel.isShareActivityDisplayed)
             .edgesIgnoringSafeArea(.all)
             .modifier(LockPhoneOrientation())
         }
