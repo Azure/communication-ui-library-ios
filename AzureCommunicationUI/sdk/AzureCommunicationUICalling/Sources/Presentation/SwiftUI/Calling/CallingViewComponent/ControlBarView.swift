@@ -17,7 +17,7 @@ struct ControlBarView: View {
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     var body: some View {
-        ZStack {
+        Group {
             if screenSizeClass == .ipadScreenSize {
                 centeredStack
             } else {
