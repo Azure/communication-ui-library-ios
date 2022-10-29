@@ -169,7 +169,6 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         return controlBarViewModel ?? ControlBarViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localizationProvider: localizationProvider,
-                                                          diagnosticsManager: diagnosticsManager,
                                                           dispatchAction: dispatchAction,
                                                           endCallConfirm: endCallConfirm,
                                                           localUserState: localUserState)
