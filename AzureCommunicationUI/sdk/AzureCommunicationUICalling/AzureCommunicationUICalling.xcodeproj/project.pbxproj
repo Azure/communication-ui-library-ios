@@ -233,6 +233,7 @@
 		FA62233727DAD9AF008B5466 /* AccessibilityProviderMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */; };
 		FA6B619F290C5987004B8188 /* SharingActivityContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B619E290C5987004B8188 /* SharingActivityContainerController.swift */; };
 		FA6B61A1290C89EC004B8188 /* DrawerViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B61A0290C89EC004B8188 /* DrawerViewControllerProtocol.swift */; };
+		FA6B61A3290C9F55004B8188 /* DiagnosticsSharingActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B61A2290C9F55004B8188 /* DiagnosticsSharingActivityViewModel.swift */; };
 		FA6DF038290339430088A945 /* SharingActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6DF037290339430088A945 /* SharingActivityView.swift */; };
 		FA94AF3F27D68DFD001063A6 /* AccessibilityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA94AF3E27D68DFD001063A6 /* AccessibilityProvider.swift */; };
 		FAACEE3828FA0E4C003F7D7C /* MoreCallOptionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAACEE3728FA0E4C003F7D7C /* MoreCallOptionsList.swift */; };
@@ -528,6 +529,7 @@
 		FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderMocking.swift; sourceTree = "<group>"; };
 		FA6B619E290C5987004B8188 /* SharingActivityContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingActivityContainerController.swift; sourceTree = "<group>"; };
 		FA6B61A0290C89EC004B8188 /* DrawerViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerViewControllerProtocol.swift; sourceTree = "<group>"; };
+		FA6B61A2290C9F55004B8188 /* DiagnosticsSharingActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsSharingActivityViewModel.swift; sourceTree = "<group>"; };
 		FA6DF037290339430088A945 /* SharingActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingActivityView.swift; sourceTree = "<group>"; };
 		FA94AF3E27D68DFD001063A6 /* AccessibilityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityProvider.swift; sourceTree = "<group>"; };
 		FAACEE3728FA0E4C003F7D7C /* MoreCallOptionsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreCallOptionsList.swift; sourceTree = "<group>"; };
@@ -1318,6 +1320,7 @@
 			children = (
 				FA6DF037290339430088A945 /* SharingActivityView.swift */,
 				FA6B619E290C5987004B8188 /* SharingActivityContainerController.swift */,
+				FA6B61A2290C9F55004B8188 /* DiagnosticsSharingActivityViewModel.swift */,
 			);
 			path = SharingActivity;
 			sourceTree = "<group>";
@@ -1727,6 +1730,7 @@
 				98B186A327C85FAD00B837E6 /* AudioDevicesListCellViewModel.swift in Sources */,
 				50C6DECC270E48BE0085D04B /* BannerInfoType.swift in Sources */,
 				1F03D3D22638A6B70055C456 /* CallingViewModel.swift in Sources */,
+				FA6B61A3290C9F55004B8188 /* DiagnosticsSharingActivityViewModel.swift in Sources */,
 				50FA45FE26813FCE001844AC /* ParticipantGridViewModel.swift in Sources */,
 				1F94DAE626740D4400691D1E /* AppState.swift in Sources */,
 				8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */,

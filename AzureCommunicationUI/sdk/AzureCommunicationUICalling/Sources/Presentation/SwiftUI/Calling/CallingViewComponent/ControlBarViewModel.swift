@@ -9,7 +9,6 @@ import Combine
 class ControlBarViewModel: ObservableObject {
     private let logger: Logger
     private let localizationProvider: LocalizationProviderProtocol
-    private let diagnosticsManager: DiagnosticsManagerProtocol
     private let dispatch: ActionDispatch
     private var isCameraStateUpdating: Bool = false
     private(set) var cameraButtonViewModel: IconButtonViewModel!
@@ -26,6 +25,7 @@ class ControlBarViewModel: ObservableObject {
     var hangUpButtonViewModel: IconButtonViewModel!
     var moreButtonViewModel: IconButtonViewModel!
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
+    var diagnosticsSharingActivityViewModel: DiagnosticsSharingActivityViewModel!
     var callingStatus: CallingStatus = .none
     var cameraState = LocalUserState.CameraState(operation: .off,
                                                  device: .front,
@@ -37,13 +37,11 @@ class ControlBarViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
-         diagnosticsManager: DiagnosticsManagerProtocol,
          dispatchAction: @escaping ActionDispatch,
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState) {
         self.logger = logger
         self.localizationProvider = localizationProvider
-        self.diagnosticsManager = diagnosticsManager
         self.dispatch = dispatchAction
         self.displayEndCallConfirm = endCallConfirm
 
@@ -111,6 +109,8 @@ class ControlBarViewModel: ObservableObject {
                 }
                 self.moreButtonTapped()
         }
+        moreButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
+            .moreAccessibilityLabel)
 
         moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
             showSharingViewAction: { [weak self] in
@@ -119,6 +119,7 @@ class ControlBarViewModel: ObservableObject {
                 }
                 self.isShareActivityDisplayed = true
             })
+        diagnosticsSharingActivityViewModel = compositeViewModelFactory.makeDiagnosticsSharingActivityViewModel()
     }
 
     func endCallButtonTapped() {
@@ -203,12 +204,6 @@ class ControlBarViewModel: ObservableObject {
         let headerName = localizationProvider.getLocalizedString(.leaveCallListHeader)
         return LeaveCallConfirmationListViewModel(headerName: headerName,
                                                   listItemViewModel: leaveCallConfirmationVm)
-    }
-
-    func getDiagnosticsInfo() -> String {
-        let diagnosticsInfo = diagnosticsManager.getDiagnosticsInfo()
-        let callId = diagnosticsInfo.lastKnownCallId ?? "UNKNOWN"
-        return "Call ID: \"\(callId)\""
     }
 
     func update(localUserState: LocalUserState,

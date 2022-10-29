@@ -6,15 +6,15 @@
 import SwiftUI
 
 struct SharingActivityView: UIViewControllerRepresentable {
-    let activityItems: [Any]
+    let viewModel: DiagnosticsSharingActivityViewModel
     let applicationActivities: [UIActivity]?
     let sourceView: UIView
     @Binding var isPresented: Bool
 
     func makeUIViewController(context: Context) -> SharingActivityContainerController {
-        return SharingActivityContainerController(activityItems: activityItems,
-                                           applicationActivities: applicationActivities,
-                                           sourceView: sourceView) {
+        return SharingActivityContainerController(viewModel: viewModel,
+                                                  applicationActivities: applicationActivities,
+                                                  sourceView: sourceView) {
             self.isPresented = false
         }
     }

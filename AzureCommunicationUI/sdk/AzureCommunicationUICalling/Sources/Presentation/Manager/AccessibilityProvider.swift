@@ -17,6 +17,10 @@ protocol AccessibilityProviderProtocol {
     /// Move focus to the element with the highest sort priority for the current view
     func moveFocusToFirstElement()
 
+    /// Moves focus to the view
+    /// - Parameter view: The UIView that will be focused
+    func moveFocusToView(_ view: UIView)
+
     /// Add observer for voiceOverStatusDidChangeNotification
     /// - Parameter completion: completion that will be executed when receiving a notification
     func subscribeToVoiceOverStatusDidChangeNotification(_ observer: AccessibilityProviderNotificationsObserver)
@@ -41,6 +45,11 @@ struct AccessibilityProvider: AccessibilityProviderProtocol {
     func moveFocusToFirstElement() {
         UIAccessibility.post(notification: .screenChanged,
                              argument: nil)
+    }
+
+    func moveFocusToView(_ view: UIView) {
+        UIAccessibility.post(notification: .layoutChanged,
+                             argument: view)
     }
 
     func subscribeToVoiceOverStatusDidChangeNotification(_ observer: AccessibilityProviderNotificationsObserver) {

@@ -164,7 +164,7 @@ struct ControlBarView: View {
 
     var activityView: some View {
         return Group {
-            SharingActivityView(activityItems: [viewModel.getDiagnosticsInfo()],
+            SharingActivityView(viewModel: viewModel.diagnosticsSharingActivityViewModel,
                                 applicationActivities: nil,
                                 sourceView: diagnosticsInfoSourceView,
                                 isPresented: $viewModel.isShareActivityDisplayed)

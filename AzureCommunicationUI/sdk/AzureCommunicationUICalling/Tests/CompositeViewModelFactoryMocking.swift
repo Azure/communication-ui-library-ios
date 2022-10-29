@@ -35,6 +35,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var audioDevicesListCellViewModel: AudioDevicesListCellViewModel?
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel?
     var moreCallOptionsListCellViewModel: MoreCallOptionsListCellViewModel?
+    var diagnosticsSharingActivityViewModel: DiagnosticsSharingActivityViewModel?
 
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
     var createParticipantsListCellViewModel: ((ParticipantInfoModel) -> ParticipantsListCellViewModel?)?
@@ -168,6 +169,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         return controlBarViewModel ?? ControlBarViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localizationProvider: localizationProvider,
+                                                          diagnosticsManager: diagnosticsManager,
                                                           dispatchAction: dispatchAction,
                                                           endCallConfirm: endCallConfirm,
                                                           localUserState: localUserState)
@@ -233,6 +235,12 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                              title: title,
                                                                              accessibilityIdentifier: accessibilityIdentifier,
                                                                              action: action)
+    }
+
+    func makeDiagnosticsSharingActivityViewModel() -> DiagnosticsSharingActivityViewModel {
+        diagnosticsSharingActivityViewModel ??
+        DiagnosticsSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
+                                            diagnosticsManager: diagnosticsManager)
     }
 
     // MARK: SetupViewModels

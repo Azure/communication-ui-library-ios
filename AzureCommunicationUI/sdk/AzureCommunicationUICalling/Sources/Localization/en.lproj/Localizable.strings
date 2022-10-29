@@ -67,6 +67,7 @@
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Cancel";
 "AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="Leave call?";
 
+"AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "More";
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Share diagnostics info";
 
 /* ComplianceBanner title */

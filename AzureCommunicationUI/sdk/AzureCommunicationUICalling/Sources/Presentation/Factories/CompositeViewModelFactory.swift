@@ -56,6 +56,7 @@ protocol CompositeViewModelFactoryProtocol {
                                               title: String,
                                               accessibilityIdentifier: String,
                                               action: @escaping (() -> Void)) -> MoreCallOptionsListCellViewModel
+    func makeDiagnosticsSharingActivityViewModel() -> DiagnosticsSharingActivityViewModel
 
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
@@ -206,7 +207,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         ControlBarViewModel(compositeViewModelFactory: self,
                             logger: logger,
                             localizationProvider: localizationProvider,
-                            diagnosticsManager: diagnosticsManager,
                             dispatchAction: dispatchAction,
                             endCallConfirm: endCallConfirm,
                             localUserState: localUserState)
@@ -268,6 +268,11 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                          title: title,
                                          accessibilityIdentifier: accessibilityIdentifier,
                                          action: action)
+    }
+
+    func makeDiagnosticsSharingActivityViewModel() -> DiagnosticsSharingActivityViewModel {
+        DiagnosticsSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
+                                            diagnosticsManager: diagnosticsManager)
     }
 
     // MARK: SetupViewModels
