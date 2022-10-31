@@ -5,6 +5,7 @@
 
 import AzureCore
 import Foundation
+import AzureCommunicationCommon
 
 extension Reducer where State == ParticipantsState,
                         Actions == Action {
@@ -17,6 +18,7 @@ extension Reducer where State == ParticipantsState,
         // MARK: Typing Indicator
         var typingParticipants = participantsState.typingParticipants
 
+        print("[test] reducer called")
         switch action {
         case .participantsAction(.participantsAdded(let participants)):
             var currentParticipants = participantsState.participants
@@ -38,10 +40,31 @@ extension Reducer where State == ParticipantsState,
                                           participantsUpdatedTimestamp: participantsUpdatedTimestamp)
             return state
         case .participantsAction(.typingIndicatorReceived(let participant)):
+            print("[test] \(participant.id) added")
             typingParticipants = typingParticipants.filter { $0.id != participant.id }
             typingParticipants.append(participant)
-        case .participantsAction(.setTypingIndicator(let newParticipants)):
-            typingParticipants = newParticipants
+            currentParticipants = [
+                "8:acs:b6aada1f-0b1d-47ac-866f-91aae00a1d01_00000014-c657-4e9f-c5a7-923a0d009572":
+                    ParticipantInfoModel(identifier: CommunicationUserIdentifier(
+                        "8:acs:b6aada1f-0b1d-47ac-866f-91aae00a1d01_00000014-c657-4e9f-c5a7-923a0d009572"),
+                                            displayName: "Chris Lee"),
+                "8:acs:b6aada1f-0b1d-47ac-866f-91aae00a1d01_00000014-c645-3b8d-5aad-923a0d009901":
+                    ParticipantInfoModel(identifier: CommunicationUserIdentifier(
+                        "8:acs:b6aada1f-0b1d-47ac-866f-91aae00a1d01_00000014-c645-3b8d-5aad-923a0d009901"),
+                                            displayName: "Alex Choi"),
+                "8:acs:b6aada1f-0b1d-47ac-866f-91aae00a1d01_00000014-c645-8a65-5aad-923a0d009903":
+                    ParticipantInfoModel(identifier: CommunicationUserIdentifier(
+                        "8:acs:b6aada1f-0b1d-47ac-866f-91aae00a1d01_00000014-c645-8a65-5aad-923a0d009903"),
+                                        displayName: "John Smith")
+            ]
+        case .participantsAction(.removeTypingParticipants(let participants)):
+            for p in participants {
+                print("[test] \(p.id) removed.")
+                typingParticipants = typingParticipants.filter { $0 != p }
+            }
+        case .participantsAction(.setTypingIndicator(let participant)):
+            print("[test] participants updated to \(participant.count)")
+            typingParticipants = participant
         case .repositoryAction(.chatMessageReceived(let message)):
             guard let participantId = message.senderId else {
                 break

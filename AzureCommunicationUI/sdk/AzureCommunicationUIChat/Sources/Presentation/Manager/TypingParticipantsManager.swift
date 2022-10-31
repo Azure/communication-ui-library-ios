@@ -30,7 +30,7 @@ class TypingParticipantsManager: TypingParticipantsManagerProtocol {
     }
 
     private func receive(_ state: AppState) {
-        updateParticipant(from: state.participantsState.typingParticipants)
+        // updateParticipant(from: state.participantsState.typingParticipants)
     }
 
     private func updateParticipant(from participants: [UserEventTimestampModel]) {
@@ -50,8 +50,8 @@ class TypingParticipantsManager: TypingParticipantsManagerProtocol {
                 return
             }
             DispatchQueue.main.async {
-                self.store.dispatch(action: .participantsAction(
-                    .setTypingIndicator(participant: filteredParticiapants)))
+                // self.store.dispatch(action: .participantsAction(
+                //    .setTypingIndicator(participant: filteredParticiapants)))
             }
         })
     }

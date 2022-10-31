@@ -37,12 +37,15 @@ protocol ChatActionHandling {
     func sendTypingIndicator(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func sendReadReceipt(messageId: String, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func setTypingParticipantClearingTimer(typingParticipants: [UserEventTimestampModel],
+                                           dispatch: @escaping ActionDispatch)
 }
 
 class ChatActionHandler: ChatActionHandling {
 
     private let chatService: ChatServiceProtocol
     private let logger: Logger
+    private var timer: Timer?
 
     init(chatService: ChatServiceProtocol, logger: Logger) {
         self.chatService = chatService
@@ -108,6 +111,42 @@ class ChatActionHandler: ChatActionHandling {
                 logger.error("ChatActionHandler sendReadReceipt failed: \(error)")
                 dispatch(.participantsAction(.sendReadReceiptFailed(error: error as NSError)))
             }
+        }
+    }
+
+    func setTypingParticipantClearingTimer(typingParticipants: [UserEventTimestampModel],
+                                           dispatch: @escaping ActionDispatch) {
+        // if list becomes empty, remove timer
+        guard !typingParticipants.isEmpty else {
+            timer = nil
+            print("[test] timer removed")
+            return
+        }
+        // if timer is in progress, do nothing
+        if let time = timer, time.isValid {
+            print("[test] timer in progress")
+            return
+        }
+        // otherwise, set up timer
+        let arr = typingParticipants.map {
+            // determine the expiring time point
+            let expringPoint = $0.timestamp.value.addingTimeInterval(8)
+            // determine how many seconds left until expiring
+            let differenceInSeconds = max(0, expringPoint.timeIntervalSince(Date()))
+            // round to 1 decimal point
+            let roundedDiffInSeconds = Double(round(10.0 * differenceInSeconds) / 10.0)
+            return (model: $0, time: roundedDiffInSeconds)
+        }.sorted(by: { $0.time < $1.time })
+        let participantsToBeRemoved = arr.filter { $0.model.id == arr.first?.model.id }
+        let interval = participantsToBeRemoved.first?.time ?? 0
+        let participants = participantsToBeRemoved.map { $0.model }
+        print("[test] timer scheduled in \(interval) seconds.")
+        DispatchQueue.main.async {
+            self.timer = Timer.scheduledTimer(withTimeInterval: interval,
+                                         repeats: false,
+                                         block: { timer in
+                dispatch(.participantsAction(.removeTypingParticipants(participants: participants)))
+            })
         }
     }
 
