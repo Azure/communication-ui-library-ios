@@ -27,6 +27,8 @@ protocol ChatActionHandling {
     @discardableResult
     func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
+    func getListOfParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
     func getPreviousMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func sendMessage(internalId: String,
@@ -134,6 +136,17 @@ class ChatActionHandler: ChatActionHandling {
             } catch {
                 // dispatch error *not handled*
                 dispatch(.repositoryAction(.fetchInitialMessagesFailed(error: error)))
+            }
+        }
+    }
+
+    func getListOfParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            do {
+                let listOfParticipants = try await chatService.getListOfParticipants()
+                dispatch(.participantsAction(.participantsAdded(participants: listOfParticipants)))
+            } catch {
+                dispatch(.participantsAction(.fetchListOfParticipantsFailed(error: error)))
             }
         }
     }

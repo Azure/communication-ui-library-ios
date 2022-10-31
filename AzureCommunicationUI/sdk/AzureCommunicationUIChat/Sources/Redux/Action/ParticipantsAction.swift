@@ -7,6 +7,8 @@ import Foundation
 
 enum ParticipantsAction: Equatable {
     // MARK: - Chat SDK Local Event Actions
+    case fetchListOfParticipantsFailed(error: Error)
+
     case leaveChatSuccess
 
     // MARK: - Chat SDK Remote Event Actions

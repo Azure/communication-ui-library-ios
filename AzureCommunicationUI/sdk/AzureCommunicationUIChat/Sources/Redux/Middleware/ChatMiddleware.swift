@@ -93,6 +93,8 @@ private func handleRepositoryAction(_ action: RepositoryAction,
     case .fetchInitialMessagesTriggered:
         actionHandler.getInitialMessages(state: getState(),
                                          dispatch: dispatch)
+        actionHandler.getListOfParticipants(state: getState(),
+                                            dispatch: dispatch)
     case .fetchPreviousMessagesTriggered:
         actionHandler.getPreviousMessages(state: getState(),
                                           dispatch: dispatch)
