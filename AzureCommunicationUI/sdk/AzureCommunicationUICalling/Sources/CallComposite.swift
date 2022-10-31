@@ -32,7 +32,7 @@ public class CallComposite {
     private var avatarViewManager: AvatarViewManagerProtocol?
     private var diagnosticsManager: DiagnosticsManagerProtocol?
 
-    /// Create an instance of Call Composite with options.
+    /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
         events = Events()
