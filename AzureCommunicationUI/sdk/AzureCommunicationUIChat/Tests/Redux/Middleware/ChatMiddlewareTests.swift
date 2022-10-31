@@ -3,12 +3,12 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
-import AzureCore
-import AzureCommunicationCommon
-import XCTest
-import Combine
 @testable import AzureCommunicationUIChat
+import AzureCommunicationCommon
+import AzureCore
+import Combine
+import Foundation
+import XCTest
 
 class ChatMiddlewareTests: XCTestCase {
 
