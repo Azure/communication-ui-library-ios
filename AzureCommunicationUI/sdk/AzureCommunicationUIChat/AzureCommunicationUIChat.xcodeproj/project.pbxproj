@@ -146,7 +146,6 @@
 		521A024128FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A023F28FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift */; };
 		521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */; };
 		521A024528FE1E8D002CAD8E /* TypingParticipantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024328FE1E8D002CAD8E /* TypingParticipantsView.swift */; };
-		52D9EC0C290BAEF700AE6D08 /* TypingParticipantsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9EC0B290BAEF700AE6D08 /* TypingParticipantsManager.swift */; };
 		52D9EC0E290C4BFE00AE6D08 /* TypingParticipantManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52D9EC0D290C4BFE00AE6D08 /* TypingParticipantManagerTests.swift */; };
 		85D6F5E7707CE2A8E51E5451 /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9C157344D512A9F069F9CC /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework */; };
 		A88000ED29070F790076B0E2 /* HtmlMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88000EC29070F790076B0E2 /* HtmlMessageView.swift */; };
@@ -322,7 +321,6 @@
 		521A023F28FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantAvatarGroupContainer.swift; sourceTree = "<group>"; };
 		521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantsViewModel.swift; sourceTree = "<group>"; };
 		521A024328FE1E8D002CAD8E /* TypingParticipantsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantsView.swift; sourceTree = "<group>"; };
-		52D9EC0B290BAEF700AE6D08 /* TypingParticipantsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingParticipantsManager.swift; sourceTree = "<group>"; };
 		52D9EC0D290C4BFE00AE6D08 /* TypingParticipantManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypingParticipantManagerTests.swift; sourceTree = "<group>"; };
 		5BE15140BA042B0F23F23BE3 /* Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		78EED6E1D0BF91A2966AC0C7 /* Pods-AzureCommunicationUIChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat/Pods-AzureCommunicationUIChat.debug.xcconfig"; sourceTree = "<group>"; };
@@ -563,7 +561,6 @@
 				50CB820828C2868A00680566 /* AvatarViewManager.swift */,
 				50CB820A28C2869D00680566 /* RemoteParticipantsManager.swift */,
 				50CB820C28C286AA00680566 /* MessageRepositoryManager.swift */,
-				52D9EC0B290BAEF700AE6D08 /* TypingParticipantsManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1377,7 +1374,6 @@
 				50CB824D28C29B1700680566 /* ParticipantsReducer.swift in Sources */,
 				50CB825D28C29DEF00680566 /* ChatService.swift in Sources */,
 				50CB824528C29AEB00680566 /* ErrorState.swift in Sources */,
-				52D9EC0C290BAEF700AE6D08 /* TypingParticipantsManager.swift in Sources */,
 				50CB82CA28C2AD2300680566 /* ViewExtension.swift in Sources */,
 				50CB82D228C2B2B800680566 /* CommunicationIdentifierExtension.swift in Sources */,
 				50CB825F28C29DFD00680566 /* ChatSDKWrapper.swift in Sources */,
