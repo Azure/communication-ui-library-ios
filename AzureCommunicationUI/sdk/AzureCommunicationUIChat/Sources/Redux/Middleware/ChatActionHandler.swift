@@ -37,7 +37,7 @@ protocol ChatActionHandling {
     func sendTypingIndicator(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func sendReadReceipt(messageId: String, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
-    func setTypingParticipantTimer(getState: @escaping () -> AppState, dispatch: @escaping ActionDispatch)
+    func setTypingParticipantTimer(_ getState: @escaping () -> AppState, _ dispatch: @escaping ActionDispatch)
 }
 
 class ChatActionHandler: ChatActionHandling {
@@ -113,8 +113,8 @@ class ChatActionHandler: ChatActionHandling {
         }
     }
 
-    func setTypingParticipantTimer(getState: @escaping () -> AppState,
-                                   dispatch: @escaping ActionDispatch) {
+    func setTypingParticipantTimer(_ getState: @escaping () -> AppState,
+                                   _ dispatch: @escaping ActionDispatch) {
         // If timer in progress, do nothing
         guard timer == nil else {
             return
