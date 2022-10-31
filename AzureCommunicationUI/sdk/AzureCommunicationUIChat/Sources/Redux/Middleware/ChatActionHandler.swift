@@ -37,8 +37,7 @@ protocol ChatActionHandling {
     func sendTypingIndicator(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func sendReadReceipt(messageId: String, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
-    func setTypingParticipantClearingTimer(typingParticipants: [UserEventTimestampModel],
-                                           dispatch: @escaping ActionDispatch)
+    func setTypingParticipantTimer(getState: @escaping () -> AppState, dispatch: @escaping ActionDispatch)
 }
 
 class ChatActionHandler: ChatActionHandling {
@@ -114,40 +113,16 @@ class ChatActionHandler: ChatActionHandling {
         }
     }
 
-    func setTypingParticipantClearingTimer(typingParticipants: [UserEventTimestampModel],
-                                           dispatch: @escaping ActionDispatch) {
-        // if list becomes empty, remove timer
-        guard !typingParticipants.isEmpty else {
-            timer = nil
-            print("[test] timer removed")
+    func setTypingParticipantTimer(getState: @escaping () -> AppState,
+                                   dispatch: @escaping ActionDispatch) {
+        // If timer in progress, do nothing
+        guard timer == nil else {
             return
         }
-        // if timer is in progress, do nothing
-        if let time = timer, time.isValid {
-            print("[test] timer in progress")
-            return
-        }
-        // otherwise, set up timer
-        let arr = typingParticipants.map {
-            // determine the expiring time point
-            let expringPoint = $0.timestamp.value.addingTimeInterval(8)
-            // determine how many seconds left until expiring
-            let differenceInSeconds = max(0, expringPoint.timeIntervalSince(Date()))
-            // round to 1 decimal point
-            let roundedDiffInSeconds = Double(round(10.0 * differenceInSeconds) / 10.0)
-            return (model: $0, time: roundedDiffInSeconds)
-        }.sorted(by: { $0.time < $1.time })
-        let participantsToBeRemoved = arr.filter { $0.model.id == arr.first?.model.id }
-        let interval = participantsToBeRemoved.first?.time ?? 0
-        let participants = participantsToBeRemoved.map { $0.model }
-        print("[test] timer scheduled in \(interval) seconds.")
-        DispatchQueue.main.async {
-            self.timer = Timer.scheduledTimer(withTimeInterval: interval,
-                                         repeats: false,
-                                         block: { timer in
-                dispatch(.participantsAction(.removeTypingParticipants(participants: participants)))
-            })
-        }
+        // Otherwise, set up an initial timer with 8 seconds of timeout
+        scheduleTimer(timeInterval: UserEventTimestampModel.typingParticipantTimeout,
+                      getState: getState,
+                      dispatch: dispatch)
     }
 
     // MARK: Repository Handler
@@ -197,5 +172,45 @@ class ChatActionHandler: ChatActionHandling {
                 dispatch(.repositoryAction(.sendMessageFailed(error: error)))
             }
         }
+    }
+}
+
+// MARK: Helpers
+extension ChatActionHandler {
+    // MARK: Typing Participant Helpers
+    private func scheduleTimer(timeInterval: TimeInterval,
+                               getState: @escaping () -> AppState,
+                               dispatch: @escaping ActionDispatch) {
+        DispatchQueue.main.async {
+            self.timer = Timer.scheduledTimer(withTimeInterval: timeInterval,
+                                              repeats: false,
+                                              block: { [weak self] runningTimer in
+                self?.resetTimerInterval(of: runningTimer, with: dispatch, and: getState)
+            })
+        }
+    }
+
+    // Handle an expriring typing timer.
+    private func resetTimerInterval(of timer: Timer,
+                                    with dispatch: @escaping ActionDispatch,
+                                    and getState: @escaping () -> AppState) {
+        dispatch(.participantsAction(.typingIndicatorExpired))
+        // get next participant with expiring timestamp
+        let expiringParticipant = getState().participantsState.typingParticipants
+            .filter(\.isTyping)
+            .sorted(by: { lhs, rhs in
+                lhs.timestamp > rhs.timestamp
+            })
+            .first
+        // remove timer if there's no more typing participants
+        guard let expiringParticipant = expiringParticipant else {
+            self.timer = nil
+            return
+        }
+        // how many seconds left until participant to be removed
+        let expiringInSeconds = max(0, Date().timeIntervalSince(expiringParticipant.timestamp.value))
+        scheduleTimer(timeInterval: expiringInSeconds,
+                      getState: getState,
+                      dispatch: dispatch)
     }
 }

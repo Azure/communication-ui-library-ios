@@ -78,20 +78,8 @@ private func handleParticipantsAction(_ action: ParticipantsAction,
     switch action {
     case .sendReadReceiptTriggered(let messageId):
         actionHandler.sendReadReceipt(messageId: messageId, dispatch: dispatch)
-    case .typingIndicatorReceived(let participant):
-        print("[test] middle ware handled called")
-        var participants = getState().participantsState.typingParticipants
-        participants = participants.filter { $0.id != participant.id }
-        participants.append(participant)
-        actionHandler.setTypingParticipantClearingTimer(typingParticipants: participants,
-                                                        dispatch: dispatch)
-    case .removeTypingParticipants(let participants):
-        /* var remaining = getState().participantsState.typingParticipants
-        for p in participants {
-            remaining = remaining.filter { $0.id != p.id }
-        }*/
-        actionHandler.setTypingParticipantClearingTimer(typingParticipants: remaining,
-                                                        dispatch: dispatch)
+    case .typingIndicatorReceived(_):
+        actionHandler.setTypingParticipantTimer(getState: getState, dispatch: dispatch)
     default:
         break
     }
