@@ -198,15 +198,14 @@ extension ChatActionHandler {
             self.timer = Timer.scheduledTimer(withTimeInterval: timeInterval,
                                               repeats: false,
                                               block: { [weak self] runningTimer in
-                self?.resetTimerInterval(of: runningTimer, with: dispatch, and: getState)
+                self?.handleTimerInterval(runningTimer, dispatch, getState)
             })
         }
     }
 
-    // Handle an expriring typing timer.
-    private func resetTimerInterval(of timer: Timer,
-                                    with dispatch: @escaping ActionDispatch,
-                                    and getState: @escaping () -> AppState) {
+    private func handleTimerInterval(_ timer: Timer,
+                                    _ dispatch: @escaping ActionDispatch,
+                                    _ getState: @escaping () -> AppState) {
         dispatch(.participantsAction(.typingIndicatorExpired))
         // get next participant with expiring timestamp
         let expiringParticipant = getState().participantsState.typingParticipants
