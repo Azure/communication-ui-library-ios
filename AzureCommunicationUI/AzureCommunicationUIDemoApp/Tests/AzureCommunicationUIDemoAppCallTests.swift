@@ -8,8 +8,10 @@ import XCTest
 
 class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
-    func testJoinCallWithMockCallCallingSDKWrapperHandler() {
+    func testJoinCallEndCallWithMockCallCallingSDKWrapperHandler() {
         tapInterfaceFor(.uiKit)
+
+        // turn on calling sdk mock in settings modal
         tapButton(
             accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue,
             shouldWait: false)
@@ -19,14 +21,29 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
             toggle.tap()
         }
         app.buttons["Close"].tap()
+
+        // go to setup screen
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
             shouldWait: true)
-        let buttonExist = app.buttons["Join call"].waitForExistence(timeout: 10)
+        let buttonExist = app.buttons[AccessibilityIdentifier.joinCallAccessibilityID.rawValue].waitForExistence(timeout: 10)
         XCTAssertTrue(buttonExist)
+
+        // join call
         tapButton(
             accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
             shouldWait: true)
+
+        // mute / unmute local mic
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.micAccessibilityID.rawValue,
+                  shouldWait: true)
+        let micButton = app.buttons[AccessibilityIdentifier.micAccessibilityID.rawValue]
+        XCTAssertNotNil(micButton)
+        XCTAssertTrue(micButton.isEnabled)
+        XCTAssertEqual(micButton.label, "Mute")
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.micAccessibilityID.rawValue,
+                  shouldWait: true)
+        XCTAssertEqual(micButton.label, "Unmute")
         toggleLeaveCallDrawer(leaveCall: true)
     }
 

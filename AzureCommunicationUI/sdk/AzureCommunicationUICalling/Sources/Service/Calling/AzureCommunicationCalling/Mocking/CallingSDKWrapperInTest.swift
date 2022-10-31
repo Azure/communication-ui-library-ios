@@ -62,17 +62,6 @@ class CallingSDKWrapperInTest: NSObject, CallingSDKWrapperProtocol {
 //            joinCallOptions.videoOptions = videoOptions
 //        }
 
-//        var joinLocator: JoinMeetingLocator
-//        if callConfigurationMocking.compositeCallType == .groupCall,
-//           let groupId = callConfigurationMocking.groupId {
-//            joinLocator = GroupCallLocator(groupId: groupId)
-//        } else if let meetingLink = callConfigurationMocking.meetingLink {
-//            joinLocator = TeamsMeetingLinkLocator(meetingLink: meetingLink)
-//        } else {
-//            logger.error("Invalid groupID / meeting link")
-//            throw CallCompositeInternalError.callJoinFailed
-//        }
-
         guard let callAgent = callAgentMocking else {
             logger.error( "callAgent is nil")
             throw CallCompositeInternalError.callJoinFailed
@@ -85,18 +74,20 @@ class CallingSDKWrapperInTest: NSObject, CallingSDKWrapperProtocol {
 
         if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
             joinedCall.delegate = callingEventsHandler
-            callingEventsHandler.joinCall()
+            if callConfigurationMocking.compositeCallType == .groupCall {
+                callingEventsHandler.joinCall()
+            } else if callConfigurationMocking.compositeCallType == .teamsMeeting {
+                callingEventsHandler.joinLobby()
+            } else {
+                logger.error("Invalid groupID / meeting link")
+                throw CallCompositeInternalError.callJoinFailed
+            }
         }
 
         callMocking = joinedCall
 
         // todo: will work on this in the next task
 //        setupCallRecordingAndTranscriptionFeature()
-
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
-//            self?.callingEventsHandler.callInfoSubject.send(CallInfoModel(status: .connected,
-//                                                                          internalError: nil))
-//        }
     }
 
     public func endCall() async throws {
@@ -194,71 +185,34 @@ class CallingSDKWrapperInTest: NSObject, CallingSDKWrapperProtocol {
     }
 
     public func startPreviewVideoStream() async throws -> String {
+        return ""
+        // todo: will work on this in the next task
         _ = await getValidLocalVideoStream()
         return getLocalVideoStreamIdentifier() ?? ""
     }
 
     public func muteLocalMic() async throws {
-        // todo: will work on this in the next task
-        return
-//        guard let call = callMocking else {
-//            return
-//        }
-//
-//        do {
-//            try await call.mute()
-//        } catch {
-//            logger.error("ERROR: It was not possible to mute. \(error)")
-//            throw error
-//        }
-//        logger.debug("Mute successful")
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.muteLocalMic()
+        }
     }
 
     public func unmuteLocalMic() async throws {
-        // todo: will work on this in the next task
-        return
-//        guard let call = callMocking else {
-//            return
-//        }
-//
-//        do {
-//            try await call.unmute()
-//        } catch {
-//            logger.error("ERROR: It was not possible to unmute. \(error)")
-//            throw error
-//        }
-//        logger.debug("Unmute successful")
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.unmuteLocalMic()
+        }
     }
 
     public func holdCall() async throws {
-        // todo: will work on this in the next task
-        return
-//        guard let call = callMocking else {
-//            return
-//        }
-//
-//        do {
-//            try await call.hold()
-//            logger.debug("Hold Call successful")
-//        } catch {
-//            logger.error("ERROR: It was not possible to hold call. \(error)")
-//        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.holdCall()
+        }
     }
 
     public func resumeCall() async throws {
-        // todo: will work on this in the next task
-        return
-//        guard let call = callMocking else {
-//            return
-//        }
-//
-//        do {
-//            try await call.resume()
-//            logger.debug("Resume Call successful")
-//        } catch {
-//            logger.error( "ERROR: It was not possible to resume call. \(error)")
-//            throw error
-//        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.resumeCall()
+        }
     }
 }
 
