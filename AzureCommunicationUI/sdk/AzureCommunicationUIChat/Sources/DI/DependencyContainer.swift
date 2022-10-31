@@ -70,6 +70,7 @@ final class DependencyContainer {
 
         register(CompositeManager(store: resolve(),
                                   logger: resolve()) as CompositeManagerProtocol)
+
     }
 
     private func makeStore(displayName: String?,

@@ -4,7 +4,8 @@
 //
 
 import Foundation
-
+import AzureCore
+import AzureCommunicationCommon
 import XCTest
 import Combine
 @testable import AzureCommunicationUIChat
@@ -104,6 +105,19 @@ class ChatMiddlewareTests: XCTestCase {
             expectation.fulfill()
         }
         middlewareDispatch(getEmptyDispatch())(.chatAction(.sendTypingIndicatorTriggered))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_chatMiddleware_apply_when_recieveTypingIndicatorTriggered_then_handlerSetTypingIndicatorTimeoutCalled() {
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "setTypingIndicatorTimeoutCalled")
+        mockChatActionHandler.setTypingIndicatorTimeoutCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+        let model = UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier(""),
+                                            timestamp: Iso8601Date())!
+        middlewareDispatch(getEmptyDispatch())(.participantsAction(.typingIndicatorReceived(participant: model)))
         wait(for: [expectation], timeout: 1)
     }
 

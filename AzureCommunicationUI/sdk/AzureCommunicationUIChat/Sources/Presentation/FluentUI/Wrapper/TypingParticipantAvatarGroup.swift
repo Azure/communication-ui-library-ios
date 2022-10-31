@@ -36,8 +36,8 @@ extension TypingParticipantAvatarGroup {
             return
         }
         group.state.overflowCount = Constants.overflowCount
-        group.state.style = .stack
-        // Max avatar shown would be 3
+        // total avatar shown would be 3
+        // (max allowed 2 + 1 to show number of remaining participants)
         group.state.maxDisplayedAvatars = Constants.maxAvatarAllowed
         group.isAccessibilityElement = false
         addSubview(group.view)

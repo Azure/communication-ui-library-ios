@@ -5,7 +5,6 @@
 
 import AzureCore
 import Foundation
-import AzureCommunicationCommon
 
 extension Reducer where State == ParticipantsState,
                         Actions == Action {
@@ -13,7 +12,6 @@ extension Reducer where State == ParticipantsState,
         // MARK: Chat Participant
         var currentParticipants = participantsState.participants
         var participantsUpdatedTimestamp = participantsState.participantsUpdatedTimestamp
-        let currentTimestamp = Date()
 
         // MARK: Typing Indicator
         var typingParticipants = participantsState.typingParticipants
@@ -34,7 +32,6 @@ extension Reducer where State == ParticipantsState,
                 typingParticipants = typingParticipants.filter { $0.id != participant.id }
                 currentParticipants.removeValue(forKey: participant.id)
             }
-            participantsUpdatedTimestamp = currentTimestamp
             let state = ParticipantsState(participants: currentParticipants,
                                           participantsUpdatedTimestamp: participantsUpdatedTimestamp)
             return state

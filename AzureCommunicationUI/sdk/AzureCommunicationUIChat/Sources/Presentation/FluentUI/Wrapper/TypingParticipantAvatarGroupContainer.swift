@@ -8,7 +8,6 @@ import SwiftUI
 struct TypingParticipantAvatarGroupContainer: UIViewRepresentable {
 
     var participantList: [ParticipantInfoModel]
-    var previousParticipants: [ParticipantInfoModel]
     var avatarGroup: TypingParticipantAvatarGroup
 
     func makeUIView(context: Context) -> TypingParticipantAvatarGroup {

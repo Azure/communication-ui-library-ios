@@ -8,12 +8,11 @@ import AzureCommunicationCommon
 import AzureCore
 
 struct UserEventTimestampModel: BaseInfoModel, Equatable {
-
     let id: String
     let identifier: CommunicationIdentifier
     let timestamp: Iso8601Date
 
-    static let typingParticipantTimeout: TimeInterval = 8
+    static var typingParticipantTimeout: TimeInterval = 8
 
     init?(userIdentifier: CommunicationIdentifier?, timestamp: Iso8601Date?) {
         guard let identifier = userIdentifier, let time = timestamp else {
