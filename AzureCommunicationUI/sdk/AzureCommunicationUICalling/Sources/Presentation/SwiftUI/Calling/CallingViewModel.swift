@@ -31,6 +31,7 @@ class CallingViewModel: ObservableObject {
     var controlBarViewModel: ControlBarViewModel!
     var infoHeaderViewModel: InfoHeaderViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
+    var uiTestSettingsViewOverlayViewModel: UITestSettingsOverlayViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -56,6 +57,10 @@ class CallingViewModel: ObservableObject {
         let isCallConnected = store.state.callingState.status == .connected
         let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
         isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
+        uiTestSettingsViewOverlayViewModel = compositeViewModelFactory
+            .makeSettingsOverlayViewModel(store: store) { action in
+                self.respondTo(action: action)
+            }
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
                 guard let self = self else {
@@ -93,6 +98,12 @@ class CallingViewModel: ObservableObject {
 
     func resumeOnHold() {
         store.dispatch(action: .callingAction(.resumeRequested))
+    }
+
+    /// Responds to simulated action from the UITestSettingsView
+    /// - Parameter action: action to perform
+    func respondTo(action: Action) {
+        store.dispatch(action: action)
     }
 
     func receive(_ state: AppState) {

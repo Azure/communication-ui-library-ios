@@ -101,6 +101,9 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityHidden(!viewModel.onHoldOverlayViewModel.isDisplayed)
                 })
+                .modifier(PopupModalView(isPresented: viewModel.uiTestSettingsViewOverlayViewModel.isDisplayed) {
+                    UITestSettingsView(viewModel: viewModel.uiTestSettingsViewOverlayViewModel)
+                })
             }
         }
     }

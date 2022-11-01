@@ -53,15 +53,6 @@ class CallingSDKWrapperInTest: NSObject, CallingSDKWrapperProtocol {
     public func joinCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
         logger.debug( "Joining call")
 
-        // todo: will work on this in the next task
-//        let joinCallOptionsMocking = JoinCallOptionsMocking(isAudioPreferred: isAudioPreferred)
-//        if isCameraPreferred,
-//           let localVideoStream = localVideoStream {
-//            let localVideoStreamArray = [localVideoStream]
-//            let videoOptions = VideoOptions(localVideoStreams: localVideoStreamArray)
-//            joinCallOptions.videoOptions = videoOptions
-//        }
-
         guard let callAgent = callAgentMocking else {
             logger.error( "callAgent is nil")
             throw CallCompositeInternalError.callJoinFailed
@@ -85,9 +76,6 @@ class CallingSDKWrapperInTest: NSObject, CallingSDKWrapperProtocol {
         }
 
         callMocking = joinedCall
-
-        // todo: will work on this in the next task
-//        setupCallRecordingAndTranscriptionFeature()
     }
 
     public func endCall() async throws {
@@ -117,7 +105,8 @@ class CallingSDKWrapperInTest: NSObject, CallingSDKWrapperProtocol {
     }
 
     public func communicationIdForParticipant(identifier: String) -> CommunicationIdentifier? {
-        findParticipant(identifier: identifier)?.identifier
+        return nil
+//        findParticipant(identifier: identifier)?.identifier
     }
 
     private func findParticipant(identifier: String) -> AzureCommunicationCalling.RemoteParticipant? {
@@ -187,8 +176,8 @@ class CallingSDKWrapperInTest: NSObject, CallingSDKWrapperProtocol {
     public func startPreviewVideoStream() async throws -> String {
         return ""
         // todo: will work on this in the next task
-        _ = await getValidLocalVideoStream()
-        return getLocalVideoStreamIdentifier() ?? ""
+//        _ = await getValidLocalVideoStream()
+//        return getLocalVideoStreamIdentifier() ?? ""
     }
 
     public func muteLocalMic() async throws {
@@ -288,19 +277,6 @@ extension CallingSDKWrapperInTest {
 //        }
     }
 
-    private func setupCallRecordingAndTranscriptionFeature() {
-        // todo: will work on this in the next task
-//        guard let call = call else {
-//            return
-//        }
-//        let recordingCallFeature = call.feature(Features.recording)
-//        let transcriptionCallFeature = call.feature(Features.transcription)
-//        if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
-//            callingEventsHandler.assign(recordingCallFeature)
-//            callingEventsHandler.assign(transcriptionCallFeature)
-//        }
-    }
-
     private func getLocalVideoStreamIdentifier() -> String? {
         // todo: will work on this in the next task
         guard localVideoStream != nil else {
@@ -313,42 +289,13 @@ extension CallingSDKWrapperInTest {
 extension CallingSDKWrapperInTest: DeviceManagerDelegate {
     public func deviceManager(_ deviceManager: DeviceManager,
                               didUpdateCameras args: VideoDevicesUpdatedEventArgs) {
-        // todo: will work on this in the next task
-//        for newDevice in args.addedVideoDevices {
-//            newVideoDeviceAddedHandler?(newDevice)
-//        }
     }
 
     private func getVideoDeviceInfo(_ cameraFacing: CameraFacing) async -> VideoDeviceInfoMocking {
-        return VideoDeviceInfoMocking(cameraFacing: .front)
-        // todo: will work on this in the next task
-
-        // If we have a camera, return the value right away
-//        await withCheckedContinuation({ continuation in
-//            if let camera = deviceManagerMocking?.cameras
-//                .first(where: { $0.cameraFacing == cameraFacing }
-//                ) {
-//                newVideoDeviceAddedHandler = nil
-//                return continuation.resume(returning: camera)
-//            }
-//            newVideoDeviceAddedHandler = { deviceInfo in
-//                if deviceInfo.cameraFacing == cameraFacing {
-//                    continuation.resume(returning: deviceInfo)
-//                }
-//            }
-//        })
+         return VideoDeviceInfoMocking(cameraFacing: .front)
     }
 
     private func getValidLocalVideoStream() async -> LocalVideoStreamMocking {
         return LocalVideoStreamMocking()
-        // todo: will work on this in the next task
-//        if let existingVideoStream = localVideoStream {
-//            return existingVideoStream
-//        }
-//
-//        let videoDevice = await getVideoDeviceInfo(.front)
-//        let videoStream = LocalVideoStreamMocking()
-//        localVideoStream = videoStream
-//        return videoStream
     }
 }
