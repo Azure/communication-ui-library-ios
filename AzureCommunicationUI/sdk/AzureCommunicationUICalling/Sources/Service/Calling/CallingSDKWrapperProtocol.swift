@@ -71,6 +71,10 @@ protocol CallingSDKWrapperProtocol {
     func holdCall() async throws
     func resumeCall() async throws
 
+    func registerForPushNotifications(token: Data) async throws
+    func unregisterForPushNotifications() async throws
+    func handleCallSetupPush(payload: [AnyHashable: Any]) async throws
+
     var callingEventsHandler: CallingSDKEventsHandling { get }
 }
 

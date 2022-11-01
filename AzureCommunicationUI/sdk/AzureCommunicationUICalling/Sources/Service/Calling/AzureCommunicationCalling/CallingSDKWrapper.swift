@@ -238,6 +238,29 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             throw error
         }
     }
+
+    func registerForPushNotifications(token: Data) async throws {
+        guard let agent = callAgent else {
+            fatalError("Call agent must exist before attempting to register for push")
+        }
+        try await agent.registerPushNotifications(deviceToken: token)
+    }
+
+    func unregisterForPushNotifications() async throws {
+        guard let agent = callAgent else {
+            fatalError("Call agent must exist before attempting to deregister for push")
+        }
+        try await agent.unregisterPushNotification()
+    }
+
+    func handleCallSetupPush(payload: [AnyHashable: Any]) async throws {
+        guard let agent = callAgent else {
+            fatalError("Call agent must exist before attempting to setup call from push")
+        }
+
+        let callNotification = PushNotificationInfo.fromDictionary(payload)
+        try await agent.handlePush(notification: callNotification)
+    }
 }
 
 extension CallingSDKWrapper {
