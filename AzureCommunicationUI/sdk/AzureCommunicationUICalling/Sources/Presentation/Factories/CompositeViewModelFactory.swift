@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import FluentUI
+import Foundation
 
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels

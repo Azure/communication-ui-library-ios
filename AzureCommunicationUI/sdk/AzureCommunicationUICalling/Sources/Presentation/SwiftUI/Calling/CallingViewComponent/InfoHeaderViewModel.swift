@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 class InfoHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String

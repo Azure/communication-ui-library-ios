@@ -3,9 +3,9 @@
 //  Licensed under the MIT License.
 //
 
+import Combine
 import Foundation
 import UIKit
-import Combine
 
 protocol LifeCycleManagerProtocol {
 
