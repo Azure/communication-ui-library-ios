@@ -19,6 +19,7 @@ struct MessageListView: View {
 
     @StateObject var viewModel: MessageListViewModel
     @State private var offset: CGFloat = .zero
+    @State private var size: CGFloat = .zero
 
     var body: some View {
         messageList
@@ -50,7 +51,9 @@ struct MessageListView: View {
                                 Color.clear.preference(key: ViewOffsetKey.self,
                                     value: -$0.frame(in: .named("scroll")).origin.y)
                 })
-                .onPreferenceChange(ViewOffsetKey.self) { print("offset >> \($0)") }
+                .onPreferenceChange(ViewOffsetKey.self) {
+                    print("offset >> \($0)")
+                }
             }
             .coordinateSpace(name: "scroll")
             .listStyle(.plain)
@@ -63,6 +66,11 @@ struct MessageListView: View {
                     scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
                 }
             }
+            .overlay(
+                 GeometryReader { proxy in
+                     Color.clear.onAppear { print(proxy.size.height) }
+                 }
+            )
         }
     }
 
