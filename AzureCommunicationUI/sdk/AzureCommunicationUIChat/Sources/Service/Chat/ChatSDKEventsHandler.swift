@@ -57,7 +57,8 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
         case let .typingIndicatorReceived(event):
             logger.info("Received a TypingIndicatorReceivedEvent: \(event)")
             guard event.threadId == self.threadId,
-                let userEventTimestamp = event.toUserEventTimestampModel() else {
+                  let userEventTimestamp = event.toUserEventTimestampModel(),
+                    userEventTimestamp.id != localUserId.stringValue else {
                 return
             }
             eventModel = ChatEventModel(eventType: .typingIndicatorReceived,
