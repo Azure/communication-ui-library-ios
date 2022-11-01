@@ -58,6 +58,12 @@ struct MessageListView: View {
         }
     }
 
+    // 1. Scroll to bottom when you send message
+    // 2. Scroll to bottom when receiving a new message and already at bottom
+    // 3. Scroll unchanged when receiving a new message and not at bottom
+    // 4. Scroll unchanged when paging in new messages
+    // 5. Add bottom to scroll to new messages
+
     private func scrollToBottom(proxy: ScrollViewProxy, bottomIndex: Int) {
         guard bottomIndex != 0 else {
             return

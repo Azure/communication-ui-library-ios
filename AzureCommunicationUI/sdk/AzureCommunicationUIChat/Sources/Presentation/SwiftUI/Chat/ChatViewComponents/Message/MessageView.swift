@@ -8,10 +8,16 @@ import SwiftUI
 struct MessageView: View {
     @StateObject var viewModel: MessageViewModel
 
+    private let isDebugOn: Bool = true
+
     var body: some View {
         VStack {
             dateHeader
-            message
+            if isDebugOn {
+                messageWithDebug
+            } else {
+                message
+            }
         }
     }
 
@@ -35,6 +41,20 @@ struct MessageView: View {
             default:
                 EmptyView()
             }
+        }
+    }
+
+    var messageWithDebug: some View {
+        HStack {
+            VStack {
+                Text(viewModel.message.id)
+                    .font(.caption2)
+                Text(viewModel.message.createdOn.requestString)
+                    .font(.caption2)
+                Text(viewModel.message.senderDisplayName ?? "nil")
+                    .font(.caption2)
+            }
+            message
         }
     }
 }
