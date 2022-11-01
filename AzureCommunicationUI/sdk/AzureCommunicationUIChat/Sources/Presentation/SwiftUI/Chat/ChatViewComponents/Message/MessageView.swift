@@ -8,7 +8,7 @@ import SwiftUI
 struct MessageView: View {
     @StateObject var viewModel: MessageViewModel
 
-    private let isDebugOn: Bool = true
+    private let isDebugOn: Bool = false
 
     var body: some View {
         VStack {

@@ -18,6 +18,7 @@ struct MessageListView: View {
     }
 
     @StateObject var viewModel: MessageListViewModel
+    @State private var offset: CGFloat = .zero
 
     var body: some View {
         messageList
@@ -45,24 +46,32 @@ struct MessageListView: View {
                         }
                     }
                 }
-
+                .background(GeometryReader {
+                                Color.clear.preference(key: ViewOffsetKey.self,
+                                    value: -$0.frame(in: .named("scroll")).origin.y)
+                })
+                .onPreferenceChange(ViewOffsetKey.self) { print("offset >> \($0)") }
             }
+            .coordinateSpace(name: "scroll")
             .listStyle(.plain)
             .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
-            .onAppear {
-                scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
-            }
+//            .onAppear {
+//                scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
+//            }
             .onChange(of: viewModel.messages.count) { _ in
-                scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
+                if viewModel.isLocalUser(message: viewModel.messages.last) {
+                    scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
+                }
             }
         }
     }
 
-    // 1. Scroll to bottom when you send message
+    // 1. Scroll to bottom when you send message (Done)
     // 2. Scroll to bottom when receiving a new message and already at bottom
-    // 3. Scroll unchanged when receiving a new message and not at bottom
+    // 3. Scroll unchanged when receiving a new message and not at bottom (Done)
     // 4. Scroll unchanged when paging in new messages
-    // 5. Add bottom to scroll to new messages
+    // 5. Add button to scroll to new messages
+    // 6. When resuming, do not scroll (Done)
 
     private func scrollToBottom(proxy: ScrollViewProxy, bottomIndex: Int) {
         guard bottomIndex != 0 else {
@@ -81,5 +90,13 @@ struct MessageListView: View {
             leading: Constants.horizontalPadding,
             bottom: Constants.bottomPadding,
             trailing: Constants.horizontalPadding)
+    }
+}
+
+struct ViewOffsetKey: PreferenceKey {
+    typealias Value = CGFloat
+    static var defaultValue: CGFloat = .zero
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value += nextValue()
     }
 }

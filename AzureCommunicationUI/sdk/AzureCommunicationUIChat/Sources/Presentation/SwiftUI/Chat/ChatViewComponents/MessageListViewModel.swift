@@ -55,7 +55,7 @@ class MessageListViewModel: ObservableObject {
 
         switch type {
         case .text:
-            let isLocalUser = message.senderId == localUserId
+            let isLocalUser = isLocalUser(message: message)
             let showUsername = !isLocalUser && !isConsecutive
             let showTime = !isConsecutive
 
@@ -76,5 +76,13 @@ class MessageListViewModel: ObservableObject {
                                           showDateHeader: showDateHeader,
                                           isConsecutive: isConsecutive)
         }
+    }
+
+    // Move the message repo?
+    func isLocalUser(message: ChatMessageInfoModel?) -> Bool {
+        guard message != nil else {
+            return false
+        }
+        return message!.senderId == localUserId
     }
 }
