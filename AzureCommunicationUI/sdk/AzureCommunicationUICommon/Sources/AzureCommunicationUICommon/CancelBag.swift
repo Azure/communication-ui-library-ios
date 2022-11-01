@@ -5,9 +5,7 @@
 
 import Combine
 
-final class CancelBag {
-
-    init() { }
+final class CancelBag { 
     
     fileprivate(set) var subscriptions = Set<AnyCancellable>()
 
