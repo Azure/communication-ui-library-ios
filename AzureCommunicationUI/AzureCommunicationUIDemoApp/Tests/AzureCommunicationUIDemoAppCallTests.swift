@@ -44,6 +44,13 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.micAccessibilityID.rawValue,
                   shouldWait: true)
         XCTAssertEqual(micButton.label, "Unmute")
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateCallOnHold.rawValue, shouldWait: true)
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateCallOnResume.rawValue, shouldWait: true)
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateRecordingStart.rawValue, shouldWait: true)
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateRecordingEnd.rawValue, shouldWait: true)
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateTranscriptionStart.rawValue, shouldWait: true)
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateTranscriptionEnd.rawValue, shouldWait: true)
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateNewParticipantJoin.rawValue, shouldWait: true)
         toggleLeaveCallDrawer(leaveCall: true)
     }
 
