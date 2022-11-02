@@ -3,9 +3,9 @@
 //  Licensed under the MIT License.
 //
 
+@testable import AzureCommunicationUIChat
 import Foundation
 import XCTest
-@testable import AzureCommunicationUIChat
 
 class NavigationRouterTests: XCTestCase {
     var storeFactory: StoreFactoryMocking!
