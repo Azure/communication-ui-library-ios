@@ -108,6 +108,9 @@ class AudioSessionManager: AudioSessionManagerProtocol {
                                                            .allowBluetoothA2DP]
             try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: options)
             try audioSession.setActive(true)
+            // Work around for failure to grab ownership of microphone on first try.
+            // Reproduced on phone 11/13/14. iOS 14, 15, 16
+            try audioSession.setActive(true)
         } catch let error {
             logger.error("Failed to set audio session category:\(error.localizedDescription)")
         }
