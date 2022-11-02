@@ -13,6 +13,9 @@ struct MessageListView: View {
         static let topConsecutivePadding: CGFloat = 4
 
         static let defaultMinListRowHeight: CGFloat = 10
+
+        static let scrollMinOffsetMessageFetch: CGFloat = 1000
+        static let scrollTolerance: CGFloat = 50
     }
 
     @State private var scrollOffset: CGFloat = .zero
@@ -27,7 +30,12 @@ struct MessageListView: View {
     var messageList: some View {
         ScrollViewReader { scrollProxy in
             ObservableScrollView(
-                offsetChanged: { scrollOffset = $0 },
+                offsetChanged: {
+                    scrollOffset = $0
+                    if scrollOffset < Constants.scrollMinOffsetMessageFetch {
+                        viewModel.fetchMessages()
+                    }
+                },
                 heightChanged: { scrollSize = $0 },
                 content: {
                 LazyVStack(spacing: 0) {
@@ -61,8 +69,7 @@ struct MessageListView: View {
     }
 
     private func isAtBottom() -> Bool {
-        let scrollTolerance: CGFloat = 50
-        return scrollSize - scrollOffset < scrollTolerance
+        return scrollSize - scrollOffset < Constants.scrollTolerance
     }
 
     private func scrollToBottom(proxy: ScrollViewProxy) {
