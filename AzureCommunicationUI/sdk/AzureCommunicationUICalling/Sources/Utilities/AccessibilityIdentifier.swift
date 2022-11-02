@@ -19,6 +19,7 @@ enum AccessibilityIdentifier: String {
             "AzureCommunicationUICalling.CallingView.ControlButton.AudioDevice.AccessibilityID"
     case hangupAccessibilityID = "AzureCommunicationUICalling.CallingView.ControlButton.HangUp.AccessibilityID"
     case cancelAccessibilityID = "AzureCommunicationUICalling.CallingView.Overlay.Cancel.AccessibilityID"
+    case uitestSettingsLaunchButton = "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.LaunchButton"
     case uitestsimulateCallOnHold = "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.SimulateCallOnHold"
     case uitestsimulateCallOnResume =
             "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.SimulateCallResume"

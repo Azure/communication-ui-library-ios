@@ -27,6 +27,7 @@ struct CallingView: View {
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
 
     @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
+    @State private var isUITestScreenDisplayed: Bool = false
 
     var safeAreaIgnoreArea: Edge.Set {
         return getSizeClass() != .iphoneLandscapeScreenSize ? []: [.bottom]
@@ -60,6 +61,20 @@ struct CallingView: View {
         HStack(alignment: .center, spacing: 0) {
             containerView
             ControlBarView(viewModel: viewModel.controlBarViewModel)
+        }
+    }
+
+    var uitestButton: some View {
+        return Group {
+            if let uiTestEnabled = Bool(ProcessInfo.processInfo.environment["uiTestEnabled"] ?? ""),
+               uiTestEnabled {
+                Button("Debugger") {
+                    //            viewModel.uiTestSettingsViewOverlayViewModel.toggleDisplayrIfNeeded()
+                    isUITestScreenDisplayed = !isUITestScreenDisplayed
+                }.accessibilityIdentifier(AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue)
+            } else {
+                EmptyView()
+            }
         }
     }
 
@@ -101,10 +116,14 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityHidden(!viewModel.onHoldOverlayViewModel.isDisplayed)
                 })
-                .modifier(PopupModalView(isPresented: viewModel.uiTestSettingsViewOverlayViewModel.isDisplayed) {
-                    UITestSettingsView(viewModel: viewModel.uiTestSettingsViewOverlayViewModel)
+                .modifier(PopupModalView(isPresented: isUITestScreenDisplayed) {
+                    UITestSettingsView(viewModel: viewModel.uiTestSettingsViewOverlayViewModel,
+                                       displayed: $isUITestScreenDisplayed)
+                        .accessibilityElement(children: .contain)
+                        .accessibilityHidden(!isUITestScreenDisplayed)
                 })
             }
+            uitestButton
         }
     }
 

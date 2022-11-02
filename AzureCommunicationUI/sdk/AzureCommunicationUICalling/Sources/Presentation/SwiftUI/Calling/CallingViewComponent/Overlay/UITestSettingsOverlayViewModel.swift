@@ -17,4 +17,16 @@ class UITestSettingsOverlayViewModel: OverlayViewModelProtocol, ObservableObject
          action: @escaping (Action) -> Void) {
         self.action = action
     }
+
+    func toggleDisplayrIfNeeded() {
+        self.isDisplayed ? hide() : show()
+    }
+
+    private func hide() {
+        self.isDisplayed = false
+    }
+
+    private func show() {
+        self.isDisplayed = true
+    }
 }

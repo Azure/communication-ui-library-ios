@@ -9,34 +9,48 @@ import FluentUI
 
 struct UITestSettingsView: View {
     @ObservedObject var viewModel: UITestSettingsOverlayViewModel
+    @Binding var displayed: Bool
+
+    private enum Constants {
+        static let shapeCornerRadius: CGFloat = 5.0
+        static let verticalSpacingMedium: CGFloat = 8.0
+        static let verticalSpacingLarge: CGFloat = 10.0
+    }
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: Constants.verticalSpacingLarge) {
             Text("UITest - Settings")
                 .font(Fonts.button2Accessibility.font)
-            VStack(alignment: .leading, spacing: 8) {
-                Button("simulateCallOnHold") {
+            VStack(alignment: .leading, spacing: Constants.verticalSpacingMedium) {
+                Button("Simulate call on hold") {
                     viewModel.action(.callingAction(.holdRequested))
+                    displayed = false
                 }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateCallOnHold.rawValue)
-                Button("simulateCallResume") {
+                Button("Simulate call resume") {
                     viewModel.action(.callingAction(.resumeRequested))
+                    displayed = false
                 }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateCallOnResume.rawValue)
-                Button("simulateRecordingStart") {
+                Button("Simulate recording start") {
                     viewModel.action(.callingAction(
                         .recordingStateUpdated(isRecordingActive: true)))
+                    displayed = false
                 }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateRecordingStart.rawValue)
-                Button("simulateRecordingEnd") {
+                Button("Simulate recording end") {
                     viewModel.action(.callingAction(
                         .recordingStateUpdated(isRecordingActive: false)))
+                    displayed = false
                 }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateRecordingEnd.rawValue)
-                Button("simulateTranscriptionStart") {
+                Button("Simulate transcription start") {
                     viewModel.action(.callingAction(
                         .transcriptionStateUpdated(isTranscriptionActive: true)))
+                    displayed = false
                 }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateTranscriptionStart.rawValue)
-                Button("simulateTranscriptionEnd") {
+                Button("Simulate transcription end") {
                     viewModel.action(.callingAction(
                         .transcriptionStateUpdated(isTranscriptionActive: false)))
+                    displayed = false
                 }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateTranscriptionEnd.rawValue)
-                Button("simulateNewParticipantJoin") {
+                Button("Simulate new participant join") {
                     let infoModel = ParticipantInfoModel(displayName: "New User 1",
                                                          isSpeaking: false,
                                                          isMuted: true,
@@ -66,11 +80,13 @@ struct UITestSettingsView: View {
                                                          cameraVideoStreamModel: nil)
                     viewModel.action(.callingAction(.participantListUpdated(participants:
                                                                                 [infoModel, infoModel2, infoModel3])))
+                    displayed = false
                 }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateNewParticipantJoin.rawValue)
             }
         }
         .padding(.all)
         .background(Color(StyleProvider.color.backgroundColor))
         .opacity(0.7)
+        .clipShape(RoundedRectangle(cornerRadius: Constants.shapeCornerRadius))
     }
 }
