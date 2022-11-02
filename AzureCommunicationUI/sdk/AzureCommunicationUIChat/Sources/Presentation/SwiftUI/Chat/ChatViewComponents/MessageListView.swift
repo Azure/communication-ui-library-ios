@@ -27,12 +27,7 @@ struct MessageListView: View {
     var messageList: some View {
         ScrollViewReader { scrollProxy in
             ObservableScrollView(
-                offsetChanged: {
-                    scrollOffset = $0
-                    print("Scroll Offset: \(scrollOffset)")
-                    print("Scroll Size: \(scrollSize)")
-                    print("Is at Bottom: \(isAtBottom())")
-                },
+                offsetChanged: { scrollOffset = $0 },
                 heightChanged: { scrollSize = $0 },
                 content: {
                 LazyVStack(spacing: 0) {
@@ -55,36 +50,15 @@ struct MessageListView: View {
                 if isAtBottom() || viewModel.isLocalUser(message: viewModel.messages.last) {
                     scrollToBottom(proxy: scrollProxy)
                 } else {
-                    // New messages
-                    // Calculate number of messages
-                    // Show button
+                    // Check latest message timestamp, compare to latest read message
+                    // Subtract indicies to get number of new messages
+                    // Show jump to bottom button with number of messages
 
-                    // Paged messages
-                    // Ignore
+                    // Paged messages will be ignored as they won't change the latest message timestamp
                 }
             }
         }
     }
-
-    var jumpToBottomButton: some View {
-        Button(action: onJumpToBottom)
-    }
-
-    func onJumpToButton() {
-        print("Jump to bottom")
-    }
-
-    // 1. Scroll to bottom when you send message (Done)
-    // 2. Scroll to bottom when receiving a new message and already at bottom
-    // 3. Scroll unchanged when receiving a new message and not at bottom (Done)
-    // 4. Scroll unchanged when paging in new messages
-    // 5. Add button to scroll to new messages
-    // 6. When resuming, do not scroll (Done)
-
-    // If scroll is near the bottom then we want to scroll to bottom with new messages coming in
-    // If not don't scroll, this handles case where we page near top
-
-    // Must find full height of scroll view
 
     private func isAtBottom() -> Bool {
         let scrollTolerance: CGFloat = 50
@@ -93,7 +67,6 @@ struct MessageListView: View {
 
     private func scrollToBottom(proxy: ScrollViewProxy) {
         let scrollIndex = viewModel.messages.count - 1
-        print("SCROLL TO: \(scrollIndex)") // Testing
         proxy.scrollTo(scrollIndex)
     }
 
@@ -105,64 +78,5 @@ struct MessageListView: View {
             leading: Constants.horizontalPadding,
             bottom: Constants.bottomPadding,
             trailing: Constants.horizontalPadding)
-    }
-}
-
-struct ScrollOffsetPreferenceKey: PreferenceKey {
-    static var defaultValue: CGFloat = .zero
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {}
-}
-
-struct ScrollHeightPreferenceKey: PreferenceKey {
-    typealias Value = CGFloat
-    static var defaultValue: CGFloat {0}
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value += nextValue()
-    }
-}
-
-struct ObservableScrollView<Content: View>: View {
-    let axes: Axis.Set
-    let showsIndicators: Bool
-    let offsetChanged: (CGFloat) -> Void
-    let heightChanged: (CGFloat) -> Void
-    let content: Content
-
-    init(
-        axes: Axis.Set = .vertical,
-        showsIndicators: Bool = true,
-        offsetChanged: @escaping (CGFloat) -> Void = { _ in },
-        heightChanged: @escaping (CGFloat) -> Void = { _ in },
-        @ViewBuilder content: () -> Content
-    ) {
-        self.axes = axes
-        self.showsIndicators = showsIndicators
-        self.offsetChanged = offsetChanged
-        self.heightChanged = heightChanged
-        self.content = content()
-    }
-
-    var body: some View {
-        SwiftUI.ScrollView(axes, showsIndicators: showsIndicators) {
-            GeometryReader { geometry in
-                Color.clear.preference(
-                    key: ScrollOffsetPreferenceKey.self,
-                    value: -geometry.frame(in: .named("scrollView")).origin.y
-                )
-            }
-            content
-            .background(
-                GeometryReader { geometry in
-                    Color.clear.preference(key: ScrollHeightPreferenceKey.self, value: geometry.size.height)
-                }
-            )
-        }
-        .background(
-            GeometryReader { geometry in
-                Color.clear.preference(key: ScrollHeightPreferenceKey.self, value: -geometry.size.height)
-            })
-        .coordinateSpace(name: "scrollView")
-        .onPreferenceChange(ScrollOffsetPreferenceKey.self, perform: offsetChanged)
-        .onPreferenceChange(ScrollHeightPreferenceKey.self, perform: heightChanged)
     }
 }
