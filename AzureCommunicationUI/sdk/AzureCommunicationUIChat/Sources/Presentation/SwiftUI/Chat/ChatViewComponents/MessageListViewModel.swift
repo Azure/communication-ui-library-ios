@@ -80,6 +80,17 @@ class MessageListViewModel: ObservableObject {
     }
 
     func updateLastReadMessageIndex(index: Int) {
+        guard index >= 0, index < messages.count else {
+            return
+        }
+        let message = messages[index]
+        /* There will be messages that do not have senderId, such as system messages
+         For those messages, we still want to send read receipt
+         That's why we default senderId to empty string, which will pass the guard statement senderId != localUserId */
+        let senderId = message.senderId ?? ""
+        guard let localUserId = localUserId, senderId != localUserId else {
+            return
+        }
         guard let lastReadMessageIndex = self.lastReadMessageIndex else {
             self.lastReadMessageIndex = index
             return
