@@ -14,6 +14,7 @@ class MessageListViewModel: ObservableObject {
     private var localUserId: String? // Remove optional?
 
     @Published var messages: [ChatMessageInfoModel]
+    @Published var haveInitialMessagesLoaded: Bool = false
 
     init(messageRepositoryManager: MessageRepositoryManagerProtocol,
          logger: Logger,
@@ -36,6 +37,7 @@ class MessageListViewModel: ObservableObject {
         if self.repositoryUpdatedTimestamp < repositoryState.lastUpdatedTimestamp {
             self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
             messages = messageRepositoryManager.messages
+            haveInitialMessagesLoaded = true
             // Debug for testing
 //            print("*Messages count: \(messageRepositoryManager.messages.count)")
 //            for message in messageRepositoryManager.messages {
