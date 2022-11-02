@@ -41,14 +41,14 @@ struct MessageListView: View {
                 },
                 heightChanged: { scrollSize = $0 },
                 content: {
-                LazyVStack(spacing: 0) {
-                    ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, _ in
-                        let messageViewModel = viewModel.createViewModel(index: index)
-                        MessageView(viewModel: messageViewModel)
-                        .id(index)
-                        .padding(getEdgeInsets(message: messageViewModel))
+                    LazyVStack(spacing: 0) {
+                        ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, _ in
+                            let messageViewModel = viewModel.createViewModel(index: index)
+                            MessageView(viewModel: messageViewModel)
+                            .id(index)
+                            .padding(getEdgeInsets(message: messageViewModel))
+                        }
                     }
-                }
                 })
             .listStyle(.plain)
             .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
