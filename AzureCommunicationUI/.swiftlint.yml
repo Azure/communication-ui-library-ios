@@ -173,6 +173,7 @@ explicit_type_interface: # requires type annotation on everything but local vari
   excluded:
     - local
   allow_redundancy: true # Ignores rule if it would result in redundancy
+file_length: 600
 file_header:
   required_pattern: |
                     \/\/

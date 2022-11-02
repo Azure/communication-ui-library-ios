@@ -27,6 +27,10 @@ protocol CallingServiceProtocol {
 
     func holdCall() async throws
     func resumeCall() async throws
+
+    func registerForPushNotifications(token: Data) async throws
+    func unregisterForPushNotifications() async throws
+    func handleCallSetupPush(payload: [AnyHashable: Any]) async throws
 }
 
 class CallingService: NSObject, CallingServiceProtocol {
@@ -50,6 +54,8 @@ class CallingService: NSObject, CallingServiceProtocol {
         isLocalUserMutedSubject = callingSDKWrapper.callingEventsHandler.isLocalUserMutedSubject
         participantsInfoListSubject = callingSDKWrapper.callingEventsHandler.participantsInfoListSubject
         callInfoSubject = callingSDKWrapper.callingEventsHandler.callInfoSubject
+
+        super.init()
     }
 
     func setupCall() async throws {
@@ -97,5 +103,17 @@ class CallingService: NSObject, CallingServiceProtocol {
 
     func resumeCall() async throws {
         try await callingSDKWrapper.resumeCall()
+    }
+
+    func registerForPushNotifications(token: Data) async throws {
+        try await callingSDKWrapper.registerForPushNotifications(token: token)
+    }
+
+    func unregisterForPushNotifications() async throws {
+        try await callingSDKWrapper.unregisterForPushNotifications()
+    }
+
+    func handleCallSetupPush(payload: [AnyHashable: Any]) async throws {
+        try await callingSDKWrapper.handleCallSetupPush(payload: payload)
     }
 }

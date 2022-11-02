@@ -3,8 +3,10 @@
 //  Licensed under the MIT License.
 //
 
+import CallKit
 import Combine
 import Foundation
+import PushKit
 
 protocol CallingMiddlewareHandling {
     @discardableResult
@@ -39,17 +41,33 @@ protocol CallingMiddlewareHandling {
     func requestMicrophoneUnmute(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func onCameraPermissionIsSet(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+
+    @discardableResult
+    func registerForPushNotifications() -> Task<Void, Never>
 }
 
-class CallingMiddlewareHandler: CallingMiddlewareHandling {
+class CallingMiddlewareHandler: NSObject, CallingMiddlewareHandling {
     private let callingService: CallingServiceProtocol
     private let logger: Logger
     private let cancelBag = CancelBag()
     private let subscription = CancelBag()
 
+    private let voipRegistry = PKPushRegistry(queue: .main)
+    private let callKitProvider: CXProvider
+    private let callController = CXCallController()
+    private var cxTransaction: CXTransaction?
+
     init(callingService: CallingServiceProtocol, logger: Logger) {
         self.callingService = callingService
         self.logger = logger
+        let cxConfiguration = CXProviderConfiguration()
+        cxConfiguration.supportsVideo = true
+        cxConfiguration.supportedHandleTypes = [.generic]
+
+        self.callKitProvider = CXProvider(
+            configuration: cxConfiguration
+        )
+        super.init()
     }
 
     func setupCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
@@ -61,6 +79,18 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                    state.errorState.internalError == nil {
                     dispatch(.localUserAction(.cameraPreviewOnTriggered))
                 }
+                // Setup call kit for call
+                let handle = CXHandle(
+                    type: .generic,
+                    value: state.localUserState.displayName ?? "Unnamed User"
+                )
+                let transaction = CXTransaction(
+                    action: CXStartCallAction(
+                        call: UUID(),
+                        handle: handle)
+                )
+                try await callController.request(transaction)
+                cxTransaction = transaction
             } catch {
                 handle(error: error, errorType: .callJoinFailed, dispatch: dispatch)
             }
@@ -75,6 +105,10 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                     isAudioPreferred: state.localUserState.audioState.operation == .on
                 )
                 subscription(dispatch: dispatch)
+
+                let startCallAction = CXStartCallAction(
+                    call: UUID(),
+                    handle: CXHandle(type: .generic, value: ))
             } catch {
                 handle(error: error, errorType: .callJoinFailed, dispatch: dispatch)
             }
@@ -264,6 +298,18 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             dispatch(.callingAction(.holdRequested))
         }
     }
+
+    func registerForPushNotifications() -> Task<Void, Never> {
+        return Task {
+            guard voipRegistry.delegate == nil else {
+                return
+            }
+
+            voipRegistry.delegate = self
+            // Set the push type to VoIP, which starts the registration
+            voipRegistry.desiredPushTypes = [.voIP]
+        }
+    }
 }
 
 extension CallingMiddlewareHandler {
@@ -319,5 +365,84 @@ extension CallingMiddlewareHandler {
             .sink { isLocalUserMuted in
                 dispatch(.localUserAction(.microphoneMuteStateUpdated(isMuted: isLocalUserMuted)))
             }.store(in: subscription)
+    }
+}
+
+extension CallingMiddlewareHandler: CXProviderDelegate {
+
+    /// For outgoing calls
+    func provider(_ provider: CXProvider, perform action: CXStartCallAction) {
+
+    }
+
+    /// For incoming calls
+    func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
+
+        // Implement all the logic to getting to the call screen here, and connect the call
+
+        // Answer the call, when we have setup
+        action.fulfill()
+    }
+
+    func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
+        // handle the ending of the call
+        // hang up, clean up and report we're done
+    }
+
+    func provider(_ provider: CXProvider, perform action: CXSetHeldCallAction) {
+        // handle putting the call on hold / resume
+    }
+
+    func provider(_ provider: CXProvider, perform action: CXSetMutedCallAction) {
+        // handle muting / unmuting the call
+    }
+
+    func providerDidReset(_ provider: CXProvider) {
+        // handle the reset
+        // Stop any calls in progress, clean up.
+    }
+}
+
+extension CallingMiddlewareHandler: PKPushRegistryDelegate {
+
+    func pushRegistry(_ registry: PKPushRegistry,
+                      didUpdate pushCredentials: PKPushCredentials,
+                      for type: PKPushType) {
+        let token = pushCredentials.token
+
+        // Make this a redux action dispatch?
+        Task {
+            try await callingService.registerForPushNotifications(token: token)
+        }
+    }
+
+    func pushRegistry(_ registry: PKPushRegistry,
+                      didReceiveIncomingPushWith payload: PKPushPayload,
+                      for type: PKPushType,
+                      completion: @escaping () -> Void) {
+        // Process the push, start up the app straight to the call screen?
+        guard type == .voIP else {
+            return
+        }
+
+        // Extract the call information from the push notification payload
+        if let handle = payload.dictionaryPayload["handle"] as? String,
+           let uuidString = payload.dictionaryPayload["callUUID"] as? String,
+           let callUUID = UUID(uuidString: uuidString) {
+
+            // Configure the call information data structures.
+            let callUpdate = CXCallUpdate()
+            callUpdate.remoteHandle = CXHandle(type: .generic, value: handle)
+
+            // Report the call to CallKit, and let it display the call UI.
+            callKitProvider.reportNewIncomingCall(
+                with: callUUID,
+                update: callUpdate
+            ) { error in
+                if let err = error {
+                    print(err)
+                }
+            }
+        }
     }
 }
