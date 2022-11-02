@@ -21,6 +21,7 @@ class InfoHeaderViewModel: ObservableObject {
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
+
     var isPad: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,

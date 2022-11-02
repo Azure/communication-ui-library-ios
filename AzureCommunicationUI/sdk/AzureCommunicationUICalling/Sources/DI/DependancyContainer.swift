@@ -50,11 +50,13 @@ final class DependencyContainer {
         register(AvatarViewManager(store: resolve(),
                                    localParticipantViewData: localOptions?.participantViewData) as
                  AvatarViewManagerProtocol)
+        register(DiagnosticsManager(store: resolve()) as DiagnosticsManagerProtocol)
         register(CompositeViewModelFactory(logger: resolve(),
                                            store: resolve(),
                                            networkManager: resolve(),
                                            localizationProvider: resolve(),
                                            accessibilityProvider: resolve(),
+                                           diagnosticsManager: resolve(),
                                            localOptions: localOptions) as CompositeViewModelFactoryProtocol)
         register(CompositeViewFactory(logger: resolve(),
                                       avatarManager: resolve(),
@@ -71,7 +73,6 @@ final class DependencyContainer {
                                            callCompositeEventsHandler: callCompositeEventsHandler,
                                            callingSDKWrapper: resolve(),
                                            avatarViewManager: resolve()) as RemoteParticipantsManagerProtocol)
-        register(DiagnosticsManager(store: resolve()) as DiagnosticsManagerProtocol)
     }
 
     private func makeStore(displayName: String?) -> Store<AppState> {

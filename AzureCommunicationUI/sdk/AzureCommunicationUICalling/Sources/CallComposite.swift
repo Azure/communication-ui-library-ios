@@ -64,7 +64,7 @@ public class CallComposite {
         present(toolkitHostingController)
     }
 
-    /// Start call composite experience with joining a Teams meeting.
+    /// Start Call Composite experience with joining a Teams meeting.
     /// - Parameter remoteOptions: RemoteOptions used to send to ACS to locate the call.
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This is data is not sent up to ACS.
@@ -95,15 +95,14 @@ public class CallComposite {
                           completionHandler: completionHandler)
     }
 
-    public func getDiagnosticInfo​() -> DiagnosticsInfo {
+    /// Get Call Composite diagnostics information.
+    /// - Returns: The DiagnosticsInfo object with Call Composite diagnostics information.
+    public func getDiagnosticsInfo() -> DiagnosticsInfo {
         guard let diagnosticsManager = diagnosticsManager else {
             return DiagnosticsInfo()
         }
 
-        let callId = diagnosticsManager.callId
-        let diagnosticsInfo = DiagnosticsInfo(lastKnownCallId: callId)
-
-        return diagnosticsInfo
+        return diagnosticsManager.getDiagnosticsInfo()
     }
 
     private func setupManagers(with dependencyContainer: DependencyContainer) {

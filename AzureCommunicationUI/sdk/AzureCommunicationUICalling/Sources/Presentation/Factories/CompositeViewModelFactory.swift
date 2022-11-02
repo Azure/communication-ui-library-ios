@@ -51,6 +51,12 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
+    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+    func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
+                                              title: String,
+                                              accessibilityIdentifier: String,
+                                              action: @escaping (() -> Void)) -> MoreCallOptionsListCellViewModel
+    func makeDiagnosticsSharingActivityViewModel() -> DiagnosticsSharingActivityViewModel
 
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
@@ -65,6 +71,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let networkManager: NetworkManager
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
+    private let diagnosticsManager: DiagnosticsManagerProtocol
     private let localOptions: LocalOptions?
 
     private weak var setupViewModel: SetupViewModel?
@@ -75,12 +82,14 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          networkManager: NetworkManager,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
+         diagnosticsManager: DiagnosticsManagerProtocol,
          localOptions: LocalOptions? = nil) {
         self.logger = logger
         self.store = store
         self.networkManager = networkManager
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
+        self.diagnosticsManager = diagnosticsManager
         self.localOptions = localOptions
     }
 
@@ -243,6 +252,27 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     -> ParticipantsListCellViewModel {
         ParticipantsListCellViewModel(participantInfoModel: participantInfoModel,
                                       localizationProvider: localizationProvider)
+    }
+
+    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
+        MoreCallOptionsListViewModel(compositeViewModelFactory: self,
+                                     localizationProvider: localizationProvider,
+                                     showSharingViewAction: showSharingViewAction)
+    }
+
+    func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
+                                              title: String,
+                                              accessibilityIdentifier: String,
+                                              action: @escaping (() -> Void)) -> MoreCallOptionsListCellViewModel {
+        MoreCallOptionsListCellViewModel(icon: icon,
+                                         title: title,
+                                         accessibilityIdentifier: accessibilityIdentifier,
+                                         action: action)
+    }
+
+    func makeDiagnosticsSharingActivityViewModel() -> DiagnosticsSharingActivityViewModel {
+        DiagnosticsSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
+                                            diagnosticsManager: diagnosticsManager)
     }
 
     // MARK: SetupViewModels

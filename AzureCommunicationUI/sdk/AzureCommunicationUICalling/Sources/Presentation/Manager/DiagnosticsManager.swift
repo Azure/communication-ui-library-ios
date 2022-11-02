@@ -7,13 +7,13 @@ import Combine
 import Foundation
 
 protocol DiagnosticsManagerProtocol {
-    var callId: String? { get }
+    func getDiagnosticsInfo() -> DiagnosticsInfo
 }
 
 class DiagnosticsManager: DiagnosticsManagerProtocol {
     private let store: Store<AppState>
     private var cancellables = Set<AnyCancellable>()
-    private(set) var callId: String?
+    private var callId: String?
 
     init(store: Store<AppState>) {
         self.store = store
@@ -25,6 +25,16 @@ class DiagnosticsManager: DiagnosticsManagerProtocol {
     }
 
     private func receive(_ state: AppState) {
+        // call id should be persisted after a call is finished
+        guard let updatedCallId = state.callingState.callId,
+              !updatedCallId.isEmpty else {
+            return
+        }
+
         callId = state.callingState.callId
+    }
+
+    func getDiagnosticsInfo() -> DiagnosticsInfo {
+        return DiagnosticsInfo(lastKnownCallId: callId)
     }
 }
