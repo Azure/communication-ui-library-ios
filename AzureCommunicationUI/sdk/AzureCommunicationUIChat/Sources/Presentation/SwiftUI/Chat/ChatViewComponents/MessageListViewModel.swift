@@ -12,9 +12,11 @@ class MessageListViewModel: ObservableObject {
 
     private var repositoryUpdatedTimestamp: Date = .distantPast
     private var localUserId: String? // Remove optional?
+    private var lastReadMessageIndex: Int?
 
     @Published var messages: [ChatMessageInfoModel]
     @Published var haveInitialMessagesLoaded: Bool = false
+    @Published var showJumpToNewMessages: Bool = false
 
     init(messageRepositoryManager: MessageRepositoryManagerProtocol,
          logger: Logger,
@@ -28,6 +30,10 @@ class MessageListViewModel: ObservableObject {
         self.messages = messageRepositoryManager.messages
     }
 
+    var numberOfNewMessages: Int {
+        (messages.count - 1) - (lastReadMessageIndex ?? 0)
+    }
+
     func fetchMessages() {
         print("SCROLL: Fetch Messages") // Testing
         dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
@@ -37,7 +43,14 @@ class MessageListViewModel: ObservableObject {
         if self.repositoryUpdatedTimestamp < repositoryState.lastUpdatedTimestamp {
             self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
             messages = messageRepositoryManager.messages
-            haveInitialMessagesLoaded = true
+
+            if !haveInitialMessagesLoaded {
+                haveInitialMessagesLoaded = true
+            }
+
+            if numberOfNewMessages > 0 {
+                showJumpToNewMessages = true
+            }
             // Debug for testing
 //            print("*Messages count: \(messageRepositoryManager.messages.count)")
 //            for message in messageRepositoryManager.messages {

@@ -24,7 +24,10 @@ struct MessageListView: View {
     @StateObject var viewModel: MessageListViewModel
 
     var body: some View {
-        messageList
+        ZStack {
+            messageList
+            jumpToNewMessagesButton
+        }
     }
 
     var messageList: some View {
@@ -51,21 +54,34 @@ struct MessageListView: View {
             .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
             .onChange(of: viewModel.haveInitialMessagesLoaded) { _ in
                 if viewModel.haveInitialMessagesLoaded {
+                    // Hide messages and show activity indicator?
                     scrollToBottom(proxy: scrollProxy)
                 }
             }
             .onChange(of: viewModel.messages.count) { _ in
                 if isAtBottom() || viewModel.isLocalUser(message: viewModel.messages.last) {
                     scrollToBottom(proxy: scrollProxy)
-                } else {
-                    // Check latest message timestamp, compare to latest read message
-                    // Subtract indicies to get number of new messages
-                    // Show jump to bottom button with number of messages
-
-                    // Paged messages will be ignored as they won't change the latest message timestamp
                 }
             }
         }
+    }
+
+    var jumpToNewMessagesButton: some View {
+        Group {
+            if viewModel.showJumpToNewMessages {
+                VStack {
+                    Spacer()
+                    Button(action: onJumpToNewMessages) {
+                        Text("Jump to \(viewModel.numberOfNewMessages)") // Localization
+                    }
+                    .padding(50)
+                }
+            }
+        }
+    }
+
+    func onJumpToNewMessages() {
+        print("Jump to new messages")
     }
 
     private func isAtBottom() -> Bool {
