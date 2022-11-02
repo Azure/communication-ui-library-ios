@@ -56,9 +56,8 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
             try createChatThreadClient()
 
             // Make request to ChatSDK to verfy token
-            // Sideeffect: topic send through Subject to middleware
+            // Side-effect: topic send through Subject to middleware
             let topic = try await retrieveThreadTopic()
-            print("topic: \(topic)")
 
             try registerRealTimeNotifications()
         } catch {
@@ -166,20 +165,24 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
 
     private func createChatClient() throws {
         do {
-            print("Creating Chat Client...")
+            logger.info("Creating Chat Client...")
+            let appId = self.chatConfiguration.diagnosticConfig.tags
+                .joined(separator: "/")
+            let telemetryOptions = TelemetryOptions(applicationId: appId)
+            let clientOptions = AzureCommunicationChatClientOptions(telemetryOptions: telemetryOptions)
             self.chatClient = try ChatClient(
                 endpoint: self.chatConfiguration.endpoint,
                 credential: self.chatConfiguration.credential,
-                withOptions: AzureCommunicationChatClientOptions())
+                withOptions: clientOptions)
         } catch {
-            logger.error( "Create Chat Client failed: \(error)")
+            logger.error("Create Chat Client failed: \(error)")
             throw error
         }
     }
 
     private func createChatThreadClient() throws {
         do {
-            print("Creating Chat Thread Client...")
+            logger.info("Creating Chat Thread Client...")
             self.chatThreadClient = try chatClient?.createClient(
                 forThread: self.chatConfiguration.chatThreadId)
         } catch {
@@ -195,6 +198,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                 chatThreadClient?.getProperties { result, _ in
                     switch result {
                     case .success(let threadProperties):
+                        logger.info("Retrieved topic: \(threadProperties.topic)")
                         continuation.resume(returning: threadProperties.topic)
                     case .failure(let error):
                         self.logger.error("Retrieve Thread Topic failed: \(error.errorDescription)")
@@ -209,14 +213,14 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
     }
 
     private func registerRealTimeNotifications() throws {
-        print("Register real time notification not implemented")
+        logger.info("Register real time notification not implemented")
         self.chatClient?.startRealTimeNotifications { [self] result in
             switch result {
             case .success:
-                print("Real-time notifications started.")
+                logger.info("Real-time notifications started.")
                 self.registerEvents()
             case .failure(let error):
-                print("Failed to start real-time notifications. \(error)")
+                logger.error("Failed to start real-time notifications. \(error)")
             }
         }
     }
