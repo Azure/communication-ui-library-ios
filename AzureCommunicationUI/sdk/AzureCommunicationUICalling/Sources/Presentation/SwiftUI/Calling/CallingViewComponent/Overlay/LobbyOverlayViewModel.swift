@@ -25,8 +25,9 @@ class LobbyOverlayViewModel: OverlayViewModelProtocol {
 
     @Published var isDisplayed: Bool = false
 
-    func update(callingStatus: CallingStatus) {
-        let shouldDisplay = callingStatus == .inLobby
+    func update(callingState: CallingState) {
+        let shouldDisplay = callingState.status == .inLobby ||
+        callingState.operationStatus == .bypassSetupRequested
         if shouldDisplay != isDisplayed {
             isDisplayed = shouldDisplay
             accessibilityProvider.moveFocusToFirstElement()

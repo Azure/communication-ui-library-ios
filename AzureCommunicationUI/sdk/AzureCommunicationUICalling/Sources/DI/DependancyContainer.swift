@@ -42,7 +42,8 @@ final class DependencyContainer {
         register(CallingService(logger: resolve(),
                                 callingSDKWrapper: resolve()) as CallingServiceProtocol)
         let displayName = localOptions?.participantViewData?.displayName ?? callConfiguration.displayName
-        register(makeStore(displayName: displayName) as Store<AppState>)
+        register(makeStore(displayName: displayName,
+                           config: callConfiguration) as Store<AppState>)
         register(NavigationRouter(store: resolve(),
                                   logger: resolve()) as NavigationRouter)
         register(AccessibilityProvider() as AccessibilityProviderProtocol)
@@ -73,15 +74,20 @@ final class DependencyContainer {
                                            avatarViewManager: resolve()) as RemoteParticipantsManagerProtocol)
     }
 
-    private func makeStore(displayName: String?) -> Store<AppState> {
+    private func makeStore(displayName: String?, config: CallConfiguration) -> Store<AppState> {
         let middlewaresHandler = CallingMiddlewareHandler(callingService: resolve(), logger: resolve())
         let middlewares: [Middleware] = [
             Middleware<AppState>.liveCallingMiddleware(callingMiddlewareHandler: middlewaresHandler)
         ]
 
         let localUserState = LocalUserState(displayName: displayName)
+        let navigationStatus: NavigationStatus = config.bypass ? .inCall : .setup
+        let navigationState = NavigationState(status: navigationStatus)
+        let callingState = config.bypass ? CallingState(operationStatus: .bypassSetupRequested) : CallingState()
         return Store<AppState>(reducer: Reducer<AppState, Action>.appStateReducer(),
                                middlewares: middlewares,
-                               state: AppState(localUserState: localUserState))
+                               state: AppState(callingState: callingState,
+                                               localUserState: localUserState,
+                                               navigationState: navigationState))
     }
 }

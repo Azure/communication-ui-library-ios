@@ -13,6 +13,7 @@ struct CallConfiguration {
     let credential: CommunicationTokenCredential
     let displayName: String?
     let diagnosticConfig: DiagnosticConfig
+    let bypass: Bool
 
     init(locator: JoinLocator,
          credential: CommunicationTokenCredential,
@@ -30,6 +31,7 @@ struct CallConfiguration {
         self.credential = credential
         self.displayName = displayName
         self.diagnosticConfig = DiagnosticConfig()
+        self.bypass = true
     }
 }
 

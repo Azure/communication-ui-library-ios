@@ -20,6 +20,7 @@ class CallingViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected: Bool = false
+    private var callClientRequested: Bool = false
 
     let localVideoViewModel: LocalVideoViewModel
     let participantGridsViewModel: ParticipantGridViewModel
@@ -95,9 +96,19 @@ class CallingViewModel: ObservableObject {
         store.dispatch(action: .callingAction(.resumeRequested))
     }
 
+    func requestCallClient() {
+        store.dispatch(action: .callingAction(.setupCall))
+        callClientRequested = true
+    }
+
     func receive(_ state: AppState) {
         if appState != state.lifeCycleState.currentStatus {
             appState = state.lifeCycleState.currentStatus
+        }
+
+        if state.callingState.operationStatus == .bypassSetupRequested
+            && callClientRequested == false {
+            requestCallClient()
         }
 
         guard state.lifeCycleState.currentStatus == .foreground else {
@@ -114,7 +125,7 @@ class CallingViewModel: ObservableObject {
         participantGridsViewModel.update(callingState: state.callingState,
                                          remoteParticipantsState: state.remoteParticipantsState)
         bannerViewModel.update(callingState: state.callingState)
-        lobbyOverlayViewModel.update(callingStatus: state.callingState.status)
+        lobbyOverlayViewModel.update(callingState: state.callingState)
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
                                       audioSessionStatus: state.audioSessionState.status)
 

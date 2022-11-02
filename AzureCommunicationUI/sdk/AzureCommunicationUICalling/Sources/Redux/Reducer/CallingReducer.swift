@@ -32,9 +32,10 @@ extension Reducer where State == CallingState,
             operationStatus = .none
             isRecordingActive = false
             isTranscriptionActive = false
+        case .callingAction(.callStartRequested):
+            operationStatus = .none
         // Exhaustive un-implemented actions
         case .audioSessionAction,
-                .callingAction(.callStartRequested),
                 .callingAction(.setupCall),
                 .callingAction(.dismissSetup),
                 .callingAction(.resumeRequested),
