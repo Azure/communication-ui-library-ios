@@ -55,7 +55,6 @@ struct MessageListView: View {
                 .listStyle(.plain)
                 .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
                 .onAppear {
-                    viewModel.setSendReadReceiptTimer()
                     scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
                 }
                 .onChange(of: viewModel.messages.count) { _ in
