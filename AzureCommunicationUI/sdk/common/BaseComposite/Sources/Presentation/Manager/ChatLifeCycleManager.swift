@@ -45,6 +45,6 @@ class ChatLifeCycleManager: LifeCycleManagerProtocol {
 
     func enterForeground() {
         logger.debug("Composite enters foreground mode")
-        let _ = viewModelFactory.getChatViewModel()
+        viewModelFactory.getChatViewModel()
     }
 }
