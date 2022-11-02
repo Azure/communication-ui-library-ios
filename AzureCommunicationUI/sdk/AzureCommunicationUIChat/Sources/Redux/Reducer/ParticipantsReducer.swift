@@ -38,7 +38,7 @@ extension Reducer where State == ParticipantsState,
         case .participantsAction(.typingIndicatorReceived(let participant)):
             typingParticipants = typingParticipants.filter { $0.id != participant.id }
             typingParticipants.append(participant)
-        case .participantsAction(.typingIndicatorExpired):
+        case .participantsAction(.clearIdletypingParticipants):
             typingParticipants = typingParticipants.filter(\.isTyping)
         case .repositoryAction(.chatMessageReceived(let message)):
             guard let participantId = message.senderId else {

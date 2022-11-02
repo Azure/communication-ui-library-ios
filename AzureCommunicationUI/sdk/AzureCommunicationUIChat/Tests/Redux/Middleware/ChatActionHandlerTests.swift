@@ -136,12 +136,12 @@ class ChatActionHandlerTests: XCTestCase {
         XCTAssertTrue(mockChatService.sendReadReceiptCalled)
     }
 
-    func test_chatActionHandler_recieveTypingIndicator_then_dispatchTypingIndicatorExpiredAction() async {
-        let expectation = XCTestExpectation(description: "Dispatch Typing Indicator Expired Success")
+    func test_chatActionHandler_recieveTypingIndicator_then_dispatchClearIdletypingParticipantsAction() async {
+        let expectation = XCTestExpectation(description: "Dispatch Clear Idle Typing Participants Success")
         let sut = makeSUT()
         func dispatch(action: Action) {
             switch action {
-            case .participantsAction(.typingIndicatorExpired):
+            case .participantsAction(.clearIdletypingParticipants):
                 expectation.fulfill()
             default:
                 XCTFail("Unknown Action Dispatched")

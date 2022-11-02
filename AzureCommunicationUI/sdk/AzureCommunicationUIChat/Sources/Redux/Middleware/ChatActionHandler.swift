@@ -206,7 +206,7 @@ extension ChatActionHandler {
     private func handleTimerInterval(_ timer: Timer,
                                      _ dispatch: @escaping ActionDispatch,
                                      _ getState: @escaping () -> AppState) {
-        dispatch(.participantsAction(.typingIndicatorExpired))
+        dispatch(.participantsAction(.clearIdletypingParticipants))
         // get next participant with expiring timestamp
         let expiringParticipant = getState().participantsState.typingParticipants
             .filter(\.isTyping)

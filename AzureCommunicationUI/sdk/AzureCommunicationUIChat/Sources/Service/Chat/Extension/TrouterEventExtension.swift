@@ -86,8 +86,9 @@ extension ParticipantsRemovedEvent {
 
 extension TypingIndicatorReceivedEvent {
     func toUserEventTimestampModel() -> UserEventTimestampModel? {
+        // device time is used to have consistent timer calculation
         return UserEventTimestampModel(
             userIdentifier: self.sender,
-            timestamp: self.receivedOn)
+            timestamp: Iso8601Date())
     }
 }
