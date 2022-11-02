@@ -9,6 +9,7 @@ import FluentUI
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
     func getChatViewModel() -> ChatViewModel
+    func destroyChatViewModel()
 
     // MARK: ComponentViewModels
     func makeIconButtonViewModel(iconName: CompositeIcon,
@@ -58,6 +59,10 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
             return viewModel
         }
         return viewModel
+    }
+
+    func destroyChatViewModel() {
+        self.chatViewModel = nil
     }
 
     // MARK: ComponentViewModels

@@ -40,12 +40,16 @@ class NavigationRouter: ObservableObject {
         case .inChat:
             viewToNavigateTo = .chatView
             isDismissed = false
+            // chat running with its UI shown
+            store.dispatch(action: .lifecycleAction(.foregroundEntered))
         case .headless:
             dismiss()
             guard let didNavigateBack = eventsHandler.onNavigateBack else {
                 return
             }
             didNavigateBack()
+            // chat running with its UI hidden
+            store.dispatch(action: .lifecycleAction(.backgroundEntered))
         case .exit:
             dismiss()
         }

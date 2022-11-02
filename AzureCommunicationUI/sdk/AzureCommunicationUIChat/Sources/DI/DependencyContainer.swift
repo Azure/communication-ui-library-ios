@@ -65,12 +65,11 @@ final class DependencyContainer {
                                       compositeViewModelFactory: resolve()) as CompositeViewFactoryProtocol)
         register(ErrorManager(store: resolve(),
                               chatCompositeEventsHandler: chatCompositeEventsHandler) as ErrorManagerProtocol)
-        register(UIKitAppLifeCycleManager(store: resolve(),
-                                          logger: resolve()) as LifeCycleManagerProtocol)
-
+        register(ChatLifeCycleManager(store: resolve(),
+                                      logger: resolve(),
+                                      viewModelFactory: resolve()) as LifeCycleManagerProtocol)
         register(CompositeManager(store: resolve(),
                                   logger: resolve()) as CompositeManagerProtocol)
-
     }
 
     private func makeStore(displayName: String?,
