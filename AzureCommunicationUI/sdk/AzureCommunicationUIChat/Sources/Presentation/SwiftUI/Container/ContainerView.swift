@@ -10,6 +10,7 @@ struct ContainerView: View {
     @ObservedObject var router: NavigationRouter
 
     let logger: Logger
+    let store: Store<AppState>
     let viewFactory: CompositeViewFactoryProtocol
     let isRightToLeft: Bool
 
@@ -21,6 +22,8 @@ struct ContainerView: View {
             }
         }
         .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
+        .onAppear { store.dispatch(action: .lifecycleAction(.foregroundEntered)) }
+        .onDisappear { store.dispatch(action: .lifecycleAction(.backgroundEntered)) }
     }
 
     var chatView: ChatView {

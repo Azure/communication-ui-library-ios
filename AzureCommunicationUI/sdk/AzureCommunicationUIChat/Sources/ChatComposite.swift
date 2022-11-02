@@ -83,13 +83,8 @@ public class ChatComposite {
             throw ChatCompositeError(code: ChatCompositeErrorCode.showComposite)
         }
 
-        let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
-
-        let containerUIHostingController = makeContainerUIHostingController(router: dependencyContainer.resolve(),
-                                                                    logger: dependencyContainer.resolve(),
-                                                                    viewFactory: dependencyContainer.resolve(),
-                                                                    isRightToLeft: localizationProvider.isRightToLeft,
-                                                                    canDismiss: true)
+        let containerUIHostingController = makeContainerUIHostingController(container: dependencyContainer,
+                                                                            canDismiss: true)
         try present(containerUIHostingController)
     }
 
@@ -153,21 +148,23 @@ public class ChatComposite {
         self.dependencyContainer = nil
     }
 
-    private func makeContainerUIHostingController(router: NavigationRouter,
-                                                  logger: Logger,
-                                                  viewFactory: CompositeViewFactoryProtocol,
-                                                  isRightToLeft: Bool,
+    private func makeContainerUIHostingController(container: DependencyContainer,
                                                   canDismiss: Bool) -> ContainerUIHostingController {
+        let localizationProvider = container.resolve() as LocalizationProviderProtocol
+        let router = container.resolve() as NavigationRouter
+
         let rootView = ContainerView(router: router,
-                                     logger: logger,
-                                     viewFactory: viewFactory,
-                                     isRightToLeft: isRightToLeft)
+                                     logger: container.resolve() as Logger,
+                                     store: container.resolve() as Store<AppState>,
+                                     viewFactory: container.resolve() as CompositeViewFactoryProtocol,
+                                     isRightToLeft: localizationProvider.isRightToLeft)
+
         let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
                                                                     chatComposite: self,
-                                                                    isRightToLeft: isRightToLeft)
+                                                                    isRightToLeft: localizationProvider.isRightToLeft)
         containerUIHostingController.modalPresentationStyle = .fullScreen
 
-        router.setDismissComposite { [weak containerUIHostingController, weak self] in
+        router.setDismissComposite { [weak containerUIHostingController] in
             if canDismiss {
                 containerUIHostingController?.dismissSelf()
             }

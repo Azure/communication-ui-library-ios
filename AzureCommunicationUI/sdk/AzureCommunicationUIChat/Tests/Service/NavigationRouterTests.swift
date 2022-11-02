@@ -31,31 +31,26 @@ class NavigationRouterTests: XCTestCase {
         swiftUIRouter = nil
     }
 
-    func test_router_navigate_whenNavigateToChat_shouldCallForegroundEntered() {
-        let expectation = expectation(description: "Foreground Entered")
+    func test_router_navigate_whenNavigateToChat_shouldNotDismiss() {
+        let expectation = expectation(description: "Switch to inChat")
         let state = AppState(navigationState: NavigationState(status: .inChat))
+        expectation.isInverted = true
+        func dismiss() {
+            XCTFail("should not be called")
+        }
+        swiftUIRouter.setDismissComposite(dismiss)
         swiftUIRouter.receive(state)
-        storeFactory.store.$state
-            .dropFirst(1)
-            .sink { [weak self] _ in
-                XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.first == .lifecycleAction(.foregroundEntered))
-                expectation.fulfill()
-            }.store(in: cancellable)
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_router_navigate_whenNavigateToHeadless_shouldCallBackgroundEntered() {
-        let expectation = expectation(description: "Background Entered")
+    func test_router_navigate_whenNavigateToHeadless_shouldDismiss() {
+        let expectation = expectation(description: "Switch to headless")
         let state = AppState(navigationState: NavigationState(status: .headless))
+        func dismiss() {
+            expectation.fulfill()
+        }
+        swiftUIRouter.setDismissComposite(dismiss)
         swiftUIRouter.receive(state)
-        storeFactory.store.$state
-            .dropFirst(1)
-            .sink { [weak self] _ in
-                XCTAssertEqual(self?.storeFactory.actions.count, 1)
-                XCTAssertTrue(self?.storeFactory.actions.first == .lifecycleAction(.backgroundEntered))
-                expectation.fulfill()
-            }.store(in: cancellable)
         wait(for: [expectation], timeout: 1)
     }
 }
