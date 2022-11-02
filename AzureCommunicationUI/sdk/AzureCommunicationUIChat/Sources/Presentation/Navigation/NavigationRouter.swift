@@ -44,12 +44,12 @@ class NavigationRouter: ObservableObject {
             store.dispatch(action: .lifecycleAction(.foregroundEntered))
         case .headless:
             dismiss()
+            // chat running with its UI hidden
+            store.dispatch(action: .lifecycleAction(.backgroundEntered))
             guard let didNavigateBack = eventsHandler.onNavigateBack else {
                 return
             }
             didNavigateBack()
-            // chat running with its UI hidden
-            store.dispatch(action: .lifecycleAction(.backgroundEntered))
         case .exit:
             dismiss()
         }
