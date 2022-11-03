@@ -127,9 +127,10 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
-    func onError(_ error: CallCompositeError) {
+    func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::UIKitDemoView::getEventsHandler::onError \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
+        print("::::SwiftUIDemoView diagnostics info \(callComposite.getDiagnosticsInfo())")
     }
 
     func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
@@ -168,15 +169,16 @@ class UIKitDemoViewController: UIViewController {
             self.onRemoteParticipantJoined(to: composite,
                                            identifiers: ids)
         }
-
-        callComposite.events.onError = { [weak self] error in
-            guard let errorHandler = self?.onError else {
+        let onErrorHandler = { [weak callComposite] error in
+            guard let composite = callComposite else {
                 return
             }
-            Task { @MainActor in errorHandler(error) }
+            self.onError(error,
+                         callComposite: composite)
         }
-
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
+        callComposite.events.onError = onErrorHandler
+
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
@@ -543,7 +545,7 @@ class UIKitDemoViewController: UIViewController {
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
                                            constant: LayoutConstants.stackViewSpacingPortrait).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
-                                            constant: LayoutConstants.stackViewSpacingPortrait).isActive = true
+                                            constant: -LayoutConstants.stackViewSpacingPortrait).isActive = true
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
 
         settingButtonHSpacer2.widthAnchor.constraint(equalTo: settingButtonHSpacer1.widthAnchor).isActive = true
