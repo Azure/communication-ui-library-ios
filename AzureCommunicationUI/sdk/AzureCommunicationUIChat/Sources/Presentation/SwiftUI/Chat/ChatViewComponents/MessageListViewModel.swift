@@ -13,6 +13,7 @@ class MessageListViewModel: ObservableObject {
     private var repositoryUpdatedTimestamp: Date = .distantPast
     private var localUserId: String? // Remove optional?
     private var lastReadMessageIndex: Int?
+    private var latestMessageId: String?
 
     var jumpToNewMessagesButtonViewModel: PrimaryButtonViewModel!
 
@@ -46,14 +47,21 @@ class MessageListViewModel: ObservableObject {
 //      .update(accessibilityLabel: self.localizationProvider.getLocalizedString(.jumpToNewMessages))
     }
 
-    var numberOfNewMessages: Int {
+    private var numberOfNewMessages: Int {
         (messages.count - 1) - (lastReadMessageIndex ?? 0)
     }
 
-    var jumpToNewMessagesLabel: String {
+    private var jumpToNewMessagesLabel: String {
         numberOfNewMessages < 100
         ? "\(numberOfNewMessages) new messages"
         : "99+ new messages"
+    }
+
+    private func isLocalUser(message: ChatMessageInfoModel?) -> Bool {
+        guard message != nil else {
+            return false
+        }
+        return message!.senderId == localUserId
     }
 
     func jumpToNewMessagesButtonTapped() {
@@ -69,6 +77,14 @@ class MessageListViewModel: ObservableObject {
             self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
             messages = messageRepositoryManager.messages
 
+            // Scroll to new message from local user
+            if messages.last?.id != latestMessageId {
+                latestMessageId = messages.last?.id
+                shouldScrollToBottom = isLocalUser(message: messages.last)
+            }
+
+            // Scroll for initial load of messages
+            // Hide messages and show activity indicator?
             if !haveInitialMessagesLoaded && messages.count > 1 {
                 shouldScrollToBottom = true
                 haveInitialMessagesLoaded = true
@@ -114,13 +130,5 @@ class MessageListViewModel: ObservableObject {
                                           showDateHeader: showDateHeader,
                                           isConsecutive: isConsecutive)
         }
-    }
-
-    // Move the message repo?
-    func isLocalUser(message: ChatMessageInfoModel?) -> Bool {
-        guard message != nil else {
-            return false
-        }
-        return message!.senderId == localUserId
     }
 }

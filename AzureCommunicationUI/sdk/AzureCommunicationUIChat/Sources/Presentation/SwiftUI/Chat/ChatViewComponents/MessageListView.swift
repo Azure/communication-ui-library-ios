@@ -55,7 +55,6 @@ struct MessageListView: View {
             .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
             .onChange(of: viewModel.shouldScrollToBottom) { _ in
                 if viewModel.shouldScrollToBottom {
-                    // Hide messages and show activity indicator?
                     scrollToBottom(proxy: scrollProxy)
                     viewModel.shouldScrollToBottom = false
                 }
@@ -65,7 +64,6 @@ struct MessageListView: View {
                     scrollToBottom(proxy: scrollProxy)
                 }
             }
-            // Did submit, scroll to bottom
         }
     }
 
@@ -80,10 +78,6 @@ struct MessageListView: View {
                 }
             }
         }
-    }
-
-    private func onJumpToNewMessages() {
-        print("Jump to new messages")
     }
 
     private func isAtBottom() -> Bool {
