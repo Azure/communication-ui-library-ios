@@ -22,10 +22,6 @@ extension Reducer where State == ErrorState,
             errorType = nil
             error = nil
             errorCategory = .none
-        case .participantsAction(.localParticipantRemoved):
-            errorType = .chatEvicted
-            error = nil
-            errorCategory = .fatal
             // Exhaustive unimplemented actions
         case .chatAction(_),
                 .participantsAction(_),
