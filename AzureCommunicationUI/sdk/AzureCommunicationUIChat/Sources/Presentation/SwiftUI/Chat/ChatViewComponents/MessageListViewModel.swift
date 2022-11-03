@@ -16,6 +16,8 @@ class MessageListViewModel: ObservableObject {
     private var lastReadMessageIndex: Int?
     private var latestMessageId: String?
 
+    let minFetchIndex: Int = 40
+
     var scrollOffset: CGFloat = .zero
     var scrollSize: CGFloat = .zero
     var jumpToNewMessagesButtonViewModel: PrimaryButtonViewModel!

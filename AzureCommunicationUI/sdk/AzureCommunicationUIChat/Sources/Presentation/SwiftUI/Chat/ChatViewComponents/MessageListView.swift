@@ -13,8 +13,6 @@ struct MessageListView: View {
         static let topConsecutivePadding: CGFloat = 4
         static let buttonBottomPadding: CGFloat = 35
         static let defaultMinListRowHeight: CGFloat = 10
-
-        static let minFetchIndex: Int = 40
     }
 
     @StateObject var viewModel: MessageListViewModel
@@ -39,7 +37,7 @@ struct MessageListView: View {
                             .id(index)
                             .padding(getEdgeInsets(message: messageViewModel))
                             .onAppear {
-                                if index == Constants.minFetchIndex {
+                                if index == viewModel.minFetchIndex {
                                     viewModel.fetchMessages()
                                 }
                             }
