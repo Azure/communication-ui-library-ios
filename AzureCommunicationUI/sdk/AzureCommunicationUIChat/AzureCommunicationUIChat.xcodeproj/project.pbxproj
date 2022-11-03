@@ -147,6 +147,8 @@
 		521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */; };
 		521A024528FE1E8D002CAD8E /* TypingParticipantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024328FE1E8D002CAD8E /* TypingParticipantsView.swift */; };
 		6956EB16291341B0003CCC7E /* ReadReceiptInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6956EB15291341B0003CCC7E /* ReadReceiptInfoModel.swift */; };
+		521A024729032755002CAD8E /* SystemMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024629032755002CAD8E /* SystemMessageViewModel.swift */; };
+		521A024929032762002CAD8E /* TextMessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024829032762002CAD8E /* TextMessageViewModel.swift */; };
 		69FEF0822909D68500F54FC4 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FEF0812909D68500F54FC4 /* StringExtension.swift */; };
 		85D6F5E7707CE2A8E51E5451 /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B9C157344D512A9F069F9CC /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework */; };
 		A88000ED29070F790076B0E2 /* HtmlMessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A88000EC29070F790076B0E2 /* HtmlMessageView.swift */; };
@@ -460,6 +462,7 @@
 				50CB826828C29E7400680566 /* DeviceExtension.swift */,
 				50CB826A28C29E7B00680566 /* StringConstants.swift */,
 				50CB826C28C29E8400680566 /* LocalizationKey.swift */,
+				69FEF0812909D68500F54FC4 /* StringExtension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1344,6 +1347,7 @@
 				50370CD128EE4AD900ACD234 /* ChatEventModel.swift in Sources */,
 				50CB824F28C29B2000680566 /* NavigationReducer.swift in Sources */,
 				50CB820528C2867700680566 /* ErrorManager.swift in Sources */,
+				69FEF0822909D68500F54FC4 /* StringExtension.swift in Sources */,
 				50CB823928C29AB900680566 /* ErrorAction.swift in Sources */,
 				50CB82C928C2AD2300680566 /* AccessibilityProviderNotificationsObserver.swift in Sources */,
 				50CB820B28C2869D00680566 /* RemoteParticipantsManager.swift in Sources */,
