@@ -77,7 +77,7 @@ private func handleParticipantsAction(_ action: ParticipantsAction,
                                       _ dispatch: @escaping ActionDispatch) {
     switch action {
     case .sendReadReceiptTriggered(let messageId):
-        actionHandler.sendReadReceipt(messageId: messageId, dispatch: dispatch)
+        actionHandler.sendReadReceipt(messageId: messageId, state: getState(), dispatch: dispatch)
     default:
         break
     }
@@ -91,6 +91,8 @@ private func handleRepositoryAction(_ action: RepositoryAction,
     case .fetchInitialMessagesTriggered:
         actionHandler.getInitialMessages(state: getState(),
                                          dispatch: dispatch)
+        actionHandler.getListOfParticipants(state: getState(),
+                                            dispatch: dispatch)
     case .fetchPreviousMessagesTriggered:
         actionHandler.getPreviousMessages(state: getState(),
                                           dispatch: dispatch)

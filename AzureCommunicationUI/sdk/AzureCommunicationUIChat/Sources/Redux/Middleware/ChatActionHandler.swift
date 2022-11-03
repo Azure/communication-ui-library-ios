@@ -27,6 +27,8 @@ protocol ChatActionHandling {
     @discardableResult
     func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
+    func getListOfParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
     func getPreviousMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func sendMessage(internalId: String,
@@ -36,7 +38,7 @@ protocol ChatActionHandling {
     @discardableResult
     func sendTypingIndicator(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func sendReadReceipt(messageId: String, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func sendReadReceipt(messageId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 }
 
 class ChatActionHandler: ChatActionHandling {
@@ -99,15 +101,28 @@ class ChatActionHandler: ChatActionHandling {
     }
 
     // MARK: Participants Handler
-    func sendReadReceipt(messageId: String, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func sendReadReceipt(messageId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
-            do {
-                try await chatService.sendReadReceipt(messageId: messageId)
-                dispatch(.participantsAction(.sendReadReceiptSuccess(messageId: messageId)))
-            } catch {
-                logger.error("ChatActionHandler sendReadReceipt failed: \(error)")
-                dispatch(.participantsAction(.sendReadReceiptFailed(error: error as NSError)))
+            guard let lastReadReceiptSentTimestamp = state.chatState.lastReadReceiptSentTimestamp else {
+                await sendReadReceiptToChatService(messageId: messageId, dispatch: dispatch)
+                return
             }
+
+            guard let messageTimestamp = messageId.convertEpochStringToTimestamp(),
+                  messageTimestamp > lastReadReceiptSentTimestamp else {
+                return
+            }
+            await sendReadReceiptToChatService(messageId: messageId, dispatch: dispatch)
+        }
+    }
+
+    private func sendReadReceiptToChatService(messageId: String, dispatch: @escaping ActionDispatch) async {
+        do {
+            try await chatService.sendReadReceipt(messageId: messageId)
+            dispatch(.participantsAction(.sendReadReceiptSuccess(messageId: messageId)))
+        } catch {
+            logger.error("ChatActionHandler sendReadReceipt failed: \(error)")
+            dispatch(.participantsAction(.sendReadReceiptFailed(error: error as NSError)))
         }
     }
 
@@ -120,6 +135,17 @@ class ChatActionHandler: ChatActionHandling {
             } catch {
                 // dispatch error *not handled*
                 dispatch(.repositoryAction(.fetchInitialMessagesFailed(error: error)))
+            }
+        }
+    }
+
+    func getListOfParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            do {
+                let listOfParticipants = try await chatService.getListOfParticipants()
+                dispatch(.participantsAction(.participantsAdded(participants: listOfParticipants)))
+            } catch {
+                dispatch(.participantsAction(.fetchListOfParticipantsFailed(error: error)))
             }
         }
     }

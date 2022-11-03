@@ -34,6 +34,12 @@ class ChatSDKWrapperMocking: ChatSDKWrapperProtocol {
         }.value
     }
 
+    func getListOfParticipants() async throws -> [AzureCommunicationUIChat.ParticipantInfoModel] {
+        return try await Task<[ParticipantInfoModel], Error> {
+            []
+        }.value
+    }
+
     func getPreviousMessages() async throws -> [ChatMessageInfoModel] {
         getPreviousMessagesCalled = true
         return try await Task<[ChatMessageInfoModel], Error> {

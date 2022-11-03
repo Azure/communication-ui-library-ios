@@ -13,10 +13,12 @@ class ChatServiceMocking: ChatServiceProtocol {
 
     var topic: String = "topic"
     var initialMessages: [ChatMessageInfoModel] = []
+    var listOfParticipants: [ParticipantInfoModel] = []
     var previousMessages: [ChatMessageInfoModel] = []
 
     var initializeCalled: Bool = false
     var getInitialMessagesCalled: Bool = false
+    var getListOfParticipantsCalled: Bool = false
     var getPreviousMessagesCalled: Bool = false
     var sendMessageCalled: Bool = false
     var sendReadReceiptCalled: Bool = false
@@ -34,6 +36,17 @@ class ChatServiceMocking: ChatServiceProtocol {
                 throw error
             }
             return initialMessages
+        }
+        return try await task.value
+    }
+
+    func getListOfParticipants() async throws -> [AzureCommunicationUIChat.ParticipantInfoModel] {
+        getListOfParticipantsCalled = true
+        let task = Task<[ParticipantInfoModel], Error> {
+            if let error = self.error {
+                throw error
+            }
+            return listOfParticipants
         }
         return try await task.value
     }

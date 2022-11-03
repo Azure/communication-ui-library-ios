@@ -13,10 +13,12 @@ class ChatActionHandlerMocking: ChatActionHandling {
     var onChatThreadDeletedCalled: ((Bool) -> Void)?
     var initializeCalled: ((Bool) -> Void)?
     var getInitialMessagesCalled: ((Bool) -> Void)?
+    var getListOfParticipantsCalled: ((Bool) -> Void)?
     var getPreviousMessagesCalled: ((Bool) -> Void)?
     var sendMessageCalled: ((Bool) -> Void)?
     var sendTypingIndicatorCalled: ((Bool) -> Void)?
     var sendReadReceiptCalled: ((Bool) -> Void)?
+    var sendReadReceiptSuccessCalled: ((Bool) -> Void)?
 
     func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
@@ -48,6 +50,12 @@ class ChatActionHandlerMocking: ChatActionHandling {
         }
     }
 
+    func getListOfParticipants(state: AzureCommunicationUIChat.AppState, dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            getListOfParticipantsCalled?(true)
+        }
+    }
+
     func getPreviousMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             getPreviousMessagesCalled?(true)
@@ -69,9 +77,16 @@ class ChatActionHandlerMocking: ChatActionHandling {
 
     func sendReadReceipt(
               messageId: String,
+              state: AzureCommunicationUIChat.AppState,
               dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
         Task {
             sendReadReceiptCalled?(true)
+        }
+    }
+
+    func sendReadReceiptSuccess(messageId: String, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            sendReadReceiptSuccessCalled?(true)
         }
     }
 }
