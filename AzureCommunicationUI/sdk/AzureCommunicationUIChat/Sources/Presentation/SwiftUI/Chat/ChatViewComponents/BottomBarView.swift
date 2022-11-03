@@ -8,7 +8,7 @@ import SwiftUI
 @available(iOS 15.0, *)
 struct BottomBarView: View {
     private enum Constants {
-        static let horizontalPadding: CGFloat = 10
+        static let horizontalPadding: CGFloat = 25
         static let verticalPadding: CGFloat = 0
     }
 

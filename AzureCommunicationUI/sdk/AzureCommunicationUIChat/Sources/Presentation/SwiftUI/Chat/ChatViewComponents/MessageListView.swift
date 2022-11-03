@@ -11,7 +11,7 @@ struct MessageListView: View {
         static let bottomPadding: CGFloat = 0
         static let topPadding: CGFloat = 8
         static let topConsecutivePadding: CGFloat = 4
-        static let buttonBottomPadding: CGFloat = 35
+        static let buttonBottomPadding: CGFloat = 20
         static let defaultMinListRowHeight: CGFloat = 10
     }
 

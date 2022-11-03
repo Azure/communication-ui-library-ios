@@ -12,8 +12,8 @@ class MessageListViewModel: ObservableObject {
     private let scrollTolerance: CGFloat = 50
 
     private var repositoryUpdatedTimestamp: Date = .distantPast
-    private var localUserId: String? // Remove optional?
-    private var lastReadMessageIndex: Int?
+    private var localUserId: String?
+    private var lastReadMessageIndex: Int? // Will be set with read receipt PR
     private var latestMessageId: String?
 
     let minFetchIndex: Int = 40
@@ -86,17 +86,17 @@ class MessageListViewModel: ObservableObject {
             self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
             messages = messageRepositoryManager.messages
 
-            // Scroll to new message
-            if messages.last?.id != latestMessageId {
-                latestMessageId = messages.last?.id
-                shouldScrollToBottom = isLocalUser(message: messages.last) || isAtBottom()
-            }
-
             // Scroll for initial load of messages
             // Hide messages and show activity indicator?
             if !haveInitialMessagesLoaded && messages.count > 1 {
                 shouldScrollToBottom = true
                 haveInitialMessagesLoaded = true
+            }
+
+            // Scroll to new message
+            if messages.last?.id != latestMessageId {
+                latestMessageId = messages.last?.id
+                shouldScrollToBottom = isLocalUser(message: messages.last) || isAtBottom()
             }
 
             if numberOfNewMessages > 0 {
