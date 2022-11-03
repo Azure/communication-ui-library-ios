@@ -165,7 +165,7 @@ class ChatServiceEventHandlerTests: XCTestCase {
         let chatMessageReceivedEvent = ChatEventModel(
             eventType: .readReceiptReceived,
             infoModel: ReadReceiptInfoModel(senderIdentifier: CommunicationUserIdentifier("identifier"),
-                                                chatMessageId: "chatMessageId", readOn: Iso8601Date())!)
+                                                chatMessageId: "chatMessageId", readOn: Iso8601Date()))
         mockChatService.chatEventSubject.send(chatMessageReceivedEvent)
         wait(for: [expectation], timeout: 1)
     }
