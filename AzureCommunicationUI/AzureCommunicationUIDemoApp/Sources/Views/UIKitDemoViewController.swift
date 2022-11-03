@@ -100,14 +100,14 @@ class UIKitDemoViewController: UIViewController {
                                    after: stackView.arrangedSubviews.first!)
     }
 
-    func combineEnvConfigSubject() {
+    private func combineEnvConfigSubject() {
         envConfigSubject.objectWillChange
             .throttle(for: 0.5, scheduler: DispatchQueue.main, latest: true).sink(receiveValue: { [weak self] _ in
                 self?.updateFromEnvConfig()
             }).store(in: &cancellable)
     }
 
-    func updateFromEnvConfig() {
+    private func updateFromEnvConfig() {
         if !envConfigSubject.acsToken.isEmpty {
             acsTokenTextField.text = envConfigSubject.acsToken
             acsTokenTypeSegmentedControl.selectedSegmentIndex = 2
@@ -127,13 +127,13 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
-    func onError(_ error: CallCompositeError, callComposite: CallComposite) {
+    private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::UIKitDemoView::getEventsHandler::onError \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
         print("::::SwiftUIDemoView diagnostics info \(callComposite.getDiagnosticsInfo())")
     }
 
-    func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+    private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::UIKitDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
@@ -143,7 +143,7 @@ class UIKitDemoViewController: UIViewController {
                                                                 identifiers: identifiers)
     }
 
-    func startExperience(with link: String) async {
+    private func startExperience(with link: String) async {
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         if !envConfigSubject.localeIdentifier.isEmpty {

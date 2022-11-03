@@ -266,14 +266,14 @@ extension SwiftUIDemoView {
         isErrorDisplayed = true
     }
 
-    func onError(_ error: CallCompositeError, callComposite: CallComposite) {
+    private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::SwiftUIDemoView::getEventsHandler::onError \(error)")
         print("::::SwiftUIDemoView error.code \(error.code)")
         print("::::SwiftUIDemoView diagnostics info \(callComposite.getDiagnosticsInfo())")
         showError(for: error.code)
     }
 
-    func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+    private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::SwiftUIDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
