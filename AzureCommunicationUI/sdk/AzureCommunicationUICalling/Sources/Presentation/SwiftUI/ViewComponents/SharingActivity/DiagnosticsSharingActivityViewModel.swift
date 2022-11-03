@@ -17,7 +17,7 @@ class DiagnosticsSharingActivityViewModel {
 
     func getDiagnosticsInfo() -> String {
         let diagnosticsInfo = diagnosticsManager.getDiagnosticsInfo()
-        let callId = diagnosticsInfo.lastKnownCallId ?? "UNKNOWN"
-        return "Call ID: \"\(callId)\""
+        let callId = diagnosticsInfo.lastKnownCallId ?? StringConstants.defaultCallIdDiagnosticsViewValue
+        return "\(StringConstants.callIdDiagnosticsViewTitle) \"\(callId)\""
     }
 }
