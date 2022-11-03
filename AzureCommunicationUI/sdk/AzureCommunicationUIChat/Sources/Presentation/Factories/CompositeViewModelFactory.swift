@@ -52,7 +52,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     // MARK: CompositeViewModels
-    @discardableResult
     func getChatViewModel() -> ChatViewModel {
         guard let viewModel = self.chatViewModel else {
             let viewModel = ChatViewModel(compositeViewModelFactory: self,
