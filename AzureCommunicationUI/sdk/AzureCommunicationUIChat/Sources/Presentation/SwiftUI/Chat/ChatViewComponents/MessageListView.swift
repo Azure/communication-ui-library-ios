@@ -12,15 +12,10 @@ struct MessageListView: View {
         static let topPadding: CGFloat = 8
         static let topConsecutivePadding: CGFloat = 4
         static let buttonBottomPadding: CGFloat = 35
-
         static let defaultMinListRowHeight: CGFloat = 10
 
         static let minFetchIndex: Int = 40
-        static let scrollTolerance: CGFloat = 50
     }
-
-    @State private var scrollOffset: CGFloat = .zero
-    @State private var scrollSize: CGFloat = .zero
 
     @StateObject var viewModel: MessageListViewModel
 
@@ -34,8 +29,8 @@ struct MessageListView: View {
     var messageList: some View {
         ScrollViewReader { scrollProxy in
             ObservableScrollView(
-                offsetChanged: { scrollOffset = $0 },
-                heightChanged: { scrollSize = $0 },
+                offsetChanged: { viewModel.scrollOffset = $0 },
+                heightChanged: { viewModel.scrollSize = $0 },
                 content: {
                     LazyVStack(spacing: 0) {
                         ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, _ in
@@ -59,11 +54,6 @@ struct MessageListView: View {
                     viewModel.shouldScrollToBottom = false
                 }
             }
-            .onChange(of: viewModel.messages.count) { _ in
-                if isAtBottom() {
-                    scrollToBottom(proxy: scrollProxy)
-                }
-            }
         }
     }
 
@@ -80,13 +70,9 @@ struct MessageListView: View {
         }
     }
 
-    private func isAtBottom() -> Bool {
-        return scrollSize - scrollOffset < Constants.scrollTolerance
-    }
-
     private func scrollToBottom(proxy: ScrollViewProxy) {
         let scrollIndex = viewModel.messages.count - 1
-        proxy.scrollTo(scrollIndex)
+        proxy.scrollTo(scrollIndex, anchor: .bottom)
     }
 
     private func getEdgeInsets(message: MessageViewModel) -> EdgeInsets {

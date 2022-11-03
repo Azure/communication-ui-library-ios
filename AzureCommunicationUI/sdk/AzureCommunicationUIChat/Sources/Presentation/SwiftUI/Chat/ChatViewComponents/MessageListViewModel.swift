@@ -9,12 +9,15 @@ class MessageListViewModel: ObservableObject {
     private let messageRepositoryManager: MessageRepositoryManagerProtocol
     private let logger: Logger
     private let dispatch: ActionDispatch
+    private let scrollTolerance: CGFloat = 50
 
     private var repositoryUpdatedTimestamp: Date = .distantPast
     private var localUserId: String? // Remove optional?
     private var lastReadMessageIndex: Int?
     private var latestMessageId: String?
 
+    var scrollOffset: CGFloat = .zero
+    var scrollSize: CGFloat = .zero
     var jumpToNewMessagesButtonViewModel: PrimaryButtonViewModel!
 
     @Published var messages: [ChatMessageInfoModel]
@@ -64,6 +67,10 @@ class MessageListViewModel: ObservableObject {
         return message!.senderId == localUserId
     }
 
+    private func isAtBottom() -> Bool {
+        return scrollSize - scrollOffset < scrollTolerance
+    }
+
     func jumpToNewMessagesButtonTapped() {
         shouldScrollToBottom = true
     }
@@ -77,10 +84,10 @@ class MessageListViewModel: ObservableObject {
             self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
             messages = messageRepositoryManager.messages
 
-            // Scroll to new message from local user
+            // Scroll to new message
             if messages.last?.id != latestMessageId {
                 latestMessageId = messages.last?.id
-                shouldScrollToBottom = isLocalUser(message: messages.last)
+                shouldScrollToBottom = isLocalUser(message: messages.last) || isAtBottom()
             }
 
             // Scroll for initial load of messages
