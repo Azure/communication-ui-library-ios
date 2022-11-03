@@ -94,9 +94,12 @@ extension TypingIndicatorReceivedEvent {
 
  extension ReadReceiptReceivedEvent {
     func toReadReceiptInfoModel() -> ReadReceiptInfoModel? {
+        guard let sender = self.sender, let readOn = self.readOn else {
+            return nil
+        }
         return ReadReceiptInfoModel(
-            senderIdentifier: self.sender,
+            senderIdentifier: sender,
             chatMessageId: self.chatMessageId,
-            readOn: self.readOn)
+            readOn: readOn)
     }
  }

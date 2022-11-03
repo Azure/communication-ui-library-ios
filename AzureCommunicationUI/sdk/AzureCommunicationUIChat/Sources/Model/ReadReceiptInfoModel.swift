@@ -12,10 +12,7 @@ struct ReadReceiptInfoModel: BaseInfoModel, Equatable {
     let chatMessageId: String
     let readOn: Iso8601Date
 
-    init?(senderIdentifier: CommunicationIdentifier?, chatMessageId: String, readOn: Iso8601Date?) {
-        guard let senderIdentifier = senderIdentifier, let readOn = readOn else {
-            return nil
-        }
+    init(senderIdentifier: CommunicationIdentifier, chatMessageId: String, readOn: Iso8601Date) {
         self.senderIdentifier = senderIdentifier
         self.chatMessageId = chatMessageId
         self.readOn = readOn
