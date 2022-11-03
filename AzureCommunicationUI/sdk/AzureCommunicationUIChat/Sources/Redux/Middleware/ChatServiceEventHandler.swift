@@ -49,8 +49,8 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
                       let userEventTimestamp as UserEventTimestampModel):
                     self.handleTypingIndicatorReceived(dispatch: dispatch, userEventTimestamp: userEventTimestamp)
                 case (.readReceiptReceived,
-                      let readReceiptInfo as ReadReceiptInfoModel):
-                    self.handleReadReceiptReceived(dispatch: dispatch, readReceiptInfo: readReceiptInfo)
+                      let userEventTimestamp as UserEventTimestampModel):
+                    self.handleReadReceiptReceived(dispatch: dispatch, userEventTimestamp: userEventTimestamp)
                 case (.chatThreadDeleted,
                       let chatThreadInfo as ChatThreadInfoModel):
                     self.handleChatThreadDeleted(dispatch: dispatch, threadInfo: chatThreadInfo)
@@ -98,8 +98,8 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
     }
 
     func handleReadReceiptReceived(dispatch: @escaping ActionDispatch,
-                                   readReceiptInfo: ReadReceiptInfoModel) {
-        dispatch(.participantsAction(.readReceiptReceived(readReceiptInfo: readReceiptInfo)))
+                                   userEventTimestamp: UserEventTimestampModel) {
+        // stub: to be implemented
     }
 
     func handleChatThreadDeleted(dispatch: @escaping ActionDispatch,

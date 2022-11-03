@@ -149,27 +149,6 @@ class ChatServiceEventHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_chatServiceEventHandler_subscription_when_receiveReadReceiptReceivedEvent_then_dispatchReadReceiptReceivedAction() {
-        let expectation = XCTestExpectation(description: "Dispatch Read Receipt Received Action")
-        let expectedUserId = "identifier"
-        func dispatch(action: Action) {
-            switch action {
-            case .participantsAction(.readReceiptReceived(let readReceiptInfo)):
-                XCTAssertEqual(readReceiptInfo.senderIdentifier.stringValue, expectedUserId)
-                expectation.fulfill()
-            default:
-                XCTExpectFailure("readReceiptReceived was not dispatched")
-            }
-        }
-        chatServiceEventHandler.subscription(dispatch: dispatch)
-        let chatMessageReceivedEvent = ChatEventModel(
-            eventType: .readReceiptReceived,
-            infoModel: ReadReceiptInfoModel(senderIdentifier: CommunicationUserIdentifier("identifier"),
-                                                chatMessageId: "chatMessageId", readOn: Iso8601Date())!)
-        mockChatService.chatEventSubject.send(chatMessageReceivedEvent)
-        wait(for: [expectation], timeout: 1)
-    }
-
     func test_chatServiceEventHandler_subscription_when_receiveChatThreadDeletedEvent_then_dispatchChatThreadDeletedAction() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
         func dispatch(action: Action) {
