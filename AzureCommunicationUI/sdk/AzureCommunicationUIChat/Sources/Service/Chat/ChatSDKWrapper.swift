@@ -198,7 +198,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                 chatThreadClient?.getProperties { result, _ in
                     switch result {
                     case .success(let threadProperties):
-                        logger.info("Retrieved topic: \(threadProperties.topic)")
+                        self.logger.info("Retrieved topic: \(threadProperties.topic)")
                         continuation.resume(returning: threadProperties.topic)
                     case .failure(let error):
                         self.logger.error("Retrieve Thread Topic failed: \(error.errorDescription)")
