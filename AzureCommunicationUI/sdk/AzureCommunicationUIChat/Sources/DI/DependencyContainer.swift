@@ -66,7 +66,8 @@ final class DependencyContainer {
         register(ErrorManager(store: resolve(),
                               chatCompositeEventsHandler: chatCompositeEventsHandler) as ErrorManagerProtocol)
         register(UIKitAppLifeCycleManager(store: resolve(),
-                                          logger: resolve()) as LifeCycleManagerProtocol)
+                                          logger: resolve(),
+                                          viewModelFactory: resolve()) as LifeCycleManagerProtocol)
 
         register(CompositeManager(store: resolve(),
                                   logger: resolve()) as CompositeManagerProtocol)

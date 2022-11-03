@@ -8,6 +8,7 @@ import FluentUI
 
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
+    @discardableResult
     func getChatViewModel() -> ChatViewModel
 
     // MARK: ComponentViewModels
@@ -23,6 +24,8 @@ protocol CompositeViewModelFactoryProtocol {
                                   chatState: ChatState) -> MessageListViewModel
     func makeBottomBarViewModel(dispatch: @escaping ActionDispatch) -> BottomBarViewModel
     func makeTypingParticipantsViewModel() -> TypingParticipantsViewModel
+    func handleAppStatusChange(_ status: AppStatus)
+    func destroyChatViewModel()
 }
 
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
@@ -49,6 +52,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     // MARK: CompositeViewModels
+    @discardableResult
     func getChatViewModel() -> ChatViewModel {
         guard let viewModel = self.chatViewModel else {
             let viewModel = ChatViewModel(compositeViewModelFactory: self,
@@ -97,5 +101,15 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     func makeTypingParticipantsViewModel() -> TypingParticipantsViewModel {
         TypingParticipantsViewModel(logger: logger,
                                     localizationProvider: localizationProvider)
+    }
+
+    // MARK: View Model Life Cycle Handling
+    func destroyChatViewModel() {
+        chatViewModel = nil
+    }
+
+    func handleAppStatusChange(_ status: AppStatus) {
+        store.dispatch(action: .lifecycleAction(status == .background ?
+            .backgroundEntered : .foregroundEntered))
     }
 }

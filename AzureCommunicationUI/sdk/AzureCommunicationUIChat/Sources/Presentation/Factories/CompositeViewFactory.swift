@@ -7,6 +7,7 @@ import Foundation
 
 protocol CompositeViewFactoryProtocol {
     func makeChatView() -> ChatView
+    func enter(status: AppStatus)
 }
 
 struct CompositeViewFactory: CompositeViewFactoryProtocol {
@@ -21,5 +22,9 @@ struct CompositeViewFactory: CompositeViewFactoryProtocol {
 
     func makeChatView() -> ChatView {
         return ChatView(viewModel: compositeViewModelFactory.getChatViewModel())
+    }
+
+    func enter(status: AppStatus) {
+        compositeViewModelFactory.handleAppStatusChange(status)
     }
 }

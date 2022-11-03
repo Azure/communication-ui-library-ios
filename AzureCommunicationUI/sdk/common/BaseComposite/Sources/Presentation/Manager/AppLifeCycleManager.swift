@@ -7,21 +7,27 @@ import Foundation
 import UIKit
 import Combine
 
-protocol LifeCycleManagerProtocol {
-
-}
+protocol LifeCycleManagerProtocol {}
 
 class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
 
     private let logger: Logger
     private let store: Store<AppState>
-
+    private let viewModelFactory: CompositeViewModelFactoryProtocol
+    private var state = LifeCycleState()
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState>,
-         logger: Logger) {
+         logger: Logger,
+         viewModelFactory: CompositeViewModelFactoryProtocol) {
         self.logger = logger
         self.store = store
+        self.viewModelFactory = viewModelFactory
+        store.$state
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                self?.receive(state)
+            }.store(in: &cancellables)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(willDeactivate),
                                                name: UIScene.willDeactivateNotification,
@@ -30,6 +36,19 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
                                                selector: #selector(didActivate),
                                                name: UIScene.didActivateNotification,
                                                object: nil)
+    }
+
+    private func receive(_ appState: AppState) {
+        let newState = appState.lifeCycleState
+        guard newState.currentStatus != state.currentStatus else {
+            return
+        }
+        state = newState
+        if state.currentStatus == .foreground {
+            viewModelFactory.getChatViewModel()
+        } else if state.currentStatus == .background {
+            viewModelFactory.destroyChatViewModel()
+        }
     }
 
     @objc func willDeactivate(_ notification: Notification) {
