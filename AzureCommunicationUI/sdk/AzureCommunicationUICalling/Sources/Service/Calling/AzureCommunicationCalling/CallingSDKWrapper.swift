@@ -286,6 +286,11 @@ extension CallingSDKWrapper {
         if let displayName = callConfiguration.displayName {
             options.displayName = displayName
         }
+        let cxConfiguration = CXProviderConfiguration()
+        cxConfiguration.supportsVideo = true // Update here
+        cxConfiguration.supportedHandleTypes = [.generic]
+        options.callKitOptions = CallKitOptions(with: cxConfiguration)
+
         do {
             let callAgent = try await callClient?.createCallAgent(
                 userCredential: callConfiguration.credential,

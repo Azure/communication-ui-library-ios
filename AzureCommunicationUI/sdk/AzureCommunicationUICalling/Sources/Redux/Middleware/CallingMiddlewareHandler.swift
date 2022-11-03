@@ -3,7 +3,6 @@
 //  Licensed under the MIT License.
 //
 
-import CallKit
 import Combine
 import Foundation
 import PushKit
@@ -53,23 +52,12 @@ class CallingMiddlewareHandler: NSObject, CallingMiddlewareHandling {
     private let subscription = CancelBag()
 
     private let voipRegistry = PKPushRegistry(queue: .main)
-    private let callKitProvider: CXProvider
-    private let callController = CXCallController()
-    private var currentCallUuid: UUID?
 
     init(callingService: CallingServiceProtocol, logger: Logger) {
         self.callingService = callingService
         self.logger = logger
-        let cxConfiguration = CXProviderConfiguration()
-        cxConfiguration.supportsVideo = true
-        cxConfiguration.supportedHandleTypes = [.generic]
 
-        self.callKitProvider = CXProvider(
-            configuration: cxConfiguration
-        )
         super.init()
-
-        self.callKitProvider.setDelegate(self, queue: .main)
     }
 
     func setupCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
@@ -96,18 +84,18 @@ class CallingMiddlewareHandler: NSObject, CallingMiddlewareHandling {
                 )
                 subscription(dispatch: dispatch)
 
-                guard currentCallUuid == nil else {
-                    return
-                }
-                let callUuid = UUID()
-                let startCallAction = CXStartCallAction(
-                    call: callUuid,
-                    handle: CXHandle(type: .generic, value: "TestCall" )   // Teams meeting or Group ID?
-                )
-                startCallAction.isVideo = state.localUserState.cameraState.operation == .on
-                let transaction = CXTransaction(action: startCallAction)
-                try await callController.request(transaction)
-                currentCallUuid = callUuid
+//                guard currentCallUuid == nil else {
+//                    return
+//                }
+//                let callUuid = UUID()
+//                let startCallAction = CXStartCallAction(
+//                    call: callUuid,
+//                    handle: CXHandle(type: .generic, value: "TestCall" )   // Teams meeting or Group ID?
+//                )
+//                startCallAction.isVideo = state.localUserState.cameraState.operation == .on
+//                let transaction = CXTransaction(action: startCallAction)
+//                try await callController.request(transaction)
+//                currentCallUuid = callUuid
             } catch {
                 handle(error: error, errorType: .callJoinFailed, dispatch: dispatch)
             }
@@ -119,15 +107,15 @@ class CallingMiddlewareHandler: NSObject, CallingMiddlewareHandling {
             do {
                 try await callingService.endCall()
                 dispatch(.callingAction(.callEnded))
-                if let callUuid = currentCallUuid {
-                    try await callController.request(
-                        CXTransaction(
-                            action: CXEndCallAction(
-                                call: callUuid)
-                        )
-                    )
-                }
-                currentCallUuid = nil
+//                if let callUuid = currentCallUuid {
+//                    try await callController.request(
+//                        CXTransaction(
+//                            action: CXEndCallAction(
+//                                call: callUuid)
+//                        )
+//                    )
+//                }
+//                currentCallUuid = nil
             } catch {
                 handle(error: error, errorType: .callEndFailed, dispatch: dispatch)
                 dispatch(.callingAction(.requestFailed))
@@ -144,11 +132,11 @@ class CallingMiddlewareHandler: NSObject, CallingMiddlewareHandling {
             do {
                 try await callingService.holdCall()
                 await requestCameraPause(state: state, dispatch: dispatch).value
-                if let callUuid = currentCallUuid {
-                    try await callController.request(
-                        CXTransaction(action: CXSetHeldCallAction(call: callUuid, onHold: true))
-                    )
-                }
+//                if let callUuid = currentCallUuid {
+//                    try await callController.request(
+//                        CXTransaction(action: CXSetHeldCallAction(call: callUuid, onHold: true))
+//                    )
+//                }
             } catch {
                 handle(error: error, errorType: .callHoldFailed, dispatch: dispatch)
             }
@@ -166,11 +154,11 @@ class CallingMiddlewareHandler: NSObject, CallingMiddlewareHandling {
                 if state.localUserState.cameraState.operation == .paused {
                     await requestCameraOn(state: state, dispatch: dispatch).value
                 }
-                if let callUuid = currentCallUuid {
-                    try await callController.request(
-                        CXTransaction(action: CXSetHeldCallAction(call: callUuid, onHold: false))
-                    )
-                }
+//                if let callUuid = currentCallUuid {
+//                    try await callController.request(
+//                        CXTransaction(action: CXSetHeldCallAction(call: callUuid, onHold: false))
+//                    )
+//                }
             } catch {
                 handle(error: error, errorType: .callResumeFailed, dispatch: dispatch)
             }
@@ -276,11 +264,11 @@ class CallingMiddlewareHandler: NSObject, CallingMiddlewareHandling {
         Task {
             do {
                 try await callingService.muteLocalMic()
-                if let callUuid = currentCallUuid {
-                    try await callController.request(
-                        CXTransaction(action: CXSetMutedCallAction(call: callUuid, muted: true))
-                    )
-                }
+//                if let callUuid = currentCallUuid {
+//                    try await callController.request(
+//                        CXTransaction(action: CXSetMutedCallAction(call: callUuid, muted: true))
+//                    )
+//                }
             } catch {
                 dispatch(.localUserAction(.microphoneOffFailed(error: error)))
             }
@@ -291,11 +279,11 @@ class CallingMiddlewareHandler: NSObject, CallingMiddlewareHandling {
         Task {
             do {
                 try await callingService.unmuteLocalMic()
-                if let callUuid = currentCallUuid {
-                    try await callController.request(
-                        CXTransaction(action: CXSetMutedCallAction(call: callUuid, muted: false))
-                    )
-                }
+//                if let callUuid = currentCallUuid {
+//                    try await callController.request(
+//                        CXTransaction(action: CXSetMutedCallAction(call: callUuid, muted: false))
+//                    )
+//                }
             } catch {
                 dispatch(.localUserAction(.microphoneOnFailed(error: error)))
             }
@@ -396,47 +384,6 @@ extension CallingMiddlewareHandler {
     }
 }
 
-extension CallingMiddlewareHandler: CXProviderDelegate {
-
-    /// For outgoing calls
-    func provider(_ provider: CXProvider, perform action: CXStartCallAction) {
-        print("StartCallAction")
-        action.fulfill()
-    }
-
-    /// For incoming calls
-    func provider(_ provider: CXProvider, perform action: CXAnswerCallAction) {
-
-        // Implement all the logic to getting to the call screen here, and connect the call
-
-        // Answer the call, when we have setup
-        action.fulfill()
-    }
-
-    func provider(_ provider: CXProvider, perform action: CXEndCallAction) {
-        // handle the ending of the call
-        // hang up, clean up and report we're done
-        print("EndCallAction")
-        action.fulfill()
-    }
-
-    func provider(_ provider: CXProvider, perform action: CXSetHeldCallAction) {
-        // handle putting the call on hold / resume
-        action.fulfill()
-    }
-
-    func provider(_ provider: CXProvider, perform action: CXSetMutedCallAction) {
-        // handle muting / unmuting the call
-        action.fulfill()
-    }
-
-    func providerDidReset(_ provider: CXProvider) {
-        // handle the reset
-        // Stop any calls in progress, clean up.
-        print("providerDidReset")
-    }
-}
-
 extension CallingMiddlewareHandler: PKPushRegistryDelegate {
 
     func pushRegistry(_ registry: PKPushRegistry,
@@ -458,25 +405,8 @@ extension CallingMiddlewareHandler: PKPushRegistryDelegate {
         guard type == .voIP else {
             return
         }
-
-        // Extract the call information from the push notification payload
-        if let handle = payload.dictionaryPayload["handle"] as? String,
-           let uuidString = payload.dictionaryPayload["callUUID"] as? String,
-           let callUUID = UUID(uuidString: uuidString) {
-
-            // Configure the call information data structures.
-            let callUpdate = CXCallUpdate()
-            callUpdate.remoteHandle = CXHandle(type: .generic, value: handle)
-
-            // Report the call to CallKit, and let it display the call UI.
-            callKitProvider.reportNewIncomingCall(
-                with: callUUID,
-                update: callUpdate
-            ) { error in
-                if let err = error {
-                    print(err)
-                }
-            }
+        Task {
+            try? await callingService.handleCallSetupPush(payload: payload.dictionaryPayload)
         }
     }
 }
