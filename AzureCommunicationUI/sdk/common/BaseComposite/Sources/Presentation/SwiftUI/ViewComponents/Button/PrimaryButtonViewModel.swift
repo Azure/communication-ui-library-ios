@@ -8,12 +8,14 @@ import FluentUI
 import Combine
 
 class PrimaryButtonViewModel: ObservableObject {
+    let buttonStyle: FluentUI.ButtonStyle
+    let iconName: CompositeIcon?
+    
+    var action: (() -> Void)
+
+    @Published var buttonLabel: String
     @Published var isDisabled: Bool
     @Published var accessibilityLabel: String?
-    let buttonStyle: FluentUI.ButtonStyle
-    let buttonLabel: String
-    let iconName: CompositeIcon?
-    var action: (() -> Void)
 
     init(buttonStyle: FluentUI.ButtonStyle,
          buttonLabel: String,
@@ -25,6 +27,12 @@ class PrimaryButtonViewModel: ObservableObject {
         self.iconName = iconName
         self.isDisabled = isDisabled
         self.action = action
+    }
+
+    func update(buttonLabel: String?) {
+        if buttonLabel != nil && self.buttonLabel != buttonLabel {
+            self.buttonLabel = buttonLabel!
+        }
     }
 
     func update(isDisabled: Bool) {

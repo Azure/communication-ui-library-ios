@@ -14,11 +14,12 @@ class MessageListViewModel: ObservableObject {
     private var localUserId: String? // Remove optional?
     private var lastReadMessageIndex: Int?
 
-    var joinCallButtonViewModel: PrimaryButtonViewModel!
+    var jumpToNewMessagesButtonViewModel: PrimaryButtonViewModel!
 
     @Published var messages: [ChatMessageInfoModel]
     @Published var haveInitialMessagesLoaded: Bool = false
     @Published var showJumpToNewMessages: Bool = false
+    @Published var shouldScrollToBottom: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          messageRepositoryManager: MessageRepositoryManagerProtocol,
@@ -32,9 +33,9 @@ class MessageListViewModel: ObservableObject {
         self.localUserId = chatState.localUser?.id // Only take in local User ID?
         self.messages = messageRepositoryManager.messages
 
-        joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
+        jumpToNewMessagesButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
-            buttonLabel: "\(numberOfNewMessages) new messages)", // Localize, 99+ messages?,
+            buttonLabel: jumpToNewMessagesLabel,
             iconName: .downArrow,
             isDisabled: false) { [weak self] in
                 guard let self = self else {
@@ -42,15 +43,21 @@ class MessageListViewModel: ObservableObject {
                 }
                 self.jumpToNewMessagesButtonTapped()
         }
-//        joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.joinCall))
+//      .update(accessibilityLabel: self.localizationProvider.getLocalizedString(.jumpToNewMessages))
     }
 
     var numberOfNewMessages: Int {
         (messages.count - 1) - (lastReadMessageIndex ?? 0)
     }
 
-    func jumpToNewMessagesButtonTapped() {
+    var jumpToNewMessagesLabel: String {
+        numberOfNewMessages < 100
+        ? "\(numberOfNewMessages) new messages"
+        : "99+ new messages"
+    }
 
+    func jumpToNewMessagesButtonTapped() {
+        shouldScrollToBottom = true
     }
 
     func fetchMessages() {
@@ -62,13 +69,16 @@ class MessageListViewModel: ObservableObject {
             self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
             messages = messageRepositoryManager.messages
 
-            if !haveInitialMessagesLoaded {
+            if !haveInitialMessagesLoaded && messages.count > 1 {
+                shouldScrollToBottom = true
                 haveInitialMessagesLoaded = true
             }
 
             if numberOfNewMessages > 0 {
                 showJumpToNewMessages = true
             }
+
+            jumpToNewMessagesButtonViewModel.update(buttonLabel: jumpToNewMessagesLabel)
         }
     }
 

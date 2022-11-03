@@ -15,7 +15,7 @@ struct MessageListView: View {
 
         static let defaultMinListRowHeight: CGFloat = 10
 
-        static let scrollMinOffsetMessageFetch: CGFloat = 1000
+        static let minFetchIndex: Int = 40
         static let scrollTolerance: CGFloat = 50
     }
 
@@ -34,12 +34,7 @@ struct MessageListView: View {
     var messageList: some View {
         ScrollViewReader { scrollProxy in
             ObservableScrollView(
-                offsetChanged: {
-                    scrollOffset = $0
-                    if scrollOffset < Constants.scrollMinOffsetMessageFetch {
-                        viewModel.fetchMessages()
-                    }
-                },
+                offsetChanged: { scrollOffset = $0 },
                 heightChanged: { scrollSize = $0 },
                 content: {
                     LazyVStack(spacing: 0) {
@@ -48,22 +43,29 @@ struct MessageListView: View {
                             MessageView(viewModel: messageViewModel)
                             .id(index)
                             .padding(getEdgeInsets(message: messageViewModel))
+                            .onAppear {
+                                if index == Constants.minFetchIndex {
+                                    viewModel.fetchMessages()
+                                }
+                            }
                         }
                     }
                 })
             .listStyle(.plain)
             .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
-            .onChange(of: viewModel.haveInitialMessagesLoaded) { _ in
-                if viewModel.haveInitialMessagesLoaded {
+            .onChange(of: viewModel.shouldScrollToBottom) { _ in
+                if viewModel.shouldScrollToBottom {
                     // Hide messages and show activity indicator?
                     scrollToBottom(proxy: scrollProxy)
+                    viewModel.shouldScrollToBottom = false
                 }
             }
             .onChange(of: viewModel.messages.count) { _ in
-                if isAtBottom() || viewModel.isLocalUser(message: viewModel.messages.last) {
+                if isAtBottom() {
                     scrollToBottom(proxy: scrollProxy)
                 }
             }
+            // Did submit, scroll to bottom
         }
     }
 
@@ -72,8 +74,7 @@ struct MessageListView: View {
             if viewModel.showJumpToNewMessages {
                 VStack {
                     Spacer()
-                    PrimaryButton(viewModel: viewModel.joinCallButtonViewModel)
-//                        .accessibilityIdentifier(AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
+                    PrimaryButton(viewModel: viewModel.jumpToNewMessagesButtonViewModel)
                         .fixedSize()
                         .padding(Constants.buttonBottomPadding)
                 }
