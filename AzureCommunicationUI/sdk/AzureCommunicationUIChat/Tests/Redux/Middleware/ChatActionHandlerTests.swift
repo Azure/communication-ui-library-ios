@@ -131,6 +131,7 @@ class ChatActionHandlerTests: XCTestCase {
         let sut = makeSUT()
         await sut.sendReadReceipt(
             messageId: "messageId",
+            state: getEmptyState(),
             dispatch: getEmptyDispatch()).value
 
         XCTAssertTrue(mockChatService.sendReadReceiptCalled)
