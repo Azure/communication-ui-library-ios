@@ -11,6 +11,7 @@ struct MessageListView: View {
         static let bottomPadding: CGFloat = 0
         static let topPadding: CGFloat = 8
         static let topConsecutivePadding: CGFloat = 4
+        static let buttonBottomPadding: CGFloat = 35
 
         static let defaultMinListRowHeight: CGFloat = 10
 
@@ -71,16 +72,16 @@ struct MessageListView: View {
             if viewModel.showJumpToNewMessages {
                 VStack {
                     Spacer()
-                    Button(action: onJumpToNewMessages) {
-                        Text("Jump to \(viewModel.numberOfNewMessages)") // Localization
-                    }
-                    .padding(50)
+                    PrimaryButton(viewModel: viewModel.joinCallButtonViewModel)
+//                        .accessibilityIdentifier(AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
+                        .fixedSize()
+                        .padding(Constants.buttonBottomPadding)
                 }
             }
         }
     }
 
-    func onJumpToNewMessages() {
+    private func onJumpToNewMessages() {
         print("Jump to new messages")
     }
 

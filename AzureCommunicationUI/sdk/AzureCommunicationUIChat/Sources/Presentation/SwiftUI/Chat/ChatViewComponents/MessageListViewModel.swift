@@ -14,11 +14,14 @@ class MessageListViewModel: ObservableObject {
     private var localUserId: String? // Remove optional?
     private var lastReadMessageIndex: Int?
 
+    var joinCallButtonViewModel: PrimaryButtonViewModel!
+
     @Published var messages: [ChatMessageInfoModel]
     @Published var haveInitialMessagesLoaded: Bool = false
     @Published var showJumpToNewMessages: Bool = false
 
-    init(messageRepositoryManager: MessageRepositoryManagerProtocol,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
+         messageRepositoryManager: MessageRepositoryManagerProtocol,
          logger: Logger,
          dispatch: @escaping ActionDispatch,
          chatState: ChatState) {
@@ -28,14 +31,29 @@ class MessageListViewModel: ObservableObject {
 
         self.localUserId = chatState.localUser?.id // Only take in local User ID?
         self.messages = messageRepositoryManager.messages
+
+        joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
+            buttonStyle: .primaryFilled,
+            buttonLabel: "\(numberOfNewMessages) new messages)", // Localize, 99+ messages?,
+            iconName: .downArrow,
+            isDisabled: false) { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.jumpToNewMessagesButtonTapped()
+        }
+//        joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.joinCall))
     }
 
     var numberOfNewMessages: Int {
         (messages.count - 1) - (lastReadMessageIndex ?? 0)
     }
 
+    func jumpToNewMessagesButtonTapped() {
+
+    }
+
     func fetchMessages() {
-        print("SCROLL: Fetch Messages") // Testing
         dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
     }
 
@@ -51,11 +69,6 @@ class MessageListViewModel: ObservableObject {
             if numberOfNewMessages > 0 {
                 showJumpToNewMessages = true
             }
-            // Debug for testing
-//            print("*Messages count: \(messageRepositoryManager.messages.count)")
-//            for message in messageRepositoryManager.messages {
-//                print("--*Messages: \(message.id) \(String(describing: message.content))")
-//            }
         }
     }
 
