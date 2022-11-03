@@ -91,3 +91,12 @@ extension TypingIndicatorReceivedEvent {
             timestamp: self.receivedOn)
     }
 }
+
+ extension ReadReceiptReceivedEvent {
+    func toReadReceiptInfoModel() -> ReadReceiptInfoModel? {
+        return ReadReceiptInfoModel(
+            senderIdentifier: self.sender,
+            chatMessageId: self.chatMessageId,
+            readOn: self.readOn)
+    }
+ }
