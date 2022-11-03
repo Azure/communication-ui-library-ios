@@ -21,6 +21,12 @@ struct MessageListView: View {
 
     var body: some View {
         messageList
+            .onAppear {
+                viewModel.messageListAppeared()
+            }
+            .onDisappear {
+                viewModel.messageListDisappeared()
+            }
     }
 
     var messageList: some View {
@@ -30,30 +36,30 @@ struct MessageListView: View {
                     ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, _ in
                         let messageViewModel = viewModel.createViewModel(index: index)
                         MessageView(viewModel: messageViewModel)
-                        .id(index)
-//                        .listRowSeparator(.hidden) // Use List when bug is resolved
-//                        .listRowInsets(getEdgeInsets(message: messageViewModel)) // Use List when bug is resolved
-                        .padding(getEdgeInsets(message: messageViewModel))
-                        .onAppear {
-                            // Need a more consistent way of triggering a fetch
-                            // Don't scroll automatically when triggering a fetch
-                            // Pull to refresh?
-                            // Activity Indicator
-                            if index == Constants.minFetchIndex {
-                                viewModel.fetchMessages()
+                            .id(index)
+                        // .listRowSeparator(.hidden) // Use List when bug is resolved
+                        // .listRowInsets(getEdgeInsets(message: messageViewModel)) // Use List when bug is resolved
+                            .padding(getEdgeInsets(message: messageViewModel))
+                            .onAppear {
+                                // Need a more consistent way of triggering a fetch
+                                // Don't scroll automatically when triggering a fetch
+                                // Pull to refresh?
+                                // Activity Indicator
+                                if index == Constants.minFetchIndex {
+                                    viewModel.fetchMessages()
+                                }
+                                viewModel.updateLastReadMessageIndex(index: index)
                             }
-                        }
                     }
                 }
-
-            }
-            .listStyle(.plain)
-            .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
-            .onAppear {
-                scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
-            }
-            .onChange(of: viewModel.messages.count) { _ in
-                scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
+                .listStyle(.plain)
+                .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
+                .onAppear {
+                    scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
+                }
+                .onChange(of: viewModel.messages.count) { _ in
+                    scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
+                }
             }
         }
     }
