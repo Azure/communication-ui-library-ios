@@ -89,11 +89,38 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
     func test_repositoryMiddlewareHandler_participantRemovedMessage_then_participantRemovedMessageCalled() async {
         let removedParticipant = [ParticipantInfoModel(identifier: UnknownIdentifier("SomeUnknownIdentifier"),
                                                        displayName: "MockBot")]
-        await repositoryMiddlewareHandler.participantRemovedMessage(participants: removedParticipant, dispatch: getEmptyDispatch()).value
+        await repositoryMiddlewareHandler.participantRemovedMessage(participants: removedParticipant, localUser: nil, dispatch: getEmptyDispatch()).value
         let lastMessage = mockMessageRepositoryManager.messages.last
         XCTAssertTrue(mockMessageRepositoryManager.addParticipantRemovedMessageCalled)
         XCTAssertEqual(lastMessage?.type, .participantsRemoved)
         XCTAssertEqual(lastMessage?.participants, removedParticipant)
+    }
+
+    func test_repositoryMiddlewareHandler_localParticipantRemoved_then_participantRemovedMessageNotCalled() async {
+        let removedParticipant = ParticipantInfoModel(identifier: UnknownIdentifier("SomeUnknownIdentifier"),
+                                                       displayName: "MockBot")
+        await repositoryMiddlewareHandler.participantRemovedMessage(participants: [removedParticipant],
+                                                                    localUser: removedParticipant,
+                                                                    dispatch: getEmptyDispatch()).value
+        XCTAssertFalse(mockMessageRepositoryManager.addParticipantRemovedMessageCalled)
+    }
+
+    func test_repositoryMiddlewareHandler_localParticipantRemoved_then_participantRemovedActionDispatched() async {
+        let expectation = XCTestExpectation(description: "participant Removed Action Dispatched")
+        let localUser = ParticipantInfoModel(identifier: UnknownIdentifier("SomeUnknownIdentifier"),
+                                                       displayName: "MockBot")
+        func dispatch(action: Action) {
+            switch action {
+            case .participantsAction(.localParticipantRemoved):
+                expectation.fulfill()
+            default:
+                XCTExpectFailure("Should not reach default case.")
+            }
+        }
+        await repositoryMiddlewareHandler.participantRemovedMessage(participants: [localUser],
+                                                                    localUser: localUser,
+                                                              dispatch: dispatch).value
+        wait(for: [expectation], timeout: 1)
     }
 
     func test_repositoryMiddlewareHandler_addReceivedMessage_then_addReceivedMessageCalled() async {
