@@ -12,7 +12,7 @@ class MessageListViewModel: ObservableObject {
     private let sendReadReceiptInterval: Double = 5.0
     private var repositoryUpdatedTimestamp: Date = .distantPast
     private var localUserId: String? // Remove optional?
-    private(set) var sendReadReceiptTimer: Timer?
+    private var sendReadReceiptTimer: Timer?
     private(set) var lastReadMessageIndex: Int?
 
     @Published var messages: [ChatMessageInfoModel]
@@ -100,11 +100,15 @@ class MessageListViewModel: ObservableObject {
         }
     }
 
-    func setSendReadReceiptTimer() {
+    func messageListAppeared() {
         sendReadReceiptTimer = Timer.scheduledTimer(withTimeInterval: sendReadReceiptInterval,
                                                     repeats: true) { [weak self]_ in
             self?.sendReadReceipt(messageIndex: self?.lastReadMessageIndex)
         }
+    }
+
+    func messageListDisappeared() {
+        sendReadReceiptTimer?.invalidate()
     }
 
     func sendReadReceipt(messageIndex: Int?) {
@@ -113,5 +117,9 @@ class MessageListViewModel: ObservableObject {
         }
         let messageId = messages[messageIndex].id
         dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: messageId)))
+    }
+
+    deinit {
+        sendReadReceiptTimer?.invalidate()
     }
 }

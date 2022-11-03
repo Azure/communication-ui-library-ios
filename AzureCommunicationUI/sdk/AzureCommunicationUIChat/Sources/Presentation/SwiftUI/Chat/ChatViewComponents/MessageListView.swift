@@ -22,10 +22,10 @@ struct MessageListView: View {
     var body: some View {
         messageList
             .onAppear {
-                viewModel.setSendReadReceiptTimer()
+                viewModel.messageListAppeared()
             }
             .onDisappear {
-                viewModel.sendReadReceiptTimer?.invalidate()
+                viewModel.messageListDisappeared()
             }
     }
 
