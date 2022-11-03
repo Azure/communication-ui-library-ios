@@ -21,8 +21,8 @@ struct ContainerView: View {
             }
         }
         .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
-        .onAppear { viewFactory.enter(status: .foreground) }
-        .onDisappear { viewFactory.enter(status: .background) }
+        .onAppear { viewFactory.enter(.foreground) }
+        .onDisappear { viewFactory.enter(.background) }
     }
 
     var chatView: ChatView {
