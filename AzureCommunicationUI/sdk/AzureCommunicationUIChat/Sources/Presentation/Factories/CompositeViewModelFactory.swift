@@ -101,8 +101,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         MessageListViewModel(compositeViewModelFactory: self,
                              messageRepositoryManager: messageRepositoryManager,
                              logger: logger,
-                             dispatch: dispatch,
-                             chatState: chatState)
+                             chatState: chatState,
+                             dispatch: store.dispatch)
     }
 
     func makeBottomBarViewModel(dispatch: @escaping ActionDispatch) -> BottomBarViewModel {

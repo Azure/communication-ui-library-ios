@@ -19,7 +19,13 @@ struct MessageListView: View {
 
     var body: some View {
         ZStack {
-            messageList
+        messageList
+            .onAppear {
+                viewModel.messageListAppeared()
+            }
+            .onDisappear {
+                viewModel.messageListDisappeared()
+            }
             jumpToNewMessagesButton
         }
     }
@@ -40,8 +46,8 @@ struct MessageListView: View {
                                 if index == viewModel.minFetchIndex {
                                     viewModel.fetchMessages()
                                 }
+								viewModel.updateLastReadMessageIndex(index: index)
                             }
-                        }
                     }
                 })
             .listStyle(.plain)
