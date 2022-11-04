@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 enum ViewType {
     case setupView

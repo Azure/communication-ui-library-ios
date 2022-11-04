@@ -27,7 +27,7 @@ final class DependencyContainer {
     }
 
     private func registerDefaultDependencies() {
-        register(DefaultLogger() as Logger)
+        register(DefaultLogger(category: "Calling") as Logger)
     }
 
     func registerDependencies(_ callConfiguration: CallConfiguration,

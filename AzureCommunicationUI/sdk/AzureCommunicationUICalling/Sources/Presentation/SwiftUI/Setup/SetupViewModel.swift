@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 class SetupViewModel: ObservableObject {
     private let logger: Logger
