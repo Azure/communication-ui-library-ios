@@ -31,8 +31,6 @@ struct UserEventTimestampModel: BaseInfoModel, Equatable {
 // MARK: For Typing Participants
 extension UserEventTimestampModel {
     var isTyping: Bool {
-        let now = Date()
-        let secondsElapsedSinceTypingStarted = now.timeIntervalSince(timestamp.value)
-        return secondsElapsedSinceTypingStarted < UserEventTimestampModel.typingParticipantTimeout
+        timestamp.value.timeIntervalSinceNow > -UserEventTimestampModel.typingParticipantTimeout
     }
 }
