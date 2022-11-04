@@ -8,7 +8,10 @@ import XCTest
 
 class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
-    func testJoinCallEndCallWithMockCallCallingSDKWrapperHandler() {
+    func testJoinCallEndCallWithMockCallCallingSDKWrapperHandler() throws {
+        guard isUsingMockedCallingSDKWrapper() else {
+            throw XCTSkip("CallingSDKWrapper mock test is in progress, non-mock test is skipped.")
+        }
         tapInterfaceFor(.uiKit)
 
         // turn on calling sdk mock in settings modal
@@ -73,7 +76,10 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     // MARK: End call tests
 
-    func testCallCompositeEndCallGroupCallSwiftUI() {
+    func testCallCompositeEndCallGroupCallSwiftUI() throws {
+        guard !isUsingMockedCallingSDKWrapper() else {
+            throw XCTSkip("CallingSDKWrapper mock test is in progress, non-mock test is skipped.")
+        }
         tapInterfaceFor(.swiftUI)
         tapConnectionTokenType(.acsTokenUrl)
         tapEnabledButton(
@@ -85,7 +91,10 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         toggleLeaveCallDrawer(leaveCall: true)
     }
 
-    func testCallCompositeEndCallTeamsCallSwiftUI() {
+    func testCallCompositeEndCallTeamsCallSwiftUI() throws {
+        guard !isUsingMockedCallingSDKWrapper() else {
+            throw XCTSkip("CallingSDKWrapper mock test is in progress, non-mock test is skipped.")
+        }
         tapInterfaceFor(.swiftUI)
         tapConnectionTokenType(.acsTokenUrl)
         tapMeetingType(.teamsCall)
@@ -98,7 +107,10 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         toggleLeaveCallDrawer(leaveCall: true)
     }
 
-    func testCallCompositeEndCallGroupCallUIKit() {
+    func testCallCompositeEndCallGroupCallUIKit() throws {
+        guard !isUsingMockedCallingSDKWrapper() else {
+            throw XCTSkip("CallingSDKWrapper mock test is in progress, non-mock test is skipped.")
+        }
         tapInterfaceFor(.uiKit)
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
@@ -109,7 +121,10 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         toggleLeaveCallDrawer(leaveCall: true)
     }
 
-    func testCallCompositeEndCallTeamsCallUIKit() {
+    func testCallCompositeEndCallTeamsCallUIKit() throws {
+        guard !isUsingMockedCallingSDKWrapper() else {
+            throw XCTSkip("CallingSDKWrapper mock test is in progress, non-mock test is skipped.")
+        }
         tapInterfaceFor(.uiKit)
         tapMeetingType(.teamsCall)
         tapEnabledButton(
