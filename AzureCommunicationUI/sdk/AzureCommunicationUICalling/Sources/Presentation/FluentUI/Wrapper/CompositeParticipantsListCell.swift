@@ -21,7 +21,6 @@ class CompositeParticipantsListCell: TableViewCell {
         let avatar = MSFAvatar(style: isNameEmpty ? .outlined : .accent, size: .medium)
         avatar.state.primaryText = !isNameEmpty ? avatarParticipantName : nil
         avatar.state.image = participantViewData?.avatarImage
-        let avatarView = avatar.view
 
         selectionStyle = .none
         backgroundColor = UIDevice.current.userInterfaceIdiom == .pad
@@ -38,7 +37,7 @@ class CompositeParticipantsListCell: TableViewCell {
                                                          onHoldString: viewModel.getOnHoldString(),
                                                          isMuted: viewModel.isMuted)
         setup(title: viewModel.getCellDisplayName(with: participantViewData),
-              customView: avatarView,
+              customView: avatar,
               customAccessoryView: customAccessoryView)
         self.titleNumberOfLines = 2
     }
