@@ -25,6 +25,8 @@
 		50370CD328EE507A00ACD234 /* TrouterEventExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CD228EE507A00ACD234 /* TrouterEventExtension.swift */; };
 		5085BF1E28F729990057586D /* ChatThreadInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085BF1D28F729990057586D /* ChatThreadInfoModel.swift */; };
 		5085BF2028F72E0D0057586D /* ParticipantsInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085BF1F28F72E0D0057586D /* ParticipantsInfoModel.swift */; };
+		5085BF24291430AB0057586D /* ChatUIKitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085BF23291430AB0057586D /* ChatUIKitViewController.swift */; };
+		5085BF28291478B70057586D /* ChatSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085BF27291478B70057586D /* ChatSwiftUIView.swift */; };
 		50CB81CB28C26E0C00680566 /* AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB81C228C26E0C00680566 /* AzureCommunicationUIChat.framework */; };
 		50CB81DB28C26EEB00680566 /* ChatComposite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB81DA28C26EEB00680566 /* ChatComposite.swift */; };
 		50CB81E728C2701C00680566 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 50CB81E628C2701C00680566 /* Localizable.strings */; };
@@ -197,6 +199,8 @@
 		50370CD228EE507A00ACD234 /* TrouterEventExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrouterEventExtension.swift; sourceTree = "<group>"; };
 		5085BF1D28F729990057586D /* ChatThreadInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatThreadInfoModel.swift; sourceTree = "<group>"; };
 		5085BF1F28F72E0D0057586D /* ParticipantsInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsInfoModel.swift; sourceTree = "<group>"; };
+		5085BF23291430AB0057586D /* ChatUIKitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUIKitViewController.swift; sourceTree = "<group>"; };
+		5085BF27291478B70057586D /* ChatSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSwiftUIView.swift; sourceTree = "<group>"; };
 		50CB81C228C26E0C00680566 /* AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB81CA28C26E0C00680566 /* AzureCommunicationUIChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzureCommunicationUIChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		50CB81DA28C26EEB00680566 /* ChatComposite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatComposite.swift; sourceTree = "<group>"; };
@@ -436,6 +440,8 @@
 				50CB81EC28C2854100680566 /* Style */,
 				50CB81EB28C2853A00680566 /* FluentUI */,
 				50CB81EA28C2853500680566 /* SwiftUI */,
+				5085BF23291430AB0057586D /* ChatUIKitViewController.swift */,
+				5085BF27291478B70057586D /* ChatSwiftUIView.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -1345,6 +1351,7 @@
 				50CB823128C2999200680566 /* Action.swift in Sources */,
 				50CB825928C29B7200680566 /* UserEventTimestampModel.swift in Sources */,
 				50CB82C428C2AD2300680566 /* AppLifeCycleManager.swift in Sources */,
+				5085BF28291478B70057586D /* ChatSwiftUIView.swift in Sources */,
 				521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */,
 				50CB823328C2999B00680566 /* LifecycleAction.swift in Sources */,
 				A8E5F7B5290892050080B9D5 /* TextMessageViewModel.swift in Sources */,
@@ -1406,6 +1413,7 @@
 				50CB82C128C2AD2300680566 /* Reducer.swift in Sources */,
 				5085BF2028F72E0D0057586D /* ParticipantsInfoModel.swift in Sources */,
 				50F0C58728D38812009D7176 /* MessageViewModel.swift in Sources */,
+				5085BF24291430AB0057586D /* ChatUIKitViewController.swift in Sources */,
 				521A024528FE1E8D002CAD8E /* TypingParticipantsView.swift in Sources */,
 				50CB820D28C286AA00680566 /* MessageRepositoryManager.swift in Sources */,
 			);

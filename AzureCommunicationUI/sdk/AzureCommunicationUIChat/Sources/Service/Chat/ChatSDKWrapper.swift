@@ -47,7 +47,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
     }
 
     deinit {
-        logger.debug("CallingSDKWrapper deallocated")
+        logger.debug("ChatSDKWrapper deallocated")
     }
 
     func initializeChat() async throws {

@@ -3,56 +3,58 @@
 //  Licensed under the MIT License.
 //
 
+import AzureCommunicationUIChat
+import AzureCommunicationCommon
 import SwiftUI
 
-import AzureCommunicationChat
-import AzureCommunicationCommon
-import AzureCommunicationUIChat
-
-enum DemoViewType {
-    case chat
-    case callWithChat
-}
-
-struct CredentialsView: View {
-    @State var isErrorDisplayed: Bool = false
-    @State var isSettingsDisplayed: Bool = false
-    @State var launchHeadless: Bool = true
-    @State var isAlertDisplayed: Bool = false
-    @State var alertTitle: String = ""
-    @State var alertMessage: String = ""
-    @State var unreadMessageCount: Int = 0
+struct ChatSwiftUIDemoView: View {
 
     @ObservedObject var envConfigSubject: EnvConfigSubject
+    @State var isShowingChatView: Bool = false
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
 
-    let viewType: DemoViewType
-
-    let chatComposite = ChatComposite(withOptions: ChatCompositeOptions())
+    @State var chatComposite: ChatComposite?
 
     var body: some View {
+        NavigationView {
+            VStack {
+                NavigationLink(destination: chatView, isActive: $isShowingChatView) {
+                    EmptyView()
+                }
+
+                launchView
+            }
+            .navigationTitle("UI Library - Chat Sample")
+            .navigationBarTitleDisplayMode(.inline)
+        }
+    }
+
+    var launchView: some View {
         VStack {
-            Text("UI Library - Chat Sample")
             acsTokenSelector
             displayNameTextField
             userIdField
             endpointUrlField
             meetingSelector
             startExperience
-            // Comment out for public preview
-//            if viewType == .chat {
-//                Divider()
-//                showCompositeUI
-//            }
             Spacer()
         }
         .padding()
-        .alert(isPresented: $isAlertDisplayed) {
-            Alert(title: Text(alertTitle),
-                  message: Text(alertMessage),
-                  dismissButton: .default(Text("OK")))
+    }
+
+    var chatView: some View {
+        VStack {
+            if let chatComposite = chatComposite {
+                ChatSwiftUIView(with: chatComposite)
+                    .navigationTitle("Chat")
+                    .navigationBarTitleDisplayMode(.inline)
+            } else {
+                EmptyView()
+                    .navigationTitle("Failed to start chat")
+                    .navigationBarTitleDisplayMode(.inline)
+            }
         }
     }
 
@@ -137,53 +139,23 @@ struct CredentialsView: View {
         Group {
             HStack {
                 Button("Start Experience") {
-                    switch viewType {
-                    case .chat:
-                        startChatComposite()
-                    case .callWithChat:
-                        startCallWithChatComposite()
+                    if self.chatComposite == nil {
+                        self.startChatComposite()
                     }
+                    self.isShowingChatView = true
                 }
                 .buttonStyle(DemoButtonStyle())
                 .disabled(isStartExperienceDisabled)
                 .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
 
-                // Comment out for public preview
-//                if viewType == .chat {
-//                    Button("Start Headless") {
-//                        startChatComposite(headless: true)
-//                    }
-//                    .buttonStyle(DemoButtonStyle())
-//                    .accessibility(identifier: AccessibilityId.stopChatAccessibilityID.rawValue)
-//                }
-            }
-        }
-    }
-
-    var showCompositeUI: some View {
-        Group {
-            HStack {
-                ZStack {
-                    Button("Show Chat UI") {
-                        showChatCompositeUI()
-                    }
-                    .buttonStyle(DemoButtonStyle())
-                    .accessibility(identifier: AccessibilityId.showChatUIAccessibilityID.rawValue)
-                    if unreadMessageCount > 0 {
-                        Text("\(unreadMessageCount)")
-                            .padding(6)
-                            .background(Color.red)
-                            .clipShape(Circle())
-                            .foregroundColor(.white)
-                            .offset(x: 65, y: -23)
-                    }
-                }
-
-                Button("Stop Chat") {
-                    stopChatComposite()
+                Button("Stop") {
+                    self.chatComposite = nil
+                    self.isShowingChatView = false
                 }
                 .buttonStyle(DemoButtonStyle())
-                .accessibility(identifier: AccessibilityId.startHeadlessAccessibilityID.rawValue)
+                .disabled(self.chatComposite == nil)
+                .accessibility(identifier: AccessibilityId.stopChatAccessibilityID.rawValue)
+
             }
         }
     }
@@ -204,7 +176,7 @@ struct CredentialsView: View {
     }
 }
 
-extension CredentialsView {
+extension ChatSwiftUIDemoView {
     func startChatComposite(headless: Bool = false) {
         let communicationIdentifier = CommunicationUserIdentifier(envConfigSubject.userId)
         guard let communicationTokenCredential = try? CommunicationTokenCredential(
@@ -213,46 +185,22 @@ extension CredentialsView {
         }
 
         let remoteOptions = RemoteOptions(
-            for: .groupChat(
-                threadId: envConfigSubject.threadId,
-                endpoint: envConfigSubject.endpointUrl),
+            threadId: envConfigSubject.threadId,
             communicationIdentifier: communicationIdentifier,
             credential: communicationTokenCredential,
+            endpointUrl: envConfigSubject.endpointUrl,
             displayName: envConfigSubject.displayName)
-        let localOptions = AzureCommunicationUIChat.LocalOptions(
+        let localOptions = LocalOptions(
             participantViewData: ParticipantViewData(),
             isBackgroundMode: headless)
 
-        chatComposite.launch(
+        self.chatComposite = ChatComposite(
             remoteOptions: remoteOptions,
             localOptions: localOptions)
-
-        if headless {
-            self.alertTitle = ""
-            self.alertMessage = "Chat Composite has launched in background"
-            self.isAlertDisplayed = true
+        guard let chatComposite = self.chatComposite else {
+            return
         }
-    }
-
-    func showChatCompositeUI() {
-        do {
-            try self.chatComposite.showCompositeUI()
-        } catch {
-            self.alertTitle = "Error"
-            self.alertMessage = error.localizedDescription
-            self.isAlertDisplayed = true
-        }
-    }
-
-    func stopChatComposite() {
-        self.chatComposite.stop()
-        self.alertTitle = ""
-        self.alertMessage = "Chat Composite has stopped"
-        self.isAlertDisplayed = true
-    }
-
-    func startCallWithChatComposite() {
-        // stub: to be implemented
+        chatComposite.connect()
     }
 
     private func getTokenCredential() throws -> CommunicationTokenCredential {

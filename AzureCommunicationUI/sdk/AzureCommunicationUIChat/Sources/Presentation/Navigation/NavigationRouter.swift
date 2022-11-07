@@ -42,10 +42,10 @@ class NavigationRouter: ObservableObject {
             isDismissed = false
         case .headless:
             dismiss()
-            guard let didNavigateBack = eventsHandler.onNavigateBack else {
-                return
-            }
-            didNavigateBack()
+//            guard let didNavigateBack = eventsHandler.onNavigateBack else {
+//                return
+//            }
+//            didNavigateBack()
         case .exit:
             dismiss()
         }
@@ -63,9 +63,5 @@ class NavigationRouter: ObservableObject {
         }
         dismissCompositeHostingVC?()
         isDismissed = true
-    }
-
-    func setDismissComposite(_ closure: @escaping () -> Void) {
-        self.dismissCompositeHostingVC = closure
     }
 }
