@@ -22,12 +22,15 @@ class CompositeLeaveCallConfirmationListCell: TableViewCell {
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
 
-        setTitleLabelTextColor(color: isNameEmpty
-                               ? StyleProvider.color.drawerIconDark
-                               : StyleProvider.color.onSurface)
+        let title = NSAttributedString(
+            string: viewModel.title,
+            attributes: [.foregroundColor: isNameEmpty ?
+                         StyleProvider.color.drawerIconDark :
+                            StyleProvider.color.onSurface
+                        ]
+        )
 
-        setup(title: viewModel.title,
-              customView: micImageView)
+        setup(attributedTitle: title, customView: micImageView)
         bottomSeparatorType = .none
     }
 }
