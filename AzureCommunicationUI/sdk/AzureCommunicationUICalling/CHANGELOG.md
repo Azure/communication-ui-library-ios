@@ -11,7 +11,7 @@
 ### Bugs Fixed
 - Fixed rotation does not work until drawer opens on iOS 16 [#363](https://github.com/Azure/communication-ui-library-ios/pull/363)
 - Fixed timer resources deallocation when a user leaves and rejoins a call quickly [#365](https://github.com/Azure/communication-ui-library-ios/pull/365)
-- Fixed end call animaion in landscape mode is not slide off the bottom of the screen correctly [#376](https://github.com/Azure/communication-ui-library-ios/pull/376)
+- Fixed end call animation in landscape mode is not slide off the bottom of the screen correctly [#376](https://github.com/Azure/communication-ui-library-ios/pull/376)
 - Fixed end call drawer title misalignment in landscape mode [#378](https://github.com/Azure/communication-ui-library-ios/pull/378)
 - Fixed remote participants do not see my video stream after resuming my call [#383](https://github.com/Azure/communication-ui-library-ios/pull/383)
 - Fixed drawer being cutoff in large font size and its animation [#384](https://github.com/Azure/communication-ui-library-ios/pull/384)
