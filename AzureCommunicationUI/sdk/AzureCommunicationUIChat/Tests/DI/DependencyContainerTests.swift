@@ -22,15 +22,16 @@ class DependencyContainerTests: XCTestCase {
         let communicationTokenCredential = try? CommunicationTokenCredential(token: sampleToken)
         let communicationIdentifier = CommunicationUserIdentifier("id")
         let displayName = ""
-        let chatConfiguration = try? ChatConfiguration(
-            locator: .groupChat(threadId: "threadId", endpoint: "endpoint"),
+        let chatConfiguration = ChatConfiguration(
+            threadId: "threadId",
             communicationIdentifier: communicationIdentifier,
             credential: communicationTokenCredential!,
+            endpoint: "endpoint",
             displayName: displayName)
 
         let callCompositeEventsHandler = ChatComposite.Events()
 
-        dependencyContainer.registerDependencies(chatConfiguration!,
+        dependencyContainer.registerDependencies(chatConfiguration,
                                                  localOptions: nil,
                                                  chatCompositeEventsHandler: callCompositeEventsHandler)
 
