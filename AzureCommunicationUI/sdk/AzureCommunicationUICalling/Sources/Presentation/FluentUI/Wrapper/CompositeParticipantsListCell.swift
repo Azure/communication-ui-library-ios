@@ -30,13 +30,16 @@ class CompositeParticipantsListCell: TableViewCell {
         accessibilityLabel = viewModel.getCellAccessibilityLabel(with: participantViewData)
         accessibilityTraits.remove(.button)
 
-        setTitleLabelTextColor(color: isNameEmpty ?
-                               StyleProvider.color.drawerIconDark :
-                               StyleProvider.color.onSurface)
+        let title = NSAttributedString(string: viewModel.getCellDisplayName(with: participantViewData),
+                           attributes: [.foregroundColor: isNameEmpty ?
+                                        StyleProvider.color.drawerIconDark :
+                                        StyleProvider.color.onSurface]
+        )
+
         let customAccessoryView = getCustomAccessoryView(isHold: viewModel.isHold,
                                                          onHoldString: viewModel.getOnHoldString(),
                                                          isMuted: viewModel.isMuted)
-        setup(title: viewModel.getCellDisplayName(with: participantViewData),
+        setup(attributedTitle: title,
               customView: avatar,
               customAccessoryView: customAccessoryView)
         self.titleNumberOfLines = 2
