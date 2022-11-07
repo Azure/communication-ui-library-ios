@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 class MessageListViewModel: ObservableObject {
     private let messageRepositoryManager: MessageRepositoryManagerProtocol
