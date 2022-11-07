@@ -31,6 +31,7 @@ class PrimaryButtonViewModel: ObservableObject {
 
     func update(buttonLabel: String?) {
         if buttonLabel != nil && self.buttonLabel != buttonLabel {
+            print("SCROLL - Update button label: \(buttonLabel!)")
             self.buttonLabel = buttonLabel!
         }
     }

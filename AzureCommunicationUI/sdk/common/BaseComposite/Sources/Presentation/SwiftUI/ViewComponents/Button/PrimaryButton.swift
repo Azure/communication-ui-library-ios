@@ -13,8 +13,8 @@ struct PrimaryButton: View {
     var body: some View {
         // accessibilityElement(children: .combine) is required because
         // the CompositeButton is represented as a superview with subviews
-        CompositeButton(buttonStyle: viewModel.buttonStyle,
-                        buttonLabel: viewModel.buttonLabel,
+        CompositeButton(buttonLabel: $viewModel.buttonLabel,
+                        buttonStyle: viewModel.buttonStyle,
                         iconName: viewModel.iconName)
             .onTapGesture(perform: viewModel.action)
             .frame(height: height)

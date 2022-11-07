@@ -17,6 +17,7 @@ class MessageListViewModel: ObservableObject {
     private var localUserId: String?
     private var latestMessageId: String?
     private var sendReadReceiptTimer: Timer?
+    private(set) var lastReadMessageId: String?
     private(set) var lastReadMessageIndex: Int?
 
     let minFetchIndex: Int = 40
@@ -54,9 +55,9 @@ class MessageListViewModel: ObservableObject {
 //      .update(accessibilityLabel: self.localizationProvider.getLocalizedString(.jumpToNewMessages))
     }
 
-    private var numberOfNewMessages: Int {
-        (messages.count - 1) - (lastReadMessageIndex ?? 0)
-    }
+//    private var numberOfNewMessages: Int {
+//        (messages.count - 1) - (lastReadMessageIndex ?? (messages.count - 1))
+//    }
 
     private var jumpToNewMessagesLabel: String {
         numberOfNewMessages < 100
@@ -91,6 +92,7 @@ class MessageListViewModel: ObservableObject {
             // Scroll for initial load of messages
             // Hide messages and show activity indicator?
             if !haveInitialMessagesLoaded && messages.count > 1 {
+                lastReadMessageIndex = messages.count - 1
                 shouldScrollToBottom = true
                 haveInitialMessagesLoaded = true
             }
@@ -100,6 +102,8 @@ class MessageListViewModel: ObservableObject {
                 latestMessageId = messages.last?.id
                 shouldScrollToBottom = isLocalUser(message: messages.last) || isAtBottom()
             }
+
+            print("SCROLL - Number of new messages: \(numberOfNewMessages)")
 
             if numberOfNewMessages > 0 {
                 showJumpToNewMessages = true
@@ -143,31 +147,37 @@ class MessageListViewModel: ObservableObject {
         }
     }
 
-    func updateLastReadMessageIndex(index: Int) {
-        guard index >= 0, index < messages.count else {
-            return
-        }
-        let message = messages[index]
+    func updateLastReadMessageId(message: ChatMessageInfoModel, index: Int) {
+//        guard index >= 0, index < messages.count else {
+//            return
+//        }
+//        let message = messages[index]
         /* There will be messages that do not have senderId, such as system messages
          For those messages, we still want to send read receipt
          That's why we default senderId to empty string, which will pass the guard statement senderId != localUserId */
-        let senderId = message.senderId ?? ""
-        guard let localUserId = localUserId, senderId != localUserId else {
+//        let senderId = message.senderId ?? ""
+//        guard let localUserId = localUserId, senderId != localUserId else {
+//            return
+//        }
+        guard !isLocalUser(message: message) else {
             return
         }
-        guard let lastReadMessageIndex = self.lastReadMessageIndex else {
+//        guard let lastReadMessageIndex = self.lastReadMessageIndex else {
+//            self.lastReadMessageIndex = index
+//            print("SCROLL - Last Message Index: \(self.lastReadMessageIndex)")
+//            return
+//        }
+        if Int(message.id) ?? 0 > Int(lastReadMessageId) ?? 0 {
+            self.lastReadMessageId = message.id
             self.lastReadMessageIndex = index
-            return
-        }
-        if index > lastReadMessageIndex {
-            self.lastReadMessageIndex = index
+            print("SCROLL - Last Read Message Id: \(self.lastReadMessageId)")
         }
     }
 
     func messageListAppeared() {
         sendReadReceiptTimer = Timer.scheduledTimer(withTimeInterval: sendReadReceiptInterval,
                                                     repeats: true) { [weak self]_ in
-            self?.sendReadReceipt(messageIndex: self?.lastReadMessageIndex)
+            self?.sendReadReceipt(messageId: self?.lastReadMessageId)
         }
     }
 
@@ -175,11 +185,14 @@ class MessageListViewModel: ObservableObject {
         sendReadReceiptTimer?.invalidate()
     }
 
-    func sendReadReceipt(messageIndex: Int?) {
-        guard let messageIndex = messageIndex, messageIndex >= 0, messageIndex < messages.count else {
+    func sendReadReceipt(messageId: String?) {
+//        guard let messageIndex = messageIndex, messageIndex >= 0, messageIndex < messages.count else {
+//            return
+//        }
+//        let messageId = messages[messageIndex].id
+        guard let messageId = messageId else {
             return
         }
-        let messageId = messages[messageIndex].id
         dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: messageId)))
     }
 

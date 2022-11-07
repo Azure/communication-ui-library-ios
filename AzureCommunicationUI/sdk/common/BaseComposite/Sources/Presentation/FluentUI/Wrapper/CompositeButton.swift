@@ -8,13 +8,14 @@ import FluentUI
 import UIKit
 
 struct CompositeButton: UIViewRepresentable {
+    @Binding private var buttonLabel: String
+
     let buttonStyle: FluentUI.ButtonStyle
-    let buttonLabel: String
     let iconName: CompositeIcon?
 
-    init(buttonStyle: FluentUI.ButtonStyle, buttonLabel: String, iconName: CompositeIcon? = nil) {
+    init(buttonLabel: Binding<String>, buttonStyle: FluentUI.ButtonStyle, iconName: CompositeIcon? = nil) {
+        _buttonLabel = buttonLabel
         self.buttonStyle = buttonStyle
-        self.buttonLabel = buttonLabel
         self.iconName = iconName
     }
 
@@ -30,6 +31,7 @@ struct CompositeButton: UIViewRepresentable {
         return button
     }
 
-    func updateUIView(_ uiView: FluentUI.Button, context: Context) {
+    func updateUIView(_ button: FluentUI.Button, context: Context) {
+        button.setTitle(buttonLabel, for: .normal)
     }
 }
