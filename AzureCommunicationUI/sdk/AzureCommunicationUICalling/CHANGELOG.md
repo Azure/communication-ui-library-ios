@@ -5,9 +5,11 @@
 - Implemented new feature where local user would be removed from the participant list when the app is terminated [#352](https://github.com/Azure/communication-ui-library-ios/pull/352)
 - Added aadToken for getting the ACS token in joining a call [#380](https://github.com/Azure/communication-ui-library-ios/pull/380)
 
+### Breaking Changes
+- Changed callEnd error inside CallCompositeError from mutable to inmutable [#364](https://github.com/Azure/communication-ui-library-ios/pull/364)
+
 ### Bugs Fixed
 - Fixed rotation does not work until drawer opens on iOS 16 [#363](https://github.com/Azure/communication-ui-library-ios/pull/363)
-- Fixed an issue where the error is mutable inside CallCompositeError [#364](https://github.com/Azure/communication-ui-library-ios/pull/364)
 - Fixed timer resources deallocation when a user leaves and rejoins a call quickly [#365](https://github.com/Azure/communication-ui-library-ios/pull/365)
 - Fixed end call animaion in landscape mode is not slide off the bottom of the screen correctly [#376](https://github.com/Azure/communication-ui-library-ios/pull/376)
 - Fixed end call drawer title misalignment in landscape mode [#378](https://github.com/Azure/communication-ui-library-ios/pull/378)
