@@ -23,6 +23,7 @@ class CompositeParticipantsListCell: TableViewCell {
         avatar.state.image = participantViewData?.avatarImage
 
         selectionStyle = .none
+        backgroundStyleType = .custom
         backgroundColor = UIDevice.current.userInterfaceIdiom == .pad
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
