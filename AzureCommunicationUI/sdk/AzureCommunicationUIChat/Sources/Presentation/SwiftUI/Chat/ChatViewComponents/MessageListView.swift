@@ -40,14 +40,15 @@ struct MessageListView: View {
                         ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, _ in
                             let messageViewModel = viewModel.createViewModel(index: index)
                             MessageView(viewModel: messageViewModel)
-                            .id(index)
-                            .padding(getEdgeInsets(message: messageViewModel))
-                            .onAppear {
-                                if index == viewModel.minFetchIndex {
-                                    viewModel.fetchMessages()
+                                .id(index)
+                                .padding(getEdgeInsets(message: messageViewModel))
+                                .onAppear {
+                                    if index == viewModel.minFetchIndex {
+                                        viewModel.fetchMessages()
+                                    }
+                                    viewModel.updateLastReadMessageIndex(index: index)
                                 }
-								viewModel.updateLastReadMessageIndex(index: index)
-                            }
+                        }
                     }
                 })
             .listStyle(.plain)
