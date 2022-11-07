@@ -63,8 +63,9 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
             eventModel = ChatEventModel(eventType: .typingIndicatorReceived,
                                         infoModel: userEventTimestamp)
         case let .readReceiptReceived(event):
-            // Stub: not implemented
             logger.info("Received a ReadReceiptReceivedEvent: \(event)")
+            eventModel = ChatEventModel(eventType: .readReceiptReceived,
+                                        infoModel: event.toReadReceiptInfoModel())
         case let .chatThreadDeleted(event):
             logger.info("Received a ChatThreadDeletedEvent: \(event)")
             eventModel = ChatEventModel(
