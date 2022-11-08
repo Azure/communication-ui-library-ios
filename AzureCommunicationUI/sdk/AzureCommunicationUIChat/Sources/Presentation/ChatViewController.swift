@@ -7,23 +7,17 @@ import UIKit
 import Combine
 import SwiftUI
 
-public class ChatUIKitViewController: UIViewController {
-
-    private var chatComposite: ChatComposite
-    private var dependencyContainer: DependencyContainer
+public class ChatViewController: UIViewController {
     var chatView: UIHostingController<ContainerView>!
 
     public init(with chatComposite: ChatComposite) {
-
-        self.chatComposite = chatComposite
-        self.dependencyContainer = self.chatComposite.dependencyContainer!
         super.init(nibName: nil, bundle: nil)
-        let localizationProvider = self.dependencyContainer.resolve() as LocalizationProviderProtocol
+        let localizationProvider = chatComposite.dependencyContainer.resolve() as LocalizationProviderProtocol
 
-        let containerUIHostingController = self.chatComposite.makeContainerUIHostingController(
-            router: self.dependencyContainer.resolve(),
-            logger: self.dependencyContainer.resolve(),
-            viewFactory: self.dependencyContainer.resolve(),
+        let containerUIHostingController = chatComposite.makeContainerUIHostingController(
+            router: chatComposite.dependencyContainer.resolve(),
+            logger: chatComposite.dependencyContainer.resolve(),
+            viewFactory: chatComposite.dependencyContainer.resolve(),
             isRightToLeft: localizationProvider.isRightToLeft,
             canDismiss: true)
 

@@ -5,8 +5,8 @@
 
 import SwiftUI
 
-struct ChatView: View {
-    @StateObject var viewModel: ChatViewModel
+struct ChatBaseView: View {
+    @StateObject var viewModel: ChatBaseViewModel
 
     var body: some View {
         VStack {

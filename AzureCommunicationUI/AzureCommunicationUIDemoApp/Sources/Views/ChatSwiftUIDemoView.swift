@@ -47,7 +47,7 @@ struct ChatSwiftUIDemoView: View {
     var chatView: some View {
         VStack {
             if let chatComposite = chatComposite {
-                ChatSwiftUIView(with: chatComposite)
+                ChatView(with: chatComposite)
                     .navigationTitle("Chat")
                     .navigationBarTitleDisplayMode(.inline)
             } else {

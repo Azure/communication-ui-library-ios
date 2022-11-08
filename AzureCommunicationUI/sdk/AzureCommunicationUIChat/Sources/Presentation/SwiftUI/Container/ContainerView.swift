@@ -23,7 +23,7 @@ struct ContainerView: View {
         .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
     }
 
-    var chatView: ChatView {
+    var chatView: ChatBaseView {
         logger.debug("Displaying view: chatView")
         return viewFactory.makeChatView()
     }

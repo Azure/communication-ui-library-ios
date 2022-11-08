@@ -295,7 +295,7 @@ class ChatUIKitDemoViewController: UIViewController {
                 return
             }
             chatComposite.connect()
-            let chatViewController = ChatUIKitViewController(
+            let chatViewController = ChatViewController(
                 with: chatComposite)
 
             let closeItem = UIBarButtonItem(

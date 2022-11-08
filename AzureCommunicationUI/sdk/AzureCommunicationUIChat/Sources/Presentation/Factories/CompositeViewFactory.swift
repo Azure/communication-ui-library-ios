@@ -6,7 +6,7 @@
 import Foundation
 
 protocol CompositeViewFactoryProtocol {
-    func makeChatView() -> ChatView
+    func makeChatView() -> ChatBaseView
 }
 
 struct CompositeViewFactory: CompositeViewFactoryProtocol {
@@ -19,7 +19,7 @@ struct CompositeViewFactory: CompositeViewFactoryProtocol {
         self.compositeViewModelFactory = compositeViewModelFactory
     }
 
-    func makeChatView() -> ChatView {
-        return ChatView(viewModel: compositeViewModelFactory.getChatViewModel())
+    func makeChatView() -> ChatBaseView {
+        return ChatBaseView(viewModel: compositeViewModelFactory.getChatViewModel())
     }
 }

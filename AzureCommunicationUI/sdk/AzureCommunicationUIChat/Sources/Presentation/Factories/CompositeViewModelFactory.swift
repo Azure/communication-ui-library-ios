@@ -8,7 +8,7 @@ import FluentUI
 
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
-    func getChatViewModel() -> ChatViewModel
+    func getChatViewModel() -> ChatBaseViewModel
 
     // MARK: ComponentViewModels
     func makeIconButtonViewModel(iconName: CompositeIcon,
@@ -32,7 +32,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let messageRepositoryManager: MessageRepositoryManagerProtocol
     private let store: Store<AppState>
 
-    private weak var chatViewModel: ChatViewModel?
+    private weak var chatViewModel: ChatBaseViewModel?
 
     // unit test needed
     // - only skeleton code to show view, class not finalized yet
@@ -49,9 +49,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     // MARK: CompositeViewModels
-    func getChatViewModel() -> ChatViewModel {
+    func getChatViewModel() -> ChatBaseViewModel {
         guard let viewModel = self.chatViewModel else {
-            let viewModel = ChatViewModel(compositeViewModelFactory: self,
+            let viewModel = ChatBaseViewModel(compositeViewModelFactory: self,
                                           logger: logger,
                                           store: store)
             self.chatViewModel = viewModel

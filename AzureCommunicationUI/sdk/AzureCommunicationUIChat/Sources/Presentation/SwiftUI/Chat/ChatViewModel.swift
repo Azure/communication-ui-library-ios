@@ -6,7 +6,7 @@
 import Foundation
 import Combine
 
-class ChatViewModel: ObservableObject {
+class ChatBaseViewModel: ObservableObject {
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
     private let store: Store<AppState>

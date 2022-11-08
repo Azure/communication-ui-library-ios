@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-public struct ChatSwiftUIView: View {
+public struct ChatView: View {
 
     let chatComposite: ChatComposite
 
@@ -17,11 +17,11 @@ public struct ChatSwiftUIView: View {
     public init(with chatComposite: ChatComposite) {
         self.chatComposite = chatComposite
 
-        self.router = self.chatComposite.dependencyContainer!.resolve()
-        self.logger = self.chatComposite.dependencyContainer!.resolve()
-        self.viewFactory = self.chatComposite.dependencyContainer!.resolve()
+        self.router = self.chatComposite.dependencyContainer.resolve()
+        self.logger = self.chatComposite.dependencyContainer.resolve()
+        self.viewFactory = self.chatComposite.dependencyContainer.resolve()
 
-        let localizationProvider: LocalizationProviderProtocol = self.chatComposite.dependencyContainer!.resolve()
+        let localizationProvider: LocalizationProviderProtocol = self.chatComposite.dependencyContainer.resolve()
         self.isRightToLeft = localizationProvider.isRightToLeft
 
     }
