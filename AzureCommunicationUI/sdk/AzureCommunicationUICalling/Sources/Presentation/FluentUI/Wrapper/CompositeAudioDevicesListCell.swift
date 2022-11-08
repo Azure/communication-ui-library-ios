@@ -30,12 +30,10 @@ class CompositeAudioDevicesListCell: TableViewCell {
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
 
-        setup(
-            attributedTitle: NSAttributedString(
-                string: viewModel.title,
-                attributes: [.foregroundColor: StyleProvider.color.onSurface]
-            ),
-            customView: speakerImageView,
-            customAccessoryView: checkmarkImageView)
+        setTitleLabelTextColor(color: StyleProvider.color.onSurface)
+
+        setup(title: viewModel.title,
+              customView: speakerImageView,
+              customAccessoryView: checkmarkImageView)
     }
 }
