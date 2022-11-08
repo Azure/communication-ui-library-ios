@@ -6,7 +6,6 @@
 
 This folder contains a series of scripts that facilitates the release process for UI iOS team. In particular, these scripts are meant to update release version across different files such as README, info plist, pbxproj, etc.
 
-### List
 
 | Name                 | Area        | Link |
 |----------------------|-------------|------|
@@ -17,7 +16,7 @@ This folder contains a series of scripts that facilitates the release process fo
 | TBA                  | Hero Sample | TBA  |
 
 
-### Usage
+## Usage:
 
 #### Main Repo
 
