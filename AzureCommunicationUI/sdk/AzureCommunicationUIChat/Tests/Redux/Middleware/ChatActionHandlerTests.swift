@@ -142,7 +142,7 @@ class ChatActionHandlerTests: XCTestCase {
         let sut = makeSUT()
         func dispatch(action: Action) {
             switch action {
-            case .participantsAction(.clearIdletypingParticipants):
+            case .participantsAction(.clearIdleTypingParticipants):
                 expectation.fulfill()
             default:
                 XCTFail("Unknown Action Dispatched")
