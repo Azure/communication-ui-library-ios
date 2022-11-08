@@ -97,9 +97,16 @@ class MessageListViewModel: ObservableObject {
                 haveInitialMessagesLoaded = true
             }
 
+            messages.
+
             // Scroll to new message
+            // Update number of new messages
             if messages.last?.id != latestMessageId {
                 latestMessageId = messages.last?.id
+
+                let lastReadMessageIndex = messages.firstIndex { $0.id == lastReadMessageId }
+                
+
                 shouldScrollToBottom = isLocalUser(message: messages.last) || isAtBottom()
             }
 
