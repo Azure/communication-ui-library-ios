@@ -19,7 +19,7 @@ pattern_pbx = 'MARKETING_VERSION = %s'
 def getCurrentVersion():
 	if new_Version == '':
 		sys.exit('new version is required for this script.' + 
-			' Usage: main.py -v NEW_VERSION')
+			' Usage: main-repo-updater.py -v NEW_VERSION')
 	with open(acs_UI_library_Path + info_plist_path, 'rb') as fi_info:
 		pList = plistlib.load(fi_info)
 	oldVersion = pList['UILibrarySemVersion']
@@ -43,11 +43,11 @@ def main(argv):
 		opts, args = getopt.getopt(argv, "hv:", ["help", "version="])
 	except getopt.GetoptError:
 		sys.exit('require new version for this script. ' +
-			'Usage: main.py -v NEW_VERSION or main.py --version NEW_VERSION')
+			'Usage: main-repo-updater.py -v NEW_VERSION or main-repo-updater.py --version NEW_VERSION')
 	for opt, arg in opts:
 		if opt == '-h':
-			sys.exit('Usage: main.py -v NEW_VERSION or ' + 
-				' main.py --version NEW_VERSION')
+			sys.exit('Usage: main-repo-updater.py -v NEW_VERSION or ' + 
+				' main-repo-updater.py --version NEW_VERSION')
 		elif opt in ('-v', '--version'):
 			global new_Version 
 			new_Version = arg
