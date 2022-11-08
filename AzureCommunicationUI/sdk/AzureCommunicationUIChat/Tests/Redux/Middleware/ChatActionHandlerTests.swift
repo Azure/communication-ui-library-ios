@@ -137,7 +137,7 @@ class ChatActionHandlerTests: XCTestCase {
         XCTAssertTrue(mockChatService.sendReadReceiptCalled)
     }
 
-    func test_chatActionHandler_recieveTypingIndicator_then_dispatchClearIdletypingParticipantsAction() async {
+    func test_chatActionHandler_recieveTypingIndicator_then_dispatchClearIdleTypingParticipantsAction() async {
         let expectation = XCTestExpectation(description: "Dispatch Clear Idle Typing Participants Success")
         let sut = makeSUT()
         func dispatch(action: Action) {
