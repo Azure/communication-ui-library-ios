@@ -15,7 +15,8 @@
 - Fixed end call drawer title misalignment in landscape mode [#378](https://github.com/Azure/communication-ui-library-ios/pull/378)
 - Fixed remote participants do not see my video stream after resuming my call [#383](https://github.com/Azure/communication-ui-library-ios/pull/383)
 - Fixed drawer being cutoff in large font size and its animation [#384](https://github.com/Azure/communication-ui-library-ios/pull/384)
-- Fixed issue with call on hold video not showing up for remote user when resuming [#414](https://github.com/Azure/communication-ui-library-ios/pull/414)
+- Fixed issue with call on hold video not showing up for remote user when resuming 
+    [#414](https://github.com/Azure/communication-ui-library-ios/pull/414)
 - Fixed failure to grab ownership of microphone from other audio app [#423](https://github.com/Azure/communication-ui-library-ios/pull/423)
 
 ### Other Changes
