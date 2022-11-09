@@ -20,13 +20,21 @@ extension Reducer where State == ParticipantsState,
         var typingIndicatorTimestamp = participantsState.typingIndicatorUpdatedTimestamp
 
         switch action {
+        case .participantsAction(.fetchListOfParticipantsSuccess(let participants)):
+            var newParticipants: [String: ParticipantInfoModel] = [:]
+            for participant in participants {
+                newParticipants[participant.id] = participant
+            }
+            currentParticipants = newParticipants
+            typingIndicatorMap = [:]
+            participantsUpdatedTimestamp = currentTimestamp
+            typingIndicatorTimestamp = currentTimestamp
+            print("listParticipants \(currentParticipants.count)")
         case .participantsAction(.participantsAdded(let participants)):
-            var currentParticipants = participantsState.participants
             for participant in participants {
                 currentParticipants[participant.id] = participant
             }
-            let state = ParticipantsState(participants: currentParticipants)
-            return state
+            participantsUpdatedTimestamp = currentTimestamp
         case .participantsAction(.participantsRemoved(let participants)):
             for participant in participants {
                 guard currentParticipants[participant.id] != nil else {
@@ -38,11 +46,6 @@ extension Reducer where State == ParticipantsState,
             }
             participantsUpdatedTimestamp = currentTimestamp
             typingIndicatorTimestamp = currentTimestamp
-
-            let state = ParticipantsState(participants: currentParticipants,
-                                          participantsUpdatedTimestamp: participantsUpdatedTimestamp)
-
-            return state
         case .participantsAction(.typingIndicatorReceived(userEventTimestamp: let userEventTimestamp)):
             let typingExpiringTimestamp = userEventTimestamp.timestamp.value + speakingDurationSeconds
             typingIndicatorMap[userEventTimestamp.id] = typingExpiringTimestamp
