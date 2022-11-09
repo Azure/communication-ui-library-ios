@@ -142,6 +142,7 @@
 		50F0C5C628D38CE4009D7176 /* MessageRepositoryManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C528D38CE4009D7176 /* MessageRepositoryManagerTests.swift */; };
 		50F0C5C828D38CF1009D7176 /* RemoteOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */; };
 		50F0C5CA28D38D00009D7176 /* DependencyContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */; };
+		5204C6B6291C72E80086DC3D /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5204C6B5291C72E80086DC3D /* EventManager.swift */; };
 		521A024028FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A023E28FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift */; };
 		521A024128FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A023F28FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift */; };
 		521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */; };
@@ -320,6 +321,7 @@
 		50F0C5C528D38CE4009D7176 /* MessageRepositoryManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRepositoryManagerTests.swift; sourceTree = "<group>"; };
 		50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteOptionsTests.swift; sourceTree = "<group>"; };
 		50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainerTests.swift; sourceTree = "<group>"; };
+		5204C6B5291C72E80086DC3D /* EventManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
 		521A023E28FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantAvatarGroup.swift; sourceTree = "<group>"; };
 		521A023F28FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantAvatarGroupContainer.swift; sourceTree = "<group>"; };
 		521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantsViewModel.swift; sourceTree = "<group>"; };
@@ -567,6 +569,7 @@
 				50CB820828C2868A00680566 /* AvatarViewManager.swift */,
 				50CB820A28C2869D00680566 /* RemoteParticipantsManager.swift */,
 				50CB820C28C286AA00680566 /* MessageRepositoryManager.swift */,
+				5204C6B5291C72E80086DC3D /* EventManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1395,6 +1398,7 @@
 				50CB823D28C29AC900680566 /* AppLifeCycleState.swift in Sources */,
 				6956EB16291341B0003CCC7E /* ReadReceiptInfoModel.swift in Sources */,
 				50CB82BF28C2AD2300680566 /* MappedSequence.swift in Sources */,
+				5204C6B6291C72E80086DC3D /* EventManager.swift in Sources */,
 				BD80293F28ECCD7800A55CAC /* TextMessageView.swift in Sources */,
 				A88000ED29070F790076B0E2 /* HtmlMessageView.swift in Sources */,
 				50CB81DB28C26EEB00680566 /* ChatComposite.swift in Sources */,

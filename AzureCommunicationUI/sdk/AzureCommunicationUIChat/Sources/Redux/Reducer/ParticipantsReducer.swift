@@ -12,6 +12,7 @@ extension Reducer where State == ParticipantsState,
         // MARK: Chat Participant
         var currentParticipants = participantsState.participants
         var participantsUpdatedTimestamp = participantsState.participantsUpdatedTimestamp
+        var localParticipantStatus: LocalParticipantStatus = participantsState.localParticipantStatus
 
         // MARK: Typing Indicator
         let currentTimestamp = Date()
@@ -60,6 +61,8 @@ extension Reducer where State == ParticipantsState,
             default:
                 return participantsState
             }
+        case .participantsAction(.localParticipantRemoved):
+            localParticipantStatus = .removed
         default:
             return participantsState
         }
@@ -67,6 +70,7 @@ extension Reducer where State == ParticipantsState,
         return ParticipantsState(participants: currentParticipants,
                                  participantsUpdatedTimestamp: participantsUpdatedTimestamp,
                                  typingIndicatorMap: typingIndicatorMap,
-                                 typingIndicatorUpdatedTimestamp: typingIndicatorTimestamp)
+                                 typingIndicatorUpdatedTimestamp: typingIndicatorTimestamp,
+                                 localParticipantStatus: localParticipantStatus)
     }
 }
