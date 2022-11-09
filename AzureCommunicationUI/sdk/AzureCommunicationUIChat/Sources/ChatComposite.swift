@@ -37,9 +37,9 @@ public class ChatComposite {
 
     /// Create an instance of ChatComposite with options.
     /// - Parameter options: The ChatCompositeOptions used to configure the experience.
-    public init(withOptions options: ChatCompositeOptions? = nil,
-                remoteOptions: RemoteOptions,
-                localOptions: LocalOptions? = nil) {
+    public init(remoteOptions: RemoteOptions,
+                localOptions: LocalOptions? = nil,
+                withOptions options: ChatCompositeOptions? = nil) {
         self.events = Events()
         self.themeOptions = options?.themeOptions
         self.localizationOptions = options?.localizationOptions
