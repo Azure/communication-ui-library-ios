@@ -3,9 +3,10 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import AzureCommunicationCommon
+
 import Combine
+import Foundation
 
 protocol AvatarViewManagerProtocol {
     var updatedId: PassthroughSubject<String?, Never> { get }

@@ -3,9 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import SwiftUI
-import FluentUI
 import Combine
+import FluentUI
+import SwiftUI
 
 struct ParticipantGridCellView: View {
     @ObservedObject var viewModel: ParticipantGridCellViewModel

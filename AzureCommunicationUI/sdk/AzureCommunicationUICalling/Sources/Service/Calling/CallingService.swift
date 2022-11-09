@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 protocol CallingServiceProtocol {
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> { get }

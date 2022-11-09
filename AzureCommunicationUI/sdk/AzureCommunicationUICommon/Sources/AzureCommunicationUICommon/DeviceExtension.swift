@@ -10,7 +10,7 @@ extension UIDevice {
 
     /// Returns `true` if the device has a home bar in landscape
     var hasHomeBar: Bool {
-        guard #available(iOS 11.0, *), let window =
+        guard let window =
             UIApplication.shared.windows.filter({$0.isKeyWindow}).first
         else {
             return false

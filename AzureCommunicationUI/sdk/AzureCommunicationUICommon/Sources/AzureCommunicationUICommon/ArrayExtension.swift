@@ -24,7 +24,6 @@ extension Array {
                 }
             }
         }
-
         return chunkedArray.reversed()
     }
 }
