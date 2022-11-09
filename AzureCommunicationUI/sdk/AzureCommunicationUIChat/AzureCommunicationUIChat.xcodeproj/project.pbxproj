@@ -50,7 +50,7 @@
 		50CB821728C2870500680566 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB821628C2870500680566 /* ContainerView.swift */; };
 		50CB821928C2872600680566 /* ContainerUIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB821828C2872600680566 /* ContainerUIHostingController.swift */; };
 		50CB821D28C2875D00680566 /* ChatBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB821C28C2875D00680566 /* ChatBaseView.swift */; };
-		50CB821F28C2876900680566 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB821E28C2876900680566 /* ChatViewModel.swift */; };
+		50CB821F28C2876900680566 /* ChatBaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB821E28C2876900680566 /* ChatBaseViewModel.swift */; };
 		50CB822128C28CD600680566 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB822028C28CD600680566 /* DependencyContainer.swift */; };
 		50CB822728C2995A00680566 /* ChatMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB822628C2995A00680566 /* ChatMiddleware.swift */; };
 		50CB822928C2996200680566 /* ChatActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB822828C2996200680566 /* ChatActionHandler.swift */; };
@@ -227,7 +227,7 @@
 		50CB821628C2870500680566 /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
 		50CB821828C2872600680566 /* ContainerUIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerUIHostingController.swift; sourceTree = "<group>"; };
 		50CB821C28C2875D00680566 /* ChatBaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBaseView.swift; sourceTree = "<group>"; };
-		50CB821E28C2876900680566 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		50CB821E28C2876900680566 /* ChatBaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBaseViewModel.swift; sourceTree = "<group>"; };
 		50CB822028C28CD600680566 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		50CB822628C2995A00680566 /* ChatMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMiddleware.swift; sourceTree = "<group>"; };
 		50CB822828C2996200680566 /* ChatActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatActionHandler.swift; sourceTree = "<group>"; };
@@ -598,7 +598,7 @@
 			children = (
 				50CB821B28C2874000680566 /* ChatViewComponents */,
 				50CB821C28C2875D00680566 /* ChatBaseView.swift */,
-				50CB821E28C2876900680566 /* ChatViewModel.swift */,
+				50CB821E28C2876900680566 /* ChatBaseViewModel.swift */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -1415,7 +1415,7 @@
 				50CB825328C29B4800680566 /* ParticipantInfoModel.swift in Sources */,
 				50CB826B28C29E7B00680566 /* StringConstants.swift in Sources */,
 				50370C6928EB544400ACD234 /* RepositoryAction.swift in Sources */,
-				50CB821F28C2876900680566 /* ChatViewModel.swift in Sources */,
+				50CB821F28C2876900680566 /* ChatBaseViewModel.swift in Sources */,
 				50CB826328C29E1500680566 /* ChatSDKEventsHandler.swift in Sources */,
 				BD1A6A3E28ECDFAB005E0B70 /* MessageListViewModel.swift in Sources */,
 				50CB82C128C2AD2300680566 /* Reducer.swift in Sources */,
