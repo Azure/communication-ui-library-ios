@@ -11,7 +11,7 @@ public struct ChatCompositeErrorCode {
     public static let chatJoin: String = "chatJoin"
 
     /// Error when a chat disconnects unexpectedly or fails on ending.
-    public static var chatEnd: String = "chatEnd"
+    public static let chatEnd: String = "chatEnd"
 
     /// Error when the input token is expired.
     public static let tokenExpired: String = "tokenExpired"

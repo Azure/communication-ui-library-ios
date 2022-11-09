@@ -48,7 +48,7 @@ public class ChatComposite {
 
     /// Start connection to the chat composite to Azure Communication Service.
     public func connect(remoteOptions: RemoteOptions,
-                        _ closure: ((Result<Void, ChatCompositeError>) -> Void)? = nil) {
+                        completionHandler: ((Result<Void, ChatCompositeError>) -> Void)? = nil) {
         let chatConfig = ChatConfiguration(
             threadId: remoteOptions.threadId,
             communicationIdentifier: remoteOptions.communicationIdentifier,
