@@ -27,38 +27,19 @@ public class ChatComposite {
     public let events: Events
     private var logger: Logger?
     private let themeOptions: ThemeOptions?
-    var dependencyContainer: DependencyContainer
-    private var chatConfiguration: ChatConfiguration
-    private var localOptions: LocalOptions?
-    private let localizationOptions: LocalizationOptions?
+    var dependencyContainer: DependencyContainer?
+    private var chatConfiguration: ChatConfiguration?
+//    private let localizationOptions: LocalizationOptions?
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
-    private var compositeManager: CompositeManagerProtocol
+    private var compositeManager: CompositeManagerProtocol?
 
     /// Create an instance of ChatComposite with options.
     /// - Parameter options: The ChatCompositeOptions used to configure the experience.
-    public init(remoteOptions: RemoteOptions,
-                localOptions: LocalOptions? = nil,
-                withOptions options: ChatCompositeOptions? = nil) {
+    public init(withOptions options: ChatCompositeOptions? = nil) {
         self.events = Events()
         self.themeOptions = options?.themeOptions
-        self.localizationOptions = options?.localizationOptions
-        self.localOptions = localOptions
-        self.chatConfiguration = ChatConfiguration(
-            threadId: remoteOptions.threadId,
-            communicationIdentifier: remoteOptions.communicationIdentifier,
-            credential: remoteOptions.credential,
-            endpoint: remoteOptions.endpointUrl,
-            displayName: remoteOptions.displayName)
-        self.dependencyContainer = DependencyContainer()
-        self.logger = self.dependencyContainer.resolve() as Logger
-        self.dependencyContainer.registerDependencies(chatConfiguration,
-                                          localOptions: localOptions,
-                                          chatCompositeEventsHandler: events)
-
-        self.errorManager = self.dependencyContainer.resolve() as ErrorManagerProtocol
-        self.lifeCycleManager = self.dependencyContainer.resolve() as LifeCycleManagerProtocol
-        self.compositeManager = self.dependencyContainer.resolve() as CompositeManagerProtocol
+//        self.localizationOptions = options?.localizationOptions
     }
 
     deinit {
@@ -66,8 +47,26 @@ public class ChatComposite {
     }
 
     /// Start connection to the chat composite to Azure Communication Service.
-    public func connect() {
-        compositeManager.start()
+    public func connect(remoteOptions: RemoteOptions,
+                        _ closure: ((Result<Void, ChatCompositeError>) -> Void)? = nil) {
+        let chatConfig = ChatConfiguration(
+            threadId: remoteOptions.threadId,
+            communicationIdentifier: remoteOptions.communicationIdentifier,
+            credential: remoteOptions.credential,
+            endpoint: remoteOptions.endpointUrl,
+            displayName: remoteOptions.displayName)
+        let depCont = DependencyContainer()
+
+        self.chatConfiguration = chatConfig
+        self.dependencyContainer = depCont
+        self.logger = depCont.resolve() as Logger
+        depCont.registerDependencies(chatConfig,
+                                     chatCompositeEventsHandler: events)
+        self.errorManager = depCont.resolve() as ErrorManagerProtocol
+        self.lifeCycleManager = depCont.resolve() as LifeCycleManagerProtocol
+        self.compositeManager = depCont.resolve() as CompositeManagerProtocol
+
+        compositeManager?.start()
     }
 
     /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.

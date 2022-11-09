@@ -194,13 +194,11 @@ extension ChatSwiftUIDemoView {
             participantViewData: ParticipantViewData(),
             isBackgroundMode: headless)
 
-        self.chatComposite = ChatComposite(
-            remoteOptions: remoteOptions,
-            localOptions: localOptions)
+        self.chatComposite = ChatComposite()
         guard let chatComposite = self.chatComposite else {
             return
         }
-        chatComposite.connect()
+        chatComposite.connect(remoteOptions: remoteOptions)
     }
 
     private func getTokenCredential() throws -> CommunicationTokenCredential {

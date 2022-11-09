@@ -48,6 +48,7 @@ class ChatUIKitDemoViewController: UIViewController {
     private var cancellable = Set<AnyCancellable>()
     private var envConfigSubject: EnvConfigSubject
     var chatComposite: ChatComposite?
+    var remoteOptions: RemoteOptions?
 
     private lazy var contentView: UIView = {
         let view = UIView()
@@ -158,18 +159,13 @@ class ChatUIKitDemoViewController: UIViewController {
             return
         }
 
-        let remoteOptions = RemoteOptions(
+        self.remoteOptions = RemoteOptions(
             threadId: envConfigSubject.threadId,
             communicationIdentifier: communicationIdentifier,
             credential: communicationTokenCredential,
             endpointUrl: envConfigSubject.endpointUrl,
             displayName: envConfigSubject.displayName)
-        let localOptions = LocalOptions(
-            participantViewData: ParticipantViewData(),
-            isBackgroundMode: false)
-        self.chatComposite = ChatComposite(
-            remoteOptions: remoteOptions,
-            localOptions: localOptions)
+        self.chatComposite = ChatComposite()
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {
@@ -291,10 +287,11 @@ class ChatUIKitDemoViewController: UIViewController {
             if self.chatComposite == nil {
                 await self.startExperience(with: link)
             }
-            guard let chatComposite = self.chatComposite else {
+            guard let chatComposite = self.chatComposite,
+                  let remoteOptions = self.remoteOptions else {
                 return
             }
-            chatComposite.connect()
+            chatComposite.connect(remoteOptions: remoteOptions)
             let chatViewController = ChatViewController(
                 with: chatComposite)
 

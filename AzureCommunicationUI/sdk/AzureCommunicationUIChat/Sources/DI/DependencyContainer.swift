@@ -32,7 +32,6 @@ final class DependencyContainer {
     }
 
     func registerDependencies(_ chatConfiguration: ChatConfiguration,
-                              localOptions: LocalOptions?,
                               chatCompositeEventsHandler: ChatComposite.Events) {
         register(ChatSDKEventsHandler(
             logger: resolve(),
@@ -47,7 +46,7 @@ final class DependencyContainer {
         register(MessageRepositoryManager(
             chatCompositeEventsHandler: chatCompositeEventsHandler) as MessageRepositoryManagerProtocol)
 
-        let displayName = localOptions?.participantViewData.displayName ?? chatConfiguration.displayName
+        let displayName = chatConfiguration.displayName
         register(makeStore(displayName: displayName,
                            localUserIdentifier: chatConfiguration.communicationIdentifier,
                            chatThreadId: chatConfiguration.chatThreadId) as Store<AppState> )
