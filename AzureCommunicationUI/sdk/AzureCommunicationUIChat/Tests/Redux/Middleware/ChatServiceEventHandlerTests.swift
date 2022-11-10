@@ -133,8 +133,8 @@ class ChatServiceEventHandlerTests: XCTestCase {
         let expectedUserId = "identifier"
         func dispatch(action: Action) {
             switch action {
-            case .participantsAction(.typingIndicatorReceived(let userTimestamp)):
-                XCTAssertEqual(userTimestamp.identifier.stringValue, expectedUserId)
+            case .participantsAction(.typingIndicatorReceived(let model)):
+                XCTAssertEqual(model.id, expectedUserId)
                 expectation.fulfill()
             default:
                 XCTExpectFailure("typingIndicatorReceived was not dispatched")
