@@ -482,8 +482,8 @@
 			isa = PBXGroup;
 			children = (
 				50370CCE28EE4AA800ACD234 /* BaseInfoModel.swift */,
-				50370CD028EE4AD900ACD234 /* ChatEventModel.swift */,
 				50CB825228C29B4800680566 /* ParticipantInfoModel.swift */,
+				50370CD028EE4AD900ACD234 /* ChatEventModel.swift */,
 				5085BF1F28F72E0D0057586D /* ParticipantsInfoModel.swift */,
 				50CB825428C29B5100680566 /* ChatMessageInfoModel.swift */,
 				50CB825628C29B5A00680566 /* LocalUserInfoModel.swift */,
