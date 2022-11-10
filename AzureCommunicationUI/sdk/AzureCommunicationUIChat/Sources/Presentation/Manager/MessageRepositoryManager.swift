@@ -125,7 +125,14 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
         }
         let messageId = readReceiptInfo.chatMessageId
         let messageTimestamp = messageId.convertEpochStringToTimestamp()
-        let minimumReadReceiptTimestamp = state.participantsState.readReceiptUpdatedTimestamp
+        var readReceiptMap = state.participantsState.readReceiptMap
+        readReceiptMap[readReceiptInfo.senderIdentifier.stringValue] = messageTimestamp
+
+        let minimumReadReceiptTimestamp = readReceiptMap.min { $0.value < $1.value }?.value
+        guard let minimumReadReceiptTimestamp = minimumReadReceiptTimestamp else {
+            return
+        }
+
         guard let messageTimestamp = messageTimestamp,
             messageTimestamp <= minimumReadReceiptTimestamp,
             let index = messages.firstIndex(where: {
@@ -133,6 +140,8 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
             }) else {
             return
         }
-        messages[index].messageSendStatus = .seen
+        var message = messages[index]
+        message.messageSendStatus = .seen
+        messages[index] = message
     }
 }

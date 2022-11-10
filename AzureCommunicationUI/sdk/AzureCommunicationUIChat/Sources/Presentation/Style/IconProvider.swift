@@ -10,6 +10,7 @@ import SwiftUI
 enum CompositeIcon: String {
     case leftArrow = "ic_ios_arrow_left_24"
     case send = "ic_fluent_send_24_filled"
+    case readReceipt = "ic_fluent_eye_12_regular"
 }
 
 struct IconProvider {

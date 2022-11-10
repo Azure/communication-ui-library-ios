@@ -13,8 +13,9 @@ class MessageListViewModel: ObservableObject {
     private var repositoryUpdatedTimestamp: Date = .distantPast
     private var localUserId: String? // Remove optional?
     private var sendReadReceiptTimer: Timer?
-    private(set) var lastReadMessageIndex: Int?
+    private var lastReadMessageIndex: Int?
 
+    @Published var showReadIconIndex: Int?
     @Published var messages: [ChatMessageInfoModel]
 
     init(messageRepositoryManager: MessageRepositoryManagerProtocol,
@@ -37,6 +38,20 @@ class MessageListViewModel: ObservableObject {
         if self.repositoryUpdatedTimestamp < repositoryState.lastUpdatedTimestamp {
             self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
             messages = messageRepositoryManager.messages
+
+            for (index, message) in messageRepositoryManager.messages.enumerated().reversed() {
+                guard message.senderId == localUserId else {
+                    return
+                }
+                switch message.messageSendStatus {
+                case .seen:
+                    showReadIconIndex = index
+                    return
+                default:
+                    continue
+                }
+            }
+
             // Debug for testing
 //            print("*Messages count: \(messageRepositoryManager.messages.count)")
 //            for message in messageRepositoryManager.messages {
@@ -59,13 +74,15 @@ class MessageListViewModel: ObservableObject {
             let isLocalUser = message.senderId == localUserId
             let showUsername = !isLocalUser && !isConsecutive
             let showTime = !isConsecutive
+            let showReadIcon = index == showReadIconIndex
 
             return TextMessageViewModel(message: message,
                                         showDateHeader: showDateHeader,
                                         showUsername: showUsername,
                                         showTime: showTime,
                                         isLocalUser: isLocalUser,
-                                        isConsecutive: isConsecutive)
+                                        isConsecutive: isConsecutive,
+                                        showReadIcon: showReadIcon)
         case .participantsAdded, .participantsRemoved, .topicUpdated:
             return SystemMessageViewModel(message: message,
                                           showDateHeader: showDateHeader,
