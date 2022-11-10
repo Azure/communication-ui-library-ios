@@ -7,7 +7,7 @@ import Combine
 import Foundation
 
 protocol DiagnosticsManagerProtocol {
-    func getDiagnosticsInfo() -> DiagnosticsInfo
+    func getDiagnosticsInfo() -> CallDiagnostics
 }
 
 class DiagnosticsManager: DiagnosticsManagerProtocol {
@@ -34,7 +34,7 @@ class DiagnosticsManager: DiagnosticsManagerProtocol {
         callId = state.callingState.callId
     }
 
-    func getDiagnosticsInfo() -> DiagnosticsInfo {
-        return DiagnosticsInfo(lastKnownCallId: callId)
+    func getDiagnosticsInfo() -> CallDiagnostics {
+        return CallDiagnostics(lastKnownCallId: callId)
     }
 }

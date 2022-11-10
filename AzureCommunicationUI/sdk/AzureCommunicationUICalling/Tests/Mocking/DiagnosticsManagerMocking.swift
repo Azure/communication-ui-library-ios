@@ -7,9 +7,9 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class DiagnosticsManagerMocking: DiagnosticsManagerProtocol {
-    var diagnosticsInfo: DiagnosticsInfo?
+    var diagnosticsInfo: CallDiagnostics?
 
-    func getDiagnosticsInfo() -> DiagnosticsInfo {
-        return diagnosticsInfo ?? DiagnosticsInfo()
+    func getDiagnosticsInfo() -> CallDiagnostics {
+        return diagnosticsInfo ?? CallDiagnostics()
     }
 }

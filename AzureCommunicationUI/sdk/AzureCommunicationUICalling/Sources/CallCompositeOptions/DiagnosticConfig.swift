@@ -31,7 +31,7 @@ struct DiagnosticConfig {
 }
 
 /// A Call Composite diagnostics information.
-public struct DiagnosticsInfo {
+public struct CallDiagnostics {
     /// The last known call id.
     public let lastKnownCallId: String?
 

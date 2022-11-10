@@ -33,6 +33,15 @@ public class CallComposite {
     private var avatarViewManager: AvatarViewManagerProtocol?
     private var diagnosticsManager: DiagnosticsManagerProtocol?
 
+    /// Get Call Composite diagnostics information.
+    public var diagnostics: CallDiagnostics {
+        guard let diagnosticsManager = diagnosticsManager else {
+            return CallDiagnostics()
+        }
+
+        return diagnosticsManager.getDiagnosticsInfo()
+    }
+
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
@@ -94,16 +103,6 @@ public class CallComposite {
         avatarManager.set(remoteParticipantViewData: remoteParticipantViewData,
                           for: identifier,
                           completionHandler: completionHandler)
-    }
-
-    /// Get Call Composite diagnostics information.
-    /// - Returns: The DiagnosticsInfo object with Call Composite diagnostics information.
-    public func getDiagnosticsInfo() -> DiagnosticsInfo {
-        guard let diagnosticsManager = diagnosticsManager else {
-            return DiagnosticsInfo()
-        }
-
-        return diagnosticsManager.getDiagnosticsInfo()
     }
 
     private func setupManagers(with dependencyContainer: DependencyContainer) {
