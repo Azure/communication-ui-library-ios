@@ -8,7 +8,7 @@ import SwiftUI
 struct ParticipantGridLayoutView: View {
     var cellViewModels: [ParticipantGridCellViewModel]
     let rendererViewManager: RendererViewManager?
-    let avatarViewManager: AvatarViewManager
+    let avatarViewManager: AvatarViewManagerProtocol
     let screenSize: ScreenSizeClassType
     let gridsMargin: CGFloat = 3
     @Orientation var orientation: UIDeviceOrientation

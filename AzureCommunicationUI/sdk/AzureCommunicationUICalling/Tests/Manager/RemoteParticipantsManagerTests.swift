@@ -23,7 +23,7 @@ class RemoteParticipantsManagerTests: XCTestCase {
         eventsHandler = CallComposite.Events()
         callingSDKWrapper = CallingSDKWrapperMocking()
         avatarViewManager = AvatarViewManagerMocking(store: mockStoreFactory.store,
-                                                     localOptions: nil)
+                                                     localParticipantViewData: nil)
     }
 
     override func tearDown() {

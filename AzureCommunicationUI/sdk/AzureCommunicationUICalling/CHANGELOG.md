@@ -1,20 +1,51 @@
 # Azure Communication UI Calling Release History
 
-## TBA (upcoming release)
+## 1.1.0 (2022-11-09)
 ### New Features
-- Implemented new error message `unknownError` that can be sent to developers in rare cases device manager throws an error. [#301](https://github.com/Azure/communication-ui-library-ios/pull/301)
-- Implemented new error message `cameraFailure` that can be sent to developers when turning on camera fails. [#311](https://github.com/Azure/communication-ui-library-ios/pull/311)
-- Introduced NavigationBarViewData as a new local launch option to customize title and subtitle in set up view. [#309](https://github.com/Azure/communication-ui-library-ios/pull/309)
-- Handled the case where user joining the call with no active network connection [#328](https://github.com/Azure/communication-ui-library-ios/pull/328) 
+- Implemented new feature where local user would be removed from the participant list when the app is terminated [#352](https://github.com/Azure/communication-ui-library-ios/pull/352)
+- Added aadToken for getting the ACS token in joining a call [#380](https://github.com/Azure/communication-ui-library-ios/pull/380)
+
+### Breaking Changes
+- Changed callEnd error inside CallCompositeError from mutable to inmutable [#364](https://github.com/Azure/communication-ui-library-ios/pull/364)
 
 ### Bugs Fixed
-- Fixed an issue where demo app can't dismiss setting page when in landscape mode. [#280](https://github.com/Azure/communication-ui-library-ios/pull/280)
-- Fixed an issue where speaking overlay custom colour did not show up properly [#281](https://github.com/Azure/communication-ui-library-ios/pull/281)
-- Fixed an issue where participant drawer height was not calculated correctly [#297](https://github.com/Azure/communication-ui-library-ios/pull/297)
-- Fixed an issue where InfoHeaderView did not show up when VoiceOver is on [#296](https://github.com/Azure/communication-ui-library-ios/pull/296)
+- Fixed rotation does not work until drawer opens on iOS 16 [#363](https://github.com/Azure/communication-ui-library-ios/pull/363)
+- Fixed timer resources deallocation when a user leaves and rejoins a call quickly [#365](https://github.com/Azure/communication-ui-library-ios/pull/365)
+- Fixed end call animation in landscape mode is not slide off the bottom of the screen correctly [#376](https://github.com/Azure/communication-ui-library-ios/pull/376)
+- Fixed end call drawer title misalignment in landscape mode [#378](https://github.com/Azure/communication-ui-library-ios/pull/378)
+- Fixed remote participants do not see my video stream after resuming my call [#383](https://github.com/Azure/communication-ui-library-ios/pull/383)
+- Fixed drawer being cutoff in large font size and its animation [#384](https://github.com/Azure/communication-ui-library-ios/pull/384)
+- Fixed issue with call on hold video not showing up for remote user when resuming 
+    [#414](https://github.com/Azure/communication-ui-library-ios/pull/414)
+- Fixed failure to grab ownership of microphone from other audio app [#423](https://github.com/Azure/communication-ui-library-ios/pull/423)
+
+### Other Changes
+- Updated CallingSDK's version to GA in manual installation guide [#435](https://github.com/Azure/communication-ui-library-ios/pull/435)
+
+## 1.1.0-beta.1 (2022-10-03)
+### New Features
+- Implemented new error message `cameraFailure` that can be sent to developers when:
+    - turning on camera fails. [#311](https://github.com/Azure/communication-ui-library-ios/pull/311)
+    - in rare cases device manager throws an error [#301](https://github.com/Azure/communication-ui-library-ios/pull/301) [#334](https://github.com/Azure/communication-ui-library-ios/pull/334)
+
+- Introduced NavigationBarViewData as a new local launch option to customize title and subtitle in set up view. [#309](https://github.com/Azure/communication-ui-library-ios/pull/309)
+- An alert would now be shown when joining the call with no active network connection [#328](https://github.com/Azure/communication-ui-library-ios/pull/328)
+- A new link to system settings was added to change camera and video permission directly [313](https://github.com/Azure/communication-ui-library-ios/pull/313)
+
+### Bugs Fixed
+- Fixed an issue where demo app's settings page can't be dismissed in landscape mode. [#280](https://github.com/Azure/communication-ui-library-ios/pull/280)
+- Fixed an issue where speaking overlay custom colour not showing up properly [#281](https://github.com/Azure/communication-ui-library-ios/pull/281)
+- Fixed an issue where participant drawer height not calculated correctly [#297](https://github.com/Azure/communication-ui-library-ios/pull/297)
+- Fixed an issue where InfoHeaderView not showing up when VoiceOver is on [#296](https://github.com/Azure/communication-ui-library-ios/pull/296)
+- Fixed an issue where RTL layout might not being rendered properly in demo app [#319](https://github.com/Azure/communication-ui-library-ios/pull/319)
+- Fixed an issue where text label being cutoff when accessibility large font feature is enabled [#308](https://github.com/Azure/communication-ui-library-ios/pull/308)
+- Fixed an issue where contrast ratio of some labels/icons being too low for visually impaired users [#305](https://github.com/Azure/communication-ui-library-ios/pull/305)
+- Fixed an issue where InfoHeaderView doesn't support large front size text [#331](https://github.com/Azure/communication-ui-library-ios/pull/331)
+- Fixed an issue where there was no accessibility label for the participants button [#345](https://github.com/Azure/communication-ui-library-ios/pull/345)
 
 ### Other Changes
 - Updated CallingSDK's version to GA in manual installation guide [#298](https://github.com/Azure/communication-ui-library-ios/pull/298)
+- Updated the design of error banners ("Snackbar") by adapting the latest FluentUI colours. [#314](https://github.com/Azure/communication-ui-library-ios/pull/314)
 
 ## 1.0.0 (2022-06-21)
 ### Bugs Fixed

@@ -8,7 +8,7 @@ import SwiftUI
 struct DraggableLocalVideoView: View {
     let containerBounds: CGRect
     let viewModel: CallingViewModel
-    let avatarManager: AvatarViewManager
+    let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
 
     @State var pipPosition: CGPoint?

@@ -9,17 +9,6 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class LocalizationProviderTests: XCTestCase {
-    private var logger: LoggerMocking!
-
-    override func setUp() {
-        super.setUp()
-        logger = LoggerMocking()
-    }
-
-    override func tearDown() {
-        super.tearDown()
-        logger = nil
-    }
 
     func test_localizationProvider_applyRTL_when_layoutDirectionRightToLeft_then_shouldRTLReturnTrue() {
         let sut = makeSUT()
@@ -66,6 +55,7 @@ class LocalizationProviderTests: XCTestCase {
 
 extension LocalizationProviderTests {
     func makeSUT() -> LocalizationProviderProtocol {
+        let logger = LoggerMocking()
         return LocalizationProvider(logger: logger)
     }
 }

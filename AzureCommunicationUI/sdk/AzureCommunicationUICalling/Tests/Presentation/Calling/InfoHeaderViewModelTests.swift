@@ -9,27 +9,28 @@ import XCTest
 
 class InfoHeaderViewModelTests: XCTestCase {
 
-    var logger: LoggerMocking!
+    typealias ParticipantsListViewModelUpdateStates = (LocalUserState, RemoteParticipantsState) -> Void
     var storeFactory: StoreFactoryMocking!
     var cancellable: CancelBag!
     var localizationProvider: LocalizationProviderMocking!
+    var logger: LoggerMocking!
     var factoryMocking: CompositeViewModelFactoryMocking!
 
     override func setUp() {
         super.setUp()
-        logger = LoggerMocking()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
         localizationProvider = LocalizationProviderMocking()
+        logger = LoggerMocking()
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
     }
 
     override func tearDown() {
         super.tearDown()
-        logger = nil
         storeFactory = nil
         cancellable = nil
         localizationProvider = nil
+        logger = nil
         factoryMocking = nil
     }
 
@@ -141,15 +142,19 @@ class InfoHeaderViewModelTests: XCTestCase {
         let remoteParticipantsStateValue = RemoteParticipantsState(participantInfoList: participantList,
                                                                    lastUpdateTimeStamp: Date())
         let localUserStateValue = LocalUserState(displayName: "Updated Name")
-        let participantsListViewModel = ParticipantsListViewModelMocking(compositeViewModelFactory: factoryMocking,
-                                                                         localUserState: LocalUserState())
-        participantsListViewModel.updateStates = { localUserState, remoteParticipantsState in
+        let updateStates: ParticipantsListViewModelUpdateStates = { localUserState, remoteParticipantsState in
             XCTAssertEqual(localUserState.displayName, localUserStateValue.displayName)
             XCTAssertEqual(remoteParticipantsStateValue.participantInfoList,
                            remoteParticipantsState.participantInfoList)
             expectation.fulfill()
         }
+
+        let participantsListViewModel = ParticipantsListViewModelMocking(
+                                                            compositeViewModelFactory: factoryMocking,
+                                                            localUserState: LocalUserState())
+        participantsListViewModel.updateStates = updateStates
         factoryMocking.participantsListViewModel = participantsListViewModel
+
         let sut = makeSUT()
         sut.update(localUserState: localUserStateValue,
                    remoteParticipantsState: remoteParticipantsStateValue,
@@ -318,19 +323,17 @@ class InfoHeaderViewModelTests: XCTestCase {
 }
 
 extension InfoHeaderViewModelTests {
-    func makeSUT(accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()) -> InfoHeaderViewModel {
+    func makeSUT(
+                 accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider(),
+                 localizationProvider: LocalizationProviderMocking? = nil) -> InfoHeaderViewModel {
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
                                    localUserState: LocalUserState(),
-                                   localizationProvider: LocalizationProvider(logger: logger),
+                                   localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                    accessibilityProvider: accessibilityProvider)
     }
 
     func makeSUTLocalizationMocking() -> InfoHeaderViewModel {
-        return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
-                                   logger: logger,
-                                   localUserState: LocalUserState(),
-                                   localizationProvider: localizationProvider,
-                                   accessibilityProvider: AccessibilityProvider())
+        return makeSUT(localizationProvider: localizationProvider)
     }
 }

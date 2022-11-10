@@ -11,9 +11,9 @@ class ControlBarViewModelTests: XCTestCase {
 
     var storeFactory: StoreFactoryMocking!
     var cancellable: CancelBag!
-    var logger: Logger!
-    var factoryMocking: CompositeViewModelFactoryMocking!
     var localizationProvider: LocalizationProviderMocking!
+    var logger: LoggerMocking!
+    var factoryMocking: CompositeViewModelFactoryMocking!
 
     private let timeout: TimeInterval = 10.0
 
@@ -21,18 +21,18 @@ class ControlBarViewModelTests: XCTestCase {
         super.setUp()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
+        localizationProvider = LocalizationProviderMocking()
         logger = LoggerMocking()
         factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
-        localizationProvider = LocalizationProviderMocking()
     }
 
     override func tearDown() {
         super.tearDown()
         storeFactory = nil
         cancellable = nil
+        localizationProvider = nil
         logger = nil
         factoryMocking = nil
-        localizationProvider = nil
     }
 
     // MARK: Leave Call / Cancel test
@@ -608,7 +608,6 @@ class ControlBarViewModelTests: XCTestCase {
                                                                          dispatchAction: storeFactory.store.dispatch,
                                                                          localUserState: localUserState,
                                                                          localizationProvider: LocalizationProviderMocking())
-
         audioDevicesListViewModel.updateState = { status in
             XCTAssertEqual(status, localUserState.audioState.device)
             expectation.fulfill()
@@ -623,21 +622,16 @@ class ControlBarViewModelTests: XCTestCase {
 }
 
 extension ControlBarViewModelTests {
-    func makeSUT() -> ControlBarViewModel {
+    func makeSUT(localizationProvider: LocalizationProviderMocking? = nil) -> ControlBarViewModel {
         return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
-                                   localizationProvider: LocalizationProvider(logger: logger),
+                                   localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                    dispatchAction: storeFactory.store.dispatch,
                                    endCallConfirm: {},
                                    localUserState: storeFactory.store.state.localUserState)
     }
 
     func makeSUTLocalizationMocking() -> ControlBarViewModel {
-        return ControlBarViewModel(compositeViewModelFactory: factoryMocking,
-                                   logger: logger,
-                                   localizationProvider: localizationProvider,
-                                   dispatchAction: storeFactory.store.dispatch,
-                                   endCallConfirm: {},
-                                   localUserState: storeFactory.store.state.localUserState)
+        return makeSUT(localizationProvider: localizationProvider)
     }
 }
