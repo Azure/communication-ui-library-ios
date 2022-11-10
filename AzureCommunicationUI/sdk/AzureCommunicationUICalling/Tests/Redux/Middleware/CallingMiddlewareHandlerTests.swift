@@ -11,27 +11,21 @@ import Combine
 
 class CallingMiddlewareHandlerTests: XCTestCase {
 
-    var callingMiddlewareHandler: CallingMiddlewareHandling!
-    var mockLogger: LoggerMocking!
     var mockCallingService: CallingServiceMocking!
 
     override func setUp() {
         super.setUp()
         mockCallingService = CallingServiceMocking()
-        mockLogger = LoggerMocking()
-        callingMiddlewareHandler = CallingMiddlewareHandler(callingService: mockCallingService, logger: mockLogger)
     }
 
     override func tearDown() {
         super.tearDown()
-
         mockCallingService = nil
-        mockLogger = nil
-        callingMiddlewareHandler = nil
     }
 
     func test_callingMiddlewareHandler_requestMicMute_then_muteLocalMicCalled() async {
-        await callingMiddlewareHandler.requestMicrophoneMute(
+        let sut = makeSUT()
+        await sut.requestMicrophoneMute(
             state: getEmptyState(), dispatch: getEmptyDispatch()
         ).value
 
@@ -39,74 +33,73 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     }
 
     func test_callingMiddlewareHandler_requestMicUnmute_then_unmuteLocalMicCalled() async {
-        await callingMiddlewareHandler.requestMicrophoneUnmute(
+        let sut = makeSUT()
+        await sut.requestMicrophoneUnmute(
             state: getEmptyState(), dispatch: getEmptyDispatch()
         ).value
 
         XCTAssertTrue(mockCallingService.unmuteLocalMicCalled)
     }
 
-    func test_callingMiddlewareHandler_requestMicMute_when_returnsError_then_updateMicrophoneStatusIsError() {
+    func test_callingMiddlewareHandler_requestMicMute_when_returnsError_then_updateMicrophoneStatusIsError() async {
+        let sut = makeSUT()
         let error = getError()
         func dispatch(action: Action) {
             XCTAssertTrue(action == Action.localUserAction(.microphoneOffFailed(error: error)))
         }
         mockCallingService.error = error
-        callingMiddlewareHandler.requestMicrophoneMute(state: getEmptyState(), dispatch: dispatch)
+        await sut.requestMicrophoneMute(state: getEmptyState(), dispatch: dispatch).value
     }
 
-    func test_callingMiddlewareHandler_requestMicUnmute_when_returnsError_then_updateMicrophoneStatusIsError() {
+    func test_callingMiddlewareHandler_requestMicUnmute_when_returnsError_then_updateMicrophoneStatusIsError() async {
+        let sut = makeSUT()
         let error = getError()
         func dispatch(action: Action) {
             XCTAssertTrue(action == Action.localUserAction(.microphoneOnFailed(error: error)))
         }
         mockCallingService.error = error
-        callingMiddlewareHandler.requestMicrophoneUnmute(state: getEmptyState(), dispatch: dispatch)
+        await sut.requestMicrophoneUnmute(state: getEmptyState(), dispatch: dispatch).value
     }
 
-    func test_callingMiddlewareHandler_requestCameraOn_when_cameraPermissionNotAsked_then_shouldDispatchCameraPermissionRequested() {
-        let expectation = XCTestExpectation(description: "Dispatch the new action")
+    func test_callingMiddlewareHandler_requestCameraOn_when_cameraPermissionNotAsked_then_shouldDispatchCameraPermissionRequested() async {
+        let sut = makeSUT()
         func dispatch(action: Action) {
             XCTAssertTrue(action == Action.permissionAction(.cameraPermissionRequested))
-            expectation.fulfill()
         }
         let state: AppState = getState(callingState: .connected,
-                                             cameraStatus: .off,
-                                             cameraDeviceStatus: .front,
-                                             cameraPermission: .notAsked)
+                                       cameraStatus: .off,
+                                       cameraDeviceStatus: .front,
+                                       cameraPermission: .notAsked)
 
-        callingMiddlewareHandler.requestCameraOn(state: state, dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+        await sut.requestCameraOn(state: state, dispatch: dispatch).value
     }
 
     func test_callingMiddlewareHandler_requestCameraOff_then_stopLocalVideoStreamCalled() async {
-        await callingMiddlewareHandler.requestCameraOff(
+        let sut = makeSUT()
+        await sut.requestCameraOff(
             state: getEmptyState(), dispatch: getEmptyDispatch()
         ).value
 
         XCTAssertTrue(mockCallingService.stopLocalVideoStreamCalled)
     }
 
-    func test_callingMiddlewareHandler_requestCameraOff_when_permissionNotAsked_then_updateCameraStatusOffUpdate() {
-        let expectation = XCTestExpectation(description: "Dispatch the new action")
+    func test_callingMiddlewareHandler_requestCameraOff_when_permissionNotAsked_then_updateCameraStatusOffUpdate() async {
+        let sut = makeSUT()
         func dispatch(action: Action) {
             XCTAssertTrue(action == Action.localUserAction(.cameraOffSucceeded))
-            expectation.fulfill()
         }
-        callingMiddlewareHandler.requestCameraOff(state: getEmptyState(), dispatch: dispatch)
-
-        wait(for: [expectation], timeout: 1)
+        await sut.requestCameraOff(state: getEmptyState(), dispatch: dispatch).value
     }
 
     func test_callingMiddlewareHandler_requestCameraOn_then_startLocalVideoStreamCalled() async {
-        await callingMiddlewareHandler.requestCameraOn(state: getEmptyState(), dispatch: getEmptyDispatch()).value
+        let sut = makeSUT()
+        await sut.requestCameraOn(state: getEmptyState(), dispatch: getEmptyDispatch()).value
 
         XCTAssertTrue(mockCallingService.startLocalVideoStreamCalled)
     }
 
-    func test_callingMiddlewareHandler_requestCameraOn_when_noError_then_updateCameraStatusOnUpdate() {
-        let expectation = XCTestExpectation(description: "Dispatch the new action")
-
+    func test_callingMiddlewareHandler_requestCameraOn_when_noError_then_updateCameraStatusOnUpdate() async {
+        let sut = makeSUT()
         let videoId = "Identifier"
         mockCallingService.videoStreamId = videoId
         func dispatch(action: Action) {
@@ -115,50 +108,45 @@ class CallingMiddlewareHandlerTests: XCTestCase {
             case .localUserAction(let localUserAction):
                 if case let LocalUserAction.cameraOnSucceeded(videoStreamIdentifier) = localUserAction {
                     XCTAssertEqual(videoStreamIdentifier, videoId)
-                    expectation.fulfill()
-                }
+                    }
             default:
                 XCTFail("Should not be default \(action)")
             }
         }
-        callingMiddlewareHandler.requestCameraOn(state: getEmptyState(), dispatch: dispatch)
-        wait(for: [expectation], timeout: 1.5)
+        await sut.requestCameraOn(state: getEmptyState(), dispatch: dispatch).value
     }
 
-    func test_callingMiddlewareHandler_requestCameraOff_when_returnsError_then_updateCameraStatusIsError() {
-        let expectation = XCTestExpectation(description: "Request Camera Off Dispatch Action Should Return Error")
+    func test_callingMiddlewareHandler_requestCameraOff_when_returnsError_then_updateCameraStatusIsError() async {
+        let sut = makeSUT()
         let error = getError()
         func dispatch(action: Action) {
             XCTAssertTrue(action == Action.localUserAction(.cameraOffFailed(error: error)))
-            expectation.fulfill()
         }
         mockCallingService.error = error
-        callingMiddlewareHandler.requestCameraOff(state: getEmptyState(), dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+        await sut.requestCameraOff(state: getEmptyState(), dispatch: dispatch).value
     }
 
-    func test_callingMiddlewareHandler_requestCameraOn_when_returnsError_then_updateCameraStatusIsError() {
-        let expectation = XCTestExpectation(description: "Request Camera On Dispatch Action Should Return Error")
+    func test_callingMiddlewareHandler_requestCameraOn_when_returnsError_then_updateCameraStatusIsError() async {
+        let sut = makeSUT()
         let error = getError()
         func dispatch(action: Action) {
             XCTAssertTrue(action == Action.localUserAction(.cameraOnFailed(error: error)))
-            expectation.fulfill()
         }
         mockCallingService.error = error
-        callingMiddlewareHandler.requestCameraOn(state: getEmptyState(), dispatch: dispatch)
-        wait(for: [expectation], timeout: 1.5)
+        await sut.requestCameraOn(state: getEmptyState(), dispatch: dispatch).value
     }
 
     func test_callingMiddlewareHandler_requestCameraSwitch_then_switchCameraCalled() async {
-        await callingMiddlewareHandler.requestCameraSwitch(
+        let sut = makeSUT()
+        await sut.requestCameraSwitch(
             state: getEmptyState(), dispatch: getEmptyDispatch()
         ).value
 
         XCTAssertTrue(mockCallingService.switchCameraCalled)
     }
 
-    func test_callingMiddlewareHandler_requestCameraSwitch_when_noError_then_updateCameraDeviceStatusOnUpdate() {
-        let expectation = XCTestExpectation(description: "Dispatch the new action")
+    func test_callingMiddlewareHandler_requestCameraSwitch_when_noError_then_updateCameraDeviceStatusOnUpdate() async {
+        let sut = makeSUT()
 
         let cameraDevice = CameraDevice.front
         mockCallingService.cameraDevice = cameraDevice
@@ -167,29 +155,26 @@ class CallingMiddlewareHandlerTests: XCTestCase {
             switch action {
             case let .localUserAction(.cameraSwitchSucceeded(device)):
                 XCTAssertEqual(device, cameraDevice)
-                expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
             }
         }
-        callingMiddlewareHandler.requestCameraSwitch(state: getEmptyState(), dispatch: dispatch)
-        wait(for: [expectation], timeout: 1.5)
+        await sut.requestCameraSwitch(state: getEmptyState(), dispatch: dispatch).value
     }
 
-    func test_callingMiddlewareHandler_requestCameraSwitch_when_returnsError_then_updateCameraDeviceStatusIsError() {
-        let expectation = XCTestExpectation(description: "Request Camera Switch Dispatch Action Should Return Error")
+    func test_callingMiddlewareHandler_requestCameraSwitch_when_returnsError_then_updateCameraDeviceStatusIsError() async {
+        let sut = makeSUT()
         let error = getError()
         func dispatch(action: Action) {
             XCTAssertTrue(action == Action.localUserAction(.cameraSwitchFailed(error: error)))
-            expectation.fulfill()
         }
         mockCallingService.error = error
-        callingMiddlewareHandler.requestCameraSwitch(state: getEmptyState(), dispatch: dispatch)
-        wait(for: [expectation], timeout: 1.5)
+        await sut.requestCameraSwitch(state: getEmptyState(), dispatch: dispatch).value
     }
 
     func test_callingMiddlewareHandler_endCall_then_endCallCalled() async {
-        await callingMiddlewareHandler.endCall(
+        let sut = makeSUT()
+        await sut.endCall(
             state: getEmptyState(), dispatch: getEmptyDispatch()
         ).value
 
@@ -197,59 +182,82 @@ class CallingMiddlewareHandlerTests: XCTestCase {
     }
 
     func test_callingMiddlewareHandler_startCall_then_startCallCalled() async {
-        await callingMiddlewareHandler.startCall(
+        let sut = makeSUT()
+        await sut.startCall(
             state: getEmptyState(), dispatch: getEmptyDispatch()
         ).value
 
         XCTAssertTrue(mockCallingService.startCallCalled)
     }
 
-    func test_callingMiddlewareHandler_endCall_when_returnNSError_then_updateCallError() {
-        let expectation = XCTestExpectation(description: "Dispatch the new action")
+    func test_callingMiddlewareHandler_endCall_when_returnNSError_then_firstUpdateCallError() async {
+        let sut = makeSUT()
 
         let errorCode = 50
         let error = getError(code: errorCode)
-
+        var callBackCount: Int = 0
         func dispatch(action: Action) {
-            XCTAssertTrue(action == Action.errorAction(.fatalErrorUpdated(internalError: .callEndFailed, error: error)))
-            switch action {
-            case let .errorAction(.fatalErrorUpdated(internalError, err)):
-                let nserror = err as? NSError
-                XCTAssertEqual(nserror?.code, errorCode)
-                XCTAssertEqual(internalError, .callEndFailed)
-                expectation.fulfill()
-            default:
-                XCTFail("Should not be default \(action)")
+            if callBackCount == 0 {
+                XCTAssertTrue(action == Action.errorAction(.fatalErrorUpdated(internalError: .callEndFailed, error: error)))
+                switch action {
+                case let .errorAction(.fatalErrorUpdated(internalError, err)):
+                    let nserror = err as? NSError
+                    XCTAssertEqual(nserror?.code, errorCode)
+                    XCTAssertEqual(internalError, .callEndFailed)
+                default:
+                    XCTFail("Should not be default \(action)")
+                }
+
+                callBackCount += 1
             }
         }
         mockCallingService.error = error
-        callingMiddlewareHandler.endCall(state: getEmptyState(), dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+        await sut.endCall(state: getEmptyState(), dispatch: dispatch).value
+
     }
 
-    func test_callingMiddlewareHandler_endCall_when_returnsCompositeError_then_updateClientError() {
-        let expectation = XCTestExpectation(description: "Dispatch the new action")
-
+    func test_callingMiddlewareHandler_endCall_when_returnsCompositeError_then_firstUpdateClientError() async {
+        let sut = makeSUT()
         let error = CallCompositeInternalError.cameraSwitchFailed
 
+        var callBackCount: Int = 0
         func dispatch(action: Action) {
-            XCTAssertTrue(action == Action.errorAction(.fatalErrorUpdated(internalError: error, error: nil)))
-            switch action {
-            case let .errorAction(.fatalErrorUpdated(internalError, err)):
-                XCTAssertEqual(internalError, error)
-                XCTAssertNil(err)
-                expectation.fulfill()
-            default:
-                XCTFail("Should not be default \(action)")
+            if callBackCount == 0 {
+                XCTAssertTrue(action == Action.errorAction(.fatalErrorUpdated(internalError: error, error: nil)))
+                switch action {
+                case let .errorAction(.fatalErrorUpdated(internalError, err)):
+                    XCTAssertEqual(internalError, error)
+                    XCTAssertNil(err)
+                default:
+                    XCTFail("Should not be default \(action)")
+                }
+                callBackCount += 1
             }
         }
         mockCallingService.error = error
-        callingMiddlewareHandler.endCall(state: getEmptyState(), dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+        await sut.endCall(state: getEmptyState(), dispatch: dispatch).value
+
     }
 
-    func test_callingMiddlewareHandler_startCall_when_returnsNSError_then_updateCallingCoreError() {
-        let expectation = XCTestExpectation(description: "Dispatch the new action")
+    func test_callingMiddlewareHandler_endCall_when_returnNSError_then_updateRequestFailed() async {
+        let sut = makeSUT()
+        let errorCode = 50
+        let error = getError(code: errorCode)
+        var callBackCount: Int = 0
+        func dispatch(action: Action) {
+            if callBackCount == 0 {
+                callBackCount += 1
+            } else if callBackCount == 1 {
+                XCTAssertTrue(action == Action.callingAction(.requestFailed))
+            }
+        }
+        mockCallingService.error = error
+        await sut.endCall(state: getEmptyState(), dispatch: dispatch).value
+
+    }
+
+    func test_callingMiddlewareHandler_startCall_when_returnsNSError_then_updateCallingCoreError() async {
+        let sut = makeSUT()
         let errorCode = 50
         let error = getError(code: errorCode)
         func dispatch(action: Action) {
@@ -259,18 +267,16 @@ class CallingMiddlewareHandlerTests: XCTestCase {
                 let nserror = err as? NSError
                 XCTAssertEqual(nserror?.code, errorCode)
                 XCTAssertEqual(internalError, .callJoinFailed)
-                expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
             }
         }
         mockCallingService.error = error
-        callingMiddlewareHandler.startCall(state: getEmptyState(), dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+        await sut.startCall(state: getEmptyState(), dispatch: dispatch).value
     }
 
-    func test_callingMiddlewareHandler_startCall_when_returnsCompositeError_then_updateClientErrorCompositeError() {
-        let expectation = XCTestExpectation(description: "Dispatch the new action")
+    func test_callingMiddlewareHandler_startCall_when_returnsCompositeError_then_updateClientErrorCompositeError() async {
+        let sut = makeSUT()
         let error = CallCompositeInternalError.callEndFailed
 
         func dispatch(action: Action) {
@@ -278,56 +284,50 @@ class CallingMiddlewareHandlerTests: XCTestCase {
             switch action {
             case let .errorAction(.fatalErrorUpdated(internalError, _)):
                 XCTAssertEqual(internalError, error)
-                expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
             }
         }
         mockCallingService.error = error
-        callingMiddlewareHandler.startCall(state: getEmptyState(), dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+        await sut.startCall(state: getEmptyState(), dispatch: dispatch).value
     }
 
     func test_callingMiddlewareHandler_setupCall_then_setupCallCalled() async {
-        await callingMiddlewareHandler.setupCall(
+        let sut = makeSUT()
+        await sut.setupCall(
             state: getEmptyState(), dispatch: getEmptyDispatch()
         ).value
         XCTAssertTrue(mockCallingService.setupCallCalled)
     }
 
-    func test_callingMiddlewareHandler_setupCall_when_cameraPermissionGranted_then_cameraOnTriggered() {
-        let expectation = XCTestExpectation(description: "Dispatch the new action")
+    func test_callingMiddlewareHandler_setupCall_when_cameraPermissionGranted_then_cameraOnTriggered() async {
+        let sut = makeSUT()
 
         func dispatch(action: Action) {
             XCTAssertTrue(action == Action.localUserAction(.cameraPreviewOnTriggered))
-            expectation.fulfill()
         }
-        callingMiddlewareHandler.setupCall(state: getState(callingState: .connected,
+        await sut.setupCall(state: getState(callingState: .connected,
                                                            cameraStatus: .off,
                                                            cameraDeviceStatus: .front,
                                                            cameraPermission: .granted),
-                                           dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+                            dispatch: dispatch).value
     }
 
-    func test_callingMiddlewareHandler_setupCall_when_cameraPermissionDenied_then_skipCameraOnTriggered() {
-        let expectation = XCTestExpectation(description: "Dispatch the new action")
-        expectation.isInverted = true
+    func test_callingMiddlewareHandler_setupCall_when_cameraPermissionDenied_then_skipCameraOnTriggered() async {
+        let sut = makeSUT()
 
         func dispatch(action: Action) {
-            XCTAssertTrue(action == Action.localUserAction(.cameraOnTriggered))
-            expectation.fulfill()
+            XCTAssertFalse(action == Action.localUserAction(.cameraOnTriggered))
         }
-        callingMiddlewareHandler.setupCall(state: getState(callingState: .connected,
+        await sut.setupCall(state: getState(callingState: .connected,
                                                            cameraStatus: .off,
                                                            cameraDeviceStatus: .front,
                                                            cameraPermission: .denied),
-                                           dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+                            dispatch: dispatch).value
     }
 
-    func test_callingMiddlewareHandler_setupCall_when_returnsError_then_updateCallingCoreError() {
-        let expectation = XCTestExpectation(description: "Dispatch the new action")
+    func test_callingMiddlewareHandler_setupCall_when_returnsError_then_updateCallingCoreError() async {
+        let sut = makeSUT()
         let errorCode = 50
         let error = getError(code: errorCode)
 
@@ -337,34 +337,42 @@ class CallingMiddlewareHandlerTests: XCTestCase {
                 let nserror = err as? NSError
                 XCTAssertEqual(nserror!.code, errorCode)
                 XCTAssertEqual(internalErr, .callJoinFailed)
-                expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
             }
         }
         mockCallingService.error = error
-        callingMiddlewareHandler.setupCall(state: getEmptyState(), dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+        await sut.setupCall(state: getEmptyState(), dispatch: dispatch).value
     }
 
-    func test_callingMiddlewareHandler_setupCall_when_internalErrorNotNil_then_shouldNotDispatch() {
-        let expectation = XCTestExpectation(description: "Dispatch the new action")
-        expectation.isInverted = true
+    func test_callingMiddlewareHandler_setupCall_when_internalErrorNotNil_then_shouldNotDispatch() async {
+        let sut = makeSUT()
 
         func dispatch(action: Action) {
             XCTFail("Should not dispatch")
         }
-        callingMiddlewareHandler.setupCall(state: getState(callingState: .none,
+        await sut.setupCall(state: getState(callingState: .none,
                                                            cameraStatus: .off,
                                                            cameraDeviceStatus: .front,
                                                            cameraPermission: .granted,
                                                            internalError: .callEvicted),
-                                           dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+                            dispatch: dispatch).value
+    }
+
+    func test_callingMiddlewareHandler_enterBackground_when_callConnected_cameraStatusOn_then_cameraPausedDispatched() async {
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            XCTAssertTrue(action == Action.localUserAction(.cameraPausedSucceeded))
+        }
+        await sut.enterBackground(state: getState(
+            callingState: .connected,
+            cameraStatus: .on,
+            cameraDeviceStatus: .front), dispatch: dispatch).value
     }
 
     func test_callingMiddlewareHandler_enterBackground_when_callConnected_cameraStatusOn_then_stopLocalVideoStreamCalled() async {
-        await callingMiddlewareHandler.enterBackground(
+        let sut = makeSUT()
+        await sut.enterBackground(
             state: getState(
                 callingState: .connected,
                 cameraStatus: .on,
@@ -374,46 +382,51 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         XCTAssertTrue(mockCallingService.stopLocalVideoStreamCalled)
     }
 
-    func test_callingMiddlewareHandler_enterBackground_when_callNotConnected_then_stopLocalVideoStreamNotCalled() {
-        callingMiddlewareHandler.enterBackground(state: getState(callingState: .disconnected,
+    func test_callingMiddlewareHandler_enterBackground_when_callNotConnected_then_stopLocalVideoStreamNotCalled() async {
+        let sut = makeSUT()
+        await sut.enterBackground(state: getState(callingState: .disconnected,
                                                                  cameraStatus: .on,
                                                                  cameraDeviceStatus: .front),
-                                                 dispatch: getEmptyDispatch())
+                                  dispatch: getEmptyDispatch()).value
         XCTAssertFalse(mockCallingService.stopLocalVideoStreamCalled)
     }
 
-    func test_callingMiddlewareHandler_enterBackground_when_cameraStatusNotOn_then_stopLocalVideoStreamNotCalled() {
-        callingMiddlewareHandler.enterBackground(state: getState(callingState: .connected,
+    func test_callingMiddlewareHandler_enterBackground_when_cameraStatusNotOn_then_stopLocalVideoStreamNotCalled() async {
+        let sut = makeSUT()
+        await sut.enterBackground(state: getState(callingState: .connected,
                                                                  cameraStatus: .off,
                                                                  cameraDeviceStatus: .front),
-                                                 dispatch: getEmptyDispatch())
+                                  dispatch: getEmptyDispatch()).value
         XCTAssertFalse(mockCallingService.stopLocalVideoStreamCalled)
     }
 
-    func test_callingMiddlewareHandler_enterBackground_when_callConnected_cameraStatusOn_noError_then_updateCameraStatusPauseUpdate() {
+    func test_callingMiddlewareHandler_enterBackground_when_callConnected_cameraStatusOn_noError_then_updateCameraStatusPauseUpdate() async {
+        let sut = makeSUT()
         func dispatch(action: Action) {
             XCTAssertTrue(action == Action.localUserAction(.cameraPausedSucceeded))
         }
-        callingMiddlewareHandler.enterBackground(state: getState(callingState: .connected,
+        await sut.enterBackground(state: getState(callingState: .connected,
                                                                  cameraStatus: .on,
                                                                  cameraDeviceStatus: .front),
-                                                 dispatch: dispatch)
+                                  dispatch: dispatch).value
     }
 
-    func test_callingMiddlewareHandler_enterBackground_when_callConnected_cameraStatusOn_returnsError_then_updateCameraStatusIsError() {
+    func test_callingMiddlewareHandler_enterBackground_when_callConnected_cameraStatusOn_returnsError_then_updateCameraStatusIsError() async {
+        let sut = makeSUT()
         let error = getError()
         func dispatch(action: Action) {
             XCTAssertTrue(action == Action.localUserAction(.cameraPausedFailed(error: error)))
         }
         mockCallingService.error = error
-        callingMiddlewareHandler.enterBackground(state: getState(callingState: .connected,
+        await sut.enterBackground(state: getState(callingState: .connected,
                                                                  cameraStatus: .on,
                                                                  cameraDeviceStatus: .front),
-                                                 dispatch: dispatch)
+                                  dispatch: dispatch).value
     }
 
     func test_callingMiddlewareHandler_enterForeground_when_callConnected_cameraStatusPaused_then_startLocalVideoStreamCalled() async {
-        await callingMiddlewareHandler.enterForeground(
+        let sut = makeSUT()
+        await sut.enterForeground(
             state: getState(callingState: .connected,
                             cameraStatus: .paused,
                             cameraDeviceStatus: .front),
@@ -422,141 +435,147 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         XCTAssertTrue(mockCallingService.startLocalVideoStreamCalled)
     }
 
-    func test_callingMiddlewareHandler_enterForeground_when_callNotStarted_then_startLocalVideoStreamNotCalled() {
-        callingMiddlewareHandler.enterForeground(state: getState(callingState: .disconnected,
+    func test_callingMiddlewareHandler_enterForeground_when_callNotStarted_then_startLocalVideoStreamNotCalled() async {
+        let sut = makeSUT()
+        await sut.enterForeground(state: getState(callingState: .disconnected,
                                                                  cameraStatus: .paused,
                                                                  cameraDeviceStatus: .front),
-                                                 dispatch: getEmptyDispatch())
+                                  dispatch: getEmptyDispatch()).value
         XCTAssertFalse(mockCallingService.startLocalVideoStreamCalled)
     }
 
-    func test_callingMiddlewareHandler_enterForeground_when_cameraStatusNotPaused_then_startLocalVideoStreamNotCalled() {
-        callingMiddlewareHandler.enterForeground(state: getState(callingState: .connected,
+    func test_callingMiddlewareHandler_enterForeground_when_cameraStatusNotPaused_then_startLocalVideoStreamNotCalled() async {
+        let sut = makeSUT()
+        await sut.enterForeground(state: getState(callingState: .connected,
                                                                  cameraStatus: .off,
                                                                  cameraDeviceStatus: .front),
-                                                 dispatch: getEmptyDispatch())
+                                  dispatch: getEmptyDispatch()).value
         XCTAssertFalse(mockCallingService.startLocalVideoStreamCalled)
     }
 
-    func test_callingMiddlewareHandler_enterForeground_when_callConnected_cameraStatusOn_noError_then_updateCameraStatusOnUpdate() {
-        let expectation = XCTestExpectation(description: "Dispatch the new action")
+    func test_callingMiddlewareHandler_enterForeground_when_callConnected_cameraStatusOn_noError_then_updateCameraStatusOnUpdate() async {
+        let sut = makeSUT()
         let id = "identifier"
         func dispatch(action: Action) {
             XCTAssertTrue(action == Action.localUserAction(.cameraOnSucceeded(videoStreamIdentifier: id)))
             switch action {
             case let .localUserAction(.cameraOnSucceeded(videoStreamIdentifier)):
                 XCTAssertEqual(videoStreamIdentifier, id)
-                expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
             }
         }
         mockCallingService.videoStreamId = id
-        callingMiddlewareHandler.enterForeground(state: getState(callingState: .connected,
+        await sut.enterForeground(state: getState(callingState: .connected,
                                                                  cameraStatus: .paused,
                                                                  cameraDeviceStatus: .front),
-                                                 dispatch: dispatch)
-        wait(for: [expectation], timeout: 1.5)
+                                                 dispatch: dispatch).value
     }
 
     func test_callingMiddlewareHandler_holdCall_then_holdCallCalled() async {
+        let sut = makeSUT()
         let state: AppState = getState(callingState: .connected,
                                        cameraStatus: .off,
                                        cameraDeviceStatus: .front,
                                        cameraPermission: .notAsked)
 
-        await callingMiddlewareHandler.holdCall(state: state, dispatch: getEmptyDispatch()).value
+        await sut.holdCall(state: state, dispatch: getEmptyDispatch()).value
         XCTAssertTrue(mockCallingService.holdCallCalled)
     }
 
     func test_callingMiddlewareHandler_resumeCall_then_resumeCallCalled() async {
+        let sut = makeSUT()
         let state: AppState = getState(callingState: .localHold,
                                        cameraStatus: .off,
                                        cameraDeviceStatus: .front,
                                        cameraPermission: .notAsked)
 
-        await callingMiddlewareHandler.resumeCall(state: state, dispatch: getEmptyDispatch()).value
+        await sut.resumeCall(state: state, dispatch: getEmptyDispatch()).value
         XCTAssertTrue(mockCallingService.resumeCallCalled)
     }
 
-    func test_callingMiddlewareHandler_enterForeground_when_callLocalHold_cameraStatusOn_noError_then_updateCameraStatusOnUpdate() {
-        let expectation = XCTestExpectation(description: "Dispatch the new action")
+    func test_callingMiddlewareHandler_enterForeground_when_callLocalHold_cameraStatusOn_noError_then_updateCameraStatusOnUpdate() async {
+        let sut = makeSUT()
         let id = "identifier"
         func dispatch(action: Action) {
             XCTAssertTrue(action == Action.localUserAction(.cameraOnSucceeded(videoStreamIdentifier: id)))
             switch action {
             case let Action.localUserAction(.cameraOnSucceeded(videoStreamIdentifier)):
                 XCTAssertEqual(videoStreamIdentifier, id)
-                expectation.fulfill()
             default:
                 XCTFail("Should not be default \(action)")
             }
         }
         mockCallingService.videoStreamId = id
-        callingMiddlewareHandler.enterForeground(state: getState(callingState: .localHold,
+        await sut.enterForeground(state: getState(callingState: .localHold,
                                                                  cameraStatus: .paused,
                                                                  cameraDeviceStatus: .front),
-                                                 dispatch: dispatch)
-        wait(for: [expectation], timeout: 1.5)
+                                  dispatch: dispatch).value
     }
 
-    func test_callingMiddlewareHandler_enterForeground_when_callConnected_cameraStatusOn_returnsError_then_updateCameraStatusIsError() {
+    func test_callingMiddlewareHandler_enterForeground_when_callConnected_cameraStatusOn_returnsError_then_updateCameraStatusIsError() async {
+        let sut = makeSUT()
         let error = getError()
         func dispatch(action: Action) {
             XCTAssertTrue(action == Action.localUserAction(.cameraOnFailed(error: error)))
         }
         mockCallingService.error = error
-        callingMiddlewareHandler.enterForeground(state: getState(callingState: .connected,
+        await sut.enterForeground(state: getState(callingState: .connected,
                                                                  cameraStatus: .paused,
                                                                  cameraDeviceStatus: .front),
-                                                 dispatch: dispatch)
+                                  dispatch: dispatch).value
     }
 
-    func test_callingMiddlewareHandler_onCameraPermissionIsSet_when_callTransmissionLocal_cameraPermissionRequesting_then_updateCameraPreviewOnTriggered() {
+    func test_callingMiddlewareHandler_onCameraPermissionIsSet_when_callTransmissionLocal_cameraPermissionRequesting_then_updateCameraPreviewOnTriggered() async {
+        let sut = makeSUT()
         func dispatch(action: Action) {
             XCTAssertTrue(action == Action.localUserAction(.cameraPreviewOnTriggered))
         }
-        callingMiddlewareHandler.onCameraPermissionIsSet(state: getState(cameraPermission: .requesting,
+        await sut.onCameraPermissionIsSet(state: getState(cameraPermission: .requesting,
                                                                          cameraTransmissionStatus: .local),
-                                                         dispatch: dispatch)
+                                          dispatch: dispatch).value
     }
 
-    func test_callingMiddlewareHandler_onCameraPermissionIsSet_when_callTransmissionRemote_cameraPermissionRequesting_then_updateCameraOnTriggered() {
+    func test_callingMiddlewareHandler_onCameraPermissionIsSet_when_callTransmissionRemote_cameraPermissionRequesting_then_updateCameraOnTriggered() async {
+        let sut = makeSUT()
         func dispatch(action: Action) {
             XCTAssertTrue(action == Action.localUserAction(.cameraOnTriggered))
         }
-        callingMiddlewareHandler.onCameraPermissionIsSet(state: getState(cameraPermission: .requesting,
+        await sut.onCameraPermissionIsSet(state: getState(cameraPermission: .requesting,
                                                                          cameraTransmissionStatus: .remote),
-                                                         dispatch: dispatch)
+                                          dispatch: dispatch).value
     }
 
-    func test_callingMiddlewareHandler_onCameraPermissionIsSet_when_callTransmissionRemote_cameraPermissionNotRequesting_then_updateCameraOnTriggered() {
+    func test_callingMiddlewareHandler_onCameraPermissionIsSet_when_callTransmissionRemote_cameraPermissionNotRequesting_then_updateCameraOnTriggered() async {
+        let sut = makeSUT()
         func dispatch(action: Action) {
             XCTFail("Failed with unknown action dispatched")
         }
-        callingMiddlewareHandler.onCameraPermissionIsSet(state: getState(cameraPermission: .granted,
+        await sut.onCameraPermissionIsSet(state: getState(cameraPermission: .granted,
                                                                          cameraTransmissionStatus: .remote),
-                                                         dispatch: dispatch)
+                                          dispatch: dispatch).value
     }
 
-    func test_callingMiddlewareHandler_setupCall_when_networkFailed_then_shouldNotDispatch() {
-        let expectation = XCTestExpectation(description: "Should Dispatch If Network Failed")
-        expectation.isInverted = true
+    func test_callingMiddlewareHandler_setupCall_when_networkFailed_then_shouldNotDispatch() async {
+        let sut = makeSUT()
 
         func dispatch(action: Action) {
             XCTFail("Should not dispatch")
         }
-        callingMiddlewareHandler.setupCall(state: getState(callingState: .none,
+        await sut.setupCall(state: getState(callingState: .none,
                                                            cameraStatus: .off,
                                                            cameraDeviceStatus: .front,
                                                            cameraPermission: .granted,
                                                            internalError: .connectionFailed),
-                                           dispatch: dispatch)
-        wait(for: [expectation], timeout: 1)
+                            dispatch: dispatch).value
     }
 }
 
 extension CallingMiddlewareHandlerTests {
+    private func makeSUT() -> CallingMiddlewareHandler {
+        let mockLogger = LoggerMocking()
+        return CallingMiddlewareHandler(callingService: mockCallingService, logger: mockLogger)
+    }
 
     private func getEmptyState() -> AppState {
         return AppState()

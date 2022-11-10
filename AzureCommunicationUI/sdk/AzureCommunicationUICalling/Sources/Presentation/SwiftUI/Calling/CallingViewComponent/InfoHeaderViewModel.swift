@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 class InfoHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String
@@ -45,6 +45,9 @@ class InfoHeaderViewModel: ObservableObject {
                 }
                 self.showParticipantListButtonTapped()
         }
+        self.participantListButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
+            .participantListAccessibilityLabel)
+
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
         updateInfoHeaderAvailability()
@@ -125,11 +128,10 @@ class InfoHeaderViewModel: ObservableObject {
     }
 
     private func resetTimer() {
-        self.infoHeaderDismissTimer = Timer.scheduledTimer(timeInterval: 3.0,
-                                                           target: self,
-                                                           selector: #selector(hideInfoHeader),
-                                                           userInfo: nil,
-                                                           repeats: false)
+        self.infoHeaderDismissTimer = Timer.scheduledTimer(withTimeInterval: 3.0,
+                             repeats: false) { [weak self] _ in
+            self?.hideInfoHeader()
+        }
     }
 
     private func updateInfoHeaderAvailability() {

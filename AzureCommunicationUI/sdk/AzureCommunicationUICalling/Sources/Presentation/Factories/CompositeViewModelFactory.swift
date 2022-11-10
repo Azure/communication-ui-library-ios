@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import FluentUI
+import Foundation
 
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
@@ -16,11 +16,12 @@ protocol CompositeViewModelFactoryProtocol {
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
-    func makeIconWithLabelButtonViewModel(iconName: CompositeIcon,
-                                          buttonTypeColor: IconWithLabelButtonViewModel.ButtonTypeColor,
-                                          buttonLabel: String,
-                                          isDisabled: Bool,
-                                          action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel
+    func makeIconWithLabelButtonViewModel<ButtonStateType>(
+                                 selectedButtonState: ButtonStateType,
+                                 localizationProvider: LocalizationProviderProtocol,
+                                 buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
+                                 isDisabled: Bool,
+                                 action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<ButtonStateType>
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel
     func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
                                     buttonLabel: String,
@@ -91,7 +92,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                            store: store,
                                            networkManager: networkManager,
                                            localizationProvider: localizationProvider,
-                                           navigationBarViewData: localOptions?.navigationBarViewData)
+                                           setupScreenViewData: localOptions?.setupScreenViewData)
             self.setupViewModel = viewModel
             self.callingViewModel = nil
             return viewModel
@@ -124,14 +125,16 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             isDisabled: isDisabled,
                             action: action)
     }
-    func makeIconWithLabelButtonViewModel(iconName: CompositeIcon,
-                                          buttonTypeColor: IconWithLabelButtonViewModel.ButtonTypeColor,
-                                          buttonLabel: String,
+    func makeIconWithLabelButtonViewModel<T: ButtonState>(
+                                          selectedButtonState: T,
+                                          localizationProvider: LocalizationProviderProtocol,
+                                          buttonTypeColor: IconWithLabelButtonViewModel<T>.ButtonTypeColor,
                                           isDisabled: Bool,
-                                          action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel {
-        IconWithLabelButtonViewModel(iconName: iconName,
+                                          action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<T> {
+        IconWithLabelButtonViewModel(
+                                     selectedButtonState: selectedButtonState,
+                                     localizationProvider: localizationProvider,
                                      buttonTypeColor: buttonTypeColor,
-                                     buttonLabel: buttonLabel,
                                      isDisabled: isDisabled,
                                      action: action)
     }

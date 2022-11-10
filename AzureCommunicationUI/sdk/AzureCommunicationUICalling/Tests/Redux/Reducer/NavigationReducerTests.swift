@@ -13,7 +13,7 @@ class NavigationReducerTests: XCTestCase {
         let expectedState = NavigationState(status: .setup)
         let state = NavigationState(status: .setup)
         let action = Action.callingAction(.stateUpdated(status: .connected))
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState, expectedState)
@@ -23,7 +23,7 @@ class NavigationReducerTests: XCTestCase {
         let expectedState = NavigationState(status: .exit)
         let state = NavigationState(status: .setup)
         let action = Action.compositeExitAction
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState, expectedState)
@@ -33,7 +33,7 @@ class NavigationReducerTests: XCTestCase {
         let expectedState = NavigationState(status: .inCall)
         let state = NavigationState(status: .exit)
         let action = Action.callingViewLaunched
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState, expectedState)
@@ -42,14 +42,14 @@ class NavigationReducerTests: XCTestCase {
     func test_navigationReducer_reduce_when_action_not_applicable_then_stateNotUpdate() {
         let expectedState = NavigationState(status: .inCall)
         let action = Action.audioSessionAction(.audioInterruptEnded)
-        let sut = getSUT()
+        let sut = makeSUT()
         let resultState = sut.reduce(expectedState, action)
         XCTAssertEqual(resultState, expectedState)
     }
 }
 
 extension NavigationReducerTests {
-    private func getSUT() -> Reducer<NavigationState, Action> {
+    private func makeSUT() -> Reducer<NavigationState, Action> {
         return .liveNavigationReducer
     }
 }

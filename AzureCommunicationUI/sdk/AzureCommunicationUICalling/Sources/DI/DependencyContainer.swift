@@ -27,7 +27,7 @@ final class DependencyContainer {
     }
 
     private func registerDefaultDependencies() {
-        register(DefaultLogger() as Logger)
+        register(DefaultLogger(category: "Calling") as Logger)
     }
 
     func registerDependencies(_ callConfiguration: CallConfiguration,
@@ -48,7 +48,8 @@ final class DependencyContainer {
         register(AccessibilityProvider() as AccessibilityProviderProtocol)
         register(LocalizationProvider(logger: resolve()) as LocalizationProviderProtocol)
         register(AvatarViewManager(store: resolve(),
-                                   localOptions: localOptions) as AvatarViewManager)
+                                   localParticipantViewData: localOptions?.participantViewData) as
+                 AvatarViewManagerProtocol)
         register(CompositeViewModelFactory(logger: resolve(),
                                            store: resolve(),
                                            networkManager: resolve(),
@@ -69,7 +70,7 @@ final class DependencyContainer {
         register(RemoteParticipantsManager(store: resolve(),
                                            callCompositeEventsHandler: callCompositeEventsHandler,
                                            callingSDKWrapper: resolve(),
-                                           avatarViewManager: resolve()) as RemoteParticipantsManager)
+                                           avatarViewManager: resolve()) as RemoteParticipantsManagerProtocol)
     }
 
     private func makeStore(displayName: String?) -> Store<AppState> {
