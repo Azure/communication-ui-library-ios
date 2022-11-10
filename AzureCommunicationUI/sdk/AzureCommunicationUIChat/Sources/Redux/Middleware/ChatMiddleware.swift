@@ -73,11 +73,13 @@ private func handleChatAction(_ action: ChatAction,
 
 private func handleParticipantsAction(_ action: ParticipantsAction,
                                       _ actionHandler: ChatActionHandling,
-                                      _ getState: () -> AppState,
+                                      _ getState: @escaping () -> AppState,
                                       _ dispatch: @escaping ActionDispatch) {
     switch action {
     case .sendReadReceiptTriggered(let messageId):
         actionHandler.sendReadReceipt(messageId: messageId, state: getState(), dispatch: dispatch)
+    case .typingIndicatorReceived(_):
+        actionHandler.setTypingParticipantTimer(getState, dispatch)
     default:
         break
     }
