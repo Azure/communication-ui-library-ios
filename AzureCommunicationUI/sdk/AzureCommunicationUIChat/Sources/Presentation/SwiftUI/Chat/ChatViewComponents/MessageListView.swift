@@ -33,7 +33,12 @@ struct MessageListView: View {
     var messageList: some View {
         ScrollViewReader { scrollProxy in
             ObservableScrollView(
-                offsetChanged: { viewModel.scrollOffset = $0 },
+                offsetChanged: {
+                    viewModel.scrollOffset = $0
+                    if viewModel.isAtBottom() {
+                        print("SCROLL - Is at bottom")
+                    }
+                },
                 heightChanged: { viewModel.scrollSize = $0 },
                 content: {
                     LazyVStack(spacing: 0) {
