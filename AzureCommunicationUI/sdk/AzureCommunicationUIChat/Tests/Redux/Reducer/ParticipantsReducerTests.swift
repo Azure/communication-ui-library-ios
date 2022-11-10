@@ -2,14 +2,12 @@
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
 //
-
-import AzureCommunicationCommon
-import Foundation
-import XCTest
 @testable import AzureCommunicationUIChat
+import AzureCommunicationCommon
+import AzureCore
+import XCTest
 
-class ParticipantsReducerTests: XCTestCase {
-
+class ParticipantReducerTests: XCTestCase {
     func test_participantsReducer_reduce_when_fetchListOfParticipantsSuccessParticipantAction_then_stateUpdated() {
         let participants = [
             ParticipantInfoModel(identifier: CommunicationUserIdentifier("id1"),
@@ -93,9 +91,70 @@ class ParticipantsReducerTests: XCTestCase {
         XCTAssertTrue(resultState.typingIndicatorUpdatedTimestamp > initialTimestamp)
         XCTAssertEqual(resultState.typingIndicatorMap.count, 1)
     }
+
+    func test_participantReducer_reduce_when_typingIndicatorReceivedAction_then_participantsStateUpdated() {
+        let expectedIdentifier = "ID"
+        let model = UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier(expectedIdentifier),
+                                                  timestamp: Iso8601Date())!
+        let state = ParticipantsState()
+        let action = Action.participantsAction(.typingIndicatorReceived(participant: model))
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+        XCTAssertEqual(resultState.typingParticipants.count, 1)
+        XCTAssertEqual(resultState.typingParticipants.first?.id, expectedIdentifier)
+    }
+
+    func test_participantReducer_reduce_when_participantRemovedAction_then_participantsStateUpdated() {
+        let expectedIdentifier = "ID"
+        let existingParticipant = UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier(expectedIdentifier),
+                                                  timestamp: Iso8601Date())!
+        let state = ParticipantsState(typingParticipants: [existingParticipant])
+        let participantToBeRemoved = ParticipantInfoModel(identifier: CommunicationUserIdentifier(expectedIdentifier),
+                                         displayName: expectedIdentifier)
+        let action = Action.participantsAction(.participantsRemoved(participants: [participantToBeRemoved]))
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+        XCTAssertEqual(resultState.typingParticipants.count, 0)
+    }
+
+    func test_participantReducer_reduce_when_newTextMessageReceivedAction_then_participantsStateUpdated() {
+        let expectedIdentifier = "ID"
+        let existingParticipant = UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier(expectedIdentifier),
+                                                  timestamp: Iso8601Date())!
+        let state = ParticipantsState(typingParticipants: [existingParticipant])
+        let model = ChatMessageInfoModel(type: .text, senderId: expectedIdentifier)
+        let action = Action.repositoryAction(.chatMessageReceived(message: model))
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+        XCTAssertEqual(resultState.typingParticipants.count, 0)
+    }
+
+    func test_participantReducer_reduce_when_newHTMLMessageReceivedAction_then_participantsStateUpdated() {
+        let expectedIdentifier = "ID"
+        let existingParticipant = UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier(expectedIdentifier),
+                                                  timestamp: Iso8601Date())!
+        let state = ParticipantsState(typingParticipants: [existingParticipant])
+        let model = ChatMessageInfoModel(type: .html, senderId: expectedIdentifier)
+        let action = Action.repositoryAction(.chatMessageReceived(message: model))
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+        XCTAssertEqual(resultState.typingParticipants.count, 0)
+    }
+
+    func test_participantReducer_reduce_when_newCustomMessageReceivedAction_then_participantsStateUpdated() {
+        let expectedIdentifier = "ID"
+        let existingParticipant = UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier(expectedIdentifier),
+                                                  timestamp: Iso8601Date())!
+        let state = ParticipantsState(typingParticipants: [existingParticipant])
+        let model = ChatMessageInfoModel(type: .custom(""), senderId: expectedIdentifier)
+        let action = Action.repositoryAction(.chatMessageReceived(message: model))
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+        XCTAssertEqual(resultState.typingParticipants.count, 0)
+    }
 }
 
-extension ParticipantsReducerTests {
+extension ParticipantReducerTests {
     func getSUT() -> Reducer<ParticipantsState, Action> {
         return .liveParticipantsReducer
     }

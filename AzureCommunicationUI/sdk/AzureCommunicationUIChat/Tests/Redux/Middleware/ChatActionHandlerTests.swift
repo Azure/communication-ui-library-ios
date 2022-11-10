@@ -145,6 +145,22 @@ class ChatActionHandlerTests: XCTestCase {
 
         XCTAssertTrue(mockChatService.sendReadReceiptCalled)
     }
+
+    func test_chatActionHandler_recieveTypingIndicator_then_dispatchClearIdleTypingParticipantsAction() async {
+        let expectation = XCTestExpectation(description: "Dispatch Clear Idle Typing Participants Success")
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            switch action {
+            case .participantsAction(.clearIdleTypingParticipants):
+                expectation.fulfill()
+            default:
+                XCTFail("Unknown Action Dispatched")
+            }
+        }
+        UserEventTimestampModel.typingParticipantTimeout = 0
+        sut.setTypingParticipantTimer(getEmptyState, dispatch)
+        wait(for: [expectation], timeout: 1)
+    }
 }
 
 extension ChatActionHandlerTests {

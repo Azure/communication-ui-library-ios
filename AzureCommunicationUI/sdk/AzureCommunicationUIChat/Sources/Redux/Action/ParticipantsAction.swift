@@ -13,7 +13,9 @@ enum ParticipantsAction: Equatable {
     case leaveChatSuccess
 
     // MARK: - Chat SDK Remote Event Actions
-    case typingIndicatorReceived(userEventTimestamp: UserEventTimestampModel)
+    case typingIndicatorReceived(participant: UserEventTimestampModel)
+    case clearIdleTypingParticipants
+
     case participantsAdded(participants: [ParticipantInfoModel])
     case participantsRemoved(participants: [ParticipantInfoModel])
     case readReceiptReceived(readReceiptInfo: ReadReceiptInfoModel)
