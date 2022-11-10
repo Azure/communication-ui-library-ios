@@ -1016,7 +1016,7 @@
 			children = (
 				7584842B291D82D4006373B3 /* AzureCommunicationUICommon */,
 			);
-			path = "Shared Sources";
+			name = "Shared Sources";
 			sourceTree = "<group>";
 		};
 		7584842B291D82D4006373B3 /* AzureCommunicationUICommon */ = {
@@ -1029,8 +1029,8 @@
 				75848431291D82D4006373B3 /* MappedSequence.swift */,
 			);
 			name = AzureCommunicationUICommon;
-			path = ../../AzureCommunicationUICommon/Sources/AzureCommunicationUICommon;
-			sourceTree = "<group>";
+			path = ../AzureCommunicationUICommon/Sources/AzureCommunicationUICommon;
+			sourceTree = SOURCE_ROOT;
 		};
 		9D8BF2E46CAA862B4F8E87A8 /* Pods */ = {
 			isa = PBXGroup;
