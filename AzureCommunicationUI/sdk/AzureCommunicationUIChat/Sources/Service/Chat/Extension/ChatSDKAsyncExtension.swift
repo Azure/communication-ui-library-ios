@@ -13,10 +13,10 @@ extension ChatThreadClient {
         try await withCheckedThrowingContinuation { continuation in
             listParticipants(withOptions: options) { result, _ in
                 switch result {
-                case .failure(let azureError):
-                    continuation.resume(throwing: azureError)
                 case .success(let participantsResult):
                     continuation.resume(returning: participantsResult)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
                 }
             }
         }
@@ -28,10 +28,10 @@ extension PagedCollection {
         try await withCheckedThrowingContinuation { continuation in
             nextPage { result in
                 switch result {
-                case .failure(let error):
-                    continuation.resume(throwing: error)
                 case .success(let pageItems):
                     continuation.resume(returning: pageItems)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
                 }
             }
         }
