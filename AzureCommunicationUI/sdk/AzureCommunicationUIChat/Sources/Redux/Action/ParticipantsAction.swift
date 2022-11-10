@@ -15,8 +15,8 @@ enum ParticipantsAction: Equatable {
     case typingIndicatorReceived(userEventTimestamp: UserEventTimestampModel)
     case participantsAdded(participants: [ParticipantInfoModel])
     case participantsRemoved(participants: [ParticipantInfoModel])
-    case readReceiptReceived(readReceiptInfo: ReadReceiptInfoModel)
 
+    case readReceiptReceived(readReceiptInfo: ReadReceiptInfoModel)
     case sendReadReceiptTriggered(messageId: String)
     case sendReadReceiptSuccess(messageId: String)
     case sendReadReceiptFailed(error: Error)

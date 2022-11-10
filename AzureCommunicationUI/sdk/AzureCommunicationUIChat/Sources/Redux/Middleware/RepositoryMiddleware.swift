@@ -62,6 +62,8 @@ private func handleParticipantsAction(
         case .participantsRemoved(let participants):
             actionHandler.participantRemovedMessage(participants: participants,
                                                     dispatch: dispatch)
+        case.readReceiptReceived(let readReceiptInfo):
+            actionHandler.readReceiptReceived(readReceiptInfo: readReceiptInfo, state: getState())
         default:
             break
         }

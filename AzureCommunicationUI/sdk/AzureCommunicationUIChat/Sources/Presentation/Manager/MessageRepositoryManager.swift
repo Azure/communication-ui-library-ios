@@ -24,6 +24,7 @@ protocol MessageRepositoryManagerProtocol {
     func addReceivedMessage(message: ChatMessageInfoModel)
     func updateMessageEdited(message: ChatMessageInfoModel)
     func updateMessageDeleted(message: ChatMessageInfoModel)
+    func updateMessageSendStatus(readReceiptInfo: ReadReceiptInfoModel, state: AppState)
 }
 
 class MessageRepositoryManager: MessageRepositoryManagerProtocol {
@@ -116,5 +117,22 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
         }) {
             messages[index] = message
         }
+    }
+
+    func updateMessageSendStatus(readReceiptInfo: ReadReceiptInfoModel, state: AppState) {
+        guard readReceiptInfo.senderIdentifier.stringValue != state.chatState.localUser?.identifier.stringValue else {
+            return
+        }
+        let messageId = readReceiptInfo.chatMessageId
+        let messageTimestamp = messageId.convertEpochStringToTimestamp()
+        let minimumReadReceiptTimestamp = state.participantsState.readReceiptUpdatedTimestamp
+        guard let messageTimestamp = messageTimestamp,
+            messageTimestamp <= minimumReadReceiptTimestamp,
+            let index = messages.firstIndex(where: {
+                $0.id == messageId
+            }) else {
+            return
+        }
+        messages[index].messageSendStatus = .seen
     }
 }

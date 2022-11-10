@@ -19,11 +19,16 @@ extension Reducer where State == ParticipantsState,
         var typingIndicatorMap = participantsState.typingIndicatorMap
         var typingIndicatorTimestamp = participantsState.typingIndicatorUpdatedTimestamp
 
+        // MARK: Read Receipt
+        var readReceiptMap = participantsState.readReceiptMap
+        var readReceiptUpdatedTimestamp = participantsState.readReceiptUpdatedTimestamp
+
         switch action {
         case .participantsAction(.participantsAdded(let participants)):
             var currentParticipants = participantsState.participants
             for participant in participants {
                 currentParticipants[participant.id] = participant
+                readReceiptMap[participant.id] = .distantPast
             }
             let state = ParticipantsState(participants: currentParticipants)
             return state
@@ -35,6 +40,7 @@ extension Reducer where State == ParticipantsState,
 
                 currentParticipants.removeValue(forKey: participant.id)
                 typingIndicatorMap.removeValue(forKey: participant.id)
+                readReceiptMap.removeValue(forKey: participant.id)
             }
             participantsUpdatedTimestamp = currentTimestamp
             typingIndicatorTimestamp = currentTimestamp
@@ -49,6 +55,17 @@ extension Reducer where State == ParticipantsState,
             if typingIndicatorTimestamp < typingExpiringTimestamp {
                 typingIndicatorTimestamp = typingExpiringTimestamp
             }
+        case .participantsAction(.readReceiptReceived(readReceiptInfo: let readReceiptInfo)):
+            let senderIdentifier = readReceiptInfo.senderIdentifier
+            let readOn = readReceiptInfo.readOn
+            let messageId = readReceiptInfo.chatMessageId
+            readReceiptMap[senderIdentifier.stringValue] = messageId.convertEpochStringToTimestamp()
+            let minimumReadReceiptTimestamp = readReceiptMap.min { $0.value < $1.value }?.value
+            guard let minimumReadReceiptTimestamp = minimumReadReceiptTimestamp else {
+                return participantsState
+            }
+            readReceiptUpdatedTimestamp = minimumReadReceiptTimestamp
+
         case .repositoryAction(.chatMessageReceived(let message)):
             guard let participantId = message.senderId else {
                 return participantsState
@@ -67,6 +84,8 @@ extension Reducer where State == ParticipantsState,
         return ParticipantsState(participants: currentParticipants,
                                  participantsUpdatedTimestamp: participantsUpdatedTimestamp,
                                  typingIndicatorMap: typingIndicatorMap,
-                                 typingIndicatorUpdatedTimestamp: typingIndicatorTimestamp)
+                                 typingIndicatorUpdatedTimestamp: typingIndicatorTimestamp,
+                                 readReceiptMap: readReceiptMap,
+                                 readReceiptUpdatedTimestamp: readReceiptUpdatedTimestamp)
     }
 }

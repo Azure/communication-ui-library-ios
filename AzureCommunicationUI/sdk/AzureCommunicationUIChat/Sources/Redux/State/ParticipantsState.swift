@@ -13,6 +13,10 @@ struct ParticipantsState {
     let typingIndicatorMap: [String: Date]
     let typingIndicatorUpdatedTimestamp: Date
 
+    // MARK: Read Receipt
+    var readReceiptMap: [String: Date] = [:]
+    var readReceiptUpdatedTimestamp: Date = .distantPast
+
     var numberOfParticipants: Int {
         return participants.count
     }
@@ -20,11 +24,16 @@ struct ParticipantsState {
     init(participants: [String: ParticipantInfoModel] = [:],
          participantsUpdatedTimestamp: Date = Date(),
          typingIndicatorMap: [String: Date] = [:],
-         typingIndicatorUpdatedTimestamp: Date = Date()) {
+         typingIndicatorUpdatedTimestamp: Date = Date(),
+         readReceiptMap: [String: Date] = [:],
+         readReceiptUpdatedTimestamp: Date = .distantPast) {
         self.participants = participants
 
         self.participantsUpdatedTimestamp = participantsUpdatedTimestamp
         self.typingIndicatorMap = typingIndicatorMap
         self.typingIndicatorUpdatedTimestamp = typingIndicatorUpdatedTimestamp
+
+        self.readReceiptMap = readReceiptMap
+        self.readReceiptUpdatedTimestamp = readReceiptUpdatedTimestamp
     }
 }
