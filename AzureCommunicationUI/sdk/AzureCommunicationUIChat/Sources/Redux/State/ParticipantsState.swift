@@ -19,7 +19,7 @@ struct ParticipantsState {
 
     init(participants: [String: ParticipantInfoModel] = [:],
          participantsUpdatedTimestamp: Date = Date(),
-         typingParticipants: [UserEventTimestampModel] = []
+         typingParticipants: [UserEventTimestampModel] = [],
          localParticipantStatus: LocalParticipantStatus = .joined) {
         self.participants = participants
         self.localParticipantStatus = localParticipantStatus
