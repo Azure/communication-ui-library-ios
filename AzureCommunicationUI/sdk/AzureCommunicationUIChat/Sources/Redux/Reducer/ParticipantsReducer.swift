@@ -61,6 +61,5 @@ extension Reducer where State == ParticipantsState,
                                  participantsUpdatedTimestamp: participantsUpdatedTimestamp,
                                  typingParticipants: typingParticipants,
                                  localParticipantStatus: localParticipantStatus)
-                                 )
     }
 }
