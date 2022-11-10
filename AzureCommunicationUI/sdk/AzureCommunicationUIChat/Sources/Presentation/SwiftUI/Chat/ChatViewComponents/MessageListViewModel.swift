@@ -15,7 +15,7 @@ class MessageListViewModel: ObservableObject {
     private var sendReadReceiptTimer: Timer?
     private var lastReadMessageIndex: Int?
 
-    @Published var showReadIconIndex: Int?
+    @Published var showMessageSendStatusIconIndex: Int?
     @Published var messages: [ChatMessageInfoModel]
 
     init(messageRepositoryManager: MessageRepositoryManagerProtocol,
@@ -38,20 +38,7 @@ class MessageListViewModel: ObservableObject {
         if self.repositoryUpdatedTimestamp < repositoryState.lastUpdatedTimestamp {
             self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
             messages = messageRepositoryManager.messages
-
-            for (index, message) in messageRepositoryManager.messages.enumerated().reversed() {
-                guard message.senderId == localUserId else {
-                    return
-                }
-                switch message.messageSendStatus {
-                case .seen:
-                    showReadIconIndex = index
-                    return
-                default:
-                    continue
-                }
-            }
-
+            updateShowMessageSendStatusIconIndex()
             // Debug for testing
 //            print("*Messages count: \(messageRepositoryManager.messages.count)")
 //            for message in messageRepositoryManager.messages {
@@ -74,7 +61,7 @@ class MessageListViewModel: ObservableObject {
             let isLocalUser = message.senderId == localUserId
             let showUsername = !isLocalUser && !isConsecutive
             let showTime = !isConsecutive
-            let showReadIcon = index == showReadIconIndex
+            let showReadIcon = index == showMessageSendStatusIconIndex
 
             return TextMessageViewModel(message: message,
                                         showDateHeader: showDateHeader,
@@ -134,6 +121,22 @@ class MessageListViewModel: ObservableObject {
         }
         let messageId = messages[messageIndex].id
         dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: messageId)))
+    }
+
+    func updateShowMessageSendStatusIconIndex() {
+        for (index, message) in messages.enumerated().reversed() {
+            guard message.senderId == localUserId else {
+                continue
+            }
+
+            switch message.sendStatus {
+            case .seen:
+                showMessageSendStatusIconIndex = index
+                return
+            default:
+                continue
+            }
+        }
     }
 
     deinit {

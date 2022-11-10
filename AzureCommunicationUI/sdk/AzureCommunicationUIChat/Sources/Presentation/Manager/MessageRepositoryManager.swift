@@ -141,7 +141,7 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
             return
         }
         var message = messages[index]
-        message.messageSendStatus = .seen
+        message.sendStatus = .seen
         messages[index] = message
     }
 }

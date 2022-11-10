@@ -36,7 +36,7 @@ struct MessageListView: View {
                     ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, _ in
                         let messageViewModel = viewModel.createViewModel(index: index)
                         MessageView(viewModel: messageViewModel)
-                            .id(index)
+                            .id(UUID())
                         // .listRowSeparator(.hidden) // Use List when bug is resolved
                         // .listRowInsets(getEdgeInsets(message: messageViewModel)) // Use List when bug is resolved
                             .padding(getEdgeInsets(message: messageViewModel))
