@@ -20,9 +20,7 @@ struct MessageListView: View {
 
     var body: some View {
         ZStack {
-            if viewModel.showActivityIndicator {
-                activityIndicator
-            }
+            activityIndicator
             messageList
             jumpToNewMessagesButton
         }
@@ -35,11 +33,15 @@ struct MessageListView: View {
     }
 
     var activityIndicator: some View {
-        VStack {
-            Spacer()
-            ActivityIndicator(size: .large)
-                .isAnimating(true)
-            Spacer()
+        Group {
+            if viewModel.showActivityIndicator {
+                VStack {
+                    Spacer()
+                    ActivityIndicator(size: .large)
+                        .isAnimating(true)
+                    Spacer()
+                }
+            }
         }
     }
 
