@@ -94,7 +94,7 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
 
     func handleTypingIndicatorReceived(dispatch: @escaping ActionDispatch,
                                        userEventTimestamp: UserEventTimestampModel) {
-        dispatch(.participantsAction(.typingIndicatorReceived(userEventTimestamp: userEventTimestamp)))
+        dispatch(.participantsAction(.typingIndicatorReceived(participant: userEventTimestamp)))
     }
 
     func handleReadReceiptReceived(dispatch: @escaping ActionDispatch,

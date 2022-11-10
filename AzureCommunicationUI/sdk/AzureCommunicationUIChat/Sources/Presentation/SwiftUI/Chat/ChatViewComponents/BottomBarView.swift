@@ -8,8 +8,9 @@ import SwiftUI
 @available(iOS 15.0, *)
 struct BottomBarView: View {
     private enum Constants {
-        static let horizontalPadding: CGFloat = 25
-        static let verticalPadding: CGFloat = 0
+        static let minimumHeight: CGFloat = 50
+        static let focusDelay: CGFloat = 1.0
+        static let padding: CGFloat = 25.0
     }
 
     @FocusState private var hasFocus: Bool
@@ -21,8 +22,9 @@ struct BottomBarView: View {
             messageTextField
             sendButton
         }
-        .padding([.leading, .trailing], Constants.horizontalPadding)
-        .padding([.top, .bottom], Constants.verticalPadding)
+        .frame(minHeight: Constants.minimumHeight)
+        .padding(.leading, Constants.padding)
+        .padding(.trailing, Constants.padding)
     }
 
     var messageTextField: some View {
