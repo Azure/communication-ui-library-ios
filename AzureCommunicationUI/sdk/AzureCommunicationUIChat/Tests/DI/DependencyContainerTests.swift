@@ -47,5 +47,6 @@ class DependencyContainerTests: XCTestCase {
         XCTAssertNotNil(dependencyContainer.resolve() as ErrorManagerProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as LifeCycleManagerProtocol)
         XCTAssertNotNil(dependencyContainer.resolve() as CompositeManagerProtocol)
+        XCTAssertNotNil(dependencyContainer.resolve() as EventManagerProtocol)
     }
 }
