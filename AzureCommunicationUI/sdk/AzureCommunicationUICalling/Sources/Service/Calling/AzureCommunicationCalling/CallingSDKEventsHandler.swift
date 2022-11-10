@@ -3,21 +3,10 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
-import Combine
 import AzureCommunicationCalling
 
-protocol CallingSDKEventsHandling: CallDelegate {
-    func assign(_ recordingCallFeature: RecordingCallFeature)
-    func assign(_ transcriptionCallFeature: TranscriptionCallFeature)
-    func setupProperties()
-
-    var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> { get }
-    var callInfoSubject: PassthroughSubject<CallInfoModel, Never> { get }
-    var isRecordingActiveSubject: PassthroughSubject<Bool, Never> { get }
-    var isTranscriptionActiveSubject: PassthroughSubject<Bool, Never> { get }
-    var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
-}
+import Foundation
+import Combine
 
 class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> = .init([])
@@ -31,7 +20,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     private var recordingCallFeature: RecordingCallFeature?
     private var transcriptionCallFeature: TranscriptionCallFeature?
     private var previousCallingStatus: CallingStatus = .none
-    private var remoteParticipants = MappedSequence<String, RemoteParticipant>()
+    private var remoteParticipants = MappedSequence<String, AzureCommunicationCalling.RemoteParticipant>()
 
     init(logger: Logger) {
         self.logger = logger
@@ -53,12 +42,13 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         participantsInfoListSubject.value.removeAll()
         recordingCallFeature = nil
         transcriptionCallFeature = nil
-        remoteParticipants = MappedSequence<String, RemoteParticipant>()
+        remoteParticipants = MappedSequence<String, AzureCommunicationCalling.RemoteParticipant>()
         previousCallingStatus = .none
     }
 
     private func setupRemoteParticipantEventsAdapter() {
-        let participantUpdate: ((RemoteParticipant) -> Void) = { [weak self] remoteParticipant in
+        let participantUpdate: ((AzureCommunicationCalling.RemoteParticipant)
+                                -> Void) = { [weak self] remoteParticipant in
             guard let self = self,
                   let userIdentifier = remoteParticipant.identifier.stringValue else {
                 return
@@ -80,7 +70,9 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         }
     }
 
-    private func removeRemoteParticipants(_ remoteParticipants: [RemoteParticipant]) {
+    private func removeRemoteParticipants(
+        _ remoteParticipants: [AzureCommunicationCalling.RemoteParticipant]
+    ) {
         for participant in remoteParticipants {
             if let userIdentifier = participant.identifier.stringValue {
                 self.remoteParticipants.removeValue(forKey: userIdentifier)?.delegate = nil
@@ -89,7 +81,9 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         removeRemoteParticipantsInfoModel(remoteParticipants)
     }
 
-    private func removeRemoteParticipantsInfoModel(_ remoteParticipants: [RemoteParticipant]) {
+    private func removeRemoteParticipantsInfoModel(
+        _ remoteParticipants: [AzureCommunicationCalling.RemoteParticipant]
+    ) {
         guard !remoteParticipants.isEmpty
         else { return }
 
@@ -103,7 +97,9 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         participantsInfoListSubject.send(remoteParticipantsInfoList)
     }
 
-    private func addRemoteParticipants(_ remoteParticipants: [RemoteParticipant]) {
+    private func addRemoteParticipants(
+        _ remoteParticipants: [AzureCommunicationCalling.RemoteParticipant]
+    ) {
         for participant in remoteParticipants {
             if let userIdentifier = participant.identifier.stringValue {
                 participant.delegate = remoteParticipantEventAdapter
@@ -113,7 +109,9 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         addRemoteParticipantsInfoModel(remoteParticipants)
     }
 
-    private func addRemoteParticipantsInfoModel(_ remoteParticipants: [RemoteParticipant]) {
+    private func addRemoteParticipantsInfoModel(
+        _ remoteParticipants: [AzureCommunicationCalling.RemoteParticipant]
+    ) {
         guard !remoteParticipants.isEmpty
         else { return }
 

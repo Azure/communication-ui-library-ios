@@ -8,25 +8,25 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class PreviewAreaViewModelTests: XCTestCase {
-    private var storeFactory: StoreFactoryMocking!
-    private var factoryMocking: CompositeViewModelFactoryMocking!
-    private var logger: LoggerMocking!
+
     private var localizationProvider: LocalizationProviderMocking!
+    private var storeFactory: StoreFactoryMocking!
+    private var logger: LoggerMocking!
+    private var factoryMocking: CompositeViewModelFactoryMocking!
 
     override func setUp() {
         super.setUp()
+        localizationProvider = LocalizationProviderMocking()
         storeFactory = StoreFactoryMocking()
         logger = LoggerMocking()
-        localizationProvider = LocalizationProviderMocking()
-        factoryMocking = CompositeViewModelFactoryMocking(logger: logger,
-                                                          store: storeFactory.store)
+        factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
     }
 
     override func tearDown() {
         super.tearDown()
+        localizationProvider = nil
         storeFactory = nil
         logger = nil
-        localizationProvider = nil
         factoryMocking = nil
     }
 
@@ -139,14 +139,17 @@ class PreviewAreaViewModelTests: XCTestCase {
     func test_previewAreaViewModel_update_when_statesUpdated_then_localVideoViewModelUpdated() {
         let expectation = XCTestExpectation(description: "LocalVideoViewModel is updated")
         let localUserState = LocalUserState(displayName: "UpdatedDisplayName")
+        let updateState: (LocalUserState) -> Void = { localState in
+            XCTAssertEqual(localUserState.displayName, localState.displayName)
+            expectation.fulfill()
+        }
+
         factoryMocking.localVideoViewModel = LocalVideoViewModelMocking(compositeViewModelFactory: factoryMocking,
                                                                         logger: logger,
                                                                         localizationProvider: localizationProvider,
                                                                         dispatchAction: storeFactory.store.dispatch,
-                                                                        updateState: { localState in
-            XCTAssertEqual(localUserState.displayName, localState.displayName)
-            expectation.fulfill()
-        })
+                                                                        updateState: updateState)
+
         let sut = makeSUT()
         sut.update(localUserState: localUserState, permissionState: PermissionState())
         wait(for: [expectation], timeout: 1.0)
@@ -172,15 +175,13 @@ class PreviewAreaViewModelTests: XCTestCase {
 }
 
 extension PreviewAreaViewModelTests {
-    func makeSUT() -> PreviewAreaViewModel {
+    func makeSUT(localizationProvider: LocalizationProviderMocking? = nil) -> PreviewAreaViewModel {
         return PreviewAreaViewModel(compositeViewModelFactory: factoryMocking,
                                     dispatchAction: storeFactory.store.dispatch,
-                                    localizationProvider: LocalizationProvider(logger: logger))
+                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger))
     }
 
     func makeSUTLocalizationMocking() -> PreviewAreaViewModel {
-        return PreviewAreaViewModel(compositeViewModelFactory: factoryMocking,
-                                    dispatchAction: storeFactory.store.dispatch,
-                                    localizationProvider: localizationProvider)
+        return makeSUT(localizationProvider: localizationProvider)
     }
 }

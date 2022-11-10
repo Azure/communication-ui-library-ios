@@ -100,3 +100,4 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Mikrofonunuz başka bir uygulama tarafından kullanılıyor";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Aramaya erişiminiz reddedildi.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Videoyu açma/kapatma sırasında hata oluştu";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Aramaya katılınamıyor. Ağ bağlantınızı kontrol edin.";

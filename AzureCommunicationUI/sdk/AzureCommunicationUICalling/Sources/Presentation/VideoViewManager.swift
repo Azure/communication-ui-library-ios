@@ -3,8 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import AzureCommunicationCalling
+
+import Foundation
 
 struct RemoteParticipantVideoViewId {
     let userIdentifier: String
@@ -29,7 +30,7 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
     struct VideoStreamCache {
         var renderer: VideoStreamRenderer
         var rendererView: RendererView
-        var mediaStreamType: MediaStreamType
+        var mediaStreamType: CompositeMediaStreamType
     }
     private let logger: Logger
     private var displayedRemoteParticipantsRendererView = MappedSequence<String, VideoStreamCache>()
@@ -73,18 +74,21 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
             return localRenderCache.rendererView
         }
 
-        guard let videoStream = callingSDKWrapper.getLocalVideoStream(videoStreamId) else {
+        guard let videoStream: CompositeLocalVideoStream<AzureCommunicationCalling.LocalVideoStream> =
+                callingSDKWrapper.getLocalVideoStream(videoStreamId) else {
             return nil
         }
-
+        let wrappedVideoStream = videoStream.wrappedObject
         do {
-            let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(localVideoStream: videoStream)
+            let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(localVideoStream: wrappedVideoStream)
             let newRendererView: RendererView = try newRenderer.createView(
                 withOptions: CreateViewOptions(scalingMode: .crop))
 
-            let cache = VideoStreamCache(renderer: newRenderer,
-                                         rendererView: newRendererView,
-                                         mediaStreamType: videoStream.mediaStreamType)
+            let cache = VideoStreamCache(
+                renderer: newRenderer,
+                rendererView: newRendererView,
+                mediaStreamType: videoStream.mediaStreamType
+            )
             localRendererViews.append(forKey: videoStreamId,
                                       value: cache)
             return newRendererView
@@ -112,16 +116,19 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
                                                streamSize: streamSize)
         }
 
-        guard let participant = callingSDKWrapper.getRemoteParticipant(userIdentifier),
+        guard let participant: CompositeRemoteParticipant< AzureCommunicationCalling.RemoteParticipant,
+                                                  AzureCommunicationCalling.RemoteVideoStream> =
+                callingSDKWrapper.getRemoteParticipant(userIdentifier),
               let videoStream = participant.videoStreams.first(where: { stream in
                   return String(stream.id) == videoStreamId
               }) else {
             return nil
         }
 
+        let wrappedVideoStream = videoStream.wrappedObject
         do {
             let options = CreateViewOptions(scalingMode: videoStream.mediaStreamType == .screenSharing ? .fit : .crop)
-            let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(remoteVideoStream: videoStream)
+            let newRenderer: VideoStreamRenderer = try VideoStreamRenderer(remoteVideoStream: wrappedVideoStream)
             let newRendererView: RendererView = try newRenderer.createView(withOptions: options)
 
             let cache = VideoStreamCache(renderer: newRenderer,

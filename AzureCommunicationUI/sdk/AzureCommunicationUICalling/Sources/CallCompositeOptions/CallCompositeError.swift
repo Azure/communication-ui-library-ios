@@ -11,16 +11,13 @@ public struct CallCompositeErrorCode {
     public static let callJoin: String = "callJoin"
 
     /// Error when a call disconnects unexpectedly or fails on ending.
-    public static var callEnd: String = "callEnd"
+    public static let callEnd: String = "callEnd"
 
     /// Error when camera failed to start or stop
     public static let cameraFailure: String = "cameraFailure"
 
     /// Error when the input token is expired.
     public static let tokenExpired: String = "tokenExpired"
-
-    /// Error when something unexpected has occured 
-    public static let unknownError: String = "unknownError"
 
     /// Error when a participant is evicted from the call by another participant
     static let callEvicted: String = "callEvicted"
@@ -42,7 +39,7 @@ public struct CallCompositeError {
     public let code: String
 
     /// The NSError returned from Azure Communication SDK.
-    public var error: Error?
+    public let error: Error?
 }
 
 extension CallCompositeError: Equatable {

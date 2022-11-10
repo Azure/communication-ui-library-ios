@@ -16,6 +16,8 @@ class MappedSequence<S: Hashable, T>: Sequence {
         }
     }
 
+    init() { }
+
     var count: Int {
         return keyNodeMap.count
     }
@@ -84,7 +86,8 @@ class MappedSequence<S: Hashable, T>: Sequence {
         return array
     }
 
-    @discardableResult func removeValue(forKey: S) -> T? {
+    @discardableResult
+    func removeValue(forKey: S) -> T? {
         var value: T?
 
         if let nodeToRemove = keyNodeMap[forKey] {
@@ -113,7 +116,8 @@ class MappedSequence<S: Hashable, T>: Sequence {
         return value
     }
 
-    @discardableResult func removeLast() -> T? {
+    @discardableResult
+    func removeLast() -> T? {
         var value: T?
 
         if let lastKey = last?.key {
@@ -130,5 +134,4 @@ class MappedSequence<S: Hashable, T>: Sequence {
 
         return nil
     }
-
 }

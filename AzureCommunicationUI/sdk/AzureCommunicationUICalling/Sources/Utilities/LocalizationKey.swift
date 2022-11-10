@@ -47,6 +47,8 @@ enum LocalizationKey: String {
     case callWith1Person = "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"
     // %d is for number of people in call
     case callWithNPerson = "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"
+    case participantListAccessibilityLabel =
+            "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"
 
     case unnamedParticipant = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"
     // %@ is local participant name

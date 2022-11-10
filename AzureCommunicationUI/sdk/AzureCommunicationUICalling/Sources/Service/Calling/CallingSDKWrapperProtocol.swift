@@ -2,19 +2,62 @@
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
 //
-
-import Foundation
+import AzureCommunicationCommon
 import Combine
-import AzureCommunicationCalling
+import Foundation
 
 enum CameraDevice {
     case front
     case back
 }
 
+class CompositeRemoteParticipant<WrappedType, VideoStreamType> {
+    var identifier: CommunicationIdentifier
+    var videoStreams: [CompositeRemoteVideoStream<VideoStreamType>]
+    var wrappedObject: WrappedType
+
+    init(id: CommunicationIdentifier,
+         videoStreams: [CompositeRemoteVideoStream<VideoStreamType>],
+         wrappedObject: WrappedType) {
+        self.identifier = id
+        self.videoStreams = videoStreams
+        self.wrappedObject = wrappedObject
+    }
+}
+
+enum CompositeMediaStreamType {
+    case cameraVideo
+    case screenSharing
+}
+
+class CompositeRemoteVideoStream<WrappedType> {
+    var id: Int
+    var mediaStreamType: CompositeMediaStreamType = .cameraVideo
+    var wrappedObject: WrappedType
+
+    init(id: Int, mediaStreamType: CompositeMediaStreamType, wrappedObject: WrappedType) {
+        self.id = id
+        self.mediaStreamType = mediaStreamType
+        self.wrappedObject = wrappedObject
+    }
+}
+
+class CompositeLocalVideoStream<WrappedType> {
+    var mediaStreamType: CompositeMediaStreamType = .cameraVideo
+    var wrappedObject: WrappedType
+
+    init(mediaStreamType: CompositeMediaStreamType, wrappedObject: WrappedType) {
+        self.mediaStreamType = mediaStreamType
+        self.wrappedObject = wrappedObject
+    }
+}
+
 protocol CallingSDKWrapperProtocol {
-    func getRemoteParticipant(_ identifier: String) -> RemoteParticipant?
-    func getLocalVideoStream(_ identifier: String) -> LocalVideoStream?
+    func getRemoteParticipant<ParticipantType, StreamType>(_ identifier: String)
+    -> CompositeRemoteParticipant<ParticipantType, StreamType>?
+    func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String)
+    -> CompositeLocalVideoStream<LocalVideoStreamType>?
+    func communicationIdForParticipant(identifier: String) -> CommunicationIdentifier?
 
     func startPreviewVideoStream() async throws -> String
     func setupCall() async throws
@@ -29,4 +72,12 @@ protocol CallingSDKWrapperProtocol {
     func resumeCall() async throws
 
     var callingEventsHandler: CallingSDKEventsHandling { get }
+}
+
+protocol CallingSDKEventsHandling {
+    var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> { get }
+    var callInfoSubject: PassthroughSubject<CallInfoModel, Never> { get }
+    var isRecordingActiveSubject: PassthroughSubject<Bool, Never> { get }
+    var isTranscriptionActiveSubject: PassthroughSubject<Bool, Never> { get }
+    var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
 }
