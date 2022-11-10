@@ -54,7 +54,7 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
         }
     }
 
-    func participantRemovedMessage(participants: [AzureCommunicationUIChat.ParticipantInfoModel], localUser: AzureCommunicationUIChat.ParticipantInfoModel?, dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
+    func participantRemovedMessage(participants: [AzureCommunicationUIChat.ParticipantInfoModel], localUser: AzureCommunicationUIChat.ParticipantInfoModel, dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
         Task {
             addParticipantRemovedMessageCalled?(true)
         }

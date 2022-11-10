@@ -89,7 +89,11 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
     func test_repositoryMiddlewareHandler_participantRemovedMessage_then_participantRemovedMessageCalled() async {
         let removedParticipant = [ParticipantInfoModel(identifier: UnknownIdentifier("SomeUnknownIdentifier"),
                                                        displayName: "MockBot")]
-        await repositoryMiddlewareHandler.participantRemovedMessage(participants: removedParticipant, localUser: nil, dispatch: getEmptyDispatch()).value
+        let localParticipant = ParticipantInfoModel(identifier: UnknownIdentifier("LocalUserIdentifier"),
+                                                       displayName: "LocalUser")
+        await repositoryMiddlewareHandler.participantRemovedMessage(participants: removedParticipant,
+                                                                    localUser: localParticipant,
+                                                                    dispatch: getEmptyDispatch()).value
         let lastMessage = mockMessageRepositoryManager.messages.last
         XCTAssertTrue(mockMessageRepositoryManager.addParticipantRemovedMessageCalled)
         XCTAssertEqual(lastMessage?.type, .participantsRemoved)
