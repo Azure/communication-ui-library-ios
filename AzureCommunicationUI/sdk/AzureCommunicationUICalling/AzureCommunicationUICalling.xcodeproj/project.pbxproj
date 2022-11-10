@@ -991,12 +991,12 @@
 		751D70F229119A2100323141 /* AzureCommunicationUICommon */ = {
 			isa = PBXGroup;
 			children = (
-				751D70F329119A2100323141 /* DeviceExtension.swift */,
-				751D70F429119A2100323141 /* StringConstants.swift */,
-				751D70F529119A2100323141 /* Logger.swift */,
 				751D70F629119A2100323141 /* ArrayExtension.swift */,
 				751D70F729119A2100323141 /* CancelBag.swift */,
+				751D70F329119A2100323141 /* DeviceExtension.swift */,
+				751D70F529119A2100323141 /* Logger.swift */,
 				751D70F829119A2100323141 /* MappedSequence.swift */,
+				751D70F429119A2100323141 /* StringConstants.swift */,
 			);
 			name = AzureCommunicationUICommon;
 			path = ../AzureCommunicationUICommon/Sources/AzureCommunicationUICommon;
