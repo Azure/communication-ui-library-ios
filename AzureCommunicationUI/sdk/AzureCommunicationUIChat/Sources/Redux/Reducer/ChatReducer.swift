@@ -13,9 +13,8 @@ extension Reducer where State == ChatState,
         var threadId = chatState.threadId
         var topic = chatState.topic
         var lastReadReceiptSentTimestamp = chatState.lastReadReceiptSentTimestamp
-        var lastReadMessageId = chatState.lastReadMessageId
-        var lastReceivedMessageId = chatState.lastReceivedMessageId
-        var lastSentMessageId = chatState.lastSentMessageId
+        var lastReceivedMessageTimestamp = chatState.lastReceivedMessageTimestamp
+        var lastSentMessageTimestamp = chatState.lastSentMessageTimestamp
 
         switch action {
         case .chatAction(.topicRetrieved(let newTopic)):
@@ -27,11 +26,10 @@ extension Reducer where State == ChatState,
             topic = newTopic
         case .participantsAction(.sendReadReceiptSuccess(messageId: let messageId)):
             lastReadReceiptSentTimestamp = messageId.convertEpochStringToTimestamp()
-            lastReadMessageId = messageId
-        case .repositoryAction(.sendMessageSuccess(_, actualId: let actualId)):
-            lastSentMessageId = actualId
-        case .repositoryAction(.chatMessageReceived(message: let message)):
-            lastReceivedMessageId = message.id
+        case .repositoryAction(.sendMessageTriggered(_, _)):
+            lastSentMessageTimestamp = Date()
+        case .repositoryAction(.chatMessageReceived(_)):
+            lastReceivedMessageTimestamp = Date()
         default:
             return chatState
         }
@@ -39,8 +37,7 @@ extension Reducer where State == ChatState,
                          threadId: threadId,
                          topic: topic,
                          lastReadReceiptSentTimestamp: lastReadReceiptSentTimestamp,
-                         lastReadMessageId: lastReadMessageId,
-                         lastReceivedMessageId: lastReceivedMessageId,
-                         lastSentMessageId: lastSentMessageId)
+                         lastReceivedMessageTimestamp: lastReceivedMessageTimestamp,
+                         lastSentMesssageTimestamp: lastSentMessageTimestamp)
     }
 }

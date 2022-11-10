@@ -33,12 +33,7 @@ struct MessageListView: View {
     var messageList: some View {
         ScrollViewReader { scrollProxy in
             ObservableScrollView(
-                offsetChanged: {
-                    viewModel.scrollOffset = $0
-                    if viewModel.isAtBottom() {
-                        print("SCROLL - Is at bottom")
-                    }
-                },
+                offsetChanged: { viewModel.scrollOffset = $0 },
                 heightChanged: { viewModel.scrollSize = $0 },
                 content: {
                     LazyVStack(spacing: 0) {
@@ -52,7 +47,6 @@ struct MessageListView: View {
                                         viewModel.fetchMessages()
                                     }
                                     viewModel.updateLastReadMessageId(message: message, index: index)
-                                    print("SCROLL - OnAppear: \(index)")
                                 }
                         }
                     }

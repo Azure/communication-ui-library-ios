@@ -14,8 +14,8 @@ class MessageListViewModel: ObservableObject {
     private let scrollTolerance: CGFloat = 50
 
     private var repositoryUpdatedTimestamp: Date = .distantPast
-    private var lastReceivedMessageId: String?
-    private var lastSentMessageId: String?
+    private var lastReceivedMessageTimestamp: Date = .distantPast
+    private var lastSentMessageTimestamp: Date = .distantPast
     private var hasFetchedInitialMessages: Bool = false
     private var localUserId: String?
     private var sendReadReceiptTimer: Timer?
@@ -89,6 +89,7 @@ class MessageListViewModel: ObservableObject {
         }
         if Int(message.id) ?? 0 > Int(lastReadMessageId) ?? 0 {
             self.lastReadMessageId = message.id
+            updateJumpToNewMessages()
         }
     }
 
@@ -111,16 +112,16 @@ class MessageListViewModel: ObservableObject {
     }
 
     func update(chatState: ChatState, repositoryState: RepositoryState) {
-        // Scroll to new received message
-        if self.lastReceivedMessageId != chatState.lastReceivedMessageId {
-            self.lastReceivedMessageId = chatState.lastReceivedMessageId
-            shouldScrollToBottom = isAtBottom()
+        // Update messages
+        if self.repositoryUpdatedTimestamp < repositoryState.lastUpdatedTimestamp {
+            self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
+            messages = messageRepositoryManager.messages
         }
 
-        // Scroll to new sent message
-        if self.lastSentMessageId != chatState.lastSentMessageId {
-            self.lastSentMessageId = chatState.lastSentMessageId
-            shouldScrollToBottom = true
+        // Scroll to new received message
+        if self.lastReceivedMessageTimestamp < chatState.lastReceivedMessageTimestamp {
+            self.lastReceivedMessageTimestamp = chatState.lastReceivedMessageTimestamp
+            shouldScrollToBottom = isAtBottom()
         }
 
         // Scroll to bottom for initial messages
@@ -129,34 +130,31 @@ class MessageListViewModel: ObservableObject {
             shouldScrollToBottom = true
         }
 
-        // Caculate number of unread messages
+        // Scroll to new sent message
+        if self.lastSentMessageTimestamp < chatState.lastSentMessageTimestamp {
+            self.lastSentMessageTimestamp = chatState.lastSentMessageTimestamp
+            shouldScrollToBottom = true
+        }
+
+        updateJumpToNewMessages()
+    }
+
+    func getNumberOfNewMessages() -> Int {
         if let lastReadIndex = messages.firstIndex(where: { $0.id == lastReadMessageId }),
-           let lastSentIndex = messages.firstIndex(where: { $0.id == lastSentMessageId }) {
+           let lastSentIndex = messages.lastIndex(where: { isLocalUser(message: $0) }) {
             let lastIndex = max(lastReadIndex, lastSentIndex)
 
-            let numberOfUnreadMessages = (messages.count - 1) - lastIndex
-            print("SCROLL: \(numberOfUnreadMessages)")
+             return (messages.count - 1) - lastIndex
         }
+        return 0
+    }
 
-        if self.repositoryUpdatedTimestamp < repositoryState.lastUpdatedTimestamp {
-            self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
-            messages = messageRepositoryManager.messages
-
-            // Scroll for initial load of messages
-            // Hide messages and show activity indicator?
-//            if !haveInitialMessagesLoaded && messages.count > 1 {
-//                shouldScrollToBottom = true
-//                haveInitialMessagesLoaded = true
-//            }
-
-//            if let index = messages.firstIndex(where: { $0.id == lastReadMessageId }) {
-//                let numberOfNewMessages = (messages.count - 1) - (index)
-//                showJumpToNewMessages = numberOfNewMessages > 0
-//                jumpToNewMessagesButtonViewModel.update(
-//                    buttonLabel: getJumpToNewMessagesLabel(numberOfNewMessages: numberOfNewMessages))
-//                print("SCROLL - Number of new messages: \(numberOfNewMessages)")
-//            }
-        }
+    func updateJumpToNewMessages() {
+        let numberOfNewMessages = getNumberOfNewMessages()
+        print("SCROLL - Number of new messages: \(numberOfNewMessages)")
+        showJumpToNewMessages = numberOfNewMessages > 0
+        jumpToNewMessagesButtonViewModel.update(
+            buttonLabel: getJumpToNewMessagesLabel(numberOfNewMessages: numberOfNewMessages))
     }
 
     // Replace with factory
