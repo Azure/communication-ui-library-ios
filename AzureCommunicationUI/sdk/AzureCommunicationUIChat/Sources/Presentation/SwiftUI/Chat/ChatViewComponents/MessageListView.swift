@@ -4,6 +4,7 @@
 //
 
 import SwiftUI
+import FluentUI
 
 struct MessageListView: View {
     private enum Constants {
@@ -19,14 +20,26 @@ struct MessageListView: View {
 
     var body: some View {
         ZStack {
-        messageList
-            .onAppear {
-                viewModel.messageListAppeared()
+            if viewModel.showActivityIndicator {
+                activityIndicator
             }
-            .onDisappear {
-                viewModel.messageListDisappeared()
-            }
+            messageList
             jumpToNewMessagesButton
+        }
+        .onAppear {
+            viewModel.messageListAppeared()
+        }
+        .onDisappear {
+            viewModel.messageListDisappeared()
+        }
+    }
+
+    var activityIndicator: some View {
+        VStack {
+            Spacer()
+            ActivityIndicator(size: .large)
+                .isAnimating(true)
+            Spacer()
         }
     }
 

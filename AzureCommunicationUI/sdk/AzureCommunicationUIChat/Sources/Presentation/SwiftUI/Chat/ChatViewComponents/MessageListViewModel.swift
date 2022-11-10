@@ -29,7 +29,7 @@ class MessageListViewModel: ObservableObject {
     var jumpToNewMessagesButtonViewModel: PrimaryButtonViewModel!
 
     @Published var messages: [ChatMessageInfoModel]
-
+    @Published var showActivityIndicator: Bool = true
     @Published var showJumpToNewMessages: Bool = false
     @Published var shouldScrollToBottom: Bool = false
 
@@ -127,6 +127,7 @@ class MessageListViewModel: ObservableObject {
         // Scroll to bottom for initial messages
         if self.hasFetchedInitialMessages != repositoryState.hasFetchedInitialMessages {
             self.hasFetchedInitialMessages = repositoryState.hasFetchedInitialMessages
+            showActivityIndicator = false
             shouldScrollToBottom = true
         }
 
@@ -151,7 +152,6 @@ class MessageListViewModel: ObservableObject {
 
     func updateJumpToNewMessages() {
         let numberOfNewMessages = getNumberOfNewMessages()
-        print("SCROLL - Number of new messages: \(numberOfNewMessages)")
         showJumpToNewMessages = numberOfNewMessages > 0
         jumpToNewMessagesButtonViewModel.update(
             buttonLabel: getJumpToNewMessagesLabel(numberOfNewMessages: numberOfNewMessages))
