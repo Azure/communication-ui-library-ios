@@ -12,6 +12,8 @@ struct UserEventTimestampModel: BaseInfoModel, Equatable {
     let identifier: CommunicationIdentifier
     let timestamp: Iso8601Date
 
+    static var typingParticipantTimeout: TimeInterval = 8
+
     init?(userIdentifier: CommunicationIdentifier?, timestamp: Iso8601Date?) {
         guard let identifier = userIdentifier, let time = timestamp else {
             return nil
@@ -23,5 +25,12 @@ struct UserEventTimestampModel: BaseInfoModel, Equatable {
 
     static func == (lhs: UserEventTimestampModel, rhs: UserEventTimestampModel) -> Bool {
         return lhs.id == rhs.id
+    }
+}
+
+// MARK: For Typing Participants
+extension UserEventTimestampModel {
+    var isTyping: Bool {
+        timestamp.value.timeIntervalSinceNow > -UserEventTimestampModel.typingParticipantTimeout
     }
 }

@@ -8,7 +8,7 @@ import SwiftUI
 struct TypingParticipantAvatarGroupContainer: UIViewRepresentable {
 
     var participantList: [ParticipantInfoModel]
-    var avatarGroup = TypingParticipantAvatarGroup()
+    var avatarGroup: TypingParticipantAvatarGroup
 
     func makeUIView(context: Context) -> TypingParticipantAvatarGroup {
         avatarGroup.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
@@ -16,6 +16,6 @@ struct TypingParticipantAvatarGroupContainer: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: TypingParticipantAvatarGroup, context: Context) {
-        avatarGroup.avatars = participantList
+        avatarGroup.setAvatars(to: participantList)
     }
 }
