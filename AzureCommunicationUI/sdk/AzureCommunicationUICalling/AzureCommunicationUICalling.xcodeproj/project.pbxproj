@@ -985,7 +985,7 @@
 			children = (
 				751D70F229119A2100323141 /* AzureCommunicationUICommon */,
 			);
-			path = "Shared Sources";
+			name = "Shared Sources";
 			sourceTree = "<group>";
 		};
 		751D70F229119A2100323141 /* AzureCommunicationUICommon */ = {
@@ -999,7 +999,7 @@
 				751D70F829119A2100323141 /* MappedSequence.swift */,
 			);
 			name = AzureCommunicationUICommon;
-			path = ../../AzureCommunicationUICommon/Sources/AzureCommunicationUICommon;
+			path = ../AzureCommunicationUICommon/Sources/AzureCommunicationUICommon;
 			sourceTree = "<group>";
 		};
 		75C1EE0D28E4BEF600FF78B1 /* AzureCommunicationCalling */ = {
