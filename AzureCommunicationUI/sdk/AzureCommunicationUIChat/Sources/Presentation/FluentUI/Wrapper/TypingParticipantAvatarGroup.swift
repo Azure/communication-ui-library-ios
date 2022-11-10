@@ -8,13 +8,9 @@ import UIKit
 
 class TypingParticipantAvatarGroup: UIView {
 
-    private var group = MSFAvatarGroup(style: .stack, size: .xsmall)
-
-    var avatars: [ParticipantInfoModel] = [] {
-        didSet {
-            setAvatars(data: avatars)
-        }
-    }
+    private var group: MSFAvatarGroup?
+    private var lastSeen: [ParticipantInfoModel]?
+    private var avatarCount: Int = 0
 
     private enum Constants {
         static let avatarWidth: CGFloat = 16.0
@@ -35,9 +31,13 @@ class TypingParticipantAvatarGroup: UIView {
 
 extension TypingParticipantAvatarGroup {
     private func initAvatarGroup() {
+        group = MSFAvatarGroup(style: .stack, size: .xsmall)
+        guard let group = group else {
+            return
+        }
         group.state.overflowCount = Constants.overflowCount
-        group.state.style = .stack
-        // Max avatar shown would be 3
+        // total avatar shown would be 3
+        // (max allowed 2 + 1 to show number of remaining participants)
         group.state.maxDisplayedAvatars = Constants.maxAvatarAllowed
         group.isAccessibilityElement = false
         addSubview(group.view)
@@ -50,12 +50,22 @@ extension TypingParticipantAvatarGroup {
         ])
     }
 
-    private func setAvatars(data: [ParticipantInfoModel]) {
-        for participant in data {
+    func setAvatars(to newData: [ParticipantInfoModel]) {
+        guard let group = group,
+              lastSeen != newData else {
+            return
+        }
+        for _ in 0..<avatarCount {
+            group.state.removeAvatar(at: 0)
+        }
+        avatarCount = 0
+        for participant in newData {
+            avatarCount += 1
             let newAvatar = group.state.createAvatar()
             newAvatar.primaryText = participant.displayName
             newAvatar.isTransparent = false
             newAvatar.isRingVisible = false
         }
+        lastSeen = newData
     }
 }

@@ -15,7 +15,6 @@ struct ChatView: View {
             Spacer()
             MessageListView(viewModel: viewModel.messageListViewModel)
             TypingParticipantsView(viewModel: viewModel.typingParticipantsViewModel)
-            Divider()
             messageInput
         }
         .onAppear {
