@@ -9,7 +9,7 @@ extension IconButtonViewModel.ButtonType {
     var iconImageSize: CGFloat {
         switch self {
         default:
-            return 20
+            return 24
         }
     }
 
@@ -17,7 +17,7 @@ extension IconButtonViewModel.ButtonType {
         switch self {
         case .controlButton,
                 .sendButton:
-            return 24
+            return 40
         }
     }
 
@@ -25,7 +25,7 @@ extension IconButtonViewModel.ButtonType {
         switch self {
         case .controlButton,
                 .sendButton:
-            return 24
+            return 40
         }
     }
 
