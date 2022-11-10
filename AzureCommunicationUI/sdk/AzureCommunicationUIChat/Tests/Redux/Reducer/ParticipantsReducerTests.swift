@@ -25,9 +25,7 @@ class ParticipantReducerTests: XCTestCase {
 
         XCTAssertTrue(resultState.participantsUpdatedTimestamp > initialTimestamp)
         XCTAssertEqual(resultState.participants.count, 2)
-
-        XCTAssertTrue(resultState.typingIndicatorUpdatedTimestamp > initialTimestamp)
-        XCTAssertEqual(resultState.typingIndicatorMap.count, 0)
+        XCTAssertEqual(resultState.typingParticipants.count, 0)
     }
 
     func test_participantsReducer_reduce_when_participantsAddedParticipantAction_then_stateUpdated() {
@@ -65,9 +63,11 @@ class ParticipantReducerTests: XCTestCase {
             "id3": ParticipantInfoModel(identifier: CommunicationUserIdentifier("id3"),
                                         displayName: "displayName3")
         ]
-        let initialTypingIndicatorMap = [
-            "id1": Date(),
-            "id2": Date()
+        let initialTypingParticipants: [UserEventTimestampModel] = [
+            UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier("id1"),
+                                    timestamp: Iso8601Date())!,
+            UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier("id2"),
+                                    timestamp: Iso8601Date())!
         ]
         let removedParticipants = [
             ParticipantInfoModel(identifier: CommunicationUserIdentifier("id2"),
@@ -79,8 +79,7 @@ class ParticipantReducerTests: XCTestCase {
         let state = ParticipantsState(
             participants: initialParticipantsMap,
             participantsUpdatedTimestamp: initialTimestamp,
-            typingIndicatorMap: initialTypingIndicatorMap,
-        typingIndicatorUpdatedTimestamp: initialTimestamp)
+            typingParticipants: initialTypingParticipants)
         let action = Action.participantsAction(
             .participantsRemoved(participants: removedParticipants))
         let sut = getSUT()
@@ -88,8 +87,7 @@ class ParticipantReducerTests: XCTestCase {
 
         XCTAssertTrue(resultState.participantsUpdatedTimestamp > initialTimestamp)
         XCTAssertEqual(resultState.participants.count, 1)
-        XCTAssertTrue(resultState.typingIndicatorUpdatedTimestamp > initialTimestamp)
-        XCTAssertEqual(resultState.typingIndicatorMap.count, 1)
+        XCTAssertEqual(resultState.typingParticipants.count, 1)
     }
 
     func test_participantReducer_reduce_when_typingIndicatorReceivedAction_then_participantsStateUpdated() {
@@ -106,9 +104,14 @@ class ParticipantReducerTests: XCTestCase {
 
     func test_participantReducer_reduce_when_participantRemovedAction_then_participantsStateUpdated() {
         let expectedIdentifier = "ID"
+        let initialParticipantsMap = [
+            expectedIdentifier: ParticipantInfoModel(identifier: CommunicationUserIdentifier(expectedIdentifier),
+                                        displayName: "displayName1")
+        ]
         let existingParticipant = UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier(expectedIdentifier),
                                                   timestamp: Iso8601Date())!
-        let state = ParticipantsState(typingParticipants: [existingParticipant])
+        let state = ParticipantsState(participants: initialParticipantsMap,
+                                      typingParticipants: [existingParticipant])
         let participantToBeRemoved = ParticipantInfoModel(identifier: CommunicationUserIdentifier(expectedIdentifier),
                                          displayName: expectedIdentifier)
         let action = Action.participantsAction(.participantsRemoved(participants: [participantToBeRemoved]))
