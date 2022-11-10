@@ -19,7 +19,7 @@ struct CallingView: View {
     }
 
     @ObservedObject var viewModel: CallingViewModel
-    let avatarManager: AvatarViewManager
+    let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
     let leaveCallConfirmationListSourceView = UIView()
 
@@ -210,6 +210,9 @@ extension CallingView {
             && (areAllOrientationsSupported || (!areAllOrientationsSupported
                                                 && newOrientation != .portraitUpsideDown)) {
             orientation = newOrientation
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                UIViewController.attemptRotationToDeviceOrientation()
+            }
         }
     }
 }

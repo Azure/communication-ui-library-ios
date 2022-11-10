@@ -13,13 +13,12 @@ struct SetupView: View {
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
     @Orientation var orientation: UIDeviceOrientation
-    let avatarManager: AvatarViewManager
+    let avatarManager: AvatarViewManagerProtocol
 
     enum LayoutConstant {
         static let spacing: CGFloat = 24
         static let spacingLarge: CGFloat = 40
         static let startCallButtonHeight: CGFloat = 52
-        static let errorHorizontalPadding: CGFloat = 8
         static let iPadLarge: CGFloat = 469.0
         static let iPadSmall: CGFloat = 375.0
         static let iPadSmallHeightWithMargin: CGFloat = iPadSmall + spacingLarge + startCallButtonHeight
@@ -75,9 +74,9 @@ struct SetupView: View {
             Spacer()
             ErrorInfoView(viewModel: viewModel.errorInfoViewModel)
                 .padding(EdgeInsets(top: 0,
-                                    leading: LayoutConstant.errorHorizontalPadding,
+                                    leading: 0,
                                     bottom: LayoutConstant.startCallButtonHeight + LayoutConstant.spacing,
-                                    trailing: LayoutConstant.errorHorizontalPadding)
+                                    trailing: 0)
                 )
                 .accessibilityElement(children: .contain)
                 .accessibilityAddTraits(.isModal)

@@ -5,7 +5,7 @@
 
 import SwiftUI
 import AzureCommunicationUICalling
-import AzureCommunicationCalling
+import AzureCommunicationCommon
 
 struct SwiftUIDemoView: View {
     @State var isErrorDisplayed: Bool = false
@@ -181,10 +181,10 @@ extension SwiftUIDemoView {
                                 nil:envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
-        let navigationBarViewData = NavigationBarViewData(title: envConfigSubject.navigationTitle,
+        let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let localOptions = LocalOptions(participantViewData: participantViewData,
-                                        navigationBarViewData: navigationBarViewData)
+                                        setupScreenViewData: setupScreenViewData)
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -229,7 +229,8 @@ extension SwiftUIDemoView {
             }
         case .tokenUrl:
             if let url = URL(string: envConfigSubject.acsTokenUrl) {
-                let tokenRefresher = AuthenticationHelper.getCommunicationToken(tokenUrl: url)
+                let tokenRefresher = AuthenticationHelper.getCommunicationToken(tokenUrl: url,
+                                                                                aadToken: envConfigSubject.aadToken)
                 let initialToken = await AuthenticationHelper.fetchInitialToken(with: tokenRefresher)
                 let communicationTokenRefreshOptions = CommunicationTokenRefreshOptions(initialToken: initialToken,
                                                                                         refreshProactively: true,
