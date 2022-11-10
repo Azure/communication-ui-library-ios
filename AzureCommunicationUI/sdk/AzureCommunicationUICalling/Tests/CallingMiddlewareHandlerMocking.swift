@@ -22,6 +22,7 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     var requestMicUnmuteCalled: ((Bool) -> Void)?
     var requestHoldCalled: ((Bool) -> Void)?
     var requestResumeCalled: ((Bool) -> Void)?
+    var willTerminateCalled: ((Bool) -> Void)?
 
     func setupCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
@@ -116,5 +117,11 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
 
     func audioSessionInterrupted(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {}
+    }
+
+    func willTerminate(state: AzureCommunicationUICalling.AppState, dispatch: @escaping AzureCommunicationUICalling.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            willTerminateCalled?(true)
+        }
     }
 }

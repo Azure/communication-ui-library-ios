@@ -8,4 +8,5 @@ import Foundation
 enum LifecycleAction: Equatable {
     case foregroundEntered
     case backgroundEntered
+    case willTerminate
 }

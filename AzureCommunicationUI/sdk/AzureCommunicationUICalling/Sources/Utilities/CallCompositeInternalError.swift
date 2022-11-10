@@ -21,7 +21,7 @@ enum CallCompositeInternalError: Error, Equatable {
     func toCallCompositeErrorCode() -> String? {
         switch self {
         case .deviceManagerFailed:
-            return CallCompositeErrorCode.unknownError
+            return CallCompositeErrorCode.cameraFailure
         case .callTokenFailed:
             return CallCompositeErrorCode.tokenExpired
         case .callJoinFailed:

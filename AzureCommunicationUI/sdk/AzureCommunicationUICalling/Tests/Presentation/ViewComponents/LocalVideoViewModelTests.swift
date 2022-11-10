@@ -10,32 +10,21 @@ import XCTest
 class LocalVideoViewModelTests: XCTestCase {
     var storeFactory: StoreFactoryMocking!
     var cancellable: CancelBag!
-    var localVideoViewModel: LocalVideoViewModel!
 
     override func setUp() {
         super.setUp()
         storeFactory = StoreFactoryMocking()
         cancellable = CancelBag()
-
-        func dispatch(action: Action) {
-            storeFactory.store.dispatch(action: action)
-        }
-        let logger = LoggerMocking()
-        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
-        localVideoViewModel = LocalVideoViewModel(compositeViewModelFactory: factoryMocking,
-                                                  logger: logger,
-                                                  localizationProvider: LocalizationProviderMocking(),
-                                                  dispatchAction: dispatch)
     }
 
     override func tearDown() {
         super.tearDown()
         storeFactory = nil
         cancellable = nil
-        localVideoViewModel = nil
     }
 
     func test_localVideoViewModel_when_updateWithLocalVideoStreamId_then_videoSteamIdUpdated() {
+        let sut = makeSUT()
         let cameraState = LocalUserState.CameraState(operation: .on,
                                                      device: .front,
                                                      transmission: .local)
@@ -45,15 +34,16 @@ class LocalVideoViewModelTests: XCTestCase {
                                             localVideoStreamIdentifier: "videoSteamId")
         let appState = AppState(permissionState: permissionState,
                                 localUserState: localUserState)
-        localVideoViewModel.update(localUserState: appState.localUserState)
+        sut.update(localUserState: appState.localUserState)
 
         let expectedVideoStreamId = "videoSteamId"
 
-        XCTAssertEqual(localVideoViewModel.localVideoStreamId, expectedVideoStreamId)
+        XCTAssertEqual(sut.localVideoStreamId, expectedVideoStreamId)
     }
 
     // MARK: Camera switch tests
     func test_localVideoVideModel_toggleCameraSwitch_when_cameraStatusOn_then_shouldRequestCameraOnTriggered() {
+        let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Dispatch the new action")
 
         storeFactory.store.$state
@@ -63,7 +53,23 @@ class LocalVideoViewModelTests: XCTestCase {
                 expectation.fulfill()
             }.store(in: cancellable)
 
-        localVideoViewModel.toggleCameraSwitchTapped()
+        sut.toggleCameraSwitchTapped()
         wait(for: [expectation], timeout: 1)
+    }
+}
+
+extension LocalVideoViewModelTests {
+    func makeSUT() -> LocalVideoViewModel {
+
+        func dispatch(action: Action) {
+            storeFactory.store.dispatch(action: action)
+        }
+        let logger = LoggerMocking()
+        let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
+
+        return LocalVideoViewModel(compositeViewModelFactory: factoryMocking,
+                                                  logger: logger,
+                                                  localizationProvider: LocalizationProviderMocking(),
+                                                  dispatchAction: dispatch)
     }
 }

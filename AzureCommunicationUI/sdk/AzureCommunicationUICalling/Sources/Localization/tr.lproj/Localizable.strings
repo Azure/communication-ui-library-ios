@@ -26,6 +26,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Sesi kapat";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Cihaz";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Ses cihazını seç";
+"AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Ayarlara Git";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Kameranız devre dışı. Etkinleştirmek için Ayarlar seçeneğine giderek erişime izin verin.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="Kameranız ve sesiniz devre dışı. Etkinleştirmek için Ayarlar seçeneğine giderek erişime izin verin. Bu aramayı başlatmak için sesi etkinleştirmeniz gerekiyor.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="Sesiniz devre dışı. Etkinleştirmek için Ayarlar seçeneğine giderek erişime izin verin. Bu aramayı başlatmak için sesi etkinleştirmeniz gerekiyor.";
@@ -98,3 +99,5 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Arama sürdürülemiyor";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Mikrofonunuz başka bir uygulama tarafından kullanılıyor";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Aramaya erişiminiz reddedildi.";
+"AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Videoyu açma/kapatma sırasında hata oluştu";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Aramaya katılınamıyor. Ağ bağlantınızı kontrol edin.";

@@ -3,7 +3,7 @@
 //  Licensed under the MIT License.
 //
 
-import AzureCommunicationCalling
+import AzureCommunicationCommon
 
 extension CommunicationIdentifier {
     var stringValue: String? {
