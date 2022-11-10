@@ -31,10 +31,10 @@
 
 Azure Communication Mobile UI Library requires a few dependencies. Please embed the following libraries into your project if you prefer manually embedding Mobile UI Library. And you can refer from each library's Podspec file for the required source files.
 
-#### 1. [AzureCommunicationCalling](https://github.com/Azure/azure-sdk-for-ios/tree/main/sdk/communication/AzureCommunicationCalling) version require: [2.2.0](https://github.com/Azure/Communication/releases/tag/v2.2.0)
+#### 1. [AzureCommunicationCalling](https://github.com/Azure/azure-sdk-for-ios/tree/main/sdk/communication/AzureCommunicationCalling) version require: [2.2.1](https://github.com/Azure/Communication/releases/tag/v2.2.1)
 - Drag the `AzureCommunicationCalling.xcframework` into your project. Add it as embedded framework in your target's "Frameworks and Libraries" section. 
 
-#### 2. [AzureCommunicationCommon](https://github.com/Azure/azure-sdk-for-ios/tree/main/sdk/communication/AzureCommunicationCommon) - version [1.0.3](https://github.com/Azure/azure-sdk-for-ios/releases/tag/AzureCommunicationCommon_1.0.3)
+#### 2. [AzureCommunicationCommon](https://github.com/Azure/azure-sdk-for-ios/tree/main/sdk/communication/AzureCommunicationCommon) - version [1.1.0](https://github.com/Azure/azure-sdk-for-ios/releases/tag/AzureCommunicationCommon_1.1.0)
 - Find the project [AzureCommunicationCommon.xcodeproj](https://github.com/Azure/azure-sdk-for-ios/tree/main/sdk/communication/AzureCommunicationCommon) in the repo source code and drag it into your project. 
 - Follow [same steps 1-6](#manual-installation-steps) of embedding `AzureCommunicationUICalling` and add `AzureCommunicationCommon` to your project. 
 

@@ -35,7 +35,7 @@
 		FA7B53EC282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */; };
 		FAA448A0282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; };
 		FAA448A1282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		FAC342F5282F1AA5006CB50B /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAA448A32825931500BD0DC0 /* AccessibilityIdentifier.swift */; };
+		FACEE494287364F4001D62BE /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACEE493287364F4001D62BE /* AccessibilityIdentifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,9 +102,11 @@
 		A8C69FBF2728AE1C00143DB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8C69FC12728AE1C00143DB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoInputTypes.swift; sourceTree = "<group>"; };
+		BDAA751E28E4BDC4008C2789 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		BDAA751F28E4BDC4008C2789 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantAvatarHelper.swift; sourceTree = "<group>"; };
 		FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AzureCommunicationUICalling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		FAA448A32825931500BD0DC0 /* AccessibilityIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccessibilityIdentifier.swift; path = ../sdk/AzureCommunicationUICalling/AzureCommunicationUICalling/Utilities/AccessibilityIdentifier.swift; sourceTree = "<group>"; };
+		FACEE493287364F4001D62BE /* AccessibilityIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccessibilityIdentifier.swift; path = ../sdk/AzureCommunicationUICalling/Sources/Utilities/AccessibilityIdentifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,7 +139,7 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		1F8881BB27909E08001427F0 /* AzureCommunicationUIDemoAppUITests */ = {
+		1F8881BB27909E08001427F0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				1F18191827B45050006AF3B3 /* Utilities */,
@@ -146,7 +148,7 @@
 				1FBA6B1B27B4F61A00FF3835 /* Info.plist */,
 				1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */,
 			);
-			path = AzureCommunicationUIDemoAppUITests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		1F8881C82798D5C2001427F0 /* ViewModifier */ = {
@@ -190,9 +192,9 @@
 		A8C69FA72728AE1A00143DB7 = {
 			isa = PBXGroup;
 			children = (
-				FAA448A32825931500BD0DC0 /* AccessibilityIdentifier.swift */,
-				A8C69FB22728AE1A00143DB7 /* AzureCommunicationUIDemoApp */,
-				1F8881BB27909E08001427F0 /* AzureCommunicationUIDemoAppUITests */,
+				FACEE493287364F4001D62BE /* AccessibilityIdentifier.swift */,
+				A8C69FB22728AE1A00143DB7 /* Sources */,
+				1F8881BB27909E08001427F0 /* Tests */,
 				A8C69FB12728AE1A00143DB7 /* Products */,
 				F74ACD1C99B1428891E02585 /* Frameworks */,
 				84D42CA48804501C17E76B52 /* Pods */,
@@ -208,7 +210,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A8C69FB22728AE1A00143DB7 /* AzureCommunicationUIDemoApp */ = {
+		A8C69FB22728AE1A00143DB7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				1F8881CB279B4521001427F0 /* Utilities */,
@@ -225,7 +227,7 @@
 				A8C69FC12728AE1C00143DB7 /* Info.plist */,
 				A8C69FBC2728AE1C00143DB7 /* Assets.xcassets */,
 			);
-			path = AzureCommunicationUIDemoApp;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		A8FB819D272A0B3500AA0930 /* Views */ = {
@@ -326,6 +328,7 @@
 				fr,
 				"fr-CA",
 				"zh-Hant",
+				it,
 			);
 			mainGroup = A8C69FA72728AE1A00143DB7;
 			productRefGroup = A8C69FB12728AE1A00143DB7 /* Products */;
@@ -361,6 +364,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		1FC9AB9927BC4E8F0027F9DB /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -375,10 +379,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint lint --strict --config ../.swiftlint-tests.yml --path AzureCommunicationUIDemoAppUITests\n";
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint lint --strict --config ../.swiftlint-tests.yml --path Tests\n";
 		};
 		1FF252D427B5E44E006A113E /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -393,7 +398,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint lint --strict --config AzureCommunicationUIDemoApp/.swiftlint.yml --path AzureCommunicationUIDemoApp\n";
+			shellScript = "${PODS_ROOT}/SwiftLint/swiftlint lint --strict --config Sources/.swiftlint.yml --path Sources\n";
 		};
 		21973AE741F3B55B42A2E0CE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -481,8 +486,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				5027C1C72821A55E00DC7131 /* AccessibilityId.swift in Sources */,
-				FAC342F5282F1AA5006CB50B /* AccessibilityIdentifier.swift in Sources */,
 				1F18191A27B45050006AF3B3 /* XCUIElementExtension.swift in Sources */,
+				FACEE494287364F4001D62BE /* AccessibilityIdentifier.swift in Sources */,
 				1F18191727B39F36006AF3B3 /* XCUITestBase.swift in Sources */,
 				1B0D8DC627F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift in Sources */,
 				1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift in Sources */,
@@ -530,6 +535,7 @@
 				5075FEA527FFA8C800136B34 /* fr */,
 				5075FEA627FFA8C900136B34 /* fr-CA */,
 				5075FEA727FFA9D700136B34 /* zh-Hant */,
+				BDAA751F28E4BDC4008C2789 /* it */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -541,6 +547,7 @@
 				5075FE9C27FFA87200136B34 /* fr */,
 				5075FE9D27FFA87600136B34 /* fr-CA */,
 				5075FE9E27FFA87C00136B34 /* zh-Hant */,
+				BDAA751E28E4BDC4008C2789 /* it */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -556,7 +563,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UBF8T346G9;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AzureCommunicationUIDemoAppUITests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -581,7 +588,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UBF8T346G9;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AzureCommunicationUIDemoAppUITests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -730,7 +737,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UBF8T346G9;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AzureCommunicationUIDemoApp/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This is required for calling.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This is required for calling.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -763,7 +770,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UBF8T346G9;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = AzureCommunicationUIDemoApp/Info.plist;
+				INFOPLIST_FILE = Sources/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This is required for calling.";
 				INFOPLIST_KEY_NSMicrophoneUsageDescription = "This is required for calling.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
