@@ -71,65 +71,22 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
 
     func getListOfParticipants() async throws -> [ParticipantInfoModel] {
         do {
-            let participantsPageSize: Int32 = 3 // 200
+            let participantsPageSize: Int32 = 200
             let listParticipantsOptions = ListChatParticipantsOptions(maxPageSize: participantsPageSize)
 
-            // Use the async wrapper (see bottom of file)
-            var pagedCollectionResult = try await chatThreadClient?.listParticipants(
-                withOptions: listParticipantsOptions
-            )
-
-            guard var pagedResult = pagedCollectionResult,
+            let pagedCollectionResult = try await chatThreadClient?.listParticipants(
+                withOptions: listParticipantsOptions)
+            guard let pagedResult = pagedCollectionResult,
                   let items = pagedResult.items else {
                 return []
             }
-
             var allChatParticipants = items.map({ $0.toParticipantInfoModel() })
             while !pagedResult.isExhausted {
                 let nextPage = try await pagedResult.nextPage()
                 let pageParticipants = nextPage.map { $0.toParticipantInfoModel() }
                 allChatParticipants.append(contentsOf: pageParticipants)
             }
-            
             return allChatParticipants
-
-//            return try await withCheckedThrowingContinuation { continuation in
-//                let participantsPageSize: Int32 = 3 // 200
-//                let listParticipantsOptions = ListChatParticipantsOptions(
-//                    maxPageSize: participantsPageSize)
-//                chatThreadClient?.listParticipants(withOptions: listParticipantsOptions) { result, _ in
-//                    switch result {
-//                    case .success(let pagedCollectionResult):
-//                        guard let firstPageParticipants = pagedCollectionResult.pageItems else {
-//                            continuation.resume(returning: [])
-//                            return
-//                        }
-//
-//                        var participants = firstPageParticipants.map({ $0.toParticipantInfoModel() })
-//                        while !pagedCollectionResult.isExhausted {
-//                            pagedCollectionResult.nextPage { result in
-//                                switch result {
-//                                case let .success(participantsResult):
-//                                    let participantsPagedResult = participantsResult.map({
-//                                        $0.toParticipantInfoModel()
-//                                    })
-//                                    participants.append(contentsOf: participantsPagedResult)
-//
-//                                case .failure(let error):
-//                                    self.logger.error("Failed to list participants: \(error)")
-//
-//                                    continuation.resume(throwing: error)
-//                                    return
-//                                }
-//                            }
-//                        }
-//                        continuation.resume(returning: participants)
-//                    case .failure(let error):
-//                        self.logger.error("Get Initial Messages failed: \(error)")
-//                        continuation.resume(throwing: error)
-//                    }
-//                }
-//            }
         } catch {
             logger.error("Get List of Participants failed: \(error)")
             throw error
@@ -301,36 +258,5 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         client.register(event: .chatThreadPropertiesUpdated, handler: chatEventsHandler.handle)
         client.register(event: .participantsAdded, handler: chatEventsHandler.handle)
         client.register(event: .participantsRemoved, handler: chatEventsHandler.handle)
-    }
-}
-
-extension ChatThreadClient {
-    func listParticipants(withOptions: ListChatParticipantsOptions? = nil) async throws
-    -> PagedCollection<ChatParticipant> {
-        try await withCheckedThrowingContinuation { continuation in
-            listParticipants { result, _ in
-                switch result {
-                case .failure(let azureError):
-                    continuation.resume(throwing: azureError)
-                case .success(let participantsResult):
-                    continuation.resume(returning: participantsResult)
-                }
-            }
-        }
-    }
-}
-
-extension PagedCollection where SingleElement == ChatParticipant {
-    func nextPage() async throws -> [ChatParticipant] {
-        try await withCheckedThrowingContinuation { continuation in
-            nextPage { result in
-                switch result {
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                case .success(let pageItems):
-                    continuation.resume(returning: pageItems)
-                }
-            }
-        }
     }
 }

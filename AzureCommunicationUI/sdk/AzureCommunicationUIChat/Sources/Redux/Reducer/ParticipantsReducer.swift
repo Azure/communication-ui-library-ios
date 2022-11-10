@@ -29,7 +29,6 @@ extension Reducer where State == ParticipantsState,
             typingIndicatorMap = [:]
             participantsUpdatedTimestamp = currentTimestamp
             typingIndicatorTimestamp = currentTimestamp
-            print("listParticipants \(currentParticipants.count)")
         case .participantsAction(.participantsAdded(let participants)):
             for participant in participants {
                 currentParticipants[participant.id] = participant
