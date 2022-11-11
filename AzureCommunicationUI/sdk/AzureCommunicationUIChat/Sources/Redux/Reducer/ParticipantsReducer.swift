@@ -17,13 +17,19 @@ extension Reducer where State == ParticipantsState,
         var typingParticipants = participantsState.typingParticipants
 
         switch action {
+        case .participantsAction(.fetchListOfParticipantsSuccess(let participants)):
+            var newParticipants: [String: ParticipantInfoModel] = [:]
+            for participant in participants {
+                newParticipants[participant.id] = participant
+            }
+            currentParticipants = newParticipants
+            typingParticipants = []
+            participantsUpdatedTimestamp = Date()
         case .participantsAction(.participantsAdded(let participants)):
-            var currentParticipants = participantsState.participants
             for participant in participants {
                 currentParticipants[participant.id] = participant
             }
-            let state = ParticipantsState(participants: currentParticipants)
-            return state
+            participantsUpdatedTimestamp = Date()
         case .participantsAction(.participantsRemoved(let participants)):
             for participant in participants {
                 guard currentParticipants[participant.id] != nil else {
@@ -32,9 +38,7 @@ extension Reducer where State == ParticipantsState,
                 typingParticipants = typingParticipants.filter { $0.id != participant.id }
                 currentParticipants.removeValue(forKey: participant.id)
             }
-            let state = ParticipantsState(participants: currentParticipants,
-                                          participantsUpdatedTimestamp: participantsUpdatedTimestamp)
-            return state
+            participantsUpdatedTimestamp = Date()
         case .participantsAction(.typingIndicatorReceived(let participant)):
             typingParticipants = typingParticipants.filter { $0.id != participant.id }
             typingParticipants.append(participant)
