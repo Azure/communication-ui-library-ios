@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 class LocalVideoViewModel: ObservableObject {
     private let logger: Logger

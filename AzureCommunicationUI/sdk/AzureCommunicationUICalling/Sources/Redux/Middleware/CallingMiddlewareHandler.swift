@@ -22,6 +22,8 @@ protocol CallingMiddlewareHandling {
     @discardableResult
     func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
+    func willTerminate(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
     func audioSessionInterrupted(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func requestCameraPreviewOn(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
@@ -83,8 +85,10 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         Task {
             do {
                 try await callingService.endCall()
+                dispatch(.callingAction(.callEnded))
             } catch {
                 handle(error: error, errorType: .callEndFailed, dispatch: dispatch)
+                dispatch(.callingAction(.requestFailed))
             }
         }
     }
@@ -97,6 +101,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
             do {
                 try await callingService.holdCall()
+                await requestCameraPause(state: state, dispatch: dispatch).value
             } catch {
                 handle(error: error, errorType: .callHoldFailed, dispatch: dispatch)
             }
@@ -111,6 +116,9 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
             do {
                 try await callingService.resumeCall()
+                if state.localUserState.cameraState.operation == .paused {
+                    await requestCameraOn(state: state, dispatch: dispatch).value
+                }
             } catch {
                 handle(error: error, errorType: .callResumeFailed, dispatch: dispatch)
             }
@@ -119,26 +127,26 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
-            guard state.callingState.status == .connected,
-                  state.localUserState.cameraState.operation == .on else {
-                return
-            }
-
-            do {
-                try await callingService.stopLocalVideoStream()
-            } catch {
-                dispatch(.localUserAction(.cameraPausedFailed(error: error)))
-            }
+            await requestCameraPause(state: state, dispatch: dispatch).value
         }
     }
 
     func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
-            guard state.callingState.status == .connected || state.callingState.status == .localHold,
+            guard state.callingState.status == .connected,
                   state.localUserState.cameraState.operation == .paused else {
                 return
             }
             await requestCameraOn(state: state, dispatch: dispatch).value
+        }
+    }
+
+    func willTerminate(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.status == .connected else {
+                return
+            }
+            dispatch(.callingAction(.callEndRequested))
         }
     }
 
@@ -180,6 +188,22 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 dispatch(.localUserAction(.cameraOffSucceeded))
             } catch {
                 dispatch(.localUserAction(.cameraOffFailed(error: error)))
+            }
+        }
+    }
+
+    func requestCameraPause(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.status == .connected,
+                  state.localUserState.cameraState.operation == .on else {
+                return
+            }
+
+            do {
+                try await callingService.stopLocalVideoStream()
+                dispatch(.localUserAction(.cameraPausedSucceeded))
+            } catch {
+                dispatch(.localUserAction(.cameraPausedFailed(error: error)))
             }
         }
     }

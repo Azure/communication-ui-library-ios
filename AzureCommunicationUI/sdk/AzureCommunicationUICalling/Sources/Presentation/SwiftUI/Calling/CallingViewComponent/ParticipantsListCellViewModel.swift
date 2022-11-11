@@ -36,7 +36,7 @@ class ParticipantsListCellViewModel {
     func getParticipantViewData(from avatarViewManager: AvatarViewManager) -> ParticipantViewData? {
         var participantViewData: ParticipantViewData?
         if isLocalParticipant {
-            participantViewData = avatarViewManager.localOptions?.participantViewData
+            participantViewData = avatarViewManager.localParticipantViewData
         } else if let participantId = participantId {
             participantViewData = avatarViewManager.avatarStorage.value(forKey: participantId)
         }
@@ -75,3 +75,14 @@ class ParticipantsListCellViewModel {
         localizationProvider.getLocalizedString(.onHold)
     }
 }
+
+extension ParticipantsListCellViewModel: Equatable {
+     static func == (lhs: ParticipantsListCellViewModel,
+                     rhs: ParticipantsListCellViewModel) -> Bool {
+         lhs.participantId == rhs.participantId &&
+         lhs.isMuted == rhs.isMuted &&
+         lhs.isHold == rhs.isHold &&
+         lhs.isLocalParticipant == rhs.isLocalParticipant &&
+         lhs.displayName == rhs.displayName
+     }
+ }

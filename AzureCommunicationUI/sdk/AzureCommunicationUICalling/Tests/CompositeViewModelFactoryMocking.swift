@@ -36,8 +36,11 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
     var createParticipantsListCellViewModel: ((ParticipantInfoModel) -> ParticipantsListCellViewModel?)?
-    var createIconWithLabelButtonViewModel: ((CompositeIcon) -> IconWithLabelButtonViewModel?)?
     var createIconButtonViewModel: ((CompositeIcon) -> IconButtonViewModel?)?
+
+    var createCameraIconWithLabelButtonViewModel: ((CameraButtonState) -> IconWithLabelButtonViewModel<CameraButtonState>?)?
+    var createMicIconWithLabelButtonViewModel: ((MicButtonState) -> IconWithLabelButtonViewModel<MicButtonState>?)?
+    var createAudioIconWithLabelButtonViewModel: ((AudioButtonState) -> IconWithLabelButtonViewModel<AudioButtonState>?)?
 
     init(logger: Logger,
          store: Store<AppState>,
@@ -76,16 +79,33 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                            action: action)
     }
 
-    func makeIconWithLabelButtonViewModel(iconName: CompositeIcon,
-                                          buttonTypeColor: IconWithLabelButtonViewModel.ButtonTypeColor,
-                                          buttonLabel: String,
-                                          isDisabled: Bool,
-                                          action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel {
-        return createIconWithLabelButtonViewModel?(iconName) ?? IconWithLabelButtonViewModel(iconName: iconName,
-                                                                                             buttonTypeColor: buttonTypeColor,
-                                                                                             buttonLabel: buttonLabel,
-                                                                                             isDisabled: isDisabled,
-                                                                                             action: action)
+    func makeIconWithLabelButtonViewModel<ButtonStateType>(
+                                 selectedButtonState: ButtonStateType,
+                                 localizationProvider: LocalizationProviderProtocol,
+                                 buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
+                                 isDisabled: Bool,
+                                 action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<ButtonStateType> where ButtonStateType: ButtonState {
+        if let cameraStateClosure = createCameraIconWithLabelButtonViewModel,
+            let cameraState = selectedButtonState as? CameraButtonState,
+            let vm = cameraStateClosure(cameraState) as? IconWithLabelButtonViewModel<ButtonStateType> {
+            return vm
+        }
+        if let micStateClosure = createMicIconWithLabelButtonViewModel,
+            let micState = selectedButtonState as? MicButtonState,
+            let vm = micStateClosure(micState) as? IconWithLabelButtonViewModel<ButtonStateType> {
+            return vm
+        }
+        if let audioStateClosure = createAudioIconWithLabelButtonViewModel,
+            let audioState = selectedButtonState as? AudioButtonState,
+            let vm = audioStateClosure(audioState) as? IconWithLabelButtonViewModel<ButtonStateType> {
+            return vm
+        }
+        return IconWithLabelButtonViewModel(
+                                selectedButtonState: selectedButtonState,
+                                localizationProvider: localizationProvider,
+                                buttonTypeColor: buttonTypeColor,
+                                isDisabled: isDisabled,
+                                action: action)
     }
 
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel {

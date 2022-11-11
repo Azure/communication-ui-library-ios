@@ -7,8 +7,11 @@ import Foundation
 
 struct RepositoryState {
     let lastUpdatedTimestamp: Date
+    let hasFetchedInitialMessages: Bool
 
-    init(lastUpdatedTimestamp: Date = Date()) {
+    init(lastUpdatedTimestamp: Date = Date(),
+         hasFetchedInitialMessages: Bool = false) {
         self.lastUpdatedTimestamp = lastUpdatedTimestamp
+        self.hasFetchedInitialMessages = hasFetchedInitialMessages
     }
 }

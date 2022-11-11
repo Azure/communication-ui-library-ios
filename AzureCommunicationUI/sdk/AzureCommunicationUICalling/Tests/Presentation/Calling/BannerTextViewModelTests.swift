@@ -107,13 +107,12 @@ class BannerTextViewModelTests: XCTestCase {
 }
 
 extension BannerTextViewModelTests {
-    func makeSUT(accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()) -> BannerTextViewModel {
+    func makeSUT(accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider(), localizationProvider: LocalizationProviderMocking? = nil) -> BannerTextViewModel {
         BannerTextViewModel(accessibilityProvider: accessibilityProvider,
-                            localizationProvider: LocalizationProvider(logger: LoggerMocking()))
+                            localizationProvider: localizationProvider ?? LocalizationProvider(logger: LoggerMocking()))
     }
 
     func makeSUTLocalizationMocking() -> BannerTextViewModel {
-        return BannerTextViewModel(accessibilityProvider: AccessibilityProvider(),
-                                   localizationProvider: localizationProvider)
+        return makeSUT(localizationProvider: localizationProvider)
     }
 }
