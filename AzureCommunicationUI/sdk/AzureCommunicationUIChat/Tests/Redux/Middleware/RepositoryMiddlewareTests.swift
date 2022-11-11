@@ -63,7 +63,7 @@ class RepositoryMiddlewareTests: XCTestCase {
 
     func test_repositoryMiddleware_apply_when_participantsRemovedParticipantsAction_then_handlerParticipantRemovedMessageBeingCalled() {
 
-        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let middlewareDispatch = getEmptyChatMiddlewareFunctionWithLocalUser()
         let expectation = expectation(description: "addParticipantRemovedMessageCalled")
         mockRepositoryHandler.addParticipantRemovedMessageCalled = { value in
             XCTAssertTrue(value)
@@ -186,12 +186,22 @@ extension RepositoryMiddlewareTests {
     private func getEmptyState() -> AppState {
         return AppState()
     }
+
+    private func getEmptyStateWithLocalUser() -> AppState {
+        let chatState = ChatState(localUser: ParticipantInfoModel(identifier: CommunicationUserIdentifier(""), displayName: ""))
+        return AppState(chatState: chatState)
+    }
+
     private func getEmptyDispatch() -> ActionDispatch {
         return { _ in }
     }
 
     private func getEmptyChatMiddlewareFunction() -> (@escaping ActionDispatch) -> ActionDispatch {
         return mockMiddleware.apply(getEmptyDispatch(), getEmptyState)
+    }
+
+    private func getEmptyChatMiddlewareFunctionWithLocalUser() -> (@escaping ActionDispatch) -> ActionDispatch {
+        return mockMiddleware.apply(getEmptyDispatch(), getEmptyStateWithLocalUser)
     }
 
     private func getAssertSameActionDispatch(action: Action, expectation: XCTestExpectation) -> ActionDispatch {
