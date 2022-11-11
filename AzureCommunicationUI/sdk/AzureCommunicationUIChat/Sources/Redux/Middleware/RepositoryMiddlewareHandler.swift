@@ -135,9 +135,10 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
     func participantAddedMessage(participants: [ParticipantInfoModel],
                                  dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
-            let message = ChatMessageInfoModel(type: .participantsAdded,
-                                               createdOn: Iso8601Date(),
-                                               participants: participants)
+            let message = ChatMessageInfoModel(
+                type: .participantsAdded,
+                createdOn: Iso8601Date(),
+                participants: participants)
             messageRepository.addParticipantAdded(message: message)
             dispatch(.repositoryAction(.repositoryUpdated))
         }
@@ -151,9 +152,10 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
                 dispatch(.participantsAction(.localParticipantRemoved))
                 return
             }
-            let message = ChatMessageInfoModel(type: .participantsRemoved,
-                                               createdOn: Iso8601Date(),
-                                               participants: participants)
+            let message = ChatMessageInfoModel(
+                type: .participantsRemoved,
+                createdOn: Iso8601Date(),
+                participants: participants)
             messageRepository.addParticipantRemoved(message: message)
             dispatch(.repositoryAction(.repositoryUpdated))
         }

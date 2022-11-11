@@ -101,6 +101,7 @@
 		50CB82CE28C2AD2300680566 /* LocalOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82B428C2AD2300680566 /* LocalOptions.swift */; };
 		50CB82D028C2AD9900680566 /* SetParticipantViewDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82CF28C2AD9900680566 /* SetParticipantViewDataError.swift */; };
 		50CB82D228C2B2B800680566 /* CommunicationIdentifierExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82D128C2B2B800680566 /* CommunicationIdentifierExtension.swift */; };
+		50D8EE99291C6CFB003C3A95 /* ChatSDKAsyncExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8EE98291C6CFB003C3A95 /* ChatSDKAsyncExtension.swift */; };
 		50F0C58328D38770009D7176 /* MessageViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C58228D38770009D7176 /* MessageViewModelMocking.swift */; };
 		50F0C58528D387E5009D7176 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C58428D387E5009D7176 /* MessageView.swift */; };
 		50F0C58728D38812009D7176 /* MessageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C58628D38812009D7176 /* MessageViewModel.swift */; };
@@ -281,6 +282,7 @@
 		50CB82B428C2AD2300680566 /* LocalOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalOptions.swift; sourceTree = "<group>"; };
 		50CB82CF28C2AD9900680566 /* SetParticipantViewDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetParticipantViewDataError.swift; sourceTree = "<group>"; };
 		50CB82D128C2B2B800680566 /* CommunicationIdentifierExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationIdentifierExtension.swift; sourceTree = "<group>"; };
+		50D8EE98291C6CFB003C3A95 /* ChatSDKAsyncExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSDKAsyncExtension.swift; sourceTree = "<group>"; };
 		50F0C58228D38770009D7176 /* MessageViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModelMocking.swift; sourceTree = "<group>"; };
 		50F0C58428D387E5009D7176 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		50F0C58628D38812009D7176 /* MessageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModel.swift; sourceTree = "<group>"; };
@@ -703,6 +705,7 @@
 				50CB82D128C2B2B800680566 /* CommunicationIdentifierExtension.swift */,
 				50370CC628ECA2DB00ACD234 /* ChatMessageExtension.swift */,
 				50370CC828ECAAAB00ACD234 /* ChatParticipantExtension.swift */,
+				50D8EE98291C6CFB003C3A95 /* ChatSDKAsyncExtension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1413,6 +1416,7 @@
 				50CB824D28C29B1700680566 /* ParticipantsReducer.swift in Sources */,
 				50CB825D28C29DEF00680566 /* ChatService.swift in Sources */,
 				50CB824528C29AEB00680566 /* ErrorState.swift in Sources */,
+				50D8EE99291C6CFB003C3A95 /* ChatSDKAsyncExtension.swift in Sources */,
 				50CB82CA28C2AD2300680566 /* ViewExtension.swift in Sources */,
 				50CB82D228C2B2B800680566 /* CommunicationIdentifierExtension.swift in Sources */,
 				50CB825F28C29DFD00680566 /* ChatSDKWrapper.swift in Sources */,
