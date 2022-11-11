@@ -198,8 +198,10 @@ extension CallingView {
 
     private func updateChildViewIfNeededWith(newOrientation: UIDeviceOrientation) {
         guard !viewModel.controlBarViewModel.isAudioDeviceSelectionDisplayed,
-                  !viewModel.controlBarViewModel.isConfirmLeaveListDisplayed,
-                  !viewModel.infoHeaderViewModel.isParticipantsListDisplayed else {
+              !viewModel.controlBarViewModel.isConfirmLeaveListDisplayed,
+              !viewModel.infoHeaderViewModel.isParticipantsListDisplayed,
+              !viewModel.controlBarViewModel.isMoreCallOptionsListDisplayed,
+              !viewModel.controlBarViewModel.isShareActivityDisplayed else {
                 return
             }
         let areAllOrientationsSupported = SupportedOrientationsPreferenceKey.defaultValue == .all

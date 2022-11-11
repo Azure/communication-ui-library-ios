@@ -31,6 +31,16 @@ public class CallComposite {
     private var audioSessionManager: AudioSessionManagerProtocol?
     private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
     private var avatarViewManager: AvatarViewManagerProtocol?
+    private var diagnosticsManager: DiagnosticsManagerProtocol?
+
+    /// Get Call Composite diagnostics information.
+    public var diagnostics: CallDiagnostics {
+        guard let diagnosticsManager = diagnosticsManager else {
+            return CallDiagnostics()
+        }
+
+        return diagnosticsManager.getDiagnosticsInfo()
+    }
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
@@ -64,7 +74,7 @@ public class CallComposite {
         present(toolkitHostingController)
     }
 
-    /// Start call composite experience with joining a Teams meeting.
+    /// Start Call Composite experience with joining a Teams meeting.
     /// - Parameter remoteOptions: RemoteOptions used to send to ACS to locate the call.
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This is data is not sent up to ACS.
@@ -102,6 +112,7 @@ public class CallComposite {
         self.audioSessionManager = dependencyContainer.resolve() as AudioSessionManagerProtocol
         self.avatarViewManager = dependencyContainer.resolve() as AvatarViewManagerProtocol
         self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManagerProtocol
+        self.diagnosticsManager = dependencyContainer.resolve() as DiagnosticsManagerProtocol
     }
 
     private func cleanUpManagers() {
@@ -111,6 +122,7 @@ public class CallComposite {
         self.audioSessionManager = nil
         self.avatarViewManager = nil
         self.remoteParticipantsManager = nil
+        self.diagnosticsManager = nil
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,
