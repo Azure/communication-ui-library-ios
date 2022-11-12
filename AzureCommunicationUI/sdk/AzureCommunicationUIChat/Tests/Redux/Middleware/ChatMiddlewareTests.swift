@@ -3,11 +3,12 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
-
-import XCTest
-import Combine
 @testable import AzureCommunicationUIChat
+import AzureCommunicationCommon
+import AzureCore
+import Combine
+import Foundation
+import XCTest
 
 class ChatMiddlewareTests: XCTestCase {
 
@@ -70,6 +71,19 @@ class ChatMiddlewareTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_chatMiddleware_apply_when_fetchInitialMessagesTriggeredRepositoryAction_then_handlerGetListOfParticipantsBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "getListOfParticipantsWasCalled")
+        mockChatActionHandler.getListOfParticipantsCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.repositoryAction(.fetchInitialMessagesTriggered))
+        wait(for: [expectation], timeout: 1)
+    }
+
     func test_chatMiddleware_apply_when_sendMessageTriggeredRepositoryAction_then_handlerGetPreviousMessagesBeingCalled() {
 
         let middlewareDispatch = getEmptyChatMiddlewareFunction()
@@ -104,6 +118,19 @@ class ChatMiddlewareTests: XCTestCase {
             expectation.fulfill()
         }
         middlewareDispatch(getEmptyDispatch())(.chatAction(.sendTypingIndicatorTriggered))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_chatMiddleware_apply_when_recieveTypingIndicatorTriggered_then_handlerSetTypingIndicatorTimeoutCalled() {
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "setTypingIndicatorTimeoutCalled")
+        mockChatActionHandler.setTypingIndicatorTimeoutCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+        let model = UserEventTimestampModel(userIdentifier: CommunicationUserIdentifier(""),
+                                            timestamp: Iso8601Date())!
+        middlewareDispatch(getEmptyDispatch())(.participantsAction(.typingIndicatorReceived(participant: model)))
         wait(for: [expectation], timeout: 1)
     }
 

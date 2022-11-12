@@ -4,21 +4,37 @@
 //
 
 import Foundation
+import CoreGraphics
 
 class MessageListViewModel: ObservableObject {
     private let messageRepositoryManager: MessageRepositoryManagerProtocol
     private let logger: Logger
     private let dispatch: ActionDispatch
     private let sendReadReceiptInterval: Double = 5.0
+    private let scrollTolerance: CGFloat = 50
+
     private var repositoryUpdatedTimestamp: Date = .distantPast
-    private var localUserId: String? // Remove optional?
+    private var lastReceivedMessageTimestamp: Date = .distantPast
+    private var lastSentMessageTimestamp: Date = .distantPast
+    private var hasFetchedInitialMessages: Bool = false
+    private var localUserId: String?
     private var sendReadReceiptTimer: Timer?
-    private var lastReadMessageIndex: Int?
+    private(set) var lastReadMessageId: String?
+
+    let minFetchIndex: Int = 40
+
+    var scrollOffset: CGFloat = .zero
+    var scrollSize: CGFloat = .zero
+    var jumpToNewMessagesButtonViewModel: PrimaryButtonViewModel!
 
     @Published var showMessageSendStatusIconIndex: Int?
     @Published var messages: [ChatMessageInfoModel]
+    @Published var showActivityIndicator: Bool = true
+    @Published var showJumpToNewMessages: Bool = false
+    @Published var shouldScrollToBottom: Bool = false
 
-    init(messageRepositoryManager: MessageRepositoryManagerProtocol,
+    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
+         messageRepositoryManager: MessageRepositoryManagerProtocol,
          logger: Logger,
          chatState: ChatState,
          dispatch: @escaping ActionDispatch) {
@@ -27,24 +43,119 @@ class MessageListViewModel: ObservableObject {
         self.dispatch = dispatch
         self.localUserId = chatState.localUser?.id // Only take in local User ID?
         self.messages = messageRepositoryManager.messages
+
+        jumpToNewMessagesButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
+            buttonStyle: .primaryFilled,
+            buttonLabel: "",
+            iconName: .downArrow,
+            isDisabled: false) { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.jumpToNewMessagesButtonTapped()
+        }
+//      .update(accessibilityLabel: self.localizationProvider.getLocalizedString(.jumpToNewMessages))
+    }
+
+    // Localization
+    private func getJumpToNewMessagesLabel(numberOfNewMessages: Int) -> String {
+        numberOfNewMessages < 100
+        ? "\(numberOfNewMessages) new messages"
+        : "99+ new messages"
+    }
+
+    private func isLocalUser(message: ChatMessageInfoModel?) -> Bool {
+        guard message != nil else {
+            return false
+        }
+        return message!.senderId == localUserId
+    }
+
+    func isAtBottom() -> Bool {
+        return scrollSize - scrollOffset < scrollTolerance
+    }
+
+    func jumpToNewMessagesButtonTapped() {
+        shouldScrollToBottom = true
     }
 
     func fetchMessages() {
-        print("SCROLL: Fetch Messages") // Testing
         dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
     }
 
-    func update(repositoryState: RepositoryState) {
+    func updateLastReadMessageId(message: ChatMessageInfoModel) {
+        guard !isLocalUser(message: message) else {
+            return
+        }
+        if Int(message.id) ?? 0 > Int(lastReadMessageId) ?? 0 {
+            self.lastReadMessageId = message.id
+            updateJumpToNewMessages()
+        }
+    }
+
+    func messageListAppeared() {
+        sendReadReceiptTimer = Timer.scheduledTimer(withTimeInterval: sendReadReceiptInterval,
+                                                    repeats: true) { [weak self]_ in
+            self?.sendReadReceipt(messageId: self?.lastReadMessageId)
+        }
+    }
+
+    func messageListDisappeared() {
+        sendReadReceiptTimer?.invalidate()
+    }
+
+    func sendReadReceipt(messageId: String?) {
+        guard let messageId = messageId else {
+            return
+        }
+        dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: messageId)))
+    }
+
+    func update(chatState: ChatState, repositoryState: RepositoryState) {
+        // Update messages
         if self.repositoryUpdatedTimestamp < repositoryState.lastUpdatedTimestamp {
             self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
             messages = messageRepositoryManager.messages
             updateShowMessageSendStatusIconIndex()
-            // Debug for testing
-//            print("*Messages count: \(messageRepositoryManager.messages.count)")
-//            for message in messageRepositoryManager.messages {
-//                print("--*Messages: \(message.id) \(String(describing: message.content))")
-//            }
         }
+
+        // Scroll to new received message
+        if self.lastReceivedMessageTimestamp < chatState.lastReceivedMessageTimestamp {
+            self.lastReceivedMessageTimestamp = chatState.lastReceivedMessageTimestamp
+            shouldScrollToBottom = isAtBottom()
+        }
+
+        // Scroll to bottom for initial messages
+        if self.hasFetchedInitialMessages != repositoryState.hasFetchedInitialMessages {
+            self.hasFetchedInitialMessages = repositoryState.hasFetchedInitialMessages
+            showActivityIndicator = false
+            shouldScrollToBottom = true
+        }
+
+        // Scroll to new sent message
+        if self.lastSentMessageTimestamp < chatState.lastSentMessageTimestamp {
+            self.lastSentMessageTimestamp = chatState.lastSentMessageTimestamp
+            shouldScrollToBottom = true
+        }
+
+        updateJumpToNewMessages()
+    }
+
+    func getNumberOfNewMessages() -> Int {
+        if let lastReadIndex = messages.firstIndex(where: { $0.id == lastReadMessageId }),
+           let lastSentIndex = messages.lastIndex(where: { isLocalUser(message: $0) }) {
+            let lastIndex = max(lastReadIndex, lastSentIndex)
+
+             return (messages.count - 1) - lastIndex
+        }
+        return 0
+    }
+
+    func updateJumpToNewMessages() {
+        let numberOfNewMessages = getNumberOfNewMessages()
+        showJumpToNewMessages = numberOfNewMessages > 0
+        jumpToNewMessagesButtonViewModel.update(
+            buttonLabel: getJumpToNewMessagesLabel(numberOfNewMessages: numberOfNewMessages))
     }
 
     // Replace with factory
@@ -58,7 +169,7 @@ class MessageListViewModel: ObservableObject {
 
         switch type {
         case .text:
-            let isLocalUser = message.senderId == localUserId
+            let isLocalUser = isLocalUser(message: message)
             let showUsername = !isLocalUser && !isConsecutive
             let showTime = !isConsecutive
             let showReadIcon = index == showMessageSendStatusIconIndex
@@ -81,46 +192,6 @@ class MessageListViewModel: ObservableObject {
                                           showDateHeader: showDateHeader,
                                           isConsecutive: isConsecutive)
         }
-    }
-
-    func updateLastReadMessageIndex(index: Int) {
-        guard index >= 0, index < messages.count else {
-            return
-        }
-        let message = messages[index]
-        /* There will be messages that do not have senderId, such as system messages
-         For those messages, we still want to send read receipt
-         That's why we default senderId to empty string, which will pass the guard statement senderId != localUserId */
-        let senderId = message.senderId ?? ""
-        guard let localUserId = localUserId, senderId != localUserId else {
-            return
-        }
-        guard let lastReadMessageIndex = self.lastReadMessageIndex else {
-            self.lastReadMessageIndex = index
-            return
-        }
-        if index > lastReadMessageIndex {
-            self.lastReadMessageIndex = index
-        }
-    }
-
-    func messageListAppeared() {
-        sendReadReceiptTimer = Timer.scheduledTimer(withTimeInterval: sendReadReceiptInterval,
-                                                    repeats: true) { [weak self]_ in
-            self?.sendReadReceipt(messageIndex: self?.lastReadMessageIndex)
-        }
-    }
-
-    func messageListDisappeared() {
-        sendReadReceiptTimer?.invalidate()
-    }
-
-    func sendReadReceipt(messageIndex: Int?) {
-        guard let messageIndex = messageIndex, messageIndex >= 0, messageIndex < messages.count else {
-            return
-        }
-        let messageId = messages[messageIndex].id
-        dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: messageId)))
     }
 
     func updateShowMessageSendStatusIconIndex() {

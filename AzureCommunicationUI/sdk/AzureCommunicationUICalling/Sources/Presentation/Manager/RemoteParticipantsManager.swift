@@ -3,9 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
+import AzureCommunicationCalling
 import Combine
-import AzureCommunicationCommon
+import Foundation
 
 protocol RemoteParticipantsManagerProtocol {
 }
@@ -14,7 +14,7 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
     private let store: Store<AppState>
     private let eventsHandler: CallComposite.Events
     private let callingSDKWrapper: CallingSDKWrapperProtocol
-    private let avatarViewManager: AvatarViewManager
+    private let avatarViewManager: AvatarViewManagerProtocol
     private var participantsLastUpdateTimeStamp = Date()
     private var participantsIds: Set<String> = []
 
@@ -23,7 +23,7 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
     init(store: Store<AppState>,
          callCompositeEventsHandler: CallComposite.Events,
          callingSDKWrapper: CallingSDKWrapperProtocol,
-         avatarViewManager: AvatarViewManager) {
+         avatarViewManager: AvatarViewManagerProtocol) {
         self.store = store
         self.eventsHandler = callCompositeEventsHandler
         self.callingSDKWrapper = callingSDKWrapper
@@ -70,8 +70,12 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
             return
         }
 
-        let joinedParticipantsCommunicationIds = joinedParticipantsIds
-            .compactMap { callingSDKWrapper.getRemoteParticipant($0)?.identifier }
+        let joinedParticipantsCommunicationIds: [CommunicationIdentifier] = joinedParticipantsIds
+            .compactMap {
+                callingSDKWrapper.communicationIdForParticipant(
+                    identifier: $0
+                )
+            }
         didRemoteParticipantsJoin(joinedParticipantsCommunicationIds)
     }
 }

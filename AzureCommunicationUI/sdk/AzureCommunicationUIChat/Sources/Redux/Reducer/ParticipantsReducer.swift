@@ -14,47 +14,43 @@ extension Reducer where State == ParticipantsState,
         var participantsUpdatedTimestamp = participantsState.participantsUpdatedTimestamp
 
         // MARK: Typing Indicator
-        let currentTimestamp = Date()
-        let speakingDurationSeconds: TimeInterval = 8
-        var typingIndicatorMap = participantsState.typingIndicatorMap
-        var typingIndicatorTimestamp = participantsState.typingIndicatorUpdatedTimestamp
+        var typingParticipants = participantsState.typingParticipants
 
         // MARK: Read Receipt
         var readReceiptMap = participantsState.readReceiptMap
         var readReceiptUpdatedTimestamp = participantsState.readReceiptUpdatedTimestamp
 
         switch action {
+        case .participantsAction(.fetchListOfParticipantsSuccess(let participants)):
+            var newParticipants: [String: ParticipantInfoModel] = [:]
+            for participant in participants {
+                newParticipants[participant.id] = participant
+            }
+            currentParticipants = newParticipants
+            typingParticipants = []
+            participantsUpdatedTimestamp = Date()
         case .participantsAction(.participantsAdded(let participants)):
-            var currentParticipants = participantsState.participants
             for participant in participants {
                 currentParticipants[participant.id] = participant
                 readReceiptMap[participant.id] = .distantPast
             }
-            let state = ParticipantsState(participants: currentParticipants)
-            return state
+            participantsUpdatedTimestamp = Date()
+
         case .participantsAction(.participantsRemoved(let participants)):
             for participant in participants {
                 guard currentParticipants[participant.id] != nil else {
                     continue
                 }
-
+                typingParticipants = typingParticipants.filter { $0.id != participant.id }
                 currentParticipants.removeValue(forKey: participant.id)
-                typingIndicatorMap.removeValue(forKey: participant.id)
                 readReceiptMap.removeValue(forKey: participant.id)
             }
-            participantsUpdatedTimestamp = currentTimestamp
-            typingIndicatorTimestamp = currentTimestamp
-
-            let state = ParticipantsState(participants: currentParticipants,
-                                          participantsUpdatedTimestamp: participantsUpdatedTimestamp)
-
-            return state
-        case .participantsAction(.typingIndicatorReceived(userEventTimestamp: let userEventTimestamp)):
-            let typingExpiringTimestamp = userEventTimestamp.timestamp.value + speakingDurationSeconds
-            typingIndicatorMap[userEventTimestamp.id] = typingExpiringTimestamp
-            if typingIndicatorTimestamp < typingExpiringTimestamp {
-                typingIndicatorTimestamp = typingExpiringTimestamp
-            }
+            participantsUpdatedTimestamp = Date()
+        case .participantsAction(.typingIndicatorReceived(let participant)):
+            typingParticipants = typingParticipants.filter { $0.id != participant.id }
+            typingParticipants.append(participant)
+        case .participantsAction(.clearIdleTypingParticipants):
+            typingParticipants = typingParticipants.filter(\.isTyping)
         case .participantsAction(.readReceiptReceived(readReceiptInfo: let readReceiptInfo)):
             let senderIdentifier = readReceiptInfo.senderIdentifier
             let readOn = readReceiptInfo.readOn
@@ -65,17 +61,15 @@ extension Reducer where State == ParticipantsState,
                 return participantsState
             }
             readReceiptUpdatedTimestamp = minimumReadReceiptTimestamp
-
         case .repositoryAction(.chatMessageReceived(let message)):
             guard let participantId = message.senderId else {
-                return participantsState
+                break
             }
             switch message.type {
             case .custom(_), .html, .text:
-                typingIndicatorMap.removeValue(forKey: participantId)
-                typingIndicatorTimestamp = currentTimestamp
+                typingParticipants = typingParticipants.filter { $0.id != participantId }
             default:
-                return participantsState
+                break
             }
         default:
             return participantsState
@@ -83,8 +77,7 @@ extension Reducer where State == ParticipantsState,
 
         return ParticipantsState(participants: currentParticipants,
                                  participantsUpdatedTimestamp: participantsUpdatedTimestamp,
-                                 typingIndicatorMap: typingIndicatorMap,
-                                 typingIndicatorUpdatedTimestamp: typingIndicatorTimestamp,
+                                 typingParticipants: typingParticipants,
                                  readReceiptMap: readReceiptMap,
                                  readReceiptUpdatedTimestamp: readReceiptUpdatedTimestamp)
     }

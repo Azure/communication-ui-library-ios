@@ -48,13 +48,13 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
         }
     }
 
-    func participantAddedMessage(participants: [AzureCommunicationUIChat.ParticipantInfoModel], dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
+    func participantAddedMessage(participants: [ParticipantInfoModel], dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             addParticipantAddedMessageCalled?(true)
         }
     }
 
-    func participantRemovedMessage(participants: [AzureCommunicationUIChat.ParticipantInfoModel], dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
+    func participantRemovedMessage(participants: [ParticipantInfoModel], dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             addParticipantRemovedMessageCalled?(true)
         }

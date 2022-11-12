@@ -9,11 +9,11 @@ class SystemMessageViewModel: MessageViewModel {
     var content: String {
         switch message.type {
         case .participantsAdded:
-            return "\(participants) joined the chat"
+            return "\(participants) joined the chat" // Localization
         case .participantsRemoved:
-            return "\(participants) left the chat"
+            return "\(participants) left the chat" // Localization
         case .topicUpdated:
-            return "Topic updated"
+            return "Topic updated \(message.content ?? "")" // Localization 
         default:
             return "System Message"
         }

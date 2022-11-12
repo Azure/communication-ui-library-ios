@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 class ControlBarViewModel: ObservableObject {
     private let logger: Logger

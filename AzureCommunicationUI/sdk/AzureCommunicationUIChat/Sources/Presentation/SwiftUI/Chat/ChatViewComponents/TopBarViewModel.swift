@@ -10,7 +10,7 @@ class TopBarViewModel: ObservableObject {
     private let dispatch: ActionDispatch
 
     var dismissButtonViewModel: IconButtonViewModel!
-
+    var participantsUpdatedTimestamp = Date()
     @Published var numberOfParticipantsLabel: String = ""
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
@@ -54,7 +54,10 @@ class TopBarViewModel: ObservableObject {
     }
 
     func update(participantsState: ParticipantsState) {
-        updateNumberOfParticipantsLabel(
-            numberOfParticpants: participantsState.numberOfParticipants)
+        if participantsUpdatedTimestamp != participantsState.participantsUpdatedTimestamp {
+            participantsUpdatedTimestamp = participantsState.participantsUpdatedTimestamp
+            updateNumberOfParticipantsLabel(
+                numberOfParticpants: participantsState.numberOfParticipants)
+        }
     }
 }

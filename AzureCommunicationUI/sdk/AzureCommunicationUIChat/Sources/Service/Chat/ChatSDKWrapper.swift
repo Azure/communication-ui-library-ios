@@ -8,27 +8,6 @@ import AzureCommunicationChat
 import Foundation
 
 class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
-    func sendReadReceipt(messageId: String) async throws {
-        do {
-            return try await withCheckedThrowingContinuation { continuation in
-                chatThreadClient?.sendReadReceipt(
-                                        forMessage: messageId,
-                                        withOptions: SendChatReadReceiptOptions()) { result, error  in
-                    switch result {
-                    case .success():
-                        continuation.resume(returning: Void())
-                    case .failure(let error):
-                        self.logger.error("Failed to send read receipt: \(error)")
-                        continuation.resume(throwing: error)
-                    }
-                }
-            }
-        } catch {
-            logger.error("Failed to send read receipt: \(error)")
-            throw error
-        }
-    }
-
     let chatEventsHandler: ChatSDKEventsHandling
 
     private let logger: Logger
@@ -92,23 +71,22 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
 
     func getListOfParticipants() async throws -> [ParticipantInfoModel] {
         do {
-            return try await withCheckedThrowingContinuation { continuation in
-                chatThreadClient?.listParticipants(completionHandler: { result, _ in
-                    switch result {
-                    case .success(let pagedCollection):
-                        guard let items = pagedCollection.pageItems else {
-                            continuation.resume(returning: [])
-                            return
-                        }
+            let participantsPageSize: Int32 = 200
+            let listParticipantsOptions = ListChatParticipantsOptions(maxPageSize: participantsPageSize)
 
-                        let participants = items.compactMap({ $0.toParticipantInfoModel() })
-                        continuation.resume(returning: participants)
-                    case .failure(let error):
-                        self.logger.error("Get Initial Messages failed: \(error)")
-                        continuation.resume(throwing: error)
-                    }
-                })
+            let pagedCollectionResult = try await chatThreadClient?.listParticipants(
+                withOptions: listParticipantsOptions)
+            guard let pagedResult = pagedCollectionResult,
+                  let items = pagedResult.items else {
+                return []
             }
+            var allChatParticipants = items.map({ $0.toParticipantInfoModel() })
+            while !pagedResult.isExhausted {
+                let nextPage = try await pagedResult.nextPage()
+                let pageParticipants = nextPage.map { $0.toParticipantInfoModel() }
+                allChatParticipants.append(contentsOf: pageParticipants)
+            }
+            return allChatParticipants
         } catch {
             logger.error("Get List of Participants failed: \(error)")
             throw error
@@ -135,7 +113,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                 }
             }
         } catch {
-            logger.error("Retrieve Thread Topic failed: \(error)")
+            logger.error("Retrieve previous messages failed: \(error)")
             throw error
         }
     }
@@ -159,6 +137,46 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
             }
         } catch {
             logger.error("Retrieve Thread Topic failed: \(error)")
+            throw error
+        }
+    }
+
+    func sendReadReceipt(messageId: String) async throws {
+        do {
+            return try await withCheckedThrowingContinuation { continuation in
+                chatThreadClient?.sendReadReceipt(
+                                        forMessage: messageId,
+                                        withOptions: SendChatReadReceiptOptions()) { result, error  in
+                    switch result {
+                    case .success():
+                        continuation.resume(returning: Void())
+                    case .failure(let error):
+                        self.logger.error("Failed to send read receipt: \(error)")
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        } catch {
+            logger.error("Failed to send read receipt: \(error)")
+            throw error
+        }
+    }
+
+    func sendTypingIndicator() async throws {
+        do {
+            return try await withCheckedThrowingContinuation { continuation in
+                self.chatThreadClient?.sendTypingNotification(from: self.chatConfiguration.displayName) { result, _ in
+                    switch result {
+                    case .success:
+                        continuation.resume(returning: Void())
+                    case .failure(let error):
+                        self.logger.error("Send Typing Indicator failed: \(error)")
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        } catch {
+            self.logger.error("Send Typing Indicator failed: \(error)")
             throw error
         }
     }
@@ -222,25 +240,6 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
             case .failure(let error):
                 logger.error("Failed to start real-time notifications. \(error)")
             }
-        }
-    }
-
-    func sendTypingIndicator() async throws {
-        do {
-            return try await withCheckedThrowingContinuation { continuation in
-                self.chatThreadClient?.sendTypingNotification(from: self.chatConfiguration.displayName) { result, _ in
-                    switch result {
-                    case .success:
-                        continuation.resume(returning: Void())
-                    case .failure(let error):
-                        self.logger.error("Send Typing Indicator failed: \(error)")
-                        continuation.resume(throwing: error)
-                    }
-                }
-            }
-        } catch {
-            self.logger.error("Send Typing Indicator failed: \(error)")
-            throw error
         }
     }
 

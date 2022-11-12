@@ -4,6 +4,7 @@
 //
 
 import SwiftUI
+import FluentUI
 
 struct MessageListView: View {
     private enum Constants {
@@ -11,66 +12,87 @@ struct MessageListView: View {
         static let bottomPadding: CGFloat = 0
         static let topPadding: CGFloat = 8
         static let topConsecutivePadding: CGFloat = 4
-
+        static let buttonBottomPadding: CGFloat = 20
         static let defaultMinListRowHeight: CGFloat = 10
-
-        static let minFetchIndex: Int = 40
     }
 
     @StateObject var viewModel: MessageListViewModel
 
     var body: some View {
-        messageList
-            .onAppear {
-                viewModel.messageListAppeared()
+        ZStack {
+            activityIndicator
+            messageList
+            jumpToNewMessagesButton
+        }
+        .onAppear {
+            viewModel.messageListAppeared()
+        }
+        .onDisappear {
+            viewModel.messageListDisappeared()
+        }
+    }
+
+    var activityIndicator: some View {
+        Group {
+            if viewModel.showActivityIndicator {
+                VStack {
+                    Spacer()
+                    ActivityIndicator(size: .large)
+                        .isAnimating(true)
+                    Spacer()
+                }
             }
-            .onDisappear {
-                viewModel.messageListDisappeared()
-            }
+        }
     }
 
     var messageList: some View {
-        ScrollViewReader { proxy in
-            ScrollView {
-                LazyVStack(spacing: 0) {
-                    ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, _ in
-                        let messageViewModel = viewModel.createViewModel(index: index)
-                        MessageView(viewModel: messageViewModel)
-                            .id(UUID())
-                        // .listRowSeparator(.hidden) // Use List when bug is resolved
-                        // .listRowInsets(getEdgeInsets(message: messageViewModel)) // Use List when bug is resolved
-                            .padding(getEdgeInsets(message: messageViewModel))
-                            .onAppear {
-                                // Need a more consistent way of triggering a fetch
-                                // Don't scroll automatically when triggering a fetch
-                                // Pull to refresh?
-                                // Activity Indicator
-                                if index == Constants.minFetchIndex {
-                                    viewModel.fetchMessages()
+        ScrollViewReader { scrollProxy in
+            ObservableScrollView(
+                offsetChanged: { viewModel.scrollOffset = $0 },
+                heightChanged: { viewModel.scrollSize = $0 },
+                content: {
+                    LazyVStack(spacing: 0) {
+                        ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
+                            let messageViewModel = viewModel.createViewModel(index: index)
+                            MessageView(viewModel: messageViewModel)
+                                .id(UUID())
+                                .padding(getEdgeInsets(message: messageViewModel))
+                                .onAppear {
+                                    if index == viewModel.minFetchIndex {
+                                        viewModel.fetchMessages()
+                                    }
+                                    viewModel.updateLastReadMessageId(message: message)
                                 }
-                                viewModel.updateLastReadMessageIndex(index: index)
-                            }
+                        }
                     }
-                }
-                .listStyle(.plain)
-                .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
-                .onAppear {
-                    scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
-                }
-                .onChange(of: viewModel.messages.count) { _ in
-                    scrollToBottom(proxy: proxy, bottomIndex: viewModel.messages.count)
+                })
+            .listStyle(.plain)
+            .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
+            .onChange(of: viewModel.shouldScrollToBottom) { _ in
+                if viewModel.shouldScrollToBottom {
+                    scrollToBottom(proxy: scrollProxy)
+                    viewModel.shouldScrollToBottom = false
                 }
             }
         }
     }
 
-    private func scrollToBottom(proxy: ScrollViewProxy, bottomIndex: Int) {
-        guard bottomIndex != 0 else {
-            return
+    var jumpToNewMessagesButton: some View {
+        Group {
+            if viewModel.showJumpToNewMessages {
+                VStack {
+                    Spacer()
+                    PrimaryButton(viewModel: viewModel.jumpToNewMessagesButtonViewModel)
+                        .fixedSize()
+                        .padding(Constants.buttonBottomPadding)
+                }
+            }
         }
-        let scrollIndex = bottomIndex - 1
-        print("SCROLL TO: \(scrollIndex)") // Testing
-        proxy.scrollTo(scrollIndex)
+    }
+
+    private func scrollToBottom(proxy: ScrollViewProxy) {
+        let scrollIndex = viewModel.messages.count - 1
+        proxy.scrollTo(scrollIndex, anchor: .bottom)
     }
 
     private func getEdgeInsets(message: MessageViewModel) -> EdgeInsets {

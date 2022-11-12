@@ -7,12 +7,15 @@ import Foundation
 
 enum ParticipantsAction: Equatable {
     // MARK: - Chat SDK Local Event Actions
+    case fetchListOfParticipantsSuccess(participants: [ParticipantInfoModel])
     case fetchListOfParticipantsFailed(error: Error)
 
     case leaveChatSuccess
 
     // MARK: - Chat SDK Remote Event Actions
-    case typingIndicatorReceived(userEventTimestamp: UserEventTimestampModel)
+    case typingIndicatorReceived(participant: UserEventTimestampModel)
+    case clearIdleTypingParticipants
+
     case participantsAdded(participants: [ParticipantInfoModel])
     case participantsRemoved(participants: [ParticipantInfoModel])
 
@@ -23,13 +26,18 @@ enum ParticipantsAction: Equatable {
 
     static func == (lhs: ParticipantsAction, rhs: ParticipantsAction) -> Bool {
         switch (lhs, rhs) {
-        case let (.sendReadReceiptFailed(lErr), .sendReadReceiptFailed(rErr)):
+        case let (.sendReadReceiptFailed(lErr), .sendReadReceiptFailed(rErr)),
+            let (.fetchListOfParticipantsFailed(lErr), .fetchListOfParticipantsFailed(rErr)):
             return (lErr as NSError).code == (rErr as NSError).code
 
         case let (.sendReadReceiptTriggered(lMsgId), .sendReadReceiptTriggered(rMsgId)),
               let (.sendReadReceiptSuccess(lMsgId), .sendReadReceiptSuccess(rMsgId)):
             return lMsgId == rMsgId
 
+        case let (.fetchListOfParticipantsSuccess(lArr), .fetchListOfParticipantsSuccess(rArr)),
+            let (.participantsAdded(lArr), .participantsAdded(rArr)),
+            let (.participantsRemoved(lArr), .participantsRemoved(rArr)):
+            return lArr == rArr
         default:
             return false
         }

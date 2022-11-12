@@ -39,12 +39,14 @@ protocol ChatActionHandling {
     func sendTypingIndicator(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func sendReadReceipt(messageId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func setTypingParticipantTimer(_ getState: @escaping () -> AppState, _ dispatch: @escaping ActionDispatch)
 }
 
 class ChatActionHandler: ChatActionHandling {
 
     private let chatService: ChatServiceProtocol
     private let logger: Logger
+    private var timer: Timer?
 
     init(chatService: ChatServiceProtocol, logger: Logger) {
         self.chatService = chatService
@@ -126,6 +128,18 @@ class ChatActionHandler: ChatActionHandling {
         }
     }
 
+    func setTypingParticipantTimer(_ getState: @escaping () -> AppState,
+                                   _ dispatch: @escaping ActionDispatch) {
+        // If timer in progress, do nothing
+        guard timer == nil else {
+            return
+        }
+        // Otherwise, set up an initial timer with 8 seconds of timeout
+        scheduleTimer(timeInterval: UserEventTimestampModel.typingParticipantTimeout,
+                      getState: getState,
+                      dispatch: dispatch)
+    }
+
     // MARK: Repository Handler
     func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
@@ -143,7 +157,7 @@ class ChatActionHandler: ChatActionHandling {
         Task {
             do {
                 let listOfParticipants = try await chatService.getListOfParticipants()
-                dispatch(.participantsAction(.participantsAdded(participants: listOfParticipants)))
+                dispatch(.participantsAction(.fetchListOfParticipantsSuccess(participants: listOfParticipants)))
             } catch {
                 dispatch(.participantsAction(.fetchListOfParticipantsFailed(error: error)))
             }
@@ -184,5 +198,44 @@ class ChatActionHandler: ChatActionHandling {
                 dispatch(.repositoryAction(.sendMessageFailed(error: error)))
             }
         }
+    }
+}
+
+// MARK: Helpers
+extension ChatActionHandler {
+    // MARK: Typing Participant Helpers
+    private func scheduleTimer(timeInterval: TimeInterval,
+                               getState: @escaping () -> AppState,
+                               dispatch: @escaping ActionDispatch) {
+        DispatchQueue.main.async {
+            self.timer = Timer.scheduledTimer(withTimeInterval: timeInterval,
+                                              repeats: false,
+                                              block: { [weak self] runningTimer in
+                self?.handleTimerInterval(runningTimer, dispatch, getState)
+            })
+        }
+    }
+
+    private func handleTimerInterval(_ timer: Timer,
+                                     _ dispatch: @escaping ActionDispatch,
+                                     _ getState: @escaping () -> AppState) {
+        dispatch(.participantsAction(.clearIdleTypingParticipants))
+        // get next participant with expiring timestamp
+        let expiringParticipant = getState().participantsState.typingParticipants
+            .filter(\.isTyping)
+            .sorted(by: { lhs, rhs in
+                lhs.timestamp > rhs.timestamp
+            })
+            .first
+        // remove timer if there's no more typing participants
+        guard let expiringParticipant = expiringParticipant else {
+            self.timer = nil
+            return
+        }
+        // how many seconds left until participant to be removed
+        let expiringInSeconds = max(0, Date().timeIntervalSince(expiringParticipant.timestamp.value))
+        scheduleTimer(timeInterval: expiringInSeconds,
+                      getState: getState,
+                      dispatch: dispatch)
     }
 }

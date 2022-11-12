@@ -68,6 +68,15 @@ class ChatActionHandlerTests: XCTestCase {
         XCTAssertTrue(mockChatService.getInitialMessagesCalled)
     }
 
+    func test_chatActionHandler_getListOfParticipants_then_getListOfParticipantsCalled() async {
+        let sut = makeSUT()
+        await sut.getListOfParticipants(
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
+
+        XCTAssertTrue(mockChatService.getListOfParticipantsCalled)
+    }
+
     func test_chatActionHandler_getPreviousMessages_when_nonEmptyPreviousMessages_then_getPreviousMessagesCalled() async {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
         let previousMessages = [ChatMessageInfoModel()]
@@ -135,6 +144,22 @@ class ChatActionHandlerTests: XCTestCase {
             dispatch: getEmptyDispatch()).value
 
         XCTAssertTrue(mockChatService.sendReadReceiptCalled)
+    }
+
+    func test_chatActionHandler_recieveTypingIndicator_then_dispatchClearIdleTypingParticipantsAction() async {
+        let expectation = XCTestExpectation(description: "Dispatch Clear Idle Typing Participants Success")
+        let sut = makeSUT()
+        func dispatch(action: Action) {
+            switch action {
+            case .participantsAction(.clearIdleTypingParticipants):
+                expectation.fulfill()
+            default:
+                XCTFail("Unknown Action Dispatched")
+            }
+        }
+        UserEventTimestampModel.typingParticipantTimeout = 0
+        sut.setTypingParticipantTimer(getEmptyState, dispatch)
+        wait(for: [expectation], timeout: 1)
     }
 }
 

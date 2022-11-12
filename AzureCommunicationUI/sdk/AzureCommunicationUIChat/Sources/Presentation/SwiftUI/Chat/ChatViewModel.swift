@@ -45,7 +45,8 @@ class ChatViewModel: ObservableObject {
     }
 
     func receive(_ state: AppState) {
-        messageListViewModel.update(repositoryState: state.repositoryState)
+        messageListViewModel.update(chatState: state.chatState, repositoryState: state.repositoryState)
         typingParticipantsViewModel.update(participantsState: state.participantsState)
+        topBarViewModel.update(participantsState: state.participantsState)
     }
 }

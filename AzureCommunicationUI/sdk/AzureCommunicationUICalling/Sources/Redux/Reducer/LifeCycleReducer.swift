@@ -15,6 +15,8 @@ extension Reducer where State == LifeCycleState,
             currentStatus = .foreground
         case .backgroundEntered:
             currentStatus = .background
+        case .willTerminate:
+            currentStatus = .willTerminate
         }
         return LifeCycleState(currentStatus: currentStatus)
     }

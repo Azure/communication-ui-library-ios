@@ -17,6 +17,7 @@ class ChatSDKWrapperMocking: ChatSDKWrapperProtocol {
 
     var initializeCalled: Bool = false
     var getInitialMessagesCalled: Bool = false
+    var getListOfParticipantsCalled: Bool = false
     var getPreviousMessagesCalled: Bool = false
     var sendMessageCalled: Bool = false
     var sendReadReceiptCalled: Bool = false
@@ -34,7 +35,8 @@ class ChatSDKWrapperMocking: ChatSDKWrapperProtocol {
         }.value
     }
 
-    func getListOfParticipants() async throws -> [AzureCommunicationUIChat.ParticipantInfoModel] {
+    func getListOfParticipants() async throws -> [ParticipantInfoModel] {
+        getListOfParticipantsCalled = true
         return try await Task<[ParticipantInfoModel], Error> {
             []
         }.value
