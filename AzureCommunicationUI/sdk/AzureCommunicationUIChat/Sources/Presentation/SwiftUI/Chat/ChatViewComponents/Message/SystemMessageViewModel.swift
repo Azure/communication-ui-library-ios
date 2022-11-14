@@ -13,7 +13,9 @@ class SystemMessageViewModel: MessageViewModel {
         case .participantsRemoved:
             return "\(participants) left the chat" // Localization
         case .topicUpdated:
-            return "Topic updated \(message.content ?? "")" // Localization 
+            return "Topic updated \(message.content ?? "")" // Localization
+        case .localUserRemoved:
+            return "You were removed from the chat" // todo: Localization
         default:
             return "System Message"
         }

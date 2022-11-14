@@ -15,6 +15,8 @@ class BottomBarViewModel: ObservableObject {
     private var lastTypingIndicatorSendTimestamp = Date()
     private let typingIndicatorDelay: TimeInterval = 8.0
 
+    @Published var localParticipantStatus: LocalParticipantStatus = .joined
+
     @Published var message: String = ""
     @Published var hasFocus: Bool = false
 
@@ -53,5 +55,9 @@ class BottomBarViewModel: ObservableObject {
             dispatch(.chatAction(.sendTypingIndicatorTriggered))
             lastTypingIndicatorSendTimestamp = Date()
         }
+    }
+
+    func update(participantsState: ParticipantsState) {
+        localParticipantStatus = participantsState.localParticipantStatus
     }
 }

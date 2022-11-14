@@ -178,7 +178,7 @@ class MessageListViewModel: ObservableObject {
                                         showTime: showTime,
                                         isLocalUser: isLocalUser,
                                         isConsecutive: isConsecutive)
-        case .participantsAdded, .participantsRemoved, .topicUpdated:
+        case .participantsAdded, .participantsRemoved, .topicUpdated, .localUserRemoved:
             return SystemMessageViewModel(message: message,
                                           showDateHeader: showDateHeader,
                                           isConsecutive: false)

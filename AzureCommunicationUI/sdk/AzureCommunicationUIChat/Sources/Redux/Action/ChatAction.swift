@@ -15,6 +15,7 @@ enum ChatAction: Equatable {
     case realTimeNotificationDisconnected
     case chatThreadDeleted
     case chatTopicUpdated(threadInfo: ChatThreadInfoModel)
+    case chatLocalUserRemoved
 
     case sendTypingIndicatorTriggered
     case sendTypingIndicatorSuccess

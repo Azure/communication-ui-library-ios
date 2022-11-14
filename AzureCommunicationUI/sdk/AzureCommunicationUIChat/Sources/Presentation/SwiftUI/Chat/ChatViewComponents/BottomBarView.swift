@@ -19,8 +19,14 @@ struct BottomBarView: View {
 
     var body: some View {
         HStack {
-            messageTextField
-            sendButton
+            Group {
+                if viewModel.localParticipantStatus == .removed {
+                    localParticipantInfoBanner
+                } else {
+                    messageTextField
+                    sendButton
+                }
+            }
         }
         .frame(minHeight: Constants.minimumHeight)
         .padding(.leading, Constants.padding)
@@ -54,5 +60,9 @@ struct BottomBarView: View {
     var sendButton: some View {
         IconButton(viewModel: viewModel.sendButtonViewModel)
             .flipsForRightToLeftLayoutDirection(true)
+    }
+
+    var localParticipantInfoBanner: some View {
+        Text("You're no longer a participant")
     }
 }

@@ -12,6 +12,7 @@ enum MessageType: Equatable {
     case topicUpdated
     case participantsAdded
     case participantsRemoved
+    case localUserRemoved
 }
 
 struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
