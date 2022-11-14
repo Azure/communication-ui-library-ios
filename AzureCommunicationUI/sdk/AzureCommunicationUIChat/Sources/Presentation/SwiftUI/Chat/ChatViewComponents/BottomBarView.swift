@@ -64,5 +64,6 @@ struct BottomBarView: View {
 
     var localParticipantInfoBanner: some View {
         Text("You're no longer a participant")
+            .foregroundColor(Color(StyleProvider.color.textSecondary))
     }
 }
