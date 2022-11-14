@@ -100,14 +100,14 @@ class UIKitDemoViewController: UIViewController {
                                    after: stackView.arrangedSubviews.first!)
     }
 
-    func combineEnvConfigSubject() {
+    private func combineEnvConfigSubject() {
         envConfigSubject.objectWillChange
             .throttle(for: 0.5, scheduler: DispatchQueue.main, latest: true).sink(receiveValue: { [weak self] _ in
                 self?.updateFromEnvConfig()
             }).store(in: &cancellable)
     }
 
-    func updateFromEnvConfig() {
+    private func updateFromEnvConfig() {
         if !envConfigSubject.acsToken.isEmpty {
             acsTokenTextField.text = envConfigSubject.acsToken
             acsTokenTypeSegmentedControl.selectedSegmentIndex = 2
@@ -127,12 +127,13 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
-    func onError(_ error: CallCompositeError) {
+    private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::UIKitDemoView::getEventsHandler::onError \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
+        print("::::SwiftUIDemoView diagnostics info \(callComposite.diagnostics.lastKnownCallId ?? "Unknown")")
     }
 
-    func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+    private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::UIKitDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
@@ -142,7 +143,7 @@ class UIKitDemoViewController: UIViewController {
                                                                 identifiers: identifiers)
     }
 
-    func startExperience(with link: String) async {
+    private func startExperience(with link: String) async {
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         if !envConfigSubject.localeIdentifier.isEmpty {
@@ -168,15 +169,16 @@ class UIKitDemoViewController: UIViewController {
             self.onRemoteParticipantJoined(to: composite,
                                            identifiers: ids)
         }
-
-        callComposite.events.onError = { [weak self] error in
-            guard let errorHandler = self?.onError else {
+        let onErrorHandler = { [weak callComposite] error in
+            guard let composite = callComposite else {
                 return
             }
-            Task { @MainActor in errorHandler(error) }
+            self.onError(error,
+                         callComposite: composite)
         }
-
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
+        callComposite.events.onError = onErrorHandler
+
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
@@ -216,7 +218,8 @@ class UIKitDemoViewController: UIViewController {
             }
         case .tokenUrl:
             if let url = URL(string: acsTokenUrlTextField.text!) {
-                let tokenRefresher = AuthenticationHelper.getCommunicationToken(tokenUrl: url)
+                let tokenRefresher = AuthenticationHelper.getCommunicationToken(tokenUrl: url,
+                                                                                aadToken: envConfigSubject.aadToken)
                 let initialToken = await AuthenticationHelper.fetchInitialToken(with: tokenRefresher)
                 let refreshOptions = CommunicationTokenRefreshOptions(initialToken: initialToken,
                                                                       refreshProactively: true,
@@ -543,7 +546,7 @@ class UIKitDemoViewController: UIViewController {
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
                                            constant: LayoutConstants.stackViewSpacingPortrait).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
-                                            constant: LayoutConstants.stackViewSpacingPortrait).isActive = true
+                                            constant: -LayoutConstants.stackViewSpacingPortrait).isActive = true
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
 
         settingButtonHSpacer2.widthAnchor.constraint(equalTo: settingButtonHSpacer1.widthAnchor).isActive = true
