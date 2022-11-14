@@ -161,7 +161,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         Task {
             if participants.contains(where: { $0.id == localUser.id }) {
                 dispatch(.participantsAction(.localParticipantRemoved))
-                dispatch(.chatAction(.chatLocalUserRemoved))
+                dispatch(.chatAction(.chatMessageLocalUserRemoved))
                 return
             }
             let message = ChatMessageInfoModel(

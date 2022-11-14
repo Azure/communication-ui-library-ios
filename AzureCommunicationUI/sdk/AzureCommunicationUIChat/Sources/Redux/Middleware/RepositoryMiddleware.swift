@@ -44,7 +44,7 @@ private func handleChatAction(
             actionHandler.addTopicUpdatedMessage(threadInfo: threadInfo,
                                                  state: getState(),
                                                  dispatch: dispatch)
-        case .chatLocalUserRemoved:
+        case .chatMessageLocalUserRemoved:
             actionHandler.addLocalUserRemovedMessage(state: getState(),
                                                      dispatch: dispatch)
         default:
