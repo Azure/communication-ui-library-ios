@@ -42,9 +42,8 @@ struct OverlayView: View {
                         .accessibility(addTraits: .isHeader)
                         if let actionButtonViewModel = viewModel.actionButtonViewModel {
                                 PrimaryButton(viewModel: actionButtonViewModel)
-                                    .fixedSize(horizontal: false, vertical: true)
+                                    .fixedSize()
                                     .padding(.top, verticalButtonPaddingSize)
-                                    .padding(.horizontal, horizontalPaddingSize)
                         }
                         Spacer()
                     }
