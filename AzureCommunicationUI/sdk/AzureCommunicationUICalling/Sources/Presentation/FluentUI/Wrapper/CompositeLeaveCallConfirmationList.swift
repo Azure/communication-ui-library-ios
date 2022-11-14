@@ -20,7 +20,6 @@ struct CompositeLeaveCallConfirmationList: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> DrawerContainerViewController<LeaveCallConfirmationViewModel> {
         let controller = LeaveCallConfirmationListViewController(sourceView: sourceView,
                                                                  headerName: viewModel.headerName,
-                                                                 showHeader: true,
                                                                  isRightToLeft: layoutDirection == .rightToLeft)
         controller.delegate = context.coordinator
         return controller
