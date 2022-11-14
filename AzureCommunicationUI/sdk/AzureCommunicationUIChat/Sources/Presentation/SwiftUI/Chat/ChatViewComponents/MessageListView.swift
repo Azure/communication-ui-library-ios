@@ -14,6 +14,7 @@ struct MessageListView: View {
         static let topConsecutivePadding: CGFloat = 4
         static let buttonBottomPadding: CGFloat = 20
         static let defaultMinListRowHeight: CGFloat = 10
+        static let localUserMessageTrailingPadding: CGFloat = 3
     }
 
     @StateObject var viewModel: MessageListViewModel
@@ -96,12 +97,13 @@ struct MessageListView: View {
     }
 
     private func getEdgeInsets(message: MessageViewModel) -> EdgeInsets {
-        EdgeInsets(
+        let isLocalUser = viewModel.isLocalUser(message: message.message)
+        return EdgeInsets(
             top: message.isConsecutive
             ? Constants.topConsecutivePadding
             : Constants.topPadding,
             leading: Constants.horizontalPadding,
             bottom: Constants.bottomPadding,
-            trailing: Constants.horizontalPadding)
+            trailing: isLocalUser ? Constants.localUserMessageTrailingPadding : Constants.horizontalPadding)
     }
 }

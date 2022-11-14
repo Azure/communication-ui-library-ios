@@ -13,13 +13,12 @@ struct TextMessageView: View {
         static let readReceiptIconWidth: CGFloat = 10
         static let readReceiptIconHeight: CGFloat = 6
         static let readReceiptViewPadding: CGFloat = 3
-        static let bubbleBottomPadding: CGFloat = 4
     }
 
     @StateObject var viewModel: TextMessageViewModel
 
     var body: some View {
-        HStack {
+        HStack(spacing: Constants.readReceiptViewPadding) {
             if viewModel.isLocalUser {
                 Spacer()
             }
@@ -71,17 +70,22 @@ struct TextMessageView: View {
 
     var readReceipt: some View {
         return Group {
-            ZStack {
-                Rectangle()
-                    .fill(Color.clear)
-                    .frame(width: Constants.readReceiptIconWidth,
-                            height: Constants.readReceiptIconHeight)
-//                Text("\(String(viewModel.showReadIcon))")
-                if viewModel.showReadIcon {
-                    StyleProvider.icon.getImage(for: .readReceipt)
-                        .frame(width: Constants.readReceiptIconWidth,
-                                height: Constants.readReceiptIconHeight)
-                        .padding(.bottom, Constants.readReceiptViewPadding)
+            if viewModel.isLocalUser {
+                VStack {
+                    Spacer()
+                    ZStack {
+                        Rectangle()
+                            .fill(Color.clear)
+                            .frame(width: Constants.readReceiptIconWidth,
+                                   height: Constants.readReceiptIconHeight)
+                        if viewModel.showReadIcon {
+                            StyleProvider.icon.getImage(for: .readReceipt)
+                                .frame(width: Constants.readReceiptIconWidth,
+                                       height: Constants.readReceiptIconHeight)
+                                .foregroundColor(Color(StyleProvider.color.primaryColor))
+                                .padding(.bottom, Constants.readReceiptViewPadding)
+                        }
+                    }
                 }
             }
         }
