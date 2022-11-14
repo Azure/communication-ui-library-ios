@@ -179,6 +179,20 @@ class RepositoryMiddlewareTests: XCTestCase {
         middlewareDispatch(getEmptyDispatch())(.repositoryAction(.chatMessageDeletedReceived(message: message)))
         wait(for: [expectation], timeout: 1)
     }
+
+    func test_repositoryMiddleware_apply_when_readReceiptReceivedParticipantsAction_then_handlerReadReceiptReceivedBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "readReceiptReceivedCalled")
+        mockRepositoryHandler.readReceiptReceivedCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        let readReceiptInfo = ReadReceiptInfoModel(senderIdentifier: CommunicationUserIdentifier("Identifier"), chatMessageId: "messageId", readOn: Iso8601Date())
+        middlewareDispatch(getEmptyDispatch())(.participantsAction(.readReceiptReceived(readReceiptInfo: readReceiptInfo)))
+        wait(for: [expectation], timeout: 1)
+    }
 }
 
 extension RepositoryMiddlewareTests {

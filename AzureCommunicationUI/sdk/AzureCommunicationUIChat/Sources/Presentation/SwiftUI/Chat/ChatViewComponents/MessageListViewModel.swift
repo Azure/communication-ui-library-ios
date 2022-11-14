@@ -19,7 +19,7 @@ class MessageListViewModel: ObservableObject {
     private var hasFetchedInitialMessages: Bool = false
     private var localUserId: String?
     private var sendReadReceiptTimer: Timer?
-    private(set) var lastReadMessageId: String?
+    private(set) var lastSentReadReceiptMessageId: String?
 
     let minFetchIndex: Int = 40
 
@@ -87,8 +87,8 @@ class MessageListViewModel: ObservableObject {
         guard !isLocalUser(message: message) else {
             return
         }
-        if Int(message.id) ?? 0 > Int(lastReadMessageId) ?? 0 {
-            self.lastReadMessageId = message.id
+        if Int(message.id) ?? 0 > Int(lastSentReadReceiptMessageId) ?? 0 {
+            self.lastSentReadReceiptMessageId = message.id
             updateJumpToNewMessages()
         }
     }
@@ -96,7 +96,7 @@ class MessageListViewModel: ObservableObject {
     func messageListAppeared() {
         sendReadReceiptTimer = Timer.scheduledTimer(withTimeInterval: sendReadReceiptInterval,
                                                     repeats: true) { [weak self]_ in
-            self?.sendReadReceipt(messageId: self?.lastReadMessageId)
+            self?.sendReadReceipt(messageId: self?.lastSentReadReceiptMessageId)
         }
     }
 
@@ -145,7 +145,7 @@ class MessageListViewModel: ObservableObject {
     }
 
     func getNumberOfNewMessages() -> Int {
-        if let lastReadIndex = messages.firstIndex(where: { $0.id == lastReadMessageId }),
+        if let lastReadIndex = messages.firstIndex(where: { $0.id == lastSentReadReceiptMessageId }),
            let lastSentIndex = messages.lastIndex(where: { isLocalUser(message: $0) }) {
             let lastIndex = max(lastReadIndex, lastSentIndex)
 

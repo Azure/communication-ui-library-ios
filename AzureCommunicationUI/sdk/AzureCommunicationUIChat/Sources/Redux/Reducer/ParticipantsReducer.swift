@@ -25,6 +25,9 @@ extension Reducer where State == ParticipantsState,
             var newParticipants: [String: ParticipantInfoModel] = [:]
             for participant in participants {
                 newParticipants[participant.id] = participant
+                if readReceiptMap[participant.id] == nil {
+                    readReceiptMap[participant.id] = .distantPast
+                }
             }
             currentParticipants = newParticipants
             typingParticipants = []
@@ -32,7 +35,9 @@ extension Reducer where State == ParticipantsState,
         case .participantsAction(.participantsAdded(let participants)):
             for participant in participants {
                 currentParticipants[participant.id] = participant
-                readReceiptMap[participant.id] = .distantPast
+                if readReceiptMap[participant.id] == nil {
+                    readReceiptMap[participant.id] = .distantPast
+                }
             }
             participantsUpdatedTimestamp = Date()
 

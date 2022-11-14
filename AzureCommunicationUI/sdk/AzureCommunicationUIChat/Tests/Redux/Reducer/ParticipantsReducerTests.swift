@@ -26,6 +26,8 @@ class ParticipantReducerTests: XCTestCase {
         XCTAssertTrue(resultState.participantsUpdatedTimestamp > initialTimestamp)
         XCTAssertEqual(resultState.participants.count, 2)
         XCTAssertEqual(resultState.typingParticipants.count, 0)
+        XCTAssertEqual(resultState.readReceiptMap.count, 2)
+        XCTAssertEqual(resultState.readReceiptMap["id2"], .distantPast)
     }
 
     func test_participantsReducer_reduce_when_participantsAddedParticipantAction_then_stateUpdated() {
@@ -42,9 +44,11 @@ class ParticipantReducerTests: XCTestCase {
                                  displayName: "displayName4")
         ]
         let initialTimestamp = Date()
+        let readReceiptMap: [String: Date] = ["id1": .distantPast, "id2": .distantPast]
         let state = ParticipantsState(
             participants: initialParticipantsMap,
-            participantsUpdatedTimestamp: initialTimestamp)
+            participantsUpdatedTimestamp: initialTimestamp,
+            readReceiptMap: readReceiptMap)
         let action = Action.participantsAction(
             .participantsAdded(participants: newParticipants))
         let sut = getSUT()
@@ -52,6 +56,7 @@ class ParticipantReducerTests: XCTestCase {
 
         XCTAssertTrue(resultState.participantsUpdatedTimestamp > initialTimestamp)
         XCTAssertEqual(resultState.participants.count, 4)
+        XCTAssertEqual(resultState.readReceiptMap["id3"], .distantPast)
     }
 
     func test_participantsReducer_reduce_when_participantsRemovedParticipantAction_then_stateUpdated() {
@@ -76,10 +81,12 @@ class ParticipantReducerTests: XCTestCase {
                                  displayName: "anotherName3")
         ]
         let initialTimestamp = Date()
+        let readReceiptMap: [String: Date] = ["id1": .distantPast, "id2": .distantPast, "id3": .distantPast]
         let state = ParticipantsState(
             participants: initialParticipantsMap,
             participantsUpdatedTimestamp: initialTimestamp,
-            typingParticipants: initialTypingParticipants)
+            typingParticipants: initialTypingParticipants,
+            readReceiptMap: readReceiptMap)
         let action = Action.participantsAction(
             .participantsRemoved(participants: removedParticipants))
         let sut = getSUT()
@@ -88,6 +95,7 @@ class ParticipantReducerTests: XCTestCase {
         XCTAssertTrue(resultState.participantsUpdatedTimestamp > initialTimestamp)
         XCTAssertEqual(resultState.participants.count, 1)
         XCTAssertEqual(resultState.typingParticipants.count, 1)
+        XCTAssertEqual(resultState.readReceiptMap.count, 1)
     }
 
     func test_participantReducer_reduce_when_typingIndicatorReceivedAction_then_participantsStateUpdated() {
@@ -154,6 +162,19 @@ class ParticipantReducerTests: XCTestCase {
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
         XCTAssertEqual(resultState.typingParticipants.count, 0)
+    }
+
+    func test_participantReducer_reduce_when_readReceiptReceivedAction_then_participantsStateUpdated() {
+        let participantId = "participantId"
+        let messageId = "1668456344995"
+        let state = ParticipantsState()
+        let readReceiptInfo = ReadReceiptInfoModel(senderIdentifier: CommunicationUserIdentifier(participantId), chatMessageId: messageId, readOn: Iso8601Date())
+        let action = Action.participantsAction(.readReceiptReceived(readReceiptInfo: readReceiptInfo))
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+        XCTAssertEqual(resultState.readReceiptMap.count, 1)
+        XCTAssertEqual(resultState.readReceiptMap[participantId], messageId.convertEpochStringToTimestamp())
+        XCTAssertEqual(resultState.readReceiptUpdatedTimestamp, messageId.convertEpochStringToTimestamp())
     }
 }
 

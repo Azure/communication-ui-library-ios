@@ -122,6 +122,12 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
             dispatch: getEmptyDispatch()).value
         XCTAssertTrue(mockMessageRepositoryManager.updateMessageDeletedCalled)
     }
+
+    func test_repositoryMiddlewareHandler_readReceiptReceived_then_readReceiptReceivedCalled() async {
+        let readReceiptInfo = ReadReceiptInfoModel(senderIdentifier: CommunicationUserIdentifier("Identifier"), chatMessageId: "messageId", readOn: Iso8601Date())
+        await repositoryMiddlewareHandler.readReceiptReceived(readReceiptInfo: readReceiptInfo, state: getEmptyState(), dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockMessageRepositoryManager.updateMessageSendStatusCalled)
+    }
 }
 
 extension RepositoryMiddlewareHandlerTests {
