@@ -6,7 +6,9 @@
 import FluentUI
 import UIKit
 
-class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerControllerDelegate {
+class DrawerContainerViewController<T: Equatable>: UIViewController,
+                                                    DrawerControllerDelegate,
+                                                    DrawerViewControllerProtocol {
     weak var delegate: DrawerControllerDelegate?
     lazy var drawerTableView: UITableView? = nil
     let backgroundColor: UIColor = UIDevice.current.userInterfaceIdiom == .pad
@@ -34,11 +36,10 @@ class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerContr
     }
     init(sourceView: UIView,
          headerName: String? = nil,
-         showHeader: Bool = false,
          isRightToLeft: Bool = false
     ) {
         self.sourceView = sourceView
-        self.showHeader = showHeader
+        self.showHeader = headerName != nil && headerName?.isEmpty == false
         self.headerName = headerName
         self.isRightToLeft = isRightToLeft
         super.init(nibName: nil, bundle: nil)
@@ -59,10 +60,7 @@ class DrawerContainerViewController<T: Equatable>: UIViewController, DrawerContr
             sourceView.superview?.isUserInteractionEnabled = true
             sourceView.removeFromSuperview()
         }
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            UIDevice.current.setValue(UIDevice.current.orientation.rawValue, forKey: "orientation")
-            UIViewController.attemptRotationToDeviceOrientation()
-        }
+        resetOrientation()
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {

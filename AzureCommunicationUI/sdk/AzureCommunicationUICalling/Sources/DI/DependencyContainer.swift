@@ -52,11 +52,13 @@ final class DependencyContainer {
         register(AvatarViewManager(store: resolve(),
                                    localParticipantViewData: localOptions?.participantViewData) as
                  AvatarViewManagerProtocol)
+        register(DiagnosticsManager(store: resolve()) as DiagnosticsManagerProtocol)
         register(CompositeViewModelFactory(logger: resolve(),
                                            store: resolve(),
                                            networkManager: resolve(),
                                            localizationProvider: resolve(),
                                            accessibilityProvider: resolve(),
+                                           diagnosticsManager: resolve(),
                                            localOptions: localOptions) as CompositeViewModelFactoryProtocol)
         register(CompositeViewFactory(logger: resolve(),
                                       avatarManager: resolve(),

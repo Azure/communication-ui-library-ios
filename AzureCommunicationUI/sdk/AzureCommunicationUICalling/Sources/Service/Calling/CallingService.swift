@@ -12,6 +12,7 @@ protocol CallingServiceProtocol {
     var isRecordingActiveSubject: PassthroughSubject<Bool, Never> { get }
     var isTranscriptionActiveSubject: PassthroughSubject<Bool, Never> { get }
     var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
+    var callIdSubject: PassthroughSubject<String, Never> { get }
 
     func setupCall() async throws
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws
@@ -40,6 +41,7 @@ class CallingService: NSObject, CallingServiceProtocol {
     var isLocalUserMutedSubject: PassthroughSubject<Bool, Never>
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never>
     var callInfoSubject: PassthroughSubject<CallInfoModel, Never>
+    var callIdSubject: PassthroughSubject<String, Never>
 
     init(logger: Logger,
          callingSDKWrapper: CallingSDKWrapperProtocol ) {
@@ -50,6 +52,7 @@ class CallingService: NSObject, CallingServiceProtocol {
         isLocalUserMutedSubject = callingSDKWrapper.callingEventsHandler.isLocalUserMutedSubject
         participantsInfoListSubject = callingSDKWrapper.callingEventsHandler.participantsInfoListSubject
         callInfoSubject = callingSDKWrapper.callingEventsHandler.callInfoSubject
+        callIdSubject = callingSDKWrapper.callingEventsHandler.callIdSubject
     }
 
     func setupCall() async throws {

@@ -97,6 +97,50 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         toggleLeaveCallDrawer(leaveCall: true)
     }
 
+    // MARK: Share call info
+    func testCallCompositeShareDiagnosticInfo() {
+        tapInterfaceFor(.uiKit)
+        tapMeetingType(.groupCall)
+        tapEnabledButton(
+            accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
+            shouldWait: true)
+        tapCell(
+            accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
+            shouldWait: true)
+        wait(for: app.otherElements["ActivityListView"])
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCloseButtonAccessibilityID.rawValue,
+            shouldWait: true)
+    }
+
+    func testCallCompositeCopyDiagnosticInfo() {
+        tapInterfaceFor(.uiKit)
+        tapMeetingType(.groupCall)
+        tapEnabledButton(
+            accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+            shouldWait: true)
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
+            shouldWait: true)
+        tapCell(
+            accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
+            shouldWait: true)
+        wait(for: app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue])
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCopyButtonAccessibilityID.rawValue,
+            shouldWait: true)
+        XCTAssertFalse(app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue].exists)
+    }
+
     // MARK: Private / helper functions
 
     /// Toggles the leave call overlay  in the calling screen
