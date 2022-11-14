@@ -62,7 +62,7 @@ struct MessageListView: View {
                                     if index == viewModel.minFetchIndex {
                                         viewModel.fetchMessages()
                                     }
-                                    viewModel.updateLastReadMessageId(message: message)
+                                    viewModel.updateLastSentReadReceiptMessageId(message: message)
                                 }
                         }
                     }

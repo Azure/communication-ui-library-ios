@@ -83,7 +83,7 @@ class MessageListViewModel: ObservableObject {
         dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
     }
 
-    func updateLastReadMessageId(message: ChatMessageInfoModel) {
+    func updateLastSentReadReceiptMessageId(message: ChatMessageInfoModel) {
         guard !isLocalUser(message: message) else {
             return
         }
