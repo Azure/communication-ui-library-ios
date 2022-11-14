@@ -1027,7 +1027,7 @@
 			);
 			name = AzureCommunicationUICommon;
 			path = ../AzureCommunicationUICommon/Sources/AzureCommunicationUICommon;
-			sourceTree = SOURCE_ROOT;
+			sourceTree = "<group>";
 		};
 		75C1EE0D28E4BEF600FF78B1 /* AzureCommunicationCalling */ = {
 			isa = PBXGroup;
