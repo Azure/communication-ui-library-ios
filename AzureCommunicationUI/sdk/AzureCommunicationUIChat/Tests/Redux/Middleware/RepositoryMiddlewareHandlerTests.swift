@@ -135,6 +135,28 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
             switch action {
             case .participantsAction(.localParticipantRemoved):
                 expectation.fulfill()
+            case .chatAction(.chatMessageLocalUserRemoved):
+                break
+            default:
+                XCTExpectFailure("Should not reach default case.")
+            }
+        }
+        await repositoryMiddlewareHandler.participantRemovedMessage(participants: [localUser],
+                                                                    localUser: localUser,
+                                                              dispatch: dispatch).value
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_repositoryMiddlewareHandler_localParticipantRemoved_then_chatMessageLocalUserRemovedDispatched() async {
+        let expectation = XCTestExpectation(description: "Chat Message Local User Removed Action Dispatched")
+        let localUser = ParticipantInfoModel(identifier: UnknownIdentifier("SomeUnknownIdentifier"),
+                                                       displayName: "MockBot")
+        func dispatch(action: Action) {
+            switch action {
+            case .participantsAction(.localParticipantRemoved):
+                break
+            case .chatAction(.chatMessageLocalUserRemoved):
+                expectation.fulfill()
             default:
                 XCTExpectFailure("Should not reach default case.")
             }
