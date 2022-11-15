@@ -4,6 +4,8 @@
 //
 
 import Foundation
+@testable import AzureCommunicationUICalling
+@testable import AzureCommunicationCommon
 
 class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
     func joinCall() {

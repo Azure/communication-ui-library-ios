@@ -4,6 +4,7 @@
 //
 
 import Foundation
+@testable import AzureCommunicationUICalling
 
 class LoggerMocking {}
 
