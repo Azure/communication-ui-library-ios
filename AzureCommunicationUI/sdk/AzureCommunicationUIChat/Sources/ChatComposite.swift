@@ -23,8 +23,6 @@ public class ChatComposite {
         public var onUnreadMessagesCountChanged: ((Int) -> Void)?
         /// Closure to execute when Chat Composite UI is hidden and receive new message
         public var onNewMessageReceived: ((ChatMessageModel) -> Void)?
-        /// Closure to execute when local participant removed from the chat thread
-        public var onLocalUserRemoved: (() -> Void)?
     }
 
     /// The events handler for Chat Composite

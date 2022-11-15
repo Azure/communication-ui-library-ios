@@ -70,8 +70,6 @@ final class DependencyContainer {
 
         register(CompositeManager(store: resolve(),
                                   logger: resolve()) as CompositeManagerProtocol)
-        register(EventManager(store: resolve(),
-                              chatCompositeEventsHandler: chatCompositeEventsHandler) as EventManagerProtocol)
 
     }
 

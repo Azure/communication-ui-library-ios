@@ -55,7 +55,7 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
         }
     }
 
-    func participantRemovedMessage(participants: [ParticipantInfoModel], localUser: ParticipantInfoModel, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func participantRemovedMessage(participants: [ParticipantInfoModel], dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             addParticipantRemovedMessageCalled?(true)
         }

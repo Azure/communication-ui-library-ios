@@ -62,11 +62,7 @@ private func handleParticipantsAction(
             actionHandler.participantAddedMessage(participants: participants,
                                                   dispatch: dispatch)
         case .participantsRemoved(let participants):
-            guard let localUser = getState().chatState.localUser else {
-                break
-            }
             actionHandler.participantRemovedMessage(participants: participants,
-                                                    localUser: localUser,
                                                     dispatch: dispatch)
         default:
             break

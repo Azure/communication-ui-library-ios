@@ -45,6 +45,8 @@ extension Reducer where State == ParticipantsState,
             typingParticipants.append(participant)
         case .participantsAction(.clearIdleTypingParticipants):
             typingParticipants = typingParticipants.filter(\.isTyping)
+        case .chatAction(.chatMessageLocalUserRemoved):
+            localParticipantStatus = .removed
         case .repositoryAction(.chatMessageReceived(let message)):
             guard let participantId = message.senderId else {
                 break
@@ -55,8 +57,6 @@ extension Reducer where State == ParticipantsState,
             default:
                 break
             }
-        case .participantsAction(.localParticipantRemoved):
-            localParticipantStatus = .removed
         default:
             return participantsState
         }

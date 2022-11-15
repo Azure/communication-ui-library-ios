@@ -137,12 +137,10 @@
 		50F0C5C628D38CE4009D7176 /* MessageRepositoryManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C528D38CE4009D7176 /* MessageRepositoryManagerTests.swift */; };
 		50F0C5C828D38CF1009D7176 /* RemoteOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */; };
 		50F0C5CA28D38D00009D7176 /* DependencyContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */; };
-		52008C582924168200688D37 /* EventManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52008C572924168200688D37 /* EventManagerTests.swift */; };
 		521A024028FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A023E28FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift */; };
 		521A024128FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A023F28FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift */; };
 		521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */; };
 		521A024528FE1E8D002CAD8E /* TypingParticipantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024328FE1E8D002CAD8E /* TypingParticipantsView.swift */; };
-		52586ECD291DD02100195D37 /* EventManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52586ECC291DD02100195D37 /* EventManager.swift */; };
 		6956EB16291341B0003CCC7E /* ReadReceiptInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6956EB15291341B0003CCC7E /* ReadReceiptInfoModel.swift */; };
 		69FEF0822909D68500F54FC4 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FEF0812909D68500F54FC4 /* StringExtension.swift */; };
 		75848432291D82D4006373B3 /* DeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7584842C291D82D4006373B3 /* DeviceExtension.swift */; };
@@ -319,12 +317,10 @@
 		50F0C5C528D38CE4009D7176 /* MessageRepositoryManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRepositoryManagerTests.swift; sourceTree = "<group>"; };
 		50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteOptionsTests.swift; sourceTree = "<group>"; };
 		50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainerTests.swift; sourceTree = "<group>"; };
-		52008C572924168200688D37 /* EventManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventManagerTests.swift; sourceTree = "<group>"; };
 		521A023E28FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantAvatarGroup.swift; sourceTree = "<group>"; };
 		521A023F28FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantAvatarGroupContainer.swift; sourceTree = "<group>"; };
 		521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantsViewModel.swift; sourceTree = "<group>"; };
 		521A024328FE1E8D002CAD8E /* TypingParticipantsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantsView.swift; sourceTree = "<group>"; };
-		52586ECC291DD02100195D37 /* EventManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventManager.swift; sourceTree = "<group>"; };
 		5BE15140BA042B0F23F23BE3 /* Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		6956EB15291341B0003CCC7E /* ReadReceiptInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadReceiptInfoModel.swift; sourceTree = "<group>"; };
 		69FEF0812909D68500F54FC4 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
@@ -571,7 +567,6 @@
 		50CB81EE28C2854C00680566 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				52586ECC291DD02100195D37 /* EventManager.swift */,
 				50CB820428C2867700680566 /* ErrorManager.swift */,
 				50CB820628C2868000680566 /* CompositeManager.swift */,
 				50CB820828C2868A00680566 /* AvatarViewManager.swift */,
@@ -783,7 +778,6 @@
 				50F0C5C128D38CC9009D7176 /* AvatarManagerTests.swift */,
 				50F0C5C328D38CD8009D7176 /* RemoteParticipantsManagerTests.swift */,
 				50F0C5C528D38CE4009D7176 /* MessageRepositoryManagerTests.swift */,
-				52008C572924168200688D37 /* EventManagerTests.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1412,7 +1406,6 @@
 				50CB820928C2868A00680566 /* AvatarViewManager.swift in Sources */,
 				50370CCF28EE4AA800ACD234 /* BaseInfoModel.swift in Sources */,
 				50CB823B28C29AC100680566 /* AppState.swift in Sources */,
-				52586ECD291DD02100195D37 /* EventManager.swift in Sources */,
 				50CB82CB28C2AD2300680566 /* ViewModifer.swift in Sources */,
 				BDB1B8CA28F8A2940000300F /* IconButton.swift in Sources */,
 				BD80293828ECA7D700A55CAC /* BottomBarView.swift in Sources */,
@@ -1490,7 +1483,6 @@
 				50F0C5C828D38CF1009D7176 /* RemoteOptionsTests.swift in Sources */,
 				50F0C5AA28D38BE1009D7176 /* ChatServiceEventHandlerTests.swift in Sources */,
 				50370CC228EB5E6B00ACD234 /* LocalizationProviderTests.swift in Sources */,
-				52008C582924168200688D37 /* EventManagerTests.swift in Sources */,
 				50370CBD28EB5E0D00ACD234 /* ReducerMocking.swift in Sources */,
 				50F0C5C628D38CE4009D7176 /* MessageRepositoryManagerTests.swift in Sources */,
 				50F0C59928D38B20009D7176 /* ErrorMocking.swift in Sources */,
