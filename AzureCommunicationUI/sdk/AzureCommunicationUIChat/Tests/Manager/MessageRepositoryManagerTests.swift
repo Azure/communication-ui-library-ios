@@ -253,6 +253,12 @@ class MessageRepositoryManagerTests: XCTestCase {
             XCTAssertNil(m.deletedOn)
         }
     }
+
+    func test_messageRepositoryManager_addLocalUserRemovedMessage_when_initialMessages_then_messagesCountWillBeIncrementByOne() {
+        let sut = makeSUT()
+        sut.addLocalUserRemovedMessage()
+        XCTAssertEqual(sut.messages.count, 1)
+    }
 }
 
 extension MessageRepositoryManagerTests {
