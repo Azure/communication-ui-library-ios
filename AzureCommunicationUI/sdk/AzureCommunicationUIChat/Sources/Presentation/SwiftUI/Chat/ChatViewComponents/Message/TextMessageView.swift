@@ -10,8 +10,7 @@ struct TextMessageView: View {
         static let horizontalPadding: CGFloat = 10
         static let verticalPadding: CGFloat = 8
         static let cornerRadius: CGFloat = 5
-        static let readReceiptIconWidth: CGFloat = 10
-        static let readReceiptIconHeight: CGFloat = 6
+        static let readReceiptIconSize: CGFloat = 12
         static let readReceiptViewPadding: CGFloat = 3
     }
 
@@ -23,7 +22,7 @@ struct TextMessageView: View {
                 Spacer()
             }
             bubble
-            readReceipt
+            messageSendStatus
             if !viewModel.isLocalUser {
                 Spacer()
             }
@@ -68,23 +67,22 @@ struct TextMessageView: View {
         }
     }
 
-    var readReceipt: some View {
+    var messageSendStatus: some View {
         return Group {
             if viewModel.isLocalUser {
                 VStack {
                     Spacer()
-                    ZStack {
+                    if let iconName = viewModel.getMessageSendStatusIconName() {
+                        StyleProvider.icon.getImage(for: iconName)
+                            .frame(width: Constants.readReceiptIconSize,
+                                   height: Constants.readReceiptIconSize)
+                            .foregroundColor(Color(StyleProvider.color.primaryColor))
+                            .padding(.bottom, Constants.readReceiptViewPadding)
+                    } else {
                         Rectangle()
                             .fill(Color.clear)
-                            .frame(width: Constants.readReceiptIconWidth,
-                                   height: Constants.readReceiptIconHeight)
-                        if viewModel.showReadIcon {
-                            StyleProvider.icon.getImage(for: .readReceipt)
-                                .frame(width: Constants.readReceiptIconWidth,
-                                       height: Constants.readReceiptIconHeight)
-                                .foregroundColor(Color(StyleProvider.color.primaryColor))
-                                .padding(.bottom, Constants.readReceiptViewPadding)
-                        }
+                            .frame(width: Constants.readReceiptIconSize,
+                                   height: Constants.readReceiptIconSize)
                     }
                 }
             }

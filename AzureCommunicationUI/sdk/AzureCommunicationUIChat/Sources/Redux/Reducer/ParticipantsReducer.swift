@@ -25,9 +25,10 @@ extension Reducer where State == ParticipantsState,
             var newParticipants: [String: ParticipantInfoModel] = [:]
             for participant in participants {
                 newParticipants[participant.id] = participant
-                if readReceiptMap[participant.id] == nil {
-                    readReceiptMap[participant.id] = .distantPast
-                }
+                // Uncomment after mask admin user is done
+//                if readReceiptMap[participant.id] == nil {
+//                    readReceiptMap[participant.id] = .distantPast
+//                }
             }
             currentParticipants = newParticipants
             typingParticipants = []

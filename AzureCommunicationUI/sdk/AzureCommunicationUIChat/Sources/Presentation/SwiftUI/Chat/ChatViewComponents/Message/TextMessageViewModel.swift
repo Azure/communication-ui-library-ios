@@ -9,7 +9,7 @@ class TextMessageViewModel: MessageViewModel {
     let showUsername: Bool
     let showTime: Bool
     let isLocalUser: Bool
-    let showReadIcon: Bool
+    let showMessageSendStatusIcon: Bool
 
     init(message: ChatMessageInfoModel,
          showDateHeader: Bool,
@@ -17,12 +17,31 @@ class TextMessageViewModel: MessageViewModel {
          showTime: Bool,
          isLocalUser: Bool,
          isConsecutive: Bool,
-         showReadIcon: Bool) {
+         showMessageSendStatusIcon: Bool) {
         self.showUsername = showUsername
         self.showTime = showTime
         self.isLocalUser = isLocalUser
-        self.showReadIcon = showReadIcon
+        self.showMessageSendStatusIcon = showMessageSendStatusIcon
 
         super.init(message: message, showDateHeader: showDateHeader, isConsecutive: isConsecutive)
+    }
+
+    func getMessageSendStatusIconName() -> CompositeIcon? {
+        guard showMessageSendStatusIcon == true else {
+            return nil
+        }
+        // Other cases will be handled in another PR
+        switch message.sendStatus {
+        case .delivering:
+            return nil
+        case .sent:
+            return nil
+        case .seen:
+            return .readReceipt
+        case .failed:
+            return nil
+        case .none:
+            return .readReceipt
+        }
     }
 }

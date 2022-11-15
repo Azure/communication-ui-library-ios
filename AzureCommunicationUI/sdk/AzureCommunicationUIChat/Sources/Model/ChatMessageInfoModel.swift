@@ -14,7 +14,7 @@ enum MessageType: Equatable {
     case participantsRemoved
 }
 
-enum SendStatus: Equatable {
+enum MessageSendStatus: Equatable {
     case sent
     case delivering
     case seen
@@ -31,7 +31,7 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
     var createdOn: Iso8601Date
     var editedOn: Iso8601Date?
     var deletedOn: Iso8601Date?
-    var sendStatus: SendStatus?
+    var sendStatus: MessageSendStatus?
 
     // for participant added/removed only
     var participants: [ParticipantInfoModel]
@@ -46,7 +46,7 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
          editedOn: Iso8601Date? = nil,
          deletedOn: Iso8601Date? = nil,
          participants: [ParticipantInfoModel] = [],
-         sendStatus: SendStatus? = nil) {
+         sendStatus: MessageSendStatus? = nil) {
         self.id = id ?? UUID().uuidString
         self.version = version
         self.type = type

@@ -175,7 +175,7 @@ class MessageListViewModel: ObservableObject {
             let isLocalUser = isLocalUser(message: message)
             let showUsername = !isLocalUser && !isConsecutive
             let showTime = !isConsecutive
-            let showReadIcon = message.id == showMessageSendStatusIconMessageId
+            let showMessageSendStatusIcon = message.id == showMessageSendStatusIconMessageId
 
             return TextMessageViewModel(message: message,
                                         showDateHeader: showDateHeader,
@@ -183,7 +183,7 @@ class MessageListViewModel: ObservableObject {
                                         showTime: showTime,
                                         isLocalUser: isLocalUser,
                                         isConsecutive: isConsecutive,
-                                        showReadIcon: showReadIcon)
+                                        showMessageSendStatusIcon: showMessageSendStatusIcon)
         case .participantsAdded, .participantsRemoved, .topicUpdated:
             return SystemMessageViewModel(message: message,
                                           showDateHeader: showDateHeader,
@@ -199,17 +199,11 @@ class MessageListViewModel: ObservableObject {
 
     func updateShowMessageSendStatusIconMessageId() {
         for message in messages.reversed() {
-            guard message.senderId == localUserId else {
+            guard message.sendStatus != nil, message.senderId == localUserId else {
                 continue
             }
-
-            switch message.sendStatus {
-            case .seen:
-                showMessageSendStatusIconMessageId = message.id
-                return
-            default:
-                continue
-            }
+            showMessageSendStatusIconMessageId = message.id
+            return
         }
     }
 
