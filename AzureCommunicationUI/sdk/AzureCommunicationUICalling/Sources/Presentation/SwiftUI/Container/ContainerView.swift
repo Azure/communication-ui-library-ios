@@ -14,6 +14,7 @@ struct ContainerView: View {
     let setupViewOrientationMask: UIInterfaceOrientationMask =
         UIDevice.current.userInterfaceIdiom == .phone ? .portrait : .allButUpsideDown
     let isRightToLeft: Bool
+    let isUITestEnabled: Bool
 
     var body: some View {
         Group {
@@ -29,6 +30,7 @@ struct ContainerView: View {
             }
         }
         .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
+        .environment(\.uiTestEnabled, isUITestEnabled)
     }
 
     var setupView: SetupView {

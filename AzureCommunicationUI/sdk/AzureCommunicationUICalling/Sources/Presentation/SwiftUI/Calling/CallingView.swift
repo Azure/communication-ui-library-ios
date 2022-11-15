@@ -25,6 +25,7 @@ struct CallingView: View {
 
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
+    @Environment(\.uiTestEnabled) var uiTestEnabled: Bool
 
     @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
     @State private var isUITestScreenDisplayed: Bool = false
@@ -66,10 +67,8 @@ struct CallingView: View {
 
     var uitestButton: some View {
         return Group {
-            if let uiTestEnabled = Bool(ProcessInfo.processInfo.environment["uiTestEnabled"] ?? ""),
-               uiTestEnabled {
+            if let uiTestEnabled = uiTestEnabled, uiTestEnabled {
                 Button("Debugger") {
-                    //            viewModel.uiTestSettingsViewOverlayViewModel.toggleDisplayrIfNeeded()
                     isUITestScreenDisplayed = !isUITestScreenDisplayed
                 }.accessibilityIdentifier(AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue)
             } else {

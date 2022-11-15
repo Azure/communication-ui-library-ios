@@ -55,7 +55,6 @@ class XCUITestBase: XCTestCase {
     override func setUp() {
         super.setUp()
         app = XCUIApplication()
-        app.launchEnvironment = ["uiTestEnabled": "true"]
         app.launch()
         setupSystemPromptMonitor()
     }
