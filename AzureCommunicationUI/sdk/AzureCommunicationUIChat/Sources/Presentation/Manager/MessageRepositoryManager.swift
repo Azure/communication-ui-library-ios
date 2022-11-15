@@ -94,11 +94,11 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
     }
 
     func addLocalUserRemovedMessage() {
-        let topicUpdatedSystemMessage = ChatMessageInfoModel(
+        let localUserRemovedSystemMessage = ChatMessageInfoModel(
             type: .localUserRemoved,
             createdOn: Iso8601Date()
         )
-        messages.append(topicUpdatedSystemMessage)
+        messages.append(localUserRemovedSystemMessage)
     }
 
     func addReceivedMessage(message: ChatMessageInfoModel) {
