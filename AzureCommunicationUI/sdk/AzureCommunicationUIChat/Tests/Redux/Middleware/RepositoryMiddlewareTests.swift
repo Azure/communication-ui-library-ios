@@ -179,6 +179,17 @@ class RepositoryMiddlewareTests: XCTestCase {
         middlewareDispatch(getEmptyDispatch())(.repositoryAction(.chatMessageDeletedReceived(message: message)))
         wait(for: [expectation], timeout: 1)
     }
+
+    func test_repositoryMiddleware_apply_when_chatMessageLocalUserRemovedAction_then_addLocalUserRemovedMessageBeingCalled() {
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "addLocalUserRemovedMessageBeingCalled")
+        mockRepositoryHandler.addLocalUserRemovedMessage = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+        middlewareDispatch(getEmptyDispatch())(.chatAction(.chatMessageLocalUserRemoved))
+        wait(for: [expectation], timeout: 1)
+    }
 }
 
 extension RepositoryMiddlewareTests {
