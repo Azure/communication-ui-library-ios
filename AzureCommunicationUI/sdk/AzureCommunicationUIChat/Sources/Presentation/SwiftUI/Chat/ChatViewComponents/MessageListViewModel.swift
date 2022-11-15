@@ -32,6 +32,7 @@ class MessageListViewModel: ObservableObject {
     @Published var showJumpToNewMessages: Bool = false
     @Published var shouldScrollToBottom: Bool = false
     @Published var showMessageSendStatusIconMessageId: String?
+    @Published var messageSendStatusIconType: MessageSendStatus?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          messageRepositoryManager: MessageRepositoryManagerProtocol,
@@ -133,6 +134,7 @@ class MessageListViewModel: ObservableObject {
             showMessageSendStatusIconMessageId = messageRepositoryManager.messages.last(where: {
                 $0.senderId == localUserId
             })?.id
+            messageSendStatusIconType = .seen
         }
 
         // Scroll to new sent message
@@ -183,7 +185,8 @@ class MessageListViewModel: ObservableObject {
                                         showTime: showTime,
                                         isLocalUser: isLocalUser,
                                         isConsecutive: isConsecutive,
-                                        showMessageSendStatusIcon: showMessageSendStatusIcon)
+                                        showMessageSendStatusIcon: showMessageSendStatusIcon,
+                                        messageSendStatusIconType: messageSendStatusIconType)
         case .participantsAdded, .participantsRemoved, .topicUpdated:
             return SystemMessageViewModel(message: message,
                                           showDateHeader: showDateHeader,
@@ -203,6 +206,7 @@ class MessageListViewModel: ObservableObject {
                 continue
             }
             showMessageSendStatusIconMessageId = message.id
+            messageSendStatusIconType = message.sendStatus
             return
         }
     }
