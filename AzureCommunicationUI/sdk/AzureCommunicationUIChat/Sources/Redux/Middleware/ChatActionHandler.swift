@@ -58,10 +58,10 @@ class ChatActionHandler: ChatActionHandling {
                     serviceListener: ChatServiceEventHandling) -> Task<Void, Never> {
         Task {
             do {
-                try await chatService.initalize()
+                try await chatService.initialize()
                 serviceListener.subscription(dispatch: dispatch)
             } catch {
-                // dispatch error if invalid token *not handled*
+                logger.error("Failed to initialize : \(error)")
                 dispatch(.chatAction(.initializeChatFailed(error: error)))
             }
         }

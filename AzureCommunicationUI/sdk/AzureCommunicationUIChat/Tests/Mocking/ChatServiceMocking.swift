@@ -24,7 +24,7 @@ class ChatServiceMocking: ChatServiceProtocol {
     var sendReadReceiptCalled: Bool = false
     var sendTypingIndicatorCalled: Bool = false
 
-    func initalize() async throws {
+    func initialize() async throws {
         initializeCalled = true
         try await possibleErrorTask().value
     }
