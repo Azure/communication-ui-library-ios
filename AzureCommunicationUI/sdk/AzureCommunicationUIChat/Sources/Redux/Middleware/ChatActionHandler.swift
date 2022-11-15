@@ -61,7 +61,7 @@ class ChatActionHandler: ChatActionHandling {
                 try await chatService.initialize()
                 serviceListener.subscription(dispatch: dispatch)
             } catch {
-                logger.error("Failed to initialize : \(error)")
+                logger.error("Failed to initialize chat client due to error: \(error)")
                 dispatch(.chatAction(.initializeChatFailed(error: error)))
             }
         }
