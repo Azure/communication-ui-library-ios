@@ -6,7 +6,7 @@
 import FluentUI
 import UIKit
 
-class AudioDevicesListViewController: DrawerContainerViewController<AudioDevicesListCellViewModel> {
+class AudioDevicesListViewController: DrawerContainerViewController<SelectableDrawerListItemViewModel> {
     private lazy var audioDevicesListTableView: UITableView? = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = backgroundColor
@@ -50,7 +50,7 @@ extension AudioDevicesListViewController: UITableViewDataSource, UITableViewDele
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.items[indexPath.row].switchAudioDevice()
+        self.items[indexPath.row].action()
         dismissDrawer(animated: true)
     }
 }

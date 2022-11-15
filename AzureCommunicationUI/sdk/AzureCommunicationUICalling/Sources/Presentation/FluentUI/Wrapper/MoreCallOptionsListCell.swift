@@ -9,7 +9,7 @@ import UIKit
 
 class MoreCallOptionsListCell: TableViewCell {
     /// Set up the more call options list item  in the more call options list
-    func setup(viewModel: MoreCallOptionsListCellViewModel) {
+    func setup(viewModel: DrawerListItemViewModel) {
         let iconImage = StyleProvider.icon.getUIImage(for: viewModel.icon)?
             .withTintColor(StyleProvider.color.drawerIconDark, renderingMode: .alwaysOriginal)
         let iconImageView = UIImageView(image: iconImage)

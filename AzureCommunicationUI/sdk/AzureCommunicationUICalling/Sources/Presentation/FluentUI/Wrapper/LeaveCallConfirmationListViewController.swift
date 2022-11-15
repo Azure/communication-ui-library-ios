@@ -6,7 +6,7 @@
 import FluentUI
 import UIKit
 
-class LeaveCallConfirmationListViewController: DrawerContainerViewController<LeaveCallConfirmationViewModel> {
+class LeaveCallConfirmationListViewController: DrawerContainerViewController<DrawerListItemViewModel> {
     private enum SectionConstants {
         static let headerHeight: CGFloat = 36.0
     }
