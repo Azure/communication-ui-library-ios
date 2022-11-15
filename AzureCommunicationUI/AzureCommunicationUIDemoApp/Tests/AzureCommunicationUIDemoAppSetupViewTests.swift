@@ -10,10 +10,7 @@ class AzureCommunicationUIDemoAppSetupViewTests: XCUITestBase {
 
     // MARK: Setup view tests
 
-    func testCallCompositeSetupCallGroupCallSwiftUI() throws {
-        guard !isUsingMockedCallingSDKWrapper() else {
-            throw XCTSkip("CallingSDKWrapper mock test is in progress, non-mock test is skipped.")
-        }
+    func testCallCompositeSetupCallGroupCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,

@@ -7,17 +7,11 @@ import XCTest
 
 class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
-    func testCallCompositeLaunch() throws {
-        guard !isUsingMockedCallingSDKWrapper() else {
-            throw XCTSkip("CallingSDKWrapper mock test is in progress, non-mock test is skipped.")
-        }
+    func testCallCompositeLaunch() {
         tapInterfaceFor(.uiKit)
     }
 
-    func testCallCompositeWithExpiredToken() throws {
-        guard !isUsingMockedCallingSDKWrapper() else {
-            throw XCTSkip("CallingSDKWrapper mock test is in progress, non-mock test is skipped.")
-        }
+    func testCallCompositeWithExpiredToken() {
         tapInterfaceFor(.swiftUI)
         tapButton(
             accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue,
@@ -36,10 +30,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         tapDismissButtonIfNeeded()
     }
 
-    func testCallCompositeWithEmptyToken() throws {
-        guard !isUsingMockedCallingSDKWrapper() else {
-            throw XCTSkip("CallingSDKWrapper mock test is in progress, non-mock test is skipped.")
-        }
+    func testCallCompositeWithEmptyToken() {
         tapInterfaceFor(.swiftUI)
         tapButton(
             accessibilityIdentifier: AccessibilityId.clearTokenTextFieldAccessibilityID.rawValue,
@@ -55,10 +46,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         }
     }
 
-    func testCallCompositeWithInvalidToken() throws {
-        guard !isUsingMockedCallingSDKWrapper() else {
-            throw XCTSkip("CallingSDKWrapper mock test is in progress, non-mock test is skipped.")
-        }
+    func testCallCompositeWithInvalidToken() {
         tapInterfaceFor(.swiftUI)
         tapButton(
             accessibilityIdentifier: AccessibilityId.clearTokenTextFieldAccessibilityID.rawValue,
@@ -72,10 +60,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         tapDismissButtonIfNeeded()
     }
 
-    func testCallCompositeJoinCallGroupCallSwiftUI() throws {
-        guard !isUsingMockedCallingSDKWrapper() else {
-            throw XCTSkip("CallingSDKWrapper mock test is in progress, non-mock test is skipped.")
-        }
+    func testCallCompositeJoinCallGroupCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
         tapConnectionTokenType(.acsTokenUrl)
         tapEnabledButton(
@@ -87,10 +72,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityID.rawValue, shouldWait: true)
     }
 
-    func testCallCompositeJoinCallTeamsCallSwiftUI() throws {
-        guard !isUsingMockedCallingSDKWrapper() else {
-            throw XCTSkip("CallingSDKWrapper mock test is in progress, non-mock test is skipped.")
-        }
+    func testCallCompositeJoinCallTeamsCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
         tapConnectionTokenType(.acsTokenUrl)
         tapMeetingType(.teamsCall)
@@ -105,10 +87,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
             shouldWait: true)
     }
 
-    func testCallCompositeJoinCallGroupCallUIKit() throws {
-        guard !isUsingMockedCallingSDKWrapper() else {
-            throw XCTSkip("CallingSDKWrapper mock test is in progress, non-mock test is skipped.")
-        }
+    func testCallCompositeJoinCallGroupCallUIKit() {
         tapInterfaceFor(.uiKit)
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
@@ -121,10 +100,7 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
             shouldWait: true)
     }
 
-    func testCallCompositeJoinCallTeamsCallUIKit() throws {
-        guard !isUsingMockedCallingSDKWrapper() else {
-            throw XCTSkip("CallingSDKWrapper mock test is in progress, non-mock test is skipped.")
-        }
+    func testCallCompositeJoinCallTeamsCallUIKit() {
         tapInterfaceFor(.uiKit)
         tapMeetingType(.teamsCall)
         tapEnabledButton(
