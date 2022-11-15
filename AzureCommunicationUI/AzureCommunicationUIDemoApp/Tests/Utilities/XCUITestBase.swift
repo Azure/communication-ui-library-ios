@@ -154,6 +154,18 @@ extension XCUITestBase {
         app.buttons[connectionType.name].tap()
     }
 
+    /// Taps the cell that matches with the given accessibility id
+    /// - Parameters:
+    ///   - accessibilityIdentifier: accessibility id of the cell
+    ///   - shouldWait: determines whether app should wait for the tap test to complete
+    func tapCell(accessibilityIdentifier: String, shouldWait: Bool) {
+        let cell = app.cells[accessibilityIdentifier]
+        if shouldWait {
+            wait(for: cell)
+        }
+        cell.forceTapElement()
+    }
+
     func takeScreenshot(name: String = "App Screenshot - \(Date().description)",
                         lifetime: XCTAttachment.Lifetime  = .keepAlways) {
         let screenshot = app.screenshot()

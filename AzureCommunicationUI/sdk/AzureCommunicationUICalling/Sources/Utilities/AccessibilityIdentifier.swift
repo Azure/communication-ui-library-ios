@@ -33,4 +33,13 @@ enum AccessibilityIdentifier: String {
             "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.SimulateTranscriptionEnd"
     case uitestsimulateNewParticipantJoin =
             "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.SimulateNewParticipantJoin"
+    case moreAccessibilityID = "AzureCommunicationUICalling.CallingView.ControlButton.More.AccessibilityID"
+    case shareDiagnosticsAccessibilityID =
+            "AzureCommunicationUICalling.CallingView.MoreOverlay.ShareDiagnostics.AccessibilityID"
+    case activityViewControllerCloseButtonAccessibilityID =
+            "Close"
+    case activityViewControllerCopyButtonAccessibilityID =
+            "Copy"
+    case activityViewControllerAccessibilityID =
+            "ActivityListView"
 }

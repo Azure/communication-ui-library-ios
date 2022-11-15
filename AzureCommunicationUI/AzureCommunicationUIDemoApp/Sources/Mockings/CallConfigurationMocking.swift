@@ -5,6 +5,7 @@
 
 import Foundation
 import AzureCommunicationCommon
+@testable import AzureCommunicationUICalling
 
 struct CallConfigurationMocking {
     let groupId: UUID?

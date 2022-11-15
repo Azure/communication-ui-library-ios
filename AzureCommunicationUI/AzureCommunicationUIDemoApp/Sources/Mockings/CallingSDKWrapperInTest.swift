@@ -6,6 +6,7 @@
 import Foundation
 import Combine
 import AzureCommunicationCalling
+@testable import AzureCommunicationUICalling
 
 class CallingSDKWrapperInTest: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
