@@ -26,9 +26,8 @@ class ParticipantReducerTests: XCTestCase {
         XCTAssertTrue(resultState.participantsUpdatedTimestamp > initialTimestamp)
         XCTAssertEqual(resultState.participants.count, 2)
         XCTAssertEqual(resultState.typingParticipants.count, 0)
-        // Uncomment after mask admin user is done
-//        XCTAssertEqual(resultState.readReceiptMap.count, 2)
-//        XCTAssertEqual(resultState.readReceiptMap["id2"], .distantPast)
+        XCTAssertEqual(resultState.readReceiptMap.count, 2)
+        XCTAssertEqual(resultState.readReceiptMap["id2"], .distantPast)
     }
 
     func test_participantsReducer_reduce_when_participantsAddedParticipantAction_then_stateUpdated() {
