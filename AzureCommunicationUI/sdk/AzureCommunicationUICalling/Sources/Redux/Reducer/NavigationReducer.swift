@@ -20,6 +20,7 @@ extension Reducer where State == NavigationState,
 
             // Exhaustive unimplemented actions
         case .audioSessionAction(_),
+                .callingAction(.callIdUpdated(callId: _)),
                 .callingAction(.callStartRequested),
                 .callingAction(.callEndRequested),
                 .callingAction(.callEnded),

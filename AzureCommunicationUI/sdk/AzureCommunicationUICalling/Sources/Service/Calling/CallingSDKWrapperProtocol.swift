@@ -80,4 +80,5 @@ protocol CallingSDKEventsHandling {
     var isRecordingActiveSubject: PassthroughSubject<Bool, Never> { get }
     var isTranscriptionActiveSubject: PassthroughSubject<Bool, Never> { get }
     var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
+    var callIdSubject: PassthroughSubject<String, Never> { get }
 }

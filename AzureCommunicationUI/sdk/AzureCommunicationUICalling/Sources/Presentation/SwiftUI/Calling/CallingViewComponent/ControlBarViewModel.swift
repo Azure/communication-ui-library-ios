@@ -16,12 +16,16 @@ class ControlBarViewModel: ObservableObject {
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var isAudioDeviceSelectionDisplayed: Bool = false
     @Published var isConfirmLeaveListDisplayed: Bool = false
+    @Published var isMoreCallOptionsListDisplayed: Bool = false
+    @Published var isShareActivityDisplayed: Bool = false
 
     let audioDevicesListViewModel: AudioDevicesListViewModel
-
     var micButtonViewModel: IconButtonViewModel!
     var audioDeviceButtonViewModel: IconButtonViewModel!
     var hangUpButtonViewModel: IconButtonViewModel!
+    var moreButtonViewModel: IconButtonViewModel!
+    var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
+    var diagnosticsSharingActivityViewModel: DiagnosticsSharingActivityViewModel!
     var callingStatus: CallingStatus = .none
     var cameraState = LocalUserState.CameraState(operation: .off,
                                                  device: .front,
@@ -44,7 +48,6 @@ class ControlBarViewModel: ObservableObject {
         audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
             localUserState: localUserState)
-
         cameraButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .videoOff,
             buttonType: .controlButton,
@@ -96,6 +99,27 @@ class ControlBarViewModel: ObservableObject {
         }
         hangUpButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .leaveCall)
+        moreButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
+            iconName: .more,
+            buttonType: .controlButton,
+            isDisabled: false) {
+                [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.moreButtonTapped()
+        }
+        moreButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
+            .moreAccessibilityLabel)
+
+        moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
+            showSharingViewAction: { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.isShareActivityDisplayed = true
+            })
+        diagnosticsSharingActivityViewModel = compositeViewModelFactory.makeDiagnosticsSharingActivityViewModel()
     }
 
     func endCallButtonTapped() {
@@ -121,6 +145,10 @@ class ControlBarViewModel: ObservableObject {
 
     func selectAudioDeviceButtonTapped() {
         self.isAudioDeviceSelectionDisplayed = true
+    }
+
+    func moreButtonTapped() {
+        isMoreCallOptionsListDisplayed = true
     }
 
     func dismissConfirmLeaveDrawerList() {

@@ -38,10 +38,11 @@ extension CompositeViewModelFactoryTests {
         let mockStoreFactory = StoreFactoryMocking()
         let logger = LoggerMocking()
         return CompositeViewModelFactory(logger: logger,
-                                                              store: mockStoreFactory.store,
-                                                              networkManager: NetworkManager(),
-                                                              localizationProvider: LocalizationProviderMocking(),
-                                                              accessibilityProvider: AccessibilityProviderMocking())
+                                         store: mockStoreFactory.store,
+                                         networkManager: NetworkManager(),
+                                         localizationProvider: LocalizationProviderMocking(),
+                                         accessibilityProvider: AccessibilityProviderMocking(),
+                                         diagnosticsManager: DiagnosticsManagerMocking())
     }
 }
 
