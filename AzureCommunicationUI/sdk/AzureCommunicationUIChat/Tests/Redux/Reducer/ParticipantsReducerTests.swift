@@ -19,7 +19,7 @@ class ParticipantReducerTests: XCTestCase {
         let state = ParticipantsState(
             participantsUpdatedTimestamp: initialTimestamp)
         let action = Action.participantsAction(
-            .fetchListOfParticipantsSuccess(participants: participants))
+            .fetchListOfParticipantsSuccess(participants: participants, localParticipantId: "localParticipantId"))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 

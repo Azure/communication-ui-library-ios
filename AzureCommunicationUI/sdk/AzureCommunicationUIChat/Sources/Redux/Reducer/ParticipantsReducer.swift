@@ -21,14 +21,13 @@ extension Reducer where State == ParticipantsState,
         var readReceiptUpdatedTimestamp = participantsState.readReceiptUpdatedTimestamp
 
         switch action {
-        case .participantsAction(.fetchListOfParticipantsSuccess(let participants)):
+        case .participantsAction(.fetchListOfParticipantsSuccess(let participants, let localParticipantId)):
             var newParticipants: [String: ParticipantInfoModel] = [:]
             for participant in participants {
                 newParticipants[participant.id] = participant
-                // Uncomment after mask admin user is done
-//                if readReceiptMap[participant.id] == nil {
-//                    readReceiptMap[participant.id] = .distantPast
-//                }
+                if readReceiptMap[participant.id] == nil && participant.id != localParticipantId {
+                    readReceiptMap[participant.id] = .distantPast
+                }
             }
             currentParticipants = newParticipants
             typingParticipants = []

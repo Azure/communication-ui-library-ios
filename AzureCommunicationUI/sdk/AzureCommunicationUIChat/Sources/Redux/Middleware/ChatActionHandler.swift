@@ -157,7 +157,9 @@ class ChatActionHandler: ChatActionHandling {
         Task {
             do {
                 let listOfParticipants = try await chatService.getListOfParticipants()
-                dispatch(.participantsAction(.fetchListOfParticipantsSuccess(participants: listOfParticipants)))
+                dispatch(.participantsAction(.fetchListOfParticipantsSuccess(
+                                                participants: listOfParticipants,
+                                                localParticipantId: state.chatState.localUser?.id)))
             } catch {
                 dispatch(.participantsAction(.fetchListOfParticipantsFailed(error: error)))
             }
