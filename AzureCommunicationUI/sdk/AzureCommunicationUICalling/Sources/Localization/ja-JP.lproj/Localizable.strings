@@ -43,6 +43,7 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="他のユーザーの参加を待っています";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="1 人のユーザーと通話";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="%d 人のユーザーと通話する"; // %d is for number of people in call
+"AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="参加者";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="名前のない参加者";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (自分)"; // %@ is local participant name
@@ -65,6 +66,9 @@
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="退出";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="キャンセル";
 "AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="通話を終了しますか?";
+
+"AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "その他";
+"AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "診断情報を共有する";
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="レコーディングとトランスクリプトが開始されました。";

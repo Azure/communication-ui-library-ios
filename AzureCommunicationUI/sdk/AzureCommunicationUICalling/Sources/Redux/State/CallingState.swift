@@ -27,15 +27,18 @@ enum OperationStatus: Int {
 struct CallingState: Equatable {
     let status: CallingStatus
     let operationStatus: OperationStatus
+    let callId: String?
     let isRecordingActive: Bool
     let isTranscriptionActive: Bool
 
     init(status: CallingStatus = .none,
          operationStatus: OperationStatus = .none,
+         callId: String? = nil,
          isRecordingActive: Bool = false,
          isTranscriptionActive: Bool = false) {
         self.status = status
         self.operationStatus = operationStatus
+        self.callId = callId
         self.isRecordingActive = isRecordingActive
         self.isTranscriptionActive = isTranscriptionActive
     }

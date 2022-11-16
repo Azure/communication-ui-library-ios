@@ -11,6 +11,8 @@ enum CallingAction: Equatable {
     case callEnded
     case stateUpdated(status: CallingStatus)
 
+    case callIdUpdated(callId: String)
+
     case setupCall
     case dismissSetup
     case recordingStateUpdated(isRecordingActive: Bool)

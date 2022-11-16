@@ -4,11 +4,14 @@
 //
 
 import Foundation
+import UIKit
 @testable import AzureCommunicationUICalling
 
 class AccessibilityProviderMocking: AccessibilityProviderProtocol {
+
     var postQueuedAnnouncementBlock: ((String) -> Void)?
     var moveFocusToFirstElementBlock: (() -> Void)?
+    var moveFocusToViewBlock: ((UIView) -> Void)?
     var subscribeToVoiceOverStatusDidChangeNotificationBlock: ((AccessibilityProviderNotificationsObserver) -> Void)?
     var subscribeToUIFocusDidUpdateNotificationBlock: ((AccessibilityProviderNotificationsObserver) -> Void)?
 
@@ -20,6 +23,10 @@ class AccessibilityProviderMocking: AccessibilityProviderProtocol {
 
     func moveFocusToFirstElement() {
         moveFocusToFirstElementBlock?()
+    }
+
+    func moveFocusToView(_ view: UIView) {
+        moveFocusToViewBlock?(view)
     }
 
     func subscribeToVoiceOverStatusDidChangeNotification(_ observer: AccessibilityProviderNotificationsObserver) {
