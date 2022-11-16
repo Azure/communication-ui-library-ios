@@ -43,6 +43,7 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Warten auf andere Teilnehmer";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="Anruf mit 1 Person";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Anruf mit %d Personen"; // %d is for number of people in call
+"AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Teilnehmer";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Unbenannter Teilnehmer";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (ich)"; // %@ is local participant name
@@ -65,6 +66,9 @@
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Verlassen";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Abbrechen";
 "AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="Anruf verlassen?";
+
+"AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mehr";
+"AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Diagnoseinformationen freigeben";
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Die Aufzeichnung und Transkription haben begonnen.";
