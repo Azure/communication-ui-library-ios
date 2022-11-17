@@ -11,6 +11,8 @@ enum CompositeIcon: String {
     case leftArrow = "ic_ios_arrow_left_24"
     case downArrow = "ic_fluent_arrow_down_24_filled"
     case send = "ic_fluent_send_24_filled"
+    case systemJoin = "ic_fluent_person_add"
+    case systemLeave = "ic_fluent_person_remove"
 }
 
 struct IconProvider {
