@@ -2,8 +2,7 @@
 
 ## Overview
 
-This folder contains a series of scripts that facilitates the release process for UI iOS team. In particular, these scripts are meant to update release version across different files such as README, info plist, pbxproj, etc.
-
+This ```script``` folder contains a list of scripts that facilitates the release process for UI iOS team. In particular, these scripts are meant to update release version across different files such as README, info plist, pbxproj, etc.
 
 | Name                 | Area        | Link |
 |----------------------|-------------|------|
@@ -12,8 +11,8 @@ This folder contains a series of scripts that facilitates the release process fo
 | TBA                  | QuickStarts | TBA  |
 | TBA                  | MS Doc      | TBA  |
 
-## Details
-#### Main Repo
+## Main Repo Script
+#### Details
 
 The ```main-repo-updater.py ``` would perform version update for the following files:
 - Info.plist
@@ -23,9 +22,7 @@ The ```main-repo-updater.py ``` would perform version update for the following f
 
 The script would attempt to find current version from Info.plist by looking for key ```UILibrarySemVersion```. If current versions is identical to the new version, the version update would be skipped.
 
-## Usage:
-
-#### Main Repo
+#### Usage:
 
 1. make sure this script is located under ```communication-ui-library-ios/scripts``` folder
 2. make sure you have ```python3``` installed
