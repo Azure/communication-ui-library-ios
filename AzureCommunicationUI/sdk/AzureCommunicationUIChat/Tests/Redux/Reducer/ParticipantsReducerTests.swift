@@ -155,14 +155,6 @@ class ParticipantReducerTests: XCTestCase {
         let resultState = sut.reduce(state, action)
         XCTAssertEqual(resultState.typingParticipants.count, 0)
     }
-
-    func test_participantReducer_reduce_when_chatMessageLocalUserRemovedAction_then_participantsStateUpdated() {
-        let state = ParticipantsState()
-        let action = Action.chatAction(.chatMessageLocalUserRemoved)
-        let sut = getSUT()
-        let resultState = sut.reduce(state, action)
-        XCTAssertEqual(resultState.localParticipantStatus, .removed)
-    }
 }
 
 extension ParticipantReducerTests {
