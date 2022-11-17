@@ -18,6 +18,7 @@ class CompositeLeaveCallConfirmationListCell: TableViewCell {
         micImageView = UIImageView(image: micImage)
 
         selectionStyle = .none
+        backgroundStyleType = .custom
         backgroundColor = UIDevice.current.userInterfaceIdiom == .pad
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor
