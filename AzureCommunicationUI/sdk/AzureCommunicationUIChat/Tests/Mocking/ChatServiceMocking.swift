@@ -42,7 +42,7 @@ class ChatServiceMocking: ChatServiceProtocol {
         return try await task.value
     }
 
-    func getListOfParticipants() async throws -> [AzureCommunicationUIChat.ParticipantInfoModel] {
+    func getListOfParticipants() async throws -> [ParticipantInfoModel] {
         getListOfParticipantsCalled = true
         let task = Task<[ParticipantInfoModel], Error> {
             if let error = self.error {

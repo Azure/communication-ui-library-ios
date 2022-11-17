@@ -43,6 +43,7 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Ожидание присоединения других участников";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="Звонок с 1 пользователем";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Звонок с несколькими (%d) людьми"; // %d is for number of people in call
+"AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Участники";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Участник без имени";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (Я)"; // %@ is local participant name
@@ -65,6 +66,9 @@
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Выйти";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Отмена";
 "AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="Выйти из звонка?";
+
+"AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Дополнительно";
+"AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Поделиться диагностическими сведениями";
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Начата запись и транскрибирование.";

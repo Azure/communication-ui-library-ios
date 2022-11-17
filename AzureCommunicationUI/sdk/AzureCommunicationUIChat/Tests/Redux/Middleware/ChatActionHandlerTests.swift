@@ -68,6 +68,15 @@ class ChatActionHandlerTests: XCTestCase {
         XCTAssertTrue(mockChatService.getInitialMessagesCalled)
     }
 
+    func test_chatActionHandler_getListOfParticipants_then_getListOfParticipantsCalled() async {
+        let sut = makeSUT()
+        await sut.getListOfParticipants(
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
+
+        XCTAssertTrue(mockChatService.getListOfParticipantsCalled)
+    }
+
     func test_chatActionHandler_getPreviousMessages_when_nonEmptyPreviousMessages_then_getPreviousMessagesCalled() async {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
         let previousMessages = [ChatMessageInfoModel()]

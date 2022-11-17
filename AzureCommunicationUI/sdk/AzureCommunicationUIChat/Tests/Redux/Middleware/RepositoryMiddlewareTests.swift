@@ -3,6 +3,7 @@
 //  Licensed under the MIT License.
 //
 
+import AzureCommunicationCommon
 import AzureCore
 import Combine
 import Foundation
@@ -38,6 +39,44 @@ class RepositoryMiddlewareTests: XCTestCase {
 
         let threadInfo = ChatThreadInfoModel(topic: "newTopic", receivedOn: Iso8601Date())
         middlewareDispatch(getEmptyDispatch())(.chatAction(.chatTopicUpdated(threadInfo: threadInfo)))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_repositoryMiddleware_apply_when_participantsAddedParticipantsAction_then_handlerParticipantAddedMessageBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "addParticipantAddedMessageCalled")
+        mockRepositoryHandler.addParticipantAddedMessageCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        let participants = [
+            ParticipantInfoModel(identifier: CommunicationUserIdentifier("id1"),
+                                 displayName: "displayName1"),
+            ParticipantInfoModel(identifier: CommunicationUserIdentifier("id2"),
+                                 displayName: "displayName2")
+        ]
+        middlewareDispatch(getEmptyDispatch())(.participantsAction(.participantsAdded(participants: participants)))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_repositoryMiddleware_apply_when_participantsRemovedParticipantsAction_then_handlerParticipantRemovedMessageBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "addParticipantRemovedMessageCalled")
+        mockRepositoryHandler.addParticipantRemovedMessageCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        let participants = [
+            ParticipantInfoModel(identifier: CommunicationUserIdentifier("id1"),
+                                 displayName: "displayName1"),
+            ParticipantInfoModel(identifier: CommunicationUserIdentifier("id2"),
+                                 displayName: "displayName2")
+        ]
+        middlewareDispatch(getEmptyDispatch())(.participantsAction(.participantsRemoved(participants: participants)))
         wait(for: [expectation], timeout: 1)
     }
 
