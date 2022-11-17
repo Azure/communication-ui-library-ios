@@ -189,7 +189,7 @@ class RepositoryMiddlewareTests: XCTestCase {
             expectation.fulfill()
         }
 
-        TextMessageView.swift ReadReceiptInfoModel(
+        let readReceiptInfo = ReadReceiptInfoModel(
             senderIdentifier: CommunicationUserIdentifier("Identifier"),
             chatMessageId: "messageId",
             readOn: Iso8601Date())
