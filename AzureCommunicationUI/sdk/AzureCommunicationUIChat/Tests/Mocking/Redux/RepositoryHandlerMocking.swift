@@ -10,7 +10,11 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
     var loadInitialMessagesCalled: ((Bool) -> Void)?
     var addPreviousMessagesCalled: ((Bool) -> Void)?
     var addNewSentMessageCalled: ((Bool) -> Void)?
+    var updateNewEditedMessageCalled: ((Bool) -> Void)?
+    var updateNewDeletedMessageCalled: ((Bool) -> Void)?
     var updateSentMessageIdCalled: ((Bool) -> Void)?
+    var updateEditedMessageTimestampCalled: ((Bool) -> Void)?
+    var updateDeletedMessageTimestampCalled: ((Bool) -> Void)?
     var addTopicUpdatedMessageCalled: ((Bool) -> Void)?
     var addParticipantAddedMessageCalled: ((Bool) -> Void)?
     var addParticipantRemovedMessageCalled: ((Bool) -> Void)?
@@ -36,9 +40,33 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
         }
     }
 
+    func updateNewEditedMessage(messageId: String, content: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            updateNewEditedMessageCalled?(true)
+        }
+    }
+
+    func updateNewDeletedMessage(messageId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            updateNewDeletedMessageCalled?(true)
+        }
+    }
+
     func updateSentMessageId(internalId: String, actualId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             updateSentMessageIdCalled?(true)
+        }
+    }
+
+    func updateEditedMessageTimestamp(messageId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            updateEditedMessageTimestampCalled?(true)
+        }
+    }
+
+    func updateDeletedMessageTimestamp(messageId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            updateDeletedMessageTimestampCalled?(true)
         }
     }
 

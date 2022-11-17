@@ -78,7 +78,6 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                             .map({ $0.toChatMessageInfoModel() })
                         continuation.resume(returning: messages?.reversed() ?? [])
                     case .failure(let error):
-                        self.logger.error("Get Initial Messages failed: \(error)")
                         self.pagedCollection = nil
                         continuation.resume(throwing: error)
                     }
@@ -104,7 +103,6 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                         let participants = items.compactMap({ $0.toParticipantInfoModel() })
                         continuation.resume(returning: participants)
                     case .failure(let error):
-                        self.logger.error("Get Initial Messages failed: \(error)")
                         continuation.resume(throwing: error)
                     }
                 })
@@ -129,7 +127,6 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                         })
                         continuation.resume(returning: previousMessages)
                     case .failure(let error):
-                        self.logger.error("Failed to get previous messages")
                         continuation.resume(throwing: error)
                     }
                 }
@@ -152,13 +149,51 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                     case let .success(result):
                         continuation.resume(returning: result.id)
                     case .failure(let error):
-                        self.logger.error("Failed to send message: \(error)")
                         continuation.resume(throwing: error)
                     }
                 }
             }
         } catch {
             logger.error("Retrieve Thread Topic failed: \(error)")
+            throw error
+        }
+    }
+
+    func editMessage(messageId: String, content: String) async throws {
+        do {
+            let messageRequest = UpdateChatMessageRequest(
+                content: content
+            )
+            return try await withCheckedThrowingContinuation { continuation in
+                chatThreadClient?.update(message: messageId, parameters: messageRequest) { result, _ in
+                    switch result {
+                    case .success:
+                        continuation.resume()
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        } catch {
+            logger.error("Edit Message failed: \(error)")
+            throw error
+        }
+    }
+
+    func deleteMessage(messageId: String) async throws {
+        do {
+            return try await withCheckedThrowingContinuation { continuation in
+                chatThreadClient?.delete(message: messageId) { result, _ in
+                    switch result {
+                    case .success:
+                        continuation.resume()
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        } catch {
+            logger.error("Delete Message failed: \(error)")
             throw error
         }
     }
@@ -201,7 +236,6 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                         self.logger.info("Retrieved topic: \(threadProperties.topic)")
                         continuation.resume(returning: threadProperties.topic)
                     case .failure(let error):
-                        self.logger.error("Retrieve Thread Topic failed: \(error.errorDescription)")
                         continuation.resume(throwing: error)
                     }
                 }
@@ -233,7 +267,6 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                     case .success:
                         continuation.resume(returning: Void())
                     case .failure(let error):
-                        self.logger.error("Send Typing Indicator failed: \(error)")
                         continuation.resume(throwing: error)
                     }
                 }
