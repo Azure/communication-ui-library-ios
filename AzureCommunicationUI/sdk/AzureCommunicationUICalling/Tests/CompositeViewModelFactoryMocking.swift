@@ -8,11 +8,11 @@ import FluentUI
 @testable import AzureCommunicationUICalling
 
 struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
-
     private let logger: Logger
     private let store: Store<AppState>
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
+    private let diagnosticsManager: DiagnosticsManagerProtocol
 
     var bannerTextViewModel: BannerTextViewModel?
     var controlBarViewModel: ControlBarViewModel?
@@ -33,6 +33,9 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var callingViewModel: CallingViewModel?
     var localParticipantsListCellViewModel: ParticipantsListCellViewModel?
     var audioDevicesListCellViewModel: AudioDevicesListCellViewModel?
+    var moreCallOptionsListViewModel: MoreCallOptionsListViewModel?
+    var moreCallOptionsListCellViewModel: MoreCallOptionsListCellViewModel?
+    var diagnosticsSharingActivityViewModel: DiagnosticsSharingActivityViewModel?
 
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
     var createParticipantsListCellViewModel: ((ParticipantInfoModel) -> ParticipantsListCellViewModel?)?
@@ -45,11 +48,13 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     init(logger: Logger,
          store: Store<AppState>,
          accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking(),
-         localizationProvider: LocalizationProviderProtocol = LocalizationProviderMocking()) {
+         localizationProvider: LocalizationProviderProtocol = LocalizationProviderMocking(),
+         diagnosticsManager: DiagnosticsManagerProtocol = DiagnosticsManagerMocking()) {
         self.logger = logger
         self.store = store
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
+        self.diagnosticsManager = diagnosticsManager
     }
 
     func getSetupViewModel() -> SetupViewModel {
@@ -213,6 +218,28 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel {
         createParticipantsListCellViewModel?(participantInfoModel) ?? ParticipantsListCellViewModel(participantInfoModel: participantInfoModel,
                                                                                                     localizationProvider: localizationProvider)
+    }
+
+    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
+        moreCallOptionsListViewModel ?? MoreCallOptionsListViewModel(compositeViewModelFactory: self,
+                                                                     localizationProvider: localizationProvider,
+                                                                     showSharingViewAction: showSharingViewAction)
+    }
+
+    func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
+                                              title: String,
+                                              accessibilityIdentifier: String,
+                                              action: @escaping (() -> Void)) -> MoreCallOptionsListCellViewModel {
+        moreCallOptionsListCellViewModel ?? MoreCallOptionsListCellViewModel(icon: icon,
+                                                                             title: title,
+                                                                             accessibilityIdentifier: accessibilityIdentifier,
+                                                                             action: action)
+    }
+
+    func makeDiagnosticsSharingActivityViewModel() -> DiagnosticsSharingActivityViewModel {
+        diagnosticsSharingActivityViewModel ??
+        DiagnosticsSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
+                                            diagnosticsManager: diagnosticsManager)
     }
 
     // MARK: SetupViewModels

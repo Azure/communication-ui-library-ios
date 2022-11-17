@@ -11,12 +11,15 @@ extension Reducer where State == CallingState,
 
         var callingStatus = callingState.status
         var operationStatus = callingState.operationStatus
+        var callIdValue = callingState.callId
         var isRecordingActive = callingState.isRecordingActive
         var isTranscriptionActive = callingState.isTranscriptionActive
 
         switch action {
         case .callingAction(.stateUpdated(let status)):
             callingStatus = status
+        case .callingAction(.callIdUpdated(let callId)):
+            callIdValue = callId
         case .callingAction(.recordingStateUpdated(let newValue)):
             isRecordingActive = newValue
         case .callingAction(.transcriptionStateUpdated(let newValue)):
@@ -50,6 +53,7 @@ extension Reducer where State == CallingState,
         }
         return CallingState(status: callingStatus,
                             operationStatus: operationStatus,
+                            callId: callIdValue,
                             isRecordingActive: isRecordingActive,
                             isTranscriptionActive: isTranscriptionActive)
     }
