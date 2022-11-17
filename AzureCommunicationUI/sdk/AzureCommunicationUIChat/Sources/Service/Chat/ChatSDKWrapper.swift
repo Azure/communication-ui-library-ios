@@ -175,7 +175,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
             throw error
         }
     }
-    
+
     func sendReadReceipt(messageId: String) async throws {
         do {
             return try await withCheckedThrowingContinuation { continuation in
@@ -195,7 +195,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
             throw error
         }
     }
-    
+
     func sendTypingIndicator() async throws {
         do {
             return try await withCheckedThrowingContinuation { continuation in
