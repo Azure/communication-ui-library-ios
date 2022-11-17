@@ -6,7 +6,7 @@ This ```script``` folder contains a list of scripts that facilitates the release
 
 | Name                 | Area        | Link |
 |----------------------|-------------|------|
-| main-repo-updater.py | Main Repo   | [Go](https://github.com/Azure/communication-ui-library-ios/blob/feature/script-version-update/scripts/main-repo-updater.py)     |
+| main-repo-updater.py | Main Repo   | [Go](main-repo-updater.py)     |
 | TBA                  | CocoaPods   | TBA  |
 | TBA                  | QuickStarts | TBA  |
 | TBA                  | MS Doc      | TBA  |
