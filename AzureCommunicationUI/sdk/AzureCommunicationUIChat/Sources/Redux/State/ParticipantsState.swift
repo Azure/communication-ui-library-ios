@@ -7,7 +7,6 @@ import Foundation
 
 struct ParticipantsState {
     let participants: [String: ParticipantInfoModel]
-    let localParticipantStatus: LocalParticipantStatus
 
     // MARK: Typing Indicators
     let participantsUpdatedTimestamp: Date
@@ -19,16 +18,9 @@ struct ParticipantsState {
 
     init(participants: [String: ParticipantInfoModel] = [:],
          participantsUpdatedTimestamp: Date = Date(),
-         typingParticipants: [UserEventTimestampModel] = [],
-         localParticipantStatus: LocalParticipantStatus = .joined) {
+         typingParticipants: [UserEventTimestampModel] = []) {
         self.participants = participants
-        self.localParticipantStatus = localParticipantStatus
         self.typingParticipants = typingParticipants
         self.participantsUpdatedTimestamp = participantsUpdatedTimestamp
     }
-}
-
-enum LocalParticipantStatus {
-    case joined
-    case removed
 }

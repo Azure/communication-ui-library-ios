@@ -12,7 +12,6 @@ extension Reducer where State == ParticipantsState,
         // MARK: Chat Participant
         var currentParticipants = participantsState.participants
         var participantsUpdatedTimestamp = participantsState.participantsUpdatedTimestamp
-        var localParticipantStatus: LocalParticipantStatus = participantsState.localParticipantStatus
 
         // MARK: Typing Indicator
         var typingParticipants = participantsState.typingParticipants
@@ -45,8 +44,6 @@ extension Reducer where State == ParticipantsState,
             typingParticipants.append(participant)
         case .participantsAction(.clearIdleTypingParticipants):
             typingParticipants = typingParticipants.filter(\.isTyping)
-        case .chatAction(.chatMessageLocalUserRemoved):
-            localParticipantStatus = .removed
         case .repositoryAction(.chatMessageReceived(let message)):
             guard let participantId = message.senderId else {
                 break
@@ -63,7 +60,6 @@ extension Reducer where State == ParticipantsState,
 
         return ParticipantsState(participants: currentParticipants,
                                  participantsUpdatedTimestamp: participantsUpdatedTimestamp,
-                                 typingParticipants: typingParticipants,
-                                 localParticipantStatus: localParticipantStatus)
+                                 typingParticipants: typingParticipants)
     }
 }

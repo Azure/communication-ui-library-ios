@@ -95,8 +95,9 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
 
     func addLocalUserRemovedMessage() {
         let localUserRemovedSystemMessage = ChatMessageInfoModel(
-            type: .localUserRemoved,
-            createdOn: Iso8601Date()
+            type: .participantsRemoved,
+            createdOn: Iso8601Date(),
+            isLocalUser: true
         )
         messages.append(localUserRemovedSystemMessage)
     }

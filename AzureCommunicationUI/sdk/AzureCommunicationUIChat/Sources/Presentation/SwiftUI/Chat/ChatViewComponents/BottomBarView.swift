@@ -20,7 +20,7 @@ struct BottomBarView: View {
     var body: some View {
         HStack {
             Group {
-                if viewModel.localParticipantStatus == .removed {
+                if viewModel.isLocalUserRemoved {
                     localParticipantInfoBanner
                 } else {
                     messageTextField
