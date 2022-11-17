@@ -40,13 +40,13 @@ extension TypingParticipantAvatarGroup {
         // (max allowed 2 + 1 to show number of remaining participants)
         group.state.maxDisplayedAvatars = Constants.maxAvatarAllowed
         group.isAccessibilityElement = false
-        addSubview(group.view)
-        group.view.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(group)
+        group.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            group.view.leftAnchor.constraint(equalTo: self.leftAnchor),
-            group.view.rightAnchor.constraint(equalTo: self.rightAnchor),
-            group.view.topAnchor.constraint(equalTo: self.topAnchor),
-            group.view.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            group.leftAnchor.constraint(equalTo: self.leftAnchor),
+            group.rightAnchor.constraint(equalTo: self.rightAnchor),
+            group.topAnchor.constraint(equalTo: self.topAnchor),
+            group.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
 
