@@ -15,7 +15,7 @@ class BottomBarViewModel: ObservableObject {
     private var lastTypingIndicatorSendTimestamp = Date()
     private let typingIndicatorDelay: TimeInterval = 8.0
 
-    var isLocalUserRemoved: Bool = false
+    @Published var isLocalUserRemoved: Bool = false
 
     @Published var message: String = ""
     @Published var hasFocus: Bool = false
