@@ -189,7 +189,10 @@ class RepositoryMiddlewareTests: XCTestCase {
             expectation.fulfill()
         }
 
-        let readReceiptInfo = ReadReceiptInfoModel(senderIdentifier: CommunicationUserIdentifier("Identifier"), chatMessageId: "messageId", readOn: Iso8601Date())
+        TextMessageView.swift ReadReceiptInfoModel(
+            senderIdentifier: CommunicationUserIdentifier("Identifier"),
+            chatMessageId: "messageId",
+            readOn: Iso8601Date())
         middlewareDispatch(getEmptyDispatch())(.participantsAction(.readReceiptReceived(readReceiptInfo: readReceiptInfo)))
         wait(for: [expectation], timeout: 1)
     }

@@ -201,10 +201,7 @@ class MessageListViewModel: ObservableObject {
     }
 
     func updateShowMessageSendStatusIconMessageId() {
-        for message in messages.reversed() {
-            guard message.sendStatus != nil, message.senderId == localUserId else {
-                continue
-            }
+        for message in messages.reversed() where message.sendStatus != nil && message.senderId == localUserId {
             showMessageSendStatusIconMessageId = message.id
             messageSendStatusIconType = message.sendStatus
             return
