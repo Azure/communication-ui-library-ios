@@ -223,6 +223,8 @@ extension CredentialsView {
             participantViewData: ParticipantViewData(),
             isBackgroundMode: headless)
 
+        chatComposite.events.onError = showError
+
         chatComposite.launch(
             remoteOptions: remoteOptions,
             localOptions: localOptions)
@@ -276,6 +278,14 @@ extension CredentialsView {
                 }
             }
             throw DemoError.invalidToken
+        }
+    }
+
+    private func showError(error: ChatCompositeError) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            self.alertTitle = "Error - \(error.code)"
+            self.alertMessage = error.error?.localizedDescription ?? error.localizedDescription
+            self.isAlertDisplayed = true
         }
     }
 }
