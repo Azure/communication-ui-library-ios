@@ -18,7 +18,7 @@ struct ParticipantInfoModel: BaseInfoModel, Equatable {
 
     init(identifier: CommunicationIdentifier,
          displayName: String,
-         isLocalParticipant: Bool,
+         isLocalParticipant: Bool = false,
          sharedHistoryTime: Iso8601Date? = nil) {
         self.id = identifier.stringValue
         self.identifier = identifier

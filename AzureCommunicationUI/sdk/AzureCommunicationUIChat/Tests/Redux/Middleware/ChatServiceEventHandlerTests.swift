@@ -225,11 +225,11 @@ class ChatServiceEventHandlerTests: XCTestCase {
         chatServiceEventHandler.subscription(dispatch: dispatch)
         let participant = ParticipantInfoModel(
             identifier: CommunicationUserIdentifier("identifier"),
-            displayName: "DisplayName")
+            displayName: "DisplayName",
+            isLocalParticipant: true)
         let chatEventModel = ChatEventModel(
             eventType: .participantsAdded,
             infoModel: ParticipantsInfoModel(participants: [participant],
-                                             localParticipantID: localUserId,
                                              createdOn: Iso8601Date()))
         mockChatService.chatEventSubject.send(chatEventModel)
         wait(for: [expectation], timeout: 1)
@@ -251,11 +251,11 @@ class ChatServiceEventHandlerTests: XCTestCase {
         chatServiceEventHandler.subscription(dispatch: dispatch)
         let participant = ParticipantInfoModel(
             identifier: CommunicationUserIdentifier("identifier"),
-            displayName: "DisplayName")
+            displayName: "DisplayName",
+            isLocalParticipant: false)
         let chatEventModel = ChatEventModel(
             eventType: .participantsRemoved,
             infoModel: ParticipantsInfoModel(participants: [participant],
-                                             localParticipantID: localUserId,
                                              createdOn: Iso8601Date()))
         mockChatService.chatEventSubject.send(chatEventModel)
         wait(for: [expectation], timeout: 1)
@@ -277,11 +277,11 @@ class ChatServiceEventHandlerTests: XCTestCase {
         chatServiceEventHandler.subscription(dispatch: dispatch)
         let participant = ParticipantInfoModel(
             identifier: CommunicationUserIdentifier(userId),
-            displayName: "DisplayName")
+            displayName: "DisplayName",
+            isLocalParticipant: true)
         let chatEventModel = ChatEventModel(
             eventType: .participantsRemoved,
             infoModel: ParticipantsInfoModel(participants: [participant],
-                                             localParticipantID: userId,
                                              createdOn: Iso8601Date()))
         mockChatService.chatEventSubject.send(chatEventModel)
         wait(for: [expectation], timeout: 1)
