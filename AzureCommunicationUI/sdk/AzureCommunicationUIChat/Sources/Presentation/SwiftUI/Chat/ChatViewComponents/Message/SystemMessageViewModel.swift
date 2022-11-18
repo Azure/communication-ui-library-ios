@@ -23,4 +23,17 @@ class SystemMessageViewModel: MessageViewModel {
         return message.participants.map {$0.displayName}
             .joined(separator: ", ")
     }
+
+    var icon: CompositeIcon? {
+        switch message.type {
+        case .participantsAdded:
+            return .systemJoin
+        case .participantsRemoved:
+            return .systemLeave
+        case .topicUpdated:
+            return nil
+        default:
+            return nil
+        }
+    }
 }

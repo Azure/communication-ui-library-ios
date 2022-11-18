@@ -10,7 +10,7 @@ struct BottomBarView: View {
     private enum Constants {
         static let minimumHeight: CGFloat = 50
         static let focusDelay: CGFloat = 1.0
-        static let padding: CGFloat = 25.0
+        static let padding: CGFloat = 12
     }
 
     @FocusState private var hasFocus: Bool
@@ -18,13 +18,12 @@ struct BottomBarView: View {
     @StateObject var viewModel: BottomBarViewModel
 
     var body: some View {
-        HStack {
+        HStack(spacing: Constants.padding) {
             messageTextField
             sendButton
         }
         .frame(minHeight: Constants.minimumHeight)
-        .padding(.leading, Constants.padding)
-        .padding(.trailing, Constants.padding)
+        .padding([.leading, .trailing], Constants.padding)
     }
 
     var messageTextField: some View {
