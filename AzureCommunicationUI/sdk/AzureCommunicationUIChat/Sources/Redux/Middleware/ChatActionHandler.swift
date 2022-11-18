@@ -36,6 +36,16 @@ protocol ChatActionHandling {
                      state: AppState,
                      dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
+    func editMessage(messageId: String,
+                     content: String,
+                     prevContent: String,
+                     state: AppState,
+                     dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func deleteMessage(messageId: String,
+                       state: AppState,
+                       dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
     func sendTypingIndicator(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func sendReadReceipt(messageId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
@@ -58,10 +68,10 @@ class ChatActionHandler: ChatActionHandling {
                     serviceListener: ChatServiceEventHandling) -> Task<Void, Never> {
         Task {
             do {
-                try await chatService.initalize()
+                try await chatService.initialize()
                 serviceListener.subscription(dispatch: dispatch)
             } catch {
-                // dispatch error if invalid token *not handled*
+                logger.error("Failed to initialize chat client due to error: \(error)")
                 dispatch(.chatAction(.initializeChatFailed(error: error)))
             }
         }
@@ -198,6 +208,41 @@ class ChatActionHandler: ChatActionHandling {
             } catch {
                 // dispatch error *not handled*
                 dispatch(.repositoryAction(.sendMessageFailed(error: error)))
+            }
+        }
+    }
+
+    func editMessage(messageId: String,
+                     content: String,
+                     prevContent: String,
+                     state: AppState,
+                     dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            do {
+                try await chatService.editMessage(messageId: messageId, content: content)
+                dispatch(.repositoryAction(.editMessageSuccess(messageId: messageId)))
+            } catch {
+                // dispatch error *not handled* to replace with prevContent
+                dispatch(.repositoryAction(
+                    .editMessageFailed(messageId: messageId,
+                                       prevContent: prevContent,
+                                       error: error)))
+            }
+        }
+    }
+
+    func deleteMessage(messageId: String,
+                       state: AppState,
+                       dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            do {
+                try await chatService.deleteMessage(messageId: messageId)
+                dispatch(.repositoryAction(.deleteMessageSuccess(messageId: messageId)))
+            } catch {
+                // dispatch error *not handled*
+                dispatch(.repositoryAction(
+                    .deleteMessageFailed(messageId: messageId,
+                                         error: error)))
             }
         }
     }

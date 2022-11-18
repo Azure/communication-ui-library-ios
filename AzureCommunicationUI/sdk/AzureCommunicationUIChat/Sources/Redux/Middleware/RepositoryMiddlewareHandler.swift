@@ -25,9 +25,30 @@ protocol RepositoryMiddlewareHandling {
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
+    func updateNewEditedMessage(
+        messageId: String,
+        content: String,
+        state: AppState,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func updateNewDeletedMessage(
+        messageId: String,
+        state: AppState,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
     func updateSentMessageId(
         internalId: String,
         actualId: String,
+        state: AppState,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func updateEditedMessageTimestamp(
+        messageId: String,
+        state: AppState,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func updateDeletedMessageTimestamp(
+        messageId: String,
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 
@@ -99,32 +120,74 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         content: String,
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
-        Task {
-            guard let localUserId = state.chatState.localUser?.identifier.stringValue,
-                  let displayName = state.chatState.localUser?.displayName else {
-                return
+            Task {
+                guard let localUserId = state.chatState.localUser?.identifier.stringValue,
+                      let displayName = state.chatState.localUser?.displayName else {
+                    return
+                }
+                let message = ChatMessageInfoModel(
+                    id: internalId,
+                    type: .text,
+                    senderId: localUserId,
+                    senderDisplayName: displayName,
+                    content: content)
+                messageRepository.addNewSendingMessage(message: message)
+                dispatch(.repositoryAction(.repositoryUpdated))
             }
-            let message = ChatMessageInfoModel(
-                id: internalId,
-                type: .text,
-                senderId: localUserId,
-                senderDisplayName: displayName,
-                content: content)
-            messageRepository.addNewSendingMessage(message: message)
-            dispatch(.repositoryAction(.repositoryUpdated))
         }
-    }
+
+    func updateNewEditedMessage(
+        messageId: String,
+        content: String,
+        state: AppState,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+            Task {
+                messageRepository.editMessage(messageId: messageId, content: content)
+                dispatch(.repositoryAction(.repositoryUpdated))
+            }
+        }
+
+    func updateNewDeletedMessage(
+        messageId: String,
+        state: AppState,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+            Task {
+                messageRepository.deleteMessage(messageId: messageId)
+                dispatch(.repositoryAction(.repositoryUpdated))
+            }
+        }
 
     func updateSentMessageId(
         internalId: String,
         actualId: String,
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
-        Task {
-            messageRepository.replaceMessageId(internalId: internalId,
-                                               actualId: actualId)
+            Task {
+                messageRepository.replaceMessageId(internalId: internalId,
+                                                   actualId: actualId)
+                dispatch(.repositoryAction(.repositoryUpdated))
+            }
         }
-    }
+
+    func updateEditedMessageTimestamp(
+        messageId: String,
+        state: AppState,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+            Task {
+                messageRepository.updateEditMessageTimestamp(messageId: messageId)
+                dispatch(.repositoryAction(.repositoryUpdated))
+            }
+        }
+
+    func updateDeletedMessageTimestamp(
+        messageId: String,
+        state: AppState,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+            Task {
+                messageRepository.updateDeletedMessageTimestamp(messageId: messageId)
+                dispatch(.repositoryAction(.repositoryUpdated))
+            }
+        }
 
     func addTopicUpdatedMessage(
         threadInfo: ChatThreadInfoModel,
@@ -164,37 +227,37 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         message: ChatMessageInfoModel,
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
-        Task {
-            messageRepository.addReceivedMessage(message: message)
-            dispatch(.repositoryAction(.repositoryUpdated))
+            Task {
+                messageRepository.addReceivedMessage(message: message)
+                dispatch(.repositoryAction(.repositoryUpdated))
+            }
         }
-    }
 
     func updateReceivedEditedMessage(
         message: ChatMessageInfoModel,
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
-        Task {
-            messageRepository.updateMessageEdited(message: message)
+            Task {
+                messageRepository.updateMessageEdited(message: message)
+            }
         }
-    }
 
     func updateReceivedDeletedMessage(
         message: ChatMessageInfoModel,
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
-        Task {
-            messageRepository.updateMessageDeleted(message: message)
+            Task {
+                messageRepository.updateMessageDeleted(message: message)
+            }
         }
-    }
 
     func readReceiptReceived(
         readReceiptInfo: ReadReceiptInfoModel,
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
-        Task {
-            messageRepository.updateMessageSendStatus(readReceiptInfo: readReceiptInfo, state: state)
-            dispatch(.repositoryAction(.repositoryUpdated))
+            Task {
+                messageRepository.updateMessageSendStatus(readReceiptInfo: readReceiptInfo, state: state)
+                dispatch(.repositoryAction(.repositoryUpdated))
+            }
         }
-    }
 }

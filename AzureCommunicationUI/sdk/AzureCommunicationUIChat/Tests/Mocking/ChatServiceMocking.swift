@@ -21,10 +21,12 @@ class ChatServiceMocking: ChatServiceProtocol {
     var getListOfParticipantsCalled: Bool = false
     var getPreviousMessagesCalled: Bool = false
     var sendMessageCalled: Bool = false
+    var editMessageCalled: Bool = false
+    var deleteMessageCalled: Bool = false
     var sendReadReceiptCalled: Bool = false
     var sendTypingIndicatorCalled: Bool = false
 
-    func initalize() async throws {
+    func initialize() async throws {
         initializeCalled = true
         try await possibleErrorTask().value
     }
@@ -71,6 +73,24 @@ class ChatServiceMocking: ChatServiceProtocol {
             return "messageId"
         }
         return try await task.value
+    }
+
+    func editMessage(messageId: String, content: String) async throws {
+        editMessageCalled = true
+        Task<Void, Error> {
+            if let error = self.error {
+                throw error
+            }
+        }
+    }
+
+    func deleteMessage(messageId: String) async throws {
+        deleteMessageCalled = true
+        Task<Void, Error> {
+            if let error = self.error {
+                throw error
+            }
+        }
     }
 
     func sendReadReceipt(messageId: String) async throws {

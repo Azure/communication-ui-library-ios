@@ -7,11 +7,13 @@ import Combine
 import Foundation
 
 protocol ChatServiceProtocol {
-    func initalize() async throws
+    func initialize() async throws
     func getInitialMessages() async throws -> [ChatMessageInfoModel]
     func getListOfParticipants() async throws -> [ParticipantInfoModel]
     func getPreviousMessages() async throws -> [ChatMessageInfoModel]
     func sendMessage(content: String, senderDisplayName: String) async throws -> String
+    func editMessage(messageId: String, content: String) async throws
+    func deleteMessage(messageId: String) async throws
     func sendReadReceipt(messageId: String) async throws
     func sendTypingIndicator() async throws
 
@@ -31,7 +33,7 @@ class ChatService: NSObject, ChatServiceProtocol {
         self.chatEventSubject = chatSDKWrapper.chatEventsHandler.chatEventSubject
     }
 
-    func initalize() async throws {
+    func initialize() async throws {
         try await chatSDKWrapper.initializeChat()
     }
 
@@ -48,6 +50,14 @@ class ChatService: NSObject, ChatServiceProtocol {
 
     func sendMessage(content: String, senderDisplayName: String) async throws -> String {
         return try await chatSDKWrapper.sendMessage(content: content, senderDisplayName: senderDisplayName)
+    }
+
+    func editMessage(messageId: String, content: String) async throws {
+        try await chatSDKWrapper.editMessage(messageId: messageId, content: content)
+    }
+
+    func deleteMessage(messageId: String) async throws {
+        try await chatSDKWrapper.deleteMessage(messageId: messageId)
     }
 
     func sendReadReceipt(messageId: String) async throws {

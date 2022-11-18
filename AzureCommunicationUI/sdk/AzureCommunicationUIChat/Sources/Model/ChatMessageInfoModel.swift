@@ -64,6 +64,18 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
         self.id = id
     }
 
+    mutating func edit(content: String) {
+        self.content = content
+    }
+
+    mutating func update(editedOn: Iso8601Date) {
+        self.editedOn = editedOn
+    }
+
+    mutating func update(deletedOn: Iso8601Date) {
+        self.deletedOn = deletedOn
+    }
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }

@@ -57,6 +57,23 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
         XCTAssertTrue(mockMessageRepositoryManager.addNewSentMessageCalled)
     }
 
+    func test_repositoryMiddlewareHandler_updateNewEditedMessage_then_editMessageCalled() async {
+        await repositoryMiddlewareHandler.updateNewEditedMessage(
+            messageId: "messageId",
+            content: "content",
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockMessageRepositoryManager.editMessageCalled)
+    }
+
+    func test_repositoryMiddlewareHandler_updateNewDeletedMessage_then_deleteMessageCalled() async {
+        await repositoryMiddlewareHandler.updateNewDeletedMessage(
+            messageId: "messageId",
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockMessageRepositoryManager.deleteMessageCalled)
+    }
+
     func test_repositoryMiddlewareHandler_updateSentMessageId_then_replaceMessageIdCalled() async {
         await repositoryMiddlewareHandler.updateSentMessageId(
             internalId: "internalId",
@@ -64,6 +81,22 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
             state: getEmptyState(),
             dispatch: getEmptyDispatch()).value
         XCTAssertTrue(mockMessageRepositoryManager.replaceMessageIdCalled)
+    }
+
+    func test_repositoryMiddlewareHandler_updateEditedMessageTimestamp_then_updateEditMessageTimestampCalled() async {
+        await repositoryMiddlewareHandler.updateEditedMessageTimestamp(
+            messageId: "messageId",
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockMessageRepositoryManager.updateEditMessageTimestampCalled)
+    }
+
+    func test_repositoryMiddlewareHandler_updateDeletedMessageTimestamp_then_updateDeletedMessageTimestampCalled() async {
+        await repositoryMiddlewareHandler.updateDeletedMessageTimestamp(
+            messageId: "messageId",
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockMessageRepositoryManager.updateDeletedMessageTimestampCalled)
     }
 
     func test_repositoryMiddlewareHandler_addTopicUpdatedMessage_then_addTopicUpdatedMessageCalled() async {

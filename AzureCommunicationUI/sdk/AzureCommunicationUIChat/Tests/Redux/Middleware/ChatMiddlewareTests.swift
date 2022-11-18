@@ -110,6 +110,32 @@ class ChatMiddlewareTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_chatMiddleware_apply_when_editMessageTriggeredRepositoryAction_then_handlerEditMessageCalledBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "editMessageCalled")
+        mockChatActionHandler.editMessageCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.repositoryAction(.editMessageTriggered(messageId: "messageId", content: "content", prevContent: "prevContent")))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_chatMiddleware_apply_when_deleteMessageTriggeredRepositoryAction_then_handlerEditMessageCalledBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "deleteMessageCalled")
+        mockChatActionHandler.deleteMessageCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.repositoryAction(.deleteMessageTriggered(messageId: "messageId")))
+        wait(for: [expectation], timeout: 1)
+    }
+
     func test_chatMiddleware_apply_when_sendTypingIndicatorTriggered_then_handlerSendTypingIndicatorCalled() {
         let middlewareDispatch = getEmptyChatMiddlewareFunction()
         let expectation = expectation(description: "sendTypingIndicatorCalled")
