@@ -59,9 +59,16 @@ class MessageListViewModel: ObservableObject {
 
     // Localization
     private func getJumpToNewMessagesLabel(numberOfNewMessages: Int) -> String {
-        numberOfNewMessages < 100
-        ? "\(numberOfNewMessages) new messages"
-        : "99+ new messages"
+        switch numberOfNewMessages {
+        case 100..<Int.max:
+            return "99+ new messages"
+        case 2..<99:
+            return "\(numberOfNewMessages) new messages"
+        case 1:
+            return "\(numberOfNewMessages) new message"
+        default:
+            return "Unknown number of new messages"
+        }
     }
 
     private func isLocalUser(message: ChatMessageInfoModel?) -> Bool {
