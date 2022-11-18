@@ -4,24 +4,44 @@
 //
 
 import SwiftUI
+import FluentUI
 
 struct TextMessageView: View {
     private enum Constants {
-        static let horizontalPadding: CGFloat = 10
-        static let verticalPadding: CGFloat = 8
+        static let localLeadingPadding: CGFloat = 60
+        static let localTrailingPadding: CGFloat = 10
+        static let remoteAvatarLeadingPadding: CGFloat = 6
+        static let remoteLeadingPadding: CGFloat = 30
+        static let remoteTrailingPadding: CGFloat = 31
+        static let spacing: CGFloat = 4
+
+        static let contentHorizontalPadding: CGFloat = 10
+        static let contentVerticalPadding: CGFloat = 8
         static let cornerRadius: CGFloat = 5
     }
 
     @StateObject var viewModel: TextMessageViewModel
 
     var body: some View {
-        HStack {
+        HStack(spacing: Constants.spacing) {
             if viewModel.isLocalUser {
                 Spacer()
             }
+            avatar
             bubble
             readReceipt
             if !viewModel.isLocalUser {
+                Spacer()
+            }
+        }
+        .padding(.leading, getLeadingPadding)
+        .padding(.trailing, viewModel.isLocalUser ? Constants.localTrailingPadding : Constants.remoteTrailingPadding)
+    }
+
+    var avatar: some View {
+        VStack() {
+            if viewModel.showUsername {
+                Avatar(style: .outlinedPrimary, size: .small, primaryText: viewModel.message.senderDisplayName)
                 Spacer()
             }
         }
@@ -36,8 +56,8 @@ struct TextMessageView: View {
             Text(viewModel.message.content ?? "No Content") // Handle nil?
                 .font(.body)
         }
-        .padding([.leading, .trailing], Constants.horizontalPadding)
-        .padding([.top, .bottom], Constants.verticalPadding)
+        .padding([.leading, .trailing], Constants.contentHorizontalPadding)
+        .padding([.top, .bottom], Constants.contentVerticalPadding)
         .background(viewModel.isLocalUser
                     ? Color(StyleProvider.color.primaryColorTint30)
                     : Color(StyleProvider.color.surfaceTertiary))
@@ -72,6 +92,18 @@ struct TextMessageView: View {
                 // Replace with icon
                 Text("Read")
             }
+        }
+    }
+
+    private var getLeadingPadding: CGFloat {
+        if viewModel.isLocalUser {
+            return Constants.localLeadingPadding
+        }
+
+        if viewModel.showUsername {
+            return Constants.remoteAvatarLeadingPadding
+        } else {
+            return Constants.remoteLeadingPadding
         }
     }
 }
