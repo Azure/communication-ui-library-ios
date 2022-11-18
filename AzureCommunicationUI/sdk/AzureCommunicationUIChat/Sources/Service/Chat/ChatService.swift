@@ -9,6 +9,7 @@ import Foundation
 protocol ChatServiceProtocol {
     func initialize() async throws
     func getInitialMessages() async throws -> [ChatMessageInfoModel]
+    func getMaskedParticipantIds() async throws -> Set<String>
     func getListOfParticipants() async throws -> [ParticipantInfoModel]
     func getPreviousMessages() async throws -> [ChatMessageInfoModel]
     func sendMessage(content: String, senderDisplayName: String) async throws -> String
@@ -39,6 +40,12 @@ class ChatService: NSObject, ChatServiceProtocol {
 
     func getInitialMessages() async throws -> [ChatMessageInfoModel] {
         return try await chatSDKWrapper.getInitialMessages()
+    }
+
+    func getMaskedParticipantIds() async throws -> Set<String> {
+        let createdBy = try await chatSDKWrapper.retrieveThreadCreatedBy()
+        let maskedParticipantIdsSet: Set = [createdBy]
+        return maskedParticipantIdsSet
     }
 
     func getListOfParticipants() async throws -> [ParticipantInfoModel] {

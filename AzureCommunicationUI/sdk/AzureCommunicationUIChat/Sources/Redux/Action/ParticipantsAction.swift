@@ -18,6 +18,7 @@ enum ParticipantsAction: Equatable {
 
     case participantsAdded(participants: [ParticipantInfoModel])
     case participantsRemoved(participants: [ParticipantInfoModel])
+    case maskedParticipantsReceived(participantIds: Set<String>)
 
     case readReceiptReceived(readReceiptInfo: ReadReceiptInfoModel)
     case sendReadReceiptTriggered(messageId: String)
@@ -40,6 +41,9 @@ enum ParticipantsAction: Equatable {
 
         case let (.fetchListOfParticipantsSuccess(lArr, lId), .fetchListOfParticipantsSuccess(rArr, rId)):
             return lId == rId && lArr == rArr
+
+        case let (.maskedParticipantsReceived(lArr), .maskedParticipantsReceived(rArr)):
+            return lArr == rArr
 
         default:
             return false

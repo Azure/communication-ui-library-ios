@@ -74,6 +74,7 @@ class ChatActionHandlerTests: XCTestCase {
             state: getEmptyState(),
             dispatch: getEmptyDispatch()).value
 
+        XCTAssertTrue(mockChatService.getMaskedParticipantIdsCalled)
         XCTAssertTrue(mockChatService.getListOfParticipantsCalled)
     }
 

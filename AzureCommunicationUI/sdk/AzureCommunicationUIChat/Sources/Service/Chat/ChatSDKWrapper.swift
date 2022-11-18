@@ -7,6 +7,7 @@ import AzureCore
 import AzureCommunicationChat
 import Foundation
 
+// swiftlint:disable type_body_length
 class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
     let chatEventsHandler: ChatSDKEventsHandling
 
@@ -64,6 +65,26 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
             }
         } catch {
             logger.error("Retrieve Thread Topic failed: \(error)")
+            throw error
+        }
+    }
+
+    func retrieveThreadCreatedBy() async throws -> String {
+        do {
+            return try await withCheckedThrowingContinuation { continuation in
+                chatThreadClient?.getProperties { result, _ in
+                    switch result {
+                    case .success(let threadProperties):
+                        self.logger.info("Retrieved CreatedBy: \(threadProperties.createdBy)")
+                        continuation.resume(returning: threadProperties.createdBy.stringValue)
+                    case .failure(let error):
+                        self.logger.error("Retrieve Thread CreatedBy failed: \(error.errorDescription ?? "")")
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        } catch {
+            logger.error("Retrieve Thread CreatedBy failed: \(error)")
             throw error
         }
     }
