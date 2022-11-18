@@ -13,7 +13,11 @@ protocol MessageRepositoryManagerProtocol {
     func addInitialMessages(initialMessages: [ChatMessageInfoModel])
     func addPreviousMessages(previousMessages: [ChatMessageInfoModel])
     func addNewSendingMessage(message: ChatMessageInfoModel)
+    func editMessage(messageId: String, content: String)
+    func deleteMessage(messageId: String)
     func replaceMessageId(internalId: String, actualId: String)
+    func updateEditMessageTimestamp(messageId: String)
+    func updateDeletedMessageTimestamp(messageId: String)
 
     // MARK: participant events
     func addParticipantAdded(message: ChatMessageInfoModel)
@@ -62,12 +66,53 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
         messages.append(message)
     }
 
+    func editMessage(messageId: String, content: String) {
+        if let index = messages.firstIndex(where: {
+            $0.id == messageId
+        }) {
+            var msg = messages[index]
+            msg.edit(content: content)
+            msg.update(editedOn: Iso8601Date())
+            messages[index] = msg
+        }
+    }
+
+    func deleteMessage(messageId: String) {
+        if let index = messages.firstIndex(where: {
+            $0.id == messageId
+        }) {
+            var msg = messages[index]
+            msg.update(deletedOn: Iso8601Date())
+            messages[index] = msg
+        }
+    }
+
     func replaceMessageId(internalId: String, actualId: String) {
         if let index = messages.firstIndex(where: {
             $0.id == internalId
         }) {
             var msg = messages[index]
             msg.replace(id: actualId)
+            messages[index] = msg
+        }
+    }
+
+    func updateEditMessageTimestamp(messageId: String) {
+        if let index = messages.firstIndex(where: {
+            $0.id == messageId
+        }) {
+            var msg = messages[index]
+            msg.update(editedOn: Iso8601Date())
+            messages[index] = msg
+        }
+    }
+
+    func updateDeletedMessageTimestamp(messageId: String) {
+        if let index = messages.firstIndex(where: {
+            $0.id == messageId
+        }) {
+            var msg = messages[index]
+            msg.update(deletedOn: Iso8601Date())
             messages[index] = msg
         }
     }

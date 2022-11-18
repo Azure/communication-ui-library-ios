@@ -16,6 +16,7 @@ class ColorThemeProvider {
     let primaryColorTint30: UIColor
 
     let textDominant: UIColor = Colors.textDominant
+    let textPrimary: UIColor = Colors.textPrimary
     let textSecondary: UIColor = Colors.textSecondary
     let textDisabled: UIColor = Colors.textDisabled
     let surfaceTertiary: UIColor = Colors.surfaceTertiary

@@ -106,7 +106,7 @@ class ChatActionHandlerTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_chatActionHandler_sendMessage_then_getInitialMessagesCalled() async {
+    func test_chatActionHandler_sendMessage_then_sendMessageCalled() async {
         let sut = makeSUT()
         await sut.sendMessage(
             internalId: "internalId",
@@ -115,6 +115,28 @@ class ChatActionHandlerTests: XCTestCase {
             dispatch: getEmptyDispatch()).value
 
         XCTAssertTrue(mockChatService.sendMessageCalled)
+    }
+
+    func test_chatActionHandler_editMessage_then_editMessageCalled() async {
+        let sut = makeSUT()
+        await sut.editMessage(
+            messageId: "messageId",
+            content: "content",
+            prevContent: "prevContent",
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
+
+        XCTAssertTrue(mockChatService.editMessageCalled)
+    }
+
+    func test_chatActionHandler_deleteMessage_then_deleteMessageCalled() async {
+        let sut = makeSUT()
+        await sut.deleteMessage(
+            messageId: "messageId",
+            state: getEmptyState(),
+            dispatch: getEmptyDispatch()).value
+
+        XCTAssertTrue(mockChatService.deleteMessageCalled)
     }
 
     func test_chatActionHandler_sendTypingIndicator_then_sendTypingIndicatorCalled() async {
