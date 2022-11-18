@@ -56,13 +56,25 @@ class ChatServiceTests: XCTestCase {
         XCTAssertTrue(chatSDKWrapper.getPreviousMessagesCalled)
     }
 
-    func test_chatService_sendMessage_shouldCallchatSDKWrappersendMessage() async throws {
+    func test_chatService_sendMessage_shouldCallchatSDKWrapperSendMessage() async throws {
         _ = try await chatService.sendMessage(content: "content", senderDisplayName: "displayName")
 
         XCTAssertTrue(chatSDKWrapper.sendMessageCalled)
     }
 
-    func test_chatService_sendReadReceipt_shouldCallchatSDKWrappersendReadReceipt() async throws {
+    func test_chatService_editMessage_shouldCallchatSDKWrapperEditMessage() async throws {
+        _ = try await chatService.editMessage(messageId: "messageId", content: "content")
+
+        XCTAssertTrue(chatSDKWrapper.editMessageCalled)
+    }
+
+    func test_chatService_deleteMessage_shouldCallchatSDKWrapperDeleteMessage() async throws {
+        _ = try await chatService.deleteMessage(messageId: "messageId")
+
+        XCTAssertTrue(chatSDKWrapper.deleteMessageCalled)
+    }
+
+    func test_chatService_sendReadReceipt_shouldCallchatSDKWrapperSendReadReceipt() async throws {
         _ = try await chatService.sendReadReceipt(messageId: "messageId")
         XCTAssertTrue(chatSDKWrapper.sendReadReceiptCalled)
     }
