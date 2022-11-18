@@ -103,6 +103,17 @@ private func handleRepositoryAction(_ action: RepositoryAction,
                                   content: content,
                                   state: getState(),
                                   dispatch: dispatch)
+
+    case .editMessageTriggered(let messageId, let content, let prevContent):
+        actionHandler.editMessage(messageId: messageId,
+                                  content: content,
+                                  prevContent: prevContent,
+                                  state: getState(),
+                                  dispatch: dispatch)
+    case .deleteMessageTriggered(let messageId):
+        actionHandler.deleteMessage(messageId: messageId,
+                                  state: getState(),
+                                  dispatch: dispatch)
     default:
         break
     }

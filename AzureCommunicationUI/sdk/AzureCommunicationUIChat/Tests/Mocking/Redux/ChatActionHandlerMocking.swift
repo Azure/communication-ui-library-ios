@@ -16,6 +16,8 @@ class ChatActionHandlerMocking: ChatActionHandling {
     var getListOfParticipantsCalled: ((Bool) -> Void)?
     var getPreviousMessagesCalled: ((Bool) -> Void)?
     var sendMessageCalled: ((Bool) -> Void)?
+    var editMessageCalled: ((Bool) -> Void)?
+    var deleteMessageCalled: ((Bool) -> Void)?
     var sendTypingIndicatorCalled: ((Bool) -> Void)?
     var setTypingIndicatorTimeoutCalled: ((Bool) -> Void)?
     var sendReadReceiptCalled: ((Bool) -> Void)?
@@ -66,6 +68,18 @@ class ChatActionHandlerMocking: ChatActionHandling {
     func sendMessage(internalId: String, content: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             sendMessageCalled?(true)
+        }
+    }
+
+    func editMessage(messageId: String, content: String, prevContent: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            editMessageCalled?(true)
+        }
+    }
+
+    func deleteMessage(messageId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            deleteMessageCalled?(true)
         }
     }
 

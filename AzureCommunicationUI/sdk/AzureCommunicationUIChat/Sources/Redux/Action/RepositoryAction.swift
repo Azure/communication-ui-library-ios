@@ -22,6 +22,18 @@ enum RepositoryAction: Equatable {
                             actualId: String)
     case sendMessageFailed(error: Error)
 
+    case editMessageTriggered(messageId: String,
+                              content: String,
+                              prevContent: String)
+    case editMessageSuccess(messageId: String)
+    case editMessageFailed(messageId: String,
+                           prevContent: String,
+                           error: Error)
+
+    case deleteMessageTriggered(messageId: String)
+    case deleteMessageSuccess(messageId: String)
+    case deleteMessageFailed(messageId: String, error: Error)
+
     case repositoryUpdated
 
     // MARK: user action receive from chat
