@@ -175,6 +175,15 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
         XCTAssertTrue(mockMessageRepositoryManager.updateMessageDeletedCalled)
     }
 
+    func test_repositoryMiddlewareHandler_readReceiptReceived_then_readReceiptReceivedCalled() async {
+        let readReceiptInfo = ReadReceiptInfoModel(
+            senderIdentifier: CommunicationUserIdentifier("Identifier"),
+            chatMessageId: "messageId",
+            readOn: Iso8601Date())
+        await repositoryMiddlewareHandler.readReceiptReceived(readReceiptInfo: readReceiptInfo, state: getEmptyState(), dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockMessageRepositoryManager.updateMessageSendStatusCalled)
+    }
+
     func test_repositoryMiddlewareHandler_addLocalUserRemovedMessage_then_addLocalUserRemovedMessageCalled() async {
         let message = ChatMessageInfoModel()
         await repositoryMiddlewareHandler.addLocalUserRemovedMessage(state: getEmptyState(),
