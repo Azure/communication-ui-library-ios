@@ -7,7 +7,7 @@ import Foundation
 
 enum ParticipantsAction: Equatable {
     // MARK: - Chat SDK Local Event Actions
-    case fetchListOfParticipantsSuccess(participants: [ParticipantInfoModel])
+    case fetchListOfParticipantsSuccess(participants: [ParticipantInfoModel], localParticipantId: String?)
     case fetchListOfParticipantsFailed(error: Error)
 
     case leaveChatSuccess
@@ -18,6 +18,7 @@ enum ParticipantsAction: Equatable {
 
     case participantsAdded(participants: [ParticipantInfoModel])
     case participantsRemoved(participants: [ParticipantInfoModel])
+
     case readReceiptReceived(readReceiptInfo: ReadReceiptInfoModel)
     case sendReadReceiptTriggered(messageId: String)
     case sendReadReceiptSuccess(messageId: String)
@@ -33,10 +34,13 @@ enum ParticipantsAction: Equatable {
               let (.sendReadReceiptSuccess(lMsgId), .sendReadReceiptSuccess(rMsgId)):
             return lMsgId == rMsgId
 
-        case let (.fetchListOfParticipantsSuccess(lArr), .fetchListOfParticipantsSuccess(rArr)),
-            let (.participantsAdded(lArr), .participantsAdded(rArr)),
+        case let (.participantsAdded(lArr), .participantsAdded(rArr)),
             let (.participantsRemoved(lArr), .participantsRemoved(rArr)):
             return lArr == rArr
+
+        case let (.fetchListOfParticipantsSuccess(lArr, lId), .fetchListOfParticipantsSuccess(rArr, rId)):
+            return lId == rId && lArr == rArr
+
         default:
             return false
         }

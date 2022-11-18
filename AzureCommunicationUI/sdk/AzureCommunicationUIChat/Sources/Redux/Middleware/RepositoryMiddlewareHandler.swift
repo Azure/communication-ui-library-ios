@@ -81,6 +81,11 @@ protocol RepositoryMiddlewareHandling {
         message: ChatMessageInfoModel,
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func readReceiptReceived(
+        readReceiptInfo: ReadReceiptInfoModel,
+        state: AppState,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 }
 
 class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
@@ -254,6 +259,16 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 messageRepository.updateMessageDeleted(message: message)
+            }
+        }
+
+    func readReceiptReceived(
+        readReceiptInfo: ReadReceiptInfoModel,
+        state: AppState,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+            Task {
+                messageRepository.updateMessageSendStatus(readReceiptInfo: readReceiptInfo, state: state)
+                dispatch(.repositoryAction(.repositoryUpdated))
             }
         }
 }
