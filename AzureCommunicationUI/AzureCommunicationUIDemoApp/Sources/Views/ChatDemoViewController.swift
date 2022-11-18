@@ -10,7 +10,7 @@ import AzureCommunicationUIChat
 import AzureCommunicationChat
 import AzureCommunicationCommon
 
-class ChatUIKitDemoViewController: UIViewController {
+class ChatDemoViewController: UIViewController {
 
     enum LayoutConstants {
         static let verticalSpacing: CGFloat = 8.0
@@ -608,7 +608,7 @@ class ChatUIKitDemoViewController: UIViewController {
     }
 }
 
-extension ChatUIKitDemoViewController: UITextFieldDelegate {
+extension ChatDemoViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false

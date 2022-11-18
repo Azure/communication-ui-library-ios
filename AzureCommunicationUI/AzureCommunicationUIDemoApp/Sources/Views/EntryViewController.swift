@@ -125,20 +125,20 @@ class EntryViewController: UIViewController {
     }
 
     @objc func onCallingSwiftUIPressed() {
-        let swiftUIDemoView = CallingSwiftUIDemoView(envConfigSubject: envConfigSubject)
+        let swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject)
         let swiftUIDemoViewHostingController = UIHostingController(rootView: swiftUIDemoView)
         swiftUIDemoViewHostingController.modalPresentationStyle = .fullScreen
         present(swiftUIDemoViewHostingController, animated: true, completion: nil)
     }
 
     @objc func onCallingUIKitPressed() {
-        let uiKitDemoViewController = CallingUIKitDemoViewController(envConfigSubject: envConfigSubject)
+        let uiKitDemoViewController = CallingDemoViewController(envConfigSubject: envConfigSubject)
         uiKitDemoViewController.modalPresentationStyle = .fullScreen
         present(uiKitDemoViewController, animated: true, completion: nil)
     }
 
     @objc func onChatSwiftUIPressed() {
-        let chatSwiftUIDemoView = ChatSwiftUIDemoView(
+        let chatSwiftUIDemoView = ChatDemoView(
             envConfigSubject: envConfigSubject)
         let chatSwiftUIDemoHostingController = UIHostingController(rootView: chatSwiftUIDemoView)
         chatSwiftUIDemoHostingController.modalPresentationStyle = .fullScreen
@@ -146,7 +146,7 @@ class EntryViewController: UIViewController {
     }
 
     @objc func onChatUIKitPressed() {
-        let chatUIKitDemoViewController = ChatUIKitDemoViewController(envConfigSubject: envConfigSubject)
+        let chatUIKitDemoViewController = ChatDemoViewController(envConfigSubject: envConfigSubject)
         chatUIKitDemoViewController.modalPresentationStyle = .fullScreen
         present(chatUIKitDemoViewController, animated: true, completion: nil)
     }

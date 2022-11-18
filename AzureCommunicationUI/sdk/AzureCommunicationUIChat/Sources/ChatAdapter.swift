@@ -27,7 +27,7 @@ public class ChatAdapter {
     public let events: Events
     private var logger: Logger?
     private var themeOptions: ThemeOptions?
-    var dependencyContainer: DependencyContainer?
+    var dependencyContainer: DependencyContainer
     private var chatConfiguration: ChatConfiguration
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
@@ -44,6 +44,7 @@ public class ChatAdapter {
             endpoint: endpoint,
             displayName: displayName)
         self.events = Events()
+        self.dependencyContainer = DependencyContainer()
     }
 
     deinit {
@@ -52,26 +53,26 @@ public class ChatAdapter {
 
     /// Start connection to the chat composite to Azure Communication Service.
     public func connect(threadId: String,
-                        completionHandler: ((Result<Void, ChatCompositeError>) -> Void)? = nil) {
-
-        let depCont = DependencyContainer()
-
+                        completionHandler: ((Result<Void, ChatCompositeError>) -> Void)?) {
         self.chatConfiguration.chatThreadId = threadId
-        self.dependencyContainer = depCont
-        self.logger = depCont.resolve() as Logger
-        depCont.registerDependencies(self.chatConfiguration,
-                                     chatCompositeEventsHandler: events,
-                                     connectEventHandler: completionHandler)
-        self.errorManager = depCont.resolve() as ErrorManagerProtocol
-        self.lifeCycleManager = depCont.resolve() as LifeCycleManagerProtocol
-        self.compositeManager = depCont.resolve() as CompositeManagerProtocol
+        self.logger = dependencyContainer.resolve() as Logger
+        dependencyContainer.registerDependencies(self.chatConfiguration,
+                                                 chatCompositeEventsHandler: events,
+                                                 connectEventHandler: completionHandler)
+        self.errorManager = dependencyContainer.resolve() as ErrorManagerProtocol
+        self.lifeCycleManager = dependencyContainer.resolve() as LifeCycleManagerProtocol
+        self.compositeManager = dependencyContainer.resolve() as CompositeManagerProtocol
 
         compositeManager?.start()
     }
 
     /// Start connection to the chat composite to Azure Communication Service.
     public func connect(threadId: String) async throws {
-        connect(threadId: threadId, completionHandler: nil)
+        return try await withCheckedThrowingContinuation { continuation in
+            connect(threadId: threadId) { result in
+                continuation.resume(with: result)
+            }
+        }
     }
 
     /// Stop connection to chat composite to Azure Communication Service

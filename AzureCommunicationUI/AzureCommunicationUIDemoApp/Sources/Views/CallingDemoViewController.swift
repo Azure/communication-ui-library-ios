@@ -10,7 +10,7 @@ import AzureCommunicationUICalling
 import AzureCommunicationCommon
 import AppCenterCrashes
 
-class CallingUIKitDemoViewController: UIViewController {
+class CallingDemoViewController: UIViewController {
 
     enum LayoutConstants {
         static let verticalSpacing: CGFloat = 8.0
@@ -575,7 +575,7 @@ class CallingUIKitDemoViewController: UIViewController {
     }
 }
 
-extension CallingUIKitDemoViewController: UITextFieldDelegate {
+extension CallingDemoViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false

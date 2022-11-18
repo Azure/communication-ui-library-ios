@@ -7,7 +7,7 @@ import AzureCommunicationUIChat
 import AzureCommunicationCommon
 import SwiftUI
 
-struct ChatSwiftUIDemoView: View {
+struct ChatDemoView: View {
 
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @State var isShowingChatView: Bool = false
@@ -176,7 +176,7 @@ struct ChatSwiftUIDemoView: View {
     }
 }
 
-extension ChatSwiftUIDemoView {
+extension ChatDemoView {
     func startChatComposite(headless: Bool = false) {
         let communicationIdentifier = CommunicationUserIdentifier(envConfigSubject.userId)
         guard let communicationTokenCredential = try? CommunicationTokenCredential(
