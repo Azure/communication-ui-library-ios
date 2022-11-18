@@ -7,7 +7,7 @@ import Combine
 import Foundation
 
 protocol ChatServiceProtocol {
-    func initalize() async throws
+    func initialize() async throws
     func getInitialMessages() async throws -> [ChatMessageInfoModel]
     func getListOfParticipants() async throws -> [ParticipantInfoModel]
     func getPreviousMessages() async throws -> [ChatMessageInfoModel]
@@ -33,7 +33,7 @@ class ChatService: NSObject, ChatServiceProtocol {
         self.chatEventSubject = chatSDKWrapper.chatEventsHandler.chatEventSubject
     }
 
-    func initalize() async throws {
+    func initialize() async throws {
         try await chatSDKWrapper.initializeChat()
     }
 

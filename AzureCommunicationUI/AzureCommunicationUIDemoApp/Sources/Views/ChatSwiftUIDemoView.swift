@@ -192,6 +192,7 @@ extension ChatSwiftUIDemoView {
         guard let chatAdapter = self.chatAdapter else {
             return
         }
+        chatAdapter.events.onError = showError
         chatAdapter.connect(threadId: envConfigSubject.threadId) { _ in
             print("Chat connect completionHandler called")
         }
@@ -219,5 +220,9 @@ extension ChatSwiftUIDemoView {
             }
             throw DemoError.invalidToken
         }
+    }
+
+    private func showError(error: ChatCompositeError) {
+        print("Error - \(error.code): \(error.error?.localizedDescription ?? error.localizedDescription)")
     }
 }

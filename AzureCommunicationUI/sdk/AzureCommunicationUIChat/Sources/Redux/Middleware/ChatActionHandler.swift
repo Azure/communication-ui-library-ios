@@ -72,14 +72,14 @@ class ChatActionHandler: ChatActionHandling {
                     serviceListener: ChatServiceEventHandling) -> Task<Void, Never> {
         Task {
             do {
-                try await chatService.initalize()
+                try await chatService.initialize()
                 serviceListener.subscription(dispatch: dispatch)
                 connectEventHandler?(.success(Void()))
             } catch {
-                // dispatch error if invalid token *not handled*
                 connectEventHandler?(.failure(ChatCompositeError(
                     code: ChatCompositeErrorCode.chatConnect,
                     error: error)))
+                logger.error("Failed to initialize chat client due to error: \(error)")
                 dispatch(.chatAction(.initializeChatFailed(error: error)))
             }
         }

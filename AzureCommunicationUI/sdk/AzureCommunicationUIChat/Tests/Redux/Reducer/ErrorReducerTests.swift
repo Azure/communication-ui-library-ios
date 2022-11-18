@@ -24,7 +24,7 @@ class ErrorReducerTests: XCTestCase {
         XCTAssertEqual(resultState.errorCategory, .fatal)
     }
 
-    func test_handleErrorReducer_reduce_when_statusErrorCallEvictionAndCallReset_then_returnErrorState_categoryCallState() {
+    func test_handleErrorReducer_reduce_when_statusErrorChatEvictionAndChatReset_then_returnErrorState_categoryChatState() {
         let state = ErrorState()
         let action = Action.errorAction(.fatalErrorUpdated(
             internalError: .chatEvicted, error: nil))
@@ -32,6 +32,17 @@ class ErrorReducerTests: XCTestCase {
         let resultState = sut.reduce(state, action)
 
         XCTAssertEqual(resultState.internalError, .chatEvicted)
+        XCTAssertEqual(resultState.errorCategory, .fatal)
+    }
+
+    func test_handleErrorReducer_reduce_when_statusErrorChatInitFailed_then_returnErrorState_categoryChatState() {
+        let state = ErrorState()
+        let error = ChatCompositeError(code: "failed to init chat client")
+        let action = Action.chatAction(.initializeChatFailed(error: error))
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState.internalError, .chatConnectFailed)
         XCTAssertEqual(resultState.errorCategory, .fatal)
     }
 }

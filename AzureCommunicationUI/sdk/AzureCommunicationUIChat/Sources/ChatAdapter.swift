@@ -71,19 +71,7 @@ public class ChatAdapter {
 
     /// Start connection to the chat composite to Azure Communication Service.
     public func connect(threadId: String) async throws {
-        let depCont = DependencyContainer()
-
-        self.chatConfiguration.chatThreadId = threadId
-        self.dependencyContainer = depCont
-        self.logger = depCont.resolve() as Logger
-        depCont.registerDependencies(self.chatConfiguration,
-                                     chatCompositeEventsHandler: events,
-                                     connectEventHandler: nil)
-        self.errorManager = depCont.resolve() as ErrorManagerProtocol
-        self.lifeCycleManager = depCont.resolve() as LifeCycleManagerProtocol
-        self.compositeManager = depCont.resolve() as CompositeManagerProtocol
-
-        compositeManager?.start()
+        connect(threadId: threadId, completionHandler: nil)
     }
 
     /// Stop connection to chat composite to Azure Communication Service
