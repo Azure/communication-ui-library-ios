@@ -96,7 +96,8 @@ final class DependencyContainer {
         }
         let localUserInfoModel = ParticipantInfoModel(
             identifier: localUserId,
-            displayName: displayName ?? "")
+            displayName: displayName ?? "",
+            isLocalParticipant: true)
         let chatState = ChatState(
             localUser: localUserInfoModel,
             threadId: chatThreadId ?? "")

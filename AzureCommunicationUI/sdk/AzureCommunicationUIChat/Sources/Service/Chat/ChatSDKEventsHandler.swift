@@ -84,7 +84,8 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
             }
             eventModel = ChatEventModel(
                 eventType: .participantsAdded,
-                infoModel: event.toParticipantsInfo(participants))
+                infoModel: event.toParticipantsInfo(participants,
+                                                    localUserId.stringValue))
         case let .participantsRemoved(event):
             logger.info("Received a ParticipantsRemovedEvent: \(event)")
             guard let participants = event.participantsRemoved else {
@@ -92,7 +93,8 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
             }
             eventModel = ChatEventModel(
                 eventType: .participantsRemoved,
-                infoModel: event.toParticipantsInfo(participants))
+                infoModel: event.toParticipantsInfo(participants,
+                                                    localUserId.stringValue))
         default:
             logger.info("Event received will not handled \(response)")
             return

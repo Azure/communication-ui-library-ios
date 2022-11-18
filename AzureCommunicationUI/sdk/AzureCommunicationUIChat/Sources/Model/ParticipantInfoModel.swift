@@ -14,13 +14,16 @@ struct ParticipantInfoModel: BaseInfoModel, Equatable {
     let identifier: CommunicationIdentifier
     let displayName: String
     let sharedHistoryTime: Iso8601Date?
+    let isLocalParticipant: Bool
 
     init(identifier: CommunicationIdentifier,
          displayName: String,
+         isLocalParticipant: Bool = false,
          sharedHistoryTime: Iso8601Date? = nil) {
         self.id = identifier.stringValue
         self.identifier = identifier
         self.displayName = displayName
+        self.isLocalParticipant = isLocalParticipant
         self.sharedHistoryTime = sharedHistoryTime
     }
 

@@ -16,6 +16,7 @@ protocol MessageRepositoryManagerProtocol {
     func editMessage(messageId: String, content: String)
     func deleteMessage(messageId: String)
     func replaceMessageId(internalId: String, actualId: String)
+    func addLocalUserRemovedMessage()
     func updateEditMessageTimestamp(messageId: String)
     func updateDeletedMessageTimestamp(messageId: String)
 
@@ -135,6 +136,15 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
             createdOn: chatThreadInfo.receivedOn
         )
         messages.append(topicUpdatedSystemMessage)
+    }
+
+    func addLocalUserRemovedMessage() {
+        let localUserRemovedSystemMessage = ChatMessageInfoModel(
+            type: .participantsRemoved,
+            createdOn: Iso8601Date(),
+            isLocalUser: true
+        )
+        messages.append(localUserRemovedSystemMessage)
     }
 
     func addReceivedMessage(message: ChatMessageInfoModel) {

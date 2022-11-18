@@ -24,6 +24,7 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
     var createdOn: Iso8601Date
     var editedOn: Iso8601Date?
     var deletedOn: Iso8601Date?
+    var isLocalUser: Bool
 
     // for participant added/removed only
     var participants: [ParticipantInfoModel]
@@ -37,7 +38,8 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
          createdOn: Iso8601Date? = nil,
          editedOn: Iso8601Date? = nil,
          deletedOn: Iso8601Date? = nil,
-         participants: [ParticipantInfoModel] = []) {
+         participants: [ParticipantInfoModel] = [],
+         isLocalUser: Bool = false) {
         self.id = id ?? UUID().uuidString
         self.version = version
         self.type = type
@@ -48,6 +50,7 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
         self.editedOn = editedOn
         self.deletedOn = deletedOn
         self.participants = participants
+        self.isLocalUser = isLocalUser
     }
 
     mutating func replace(id: String) {
