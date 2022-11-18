@@ -15,6 +15,7 @@ extension Reducer where State == ChatState,
         var lastReadReceiptSentTimestamp = chatState.lastReadReceiptSentTimestamp
         var lastReceivedMessageTimestamp = chatState.lastReceivedMessageTimestamp
         var lastSentMessageTimestamp = chatState.lastSentMessageTimestamp
+        var isLocalUserRemovedFromChat = chatState.isLocalUserRemovedFromChat
 
         switch action {
         case .chatAction(.topicRetrieved(let newTopic)):
@@ -24,6 +25,8 @@ extension Reducer where State == ChatState,
                 break
             }
             topic = newTopic
+        case .chatAction(.chatMessageLocalUserRemoved):
+            isLocalUserRemovedFromChat = true
         case .participantsAction(.sendReadReceiptSuccess(messageId: let messageId)):
             lastReadReceiptSentTimestamp = messageId.convertEpochStringToTimestamp()
         case .repositoryAction(.sendMessageTriggered(_, _)):
@@ -38,6 +41,7 @@ extension Reducer where State == ChatState,
                          topic: topic,
                          lastReadReceiptSentTimestamp: lastReadReceiptSentTimestamp,
                          lastReceivedMessageTimestamp: lastReceivedMessageTimestamp,
-                         lastSentMesssageTimestamp: lastSentMessageTimestamp)
+                         lastSentMesssageTimestamp: lastSentMessageTimestamp,
+                         isLocalUserRemovedFromChat: isLocalUserRemovedFromChat)
     }
 }

@@ -122,6 +122,9 @@ class ChatServiceEventHandler: ChatServiceEventHandling {
 
     func handleParticipantsRemoved(dispatch: @escaping ActionDispatch,
                                    participantsInfo: ParticipantsInfoModel) {
+        if participantsInfo.participants.contains(where: { $0.isLocalParticipant }) {
+            dispatch(.chatAction(.chatMessageLocalUserRemoved))
+        }
         dispatch(.participantsAction(.participantsRemoved(participants: participantsInfo.participants)))
     }
 }
