@@ -22,6 +22,7 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
     var updateReceivedEditedMessageCalled: ((Bool) -> Void)?
     var updateReceivedDeletedMessageCalled: ((Bool) -> Void)?
     var readReceiptReceivedCalled: ((Bool) -> Void)?
+    var addLocalUserRemovedMessage: ((Bool) -> Void)?
 
     func loadInitialMessages(messages: [ChatMessageInfoModel], state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
@@ -113,6 +114,11 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             readReceiptReceivedCalled?(true)
+        }
+    }
+    func addLocalUserRemovedMessage(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            addLocalUserRemovedMessage?(true)
         }
     }
 }

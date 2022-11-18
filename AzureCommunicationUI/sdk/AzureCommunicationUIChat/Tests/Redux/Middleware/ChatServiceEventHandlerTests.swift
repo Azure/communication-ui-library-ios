@@ -212,6 +212,7 @@ class ChatServiceEventHandlerTests: XCTestCase {
     func test_chatServiceEventHandler_subscription_when_receiveParticipantsAddedEvent_then_dispatchParticipantsAddedAction() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
         let expectedUserId = "identifier"
+        let localUserId = "local"
         func dispatch(action: Action) {
             switch action {
             case .participantsAction(.participantsAdded(let participants)):
@@ -224,7 +225,8 @@ class ChatServiceEventHandlerTests: XCTestCase {
         chatServiceEventHandler.subscription(dispatch: dispatch)
         let participant = ParticipantInfoModel(
             identifier: CommunicationUserIdentifier("identifier"),
-            displayName: "DisplayName")
+            displayName: "DisplayName",
+            isLocalParticipant: true)
         let chatEventModel = ChatEventModel(
             eventType: .participantsAdded,
             infoModel: ParticipantsInfoModel(participants: [participant],
@@ -236,6 +238,7 @@ class ChatServiceEventHandlerTests: XCTestCase {
     func test_chatServiceEventHandler_subscription_when_receiveParticipantsRemovedEvent_then_dispatchParticipantsRemovedAction() {
         let expectation = XCTestExpectation(description: "Dispatch the new action")
         let expectedUserId = "identifier"
+        let localUserId = "local"
         func dispatch(action: Action) {
             switch action {
             case .participantsAction(.participantsRemoved(let participants)):
@@ -248,7 +251,34 @@ class ChatServiceEventHandlerTests: XCTestCase {
         chatServiceEventHandler.subscription(dispatch: dispatch)
         let participant = ParticipantInfoModel(
             identifier: CommunicationUserIdentifier("identifier"),
-            displayName: "DisplayName")
+            displayName: "DisplayName",
+            isLocalParticipant: false)
+        let chatEventModel = ChatEventModel(
+            eventType: .participantsRemoved,
+            infoModel: ParticipantsInfoModel(participants: [participant],
+                                             createdOn: Iso8601Date()))
+        mockChatService.chatEventSubject.send(chatEventModel)
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_chatServiceEventHandler_subscription_when_receiveParticipantsRemovedEvent_where_localParticipantIncluded_then_dispatchLocalUserRemovedAction() {
+        let expectation = XCTestExpectation(description: "Dispatch the new action")
+        let userId = "identifier"
+        func dispatch(action: Action) {
+            switch action {
+            case .chatAction(.chatMessageLocalUserRemoved):
+                expectation.fulfill()
+            case .participantsAction(.participantsRemoved(_)):
+                break
+            default:
+                XCTExpectFailure("Should not reach default case.")
+            }
+        }
+        chatServiceEventHandler.subscription(dispatch: dispatch)
+        let participant = ParticipantInfoModel(
+            identifier: CommunicationUserIdentifier(userId),
+            displayName: "DisplayName",
+            isLocalParticipant: true)
         let chatEventModel = ChatEventModel(
             eventType: .participantsRemoved,
             infoModel: ParticipantsInfoModel(participants: [participant],

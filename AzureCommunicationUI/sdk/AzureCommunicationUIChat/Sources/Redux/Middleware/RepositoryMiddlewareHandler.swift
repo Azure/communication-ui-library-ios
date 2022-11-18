@@ -64,6 +64,9 @@ protocol RepositoryMiddlewareHandling {
     func participantRemovedMessage(participants: [ParticipantInfoModel],
                                    dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
+    func addLocalUserRemovedMessage(state: AppState,
+                                    dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
     func addReceivedMessage(
         message: ChatMessageInfoModel,
         state: AppState,
@@ -197,7 +200,15 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
                 messageRepository.addTopicUpdatedMessage(chatThreadInfo: threadInfo)
                 dispatch(.repositoryAction(.repositoryUpdated))
             }
+    }
+
+    func addLocalUserRemovedMessage(state: AppState,
+                                    dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            messageRepository.addLocalUserRemovedMessage()
+            dispatch(.repositoryAction(.repositoryUpdated))
         }
+    }
 
     func participantAddedMessage(participants: [ParticipantInfoModel],
                                  dispatch: @escaping ActionDispatch) -> Task<Void, Never> {

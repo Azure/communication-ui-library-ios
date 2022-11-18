@@ -24,6 +24,7 @@ class MessageRepositoryManagerMocking: MessageRepositoryManagerProtocol {
     var updateMessageEditedCalled: Bool = false
     var updateMessageDeletedCalled: Bool = false
     var updateMessageSendStatusCalled: Bool = false
+    var addlocalUserRemovedMessageCalled: Bool = false
 
     func addInitialMessages(initialMessages: [ChatMessageInfoModel]) {
         addInitialMessagesCalled = true
@@ -89,5 +90,8 @@ class MessageRepositoryManagerMocking: MessageRepositoryManagerProtocol {
 
     func updateMessageSendStatus(readReceiptInfo: ReadReceiptInfoModel, state: AppState) {
         updateMessageSendStatusCalled = true
+    }
+    func addLocalUserRemovedMessage() {
+        addlocalUserRemovedMessageCalled = true
     }
 }
