@@ -21,7 +21,7 @@ struct BottomBarView: View {
         HStack(spacing: Constants.padding) {
           Group {
             if viewModel.isLocalUserRemoved {
-                localParticipantInfoBanner
+                localParticipantRemovedBanner
             } else {
                 messageTextField
                 sendButton
@@ -61,7 +61,7 @@ struct BottomBarView: View {
             .flipsForRightToLeftLayoutDirection(true)
     }
 
-    var localParticipantInfoBanner: some View {
+    var localParticipantRemovedBanner: some View {
         Text("You're no longer a participant")
             .foregroundColor(Color(StyleProvider.color.textSecondary))
     }
