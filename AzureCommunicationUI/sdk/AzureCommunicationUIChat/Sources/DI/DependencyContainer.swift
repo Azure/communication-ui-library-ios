@@ -103,7 +103,8 @@ final class DependencyContainer {
             }
             let localUserInfoModel = ParticipantInfoModel(
                 identifier: localUserId,
-                displayName: displayName ?? "")
+                displayName: displayName ?? "",
+                isLocalParticipant: true)
             let chatState = ChatState(
                 localUser: localUserInfoModel,
                 threadId: chatThreadId ?? "")
@@ -112,17 +113,4 @@ final class DependencyContainer {
                                    middlewares: middlewares,
                                    state: appState)
         }
-
-        let localUserInfoModel = ParticipantInfoModel(
-            identifier: localUserId,
-            displayName: displayName ?? "",
-            isLocalParticipant: true)
-        let chatState = ChatState(
-            localUser: localUserInfoModel,
-            threadId: chatThreadId ?? "")
-        let appState = AppState(chatState: chatState)
-        return Store<AppState>(reducer: Reducer<AppState, Action>.appStateReducer(),
-                               middlewares: middlewares,
-                               state: appState)
-    }
 }
