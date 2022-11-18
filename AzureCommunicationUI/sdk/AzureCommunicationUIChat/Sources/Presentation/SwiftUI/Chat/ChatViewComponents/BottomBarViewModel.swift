@@ -58,6 +58,9 @@ class BottomBarViewModel: ObservableObject {
     }
 
     func update(chatState: ChatState) {
+        guard isLocalUserRemoved != chatState.isLocalUserRemovedFromChat else {
+            return
+        }
         isLocalUserRemoved = chatState.isLocalUserRemovedFromChat
     }
 }
