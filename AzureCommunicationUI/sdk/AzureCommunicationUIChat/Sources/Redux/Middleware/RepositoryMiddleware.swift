@@ -91,11 +91,31 @@ private func handleRepositoryAction(
                                             content: content,
                                             state: getState(),
                                             dispatch: dispatch)
+        case .editMessageTriggered(let messageId, let content, _):
+            actionHandler.updateNewEditedMessage(messageId: messageId,
+                                                 content: content,
+                                                 state: getState(),
+                                                 dispatch: dispatch)
+        case .deleteMessageTriggered(let messageId):
+            actionHandler.updateNewDeletedMessage(messageId: messageId,
+                                                  state: getState(),
+                                                  dispatch: dispatch)
+
         case .sendMessageSuccess(let internalId, let actualId):
             actionHandler.updateSentMessageId(internalId: internalId,
                                               actualId: actualId,
                                               state: getState(),
                                               dispatch: dispatch)
+        case .editMessageSuccess(let messageId):
+            actionHandler.updateEditedMessageTimestamp(
+                messageId: messageId,
+                state: getState(),
+                dispatch: dispatch)
+        case .deleteMessageSuccess(let messageId):
+            actionHandler.updateDeletedMessageTimestamp(
+                messageId: messageId,
+                state: getState(),
+                dispatch: dispatch)
 
             // MARK: receiving remote events
 

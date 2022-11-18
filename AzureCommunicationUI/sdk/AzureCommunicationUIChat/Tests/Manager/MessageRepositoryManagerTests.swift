@@ -109,6 +109,40 @@ class MessageRepositoryManagerTests: XCTestCase {
         XCTAssertEqual(sut.messages.count, 1)
     }
 
+    func test_messageRepositoryManager_editMessage_when_foundMatchingMessageId_then_contentAndTimestampWillBeUpdated() {
+        let initialMessages = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        guard let messageId = initialMessages.last?.id else {
+            XCTFail("Should have at least one message")
+            return
+        }
+        let expectedContent = "editedContent"
+        let sut = makeSUT(messages: initialMessages)
+        sut.editMessage(messageId: messageId, content: expectedContent)
+        XCTAssertEqual(sut.messages.count, initialMessages.count)
+        XCTAssertNotNil(sut.messages.last?.editedOn)
+        XCTAssertEqual(sut.messages.last?.content, expectedContent)
+    }
+
+    func test_messageRepositoryManager_deleteMessage_when_foundMatchingMessageId_then_deletedOnWillBeNotNil() {
+        let initialMessages = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        guard let messageId = initialMessages.last?.id else {
+            XCTFail("Should have at least one message")
+            return
+        }
+        let sut = makeSUT(messages: initialMessages)
+        sut.deleteMessage(messageId: messageId)
+        XCTAssertEqual(sut.messages.count, initialMessages.count)
+        XCTAssertNotNil(sut.messages.last?.deletedOn)
+    }
+
     func test_messageRepositoryManager_replaceMessageId_when_foundMatchingInternalId_then_actualIdWillBeUpdated() {
         let initialMessages = [
             ChatMessageInfoModel(),
@@ -141,6 +175,38 @@ class MessageRepositoryManagerTests: XCTestCase {
         sut.replaceMessageId(internalId: internalId + "notFound", actualId: "actualMessageId")
         XCTAssertEqual(sut.messages.count, initialMessages.count)
         XCTAssertNotEqual(sut.messages.last?.id, expectedActualId)
+    }
+
+    func test_messageRepositoryManager_updateEditMessageTimestamp_when_foundMatchingMessageId_then_editedOnWillBeNotNil() {
+        let initialMessages = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        guard let messageId = initialMessages.last?.id else {
+            XCTFail("Should have at least one message")
+            return
+        }
+        let sut = makeSUT(messages: initialMessages)
+        sut.updateEditMessageTimestamp(messageId: messageId)
+        XCTAssertEqual(sut.messages.count, initialMessages.count)
+        XCTAssertNotNil(sut.messages.last?.editedOn)
+    }
+
+    func test_messageRepositoryManager_updateDeletedMessageTimestamp_when_foundMatchingMessageId_then_editedOnWillBeNotNil() {
+        let initialMessages = [
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel(),
+            ChatMessageInfoModel()
+        ]
+        guard let messageId = initialMessages.last?.id else {
+            XCTFail("Should have at least one message")
+            return
+        }
+        let sut = makeSUT(messages: initialMessages)
+        sut.updateDeletedMessageTimestamp(messageId: messageId)
+        XCTAssertEqual(sut.messages.count, initialMessages.count)
+        XCTAssertNotNil(sut.messages.last?.deletedOn)
     }
 
     func test_messageRepositoryManager_addTopicUpdatedMessage_then_messagesCountWillBeIncrementByOne() {

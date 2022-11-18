@@ -123,6 +123,36 @@ class RepositoryMiddlewareTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_repositoryMiddleware_apply_when_editMessageTriggeredRepositoryAction_then_handlerUpdateNewEditedMessageBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "updateNewEditedMessageCalled")
+        mockRepositoryHandler.updateNewEditedMessageCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.repositoryAction(.editMessageTriggered(
+            messageId: "messageId",
+            content: "content",
+            prevContent: "prevContent")))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_repositoryMiddleware_apply_when_deleteMessageTriggeredRepositoryAction_then_handlerUpdateNewDeletedMessageBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "updateNewDeletedMessageCalled")
+        mockRepositoryHandler.updateNewDeletedMessageCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.repositoryAction(.deleteMessageTriggered(
+            messageId: "messageId")))
+        wait(for: [expectation], timeout: 1)
+    }
+
     func test_repositoryMiddleware_apply_when_sendMessageSuccessRepositoryAction_then_handlerLoadInitialMessagesCalledBeingCalled() {
 
         let middlewareDispatch = getEmptyChatMiddlewareFunction()
@@ -135,6 +165,34 @@ class RepositoryMiddlewareTests: XCTestCase {
         middlewareDispatch(getEmptyDispatch())(.repositoryAction(.sendMessageSuccess(
             internalId: "internalId",
             actualId: "actualId")))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_repositoryMiddleware_apply_when_editMessageTriggeredRepositoryAction_then_handlerUpdateEditedMessageTimestampBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "updateEditedMessageTimestampCalled")
+        mockRepositoryHandler.updateEditedMessageTimestampCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.repositoryAction(.editMessageSuccess(
+            messageId: "messageId")))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_repositoryMiddleware_apply_when_editMessageTriggeredRepositoryAction_then_handlerUpdateDeletedMessageTimestampBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "updateDeletedMessageTimestampCalled")
+        mockRepositoryHandler.updateDeletedMessageTimestampCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        middlewareDispatch(getEmptyDispatch())(.repositoryAction(.deleteMessageSuccess(
+            messageId: "messageId")))
         wait(for: [expectation], timeout: 1)
     }
 
