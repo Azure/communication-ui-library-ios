@@ -66,11 +66,10 @@ extension ParticipantsAddedEvent {
     func toParticipantsInfo(_ participantsAdded: [SignalingChatParticipant],
                             _ localParticipantID: String) -> ParticipantsInfoModel {
         let participants = participantsAdded.map {
-            $0.toParticipantInfoModel()
+            $0.toParticipantInfoModel(localParticipantID)
         }
         return ParticipantsInfoModel(
             participants: participants,
-            localParticipantID: localParticipantID,
             createdOn: self.addedOn ?? Iso8601Date())
     }
 }
@@ -79,11 +78,10 @@ extension ParticipantsRemovedEvent {
     func toParticipantsInfo(_ participantsRemoved: [SignalingChatParticipant],
                             _ localParticipantID: String) -> ParticipantsInfoModel {
         let participants = participantsRemoved.map {
-            $0.toParticipantInfoModel()
+            $0.toParticipantInfoModel(localParticipantID)
         }
         return ParticipantsInfoModel(
             participants: participants,
-            localParticipantID: localParticipantID,
             createdOn: self.removedOn ?? Iso8601Date())
     }
 }

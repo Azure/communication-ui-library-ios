@@ -8,19 +8,21 @@ import AzureCore
 import AzureCommunicationChat
 
 extension ChatParticipant {
-    func toParticipantInfoModel() -> ParticipantInfoModel {
+    func toParticipantInfoModel(_ localParticipantID: String = "") -> ParticipantInfoModel {
         return ParticipantInfoModel(
             identifier: self.id,
             displayName: self.displayName ?? "",
+            isLocalParticipant: id.stringValue == localParticipantID,
             sharedHistoryTime: self.shareHistoryTime ?? Iso8601Date())
     }
 }
 
 extension SignalingChatParticipant {
-    func toParticipantInfoModel() -> ParticipantInfoModel {
+    func toParticipantInfoModel(_ localParticipantID: String = "") -> ParticipantInfoModel {
         return ParticipantInfoModel(
             identifier: self.id!,
             displayName: self.displayName ?? "",
+            isLocalParticipant: id?.stringValue == localParticipantID,
             sharedHistoryTime: self.shareHistoryTime ?? Iso8601Date())
     }
 }
