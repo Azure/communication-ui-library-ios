@@ -47,10 +47,14 @@ class ChatActionHandler: ChatActionHandling {
     private let chatService: ChatServiceProtocol
     private let logger: Logger
     private var timer: Timer?
+    private var connectEventHandler: ((Result<Void, ChatCompositeError>) -> Void)?
 
-    init(chatService: ChatServiceProtocol, logger: Logger) {
+    init(chatService: ChatServiceProtocol,
+         logger: Logger,
+         connectEventHandler: ((Result<Void, ChatCompositeError>) -> Void)?) {
         self.chatService = chatService
         self.logger = logger
+        self.connectEventHandler = connectEventHandler
     }
 
     func initialize(state: AppState,
@@ -60,8 +64,12 @@ class ChatActionHandler: ChatActionHandling {
             do {
                 try await chatService.initalize()
                 serviceListener.subscription(dispatch: dispatch)
+                connectEventHandler?(.success(Void()))
             } catch {
                 // dispatch error if invalid token *not handled*
+                connectEventHandler?(.failure(ChatCompositeError(
+                    code: ChatCompositeErrorCode.chatConnect,
+                    error: error)))
                 dispatch(.chatAction(.initializeChatFailed(error: error)))
             }
         }

@@ -26,7 +26,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
     }
 
     deinit {
-        logger.debug("CallingSDKWrapper deallocated")
+        logger.debug("ChatSDKWrapper deallocated")
     }
 
     func initializeChat() async throws {
@@ -219,7 +219,6 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                         self.logger.info("Retrieved topic: \(threadProperties.topic)")
                         continuation.resume(returning: threadProperties.topic)
                     case .failure(let error):
-                        self.logger.error("Retrieve Thread Topic failed: \(error.errorDescription)")
                         continuation.resume(throwing: error)
                     }
                 }

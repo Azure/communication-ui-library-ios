@@ -16,11 +16,11 @@ enum CompositeIcon: String {
 struct IconProvider {
     func getUIImage(for iconName: CompositeIcon) -> UIImage? {
         UIImage(named: "Icon/\(iconName.rawValue)",
-                in: Bundle(for: ChatComposite.self),
+                in: Bundle(for: ChatAdapter.self),
                 compatibleWith: nil)
     }
     func getImage(for iconName: CompositeIcon) -> Image {
-        Image("Icon/\(iconName.rawValue)", bundle: Bundle(for: ChatComposite.self))
+        Image("Icon/\(iconName.rawValue)", bundle: Bundle(for: ChatAdapter.self))
             .resizable()
             .renderingMode(.template)
     }

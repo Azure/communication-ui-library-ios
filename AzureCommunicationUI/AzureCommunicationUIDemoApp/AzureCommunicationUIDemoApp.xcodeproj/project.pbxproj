@@ -19,14 +19,15 @@
 		5027C1C72821A55E00DC7131 /* AccessibilityId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5027C1C52821A07500DC7131 /* AccessibilityId.swift */; };
 		5075FEA127FFA8C200136B34 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5075FEA327FFA8C200136B34 /* Localizable.strings */; };
 		50B390CF27D2996E0010A2ED /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390CE27D2996E0010A2ED /* SettingsView.swift */; };
-		50CB82D428C91E1100680566 /* CredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82D328C91E1100680566 /* CredentialsView.swift */; };
 		50CB82E128C9200300680566 /* AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB82E028C9200300680566 /* AzureCommunicationUIChat.framework */; };
 		50CB82E228C9200E00680566 /* AzureCommunicationUIChat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB82E028C9200300680566 /* AzureCommunicationUIChat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		50D8EE9F2926C0C6003C3A95 /* ChatSwiftUIDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8EE9E2926C0C6003C3A95 /* ChatSwiftUIDemoView.swift */; };
+		50D8EEA12926C0DD003C3A95 /* ChatUIKitDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8EEA02926C0DD003C3A95 /* ChatUIKitDemoViewController.swift */; };
 		8926B039F67555DE4F89893B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026F091CB7F97EBA5A39610B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework */; };
 		A85DDCB12728B12D001297B4 /* EnvConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCAF2728B12D001297B4 /* EnvConfig.swift */; };
 		A85DDCB32728B140001297B4 /* ThemeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCB22728B140001297B4 /* ThemeOptions.swift */; };
-		A85DDCB82728B23B001297B4 /* UIKitDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCB42728B23A001297B4 /* UIKitDemoViewController.swift */; };
-		A85DDCB92728B23B001297B4 /* SwiftUIDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCB52728B23B001297B4 /* SwiftUIDemoView.swift */; };
+		A85DDCB82728B23B001297B4 /* CallingUIKitDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCB42728B23A001297B4 /* CallingUIKitDemoViewController.swift */; };
+		A85DDCB92728B23B001297B4 /* CallingSwiftUIDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCB52728B23B001297B4 /* CallingSwiftUIDemoView.swift */; };
 		A87CEABC2729ECA600F3AE16 /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87CEABB2729ECA600F3AE16 /* EntryViewController.swift */; };
 		A8849E532732FFA10049FB1A /* AuthenticationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8849E522732FFA10049FB1A /* AuthenticationHelper.swift */; };
 		A8AC66FE2735A41600632D0B /* CustomControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AC66FD2735A41600632D0B /* CustomControls.swift */; };
@@ -89,15 +90,16 @@
 		5075FEA627FFA8C900136B34 /* fr-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fr-CA"; path = "fr-CA.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		5075FEA727FFA9D700136B34 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		50B390CE27D2996E0010A2ED /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
-		50CB82D328C91E1100680566 /* CredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsView.swift; sourceTree = "<group>"; };
 		50CB82E028C9200300680566 /* AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		50D8EE9E2926C0C6003C3A95 /* ChatSwiftUIDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSwiftUIDemoView.swift; sourceTree = "<group>"; };
+		50D8EEA02926C0DD003C3A95 /* ChatUIKitDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUIKitDemoViewController.swift; sourceTree = "<group>"; };
 		55177298464F41939884F1C8 /* Pods-AzureCommunicationUIDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp/Pods-AzureCommunicationUIDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		645D1D3003E302ECA00BB66C /* Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		747FFD0380FFBF53EC331032 /* Pods_AzureCommunicationUIDemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIDemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A85DDCAF2728B12D001297B4 /* EnvConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvConfig.swift; sourceTree = "<group>"; };
 		A85DDCB22728B140001297B4 /* ThemeOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeOptions.swift; sourceTree = "<group>"; };
-		A85DDCB42728B23A001297B4 /* UIKitDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitDemoViewController.swift; sourceTree = "<group>"; };
-		A85DDCB52728B23B001297B4 /* SwiftUIDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIDemoView.swift; sourceTree = "<group>"; };
+		A85DDCB42728B23A001297B4 /* CallingUIKitDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallingUIKitDemoViewController.swift; sourceTree = "<group>"; };
+		A85DDCB52728B23B001297B4 /* CallingSwiftUIDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallingSwiftUIDemoView.swift; sourceTree = "<group>"; };
 		A87CEABB2729ECA600F3AE16 /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
 		A8849E522732FFA10049FB1A /* AuthenticationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationHelper.swift; sourceTree = "<group>"; };
 		A8AC66FD2735A41600632D0B /* CustomControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomControls.swift; sourceTree = "<group>"; };
@@ -242,9 +244,10 @@
 			children = (
 				1F8881C82798D5C2001427F0 /* ViewModifier */,
 				A87CEABB2729ECA600F3AE16 /* EntryViewController.swift */,
-				50CB82D328C91E1100680566 /* CredentialsView.swift */,
-				A85DDCB52728B23B001297B4 /* SwiftUIDemoView.swift */,
-				A85DDCB42728B23A001297B4 /* UIKitDemoViewController.swift */,
+				A85DDCB52728B23B001297B4 /* CallingSwiftUIDemoView.swift */,
+				A85DDCB42728B23A001297B4 /* CallingUIKitDemoViewController.swift */,
+				50D8EE9E2926C0C6003C3A95 /* ChatSwiftUIDemoView.swift */,
+				50D8EEA02926C0DD003C3A95 /* ChatUIKitDemoViewController.swift */,
 				50B390CE27D2996E0010A2ED /* SettingsView.swift */,
 				A8AC66FD2735A41600632D0B /* CustomControls.swift */,
 				A8C69FBE2728AE1C00143DB7 /* LaunchScreen.storyboard */,
@@ -511,14 +514,15 @@
 				A8C69FB42728AE1A00143DB7 /* AppDelegate.swift in Sources */,
 				A8FB819C272A082B00AA0930 /* DemoInputTypes.swift in Sources */,
 				A8AC66FE2735A41600632D0B /* CustomControls.swift in Sources */,
-				A85DDCB92728B23B001297B4 /* SwiftUIDemoView.swift in Sources */,
+				A85DDCB92728B23B001297B4 /* CallingSwiftUIDemoView.swift in Sources */,
 				1F8881CD279B456E001427F0 /* Extension.swift in Sources */,
 				5027C1C62821A07500DC7131 /* AccessibilityId.swift in Sources */,
 				A85DDCB12728B12D001297B4 /* EnvConfig.swift in Sources */,
 				FA7B53EC282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift in Sources */,
 				A85DDCB32728B140001297B4 /* ThemeOptions.swift in Sources */,
-				50CB82D428C91E1100680566 /* CredentialsView.swift in Sources */,
-				A85DDCB82728B23B001297B4 /* UIKitDemoViewController.swift in Sources */,
+				A85DDCB82728B23B001297B4 /* CallingUIKitDemoViewController.swift in Sources */,
+				50D8EE9F2926C0C6003C3A95 /* ChatSwiftUIDemoView.swift in Sources */,
+				50D8EEA12926C0DD003C3A95 /* ChatUIKitDemoViewController.swift in Sources */,
 				A8C69FB62728AE1A00143DB7 /* SceneDelegate.swift in Sources */,
 				A87CEABC2729ECA600F3AE16 /* EntryViewController.swift in Sources */,
 				1F8881CA2798D5E7001427F0 /* TextFieldClearButton.swift in Sources */,

@@ -13,7 +13,7 @@ class NavigationRouter: ObservableObject {
     private let store: Store<AppState>
     private let logger: Logger
     private var isDismissed: Bool = false
-    private let eventsHandler: ChatComposite.Events
+    private let eventsHandler: ChatAdapter.Events
     @Published var currentView: ViewType = .chatView
 
     var cancellables = Set<AnyCancellable>()
@@ -21,7 +21,7 @@ class NavigationRouter: ObservableObject {
 
     init(store: Store<AppState>,
          logger: Logger,
-         chatCompositeEventsHandler: ChatComposite.Events) {
+         chatCompositeEventsHandler: ChatAdapter.Events) {
         self.store = store
         self.logger = logger
         self.eventsHandler = chatCompositeEventsHandler
@@ -42,10 +42,6 @@ class NavigationRouter: ObservableObject {
             isDismissed = false
         case .headless:
             dismiss()
-            guard let didNavigateBack = eventsHandler.onNavigateBack else {
-                return
-            }
-            didNavigateBack()
         case .exit:
             dismiss()
         }
@@ -63,9 +59,5 @@ class NavigationRouter: ObservableObject {
         }
         dismissCompositeHostingVC?()
         isDismissed = true
-    }
-
-    func setDismissComposite(_ closure: @escaping () -> Void) {
-        self.dismissCompositeHostingVC = closure
     }
 }

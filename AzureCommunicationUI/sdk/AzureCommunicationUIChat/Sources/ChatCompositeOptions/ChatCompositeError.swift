@@ -8,10 +8,10 @@ import UIKit
 /// Chat Composite runtime error types.
 public struct ChatCompositeErrorCode {
     /// Error when local user fails to join a chat.
-    public static let chatJoin: String = "chatJoin"
+    public static let chatConnect: String = "chatConnect"
 
     /// Error when a chat disconnects unexpectedly or fails on ending.
-    public static var chatEnd: String = "chatEnd"
+    public static let chatEnd: String = "chatEnd"
 
     /// Error when the input token is expired.
     public static let tokenExpired: String = "tokenExpired"
