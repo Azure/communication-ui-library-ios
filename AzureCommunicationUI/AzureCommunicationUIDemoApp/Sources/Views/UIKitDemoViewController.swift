@@ -164,7 +164,7 @@ class UIKitDemoViewController: UIViewController {
 
         let callComposite = envConfigSubject.useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
-                          callingSDKWrapperProtocol: CallingSDKWrapperInTest())
+                          callingSDKWrapperProtocol: UITestCallingSDKWrapper())
             : CallComposite(withOptions: callCompositeOptions)
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {

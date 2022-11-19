@@ -28,10 +28,6 @@ class CallClientMocking {
             return CallAgentMocking()
         }.value
     }
-
-    func getDeviceManagerMocking() -> DeviceManagerMocking {
-        return DeviceManagerMocking()
-    }
 }
 
 class CallAgentMocking {
@@ -72,6 +68,3 @@ class VideoDeviceInfoMocking {
 class AudioOptionsMocking {
     var muted: Bool = false
 }
-
-class VideoOptionsMocking {}
-class LocalVideoStreamMocking {}

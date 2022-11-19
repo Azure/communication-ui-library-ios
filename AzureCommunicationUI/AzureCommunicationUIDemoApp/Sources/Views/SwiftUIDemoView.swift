@@ -165,7 +165,7 @@ extension SwiftUIDemoView {
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         let callComposite = useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
-                          callingSDKWrapperProtocol: CallingSDKWrapperInTest())
+                          callingSDKWrapperProtocol: UITestCallingSDKWrapper())
             : CallComposite(withOptions: callCompositeOptions)
 
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
