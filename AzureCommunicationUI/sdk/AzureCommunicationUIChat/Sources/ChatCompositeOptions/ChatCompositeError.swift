@@ -6,35 +6,24 @@
 import UIKit
 
 /// Chat Composite runtime error types.
-public struct ChatCompositeErrorCode {
-    /// Error when local user fails to join a chat.
-    public static let chatConnect: String = "chatConnect"
+struct ChatCompositeErrorCode {
+    /// Error when adapter fails to connect to a chat.
+    static let chatConnect: String = "chatConnect"
 
-    /// Error when a chat disconnects unexpectedly or fails on ending.
-    public static let chatEnd: String = "chatEnd"
+    /// Error when the input token is not authorized for the threadId.
+    static let chatUnauthorized: String = "chatUnauthorized"
 
-    /// Error when the input token is expired.
-    public static let tokenExpired: String = "tokenExpired"
+    /// Error when a chat disconnects unexpectedly or fails on ending. (event code?)
+    static let chatEnd: String = "chatEnd"
 
-    public static let showComposite: String = "showComposite"
-
-    /// Error when a participant is evicted from the chat by another participant
+    /// Error when a participant is evicted from the chat by another participant (event code?)
     static let chatEvicted: String = "chatEvicted"
 
-    /// Error when a participant is denied from entering the chat
+    /// Error when a participant is denied from entering the chat (event code?)
     static let chatDenied: String = "chatDenied"
-
-    /// Error when local user fails to hold a chat.
-    static let chatHold: String = "chatHold"
-
-    /// Error when local user fails to resume a chat.
-    static let chatResume: String = "chatResume"
 
     /// Error when local user fails to send message.
     static let sendMessage: String = "sendMessage"
-
-    /// Error when failed to parse threadId from teams meeting URL
-    static let parseThreadIdFailed: String = "parseThreadIdFailed"
 }
 
 /// The error thrown after Chat Composite launching.

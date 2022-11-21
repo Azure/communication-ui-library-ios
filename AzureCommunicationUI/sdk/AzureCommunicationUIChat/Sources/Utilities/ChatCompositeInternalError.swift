@@ -6,39 +6,35 @@
 import Foundation
 
 enum ChatCompositeInternalError: String, Error, Equatable {
-    case chatTokenFailed
     case chatConnectFailed
+    case chatUnauthorized
     case chatEndFailed
     case chatEvicted
     case chatDenied
     case sendMessageFailed
-    case parseThreadIdFailed
 
     func toChatCompositeErrorCode() -> String? {
         switch self {
-        case .chatTokenFailed:
-            return ChatCompositeErrorCode.tokenExpired
         case .chatConnectFailed:
             return ChatCompositeErrorCode.chatConnect
+        case .chatUnauthorized:
+            return ChatCompositeErrorCode.chatUnauthorized
         case .chatEndFailed:
             return ChatCompositeErrorCode.chatEnd
-        case .parseThreadIdFailed:
-            return ChatCompositeErrorCode.parseThreadIdFailed
-        case .sendMessageFailed:
-            return ChatCompositeErrorCode.sendMessage
         case .chatEvicted:
             return ChatCompositeErrorCode.chatEvicted
         case .chatDenied:
-            return nil
+            return ChatCompositeErrorCode.chatDenied
+        case .sendMessageFailed:
+            return ChatCompositeErrorCode.sendMessage
         }
     }
 
     func isFatalError() -> Bool {
         switch self {
-        case .chatTokenFailed,
+        case .chatUnauthorized,
                 .chatConnectFailed,
                 .chatEndFailed,
-                .parseThreadIdFailed,
                 .chatEvicted:
             return true
         case .chatDenied,

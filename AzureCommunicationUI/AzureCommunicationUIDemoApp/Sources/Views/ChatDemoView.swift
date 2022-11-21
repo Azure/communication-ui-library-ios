@@ -192,7 +192,7 @@ extension ChatDemoView {
         guard let chatAdapter = self.chatAdapter else {
             return
         }
-        chatAdapter.events.onError = showError
+//        chatAdapter.events.onError = showError
         chatAdapter.connect(threadId: envConfigSubject.threadId) { _ in
             print("Chat connect completionHandler called")
         }
