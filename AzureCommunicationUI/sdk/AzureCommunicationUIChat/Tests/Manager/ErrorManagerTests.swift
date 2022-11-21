@@ -61,10 +61,10 @@ class ErrorManagerTests: XCTestCase {
         wait(for: [handlerChatExpectation], timeout: 1)
     }
 
-    func test_errorManager_receiveState_when_fatalErrorChatJoin_then_receiveDidFail() {
-        let fatalError = ChatCompositeError(code: ChatCompositeErrorCode.chatJoin, error: nil)
+    func test_errorManager_receiveState_when_fatalErrorChatConnect_then_receiveDidFail() {
+        let fatalError = ChatCompositeError(code: ChatCompositeErrorCode.chatConnect, error: nil)
         self.expectedError = fatalError
-        let errorState = ErrorState(internalError: .chatJoinFailed,
+        let errorState = ErrorState(internalError: .chatConnectFailed,
                                     error: nil,
                                     errorCategory: .chatState)
         let newState = getAppState(errorState: errorState)
@@ -120,8 +120,8 @@ extension ErrorManagerTests {
                         errorState: errorState)
     }
 
-    func getEventsHandler() -> ChatComposite.Events {
-        let handler = ChatComposite.Events()
+    func getEventsHandler() -> ChatAdapter.Events {
+        let handler = ChatAdapter.Events()
         handler.onError = { [weak self] chatCompositeError in
             guard let self = self else {
                 return

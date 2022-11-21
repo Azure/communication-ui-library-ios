@@ -7,7 +7,7 @@ import Foundation
 
 enum ChatCompositeInternalError: String, Error, Equatable {
     case chatTokenFailed
-    case chatJoinFailed
+    case chatConnectFailed
     case chatEndFailed
     case chatEvicted
     case chatDenied
@@ -18,8 +18,8 @@ enum ChatCompositeInternalError: String, Error, Equatable {
         switch self {
         case .chatTokenFailed:
             return ChatCompositeErrorCode.tokenExpired
-        case .chatJoinFailed:
-            return ChatCompositeErrorCode.chatJoin
+        case .chatConnectFailed:
+            return ChatCompositeErrorCode.chatConnect
         case .chatEndFailed:
             return ChatCompositeErrorCode.chatEnd
         case .parseThreadIdFailed:
@@ -36,7 +36,7 @@ enum ChatCompositeInternalError: String, Error, Equatable {
     func isFatalError() -> Bool {
         switch self {
         case .chatTokenFailed,
-                .chatJoinFailed,
+                .chatConnectFailed,
                 .chatEndFailed,
                 .parseThreadIdFailed,
                 .chatEvicted:

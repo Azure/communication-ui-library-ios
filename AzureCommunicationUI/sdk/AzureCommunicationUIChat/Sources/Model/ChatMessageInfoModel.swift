@@ -94,7 +94,7 @@ extension ChatMessageInfoModel {
     }
 }
 
-public struct ChatMessageModel {
+struct ChatMessageModel {
     public let id: String
     public let content: String
     public let senderId: String
