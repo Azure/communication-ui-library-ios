@@ -18,5 +18,6 @@ class MoreCallOptionsListCell: TableViewCell {
         setup(title: viewModel.title,
               customView: iconImageView)
         bottomSeparatorType = .none
+        titleNumberOfLines = 0
     }
 }
