@@ -6,75 +6,75 @@ import Foundation
 import SwiftUI
 
 /// SupportedLocale representing the supported locales.
-public struct SupportedLocale {
+struct SupportedLocale {
     /// Chinese, Simplified
-    public static let zh = Locale(identifier: "zh")
+    static let zh = Locale(identifier: "zh")
     /// Chinese, Simplified
-    public static let zhHans = Locale(identifier: "zh-Hans")
+    static let zhHans = Locale(identifier: "zh-Hans")
     /// Chinese, Simplified (China mainland)
-    public static let zhHansCN = Locale(identifier: "zh-Hans-CN")
+    static let zhHansCN = Locale(identifier: "zh-Hans-CN")
     /// Chinese, Traditional
-    public static let zhHant = Locale(identifier: "zh-Hant")
+    static let zhHant = Locale(identifier: "zh-Hant")
     /// Chinese, Traditional (Taiwan)
-    public static let zhHantTW = Locale(identifier: "zh-Hant-TW")
+    static let zhHantTW = Locale(identifier: "zh-Hant-TW")
     /// Dutch
-    public static let nl = Locale(identifier: "nl")
+    static let nl = Locale(identifier: "nl")
     /// Dutch (Netherlands)
-    public static let nlNL = Locale(identifier: "nl-NL")
+    static let nlNL = Locale(identifier: "nl-NL")
     /// English
-    public static let en = Locale(identifier: "en")
+    static let en = Locale(identifier: "en")
     /// English (United Kingdom)
-    public static let enGB = Locale(identifier: "en-GB")
+    static let enGB = Locale(identifier: "en-GB")
     /// English (United States)
-    public static let enUS = Locale(identifier: "en-US")
+    static let enUS = Locale(identifier: "en-US")
     /// French
-    public static let fr = Locale(identifier: "fr")
+    static let fr = Locale(identifier: "fr")
     /// French (France)
-    public static let frFR = Locale(identifier: "fr-FR")
+    static let frFR = Locale(identifier: "fr-FR")
     /// German
-    public static let de = Locale(identifier: "de")
+    static let de = Locale(identifier: "de")
     /// German (Germany)
-    public static let deDE = Locale(identifier: "de-DE")
+    static let deDE = Locale(identifier: "de-DE")
     /// Italian
-    public static let it = Locale(identifier: "it")
+    static let it = Locale(identifier: "it")
     /// Italian (Italy)
-    public static let itIT = Locale(identifier: "it-IT")
+    static let itIT = Locale(identifier: "it-IT")
     /// Japanese
-    public static let ja = Locale(identifier: "ja")
+    static let ja = Locale(identifier: "ja")
     /// Japanese (Japan)
-    public static let jaJP = Locale(identifier: "ja-JP")
+    static let jaJP = Locale(identifier: "ja-JP")
     /// Korean
-    public static let ko = Locale(identifier: "ko")
+    static let ko = Locale(identifier: "ko")
     /// Korean (South Korea)
-    public static let koKR = Locale(identifier: "ko-KR")
+    static let koKR = Locale(identifier: "ko-KR")
     /// Portuguese
-    public static let pt = Locale(identifier: "pt")
+    static let pt = Locale(identifier: "pt")
     /// Portuguese (Brazil)
-    public static let ptBR = Locale(identifier: "pt-BR")
+    static let ptBR = Locale(identifier: "pt-BR")
     /// Russian
-    public static let ru = Locale(identifier: "ru")
+    static let ru = Locale(identifier: "ru")
     /// Russian (Russia)
-    public static let ruRU = Locale(identifier: "ru-RU")
+    static let ruRU = Locale(identifier: "ru-RU")
     /// Spanish
-    public static let es = Locale(identifier: "es")
+    static let es = Locale(identifier: "es")
     /// Spanish (Spain)
-    public static let esES = Locale(identifier: "es-ES")
+    static let esES = Locale(identifier: "es-ES")
     /// Turkish
-    public static let tr = Locale(identifier: "tr")
+    static let tr = Locale(identifier: "tr")
     /// Turkish (Turkey)
-    public static let trTR = Locale(identifier: "tr-TR")
+    static let trTR = Locale(identifier: "tr-TR")
 
     /// Get supported locales the AzureCommunicationUIChat has predefined translations.
     /// - Returns: Get supported Locales the AzureCommunicationUIChat
     ///  has predefined translations.
-    public static var values: [Locale] {
-        return Bundle(for: ChatComposite.self).localizations.sorted()
+    static var values: [Locale] {
+        return Bundle(for: ChatAdapter.self).localizations.sorted()
             .map { Locale(identifier: $0) }
     }
 }
 
 /// Options to allow customizing localization.
-public struct LocalizationOptions {
+struct LocalizationOptions {
     let languageCode: String
     let localizableFilename: String
     let layoutDirection: LayoutDirection
@@ -89,9 +89,9 @@ public struct LocalizationOptions {
     ///  localization keys. Default value is `"Localizable"`.
     /// - Parameter layoutDirection: LayoutDirection for mirroring layout for right-to-left.
     ///  Default value is `false`.
-    public init(locale: Locale,
-                localizableFilename: String = "Localizable",
-                layoutDirection: LayoutDirection = .leftToRight) {
+    init(locale: Locale,
+         localizableFilename: String = "Localizable",
+         layoutDirection: LayoutDirection = .leftToRight) {
         self.languageCode = locale.collatorIdentifier ?? "en"
         self.localizableFilename = localizableFilename
         self.layoutDirection = layoutDirection

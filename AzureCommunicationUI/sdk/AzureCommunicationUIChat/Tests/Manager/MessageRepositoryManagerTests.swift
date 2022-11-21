@@ -9,11 +9,11 @@ import XCTest
 @testable import AzureCommunicationUIChat
 
 class MessageRepositoryManagerTests: XCTestCase {
-    var eventsHandler: ChatComposite.Events!
+    var eventsHandler: ChatAdapter.Events!
 
     override func setUp() {
         super.setUp()
-        eventsHandler = ChatComposite.Events()
+        eventsHandler = ChatAdapter.Events()
     }
 
     override func tearDown() {

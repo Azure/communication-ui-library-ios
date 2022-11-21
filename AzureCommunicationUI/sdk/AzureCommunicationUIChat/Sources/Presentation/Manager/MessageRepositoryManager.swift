@@ -35,14 +35,20 @@ protocol MessageRepositoryManagerProtocol {
 class MessageRepositoryManager: MessageRepositoryManagerProtocol {
     var messages: [ChatMessageInfoModel] = []
 
-    private let eventsHandler: ChatComposite.Events
+    private let eventsHandler: ChatAdapter.Events
 
-    init(chatCompositeEventsHandler: ChatComposite.Events) {
+    init(chatCompositeEventsHandler: ChatAdapter.Events) {
         self.eventsHandler = chatCompositeEventsHandler
     }
 
     func addInitialMessages(initialMessages: [ChatMessageInfoModel]) {
         messages = initialMessages
+
+        messages.sort { lhs, rhs -> Bool in
+            // createdOn does not have milliseconds
+            return lhs.createdOn == rhs.createdOn ?
+            lhs.id < rhs.id : lhs.createdOn < rhs.createdOn
+        }
     }
 
     func addPreviousMessages(previousMessages: [ChatMessageInfoModel]) {

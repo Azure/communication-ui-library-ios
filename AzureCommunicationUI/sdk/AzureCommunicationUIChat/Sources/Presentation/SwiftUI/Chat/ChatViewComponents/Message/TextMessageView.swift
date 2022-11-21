@@ -54,6 +54,7 @@ struct TextMessageView: View {
             HStack {
                 name
                 timeStamp
+                edited
             }
             Text(viewModel.message.content ?? "No Content") // Handle nil?
                 .font(.body)
@@ -81,6 +82,16 @@ struct TextMessageView: View {
         Group {
             if viewModel.showTime {
                 Text(viewModel.message.createdOn.value, style: .time)
+                    .font(.caption)
+                    .foregroundColor(Color(StyleProvider.color.textDisabled))
+            }
+        }
+    }
+
+    var edited: some View {
+        Group {
+            if viewModel.message.editedOn != nil {
+                Text("Edited")
                     .font(.caption)
                     .foregroundColor(Color(StyleProvider.color.textDisabled))
             }

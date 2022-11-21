@@ -7,7 +7,7 @@ import SwiftUI
 import AzureCommunicationUICalling
 import AzureCommunicationCommon
 
-struct SwiftUIDemoView: View {
+struct CallingDemoView: View {
     @State var isErrorDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
     @State var isStartExperienceLoading: Bool = false
@@ -141,7 +141,7 @@ struct SwiftUIDemoView: View {
     }
 }
 
-extension SwiftUIDemoView {
+extension CallingDemoView {
     func startCallComposite() async {
         let link = getMeetingLink()
 

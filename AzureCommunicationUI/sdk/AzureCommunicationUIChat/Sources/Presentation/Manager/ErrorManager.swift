@@ -11,13 +11,13 @@ protocol ErrorManagerProtocol {
 
 class ErrorManager: ErrorManagerProtocol {
     private let store: Store<AppState>
-    private let eventsHandler: ChatComposite.Events
+    private let eventsHandler: ChatAdapter.Events
     private var previousError: ChatCompositeInternalError?
 
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState>,
-         chatCompositeEventsHandler: ChatComposite.Events) {
+         chatCompositeEventsHandler: ChatAdapter.Events) {
         self.store = store
         self.eventsHandler = chatCompositeEventsHandler
         store.$state

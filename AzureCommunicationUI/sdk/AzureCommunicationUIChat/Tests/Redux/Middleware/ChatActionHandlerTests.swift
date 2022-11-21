@@ -199,7 +199,8 @@ extension ChatActionHandlerTests {
 
         return ChatActionHandler(
             chatService: mockChatService,
-            logger: mockLogger)
+            logger: mockLogger,
+            connectEventHandler: nil)
     }
 
     private func getEmptyState() -> AppState {
