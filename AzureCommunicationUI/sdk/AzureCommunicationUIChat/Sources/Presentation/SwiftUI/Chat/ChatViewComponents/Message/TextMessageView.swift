@@ -70,7 +70,7 @@ struct TextMessageView: View {
                 Text(viewModel.message.senderDisplayName!)
                     .font(.caption)
                     .fontWeight(.bold)
-                    .foregroundColor(Color(StyleProvider.color.textSecondary))
+                    .foregroundColor(Color(StyleProvider.color.textPrimary))
             }
         }
     }
@@ -80,7 +80,7 @@ struct TextMessageView: View {
             if viewModel.showTime {
                 Text(viewModel.message.createdOn.value, style: .time)
                     .font(.caption)
-                    .foregroundColor(Color(StyleProvider.color.textDisabled))
+                    .foregroundColor(Color(StyleProvider.color.textSecondary))
             }
         }
     }

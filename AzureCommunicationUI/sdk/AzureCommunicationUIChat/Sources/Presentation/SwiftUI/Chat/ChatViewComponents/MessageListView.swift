@@ -15,6 +15,8 @@ struct MessageListView: View {
         static let defaultMinListRowHeight: CGFloat = 10
 
         static let buttonIconSize: CGFloat = 24
+        static let buttonShadowRadius: CGFloat = 7
+        static let buttonShadowOffset: CGFloat = 4
         static let buttonBottomPadding: CGFloat = 20
     }
 
@@ -95,6 +97,7 @@ struct MessageListView: View {
                         .foregroundColor(.white)
                         .background(Color(StyleProvider.color.primaryColor))
                         .clipShape(Capsule())
+                        .shadow(radius: Constants.buttonShadowRadius, y: Constants.buttonShadowOffset)
                         .padding(.bottom, Constants.buttonBottomPadding)
                     })
                 }

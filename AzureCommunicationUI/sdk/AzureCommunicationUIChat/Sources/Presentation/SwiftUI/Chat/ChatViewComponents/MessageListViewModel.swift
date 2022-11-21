@@ -26,7 +26,6 @@ class MessageListViewModel: ObservableObject {
 
     var scrollOffset: CGFloat = .zero
     var scrollSize: CGFloat = .zero
-//    var jumpToNewMessagesButtonViewModel: PrimaryButtonViewModel!
 
     @Published var messages: [ChatMessageInfoModel]
     @Published var showActivityIndicator: Bool = true
@@ -44,18 +43,6 @@ class MessageListViewModel: ObservableObject {
         self.dispatch = dispatch
         self.localUserId = chatState.localUser?.id // Only take in local User ID?
         self.messages = messageRepositoryManager.messages
-
-//        jumpToNewMessagesButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
-//            buttonStyle: .primaryFilled,
-//            buttonLabel: "",
-//            iconName: .downArrow,
-//            isDisabled: false) { [weak self] in
-//                guard let self = self else {
-//                    return
-//                }
-//                self.jumpToNewMessagesButtonTapped()
-//        }
-//      .update(accessibilityLabel: self.localizationProvider.getLocalizedString(.jumpToNewMessages))
     }
 
     // Localization
@@ -162,8 +149,6 @@ class MessageListViewModel: ObservableObject {
         let numberOfNewMessages = getNumberOfNewMessages()
         showJumpToNewMessages = numberOfNewMessages > 0
         jumpToNewMessagesButtonLabel = getJumpToNewMessagesLabel(numberOfNewMessages: numberOfNewMessages)
-//        jumpToNewMessagesButtonViewModel.update(
-//            buttonLabel: getJumpToNewMessagesLabel(numberOfNewMessages: numberOfNewMessages))
     }
 
     // Replace with factory
