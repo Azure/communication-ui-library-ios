@@ -9,17 +9,17 @@ import FluentUI
 struct TextMessageView: View {
     private enum Constants {
         static let localLeadingPadding: CGFloat = 60
-        static let localTrailingPadding: CGFloat = 10
+        static let localTrailingPadding: CGFloat = 15
         static let remoteAvatarLeadingPadding: CGFloat = 6
         static let remoteLeadingPadding: CGFloat = 30
-        static let remoteTrailingPadding: CGFloat = 31
+        static let remoteTrailingPadding: CGFloat = 34
         static let spacing: CGFloat = 4
 
         static let contentHorizontalPadding: CGFloat = 10
         static let contentVerticalPadding: CGFloat = 8
         static let cornerRadius: CGFloat = 5
-        static let readReceiptIconSize: CGFloat = 12
-        static let readReceiptViewPadding: CGFloat = 3
+        static let messageSendStatusIconSize: CGFloat = 12
+        static let messageSendStatusViewPadding: CGFloat = 3
     }
 
     @StateObject var viewModel: TextMessageViewModel
@@ -37,7 +37,7 @@ struct TextMessageView: View {
             }
         }
         .padding(.leading, getLeadingPadding)
-        .padding(.trailing, viewModel.isLocalUser ? Constants.localTrailingPadding : Constants.remoteTrailingPadding)
+        .padding(.trailing, getTrailingPadding)
     }
 
     var avatar: some View {
@@ -96,15 +96,10 @@ struct TextMessageView: View {
                     Spacer()
                     if let iconName = viewModel.getMessageSendStatusIconName() {
                         StyleProvider.icon.getImage(for: iconName)
-                            .frame(width: Constants.readReceiptIconSize,
-                                   height: Constants.readReceiptIconSize)
+                            .frame(width: Constants.messageSendStatusIconSize,
+                                   height: Constants.messageSendStatusIconSize)
                             .foregroundColor(Color(tintColor))
-                            .padding(.bottom, Constants.readReceiptViewPadding)
-                    } else {
-                        Rectangle()
-                            .fill(Color.clear)
-                            .frame(width: Constants.readReceiptIconSize,
-                                   height: Constants.readReceiptIconSize)
+                            .padding(.bottom, Constants.messageSendStatusViewPadding)
                     }
                 }
             }
@@ -120,6 +115,18 @@ struct TextMessageView: View {
             return Constants.remoteAvatarLeadingPadding
         } else {
             return Constants.remoteLeadingPadding
+        }
+    }
+
+    private var getTrailingPadding: CGFloat {
+        if !viewModel.isLocalUser {
+            return Constants.remoteTrailingPadding
+        }
+
+        if viewModel.showMessageSendStatusIcon {
+            return Constants.messageSendStatusViewPadding
+        } else {
+            return Constants.localTrailingPadding
         }
     }
 }

@@ -104,6 +104,8 @@ struct MessageListView: View {
             : Constants.topPadding,
             leading: Constants.horizontalPadding,
             bottom: Constants.bottomPadding,
-            trailing: isLocalUser ? Constants.localUserMessageTrailingPadding : Constants.horizontalPadding)
+            trailing: message.message.type == .text
+            ? Constants.localUserMessageTrailingPadding
+            : Constants.horizontalPadding)
     }
 }
