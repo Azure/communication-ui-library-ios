@@ -65,7 +65,10 @@ private func handleParticipantsAction(
             actionHandler.participantRemovedMessage(participants: participants,
                                                     dispatch: dispatch)
         case.readReceiptReceived(let readReceiptInfo):
-            actionHandler.readReceiptReceived(readReceiptInfo: readReceiptInfo, state: getState(), dispatch: dispatch)
+            actionHandler.updateMessageReceiptReceivedStatus(
+                                                readReceiptInfo: readReceiptInfo,
+                                                state: getState(),
+                                                dispatch: dispatch)
         default:
             break
         }
@@ -104,10 +107,12 @@ private func handleRepositoryAction(
                                                   dispatch: dispatch)
 
         case .sendMessageSuccess(let internalId, let actualId):
-            actionHandler.updateSentMessageId(internalId: internalId,
+            actionHandler.updateSentMessageIdAndSendStatus(internalId: internalId,
                                               actualId: actualId,
                                               state: getState(),
                                               dispatch: dispatch)
+        case .sendMessageFailed(let internalId, _):
+            actionHandler.updateMessageSendStatus(messageId: internalId, messageSendStatus: .failed, dispatch: dispatch)
         case .editMessageSuccess(let messageId):
             actionHandler.updateEditedMessageTimestamp(
                 messageId: messageId,

@@ -15,8 +15,8 @@ enum MessageType: Equatable {
 }
 
 enum MessageSendStatus: Equatable {
-    case sent
-    case delivering
+    case sending
+    case delivered
     case seen
     case failed
 }

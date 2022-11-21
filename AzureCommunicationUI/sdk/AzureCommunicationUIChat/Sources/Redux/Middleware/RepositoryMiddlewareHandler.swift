@@ -36,7 +36,7 @@ protocol RepositoryMiddlewareHandling {
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func updateSentMessageId(
+    func updateSentMessageIdAndSendStatus(
         internalId: String,
         actualId: String,
         state: AppState,
@@ -82,7 +82,12 @@ protocol RepositoryMiddlewareHandling {
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func readReceiptReceived(
+    func updateMessageSendStatus(
+        messageId: String,
+        messageSendStatus: MessageSendStatus,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func updateMessageReceiptReceivedStatus(
         readReceiptInfo: ReadReceiptInfoModel,
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
@@ -133,7 +138,8 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
                     type: .text,
                     senderId: localUserId,
                     senderDisplayName: displayName,
-                    content: content)
+                    content: content,
+                    sendStatus: .sending)
                 messageRepository.addNewSendingMessage(message: message)
                 dispatch(.repositoryAction(.repositoryUpdated))
             }
@@ -160,7 +166,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
             }
         }
 
-    func updateSentMessageId(
+    func updateSentMessageIdAndSendStatus(
         internalId: String,
         actualId: String,
         state: AppState,
@@ -168,6 +174,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
             Task {
                 messageRepository.replaceMessageId(internalId: internalId,
                                                    actualId: actualId)
+                messageRepository.updateMessageSendStatus(messageId: actualId, messageSendStatus: .delivered)
                 dispatch(.repositoryAction(.repositoryUpdated))
             }
         }
@@ -262,12 +269,22 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
             }
         }
 
-    func readReceiptReceived(
+    func updateMessageSendStatus(
+        messageId: String,
+        messageSendStatus: MessageSendStatus,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            messageRepository.updateMessageSendStatus(messageId: messageId, messageSendStatus: messageSendStatus)
+            dispatch(.repositoryAction(.repositoryUpdated))
+        }
+    }
+
+    func updateMessageReceiptReceivedStatus(
         readReceiptInfo: ReadReceiptInfoModel,
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
-                messageRepository.updateMessageSendStatus(readReceiptInfo: readReceiptInfo, state: state)
+                messageRepository.updateMessageReadReceiptStatus(readReceiptInfo: readReceiptInfo, state: state)
                 dispatch(.repositoryAction(.repositoryUpdated))
             }
         }

@@ -29,7 +29,8 @@ protocol MessageRepositoryManagerProtocol {
     func addReceivedMessage(message: ChatMessageInfoModel)
     func updateMessageEdited(message: ChatMessageInfoModel)
     func updateMessageDeleted(message: ChatMessageInfoModel)
-    func updateMessageSendStatus(readReceiptInfo: ReadReceiptInfoModel, state: AppState)
+    func updateMessageReadReceiptStatus(readReceiptInfo: ReadReceiptInfoModel, state: AppState)
+    func updateMessageSendStatus(messageId: String, messageSendStatus: MessageSendStatus)
 }
 
 class MessageRepositoryManager: MessageRepositoryManagerProtocol {
@@ -174,7 +175,16 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
         }
     }
 
-    func updateMessageSendStatus(readReceiptInfo: ReadReceiptInfoModel, state: AppState) {
+    func updateMessageSendStatus(messageId: String, messageSendStatus: MessageSendStatus) {
+        guard let index = messages.firstIndex(where: {
+                $0.id == messageId
+            }) else {
+            return
+        }
+        messages[index].sendStatus = messageSendStatus
+    }
+
+    func updateMessageReadReceiptStatus(readReceiptInfo: ReadReceiptInfoModel, state: AppState) {
         guard readReceiptInfo.senderIdentifier.stringValue != state.chatState.localUser?.identifier.stringValue else {
             return
         }

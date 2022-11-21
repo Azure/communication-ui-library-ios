@@ -88,6 +88,8 @@ struct TextMessageView: View {
     }
 
     var messageSendStatus: some View {
+        let tintColor = viewModel.message.sendStatus == .failed
+                            ? StyleProvider.color.dangerPrimary : StyleProvider.color.primaryColor
         return Group {
             if viewModel.isLocalUser {
                 VStack {
@@ -96,7 +98,7 @@ struct TextMessageView: View {
                         StyleProvider.icon.getImage(for: iconName)
                             .frame(width: Constants.readReceiptIconSize,
                                    height: Constants.readReceiptIconSize)
-                            .foregroundColor(Color(StyleProvider.color.primaryColor))
+                            .foregroundColor(Color(tintColor))
                             .padding(.bottom, Constants.readReceiptViewPadding)
                     } else {
                         Rectangle()

@@ -33,16 +33,15 @@ class TextMessageViewModel: MessageViewModel {
         guard showMessageSendStatusIcon == true, let messageSendStatusIconType = messageSendStatusIconType else {
             return nil
         }
-        // Other cases will be handled in another PR
         switch messageSendStatusIconType {
-        case .delivering:
-            return nil
-        case .sent:
-            return nil
+        case .sending:
+            return .messageSending
+        case .delivered:
+            return .messageDelivered
         case .seen:
             return .readReceipt
         case .failed:
-            return nil
+            return .messageSendFailed
         }
     }
 }
