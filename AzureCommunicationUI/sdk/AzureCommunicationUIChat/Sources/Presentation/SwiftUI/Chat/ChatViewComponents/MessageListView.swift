@@ -12,8 +12,10 @@ struct MessageListView: View {
         static let bottomPadding: CGFloat = 0
         static let topPadding: CGFloat = 8
         static let topConsecutivePadding: CGFloat = 4
-        static let buttonBottomPadding: CGFloat = 20
         static let defaultMinListRowHeight: CGFloat = 10
+
+        static let buttonIconSize: CGFloat = 24
+        static let buttonBottomPadding: CGFloat = 20
     }
 
     @StateObject var viewModel: MessageListViewModel
@@ -86,14 +88,13 @@ struct MessageListView: View {
                         viewModel.jumpToNewMessagesButtonTapped()
                     }, label: {
                         HStack {
-                            Icon(name: .downArrow, size: 24)
+                            Icon(name: .downArrow, size: Constants.buttonIconSize)
                             Text(viewModel.jumpToNewMessagesButtonLabel)
-                                .font(.body)
                         }
                         .padding()
                         .foregroundColor(.white)
                         .background(Color(StyleProvider.color.primaryColor))
-                        .cornerRadius(40)
+                        .clipShape(Capsule())
                         .padding(.bottom, Constants.buttonBottomPadding)
                     })
                 }
