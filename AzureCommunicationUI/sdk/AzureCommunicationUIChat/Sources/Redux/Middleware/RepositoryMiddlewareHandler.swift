@@ -250,6 +250,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 messageRepository.updateMessageEdited(message: message)
+                dispatch(.repositoryAction(.repositoryUpdated))
             }
         }
 
@@ -259,6 +260,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 messageRepository.updateMessageDeleted(message: message)
+                dispatch(.repositoryAction(.repositoryUpdated))
             }
         }
 

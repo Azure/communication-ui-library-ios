@@ -35,7 +35,9 @@ struct MessageView: View {
         Group {
             switch viewModel {
             case let textMessageViewModel as TextMessageViewModel:
-                TextMessageView(viewModel: textMessageViewModel)
+                if textMessageViewModel.message.deletedOn == nil {
+                    TextMessageView(viewModel: textMessageViewModel)
+                }
             case let systemMessageViewModel as SystemMessageViewModel:
                 SystemMessageView(viewModel: systemMessageViewModel)
             default:
