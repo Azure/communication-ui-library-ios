@@ -82,9 +82,20 @@ struct MessageListView: View {
             if viewModel.showJumpToNewMessages {
                 VStack {
                     Spacer()
-                    PrimaryButton(viewModel: viewModel.jumpToNewMessagesButtonViewModel)
-                        .fixedSize()
-                        .padding(Constants.buttonBottomPadding)
+                    Button(action: {
+                        viewModel.jumpToNewMessagesButtonTapped()
+                    }, label: {
+                        HStack {
+                            Icon(name: .downArrow, size: 24)
+                            Text(viewModel.jumpToNewMessagesButtonLabel)
+                                .font(.body)
+                        }
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color(StyleProvider.color.primaryColor))
+                        .cornerRadius(40)
+                        .padding(.bottom, Constants.buttonBottomPadding)
+                    })
                 }
             }
         }

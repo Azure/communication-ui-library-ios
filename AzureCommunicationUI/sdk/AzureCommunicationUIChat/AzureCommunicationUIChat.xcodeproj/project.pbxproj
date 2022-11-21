@@ -158,9 +158,6 @@
 		BD1A6A3E28ECDFAB005E0B70 /* MessageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A6A3D28ECDFAB005E0B70 /* MessageListViewModel.swift */; };
 		BD1A6A3F28ECF008005E0B70 /* RepositoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6628EB543200ACD234 /* RepositoryState.swift */; };
 		BD231EF22913257C00B56882 /* ObservableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231EF12913257C00B56882 /* ObservableScrollView.swift */; };
-		BD31EA792914206200A1C213 /* PrimaryButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD31EA782914206200A1C213 /* PrimaryButton.swift */; };
-		BD31EA7B2914206F00A1C213 /* PrimaryButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD31EA7A2914206F00A1C213 /* PrimaryButtonViewModel.swift */; };
-		BD31EA7E291420B200A1C213 /* CompositeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD31EA7D291420B200A1C213 /* CompositeButton.swift */; };
 		BD80293328EC9BDF00A55CAC /* ChatViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80293228EC9BDF00A55CAC /* ChatViewModelMocking.swift */; };
 		BD80293828ECA7D700A55CAC /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80293428ECA68700A55CAC /* BottomBarView.swift */; };
 		BD80293928ECA7DC00A55CAC /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80293628ECA6C600A55CAC /* TopBarView.swift */; };
@@ -339,9 +336,6 @@
 		BD1A6A3B28ECDEAE005E0B70 /* MessageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListView.swift; sourceTree = "<group>"; };
 		BD1A6A3D28ECDFAB005E0B70 /* MessageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListViewModel.swift; sourceTree = "<group>"; };
 		BD231EF12913257C00B56882 /* ObservableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableScrollView.swift; sourceTree = "<group>"; };
-		BD31EA782914206200A1C213 /* PrimaryButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButton.swift; sourceTree = "<group>"; };
-		BD31EA7A2914206F00A1C213 /* PrimaryButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrimaryButtonViewModel.swift; sourceTree = "<group>"; };
-		BD31EA7D291420B200A1C213 /* CompositeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeButton.swift; sourceTree = "<group>"; };
 		BD80293228EC9BDF00A55CAC /* ChatViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModelMocking.swift; sourceTree = "<group>"; };
 		BD80293428ECA68700A55CAC /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
 		BD80293628ECA6C600A55CAC /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
@@ -1074,7 +1068,6 @@
 		BD31EA7C291420A300A1C213 /* Wrapper */ = {
 			isa = PBXGroup;
 			children = (
-				BD31EA7D291420B200A1C213 /* CompositeButton.swift */,
 			);
 			path = Wrapper;
 			sourceTree = "<group>";
@@ -1092,8 +1085,6 @@
 			children = (
 				BDB1B8C828F8A2940000300F /* IconButton.swift */,
 				BDB1B8C928F8A2940000300F /* IconButtonViewModel.swift */,
-				BD31EA782914206200A1C213 /* PrimaryButton.swift */,
-				BD31EA7A2914206F00A1C213 /* PrimaryButtonViewModel.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -1341,13 +1332,11 @@
 				50CB81F828C2860200680566 /* ChatCompositeError.swift in Sources */,
 				50CB82D028C2AD9900680566 /* SetParticipantViewDataError.swift in Sources */,
 				50CB824128C29ADA00680566 /* ParticipantsState.swift in Sources */,
-				BD31EA7B2914206F00A1C213 /* PrimaryButtonViewModel.swift in Sources */,
 				50CB826128C29E0600680566 /* ChatSDKWrapperProtocol.swift in Sources */,
 				50CB821128C286D400680566 /* IconProvider.swift in Sources */,
 				BD1A6A3F28ECF008005E0B70 /* RepositoryState.swift in Sources */,
 				75848435291D82D4006373B3 /* ArrayExtension.swift in Sources */,
 				50CB823728C29A3E00680566 /* ParticipantsAction.swift in Sources */,
-				BD31EA792914206200A1C213 /* PrimaryButton.swift in Sources */,
 				BD80293B28ECA84200A55CAC /* TopBarViewModel.swift in Sources */,
 				521A024128FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift in Sources */,
 				50CB81FC28C2862000680566 /* LocalizationOptions.swift in Sources */,
@@ -1384,7 +1373,6 @@
 				50CB823128C2999200680566 /* Action.swift in Sources */,
 				50CB825928C29B7200680566 /* UserEventTimestampModel.swift in Sources */,
 				50CB82C428C2AD2300680566 /* AppLifeCycleManager.swift in Sources */,
-				BD31EA7E291420B200A1C213 /* CompositeButton.swift in Sources */,
 				521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */,
 				50CB823328C2999B00680566 /* LifecycleAction.swift in Sources */,
 				A8E5F7B5290892050080B9D5 /* TextMessageViewModel.swift in Sources */,

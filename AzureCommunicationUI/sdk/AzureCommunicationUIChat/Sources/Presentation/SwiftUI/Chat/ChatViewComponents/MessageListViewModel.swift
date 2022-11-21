@@ -26,11 +26,12 @@ class MessageListViewModel: ObservableObject {
 
     var scrollOffset: CGFloat = .zero
     var scrollSize: CGFloat = .zero
-    var jumpToNewMessagesButtonViewModel: PrimaryButtonViewModel!
+//    var jumpToNewMessagesButtonViewModel: PrimaryButtonViewModel!
 
     @Published var messages: [ChatMessageInfoModel]
     @Published var showActivityIndicator: Bool = true
     @Published var showJumpToNewMessages: Bool = false
+    @Published var jumpToNewMessagesButtonLabel: String = ""
     @Published var shouldScrollToBottom: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -44,16 +45,16 @@ class MessageListViewModel: ObservableObject {
         self.localUserId = chatState.localUser?.id // Only take in local User ID?
         self.messages = messageRepositoryManager.messages
 
-        jumpToNewMessagesButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
-            buttonStyle: .primaryFilled,
-            buttonLabel: "",
-            iconName: .downArrow,
-            isDisabled: false) { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                self.jumpToNewMessagesButtonTapped()
-        }
+//        jumpToNewMessagesButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
+//            buttonStyle: .primaryFilled,
+//            buttonLabel: "",
+//            iconName: .downArrow,
+//            isDisabled: false) { [weak self] in
+//                guard let self = self else {
+//                    return
+//                }
+//                self.jumpToNewMessagesButtonTapped()
+//        }
 //      .update(accessibilityLabel: self.localizationProvider.getLocalizedString(.jumpToNewMessages))
     }
 
@@ -160,8 +161,9 @@ class MessageListViewModel: ObservableObject {
     func updateJumpToNewMessages() {
         let numberOfNewMessages = getNumberOfNewMessages()
         showJumpToNewMessages = numberOfNewMessages > 0
-        jumpToNewMessagesButtonViewModel.update(
-            buttonLabel: getJumpToNewMessagesLabel(numberOfNewMessages: numberOfNewMessages))
+        jumpToNewMessagesButtonLabel = getJumpToNewMessagesLabel(numberOfNewMessages: numberOfNewMessages)
+//        jumpToNewMessagesButtonViewModel.update(
+//            buttonLabel: getJumpToNewMessagesLabel(numberOfNewMessages: numberOfNewMessages))
     }
 
     // Replace with factory
