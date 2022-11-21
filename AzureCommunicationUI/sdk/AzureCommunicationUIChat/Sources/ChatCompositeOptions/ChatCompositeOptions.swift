@@ -7,7 +7,7 @@ import Foundation
 import UIKit
 
 /// User-configurable options for creating ChatComposite.
-public struct ChatCompositeOptions {
+struct ChatCompositeOptions {
     private(set) var themeOptions: ThemeOptions?
     private(set) var localizationOptions: LocalizationOptions?
 
@@ -16,8 +16,8 @@ public struct ChatCompositeOptions {
     ///  Default value is `nil`.
     /// - Parameter localization: LocalizationOptions for specifying
     ///  localization customization. Default value is `nil`.
-    public init(theme: ThemeOptions? = nil,
-                localization: LocalizationOptions? = nil) {
+    init(theme: ThemeOptions? = nil,
+         localization: LocalizationOptions? = nil) {
         self.themeOptions = theme
         self.localizationOptions = localization
     }
