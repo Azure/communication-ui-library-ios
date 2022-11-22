@@ -44,16 +44,16 @@ struct TextEditorView: View {
         static let cornerRadius: CGFloat = 10
         static let shadow: CGFloat = 1
         static let minimumHeight: CGFloat = 40
-
         // Extra padding needed when more that one line displayed
         static let multilineHeightOffset: CGFloat = 20
+
+        static let placeholderPadding: CGFloat = 6
     }
 
     @Binding var text: String
     @State var textEditorHeight: CGFloat = Constants.minimumHeight
 
     var body: some View {
-
         ZStack(alignment: .leading) {
             Text(text)
                 .font(.system(.body))
@@ -62,18 +62,22 @@ struct TextEditorView: View {
                     Color.clear.preference(key: ViewHeightKey.self,
                                            value: $0.frame(in: .local).size.height)
                 })
-
-            TextEditor(text: $text)
-                .font(.system(.body))
-                .frame(height: max(Constants.minimumHeight, textEditorHeight))
-                .cornerRadius(Constants.cornerRadius)
-                .shadow(radius: Constants.shadow)
+            ZStack(alignment: .leading) {
+                TextEditor(text: $text)
+                    .font(.system(.body))
+                    .frame(height: max(Constants.minimumHeight, textEditorHeight))
+                    .cornerRadius(Constants.cornerRadius)
+                    .shadow(radius: Constants.shadow)
+                if text.isEmpty {
+                    Text("Type a message") // Localization
+                        .foregroundColor(Color(StyleProvider.color.textDisabled))
+                        .padding(Constants.placeholderPadding)
+                }
+            }
         }.onPreferenceChange(ViewHeightKey.self) {
             textEditorHeight = $0 + (text.numberOfLines() > 1 ? Constants.multilineHeightOffset : 0)
         }
-
     }
-
 }
 
 extension String {
