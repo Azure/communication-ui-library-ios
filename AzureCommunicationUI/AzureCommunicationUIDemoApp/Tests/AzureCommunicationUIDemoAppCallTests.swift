@@ -59,6 +59,8 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateRecordingStart.rawValue, shouldWait: true)
+        let bannerView = app.otherElements[AccessibilityIdentifier.bannerViewAccessibilityID.rawValue]
+        XCTAssertNotNil(bannerView)
 
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateRecordingEnd.rawValue, shouldWait: true)
@@ -71,6 +73,17 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateNewParticipantJoin.rawValue, shouldWait: true)
+        let participantGridCellView = app.otherElements[AccessibilityIdentifier.participantGridCellViewAccessibilityID.rawValue]
+        XCTAssertNotNil(participantGridCellView)
+
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulate3NewParticipantJoin.rawValue, shouldWait: true)
+
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulate6NewParticipantJoin.rawValue, shouldWait: true)
+
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulate1ParticipantLeave.rawValue, shouldWait: true)
 
         toggleLeaveCallDrawer(leaveCall: true)
     }

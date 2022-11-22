@@ -50,38 +50,30 @@ struct UITestSettingsView: View {
                         .transcriptionStateUpdated(isTranscriptionActive: false)))
                     displayed = false
                 }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateTranscriptionEnd.rawValue)
-                Button("Simulate new participant join") {
-                    let infoModel = ParticipantInfoModel(displayName: "New User 1",
-                                                         isSpeaking: false,
-                                                         isMuted: true,
-                                                         isRemoteUser: true,
-                                                         userIdentifier: "userIdentifier1",
-                                                         status: .connected,
-                                                         recentSpeakingStamp: Date(),
-                                                         screenShareVideoStreamModel: nil,
-                                                         cameraVideoStreamModel: nil)
-                    let infoModel2 = ParticipantInfoModel(displayName: "New User 2",
-                                                         isSpeaking: false,
-                                                         isMuted: true,
-                                                         isRemoteUser: true,
-                                                         userIdentifier: "userIdentifier2",
-                                                         status: .connected,
-                                                         recentSpeakingStamp: Date(),
-                                                         screenShareVideoStreamModel: nil,
-                                                         cameraVideoStreamModel: nil)
-                    let infoModel3 = ParticipantInfoModel(displayName: "New User 3",
-                                                         isSpeaking: false,
-                                                         isMuted: true,
-                                                         isRemoteUser: true,
-                                                          userIdentifier: "userIdentifier3",
-                                                         status: .connected,
-                                                         recentSpeakingStamp: Date(),
-                                                         screenShareVideoStreamModel: nil,
-                                                         cameraVideoStreamModel: nil)
+                Button("Simulate 1 participants join") {
+                    viewModel.addParticipant()
                     viewModel.action(.callingAction(.participantListUpdated(participants:
-                                                                                [infoModel, infoModel2, infoModel3])))
+                                                                                viewModel.participantInfoViewModel)))
                     displayed = false
                 }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateNewParticipantJoin.rawValue)
+                Button("Simulate 3 new participants join") {
+                    viewModel.addParticipants(number: 3)
+                    viewModel.action(.callingAction(.participantListUpdated(participants:
+                                                                                viewModel.participantInfoViewModel)))
+                    displayed = false
+                }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulate3NewParticipantJoin.rawValue)
+                Button("Simulate 6 participants join") {
+                    viewModel.addParticipants(number: 6)
+                    viewModel.action(.callingAction(.participantListUpdated(participants:
+                                                                                viewModel.participantInfoViewModel)))
+                    displayed = false
+                }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulate6NewParticipantJoin.rawValue)
+                Button("Simulate 1 participants leave") {
+                    viewModel.removeLastPartiicpant()
+                    viewModel.action(.callingAction(.participantListUpdated(participants:
+                                                                                viewModel.participantInfoViewModel)))
+                    displayed = false
+                }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulate1ParticipantLeave.rawValue)
             }
         }
         .padding(.all)

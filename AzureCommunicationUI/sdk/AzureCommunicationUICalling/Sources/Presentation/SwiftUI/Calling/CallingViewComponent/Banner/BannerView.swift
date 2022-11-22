@@ -21,6 +21,7 @@ struct BannerView: View {
             }
             .background(Color(StyleProvider.color.backgroundColor))
             .accessibilitySortPriority(2)
+            .accessibilityIdentifier(AccessibilityIdentifier.bannerViewAccessibilityID.rawValue)
         } else {
             Spacer()
                 .frame(height: 8)

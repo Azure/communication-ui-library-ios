@@ -6,6 +6,9 @@
 import Foundation
 
 enum AccessibilityIdentifier: String {
+    case bannerViewAccessibilityID = "AzureCommunicationUICalling.CallingView.Banner.AccessibilityID"
+    case participantGridCellViewAccessibilityID =
+            "AzureCommunicationUICalling.CallingView.ParticipantGridCellView.AccessibilityID"
     case leaveCallAccessibilityID = "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall.AccessibilityID"
     case joinCallAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.JoinCall.AccessibilityID"
     case toggleVideoAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.Video.AccessibilityID"
@@ -33,6 +36,14 @@ enum AccessibilityIdentifier: String {
             "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.SimulateTranscriptionEnd"
     case uitestsimulateNewParticipantJoin =
             "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.SimulateNewParticipantJoin"
+    case uitestsimulate3NewParticipantJoin =
+            "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.Simulate3NewParticipantsJoin"
+    case uitestsimulate6NewParticipantJoin =
+            "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.Simulate6NewParticipantsJoin"
+    case uitestsimulate1ParticipantLeave =
+            "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.Simulate1ParticipantLeave"
+    case uitestsimulateAllParticipantsLeave =
+            "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.SimulateAllParticipantsLeave"
     case moreAccessibilityID = "AzureCommunicationUICalling.CallingView.ControlButton.More.AccessibilityID"
     case shareDiagnosticsAccessibilityID =
             "AzureCommunicationUICalling.CallingView.MoreOverlay.ShareDiagnostics.AccessibilityID"
