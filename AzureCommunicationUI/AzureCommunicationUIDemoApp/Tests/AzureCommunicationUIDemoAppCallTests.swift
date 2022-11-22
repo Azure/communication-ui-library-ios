@@ -160,9 +160,14 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
             accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
             shouldWait: true)
         wait(for: app.otherElements["ActivityListView"])
-        tapButton(
-            accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCloseButtonAccessibilityID.rawValue,
-            shouldWait: true)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            app.otherElements["PopoverDismissRegion"].tap()
+        } else if UIDevice.current.userInterfaceIdiom == .phone {
+            tapButton(
+                accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCloseButtonAccessibilityID.rawValue,
+                shouldWait: true)
+        }
+        XCTAssertFalse(app.otherElements["ActivityListView"].exists)
     }
 
     func testCallCompositeCopyDiagnosticInfo() {
