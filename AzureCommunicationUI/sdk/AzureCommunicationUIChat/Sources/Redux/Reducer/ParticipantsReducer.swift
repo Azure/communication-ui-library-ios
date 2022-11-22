@@ -12,6 +12,7 @@ extension Reducer where State == ParticipantsState,
         // MARK: Chat Participant
         var currentParticipants = participantsState.participants
         var participantsUpdatedTimestamp = participantsState.participantsUpdatedTimestamp
+        var maskedParticipants = participantsState.maskedParticipants
 
         // MARK: Typing Indicator
         var typingParticipants = participantsState.typingParticipants
@@ -25,7 +26,9 @@ extension Reducer where State == ParticipantsState,
             var newParticipants: [String: ParticipantInfoModel] = [:]
             for participant in participants {
                 newParticipants[participant.id] = participant
-                if readReceiptMap[participant.id] == nil && participant.id != localParticipantId {
+                if readReceiptMap[participant.id] == nil
+                    && participant.id != localParticipantId
+                    && !maskedParticipants.contains(participant.id) {
                     readReceiptMap[participant.id] = .distantPast
                 }
             }
@@ -35,7 +38,7 @@ extension Reducer where State == ParticipantsState,
         case .participantsAction(.participantsAdded(let participants)):
             for participant in participants {
                 currentParticipants[participant.id] = participant
-                if readReceiptMap[participant.id] == nil {
+                if readReceiptMap[participant.id] == nil && !maskedParticipants.contains(participant.id) {
                     readReceiptMap[participant.id] = .distantPast
                 }
             }
@@ -51,6 +54,8 @@ extension Reducer where State == ParticipantsState,
                 readReceiptMap.removeValue(forKey: participant.id)
             }
             participantsUpdatedTimestamp = Date()
+        case .participantsAction(.maskedParticipantsReceived(let participantIds)):
+            maskedParticipants = participantIds
         case .participantsAction(.typingIndicatorReceived(let participant)):
             typingParticipants = typingParticipants.filter { $0.id != participant.id }
             typingParticipants.append(participant)
@@ -83,6 +88,7 @@ extension Reducer where State == ParticipantsState,
         return ParticipantsState(participants: currentParticipants,
                                  participantsUpdatedTimestamp: participantsUpdatedTimestamp,
                                  typingParticipants: typingParticipants,
+                                 maskedParticipants: maskedParticipants,
                                  readReceiptMap: readReceiptMap,
                                  readReceiptUpdatedTimestamp: readReceiptUpdatedTimestamp)
     }

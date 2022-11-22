@@ -60,6 +60,7 @@ private func handleParticipantsAction(
         switch action {
         case .participantsAdded(let participants):
             actionHandler.participantAddedMessage(participants: participants,
+                                                  state: getState(),
                                                   dispatch: dispatch)
         case .participantsRemoved(let participants):
             actionHandler.participantRemovedMessage(participants: participants,
