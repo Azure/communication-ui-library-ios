@@ -99,14 +99,14 @@ struct LocalUserState {
                         rhs: LocalUserState.AudioDeviceSelectionStatus) -> Bool {
             switch (lhs, rhs) {
             case (.speakerSelected, .speakerSelected),
-                 (.speakerRequested, .speakerRequested),
-                 (.receiverSelected, receiverSelected),
-                 (.receiverRequested, .receiverRequested),
-                 (.bluetoothSelected, bluetoothSelected),
-                 (.bluetoothRequested, .bluetoothRequested),
-                 (.headphonesSelected, headphonesSelected),
-                 (.headphonesRequested, .headphonesRequested),
-                 (.error, .error):
+                (.speakerRequested, .speakerRequested),
+                (.receiverSelected, .receiverSelected),
+                (.receiverRequested, .receiverRequested),
+                (.bluetoothSelected, .bluetoothSelected),
+                (.bluetoothRequested, .bluetoothRequested),
+                (.headphonesSelected, .headphonesSelected),
+                (.headphonesRequested, .headphonesRequested),
+                (.error, .error):
                 return true
             default:
                 return false
