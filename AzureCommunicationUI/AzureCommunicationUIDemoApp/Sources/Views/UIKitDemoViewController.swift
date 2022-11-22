@@ -169,7 +169,7 @@ class UIKitDemoViewController: UIViewController {
             self.onRemoteParticipantJoined(to: composite,
                                            identifiers: ids)
         }
-        let onErrorHandler = { [weak callComposite] error in
+        let onErrorHandler: (CallCompositeError) -> Void = { [weak callComposite] error in
             guard let composite = callComposite else {
                 return
             }
