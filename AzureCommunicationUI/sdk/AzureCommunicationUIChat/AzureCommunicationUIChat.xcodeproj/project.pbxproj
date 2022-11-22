@@ -158,6 +158,7 @@
 		BD1A6A3E28ECDFAB005E0B70 /* MessageListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1A6A3D28ECDFAB005E0B70 /* MessageListViewModel.swift */; };
 		BD1A6A3F28ECF008005E0B70 /* RepositoryState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6628EB543200ACD234 /* RepositoryState.swift */; };
 		BD231EF22913257C00B56882 /* ObservableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD231EF12913257C00B56882 /* ObservableScrollView.swift */; };
+		BD73352D292D43A0004E4E05 /* UIApplicationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD73352C292D43A0004E4E05 /* UIApplicationHelper.swift */; };
 		BD80293328EC9BDF00A55CAC /* ChatViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80293228EC9BDF00A55CAC /* ChatViewModelMocking.swift */; };
 		BD80293828ECA7D700A55CAC /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80293428ECA68700A55CAC /* BottomBarView.swift */; };
 		BD80293928ECA7DC00A55CAC /* TopBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD80293628ECA6C600A55CAC /* TopBarView.swift */; };
@@ -336,6 +337,7 @@
 		BD1A6A3B28ECDEAE005E0B70 /* MessageListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListView.swift; sourceTree = "<group>"; };
 		BD1A6A3D28ECDFAB005E0B70 /* MessageListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageListViewModel.swift; sourceTree = "<group>"; };
 		BD231EF12913257C00B56882 /* ObservableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservableScrollView.swift; sourceTree = "<group>"; };
+		BD73352C292D43A0004E4E05 /* UIApplicationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplicationHelper.swift; sourceTree = "<group>"; };
 		BD80293228EC9BDF00A55CAC /* ChatViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModelMocking.swift; sourceTree = "<group>"; };
 		BD80293428ECA68700A55CAC /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
 		BD80293628ECA6C600A55CAC /* TopBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarView.swift; sourceTree = "<group>"; };
@@ -437,6 +439,7 @@
 		50CB81DE28C26FB300680566 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				BD73352B292D4356004E4E05 /* Utilities */,
 				50CB81EF28C2855300680566 /* Factories */,
 				50CB81EE28C2854C00680566 /* Manager */,
 				50CB81ED28C2854500680566 /* Navigation */,
@@ -1072,6 +1075,14 @@
 			path = Wrapper;
 			sourceTree = "<group>";
 		};
+		BD73352B292D4356004E4E05 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				BD73352C292D43A0004E4E05 /* UIApplicationHelper.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		BDB1B8C628F8A17C0000300F /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
@@ -1346,6 +1357,7 @@
 				50CB821D28C2875D00680566 /* ChatView.swift in Sources */,
 				50370CD328EE507A00ACD234 /* TrouterEventExtension.swift in Sources */,
 				BD231EF22913257C00B56882 /* ObservableScrollView.swift in Sources */,
+				BD73352D292D43A0004E4E05 /* UIApplicationHelper.swift in Sources */,
 				50CB82CE28C2AD2300680566 /* LocalOptions.swift in Sources */,
 				50CB824B28C29B0700680566 /* ChatReducer.swift in Sources */,
 				50CB822728C2995A00680566 /* ChatMiddleware.swift in Sources */,

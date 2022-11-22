@@ -34,6 +34,9 @@ struct MessageListView: View {
         .onDisappear {
             viewModel.messageListDisappeared()
         }
+        .onTapGesture {
+            UIApplicationHelper.dismissKeyboard()
+        }
     }
 
     var activityIndicator: some View {

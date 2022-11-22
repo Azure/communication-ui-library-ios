@@ -12,51 +12,20 @@ struct BottomBarView: View {
         static let focusDelay: CGFloat = 1.0
         static let padding: CGFloat = 12
     }
-
-    @FocusState private var hasFocus: Bool
-
     @StateObject var viewModel: BottomBarViewModel
+
+    @State var textEditorHeight: CGFloat = 20
 
     var body: some View {
         HStack(spacing: Constants.padding) {
-            legacyMessageTextField
+            messageTextField
             sendButton
         }
-        .padding([.leading, .trailing], Constants.padding)
-//        .onTapGesture {
-//            hasFocus = false
-//        }
+        .padding([.leading, .trailing, .bottom], Constants.padding)
     }
 
-    // Wrap iOS 16 .vertical
-    // Can't set minimumHeight
     var messageTextField: some View {
-        Group {
-            if #available(iOS 16.0, *) {
-                TextField("Message...",
-                          text: $viewModel.message,
-                          axis: .vertical)
-                .submitLabel(.return)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .focused($hasFocus)
-                .onChange(of: viewModel.message) { newValue in
-                    guard !newValue.isEmpty else {
-                        return
-                    }
-                    viewModel.sendTypingIndicator()
-                }
-            }
-        }
-    }
-
-    var legacyMessageTextField: some View {
-        LegacyTextFieldView(text: $viewModel.message)
-            .frame(height: 40)
-            .overlay(
-                Capsule(style: .continuous)
-                    .stroke(Color.gray, style: StrokeStyle(lineWidth: 1))
-            )
-        // color: Light/Dividers/On primary
+        TextEditorView(text: $viewModel.message)
     }
 
     var sendButton: some View {
@@ -65,48 +34,61 @@ struct BottomBarView: View {
     }
 }
 
-struct LegacyTextFieldView: UIViewRepresentable {
+// Workaround due to no support for multiline text in SwiftUI Textfield.
+// Multiline support was added in iOS 16 but has a new issue of lack of
+// support for padding
+// This uses an invisible text view to measure the text size and then pass
+// that to the texteditor to use for it's height
+struct TextEditorView: View {
+    private enum Constants {
+        static let cornerRadius: CGFloat = 10
+        static let shadow: CGFloat = 1
+        static let minimumHeight: CGFloat = 40
+
+        // Extra padding needed when more that one line displayed
+        static let multilineHeightOffset: CGFloat = 20
+    }
+
     @Binding var text: String
+    @State var textEditorHeight: CGFloat = Constants.minimumHeight
 
-    typealias UIViewType = UITextView
+    var body: some View {
 
-    func makeUIView(context: Context) -> UIViewType {
-        let textView = UITextView()
+        ZStack(alignment: .leading) {
+            Text(text)
+                .font(.system(.body))
+                .foregroundColor(.clear)
+                .background(GeometryReader {
+                    Color.clear.preference(key: ViewHeightKey.self,
+                                           value: $0.frame(in: .local).size.height)
+                })
 
-//        textView.layer.cornerRadius = 5
-//         textView.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
-//         textView.layer.borderWidth = 0.5
-//         textView.clipsToBounds = true
-
-//        textView.font = UIFont.preferredFont(forTextStyle: textStyle)
-//        textView.autocapitalizationType = .sentences
-        textView.isSelectable = true
-        textView.isEditable = true
-        textView.isUserInteractionEnabled = true
-
-        textView.font = UIFont.preferredFont(forTextStyle: .body)
-
-        return textView
-    }
-
-    func updateUIView(_ uiView: UITextView, context: Context) {
-         uiView.text = text
-//         uiView.font = UIFont.preferredFont(forTextStyle: textStyle)
-    }
-
-    func makeCoordinator() -> Coordinator {
-        Coordinator($text)
-    }
-
-    class Coordinator: NSObject, UITextViewDelegate {
-        var text: Binding<String>
-
-        init(_ text: Binding<String>) {
-            self.text = text
+            TextEditor(text: $text)
+                .font(.system(.body))
+                .frame(height: max(Constants.minimumHeight, textEditorHeight))
+                .cornerRadius(Constants.cornerRadius)
+                .shadow(radius: Constants.shadow)
+        }.onPreferenceChange(ViewHeightKey.self) {
+            textEditorHeight = $0 + (text.numberOfLines() > 1 ? Constants.multilineHeightOffset : 0)
         }
 
-        func textViewDidChange(_ textView: UITextView) {
-            self.text.wrappedValue = textView.text
-        }
+    }
+
+}
+
+extension String {
+    func numberOfLines() -> Int {
+        return self.numberOfOccurrencesOf(string: "\n") + 1
+    }
+
+    func numberOfOccurrencesOf(string: String) -> Int {
+        return self.components(separatedBy: string).count - 1
+    }
+}
+
+struct ViewHeightKey: PreferenceKey {
+    static var defaultValue: CGFloat { 0 }
+    static func reduce(value: inout Value, nextValue: () -> Value) {
+        value += nextValue()
     }
 }
