@@ -34,12 +34,12 @@ public class ChatAdapter {
     private var compositeManager: CompositeManagerProtocol?
 
     /// Create an instance of ChatComposite with options.
-    public init(communicationIdentifier: CommunicationIdentifier,
+    public init(identifier: CommunicationIdentifier,
                 credential: CommunicationTokenCredential,
                 endpoint: String,
                 displayName: String? = nil) {
         self.chatConfiguration = ChatConfiguration(
-            communicationIdentifier: communicationIdentifier,
+            communicationIdentifier: identifier,
             credential: credential,
             endpoint: endpoint,
             displayName: displayName)

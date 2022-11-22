@@ -185,7 +185,7 @@ extension ChatDemoView {
         }
 
         self.chatAdapter = ChatAdapter(
-            communicationIdentifier: communicationIdentifier,
+            identifier: communicationIdentifier,
             credential: communicationTokenCredential,
             endpoint: envConfigSubject.endpointUrl,
             displayName: envConfigSubject.displayName)
