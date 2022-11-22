@@ -93,7 +93,9 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
         }
     }
 
-    func participantAddedMessage(participants: [ParticipantInfoModel], dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func participantAddedMessage(participants: [ParticipantInfoModel],
+                                 state: AzureCommunicationUIChat.AppState,
+                                 dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             addParticipantAddedMessageCalled?(true)
         }

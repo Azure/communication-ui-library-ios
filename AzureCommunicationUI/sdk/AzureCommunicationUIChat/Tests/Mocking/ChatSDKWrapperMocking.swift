@@ -6,6 +6,8 @@
 import Foundation
 import Combine
 import AzureCommunicationCommon
+import AzureCore
+
 @testable import AzureCommunicationUIChat
 
 class ChatSDKWrapperMocking: ChatSDKWrapperProtocol {
@@ -17,6 +19,7 @@ class ChatSDKWrapperMocking: ChatSDKWrapperProtocol {
 
     var initializeCalled: Bool = false
     var getInitialMessagesCalled: Bool = false
+    var retrieveChatThreadPropertiesCalled: Bool = false
     var getListOfParticipantsCalled: Bool = false
     var getPreviousMessagesCalled: Bool = false
     var sendMessageCalled: Bool = false
@@ -34,6 +37,13 @@ class ChatSDKWrapperMocking: ChatSDKWrapperProtocol {
         getInitialMessagesCalled = true
         return try await Task<[ChatMessageInfoModel], Error> {
             []
+        }.value
+    }
+
+    func retrieveChatThreadProperties() async throws -> ChatThreadInfoModel {
+        retrieveChatThreadPropertiesCalled = true
+        return try await Task<ChatThreadInfoModel, Error> {
+            ChatThreadInfoModel(receivedOn: Iso8601Date())
         }.value
     }
 

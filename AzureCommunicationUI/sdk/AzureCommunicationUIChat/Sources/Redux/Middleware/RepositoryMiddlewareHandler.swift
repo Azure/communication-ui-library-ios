@@ -59,6 +59,7 @@ protocol RepositoryMiddlewareHandling {
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func participantAddedMessage(participants: [ParticipantInfoModel],
+                                 state: AppState,
                                  dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func participantRemovedMessage(participants: [ParticipantInfoModel],
@@ -108,7 +109,8 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
-                messageRepository.addInitialMessages(initialMessages: messages)
+                let filteredMessages = getMessagesWithoutMaskedParticipants(messages: messages, state: state)
+                messageRepository.addInitialMessages(initialMessages: filteredMessages)
                 dispatch(.repositoryAction(.repositoryUpdated))
             }
         }
@@ -118,7 +120,8 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
-                messageRepository.addPreviousMessages(previousMessages: messages)
+                let filteredMessages = getMessagesWithoutMaskedParticipants(messages: messages, state: state)
+                messageRepository.addPreviousMessages(previousMessages: filteredMessages)
                 dispatch(.repositoryAction(.repositoryUpdated))
             }
         }
@@ -218,12 +221,17 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
     }
 
     func participantAddedMessage(participants: [ParticipantInfoModel],
+                                 state: AppState,
                                  dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
+            let filteredParticipants = filterOutMaskedParticipantsFromMessage(participants: participants, state: state)
+            guard !filteredParticipants.isEmpty else {
+                return
+            }
             let message = ChatMessageInfoModel(
                 type: .participantsAdded,
                 createdOn: Iso8601Date(),
-                participants: participants)
+                participants: filteredParticipants)
             messageRepository.addParticipantAdded(message: message)
             dispatch(.repositoryAction(.repositoryUpdated))
         }
@@ -290,4 +298,33 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
                 dispatch(.repositoryAction(.repositoryUpdated))
             }
         }
+
+    private func getMessagesWithoutMaskedParticipants(
+                                                messages: [ChatMessageInfoModel],
+                                                state: AppState) -> [ChatMessageInfoModel] {
+        var newMessages = messages
+        for (index, message) in messages.enumerated() where message.type == .participantsAdded {
+            let filteredParticipants = filterOutMaskedParticipantsFromMessage(
+                                                                participants: message.participants,
+                                                                state: state)
+            guard !filteredParticipants.isEmpty else {
+                newMessages.remove(at: index)
+                continue
+            }
+            var newMessage = message
+            newMessage.participants = filteredParticipants
+            newMessages[index] = newMessage
+        }
+        return newMessages
+    }
+
+    private func filterOutMaskedParticipantsFromMessage(
+                                                    participants: [ParticipantInfoModel],
+                                                    state: AppState) -> [ParticipantInfoModel] {
+        let maskedParticipants = state.participantsState.maskedParticipants
+        let participants = participants.filter {
+            !maskedParticipants.contains($0.id)
+        }
+        return participants
+    }
 }
