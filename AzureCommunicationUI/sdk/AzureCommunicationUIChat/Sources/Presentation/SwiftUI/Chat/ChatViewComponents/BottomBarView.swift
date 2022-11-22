@@ -32,6 +32,12 @@ struct BottomBarView: View {
 
     var messageTextField: some View {
         TextEditorView(text: $viewModel.message)
+            .onChange(of: viewModel.message) { newValue in
+                guard !newValue.isEmpty else {
+                    return
+                }
+                viewModel.sendTypingIndicator()
+            }
     }
 
     var sendButton: some View {
