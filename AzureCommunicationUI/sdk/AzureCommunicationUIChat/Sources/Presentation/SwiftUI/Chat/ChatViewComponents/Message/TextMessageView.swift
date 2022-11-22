@@ -12,7 +12,7 @@ struct TextMessageView: View {
         static let localTrailingPadding: CGFloat = 15
         static let remoteAvatarLeadingPadding: CGFloat = 6
         static let remoteLeadingPadding: CGFloat = 30
-        static let remoteTrailingPadding: CGFloat = 34
+        static let remoteTrailingPadding: CGFloat = 44
         static let spacing: CGFloat = 4
 
         static let contentHorizontalPadding: CGFloat = 10
