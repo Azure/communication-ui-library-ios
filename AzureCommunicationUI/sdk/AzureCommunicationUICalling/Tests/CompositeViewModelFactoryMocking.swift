@@ -33,6 +33,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var callingViewModel: CallingViewModel?
     var localParticipantsListCellViewModel: ParticipantsListCellViewModel?
     var audioDevicesListCellViewModel: AudioDevicesListCellViewModel?
+    var uitestSettingsOverlayViewModel: UITestSettingsOverlayViewModel?
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel?
     var moreCallOptionsListCellViewModel: MoreCallOptionsListCellViewModel?
     var diagnosticsSharingActivityViewModel: DiagnosticsSharingActivityViewModel?
@@ -155,6 +156,10 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                               title: title,
                                                                               isSelected: isSelected,
                                                                               onSelected: onSelectedAction)
+    }
+
+    func makeSettingsOverlayViewModel(store: AzureCommunicationUICalling.Store<AzureCommunicationUICalling.AppState>, action: @escaping ((AzureCommunicationUICalling.Action) -> Void)) -> AzureCommunicationUICalling.UITestSettingsOverlayViewModel {
+        return uitestSettingsOverlayViewModel ?? UITestSettingsOverlayViewModel(store: store, action: action)
     }
 
     // MARK: CallingViewModels
