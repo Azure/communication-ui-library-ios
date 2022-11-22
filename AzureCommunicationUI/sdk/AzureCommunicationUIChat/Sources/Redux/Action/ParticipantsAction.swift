@@ -42,8 +42,8 @@ enum ParticipantsAction: Equatable {
         case let (.fetchListOfParticipantsSuccess(lArr, lId), .fetchListOfParticipantsSuccess(rArr, rId)):
             return lId == rId && lArr == rArr
 
-        case let (.maskedParticipantsReceived(lArr), .maskedParticipantsReceived(rArr)):
-            return lArr == rArr
+        case let (.maskedParticipantsReceived(lSet), .maskedParticipantsReceived(rSet)):
+            return lSet == rSet
 
         default:
             return false

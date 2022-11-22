@@ -43,7 +43,7 @@ class ChatService: NSObject, ChatServiceProtocol {
     }
 
     func getMaskedParticipantIds() async throws -> Set<String> {
-        guard let createdBy = try await chatSDKWrapper.retriveChatThreadProperties().createdBy else {
+        guard let createdBy = try await chatSDKWrapper.retrieveChatThreadProperties().createdBy else {
             return Set<String>()
         }
         let maskedParticipantIdsSet: Set = [createdBy]

@@ -37,7 +37,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
 
             // Make request to ChatSDK to verfy token
             // Side-effect: topic send through Subject to middleware
-            _ = try await retriveChatThreadProperties().topic
+            _ = try await retrieveChatThreadProperties().topic
 
             try registerRealTimeNotifications()
         } catch {
@@ -69,7 +69,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         }
     }
 
-    func retriveChatThreadProperties() async throws -> ChatThreadInfoModel {
+    func retrieveChatThreadProperties() async throws -> ChatThreadInfoModel {
         do {
             return try await withCheckedThrowingContinuation { continuation in
                 chatThreadClient?.getProperties { result, _ in
@@ -79,8 +79,8 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                         let createdBy = threadProperties.createdBy.stringValue
                         self.logger.info("Retrieved thread topic: \(topic) and createdBy: \(createdBy)")
                         let chatThreadInfo = ChatThreadInfoModel(topic: topic,
-                                                                     receivedOn: Iso8601Date(),
-                                                                     createdBy: createdBy)
+                                                                 receivedOn: Iso8601Date(),
+                                                                 createdBy: createdBy)
                         continuation.resume(returning: chatThreadInfo)
                     case .failure(let error):
                         self.logger.error("Retrieve Thread Properties failed: \(error.errorDescription ?? "")")
