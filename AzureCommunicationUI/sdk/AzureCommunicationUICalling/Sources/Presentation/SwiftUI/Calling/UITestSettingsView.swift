@@ -22,58 +22,103 @@ struct UITestSettingsView: View {
             Text("UITest - Settings")
                 .font(Fonts.button2Accessibility.font)
             VStack(alignment: .leading, spacing: Constants.verticalSpacingMedium) {
-                Button("Simulate call on hold") {
-                    viewModel.action(.callingAction(.holdRequested))
-                    displayed = false
-                }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateCallOnHold.rawValue)
-                Button("Simulate call resume") {
-                    viewModel.action(.callingAction(.resumeRequested))
-                    displayed = false
-                }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateCallOnResume.rawValue)
-                Button("Simulate recording start") {
-                    viewModel.action(.callingAction(
-                        .recordingStateUpdated(isRecordingActive: true)))
-                    displayed = false
-                }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateRecordingStart.rawValue)
-                Button("Simulate recording end") {
-                    viewModel.action(.callingAction(
-                        .recordingStateUpdated(isRecordingActive: false)))
-                    displayed = false
-                }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateRecordingEnd.rawValue)
-                Button("Simulate transcription start") {
-                    viewModel.action(.callingAction(
-                        .transcriptionStateUpdated(isTranscriptionActive: true)))
-                    displayed = false
-                }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateTranscriptionStart.rawValue)
-                Button("Simulate transcription end") {
-                    viewModel.action(.callingAction(
-                        .transcriptionStateUpdated(isTranscriptionActive: false)))
-                    displayed = false
-                }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateTranscriptionEnd.rawValue)
-                Button("Simulate 1 participants join") {
-                    viewModel.addParticipant()
-                    viewModel.action(.callingAction(.participantListUpdated(participants:
-                                                                                viewModel.participantInfoViewModel)))
-                    displayed = false
-                }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateNewParticipantJoin.rawValue)
-                Button("Simulate 3 new participants join") {
-                    viewModel.addParticipants(number: 3)
-                    viewModel.action(.callingAction(.participantListUpdated(participants:
-                                                                                viewModel.participantInfoViewModel)))
-                    displayed = false
-                }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulate3NewParticipantJoin.rawValue)
-                Button("Simulate 6 participants join") {
-                    viewModel.addParticipants(number: 6)
-                    viewModel.action(.callingAction(.participantListUpdated(participants:
-                                                                                viewModel.participantInfoViewModel)))
-                    displayed = false
-                }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulate6NewParticipantJoin.rawValue)
-                Button("Simulate 1 participants leave") {
-                    viewModel.removeLastPartiicpant()
-                    viewModel.action(.callingAction(.participantListUpdated(participants:
-                                                                                viewModel.participantInfoViewModel)))
-                    displayed = false
-                }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulate1ParticipantLeave.rawValue)
+                Group {
+                    Button("Simulate call on hold") {
+                        viewModel.action(.callingAction(.holdRequested))
+                        displayed = false
+                    }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateCallOnHold.rawValue)
+                    Button("Simulate call resume") {
+                        viewModel.action(.callingAction(.resumeRequested))
+                        displayed = false
+                    }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateCallOnResume.rawValue)
+                }
+                Group {
+                    Button("Simulate recording start") {
+                        viewModel.action(.callingAction(
+                            .recordingStateUpdated(isRecordingActive: true)))
+                        displayed = false
+                    }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateRecordingStart.rawValue)
+                    Button("Simulate recording end") {
+                        viewModel.action(.callingAction(
+                            .recordingStateUpdated(isRecordingActive: false)))
+                        displayed = false
+                    }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateRecordingEnd.rawValue)
+                    Button("Simulate transcription start") {
+                        viewModel.action(.callingAction(
+                            .transcriptionStateUpdated(isTranscriptionActive: true)))
+                        displayed = false
+                    }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateTranscriptionStart.rawValue)
+                    Button("Simulate transcription end") {
+                        viewModel.action(.callingAction(
+                            .transcriptionStateUpdated(isTranscriptionActive: false)))
+                        displayed = false
+                    }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateTranscriptionEnd.rawValue)
+                }
+                Group {
+                    Button("Simulate 1 participants join") {
+                        viewModel.addParticipant()
+                        viewModel.action(
+                            .callingAction(.participantListUpdated(participants:
+                                                                    viewModel.participantInfoViewModels)))
+                        displayed = false
+                    }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulate1ParticipantJoin.rawValue)
+                    Button("Simulate 3 participants join") {
+                        viewModel.addParticipants(number: 3)
+                        viewModel.action(
+                            .callingAction(.participantListUpdated(participants:
+                                                                    viewModel.participantInfoViewModels)))
+                        displayed = false
+                    }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulate3NewParticipantJoin.rawValue)
+                    Button("Simulate 6 participants join") {
+                        viewModel.addParticipants(number: 6)
+                        viewModel.action(
+                            .callingAction(.participantListUpdated(participants:
+                                                                    viewModel.participantInfoViewModels)))
+                        displayed = false
+                    }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulate6NewParticipantJoin.rawValue)
+                    Button("Simulate 1 participant leave") {
+                        viewModel.removeLastPartiicpant()
+                        viewModel.action(
+                            .callingAction(.participantListUpdated(participants:
+                                                                    viewModel.participantInfoViewModels)))
+                        displayed = false
+                    }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulate1ParticipantLeave.rawValue)
+                    Button("Simulate all participants leave") {
+                        viewModel.removeAllRemoteParticipants()
+                        viewModel.action(
+                            .callingAction(.participantListUpdated(participants:
+                                                                    viewModel.participantInfoViewModels)))
+                        displayed = false
+                    }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateAllParticipantsLeave.rawValue)
+                    Button("Simulate participant speaks") {
+                        viewModel.updateParticipantSpeakStatus(isSpeaking: true)
+                        viewModel.action(
+                            .callingAction(.participantListUpdated(participants:
+                                                                    viewModel.participantInfoViewModels)))
+                        displayed = false
+                    }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateParticipantSpeak.rawValue)
+                    Button("Simulate participant mute") {
+                        viewModel.updateParticipantSpeakStatus(isSpeaking: false)
+                        viewModel.action(
+                            .callingAction(.participantListUpdated(participants:
+                                                                    viewModel.participantInfoViewModels)))
+                        displayed = false
+                    }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateParticipantMute.rawValue)
+                    Button("Simulate participant hold") {
+                        viewModel.updateParticipantHoldStatus(isHold: true)
+                        viewModel.action(
+                            .callingAction(.participantListUpdated(participants:
+                                                                    viewModel.participantInfoViewModels)))
+                        displayed = false
+                    }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateParticipantMute.rawValue)
+                    Button("Simulate participant resume") {
+                        viewModel.updateParticipantHoldStatus(isHold: false)
+                        viewModel.action(
+                            .callingAction(.participantListUpdated(participants:
+                                                                    viewModel.participantInfoViewModels)))
+                        displayed = false
+                    }.accessibilityIdentifier(AccessibilityIdentifier.uitestsimulateParticipantMute.rawValue)
+                }
             }
         }
         .padding(.all)

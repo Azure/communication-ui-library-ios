@@ -8,7 +8,7 @@ import Foundation
 class UITestSettingsOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
 
     @Published var isDisplayed: Bool = true
-    var participantInfoViewModel: [ParticipantInfoModel] = []
+    var participantInfoViewModels: [ParticipantInfoModel] = []
 
     var title: String {
         return "UITest Settings Page"
@@ -33,7 +33,7 @@ class UITestSettingsOverlayViewModel: OverlayViewModelProtocol, ObservableObject
     }
 
     func addParticipant() {
-        let count = participantInfoViewModel.count
+        let count = participantInfoViewModels.count
         let newParticipant = ParticipantInfoModel(displayName: "New User \(count + 1)",
                                                   isSpeaking: false,
                                                   isMuted: true,
@@ -43,12 +43,12 @@ class UITestSettingsOverlayViewModel: OverlayViewModelProtocol, ObservableObject
                                                   recentSpeakingStamp: Date(),
                                                   screenShareVideoStreamModel: nil,
                                                   cameraVideoStreamModel: nil)
-        participantInfoViewModel.append(newParticipant)
+        participantInfoViewModels.append(newParticipant)
     }
 
     func addParticipants(number: Int) {
-        let count = participantInfoViewModel.count
-        for i in 0...number {
+        let count = participantInfoViewModels.count
+        for i in 1...number {
             let newParticipant = ParticipantInfoModel(displayName: "New User \(count + i)",
                                                       isSpeaking: false,
                                                       isMuted: true,
@@ -58,19 +58,57 @@ class UITestSettingsOverlayViewModel: OverlayViewModelProtocol, ObservableObject
                                                       recentSpeakingStamp: Date(),
                                                       screenShareVideoStreamModel: nil,
                                                       cameraVideoStreamModel: nil)
-            participantInfoViewModel.append(newParticipant)
+            participantInfoViewModels.append(newParticipant)
         }
     }
 
     func removeLastPartiicpant() {
-        guard !participantInfoViewModel.isEmpty else {
+        guard !participantInfoViewModels.isEmpty else {
             return
         }
 
-        participantInfoViewModel.removeLast()
+        participantInfoViewModels.removeLast()
     }
 
     func removeAllRemoteParticipants() {
-        participantInfoViewModel.removeAll()
+        participantInfoViewModels.removeAll()
+    }
+
+    func updateParticipantSpeakStatus(isSpeaking: Bool) {
+        guard !participantInfoViewModels.isEmpty else {
+            return
+        }
+        if let first = participantInfoViewModels.first {
+            let newParticipant = ParticipantInfoModel(displayName: first.displayName,
+                                                      isSpeaking: isSpeaking,
+                                                      isMuted: !isSpeaking,
+                                                      isRemoteUser: first.isRemoteUser,
+                                                      userIdentifier: first.userIdentifier,
+                                                      status: first.status,
+                                                      recentSpeakingStamp: Date(),
+                                                      screenShareVideoStreamModel: first.screenShareVideoStreamModel,
+                                                      cameraVideoStreamModel: first.cameraVideoStreamModel)
+            participantInfoViewModels.removeFirst()
+            participantInfoViewModels.insert(newParticipant, at: 0)
+        }
+    }
+
+    func updateParticipantHoldStatus(isHold: Bool) {
+        guard !participantInfoViewModels.isEmpty else {
+            return
+        }
+        if let first = participantInfoViewModels.first {
+            let newParticipant = ParticipantInfoModel(displayName: first.displayName,
+                                                      isSpeaking: first.isSpeaking,
+                                                      isMuted: first.isMuted,
+                                                      isRemoteUser: first.isRemoteUser,
+                                                      userIdentifier: first.userIdentifier,
+                                                      status: isHold ? .hold : .connected,
+                                                      recentSpeakingStamp: first.recentSpeakingStamp,
+                                                      screenShareVideoStreamModel: first.screenShareVideoStreamModel,
+                                                      cameraVideoStreamModel: first.cameraVideoStreamModel)
+            participantInfoViewModels.removeFirst()
+            participantInfoViewModels.insert(newParticipant, at: 0)
+        }
     }
 }

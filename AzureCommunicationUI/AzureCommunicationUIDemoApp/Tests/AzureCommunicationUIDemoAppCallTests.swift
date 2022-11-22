@@ -72,9 +72,9 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateTranscriptionEnd.rawValue, shouldWait: true)
 
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateNewParticipantJoin.rawValue, shouldWait: true)
-        let participantGridCellView = app.otherElements[AccessibilityIdentifier.participantGridCellViewAccessibilityID.rawValue]
-        XCTAssertNotNil(participantGridCellView)
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulate1ParticipantJoin.rawValue, shouldWait: true)
+        let draggablePipView = app.otherElements[AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue]
+        XCTAssertTrue(draggablePipView.exists)
 
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulate3NewParticipantJoin.rawValue, shouldWait: true)
@@ -85,7 +85,12 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulate1ParticipantLeave.rawValue, shouldWait: true)
 
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateAllParticipantsLeave.rawValue, shouldWait: true)
+
         toggleLeaveCallDrawer(leaveCall: true)
+        let draggablePipViewRetest = app.otherElements[AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue]
+        XCTAssertFalse(draggablePipViewRetest.exists)
     }
 
     // MARK: End call tests

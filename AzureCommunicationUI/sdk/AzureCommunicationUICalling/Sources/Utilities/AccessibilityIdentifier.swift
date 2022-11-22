@@ -9,6 +9,9 @@ enum AccessibilityIdentifier: String {
     case bannerViewAccessibilityID = "AzureCommunicationUICalling.CallingView.Banner.AccessibilityID"
     case participantGridCellViewAccessibilityID =
             "AzureCommunicationUICalling.CallingView.ParticipantGridCellView.AccessibilityID"
+    case participantGridLayoutViewAccessibilityID =
+            "AzureCommunicationUICalling.CallingView.ParticipantGridLayoutView.AccessibilityID"
+    case draggablePipViewAccessibilityID = "AzureCommunicationUICalling.CallingView.DraggablePipView.AccessibilityID"
     case leaveCallAccessibilityID = "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall.AccessibilityID"
     case joinCallAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.JoinCall.AccessibilityID"
     case toggleVideoAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.Video.AccessibilityID"
@@ -34,7 +37,7 @@ enum AccessibilityIdentifier: String {
             "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.SimulateTranscriptionStart"
     case uitestsimulateTranscriptionEnd =
             "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.SimulateTranscriptionEnd"
-    case uitestsimulateNewParticipantJoin =
+    case uitestsimulate1ParticipantJoin =
             "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.SimulateNewParticipantJoin"
     case uitestsimulate3NewParticipantJoin =
             "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.Simulate3NewParticipantsJoin"
@@ -44,6 +47,14 @@ enum AccessibilityIdentifier: String {
             "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.Simulate1ParticipantLeave"
     case uitestsimulateAllParticipantsLeave =
             "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.SimulateAllParticipantsLeave"
+    case uitestsimulateParticipantSpeak =
+            "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.SimulateParticipantSpeak"
+    case uitestsimulateParticipantMute =
+            "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.SimulateParticipantMute"
+    case uitestsimulateParticipantHold =
+            "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.SimulateParticipantHold"
+    case uitestsimulateParticipantResume =
+            "AzureCommunicationUICalling.CallingView.Overlay.UITestSettings.SimulateParticipantResume"
     case moreAccessibilityID = "AzureCommunicationUICalling.CallingView.ControlButton.More.AccessibilityID"
     case shareDiagnosticsAccessibilityID =
             "AzureCommunicationUICalling.CallingView.MoreOverlay.ShareDiagnostics.AccessibilityID"
