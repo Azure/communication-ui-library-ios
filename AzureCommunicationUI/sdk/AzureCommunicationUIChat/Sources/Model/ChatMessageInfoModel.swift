@@ -14,6 +14,13 @@ enum MessageType: Equatable {
     case participantsRemoved
 }
 
+enum MessageSendStatus: Equatable {
+    case sent
+    case delivering
+    case seen
+    case failed
+}
+
 struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
     var id: String
     let version: String
@@ -24,6 +31,8 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
     var createdOn: Iso8601Date
     var editedOn: Iso8601Date?
     var deletedOn: Iso8601Date?
+    var sendStatus: MessageSendStatus?
+    var isLocalUser: Bool
 
     // for participant added/removed only
     var participants: [ParticipantInfoModel]
@@ -37,7 +46,9 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
          createdOn: Iso8601Date? = nil,
          editedOn: Iso8601Date? = nil,
          deletedOn: Iso8601Date? = nil,
-         participants: [ParticipantInfoModel] = []) {
+         participants: [ParticipantInfoModel] = [],
+         sendStatus: MessageSendStatus? = nil,
+         isLocalUser: Bool = false) {
         self.id = id ?? UUID().uuidString
         self.version = version
         self.type = type
@@ -48,6 +59,8 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
         self.editedOn = editedOn
         self.deletedOn = deletedOn
         self.participants = participants
+        self.sendStatus = sendStatus
+        self.isLocalUser = isLocalUser
     }
 
     mutating func replace(id: String) {
@@ -81,7 +94,7 @@ extension ChatMessageInfoModel {
     }
 }
 
-public struct ChatMessageModel {
+struct ChatMessageModel {
     public let id: String
     public let content: String
     public let senderId: String

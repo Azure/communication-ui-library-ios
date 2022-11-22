@@ -64,6 +64,9 @@ protocol RepositoryMiddlewareHandling {
     func participantRemovedMessage(participants: [ParticipantInfoModel],
                                    dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
+    func addLocalUserRemovedMessage(state: AppState,
+                                    dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
     func addReceivedMessage(
         message: ChatMessageInfoModel,
         state: AppState,
@@ -76,6 +79,11 @@ protocol RepositoryMiddlewareHandling {
     @discardableResult
     func updateReceivedDeletedMessage(
         message: ChatMessageInfoModel,
+        state: AppState,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func readReceiptReceived(
+        readReceiptInfo: ReadReceiptInfoModel,
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 }
@@ -192,7 +200,15 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
                 messageRepository.addTopicUpdatedMessage(chatThreadInfo: threadInfo)
                 dispatch(.repositoryAction(.repositoryUpdated))
             }
+    }
+
+    func addLocalUserRemovedMessage(state: AppState,
+                                    dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            messageRepository.addLocalUserRemovedMessage()
+            dispatch(.repositoryAction(.repositoryUpdated))
         }
+    }
 
     func participantAddedMessage(participants: [ParticipantInfoModel],
                                  dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
@@ -234,6 +250,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 messageRepository.updateMessageEdited(message: message)
+                dispatch(.repositoryAction(.repositoryUpdated))
             }
         }
 
@@ -243,6 +260,17 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 messageRepository.updateMessageDeleted(message: message)
+                dispatch(.repositoryAction(.repositoryUpdated))
+            }
+        }
+
+    func readReceiptReceived(
+        readReceiptInfo: ReadReceiptInfoModel,
+        state: AppState,
+        dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+            Task {
+                messageRepository.updateMessageSendStatus(readReceiptInfo: readReceiptInfo, state: state)
+                dispatch(.repositoryAction(.repositoryUpdated))
             }
         }
 }

@@ -44,7 +44,9 @@ private func handleChatAction(
             actionHandler.addTopicUpdatedMessage(threadInfo: threadInfo,
                                                  state: getState(),
                                                  dispatch: dispatch)
-
+        case .chatMessageLocalUserRemoved:
+            actionHandler.addLocalUserRemovedMessage(state: getState(),
+                                                     dispatch: dispatch)
         default:
             break
         }
@@ -62,6 +64,8 @@ private func handleParticipantsAction(
         case .participantsRemoved(let participants):
             actionHandler.participantRemovedMessage(participants: participants,
                                                     dispatch: dispatch)
+        case.readReceiptReceived(let readReceiptInfo):
+            actionHandler.readReceiptReceived(readReceiptInfo: readReceiptInfo, state: getState(), dispatch: dispatch)
         default:
             break
         }

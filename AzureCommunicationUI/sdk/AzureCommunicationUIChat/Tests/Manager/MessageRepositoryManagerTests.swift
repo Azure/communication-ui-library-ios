@@ -3,16 +3,17 @@
 //  Licensed under the MIT License.
 //
 
+import AzureCommunicationCommon
 import AzureCore
 import XCTest
 @testable import AzureCommunicationUIChat
 
 class MessageRepositoryManagerTests: XCTestCase {
-    var eventsHandler: ChatComposite.Events!
+    var eventsHandler: ChatAdapter.Events!
 
     override func setUp() {
         super.setUp()
-        eventsHandler = ChatComposite.Events()
+        eventsHandler = ChatAdapter.Events()
     }
 
     override func tearDown() {
@@ -319,6 +320,64 @@ class MessageRepositoryManagerTests: XCTestCase {
             XCTAssertNil(m.deletedOn)
         }
     }
+
+    func test_messageRepositoryManager_updateMessageSendStatus_when_everyParticipantHasReadMessage_then_sendStatusWillBeUpdated() {
+        let lastMessageId = "1668456344995"
+        let initialMessages = [
+            ChatMessageInfoModel(id: "1668436344995"),
+            ChatMessageInfoModel(id: "1668446344995"),
+            ChatMessageInfoModel(id: lastMessageId)
+        ]
+
+        let sut = makeSUT(messages: initialMessages)
+        let readReceiptInfo = ReadReceiptInfoModel(senderIdentifier: CommunicationUserIdentifier("identifier"), chatMessageId: lastMessageId, readOn: Iso8601Date())
+        guard let messageIdDouble = Double(lastMessageId) else {
+            XCTFail("Message Id should be able to be converted to Double")
+            return
+        }
+        let readReceiptMap = [
+            "Participant1": Date(timeIntervalSince1970: (messageIdDouble + 300) / 1000),
+            "Participant2": Date(timeIntervalSince1970: (messageIdDouble + 200) / 1000),
+            "Participant3": Date(timeIntervalSince1970: (messageIdDouble + 100) / 1000)
+        ]
+        let participantsState = ParticipantsState(readReceiptMap: readReceiptMap)
+        sut.updateMessageSendStatus(readReceiptInfo: readReceiptInfo, state: getAppState(participantsState: participantsState))
+
+        XCTAssertNil(sut.messages.first?.sendStatus)
+        XCTAssertEqual(sut.messages.last?.sendStatus, .seen)
+    }
+
+    func test_messageRepositoryManager_updateMessageSendStatus_when_someParticipantsHaveReadMessage_then_sendStatusWillNotBeUpdated() {
+        let lastMessageId = "1668456344995"
+        let initialMessages = [
+            ChatMessageInfoModel(id: "1668436344995"),
+            ChatMessageInfoModel(id: "1668446344995"),
+            ChatMessageInfoModel(id: lastMessageId)
+        ]
+
+        let sut = makeSUT(messages: initialMessages)
+        let readReceiptInfo = ReadReceiptInfoModel(senderIdentifier: CommunicationUserIdentifier("identifier"), chatMessageId: lastMessageId, readOn: Iso8601Date())
+        guard let messageIdDouble = Double(lastMessageId) else {
+            XCTFail("Message Id should be able to be converted to Double")
+            return
+        }
+        let readReceiptMap = [
+            "Participant1": Date(timeIntervalSince1970: (messageIdDouble - 300) / 1000),
+            "Participant2": Date(timeIntervalSince1970: (messageIdDouble - 200) / 1000),
+            "Participant3": Date(timeIntervalSince1970: (messageIdDouble) / 1000)
+        ]
+        let participantsState = ParticipantsState(readReceiptMap: readReceiptMap)
+        sut.updateMessageSendStatus(readReceiptInfo: readReceiptInfo, state: getAppState(participantsState: participantsState))
+
+        XCTAssertNil(sut.messages.first?.sendStatus)
+        XCTAssertNil(sut.messages.last?.sendStatus)
+    }
+
+    func test_messageRepositoryManager_addLocalUserRemovedMessage_when_initialMessages_then_messagesCountWillBeIncrementByOne() {
+        let sut = makeSUT()
+        sut.addLocalUserRemovedMessage()
+        XCTAssertEqual(sut.messages.count, 1)
+    }
 }
 
 extension MessageRepositoryManagerTests {
@@ -326,5 +385,14 @@ extension MessageRepositoryManagerTests {
         let sut = MessageRepositoryManager(chatCompositeEventsHandler: eventsHandler)
         sut.messages = messages
         return sut
+    }
+
+    func getAppState(participantsState: ParticipantsState) -> AppState {
+        return AppState(lifeCycleState: LifeCycleState(),
+                        chatState: ChatState(),
+                        participantsState: participantsState,
+                        navigationState: NavigationState(),
+                        repositoryState: RepositoryState(),
+                        errorState: ErrorState())
     }
 }

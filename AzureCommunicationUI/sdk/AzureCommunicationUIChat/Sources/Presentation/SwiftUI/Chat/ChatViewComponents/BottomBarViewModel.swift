@@ -15,6 +15,8 @@ class BottomBarViewModel: ObservableObject {
     private var lastTypingIndicatorSendTimestamp = Date()
     private let typingIndicatorDelay: TimeInterval = 8.0
 
+    @Published var isLocalUserRemoved: Bool = false
+
     @Published var message: String = ""
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
@@ -51,5 +53,12 @@ class BottomBarViewModel: ObservableObject {
             dispatch(.chatAction(.sendTypingIndicatorTriggered))
             lastTypingIndicatorSendTimestamp = Date()
         }
+    }
+
+    func update(chatState: ChatState) {
+        guard isLocalUserRemoved != chatState.isLocalUserRemovedFromChat else {
+            return
+        }
+        isLocalUserRemoved = chatState.isLocalUserRemovedFromChat
     }
 }

@@ -16,6 +16,7 @@ protocol MessageRepositoryManagerProtocol {
     func editMessage(messageId: String, content: String)
     func deleteMessage(messageId: String)
     func replaceMessageId(internalId: String, actualId: String)
+    func addLocalUserRemovedMessage()
     func updateEditMessageTimestamp(messageId: String)
     func updateDeletedMessageTimestamp(messageId: String)
 
@@ -28,19 +29,26 @@ protocol MessageRepositoryManagerProtocol {
     func addReceivedMessage(message: ChatMessageInfoModel)
     func updateMessageEdited(message: ChatMessageInfoModel)
     func updateMessageDeleted(message: ChatMessageInfoModel)
+    func updateMessageSendStatus(readReceiptInfo: ReadReceiptInfoModel, state: AppState)
 }
 
 class MessageRepositoryManager: MessageRepositoryManagerProtocol {
     var messages: [ChatMessageInfoModel] = []
 
-    private let eventsHandler: ChatComposite.Events
+    private let eventsHandler: ChatAdapter.Events
 
-    init(chatCompositeEventsHandler: ChatComposite.Events) {
+    init(chatCompositeEventsHandler: ChatAdapter.Events) {
         self.eventsHandler = chatCompositeEventsHandler
     }
 
     func addInitialMessages(initialMessages: [ChatMessageInfoModel]) {
         messages = initialMessages
+
+        messages.sort { lhs, rhs -> Bool in
+            // createdOn does not have milliseconds
+            return lhs.createdOn == rhs.createdOn ?
+            lhs.id < rhs.id : lhs.createdOn < rhs.createdOn
+        }
     }
 
     func addPreviousMessages(previousMessages: [ChatMessageInfoModel]) {
@@ -137,6 +145,15 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
         messages.append(topicUpdatedSystemMessage)
     }
 
+    func addLocalUserRemovedMessage() {
+        let localUserRemovedSystemMessage = ChatMessageInfoModel(
+            type: .participantsRemoved,
+            createdOn: Iso8601Date(),
+            isLocalUser: true
+        )
+        messages.append(localUserRemovedSystemMessage)
+    }
+
     func addReceivedMessage(message: ChatMessageInfoModel) {
         if let index = messages.firstIndex(where: {
             $0.id == message.id
@@ -161,5 +178,29 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
         }) {
             messages[index] = message
         }
+    }
+
+    func updateMessageSendStatus(readReceiptInfo: ReadReceiptInfoModel, state: AppState) {
+        guard readReceiptInfo.senderIdentifier.stringValue != state.chatState.localUser?.identifier.stringValue else {
+            return
+        }
+        let messageId = readReceiptInfo.chatMessageId
+        let messageTimestamp = messageId.convertEpochStringToTimestamp()
+        var readReceiptMap = state.participantsState.readReceiptMap
+        readReceiptMap[readReceiptInfo.senderIdentifier.stringValue] = messageTimestamp
+
+        let minimumReadReceiptTimestamp = readReceiptMap.min { $0.value < $1.value }?.value
+        guard let minimumReadReceiptTimestamp = minimumReadReceiptTimestamp else {
+            return
+        }
+
+        guard let messageTimestamp = messageTimestamp,
+            messageTimestamp <= minimumReadReceiptTimestamp,
+            let index = messages.firstIndex(where: {
+                $0.id == messageId
+            }) else {
+            return
+        }
+        messages[index].sendStatus = .seen
     }
 }

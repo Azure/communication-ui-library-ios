@@ -63,7 +63,7 @@ class RepositoryMiddlewareTests: XCTestCase {
 
     func test_repositoryMiddleware_apply_when_participantsRemovedParticipantsAction_then_handlerParticipantRemovedMessageBeingCalled() {
 
-        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let middlewareDispatch = getEmptyChatMiddlewareFunctionWithLocalUser()
         let expectation = expectation(description: "addParticipantRemovedMessageCalled")
         mockRepositoryHandler.addParticipantRemovedMessageCalled = { value in
             XCTAssertTrue(value)
@@ -237,6 +237,34 @@ class RepositoryMiddlewareTests: XCTestCase {
         middlewareDispatch(getEmptyDispatch())(.repositoryAction(.chatMessageDeletedReceived(message: message)))
         wait(for: [expectation], timeout: 1)
     }
+
+    func test_repositoryMiddleware_apply_when_readReceiptReceivedParticipantsAction_then_handlerReadReceiptReceivedBeingCalled() {
+
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "readReceiptReceivedCalled")
+        mockRepositoryHandler.readReceiptReceivedCalled = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+
+        let readReceiptInfo = ReadReceiptInfoModel(
+            senderIdentifier: CommunicationUserIdentifier("Identifier"),
+            chatMessageId: "messageId",
+            readOn: Iso8601Date())
+        middlewareDispatch(getEmptyDispatch())(.participantsAction(.readReceiptReceived(readReceiptInfo: readReceiptInfo)))
+        wait(for: [expectation], timeout: 1)
+    }
+
+    func test_repositoryMiddleware_apply_when_chatMessageLocalUserRemovedAction_then_addLocalUserRemovedMessageBeingCalled() {
+        let middlewareDispatch = getEmptyChatMiddlewareFunction()
+        let expectation = expectation(description: "addLocalUserRemovedMessageBeingCalled")
+        mockRepositoryHandler.addLocalUserRemovedMessage = { value in
+            XCTAssertTrue(value)
+            expectation.fulfill()
+        }
+        middlewareDispatch(getEmptyDispatch())(.chatAction(.chatMessageLocalUserRemoved))
+        wait(for: [expectation], timeout: 1)
+    }
 }
 
 extension RepositoryMiddlewareTests {
@@ -244,12 +272,22 @@ extension RepositoryMiddlewareTests {
     private func getEmptyState() -> AppState {
         return AppState()
     }
+
+    private func getEmptyStateWithLocalUser() -> AppState {
+        let chatState = ChatState(localUser: ParticipantInfoModel(identifier: CommunicationUserIdentifier(""), displayName: ""))
+        return AppState(chatState: chatState)
+    }
+
     private func getEmptyDispatch() -> ActionDispatch {
         return { _ in }
     }
 
     private func getEmptyChatMiddlewareFunction() -> (@escaping ActionDispatch) -> ActionDispatch {
         return mockMiddleware.apply(getEmptyDispatch(), getEmptyState)
+    }
+
+    private func getEmptyChatMiddlewareFunctionWithLocalUser() -> (@escaping ActionDispatch) -> ActionDispatch {
+        return mockMiddleware.apply(getEmptyDispatch(), getEmptyStateWithLocalUser)
     }
 
     private func getAssertSameActionDispatch(action: Action, expectation: XCTestExpectation) -> ActionDispatch {

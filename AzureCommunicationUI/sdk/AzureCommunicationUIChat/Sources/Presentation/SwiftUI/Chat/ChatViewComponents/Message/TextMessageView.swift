@@ -18,6 +18,8 @@ struct TextMessageView: View {
         static let contentHorizontalPadding: CGFloat = 10
         static let contentVerticalPadding: CGFloat = 8
         static let cornerRadius: CGFloat = 5
+        static let readReceiptIconSize: CGFloat = 12
+        static let readReceiptViewPadding: CGFloat = 3
     }
 
     @StateObject var viewModel: TextMessageViewModel
@@ -29,7 +31,7 @@ struct TextMessageView: View {
             }
             avatar
             bubble
-            readReceipt
+            messageSendStatus
             if !viewModel.isLocalUser {
                 Spacer()
             }
@@ -52,6 +54,7 @@ struct TextMessageView: View {
             HStack {
                 name
                 timeStamp
+                edited
             }
             Text(viewModel.message.content ?? "No Content") // Handle nil?
                 .font(.body)
@@ -85,12 +88,34 @@ struct TextMessageView: View {
         }
     }
 
-    var readReceipt: some View {
-        let isRead = false
+    var edited: some View {
+        Group {
+            if viewModel.message.editedOn != nil {
+                Text("Edited")
+                    .font(.caption)
+                    .foregroundColor(Color(StyleProvider.color.textDisabled))
+            }
+        }
+    }
+
+    var messageSendStatus: some View {
         return Group {
-            if isRead {
-                // Replace with icon
-                Text("Read")
+            if viewModel.isLocalUser {
+                VStack {
+                    Spacer()
+                    if let iconName = viewModel.getMessageSendStatusIconName() {
+                        StyleProvider.icon.getImage(for: iconName)
+                            .frame(width: Constants.readReceiptIconSize,
+                                   height: Constants.readReceiptIconSize)
+                            .foregroundColor(Color(StyleProvider.color.primaryColor))
+                            .padding(.bottom, Constants.readReceiptViewPadding)
+                    } else {
+                        Rectangle()
+                            .fill(Color.clear)
+                            .frame(width: Constants.readReceiptIconSize,
+                                   height: Constants.readReceiptIconSize)
+                    }
+                }
             }
         }
     }

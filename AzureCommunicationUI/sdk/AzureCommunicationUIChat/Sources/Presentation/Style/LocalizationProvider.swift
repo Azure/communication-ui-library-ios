@@ -75,14 +75,14 @@ extension LocalizationProvider {
             return predefinedTranslation
         }
         return NSLocalizedString(key,
-                                 bundle: Bundle(for: ChatComposite.self),
+                                 bundle: Bundle(for: ChatAdapter.self),
                                  value: key,
                                  comment: key)
     }
 
     private func findPredefinedLocalizedString(_ languageCode: String,
                                                _ key: String) -> String? {
-        guard let path = Bundle(for: ChatComposite.self)
+        guard let path = Bundle(for: ChatAdapter.self)
             .path(forResource: languageCode, ofType: "lproj") else {
             return nil
         }

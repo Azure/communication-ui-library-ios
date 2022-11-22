@@ -18,8 +18,14 @@ struct BottomBarView: View {
 
     var body: some View {
         HStack(spacing: Constants.padding) {
-            messageTextField
-            sendButton
+          Group {
+            if viewModel.isLocalUserRemoved {
+                localParticipantRemovedBanner
+            } else {
+                messageTextField
+                sendButton
+            }
+          }
         }
         .padding([.leading, .trailing, .bottom], Constants.padding)
     }
@@ -31,6 +37,11 @@ struct BottomBarView: View {
     var sendButton: some View {
         IconButton(viewModel: viewModel.sendButtonViewModel)
             .flipsForRightToLeftLayoutDirection(true)
+    }
+
+    var localParticipantRemovedBanner: some View {
+        Text("You're no longer a participant")
+            .foregroundColor(Color(StyleProvider.color.textSecondary))
     }
 }
 

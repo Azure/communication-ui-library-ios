@@ -48,5 +48,6 @@ class ChatViewModel: ObservableObject {
         messageListViewModel.update(chatState: state.chatState, repositoryState: state.repositoryState)
         typingParticipantsViewModel.update(participantsState: state.participantsState)
         topBarViewModel.update(participantsState: state.participantsState)
+        bottomBarViewModel.update(chatState: state.chatState)
     }
 }
