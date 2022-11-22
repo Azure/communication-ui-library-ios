@@ -44,6 +44,12 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
 
     func addInitialMessages(initialMessages: [ChatMessageInfoModel]) {
         messages = initialMessages
+
+        messages.sort { lhs, rhs -> Bool in
+            // createdOn does not have milliseconds
+            return lhs.createdOn == rhs.createdOn ?
+            lhs.id < rhs.id : lhs.createdOn < rhs.createdOn
+        }
     }
 
     func addPreviousMessages(previousMessages: [ChatMessageInfoModel]) {
