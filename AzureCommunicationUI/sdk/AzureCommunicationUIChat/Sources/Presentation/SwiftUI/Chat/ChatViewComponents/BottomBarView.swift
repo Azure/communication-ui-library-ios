@@ -19,39 +19,94 @@ struct BottomBarView: View {
 
     var body: some View {
         HStack(spacing: Constants.padding) {
-            messageTextField
+            legacyMessageTextField
             sendButton
         }
-        .frame(minHeight: Constants.minimumHeight)
         .padding([.leading, .trailing], Constants.padding)
+//        .onTapGesture {
+//            hasFocus = false
+//        }
     }
 
+    // Wrap iOS 16 .vertical
+    // Can't set minimumHeight
     var messageTextField: some View {
-        TextField("Message...",
-                  text: $viewModel.message,
-                  onCommit: viewModel.sendMessage)
-        .submitLabel(.send)
-        .textFieldStyle(RoundedBorderTextFieldStyle())
-        .focused($hasFocus)
-        .onChange(of: viewModel.hasFocus) {
-            hasFocus = $0
-        }
-        .onChange(of: hasFocus) {
-            viewModel.hasFocus = $0
-        }
-        .onChange(of: viewModel.message) { newValue in
-            guard !newValue.isEmpty else {
-                return
+        Group {
+            if #available(iOS 16.0, *) {
+                TextField("Message...",
+                          text: $viewModel.message,
+                          axis: .vertical)
+                .submitLabel(.return)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .focused($hasFocus)
+                .onChange(of: viewModel.message) { newValue in
+                    guard !newValue.isEmpty else {
+                        return
+                    }
+                    viewModel.sendTypingIndicator()
+                }
             }
-            viewModel.sendTypingIndicator()
         }
-        .onAppear {
-           viewModel.hasFocus = true
-        }
+    }
+
+    var legacyMessageTextField: some View {
+        LegacyTextFieldView(text: $viewModel.message)
+            .frame(height: 40)
+            .overlay(
+                Capsule(style: .continuous)
+                    .stroke(Color.gray, style: StrokeStyle(lineWidth: 1))
+            )
+        // color: Light/Dividers/On primary
     }
 
     var sendButton: some View {
         IconButton(viewModel: viewModel.sendButtonViewModel)
             .flipsForRightToLeftLayoutDirection(true)
+    }
+}
+
+struct LegacyTextFieldView: UIViewRepresentable {
+    @Binding var text: String
+
+    typealias UIViewType = UITextView
+
+    func makeUIView(context: Context) -> UIViewType {
+        let textView = UITextView()
+
+//        textView.layer.cornerRadius = 5
+//         textView.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
+//         textView.layer.borderWidth = 0.5
+//         textView.clipsToBounds = true
+
+//        textView.font = UIFont.preferredFont(forTextStyle: textStyle)
+//        textView.autocapitalizationType = .sentences
+        textView.isSelectable = true
+        textView.isEditable = true
+        textView.isUserInteractionEnabled = true
+
+        textView.font = UIFont.preferredFont(forTextStyle: .body)
+
+        return textView
+    }
+
+    func updateUIView(_ uiView: UITextView, context: Context) {
+         uiView.text = text
+//         uiView.font = UIFont.preferredFont(forTextStyle: textStyle)
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator($text)
+    }
+
+    class Coordinator: NSObject, UITextViewDelegate {
+        var text: Binding<String>
+
+        init(_ text: Binding<String>) {
+            self.text = text
+        }
+
+        func textViewDidChange(_ textView: UITextView) {
+            self.text.wrappedValue = textView.text
+        }
     }
 }

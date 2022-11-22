@@ -16,7 +16,6 @@ class BottomBarViewModel: ObservableObject {
     private let typingIndicatorDelay: TimeInterval = 8.0
 
     @Published var message: String = ""
-    @Published var hasFocus: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
@@ -38,7 +37,6 @@ class BottomBarViewModel: ObservableObject {
     }
 
     func sendMessage() {
-        hasFocus = true
         guard !message.isEmpty else {
             return
         }
