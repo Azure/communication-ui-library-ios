@@ -8,22 +8,16 @@ import UIKit
 /// Chat Composite runtime error types.
 struct ChatCompositeErrorCode {
     /// Error when adapter fails to connect to a chat.
-    static let chatConnect: String = "chatConnect"
+    static let connectFailed: String = "connectFailed"
 
     /// Error when the input token is not authorized for the threadId.
-    static let chatUnauthorized: String = "chatUnauthorized"
+    static let authorizationFailed: String = "authorizationFailed"
 
     /// Error when a chat disconnects unexpectedly or fails on ending. (event code?)
-    static let chatEnd: String = "chatEnd"
-
-    /// Error when a participant is evicted from the chat by another participant (event code?)
-    static let chatEvicted: String = "chatEvicted"
-
-    /// Error when a participant is denied from entering the chat (event code?)
-    static let chatDenied: String = "chatDenied"
+    static let disconnectFailed: String = "disconnectFailed"
 
     /// Error when local user fails to send message.
-    static let sendMessage: String = "sendMessage"
+    static let messageSendFailed: String = "messageSendFailed"
 }
 
 /// The error thrown after Chat Composite launching.
@@ -48,4 +42,13 @@ extension ChatCompositeError: Equatable {
 
         return false
     }
+}
+
+/// Event code (placeholder to be refactored)
+struct ChatCompositeEventCode {
+    /// Error when a participant is evicted from the chat by another participant (event code?)
+    static let chatEvicted: String = "chatEvicted"
+
+    /// Error when a participant is denied from entering the chat (event code?)
+    static let chatDenied: String = "chatDenied"
 }

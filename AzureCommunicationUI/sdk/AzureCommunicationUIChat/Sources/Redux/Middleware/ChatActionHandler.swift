@@ -77,7 +77,7 @@ class ChatActionHandler: ChatActionHandling {
                 connectEventHandler?(.success(Void()))
             } catch {
                 connectEventHandler?(.failure(ChatCompositeError(
-                    code: ChatCompositeErrorCode.chatConnect,
+                    code: ChatCompositeErrorCode.connectFailed,
                     error: error)))
                 logger.error("Failed to initialize chat client due to error: \(error)")
                 dispatch(.chatAction(.initializeChatFailed(error: error)))

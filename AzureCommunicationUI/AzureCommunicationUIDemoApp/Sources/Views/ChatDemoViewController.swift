@@ -205,12 +205,6 @@ class ChatDemoViewController: UIViewController {
 
     private func showError(for errorCode: String) {
         var errorMessage = errorCode
-//        switch errorCode {
-//        case ChatCompositeErrorCode.tokenExpired:
-//            errorMessage = "Token is invalid"
-//        default:
-//            errorMessage = "Unknown error"
-//        }
         let errorAlert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
         errorAlert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
         present(errorAlert,

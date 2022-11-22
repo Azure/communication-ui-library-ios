@@ -6,39 +6,41 @@
 import Foundation
 
 enum ChatCompositeInternalError: String, Error, Equatable {
-    case chatConnectFailed
-    case chatUnauthorized
-    case chatEndFailed
+    case connectFailed
+    case authorizationFailed
+    case disconnectFailed
+    case messageSendFailed
+
+    // event code
     case chatEvicted
     case chatDenied
-    case sendMessageFailed
 
     func toChatCompositeErrorCode() -> String? {
         switch self {
-        case .chatConnectFailed:
-            return ChatCompositeErrorCode.chatConnect
-        case .chatUnauthorized:
-            return ChatCompositeErrorCode.chatUnauthorized
-        case .chatEndFailed:
-            return ChatCompositeErrorCode.chatEnd
+        case .connectFailed:
+            return ChatCompositeErrorCode.connectFailed
+        case .authorizationFailed:
+            return ChatCompositeErrorCode.authorizationFailed
+        case .disconnectFailed:
+            return ChatCompositeErrorCode.disconnectFailed
         case .chatEvicted:
-            return ChatCompositeErrorCode.chatEvicted
+            return ChatCompositeEventCode.chatEvicted
         case .chatDenied:
-            return ChatCompositeErrorCode.chatDenied
-        case .sendMessageFailed:
-            return ChatCompositeErrorCode.sendMessage
+            return ChatCompositeEventCode.chatDenied
+        case .messageSendFailed:
+            return ChatCompositeErrorCode.messageSendFailed
         }
     }
 
     func isFatalError() -> Bool {
         switch self {
-        case .chatUnauthorized,
-                .chatConnectFailed,
-                .chatEndFailed,
-                .chatEvicted:
+        case .connectFailed,
+                .authorizationFailed,
+                .disconnectFailed:
             return true
         case .chatDenied,
-                .sendMessageFailed:
+                .chatEvicted,
+                .messageSendFailed:
             return false
         }
     }
