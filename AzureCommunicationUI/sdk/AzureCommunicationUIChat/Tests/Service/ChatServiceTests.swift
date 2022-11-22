@@ -46,7 +46,7 @@ class ChatServiceTests: XCTestCase {
 
     func test_chatService_getMaskedParticipantIds_shouldCallChatSDKWrapperGetListOfParticipantsCalled() async throws {
         _ = try await chatService.getMaskedParticipantIds()
-        XCTAssertTrue(chatSDKWrapper.retrieveThreadCreatedByCalled)
+        XCTAssertTrue(chatSDKWrapper.retriveChatThreadPropertiesCalled)
     }
 
     func test_chatService_getListOfParticipants_shouldCallChatSDKWrapperGetListOfParticipantsCalled() async throws {
