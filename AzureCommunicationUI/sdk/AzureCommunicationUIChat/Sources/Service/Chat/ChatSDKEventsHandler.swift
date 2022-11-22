@@ -40,67 +40,71 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
             eventModel = ChatEventModel(
                 eventType: .realTimeNotificationDisconnected)
         case let .chatMessageReceivedEvent(event):
-            logger.info("Received a ChatMessageReceivedEvent: \(event.type)")
             eventModel = ChatEventModel(
                 eventType: .chatMessageReceived,
-                infoModel: event.toChatMessageInfoModel())
+                infoModel: event.toChatMessageInfoModel(),
+                threadId: event.threadId)
         case let .chatMessageEdited(event):
-            logger.info("Received a ChatMessageEditedEvent: \(event)")
             eventModel = ChatEventModel(
                 eventType: .chatMessageEdited,
-                infoModel: event.toChatMessageInfoModel())
+                infoModel: event.toChatMessageInfoModel(),
+                threadId: event.threadId)
         case let .chatMessageDeleted(event):
-            logger.info("Received a ChatMessageDeletedEvent: \(event)")
             eventModel = ChatEventModel(
                 eventType: .chatMessageDeleted,
-                infoModel: event.toChatMessageInfoModel())
+                infoModel: event.toChatMessageInfoModel(),
+                threadId: event.threadId)
         case let .typingIndicatorReceived(event):
-            logger.info("Received a TypingIndicatorReceivedEvent: \(event)")
             guard event.threadId == self.threadId,
                   let userEventTimestamp = event.toUserEventTimestampModel(),
                     userEventTimestamp.id != localUserId.stringValue else {
                 return
             }
             eventModel = ChatEventModel(eventType: .typingIndicatorReceived,
-                                        infoModel: userEventTimestamp)
+                                        infoModel: userEventTimestamp,
+                                        threadId: event.threadId)
         case let .readReceiptReceived(event):
-            logger.info("Received a ReadReceiptReceivedEvent: \(event)")
             eventModel = ChatEventModel(eventType: .readReceiptReceived,
-                                        infoModel: event.toReadReceiptInfoModel())
+                                        infoModel: event.toReadReceiptInfoModel(),
+                                        threadId: event.threadId)
         case let .chatThreadDeleted(event):
-            logger.info("Received a ChatThreadDeletedEvent: \(event)")
             eventModel = ChatEventModel(
                 eventType: .chatThreadDeleted,
-                infoModel: event.toChatThreadInfoModel())
+                infoModel: event.toChatThreadInfoModel(),
+                threadId: event.threadId)
         case let .chatThreadPropertiesUpdated(event):
-            logger.info("Received a ChatThreadPropertiesUpdatedEvent: \(event)")
             eventModel = ChatEventModel(
                 eventType: .chatThreadPropertiesUpdated,
-                infoModel: event.toChatThreadInfoModel())
+                infoModel: event.toChatThreadInfoModel(),
+                threadId: event.threadId)
         case let .participantsAdded(event):
-            logger.info("Received a ParticipantsAddedEvent: \(event)")
             guard let participants = event.participantsAdded else {
                 return
             }
             eventModel = ChatEventModel(
                 eventType: .participantsAdded,
                 infoModel: event.toParticipantsInfo(participants,
-                                                    localUserId.stringValue))
+                                                    localUserId.stringValue),
+                threadId: event.threadId)
         case let .participantsRemoved(event):
-            logger.info("Received a ParticipantsRemovedEvent: \(event)")
             guard let participants = event.participantsRemoved else {
                 return
             }
             eventModel = ChatEventModel(
                 eventType: .participantsRemoved,
                 infoModel: event.toParticipantsInfo(participants,
-                                                    localUserId.stringValue))
+                                                    localUserId.stringValue),
+                threadId: event.threadId)
         default:
             logger.info("Event received will not handled \(response)")
             return
         }
 
         guard let chatEventModel = eventModel else {
+            return
+        }
+        if let threadId = chatEventModel.threadId,
+           threadId != self.threadId {
             return
         }
         chatEventSubject.send(chatEventModel)
