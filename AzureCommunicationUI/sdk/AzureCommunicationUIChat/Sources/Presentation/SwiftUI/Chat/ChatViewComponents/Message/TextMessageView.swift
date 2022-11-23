@@ -81,7 +81,7 @@ struct TextMessageView: View {
     var timeStamp: some View {
         Group {
             if viewModel.showTime {
-                Text(viewModel.message.createdOn.value, style: .time)
+                Text(viewModel.timestamp)
                     .font(.caption)
                     .foregroundColor(Color(StyleProvider.color.textSecondary))
             }
