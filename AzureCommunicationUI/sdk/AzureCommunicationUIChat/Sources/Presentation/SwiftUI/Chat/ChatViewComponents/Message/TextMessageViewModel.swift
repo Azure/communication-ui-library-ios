@@ -47,42 +47,6 @@ class TextMessageViewModel: MessageViewModel {
     }
 
     func getContentString() -> String {
-        var content: String?
-        if message.type == .text {
-            content = message.content ?? "text not available"
-        } else if message.type == .custom("RichText/Html") ||
-                    message.type == .html {
-            content = message.content?.replacingOccurrences(
-                of: "<[^>]+>", with: "",
-                options: String.CompareOptions.regularExpression)
-//            return content?.stringByDecodingHTMLEntities ?? "not displable"
-//            let htmlString = "Easy peasy lemon squeezy. &#127819;"
-//            let fixedString = String(htmlEncodedString: htmlString) ?? "not displayable"
-//            return fixedString
-            let decoded = CFXMLCreateStringByUnescapingEntities(nil, content, nil) as String
-            return decoded
-        }
-        return content ?? "Text not available"
-    }
-}
-
-
-extension String {
-    init?(htmlEncodedString: String) {
-        guard let data = htmlEncodedString.data(using: .utf8) else {
-            return nil
-        }
-        let options: [NSAttributedString.DocumentReadingOptionKey: Any] = [
-            .documentType: NSAttributedString.DocumentType.html,
-            .characterEncoding: String.Encoding.utf8.rawValue
-        ]
-        print("*** data \(htmlEncodedString) \(data)")
-        guard let attributedString = try? NSAttributedString(
-            data: data,
-            options: options,
-            documentAttributes: nil) else {
-            return nil
-        }
-        self.init(attributedString.string)
+        return message.content ?? "Text not available"
     }
 }
