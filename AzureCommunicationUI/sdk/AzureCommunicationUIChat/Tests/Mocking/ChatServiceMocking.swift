@@ -18,6 +18,7 @@ class ChatServiceMocking: ChatServiceProtocol {
 
     var initializeCalled: Bool = false
     var getInitialMessagesCalled: Bool = false
+    var getMaskedParticipantIdsCalled: Bool = false
     var getListOfParticipantsCalled: Bool = false
     var getPreviousMessagesCalled: Bool = false
     var sendMessageCalled: Bool = false
@@ -42,7 +43,19 @@ class ChatServiceMocking: ChatServiceProtocol {
         return try await task.value
     }
 
+    func getMaskedParticipantIds() async throws -> Set<String> {
+        let task = Task<String, Error> {
+            if let error = self.error {
+                throw error
+            }
+            return "participantId"
+        }
+        let maskedParticipantSet: Set = try await [task.value]
+        return maskedParticipantSet
+    }
+
     func getListOfParticipants() async throws -> [ParticipantInfoModel] {
+        getMaskedParticipantIdsCalled = true
         getListOfParticipantsCalled = true
         let task = Task<[ParticipantInfoModel], Error> {
             if let error = self.error {

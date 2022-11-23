@@ -112,6 +112,7 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
         let addParticipant = [ParticipantInfoModel(identifier: UnknownIdentifier("SomeUnknownIdentifier"),
                                                    displayName: "MockBot")]
         await repositoryMiddlewareHandler.participantAddedMessage(participants: addParticipant,
+                                                                  state: getEmptyState(),
                                                                   dispatch: getEmptyDispatch()).value
         let lastMessage = mockMessageRepositoryManager.messages.last
         XCTAssertTrue(mockMessageRepositoryManager.addParticipantAddedMessageCalled)
