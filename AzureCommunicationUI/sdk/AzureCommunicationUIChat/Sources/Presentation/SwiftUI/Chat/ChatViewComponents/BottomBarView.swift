@@ -10,6 +10,7 @@ struct BottomBarView: View {
     private enum Constants {
         static let minimumHeight: CGFloat = 50
         static let focusDelay: CGFloat = 1.0
+        static let topPadding: CGFloat = 8
         static let padding: CGFloat = 12
     }
     @StateObject var viewModel: BottomBarViewModel
@@ -27,7 +28,8 @@ struct BottomBarView: View {
             }
           }
         }
-        .padding(Constants.padding)
+        .padding([.top], Constants.topPadding)
+        .padding([.leading, .trailing, .bottom], Constants.padding)
     }
 
     var messageTextField: some View {
