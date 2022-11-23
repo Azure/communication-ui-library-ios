@@ -43,7 +43,7 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
 
     func addInitialMessages(initialMessages: [ChatMessageInfoModel]) {
         messages = initialMessages
-
+        print("***messages initial \(initialMessages)")
         messages.sort { lhs, rhs -> Bool in
             // createdOn does not have milliseconds
             return lhs.createdOn == rhs.createdOn ?
@@ -53,6 +53,7 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
 
     func addPreviousMessages(previousMessages: [ChatMessageInfoModel]) {
         // Workaround: improve data structure in MessageRepo user story
+        print("***messages previous \(previousMessages)")
         for m in previousMessages {
             if let index = messages.firstIndex(where: {
                 $0.id == m.id
@@ -71,6 +72,7 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
     }
 
     func addNewSendingMessage(message: ChatMessageInfoModel) {
+        print("***messages addNewSendingMessage \(message)")
         messages.append(message)
     }
 
@@ -155,6 +157,7 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
     }
 
     func addReceivedMessage(message: ChatMessageInfoModel) {
+        print("***messages addReceivedMessage \(message)")
         if let index = messages.firstIndex(where: {
             $0.id == message.id
         }) {
@@ -165,6 +168,7 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
     }
 
     func updateMessageEdited(message: ChatMessageInfoModel) {
+        print("***messages updateMessageEdited \(message)")
         if let index = messages.firstIndex(where: {
             $0.id == message.id
         }) {
@@ -173,6 +177,7 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
     }
 
     func updateMessageDeleted(message: ChatMessageInfoModel) {
+        print("***messages updateMessageDeleted \(message)")
         if let index = messages.firstIndex(where: {
             $0.id == message.id
         }) {
