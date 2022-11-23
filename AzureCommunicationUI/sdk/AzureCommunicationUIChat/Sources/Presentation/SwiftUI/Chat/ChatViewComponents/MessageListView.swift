@@ -56,7 +56,7 @@ struct MessageListView: View {
                         ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
                             let messageViewModel = viewModel.createViewModel(index: index)
                             MessageView(viewModel: messageViewModel)
-                                .id(UUID())
+                                .id(message.id)
                                 .padding(getEdgeInsets(message: messageViewModel))
                                 .onAppear {
                                     if index == viewModel.minFetchIndex {
@@ -93,7 +93,11 @@ struct MessageListView: View {
 
     private func scrollToBottom(proxy: ScrollViewProxy) {
         let scrollIndex = viewModel.messages.count - 1
-        proxy.scrollTo(scrollIndex, anchor: .bottom)
+        guard scrollIndex >= 0 else {
+            return
+        }
+        let messageId = viewModel.messages[scrollIndex].id
+        proxy.scrollTo(messageId, anchor: .bottom)
     }
 
     private func getEdgeInsets(message: MessageViewModel) -> EdgeInsets {
