@@ -17,7 +17,6 @@ class MessageListViewModel: ObservableObject {
     private var lastReceivedMessageTimestamp: Date = .distantPast
     private var lastSentMessageTimestamp: Date = .distantPast
     private var hasFetchedInitialMessages: Bool = false
-    private var localUserId: String?
     private var sendReadReceiptTimer: Timer?
     private(set) var lastSentReadReceiptMessageId: String?
 
@@ -37,12 +36,10 @@ class MessageListViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          messageRepositoryManager: MessageRepositoryManagerProtocol,
          logger: Logger,
-         chatState: ChatState,
          dispatch: @escaping ActionDispatch) {
         self.messageRepositoryManager = messageRepositoryManager
         self.logger = logger
         self.dispatch = dispatch
-        self.localUserId = chatState.localUser?.id // Only take in local User ID?
         self.messages = messageRepositoryManager.messages
 
         jumpToNewMessagesButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
@@ -65,13 +62,6 @@ class MessageListViewModel: ObservableObject {
         : "99+ new messages"
     }
 
-    func isLocalUser(message: ChatMessageInfoModel?) -> Bool {
-        guard message != nil else {
-            return false
-        }
-        return message!.senderId == localUserId
-    }
-
     func isAtBottom() -> Bool {
         return scrollSize - scrollOffset < scrollTolerance
     }
@@ -85,7 +75,7 @@ class MessageListViewModel: ObservableObject {
     }
 
     func updateLastSentReadReceiptMessageId(message: ChatMessageInfoModel) {
-        guard !isLocalUser(message: message) else {
+        guard !message.isLocalUser else {
             return
         }
         if Int(message.id) ?? 0 > Int(lastSentReadReceiptMessageId) ?? 0 {
@@ -132,7 +122,7 @@ class MessageListViewModel: ObservableObject {
             showActivityIndicator = false
             shouldScrollToBottom = true
             showMessageSendStatusIconMessageId = messageRepositoryManager.messages.last(where: {
-                $0.senderId == localUserId
+                $0.isLocalUser
             })?.id
             messageSendStatusIconType = .seen
         }
@@ -148,7 +138,7 @@ class MessageListViewModel: ObservableObject {
 
     func getNumberOfNewMessages() -> Int {
         if let lastReadIndex = messages.firstIndex(where: { $0.id == lastSentReadReceiptMessageId }),
-           let lastSentIndex = messages.lastIndex(where: { isLocalUser(message: $0) }) {
+           let lastSentIndex = messages.lastIndex(where: { $0.isLocalUser }) {
             let lastIndex = max(lastReadIndex, lastSentIndex)
 
              return (messages.count - 1) - lastIndex
@@ -174,8 +164,7 @@ class MessageListViewModel: ObservableObject {
 
         switch type {
         case .text:
-            let isLocalUser = isLocalUser(message: message)
-            let showUsername = !isLocalUser && !isConsecutive
+            let showUsername = !message.isLocalUser && !isConsecutive
             let showTime = !isConsecutive
             let showMessageSendStatusIcon = message.id == showMessageSendStatusIconMessageId
 
@@ -183,7 +172,6 @@ class MessageListViewModel: ObservableObject {
                                         showDateHeader: showDateHeader,
                                         showUsername: showUsername,
                                         showTime: showTime,
-                                        isLocalUser: isLocalUser,
                                         isConsecutive: isConsecutive,
                                         showMessageSendStatusIcon: showMessageSendStatusIcon,
                                         messageSendStatusIconType: messageSendStatusIconType)
@@ -201,7 +189,7 @@ class MessageListViewModel: ObservableObject {
     }
 
     func updateShowMessageSendStatusIconMessageId() {
-        for message in messages.reversed() where message.sendStatus != nil && message.senderId == localUserId {
+        for message in messages.reversed() where message.sendStatus != nil && message.isLocalUser {
             showMessageSendStatusIconMessageId = message.id
             messageSendStatusIconType = message.sendStatus
             return

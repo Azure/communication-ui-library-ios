@@ -38,7 +38,7 @@ final class DependencyContainer {
             register(ChatSDKEventsHandler(
                 logger: resolve(),
                 threadId: chatConfiguration.chatThreadId,
-                localUserId: chatConfiguration.communicationIdentifier) as ChatSDKEventsHandling)
+                localUserId: chatConfiguration.identifier) as ChatSDKEventsHandling)
             register(ChatSDKWrapper(logger: resolve(),
                                     chatEventsHandler: resolve(),
                                     chatConfiguration: chatConfiguration) as ChatSDKWrapperProtocol)
@@ -50,7 +50,7 @@ final class DependencyContainer {
 
             let displayName = chatConfiguration.displayName
             register(makeStore(displayName: displayName,
-                               localUserIdentifier: chatConfiguration.communicationIdentifier,
+                               localUserIdentifier: chatConfiguration.identifier,
                                chatThreadId: chatConfiguration.chatThreadId,
                                connectEventHandler: connectEventHandler) as Store<AppState> )
             register(NavigationRouter(store: resolve(),
