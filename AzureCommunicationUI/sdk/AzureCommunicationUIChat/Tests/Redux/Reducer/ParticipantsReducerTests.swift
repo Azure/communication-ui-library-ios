@@ -30,6 +30,38 @@ class ParticipantReducerTests: XCTestCase {
         XCTAssertEqual(resultState.readReceiptMap["id2"], .distantPast)
     }
 
+    func test_participantsReducer_reduce_when_fetchListOfParticipantsSuccessParticipantActionWithMaskedParticipants_then_stateUpdated() {
+        let localParticipantId = "localParticipantId"
+        let maskedParticipantId = "maskedParticipantId"
+        let maskedParticipants: Set = [maskedParticipantId]
+        let participants = [
+            ParticipantInfoModel(identifier: CommunicationUserIdentifier(localParticipantId),
+                                 displayName: "localParticipantId"),
+            ParticipantInfoModel(identifier: CommunicationUserIdentifier(maskedParticipantId),
+                                 displayName: "maskedParticipant"),
+            ParticipantInfoModel(identifier: CommunicationUserIdentifier("id1"),
+                                 displayName: "displayName1"),
+            ParticipantInfoModel(identifier: CommunicationUserIdentifier("id2"),
+                                 displayName: "displayName2")
+        ]
+        let initialTimestamp = Date()
+
+        let state = ParticipantsState(
+            participantsUpdatedTimestamp: initialTimestamp,
+            maskedParticipants: maskedParticipants)
+        let action = Action.participantsAction(
+            .fetchListOfParticipantsSuccess(participants: participants, localParticipantId: localParticipantId))
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertTrue(resultState.participantsUpdatedTimestamp > initialTimestamp)
+        XCTAssertEqual(resultState.participants.count, 4)
+        XCTAssertEqual(resultState.typingParticipants.count, 0)
+        XCTAssertEqual(resultState.readReceiptMap.count, 2)
+        XCTAssertNil(resultState.readReceiptMap[localParticipantId])
+        XCTAssertNil(resultState.readReceiptMap[maskedParticipantId])
+    }
+
     func test_participantsReducer_reduce_when_participantsAddedParticipantAction_then_stateUpdated() {
         let initialParticipantsMap = [
             "id1": ParticipantInfoModel(identifier: CommunicationUserIdentifier("id1"),
@@ -41,13 +73,17 @@ class ParticipantReducerTests: XCTestCase {
             ParticipantInfoModel(identifier: CommunicationUserIdentifier("id3"),
                                  displayName: "displayName3"),
             ParticipantInfoModel(identifier: CommunicationUserIdentifier("id4"),
-                                 displayName: "displayName4")
+                                 displayName: "displayName4"),
+            ParticipantInfoModel(identifier: CommunicationUserIdentifier("id5"),
+                                 displayName: "displayName5")
         ]
         let initialTimestamp = Date()
         let readReceiptMap: [String: Date] = ["id1": .distantPast, "id2": .distantPast]
+        let maskedParticipants: Set = ["id5"]
         let state = ParticipantsState(
             participants: initialParticipantsMap,
             participantsUpdatedTimestamp: initialTimestamp,
+            maskedParticipants: maskedParticipants,
             readReceiptMap: readReceiptMap)
         let action = Action.participantsAction(
             .participantsAdded(participants: newParticipants))
@@ -55,7 +91,7 @@ class ParticipantReducerTests: XCTestCase {
         let resultState = sut.reduce(state, action)
 
         XCTAssertTrue(resultState.participantsUpdatedTimestamp > initialTimestamp)
-        XCTAssertEqual(resultState.participants.count, 4)
+        XCTAssertEqual(resultState.participants.count, 5)
         XCTAssertEqual(resultState.readReceiptMap["id3"], .distantPast)
     }
 
@@ -108,6 +144,14 @@ class ParticipantReducerTests: XCTestCase {
         let resultState = sut.reduce(state, action)
         XCTAssertEqual(resultState.typingParticipants.count, 1)
         XCTAssertEqual(resultState.typingParticipants.first?.id, expectedIdentifier)
+    }
+
+    func test_participantReducer_reduce_when_maskedParticipantsReceived_then_participantsStateUpdated() {
+        let state = ParticipantsState()
+        let action = Action.participantsAction(.maskedParticipantsReceived(participantIds: ["id1", "id2", "id3"]))
+        let sut = getSUT()
+        let resultState = sut.reduce(state, action)
+        XCTAssertEqual(resultState.maskedParticipants.count, 3)
     }
 
     func test_participantReducer_reduce_when_participantRemovedAction_then_participantsStateUpdated() {
