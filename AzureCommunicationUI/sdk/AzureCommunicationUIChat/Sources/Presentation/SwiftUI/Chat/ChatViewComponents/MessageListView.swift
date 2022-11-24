@@ -12,9 +12,13 @@ struct MessageListView: View {
         static let bottomPadding: CGFloat = 0
         static let topPadding: CGFloat = 8
         static let topConsecutivePadding: CGFloat = 4
-        static let buttonBottomPadding: CGFloat = 20
         static let defaultMinListRowHeight: CGFloat = 10
         static let localUserMessageTrailingPadding: CGFloat = 3
+
+        static let buttonIconSize: CGFloat = 24
+        static let buttonShadowRadius: CGFloat = 7
+        static let buttonShadowOffset: CGFloat = 4
+        static let buttonBottomPadding: CGFloat = 20
     }
 
     @StateObject var viewModel: MessageListViewModel
@@ -30,6 +34,9 @@ struct MessageListView: View {
         }
         .onDisappear {
             viewModel.messageListDisappeared()
+        }
+        .onTapGesture {
+            UIApplicationHelper.dismissKeyboard()
         }
     }
 
@@ -85,9 +92,20 @@ struct MessageListView: View {
             if viewModel.showJumpToNewMessages {
                 VStack {
                     Spacer()
-                    PrimaryButton(viewModel: viewModel.jumpToNewMessagesButtonViewModel)
-                        .fixedSize()
-                        .padding(Constants.buttonBottomPadding)
+                    Button(action: {
+                        viewModel.jumpToNewMessagesButtonTapped()
+                    }, label: {
+                        HStack {
+                            Icon(name: .downArrow, size: Constants.buttonIconSize)
+                            Text(viewModel.jumpToNewMessagesButtonLabel)
+                        }
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color(StyleProvider.color.primaryColor))
+                        .clipShape(Capsule())
+                        .shadow(radius: Constants.buttonShadowRadius, y: Constants.buttonShadowOffset)
+                        .padding(.bottom, Constants.buttonBottomPadding)
+                    })
                 }
             }
         }
