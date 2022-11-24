@@ -15,12 +15,12 @@ class ErrorReducerTests: XCTestCase {
 
     func test_handleErrorReducer_reduce_when_fatalErrorUpdated_then_returnErrorState_categoryFatal() {
         let state = ErrorState()
-        let action = Action.errorAction(.fatalErrorUpdated(internalError: .chatConnectFailed,
+        let action = Action.errorAction(.fatalErrorUpdated(internalError: .connectFailed,
                                                            error: nil))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
-        XCTAssertEqual(resultState.internalError, .chatConnectFailed)
+        XCTAssertEqual(resultState.internalError, .connectFailed)
         XCTAssertEqual(resultState.errorCategory, .fatal)
     }
 
@@ -42,7 +42,7 @@ class ErrorReducerTests: XCTestCase {
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
-        XCTAssertEqual(resultState.internalError, .chatConnectFailed)
+        XCTAssertEqual(resultState.internalError, .disconnectFailed)
         XCTAssertEqual(resultState.errorCategory, .fatal)
     }
 }

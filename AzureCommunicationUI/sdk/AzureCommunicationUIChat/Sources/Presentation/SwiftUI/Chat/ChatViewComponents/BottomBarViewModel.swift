@@ -18,7 +18,6 @@ class BottomBarViewModel: ObservableObject {
     @Published var isLocalUserRemoved: Bool = false
 
     @Published var message: String = ""
-    @Published var hasFocus: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
@@ -40,7 +39,6 @@ class BottomBarViewModel: ObservableObject {
     }
 
     func sendMessage() {
-        hasFocus = true
         guard !message.isEmpty else {
             return
         }

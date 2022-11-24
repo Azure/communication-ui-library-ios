@@ -12,19 +12,19 @@ import AzureCommunicationCommon
 public class ChatAdapter {
 
     /// The class to configure events closures for Chat Composite.
-    public class Events {
+    class Events {
         /// Closure to execute when error event occurs inside Chat Composite.
-        public var onError: ((ChatCompositeError) -> Void)?
+        var onError: ((ChatCompositeError) -> Void)?
         /// Closures to execute when participant has joined a chat inside Chat Composite.
-//        public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
+        var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
         /// Closure to execute when Chat Composite UI is hidden and receive new message
-//        public var onUnreadMessagesCountChanged: ((Int) -> Void)?
+        var onUnreadMessagesCountChanged: ((Int) -> Void)?
         /// Closure to execute when Chat Composite UI is hidden and receive new message
-//        public var onNewMessageReceived: ((ChatMessageModel) -> Void)?
+        var onNewMessageReceived: ((ChatMessageModel) -> Void)?
     }
 
     /// The events handler for Chat Composite
-    public let events: Events
+    let events: Events
     private var logger: Logger?
     private var themeOptions: ThemeOptions?
     var dependencyContainer: DependencyContainer
@@ -34,12 +34,12 @@ public class ChatAdapter {
     private var compositeManager: CompositeManagerProtocol?
 
     /// Create an instance of ChatComposite with options.
-    public init(communicationIdentifier: CommunicationIdentifier,
+    public init(identifier: CommunicationIdentifier,
                 credential: CommunicationTokenCredential,
                 endpoint: String,
                 displayName: String? = nil) {
         self.chatConfiguration = ChatConfiguration(
-            communicationIdentifier: communicationIdentifier,
+            communicationIdentifier: identifier,
             credential: credential,
             endpoint: endpoint,
             displayName: displayName)
@@ -82,18 +82,6 @@ public class ChatAdapter {
 
     }
 
-    /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.
-    /// - Parameters:
-    ///   - remoteParticipantViewData: ParticipantViewData used to set the participant's information for the chat.
-    ///   - identifier: The communication identifier for the remote participant.
-    ///   - completionHandler: The completion handler that receives `Result` enum value with either
-    ///                        a `Void` or an `SetParticipantViewDataError`.
-//    public func set(remoteParticipantViewData: ParticipantViewData,
-//                    for identifier: CommunicationIdentifier,
-//                    completionHandler: ((Result<Void, SetParticipantViewDataError>) -> Void)? = nil) {
-//        // stub: to be implemented
-//    }
-
     private func cleanUpComposite() {
         self.errorManager = nil
         self.lifeCycleManager = nil
@@ -114,26 +102,5 @@ public class ChatAdapter {
         containerUIHostingController.modalPresentationStyle = .fullScreen
 
         return containerUIHostingController
-    }
-
-    private func present(_ viewController: UIViewController) throws {
-        guard self.isCompositePresentable(),
-              let topViewController = UIWindow.keyWindow?.topViewController else {
-            throw ChatCompositeError(code: ChatCompositeErrorCode.showComposite)
-        }
-
-        DispatchQueue.main.async {
-            viewController.transitioningDelegate = viewController as? ContainerUIHostingController
-            topViewController.present(viewController, animated: true, completion: nil)
-        }
-    }
-
-    private func isCompositePresentable() -> Bool {
-        guard let keyWindow = UIWindow.keyWindow else {
-            return false
-        }
-
-        let hasChatComposite = keyWindow.hasViewController(ofKind: ContainerUIHostingController.self)
-        return !hasChatComposite
     }
 }
