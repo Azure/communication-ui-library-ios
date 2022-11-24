@@ -100,11 +100,9 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
             return
         }
 
-        guard let chatEventModel = eventModel else {
-            return
-        }
-        if let threadId = chatEventModel.threadId,
-           threadId != self.threadId {
+        guard let chatEventModel = eventModel,
+              (chatEventModel.threadId == nil ||
+                chatEventModel.threadId == self.threadId) else {
             return
         }
         chatEventSubject.send(chatEventModel)
