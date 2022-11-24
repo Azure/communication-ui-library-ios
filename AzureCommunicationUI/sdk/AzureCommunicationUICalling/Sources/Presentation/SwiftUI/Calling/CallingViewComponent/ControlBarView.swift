@@ -12,7 +12,7 @@ struct ControlBarView: View {
     @State var audioDeviceButtonSourceView = UIView()
     @State var leaveCallConfirmationListSourceView = UIView()
     @State var moreListSourceView = UIView()
-    @State var diagnosticsInfoSourceView = UIView()
+    @State var debugInfoSourceView = UIView()
 
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
@@ -149,7 +149,7 @@ struct ControlBarView: View {
     var moreButton: some View {
         IconButton(viewModel: viewModel.moreButtonViewModel)
             .background(SourceViewSpace(sourceView: moreListSourceView))
-            .background(SourceViewSpace(sourceView: diagnosticsInfoSourceView))
+            .background(SourceViewSpace(sourceView: debugInfoSourceView))
             .accessibilityIdentifier(AccessibilityIdentifier.moreAccessibilityID.rawValue)
     }
 
@@ -164,9 +164,9 @@ struct ControlBarView: View {
 
     var activityView: some View {
         return Group {
-            SharingActivityView(viewModel: viewModel.diagnosticsSharingActivityViewModel,
+            SharingActivityView(viewModel: viewModel.debugInfoSharingActivityViewModel,
                                 applicationActivities: nil,
-                                sourceView: diagnosticsInfoSourceView,
+                                sourceView: debugInfoSourceView,
                                 isPresented: $viewModel.isShareActivityDisplayed)
             .edgesIgnoringSafeArea(.all)
             .modifier(LockPhoneOrientation())

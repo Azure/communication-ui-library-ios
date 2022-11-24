@@ -6,11 +6,11 @@
 import Combine
 import Foundation
 
-protocol DiagnosticsManagerProtocol {
-    func getDiagnosticsInfo() -> CallDiagnostics
+protocol DebugInfoManagerProtocol {
+    func getDebugInfo() -> DebugInfo
 }
 
-class DiagnosticsManager: DiagnosticsManagerProtocol {
+class DebugInfoManager: DebugInfoManagerProtocol {
     private let store: Store<AppState>
     private var cancellables = Set<AnyCancellable>()
     private var callId: String?
@@ -34,7 +34,7 @@ class DiagnosticsManager: DiagnosticsManagerProtocol {
         callId = state.callingState.callId
     }
 
-    func getDiagnosticsInfo() -> CallDiagnostics {
-        return CallDiagnostics(lastKnownCallId: callId)
+    func getDebugInfo() -> DebugInfo {
+        return DebugInfo(lastKnownCallId: callId)
     }
 }

@@ -25,7 +25,7 @@ class ControlBarViewModel: ObservableObject {
     var hangUpButtonViewModel: IconButtonViewModel!
     var moreButtonViewModel: IconButtonViewModel!
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
-    var diagnosticsSharingActivityViewModel: DiagnosticsSharingActivityViewModel!
+    var debugInfoSharingActivityViewModel: DebugInfoSharingActivityViewModel!
     var callingStatus: CallingStatus = .none
     var cameraState = LocalUserState.CameraState(operation: .off,
                                                  device: .front,
@@ -119,7 +119,7 @@ class ControlBarViewModel: ObservableObject {
                 }
                 self.isShareActivityDisplayed = true
             })
-        diagnosticsSharingActivityViewModel = compositeViewModelFactory.makeDiagnosticsSharingActivityViewModel()
+        debugInfoSharingActivityViewModel = compositeViewModelFactory.makeDebugInfoSharingActivityViewModel()
     }
 
     func endCallButtonTapped() {

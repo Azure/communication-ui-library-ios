@@ -273,7 +273,7 @@ extension SwiftUIDemoView {
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::SwiftUIDemoView::getEventsHandler::onError \(error)")
         print("::::SwiftUIDemoView error.code \(error.code)")
-        print("::::SwiftUIDemoView diagnostics info \(callComposite.diagnostics.lastKnownCallId ?? "Unknown")")
+        print("::::SwiftUIDemoView debug info \(callComposite.debugInfo.lastKnownCallId ?? "Unknown")")
         showError(for: error.code)
     }
 

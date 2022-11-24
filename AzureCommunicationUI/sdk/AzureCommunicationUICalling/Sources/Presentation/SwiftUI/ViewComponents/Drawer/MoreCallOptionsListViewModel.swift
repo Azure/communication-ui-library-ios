@@ -18,11 +18,11 @@ class MoreCallOptionsListViewModel: ObservableObject {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
 
-        let shareDiagnosticsInfoModel = compositeViewModelFactory.makeMoreCallOptionsListCellViewModel(
+        let shareDebugInfoModel = compositeViewModelFactory.makeMoreCallOptionsListCellViewModel(
             icon: .share,
             title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
             accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
             action: showSharingViewAction)
-        items = [shareDiagnosticsInfoModel]
+        items = [shareDebugInfoModel]
     }
 }
