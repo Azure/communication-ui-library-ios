@@ -1,59 +1,146 @@
-# Variable 'Configuration' was defined in the Variables tab
-# Variable 'Ic3PipelineUsage' was defined in the Variables tab
-# Variable 'P12password' was defined in the Variables tab
-# Variable 'SDK' was defined in the Variables tab
-# Variable 'TestConfiguration' was defined in the Variables tab
-# Variable 'TestSDK' was defined in the Variables tab
-# Variable Group 'ServiceTreeLinkGroup' was defined in the Variables tab
-# Variable Group 'InfoSec-SecurityResults' was defined in the Variables tab
-variables:
-- name: BuildParameters.xcodeVersion
-  value: default
-- name: BuildParameters.xcodeDeveloperDir
-  value: ''
-trigger:
-  branches:
-    include:
-    - main
-    - feature/*
-  batch: True
-name: $(date:yyyyMMdd)$(rev:.r)
-resources:
-  repositories:
-  - repository: self
-    type: git
-    ref: refs/heads/main
-jobs:
-- job: Job_1
-  displayName: Agent job 1
-  pool:
-    name: vsts-mac-1231-xcode-1331
-  steps:
-  - checkout: self
-    clean: true
-  - task: servicetree-link-build-task@1
-    displayName: 'ServiceTree: [$(BuildOutputUsage)] '
+pool:
+  name: vsts-mac-1231-xcode-1331
+  demands: xcode
+
+#Your build pipeline references an undefined variable named ‘Parameters.xcodeVersion’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build pipeline references an undefined variable named ‘Parameters.xcodeVersion’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build pipeline references an undefined variable named ‘Parameters.xcodeVersion’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build pipeline references an undefined variable named ‘Parameters.xcodeVersion’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+
+steps:
+  - task: skvso.servicetree-build-tasks.servicetree-link-build-task.servicetree-link-build-task@1
+    displayName: "ServiceTree: [$(BuildOutputUsage)] "
+    inputs:
+      ServiceTreeGateway: "ServiceTree Gateway"
+      Service: "5b23174b-8c6d-467d-862d-a3f24958fb74"
     condition: always()
-    inputs:
-      ServiceTreeGateway: c29e963a-8ea3-4e6a-b28f-a035eaff83ab
-      Service: 5b23174b-8c6d-467d-862d-a3f24958fb74
+
+  - script: |
+      pod deintegrate sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj
+      pod deintegrate sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj
+
+    workingDirectory: AzureCommunicationUI
+    displayName: "Pod cleanup "
+    enabled: false
+
   - task: CocoaPods@0
-    displayName: pod install
+    displayName: "pod install"
     inputs:
+      workingDirectory: AzureCommunicationUI
       forceRepoUpdate: true
-  - task: CmdLine@2
-    displayName: Pod remove trunk if install failed
+      projectDirectory: AzureCommunicationUI
+
+  - script: "pod repo remove trunk"
+    workingDirectory: AzureCommunicationUI
+    displayName: "Pod remove trunk if install failed"
     condition: failed()
-    inputs:
-      script: >
-        pod repo remove trunk
+
+  - script: "Pods/SwiftLint/swiftlint lint --strict --config .swiftlint.yml --path sdk/AzureCommunicationUICalling "
+    workingDirectory: AzureCommunicationUI
+    displayName: "Pod swiftlint"
+    enabled: false
+
+  - script: |
+      swift build -v \
+        -Xswiftc "-sdk" \
+        -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" \
+        -Xswiftc "-target" \
+        -Xswiftc "x86_64-apple-ios14.0-simulator"
+
+      xcodebuild test -scheme AzureCommunicationUICommon -sdk "`xcrun --sdk iphonesimulator --show-sdk-path`" -destination "name=iPhone 13"
+    workingDirectory: AzureCommunicationUI/sdk/AzureCommunicationUICommon
+    displayName: "Build AzureCommunicationUICommon via SPM"
+
+  - script: |
+      export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
+      {
+          echo 'coverage_service: cobertura_xml'
+          echo 'output_directory: slather-report'
+          echo 'scheme: AzureCommunicationUICalling'
+          echo 'workspace: AzureCommunicationUI.xcworkspace'
+          echo 'xcodeproj: sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
+          echo 'ignore:'
+          echo '    - ../**/*/Xcode*'
+          echo '    - ../core/*'
+          echo '    - AzureCommunicationUI/*/*View.swift'
+          echo '    - AzureCommunicationUI/*/*Button.swift'
+          echo '    - AzureCommunicationUI/*/*Extension.swift'
+      } >> $SLATHER_FILE
+
+    displayName: "Add .slather.yml file"
+
   - task: Xcode@5
-    displayName: Xcode build
+    displayName: "Xcode Calling build"
     inputs:
       configuration: Release
       sdk: iphoneos
-      xcWorkspacePath: AzureCalling.xcworkspace
-      scheme: AzureCalling
-      xcodeVersion: $(BuildParameters.xcodeVersion)
-      xcodeDeveloperDir: $(BuildParameters.xcodeDeveloperDir)
-...
+      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+      scheme: AzureCommunicationUICalling
+      xcodeVersion: "$(Parameters.xcodeVersion)"
+      args: "-verbose"
+
+  - task: Xcode@5
+    displayName: "Xcode Calling Unit Test "
+    inputs:
+      actions: test
+      configuration: Debug
+      sdk: iphoneos
+      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+      scheme: AzureCommunicationUICalling
+      xcodeVersion: "$(Parameters.xcodeVersion)"
+      destinationPlatformOption: iOS
+      destinationSimulators: "iPhone 12 Pro"
+      publishJUnitResults: true
+
+  - script: |
+      cd AzureCommunicationUI
+      slather
+      cat slather-report/cobertura.xml
+
+    displayName: "Run slather"
+
+  - task: Xcode@5
+    displayName: "Xcode Chat build"
+    inputs:
+      configuration: Release
+      sdk: iphoneos
+      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+      scheme: AzureCommunicationUIChat
+      xcodeVersion: "$(Parameters.xcodeVersion)"
+      args: "-verbose"
+    enabled: false
+    condition: and(succeeded(),or(eq(variables['System.PullRequest.TargetBranch'], 'feature/chat'),or(contains(variables['Build.SourceBranch'], 'chat'), contains(variables['Build.SourceBranch'], 'Chat'))))
+
+  - task: Xcode@5
+    displayName: "Xcode Chat Unit Test"
+    inputs:
+      actions: test
+      configuration: Debug
+      sdk: iphoneos
+      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+      scheme: AzureCommunicationUIChat
+      xcodeVersion: "$(Parameters.xcodeVersion)"
+      destinationPlatformOption: iOS
+      destinationSimulators: "iPhone 12 Pro"
+      args: "-verbose"
+      publishJUnitResults: true
+    enabled: false
+    condition: and(succeeded(),or(eq(variables['System.PullRequest.TargetBranch'], 'feature/chat'),or(contains(variables['Build.SourceBranch'], 'chat'), contains(variables['Build.SourceBranch'], 'Chat'))))
+
+  - task: UseDotNet@2
+    displayName: "Use .NET Core sdk 3.1.x"
+    inputs:
+      version: 3.1.x
+
+  - task: PublishCodeCoverageResults@1
+    displayName: "Publish code coverage from $(System.DefaultWorkingDirectory)/AzureCommunicationUI/slather-report/cobertura.xml"
+    inputs:
+      codeCoverageTool: Cobertura
+      summaryFileLocation: "$(System.DefaultWorkingDirectory)/AzureCommunicationUI/slather-report/cobertura.xml"
+
+  - task: mspremier.BuildQualityChecks.QualityChecks-task.BuildQualityChecks@8
+    displayName: "Check build quality"
+    inputs:
+      checkCoverage: true
+      coverageFailOption: fixed
+      coverageType: lines
