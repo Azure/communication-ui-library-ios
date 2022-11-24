@@ -79,6 +79,10 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
         self.deletedOn = deletedOn
     }
 
+    mutating func update(sendStatus: MessageSendStatus) {
+        self.sendStatus = sendStatus
+    }
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }

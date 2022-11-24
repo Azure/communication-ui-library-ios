@@ -19,6 +19,7 @@ class MessageListViewModel: ObservableObject {
     private var hasFetchedInitialMessages: Bool = false
     private var localUserId: String?
     private var sendReadReceiptTimer: Timer?
+    
     private(set) var lastSentReadReceiptMessageId: String?
 
     let minFetchIndex: Int = 40
@@ -31,8 +32,6 @@ class MessageListViewModel: ObservableObject {
     @Published var showActivityIndicator: Bool = true
     @Published var showJumpToNewMessages: Bool = false
     @Published var shouldScrollToBottom: Bool = false
-    @Published var showMessageSendStatusIconMessageId: String?
-    @Published var messageSendStatusIconType: MessageSendStatus?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          messageRepositoryManager: MessageRepositoryManagerProtocol,
@@ -117,7 +116,6 @@ class MessageListViewModel: ObservableObject {
         if self.repositoryUpdatedTimestamp < repositoryState.lastUpdatedTimestamp {
             self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
             messages = messageRepositoryManager.messages
-            updateShowMessageSendStatusIconMessageId()
         }
 
         // Scroll to new received message
@@ -131,10 +129,6 @@ class MessageListViewModel: ObservableObject {
             self.hasFetchedInitialMessages = repositoryState.hasFetchedInitialMessages
             showActivityIndicator = false
             shouldScrollToBottom = true
-            showMessageSendStatusIconMessageId = messageRepositoryManager.messages.last(where: {
-                $0.senderId == localUserId
-            })?.id
-            messageSendStatusIconType = .seen
         }
 
         // Scroll to new sent message
@@ -164,8 +158,8 @@ class MessageListViewModel: ObservableObject {
     }
 
     // Replace with factory
-    func createViewModel(index: Int) -> MessageViewModel {
-        let message = messages[index]
+    func createViewModel(message: ChatMessageInfoModel) -> MessageViewModel {
+        let index = messages.firstIndex(of: message)!
         let type = messages[index].type
         let lastMessageIndex = index == 0 ? 0 : index - 1
         let lastMessage = messages[lastMessageIndex]
@@ -177,16 +171,13 @@ class MessageListViewModel: ObservableObject {
             let isLocalUser = isLocalUser(message: message)
             let showUsername = !isLocalUser && !isConsecutive
             let showTime = !isConsecutive
-            let showMessageSendStatusIcon = message.id == showMessageSendStatusIconMessageId
 
             return TextMessageViewModel(message: message,
                                         showDateHeader: showDateHeader,
                                         showUsername: showUsername,
                                         showTime: showTime,
                                         isLocalUser: isLocalUser,
-                                        isConsecutive: isConsecutive,
-                                        showMessageSendStatusIcon: showMessageSendStatusIcon,
-                                        messageSendStatusIconType: messageSendStatusIconType)
+                                        isConsecutive: isConsecutive)
         case .participantsAdded, .participantsRemoved, .topicUpdated:
             return SystemMessageViewModel(message: message,
                                           showDateHeader: showDateHeader,
@@ -197,14 +188,6 @@ class MessageListViewModel: ObservableObject {
             return SystemMessageViewModel(message: message,
                                           showDateHeader: showDateHeader,
                                           isConsecutive: isConsecutive)
-        }
-    }
-
-    func updateShowMessageSendStatusIconMessageId() {
-        for message in messages.reversed() where message.sendStatus != nil && message.senderId == localUserId {
-            showMessageSendStatusIconMessageId = message.id
-            messageSendStatusIconType = message.sendStatus
-            return
         }
     }
 

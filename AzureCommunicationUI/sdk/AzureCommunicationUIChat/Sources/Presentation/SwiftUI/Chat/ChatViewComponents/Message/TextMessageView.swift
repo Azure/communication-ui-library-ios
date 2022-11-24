@@ -99,25 +99,27 @@ struct TextMessageView: View {
     }
 
     var messageSendStatus: some View {
-        return Group {
-            if viewModel.isLocalUser {
-                VStack {
-                    Spacer()
-                    if let iconName = viewModel.getMessageSendStatusIconName() {
-                        StyleProvider.icon.getImage(for: iconName)
-                            .frame(width: Constants.readReceiptIconSize,
-                                   height: Constants.readReceiptIconSize)
-                            .foregroundColor(Color(StyleProvider.color.primaryColor))
-                            .padding(.bottom, Constants.readReceiptViewPadding)
-                    } else {
-                        Rectangle()
-                            .fill(Color.clear)
-                            .frame(width: Constants.readReceiptIconSize,
-                                   height: Constants.readReceiptIconSize)
-                    }
-                }
+        Group {
+            if viewModel.message.sendStatus != nil {
+                Text(String(describing: viewModel.message.sendStatus))
             }
         }
+//        VStack {
+//            Spacer()
+//            if let iconName = viewModel.getIconNameForMessageSendStatus(
+//                sendStatus: viewModel.message.sendStatus) {
+//                StyleProvider.icon.getImage(for: iconName)
+//                    .frame(width: Constants.readReceiptIconSize,
+//                           height: Constants.readReceiptIconSize)
+//                    .foregroundColor(Color(StyleProvider.color.primaryColor))
+//                    .padding(.bottom, Constants.readReceiptViewPadding)
+//            } else {
+//                Rectangle()
+//                    .fill(Color.clear)
+//                    .frame(width: Constants.readReceiptIconSize,
+//                           height: Constants.readReceiptIconSize)
+//            }
+//        }
     }
 
     private var getLeadingPadding: CGFloat {

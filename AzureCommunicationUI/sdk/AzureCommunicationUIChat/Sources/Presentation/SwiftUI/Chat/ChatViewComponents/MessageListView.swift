@@ -53,15 +53,15 @@ struct MessageListView: View {
                 heightChanged: { viewModel.scrollSize = $0 },
                 content: {
                     LazyVStack(spacing: 0) {
-                        ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
-                            let messageViewModel = viewModel.createViewModel(index: index)
+                        ForEach(viewModel.messages) { message in
+                            let messageViewModel = viewModel.createViewModel(message: message)
                             MessageView(viewModel: messageViewModel)
-                                .id(message.id)
+//                                .id(message.id)
                                 .padding(getEdgeInsets(message: messageViewModel))
                                 .onAppear {
-                                    if index == viewModel.minFetchIndex {
-                                        viewModel.fetchMessages()
-                                    }
+//                                    if index == viewModel.minFetchIndex {
+//                                        viewModel.fetchMessages()
+//                                    }
                                     viewModel.updateLastSentReadReceiptMessageId(message: message)
                                 }
                         }
@@ -97,6 +97,7 @@ struct MessageListView: View {
             return
         }
         let messageId = viewModel.messages[scrollIndex].id
+        print("SCROLL: Scroll to \(scrollIndex) : \(messageId)")
         proxy.scrollTo(messageId, anchor: .bottom)
     }
 

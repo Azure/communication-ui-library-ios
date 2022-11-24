@@ -5,7 +5,7 @@
 
 import Foundation
 
-class MessageViewModel: ObservableObject, Equatable, Identifiable {
+class MessageViewModel: ObservableObject {
     let showDateHeader: Bool
     let isConsecutive: Bool
 
@@ -34,10 +34,6 @@ class MessageViewModel: ObservableObject, Equatable, Identifiable {
             let formattedDate = format.string(from: message.createdOn.value)
             return formattedDate
         }
-    }
-
-    static func == (lhs: MessageViewModel, rhs: MessageViewModel) -> Bool {
-        lhs.message.id == rhs.message.id
     }
 }
 
