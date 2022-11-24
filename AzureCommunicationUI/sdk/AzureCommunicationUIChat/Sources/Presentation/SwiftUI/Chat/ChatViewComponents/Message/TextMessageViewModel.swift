@@ -20,6 +20,8 @@ class TextMessageViewModel: MessageViewModel {
         self.showTime = showTime
         self.isLocalUser = isLocalUser
 
+        print("SCROLL: Init Text viewModel for \(message.id)")
+
         super.init(message: message, showDateHeader: showDateHeader, isConsecutive: isConsecutive)
     }
 

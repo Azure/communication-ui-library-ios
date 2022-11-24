@@ -54,6 +54,8 @@ struct MessageListView: View {
                 content: {
                     LazyVStack(spacing: 0) {
                         ForEach(viewModel.messages) { message in
+                            let a = print("SCROLL: Creating viewModel for \(message.id)")
+                            let b = print("SCROLL: \(message.sendStatus)")
                             let messageViewModel = viewModel.createViewModel(message: message)
                             MessageView(viewModel: messageViewModel)
 //                                .id(message.id)
