@@ -4,6 +4,7 @@
 //
 
 import AzureCommunicationCommon
+
 import UIKit
 import SwiftUI
 import FluentUI
@@ -30,6 +31,17 @@ public class CallComposite {
     private var audioSessionManager: AudioSessionManagerProtocol?
     private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
     private var avatarViewManager: AvatarViewManagerProtocol?
+    private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
+    private var diagnosticsManager: DiagnosticsManagerProtocol?
+
+    /// Get Call Composite diagnostics information.
+    public var diagnostics: CallDiagnostics {
+        guard let diagnosticsManager = diagnosticsManager else {
+            return CallDiagnostics()
+        }
+
+        return diagnosticsManager.getDiagnosticsInfo()
+    }
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
@@ -37,6 +49,14 @@ public class CallComposite {
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
+    }
+
+    init(withOptions options: CallCompositeOptions? = nil,
+         callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
+        events = Events()
+        themeOptions = options?.themeOptions
+        localizationOptions = options?.localizationOptions
+        self.customCallingSdkWrapper = callingSDKWrapperProtocol
     }
 
     deinit {
@@ -51,7 +71,8 @@ public class CallComposite {
 
         dependencyContainer.registerDependencies(callConfiguration,
                                                  localOptions: localOptions,
-                                                 callCompositeEventsHandler: events)
+                                                 callCompositeEventsHandler: events,
+                                                 withCallingSDKWrapper: self.customCallingSdkWrapper)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)
@@ -63,7 +84,7 @@ public class CallComposite {
         present(toolkitHostingController)
     }
 
-    /// Start call composite experience with joining a Teams meeting.
+    /// Start Call Composite experience with joining a Teams meeting.
     /// - Parameter remoteOptions: RemoteOptions used to send to ACS to locate the call.
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This is data is not sent up to ACS.
@@ -101,6 +122,7 @@ public class CallComposite {
         self.audioSessionManager = dependencyContainer.resolve() as AudioSessionManagerProtocol
         self.avatarViewManager = dependencyContainer.resolve() as AvatarViewManagerProtocol
         self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManagerProtocol
+        self.diagnosticsManager = dependencyContainer.resolve() as DiagnosticsManagerProtocol
     }
 
     private func cleanUpManagers() {
@@ -110,6 +132,7 @@ public class CallComposite {
         self.audioSessionManager = nil
         self.avatarViewManager = nil
         self.remoteParticipantsManager = nil
+        self.diagnosticsManager = nil
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,

@@ -4,8 +4,8 @@
 //
 
 import SwiftUI
-import AzureCommunicationUICalling
 import AzureCommunicationCommon
+@testable import AzureCommunicationUICalling
 
 struct SwiftUIDemoView: View {
     @State var isErrorDisplayed: Bool = false
@@ -162,7 +162,11 @@ extension SwiftUIDemoView {
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
-        let callComposite = CallComposite(withOptions: callCompositeOptions)
+        let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
+        let callComposite = useMockCallingSDKHandler ?
+            CallComposite(withOptions: callCompositeOptions,
+                          callingSDKWrapperProtocol: UITestCallingSDKWrapper())
+            : CallComposite(withOptions: callCompositeOptions)
 
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
@@ -171,11 +175,15 @@ extension SwiftUIDemoView {
             self.onRemoteParticipantJoined(to: composite,
                                            identifiers: ids)
         }
-
-        callComposite.events.onError = { error in
-            Task { @MainActor in onError(error) }
+        let onErrorHandler: (CallCompositeError) -> Void = { [weak callComposite] error in
+            guard let composite = callComposite else {
+                return
+            }
+            onError(error,
+                    callComposite: composite)
         }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
+        callComposite.events.onError = onErrorHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
@@ -262,13 +270,14 @@ extension SwiftUIDemoView {
         isErrorDisplayed = true
     }
 
-    func onError(_ error: CallCompositeError) {
+    private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::SwiftUIDemoView::getEventsHandler::onError \(error)")
         print("::::SwiftUIDemoView error.code \(error.code)")
+        print("::::SwiftUIDemoView diagnostics info \(callComposite.diagnostics.lastKnownCallId ?? "Unknown")")
         showError(for: error.code)
     }
 
-    func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+    private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::SwiftUIDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return

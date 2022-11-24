@@ -1,10 +1,30 @@
 # Azure Communication UI Calling Release History
 
-## Upcoming Release (TBA)
+## 1.2.0-beta.1 (TBD)
+### New Features
+- Introduced CallDiagnostics to get diagnostics information for the call [#446](https://github.com/Azure/communication-ui-library-ios/pull/446)
+
+## 1.1.0 (2022-11-09)
 ### New Features
 - Implemented new feature where local user would be removed from the participant list when the app is terminated [#352](https://github.com/Azure/communication-ui-library-ios/pull/352)
+- Added aadToken for getting the ACS token in joining a call [#380](https://github.com/Azure/communication-ui-library-ios/pull/380)
+
+### Breaking Changes
+- Changed callEnd error inside CallCompositeError from mutable to inmutable [#364](https://github.com/Azure/communication-ui-library-ios/pull/364)
+
 ### Bugs Fixed
-- Fixed an issue where the error is mutable inside CallCompositeError [#364](https://github.com/Azure/communication-ui-library-ios/pull/364)
+- Fixed rotation does not work until drawer opens on iOS 16 [#363](https://github.com/Azure/communication-ui-library-ios/pull/363)
+- Fixed timer resources deallocation when a user leaves and rejoins a call quickly [#365](https://github.com/Azure/communication-ui-library-ios/pull/365)
+- Fixed end call animation in landscape mode is not slide off the bottom of the screen correctly [#376](https://github.com/Azure/communication-ui-library-ios/pull/376)
+- Fixed end call drawer title misalignment in landscape mode [#378](https://github.com/Azure/communication-ui-library-ios/pull/378)
+- Fixed remote participants do not see my video stream after resuming my call [#383](https://github.com/Azure/communication-ui-library-ios/pull/383)
+- Fixed drawer being cutoff in large font size and its animation [#384](https://github.com/Azure/communication-ui-library-ios/pull/384)
+- Fixed issue with call on hold video not showing up for remote user when resuming 
+    [#414](https://github.com/Azure/communication-ui-library-ios/pull/414)
+- Fixed failure to grab ownership of microphone from other audio app [#423](https://github.com/Azure/communication-ui-library-ios/pull/423)
+
+### Other Changes
+- Updated CallingSDK's version to GA in manual installation guide [#435](https://github.com/Azure/communication-ui-library-ios/pull/435)
 
 ## 1.1.0-beta.1 (2022-10-03)
 ### New Features
@@ -30,6 +50,7 @@
 ### Other Changes
 - Updated CallingSDK's version to GA in manual installation guide [#298](https://github.com/Azure/communication-ui-library-ios/pull/298)
 - Updated the design of error banners ("Snackbar") by adapting the latest FluentUI colours. [#314](https://github.com/Azure/communication-ui-library-ios/pull/314)
+
 ## 1.0.0 (2022-06-21)
 ### Bugs Fixed
 - Fixed issue where header was still selectable with voiceover on and overlay visible. [#256](https://github.com/Azure/communication-ui-library-ios/pull/256)

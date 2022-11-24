@@ -3,9 +3,10 @@
 //  Licensed under the MIT License.
 //
 
+import AzureCommunicationCommon
+
 import Foundation
 import XCTest
-import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
 
 class DependencyContainerTests: XCTestCase {

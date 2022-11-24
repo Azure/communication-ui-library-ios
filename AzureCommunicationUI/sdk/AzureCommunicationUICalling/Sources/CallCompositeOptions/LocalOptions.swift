@@ -51,7 +51,7 @@ public struct SetupScreenViewData {
     /// All information in this object is only stored locally in the composite.
     /// - Parameters:
     ///    - title: The String that would be displayed as the title on setup screen
-    ///              If this is `nil` the default title "Setup" would be used
+    ///              If title is empty the default title "Setup" would be used
     ///    - subtitle: The String that would be displayed as the subtitle on setup screen
     ///                   If this is `nil` the subtitle would be hidden
     public init(title: String,

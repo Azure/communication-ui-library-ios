@@ -43,6 +43,7 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="正在等待其他人加入";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="与 1 个人通话";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="与 %d 人通话"; // %d is for number of people in call
+"AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="参与者";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="未命名的参与者";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (我)"; // %@ is local participant name
@@ -65,6 +66,9 @@
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="退出";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="取消";
 "AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="离开会议?";
+
+"AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "更多";
+"AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "共享诊断信息";
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="录制和听录已开始。";

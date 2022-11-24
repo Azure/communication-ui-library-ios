@@ -133,7 +133,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
-            guard state.callingState.status == .connected || state.callingState.status == .localHold,
+            guard state.callingState.status == .connected,
                   state.localUserState.cameraState.operation == .paused else {
                 return
             }
@@ -318,6 +318,12 @@ extension CallingMiddlewareHandler {
             .removeDuplicates()
             .sink { isLocalUserMuted in
                 dispatch(.localUserAction(.microphoneMuteStateUpdated(isMuted: isLocalUserMuted)))
+            }.store(in: subscription)
+
+        callingService.callIdSubject
+            .removeDuplicates()
+            .sink { callId in
+                dispatch(.callingAction(.callIdUpdated(callId: callId)))
             }.store(in: subscription)
     }
 }
