@@ -174,6 +174,8 @@ class ChatActionHandler: ChatActionHandling {
     func getListOfParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             do {
+                let maskedParticipantIds = try await chatService.getMaskedParticipantIds()
+                dispatch(.participantsAction(.maskedParticipantsReceived(participantIds: maskedParticipantIds)))
                 let listOfParticipants = try await chatService.getListOfParticipants()
                 dispatch(.participantsAction(.fetchListOfParticipantsSuccess(
                                                 participants: listOfParticipants,

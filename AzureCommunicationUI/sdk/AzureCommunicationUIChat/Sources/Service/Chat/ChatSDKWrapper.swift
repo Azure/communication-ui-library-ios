@@ -7,6 +7,7 @@ import AzureCore
 import AzureCommunicationChat
 import Foundation
 
+// swiftlint:disable type_body_length
 class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
     let chatEventsHandler: ChatSDKEventsHandling
 
@@ -36,7 +37,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
 
             // Make request to ChatSDK to verfy token
             // Side-effect: topic send through Subject to middleware
-            let topic = try await retrieveThreadTopic()
+            _ = try await retrieveChatThreadProperties().topic
 
             try registerRealTimeNotifications()
         } catch {
@@ -64,6 +65,31 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
             }
         } catch {
             logger.error("Retrieve Thread Topic failed: \(error)")
+            throw error
+        }
+    }
+
+    func retrieveChatThreadProperties() async throws -> ChatThreadInfoModel {
+        do {
+            return try await withCheckedThrowingContinuation { continuation in
+                chatThreadClient?.getProperties { result, _ in
+                    switch result {
+                    case .success(let threadProperties):
+                        let topic = threadProperties.topic
+                        let createdBy = threadProperties.createdBy.stringValue
+                        self.logger.info("Retrieved thread topic: \(topic) and createdBy: \(createdBy)")
+                        let chatThreadInfo = ChatThreadInfoModel(topic: topic,
+                                                                 receivedOn: Iso8601Date(),
+                                                                 createdBy: createdBy)
+                        continuation.resume(returning: chatThreadInfo)
+                    case .failure(let error):
+                        self.logger.error("Retrieve Thread Properties failed: \(error.errorDescription ?? "")")
+                        continuation.resume(throwing: error)
+                    }
+                }
+            }
+        } catch {
+            logger.error("Retrieve Thread Properties failed: \(error)")
             throw error
         }
     }
@@ -238,26 +264,6 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                 forThread: self.chatConfiguration.chatThreadId)
         } catch {
             logger.error("Create Chat Thread Client failed: \(error)")
-            throw error
-        }
-    }
-
-    private func retrieveThreadTopic() async throws -> String {
-        // Make request to get `topic` to verify valid credential
-        do {
-            return try await withCheckedThrowingContinuation { continuation in
-                chatThreadClient?.getProperties { result, _ in
-                    switch result {
-                    case .success(let threadProperties):
-                        self.logger.info("Retrieved topic: \(threadProperties.topic)")
-                        continuation.resume(returning: threadProperties.topic)
-                    case .failure(let error):
-                        continuation.resume(throwing: error)
-                    }
-                }
-            }
-        } catch {
-            logger.error("Retrieve Thread Topic failed: \(error)")
             throw error
         }
     }

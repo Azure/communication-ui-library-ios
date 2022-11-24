@@ -11,6 +11,7 @@ struct ParticipantsState {
     // MARK: Typing Indicators
     let participantsUpdatedTimestamp: Date
     let typingParticipants: [UserEventTimestampModel]
+    let maskedParticipants: Set<String>
 
     // MARK: Read Receipt
     var readReceiptMap: [String: Date] = [:]
@@ -23,6 +24,7 @@ struct ParticipantsState {
     init(participants: [String: ParticipantInfoModel] = [:],
          participantsUpdatedTimestamp: Date = Date(),
          typingParticipants: [UserEventTimestampModel] = [],
+         maskedParticipants: Set<String> = [],
          readReceiptMap: [String: Date] = [:],
          readReceiptUpdatedTimestamp: Date = .distantPast) {
         self.participants = participants
@@ -30,5 +32,6 @@ struct ParticipantsState {
         self.participantsUpdatedTimestamp = participantsUpdatedTimestamp
         self.readReceiptMap = readReceiptMap
         self.readReceiptUpdatedTimestamp = readReceiptUpdatedTimestamp
+        self.maskedParticipants = maskedParticipants
     }
 }
