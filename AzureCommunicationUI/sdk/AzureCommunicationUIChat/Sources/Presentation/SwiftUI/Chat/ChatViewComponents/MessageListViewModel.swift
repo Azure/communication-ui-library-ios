@@ -19,7 +19,7 @@ class MessageListViewModel: ObservableObject {
     private var hasFetchedInitialMessages: Bool = false
     private var localUserId: String?
     private var sendReadReceiptTimer: Timer?
-    
+
     private(set) var lastSentReadReceiptMessageId: String?
 
     let minFetchIndex: Int = 40

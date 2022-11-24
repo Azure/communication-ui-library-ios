@@ -203,13 +203,13 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
         }
 
         // Handle case for deletion or edit?
-//        for i in messages.indices {
-//            if messages[i].sendStatus == .seen {
-//                messages[i].update(sendStatus: .sent)
-//            }
-//        }
+        for i in messages.indices {
+            if messages[i].sendStatus == .seen {
+                messages[i].update(sendStatus: .sent)
+            }
+        }
 
-//        messages[index].update(sendStatus: .seen)
-        messages[index].sendStatus = .seen
+        messages[index].update(sendStatus: .seen)
+//        messages[index].sendStatus = .seen
     }
 }
