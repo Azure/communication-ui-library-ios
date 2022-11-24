@@ -6,43 +6,41 @@
 import Foundation
 
 enum ChatCompositeInternalError: String, Error, Equatable {
-    case chatTokenFailed
-    case chatConnectFailed
-    case chatEndFailed
+    case connectFailed
+    case authorizationFailed
+    case disconnectFailed
+    case messageSendFailed
+
+    // event code
     case chatEvicted
     case chatDenied
-    case sendMessageFailed
-    case parseThreadIdFailed
 
     func toChatCompositeErrorCode() -> String? {
         switch self {
-        case .chatTokenFailed:
-            return ChatCompositeErrorCode.tokenExpired
-        case .chatConnectFailed:
-            return ChatCompositeErrorCode.chatConnect
-        case .chatEndFailed:
-            return ChatCompositeErrorCode.chatEnd
-        case .parseThreadIdFailed:
-            return ChatCompositeErrorCode.parseThreadIdFailed
-        case .sendMessageFailed:
-            return ChatCompositeErrorCode.sendMessage
+        case .connectFailed:
+            return ChatCompositeErrorCode.connectFailed
+        case .authorizationFailed:
+            return ChatCompositeErrorCode.authorizationFailed
+        case .disconnectFailed:
+            return ChatCompositeErrorCode.disconnectFailed
         case .chatEvicted:
-            return ChatCompositeErrorCode.chatEvicted
+            return ChatCompositeEventCode.chatEvicted
         case .chatDenied:
-            return nil
+            return ChatCompositeEventCode.chatDenied
+        case .messageSendFailed:
+            return ChatCompositeErrorCode.messageSendFailed
         }
     }
 
     func isFatalError() -> Bool {
         switch self {
-        case .chatTokenFailed,
-                .chatConnectFailed,
-                .chatEndFailed,
-                .parseThreadIdFailed,
-                .chatEvicted:
+        case .connectFailed,
+                .authorizationFailed,
+                .disconnectFailed:
             return true
         case .chatDenied,
-                .sendMessageFailed:
+                .chatEvicted,
+                .messageSendFailed:
             return false
         }
     }
