@@ -15,11 +15,6 @@ protocol CompositeViewModelFactoryProtocol {
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
-    func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
-                                    buttonLabel: String,
-                                    iconName: CompositeIcon?,
-                                    isDisabled: Bool,
-                                    action: @escaping (() -> Void)) -> PrimaryButtonViewModel
 
     // MARK: ChatViewModels
     func makeTopBarViewModel(dispatch: @escaping ActionDispatch,
@@ -73,17 +68,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             buttonType: buttonType,
                             isDisabled: isDisabled,
                             action: action)
-    }
-    func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
-                                    buttonLabel: String,
-                                    iconName: CompositeIcon?,
-                                    isDisabled: Bool = false,
-                                    action: @escaping (() -> Void)) -> PrimaryButtonViewModel {
-        PrimaryButtonViewModel(buttonStyle: buttonStyle,
-                               buttonLabel: buttonLabel,
-                               iconName: iconName,
-                               isDisabled: isDisabled,
-                               action: action)
     }
 
     // MARK: ChatViewModels

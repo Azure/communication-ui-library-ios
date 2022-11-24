@@ -24,11 +24,11 @@ class MessageListViewModel: ObservableObject {
 
     var scrollOffset: CGFloat = .zero
     var scrollSize: CGFloat = .zero
-    var jumpToNewMessagesButtonViewModel: PrimaryButtonViewModel!
 
     @Published var messages: [ChatMessageInfoModel]
     @Published var showActivityIndicator: Bool = true
     @Published var showJumpToNewMessages: Bool = false
+    @Published var jumpToNewMessagesButtonLabel: String = ""
     @Published var shouldScrollToBottom: Bool = false
     @Published var showMessageSendStatusIconMessageId: String?
     @Published var messageSendStatusIconType: MessageSendStatus?
@@ -41,25 +41,20 @@ class MessageListViewModel: ObservableObject {
         self.logger = logger
         self.dispatch = dispatch
         self.messages = messageRepositoryManager.messages
-
-        jumpToNewMessagesButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
-            buttonStyle: .primaryFilled,
-            buttonLabel: "",
-            iconName: .downArrow,
-            isDisabled: false) { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                self.jumpToNewMessagesButtonTapped()
-        }
-//      .update(accessibilityLabel: self.localizationProvider.getLocalizedString(.jumpToNewMessages))
     }
 
     // Localization
     private func getJumpToNewMessagesLabel(numberOfNewMessages: Int) -> String {
-        numberOfNewMessages < 100
-        ? "\(numberOfNewMessages) new messages"
-        : "99+ new messages"
+        switch numberOfNewMessages {
+        case 100..<Int.max:
+            return "99+ new messages"
+        case 2..<99:
+            return "\(numberOfNewMessages) new messages"
+        case 1:
+            return "\(numberOfNewMessages) new message"
+        default:
+            return "Unknown number of new messages"
+        }
     }
 
     func isAtBottom() -> Bool {
@@ -149,8 +144,7 @@ class MessageListViewModel: ObservableObject {
     func updateJumpToNewMessages() {
         let numberOfNewMessages = getNumberOfNewMessages()
         showJumpToNewMessages = numberOfNewMessages > 0
-        jumpToNewMessagesButtonViewModel.update(
-            buttonLabel: getJumpToNewMessagesLabel(numberOfNewMessages: numberOfNewMessages))
+        jumpToNewMessagesButtonLabel = getJumpToNewMessagesLabel(numberOfNewMessages: numberOfNewMessages)
     }
 
     // Replace with factory
