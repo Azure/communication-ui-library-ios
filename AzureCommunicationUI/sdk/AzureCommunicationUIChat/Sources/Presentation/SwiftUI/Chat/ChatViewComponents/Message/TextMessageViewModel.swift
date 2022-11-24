@@ -29,6 +29,16 @@ class TextMessageViewModel: MessageViewModel {
         super.init(message: message, showDateHeader: showDateHeader, isConsecutive: isConsecutive)
     }
 
+    var timestamp: String {
+        let createdOn = message.createdOn.value
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+        dateFormatter.amSymbol = "a.m." // Localization?
+        dateFormatter.pmSymbol = "p.m." // Localization?
+
+        return dateFormatter.string(from: createdOn)
+    }
+
     func getMessageSendStatusIconName() -> CompositeIcon? {
         guard showMessageSendStatusIcon == true, let messageSendStatusIconType = messageSendStatusIconType else {
             return nil
