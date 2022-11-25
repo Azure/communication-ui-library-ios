@@ -149,6 +149,10 @@ extension ChatMessageInfoModel {
         }
     }
 
+    func getContentLabel() -> String {
+        return content ?? "Text not available" // Localization
+    }
+
     // MARK: System Message
 
     // Inject localization into method
@@ -162,7 +166,7 @@ extension ChatMessageInfoModel {
             }
             return "\(participants) left the chat" // Localization
         case .topicUpdated:
-            return "Topic updated \(content ?? "")" // Localization
+            return "Topic updated to \(content ?? "")" // Localization
         default:
             return ""
         }
