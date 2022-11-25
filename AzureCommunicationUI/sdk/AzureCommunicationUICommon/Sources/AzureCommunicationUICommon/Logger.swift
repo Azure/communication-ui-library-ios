@@ -6,34 +6,35 @@
 import Foundation
 import os
 
-protocol Logger {
+@_spi(CallCompositeUITest) public protocol Logger {
     func debug(_: @autoclosure @escaping () -> String?)
     func info(_: @autoclosure @escaping () -> String?)
     func warning(_: @autoclosure @escaping () -> String?)
     func error(_: @autoclosure @escaping () -> String?)
 }
 
-struct DefaultLogger: Logger {
+@_spi(CallCompositeUITest) public struct DefaultLogger: Logger {
 
     private let osLogger: OSLog
-    init(subsystem: String = "com.azure",
+
+    public init(subsystem: String = "com.azure",
                               category: String = "AzureCommunicationUICommon") {
         osLogger = OSLog(subsystem: subsystem, category: category)
     }
 
-    func debug(_ message: @escaping () -> String?) {
+    public func debug(_ message: @escaping () -> String?) {
         log(message, atLevel: .debug)
     }
 
-    func info(_ message: @escaping () -> String?) {
+    public func info(_ message: @escaping () -> String?) {
         log(message, atLevel: .info)
     }
 
-    func warning(_ message: @escaping () -> String?) {
+    public func warning(_ message: @escaping () -> String?) {
         log(message, atLevel: .warning)
     }
 
-    func error(_ message: @escaping () -> String?) {
+    public func error(_ message: @escaping () -> String?) {
         log(message, atLevel: .error)
     }
 

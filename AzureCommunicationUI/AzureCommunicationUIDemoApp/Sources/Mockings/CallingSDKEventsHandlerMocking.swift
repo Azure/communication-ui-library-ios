@@ -4,10 +4,12 @@
 //
 
 import Foundation
-@testable import AzureCommunicationUICalling
-@testable import AzureCommunicationCommon
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
+    override init(logger: Logger) {
+        super.init(logger: logger)
+    }
     func joinCall() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
             self?.callInfoSubject.send(CallInfoModel(status: .connected,

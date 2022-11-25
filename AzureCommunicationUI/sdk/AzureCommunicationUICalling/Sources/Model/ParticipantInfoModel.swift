@@ -16,7 +16,7 @@ enum ParticipantStatus: Int {
     case ringing
 }
 
-struct ParticipantInfoModel: Hashable, Equatable {
+@_spi(CallCompositeUITest) public struct ParticipantInfoModel: Hashable, Equatable {
     let displayName: String
     let isSpeaking: Bool
     let isMuted: Bool

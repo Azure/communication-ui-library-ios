@@ -6,7 +6,7 @@
 import Foundation
 import Combine
 import AzureCommunicationCalling
-@testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
@@ -169,10 +169,6 @@ extension UITestCallingSDKWrapper {
 
     private func makeCallClientMocking() -> CallClientMocking {
         let clientOptionsMocking = CallClientOptionsMocking()
-        let appendingTag = self.callConfigurationMocking.diagnosticConfig.tags
-        let diagnostics = clientOptionsMocking.diagnostics ?? CallDiagnosticsOptionsMocking()
-        diagnostics.tags.append(contentsOf: appendingTag)
-        clientOptionsMocking.diagnostics = diagnostics
         return CallClientMocking(options: clientOptionsMocking)
     }
 }

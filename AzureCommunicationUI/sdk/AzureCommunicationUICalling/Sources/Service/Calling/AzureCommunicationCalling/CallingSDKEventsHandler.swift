@@ -8,13 +8,13 @@ import AzureCommunicationCalling
 import Foundation
 import Combine
 
-class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
-    var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> = .init([])
-    var callInfoSubject = PassthroughSubject<CallInfoModel, Never>()
-    var isRecordingActiveSubject = PassthroughSubject<Bool, Never>()
-    var isTranscriptionActiveSubject = PassthroughSubject<Bool, Never>()
-    var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
-    var callIdSubject = PassthroughSubject<String, Never>()
+@_spi(CallCompositeUITest) open class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
+    public var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> = .init([])
+    public var callInfoSubject = PassthroughSubject<CallInfoModel, Never>()
+    public var isRecordingActiveSubject = PassthroughSubject<Bool, Never>()
+    public var isTranscriptionActiveSubject = PassthroughSubject<Bool, Never>()
+    public var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
+    public var callIdSubject = PassthroughSubject<String, Never>()
 
     private let logger: Logger
     private var remoteParticipantEventAdapter = RemoteParticipantsEventsAdapter()
@@ -23,7 +23,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     private var previousCallingStatus: CallingStatus = .none
     private var remoteParticipants = MappedSequence<String, AzureCommunicationCalling.RemoteParticipant>()
 
-    init(logger: Logger) {
+    public init(logger: Logger) {
         self.logger = logger
         super.init()
         setupRemoteParticipantEventsAdapter()
@@ -39,7 +39,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         transcriptionCallFeature.delegate = self
     }
 
-    func setupProperties() {
+    public func setupProperties() {
         participantsInfoListSubject.value.removeAll()
         recordingCallFeature = nil
         transcriptionCallFeature = nil
@@ -147,14 +147,14 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     }
 }
 
-extension CallingSDKEventsHandler: CallDelegate,
+@_spi(CallCompositeUITest) extension CallingSDKEventsHandler: CallDelegate,
     RecordingCallFeatureDelegate,
     TranscriptionCallFeatureDelegate {
-    func call(_ call: Call, didChangeId args: PropertyChangedEventArgs) {
+    public func call(_ call: Call, didChangeId args: PropertyChangedEventArgs) {
         callIdSubject.send(call.id)
     }
 
-    func call(_ call: Call, didUpdateRemoteParticipant args: ParticipantsUpdatedEventArgs) {
+    public func call(_ call: Call, didUpdateRemoteParticipant args: ParticipantsUpdatedEventArgs) {
         if !args.removedParticipants.isEmpty {
             removeRemoteParticipants(args.removedParticipants)
         }
@@ -163,7 +163,7 @@ extension CallingSDKEventsHandler: CallDelegate,
         }
     }
 
-    func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {
+    public func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {
         callIdSubject.send(call.id)
 
         let currentStatus = call.state.toCallingStatus()
@@ -180,19 +180,19 @@ extension CallingSDKEventsHandler: CallDelegate,
         self.previousCallingStatus = currentStatus
     }
 
-    func recordingCallFeature(_ recordingCallFeature: RecordingCallFeature,
-                              didChangeRecordingState args: PropertyChangedEventArgs) {
+    public func recordingCallFeature(_ recordingCallFeature: RecordingCallFeature,
+                                     didChangeRecordingState args: PropertyChangedEventArgs) {
         let newRecordingActive = recordingCallFeature.isRecordingActive
         isRecordingActiveSubject.send(newRecordingActive)
     }
 
-    func transcriptionCallFeature(_ transcriptionCallFeature: TranscriptionCallFeature,
-                                  didChangeTranscriptionState args: PropertyChangedEventArgs) {
+    public func transcriptionCallFeature(_ transcriptionCallFeature: TranscriptionCallFeature,
+                                         didChangeTranscriptionState args: PropertyChangedEventArgs) {
         let newTranscriptionActive = transcriptionCallFeature.isTranscriptionActive
         isTranscriptionActiveSubject.send(newTranscriptionActive)
     }
 
-    func call(_ call: Call, didChangeMuteState args: PropertyChangedEventArgs) {
+    public func call(_ call: Call, didChangeMuteState args: PropertyChangedEventArgs) {
         isLocalUserMutedSubject.send(call.isMuted)
     }
 

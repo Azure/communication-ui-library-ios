@@ -5,7 +5,7 @@
 
 import SwiftUI
 import AzureCommunicationCommon
-@testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 struct SwiftUIDemoView: View {
     @State var isErrorDisplayed: Bool = false

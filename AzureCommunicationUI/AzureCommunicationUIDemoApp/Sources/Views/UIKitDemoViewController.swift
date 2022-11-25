@@ -8,7 +8,7 @@ import Combine
 import SwiftUI
 import AzureCommunicationCommon
 import AppCenterCrashes
-@testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class UIKitDemoViewController: UIViewController {
 

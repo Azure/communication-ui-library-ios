@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum CallCompositeInternalError: Error, Equatable {
+@_spi(CallCompositeUITest) public enum CallCompositeInternalError: Error, Equatable {
     case deviceManagerFailed(Error?)
     case connectionFailed
     case callTokenFailed
@@ -59,8 +59,9 @@ enum CallCompositeInternalError: Error, Equatable {
     }
 }
 
-extension CallCompositeInternalError {
-    static func == (lhs: CallCompositeInternalError, rhs: CallCompositeInternalError) -> Bool {
+@_spi(CallCompositeUITest) public  extension CallCompositeInternalError {
+    @_spi(CallCompositeUITest) static func == (lhs: CallCompositeInternalError,
+                                               rhs: CallCompositeInternalError) -> Bool {
         switch(lhs, rhs) {
         case (.deviceManagerFailed, .deviceManagerFailed),
             (.connectionFailed, .connectionFailed),

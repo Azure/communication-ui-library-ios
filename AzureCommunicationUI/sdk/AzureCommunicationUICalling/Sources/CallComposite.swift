@@ -51,8 +51,8 @@ public class CallComposite {
         localizationOptions = options?.localizationOptions
     }
 
-    init(withOptions options: CallCompositeOptions? = nil,
-         callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
+    @_spi(CallCompositeUITest) public init(withOptions options: CallCompositeOptions? = nil,
+                                           callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions

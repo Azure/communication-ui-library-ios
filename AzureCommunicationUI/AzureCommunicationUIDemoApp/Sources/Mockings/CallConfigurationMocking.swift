@@ -5,7 +5,7 @@
 
 import Foundation
 import AzureCommunicationCommon
-@testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 struct CallConfigurationMocking {
     let groupId: UUID?
@@ -13,7 +13,6 @@ struct CallConfigurationMocking {
     let compositeCallType: CompositeCallTypeMocking
     let credential: CommunicationTokenCredential
     let displayName: String?
-    let diagnosticConfig: DiagnosticConfig
 
     init() {
         self.groupId = UUID()
@@ -24,7 +23,6 @@ struct CallConfigurationMocking {
         let communicationTokenCredential = try? CommunicationTokenCredential(token: sampleToken)
         self.credential = communicationTokenCredential!
         self.displayName = "E2E testing"
-        self.diagnosticConfig = DiagnosticConfig()
     }
 }
 

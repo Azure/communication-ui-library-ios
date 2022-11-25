@@ -6,12 +6,12 @@ import AzureCommunicationCommon
 import Combine
 import Foundation
 
-enum CameraDevice {
+@_spi(CallCompositeUITest) public enum CameraDevice {
     case front
     case back
 }
 
-class CompositeRemoteParticipant<WrappedType, VideoStreamType> {
+@_spi(CallCompositeUITest) public class CompositeRemoteParticipant<WrappedType, VideoStreamType> {
     var identifier: CommunicationIdentifier
     var videoStreams: [CompositeRemoteVideoStream<VideoStreamType>]
     var wrappedObject: WrappedType
@@ -42,7 +42,7 @@ class CompositeRemoteVideoStream<WrappedType> {
     }
 }
 
-class CompositeLocalVideoStream<WrappedType> {
+@_spi(CallCompositeUITest) public class CompositeLocalVideoStream<WrappedType> {
     var mediaStreamType: CompositeMediaStreamType = .cameraVideo
     var wrappedObject: WrappedType
 
@@ -52,7 +52,7 @@ class CompositeLocalVideoStream<WrappedType> {
     }
 }
 
-protocol CallingSDKWrapperProtocol {
+@_spi(CallCompositeUITest) public protocol CallingSDKWrapperProtocol {
     func getRemoteParticipant<ParticipantType, StreamType>(_ identifier: String)
     -> CompositeRemoteParticipant<ParticipantType, StreamType>?
     func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String)
@@ -74,7 +74,7 @@ protocol CallingSDKWrapperProtocol {
     var callingEventsHandler: CallingSDKEventsHandling { get }
 }
 
-protocol CallingSDKEventsHandling {
+@_spi(CallCompositeUITest) public protocol CallingSDKEventsHandling {
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> { get }
     var callInfoSubject: PassthroughSubject<CallInfoModel, Never> { get }
     var isRecordingActiveSubject: PassthroughSubject<Bool, Never> { get }
