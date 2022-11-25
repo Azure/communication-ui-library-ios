@@ -72,7 +72,7 @@ public class CallComposite {
         dependencyContainer.registerDependencies(callConfiguration,
                                                  localOptions: localOptions,
                                                  callCompositeEventsHandler: events,
-                                                 withCallingSDKWrapper: self.customCallingSdkWrapper)
+                                                 callingSDKWrapper: self.customCallingSdkWrapper)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)

@@ -59,7 +59,7 @@ import Foundation
     }
 }
 
-@_spi(CallCompositeUITest) public  extension CallCompositeInternalError {
+@_spi(CallCompositeUITest) public extension CallCompositeInternalError {
     @_spi(CallCompositeUITest) static func == (lhs: CallCompositeInternalError,
                                                rhs: CallCompositeInternalError) -> Bool {
         switch(lhs, rhs) {

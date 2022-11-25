@@ -33,7 +33,7 @@ final class DependencyContainer {
     func registerDependencies(_ callConfiguration: CallConfiguration,
                               localOptions: LocalOptions?,
                               callCompositeEventsHandler: CallComposite.Events,
-                              withCallingSDKWrapper wrapper: CallingSDKWrapperProtocol? = nil) {
+                              callingSDKWrapper wrapper: CallingSDKWrapperProtocol? = nil) {
         register(CallingSDKEventsHandler(logger: resolve()) as CallingSDKEventsHandling)
         let callingSDKWrapper = wrapper ?? CallingSDKWrapper(logger: resolve(),
                                                              callingEventsHandler: resolve(),
