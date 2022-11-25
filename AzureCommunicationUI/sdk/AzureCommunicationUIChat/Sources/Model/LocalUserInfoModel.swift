@@ -13,11 +13,11 @@ struct LocalUserInfoModel {
     let chatThreadId: String?
 
     init(displayName: String? = nil,
-         localUserIdentifier: CommunicationIdentifier? = nil,
+         identifier: CommunicationIdentifier? = nil,
          chatThreadId: String? = nil) {
         self.displayName = displayName
-        self.localUserId = localUserIdentifier?.stringValue
-        self.localUserIdentifier = localUserIdentifier
+        self.localUserId = identifier?.stringValue
+        self.localUserIdentifier = identifier
         self.chatThreadId = chatThreadId
     }
 }

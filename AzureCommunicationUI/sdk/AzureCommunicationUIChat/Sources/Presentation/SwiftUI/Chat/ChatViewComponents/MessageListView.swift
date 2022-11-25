@@ -115,13 +115,14 @@ struct MessageListView: View {
     }
 
     private func getEdgeInsets(message: MessageViewModel) -> EdgeInsets {
-        let isLocalUser = viewModel.isLocalUser(message: message.message)
         return EdgeInsets(
             top: message.isConsecutive
             ? Constants.topConsecutivePadding
             : Constants.topPadding,
             leading: Constants.horizontalPadding,
             bottom: Constants.bottomPadding,
-            trailing: isLocalUser ? Constants.localUserMessageTrailingPadding : Constants.horizontalPadding)
+            trailing: message.message.isLocalUser ?
+            Constants.localUserMessageTrailingPadding :
+                Constants.horizontalPadding)
     }
 }

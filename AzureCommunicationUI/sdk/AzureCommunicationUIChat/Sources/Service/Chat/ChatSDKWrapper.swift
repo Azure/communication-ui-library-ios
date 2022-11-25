@@ -36,7 +36,6 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
             try createChatThreadClient()
 
             // Make request to ChatSDK to verfy token
-            // Side-effect: topic send through Subject to middleware
             _ = try await retrieveChatThreadProperties().topic
 
             try registerRealTimeNotifications()
@@ -55,7 +54,10 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                     case .success(let messagesResult):
                         self.pagedCollection = messagesResult
                         let messages = self.pagedCollection?.pageItems?
-                            .map({ $0.toChatMessageInfoModel() })
+                            .map({
+                                $0.toChatMessageInfoModel(
+                                    localUserId: self.chatConfiguration.identifier)
+                            })
                         continuation.resume(returning: messages?.reversed() ?? [])
                     case .failure(let error):
                         self.pagedCollection = nil
@@ -127,7 +129,8 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                     switch result {
                     case .success(let messagesResult):
                         let previousMessages = messagesResult.map({
-                            $0.toChatMessageInfoModel()
+                            $0.toChatMessageInfoModel(
+                                localUserId: self.chatConfiguration.identifier)
                         })
                         continuation.resume(returning: previousMessages)
                     case .failure(let error):
