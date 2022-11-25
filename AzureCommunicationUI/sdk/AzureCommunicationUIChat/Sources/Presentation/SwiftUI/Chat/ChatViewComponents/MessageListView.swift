@@ -107,31 +107,41 @@ struct MessageListView: View {
         }
     }
 
-    private func createMessage(message: ChatMessageInfoModel, messages: [ChatMessageInfoModel]) -> MessageView {
-        let index = messages.firstIndex(of: message)!
-        let type = messages[index].type
-        let lastMessageIndex = index == 0 ? 0 : index - 1
+    @ViewBuilder
+    private func createMessage(message: ChatMessageInfoModel, messages: [ChatMessageInfoModel]) -> some View {
+        let index = messages.firstIndex(of: message)
+        if index == nil {
+            EmptyView()
+        }
+        let lastMessageIndex = index == 0 ? 0 : index! - 1
         let lastMessage = messages[lastMessageIndex]
-        let showDateHeader = index == 0 || message.createdOn.dayOfYear - lastMessage.createdOn.dayOfYear > 0
+        let showDateHeader = index! == 0 || message.createdOn.dayOfYear - lastMessage.createdOn.dayOfYear > 0
         let isConsecutive = message.senderId == lastMessage.senderId
         let showUsername = !message.isLocalUser && !isConsecutive
         let showTime = !isConsecutive
 
-        return MessageView(messageModel: message,
+        MessageView(messageModel: message,
                            showDateHeader: showDateHeader,
                            isConsecutive: isConsecutive,
                            showUsername: showUsername,
                            showTime: showTime)
     }
 
-    private func getEdgeInsets(message: MessageViewModel) -> EdgeInsets {
+    private func getEdgeInsets(message: ChatMessageInfoModel, messages: [ChatMessageInfoModel]) -> EdgeInsets {
+        guard let index = messages.firstIndex(of: message) else {
+            return EdgeInsets()
+        }
+        let lastMessageIndex = index == 0 ? 0 : index - 1
+        let lastMessage = messages[lastMessageIndex]
+        let isConsecutive = message.senderId == lastMessage.senderId
+
         return EdgeInsets(
-            top: message.isConsecutive
+            top: isConsecutive
             ? Constants.topConsecutivePadding
             : Constants.topPadding,
             leading: Constants.horizontalPadding,
             bottom: Constants.bottomPadding,
-            trailing: message.message.isLocalUser ?
+            trailing: message.isLocalUser ?
             Constants.localUserMessageTrailingPadding :
                 Constants.horizontalPadding)
 }
