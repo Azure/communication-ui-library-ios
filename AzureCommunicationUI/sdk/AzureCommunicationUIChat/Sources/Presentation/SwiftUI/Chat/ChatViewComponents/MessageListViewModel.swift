@@ -64,8 +64,10 @@ class MessageListViewModel: ObservableObject {
         shouldScrollToBottom = true
     }
 
-    func fetchMessages() {
-        dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
+    func fetchMessages(index: Int) {
+        if index == minFetchIndex {
+            dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
+        }
     }
 
     func updateLastSentReadReceiptMessageId(message: ChatMessageInfoModel) {

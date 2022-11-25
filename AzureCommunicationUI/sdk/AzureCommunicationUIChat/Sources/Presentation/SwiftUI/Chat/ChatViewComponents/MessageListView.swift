@@ -60,15 +60,12 @@ struct MessageListView: View {
                 heightChanged: { viewModel.scrollSize = $0 },
                 content: {
                     LazyVStack(spacing: 0) {
-                        ForEach($viewModel.messages) { $message in
-                            createMessage(message: $message.wrappedValue, messages: viewModel.messages)
-                                .padding(getEdgeInsets(message: $message.wrappedValue, messages: viewModel.messages))
-                                .onAppear {
-//                                    if index == viewModel.minFetchIndex {
-//                                        viewModel.fetchMessages()
-//                                    }
-                                    viewModel.updateLastSentReadReceiptMessageId(message: message)
-                                }
+                        ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
+                            createMessage(message: message, messages: viewModel.messages, index: index)
+                            .onAppear {
+                                viewModel.fetchMessages(index: index)
+                                viewModel.updateLastSentReadReceiptMessageId(message: message)
+                            }
                         }
                     }
                 })
@@ -76,8 +73,10 @@ struct MessageListView: View {
             .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
             .onChange(of: viewModel.shouldScrollToBottom) { _ in
                 if viewModel.shouldScrollToBottom {
-                    scrollToBottom(proxy: scrollProxy)
-                    viewModel.shouldScrollToBottom = false
+                    if let lastMessage = viewModel.messages.last {
+                        scrollProxy.scrollTo(lastMessage, anchor: .bottom)
+                        viewModel.shouldScrollToBottom = false
+                    }
                 }
             }
         }
@@ -108,62 +107,30 @@ struct MessageListView: View {
     }
 
     @ViewBuilder
-    private func createMessage(message: ChatMessageInfoModel, messages: [ChatMessageInfoModel]) -> some View {
-        let index = messages.firstIndex(of: message)
-        if index == nil {
-            EmptyView()
-        }
-        let lastMessageIndex = index == 0 ? 0 : index! - 1
+    private func createMessage(message: ChatMessageInfoModel,
+                               messages: [ChatMessageInfoModel],
+                               index: Int) -> some View {
+        let lastMessageIndex = index == 0 ? 0 : index - 1
         let lastMessage = messages[lastMessageIndex]
-        let showDateHeader = index! == 0 || message.createdOn.dayOfYear - lastMessage.createdOn.dayOfYear > 0
+        let showDateHeader = index == 0 || message.createdOn.dayOfYear - lastMessage.createdOn.dayOfYear > 0
         let isConsecutive = message.senderId == lastMessage.senderId
         let showUsername = !message.isLocalUser && !isConsecutive
         let showTime = !isConsecutive
+
+        let edgeInsets = EdgeInsets(top: isConsecutive
+                                        ? Constants.topConsecutivePadding
+                                        : Constants.topPadding,
+                                    leading: Constants.horizontalPadding,
+                                    bottom: Constants.bottomPadding,
+                                    trailing: message.isLocalUser
+                                        ? Constants.localUserMessageTrailingPadding
+                                        : Constants.horizontalPadding)
 
         MessageView(messageModel: message,
                            showDateHeader: showDateHeader,
                            isConsecutive: isConsecutive,
                            showUsername: showUsername,
                            showTime: showTime)
+        .padding(edgeInsets)
     }
-
-    private func getEdgeInsets(message: ChatMessageInfoModel, messages: [ChatMessageInfoModel]) -> EdgeInsets {
-        guard let index = messages.firstIndex(of: message) else {
-            return EdgeInsets()
-        }
-        let lastMessageIndex = index == 0 ? 0 : index - 1
-        let lastMessage = messages[lastMessageIndex]
-        let isConsecutive = message.senderId == lastMessage.senderId
-
-        return EdgeInsets(
-            top: isConsecutive
-            ? Constants.topConsecutivePadding
-            : Constants.topPadding,
-            leading: Constants.horizontalPadding,
-            bottom: Constants.bottomPadding,
-            trailing: message.isLocalUser ?
-            Constants.localUserMessageTrailingPadding :
-                Constants.horizontalPadding)
-}
-
-    private func scrollToBottom(proxy: ScrollViewProxy) {
-        let scrollIndex = viewModel.messages.count - 1
-        guard scrollIndex >= 0 else {
-            return
-        }
-        let messageId = viewModel.messages[scrollIndex].id
-        print("SCROLL: Scroll to \(scrollIndex) : \(messageId)")
-        proxy.scrollTo(messageId, anchor: .bottom)
-    }
-
-//    private func getEdgeInsets(message: ChatMessageInfoModel) -> EdgeInsets {
-//        let isLocalUser = viewModel.isLocalUser(message: message.message)
-//        return EdgeInsets(
-//            top: message.isConsecutive
-//            ? Constants.topConsecutivePadding
-//            : Constants.topPadding,
-//            leading: Constants.horizontalPadding,
-//            bottom: Constants.bottomPadding,
-//            trailing: isLocalUser ? Constants.localUserMessageTrailingPadding : Constants.horizontalPadding)
-//    }
 }
