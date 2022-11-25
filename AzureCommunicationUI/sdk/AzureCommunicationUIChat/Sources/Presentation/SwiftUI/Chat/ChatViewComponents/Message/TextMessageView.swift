@@ -101,27 +101,21 @@ struct TextMessageView: View {
     }
 
     var messageSendStatus: some View {
-        Group {
-            if message.sendStatus != nil {
-                Text(String(describing: message.sendStatus))
+        VStack {
+            Spacer()
+            if let iconName = message.getIconNameForMessageSendStatus() {
+                StyleProvider.icon.getImage(for: iconName)
+                    .frame(width: Constants.readReceiptIconSize,
+                           height: Constants.readReceiptIconSize)
+                    .foregroundColor(Color(StyleProvider.color.primaryColor))
+                    .padding(.bottom, Constants.readReceiptViewPadding)
+            } else {
+                Rectangle()
+                    .fill(Color.clear)
+                    .frame(width: Constants.readReceiptIconSize,
+                           height: Constants.readReceiptIconSize)
             }
         }
-//        VStack {
-//            Spacer()
-//            if let iconName = viewModel.getIconNameForMessageSendStatus(
-//                sendStatus: viewModel.message.sendStatus) {
-//                StyleProvider.icon.getImage(for: iconName)
-//                    .frame(width: Constants.readReceiptIconSize,
-//                           height: Constants.readReceiptIconSize)
-//                    .foregroundColor(Color(StyleProvider.color.primaryColor))
-//                    .padding(.bottom, Constants.readReceiptViewPadding)
-//            } else {
-//                Rectangle()
-//                    .fill(Color.clear)
-//                    .frame(width: Constants.readReceiptIconSize,
-//                           height: Constants.readReceiptIconSize)
-//            }
-//        }
     }
 
     private var getLeadingPadding: CGFloat {
