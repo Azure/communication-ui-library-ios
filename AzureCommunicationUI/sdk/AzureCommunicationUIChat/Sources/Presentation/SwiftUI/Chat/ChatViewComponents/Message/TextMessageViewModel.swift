@@ -54,4 +54,8 @@ class TextMessageViewModel: MessageViewModel {
             return nil
         }
     }
+
+    func getContentString() -> String {
+        return message.content ?? "Text not available"
+    }
 }

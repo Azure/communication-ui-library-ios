@@ -157,7 +157,7 @@ class MessageListViewModel: ObservableObject {
         let isConsecutive = message.senderId == lastMessage.senderId
 
         switch type {
-        case .text:
+        case .text, .html:
             let showUsername = !message.isLocalUser && !isConsecutive
             let showTime = !isConsecutive
             let showMessageSendStatusIcon = message.id == showMessageSendStatusIconMessageId
@@ -173,8 +173,6 @@ class MessageListViewModel: ObservableObject {
             return SystemMessageViewModel(message: message,
                                           showDateHeader: showDateHeader,
                                           isConsecutive: false)
-        case .html:
-            return HtmlMessageViewModel(message: message, showDateHeader: showDateHeader, isConsecutive: isConsecutive)
         case .custom(_): // Stub until finished
             return SystemMessageViewModel(message: message,
                                           showDateHeader: showDateHeader,

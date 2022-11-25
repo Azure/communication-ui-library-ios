@@ -16,7 +16,7 @@ class SystemMessageViewModel: MessageViewModel {
             }
             return "\(participants) left the chat" // Localization
         case .topicUpdated:
-            return "Topic updated \(message.content ?? "")" // Localization
+            return "Topic updated to: \(message.content ?? "")" // Localization
         default:
             return "System Message"
         }
