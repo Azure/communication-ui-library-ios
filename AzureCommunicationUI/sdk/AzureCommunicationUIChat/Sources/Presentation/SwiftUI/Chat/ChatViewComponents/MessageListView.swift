@@ -6,6 +6,24 @@
 import SwiftUI
 import FluentUI
 
+struct MessageTest: View {
+//    @Binding var message: ChatMessageInfoModel
+    @StateObject var viewModel: MessageViewModelTest
+
+    var body: some View {
+        let message = $viewModel.message.content
+        Text(message)
+    }
+}
+
+class MessageViewModelTest: ObservableObject {
+    var message: Binding<ChatMessageInfoModel>
+
+    init(message: Binding<ChatMessageInfoModel>) {
+        self.message = message
+    }
+}
+
 struct MessageListView: View {
     private enum Constants {
         static let horizontalPadding: CGFloat = 16
@@ -60,18 +78,20 @@ struct MessageListView: View {
                 heightChanged: { viewModel.scrollSize = $0 },
                 content: {
                     LazyVStack(spacing: 0) {
-                        ForEach(viewModel.messages) { message in
-                            let a = print("SCROLL: Creating viewModel for \(message.id)")
-                            let b = print("SCROLL: \(message.sendStatus)")
-                            let messageViewModel = viewModel.createViewModel(message: message)
-                            MessageView(viewModel: messageViewModel)
+                        ForEach($viewModel.messages) { $message in
+//                            let a = print("SCROLL: Creating viewModel for \(message.id)")
+//                            let b = print("SCROLL: \(message.sendStatus)")
+//                            let messageViewModel = viewModel.createViewModel(message: message)
+//                            MessageTest(message: $message)//
+                            MessageTest(viewModel: MessageViewModelTest(message: $message))
+//                            MessageView(viewModel: messageViewModel)
 //                                .id(message.id)
-                                .padding(getEdgeInsets(message: messageViewModel))
+//                                .padding(getEdgeInsets(message: messageViewModel))
                                 .onAppear {
 //                                    if index == viewModel.minFetchIndex {
 //                                        viewModel.fetchMessages()
 //                                    }
-                                    viewModel.updateLastSentReadReceiptMessageId(message: message)
+//                                    viewModel.updateLastSentReadReceiptMessageId(message: message)
                                 }
                         }
                     }
@@ -121,14 +141,14 @@ struct MessageListView: View {
         proxy.scrollTo(messageId, anchor: .bottom)
     }
 
-    private func getEdgeInsets(message: MessageViewModel) -> EdgeInsets {
-        let isLocalUser = viewModel.isLocalUser(message: message.message)
-        return EdgeInsets(
-            top: message.isConsecutive
-            ? Constants.topConsecutivePadding
-            : Constants.topPadding,
-            leading: Constants.horizontalPadding,
-            bottom: Constants.bottomPadding,
-            trailing: isLocalUser ? Constants.localUserMessageTrailingPadding : Constants.horizontalPadding)
-    }
+//    private func getEdgeInsets(message: MessageViewModel) -> EdgeInsets {
+//        let isLocalUser = viewModel.isLocalUser(message: message.message)
+//        return EdgeInsets(
+//            top: message.isConsecutive
+//            ? Constants.topConsecutivePadding
+//            : Constants.topPadding,
+//            leading: Constants.horizontalPadding,
+//            bottom: Constants.bottomPadding,
+//            trailing: isLocalUser ? Constants.localUserMessageTrailingPadding : Constants.horizontalPadding)
+//    }
 }
