@@ -176,5 +176,5 @@ struct ControlBarView: View {
 
 struct LeaveCallConfirmationListViewModel {
     let headerName: String?
-    let listItemViewModel: [LeaveCallConfirmationViewModel]
+    let listItemViewModel: [DrawerListItemViewModel]
 }
