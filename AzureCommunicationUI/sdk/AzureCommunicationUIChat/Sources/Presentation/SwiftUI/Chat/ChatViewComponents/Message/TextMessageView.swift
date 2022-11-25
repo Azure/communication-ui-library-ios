@@ -22,28 +22,30 @@ struct TextMessageView: View {
         static let readReceiptViewPadding: CGFloat = 3
     }
 
-    @StateObject var viewModel: TextMessageViewModel
+    let message: ChatMessageInfoModel
+    let showUsername: Bool
+    let showTime: Bool
 
     var body: some View {
         HStack(spacing: Constants.spacing) {
-            if viewModel.isLocalUser {
+            if message.isLocalUser {
                 Spacer()
             }
             avatar
             bubble
             messageSendStatus
-            if !viewModel.isLocalUser {
+            if !message.isLocalUser {
                 Spacer()
             }
         }
         .padding(.leading, getLeadingPadding)
-        .padding(.trailing, viewModel.isLocalUser ? Constants.localTrailingPadding : Constants.remoteTrailingPadding)
+        .padding(.trailing, message.isLocalUser ? Constants.localTrailingPadding : Constants.remoteTrailingPadding)
     }
 
     var avatar: some View {
         VStack() {
-            if viewModel.showUsername {
-                Avatar(style: .outlinedPrimary, size: .small, primaryText: viewModel.message.senderDisplayName)
+            if showUsername {
+                Avatar(style: .outlinedPrimary, size: .small, primaryText: message.senderDisplayName)
                 Spacer()
             }
         }
@@ -56,12 +58,12 @@ struct TextMessageView: View {
                 timeStamp
                 edited
             }
-            Text(viewModel.message.content ?? "No Content") // Handle nil?
+            Text(message.content ?? "No Content") // Handle nil?
                 .font(.body)
         }
         .padding([.leading, .trailing], Constants.contentHorizontalPadding)
         .padding([.top, .bottom], Constants.contentVerticalPadding)
-        .background(viewModel.isLocalUser
+        .background(message.isLocalUser
                     ? Color(StyleProvider.color.primaryColorTint30)
                     : Color(StyleProvider.color.surfaceTertiary))
         .cornerRadius(Constants.cornerRadius)
@@ -69,8 +71,8 @@ struct TextMessageView: View {
 
     var name: some View {
         Group {
-            if viewModel.showUsername && viewModel.message.senderDisplayName != nil {
-                Text(viewModel.message.senderDisplayName!)
+            if showUsername && message.senderDisplayName != nil {
+                Text(message.senderDisplayName!)
                     .font(.caption)
                     .fontWeight(.bold)
                     .foregroundColor(Color(StyleProvider.color.textPrimary))
@@ -80,8 +82,8 @@ struct TextMessageView: View {
 
     var timeStamp: some View {
         Group {
-            if viewModel.showTime {
-                Text(viewModel.timestamp)
+            if showTime {
+                Text(message.timestamp)
                     .font(.caption)
                     .foregroundColor(Color(StyleProvider.color.textSecondary))
             }
@@ -90,7 +92,7 @@ struct TextMessageView: View {
 
     var edited: some View {
         Group {
-            if viewModel.message.editedOn != nil {
+            if message.editedOn != nil {
                 Text("Edited")
                     .font(.caption)
                     .foregroundColor(Color(StyleProvider.color.textDisabled))
@@ -100,8 +102,8 @@ struct TextMessageView: View {
 
     var messageSendStatus: some View {
         Group {
-            if viewModel.message.sendStatus != nil {
-                Text(String(describing: viewModel.message.sendStatus))
+            if message.sendStatus != nil {
+                Text(String(describing: message.sendStatus))
             }
         }
 //        VStack {
@@ -123,11 +125,11 @@ struct TextMessageView: View {
     }
 
     private var getLeadingPadding: CGFloat {
-        if viewModel.isLocalUser {
+        if message.isLocalUser {
             return Constants.localLeadingPadding
         }
 
-        if viewModel.showUsername {
+        if showUsername {
             return Constants.remoteAvatarLeadingPadding
         } else {
             return Constants.remoteLeadingPadding

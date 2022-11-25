@@ -6,25 +6,25 @@
 import SwiftUI
 
 struct MessageView: View {
-    @StateObject var viewModel: MessageViewModel
+    let messageModel: ChatMessageInfoModel
+    let showDateHeader: Bool
+    let isConsecutive: Bool
+    let showUsername: Bool
+    let showTime: Bool
 
-    private let isDebugOn: Bool = false
+    // Inject localization with environment?
 
     var body: some View {
         VStack {
             dateHeader
-            if isDebugOn {
-                messageWithDebug
-            } else {
-                message
-            }
+            message
         }
     }
 
     var dateHeader: some View {
         Group {
-            if viewModel.showDateHeader {
-                Text(viewModel.dateHeaderLabel)
+            if showDateHeader {
+                Text(messageModel.dateHeaderLabel)
                     .font(.caption)
                     .foregroundColor(Color(StyleProvider.color.textSecondary))
             }
@@ -33,30 +33,16 @@ struct MessageView: View {
 
     var message: some View {
         Group {
-            switch viewModel {
-            case let textMessageViewModel as TextMessageViewModel:
-                if textMessageViewModel.message.deletedOn == nil {
-                    TextMessageView(viewModel: textMessageViewModel)
+            switch messageModel.type {
+            case .text:
+                if messageModel.deletedOn == nil {
+                    TextMessageView(message: messageModel, showUsername: showUsername, showTime: showTime)
                 }
-            case let systemMessageViewModel as SystemMessageViewModel:
-                SystemMessageView(viewModel: systemMessageViewModel)
+            case .participantsAdded, .participantsRemoved, .topicUpdated:
+                SystemMessageView(messageModel: messageModel)
             default:
                 EmptyView()
             }
-        }
-    }
-
-    var messageWithDebug: some View {
-        HStack {
-            VStack {
-                Text(viewModel.message.id)
-                    .font(.caption2)
-                Text(viewModel.message.createdOn.requestString)
-                    .font(.caption2)
-                Text(viewModel.message.senderDisplayName ?? "nil")
-                    .font(.caption2)
-            }
-            message
         }
     }
 }

@@ -151,40 +151,6 @@ class MessageListViewModel: ObservableObject {
         jumpToNewMessagesButtonLabel = getJumpToNewMessagesLabel(numberOfNewMessages: numberOfNewMessages)
     }
 
-    // Replace with factory
-    func createViewModel(message: ChatMessageInfoModel) -> MessageViewModel {
-        let index = messages.firstIndex(of: message)!
-        let type = messages[index].type
-        let lastMessageIndex = index == 0 ? 0 : index - 1
-        let lastMessage = messages[lastMessageIndex]
-        let showDateHeader = index == 0 || message.createdOn.dayOfYear - lastMessage.createdOn.dayOfYear > 0
-        let isConsecutive = message.senderId == lastMessage.senderId
-
-        switch type {
-        case .text:
-            let isLocalUser = isLocalUser(message: message)
-            let showUsername = !isLocalUser && !isConsecutive
-            let showTime = !isConsecutive
-
-            return TextMessageViewModel(message: message,
-                                        showDateHeader: showDateHeader,
-                                        showUsername: showUsername,
-                                        showTime: showTime,
-                                        isLocalUser: isLocalUser,
-                                        isConsecutive: isConsecutive)
-        case .participantsAdded, .participantsRemoved, .topicUpdated:
-            return SystemMessageViewModel(message: message,
-                                          showDateHeader: showDateHeader,
-                                          isConsecutive: false)
-        case .html:
-            return HtmlMessageViewModel(message: message, showDateHeader: showDateHeader, isConsecutive: isConsecutive)
-        case .custom(_): // Stub until finished
-            return SystemMessageViewModel(message: message,
-                                          showDateHeader: showDateHeader,
-                                          isConsecutive: isConsecutive)
-        }
-    }
-
     deinit {
         sendReadReceiptTimer?.invalidate()
     }

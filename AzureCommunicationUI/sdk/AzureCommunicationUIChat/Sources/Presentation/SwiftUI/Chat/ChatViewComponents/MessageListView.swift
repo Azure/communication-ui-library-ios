@@ -6,24 +6,6 @@
 import SwiftUI
 import FluentUI
 
-struct MessageTest: View {
-//    @Binding var message: ChatMessageInfoModel
-    @StateObject var viewModel: MessageViewModelTest
-
-    var body: some View {
-        let message = $viewModel.message.content
-        Text(message)
-    }
-}
-
-class MessageViewModelTest: ObservableObject {
-    var message: Binding<ChatMessageInfoModel>
-
-    init(message: Binding<ChatMessageInfoModel>) {
-        self.message = message
-    }
-}
-
 struct MessageListView: View {
     private enum Constants {
         static let horizontalPadding: CGFloat = 16
@@ -79,19 +61,13 @@ struct MessageListView: View {
                 content: {
                     LazyVStack(spacing: 0) {
                         ForEach($viewModel.messages) { $message in
-//                            let a = print("SCROLL: Creating viewModel for \(message.id)")
-//                            let b = print("SCROLL: \(message.sendStatus)")
-//                            let messageViewModel = viewModel.createViewModel(message: message)
-//                            MessageTest(message: $message)//
-                            MessageTest(viewModel: MessageViewModelTest(message: $message))
-//                            MessageView(viewModel: messageViewModel)
-//                                .id(message.id)
-//                                .padding(getEdgeInsets(message: messageViewModel))
+                            createMessage(message: $message.wrappedValue, messages: viewModel.messages)
+//                                .padding(getEdgeInsets(message: $message.wrappedValue))
                                 .onAppear {
 //                                    if index == viewModel.minFetchIndex {
 //                                        viewModel.fetchMessages()
 //                                    }
-//                                    viewModel.updateLastSentReadReceiptMessageId(message: message)
+                                    viewModel.updateLastSentReadReceiptMessageId(message: message)
                                 }
                         }
                     }
@@ -131,6 +107,23 @@ struct MessageListView: View {
         }
     }
 
+    private func createMessage(message: ChatMessageInfoModel, messages: [ChatMessageInfoModel]) -> MessageView {
+        let index = messages.firstIndex(of: message)!
+        let type = messages[index].type
+        let lastMessageIndex = index == 0 ? 0 : index - 1
+        let lastMessage = messages[lastMessageIndex]
+        let showDateHeader = index == 0 || message.createdOn.dayOfYear - lastMessage.createdOn.dayOfYear > 0
+        let isConsecutive = message.senderId == lastMessage.senderId
+        let showUsername = !message.isLocalUser && !isConsecutive
+        let showTime = !isConsecutive
+
+        return MessageView(messageModel: message,
+                           showDateHeader: showDateHeader,
+                           isConsecutive: isConsecutive,
+                           showUsername: showUsername,
+                           showTime: showTime)
+    }
+
     private func scrollToBottom(proxy: ScrollViewProxy) {
         let scrollIndex = viewModel.messages.count - 1
         guard scrollIndex >= 0 else {
@@ -141,7 +134,7 @@ struct MessageListView: View {
         proxy.scrollTo(messageId, anchor: .bottom)
     }
 
-//    private func getEdgeInsets(message: MessageViewModel) -> EdgeInsets {
+//    private func getEdgeInsets(message: ChatMessageInfoModel) -> EdgeInsets {
 //        let isLocalUser = viewModel.isLocalUser(message: message.message)
 //        return EdgeInsets(
 //            top: message.isConsecutive

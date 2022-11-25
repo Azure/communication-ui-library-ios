@@ -6,11 +6,11 @@
 import SwiftUI
 
 struct HtmlMessageView: View {
-    @StateObject var viewModel: HtmlMessageViewModel
+    let message: ChatMessageInfoModel
 
     var body: some View {
         HStack {
-            Text(viewModel.message.content ?? "No Content")
+            Text(message.content ?? "No Content")
                 .font(.caption2)
                 .foregroundColor(Color(StyleProvider.color.textSecondary))
             Spacer()
