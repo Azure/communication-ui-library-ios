@@ -32,10 +32,6 @@ steps:
       pod deintegrate sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj
       pod deintegrate sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj
 
-    workingDirectory: AzureCommunicationUI
-    displayName: "Pod cleanup "
-    enabled: false
-
   - task: CocoaPods@0
     displayName: "pod install"
     inputs:
