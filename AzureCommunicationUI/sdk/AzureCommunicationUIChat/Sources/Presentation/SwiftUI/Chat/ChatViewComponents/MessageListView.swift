@@ -62,7 +62,7 @@ struct MessageListView: View {
                     LazyVStack(spacing: 0) {
                         ForEach($viewModel.messages) { $message in
                             createMessage(message: $message.wrappedValue, messages: viewModel.messages)
-//                                .padding(getEdgeInsets(message: $message.wrappedValue))
+                                .padding(getEdgeInsets(message: $message.wrappedValue, messages: viewModel.messages))
                                 .onAppear {
 //                                    if index == viewModel.minFetchIndex {
 //                                        viewModel.fetchMessages()
