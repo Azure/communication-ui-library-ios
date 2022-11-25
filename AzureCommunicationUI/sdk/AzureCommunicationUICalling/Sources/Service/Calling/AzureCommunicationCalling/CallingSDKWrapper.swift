@@ -119,10 +119,6 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         return castValue
     }
 
-    func communicationIdForParticipant(identifier: String) -> CommunicationIdentifier? {
-        findParticipant(identifier: identifier)?.identifier
-    }
-
     private func findParticipant(identifier: String) -> AzureCommunicationCalling.RemoteParticipant? {
         call?.remoteParticipants.first(where: { $0.identifier.stringValue == identifier })
     }

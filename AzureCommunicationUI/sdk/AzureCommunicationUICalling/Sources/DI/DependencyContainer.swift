@@ -73,7 +73,6 @@ final class DependencyContainer {
                                      logger: resolve()) as AudioSessionManagerProtocol)
         register(RemoteParticipantsManager(store: resolve(),
                                            callCompositeEventsHandler: callCompositeEventsHandler,
-                                           callingSDKWrapper: resolve(),
                                            avatarViewManager: resolve()) as RemoteParticipantsManagerProtocol)
     }
 

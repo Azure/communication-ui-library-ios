@@ -13,7 +13,6 @@ protocol RemoteParticipantsManagerProtocol {
 class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
     private let store: Store<AppState>
     private let eventsHandler: CallComposite.Events
-    private let callingSDKWrapper: CallingSDKWrapperProtocol
     private let avatarViewManager: AvatarViewManagerProtocol
     private var participantsLastUpdateTimeStamp = Date()
     private var participantsIds: Set<String> = []
@@ -22,11 +21,9 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
 
     init(store: Store<AppState>,
          callCompositeEventsHandler: CallComposite.Events,
-         callingSDKWrapper: CallingSDKWrapperProtocol,
          avatarViewManager: AvatarViewManagerProtocol) {
         self.store = store
         self.eventsHandler = callCompositeEventsHandler
-        self.callingSDKWrapper = callingSDKWrapper
         self.avatarViewManager = avatarViewManager
         store.$state
             .receive(on: DispatchQueue.main)
@@ -69,13 +66,12 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
         guard !joinedParticipantsIds.isEmpty else {
             return
         }
-
+        print("!!!!")
+print(joinedParticipantsIds)
         let joinedParticipantsCommunicationIds: [CommunicationIdentifier] = joinedParticipantsIds
-            .compactMap {
-                callingSDKWrapper.communicationIdForParticipant(
-                    identifier: $0
-                )
-            }
+            .compactMap { createCommunicationIdentifier(fromRawId: $0) }
+        print("!!!!")
+        print(joinedParticipantsCommunicationIds)
         didRemoteParticipantsJoin(joinedParticipantsCommunicationIds)
     }
 }
