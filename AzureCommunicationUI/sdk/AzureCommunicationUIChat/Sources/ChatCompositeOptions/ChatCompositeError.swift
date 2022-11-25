@@ -6,35 +6,18 @@
 import UIKit
 
 /// Chat Composite runtime error types.
-public struct ChatCompositeErrorCode {
-    /// Error when local user fails to join a chat.
-    public static let chatConnect: String = "chatConnect"
+struct ChatCompositeErrorCode {
+    /// Error when adapter fails to connect to a chat.
+    static let connectFailed: String = "connectFailed"
 
-    /// Error when a chat disconnects unexpectedly or fails on ending.
-    public static let chatEnd: String = "chatEnd"
+    /// Error when the input token is not authorized for the threadId.
+    static let authorizationFailed: String = "authorizationFailed"
 
-    /// Error when the input token is expired.
-    public static let tokenExpired: String = "tokenExpired"
-
-    public static let showComposite: String = "showComposite"
-
-    /// Error when a participant is evicted from the chat by another participant
-    static let chatEvicted: String = "chatEvicted"
-
-    /// Error when a participant is denied from entering the chat
-    static let chatDenied: String = "chatDenied"
-
-    /// Error when local user fails to hold a chat.
-    static let chatHold: String = "chatHold"
-
-    /// Error when local user fails to resume a chat.
-    static let chatResume: String = "chatResume"
+    /// Error when a chat disconnects unexpectedly or fails on ending. (event code?)
+    static let disconnectFailed: String = "disconnectFailed"
 
     /// Error when local user fails to send message.
-    static let sendMessage: String = "sendMessage"
-
-    /// Error when failed to parse threadId from teams meeting URL
-    static let parseThreadIdFailed: String = "parseThreadIdFailed"
+    static let messageSendFailed: String = "messageSendFailed"
 }
 
 /// The error thrown after Chat Composite launching.
@@ -59,4 +42,13 @@ extension ChatCompositeError: Equatable {
 
         return false
     }
+}
+
+/// Event code (placeholder to be refactored)
+struct ChatCompositeEventCode {
+    /// Error when a participant is evicted from the chat by another participant (event code?)
+    static let chatEvicted: String = "chatEvicted"
+
+    /// Error when a participant is denied from entering the chat (event code?)
+    static let chatDenied: String = "chatDenied"
 }

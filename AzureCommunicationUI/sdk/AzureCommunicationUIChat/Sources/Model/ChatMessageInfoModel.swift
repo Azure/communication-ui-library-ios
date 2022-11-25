@@ -101,11 +101,12 @@ extension ChatMessageInfoModel {
     }
 }
 
+// To be public for event handlers
 struct ChatMessageModel {
-    public let id: String
-    public let content: String
-    public let senderId: String
-    public let senderDisplayName: String
+    let id: String
+    let content: String
+    let senderId: String
+    let senderDisplayName: String
 }
 
 extension Iso8601Date {
