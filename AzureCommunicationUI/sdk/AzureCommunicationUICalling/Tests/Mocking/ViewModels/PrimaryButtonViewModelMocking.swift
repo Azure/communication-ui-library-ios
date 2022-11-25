@@ -6,6 +6,7 @@
 import Foundation
 import FluentUI
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class PrimaryButtonViewModelMocking: PrimaryButtonViewModel {
     private let updateState: ((Bool) -> Void)?

@@ -5,6 +5,7 @@
 
 import Foundation
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     var setupCallWasCalled: ((Bool) -> Void)?

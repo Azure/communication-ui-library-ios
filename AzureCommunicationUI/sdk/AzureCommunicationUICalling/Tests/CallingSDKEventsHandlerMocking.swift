@@ -7,6 +7,7 @@ import Foundation
 import Combine
 
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class CallingSDKEventsHandlerMocking: NSObject, CallingSDKEventsHandling {
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> = .init([])

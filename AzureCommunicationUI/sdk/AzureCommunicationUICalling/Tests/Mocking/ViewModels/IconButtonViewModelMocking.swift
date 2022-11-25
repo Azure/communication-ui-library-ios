@@ -5,6 +5,7 @@
 
 import Foundation
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class IconButtonViewModelMocking: IconButtonViewModel {
     var updateIcon: ((CompositeIcon?) -> Void)?

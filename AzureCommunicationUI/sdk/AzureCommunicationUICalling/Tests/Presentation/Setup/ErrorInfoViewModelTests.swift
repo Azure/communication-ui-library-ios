@@ -5,6 +5,7 @@
 
 import XCTest
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class ErrorInfoViewModelTests: XCTestCase {
 

@@ -7,6 +7,7 @@ import Foundation
 import XCTest
 import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class RemoteOptionsTests: XCTestCase {
     func test_remoteOptions_init_groupCall_when_parametersAreValid_then_returnRemoteOptionsObject() {

@@ -6,6 +6,7 @@
 import Foundation
 import Combine
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class PermissionsManagerMocking: PermissionsManagerProtocol {
     private var requestWasCalled: Bool = false

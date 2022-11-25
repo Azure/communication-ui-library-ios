@@ -8,6 +8,7 @@ import AzureCommunicationCommon
 import Foundation
 import XCTest
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class DependencyContainerTests: XCTestCase {
     func test_dependencyContainer_init_then_defaultDependenciesAreRegistered() {

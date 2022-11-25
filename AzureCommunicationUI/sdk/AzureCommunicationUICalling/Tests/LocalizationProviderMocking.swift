@@ -5,6 +5,7 @@
 
 import Foundation
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class LocalizationProviderMocking: LocalizationProviderProtocol {
     var isApplyCalled: Bool = false

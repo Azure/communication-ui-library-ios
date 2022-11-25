@@ -7,6 +7,7 @@ import Combine
 import Foundation
 
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class OnHoldOverlayViewModelMocking: OnHoldOverlayViewModel {
     var actionButtonViewModelMocking: PrimaryButtonViewModel?

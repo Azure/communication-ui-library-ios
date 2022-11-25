@@ -6,6 +6,7 @@
 import Foundation
 import XCTest
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class BannerTextViewModelTests: XCTestCase {
     private var localizationProvider: LocalizationProviderMocking!

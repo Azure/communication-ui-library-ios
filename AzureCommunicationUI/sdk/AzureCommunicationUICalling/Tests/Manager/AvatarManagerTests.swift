@@ -8,6 +8,7 @@ import AzureCommunicationCommon
 import UIKit
 import XCTest
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class AvatarManagerTests: XCTestCase {
     var mockStoreFactory: StoreFactoryMocking!

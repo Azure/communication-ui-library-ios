@@ -6,6 +6,7 @@
 import Foundation
 import UIKit
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class AccessibilityProviderMocking: AccessibilityProviderProtocol {
 

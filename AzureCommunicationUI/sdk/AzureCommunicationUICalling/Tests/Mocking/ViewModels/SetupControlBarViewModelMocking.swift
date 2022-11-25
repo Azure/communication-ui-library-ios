@@ -5,6 +5,7 @@
 
 import Foundation
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class SetupControlBarViewModelMocking: SetupControlBarViewModel {
     private let updateState: ((LocalUserState, PermissionState, CallingState) -> Void)?

@@ -6,6 +6,7 @@
 import Foundation
 import FluentUI
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     private let logger: Logger

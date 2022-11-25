@@ -6,6 +6,7 @@
 import XCTest
 import AzureCommunicationCommon
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class RemoteParticipantsManagerTests: XCTestCase {
     var sut: RemoteParticipantsManager!

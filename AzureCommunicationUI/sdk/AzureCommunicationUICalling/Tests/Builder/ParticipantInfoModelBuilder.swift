@@ -5,6 +5,7 @@
 
 import Foundation
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 struct ParticipantInfoModelBuilder {
     static func get(participantIdentifier: String = UUID().uuidString,

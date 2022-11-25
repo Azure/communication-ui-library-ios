@@ -7,6 +7,7 @@ import Foundation
 import XCTest
 
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class CompositeViewModelFactoryTests: XCTestCase {
 

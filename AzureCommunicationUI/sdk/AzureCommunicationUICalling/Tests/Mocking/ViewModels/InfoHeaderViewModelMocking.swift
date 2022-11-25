@@ -5,6 +5,7 @@
 
 import Foundation
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class InfoHeaderViewModelMocking: InfoHeaderViewModel {
     private let updateState: ((LocalUserState, RemoteParticipantsState, CallingState) -> Void)?

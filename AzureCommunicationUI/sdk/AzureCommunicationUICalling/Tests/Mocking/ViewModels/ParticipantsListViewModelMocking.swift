@@ -5,6 +5,7 @@
 
 import Foundation
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class ParticipantsListViewModelMocking: ParticipantsListViewModel {
     var updateStates: ((LocalUserState, RemoteParticipantsState) -> Void)?

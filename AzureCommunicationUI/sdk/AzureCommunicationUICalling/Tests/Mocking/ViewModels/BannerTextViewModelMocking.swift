@@ -7,6 +7,7 @@ import Foundation
 import Combine
 
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class BannerTextViewModelMocking: BannerTextViewModel {
     var updateBannerInfoType: ((BannerInfoType?) -> Void)?

@@ -6,6 +6,7 @@
 import Foundation
 import XCTest
 @testable import AzureCommunicationUICalling
+@_spi(CallCompositeUITest) import AzureCommunicationUICalling
 
 class CallingReducerTests: XCTestCase {
     func test_callingReducer_reduce_when_callingActionStateUpdated_then_stateUpdated() {
