@@ -127,10 +127,10 @@ struct MessageListView: View {
                                         : Constants.horizontalPadding)
 
         MessageView(messageModel: message,
-                           showDateHeader: showDateHeader,
-                           isConsecutive: isConsecutive,
-                           showUsername: showUsername,
-                           showTime: showTime)
+                    showDateHeader: showDateHeader,
+                    isConsecutive: isConsecutive,
+                    showUsername: showUsername,
+                    showTime: showTime)
         .padding(edgeInsets)
     }
 }

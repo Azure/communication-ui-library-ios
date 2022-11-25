@@ -46,13 +46,13 @@ class MessageListViewModel: ObservableObject {
     private func getJumpToNewMessagesLabel(numberOfNewMessages: Int) -> String {
         switch numberOfNewMessages {
         case 100..<Int.max:
-            return "99+ new messages"
+            return "99+ new messages" // Localization
         case 2..<99:
-            return "\(numberOfNewMessages) new messages"
+            return "\(numberOfNewMessages) new messages" // Localization
         case 1:
-            return "\(numberOfNewMessages) new message"
+            return "\(numberOfNewMessages) new message" // Localization
         default:
-            return "Unknown number of new messages"
+            return "Unknown number of new messages" // Localization
         }
     }
 
@@ -74,7 +74,9 @@ class MessageListViewModel: ObservableObject {
         guard !message.isLocalUser else {
             return
         }
-        if Int(message.id) ?? 0 > Int(lastSentReadReceiptMessageId) ?? 0 {
+        if let messageId = Int(message.id),
+           let lastSentReadReceiptMessageId = Int(lastSentReadReceiptMessageId),
+           messageId > lastSentReadReceiptMessageId {
             self.lastSentReadReceiptMessageId = message.id
             updateJumpToNewMessages()
         }
