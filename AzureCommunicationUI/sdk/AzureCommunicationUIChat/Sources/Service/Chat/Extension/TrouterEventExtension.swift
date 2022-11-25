@@ -4,11 +4,12 @@
 //
 
 import AzureCommunicationChat
+import AzureCommunicationCommon
 import AzureCore
 import Foundation
 
 extension ChatMessageReceivedEvent {
-    func toChatMessageInfoModel() -> ChatMessageInfoModel {
+    func toChatMessageInfoModel(localUserId: CommunicationIdentifier? = nil) -> ChatMessageInfoModel {
         return ChatMessageInfoModel(
             id: self.id,
             version: self.version,
@@ -16,12 +17,13 @@ extension ChatMessageReceivedEvent {
             senderId: self.sender?.stringValue,
             senderDisplayName: self.senderDisplayName,
             content: self.message,
-            createdOn: self.createdOn)
+            createdOn: self.createdOn,
+            isLocalUser: self.sender != nil && self.sender?.rawId == localUserId?.rawId)
     }
 }
 
 extension ChatMessageEditedEvent {
-    func toChatMessageInfoModel() -> ChatMessageInfoModel {
+    func toChatMessageInfoModel(localUserId: CommunicationIdentifier? = nil) -> ChatMessageInfoModel {
         return ChatMessageInfoModel(
             id: self.id,
             version: self.version,
@@ -30,12 +32,13 @@ extension ChatMessageEditedEvent {
             senderDisplayName: self.senderDisplayName,
             content: self.message,
             createdOn: self.createdOn,
-            editedOn: self.editedOn)
+            editedOn: self.editedOn,
+            isLocalUser: self.sender != nil && self.sender?.rawId == localUserId?.rawId)
     }
 }
 
 extension ChatMessageDeletedEvent {
-    func toChatMessageInfoModel() -> ChatMessageInfoModel {
+    func toChatMessageInfoModel(localUserId: CommunicationIdentifier? = nil) -> ChatMessageInfoModel {
         return ChatMessageInfoModel(
             id: self.id,
             version: self.version,
@@ -43,7 +46,8 @@ extension ChatMessageDeletedEvent {
             senderId: self.sender?.stringValue,
             senderDisplayName: self.senderDisplayName,
             createdOn: self.createdOn,
-            deletedOn: self.deletedOn)
+            deletedOn: self.deletedOn,
+            isLocalUser: self.sender != nil && self.sender?.rawId == localUserId?.rawId)
     }
 }
 

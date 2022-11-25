@@ -58,7 +58,7 @@ struct TextMessageView: View {
                 timeStamp
                 edited
             }
-            Text(message.content ?? "No Content") // Handle nil?
+            Text(message.getContentLabel())
                 .font(.body)
         }
         .padding([.leading, .trailing], Constants.contentHorizontalPadding)

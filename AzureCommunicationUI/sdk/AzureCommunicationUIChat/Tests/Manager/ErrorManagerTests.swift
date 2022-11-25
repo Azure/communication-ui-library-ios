@@ -50,9 +50,9 @@ class ErrorManagerTests: XCTestCase {
     }
 
     func test_errorManager_receiveState_when_nonFatalErrorSendMessage_then_receiveDidFail() {
-        let nonFatalError = ChatCompositeError(code: ChatCompositeErrorCode.sendMessage, error: nil)
+        let nonFatalError = ChatCompositeError(code: ChatCompositeErrorCode.messageSendFailed, error: nil)
         self.expectedError = nonFatalError
-        let errorState = ErrorState(internalError: .sendMessageFailed,
+        let errorState = ErrorState(internalError: .messageSendFailed,
                                     error: nil,
                                     errorCategory: .chatState)
         let newState = getAppState(errorState: errorState)
@@ -62,9 +62,9 @@ class ErrorManagerTests: XCTestCase {
     }
 
     func test_errorManager_receiveState_when_fatalErrorChatConnect_then_receiveDidFail() {
-        let fatalError = ChatCompositeError(code: ChatCompositeErrorCode.chatConnect, error: nil)
+        let fatalError = ChatCompositeError(code: ChatCompositeErrorCode.connectFailed, error: nil)
         self.expectedError = fatalError
-        let errorState = ErrorState(internalError: .chatConnectFailed,
+        let errorState = ErrorState(internalError: .connectFailed,
                                     error: nil,
                                     errorCategory: .chatState)
         let newState = getAppState(errorState: errorState)
@@ -75,11 +75,11 @@ class ErrorManagerTests: XCTestCase {
 
     func test_errorManager_receiveState_when_fatalErrorTokenExpired_then_receiveEmergencyExitAction() {
         let fatalError = ChatCompositeError(
-            code: ChatCompositeErrorCode.chatEvicted,
+            code: ChatCompositeErrorCode.connectFailed,
             error: nil)
 
         self.expectedError = fatalError
-        let errorState = ErrorState(internalError: .chatEvicted,
+        let errorState = ErrorState(internalError: .connectFailed,
                                     error: nil,
                                     errorCategory: .fatal)
         let newState = getAppState(errorState: errorState)

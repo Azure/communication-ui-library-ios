@@ -28,8 +28,7 @@ class ChatViewModel: ObservableObject {
 
         self.topBarViewModel = compositeViewModelFactory
             .makeTopBarViewModel(dispatch: store.dispatch, participantsState: store.state.participantsState)
-        self.messageListViewModel = compositeViewModelFactory.makeMessageListViewModel(dispatch: store.dispatch,
-                                                                                       chatState: store.state.chatState)
+        self.messageListViewModel = compositeViewModelFactory.makeMessageListViewModel(dispatch: store.dispatch)
         self.bottomBarViewModel = compositeViewModelFactory.makeBottomBarViewModel(dispatch: store.dispatch)
         self.typingParticipantsViewModel = compositeViewModelFactory.makeTypingParticipantsViewModel()
         store.$state

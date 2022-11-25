@@ -17,7 +17,6 @@ class MessageListViewModel: ObservableObject {
     private var lastReceivedMessageTimestamp: Date = .distantPast
     private var lastSentMessageTimestamp: Date = .distantPast
     private var hasFetchedInitialMessages: Bool = false
-    private var localUserId: String?
     private var sendReadReceiptTimer: Timer?
 
     private(set) var lastSentReadReceiptMessageId: String?
@@ -36,12 +35,10 @@ class MessageListViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          messageRepositoryManager: MessageRepositoryManagerProtocol,
          logger: Logger,
-         chatState: ChatState,
          dispatch: @escaping ActionDispatch) {
         self.messageRepositoryManager = messageRepositoryManager
         self.logger = logger
         self.dispatch = dispatch
-        self.localUserId = chatState.localUser?.id // Only take in local User ID?
         self.messages = messageRepositoryManager.messages
     }
 
@@ -59,13 +56,6 @@ class MessageListViewModel: ObservableObject {
         }
     }
 
-    func isLocalUser(message: ChatMessageInfoModel?) -> Bool {
-        guard message != nil else {
-            return false
-        }
-        return message!.senderId == localUserId
-    }
-
     func isAtBottom() -> Bool {
         return scrollSize - scrollOffset < scrollTolerance
     }
@@ -79,7 +69,7 @@ class MessageListViewModel: ObservableObject {
     }
 
     func updateLastSentReadReceiptMessageId(message: ChatMessageInfoModel) {
-        guard !isLocalUser(message: message) else {
+        guard !message.isLocalUser else {
             return
         }
         if Int(message.id) ?? 0 > Int(lastSentReadReceiptMessageId) ?? 0 {
@@ -137,7 +127,7 @@ class MessageListViewModel: ObservableObject {
 
     func getNumberOfNewMessages() -> Int {
         if let lastReadIndex = messages.firstIndex(where: { $0.id == lastSentReadReceiptMessageId }),
-           let lastSentIndex = messages.lastIndex(where: { isLocalUser(message: $0) }) {
+           let lastSentIndex = messages.lastIndex(where: { $0.isLocalUser }) {
             let lastIndex = max(lastReadIndex, lastSentIndex)
 
              return (messages.count - 1) - lastIndex

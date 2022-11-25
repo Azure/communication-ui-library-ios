@@ -27,6 +27,7 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
     let type: MessageType
     var senderId: String?
     var senderDisplayName: String?
+    var rawContent: String?
     var content: String?
     var createdOn: Iso8601Date
     var editedOn: Iso8601Date?
@@ -54,7 +55,13 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
         self.type = type
         self.senderId = senderId
         self.senderDisplayName = senderDisplayName
-        self.content = content
+        self.rawContent = content
+        if type == .html {
+            self.content = content?.unescapeHtmlString
+        } else {
+            self.content = content
+        }
+
         self.createdOn = createdOn ?? Iso8601Date()
         self.editedOn = editedOn
         self.deletedOn = deletedOn
@@ -190,11 +197,12 @@ extension ChatMessageInfoModel {
     }
 }
 
+// To be public for event handlers
 struct ChatMessageModel {
-    public let id: String
-    public let content: String
-    public let senderId: String
-    public let senderDisplayName: String
+    let id: String
+    let content: String
+    let senderId: String
+    let senderDisplayName: String
 }
 
 extension Iso8601Date {

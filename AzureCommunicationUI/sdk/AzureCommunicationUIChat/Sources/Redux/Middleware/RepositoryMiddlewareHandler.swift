@@ -136,7 +136,8 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
                     type: .text,
                     senderId: localUserId,
                     senderDisplayName: displayName,
-                    content: content)
+                    content: content,
+                    isLocalUser: true)
                 messageRepository.addNewSendingMessage(message: message)
                 dispatch(.repositoryAction(.repositoryUpdated))
             }

@@ -124,6 +124,18 @@ struct MessageListView: View {
                            showTime: showTime)
     }
 
+    private func getEdgeInsets(message: MessageViewModel) -> EdgeInsets {
+        return EdgeInsets(
+            top: message.isConsecutive
+            ? Constants.topConsecutivePadding
+            : Constants.topPadding,
+            leading: Constants.horizontalPadding,
+            bottom: Constants.bottomPadding,
+            trailing: message.message.isLocalUser ?
+            Constants.localUserMessageTrailingPadding :
+                Constants.horizontalPadding)
+}
+
     private func scrollToBottom(proxy: ScrollViewProxy) {
         let scrollIndex = viewModel.messages.count - 1
         guard scrollIndex >= 0 else {
