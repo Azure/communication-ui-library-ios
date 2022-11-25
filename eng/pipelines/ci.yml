@@ -28,21 +28,12 @@ steps:
       Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
     condition: always()
 
-  - script: |
-      pod deintegrate sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj
-      pod deintegrate sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj
-
   - task: CocoaPods@0
     displayName: "pod install"
     inputs:
       workingDirectory: AzureCommunicationUI
       forceRepoUpdate: true
       projectDirectory: AzureCommunicationUI
-
-  - script: "pod repo remove trunk"
-    workingDirectory: AzureCommunicationUI
-    displayName: "Pod remove trunk if install failed"
-    condition: failed()
 
   - script: |
       swift build -v \
