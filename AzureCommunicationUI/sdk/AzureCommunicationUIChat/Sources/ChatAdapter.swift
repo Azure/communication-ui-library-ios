@@ -39,7 +39,7 @@ public class ChatAdapter {
                 endpoint: String,
                 displayName: String? = nil) {
         self.chatConfiguration = ChatConfiguration(
-            communicationIdentifier: identifier,
+            identifier: identifier,
             credential: credential,
             endpoint: endpoint,
             displayName: displayName)

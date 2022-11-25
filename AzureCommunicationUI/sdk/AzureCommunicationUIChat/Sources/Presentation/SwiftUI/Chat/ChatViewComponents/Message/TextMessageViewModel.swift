@@ -16,13 +16,12 @@ class TextMessageViewModel: MessageViewModel {
          showDateHeader: Bool,
          showUsername: Bool,
          showTime: Bool,
-         isLocalUser: Bool,
          isConsecutive: Bool,
          showMessageSendStatusIcon: Bool,
          messageSendStatusIconType: MessageSendStatus? = nil) {
         self.showUsername = showUsername
         self.showTime = showTime
-        self.isLocalUser = isLocalUser
+        self.isLocalUser = message.isLocalUser
         self.showMessageSendStatusIcon = showMessageSendStatusIcon
         self.messageSendStatusIconType = messageSendStatusIconType
 
