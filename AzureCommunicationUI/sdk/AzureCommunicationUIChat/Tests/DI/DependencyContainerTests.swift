@@ -20,10 +20,10 @@ class DependencyContainerTests: XCTestCase {
 
         let sampleToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjMyNTAzNjgwMDAwfQ.9i7FNNHHJT8cOzo-yrAUJyBSfJ-tPPk2emcHavOEpWc"
         let communicationTokenCredential = try? CommunicationTokenCredential(token: sampleToken)
-        let communicationIdentifier = CommunicationUserIdentifier("id")
+        let identifier = CommunicationUserIdentifier("id")
         let displayName = ""
         var chatConfiguration = ChatConfiguration(
-            communicationIdentifier: communicationIdentifier,
+            identifier: identifier,
             credential: communicationTokenCredential!,
             endpoint: "endpoint",
             displayName: displayName)
