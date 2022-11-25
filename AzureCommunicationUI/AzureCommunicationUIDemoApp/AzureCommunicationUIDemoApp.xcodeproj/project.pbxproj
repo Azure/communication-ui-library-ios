@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		1B0D8DC627F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */; };
 		1B3E3B4F285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */; };
+		1B5D6C0F29231B900072C66D /* CallConfigurationMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D6C0929231B900072C66D /* CallConfigurationMocking.swift */; };
+		1B5D6C1029231B900072C66D /* UITestCallingSDKWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D6C0A29231B900072C66D /* UITestCallingSDKWrapper.swift */; };
+		1B5D6C1129231B900072C66D /* CallClientMockings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D6C0B29231B900072C66D /* CallClientMockings.swift */; };
+		1B5D6C1329231B900072C66D /* CallingSDKEventsHandlerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D6C0D29231B900072C66D /* CallingSDKEventsHandlerMocking.swift */; };
 		1F18191727B39F36006AF3B3 /* XCUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18191627B39F36006AF3B3 /* XCUITestBase.swift */; };
 		1F18191A27B45050006AF3B3 /* XCUIElementExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18191927B45050006AF3B3 /* XCUIElementExtension.swift */; };
 		1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift */; };
@@ -67,6 +71,10 @@
 		1AA61EC7BE9A4B43EEC5DBCC /* Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppCallTests.swift; sourceTree = "<group>"; };
 		1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppSetupViewTests.swift; sourceTree = "<group>"; };
+		1B5D6C0929231B900072C66D /* CallConfigurationMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallConfigurationMocking.swift; sourceTree = "<group>"; };
+		1B5D6C0A29231B900072C66D /* UITestCallingSDKWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITestCallingSDKWrapper.swift; sourceTree = "<group>"; };
+		1B5D6C0B29231B900072C66D /* CallClientMockings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallClientMockings.swift; sourceTree = "<group>"; };
+		1B5D6C0D29231B900072C66D /* CallingSDKEventsHandlerMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallingSDKEventsHandlerMocking.swift; sourceTree = "<group>"; };
 		1F18191627B39F36006AF3B3 /* XCUITestBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUITestBase.swift; sourceTree = "<group>"; };
 		1F18191927B45050006AF3B3 /* XCUIElementExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCUIElementExtension.swift; sourceTree = "<group>"; };
 		1F8881BA27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzureCommunicationUIDemoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +138,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B5D6BFB2922F9DF0072C66D /* Mockings */ = {
+			isa = PBXGroup;
+			children = (
+				1B5D6C0B29231B900072C66D /* CallClientMockings.swift */,
+				1B5D6C0929231B900072C66D /* CallConfigurationMocking.swift */,
+				1B5D6C0D29231B900072C66D /* CallingSDKEventsHandlerMocking.swift */,
+				1B5D6C0A29231B900072C66D /* UITestCallingSDKWrapper.swift */,
+			);
+			path = Mockings;
+			sourceTree = "<group>";
+		};
 		1F18191827B45050006AF3B3 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -213,6 +232,7 @@
 		A8C69FB22728AE1A00143DB7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				1B5D6BFB2922F9DF0072C66D /* Mockings */,
 				1F8881CB279B4521001427F0 /* Utilities */,
 				A8FB819D272A0B3500AA0930 /* Views */,
 				5075FE9B27FFA84B00136B34 /* Localization */,
@@ -500,11 +520,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8C69FB42728AE1A00143DB7 /* AppDelegate.swift in Sources */,
+				1B5D6C1329231B900072C66D /* CallingSDKEventsHandlerMocking.swift in Sources */,
 				A8FB819C272A082B00AA0930 /* DemoInputTypes.swift in Sources */,
 				A8AC66FE2735A41600632D0B /* CustomControls.swift in Sources */,
 				A85DDCB92728B23B001297B4 /* SwiftUIDemoView.swift in Sources */,
+				1B5D6C1029231B900072C66D /* UITestCallingSDKWrapper.swift in Sources */,
 				1F8881CD279B456E001427F0 /* Extension.swift in Sources */,
 				5027C1C62821A07500DC7131 /* AccessibilityId.swift in Sources */,
+				1B5D6C0F29231B900072C66D /* CallConfigurationMocking.swift in Sources */,
 				A85DDCB12728B12D001297B4 /* EnvConfig.swift in Sources */,
 				FA7B53EC282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift in Sources */,
 				A85DDCB32728B140001297B4 /* ThemeOptions.swift in Sources */,
@@ -514,6 +537,7 @@
 				1F8881CA2798D5E7001427F0 /* TextFieldClearButton.swift in Sources */,
 				A8849E532732FFA10049FB1A /* AuthenticationHelper.swift in Sources */,
 				50B390CF27D2996E0010A2ED /* SettingsView.swift in Sources */,
+				1B5D6C1129231B900072C66D /* CallClientMockings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

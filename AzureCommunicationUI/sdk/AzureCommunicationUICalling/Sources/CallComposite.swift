@@ -31,6 +31,7 @@ public class CallComposite {
     private var audioSessionManager: AudioSessionManagerProtocol?
     private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
     private var avatarViewManager: AvatarViewManagerProtocol?
+    private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var diagnosticsManager: DiagnosticsManagerProtocol?
 
     /// Get Call Composite diagnostics information.
@@ -50,6 +51,14 @@ public class CallComposite {
         localizationOptions = options?.localizationOptions
     }
 
+    init(withOptions options: CallCompositeOptions? = nil,
+         callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
+        events = Events()
+        themeOptions = options?.themeOptions
+        localizationOptions = options?.localizationOptions
+        self.customCallingSdkWrapper = callingSDKWrapperProtocol
+    }
+
     deinit {
         logger?.debug("Composite deallocated")
     }
@@ -62,7 +71,8 @@ public class CallComposite {
 
         dependencyContainer.registerDependencies(callConfiguration,
                                                  localOptions: localOptions,
-                                                 callCompositeEventsHandler: events)
+                                                 callCompositeEventsHandler: events,
+                                                 withCallingSDKWrapper: self.customCallingSdkWrapper)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)
