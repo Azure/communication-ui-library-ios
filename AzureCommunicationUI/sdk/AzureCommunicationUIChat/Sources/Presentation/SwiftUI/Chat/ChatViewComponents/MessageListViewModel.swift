@@ -167,7 +167,7 @@ class MessageListViewModel: ObservableObject {
         let isConsecutive = message.senderId == lastMessage.senderId
 
         switch type {
-        case .text, .html, .custom("RichText/Html"):
+        case .text, .html:
             let isLocalUser = isLocalUser(message: message)
             let showUsername = !isLocalUser && !isConsecutive
             let showTime = !isConsecutive

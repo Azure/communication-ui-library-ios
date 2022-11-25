@@ -56,7 +56,7 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
         self.senderId = senderId
         self.senderDisplayName = senderDisplayName
         self.rawContent = content
-        if type == .html || type == .custom("RichText/Html") {
+        if type == .html {
             self.content = content?.unescapeHtmlString
         } else {
             self.content = content

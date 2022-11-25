@@ -26,6 +26,9 @@ extension ChatMessageType {
     func toMessageType() -> MessageType {
         switch self {
         case .custom(let str):
+            if str.lowercased() == "richtext/html" {
+                return .html
+            }
             return .custom(str)
         case .text:
             return .text
