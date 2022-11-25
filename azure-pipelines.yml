@@ -7,7 +7,8 @@ trigger:
     include:
       - main
       - develop
-      - relese/*
+      - release/*
+      - feature/*
 
 # Run on PRs to these branches
 pr:
@@ -24,7 +25,7 @@ steps:
     displayName: "ServiceTree: [$(BuildOutputUsage)] "
     inputs:
       ServiceTreeGateway: "ServiceTree Gateway"
-      Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f" #"5b23174b-8c6d-467d-862d-a3f24958fb74"
+      Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
     condition: always()
 
   - script: |
@@ -47,11 +48,6 @@ steps:
     displayName: "Pod remove trunk if install failed"
     condition: failed()
 
-  - script: "Pods/SwiftLint/swiftlint lint --strict --config .swiftlint.yml --path sdk/AzureCommunicationUICalling"
-    workingDirectory: AzureCommunicationUI
-    displayName: "Pod swiftlint"
-    enabled: false
-
   - script: |
       swift build -v \
         -Xswiftc "-sdk" \
@@ -61,7 +57,7 @@ steps:
 
       xcodebuild test -scheme AzureCommunicationUICommon -sdk "`xcrun --sdk iphonesimulator --show-sdk-path`" -destination "name=iPhone 13"
     workingDirectory: AzureCommunicationUI/sdk/AzureCommunicationUICommon
-    displayName: "Build AzureCommunicationUICommon via SPM"
+    displayName: "Build and test AzureCommunicationUICommon"
 
   - script: |
       export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
@@ -79,7 +75,7 @@ steps:
           echo '    - AzureCommunicationUI/*/*Extension.swift'
       } >> $SLATHER_FILE
 
-    displayName: "Add .slather.yml file"
+    displayName: "Inject .slather.yml file"
 
   - task: Xcode@5
     displayName: "Xcode Calling build"
@@ -150,7 +146,7 @@ steps:
       codeCoverageTool: Cobertura
       summaryFileLocation: "$(System.DefaultWorkingDirectory)/AzureCommunicationUI/slather-report/cobertura.xml"
 
-  - task: mspremier.BuildQualityChecks.QualityChecks-task.BuildQualityChecks@8
+  - task: BuildQualityChecks@8
     displayName: "Check build quality"
     inputs:
       checkCoverage: true
