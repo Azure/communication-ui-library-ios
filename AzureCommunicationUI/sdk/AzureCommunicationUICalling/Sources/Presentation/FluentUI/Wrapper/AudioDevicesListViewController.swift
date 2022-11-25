@@ -50,7 +50,11 @@ extension AudioDevicesListViewController: UITableViewDataSource, UITableViewDele
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.items[indexPath.row].action()
+        switchAudioDeviceAction(at: indexPath.row)
         dismissDrawer(animated: true)
+    }
+
+    private func switchAudioDeviceAction(at row: Int) {
+        self.items[row].action()
     }
 }
