@@ -48,6 +48,10 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
             return lhs.createdOn == rhs.createdOn ?
             lhs.id < rhs.id : lhs.createdOn < rhs.createdOn
         }
+        // Assume all sent messages have been seen
+        if let index = messages.lastIndex(where: {$0.isLocalUser}) {
+            messages[index].update(sendStatus: .seen)
+        }
     }
 
     func addPreviousMessages(previousMessages: [ChatMessageInfoModel]) {
@@ -201,14 +205,15 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
             return
         }
 
-        // Handle case for deletion or edit?
+        clearSendStatusForAllMessages()
+        messages[index].update(sendStatus: .seen)
+    }
+
+    private func clearSendStatusForAllMessages() {
         for i in messages.indices {
             if messages[i].sendStatus == .seen {
                 messages[i].update(sendStatus: .sent)
             }
         }
-
-        messages[index].update(sendStatus: .seen)
-//        messages[index].sendStatus = .seen
     }
 }
