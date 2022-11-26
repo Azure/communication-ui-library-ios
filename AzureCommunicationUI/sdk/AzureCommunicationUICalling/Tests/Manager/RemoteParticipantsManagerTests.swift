@@ -11,7 +11,6 @@ class RemoteParticipantsManagerTests: XCTestCase {
     var sut: RemoteParticipantsManager!
     var avatarViewManager: AvatarViewManagerMocking!
     var mockStoreFactory: StoreFactoryMocking!
-    var callingSDKWrapper: CallingSDKWrapperMocking!
     var eventsHandler: CallComposite.Events!
     var remoteParticipantsJoinedExpectation: XCTestExpectation!
     var expectedIds: [String]!
@@ -21,7 +20,6 @@ class RemoteParticipantsManagerTests: XCTestCase {
         remoteParticipantsJoinedExpectation = XCTestExpectation(description: "DidRemoteParticipantsJoin event expectation")
         mockStoreFactory = StoreFactoryMocking()
         eventsHandler = CallComposite.Events()
-        callingSDKWrapper = CallingSDKWrapperMocking()
         avatarViewManager = AvatarViewManagerMocking(store: mockStoreFactory.store,
                                                      localParticipantViewData: nil)
     }
@@ -32,7 +30,6 @@ class RemoteParticipantsManagerTests: XCTestCase {
         remoteParticipantsJoinedExpectation = nil
         mockStoreFactory = nil
         eventsHandler = nil
-        callingSDKWrapper = nil
         avatarViewManager = nil
         expectedIds = []
     }
