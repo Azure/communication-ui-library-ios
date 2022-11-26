@@ -48,7 +48,7 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
             return lhs.createdOn == rhs.createdOn ?
             lhs.id < rhs.id : lhs.createdOn < rhs.createdOn
         }
-        // Assume all sent messages have been seen
+        // Assume all previously sent messages have been seen
         if let index = messages.lastIndex(where: {$0.isLocalUser}) {
             messages[index].update(sendStatus: .seen)
         }

@@ -103,7 +103,6 @@
 		50D8EE99291C6CFB003C3A95 /* ChatSDKAsyncExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8EE98291C6CFB003C3A95 /* ChatSDKAsyncExtension.swift */; };
 		50D8EE9B2926B6D7003C3A95 /* ChatCompositeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8EE9A2926B6D7003C3A95 /* ChatCompositeView.swift */; };
 		50D8EE9D2926B6F0003C3A95 /* ChatCompositeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8EE9C2926B6F0003C3A95 /* ChatCompositeViewController.swift */; };
-		50F0C58328D38770009D7176 /* MessageViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C58228D38770009D7176 /* MessageViewModelMocking.swift */; };
 		50F0C58528D387E5009D7176 /* MessageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C58428D387E5009D7176 /* MessageView.swift */; };
 		50F0C58928D388E4009D7176 /* ChatActionHandlerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C58828D388E4009D7176 /* ChatActionHandlerMocking.swift */; };
 		50F0C58B28D388FE009D7176 /* ChatServiceEventHandlerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C58A28D388FE009D7176 /* ChatServiceEventHandlerMocking.swift */; };
@@ -278,7 +277,6 @@
 		50D8EE98291C6CFB003C3A95 /* ChatSDKAsyncExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSDKAsyncExtension.swift; sourceTree = "<group>"; };
 		50D8EE9A2926B6D7003C3A95 /* ChatCompositeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ChatCompositeView.swift; path = Sources/Presentation/ChatCompositeView.swift; sourceTree = SOURCE_ROOT; };
 		50D8EE9C2926B6F0003C3A95 /* ChatCompositeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCompositeViewController.swift; sourceTree = "<group>"; };
-		50F0C58228D38770009D7176 /* MessageViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageViewModelMocking.swift; sourceTree = "<group>"; };
 		50F0C58428D387E5009D7176 /* MessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageView.swift; sourceTree = "<group>"; };
 		50F0C58828D388E4009D7176 /* ChatActionHandlerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatActionHandlerMocking.swift; sourceTree = "<group>"; };
 		50F0C58A28D388FE009D7176 /* ChatServiceEventHandlerMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceEventHandlerMocking.swift; sourceTree = "<group>"; };
@@ -740,7 +738,6 @@
 		50CB827528C2A1D900680566 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				50F0C58228D38770009D7176 /* MessageViewModelMocking.swift */,
 				BD80293228EC9BDF00A55CAC /* ChatViewModelMocking.swift */,
 			);
 			path = ViewModels;
@@ -1475,7 +1472,6 @@
 				50F0C5C628D38CE4009D7176 /* MessageRepositoryManagerTests.swift in Sources */,
 				50F0C59928D38B20009D7176 /* ErrorMocking.swift in Sources */,
 				50F0C5C228D38CC9009D7176 /* AvatarManagerTests.swift in Sources */,
-				50F0C58328D38770009D7176 /* MessageViewModelMocking.swift in Sources */,
 				50370CC428EB5ED200ACD234 /* DiagnosticConfigTests.swift in Sources */,
 				50370CBF28EB5E2300ACD234 /* StoreFactoryMocking.swift in Sources */,
 				50F0C5CA28D38D00009D7176 /* DependencyContainerTests.swift in Sources */,
