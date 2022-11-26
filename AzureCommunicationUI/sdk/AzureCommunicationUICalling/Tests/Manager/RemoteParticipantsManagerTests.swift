@@ -189,19 +189,18 @@ class RemoteParticipantsManagerTests: XCTestCase {
 extension RemoteParticipantsManagerTests {
     func makeSUT(isParticipantsJoinHandlerSet: Bool = true) {
         if isParticipantsJoinHandlerSet {
-            eventsHandler.onRemoteParticipantJoined = { [weak self] _ in
+            eventsHandler.onRemoteParticipantJoined = { [weak self] ids in
                 guard let self = self else {
                     return
                 }
                 // check getRemoteParticipantCallIds as there is no way to init RemoteParticipant for getRemoteParticipant func
-                XCTAssertEqual(self.callingSDKWrapper.getRemoteParticipantCallIds.sorted(),
+                XCTAssertEqual(ids.map { $0.rawId }.sorted(),
                                self.expectedIds.sorted())
                 self.remoteParticipantsJoinedExpectation.fulfill()
             }
         }
         sut = RemoteParticipantsManager(store: mockStoreFactory.store,
                                         callCompositeEventsHandler: eventsHandler,
-                                        callingSDKWrapper: callingSDKWrapper,
                                         avatarViewManager: avatarViewManager)
     }
 }

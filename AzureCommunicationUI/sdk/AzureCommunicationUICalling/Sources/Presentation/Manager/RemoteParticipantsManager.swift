@@ -66,12 +66,8 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
         guard !joinedParticipantsIds.isEmpty else {
             return
         }
-        print("!!!!")
-print(joinedParticipantsIds)
         let joinedParticipantsCommunicationIds: [CommunicationIdentifier] = joinedParticipantsIds
             .compactMap { createCommunicationIdentifier(fromRawId: $0) }
-        print("!!!!")
-        print(joinedParticipantsCommunicationIds)
         didRemoteParticipantsJoin(joinedParticipantsCommunicationIds)
     }
 }
