@@ -91,27 +91,15 @@ jobs:
       - script: |
           cd AzureCommunicationUI
           slather
-          cat slather-report/cobertura.xml
+          mv slather-report/cobertura.xml slather-report/calling-cobertura.xml
         displayName: "Run slather"
 
-      - task: UseDotNet@2
-        displayName: "Use .NET Core sdk 3.1.x"
+      - task: PublishPipelineArtifact@1
+        displayName: "Publish Code Coverage Report to Pipeline"
         inputs:
-          version: 3.1.x
-
-      - task: PublishCodeCoverageResults@1
-        displayName: "Publish code coverage from $(System.DefaultWorkingDirectory)/AzureCommunicationUI/slather-report/cobertura.xml"
-        inputs:
-          codeCoverageTool: Cobertura
-          summaryFileLocation: "$(System.DefaultWorkingDirectory)/AzureCommunicationUI/slather-report/cobertura.xml"
-
-      - task: BuildQualityChecks@8
-        displayName: "Check build quality"
-        enabled: false
-        inputs:
-          checkCoverage: true
-          coverageFailOption: fixed
-          coverageType: lines
+          targetPath: "$(System.DefaultWorkingDirectory)/AzureCommunicationUI/slather-report/calling-cobertura.xml"
+          artifact: "CallingCoberturaReport"
+          publishLocation: "pipeline"
 
   - job: BuildChat
     displayName: "Build UI Chat Library & unit test"
@@ -190,19 +178,51 @@ jobs:
       - script: |
           cd AzureCommunicationUI
           slather
-          cat slather-report/cobertura.xml
+          mv slather-report/cobertura.xml slather-report/chat-cobertura.xml
         displayName: "Run slather"
 
-      - task: UseDotNet@2
-        displayName: "Use .NET Core sdk 3.1.x"
+      - task: PublishPipelineArtifact@1
+        displayName: "Publish Code Coverage Report to Pipeline"
         inputs:
-          version: 3.1.x
+          targetPath: "$(System.DefaultWorkingDirectory)/AzureCommunicationUI/slather-report/chat-cobertura.xml"
+          artifact: "ChatCoberturaReport"
+          publishLocation: "pipeline"
+
+  - job: CombineReports
+    displayName: "Publish Reports"
+    dependsOn:
+     - BuildCalling
+     - BuildChat
+
+    steps:
+      # - task: UseDotNet@2
+      #   displayName: "Use .NET Core sdk 3.1.x"
+      #   inputs:
+      #     version: 3.1.x
+      - task: DownloadBuildArtifacts@1
+        displayName: "Get cobertura files from calling build"
+        inputs:
+          artifactName: "CallingCoberturaReport"
+          buildType: "current"
+          downloadPath: "$(System.ArtifactsDirectory)/cobertura"
+
+      - task: DownloadBuildArtifacts@1
+        displayName: "Get cobertura files from chat build"
+        inputs:
+          artifactName: "ChatCoberturaReport"
+          buildType: "current"
+          downloadPath: "$(System.ArtifactsDirectory)/cobertura"
+
+      - task: reportgenerator@5
+        displayName: "Combine Cobertura Reports"
+        inputs:
+          reports: "$(System.ArtifactsDirectory)/cobertura/*.xml"
+          targetdir: $(Pipeline.Workspace)/coveragereport
 
       - task: PublishCodeCoverageResults@1
-        displayName: "Publish code coverage from $(System.DefaultWorkingDirectory)/AzureCommunicationUI/slather-report/cobertura.xml"
         inputs:
-          codeCoverageTool: Cobertura
-          summaryFileLocation: "$(System.DefaultWorkingDirectory)/AzureCommunicationUI/slather-report/cobertura.xml"
+          codeCoverageTool: "Cobertura"
+          summaryFileLocation: $(Pipeline.Workspace)/coveragereport/cobertura.xml
 
       - task: BuildQualityChecks@8
         displayName: "Check build quality"
@@ -211,3 +231,9 @@ jobs:
           checkCoverage: true
           coverageFailOption: fixed
           coverageType: lines
+
+      # - task: PublishCodeCoverageResults@1
+      #   displayName: "Publish code coverage from $(System.DefaultWorkingDirectory)/AzureCommunicationUI/slather-report/cobertura.xml"
+      #   inputs:
+      #     codeCoverageTool: Cobertura
+      #     summaryFileLocation: "$(System.DefaultWorkingDirectory)/AzureCommunicationUI/slather-report/cobertura.xml"
