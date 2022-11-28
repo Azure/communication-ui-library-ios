@@ -24,4 +24,6 @@ enum AccessibilityId: String {
     /* SettingsView */
     case expiredAcsTokenToggleAccessibilityID =
             "AzureCommunicationUICalling.SettingsView.expiredAcstokenToggle.AccessibilityID"
+    case useMockCallingSDKHandlerToggleAccessibilityID =
+            "AzureCommunicationUICalling.SettingsView.useMockCallingSDKHandler.AccessibilityID"
 }
