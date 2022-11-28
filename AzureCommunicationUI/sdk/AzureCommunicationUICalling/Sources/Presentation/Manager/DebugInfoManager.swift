@@ -35,6 +35,6 @@ class DebugInfoManager: DebugInfoManagerProtocol {
     }
 
     func getDebugInfo() -> DebugInfo {
-        return DebugInfo(lastKnownCallId: callId)
+        return DebugInfo(lastCallId: callId)
     }
 }

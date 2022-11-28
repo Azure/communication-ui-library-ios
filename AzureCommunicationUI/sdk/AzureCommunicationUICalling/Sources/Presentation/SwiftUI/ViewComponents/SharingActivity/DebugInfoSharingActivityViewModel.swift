@@ -17,7 +17,7 @@ class DebugInfoSharingActivityViewModel {
 
     func getDebugInfo() -> String {
         let debugInfo = debugInfoManager.getDebugInfo()
-        let callId = debugInfo.lastKnownCallId ?? StringConstants.defaultCallIdDebugInfoValue
+        let callId = debugInfo.lastCallId ?? StringConstants.defaultCallIdDebugInfoValue
         return "\(StringConstants.callIdDebugInfoTitle) \"\(callId)\""
     }
 }

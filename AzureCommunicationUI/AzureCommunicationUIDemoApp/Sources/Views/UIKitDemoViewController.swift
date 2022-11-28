@@ -130,7 +130,7 @@ class UIKitDemoViewController: UIViewController {
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::UIKitDemoView::getEventsHandler::onError \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
-        print("::::SwiftUIDemoView debug info \(callComposite.debugInfo.lastKnownCallId ?? "Unknown")")
+        print("::::SwiftUIDemoView debug info \(callComposite.debugInfo.lastCallId ?? "Unknown")")
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {

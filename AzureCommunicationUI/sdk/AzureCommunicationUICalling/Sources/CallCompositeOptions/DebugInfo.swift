@@ -9,9 +9,9 @@ import Foundation
 public struct DebugInfo {
     /// The last known call id for CallComposite object.
     /// `Nil` is returned if a call hasn't started for CallComposite.
-    public let lastKnownCallId: String?
+    public let lastCallId: String?
 
-    init(lastKnownCallId: String? = nil) {
-        self.lastKnownCallId = lastKnownCallId
+    init(lastCallId: String? = nil) {
+        self.lastCallId = lastCallId
     }
 }
