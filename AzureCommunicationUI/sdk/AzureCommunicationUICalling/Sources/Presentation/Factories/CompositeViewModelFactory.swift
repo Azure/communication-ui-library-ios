@@ -30,10 +30,6 @@ protocol CompositeViewModelFactoryProtocol {
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
-    func makeAudioDevicesListCellViewModel(icon: CompositeIcon,
-                                           title: String,
-                                           isSelected: Bool,
-                                           onSelectedAction: @escaping (() -> Void)) -> AudioDevicesListCellViewModel
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
 
@@ -52,10 +48,15 @@ protocol CompositeViewModelFactoryProtocol {
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
     func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
-    func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
-                                              title: String,
-                                              accessibilityIdentifier: String,
-                                              action: @escaping (() -> Void)) -> MoreCallOptionsListCellViewModel
+    func makeDrawerListItemViewModel(icon: CompositeIcon,
+                                     title: String,
+                                     accessibilityIdentifier: String,
+                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel
+    func makeSelectableDrawerListItemViewModel(
+        icon: CompositeIcon,
+        title: String,
+        isSelected: Bool,
+        onSelectedAction: @escaping (() -> Void)) -> SelectableDrawerListItemViewModel
     func makeDiagnosticsSharingActivityViewModel() -> DiagnosticsSharingActivityViewModel
 
     // MARK: SetupViewModels
@@ -172,14 +173,16 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                   localizationProvider: localizationProvider)
     }
 
-    func makeAudioDevicesListCellViewModel(icon: CompositeIcon,
-                                           title: String,
-                                           isSelected: Bool,
-                                           onSelectedAction: @escaping (() -> Void)) -> AudioDevicesListCellViewModel {
-        AudioDevicesListCellViewModel(icon: icon,
-                                      title: title,
-                                      isSelected: isSelected,
-                                      onSelected: onSelectedAction)
+    func makeSelectableDrawerListItemViewModel(icon: CompositeIcon,
+                                               title: String,
+                                               isSelected: Bool,
+                                               onSelectedAction: @escaping (() -> Void)) ->
+    SelectableDrawerListItemViewModel {
+        SelectableDrawerListItemViewModel(icon: icon,
+                                          title: title,
+                                          accessibilityIdentifier: "",
+                                          isSelected: isSelected,
+                                          action: onSelectedAction)
     }
 
     func makeErrorInfoViewModel(title: String,
@@ -260,14 +263,14 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                      showSharingViewAction: showSharingViewAction)
     }
 
-    func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
-                                              title: String,
-                                              accessibilityIdentifier: String,
-                                              action: @escaping (() -> Void)) -> MoreCallOptionsListCellViewModel {
-        MoreCallOptionsListCellViewModel(icon: icon,
-                                         title: title,
-                                         accessibilityIdentifier: accessibilityIdentifier,
-                                         action: action)
+    func makeDrawerListItemViewModel(icon: CompositeIcon,
+                                     title: String,
+                                     accessibilityIdentifier: String,
+                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel {
+        DrawerListItemViewModel(icon: icon,
+                                title: title,
+                                accessibilityIdentifier: accessibilityIdentifier,
+                                action: action)
     }
 
     func makeDiagnosticsSharingActivityViewModel() -> DiagnosticsSharingActivityViewModel {

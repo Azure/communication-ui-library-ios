@@ -8,6 +8,45 @@ import XCTest
 
 class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
+    func testJoinCallEndCallWithMockCallCallingSDKWrapperHandler() {
+        tapInterfaceFor(.uiKit)
+
+        // turn on calling sdk mock in settings modal
+        tapButton(
+            accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue,
+            shouldWait: false)
+        app.tap()
+        let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
+        if toggle.waitForExistence(timeout: 3) {
+            toggle.tap()
+        }
+        app.buttons["Close"].tap()
+
+        // go to setup screen
+        tapEnabledButton(
+            accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
+            shouldWait: true)
+        let buttonExist = app.buttons[AccessibilityIdentifier.joinCallAccessibilityID.rawValue].waitForExistence(timeout: 10)
+        XCTAssertTrue(buttonExist)
+
+        // join call
+        tapButton(
+            accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+            shouldWait: true)
+
+        // mute / unmute local mic
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.micAccessibilityID.rawValue,
+                  shouldWait: true)
+        let micButton = app.buttons[AccessibilityIdentifier.micAccessibilityID.rawValue]
+        XCTAssertNotNil(micButton)
+        XCTAssertTrue(micButton.isEnabled)
+        XCTAssertEqual(micButton.label, "Mute")
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.micAccessibilityID.rawValue,
+                  shouldWait: true)
+        XCTAssertEqual(micButton.label, "Unmute")
+        toggleLeaveCallDrawer(leaveCall: true)
+    }
+
     // MARK: End call tests
 
     func testCallCompositeEndCallGroupCallSwiftUI() {
@@ -75,9 +114,14 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
             accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
             shouldWait: true)
         wait(for: app.otherElements["ActivityListView"])
-        tapButton(
-            accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCloseButtonAccessibilityID.rawValue,
-            shouldWait: true)
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            app.otherElements["PopoverDismissRegion"].tap()
+        } else if UIDevice.current.userInterfaceIdiom == .phone {
+            tapButton(
+                accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCloseButtonAccessibilityID.rawValue,
+                shouldWait: true)
+        }
+        XCTAssertFalse(app.otherElements["ActivityListView"].exists)
     }
 
     func testCallCompositeCopyDiagnosticInfo() {
