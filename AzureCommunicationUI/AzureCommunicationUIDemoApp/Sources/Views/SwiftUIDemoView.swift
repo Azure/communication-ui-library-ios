@@ -4,8 +4,8 @@
 //
 
 import SwiftUI
-import AzureCommunicationUICalling
 import AzureCommunicationCommon
+@testable import AzureCommunicationUICalling
 
 struct SwiftUIDemoView: View {
     @State var isErrorDisplayed: Bool = false
@@ -162,7 +162,11 @@ extension SwiftUIDemoView {
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
-        let callComposite = CallComposite(withOptions: callCompositeOptions)
+        let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
+        let callComposite = useMockCallingSDKHandler ?
+            CallComposite(withOptions: callCompositeOptions,
+                          callingSDKWrapperProtocol: UITestCallingSDKWrapper())
+            : CallComposite(withOptions: callCompositeOptions)
 
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {

@@ -6,9 +6,9 @@
 import UIKit
 import Combine
 import SwiftUI
-import AzureCommunicationUICalling
 import AzureCommunicationCommon
 import AppCenterCrashes
+@testable import AzureCommunicationUICalling
 
 class UIKitDemoViewController: UIViewController {
 
@@ -161,7 +161,11 @@ class UIKitDemoViewController: UIViewController {
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
-        let callComposite = CallComposite(withOptions: callCompositeOptions)
+
+        let callComposite = envConfigSubject.useMockCallingSDKHandler ?
+            CallComposite(withOptions: callCompositeOptions,
+                          callingSDKWrapperProtocol: UITestCallingSDKWrapper())
+            : CallComposite(withOptions: callCompositeOptions)
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
@@ -457,6 +461,7 @@ class UIKitDemoViewController: UIViewController {
                                                              left: LayoutConstants.buttonHorizontalInset,
                                                              bottom: LayoutConstants.buttonVerticalInset,
                                                              right: LayoutConstants.buttonHorizontalInset)
+        settingsButton.accessibilityIdentifier = AccessibilityId.settingsButtonAccessibilityID.rawValue
 
         startExperienceButton = UIButton()
         startExperienceButton.backgroundColor = .systemBlue
