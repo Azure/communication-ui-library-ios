@@ -148,7 +148,7 @@ jobs:
           {
               echo 'coverage_service: cobertura_xml'
               echo 'output_directory: slather-report'
-              echo 'scheme: AzureCommunicationUICalling'
+              echo 'scheme: AzureCommunicationUIChat'
               echo 'workspace: AzureCommunicationUI.xcworkspace'
               echo 'xcodeproj: sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj'
               echo 'ignore:'
