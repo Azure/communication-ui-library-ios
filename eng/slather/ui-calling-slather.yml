@@ -1,0 +1,12 @@
+coverage_service: cobertura.xml
+output_directory: slather-report
+scheme: AzureCommunicationUICalling
+workspace: AzureCommunicationUI.xcworkspace
+xcodeproj: sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj
+ignore:
+  - AzureCommunicationUIDemoApp/**
+  - sdk/AzureCommunicationUICalling/Tests/**
+  - sdk/AzureCommunicationUIChat/Tests/**
+  - sdk/AzureCommunicationUICommon/Tests/**
+  - sdk/**/*View*
+  - sdk/**/*Button*

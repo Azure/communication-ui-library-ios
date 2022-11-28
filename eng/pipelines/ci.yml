@@ -102,7 +102,7 @@ jobs:
           publishLocation: "pipeline"
 
   - job: BuildChat
-    displayName: "Build UI Chat Library & unit test"
+    displayName: "Build UI Chat Library"
     pool:
       name: vsts-mac-1231-xcode-1331
       demands: xcode
@@ -195,10 +195,6 @@ jobs:
      - BuildChat
 
     steps:
-      # - task: UseDotNet@2
-      #   displayName: "Use .NET Core sdk 3.1.x"
-      #   inputs:
-      #     version: 3.1.x
       - task: DownloadBuildArtifacts@1
         displayName: "Get cobertura files from calling build"
         inputs:
@@ -222,7 +218,7 @@ jobs:
       - task: PublishCodeCoverageResults@1
         inputs:
           codeCoverageTool: "Cobertura"
-          summaryFileLocation: $(Pipeline.Workspace)/coveragereport/cobertura.xml
+          summaryFileLocation: $(Pipeline.Workspace)/coveragereport/Cobertura.xml
 
       - task: BuildQualityChecks@8
         displayName: "Check build quality"
@@ -231,9 +227,3 @@ jobs:
           checkCoverage: true
           coverageFailOption: fixed
           coverageType: lines
-
-      # - task: PublishCodeCoverageResults@1
-      #   displayName: "Publish code coverage from $(System.DefaultWorkingDirectory)/AzureCommunicationUI/slather-report/cobertura.xml"
-      #   inputs:
-      #     codeCoverageTool: Cobertura
-      #     summaryFileLocation: "$(System.DefaultWorkingDirectory)/AzureCommunicationUI/slather-report/cobertura.xml"
