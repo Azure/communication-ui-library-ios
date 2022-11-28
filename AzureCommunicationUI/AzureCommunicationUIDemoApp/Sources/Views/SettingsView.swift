@@ -35,6 +35,7 @@ struct SettingsView: View {
                 localizationSettings
                 localParticipantSettings
                 avatarSettings
+                useMockCallingSDKHandler
                 navigationSettings
                 remoteParticipantsAvatarsSettings
                 themeSettings
@@ -101,6 +102,14 @@ struct SettingsView: View {
     var remoteParticipantsAvatarsSettings: some View {
         Section(header: Text("Remote Participants View Data")) {
             Toggle("Inject avatars", isOn: $envConfigSubject.useCustomRemoteParticipantViewData)
+        }
+    }
+
+    var useMockCallingSDKHandler: some View {
+        Section(header: Text("Calling SDK Wrapper Handler Mocking")) {
+            Toggle("Use mock Calling SDK Wrapper Handler",
+                   isOn: $envConfigSubject.useMockCallingSDKHandler)
+                .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
         }
     }
 
