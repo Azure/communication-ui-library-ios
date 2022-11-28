@@ -54,6 +54,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var isRightToLeft: Bool = false
     @Published var useCustomColors: Bool = false
     @Published var useCustomRemoteParticipantViewData: Bool = false
+    @Published var useMockCallingSDKHandler: Bool = false
     @Published var useExpiredToken: Bool = false
     @Published var primaryColor: Color = .blue
     @Published var tint10: Color = .blue

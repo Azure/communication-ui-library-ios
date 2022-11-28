@@ -6,7 +6,7 @@
 import FluentUI
 import UIKit
 
-class MoreCallOptionsListViewController: DrawerContainerViewController<MoreCallOptionsListCellViewModel> {
+class MoreCallOptionsListViewController: DrawerContainerViewController<DrawerListItemViewModel> {
     private enum SectionConstants {
         static let headerHeight: CGFloat = 36.0
     }
