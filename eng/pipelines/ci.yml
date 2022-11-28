@@ -1,5 +1,4 @@
-# CI Pipeline for
-# Performs basic testing for PRs and pushes to specific branches
+# CI Pipeline
 
 # Run on pushes to these branches
 trigger:
@@ -15,6 +14,16 @@ pr:
   - main
   - develop
   - release/*
+
+variables:
+  targetingChatBranch: $[ eq(variables['System.PullRequest.TargetBranch'], 'feature/chat') ]
+  isChatFeature: $[ or(contains(variables['Build.SourceBranch'], 'chat'), contains(variables['Build.SourceBranch'], 'Chat')) ]
+  buildChat: or($(isChatFeature), $(targetingChatBranch))
+
+  # ${{ if contains(variables['Build.SourceBranch'], 'chat') || contains(variables['Build.SourceBranch'], 'Chat') || eq(variables['System.PullRequest.TargetBranch'], 'feature/chat') }}:
+  #   buildChat: true
+  # $ {{ else }}:
+  #   buildChat: false
 
 jobs:
   - job: BuildCalling
@@ -106,7 +115,7 @@ jobs:
     pool:
       name: vsts-mac-1231-xcode-1331
       demands: xcode
-    condition: and(succeeded(),or(eq(variables['System.PullRequest.TargetBranch'], 'feature/chat'),or(contains(variables['Build.SourceBranch'], 'chat'), contains(variables['Build.SourceBranch'], 'Chat'))))
+    condition: and(succeeded(), variables.buildChat, 'true')
     steps:
       - task: servicetree-link-build-task@1
         displayName: "ServiceTree: [$(BuildOutputUsage)] "
@@ -193,7 +202,9 @@ jobs:
     dependsOn:
      - BuildCalling
      - BuildChat
-
+    pool:
+      name: vsts-mac-1231-xcode-1331
+      demands: xcode
     steps:
       - task: DownloadBuildArtifacts@1
         displayName: "Get cobertura files from calling build"
