@@ -61,6 +61,7 @@ jobs:
               echo '    - sdk/AzureCommunicationUIChat/Tests/**'
               echo '    - sdk/AzureCommunicationUICommon/Tests/**'
               echo '    - sdk/**/*View*'
+              echo '    - sdk/**/*Button*'
           } >> $SLATHER_FILE
         displayName: "Inject .slather.yml file"
 
@@ -106,6 +107,7 @@ jobs:
 
       - task: BuildQualityChecks@8
         displayName: "Check build quality"
+        enabled: false
         inputs:
           checkCoverage: true
           coverageFailOption: fixed
@@ -157,6 +159,7 @@ jobs:
               echo '    - sdk/AzureCommunicationUIChat/Tests/**'
               echo '    - sdk/AzureCommunicationUICommon/Tests/**'
               echo '    - sdk/**/*View*'
+              echo '    - sdk/**/*Button*'
           } >> $SLATHER_FILE
         displayName: "Inject .slather.yml file"
 
@@ -184,6 +187,12 @@ jobs:
           args: "-verbose"
           publishJUnitResults: true
 
+      - script: |
+          cd AzureCommunicationUI
+          slather
+          cat slather-report/cobertura.xml
+        displayName: "Run slather"
+
       - task: UseDotNet@2
         displayName: "Use .NET Core sdk 3.1.x"
         inputs:
@@ -197,6 +206,7 @@ jobs:
 
       - task: BuildQualityChecks@8
         displayName: "Check build quality"
+        enabled: false
         inputs:
           checkCoverage: true
           coverageFailOption: fixed
