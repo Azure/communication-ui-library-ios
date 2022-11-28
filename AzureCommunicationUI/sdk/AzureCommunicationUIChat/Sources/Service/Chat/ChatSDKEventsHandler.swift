@@ -101,10 +101,19 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
         }
 
         guard let chatEventModel = eventModel,
-              (chatEventModel.threadId == nil ||
-                chatEventModel.threadId == self.threadId) else {
+              (isChatClientEvent(chatEventModel) ||
+               isLocalChatThread(chatEventModel))
+        else {
             return
         }
         chatEventSubject.send(chatEventModel)
+    }
+
+    func isChatClientEvent(_ eventModel: ChatEventModel) -> Bool {
+        return eventModel.threadId == nil
+    }
+
+    func isLocalChatThread(_ eventModel: ChatEventModel) -> Bool {
+        return eventModel.threadId == self.threadId
     }
 }
