@@ -29,13 +29,3 @@ struct DiagnosticConfig {
     }
 
 }
-
-/// A Call Composite diagnostics information.
-public struct CallDiagnostics {
-    /// The last known call id.
-    public let lastKnownCallId: String?
-
-    init(lastKnownCallId: String? = nil) {
-        self.lastKnownCallId = lastKnownCallId
-    }
-}
