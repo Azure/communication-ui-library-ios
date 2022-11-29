@@ -50,10 +50,10 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     private func setupRemoteParticipantEventsAdapter() {
         let participantUpdate: ((AzureCommunicationCalling.RemoteParticipant)
                                 -> Void) = { [weak self] remoteParticipant in
-            guard let self = self,
-                  let userIdentifier = remoteParticipant.identifier.stringValue else {
+            guard let self = self else {
                 return
             }
+            let userIdentifier = remoteParticipant.identifier.rawId
             self.updateRemoteParticipant(userIdentifier: userIdentifier, updateSpeakingStamp: false)
         }
 
@@ -62,10 +62,10 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         remoteParticipantEventAdapter.onStateChanged = participantUpdate
 
         remoteParticipantEventAdapter.onIsSpeakingChanged = { [weak self] remoteParticipant in
-            guard let self = self,
-                  let userIdentifier = remoteParticipant.identifier.stringValue else {
+            guard let self = self else {
                 return
             }
+            let userIdentifier = remoteParticipant.identifier.rawId
             let updateSpeakingStamp = remoteParticipant.isSpeaking
             self.updateRemoteParticipant(userIdentifier: userIdentifier, updateSpeakingStamp: updateSpeakingStamp)
         }
@@ -75,9 +75,8 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         _ remoteParticipants: [AzureCommunicationCalling.RemoteParticipant]
     ) {
         for participant in remoteParticipants {
-            if let userIdentifier = participant.identifier.stringValue {
-                self.remoteParticipants.removeValue(forKey: userIdentifier)?.delegate = nil
-            }
+            let userIdentifier = participant.identifier.rawId
+            self.remoteParticipants.removeValue(forKey: userIdentifier)?.delegate = nil
         }
         removeRemoteParticipantsInfoModel(remoteParticipants)
     }
@@ -92,7 +91,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         remoteParticipantsInfoList =
             remoteParticipantsInfoList.filter { infoModel in
                 !remoteParticipants.contains(where: {
-                    $0.identifier.stringValue == infoModel.userIdentifier
+                    $0.identifier.rawId == infoModel.userIdentifier
                 })
             }
         participantsInfoListSubject.send(remoteParticipantsInfoList)
@@ -102,10 +101,9 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         _ remoteParticipants: [AzureCommunicationCalling.RemoteParticipant]
     ) {
         for participant in remoteParticipants {
-            if let userIdentifier = participant.identifier.stringValue {
-                participant.delegate = remoteParticipantEventAdapter
-                self.remoteParticipants.append(forKey: userIdentifier, value: participant)
-            }
+            let userIdentifier = participant.identifier.rawId
+            participant.delegate = remoteParticipantEventAdapter
+            self.remoteParticipants.append(forKey: userIdentifier, value: participant)
         }
         addRemoteParticipantsInfoModel(remoteParticipants)
     }

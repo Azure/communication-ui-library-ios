@@ -77,31 +77,31 @@ struct ControlBarView: View {
         }
     }
 
-    /// A stack view that has items that take the stakview space evenly
+    /// A stack view that has items that take the stackview space evenly
     var nonCenteredStack: some View {
         Group {
             if screenSizeClass != .iphoneLandscapeScreenSize {
                 HStack {
                     videoButton
-                    Spacer()
+                    Spacer(minLength: 0)
                     micButton
-                    Spacer()
+                    Spacer(minLength: 0)
                     audioDeviceButton
-                    Spacer()
+                    Spacer(minLength: 0)
                     moreButton
-                    Spacer()
+                    Spacer(minLength: 0)
                     hangUpButton
                 }
             } else {
                 VStack {
                     hangUpButton
-                    Spacer()
+                    Spacer(minLength: 0)
                     moreButton
-                    Spacer()
+                    Spacer(minLength: 0)
                     audioDeviceButton
-                    Spacer()
+                    Spacer(minLength: 0)
                     micButton
-                    Spacer()
+                    Spacer(minLength: 0)
                     videoButton
                 }
             }
@@ -176,5 +176,5 @@ struct ControlBarView: View {
 
 struct LeaveCallConfirmationListViewModel {
     let headerName: String?
-    let listItemViewModel: [LeaveCallConfirmationViewModel]
+    let listItemViewModel: [DrawerListItemViewModel]
 }

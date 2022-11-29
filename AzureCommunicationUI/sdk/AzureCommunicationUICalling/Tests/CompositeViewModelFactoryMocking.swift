@@ -32,10 +32,10 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var setupViewModel: SetupViewModel?
     var callingViewModel: CallingViewModel?
     var localParticipantsListCellViewModel: ParticipantsListCellViewModel?
-    var audioDevicesListCellViewModel: AudioDevicesListCellViewModel?
+    var audioDevicesListCellViewModel: SelectableDrawerListItemViewModel?
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel?
-    var moreCallOptionsListCellViewModel: MoreCallOptionsListCellViewModel?
     var debugInfoSharingActivityViewModel: DebugInfoSharingActivityViewModel?
+    var moreCallOptionsListCellViewModel: DrawerListItemViewModel?
 
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
     var createParticipantsListCellViewModel: ((ParticipantInfoModel) -> ParticipantsListCellViewModel?)?
@@ -147,14 +147,15 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                         subtitle: subtitle)
     }
 
-    func makeAudioDevicesListCellViewModel(icon: CompositeIcon,
-                                           title: String,
-                                           isSelected: Bool,
-                                           onSelectedAction: @escaping (() -> Void)) -> AudioDevicesListCellViewModel {
-        return audioDevicesListCellViewModel ?? AudioDevicesListCellViewModel(icon: icon,
-                                                                              title: title,
+    func makeSelectableDrawerListItemViewModel(icon: CompositeIcon,
+                                               title: String,
+                                               isSelected: Bool,
+                                               onSelectedAction: @escaping (() -> Void)) -> SelectableDrawerListItemViewModel {
+        return audioDevicesListCellViewModel ?? SelectableDrawerListItemViewModel(icon: icon,
+                                                                                  title: title,
+                                                                                  accessibilityIdentifier: "",
                                                                               isSelected: isSelected,
-                                                                              onSelected: onSelectedAction)
+                                                                              action: onSelectedAction)
     }
 
     // MARK: CallingViewModels
@@ -226,11 +227,11 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                      showSharingViewAction: showSharingViewAction)
     }
 
-    func makeMoreCallOptionsListCellViewModel(icon: CompositeIcon,
-                                              title: String,
-                                              accessibilityIdentifier: String,
-                                              action: @escaping (() -> Void)) -> MoreCallOptionsListCellViewModel {
-        moreCallOptionsListCellViewModel ?? MoreCallOptionsListCellViewModel(icon: icon,
+    func makeDrawerListItemViewModel(icon: CompositeIcon,
+                                     title: String,
+                                     accessibilityIdentifier: String,
+                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel {
+        moreCallOptionsListCellViewModel ?? DrawerListItemViewModel(icon: icon,
                                                                              title: title,
                                                                              accessibilityIdentifier: accessibilityIdentifier,
                                                                              action: action)
