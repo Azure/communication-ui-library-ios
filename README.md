@@ -2,10 +2,6 @@
 
 # Azure Communication UI Mobile Library for iOS
 
-![Cocoapods](https://img.shields.io/cocoapods/l/AzureCommunicationUICalling)
-![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AzureCommunicationUICalling)
-![Cocoapods platforms](https://img.shields.io/cocoapods/p/AzureCommunicationUICalling)
-
 Azure Communication [UI Mobile Library](https://docs.microsoft.com/en-us/azure/communication-services/concepts/ui-library/ui-library-overview) is an Azure Communication Services capability focused on providing UI components for common business-to-consumer and business-to-business calling interactions.
 
 ## Getting Started
@@ -19,50 +15,42 @@ Get started with Azure Communication Services by using the UI Library to integra
 * A deployed Communication Services resource. Create a [Communication Services resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource).
 * Azure Communication Services Token. [See example](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity).
 
-### Installation
+## Libraries
 
-#### Requirements
+Azure Communication UI Library currently offers the following features:
 
-* iOS 14+
-* Xcode 13+
-* Swift 5.0+
+### [Calling](/sdk/AzureCommunicationUICalling)
 
-#### Using CocoaPods
+```Template Marking Text Below```
 
-CocoaPods is a dependency manager for Cocoa projects. To set up with CocoaPods visit their [Getting Started Guide](https://guides.cocoapods.org/using/getting-started.html). To integrate UI Mobile Library into your Xcode project using CocoaPods, specify it in your `Podfile`:
+Calling offers the ability for users to join ACS group calls as well as Teams calls. By simply few lines of code, call composite would deliver exceptional and seamlessly calling experiences with no set up required on the client side. For more information about calling composite and how you can leverage it in your application, click [here](https://github.com/Azure/communication-ui-library-ios/tree/john/readme-proposal/AzureCommunicationUI/sdk/AzureCommunicationUICalling)
 
-```ruby
-pod 'AzureCommunicationUICalling', '1.1.0'
-```
+```Template Images Below```
 
-#### Manual Installation
+<p>
+<img width="200" alt="image" src="https://user-images.githubusercontent.com/109105353/193981552-176f3c39-5ed3-4811-b691-40d224cf8eca.png">
+<img width="208" alt="image" src="https://user-images.githubusercontent.com/109105353/193981288-f999c6ca-f0ab-4deb-a48c-780c3087e483.png">
+</p>
 
+### [Chat](/sdk/AzureCommunicationUIChat)
 
-If you prefer importing Mobile UI Library as an Embedded Framework to your project, please visit our [Manual Installation](docs/manual-installation.md) guide.
+```Template Marking Text Below```
 
-### Quick Sample
+Similarly, Chat Composite provides a simple yet comprehensive solution for chat. From sending GIFs, to supporting live discussions with hundreds of participants, you rest assured that Chat Composite would deliver exactly what you need for the success of your business. Learn more about how to integrate Chat Composite and quickstarters, click [here] (TBA).
 
-Replace `<GROUP_CALL_ID>` with your group id for your call, `<DISPLAY_NAME>` with your name, and `<USER_ACCESS_TOKEN>` with your token. For full instructions check out our [quickstart](https://docs.microsoft.com/azure/communication-services/quickstarts/ui-library/get-started-composites?tabs=kotlin&pivots=platform-ios) or get the completed [sample](https://github.com/Azure-Samples/communication-services-ios-quickstarts/tree/main/ui-library-quick-start).
+```Template Images Below```
 
-```swift
-let callCompositeOptions = CallCompositeOptions()
-let callComposite = CallComposite(withOptions: callCompositeOptions)
-let communicationTokenCredential = try! CommunicationTokenCredential(token: "<USER_ACCESS_TOKEN>")
-let remoteOptions = RemoteOptions(for: .groupCall(groupId: UUID("<GROUP_CALL_ID>")!),
-                                  credential: communicationTokenCredential,
-                                  displayName: "<DISPLAY_NAME>")
-callComposite.launch(remoteOptions: remoteOptions)
-```
-
-For more details on Mobile UI Library functionalities visit the [API Reference Documentation](https://azure.github.io/azure-sdk-for-ios/AzureCommunicationUICalling/index.html).
-
+<p>
+<img width="200" alt="image" src="https://user-images.githubusercontent.com/109105353/193981552-176f3c39-5ed3-4811-b691-40d224cf8eca.png">
+<img width="208" alt="image" src="https://user-images.githubusercontent.com/109105353/193981288-f999c6ca-f0ab-4deb-a48c-780c3087e483.png">
+</p>
 
 ## Contributing to the Library or Sample
 
 Before developing and contributing to Communication Mobile UI Library, check out our [making a contribution guide](docs/contributing-guide.md).  
 Included in this repository is a demo of using Mobile UI Library to start a call. You can find the detail of using and developing the UI Library in the [Demo Guide](AzureCommunicationUI/AzureCommunicationUIDemoApp).
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments. Also, please check our [Contribution Policy](CONTRIBUTING.md). 
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments. Also, please check our [Contribution Policy](CONTRIBUTING.md).
 
 ## Community Help and Support
 
