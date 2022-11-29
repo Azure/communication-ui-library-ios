@@ -3,10 +3,10 @@
 //  Licensed under the MIT License.
 //
 
-import UIKit
-import SwiftUI
-import FluentUI
 import AzureCommunicationCommon
+import FluentUI
+import SwiftUI
+import UIKit
 
 /// The main class representing the entry point for the Chat Composite.
 public class ChatAdapter {
@@ -25,7 +25,7 @@ public class ChatAdapter {
 
     /// The events handler for Chat Composite
     let events: Events
-    private var logger: Logger?
+
     private var themeOptions: ThemeOptions?
     var dependencyContainer: DependencyContainer
     private var chatConfiguration: ChatConfiguration
@@ -48,17 +48,18 @@ public class ChatAdapter {
     }
 
     deinit {
-        logger?.debug("Composite deallocated")
+        dependencyContainer.logger.debug("Composite deallocated")
     }
 
     /// Start connection to the chat composite to Azure Communication Service.
     public func connect(threadId: String,
                         completionHandler: ((Result<Void, ChatCompositeError>) -> Void)?) {
         self.chatConfiguration.chatThreadId = threadId
-        self.logger = dependencyContainer.logger
-        dependencyContainer.registerDependencies(self.chatConfiguration,
-                                                 chatCompositeEventsHandler: events,
-                                                 connectEventHandler: completionHandler)
+        dependencyContainer.registerDependencies(
+            self.chatConfiguration,
+            chatCompositeEventsHandler: events,
+            connectEventHandler: completionHandler
+        )
         self.errorManager = dependencyContainer.errorManager
         self.lifeCycleManager = dependencyContainer.lifecycleManager
         self.compositeManager = dependencyContainer.compositeManager
