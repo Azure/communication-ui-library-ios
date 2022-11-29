@@ -54,9 +54,24 @@ jobs:
       - script: |
           export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
           cp ../eng/slather/ui-calling-slather.yml $SLATHER_FILE
-          pwd
-          ls -alh ../eng/slather
-          ls -alh .
+          cat $SLATHER_FILE
+
+          {
+              echo 'coverage_service: cobertura_xml'
+              echo 'output_directory: slather-report'
+              echo 'scheme: AzureCommunicationUICalling'
+              echo 'workspace: AzureCommunicationUI.xcworkspace'
+              echo 'xcodeproj: sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
+              echo 'ignore:'
+              echo '    - AzureCommunicationUIDemoApp/**'
+              echo '    - sdk/AzureCommunicationUICalling/Tests/**'
+              echo '    - sdk/AzureCommunicationUIChat/Tests/**'
+              echo '    - sdk/AzureCommunicationUICommon/Tests/**'
+              echo '    - sdk/**/*View*'
+              echo '    - sdk/**/*Button*'
+          } > $SLATHER_FILE
+          
+          cat $SLATHER_FILE
 
         displayName: "Inject Calling .slather.yml file"
         workingDirectory: AzureCommunicationUI
@@ -87,6 +102,7 @@ jobs:
       - script: |
           pwd
           ls -alh
+          cat .slather.yml
           slather
           mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/calling-cobertura.xml
         displayName: "Run slather for Calling"
@@ -95,10 +111,6 @@ jobs:
       - script: |
           export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
           cp ../eng/slather/ui-chat-slather.yml $SLATHER_FILE
-          pwd
-          ls -alh ../eng/slather
-          ls -alh .
-
         displayName: "Inject Chat .slather.yml file"
         condition: and(succeeded(), eq(variables['buildChat'], 'true') )
         workingDirectory: AzureCommunicationUI
