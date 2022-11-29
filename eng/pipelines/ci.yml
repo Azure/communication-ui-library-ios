@@ -52,10 +52,9 @@ jobs:
         displayName: "Build and test AzureCommunicationUICommon"
 
       - script: |
-          export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
-          cp $(system.defaultWorkingDirectory)/eng/slather/ui-calling-slather.yml $SLATHER_FILE
-
+          cp ../eng/slather/ui-calling-slather.yml .slather.yml
         displayName: "Inject Calling .slather.yml file"
+        workingDirectory: AzureCommunicationUI
 
       - task: Xcode@5
         displayName: "Build UI Calling Library & unit test"
@@ -81,19 +80,20 @@ jobs:
           publishJUnitResults: true
 
       - script: |
-          cd AzureCommunicationUI
           slather
           mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/calling-cobertura.xml
-        displayName: "Run slather"
+        displayName: "Run slather for Calling"
+        workingDirectory: AzureCommunicationUI
 
       - script: |
-          export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
-          cp $(system.defaultWorkingDirectory)/eng/slather/ui-chat-slather.yml $SLATHER_FILE
-
+          cp ../eng/slather/ui-chat-slather.yml .slather.yml
         displayName: "Inject Chat .slather.yml file"
+        condition: and(succeeded(), eq(variables['buildChat'], 'true') )
+        workingDirectory: AzureCommunicationUI
 
       - task: Xcode@5
         displayName: "Xcode Chat build"
+        condition: and(succeeded(), eq(variables['buildChat'], 'true') )
         inputs:
           configuration: Release
           sdk: iphoneos
@@ -104,6 +104,7 @@ jobs:
      
       - task: Xcode@5
         displayName: "Xcode Chat Unit Test"
+        condition: and(succeeded(), eq(variables['buildChat'], 'true') )
         inputs:
           actions: test
           configuration: Debug
@@ -117,10 +118,11 @@ jobs:
           publishJUnitResults: true
 
       - script: |
-          cd AzureCommunicationUI
           slather
           mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/chat-cobertura.xml
-        displayName: "Run slather"
+        displayName: "Run slather for Chat"
+        condition: and(succeeded(), eq(variables['buildChat'], 'true') )
+        workingDirectory: AzureCommunicationUI
 
       # Need Dot Net for the report generator (combiner) step
       - task: UseDotNet@2
