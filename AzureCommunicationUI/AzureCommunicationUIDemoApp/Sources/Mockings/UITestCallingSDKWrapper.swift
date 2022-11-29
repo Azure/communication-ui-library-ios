@@ -80,6 +80,7 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     public func endCall() async throws {
         guard callMocking != nil else {
             throw CallCompositeInternalError.callEndFailed
+            logger.debug("Call ended had faled, callMocking is nil")
         }
         logger.debug("Call ended successfully")
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
