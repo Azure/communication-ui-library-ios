@@ -23,6 +23,7 @@
 		50370CCF28EE4AA800ACD234 /* BaseInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CCE28EE4AA800ACD234 /* BaseInfoModel.swift */; };
 		50370CD128EE4AD900ACD234 /* ChatEventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CD028EE4AD900ACD234 /* ChatEventModel.swift */; };
 		50370CD328EE507A00ACD234 /* TrouterEventExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370CD228EE507A00ACD234 /* TrouterEventExtension.swift */; };
+		506E1D5C293568B5002B0D0A /* ChatSDKEventsHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 506E1D5B293568B5002B0D0A /* ChatSDKEventsHandlerTests.swift */; };
 		5085BF1E28F729990057586D /* ChatThreadInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085BF1D28F729990057586D /* ChatThreadInfoModel.swift */; };
 		5085BF2028F72E0D0057586D /* ParticipantsInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5085BF1F28F72E0D0057586D /* ParticipantsInfoModel.swift */; };
 		50CB81CB28C26E0C00680566 /* AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB81C228C26E0C00680566 /* AzureCommunicationUIChat.framework */; };
@@ -195,6 +196,7 @@
 		50370CCE28EE4AA800ACD234 /* BaseInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseInfoModel.swift; sourceTree = "<group>"; };
 		50370CD028EE4AD900ACD234 /* ChatEventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatEventModel.swift; sourceTree = "<group>"; };
 		50370CD228EE507A00ACD234 /* TrouterEventExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrouterEventExtension.swift; sourceTree = "<group>"; };
+		506E1D5B293568B5002B0D0A /* ChatSDKEventsHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSDKEventsHandlerTests.swift; sourceTree = "<group>"; };
 		5085BF1D28F729990057586D /* ChatThreadInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatThreadInfoModel.swift; sourceTree = "<group>"; };
 		5085BF1F28F72E0D0057586D /* ParticipantsInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsInfoModel.swift; sourceTree = "<group>"; };
 		50CB81C228C26E0C00680566 /* AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -776,6 +778,7 @@
 			children = (
 				50F0C5BB28D38C63009D7176 /* ChatServiceTests.swift */,
 				50F0C5BD28D38C6E009D7176 /* NavigationRouterTests.swift */,
+				506E1D5B293568B5002B0D0A /* ChatSDKEventsHandlerTests.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1470,6 +1473,7 @@
 				50370CC228EB5E6B00ACD234 /* LocalizationProviderTests.swift in Sources */,
 				50370CBD28EB5E0D00ACD234 /* ReducerMocking.swift in Sources */,
 				50F0C5C628D38CE4009D7176 /* MessageRepositoryManagerTests.swift in Sources */,
+				506E1D5C293568B5002B0D0A /* ChatSDKEventsHandlerTests.swift in Sources */,
 				50F0C59928D38B20009D7176 /* ErrorMocking.swift in Sources */,
 				50F0C5C228D38CC9009D7176 /* AvatarManagerTests.swift in Sources */,
 				50370CC428EB5ED200ACD234 /* DiagnosticConfigTests.swift in Sources */,
