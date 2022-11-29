@@ -138,11 +138,6 @@ class ChatDemoViewController: UIViewController {
         }
     }
 
-    func onError(_ error: ChatCompositeError) {
-        print("::::UIKitChatDemoView::getEventsHandler::onError \(error)")
-        print("::::UIKitChatDemoView error.code \(error.code)")
-    }
-
     @objc func onBackBtnPressed() {
         Task { @MainActor in
             print("Dismissing chat")
@@ -152,19 +147,58 @@ class ChatDemoViewController: UIViewController {
 
     func startExperience(with link: String) async {
         print("Chat is starting \(link)")
-
         let communicationIdentifier = CommunicationUserIdentifier(envConfigSubject.userId)
         guard let communicationTokenCredential = try? CommunicationTokenCredential(
             token: envConfigSubject.acsToken) else {
             return
         }
-
         self.threadId = envConfigSubject.threadId
         self.chatAdapter = ChatAdapter(
             identifier: communicationIdentifier,
             credential: communicationTokenCredential,
             endpoint: envConfigSubject.endpointUrl,
             displayName: envConfigSubject.displayName)
+        setupErrorHandler()
+    }
+
+    private func setupErrorHandler() {
+        guard let adapter = self.chatAdapter else {
+            return
+        }
+        adapter.events.onError = { [weak self] chatCompositeError in
+            guard let self = self else {
+                return
+            }
+            print("::::UIKitChatDemoView::setupErrorHandler::onError \(chatCompositeError)")
+            print("::::UIKitChatDemoView error.code \(chatCompositeError.code)")
+            print("Error - \(chatCompositeError.code): " +
+                  "\(chatCompositeError.error?.localizedDescription ?? chatCompositeError.localizedDescription)")
+            self.showError(errorCode: chatCompositeError.code)
+        }
+    }
+
+    private func showError(errorCode: String) {
+        var errorMessage = ""
+        // cases are hard coded for now
+        // since ChatCompositeErrorCode is internal
+        switch errorCode {
+        case "connectFailed":
+            errorMessage = "Connection Failed"
+        case "authorizationFailed":
+            errorMessage = "Authorization Failed"
+        case "disconnectFailed":
+            errorMessage = "Failed to create a chat client"
+        case "messageSendFailed":
+            // no alert
+            return
+        default:
+            errorMessage = "Unknown error"
+        }
+        let errorAlert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
+        errorAlert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        present(errorAlert,
+                animated: true,
+                completion: nil)
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {
@@ -201,15 +235,6 @@ class ChatDemoViewController: UIViewController {
         case .teamsChat:
             return teamsMeetingTextField.text ?? ""
         }
-    }
-
-    private func showError(for errorCode: String) {
-        var errorMessage = errorCode
-        let errorAlert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
-        errorAlert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
-        present(errorAlert,
-                animated: true,
-                completion: nil)
     }
 
     private func registerNotifications() {

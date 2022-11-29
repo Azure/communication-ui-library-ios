@@ -9,8 +9,10 @@ import SwiftUI
 
 struct ChatDemoView: View {
 
+    @State var isErrorDisplayed: Bool = false
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @State var isShowingChatView: Bool = false
+    @State var errorMessage: String = ""
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
@@ -28,6 +30,15 @@ struct ChatDemoView: View {
             }
             .navigationTitle("UI Library - Chat Sample")
             .navigationBarTitleDisplayMode(.inline)
+        }
+        .alert(isPresented: $isErrorDisplayed) {
+            Alert(
+                title: Text("Error"),
+                message: Text(errorMessage),
+                dismissButton:
+                        .default(Text("Dismiss"), action: {
+                    isErrorDisplayed = false
+                }))
         }
     }
 
@@ -192,6 +203,7 @@ extension ChatDemoView {
         guard let chatAdapter = self.chatAdapter else {
             return
         }
+        chatAdapter.events.onError = showError(error:)
         chatAdapter.connect(threadId: envConfigSubject.threadId) { _ in
             print("Chat connect completionHandler called")
         }
@@ -222,6 +234,22 @@ extension ChatDemoView {
     }
 
     private func showError(error: ChatCompositeError) {
+        print("::::SwiftUIChatDemoView::showError \(error)")
+        print("::::SwiftUIChatDemoView error.code \(error.code)")
         print("Error - \(error.code): \(error.error?.localizedDescription ?? error.localizedDescription)")
+        switch error.code {
+        case "connectFailed":
+            errorMessage = "Connection Failed"
+        case "authorizationFailed":
+            errorMessage = "Authorization Failed"
+        case "disconnectFailed":
+            errorMessage = "Failed to create a chat client"
+        case "messageSendFailed":
+            // no alert
+            return
+        default:
+            errorMessage = "Unknown error"
+        }
+        isErrorDisplayed = true
     }
 }
