@@ -12,7 +12,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     private let store: Store<AppState>
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
-    private let diagnosticsManager: DiagnosticsManagerProtocol
+    private let debugInfoManager: DebugInfoManagerProtocol
 
     var bannerTextViewModel: BannerTextViewModel?
     var controlBarViewModel: ControlBarViewModel?
@@ -34,8 +34,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var localParticipantsListCellViewModel: ParticipantsListCellViewModel?
     var audioDevicesListCellViewModel: SelectableDrawerListItemViewModel?
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel?
+    var debugInfoSharingActivityViewModel: DebugInfoSharingActivityViewModel?
     var moreCallOptionsListCellViewModel: DrawerListItemViewModel?
-    var diagnosticsSharingActivityViewModel: DiagnosticsSharingActivityViewModel?
 
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
     var createParticipantsListCellViewModel: ((ParticipantInfoModel) -> ParticipantsListCellViewModel?)?
@@ -49,12 +49,12 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
          store: Store<AppState>,
          accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking(),
          localizationProvider: LocalizationProviderProtocol = LocalizationProviderMocking(),
-         diagnosticsManager: DiagnosticsManagerProtocol = DiagnosticsManagerMocking()) {
+         debugInfoManager: DebugInfoManagerProtocol = DebugInfoManagerMocking()) {
         self.logger = logger
         self.store = store
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
-        self.diagnosticsManager = diagnosticsManager
+        self.debugInfoManager = debugInfoManager
     }
 
     func getSetupViewModel() -> SetupViewModel {
@@ -237,10 +237,10 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                              action: action)
     }
 
-    func makeDiagnosticsSharingActivityViewModel() -> DiagnosticsSharingActivityViewModel {
-        diagnosticsSharingActivityViewModel ??
-        DiagnosticsSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
-                                            diagnosticsManager: diagnosticsManager)
+    func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {
+        debugInfoSharingActivityViewModel ??
+        DebugInfoSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
+                                          debugInfoManager: debugInfoManager)
     }
 
     // MARK: SetupViewModels
