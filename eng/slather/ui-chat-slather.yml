@@ -8,5 +8,5 @@ ignore:
   - sdk/AzureCommunicationUICalling/Tests/**
   - sdk/AzureCommunicationUIChat/Tests/**
   - sdk/AzureCommunicationUICommon/Tests/**
-  - sdk/**/*View*
-  - sdk/**/*Button*
+  - sdk/**/*View.swift
+  - sdk/**/*Button.swift
