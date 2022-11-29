@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct SharingActivityView: UIViewControllerRepresentable {
-    let viewModel: DiagnosticsSharingActivityViewModel
+    let viewModel: DebugInfoSharingActivityViewModel
     let applicationActivities: [UIActivity]?
     let sourceView: UIView
     @Binding var isPresented: Bool

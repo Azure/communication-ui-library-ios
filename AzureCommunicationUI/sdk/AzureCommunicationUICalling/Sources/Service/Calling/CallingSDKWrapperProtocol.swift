@@ -57,7 +57,10 @@ protocol CallingSDKWrapperProtocol {
     -> CompositeRemoteParticipant<ParticipantType, StreamType>?
     func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String)
     -> CompositeLocalVideoStream<LocalVideoStreamType>?
+<<<<<<< HEAD
     func communicationIdForParticipant(identifier: String) -> CommunicationIdentifier?
+=======
+>>>>>>> develop
 
     func startPreviewVideoStream() async throws -> String
     func setupCall() async throws

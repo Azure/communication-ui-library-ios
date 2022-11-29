@@ -3,6 +3,7 @@
 ## 1.2.0-beta.1 (TBD)
 ### New Features
 - Introduced CallDiagnostics to get diagnostics information for the call [#446](https://github.com/Azure/communication-ui-library-ios/pull/446)
+- Additional localization support for 6 languages (Arabic, Finnish, Hebrew, Norwegian Bokmål, Polish, Swedish) [#484](https://github.com/Azure/communication-ui-library-ios/pull/484)
 
 ## 1.1.0 (2022-11-09)
 ### New Features
