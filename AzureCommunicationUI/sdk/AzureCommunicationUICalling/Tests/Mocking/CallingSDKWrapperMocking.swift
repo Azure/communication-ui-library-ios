@@ -77,11 +77,6 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
 
     func getRemoteParticipant<ParticipantType, StreamType>(_ identifier: String) ->
     CompositeRemoteParticipant<ParticipantType, StreamType>? {
-        _ = communicationIdForParticipant(identifier: identifier)
-        return nil
-    }
-
-    func communicationIdForParticipant(identifier: String) -> CommunicationIdentifier? {
         getRemoteParticipantCallIds.append(identifier)
         return nil
     }
