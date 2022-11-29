@@ -55,7 +55,6 @@ jobs:
           export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
           cat ../eng/slather/ui-calling-slather.yml > $SLATHER_FILE
           cat $SLATHER_FILE
-
         displayName: "Inject Calling .slather.yml file"
         workingDirectory: AzureCommunicationUI
 
@@ -83,9 +82,6 @@ jobs:
           publishJUnitResults: true
 
       - script: |
-          pwd
-          ls -alh
-          cat .slather.yml
           slather
           mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/calling-cobertura.xml
         displayName: "Run slather for Calling"
@@ -93,7 +89,8 @@ jobs:
 
       - script: |
           export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
-          cp ../eng/slather/ui-chat-slather.yml $SLATHER_FILE
+          cat ../eng/slather/ui-chat-slather.yml > $SLATHER_FILE
+          cat $SLATHER_FILE
         displayName: "Inject Chat .slather.yml file"
         condition: and(succeeded(), eq(variables['buildChat'], 'true') )
         workingDirectory: AzureCommunicationUI

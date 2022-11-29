@@ -1,4 +1,4 @@
-coverage_service: cobertura.xml
+coverage_service: cobertura_xml
 output_directory: slather-report
 scheme: AzureCommunicationUIChat
 workspace: AzureCommunicationUI.xcworkspace
@@ -10,4 +10,3 @@ ignore:
   - sdk/AzureCommunicationUICommon/Tests/**
   - sdk/**/*View*
   - sdk/**/*Button*
-  

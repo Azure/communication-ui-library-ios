@@ -1,4 +1,4 @@
-coverage_service: cobertura.xml
+coverage_service: cobertura_xml
 output_directory: slather-report
 scheme: AzureCommunicationUICalling
 workspace: AzureCommunicationUI.xcworkspace
