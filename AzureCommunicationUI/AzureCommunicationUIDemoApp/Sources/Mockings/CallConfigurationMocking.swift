@@ -5,6 +5,7 @@
 
 import Foundation
 import AzureCommunicationCommon
+#if DEBUG
 @testable import AzureCommunicationUICalling
 
 struct CallConfigurationMocking {
@@ -32,3 +33,5 @@ enum CompositeCallTypeMocking {
     case groupCall
     case teamsMeeting
 }
+#else
+#endif
