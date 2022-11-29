@@ -92,7 +92,7 @@ jobs:
           cat ../eng/slather/ui-chat-slather.yml > $SLATHER_FILE
           cat $SLATHER_FILE
         displayName: "Inject Chat .slather.yml file"
-        condition: and(succeeded(), eq(variables['buildChat'], 'true') )
+        condition: and(succeeded(), variables['buildChat'])
         workingDirectory: AzureCommunicationUI
 
       - task: Xcode@5
