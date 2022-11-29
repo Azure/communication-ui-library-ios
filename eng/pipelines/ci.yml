@@ -20,11 +20,6 @@ variables:
   isChatFeature: $[ or(contains(variables['Build.SourceBranch'], 'chat'), contains(variables['Build.SourceBranch'], 'Chat')) ]
   buildChat: or($(isChatFeature), $(targetingChatBranch))
 
-  # ${{ if contains(variables['Build.SourceBranch'], 'chat') || contains(variables['Build.SourceBranch'], 'Chat') || eq(variables['System.PullRequest.TargetBranch'], 'feature/chat') }}:
-  #   buildChat: true
-  # $ {{ else }}:
-  #   buildChat: false
-
 jobs:
   - job: BuildCalling
     displayName: "Build Calling UI Library"
@@ -211,19 +206,26 @@ jobs:
         inputs:
           artifactName: "CallingCoberturaReport"
           buildType: "current"
-          downloadPath: "$(System.ArtifactsDirectory)/cobertura"
+          downloadPath: "$(System.ArtifactsDirectory)"
 
       - task: DownloadBuildArtifacts@1
         displayName: "Get cobertura files from chat build"
         inputs:
           artifactName: "ChatCoberturaReport"
           buildType: "current"
-          downloadPath: "$(System.ArtifactsDirectory)/cobertura"
+          downloadPath: "$(System.ArtifactsDirectory)"
+
+      # Need Dot Net for the report generator step
+      - task: UseDotNet@2
+        displayName: "Use .NET Core sdk 3.1.x"
+        inputs:
+          version: 3.1.x
 
       - task: reportgenerator@5
         displayName: "Combine Cobertura Reports"
         inputs:
-          reports: "$(System.ArtifactsDirectory)/cobertura/*.xml"
+          reports: "$(System.ArtifactsDirectory)/*cobertura.xml"
+          reporttypes: "Cobertura"
           targetdir: $(Pipeline.Workspace)/coveragereport
 
       - task: PublishCodeCoverageResults@1
