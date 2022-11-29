@@ -37,7 +37,9 @@ struct SetupView: View {
                                 PreviewAreaView(viewModel: viewModel.previewAreaViewModel,
                                                 viewManager: viewManager,
                                                 avatarManager: avatarManager)
-                                SetupControlBarView(viewModel: viewModel.setupControlBarViewModel)
+                                if viewModel.shouldShowSetupControlBarView() {
+                                    SetupControlBarView(viewModel: viewModel.setupControlBarViewModel)
+                                }
                             }
                             .background(Color(StyleProvider.color.surface))
                             .cornerRadius(4)
