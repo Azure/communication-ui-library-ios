@@ -169,5 +169,4 @@ extension UITestCallingSDKWrapper {
         return CallClientMocking(options: clientOptionsMocking)
     }
 }
-#else
 #endif
