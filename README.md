@@ -19,7 +19,7 @@ Get started with Azure Communication Services by using the UI Library to integra
 
 Azure Communication UI Library currently offers the following features:
 
-### [Calling](/sdk/AzureCommunicationUICalling)
+### [Calling](AzureCommunicationUI/sdk/AzureCommunicationUICalling)
 
 ```Template Marking Text Below```
 
@@ -32,7 +32,7 @@ Calling offers the ability for users to join ACS group calls as well as Teams ca
 <img width="208" alt="image" src="https://user-images.githubusercontent.com/109105353/193981288-f999c6ca-f0ab-4deb-a48c-780c3087e483.png">
 </p>
 
-### [Chat](/sdk/AzureCommunicationUIChat)
+### [Chat](/AzureCommunicationUI/sdk/AzureCommunicationUIChat)
 
 ```Template Marking Text Below```
 
