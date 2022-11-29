@@ -165,8 +165,8 @@ extension SwiftUIDemoView {
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
-        let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         #if DEBUG
+        let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         let callComposite = useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
                           callingSDKWrapperProtocol: UITestCallingSDKWrapper())

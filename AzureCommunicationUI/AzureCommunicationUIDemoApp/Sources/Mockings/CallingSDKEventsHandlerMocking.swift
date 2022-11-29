@@ -56,6 +56,4 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
         }
     }
 }
-
-#else
 #endif

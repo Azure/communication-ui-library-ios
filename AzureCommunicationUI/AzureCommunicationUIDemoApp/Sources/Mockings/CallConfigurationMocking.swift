@@ -33,5 +33,4 @@ enum CompositeCallTypeMocking {
     case groupCall
     case teamsMeeting
 }
-#else
 #endif
