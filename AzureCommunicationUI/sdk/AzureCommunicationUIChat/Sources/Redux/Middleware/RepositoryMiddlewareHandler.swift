@@ -287,17 +287,21 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
                                                 messages: [ChatMessageInfoModel],
                                                 state: AppState) -> [ChatMessageInfoModel] {
         var newMessages = messages
+        var messageIdsToRemove: Set<String> = []
         for (index, message) in messages.enumerated() where message.type == .participantsAdded {
             let filteredParticipants = filterOutMaskedParticipantsFromMessage(
                                                                 participants: message.participants,
                                                                 state: state)
             guard !filteredParticipants.isEmpty else {
-                newMessages.remove(at: index)
+                messageIdsToRemove.insert(message.id)
                 continue
             }
             var newMessage = message
             newMessage.participants = filteredParticipants
             newMessages[index] = newMessage
+        }
+        newMessages = newMessages.filter {
+            !messageIdsToRemove.contains($0.id)
         }
         return newMessages
     }
