@@ -53,24 +53,7 @@ jobs:
 
       - script: |
           export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
-          cp ../eng/slather/ui-calling-slather.yml $SLATHER_FILE
-          cat $SLATHER_FILE
-
-          {
-              echo 'coverage_service: cobertura_xml'
-              echo 'output_directory: slather-report'
-              echo 'scheme: AzureCommunicationUICalling'
-              echo 'workspace: AzureCommunicationUI.xcworkspace'
-              echo 'xcodeproj: sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
-              echo 'ignore:'
-              echo '    - AzureCommunicationUIDemoApp/**'
-              echo '    - sdk/AzureCommunicationUICalling/Tests/**'
-              echo '    - sdk/AzureCommunicationUIChat/Tests/**'
-              echo '    - sdk/AzureCommunicationUICommon/Tests/**'
-              echo '    - sdk/**/*View*'
-              echo '    - sdk/**/*Button*'
-          } > $SLATHER_FILE
-          
+          cat ../eng/slather/ui-calling-slather.yml > $SLATHER_FILE
           cat $SLATHER_FILE
 
         displayName: "Inject Calling .slather.yml file"
@@ -117,7 +100,7 @@ jobs:
 
       - task: Xcode@5
         displayName: "Xcode Chat build"
-        condition: and(succeeded(), eq(variables['buildChat'], 'true') )
+        condition: and(succeeded(), variables['buildChat'])
         inputs:
           configuration: Release
           sdk: iphoneos
@@ -128,7 +111,7 @@ jobs:
      
       - task: Xcode@5
         displayName: "Xcode Chat Unit Test"
-        condition: and(succeeded(), eq(variables['buildChat'], 'true') )
+        condition: and(succeeded(), variables['buildChat'])
         inputs:
           actions: test
           configuration: Debug
@@ -145,7 +128,7 @@ jobs:
           slather
           mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/chat-cobertura.xml
         displayName: "Run slather for Chat"
-        condition: and(succeeded(), eq(variables['buildChat'], 'true') )
+        condition: and(succeeded(), variables['buildChat'])
         workingDirectory: AzureCommunicationUI
 
       # Need Dot Net for the report generator (combiner) step

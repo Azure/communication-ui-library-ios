@@ -10,3 +10,4 @@ ignore:
   - sdk/AzureCommunicationUICommon/Tests/**
   - sdk/**/*View*
   - sdk/**/*Button*
+  
