@@ -92,10 +92,6 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         return nil
     }
 
-    public func communicationIdForParticipant(identifier: String) -> CommunicationIdentifier? {
-        return nil
-    }
-
     public func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String)
     -> CompositeLocalVideoStream<LocalVideoStreamType>? {
         return nil
