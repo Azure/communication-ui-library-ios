@@ -22,30 +22,30 @@ struct TextMessageView: View {
         static let readReceiptViewPadding: CGFloat = 3
     }
 
-    let message: ChatMessageInfoModel
+    let messageModel: ChatMessageInfoModel
     let showUsername: Bool
     let showTime: Bool
 
     var body: some View {
         HStack(spacing: Constants.spacing) {
-            if message.isLocalUser {
+            if messageModel.isLocalUser {
                 Spacer()
             }
             avatar
             bubble
             messageSendStatus
-            if !message.isLocalUser {
+            if !messageModel.isLocalUser {
                 Spacer()
             }
         }
         .padding(.leading, getLeadingPadding)
-        .padding(.trailing, message.isLocalUser ? Constants.localTrailingPadding : Constants.remoteTrailingPadding)
+        .padding(.trailing, messageModel.isLocalUser ? Constants.localTrailingPadding : Constants.remoteTrailingPadding)
     }
 
     var avatar: some View {
         VStack() {
             if showUsername {
-                Avatar(style: .outlinedPrimary, size: .small, primaryText: message.senderDisplayName)
+                Avatar(style: .outlinedPrimary, size: .small, primaryText: messageModel.senderDisplayName)
                 Spacer()
             }
         }
@@ -58,12 +58,12 @@ struct TextMessageView: View {
                 timeStamp
                 edited
             }
-            Text(message.getContentLabel())
+            Text(messageModel.getContentLabel())
                 .font(.body)
         }
         .padding([.leading, .trailing], Constants.contentHorizontalPadding)
         .padding([.top, .bottom], Constants.contentVerticalPadding)
-        .background(message.isLocalUser
+        .background(messageModel.isLocalUser
                     ? Color(StyleProvider.color.primaryColorTint30)
                     : Color(StyleProvider.color.surfaceTertiary))
         .cornerRadius(Constants.cornerRadius)
@@ -71,8 +71,8 @@ struct TextMessageView: View {
 
     var name: some View {
         Group {
-            if showUsername && message.senderDisplayName != nil {
-                Text(message.senderDisplayName!)
+            if showUsername && messageModel.senderDisplayName != nil {
+                Text(messageModel.senderDisplayName!)
                     .font(.caption)
                     .fontWeight(.bold)
                     .foregroundColor(Color(StyleProvider.color.textPrimary))
@@ -83,7 +83,7 @@ struct TextMessageView: View {
     var timeStamp: some View {
         Group {
             if showTime {
-                Text(message.timestamp)
+                Text(messageModel.timestamp)
                     .font(.caption)
                     .foregroundColor(Color(StyleProvider.color.textSecondary))
             }
@@ -92,7 +92,7 @@ struct TextMessageView: View {
 
     var edited: some View {
         Group {
-            if message.editedOn != nil {
+            if messageModel.editedOn != nil {
                 Text("Edited")
                     .font(.caption)
                     .foregroundColor(Color(StyleProvider.color.textDisabled))
@@ -103,7 +103,7 @@ struct TextMessageView: View {
     var messageSendStatus: some View {
         VStack {
             Spacer()
-            if let iconName = message.getIconNameForMessageSendStatus() {
+            if let iconName = messageModel.getIconNameForMessageSendStatus() {
                 StyleProvider.icon.getImage(for: iconName)
                     .frame(width: Constants.readReceiptIconSize,
                            height: Constants.readReceiptIconSize)
@@ -119,7 +119,7 @@ struct TextMessageView: View {
     }
 
     private var getLeadingPadding: CGFloat {
-        if message.isLocalUser {
+        if messageModel.isLocalUser {
             return Constants.localLeadingPadding
         }
 

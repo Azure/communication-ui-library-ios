@@ -36,7 +36,7 @@ struct MessageView: View {
             switch messageModel.type {
             case .text:
                 if messageModel.deletedOn == nil {
-                    TextMessageView(message: messageModel, showUsername: showUsername, showTime: showTime)
+                    TextMessageView(messageModel: messageModel, showUsername: showUsername, showTime: showTime)
                 }
             case .participantsAdded, .participantsRemoved, .topicUpdated:
                 SystemMessageView(messageModel: messageModel)
