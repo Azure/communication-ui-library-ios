@@ -8,7 +8,11 @@ import Combine
 import SwiftUI
 import AzureCommunicationCommon
 import AppCenterCrashes
+#if DEBUG
 @testable import AzureCommunicationUICalling
+#else
+import AzureCommunicationUICalling
+#endif
 
 class UIKitDemoViewController: UIViewController {
 
@@ -130,7 +134,7 @@ class UIKitDemoViewController: UIViewController {
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::UIKitDemoView::getEventsHandler::onError \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
-        print("::::SwiftUIDemoView diagnostics info \(callComposite.diagnostics.lastKnownCallId ?? "Unknown")")
+        print("::::SwiftUIDemoView debug info \(callComposite.debugInfo.lastCallId ?? "Unknown")")
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
@@ -161,11 +165,14 @@ class UIKitDemoViewController: UIViewController {
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
-
+        #if DEBUG
         let callComposite = envConfigSubject.useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
                           callingSDKWrapperProtocol: UITestCallingSDKWrapper())
             : CallComposite(withOptions: callCompositeOptions)
+        #else
+        let callComposite = CallComposite(withOptions: callCompositeOptions)
+        #endif
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
