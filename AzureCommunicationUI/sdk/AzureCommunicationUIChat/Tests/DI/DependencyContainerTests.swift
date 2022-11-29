@@ -12,7 +12,7 @@ class DependencyContainerTests: XCTestCase {
     func test_dependencyContainer_init_then_defaultDependenciesAreRegistered() {
         let dependencyContainer = DependencyContainer()
 
-        XCTAssertNotNil(dependencyContainer.resolve() as Logger)
+        XCTAssertNotNil(dependencyContainer.logger)
     }
 
     func test_dependencyContainer_registerExperienceDependencies_thenExperienceDependenciesAreRegistered() {
@@ -35,18 +35,18 @@ class DependencyContainerTests: XCTestCase {
             chatConfiguration,
             chatCompositeEventsHandler: callCompositeEventsHandler, connectEventHandler: nil)
 
-        XCTAssertNotNil(dependencyContainer.resolve() as ChatSDKEventsHandling)
-        XCTAssertNotNil(dependencyContainer.resolve() as ChatSDKWrapperProtocol)
-        XCTAssertNotNil(dependencyContainer.resolve() as ChatServiceProtocol)
-        XCTAssertNotNil(dependencyContainer.resolve() as MessageRepositoryManagerProtocol)
-        XCTAssertNotNil(dependencyContainer.resolve() as Store<AppState>)
-        XCTAssertNotNil(dependencyContainer.resolve() as NavigationRouter)
-        XCTAssertNotNil(dependencyContainer.resolve() as AccessibilityProviderProtocol)
-        XCTAssertNotNil(dependencyContainer.resolve() as LocalizationProviderProtocol)
-        XCTAssertNotNil(dependencyContainer.resolve() as CompositeViewModelFactoryProtocol)
-        XCTAssertNotNil(dependencyContainer.resolve() as CompositeViewFactoryProtocol)
-        XCTAssertNotNil(dependencyContainer.resolve() as ErrorManagerProtocol)
-        XCTAssertNotNil(dependencyContainer.resolve() as LifeCycleManagerProtocol)
-        XCTAssertNotNil(dependencyContainer.resolve() as CompositeManagerProtocol)
+//        XCTAssertNotNil(dependencyContainer.chatSdkEventsHandler)
+//        XCTAssertNotNil(dependencyContainer.chatSdkWrapper)
+//        XCTAssertNotNil(dependencyContainer.chatService)
+//        XCTAssertNotNil(dependencyContainer.messageRepositoryManager)
+//        XCTAssertNotNil(dependencyContainer.store)
+        XCTAssertNotNil(dependencyContainer.navigationRouter)
+        XCTAssertNotNil(dependencyContainer.accessibilityProvider)
+        XCTAssertNotNil(dependencyContainer.localizationProvider)
+//        XCTAssertNotNil(dependencyContainer.compositeViewModelFactory)
+        XCTAssertNotNil(dependencyContainer.compositeViewFactory)
+        XCTAssertNotNil(dependencyContainer.errorManager)
+        XCTAssertNotNil(dependencyContainer.lifecycleManager)
+        XCTAssertNotNil(dependencyContainer.compositeManager)
     }
 }

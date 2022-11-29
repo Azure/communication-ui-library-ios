@@ -17,11 +17,11 @@ public struct ChatCompositeView: View {
     public init(with chatAdapter: ChatAdapter) {
         self.chatAdapter = chatAdapter
 
-        self.router = self.chatAdapter.dependencyContainer.resolve()
-        self.logger = self.chatAdapter.dependencyContainer.resolve()
-        self.viewFactory = self.chatAdapter.dependencyContainer.resolve()
+        self.router = self.chatAdapter.dependencyContainer.navigationRouter!
+        self.logger = self.chatAdapter.dependencyContainer.logger
+        self.viewFactory = self.chatAdapter.dependencyContainer.compositeViewFactory!
 
-        let localizationProvider: LocalizationProviderProtocol = self.chatAdapter.dependencyContainer.resolve()
+        let localizationProvider = self.chatAdapter.dependencyContainer.localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
 
     }

@@ -55,13 +55,13 @@ public class ChatAdapter {
     public func connect(threadId: String,
                         completionHandler: ((Result<Void, ChatCompositeError>) -> Void)?) {
         self.chatConfiguration.chatThreadId = threadId
-        self.logger = dependencyContainer.resolve() as Logger
+        self.logger = dependencyContainer.logger
         dependencyContainer.registerDependencies(self.chatConfiguration,
                                                  chatCompositeEventsHandler: events,
                                                  connectEventHandler: completionHandler)
-        self.errorManager = dependencyContainer.resolve() as ErrorManagerProtocol
-        self.lifeCycleManager = dependencyContainer.resolve() as LifeCycleManagerProtocol
-        self.compositeManager = dependencyContainer.resolve() as CompositeManagerProtocol
+        self.errorManager = dependencyContainer.errorManager
+        self.lifeCycleManager = dependencyContainer.lifecycleManager
+        self.compositeManager = dependencyContainer.compositeManager
 
         compositeManager?.start()
     }

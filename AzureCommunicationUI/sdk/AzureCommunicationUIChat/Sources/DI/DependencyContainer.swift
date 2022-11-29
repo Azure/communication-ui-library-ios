@@ -7,110 +7,145 @@ import Foundation
 import AzureCommunicationCommon
 
 final class DependencyContainer {
-    private var dependencies = [String: AnyObject]()
+
+    // Dependencies, retaining type information
+    var logger: Logger
+    var errorManager: ErrorManagerProtocol?
+    var lifecycleManager: LifeCycleManagerProtocol?
+    var compositeManager: CompositeManagerProtocol?
+    var navigationRouter: NavigationRouter?
+
+    var accessibilityProvider: AccessibilityProviderProtocol
+    var localizationProvider: LocalizationProviderProtocol
+    var compositeViewFactory: CompositeViewFactoryProtocol?
+
+    // Internal dependencies? Do we need these?
+    private var chatSdkEventHandler: ChatSDKEventsHandling?
+    private var chatSdkWrapper: ChatSDKWrapperProtocol?
+    private var chatService: ChatServiceProtocol?
+    private var messageRepositoryManager: MessageRepositoryManagerProtocol?
+    private var store: Store<AppState>?
+    private var compositeViewModelFactory: CompositeViewModelFactoryProtocol?
 
     init() {
-        registerDefaultDependencies()
-    }
-
-    func register<T>(_ dependency: T) {
-        let key = String(describing: T.self)
-        dependencies[key] = dependency as AnyObject
-    }
-
-    func resolve<T>() -> T {
-        let key = String(describing: T.self)
-        let dependency = dependencies[key] as? T
-
-        precondition(dependency != nil, "No dependency found for \(key)! must register a dependency before resolve.")
-
-        return dependency!
-    }
-
-    private func registerDefaultDependencies() {
-        register(DefaultLogger(category: "ChatComponent") as Logger)
+        logger = DefaultLogger(category: "ChatComponent")
+        accessibilityProvider = AccessibilityProvider()
+        localizationProvider = LocalizationProvider(logger: logger)
     }
 
     func registerDependencies(
         _ chatConfiguration: ChatConfiguration,
         chatCompositeEventsHandler: ChatAdapter.Events,
-        connectEventHandler: ((Result<Void, ChatCompositeError>) -> Void)? = nil) {
-            register(ChatSDKEventsHandler(
-                logger: resolve(),
-                threadId: chatConfiguration.chatThreadId,
-                localUserId: chatConfiguration.identifier) as ChatSDKEventsHandling)
-            register(ChatSDKWrapper(logger: resolve(),
-                                    chatEventsHandler: resolve(),
-                                    chatConfiguration: chatConfiguration) as ChatSDKWrapperProtocol)
-            register(ChatService(logger: resolve(),
-                                 chatSDKWrapper: resolve()) as ChatServiceProtocol)
+        connectEventHandler: ((Result<Void, ChatCompositeError>) -> Void)? = nil
+    ) {
+        let eventHandler = ChatSDKEventsHandler(
+            logger: logger,
+            threadId: chatConfiguration.chatThreadId,
+            localUserId: chatConfiguration.identifier
+        )
+        chatSdkEventHandler = eventHandler
 
-            register(MessageRepositoryManager(
-                chatCompositeEventsHandler: chatCompositeEventsHandler) as MessageRepositoryManagerProtocol)
+        let chatSdk = ChatSDKWrapper(
+            logger: logger,
+            chatEventsHandler: eventHandler,
+            chatConfiguration: chatConfiguration
+        )
+        chatSdkWrapper = chatSdk
 
-            let displayName = chatConfiguration.displayName
-            register(makeStore(displayName: displayName,
-                               localUserIdentifier: chatConfiguration.identifier,
-                               chatThreadId: chatConfiguration.chatThreadId,
-                               connectEventHandler: connectEventHandler) as Store<AppState> )
-            register(NavigationRouter(store: resolve(),
-                                      logger: resolve(),
-                                      chatCompositeEventsHandler: chatCompositeEventsHandler) as NavigationRouter)
-            register(AccessibilityProvider() as AccessibilityProviderProtocol)
-            register(LocalizationProvider(logger: resolve()) as LocalizationProviderProtocol)
-            register(CompositeViewModelFactory(logger: resolve(),
-                                               localizationProvider: resolve(),
-                                               accessibilityProvider: resolve(),
-                                               messageRepositoryManager: resolve(),
-                                               store: resolve()) as CompositeViewModelFactoryProtocol)
-            register(CompositeViewFactory(logger: resolve(),
-                                          compositeViewModelFactory: resolve()) as CompositeViewFactoryProtocol)
-            register(ErrorManager(store: resolve(),
-                                  chatCompositeEventsHandler: chatCompositeEventsHandler) as ErrorManagerProtocol)
-            register(UIKitAppLifeCycleManager(store: resolve(),
-                                              logger: resolve()) as LifeCycleManagerProtocol)
+        let chatService = ChatService(
+            logger: logger,
+            chatSDKWrapper: chatSdk
+        )
+        self.chatService = chatService
 
-            register(CompositeManager(store: resolve(),
-                                      logger: resolve()) as CompositeManagerProtocol)
+        let repositoryManager = MessageRepositoryManager(
+            chatCompositeEventsHandler: chatCompositeEventsHandler
+        )
+        messageRepositoryManager = repositoryManager
 
-        }
+        let store = makeStore(
+            chatService: chatService,
+            messageRepository: repositoryManager,
+            chatConfiguration: chatConfiguration,
+            connectEventHandler: connectEventHandler
+        )
+        self.store = store
+
+        navigationRouter = NavigationRouter(
+            store: store,
+            logger: logger,
+            chatCompositeEventsHandler: chatCompositeEventsHandler
+        )
+
+        let compositeViewModelFactory = CompositeViewModelFactory(
+            logger: logger,
+            localizationProvider: localizationProvider,
+            accessibilityProvider: accessibilityProvider,
+            messageRepositoryManager: repositoryManager,
+            store: store
+        )
+        self.compositeViewModelFactory = compositeViewModelFactory
+
+        compositeViewFactory = CompositeViewFactory(
+            logger: logger,
+            compositeViewModelFactory: compositeViewModelFactory
+        )
+
+        let errorManager = ErrorManager(
+            store: store,
+            chatCompositeEventsHandler: chatCompositeEventsHandler
+        )
+        self.errorManager = errorManager
+
+        lifecycleManager = UIKitAppLifeCycleManager(
+            store: store,
+            logger: logger
+        )
+        compositeManager = CompositeManager(
+            store: store,
+            logger: logger
+        )
+    }
 
     private func makeStore(
-        displayName: String?,
-        localUserIdentifier: CommunicationIdentifier?,
-        chatThreadId: String?,
-        connectEventHandler: ((Result<Void, ChatCompositeError>) -> Void)?) -> Store<AppState> {
-            let chatActionHandler = ChatActionHandler(
-                chatService: resolve(),
-                logger: resolve(),
-                connectEventHandler: connectEventHandler)
-            let chatServiceEventHandler = ChatServiceEventHandler(chatService: resolve(), logger: resolve())
+        chatService: ChatServiceProtocol,
+        messageRepository: MessageRepositoryManagerProtocol,
+        chatConfiguration: ChatConfiguration,
+        connectEventHandler: ((Result<Void, ChatCompositeError>) -> Void)?
+    ) -> Store<AppState> {
 
-            let repositoryMiddlewareHandler = RepositoryMiddlewareHandler(messageRepository: resolve(),
-                                                                          logger: resolve())
-            let middlewares: [Middleware] = [
-                Middleware<AppState>.liveChatMiddleware(
-                    chatActionHandler: chatActionHandler,
-                    chatServiceEventHandler: chatServiceEventHandler),
-                Middleware<AppState>.liveRepositoryMiddleware(repositoryMiddlewareHandler: repositoryMiddlewareHandler)
-            ]
+        let middlewares: [Middleware] = [
+            Middleware<AppState>.liveChatMiddleware(
+                chatActionHandler: ChatActionHandler(
+                    chatService: chatService,
+                    logger: logger,
+                    connectEventHandler: connectEventHandler
+                ),
+                chatServiceEventHandler: ChatServiceEventHandler(
+                    chatService: chatService, logger: logger
+                )
+            ),
+            Middleware<AppState>.liveRepositoryMiddleware(
+                repositoryMiddlewareHandler: RepositoryMiddlewareHandler(
+                    messageRepository: messageRepository,
+                    logger: logger
+                )
+            )
+        ]
 
-            guard let localUserId = localUserIdentifier else {
-                // to do handle communication identifier nil
-                return Store<AppState>(reducer: Reducer<AppState, Action>.appStateReducer(),
-                                       middlewares: middlewares,
-                                       state: AppState())
-            }
-            let localUserInfoModel = ParticipantInfoModel(
-                identifier: localUserId,
-                displayName: displayName ?? "",
-                isLocalParticipant: true)
-            let chatState = ChatState(
-                localUser: localUserInfoModel,
-                threadId: chatThreadId ?? "")
-            let appState = AppState(chatState: chatState)
-            return Store<AppState>(reducer: Reducer<AppState, Action>.appStateReducer(),
-                                   middlewares: middlewares,
-                                   state: appState)
-        }
+        return Store<AppState>(
+            reducer: Reducer<AppState, Action>.appStateReducer(),
+            middlewares: middlewares,
+            state: AppState(
+                chatState: ChatState(
+                    localUser: ParticipantInfoModel(
+                        identifier: chatConfiguration.identifier,
+                        displayName: chatConfiguration.displayName ?? "",
+                        isLocalParticipant: true
+                    ),
+                    threadId: chatConfiguration.chatThreadId
+                )
+            )
+        )
+    }
 }
