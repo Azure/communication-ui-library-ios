@@ -147,6 +147,11 @@ class SetupViewModel: ObservableObject {
         errorInfoViewModel.update(errorState: state.errorState)
     }
 
+    func shouldShowSetupControlBarView() -> Bool {
+        let cameraStatus = store.state.localUserState.cameraState.operation
+        return cameraStatus == .off || !isJoinRequested
+    }
+
     private func handleOffline() {
         store.dispatch(action: .errorAction(.statusErrorAndCallReset(internalError: .connectionFailed,
                                                                      error: nil)))

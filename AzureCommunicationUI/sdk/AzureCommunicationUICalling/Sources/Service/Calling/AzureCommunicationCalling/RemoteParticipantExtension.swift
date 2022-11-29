@@ -21,7 +21,7 @@ extension AzureCommunicationCalling.RemoteParticipant {
                                     isSpeaking: isSpeaking,
                                     isMuted: isMuted,
                                     isRemoteUser: true,
-                                    userIdentifier: self.identifier.stringValue ?? "",
+                                    userIdentifier: identifier.rawId,
                                     status: state.toCompositeParticipantStatus(),
                                     recentSpeakingStamp: recentSpeakingStamp,
                                     screenShareVideoStreamModel: screenShareVideoStreamModel,
