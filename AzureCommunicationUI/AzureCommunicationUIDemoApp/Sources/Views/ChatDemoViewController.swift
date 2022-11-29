@@ -187,7 +187,7 @@ class ChatDemoViewController: UIViewController {
         case "authorizationFailed":
             errorMessage = "Authorization Failed"
         case "disconnectFailed":
-            errorMessage = "Failed to create a chat client"
+            errorMessage = "Disconnect Failed"
         case "messageSendFailed":
             // no alert
             return
