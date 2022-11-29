@@ -53,20 +53,8 @@ jobs:
 
       - script: |
           export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
-          {
-              echo 'coverage_service: cobertura_xml'
-              echo 'output_directory: slather-report'
-              echo 'scheme: AzureCommunicationUICalling'
-              echo 'workspace: AzureCommunicationUI.xcworkspace'
-              echo 'xcodeproj: sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
-              echo 'ignore:'
-              echo '    - AzureCommunicationUIDemoApp/**'
-              echo '    - sdk/AzureCommunicationUICalling/Tests/**'
-              echo '    - sdk/AzureCommunicationUIChat/Tests/**'
-              echo '    - sdk/AzureCommunicationUICommon/Tests/**'
-              echo '    - sdk/**/*View*'
-              echo '    - sdk/**/*Button*'
-          } >> $SLATHER_FILE
+          cp $(system.defaultWorkingDirectory)/eng/slather/ui-calling-slather.yml $SLATHER_FILE
+
         displayName: "Inject Calling .slather.yml file"
 
       - task: Xcode@5
@@ -100,20 +88,8 @@ jobs:
 
       - script: |
           export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
-          {
-              echo 'coverage_service: cobertura_xml'
-              echo 'output_directory: slather-report'
-              echo 'scheme: AzureCommunicationUIChat'
-              echo 'workspace: AzureCommunicationUI.xcworkspace'
-              echo 'xcodeproj: sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj'
-              echo 'ignore:'
-              echo '    - AzureCommunicationUIDemoApp/**'
-              echo '    - sdk/AzureCommunicationUICalling/Tests/**'
-              echo '    - sdk/AzureCommunicationUIChat/Tests/**'
-              echo '    - sdk/AzureCommunicationUICommon/Tests/**'
-              echo '    - sdk/**/*View*'
-              echo '    - sdk/**/*Button*'
-          } >> $SLATHER_FILE
+          cp $(system.defaultWorkingDirectory)/eng/slather/ui-chat-slather.yml $SLATHER_FILE
+
         displayName: "Inject Chat .slather.yml file"
 
       - task: Xcode@5
