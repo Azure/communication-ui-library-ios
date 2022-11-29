@@ -52,7 +52,9 @@ jobs:
         displayName: "Build and test AzureCommunicationUICommon"
 
       - script: |
-          cp ../eng/slather/ui-calling-slather.yml .slather.yml
+          export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
+          cp ../eng/slather/ui-calling-slather.yml $SLATHER_FILE
+
         displayName: "Inject Calling .slather.yml file"
         workingDirectory: AzureCommunicationUI
 
@@ -86,7 +88,9 @@ jobs:
         workingDirectory: AzureCommunicationUI
 
       - script: |
-          cp ../eng/slather/ui-chat-slather.yml .slather.yml
+          export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
+          cp ../eng/slather/ui-chat-slather.yml $SLATHER_FILE
+
         displayName: "Inject Chat .slather.yml file"
         condition: and(succeeded(), eq(variables['buildChat'], 'true') )
         workingDirectory: AzureCommunicationUI
