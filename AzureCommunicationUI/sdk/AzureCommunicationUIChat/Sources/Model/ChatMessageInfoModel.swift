@@ -159,12 +159,12 @@ extension ChatMessageInfoModel {
     var systemLabel: String {
         switch type {
         case .participantsAdded:
-            return "\(participants) joined the chat" // Localization
+            return "\(participantsLabel) joined the chat" // Localization
         case .participantsRemoved:
             if isLocalUser {
                 return "You were removed from the chat" // Localization
             }
-            return "\(participants) left the chat" // Localization
+            return "\(participantsLabel) left the chat" // Localization
         case .topicUpdated:
             return "Topic updated to \(content ?? "")" // Localization
         default:

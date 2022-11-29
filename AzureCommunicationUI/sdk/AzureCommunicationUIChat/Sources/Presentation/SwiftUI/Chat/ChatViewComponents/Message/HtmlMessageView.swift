@@ -10,7 +10,7 @@ struct HtmlMessageView: View {
 
     var body: some View {
         HStack {
-            Text(message.content ?? "No Content")
+            Text(message.getContentLabel())
                 .font(.caption2)
                 .foregroundColor(Color(StyleProvider.color.textSecondary))
             Spacer()
