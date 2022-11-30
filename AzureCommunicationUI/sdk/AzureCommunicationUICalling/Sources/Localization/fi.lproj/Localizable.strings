@@ -15,7 +15,7 @@
 "AzureCommunicationUICalling.SetupView.Title"="Määritä";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Takaisin";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Liity puheluun";
-"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Liitytään puheluihin...";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Liitytään puheluun…";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Videokuva ei käytössä";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Ota kamera käyttöön";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Videokuva käytössä";
