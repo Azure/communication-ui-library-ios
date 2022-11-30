@@ -9,6 +9,7 @@ struct ChatState {
     let localUser: ParticipantInfoModel?
     let threadId: String
     let topic: String
+    let lastReadReceiptReceivedTimestamp: Date
     let lastReadReceiptSentTimestamp: Date?
     let lastReceivedMessageTimestamp: Date
     let lastSentMessageTimestamp: Date
@@ -17,6 +18,7 @@ struct ChatState {
     init(localUser: ParticipantInfoModel? = nil,
          threadId: String = "",
          topic: String = "",
+         lastReadReceiptReceivedTimestamp: Date = Date(),
          lastReadReceiptSentTimestamp: Date? = nil,
          lastReceivedMessageTimestamp: Date = Date(),
          lastSentMesssageTimestamp: Date = Date(),
@@ -24,6 +26,7 @@ struct ChatState {
         self.localUser = localUser
         self.threadId = threadId
         self.topic = topic
+        self.lastReadReceiptReceivedTimestamp = lastReadReceiptReceivedTimestamp
         self.lastReadReceiptSentTimestamp = lastReadReceiptSentTimestamp
         self.lastReceivedMessageTimestamp = lastReceivedMessageTimestamp
         self.lastSentMessageTimestamp = lastSentMesssageTimestamp

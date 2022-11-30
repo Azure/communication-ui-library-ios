@@ -60,8 +60,8 @@ class AvatarViewManager: AvatarViewManagerProtocol, ObservableObject {
              for identifier: CommunicationIdentifier,
              completionHandler: ((Result<Void, SetParticipantViewDataError>) -> Void)? = nil) {
         let participantsList = store.state.remoteParticipantsState.participantInfoList
-        guard let idStringValue = identifier.stringValue,
-              participantsList.contains(where: { $0.userIdentifier == idStringValue })
+        let idStringValue = identifier.rawId
+        guard participantsList.contains(where: { $0.userIdentifier == idStringValue })
         else {
             completionHandler?(.failure(SetParticipantViewDataError.participantNotInCall))
             return
