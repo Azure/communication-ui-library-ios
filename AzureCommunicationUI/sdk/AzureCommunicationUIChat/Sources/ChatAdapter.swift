@@ -27,7 +27,8 @@ public class ChatAdapter {
     let events: Events
 
     private var themeOptions: ThemeOptions?
-    var dependencyContainer: DependencyContainer    // This should be private? Maybe a DependencyProvider interface for UIKit, Environment variable for SwiftUI?
+    // This should be private? Maybe a DependencyProvider interface for UIKit, Environment variable for SwiftUI?
+    var dependencyContainer: DependencyContainer
     private var chatConfiguration: ChatConfiguration
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
