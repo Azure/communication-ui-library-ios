@@ -15,6 +15,7 @@ pr:
   - main
   - develop
   - release/*
+  - feature/chat
 
 pool:
   name: vsts-mac-1231-xcode-1331
