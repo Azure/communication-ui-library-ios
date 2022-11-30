@@ -30,7 +30,7 @@ pod 'AzureCommunicationUICalling', '1.1.0'
 ### Manual Installation
 
 
-If you prefer importing Mobile UI Library as an Embedded Framework to your project, please visit our [Manual Installation](docs/manual-installation.md) guide.
+If you prefer importing Mobile UI Library as an Embedded Framework to your project, please visit our [Manual Installation](manual-installation.md) guide.
 
 ## Quick Sample
 
