@@ -17,32 +17,25 @@ Get started with Azure Communication Services by using the UI Library to integra
 
 ## Libraries
 
-Azure Communication UI Library currently offers the following features:
+Azure Communication Service Mobile UI currently offers the following libraries:
 
 ### [Calling](AzureCommunicationUI/sdk/AzureCommunicationUICalling)
 
-```Template Marking Text Below```
+Calling experience allows users to start or join a call. Inside the experience, users can configure their devices, participate in the call with video, and see other participants, including those ones with video turned on. For Teams interoperability, CallComposite includes lobby functionality so that users can wait to be admitted. For more information about calling composite and how you can integrate it into your application, click [here](/AzureCommunicationUI/sdk/AzureCommunicationUICalling)
 
-Calling offers the ability for users to join ACS group calls as well as Teams calls. By simply few lines of code, call composite would deliver exceptional and seamlessly calling experiences with no set up required on the client side. For more information about calling composite and how you can leverage it in your application, click [here](https://github.com/Azure/communication-ui-library-ios/tree/john/readme-proposal/AzureCommunicationUI/sdk/AzureCommunicationUICalling)
-
-```Template Images Below```
 
 <p>
-<img width="200" alt="image" src="https://user-images.githubusercontent.com/109105353/193981552-176f3c39-5ed3-4811-b691-40d224cf8eca.png">
-<img width="208" alt="image" src="https://user-images.githubusercontent.com/109105353/193981288-f999c6ca-f0ab-4deb-a48c-780c3087e483.png">
+<img width="50%" alt="image" src="/docs/images/calling.png">
 </p>
 
 ### [Chat](/AzureCommunicationUI/sdk/AzureCommunicationUIChat)
 
-```Template Marking Text Below```
+Chat experience brings a real-time text communication to your applications. Similar to Calling, Chat also offers Teams interoperability where users can join Teams meetings and communicate with Teams chat messages.
 
-Similarly, Chat Composite provides a simple yet comprehensive solution for chat. From sending GIFs, to supporting live discussions with hundreds of participants, you rest assured that Chat Composite would deliver exactly what you need for the success of your business. Learn more about how to integrate Chat Composite and quickstarters, click [here] (TBA).
-
-```Template Images Below```
+Learn more about how to integrate Chat and other infomation, click [here] (TBA).
 
 <p>
-<img width="200" alt="image" src="https://user-images.githubusercontent.com/109105353/193981552-176f3c39-5ed3-4811-b691-40d224cf8eca.png">
-<img width="208" alt="image" src="https://user-images.githubusercontent.com/109105353/193981288-f999c6ca-f0ab-4deb-a48c-780c3087e483.png">
+<img width="50%" alt="image" src="/docs/images/chat.png">
 </p>
 
 ## Contributing to the Library or Sample
