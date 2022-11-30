@@ -42,7 +42,7 @@ class ErrorReducerTests: XCTestCase {
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
-        XCTAssertEqual(resultState.internalError, .disconnectFailed)
+        XCTAssertEqual(resultState.internalError, .connectFailed)
         XCTAssertEqual(resultState.errorCategory, .fatal)
     }
 }
