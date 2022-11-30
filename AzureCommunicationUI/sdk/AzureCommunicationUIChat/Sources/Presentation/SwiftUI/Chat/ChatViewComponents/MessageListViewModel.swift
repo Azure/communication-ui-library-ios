@@ -17,9 +17,10 @@ class MessageListViewModel: ObservableObject {
     private var lastReceivedMessageTimestamp: Date = .distantPast
     private var lastSentMessageTimestamp: Date = .distantPast
     private var hasFetchedInitialMessages: Bool = false
+    private var lastReadReceiptReceivedTimestamp: Date = .distantPast
     private var sendReadReceiptTimer: Timer?
 
-    private(set) var lastSentReadReceiptMessageId: String?
+    private(set) var lastSentReadReceiptMessageId: String? = "0"
 
     let minFetchIndex: Int = 40
 
@@ -31,6 +32,7 @@ class MessageListViewModel: ObservableObject {
     @Published var showJumpToNewMessages: Bool = false
     @Published var jumpToNewMessagesButtonLabel: String = ""
     @Published var shouldScrollToBottom: Bool = false
+    @Published var latestSeenMessageId: String?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          messageRepositoryManager: MessageRepositoryManagerProtocol,
@@ -105,28 +107,34 @@ class MessageListViewModel: ObservableObject {
         if self.repositoryUpdatedTimestamp < repositoryState.lastUpdatedTimestamp {
             self.repositoryUpdatedTimestamp = repositoryState.lastUpdatedTimestamp
             messages = messageRepositoryManager.messages
-        }
 
-        // Scroll to new received message
-        if self.lastReceivedMessageTimestamp < chatState.lastReceivedMessageTimestamp {
-            self.lastReceivedMessageTimestamp = chatState.lastReceivedMessageTimestamp
-            shouldScrollToBottom = isAtBottom()
-        }
+            // Scroll to new received message
+            if self.lastReceivedMessageTimestamp < chatState.lastReceivedMessageTimestamp {
+                self.lastReceivedMessageTimestamp = chatState.lastReceivedMessageTimestamp
+                shouldScrollToBottom = isAtBottom()
+            }
 
-        // Scroll to bottom for initial messages
-        if self.hasFetchedInitialMessages != repositoryState.hasFetchedInitialMessages {
-            self.hasFetchedInitialMessages = repositoryState.hasFetchedInitialMessages
-            showActivityIndicator = false
-            shouldScrollToBottom = true
-        }
+            // Scroll to bottom for initial messages
+            if self.hasFetchedInitialMessages != repositoryState.hasFetchedInitialMessages {
+                self.hasFetchedInitialMessages = repositoryState.hasFetchedInitialMessages
+                showActivityIndicator = false
+                shouldScrollToBottom = true
+            }
 
-        // Scroll to new sent message
-        if self.lastSentMessageTimestamp < chatState.lastSentMessageTimestamp {
-            self.lastSentMessageTimestamp = chatState.lastSentMessageTimestamp
-            shouldScrollToBottom = true
-        }
+            // Scroll to new sent message
+            if self.lastSentMessageTimestamp < chatState.lastSentMessageTimestamp {
+                self.lastSentMessageTimestamp = chatState.lastSentMessageTimestamp
+                shouldScrollToBottom = true
+            }
 
-        updateJumpToNewMessages()
+            // Get latest seen message
+            if self.lastReadReceiptReceivedTimestamp < chatState.lastReadReceiptReceivedTimestamp {
+                self.lastReadReceiptReceivedTimestamp = chatState.lastReadReceiptReceivedTimestamp
+                latestSeenMessageId = messages.last(where: {$0.sendStatus == .seen})?.id
+            }
+
+            updateJumpToNewMessages()
+        }
     }
 
     func getNumberOfNewMessages() -> Int {

@@ -11,6 +11,7 @@ struct MessageView: View {
     let isConsecutive: Bool
     let showUsername: Bool
     let showTime: Bool
+    let showMessageStatus: Bool
 
     // Inject localization with environment?
 
@@ -36,7 +37,10 @@ struct MessageView: View {
             switch messageModel.type {
             case .text:
                 if messageModel.deletedOn == nil {
-                    TextMessageView(messageModel: messageModel, showUsername: showUsername, showTime: showTime)
+                    TextMessageView(messageModel: messageModel,
+                                    showUsername: showUsername,
+                                    showTime: showTime,
+                                    showMessageStatus: showMessageStatus)
                 }
             case .participantsAdded, .participantsRemoved, .topicUpdated:
                 SystemMessageView(messageModel: messageModel)

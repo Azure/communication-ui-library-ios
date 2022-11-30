@@ -75,8 +75,8 @@ struct MessageListView: View {
                 if viewModel.shouldScrollToBottom {
                     if let lastMessage = viewModel.messages.last {
                         scrollProxy.scrollTo(lastMessage, anchor: .bottom)
-                        viewModel.shouldScrollToBottom = false
                     }
+                    viewModel.shouldScrollToBottom = false
                 }
             }
         }
@@ -116,6 +116,7 @@ struct MessageListView: View {
         let isConsecutive = message.senderId == lastMessage.senderId
         let showUsername = !message.isLocalUser && !isConsecutive
         let showTime = !isConsecutive
+        let showMessageStatus = viewModel.latestSeenMessageId == message.id
 
         let edgeInsets = EdgeInsets(top: isConsecutive
                                         ? Constants.topConsecutivePadding
@@ -130,7 +131,8 @@ struct MessageListView: View {
                     showDateHeader: showDateHeader,
                     isConsecutive: isConsecutive,
                     showUsername: showUsername,
-                    showTime: showTime)
+                    showTime: showTime,
+                    showMessageStatus: showMessageStatus)
         .padding(edgeInsets)
     }
 }

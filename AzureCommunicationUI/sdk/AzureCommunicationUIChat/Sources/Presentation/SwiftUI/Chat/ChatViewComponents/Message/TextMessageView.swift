@@ -25,6 +25,7 @@ struct TextMessageView: View {
     let messageModel: ChatMessageInfoModel
     let showUsername: Bool
     let showTime: Bool
+    let showMessageStatus: Bool
 
     var body: some View {
         HStack(spacing: Constants.spacing) {
@@ -101,19 +102,23 @@ struct TextMessageView: View {
     }
 
     var messageSendStatus: some View {
-        VStack {
-            Spacer()
-            if let iconName = messageModel.getIconNameForMessageSendStatus() {
-                StyleProvider.icon.getImage(for: iconName)
-                    .frame(width: Constants.readReceiptIconSize,
-                           height: Constants.readReceiptIconSize)
-                    .foregroundColor(Color(StyleProvider.color.primaryColor))
-                    .padding(.bottom, Constants.readReceiptViewPadding)
-            } else {
-                Rectangle()
-                    .fill(Color.clear)
-                    .frame(width: Constants.readReceiptIconSize,
-                           height: Constants.readReceiptIconSize)
+        Group {
+            if showMessageStatus {
+                VStack {
+                    Spacer()
+                    if let iconName = messageModel.getIconNameForMessageSendStatus() {
+                        StyleProvider.icon.getImage(for: iconName)
+                            .frame(width: Constants.readReceiptIconSize,
+                                   height: Constants.readReceiptIconSize)
+                            .foregroundColor(Color(StyleProvider.color.primaryColor))
+                            .padding(.bottom, Constants.readReceiptViewPadding)
+                    } else {
+                        Rectangle()
+                            .fill(Color.clear)
+                            .frame(width: Constants.readReceiptIconSize,
+                                   height: Constants.readReceiptIconSize)
+                    }
+                }
             }
         }
     }

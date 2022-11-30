@@ -205,15 +205,6 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
             return
         }
 
-        clearSendStatusForAllMessages()
         messages[index].update(sendStatus: .seen)
-    }
-
-    private func clearSendStatusForAllMessages() {
-        for i in messages.indices {
-            if messages[i].sendStatus == .seen {
-                messages[i].update(sendStatus: .sent)
-            }
-        }
     }
 }
