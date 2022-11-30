@@ -95,28 +95,26 @@ final class DependencyContainer {
         connectEventHandler: ((Result<Void, ChatCompositeError>) -> Void)?
     ) -> Store<AppState> {
 
-        let middlewares: [Middleware] = [
-            Middleware<AppState>.liveChatMiddleware(
-                chatActionHandler: ChatActionHandler(
-                    chatService: chatService,
-                    logger: logger,
-                    connectEventHandler: connectEventHandler
-                ),
-                chatServiceEventHandler: ChatServiceEventHandler(
-                    chatService: chatService, logger: logger
-                )
-            ),
-            Middleware<AppState>.liveRepositoryMiddleware(
-                repositoryMiddlewareHandler: RepositoryMiddlewareHandler(
-                    messageRepository: messageRepository,
-                    logger: logger
-                )
-            )
-        ]
-
         return Store<AppState>(
             reducer: Reducer<AppState, Action>.appStateReducer(),
-            middlewares: middlewares,
+            middlewares: [
+                Middleware<AppState>.liveChatMiddleware(
+                    chatActionHandler: ChatActionHandler(
+                        chatService: chatService,
+                        logger: logger,
+                        connectEventHandler: connectEventHandler
+                    ),
+                    chatServiceEventHandler: ChatServiceEventHandler(
+                        chatService: chatService, logger: logger
+                    )
+                ),
+                Middleware<AppState>.liveRepositoryMiddleware(
+                    repositoryMiddlewareHandler: RepositoryMiddlewareHandler(
+                        messageRepository: messageRepository,
+                        logger: logger
+                    )
+                )
+            ],
             state: AppState(
                 chatState: ChatState(
                     localUser: ParticipantInfoModel(
