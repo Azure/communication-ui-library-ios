@@ -10,7 +10,7 @@
 
 ## Latest Release
 
-- Public Preview: AzureCommunicationUICalling_1.0.0-beta.1 [release] (TBA)
+- Public Preview: AzureCommunicationUIChat_1.0.0-beta.1 [release] (TBA)
 
 ## Installation
 
@@ -44,4 +44,4 @@ For more details on Mobile UI Library functionalities visit the [API Reference D
 
 ## Known Issues
 
-Please refer to the [wiki](https://github.com/Azure/communication-ui-library-ios/wiki/Known-Issues-Calling) for known issues related to calling composite.
+Please refer to the [wiki] (https:!//github.com/Azure/communication-ui-library-ios/wiki/Known-Issues-Chat) for known issues related to chat.
