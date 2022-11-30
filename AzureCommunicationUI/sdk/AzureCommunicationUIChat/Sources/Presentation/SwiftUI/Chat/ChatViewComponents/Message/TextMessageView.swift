@@ -102,23 +102,19 @@ struct TextMessageView: View {
     }
 
     var messageSendStatus: some View {
-        Group {
-            if showMessageStatus {
-                VStack {
-                    Spacer()
-                    if let iconName = messageModel.getIconNameForMessageSendStatus() {
-                        StyleProvider.icon.getImage(for: iconName)
-                            .frame(width: Constants.readReceiptIconSize,
-                                   height: Constants.readReceiptIconSize)
-                            .foregroundColor(Color(StyleProvider.color.primaryColor))
-                            .padding(.bottom, Constants.readReceiptViewPadding)
-                    } else {
-                        Rectangle()
-                            .fill(Color.clear)
-                            .frame(width: Constants.readReceiptIconSize,
-                                   height: Constants.readReceiptIconSize)
-                    }
-                }
+        VStack {
+            Spacer()
+            if showMessageStatus, let iconName = messageModel.getIconNameForMessageSendStatus() {
+                StyleProvider.icon.getImage(for: iconName)
+                    .frame(width: Constants.readReceiptIconSize,
+                           height: Constants.readReceiptIconSize)
+                    .foregroundColor(Color(StyleProvider.color.primaryColor))
+                    .padding(.bottom, Constants.readReceiptViewPadding)
+            } else {
+                Rectangle()
+                    .fill(Color.clear)
+                    .frame(width: Constants.readReceiptIconSize,
+                           height: Constants.readReceiptIconSize)
             }
         }
     }
