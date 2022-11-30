@@ -2,11 +2,9 @@
 
 # Azure Communication UI Mobile Library for iOS - Chat
 
-! [Cocoapods] (https:!//img.shields.io/cocoapods/l/AzureCommunicationUIChat)
-
-! [CocoaPods Compatible] (https:!//img.shields.io/cocoapods/v/AzureCommunicationUIChat)
-
-! [Cocoapods platforms] (https:!//img.shields.io/cocoapods/p/AzureCommunicationUIChat)
+![Cocoapods](https://img.shields.io/cocoapods/l/AzureCommunicationUIChat)
+![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AzureCommunicationUIChat)
+![Cocoapods platforms](https://img.shields.io/cocoapods/p/AzureCommunicationUIChat)
 
 ## Latest Release
 
