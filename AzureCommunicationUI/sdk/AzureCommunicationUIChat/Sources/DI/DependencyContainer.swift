@@ -10,22 +10,14 @@ final class DependencyContainer {
 
     // Dependencies, retaining type information
     var logger: Logger
+    var accessibilityProvider: AccessibilityProviderProtocol
+    var localizationProvider: LocalizationProviderProtocol
+
     var errorManager: ErrorManagerProtocol?
     var lifecycleManager: LifeCycleManagerProtocol?
     var compositeManager: CompositeManagerProtocol?
     var navigationRouter: NavigationRouter?
-
-    var accessibilityProvider: AccessibilityProviderProtocol
-    var localizationProvider: LocalizationProviderProtocol
     var compositeViewFactory: CompositeViewFactoryProtocol?
-
-    // Internal dependencies? Do we need these?
-    private var chatSdkEventHandler: ChatSDKEventsHandling?
-    private var chatSdkWrapper: ChatSDKWrapperProtocol?
-    private var chatService: ChatServiceProtocol?
-    private var messageRepositoryManager: MessageRepositoryManagerProtocol?
-    private var store: Store<AppState>?
-    private var compositeViewModelFactory: CompositeViewModelFactoryProtocol?
 
     init() {
         logger = DefaultLogger(category: "ChatComponent")
@@ -43,33 +35,26 @@ final class DependencyContainer {
             threadId: chatConfiguration.chatThreadId,
             localUserId: chatConfiguration.identifier
         )
-        chatSdkEventHandler = eventHandler
 
         let chatSdk = ChatSDKWrapper(
             logger: logger,
             chatEventsHandler: eventHandler,
             chatConfiguration: chatConfiguration
         )
-        chatSdkWrapper = chatSdk
-
-        let chatService = ChatService(
-            logger: logger,
-            chatSDKWrapper: chatSdk
-        )
-        self.chatService = chatService
 
         let repositoryManager = MessageRepositoryManager(
             chatCompositeEventsHandler: chatCompositeEventsHandler
         )
-        messageRepositoryManager = repositoryManager
 
         let store = makeStore(
-            chatService: chatService,
+            chatService: ChatService(
+                logger: logger,
+                chatSDKWrapper: chatSdk
+            ),
             messageRepository: repositoryManager,
             chatConfiguration: chatConfiguration,
             connectEventHandler: connectEventHandler
         )
-        self.store = store
 
         navigationRouter = NavigationRouter(
             store: store,
@@ -77,25 +62,21 @@ final class DependencyContainer {
             chatCompositeEventsHandler: chatCompositeEventsHandler
         )
 
-        let compositeViewModelFactory = CompositeViewModelFactory(
-            logger: logger,
-            localizationProvider: localizationProvider,
-            accessibilityProvider: accessibilityProvider,
-            messageRepositoryManager: repositoryManager,
-            store: store
-        )
-        self.compositeViewModelFactory = compositeViewModelFactory
-
         compositeViewFactory = CompositeViewFactory(
             logger: logger,
-            compositeViewModelFactory: compositeViewModelFactory
+            compositeViewModelFactory: CompositeViewModelFactory(
+                logger: logger,
+                localizationProvider: localizationProvider,
+                accessibilityProvider: accessibilityProvider,
+                messageRepositoryManager: repositoryManager,
+                store: store
+            )
         )
 
-        let errorManager = ErrorManager(
+        errorManager = ErrorManager(
             store: store,
             chatCompositeEventsHandler: chatCompositeEventsHandler
         )
-        self.errorManager = errorManager
 
         lifecycleManager = UIKitAppLifeCycleManager(
             store: store,
