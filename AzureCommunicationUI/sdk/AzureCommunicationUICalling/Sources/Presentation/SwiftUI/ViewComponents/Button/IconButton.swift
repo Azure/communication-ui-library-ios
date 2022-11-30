@@ -130,9 +130,13 @@ struct IconButton: View {
                alignment: .center)
         .contentShape(Rectangle())
         .onTapGesture {
+            // ignore action in case if button is disabled
+            // .disabled(_) is not used because tap is passed to superview when it shouldn't
+            guard !viewModel.isDisabled else {
+                return
+            }
             viewModel.action()
         }
-        .disabled(viewModel.isDisabled)
     }
 }
 

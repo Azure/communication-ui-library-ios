@@ -11,7 +11,6 @@ class RemoteParticipantsManagerTests: XCTestCase {
     var sut: RemoteParticipantsManager!
     var avatarViewManager: AvatarViewManagerMocking!
     var mockStoreFactory: StoreFactoryMocking!
-    var callingSDKWrapper: CallingSDKWrapperMocking!
     var eventsHandler: CallComposite.Events!
     var remoteParticipantsJoinedExpectation: XCTestExpectation!
     var expectedIds: [String]!
@@ -21,7 +20,6 @@ class RemoteParticipantsManagerTests: XCTestCase {
         remoteParticipantsJoinedExpectation = XCTestExpectation(description: "DidRemoteParticipantsJoin event expectation")
         mockStoreFactory = StoreFactoryMocking()
         eventsHandler = CallComposite.Events()
-        callingSDKWrapper = CallingSDKWrapperMocking()
         avatarViewManager = AvatarViewManagerMocking(store: mockStoreFactory.store,
                                                      localParticipantViewData: nil)
     }
@@ -32,7 +30,6 @@ class RemoteParticipantsManagerTests: XCTestCase {
         remoteParticipantsJoinedExpectation = nil
         mockStoreFactory = nil
         eventsHandler = nil
-        callingSDKWrapper = nil
         avatarViewManager = nil
         expectedIds = []
     }
@@ -189,19 +186,18 @@ class RemoteParticipantsManagerTests: XCTestCase {
 extension RemoteParticipantsManagerTests {
     func makeSUT(isParticipantsJoinHandlerSet: Bool = true) {
         if isParticipantsJoinHandlerSet {
-            eventsHandler.onRemoteParticipantJoined = { [weak self] _ in
+            eventsHandler.onRemoteParticipantJoined = { [weak self] ids in
                 guard let self = self else {
                     return
                 }
                 // check getRemoteParticipantCallIds as there is no way to init RemoteParticipant for getRemoteParticipant func
-                XCTAssertEqual(self.callingSDKWrapper.getRemoteParticipantCallIds.sorted(),
+                XCTAssertEqual(ids.map { $0.rawId }.sorted(),
                                self.expectedIds.sorted())
                 self.remoteParticipantsJoinedExpectation.fulfill()
             }
         }
         sut = RemoteParticipantsManager(store: mockStoreFactory.store,
                                         callCompositeEventsHandler: eventsHandler,
-                                        callingSDKWrapper: callingSDKWrapper,
                                         avatarViewManager: avatarViewManager)
     }
 }
