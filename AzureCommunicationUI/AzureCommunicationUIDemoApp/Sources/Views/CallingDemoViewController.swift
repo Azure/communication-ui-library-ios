@@ -6,9 +6,13 @@
 import UIKit
 import Combine
 import SwiftUI
-import AzureCommunicationUICalling
 import AzureCommunicationCommon
 import AppCenterCrashes
+#if DEBUG
+@testable import AzureCommunicationUICalling
+#else
+import AzureCommunicationUICalling
+#endif
 
 class CallingDemoViewController: UIViewController {
 
@@ -130,7 +134,7 @@ class CallingDemoViewController: UIViewController {
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::UIKitDemoView::getEventsHandler::onError \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
-        print("::::SwiftUIDemoView diagnostics info \(callComposite.diagnostics.lastKnownCallId ?? "Unknown")")
+        print("::::SwiftUIDemoView debug info \(callComposite.debugInfo.lastCallId ?? "Unknown")")
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
@@ -161,7 +165,14 @@ class CallingDemoViewController: UIViewController {
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
+        #if DEBUG
+        let callComposite = envConfigSubject.useMockCallingSDKHandler ?
+            CallComposite(withOptions: callCompositeOptions,
+                          callingSDKWrapperProtocol: UITestCallingSDKWrapper())
+            : CallComposite(withOptions: callCompositeOptions)
+        #else
         let callComposite = CallComposite(withOptions: callCompositeOptions)
+        #endif
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
@@ -169,7 +180,7 @@ class CallingDemoViewController: UIViewController {
             self.onRemoteParticipantJoined(to: composite,
                                            identifiers: ids)
         }
-        let onErrorHandler = { [weak callComposite] error in
+        let onErrorHandler: (CallCompositeError) -> Void = { [weak callComposite] error in
             guard let composite = callComposite else {
                 return
             }
@@ -457,6 +468,7 @@ class CallingDemoViewController: UIViewController {
                                                              left: LayoutConstants.buttonHorizontalInset,
                                                              bottom: LayoutConstants.buttonVerticalInset,
                                                              right: LayoutConstants.buttonHorizontalInset)
+        settingsButton.accessibilityIdentifier = AccessibilityId.settingsButtonAccessibilityID.rawValue
 
         startExperienceButton = UIButton()
         startExperienceButton.backgroundColor = .systemBlue

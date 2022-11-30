@@ -4,9 +4,12 @@
 //
 
 import SwiftUI
-import AzureCommunicationUICalling
 import AzureCommunicationCommon
-
+#if DEBUG
+@testable import AzureCommunicationUICalling
+#else
+import AzureCommunicationUICalling
+#endif
 struct CallingDemoView: View {
     @State var isErrorDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
@@ -162,7 +165,15 @@ extension CallingDemoView {
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
+        #if DEBUG
+        let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
+        let callComposite = useMockCallingSDKHandler ?
+            CallComposite(withOptions: callCompositeOptions,
+                          callingSDKWrapperProtocol: UITestCallingSDKWrapper())
+            : CallComposite(withOptions: callCompositeOptions)
+        #else
         let callComposite = CallComposite(withOptions: callCompositeOptions)
+        #endif
 
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
@@ -171,7 +182,7 @@ extension CallingDemoView {
             self.onRemoteParticipantJoined(to: composite,
                                            identifiers: ids)
         }
-        let onErrorHandler = { [weak callComposite] error in
+        let onErrorHandler: (CallCompositeError) -> Void = { [weak callComposite] error in
             guard let composite = callComposite else {
                 return
             }
@@ -269,7 +280,7 @@ extension CallingDemoView {
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::SwiftUIDemoView::getEventsHandler::onError \(error)")
         print("::::SwiftUIDemoView error.code \(error.code)")
-        print("::::SwiftUIDemoView diagnostics info \(callComposite.diagnostics.lastKnownCallId ?? "Unknown")")
+        print("::::SwiftUIDemoView debug info \(callComposite.debugInfo.lastCallId ?? "Unknown")")
         showError(for: error.code)
     }
 

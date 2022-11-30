@@ -22,9 +22,13 @@ enum ChatEventType: Equatable {
 struct ChatEventModel {
     let eventType: ChatEventType
     let infoModel: BaseInfoModel?
+    let threadId: String?
 
-    init(eventType: ChatEventType, infoModel: BaseInfoModel? = nil) {
+    init(eventType: ChatEventType,
+         infoModel: BaseInfoModel? = nil,
+         threadId: String? = nil) {
         self.eventType = eventType
         self.infoModel = infoModel
+        self.threadId = threadId
     }
 }

@@ -15,17 +15,11 @@ protocol CompositeViewModelFactoryProtocol {
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
-    func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
-                                    buttonLabel: String,
-                                    iconName: CompositeIcon?,
-                                    isDisabled: Bool,
-                                    action: @escaping (() -> Void)) -> PrimaryButtonViewModel
 
     // MARK: ChatViewModels
     func makeTopBarViewModel(dispatch: @escaping ActionDispatch,
                              participantsState: ParticipantsState) -> TopBarViewModel
-    func makeMessageListViewModel(dispatch: @escaping ActionDispatch,
-                                  chatState: ChatState) -> MessageListViewModel
+    func makeMessageListViewModel(dispatch: @escaping ActionDispatch) -> MessageListViewModel
     func makeBottomBarViewModel(dispatch: @escaping ActionDispatch) -> BottomBarViewModel
     func makeTypingParticipantsViewModel() -> TypingParticipantsViewModel
 }
@@ -75,17 +69,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             isDisabled: isDisabled,
                             action: action)
     }
-    func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
-                                    buttonLabel: String,
-                                    iconName: CompositeIcon?,
-                                    isDisabled: Bool = false,
-                                    action: @escaping (() -> Void)) -> PrimaryButtonViewModel {
-        PrimaryButtonViewModel(buttonStyle: buttonStyle,
-                               buttonLabel: buttonLabel,
-                               iconName: iconName,
-                               isDisabled: isDisabled,
-                               action: action)
-    }
 
     // MARK: ChatViewModels
     func makeTopBarViewModel(dispatch: @escaping ActionDispatch,
@@ -96,12 +79,10 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                         participantsState: participantsState)
     }
 
-    func makeMessageListViewModel(dispatch: @escaping ActionDispatch,
-                                  chatState: ChatState) -> MessageListViewModel {
+    func makeMessageListViewModel(dispatch: @escaping ActionDispatch) -> MessageListViewModel {
         MessageListViewModel(compositeViewModelFactory: self,
                              messageRepositoryManager: messageRepositoryManager,
                              logger: logger,
-                             chatState: chatState,
                              dispatch: store.dispatch)
     }
 

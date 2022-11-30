@@ -25,7 +25,7 @@ class ControlBarViewModel: ObservableObject {
     var hangUpButtonViewModel: IconButtonViewModel!
     var moreButtonViewModel: IconButtonViewModel!
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
-    var diagnosticsSharingActivityViewModel: DiagnosticsSharingActivityViewModel!
+    var debugInfoSharingActivityViewModel: DebugInfoSharingActivityViewModel!
     var callingStatus: CallingStatus = .none
     var cameraState = LocalUserState.CameraState(operation: .off,
                                                  device: .front,
@@ -119,7 +119,7 @@ class ControlBarViewModel: ObservableObject {
                 }
                 self.isShareActivityDisplayed = true
             })
-        diagnosticsSharingActivityViewModel = compositeViewModelFactory.makeDiagnosticsSharingActivityViewModel()
+        debugInfoSharingActivityViewModel = compositeViewModelFactory.makeDebugInfoSharingActivityViewModel()
     }
 
     func endCallButtonTapped() {
@@ -168,8 +168,8 @@ class ControlBarViewModel: ObservableObject {
         callingStatus == .localHold
     }
 
-    func getLeaveCallButtonViewModel() -> LeaveCallConfirmationViewModel {
-        return LeaveCallConfirmationViewModel(
+    func getLeaveCallButtonViewModel() -> DrawerListItemViewModel {
+        return DrawerListItemViewModel(
             icon: .endCallRegular,
             title: localizationProvider.getLocalizedString(.leaveCall),
             accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue,
@@ -182,8 +182,8 @@ class ControlBarViewModel: ObservableObject {
             })
     }
 
-    func getCancelButtonViewModel() -> LeaveCallConfirmationViewModel {
-        return LeaveCallConfirmationViewModel(
+    func getCancelButtonViewModel() -> DrawerListItemViewModel {
+        return DrawerListItemViewModel(
             icon: .dismiss,
             title: localizationProvider.getLocalizedString(.cancel),
             accessibilityIdentifier: AccessibilityIdentifier.cancelAccessibilityID.rawValue,
@@ -197,7 +197,7 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func getLeaveCallConfirmationListViewModel() -> LeaveCallConfirmationListViewModel {
-        let leaveCallConfirmationVm: [LeaveCallConfirmationViewModel] = [
+        let leaveCallConfirmationVm: [DrawerListItemViewModel] = [
             getLeaveCallButtonViewModel(),
             getCancelButtonViewModel()
         ]

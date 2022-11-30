@@ -17,19 +17,19 @@ struct MoreCallOptionsList: UIViewControllerRepresentable {
         Coordinator(isPresented: $isPresented)
     }
 
-    func makeUIViewController(context: Context) -> DrawerContainerViewController<MoreCallOptionsListCellViewModel> {
+    func makeUIViewController(context: Context) -> DrawerContainerViewController<DrawerListItemViewModel> {
         let controller = MoreCallOptionsListViewController(sourceView: sourceView,
                                                            isRightToLeft: layoutDirection == .rightToLeft)
         controller.delegate = context.coordinator
         return controller
     }
 
-    func updateUIViewController(_ uiViewController: DrawerContainerViewController<MoreCallOptionsListCellViewModel>,
+    func updateUIViewController(_ uiViewController: DrawerContainerViewController<DrawerListItemViewModel>,
                                 context: Context) {
         uiViewController.updateDrawerList(items: viewModel.items)
     }
 
-    static func dismantleUIViewController(_ controller: DrawerContainerViewController<MoreCallOptionsListCellViewModel>,
+    static func dismantleUIViewController(_ controller: DrawerContainerViewController<DrawerListItemViewModel>,
                                           coordinator: Coordinator) {
         controller.dismissDrawer()
     }

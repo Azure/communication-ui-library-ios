@@ -22,17 +22,20 @@ struct TextMessageView: View {
         static let messageSendStatusViewPadding: CGFloat = 3
     }
 
-    @StateObject var viewModel: TextMessageViewModel
+    let messageModel: ChatMessageInfoModel
+    let showUsername: Bool
+    let showTime: Bool
+    let showMessageStatus: Bool
 
     var body: some View {
         HStack(spacing: Constants.spacing) {
-            if viewModel.isLocalUser {
+            if messageModel.isLocalUser {
                 Spacer()
             }
             avatar
             bubble
             messageSendStatus
-            if !viewModel.isLocalUser {
+            if !messageModel.isLocalUser {
                 Spacer()
             }
         }
@@ -42,8 +45,8 @@ struct TextMessageView: View {
 
     var avatar: some View {
         VStack() {
-            if viewModel.showUsername {
-                Avatar(style: .outlinedPrimary, size: .small, primaryText: viewModel.message.senderDisplayName)
+            if showUsername {
+                Avatar(style: .outlinedPrimary, size: .small, primaryText: messageModel.senderDisplayName)
                 Spacer()
             }
         }
@@ -56,12 +59,12 @@ struct TextMessageView: View {
                 timeStamp
                 edited
             }
-            Text(viewModel.message.content ?? "No Content") // Handle nil?
+            Text(messageModel.getContentLabel())
                 .font(.body)
         }
         .padding([.leading, .trailing], Constants.contentHorizontalPadding)
         .padding([.top, .bottom], Constants.contentVerticalPadding)
-        .background(viewModel.isLocalUser
+        .background(messageModel.isLocalUser
                     ? Color(StyleProvider.color.primaryColorTint30)
                     : Color(StyleProvider.color.surfaceTertiary))
         .cornerRadius(Constants.cornerRadius)
@@ -69,28 +72,28 @@ struct TextMessageView: View {
 
     var name: some View {
         Group {
-            if viewModel.showUsername && viewModel.message.senderDisplayName != nil {
-                Text(viewModel.message.senderDisplayName!)
+            if showUsername && messageModel.senderDisplayName != nil {
+                Text(messageModel.senderDisplayName!)
                     .font(.caption)
                     .fontWeight(.bold)
-                    .foregroundColor(Color(StyleProvider.color.textSecondary))
+                    .foregroundColor(Color(StyleProvider.color.textPrimary))
             }
         }
     }
 
     var timeStamp: some View {
         Group {
-            if viewModel.showTime {
-                Text(viewModel.message.createdOn.value, style: .time)
+            if showTime {
+                Text(messageModel.timestamp)
                     .font(.caption)
-                    .foregroundColor(Color(StyleProvider.color.textDisabled))
+                    .foregroundColor(Color(StyleProvider.color.textSecondary))
             }
         }
     }
 
     var edited: some View {
         Group {
-            if viewModel.message.editedOn != nil {
+            if messageModel.editedOn != nil {
                 Text("Edited")
                     .font(.caption)
                     .foregroundColor(Color(StyleProvider.color.textDisabled))
@@ -105,7 +108,7 @@ struct TextMessageView: View {
             if viewModel.isLocalUser {
                 VStack {
                     Spacer()
-                    if let iconName = viewModel.getMessageSendStatusIconName() {
+                    if showMessageStatus, let iconName = viewModel.getMessageSendStatusIconName() {
                         StyleProvider.icon.getImage(for: iconName)
                             .frame(width: Constants.messageSendStatusIconSize,
                                    height: Constants.messageSendStatusIconSize)
@@ -118,11 +121,11 @@ struct TextMessageView: View {
     }
 
     private var getLeadingPadding: CGFloat {
-        if viewModel.isLocalUser {
+        if messageModel.isLocalUser {
             return Constants.localLeadingPadding
         }
 
-        if viewModel.showUsername {
+        if showUsername {
             return Constants.remoteAvatarLeadingPadding
         } else {
             return Constants.remoteLeadingPadding

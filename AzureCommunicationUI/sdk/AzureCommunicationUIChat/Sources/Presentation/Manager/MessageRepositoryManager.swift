@@ -44,11 +44,14 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
 
     func addInitialMessages(initialMessages: [ChatMessageInfoModel]) {
         messages = initialMessages
-
         messages.sort { lhs, rhs -> Bool in
             // createdOn does not have milliseconds
             return lhs.createdOn == rhs.createdOn ?
             lhs.id < rhs.id : lhs.createdOn < rhs.createdOn
+        }
+        // Assume all previously sent messages have been seen
+        if let index = messages.lastIndex(where: {$0.isLocalUser}) {
+            messages[index].update(sendStatus: .seen)
         }
     }
 
@@ -211,6 +214,7 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
             }) else {
             return
         }
-        messages[index].sendStatus = .seen
+
+        messages[index].update(sendStatus: .seen)
     }
 }

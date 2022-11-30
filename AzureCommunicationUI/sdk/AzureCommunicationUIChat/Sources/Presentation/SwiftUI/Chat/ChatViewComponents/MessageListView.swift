@@ -12,9 +12,13 @@ struct MessageListView: View {
         static let bottomPadding: CGFloat = 0
         static let topPadding: CGFloat = 8
         static let topConsecutivePadding: CGFloat = 4
-        static let buttonBottomPadding: CGFloat = 20
         static let defaultMinListRowHeight: CGFloat = 10
         static let localUserMessageTrailingPadding: CGFloat = 3
+
+        static let buttonIconSize: CGFloat = 24
+        static let buttonShadowRadius: CGFloat = 7
+        static let buttonShadowOffset: CGFloat = 4
+        static let buttonBottomPadding: CGFloat = 20
     }
 
     @StateObject var viewModel: MessageListViewModel
@@ -30,6 +34,9 @@ struct MessageListView: View {
         }
         .onDisappear {
             viewModel.messageListDisappeared()
+        }
+        .onTapGesture {
+            UIApplicationHelper.dismissKeyboard()
         }
     }
 
@@ -54,16 +61,11 @@ struct MessageListView: View {
                 content: {
                     LazyVStack(spacing: 0) {
                         ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
-                            let messageViewModel = viewModel.createViewModel(index: index)
-                            MessageView(viewModel: messageViewModel)
-                                .id(UUID())
-                                .padding(getEdgeInsets(message: messageViewModel))
-                                .onAppear {
-                                    if index == viewModel.minFetchIndex {
-                                        viewModel.fetchMessages()
-                                    }
-                                    viewModel.updateLastSentReadReceiptMessageId(message: message)
-                                }
+                            createMessage(message: message, messages: viewModel.messages, index: index)
+                            .onAppear {
+                                viewModel.fetchMessages(index: index)
+                                viewModel.updateLastSentReadReceiptMessageId(message: message)
+                            }
                         }
                     }
                 })
@@ -71,7 +73,9 @@ struct MessageListView: View {
             .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
             .onChange(of: viewModel.shouldScrollToBottom) { _ in
                 if viewModel.shouldScrollToBottom {
-                    scrollToBottom(proxy: scrollProxy)
+                    if let lastMessage = viewModel.messages.last {
+                        scrollProxy.scrollTo(lastMessage, anchor: .bottom)
+                    }
                     viewModel.shouldScrollToBottom = false
                 }
             }
@@ -83,28 +87,52 @@ struct MessageListView: View {
             if viewModel.showJumpToNewMessages {
                 VStack {
                     Spacer()
-                    PrimaryButton(viewModel: viewModel.jumpToNewMessagesButtonViewModel)
-                        .fixedSize()
-                        .padding(Constants.buttonBottomPadding)
+                    Button(action: {
+                        viewModel.jumpToNewMessagesButtonTapped()
+                    }, label: {
+                        HStack {
+                            Icon(name: .downArrow, size: Constants.buttonIconSize)
+                            Text(viewModel.jumpToNewMessagesButtonLabel)
+                        }
+                        .padding()
+                        .foregroundColor(.white)
+                        .background(Color(StyleProvider.color.primaryColor))
+                        .clipShape(Capsule())
+                        .shadow(radius: Constants.buttonShadowRadius, y: Constants.buttonShadowOffset)
+                        .padding(.bottom, Constants.buttonBottomPadding)
+                    })
                 }
             }
         }
     }
 
-    private func scrollToBottom(proxy: ScrollViewProxy) {
-        let scrollIndex = viewModel.messages.count - 1
-        proxy.scrollTo(scrollIndex, anchor: .bottom)
-    }
+    @ViewBuilder
+    private func createMessage(message: ChatMessageInfoModel,
+                               messages: [ChatMessageInfoModel],
+                               index: Int) -> some View {
+        let lastMessageIndex = index == 0 ? 0 : index - 1
+        let lastMessage = messages[lastMessageIndex]
+        let showDateHeader = index == 0 || message.createdOn.dayOfYear - lastMessage.createdOn.dayOfYear > 0
+        let isConsecutive = message.senderId == lastMessage.senderId
+        let showUsername = !message.isLocalUser && !isConsecutive
+        let showTime = !isConsecutive
+        let showMessageStatus = viewModel.latestSeenMessageId == message.id
 
-    private func getEdgeInsets(message: MessageViewModel) -> EdgeInsets {
-        return EdgeInsets(
-            top: message.isConsecutive
-            ? Constants.topConsecutivePadding
-            : Constants.topPadding,
-            leading: Constants.horizontalPadding,
-            bottom: Constants.bottomPadding,
-            trailing: message.message.type == .text
-            ? Constants.localUserMessageTrailingPadding
-            : Constants.horizontalPadding)
+        let edgeInsets = EdgeInsets(top: isConsecutive
+                                        ? Constants.topConsecutivePadding
+                                        : Constants.topPadding,
+                                    leading: Constants.horizontalPadding,
+                                    bottom: Constants.bottomPadding,
+                                    trailing: message.isLocalUser
+                                        ? Constants.localUserMessageTrailingPadding
+                                        : Constants.horizontalPadding)
+
+        MessageView(messageModel: message,
+                    showDateHeader: showDateHeader,
+                    isConsecutive: isConsecutive,
+                    showUsername: showUsername,
+                    showTime: showTime,
+                    showMessageStatus: showMessageStatus)
+        .padding(edgeInsets)
     }
 }

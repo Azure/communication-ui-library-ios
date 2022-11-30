@@ -32,11 +32,13 @@ final class DependencyContainer {
 
     func registerDependencies(_ callConfiguration: CallConfiguration,
                               localOptions: LocalOptions?,
-                              callCompositeEventsHandler: CallComposite.Events) {
+                              callCompositeEventsHandler: CallComposite.Events,
+                              withCallingSDKWrapper wrapper: CallingSDKWrapperProtocol? = nil) {
         register(CallingSDKEventsHandler(logger: resolve()) as CallingSDKEventsHandling)
-        register(CallingSDKWrapper(logger: resolve(),
-                                   callingEventsHandler: resolve(),
-                                   callConfiguration: callConfiguration) as CallingSDKWrapperProtocol)
+        let callingSDKWrapper = wrapper ?? CallingSDKWrapper(logger: resolve(),
+                                                             callingEventsHandler: resolve(),
+                                                             callConfiguration: callConfiguration)
+        register(callingSDKWrapper as CallingSDKWrapperProtocol)
         register(VideoViewManager(callingSDKWrapper: resolve(), logger: resolve()) as VideoViewManager)
         register(NetworkManager() as NetworkManager)
         register(CallingService(logger: resolve(),
@@ -50,13 +52,13 @@ final class DependencyContainer {
         register(AvatarViewManager(store: resolve(),
                                    localParticipantViewData: localOptions?.participantViewData) as
                  AvatarViewManagerProtocol)
-        register(DiagnosticsManager(store: resolve()) as DiagnosticsManagerProtocol)
+        register(DebugInfoManager(store: resolve()) as DebugInfoManagerProtocol)
         register(CompositeViewModelFactory(logger: resolve(),
                                            store: resolve(),
                                            networkManager: resolve(),
                                            localizationProvider: resolve(),
                                            accessibilityProvider: resolve(),
-                                           diagnosticsManager: resolve(),
+                                           debugInfoManager: resolve(),
                                            localOptions: localOptions) as CompositeViewModelFactoryProtocol)
         register(CompositeViewFactory(logger: resolve(),
                                       avatarManager: resolve(),
@@ -71,7 +73,6 @@ final class DependencyContainer {
                                      logger: resolve()) as AudioSessionManagerProtocol)
         register(RemoteParticipantsManager(store: resolve(),
                                            callCompositeEventsHandler: callCompositeEventsHandler,
-                                           callingSDKWrapper: resolve(),
                                            avatarViewManager: resolve()) as RemoteParticipantsManagerProtocol)
     }
 

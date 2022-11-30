@@ -31,15 +31,16 @@ public class CallComposite {
     private var audioSessionManager: AudioSessionManagerProtocol?
     private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
     private var avatarViewManager: AvatarViewManagerProtocol?
-    private var diagnosticsManager: DiagnosticsManagerProtocol?
+    private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
+    private var debugInfoManager: DebugInfoManagerProtocol?
 
-    /// Get Call Composite diagnostics information.
-    public var diagnostics: CallDiagnostics {
-        guard let diagnosticsManager = diagnosticsManager else {
-            return CallDiagnostics()
+    /// Get debug information for the Call Composite.
+    public var debugInfo: DebugInfo {
+        guard let debugInfoManager = debugInfoManager else {
+            return DebugInfo()
         }
 
-        return diagnosticsManager.getDiagnosticsInfo()
+        return debugInfoManager.getDebugInfo()
     }
 
     /// Create an instance of CallComposite with options.
@@ -48,6 +49,14 @@ public class CallComposite {
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
+    }
+
+    init(withOptions options: CallCompositeOptions? = nil,
+         callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
+        events = Events()
+        themeOptions = options?.themeOptions
+        localizationOptions = options?.localizationOptions
+        self.customCallingSdkWrapper = callingSDKWrapperProtocol
     }
 
     deinit {
@@ -62,7 +71,8 @@ public class CallComposite {
 
         dependencyContainer.registerDependencies(callConfiguration,
                                                  localOptions: localOptions,
-                                                 callCompositeEventsHandler: events)
+                                                 callCompositeEventsHandler: events,
+                                                 withCallingSDKWrapper: self.customCallingSdkWrapper)
         let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)
@@ -112,7 +122,7 @@ public class CallComposite {
         self.audioSessionManager = dependencyContainer.resolve() as AudioSessionManagerProtocol
         self.avatarViewManager = dependencyContainer.resolve() as AvatarViewManagerProtocol
         self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManagerProtocol
-        self.diagnosticsManager = dependencyContainer.resolve() as DiagnosticsManagerProtocol
+        self.debugInfoManager = dependencyContainer.resolve() as DebugInfoManagerProtocol
     }
 
     private func cleanUpManagers() {
@@ -122,7 +132,7 @@ public class CallComposite {
         self.audioSessionManager = nil
         self.avatarViewManager = nil
         self.remoteParticipantsManager = nil
-        self.diagnosticsManager = nil
+        self.debugInfoManager = nil
     }
 
     private func makeContainerUIHostingController(router: NavigationRouter,
