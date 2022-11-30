@@ -10,15 +10,16 @@ class MessageListViewModel: ObservableObject {
     private let messageRepositoryManager: MessageRepositoryManagerProtocol
     private let logger: Logger
     private let dispatch: ActionDispatch
-    private let sendReadReceiptInterval: Double = 5.0
+    private let scrollEndsTolerance: CGFloat = 1
     private let scrollTolerance: CGFloat = 50
 
     private var repositoryUpdatedTimestamp: Date = .distantPast
     private var lastReceivedMessageTimestamp: Date = .distantPast
     private var lastSentMessageTimestamp: Date = .distantPast
+    private var lastSentReadReceiptTimestamp: Date = .distantPast
     private var hasFetchedInitialMessages: Bool = false
-    private var sendReadReceiptTimer: Timer?
-    private(set) var lastSentReadReceiptMessageId: String?
+    private var didEndScrollingTimer: Timer?
+    private var readReceiptToBeSentMessageId: String?
 
     let minFetchIndex: Int = 40
 
@@ -69,32 +70,44 @@ class MessageListViewModel: ObservableObject {
         dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
     }
 
-    func updateLastSentReadReceiptMessageId(message: ChatMessageInfoModel) {
+    func updateReadReceiptToBeSentMessageId(message: ChatMessageInfoModel) {
         guard !message.isLocalUser else {
             return
         }
-        if Int(message.id) ?? 0 > Int(lastSentReadReceiptMessageId) ?? 0 {
-            self.lastSentReadReceiptMessageId = message.id
+        guard readReceiptToBeSentMessageId != nil else {
+            self.readReceiptToBeSentMessageId = message.id
+            return
+        }
+        if let messageTimestamp = message.id.convertEpochStringToTimestamp(),
+           let toBeSentReadReceiptTimestamp = readReceiptToBeSentMessageId?.convertEpochStringToTimestamp(),
+           messageTimestamp > toBeSentReadReceiptTimestamp {
+            self.readReceiptToBeSentMessageId = message.id
             updateJumpToNewMessages()
         }
     }
 
-    func messageListAppeared() {
-        sendReadReceiptTimer = Timer.scheduledTimer(withTimeInterval: sendReadReceiptInterval,
-                                                    repeats: true) { [weak self]_ in
-            self?.sendReadReceipt(messageId: self?.lastSentReadReceiptMessageId)
+    func startDidEndScrollingTimer(currentOffset: CGFloat) {
+        guard currentOffset != scrollOffset else {
+            return
         }
-    }
-
-    func messageListDisappeared() {
-        sendReadReceiptTimer?.invalidate()
+        if didEndScrollingTimer != nil {
+            didEndScrollingTimer?.invalidate()
+        }
+        didEndScrollingTimer = Timer.scheduledTimer(
+            withTimeInterval: scrollEndsTolerance,
+            repeats: false) { [weak self]_ in
+            self?.sendReadReceipt(messageId: self?.readReceiptToBeSentMessageId)
+        }
     }
 
     func sendReadReceipt(messageId: String?) {
-        guard let messageId = messageId else {
+        guard let messageId = messageId,
+            let toBeSentReadReceiptTimestamp = messageId.convertEpochStringToTimestamp(),
+            toBeSentReadReceiptTimestamp > lastSentReadReceiptTimestamp else {
             return
         }
         dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: messageId)))
+        lastSentReadReceiptTimestamp = toBeSentReadReceiptTimestamp
     }
 
     func update(chatState: ChatState, repositoryState: RepositoryState) {
@@ -128,11 +141,15 @@ class MessageListViewModel: ObservableObject {
             shouldScrollToBottom = true
         }
 
+        if self.lastSentReadReceiptTimestamp == .distantPast, self.readReceiptToBeSentMessageId != nil {
+            sendReadReceipt(messageId: self.readReceiptToBeSentMessageId)
+        }
+
         updateJumpToNewMessages()
     }
 
     func getNumberOfNewMessages() -> Int {
-        if let lastReadIndex = messages.firstIndex(where: { $0.id == lastSentReadReceiptMessageId }),
+        if let lastReadIndex = messages.firstIndex(where: { $0.id == readReceiptToBeSentMessageId }),
            let lastSentIndex = messages.lastIndex(where: { $0.isLocalUser }) {
             let lastIndex = max(lastReadIndex, lastSentIndex)
 
@@ -189,6 +206,6 @@ class MessageListViewModel: ObservableObject {
     }
 
     deinit {
-        sendReadReceiptTimer?.invalidate()
+        didEndScrollingTimer?.invalidate()
     }
 }

@@ -29,12 +29,6 @@ struct MessageListView: View {
             messageList
             jumpToNewMessagesButton
         }
-        .onAppear {
-            viewModel.messageListAppeared()
-        }
-        .onDisappear {
-            viewModel.messageListDisappeared()
-        }
         .onTapGesture {
             UIApplicationHelper.dismissKeyboard()
         }
@@ -56,7 +50,10 @@ struct MessageListView: View {
     var messageList: some View {
         ScrollViewReader { scrollProxy in
             ObservableScrollView(
-                offsetChanged: { viewModel.scrollOffset = $0 },
+                offsetChanged: {
+                    viewModel.startDidEndScrollingTimer(currentOffset: $0)
+                    viewModel.scrollOffset = $0
+                },
                 heightChanged: { viewModel.scrollSize = $0 },
                 content: {
                     LazyVStack(spacing: 0) {
@@ -69,7 +66,7 @@ struct MessageListView: View {
                                     if index == viewModel.minFetchIndex {
                                         viewModel.fetchMessages()
                                     }
-                                    viewModel.updateLastSentReadReceiptMessageId(message: message)
+                                    viewModel.updateReadReceiptToBeSentMessageId(message: message)
                                 }
                         }
                     }
