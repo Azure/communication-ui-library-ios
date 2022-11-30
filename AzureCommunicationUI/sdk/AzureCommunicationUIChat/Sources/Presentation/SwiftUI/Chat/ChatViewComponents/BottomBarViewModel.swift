@@ -16,8 +16,15 @@ class BottomBarViewModel: ObservableObject {
     private let typingIndicatorDelay: TimeInterval = 8.0
 
     @Published var isLocalUserRemoved: Bool = false
-
-    @Published var message: String = ""
+    @Published var message: String = "" {
+        didSet {
+            sendButtonViewModel.update(isDisabled: message.isEmptyOrWhiteSpace)
+            guard !message.isEmpty else {
+                return
+            }
+            sendTypingIndicator()
+        }
+    }
 
     init(compositeViewModelFactory: CompositeViewModelFactory,
          logger: Logger,
@@ -28,7 +35,7 @@ class BottomBarViewModel: ObservableObject {
         sendButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .send,
             buttonType: .sendButton,
-            isDisabled: false) { [weak self] in
+            isDisabled: true) { [weak self] in
                 guard let self = self else {
                     return
                 }
@@ -39,9 +46,6 @@ class BottomBarViewModel: ObservableObject {
     }
 
     func sendMessage() {
-        guard !message.isEmpty else {
-            return
-        }
         dispatch(.repositoryAction(.sendMessageTriggered(
             internalId: UUID().uuidString,
             content: message)))
@@ -60,5 +64,11 @@ class BottomBarViewModel: ObservableObject {
             return
         }
         isLocalUserRemoved = chatState.isLocalUserRemovedFromChat
+    }
+}
+
+extension String {
+    var isEmptyOrWhiteSpace: Bool {
+        return self.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
 }

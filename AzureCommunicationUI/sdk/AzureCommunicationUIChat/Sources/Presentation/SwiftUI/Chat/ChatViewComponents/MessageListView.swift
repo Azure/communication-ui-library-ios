@@ -56,6 +56,7 @@ struct MessageListView: View {
     var messageList: some View {
         ScrollViewReader { scrollProxy in
             ObservableScrollView(
+                showsIndicators: false, // Hide scroll indicator due to swiftUI issue where it jumps around
                 offsetChanged: { viewModel.scrollOffset = $0 },
                 heightChanged: { viewModel.scrollSize = $0 },
                 content: {
