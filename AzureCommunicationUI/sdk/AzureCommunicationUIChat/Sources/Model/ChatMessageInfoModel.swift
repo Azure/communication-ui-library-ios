@@ -86,8 +86,108 @@ struct ChatMessageInfoModel: BaseInfoModel, Identifiable, Equatable, Hashable {
         self.deletedOn = deletedOn
     }
 
+    mutating func update(sendStatus: MessageSendStatus) {
+        self.sendStatus = sendStatus
+    }
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+    }
+}
+
+extension ChatMessageInfoModel {
+    // Inject localization into method
+    var dateHeaderLabel: String {
+        let numberOfDaysSinceToday = createdOn.value.numberOfDays()
+        if numberOfDaysSinceToday == 0 {
+            return "Today" // Localization
+        } else if numberOfDaysSinceToday == 1 {
+            return "Yesterday" // Locatization
+        } else if numberOfDaysSinceToday < 365 {
+            let format = DateFormatter()
+            format.dateFormat = "MMMM d"
+            let formattedDate = format.string(from: createdOn.value)
+            return formattedDate
+        } else {
+            let format = DateFormatter()
+            format.dateFormat = "MMMM d, yyyy"
+            let formattedDate = format.string(from: createdOn.value)
+            return formattedDate
+        }
+    }
+
+    // MARK: Text Message
+
+    // Inject localization into method
+    var timestamp: String {
+        let createdOn = createdOn.value
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+        dateFormatter.amSymbol = "a.m." // Localization?
+        dateFormatter.pmSymbol = "p.m." // Localization?
+
+        return dateFormatter.string(from: createdOn)
+    }
+
+    func getIconNameForMessageSendStatus() -> CompositeIcon? {
+        guard isLocalUser else {
+            return nil
+        }
+
+        // Other cases will be handled in another PR
+        switch sendStatus {
+        case .delivering:
+            return nil
+        case .sent:
+            return nil
+        case .seen:
+            return .readReceipt
+        case .failed:
+            return nil
+        case .none:
+            return nil
+        }
+    }
+
+    func getContentLabel() -> String {
+        return content ?? "Text not available" // Localization
+    }
+
+    // MARK: System Message
+
+    // Inject localization into method
+    var systemLabel: String {
+        switch type {
+        case .participantsAdded:
+            return "\(participantsLabel) joined the chat" // Localization
+        case .participantsRemoved:
+            if isLocalUser {
+                return "You were removed from the chat" // Localization
+            }
+            return "\(participantsLabel) left the chat" // Localization
+        case .topicUpdated:
+            return "Topic updated to \(content ?? "")" // Localization
+        default:
+            return ""
+        }
+    }
+
+    var participantsLabel: String {
+        return participants.map {$0.displayName}
+            .joined(separator: ", ")
+    }
+
+    var systemIcon: CompositeIcon? {
+        switch type {
+        case .participantsAdded:
+            return .systemJoin
+        case .participantsRemoved:
+            return .systemLeave
+        case .topicUpdated:
+            return nil
+        default:
+            return nil
+        }
     }
 }
 
@@ -112,5 +212,17 @@ struct ChatMessageModel {
 extension Iso8601Date {
     var dayOfYear: Int {
         return Calendar.current.ordinality(of: .day, in: .year, for: self.value)!
+    }
+}
+
+extension Date {
+    func numberOfDays() -> Int {
+        let calendar = Calendar.current
+
+        let from = calendar.startOfDay(for: self)
+        let to = calendar.startOfDay(for: Date())
+
+        let components = calendar.dateComponents([.day], from: from, to: to)
+        return components.day!
     }
 }

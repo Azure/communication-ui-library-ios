@@ -13,22 +13,26 @@ struct SystemMessageView: View {
         static let iconSize: CGFloat = 16
     }
 
-    @StateObject var viewModel: SystemMessageViewModel
+    let messageModel: ChatMessageInfoModel
 
     var body: some View {
         HStack(spacing: Constants.spacing) {
             icon
-            Text(viewModel.content)
-                .font(.caption2)
-                .foregroundColor(Color(StyleProvider.color.textSecondary))
+            message
             Spacer()
         }
-        .padding(.leading, viewModel.icon != nil ? Constants.iconLeadingPadding : Constants.leadingPadding)
+        .padding(.leading, messageModel.systemIcon != nil ? Constants.iconLeadingPadding : Constants.leadingPadding)
+    }
+
+    var message: some View {
+        Text(messageModel.systemLabel)
+            .font(.caption2)
+            .foregroundColor(Color(StyleProvider.color.textSecondary))
     }
 
     var icon: some View {
         Group {
-            if let icon = viewModel.icon {
+            if let icon = messageModel.systemIcon {
                 Icon(name: icon, size: Constants.iconSize)
             }
         }
