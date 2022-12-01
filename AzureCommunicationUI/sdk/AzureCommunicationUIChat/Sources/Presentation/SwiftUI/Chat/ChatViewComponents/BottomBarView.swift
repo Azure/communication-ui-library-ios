@@ -64,9 +64,8 @@ struct TextEditorView: View {
         static let shadow: CGFloat = 1
         static let minimumHeight: CGFloat = 40
         // Extra padding needed when more that one line displayed
-        static let multilineHeightOffset: CGFloat = 20
-
-        static let placeholderPadding: CGFloat = 6
+        static let multilineHeightOffset: CGFloat = 14
+        static let padding: CGFloat = 6
     }
 
     @Binding var text: String
@@ -85,12 +84,13 @@ struct TextEditorView: View {
                 TextEditor(text: $text)
                     .font(.system(.body))
                     .frame(height: max(Constants.minimumHeight, textEditorHeight))
-                    .cornerRadius(Constants.cornerRadius)
-                    .shadow(radius: Constants.shadow)
+                    .padding([.top], Constants.padding)
+                    .overlay(RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                        .stroke(Color(StyleProvider.color.dividerOnPrimary)))
                 if text.isEmpty {
                     Text("Type a message") // Localization
                         .foregroundColor(Color(StyleProvider.color.textDisabled))
-                        .padding(Constants.placeholderPadding)
+                        .padding(Constants.padding)
                 }
             }
         }.onPreferenceChange(ViewHeightKey.self) {
