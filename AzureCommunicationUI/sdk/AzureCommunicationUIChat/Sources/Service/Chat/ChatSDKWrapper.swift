@@ -106,10 +106,10 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                   let items = pagedResult.items else {
                 return []
             }
-            var allChatParticipants = items.map({ $0.toParticipantInfoModel() })
+            var allChatParticipants = items.map({ $0.toParticipantInfoModel(self.chatConfiguration.identifier) })
             while !pagedResult.isExhausted {
                 let nextPage = try await pagedResult.nextPage()
-                let pageParticipants = nextPage.map { $0.toParticipantInfoModel() }
+                let pageParticipants = nextPage.map { $0.toParticipantInfoModel(self.chatConfiguration.identifier) }
                 allChatParticipants.append(contentsOf: pageParticipants)
             }
             return allChatParticipants
