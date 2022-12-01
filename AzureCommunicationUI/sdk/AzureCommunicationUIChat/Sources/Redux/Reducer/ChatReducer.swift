@@ -12,6 +12,7 @@ extension Reducer where State == ChatState,
         var localUser = chatState.localUser
         var threadId = chatState.threadId
         var topic = chatState.topic
+        var lastReadReceiptReceivedTimestamp = chatState.lastReadReceiptReceivedTimestamp
         var lastReadReceiptSentTimestamp = chatState.lastReadReceiptSentTimestamp
         var lastReceivedMessageTimestamp = chatState.lastReceivedMessageTimestamp
         var lastSentMessageTimestamp = chatState.lastSentMessageTimestamp
@@ -27,6 +28,8 @@ extension Reducer where State == ChatState,
             topic = newTopic
         case .chatAction(.chatMessageLocalUserRemoved):
             isLocalUserRemovedFromChat = true
+        case .participantsAction(.readReceiptReceived(_)):
+            lastReadReceiptReceivedTimestamp = Date()
         case .participantsAction(.sendReadReceiptSuccess(messageId: let messageId)):
             lastReadReceiptSentTimestamp = messageId.convertEpochStringToTimestamp()
         case .repositoryAction(.sendMessageTriggered(_, _)):
@@ -39,6 +42,7 @@ extension Reducer where State == ChatState,
         return ChatState(localUser: localUser,
                          threadId: threadId,
                          topic: topic,
+                         lastReadReceiptReceivedTimestamp: lastReadReceiptReceivedTimestamp,
                          lastReadReceiptSentTimestamp: lastReadReceiptSentTimestamp,
                          lastReceivedMessageTimestamp: lastReceivedMessageTimestamp,
                          lastSentMesssageTimestamp: lastSentMessageTimestamp,
