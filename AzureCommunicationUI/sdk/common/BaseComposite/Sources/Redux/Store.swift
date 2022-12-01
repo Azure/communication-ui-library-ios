@@ -40,3 +40,46 @@ class Store<State>: ObservableObject {
         state = reducer.reduce(state, action)
     }
 }
+
+extension Store where State == AppState {
+    static func constructStore(
+        logger: Logger,
+        chatService: ChatServiceProtocol,
+        messageRepository: MessageRepositoryManagerProtocol,
+        chatConfiguration: ChatConfiguration,
+        connectEventHandler: ((Result<Void, ChatCompositeError>) -> Void)?
+    ) -> Store<AppState> {
+
+        return Store<AppState>(
+            reducer: Reducer<AppState, Action>.appStateReducer(),
+            middlewares: [
+                Middleware<AppState>.liveChatMiddleware(
+                    chatActionHandler: ChatActionHandler(
+                        chatService: chatService,
+                        logger: logger,
+                        connectEventHandler: connectEventHandler
+                    ),
+                    chatServiceEventHandler: ChatServiceEventHandler(
+                        chatService: chatService, logger: logger
+                    )
+                ),
+                Middleware<AppState>.liveRepositoryMiddleware(
+                    repositoryMiddlewareHandler: RepositoryMiddlewareHandler(
+                        messageRepository: messageRepository,
+                        logger: logger
+                    )
+                )
+            ],
+            state: AppState(
+                chatState: ChatState(
+                    localUser: ParticipantInfoModel(
+                        identifier: chatConfiguration.identifier,
+                        displayName: chatConfiguration.displayName ?? "",
+                        isLocalParticipant: true
+                    ),
+                    threadId: chatConfiguration.chatThreadId
+                )
+            )
+        )
+    }
+}

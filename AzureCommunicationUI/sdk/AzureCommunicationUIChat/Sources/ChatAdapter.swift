@@ -26,45 +26,48 @@ public class ChatAdapter {
     /// The events handler for Chat Composite
     let events: Events
 
-    private var themeOptions: ThemeOptions?
-    // This should be private? Maybe a DependencyProvider interface for UIKit, Environment variable for SwiftUI?
-    var dependencyContainer: DependencyContainer
+    // Dependencies
+    var logger: Logger = DefaultLogger(category: "ChatComponent")
+    var accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()
+    var localizationProvider: LocalizationProviderProtocol
+    var navigationRouter: NavigationRouter?
+    var compositeViewFactory: CompositeViewFactoryProtocol?
+
     private var chatConfiguration: ChatConfiguration
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var compositeManager: CompositeManagerProtocol?
+
+    private var themeOptions: ThemeOptions?
 
     /// Create an instance of ChatComposite with options.
     public init(identifier: CommunicationIdentifier,
                 credential: CommunicationTokenCredential,
                 endpoint: String,
                 displayName: String? = nil) {
+        localizationProvider = LocalizationProvider(logger: logger)
+
         self.chatConfiguration = ChatConfiguration(
             identifier: identifier,
             credential: credential,
             endpoint: endpoint,
             displayName: displayName)
         self.events = Events()
-        self.dependencyContainer = DependencyContainer()
     }
 
     deinit {
-        dependencyContainer.logger.debug("Composite deallocated")
+        logger.debug("Composite deallocated")
     }
 
     /// Start connection to the chat composite to Azure Communication Service.
     public func connect(threadId: String,
                         completionHandler: ((Result<Void, ChatCompositeError>) -> Void)?) {
         self.chatConfiguration.chatThreadId = threadId
-        dependencyContainer.registerDependencies(
+        constructDependencies(
             self.chatConfiguration,
             chatCompositeEventsHandler: events,
             connectEventHandler: completionHandler
         )
-        self.errorManager = dependencyContainer.errorManager
-        self.lifeCycleManager = dependencyContainer.lifecycleManager
-        self.compositeManager = dependencyContainer.compositeManager
-
         compositeManager?.start()
     }
 
@@ -82,6 +85,70 @@ public class ChatAdapter {
 //    public func disconnect(threadId: String? = nil
 //                           completionHandler: ((Result<Void, ChatCompositeError>) -> Void)? = nil) {
 
+    }
+
+    private func constructDependencies(
+        _ chatConfiguration: ChatConfiguration,
+        chatCompositeEventsHandler: ChatAdapter.Events,
+        connectEventHandler: ((Result<Void, ChatCompositeError>) -> Void)? = nil
+    ) {
+        let eventHandler = ChatSDKEventsHandler(
+            logger: logger,
+            threadId: chatConfiguration.chatThreadId,
+            localUserId: chatConfiguration.identifier
+        )
+
+        let chatSdk = ChatSDKWrapper(
+            logger: logger,
+            chatEventsHandler: eventHandler,
+            chatConfiguration: chatConfiguration
+        )
+
+        let repositoryManager = MessageRepositoryManager(
+            chatCompositeEventsHandler: chatCompositeEventsHandler
+        )
+
+        let store = Store.constructStore(
+            logger: logger,
+            chatService: ChatService(
+                logger: logger,
+                chatSDKWrapper: chatSdk
+            ),
+            messageRepository: repositoryManager,
+            chatConfiguration: chatConfiguration,
+            connectEventHandler: connectEventHandler
+        )
+
+        navigationRouter = NavigationRouter(
+            store: store,
+            logger: logger,
+            chatCompositeEventsHandler: chatCompositeEventsHandler
+        )
+
+        compositeViewFactory = CompositeViewFactory(
+            logger: logger,
+            compositeViewModelFactory: CompositeViewModelFactory(
+                logger: logger,
+                localizationProvider: localizationProvider,
+                accessibilityProvider: accessibilityProvider,
+                messageRepositoryManager: repositoryManager,
+                store: store
+            )
+        )
+
+        errorManager = ErrorManager(
+            store: store,
+            chatCompositeEventsHandler: chatCompositeEventsHandler
+        )
+
+        lifeCycleManager = UIKitAppLifeCycleManager(
+            store: store,
+            logger: logger
+        )
+        compositeManager = CompositeManager(
+            store: store,
+            logger: logger
+        )
     }
 
     private func cleanUpComposite() {
