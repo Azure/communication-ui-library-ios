@@ -93,12 +93,12 @@ jobs:
           cat ../eng/slather/ui-chat-slather.yml > $SLATHER_FILE
           cat $SLATHER_FILE
         displayName: "Inject Chat .slather.yml file"
-        condition: and(succeeded(), variables['buildChat'])
+        condition: and(succeeded(), eq(variables['buildChat'], true))
         workingDirectory: AzureCommunicationUI
 
       - task: Xcode@5
         displayName: "Xcode Chat build"
-        condition: and(succeeded(), variables['buildChat'])
+        condition: and(succeeded(), eq(variables['buildChat'], true))
         inputs:
           configuration: Release
           sdk: iphoneos
@@ -109,7 +109,7 @@ jobs:
      
       - task: Xcode@5
         displayName: "Xcode Chat Unit Test"
-        condition: and(succeeded(), variables['buildChat'])
+        condition: and(succeeded(), eq(variables['buildChat'], true))
         inputs:
           actions: test
           configuration: Debug
@@ -126,7 +126,7 @@ jobs:
           slather
           mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/chat-cobertura.xml
         displayName: "Run slather for Chat"
-        condition: and(succeeded(), variables['buildChat'])
+        condition: and(succeeded(), eq(variables['buildChat'], true))
         workingDirectory: AzureCommunicationUI
 
       # Need Dot Net for the report generator (combiner) step
