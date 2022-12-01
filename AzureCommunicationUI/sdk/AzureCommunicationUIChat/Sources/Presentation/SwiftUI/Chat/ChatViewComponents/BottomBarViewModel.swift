@@ -19,6 +19,7 @@ class BottomBarViewModel: ObservableObject {
     @Published var message: String = "" {
         didSet {
             sendButtonViewModel.update(isDisabled: message.isEmptyOrWhiteSpace)
+            sendButtonViewModel.update(iconName: message.isEmptyOrWhiteSpace ? .sendDisabled : .send)
             guard !message.isEmpty else {
                 return
             }
