@@ -15,16 +15,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         }
         tapInterfaceFor(.uiKit)
 
-        // turn on calling sdk mock in settings modal
-        tapButton(
-            accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue,
-            shouldWait: false)
-        app.tap()
-        let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
-        if toggle.waitForExistence(timeout: 3) {
-            toggle.tap()
-        }
-        app.buttons["Close"].tap()
+        toggleMockSDKWrapperSwitch(enable: true)
 
         // go to setup screen
         tapEnabledButton(
@@ -97,6 +88,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeEndCallGroupCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
+        toggleMockSDKWrapperSwitch(enable: false)
         tapConnectionTokenType(.acsTokenUrl)
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
@@ -109,6 +101,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeEndCallTeamsCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
+        toggleMockSDKWrapperSwitch(enable: false)
         tapConnectionTokenType(.acsTokenUrl)
         tapMeetingType(.teamsCall)
         tapEnabledButton(
@@ -122,6 +115,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeEndCallGroupCallUIKit() {
         tapInterfaceFor(.uiKit)
+        toggleMockSDKWrapperSwitch(enable: false)
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
             shouldWait: true)
@@ -133,6 +127,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeEndCallTeamsCallUIKit() {
         tapInterfaceFor(.uiKit)
+        toggleMockSDKWrapperSwitch(enable: false)
         tapMeetingType(.teamsCall)
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
@@ -146,6 +141,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     // MARK: Share call info
     func testCallCompositeShareDiagnosticInfo() {
         tapInterfaceFor(.uiKit)
+        toggleMockSDKWrapperSwitch(enable: false)
         tapMeetingType(.groupCall)
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
@@ -172,6 +168,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeCopyDiagnosticInfo() {
         tapInterfaceFor(.uiKit)
+        toggleMockSDKWrapperSwitch(enable: false)
         tapMeetingType(.groupCall)
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,

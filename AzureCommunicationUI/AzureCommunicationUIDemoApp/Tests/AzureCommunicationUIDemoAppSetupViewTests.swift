@@ -12,6 +12,7 @@ class AzureCommunicationUIDemoAppSetupViewTests: XCUITestBase {
 
     func testCallCompositeSetupCallGroupCallSwiftUI() {
         tapInterfaceFor(.swiftUI)
+        toggleMockSDKWrapperSwitch(enable: false)
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
             shouldWait: true)
