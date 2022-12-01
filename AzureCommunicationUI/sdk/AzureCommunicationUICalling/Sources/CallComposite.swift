@@ -143,6 +143,7 @@ public class CallComposite {
             callingService: CallingService(logger: logger, callingSDKWrapper: callingSdkWrapper),
             displayName: localOptions?.participantViewData?.displayName ?? callConfiguration.displayName
         )
+        self.store = store
 
         // Construct managers
         let avatarViewManager = AvatarViewManager(
