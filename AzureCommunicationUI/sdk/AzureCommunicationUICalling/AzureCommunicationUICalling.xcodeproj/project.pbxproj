@@ -136,6 +136,7 @@
 		5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */; };
 		696AD14928DBAFCE0043F807 /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696AD14828DBAFCE0043F807 /* ButtonState.swift */; };
 		752B953C2863A40F001C52E8 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752B953B2863A40E001C52E8 /* Action.swift */; };
+		756F180F29391F27004EDAFD /* CallCompositeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F180E29391F27004EDAFD /* CallCompositeTests.swift */; };
 		759BDEF728FF0839002B6853 /* ColorThemeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEF628FF0839002B6853 /* ColorThemeProvider.swift */; };
 		759BDEF928FF0851002B6853 /* StyleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEF828FF0851002B6853 /* StyleProvider.swift */; };
 		759BDEFD28FF0A81002B6853 /* LocalizationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEFC28FF0A81002B6853 /* LocalizationOptions.swift */; };
@@ -432,6 +433,7 @@
 		696AD14828DBAFCE0043F807 /* ButtonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonState.swift; sourceTree = "<group>"; };
 		69FC33B2B556CC3B9164A78E /* Pods-AzureCommunicationUICalling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling/Pods-AzureCommunicationUICalling.release.xcconfig"; sourceTree = "<group>"; };
 		752B953B2863A40E001C52E8 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		756F180E29391F27004EDAFD /* CallCompositeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeTests.swift; sourceTree = "<group>"; };
 		759BDEF628FF0839002B6853 /* ColorThemeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorThemeProvider.swift; sourceTree = "<group>"; };
 		759BDEF828FF0851002B6853 /* StyleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleProvider.swift; sourceTree = "<group>"; };
 		759BDEFC28FF0A81002B6853 /* LocalizationOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationOptions.swift; sourceTree = "<group>"; };
@@ -647,17 +649,17 @@
 		1F09A10B26BA484000BACED7 /* Calling */ = {
 			isa = PBXGroup;
 			children = (
-				1F09A10C26BA484000BACED7 /* ControlBarViewModelTests.swift */,
-				1F09A10E26BA484000BACED7 /* ParticipantCellViewModelTests.swift */,
-				1F09A10F26BA484000BACED7 /* CallingViewModelTests.swift */,
-				1F09A11026BA484000BACED7 /* ParticipantGridsViewModelTests.swift */,
-				50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */,
-				50E2D6A826FA52A3006B0EF4 /* ParticipantsListViewModelTests.swift */,
-				503300FB2706763800289BB5 /* BannerViewModelTests.swift */,
-				503300FD27079FC900289BB5 /* BannerTextViewModelTests.swift */,
 				50C6DECE270E4F020085D04B /* BannerInfoTypeTests.swift */,
+				503300FD27079FC900289BB5 /* BannerTextViewModelTests.swift */,
+				503300FB2706763800289BB5 /* BannerViewModelTests.swift */,
+				1F09A10F26BA484000BACED7 /* CallingViewModelTests.swift */,
+				1F09A10C26BA484000BACED7 /* ControlBarViewModelTests.swift */,
+				50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */,
 				8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */,
 				1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */,
+				1F09A10E26BA484000BACED7 /* ParticipantCellViewModelTests.swift */,
+				1F09A11026BA484000BACED7 /* ParticipantGridsViewModelTests.swift */,
+				50E2D6A826FA52A3006B0EF4 /* ParticipantsListViewModelTests.swift */,
 			);
 			path = Calling;
 			sourceTree = "<group>";
@@ -983,8 +985,8 @@
 		5A3142665337D92211691536 /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
-				5A3141390FEFB58AD2A2E22F /* LocalVideoViewModelTests.swift */,
 				98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */,
+				5A3141390FEFB58AD2A2E22F /* LocalVideoViewModelTests.swift */,
 			);
 			path = ViewComponents;
 			sourceTree = "<group>";
@@ -1061,11 +1063,12 @@
 		98966FE426A5E91A00069857 /* Setup */ = {
 			isa = PBXGroup;
 			children = (
-				1F09A10926BA47EC00BACED7 /* SetupViewModelTests.swift */,
-				98966FE226A5E58D00069857 /* SetupControlBarViewModelTests.swift */,
-				985DF36B269650C900CFDA55 /* PreviewAreaViewModelTests.swift */,
-				50B390D927DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift */,
 				881D8F6F27F2327B008EC897 /* ErrorInfoViewModelTests.swift */,
+				50B390D927DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift */,
+				985DF36B269650C900CFDA55 /* PreviewAreaViewModelTests.swift */,
+				98966FE226A5E58D00069857 /* SetupControlBarViewModelTests.swift */,
+				1F09A10926BA47EC00BACED7 /* SetupViewModelTests.swift */,
+				756F180E29391F27004EDAFD /* CallCompositeTests.swift */,
 			);
 			path = Setup;
 			sourceTree = "<group>";
@@ -1628,6 +1631,7 @@
 				FAC3128F27F24A8B00A4F1D0 /* IconButtonViewModelMocking.swift in Sources */,
 				FAC1FECD27C98FC200D95845 /* ParticipantGridCellViewModelMocking.swift in Sources */,
 				FAFA427D28380F7500053EA7 /* AvatarViewManagerMocking.swift in Sources */,
+				756F180F29391F27004EDAFD /* CallCompositeTests.swift in Sources */,
 				1F09A10426BA472A00BACED7 /* ParticipantInfoModelBuilder.swift in Sources */,
 				FAC1FECE27C98FC200D95845 /* ParticipantGridViewModelMocking.swift in Sources */,
 				FAC1FEC127C94D9200D95845 /* AudioDeviceListViewModelMocking.swift in Sources */,
