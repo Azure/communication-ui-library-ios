@@ -79,8 +79,9 @@ The following issues may be present.
 
 The UI library won't work for devices lower than iOS 14 but it's still possible to import the UI library with the following workaround and then conditionally launch the UI library when iOS 14 is available.
 
-1. Add a new framework to your project’s target and set the minimum deployment target > iOS 14
-
+1. Add a new framework to your project and set the minimum deployment target > iOS 14
+    - Set the new wrapper framework to be a dependency of the main project, but ensure that it is **not** linked against.
+    - Ensure that the framework target from the wrapper library is embedded into your application _only_.
     - Add all iOS 14 and above dependencies to this wrapper manually as cocoapods does not embed the binaries correctly.
     - Import all the required dependencies to the wrapper target and add `tokenCredential`, `callCompositeOptions`, and other initialization code to the top level class to launch the UI library.
     - Create the main entry point class. This could be a UIViewController for example, which loads up the `CallingComposite`.
@@ -100,3 +101,5 @@ if #available(iOS 14.0, *) {
     }
 }
 ```
+
+This method provides a way to load a framework into your application only if it is supported by the version of iOS. 
