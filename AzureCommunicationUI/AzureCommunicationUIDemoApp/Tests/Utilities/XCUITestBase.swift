@@ -115,10 +115,6 @@ extension XCUITestBase {
         button.forceTapElement()
     }
 
-    func isUsingMockedCallingSDKWrapper() -> Bool {
-        return ProcessInfo.processInfo.environment["CALLING_SDK_MOCK_ENABLED"] == "true"
-    }
-
     /// Taps the button that matches with the given accessibility label
     /// - Parameters:
     ///   - accesiibilityLabel: accessibility label of the button

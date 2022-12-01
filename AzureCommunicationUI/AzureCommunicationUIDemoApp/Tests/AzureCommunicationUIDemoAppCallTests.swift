@@ -9,10 +9,6 @@ import XCTest
 class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testJoinCallEndCallWithMockCallCallingSDKWrapperHandler() {
-        guard isUsingMockedCallingSDKWrapper() else {
-            XCTFail("CallingSDKWrapper mock test requires mock calling SDK Wrapper value enabled in the Settings screen")
-            return
-        }
         tapInterfaceFor(.uiKit)
 
         toggleMockSDKWrapperSwitch(enable: true)
