@@ -58,8 +58,8 @@ class CallingViewModel: ObservableObject {
         let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
         isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
         uiTestSettingsViewOverlayViewModel = compositeViewModelFactory
-            .makeSettingsOverlayViewModel(store: store) { action in
-                self.respondTo(action: action)
+            .makeSettingsOverlayViewModel(store: store) { [weak self] action in
+                self?.respondTo(action: action)
             }
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
