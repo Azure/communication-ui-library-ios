@@ -25,21 +25,18 @@ struct ChatDemoView: View {
                 NavigationLink(destination: chatView, isActive: $isShowingChatView) {
                     EmptyView()
                 }
-
                 launchView
             }
             .navigationTitle("UI Library - Chat Sample")
             .navigationBarTitleDisplayMode(.inline)
-        }
-        .alert(isPresented: $isErrorDisplayed) {
-            Alert(
-                title: Text("Error"),
-                message: Text(errorMessage),
-                dismissButton:
-                        .default(Text("Dismiss"), action: {
-                    isErrorDisplayed = false
-                }))
-        }
+        }.modifier(AlertDialogue(isPresented: $isErrorDisplayed,
+                             errorMessage: errorMessage,
+                             onDismiss: {
+            isErrorDisplayed = false
+            self.isShowingChatView = false
+            self.chatAdapter?.disconnect()
+            self.chatAdapter = nil
+        }))
     }
 
     var launchView: some View {
@@ -167,6 +164,21 @@ struct ChatDemoView: View {
                 .disabled(self.chatAdapter == nil)
                 .accessibility(identifier: AccessibilityId.stopChatAccessibilityID.rawValue)
 
+            }
+        }
+    }
+
+    struct AlertDialogue: ViewModifier {
+        @Binding var isPresented: Bool
+
+        var errorMessage: String
+        var onDismiss: (() -> Void)?
+
+        func body(content: Content) -> some View {
+            content.alert(isPresented: $isPresented) {
+                    Alert(title: Text("Error"),
+                          message: Text(errorMessage),
+                          dismissButton: .default(Text("Dismiss"), action: onDismiss))
             }
         }
     }
