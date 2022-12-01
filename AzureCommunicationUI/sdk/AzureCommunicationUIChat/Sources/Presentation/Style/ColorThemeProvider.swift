@@ -20,8 +20,9 @@ class ColorThemeProvider {
     let textSecondary: UIColor = Colors.textSecondary
     let textDisabled: UIColor = Colors.textDisabled
     let surfaceTertiary: UIColor = Colors.surfaceTertiary
-
-    let disableColor: UIColor = Colors.iconDisabled
+    let dividerOnPrimary: UIColor = Colors.dividerOnPrimary
+    let iconSecondary: UIColor = Colors.iconSecondary
+    let iconDisabled: UIColor = Colors.iconDisabled
 
     init(themeOptions: ThemeOptions?) {
         self.colorSchemeOverride = themeOptions?.colorSchemeOverride ?? .unspecified
