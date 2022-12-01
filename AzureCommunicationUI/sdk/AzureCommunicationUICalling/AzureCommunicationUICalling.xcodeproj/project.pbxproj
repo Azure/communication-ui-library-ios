@@ -50,7 +50,6 @@
 		1F48CF1F283447F400A44D58 /* CallingSDKWrapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48CF1E283447F400A44D58 /* CallingSDKWrapperProtocol.swift */; };
 		1F4A24BC26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A24BB26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift */; };
 		1F4B0EF8269BD17600E87014 /* CompositeErrorManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B0EF7269BD17600E87014 /* CompositeErrorManagerTests.swift */; };
-		1F4B0EFA269BD3D000E87014 /* CallCompositeMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B0EF9269BD3D000E87014 /* CallCompositeMocking.swift */; };
 		1F4B0EFE26A1466D00E87014 /* ParticipantGridCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FA46012681409D001844AC /* ParticipantGridCellView.swift */; };
 		1F4B0F0126A2025900E87014 /* ParticipantGridLayoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B0F0026A2025900E87014 /* ParticipantGridLayoutView.swift */; };
 		1F4B0F0526A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B0F0426A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift */; };
@@ -306,7 +305,6 @@
 		1F48CF1E283447F400A44D58 /* CallingSDKWrapperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKWrapperProtocol.swift; sourceTree = "<group>"; };
 		1F4A24BB26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeViewModelFactoryMocking.swift; sourceTree = "<group>"; };
 		1F4B0EF7269BD17600E87014 /* CompositeErrorManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeErrorManagerTests.swift; sourceTree = "<group>"; };
-		1F4B0EF9269BD3D000E87014 /* CallCompositeMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeMocking.swift; sourceTree = "<group>"; };
 		1F4B0F0026A2025900E87014 /* ParticipantGridLayoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantGridLayoutView.swift; sourceTree = "<group>"; };
 		1F4B0F0426A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantsEventsAdapter.swift; sourceTree = "<group>"; };
 		1F6470A82639DCFA0008B9E9 /* CallingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallingService.swift; sourceTree = "<group>"; };
@@ -976,8 +974,8 @@
 		5A314192C1EC6B1FB3D9A707 /* CallCompositeOptions */ = {
 			isa = PBXGroup;
 			children = (
-				500C0F202847E30E000BA2DC /* RemoteOptionsTests.swift */,
 				1F48B40227496E2800B6E5F9 /* DiagnosticConfigTests.swift */,
+				500C0F202847E30E000BA2DC /* RemoteOptionsTests.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1185,22 +1183,21 @@
 		A869A62E26546A16003CC4F2 /* Mocking */ = {
 			isa = PBXGroup;
 			children = (
-				FA03CC7527C8189900986D4E /* ViewModels */,
-				1F4B0EFB269BD3D800E87014 /* Redux */,
+				FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */,
+				FAFA427C28380F7500053EA7 /* AvatarViewManagerMocking.swift */,
+				1F8E0B73268697B700DDD18E /* CallingMiddlewareHandlerMocking.swift */,
+				FAD845432819FFE6007DAFE1 /* CallingSDKEventsHandlerMocking.swift */,
 				A869A63526546A2D003CC4F2 /* CallingSDKWrapperMocking.swift */,
 				A869A62F26546A2D003CC4F2 /* CallingServiceMocking.swift */,
+				1F4A24BB26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift */,
+				FA25C13D28FF711E00417715 /* DebugInfoManagerMocking.swift */,
+				5A3146B0B684264EB57EDA69 /* ErrorMocking.swift */,
+				50B390D027D82D7E0010A2ED /* LocalizationProviderMocking.swift */,
 				A869A63026546A2D003CC4F2 /* LoggerMocking.swift */,
 				A869A63226546A2D003CC4F2 /* PermissionsManagerMocking.swift */,
+				1F4B0EFB269BD3D800E87014 /* Redux */,
 				A869A63626546A2E003CC4F2 /* VideoViewManagerMocking.swift */,
-				1F8E0B73268697B700DDD18E /* CallingMiddlewareHandlerMocking.swift */,
-				1F4B0EF9269BD3D000E87014 /* CallCompositeMocking.swift */,
-				1F4A24BB26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift */,
-				5A3146B0B684264EB57EDA69 /* ErrorMocking.swift */,
-				FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */,
-				50B390D027D82D7E0010A2ED /* LocalizationProviderMocking.swift */,
-				FAD845432819FFE6007DAFE1 /* CallingSDKEventsHandlerMocking.swift */,
-				FAFA427C28380F7500053EA7 /* AvatarViewManagerMocking.swift */,
-				FA25C13D28FF711E00417715 /* DebugInfoManagerMocking.swift */,
+				FA03CC7527C8189900986D4E /* ViewModels */,
 			);
 			name = Mocking;
 			sourceTree = "<group>";
@@ -1577,7 +1574,6 @@
 				88BC24C12832D29D00818446 /* AvatarManagerTests.swift in Sources */,
 				FAC1FECF27C98FC200D95845 /* InfoHeaderViewModelMocking.swift in Sources */,
 				FAC1FECA27C98FC200D95845 /* ControlBarViewModelMocking.swift in Sources */,
-				1F4B0EFA269BD3D000E87014 /* CallCompositeMocking.swift in Sources */,
 				FA03CC8927C8189900986D4E /* PrimaryButtonViewModelMocking.swift in Sources */,
 				985DF36C269650C900CFDA55 /* PreviewAreaViewModelTests.swift in Sources */,
 				A830C30A264C8AAC00766E3D /* CallingMiddlewareTests.swift in Sources */,
