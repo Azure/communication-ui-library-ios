@@ -130,7 +130,6 @@
 		5A314059D7E61D1083A8C473 /* LocalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314A985811198B09DA2688 /* LocalVideoView.swift */; };
 		5A3140EA80ACDCB14140A060 /* CompositeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3145FC912A71B20D5ECBF6 /* CompositeViewFactory.swift */; };
 		5A3142646DD55C66CF290F7A /* LocalVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314317E4A1B700E6BE5E2E /* LocalVideoViewModel.swift */; };
-		5A31429C377C213B53F19163 /* DependencyContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314F041B5D1869C41C242E /* DependencyContainerTests.swift */; };
 		5A3142DAFAB4EE338ABF2196 /* CompositeViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3148FC4DC06C7515E1E8D9 /* CompositeViewModelFactory.swift */; };
 		5A31489916982D3699CD756D /* LocalVideoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3141390FEFB58AD2A2E22F /* LocalVideoViewModelTests.swift */; };
 		5A31497E0DEBAB0256AD0B91 /* ErrorMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3146B0B684264EB57EDA69 /* ErrorMocking.swift */; };
@@ -187,7 +186,6 @@
 		A830C30A264C8AAC00766E3D /* CallingMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */; };
 		A830C30C264D7C0900766E3D /* PermissionReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C30B264D7C0900766E3D /* PermissionReducerTests.swift */; };
 		A830C317264D8A0C00766E3D /* ContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C316264D8A0C00766E3D /* ContainerViewModelTests.swift */; };
-		A837397A261CE9FF00D46787 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8373979261CE9FF00D46787 /* DependencyContainer.swift */; };
 		A8373994261F9D7600D46787 /* CallCompositeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8373993261F9D7600D46787 /* CallCompositeOptions.swift */; };
 		A83F35BE28203EA9008C1ECE /* ViewModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83F35BD28203EA9008C1ECE /* ViewModifer.swift */; };
 		A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A865AF0827B7116B008347B4 /* IconAndLabelConversion.swift */; };
@@ -433,7 +431,6 @@
 		5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LobbyOverlayView.swift; sourceTree = "<group>"; };
 		5A3148FC4DC06C7515E1E8D9 /* CompositeViewModelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeViewModelFactory.swift; sourceTree = "<group>"; };
 		5A314A985811198B09DA2688 /* LocalVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoView.swift; sourceTree = "<group>"; };
-		5A314F041B5D1869C41C242E /* DependencyContainerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyContainerTests.swift; sourceTree = "<group>"; };
 		696AD14828DBAFCE0043F807 /* ButtonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonState.swift; sourceTree = "<group>"; };
 		69FC33B2B556CC3B9164A78E /* Pods-AzureCommunicationUICalling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling/Pods-AzureCommunicationUICalling.release.xcconfig"; sourceTree = "<group>"; };
 		752B953B2863A40E001C52E8 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
@@ -485,7 +482,6 @@
 		A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingMiddlewareTests.swift; sourceTree = "<group>"; };
 		A830C30B264D7C0900766E3D /* PermissionReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionReducerTests.swift; sourceTree = "<group>"; };
 		A830C316264D8A0C00766E3D /* ContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewModelTests.swift; sourceTree = "<group>"; };
-		A8373979261CE9FF00D46787 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		A8373993261F9D7600D46787 /* CallCompositeOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeOptions.swift; sourceTree = "<group>"; };
 		A83F35BD28203EA9008C1ECE /* ViewModifer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifer.swift; sourceTree = "<group>"; };
 		A8659FC52602A22000C807DE /* AzureCommunicationUICalling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AzureCommunicationUICalling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -886,7 +882,6 @@
 				1F4B0EF6269BD08100E87014 /* Manager */,
 				1FBCB6A7264528A900F57EEA /* Info.plist */,
 				5A314192C1EC6B1FB3D9A707 /* CallCompositeOptions */,
-				5A31454AEB090BC1B66FB680 /* DI */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -994,14 +989,6 @@
 				98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */,
 			);
 			path = ViewComponents;
-			sourceTree = "<group>";
-		};
-		5A31454AEB090BC1B66FB680 /* DI */ = {
-			isa = PBXGroup;
-			children = (
-				5A314F041B5D1869C41C242E /* DependencyContainerTests.swift */,
-			);
-			path = DI;
 			sourceTree = "<group>";
 		};
 		751D70F129119A0100323141 /* Shared Sources */ = {
@@ -1184,7 +1171,6 @@
 				1F94DADE2673E94F00691D1E /* CallComposite.swift */,
 				1F11D2B92640AD2200D33838 /* Presentation */,
 				A83739AF26210CC200D46787 /* CallCompositeOptions */,
-				A8810CDE2640A39700C88545 /* DI */,
 				1F2BED62262F859D00D98266 /* Redux */,
 				1FBCB6AD2649DA4100F57EEA /* Model */,
 				1F2BED862631EB5100D98266 /* Service */,
@@ -1234,14 +1220,6 @@
 				A874EDCB2666DF07003C7D92 /* ContainerUIHostingController.swift */,
 			);
 			path = Container;
-			sourceTree = "<group>";
-		};
-		A8810CDE2640A39700C88545 /* DI */ = {
-			isa = PBXGroup;
-			children = (
-				A8373979261CE9FF00D46787 /* DependencyContainer.swift */,
-			);
-			path = DI;
 			sourceTree = "<group>";
 		};
 		A8810CDF2640A3E100C88545 /* Factories */ = {
@@ -1654,7 +1632,6 @@
 				FAC3128F27F24A8B00A4F1D0 /* IconButtonViewModelMocking.swift in Sources */,
 				FAC1FECD27C98FC200D95845 /* ParticipantGridCellViewModelMocking.swift in Sources */,
 				FAFA427D28380F7500053EA7 /* AvatarViewManagerMocking.swift in Sources */,
-				5A31429C377C213B53F19163 /* DependencyContainerTests.swift in Sources */,
 				1F09A10426BA472A00BACED7 /* ParticipantInfoModelBuilder.swift in Sources */,
 				FAC1FECE27C98FC200D95845 /* ParticipantGridViewModelMocking.swift in Sources */,
 				FAC1FEC127C94D9200D95845 /* AudioDeviceListViewModelMocking.swift in Sources */,
@@ -1821,7 +1798,6 @@
 				1F4B0F0526A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift in Sources */,
 				88D8DD7628EF9A93006A4AC4 /* DebugInfoManager.swift in Sources */,
 				1F4B0F0126A2025900E87014 /* ParticipantGridLayoutView.swift in Sources */,
-				A837397A261CE9FF00D46787 /* DependencyContainer.swift in Sources */,
 				1B5F16A127FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift in Sources */,
 				5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */,
 				5A3142646DD55C66CF290F7A /* LocalVideoViewModel.swift in Sources */,
