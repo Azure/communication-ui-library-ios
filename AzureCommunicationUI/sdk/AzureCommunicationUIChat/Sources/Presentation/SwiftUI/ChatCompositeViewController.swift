@@ -12,12 +12,12 @@ public class ChatCompositeViewController: UIViewController {
 
     public init(with chatAdapter: ChatAdapter) {
         super.init(nibName: nil, bundle: nil)
-        let localizationProvider = chatAdapter.dependencyContainer.resolve() as LocalizationProviderProtocol
+        let localizationProvider = chatAdapter.localizationProvider
 
         let containerUIHostingController = chatAdapter.makeContainerUIHostingController(
-            router: chatAdapter.dependencyContainer.resolve(),
-            logger: chatAdapter.dependencyContainer.resolve(),
-            viewFactory: chatAdapter.dependencyContainer.resolve(),
+            router: chatAdapter.navigationRouter!,
+            logger: chatAdapter.logger,
+            viewFactory: chatAdapter.compositeViewFactory!,
             isRightToLeft: localizationProvider.isRightToLeft,
             canDismiss: true)
 

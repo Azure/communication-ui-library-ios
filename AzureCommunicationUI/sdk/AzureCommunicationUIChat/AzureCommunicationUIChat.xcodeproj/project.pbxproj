@@ -49,7 +49,6 @@
 		50CB821928C2872600680566 /* ContainerUIHostingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB821828C2872600680566 /* ContainerUIHostingController.swift */; };
 		50CB821D28C2875D00680566 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB821C28C2875D00680566 /* ChatView.swift */; };
 		50CB821F28C2876900680566 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB821E28C2876900680566 /* ChatViewModel.swift */; };
-		50CB822128C28CD600680566 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB822028C28CD600680566 /* DependencyContainer.swift */; };
 		50CB822728C2995A00680566 /* ChatMiddleware.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB822628C2995A00680566 /* ChatMiddleware.swift */; };
 		50CB822928C2996200680566 /* ChatActionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB822828C2996200680566 /* ChatActionHandler.swift */; };
 		50CB822B28C2996D00680566 /* ChatServiceEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB822A28C2996D00680566 /* ChatServiceEventHandler.swift */; };
@@ -136,7 +135,6 @@
 		50F0C5C428D38CD8009D7176 /* RemoteParticipantsManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C328D38CD8009D7176 /* RemoteParticipantsManagerTests.swift */; };
 		50F0C5C628D38CE4009D7176 /* MessageRepositoryManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C528D38CE4009D7176 /* MessageRepositoryManagerTests.swift */; };
 		50F0C5C828D38CF1009D7176 /* RemoteOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */; };
-		50F0C5CA28D38D00009D7176 /* DependencyContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */; };
 		521A024028FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A023E28FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift */; };
 		521A024128FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A023F28FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift */; };
 		521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */; };
@@ -223,7 +221,6 @@
 		50CB821828C2872600680566 /* ContainerUIHostingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerUIHostingController.swift; sourceTree = "<group>"; };
 		50CB821C28C2875D00680566 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		50CB821E28C2876900680566 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
-		50CB822028C28CD600680566 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		50CB822628C2995A00680566 /* ChatMiddleware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMiddleware.swift; sourceTree = "<group>"; };
 		50CB822828C2996200680566 /* ChatActionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatActionHandler.swift; sourceTree = "<group>"; };
 		50CB822A28C2996D00680566 /* ChatServiceEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceEventHandler.swift; sourceTree = "<group>"; };
@@ -311,7 +308,6 @@
 		50F0C5C328D38CD8009D7176 /* RemoteParticipantsManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantsManagerTests.swift; sourceTree = "<group>"; };
 		50F0C5C528D38CE4009D7176 /* MessageRepositoryManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageRepositoryManagerTests.swift; sourceTree = "<group>"; };
 		50F0C5C728D38CF1009D7176 /* RemoteOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteOptionsTests.swift; sourceTree = "<group>"; };
-		50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainerTests.swift; sourceTree = "<group>"; };
 		521A023E28FE1E47002CAD8E /* TypingParticipantAvatarGroup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantAvatarGroup.swift; sourceTree = "<group>"; };
 		521A023F28FE1E47002CAD8E /* TypingParticipantAvatarGroupContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantAvatarGroupContainer.swift; sourceTree = "<group>"; };
 		521A024228FE1E8C002CAD8E /* TypingParticipantsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TypingParticipantsViewModel.swift; sourceTree = "<group>"; };
@@ -403,7 +399,6 @@
 				50CB828128C2AD2300680566 /* common */,
 				50CB81DE28C26FB300680566 /* Presentation */,
 				50CB81E528C26FEF00680566 /* ChatCompositeOptions */,
-				50CB81E428C26FEB00680566 /* DI */,
 				50CB81E328C26FE500680566 /* Redux */,
 				50CB81E228C26FE100680566 /* Model */,
 				50CB81E128C26FDC00680566 /* Service */,
@@ -418,14 +413,12 @@
 		50CB81CE28C26E0C00680566 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				50CB827228C2A14700680566 /* Builder */,
-				50CB827328C2A1CB00680566 /* Mocking */,
-				50CB827B28C2A22E00680566 /* Redux */,
-				50CB827A28C2A22700680566 /* Presentation */,
-				50CB827928C2A22000680566 /* Service */,
-				50CB827828C2A21400680566 /* Manager */,
 				50CB827728C2A20500680566 /* ChatCompositeOptions */,
-				50CB827628C2A1FB00680566 /* DI */,
+				50CB827828C2A21400680566 /* Manager */,
+				50CB827328C2A1CB00680566 /* Mocking */,
+				50CB827A28C2A22700680566 /* Presentation */,
+				50CB827B28C2A22E00680566 /* Redux */,
+				50CB827928C2A22000680566 /* Service */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -475,14 +468,14 @@
 			isa = PBXGroup;
 			children = (
 				50370CCE28EE4AA800ACD234 /* BaseInfoModel.swift */,
-				50CB825228C29B4800680566 /* ParticipantInfoModel.swift */,
 				50370CD028EE4AD900ACD234 /* ChatEventModel.swift */,
-				5085BF1F28F72E0D0057586D /* ParticipantsInfoModel.swift */,
 				50CB825428C29B5100680566 /* ChatMessageInfoModel.swift */,
-				50CB825628C29B5A00680566 /* LocalUserInfoModel.swift */,
 				5085BF1D28F729990057586D /* ChatThreadInfoModel.swift */,
-				50CB825828C29B7200680566 /* UserEventTimestampModel.swift */,
+				50CB825628C29B5A00680566 /* LocalUserInfoModel.swift */,
+				50CB825228C29B4800680566 /* ParticipantInfoModel.swift */,
+				5085BF1F28F72E0D0057586D /* ParticipantsInfoModel.swift */,
 				6956EB15291341B0003CCC7E /* ReadReceiptInfoModel.swift */,
+				50CB825828C29B7200680566 /* UserEventTimestampModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -496,14 +489,6 @@
 				50CB822228C28D0B00680566 /* Reducer */,
 			);
 			path = Redux;
-			sourceTree = "<group>";
-		};
-		50CB81E428C26FEB00680566 /* DI */ = {
-			isa = PBXGroup;
-			children = (
-				50CB822028C28CD600680566 /* DependencyContainer.swift */,
-			);
-			path = DI;
 			sourceTree = "<group>";
 		};
 		50CB81E528C26FEF00680566 /* ChatCompositeOptions */ = {
@@ -699,13 +684,6 @@
 			path = Extension;
 			sourceTree = "<group>";
 		};
-		50CB827228C2A14700680566 /* Builder */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Builder;
-			sourceTree = "<group>";
-		};
 		50CB827328C2A1CB00680566 /* Mocking */ = {
 			isa = PBXGroup;
 			children = (
@@ -745,14 +723,6 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		50CB827628C2A1FB00680566 /* DI */ = {
-			isa = PBXGroup;
-			children = (
-				50F0C5C928D38D00009D7176 /* DependencyContainerTests.swift */,
-			);
-			path = DI;
-			sourceTree = "<group>";
-		};
 		50CB827728C2A20500680566 /* ChatCompositeOptions */ = {
 			isa = PBXGroup;
 			children = (
@@ -765,10 +735,10 @@
 		50CB827828C2A21400680566 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				50F0C5BF28D38CB8009D7176 /* ErrorManagerTests.swift */,
 				50F0C5C128D38CC9009D7176 /* AvatarManagerTests.swift */,
-				50F0C5C328D38CD8009D7176 /* RemoteParticipantsManagerTests.swift */,
+				50F0C5BF28D38CB8009D7176 /* ErrorManagerTests.swift */,
 				50F0C5C528D38CE4009D7176 /* MessageRepositoryManagerTests.swift */,
+				50F0C5C328D38CD8009D7176 /* RemoteParticipantsManagerTests.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -776,9 +746,9 @@
 		50CB827928C2A22000680566 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				506E1D5B293568B5002B0D0A /* ChatSDKEventsHandlerTests.swift */,
 				50F0C5BB28D38C63009D7176 /* ChatServiceTests.swift */,
 				50F0C5BD28D38C6E009D7176 /* NavigationRouterTests.swift */,
-				506E1D5B293568B5002B0D0A /* ChatSDKEventsHandlerTests.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1392,7 +1362,6 @@
 				BD80293928ECA7DC00A55CAC /* TopBarView.swift in Sources */,
 				50CB825128C29B2600680566 /* ErrorReducer.swift in Sources */,
 				50CB82C728C2AD2300680566 /* PreferenceKey.swift in Sources */,
-				50CB822128C28CD600680566 /* DependencyContainer.swift in Sources */,
 				50CB820928C2868A00680566 /* AvatarViewManager.swift in Sources */,
 				50370CCF28EE4AA800ACD234 /* BaseInfoModel.swift in Sources */,
 				50CB823B28C29AC100680566 /* AppState.swift in Sources */,
@@ -1478,7 +1447,6 @@
 				50F0C5C228D38CC9009D7176 /* AvatarManagerTests.swift in Sources */,
 				50370CC428EB5ED200ACD234 /* DiagnosticConfigTests.swift in Sources */,
 				50370CBF28EB5E2300ACD234 /* StoreFactoryMocking.swift in Sources */,
-				50F0C5CA28D38D00009D7176 /* DependencyContainerTests.swift in Sources */,
 				50F0C5A628D38BC5009D7176 /* ChatMiddlewareTests.swift in Sources */,
 				50F0C5A228D38B7F009D7176 /* ChatViewModelTests.swift in Sources */,
 				50F0C5C428D38CD8009D7176 /* RemoteParticipantsManagerTests.swift in Sources */,
