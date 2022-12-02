@@ -163,7 +163,7 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
             $0.id == message.id
         }) {
             messages[index] = message
-        } else {
+        } else if !message.isLocalUser {
             messages.append(message)
         }
     }

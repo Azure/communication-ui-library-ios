@@ -35,8 +35,8 @@ struct MessageView: View {
     var message: some View {
         Group {
             switch messageModel.type {
-            case .text:
-                if messageModel.deletedOn == nil {
+            case .text, .html:
+                if messageModel.deletedOn == nil || messageModel.content == nil {
                     TextMessageView(messageModel: messageModel,
                                     showUsername: showUsername,
                                     showTime: showTime,
