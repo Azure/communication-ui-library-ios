@@ -67,9 +67,3 @@ class BottomBarViewModel: ObservableObject {
         isLocalUserRemoved = chatState.isLocalUserRemovedFromChat
     }
 }
-
-extension String {
-    var isEmptyOrWhiteSpace: Bool {
-        return self.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
-    }
-}
