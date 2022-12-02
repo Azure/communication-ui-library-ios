@@ -27,7 +27,7 @@
 		50CB82E228C9200E00680566 /* AzureCommunicationUIChat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB82E028C9200300680566 /* AzureCommunicationUIChat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		50D8EE9F2926C0C6003C3A95 /* ChatDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8EE9E2926C0C6003C3A95 /* ChatDemoView.swift */; };
 		50D8EEA12926C0DD003C3A95 /* ChatDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8EEA02926C0DD003C3A95 /* ChatDemoViewController.swift */; };
-		52EFB3FE293938FF006D41B9 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EFB3FD293938FF006D41B9 /* AlertView.swift */; };
+		52EFB3FE293938FF006D41B9 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EFB3FD293938FF006D41B9 /* ErrorView.swift */; };
 		8926B039F67555DE4F89893B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026F091CB7F97EBA5A39610B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework */; };
 		A85DDCB12728B12D001297B4 /* EnvConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCAF2728B12D001297B4 /* EnvConfig.swift */; };
 		A85DDCB32728B140001297B4 /* ThemeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCB22728B140001297B4 /* ThemeOptions.swift */; };
@@ -104,7 +104,7 @@
 		50CB82E028C9200300680566 /* AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50D8EE9E2926C0C6003C3A95 /* ChatDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDemoView.swift; sourceTree = "<group>"; };
 		50D8EEA02926C0DD003C3A95 /* ChatDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDemoViewController.swift; sourceTree = "<group>"; };
-		52EFB3FD293938FF006D41B9 /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
+		52EFB3FD293938FF006D41B9 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		55177298464F41939884F1C8 /* Pods-AzureCommunicationUIDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp/Pods-AzureCommunicationUIDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		645D1D3003E302ECA00BB66C /* Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		747FFD0380FFBF53EC331032 /* Pods_AzureCommunicationUIDemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIDemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -187,7 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				1F8881C92798D5E7001427F0 /* TextFieldClearButton.swift */,
-				52EFB3FD293938FF006D41B9 /* AlertView.swift */,
+				52EFB3FD293938FF006D41B9 /* ErrorView.swift */,
 			);
 			path = ViewModifier;
 			sourceTree = "<group>";
@@ -540,7 +540,7 @@
 				A8C69FB42728AE1A00143DB7 /* AppDelegate.swift in Sources */,
 				1B5D6C1329231B900072C66D /* CallingSDKEventsHandlerMocking.swift in Sources */,
 				A8FB819C272A082B00AA0930 /* DemoInputTypes.swift in Sources */,
-				52EFB3FE293938FF006D41B9 /* AlertView.swift in Sources */,
+				52EFB3FE293938FF006D41B9 /* ErrorView.swift in Sources */,
 				A8AC66FE2735A41600632D0B /* CustomControls.swift in Sources */,
 				A85DDCB92728B23B001297B4 /* CallingDemoView.swift in Sources */,
 				1B5D6C1029231B900072C66D /* UITestCallingSDKWrapper.swift in Sources */,

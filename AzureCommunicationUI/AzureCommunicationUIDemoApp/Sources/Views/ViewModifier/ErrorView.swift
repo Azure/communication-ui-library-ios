@@ -5,7 +5,7 @@
 
 import SwiftUI
 
-struct AlertView: ViewModifier {
+struct ErrorView: ViewModifier {
     @Binding var isPresented: Bool
 
     var errorMessage: String

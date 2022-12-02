@@ -29,7 +29,7 @@ struct ChatDemoView: View {
             }
             .navigationTitle("UI Library - Chat Sample")
             .navigationBarTitleDisplayMode(.inline)
-        }.modifier(AlertView(isPresented: $isErrorDisplayed,
+        }.modifier(ErrorView(isPresented: $isErrorDisplayed,
                              errorMessage: errorMessage,
                              onDismiss: {
             isErrorDisplayed = false

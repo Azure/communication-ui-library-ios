@@ -195,7 +195,15 @@ class ChatDemoViewController: UIViewController {
             errorMessage = "Unknown error"
         }
         let errorAlert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
-        errorAlert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        errorAlert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: { [weak self] _ in
+            guard let self = self else {
+                return
+            }
+            self.chatAdapter?.disconnect()
+            self.chatAdapter = nil
+            self.updateExperieceButton()
+            self.startExperienceButton.isEnabled = true
+        }))
         present(errorAlert,
                 animated: true,
                 completion: nil)
