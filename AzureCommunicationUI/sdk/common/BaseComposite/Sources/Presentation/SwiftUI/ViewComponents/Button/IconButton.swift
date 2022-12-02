@@ -78,7 +78,7 @@ extension IconButtonViewModel.ButtonType {
 struct IconButton: View {
     @ObservedObject var viewModel: IconButtonViewModel
 
-    private let buttonDisabledColor = Color(StyleProvider.color.disableColor)
+    private let buttonDisabledColor = Color(StyleProvider.color.iconDisabled)
 
     var body: some View {
         let buttonType = viewModel.buttonType
