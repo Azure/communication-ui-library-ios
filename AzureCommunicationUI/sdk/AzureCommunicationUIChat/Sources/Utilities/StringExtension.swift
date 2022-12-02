@@ -31,4 +31,8 @@ extension String {
         return attributedStr.string.hasSuffix("\n") ?
         String(attributedStr.string.dropLast("\n".count)) : attributedStr.string
     }
+
+    var isEmptyOrWhiteSpace: Bool {
+        return self.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+    }
 }
