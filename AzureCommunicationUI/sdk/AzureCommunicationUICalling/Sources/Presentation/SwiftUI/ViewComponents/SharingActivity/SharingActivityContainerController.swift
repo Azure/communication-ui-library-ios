@@ -6,13 +6,13 @@
 import UIKit
 
 class SharingActivityContainerController: UIViewController, DrawerViewControllerProtocol {
-    private let viewModel: DiagnosticsSharingActivityViewModel
+    private let viewModel: DebugInfoSharingActivityViewModel
     private let applicationActivities: [UIActivity]?
     private weak var controller: UIActivityViewController?
     private let sourceView: UIView
     private var activityControllerCompletion: (() -> Void)?
 
-    init(viewModel: DiagnosticsSharingActivityViewModel,
+    init(viewModel: DebugInfoSharingActivityViewModel,
          applicationActivities: [UIActivity]?,
          sourceView: UIView,
          activityControllerCompletion: (() -> Void)? = nil) {
@@ -38,7 +38,7 @@ class SharingActivityContainerController: UIViewController, DrawerViewController
             topView.isUserInteractionEnabled = false
             topView.addSubview(sourceView)
         }
-        let activityController = UIActivityViewController(activityItems: [viewModel.getDiagnosticsInfo()],
+        let activityController = UIActivityViewController(activityItems: [viewModel.getDebugInfo()],
                                                           applicationActivities: applicationActivities)
         activityController.completionWithItemsHandler = { [weak self] activityType, completed, _, _ in
             guard let self = self else {

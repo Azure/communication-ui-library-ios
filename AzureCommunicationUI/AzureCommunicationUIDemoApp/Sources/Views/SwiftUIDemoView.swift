@@ -5,8 +5,11 @@
 
 import SwiftUI
 import AzureCommunicationCommon
+#if DEBUG
 @testable import AzureCommunicationUICalling
-
+#else
+import AzureCommunicationUICalling
+#endif
 struct SwiftUIDemoView: View {
     @State var isErrorDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
@@ -162,11 +165,15 @@ extension SwiftUIDemoView {
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
+        #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         let callComposite = useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
                           callingSDKWrapperProtocol: UITestCallingSDKWrapper())
             : CallComposite(withOptions: callCompositeOptions)
+        #else
+        let callComposite = CallComposite(withOptions: callCompositeOptions)
+        #endif
 
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
@@ -273,7 +280,7 @@ extension SwiftUIDemoView {
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::SwiftUIDemoView::getEventsHandler::onError \(error)")
         print("::::SwiftUIDemoView error.code \(error.code)")
-        print("::::SwiftUIDemoView diagnostics info \(callComposite.diagnostics.lastKnownCallId ?? "Unknown")")
+        print("::::SwiftUIDemoView debug info \(callComposite.debugInfo.lastCallId ?? "Unknown")")
         showError(for: error.code)
     }
 
