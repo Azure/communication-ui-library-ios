@@ -178,7 +178,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
             Task {
                 messageRepository.replaceMessageId(internalId: internalId,
                                                    actualId: actualId)
-                messageRepository.updateMessageSendStatus(messageId: actualId, messageSendStatus: .delivered)
+                messageRepository.updateMessageSendStatus(messageId: actualId, messageSendStatus: .sent)
                 dispatch(.repositoryAction(.repositoryUpdated))
             }
         }

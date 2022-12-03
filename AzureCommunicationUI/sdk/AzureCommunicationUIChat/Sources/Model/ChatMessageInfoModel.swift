@@ -16,7 +16,7 @@ enum MessageType: Equatable {
 
 enum MessageSendStatus: Equatable {
     case sending
-    case delivered
+    case sent
     case seen
     case failed
 }
@@ -136,7 +136,7 @@ extension ChatMessageInfoModel {
 
         // Other cases will be handled in another PR
         switch sendStatus {
-        case .delivering:
+        case .sending:
             return nil
         case .sent:
             return nil

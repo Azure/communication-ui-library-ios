@@ -102,13 +102,13 @@ struct TextMessageView: View {
     }
 
     var messageSendStatus: some View {
-        let tintColor = viewModel.message.sendStatus == .failed
+        let tintColor = messageModel.sendStatus == .failed
                             ? StyleProvider.color.dangerPrimary : StyleProvider.color.primaryColor
         return Group {
-            if viewModel.isLocalUser {
+            if messageModel.isLocalUser {
                 VStack {
                     Spacer()
-                    if showMessageStatus, let iconName = viewModel.getMessageSendStatusIconName() {
+                    if showMessageStatus, let iconName = messageModel.getIconNameForMessageSendStatus() {
                         StyleProvider.icon.getImage(for: iconName)
                             .frame(width: Constants.messageSendStatusIconSize,
                                    height: Constants.messageSendStatusIconSize)
@@ -133,14 +133,9 @@ struct TextMessageView: View {
     }
 
     private var getTrailingPadding: CGFloat {
-        if !viewModel.isLocalUser {
+        if !messageModel.isLocalUser {
             return Constants.remoteTrailingPadding
         }
-
-        if viewModel.showMessageSendStatusIcon {
-            return Constants.messageSendStatusViewPadding
-        } else {
-            return Constants.localTrailingPadding
-        }
+        return Constants.localTrailingPadding
     }
 }
