@@ -245,6 +245,13 @@ class MessageRepositoryManagerTests: XCTestCase {
         XCTAssertEqual(sut.messages.count, initialMessages.count + 1)
     }
 
+    func test_messageRepositoryManager_addReceivedMessage_when_localUserMessage_then_messagesCountWillNotBeIncremented() {
+        let sut = makeSUT()
+        let message = ChatMessageInfoModel(isLocalUser: true)
+        sut.addReceivedMessage(message: message)
+        XCTAssertEqual(sut.messages.count, 0)
+    }
+
     func test_messageRepositoryManager_updateMessageEdited_when_foundMatchingInternalId_then_messageEditedOnNotNil() {
         let initialMessages = [
             ChatMessageInfoModel(),
