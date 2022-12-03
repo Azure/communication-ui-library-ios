@@ -9,23 +9,18 @@ import FluentUI
 struct TextMessageView: View {
     private enum Constants {
         static let localLeadingPadding: CGFloat = 60
-        static let localTrailingPadding: CGFloat = 15
         static let remoteAvatarLeadingPadding: CGFloat = 6
         static let remoteLeadingPadding: CGFloat = 30
-        static let remoteTrailingPadding: CGFloat = 44
         static let spacing: CGFloat = 4
 
         static let contentHorizontalPadding: CGFloat = 10
         static let contentVerticalPadding: CGFloat = 8
         static let cornerRadius: CGFloat = 5
-        static let messageSendStatusIconSize: CGFloat = 12
-        static let messageSendStatusViewPadding: CGFloat = 3
     }
 
     let messageModel: ChatMessageInfoModel
     let showUsername: Bool
     let showTime: Bool
-    let showMessageStatus: Bool
 
     var body: some View {
         HStack(spacing: Constants.spacing) {
@@ -34,13 +29,11 @@ struct TextMessageView: View {
             }
             avatar
             bubble
-            messageSendStatus
             if !messageModel.isLocalUser {
                 Spacer()
             }
         }
         .padding(.leading, getLeadingPadding)
-        .padding(.trailing, getTrailingPadding)
     }
 
     var avatar: some View {
@@ -101,25 +94,6 @@ struct TextMessageView: View {
         }
     }
 
-    var messageSendStatus: some View {
-        let tintColor = messageModel.sendStatus == .failed
-                            ? StyleProvider.color.dangerPrimary : StyleProvider.color.primaryColor
-        return Group {
-            if messageModel.isLocalUser {
-                VStack {
-                    Spacer()
-                    if showMessageStatus, let iconName = messageModel.getIconNameForMessageSendStatus() {
-                        StyleProvider.icon.getImage(for: iconName)
-                            .frame(width: Constants.messageSendStatusIconSize,
-                                   height: Constants.messageSendStatusIconSize)
-                            .foregroundColor(Color(tintColor))
-                            .padding(.bottom, Constants.messageSendStatusViewPadding)
-                    }
-                }
-            }
-        }
-    }
-
     private var getLeadingPadding: CGFloat {
         if messageModel.isLocalUser {
             return Constants.localLeadingPadding
@@ -130,12 +104,5 @@ struct TextMessageView: View {
         } else {
             return Constants.remoteLeadingPadding
         }
-    }
-
-    private var getTrailingPadding: CGFloat {
-        if !messageModel.isLocalUser {
-            return Constants.remoteTrailingPadding
-        }
-        return Constants.localTrailingPadding
     }
 }

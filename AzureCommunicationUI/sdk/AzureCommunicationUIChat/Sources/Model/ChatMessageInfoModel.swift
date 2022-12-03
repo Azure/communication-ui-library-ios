@@ -130,22 +130,19 @@ extension ChatMessageInfoModel {
     }
 
     func getIconNameForMessageSendStatus() -> CompositeIcon? {
-        guard isLocalUser else {
+        guard isLocalUser, let sendStatus = sendStatus else {
             return nil
         }
 
-        // Other cases will be handled in another PR
         switch sendStatus {
         case .sending:
-            return nil
+            return .messageSending
         case .sent:
-            return nil
+            return .messageSent
         case .seen:
             return .readReceipt
         case .failed:
-            return nil
-        case .none:
-            return nil
+            return .messageSendFailed
         }
     }
 

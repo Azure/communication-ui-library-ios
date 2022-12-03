@@ -159,11 +159,14 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
     }
 
     func addReceivedMessage(message: ChatMessageInfoModel) {
+        guard !message.isLocalUser else {
+            return
+        }
         if let index = messages.firstIndex(where: {
             $0.id == message.id
         }) {
             messages[index] = message
-        } else if !message.isLocalUser {
+        } else {
             messages.append(message)
         }
     }

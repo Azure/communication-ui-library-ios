@@ -15,7 +15,8 @@ class MessageListViewModel: ObservableObject {
 
     private var repositoryUpdatedTimestamp: Date = .distantPast
     private var lastReceivedMessageTimestamp: Date = .distantPast
-    private var lastSentMessageTimestamp: Date = .distantPast
+    private var lastSendingMessageTimestamp: Date = .distantPast
+    private var lastSentOrFailedMessageTimestamp: Date = .distantPast
     private var lastSentReadReceiptTimestamp: Date = .distantPast
     private var hasFetchedInitialMessages: Bool = false
     private var didEndScrollingTimer: Timer?
@@ -33,6 +34,7 @@ class MessageListViewModel: ObservableObject {
     @Published var jumpToNewMessagesButtonLabel: String = ""
     @Published var shouldScrollToBottom: Bool = false
     @Published var latestSeenMessageId: String?
+    @Published var latestSendingOrSentMessageId: String?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          messageRepositoryManager: MessageRepositoryManagerProtocol,
@@ -129,12 +131,27 @@ class MessageListViewModel: ObservableObject {
                 self.hasFetchedInitialMessages = repositoryState.hasFetchedInitialMessages
                 showActivityIndicator = false
                 shouldScrollToBottom = true
+                // Assume all messages are seen by others when re-joining the chat
+                if let latestSeenMessage = messages.last {
+                    latestSeenMessageId = latestSeenMessage.id
+                }
             }
 
-            // Scroll to new sent message
-            if self.lastSentMessageTimestamp < chatState.lastSentMessageTimestamp {
-                self.lastSentMessageTimestamp = chatState.lastSentMessageTimestamp
+            // Scroll to new sending message and get latest sending message id
+            if self.lastSendingMessageTimestamp < chatState.lastSendingMessageTimestamp {
+                self.lastSendingMessageTimestamp = chatState.lastSendingMessageTimestamp
                 shouldScrollToBottom = true
+                if let latestSendingMessage = messages.last(where: {$0.sendStatus == .sending}) {
+                    latestSendingOrSentMessageId = latestSendingMessage.id
+                }
+            }
+
+            // Get latest sent message id
+            if self.lastSentOrFailedMessageTimestamp < chatState.lastSentOrFailedMessageTimestamp {
+                self.lastSentOrFailedMessageTimestamp = chatState.lastSentOrFailedMessageTimestamp
+                if let latestSentMessage = messages.last(where: {$0.sendStatus == .sent}) {
+                    latestSendingOrSentMessageId = latestSentMessage.id
+                }
             }
 
             // Send read receipt when initial screen is loaded
@@ -145,7 +162,9 @@ class MessageListViewModel: ObservableObject {
             // Get latest seen message
             if self.lastReadReceiptReceivedTimestamp < chatState.lastReadReceiptReceivedTimestamp {
                 self.lastReadReceiptReceivedTimestamp = chatState.lastReadReceiptReceivedTimestamp
-                latestSeenMessageId = messages.last(where: {$0.sendStatus == .seen})?.id
+                if let latestSeenMessage = messages.last(where: {$0.sendStatus == .seen}) {
+                    latestSeenMessageId = latestSeenMessage.id
+                }
             }
 
             updateJumpToNewMessages()
@@ -166,6 +185,13 @@ class MessageListViewModel: ObservableObject {
         let numberOfNewMessages = getNumberOfNewMessages()
         showJumpToNewMessages = numberOfNewMessages > 0
         jumpToNewMessagesButtonLabel = getJumpToNewMessagesLabel(numberOfNewMessages: numberOfNewMessages)
+    }
+
+    func shouldShowMessageStatusView(message: ChatMessageInfoModel) -> Bool {
+        let messageFailed = message.sendStatus == .failed
+        let showLatestSeenMessage = latestSeenMessageId == message.id
+        let showLatestSendingOrSentMessage = latestSendingOrSentMessageId == message.id
+        return messageFailed || showLatestSeenMessage || showLatestSendingOrSentMessage
     }
 
     deinit {
