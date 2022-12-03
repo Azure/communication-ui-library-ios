@@ -11,6 +11,7 @@ enum CompositeIcon: String {
     case leftArrow = "ic_ios_arrow_left_24_filled"
     case downArrow = "ic_fluent_arrow_down_24_filled"
     case send = "ic_fluent_send_24_filled"
+    case sendDisabled = "ic_fluent_send_24_regular"
     case readReceipt = "ic_fluent_eye_12_regular"
     case messageSending = "ic_fluent_circle_12_regular"
     case messageDelivered = "ic_fluent_checkmark_circle_12_regular"

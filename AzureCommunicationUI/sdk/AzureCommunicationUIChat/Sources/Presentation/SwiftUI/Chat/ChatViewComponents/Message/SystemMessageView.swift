@@ -34,6 +34,7 @@ struct SystemMessageView: View {
         Group {
             if let icon = messageModel.systemIcon {
                 Icon(name: icon, size: Constants.iconSize)
+                    .foregroundColor(Color(StyleProvider.color.iconSecondary))
             }
         }
     }
