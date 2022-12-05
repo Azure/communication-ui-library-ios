@@ -23,11 +23,14 @@ struct ChatDemoView: View {
                 NavigationLink(destination: chatView, isActive: $isShowingChatView) {
                     EmptyView()
                 }
-
                 launchView
             }
             .navigationTitle("UI Library - Chat Sample")
             .navigationBarTitleDisplayMode(.inline)
+        }.onAppear {
+            AppDelegate.orientationLock = UIInterfaceOrientationMask.portrait
+        }.onDisappear {
+            AppDelegate.orientationLock = UIInterfaceOrientationMask.all
         }
     }
 
