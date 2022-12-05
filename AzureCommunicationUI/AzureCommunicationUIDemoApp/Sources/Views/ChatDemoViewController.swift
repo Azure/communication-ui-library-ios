@@ -294,7 +294,7 @@ class ChatDemoViewController: UIViewController {
                 action: #selector(onBackBtnPressed))
             chatCompositeViewController.title = "Chat"
             chatCompositeViewController.navigationItem.leftBarButtonItem = closeItem
-            let navController = UINavigationController(rootViewController: chatCompositeViewController)
+            let navController = NavigationController(rootViewController: chatCompositeViewController)
             navController.modalPresentationStyle = .fullScreen
 
             present(navController, animated: true, completion: nil)
@@ -606,5 +606,19 @@ extension ChatDemoViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return false
+    }
+}
+
+class NavigationController: UINavigationController {
+    override var shouldAutorotate: Bool {
+        false
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        .portrait
+    }
+
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        .portrait
     }
 }
