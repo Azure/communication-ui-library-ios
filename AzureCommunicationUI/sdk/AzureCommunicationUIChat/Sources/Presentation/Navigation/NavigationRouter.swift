@@ -13,7 +13,7 @@ class NavigationRouter: ObservableObject {
     private let store: Store<AppState>
     private let logger: Logger
     private var isDismissed: Bool = false
-    private let eventsHandler: ChatAdapter.Events
+    private let eventsHandler: ChatUIClient.Events
     @Published var currentView: ViewType = .chatView
 
     var cancellables = Set<AnyCancellable>()
@@ -21,7 +21,7 @@ class NavigationRouter: ObservableObject {
 
     init(store: Store<AppState>,
          logger: Logger,
-         chatCompositeEventsHandler: ChatAdapter.Events) {
+         chatCompositeEventsHandler: ChatUIClient.Events) {
         self.store = store
         self.logger = logger
         self.eventsHandler = chatCompositeEventsHandler

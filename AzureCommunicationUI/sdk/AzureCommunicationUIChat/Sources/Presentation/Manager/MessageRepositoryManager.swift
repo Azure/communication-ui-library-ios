@@ -35,9 +35,9 @@ protocol MessageRepositoryManagerProtocol {
 class MessageRepositoryManager: MessageRepositoryManagerProtocol {
     var messages: [ChatMessageInfoModel] = []
 
-    private let eventsHandler: ChatAdapter.Events
+    private let eventsHandler: ChatUIClient.Events
 
-    init(chatCompositeEventsHandler: ChatAdapter.Events) {
+    init(chatCompositeEventsHandler: ChatUIClient.Events) {
         self.eventsHandler = chatCompositeEventsHandler
     }
 

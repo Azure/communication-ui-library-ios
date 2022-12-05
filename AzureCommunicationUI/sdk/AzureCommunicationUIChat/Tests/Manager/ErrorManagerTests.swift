@@ -120,8 +120,8 @@ extension ErrorManagerTests {
                         errorState: errorState)
     }
 
-    func getEventsHandler() -> ChatAdapter.Events {
-        let handler = ChatAdapter.Events()
+    func getEventsHandler() -> ChatUIClient.Events {
+        let handler = ChatUIClient.Events()
         handler.onError = { [weak self] chatCompositeError in
             guard let self = self else {
                 return

@@ -47,7 +47,8 @@ class ChatDemoViewController: UIViewController {
 
     private var cancellable = Set<AnyCancellable>()
     private var envConfigSubject: EnvConfigSubject
-    var chatAdapter: ChatAdapter?
+    var chatUIClient: ChatUIClient?
+    var chatAdapter: ChatThreadAdapter?
     var threadId: String?
 
     private lazy var contentView: UIView = {
@@ -160,7 +161,7 @@ class ChatDemoViewController: UIViewController {
         }
 
         self.threadId = envConfigSubject.threadId
-        self.chatAdapter = ChatAdapter(
+        self.chatUIClient = ChatUIClient(
             identifier: communicationIdentifier,
             credential: communicationTokenCredential,
             endpoint: envConfigSubject.endpointUrl,
@@ -280,12 +281,15 @@ class ChatDemoViewController: UIViewController {
             if self.chatAdapter == nil {
                 await self.startExperience(with: link)
             }
-            guard let chatAdapter = self.chatAdapter,
+            guard let chatUIClient = self.chatUIClient,
                   let threadId = self.threadId else {
                 return
             }
-            try await chatAdapter.connect(threadId: threadId)
-            let chatCompositeViewController = ChatCompositeViewController(
+            let chatAdapter = ChatThreadAdapter(
+                chatUIClient: chatUIClient,
+                threadId: threadId)
+            self.chatAdapter = chatAdapter
+            let chatCompositeViewController = ChatThreadViewController(
                 with: chatAdapter)
 
             let closeItem = UIBarButtonItem(

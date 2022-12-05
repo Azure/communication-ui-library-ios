@@ -5,23 +5,23 @@
 
 import SwiftUI
 
-public struct ChatCompositeView: View {
+public struct ChatThreadView: View {
 
-    let chatAdapter: ChatAdapter
+    let chatAdapter: ChatThreadAdapter
 
     let router: NavigationRouter
     let logger: Logger
     let viewFactory: CompositeViewFactoryProtocol
     let isRightToLeft: Bool
 
-    public init(with chatAdapter: ChatAdapter) {
+    public init(with chatAdapter: ChatThreadAdapter) {
         self.chatAdapter = chatAdapter
 
-        self.router = self.chatAdapter.navigationRouter!
-        self.logger = self.chatAdapter.logger
-        self.viewFactory = self.chatAdapter.compositeViewFactory!
+        self.router = self.chatAdapter.client.navigationRouter!
+        self.logger = self.chatAdapter.client.logger
+        self.viewFactory = self.chatAdapter.client.compositeViewFactory!
 
-        let localizationProvider = self.chatAdapter.localizationProvider
+        let localizationProvider = self.chatAdapter.client.localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
 
     }

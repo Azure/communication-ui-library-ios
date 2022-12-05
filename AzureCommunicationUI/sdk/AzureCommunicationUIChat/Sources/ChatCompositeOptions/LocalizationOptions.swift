@@ -68,7 +68,7 @@ struct SupportedLocale {
     /// - Returns: Get supported Locales the AzureCommunicationUIChat
     ///  has predefined translations.
     static var values: [Locale] {
-        return Bundle(for: ChatAdapter.self).localizations.sorted()
+        return Bundle(for: ChatUIClient.self).localizations.sorted()
             .map { Locale(identifier: $0) }
     }
 }

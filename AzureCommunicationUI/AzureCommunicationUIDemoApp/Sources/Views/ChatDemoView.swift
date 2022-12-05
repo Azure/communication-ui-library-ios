@@ -15,7 +15,8 @@ struct ChatDemoView: View {
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
 
-    @State var chatAdapter: ChatAdapter?
+    @State var chatUIClient: ChatUIClient?
+    @State var chatAdapter: ChatThreadAdapter?
 
     var body: some View {
         NavigationView {
@@ -50,7 +51,7 @@ struct ChatDemoView: View {
     var chatView: some View {
         VStack {
             if let chatAdapter = chatAdapter {
-                ChatCompositeView(with: chatAdapter)
+                ChatThreadView(with: chatAdapter)
                     .navigationTitle("Chat")
                     .navigationBarTitleDisplayMode(.inline)
             } else {
@@ -187,17 +188,18 @@ extension ChatDemoView {
             return
         }
 
-        self.chatAdapter = ChatAdapter(
+        self.chatUIClient = ChatUIClient(
             identifier: communicationIdentifier,
             credential: communicationTokenCredential,
             endpoint: envConfigSubject.endpointUrl,
             displayName: envConfigSubject.displayName)
-        guard let chatAdapter = self.chatAdapter else {
+        guard let chatUIClient = self.chatUIClient else {
             return
         }
-        chatAdapter.connect(threadId: envConfigSubject.threadId) { _ in
-            print("Chat connect completionHandler called")
-        }
+        self.chatAdapter = ChatThreadAdapter(chatUIClient: chatUIClient, threadId: envConfigSubject.threadId)
+//        chatAdapter.connect(threadId: envConfigSubject.threadId) { _ in
+//            print("Chat connect completionHandler called")
+//        }
     }
 
     private func getTokenCredential() throws -> CommunicationTokenCredential {

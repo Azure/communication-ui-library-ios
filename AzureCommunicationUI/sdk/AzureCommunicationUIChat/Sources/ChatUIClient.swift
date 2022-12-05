@@ -9,12 +9,12 @@ import SwiftUI
 import UIKit
 
 /// The main class representing the entry point for the Chat Composite.
-public class ChatAdapter {
+public class ChatUIClient {
 
     /// The class to configure events closures for Chat Composite.
-    class Events {
+    public class Events {
         /// Closure to execute when error event occurs inside Chat Composite.
-        var onError: ((ChatCompositeError) -> Void)?
+        public var onError: ((ChatCompositeError) -> Void)?
         /// Closures to execute when participant has joined a chat inside Chat Composite.
         var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
         /// Closure to execute when Chat Composite UI is hidden and receive new message
@@ -24,7 +24,7 @@ public class ChatAdapter {
     }
 
     /// The events handler for Chat Composite
-    let events: Events
+    public let events: Events
 
     // Dependencies
     var logger: Logger = DefaultLogger(category: "ChatComponent")
@@ -60,8 +60,8 @@ public class ChatAdapter {
     }
 
     /// Start connection to the chat composite to Azure Communication Service.
-    public func connect(threadId: String,
-                        completionHandler: ((Result<Void, ChatCompositeError>) -> Void)?) {
+    func connect(threadId: String,
+                 completionHandler: ((Result<Void, ChatCompositeError>) -> Void)?) {
         self.chatConfiguration.chatThreadId = threadId
         constructDependencies(
             self.chatConfiguration,
@@ -72,24 +72,24 @@ public class ChatAdapter {
     }
 
     /// Start connection to the chat composite to Azure Communication Service.
-    public func connect(threadId: String) async throws {
-        return try await withCheckedThrowingContinuation { continuation in
-            connect(threadId: threadId) { result in
-                continuation.resume(with: result)
-            }
-        }
-    }
+//    public func connect(threadId: String) async throws {
+//        return try await withCheckedThrowingContinuation { continuation in
+//            connect(threadId: threadId) { result in
+//                continuation.resume(with: result)
+//            }
+//        }
+//    }
 
     /// Stop connection to chat composite to Azure Communication Service
-    public func disconnect() {
+//    public func disconnect() {
 //    public func disconnect(threadId: String? = nil
 //                           completionHandler: ((Result<Void, ChatCompositeError>) -> Void)? = nil) {
 
-    }
+//    }
 
     private func constructDependencies(
         _ chatConfiguration: ChatConfiguration,
-        chatCompositeEventsHandler: ChatAdapter.Events,
+        chatCompositeEventsHandler: ChatUIClient.Events,
         connectEventHandler: ((Result<Void, ChatCompositeError>) -> Void)? = nil
     ) {
         let eventHandler = ChatSDKEventsHandler(
