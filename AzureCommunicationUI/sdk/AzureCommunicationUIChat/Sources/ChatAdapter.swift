@@ -8,7 +8,7 @@ import FluentUI
 import SwiftUI
 import UIKit
 
-/// The main class representing the entry point for the Chat Composite.
+/// The main class representing the components of the Chat Composite.
 public class ChatAdapter {
 
     /// The class to configure events closures for Chat Composite.

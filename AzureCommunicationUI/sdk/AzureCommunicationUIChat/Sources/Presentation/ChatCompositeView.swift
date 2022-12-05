@@ -5,6 +5,7 @@
 
 import SwiftUI
 
+/// The Chat Composite View is the entry point for the Chat Composite
 public struct ChatCompositeView: View {
 
     let chatAdapter: ChatAdapter
@@ -14,6 +15,9 @@ public struct ChatCompositeView: View {
     let viewFactory: CompositeViewFactoryProtocol
     let isRightToLeft: Bool
 
+    /// Create an instance of ChatCompositeView with chatAdapter
+    /// - Parameters:
+    ///    - chatAdapter: The required parameter to create composite's view
     public init(with chatAdapter: ChatAdapter) {
         self.chatAdapter = chatAdapter
 
@@ -26,6 +30,7 @@ public struct ChatCompositeView: View {
 
     }
 
+    /// The View's body would be used to render Chat Composite
     public var body: some View {
         VStack {
             ContainerView(router: self.router,
