@@ -5,7 +5,6 @@
 
 import Foundation
 import AzureCore
-import AzureCommunicationCommon
 import AzureCommunicationChat
 
 extension ChatParticipant {
