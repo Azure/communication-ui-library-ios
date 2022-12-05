@@ -1,5 +1,4 @@
-# CI Pipeline for
-# Performs basic testing for PRs and pushes to specific branches
+# CI Pipeline
 
 # Run on pushes to these branches
 trigger:
@@ -15,127 +14,143 @@ pr:
   - main
   - develop
   - release/*
+  - feature/chat
 
-pool:
-  name: vsts-mac-1231-xcode-1331
-  demands: xcode
+variables:
+  targetingChatBranch: $[ eq(variables['System.PullRequest.TargetBranch'], 'feature/chat') ]
+  isChatFeature: $[ or(contains(variables['Build.SourceBranch'], 'chat'), contains(variables['Build.SourceBranch'], 'Chat')) ]
+  buildChat: or($(isChatFeature), $(targetingChatBranch))
 
-steps:
-  - task: servicetree-link-build-task@1
-    displayName: "ServiceTree: [$(BuildOutputUsage)] "
-    inputs:
-      ServiceTreeGateway: "ServiceTree Gateway"
-      Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
-    condition: always()
+jobs:
+  - job: BuildAndTest
+    displayName: "Build UI Library for CI"
+    pool:
+      name: vsts-mac-1231-xcode-1331
+      demands: xcode
+    steps:
+      - task: servicetree-link-build-task@1
+        displayName: "ServiceTree: [$(BuildOutputUsage)] "
+        inputs:
+          ServiceTreeGateway: "ServiceTree Gateway"
+          Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
+        condition: always()
 
-  - task: CocoaPods@0
-    displayName: "pod install"
-    inputs:
-      workingDirectory: AzureCommunicationUI
-      forceRepoUpdate: true
-      projectDirectory: AzureCommunicationUI
+      - task: CocoaPods@0
+        displayName: "pod install"
+        inputs:
+          workingDirectory: AzureCommunicationUI
+          forceRepoUpdate: true
+          projectDirectory: AzureCommunicationUI
 
-  - script: |
-      swift build -v \
-        -Xswiftc "-sdk" \
-        -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" \
-        -Xswiftc "-target" \
-        -Xswiftc "x86_64-apple-ios14.0-simulator"
+      - script: |
+          swift build -v \
+            -Xswiftc "-sdk" \
+            -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" \
+            -Xswiftc "-target" \
+            -Xswiftc "x86_64-apple-ios14.0-simulator"
+          xcodebuild test -scheme AzureCommunicationUICommon -sdk "`xcrun --sdk iphonesimulator --show-sdk-path`" -destination "name=iPhone 13"
+        workingDirectory: AzureCommunicationUI/sdk/AzureCommunicationUICommon
+        displayName: "Build and test AzureCommunicationUICommon"
 
-      xcodebuild test -scheme AzureCommunicationUICommon -sdk "`xcrun --sdk iphonesimulator --show-sdk-path`" -destination "name=iPhone 13"
-    workingDirectory: AzureCommunicationUI/sdk/AzureCommunicationUICommon
-    displayName: "Build and test AzureCommunicationUICommon"
+      - script: |
+          export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
+          cat ../eng/slather/ui-calling-slather.yml > $SLATHER_FILE
+          cat $SLATHER_FILE
+        displayName: "Inject Calling .slather.yml file"
+        workingDirectory: AzureCommunicationUI
 
-  - script: |
-      export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
-      {
-          echo 'coverage_service: cobertura_xml'
-          echo 'output_directory: slather-report'
-          echo 'scheme: AzureCommunicationUICalling'
-          echo 'workspace: AzureCommunicationUI.xcworkspace'
-          echo 'xcodeproj: sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
-          echo 'ignore:'
-          echo '    - ../**/*/Xcode*'
-          echo '    - ../core/*'
-          echo '    - AzureCommunicationUI/*/*View.swift'
-          echo '    - AzureCommunicationUI/*/*Button.swift'
-          echo '    - AzureCommunicationUI/*/*Extension.swift'
-      } >> $SLATHER_FILE
+      - task: Xcode@5
+        displayName: "Build UI Calling Library & unit test"
+        inputs:
+          configuration: Release
+          sdk: iphoneos
+          xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+          scheme: AzureCommunicationUICalling
+          xcodeVersion: default
+          args: "-verbose"
 
-    displayName: "Inject .slather.yml file"
+      - task: Xcode@5
+        displayName: "Xcode Calling Unit Test "
+        inputs:
+          actions: test
+          configuration: Debug
+          sdk: iphoneos
+          xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+          scheme: AzureCommunicationUICalling
+          xcodeVersion: default
+          destinationPlatformOption: iOS
+          destinationSimulators: "iPhone 12 Pro"
+          publishJUnitResults: true
 
-  - task: Xcode@5
-    displayName: "Xcode Calling build"
-    inputs:
-      configuration: Release
-      sdk: iphoneos
-      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
-      scheme: AzureCommunicationUICalling
-      xcodeVersion: default
-      args: "-verbose"
+      - script: |
+          slather
+          mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/calling-cobertura.xml
+        displayName: "Run slather for Calling"
+        workingDirectory: AzureCommunicationUI
 
-  - task: Xcode@5
-    displayName: "Xcode Calling Unit Test "
-    inputs:
-      actions: test
-      configuration: Debug
-      sdk: iphoneos
-      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
-      scheme: AzureCommunicationUICalling
-      xcodeVersion: default
-      destinationPlatformOption: iOS
-      destinationSimulators: "iPhone 12 Pro"
-      publishJUnitResults: true
+      - script: |
+          export SLATHER_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/.slather.yml
+          cat ../eng/slather/ui-chat-slather.yml > $SLATHER_FILE
+          cat $SLATHER_FILE
+        displayName: "Inject Chat .slather.yml file"
+        condition: and(succeeded(), eq(variables['buildChat'], true))
+        workingDirectory: AzureCommunicationUI
 
-  - script: |
-      cd AzureCommunicationUI
-      slather
-      cat slather-report/cobertura.xml
+      - task: Xcode@5
+        displayName: "Xcode Chat build"
+        condition: and(succeeded(), eq(variables['buildChat'], true))
+        inputs:
+          configuration: Release
+          sdk: iphoneos
+          xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+          scheme: AzureCommunicationUIChat
+          xcodeVersion: default
+          args: "-verbose"
+     
+      - task: Xcode@5
+        displayName: "Xcode Chat Unit Test"
+        condition: and(succeeded(), eq(variables['buildChat'], true))
+        inputs:
+          actions: test
+          configuration: Debug
+          sdk: iphoneos
+          xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+          scheme: AzureCommunicationUIChat
+          xcodeVersion: default
+          destinationPlatformOption: iOS
+          destinationSimulators: "iPhone 12 Pro"
+          args: "-verbose"
+          publishJUnitResults: true
 
-    displayName: "Run slather"
+      - script: |
+          slather
+          mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/chat-cobertura.xml
+        displayName: "Run slather for Chat"
+        condition: and(succeeded(), eq(variables['buildChat'], true))
+        workingDirectory: AzureCommunicationUI
 
-  - task: Xcode@5
-    displayName: "Xcode Chat build"
-    inputs:
-      configuration: Release
-      sdk: iphoneos
-      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
-      scheme: AzureCommunicationUIChat
-      xcodeVersion: default
-      args: "-verbose"
-    enabled: false
-    condition: and(succeeded(),or(eq(variables['System.PullRequest.TargetBranch'], 'feature/chat'),or(contains(variables['Build.SourceBranch'], 'chat'), contains(variables['Build.SourceBranch'], 'Chat'))))
+      # Need Dot Net for the report generator (combiner) step
+      - task: UseDotNet@2
+        displayName: "Use .NET Core sdk 3.1.x"
+        inputs:
+          version: 3.1.x
 
-  - task: Xcode@5
-    displayName: "Xcode Chat Unit Test"
-    inputs:
-      actions: test
-      configuration: Debug
-      sdk: iphoneos
-      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
-      scheme: AzureCommunicationUIChat
-      xcodeVersion: default
-      destinationPlatformOption: iOS
-      destinationSimulators: "iPhone 12 Pro"
-      args: "-verbose"
-      publishJUnitResults: true
-    enabled: false
-    condition: and(succeeded(),or(eq(variables['System.PullRequest.TargetBranch'], 'feature/chat'),or(contains(variables['Build.SourceBranch'], 'chat'), contains(variables['Build.SourceBranch'], 'Chat'))))
+      - task: reportgenerator@5
+        displayName: "Combine Cobertura Reports"
+        inputs:
+          reports: "$(System.ArtifactsDirectory)/*cobertura.xml"
+          reporttypes: "Cobertura"
+          targetdir: $(Pipeline.Workspace)/coveragereport
 
-  - task: UseDotNet@2
-    displayName: "Use .NET Core sdk 3.1.x"
-    inputs:
-      version: 3.1.x
+      - task: PublishCodeCoverageResults@1
+        inputs:
+          codeCoverageTool: "Cobertura"
+          summaryFileLocation: $(Pipeline.Workspace)/coveragereport/Cobertura.xml
 
-  - task: PublishCodeCoverageResults@1
-    displayName: "Publish code coverage from $(System.DefaultWorkingDirectory)/AzureCommunicationUI/slather-report/cobertura.xml"
-    inputs:
-      codeCoverageTool: Cobertura
-      summaryFileLocation: "$(System.DefaultWorkingDirectory)/AzureCommunicationUI/slather-report/cobertura.xml"
-
-  - task: BuildQualityChecks@8
-    displayName: "Check build quality"
-    inputs:
-      checkCoverage: true
-      coverageFailOption: fixed
-      coverageType: lines
+      - task: BuildQualityChecks@8
+        displayName: "Check build quality"
+        enabled: false
+        inputs:
+          checkCoverage: true
+          coverageFailOption: fixed
+          coverageType: lines
