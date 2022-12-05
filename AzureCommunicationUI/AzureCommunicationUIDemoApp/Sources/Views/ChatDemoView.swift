@@ -29,6 +29,10 @@ struct ChatDemoView: View {
             }
             .navigationTitle("UI Library - Chat Sample")
             .navigationBarTitleDisplayMode(.inline)
+        }.onAppear {
+            AppDelegate.orientationLock = UIInterfaceOrientationMask.portrait
+        }.onDisappear {
+            AppDelegate.orientationLock = UIInterfaceOrientationMask.all
         }.modifier(ErrorView(isPresented: $isErrorDisplayed,
                              errorMessage: errorMessage,
                              onDismiss: {
