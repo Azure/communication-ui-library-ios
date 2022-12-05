@@ -84,7 +84,7 @@ The UI library won't work for devices lower than iOS 14 but it's still possible 
     - Ensure that the framework target from the wrapper library is embedded into your application _only_.
     - Add all iOS 14 and above dependencies to this wrapper manually as cocoapods does not embed the binaries correctly.
     - Import all the required dependencies to the wrapper target and add `tokenCredential`, `callCompositeOptions`, and other initialization code to the top level class to launch the UI library.
-    - Create the main entry point class. This could be a UIViewController for example, which loads up the `CallingComposite`.
+    - Create the main entry point class. This could be a UIViewController for example, which loads up the `CallComposite`.
     - Set the top-level class as the `NSPrincipalClass` for the newly added wrapper framework.
     - If needed, the principal class could play define a shared protocol between the main target and the wrapper for additional control.
 
