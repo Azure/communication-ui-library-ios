@@ -132,7 +132,7 @@ class MessageListViewModel: ObservableObject {
                 showActivityIndicator = false
                 shouldScrollToBottom = true
                 // Assume all messages are seen by others when re-joining the chat
-                if let latestSeenMessage = messages.last {
+                if let latestSeenMessage = messages.last(where: {$0.isLocalUser}) {
                     latestSeenMessageId = latestSeenMessage.id
                 }
             }
