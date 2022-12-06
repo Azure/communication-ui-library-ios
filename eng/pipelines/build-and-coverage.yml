@@ -1,0 +1,73 @@
+# Build Xcode scheme and create test coverage report
+
+parameters:
+  - name: buildScheme
+    type: string
+    default: 'AzureCommunicationUICalling'
+    values:
+      - AzureCommunicationUICalling
+      - AzureCommunicationUIChat
+
+variables:
+  workingDirectory: 'AzureCommunicationUI'
+
+  ${{ if eq(parameters.buildScheme, 'AzureCommunicationUICalling') }}:
+    slatherSourceFilename: 'ui-calling-slather.yml'
+    coberturaTargetFilename: 'calling-cobertura.xml'
+  ${{ if eq(parameters.buildScheme, 'AzureCommunicationUIChat') }}:
+    slatherSourceFilename: 'ui-chat-slather.yml'
+    coberturaTargetFilename: 'chat-cobertura.xml'
+
+steps:
+  - task: CocoaPods@0
+    displayName: "pod install"
+    inputs:
+      workingDirectory: ${{ variables.workingDirectory }}
+      forceRepoUpdate: true
+      projectDirectory: ${{ variables.workingDirectory }}
+
+  - script: |
+      swift build -v \
+        -Xswiftc "-sdk" \
+        -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" \
+        -Xswiftc "-target" \
+        -Xswiftc "x86_64-apple-ios14.0-simulator"
+      xcodebuild test -scheme AzureCommunicationUICommon -sdk "`xcrun --sdk iphonesimulator --show-sdk-path`" -destination "name=iPhone 13"
+    workingDirectory: AzureCommunicationUI/sdk/AzureCommunicationUICommon
+    displayName: "Build and test AzureCommunicationUICommon"
+
+  - script: |
+      export SLATHER_FILE=$(system.defaultWorkingDirectory)/$(workingDirectory)/.slather.yml
+      cat ../eng/slather/$(slatherSourceFile)  > $SLATHER_FILE
+      cat $SLATHER_FILE
+    displayName: "Inject Calling .slather.yml file"
+    workingDirectory: ${{ variables.workingDirectory }}
+
+  - task: Xcode@5
+    displayName: "Xcode build ${{ parameters.buildScheme }} scheme"
+    inputs:
+      configuration: Release
+      sdk: iphoneos
+      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+      scheme: ${{ parameters.buildScheme }}
+      xcodeVersion: default
+      args: "-verbose"
+
+  - task: Xcode@5
+    displayName: "Xcode Unit Test ${{ parameters.buildScheme }}"
+    inputs:
+      actions: test
+      configuration: Debug
+      sdk: iphoneos
+      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+      scheme: ${{ parameters.buildScheme }}
+      xcodeVersion: default
+      destinationPlatformOption: iOS
+      destinationSimulators: "iPhone 12 Pro"
+      publishJUnitResults: true
+
+  - script: |
+      slather
+      mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/$(coberturaTargetFilename)
+    displayName: "Run slather for ${{ parameters.buildScheme }}"
+    workingDirectory: ${{ variables.workingDirectory }}

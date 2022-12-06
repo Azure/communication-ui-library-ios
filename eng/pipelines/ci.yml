@@ -6,15 +6,14 @@ schedules:
     branches:
       include:
         - develop
+        - main
+        - feature/chat
 
 # Run on pushes to these branches
 trigger:
   branches:
     include:
-      - main
-      - develop
-      - release/*
-      - feature/*
+      - feature/chat
       - emlyn/ci-yaml-nightly-job
 
 # Run on PRs to these branches
@@ -30,19 +29,7 @@ variables:
   buildChat: or($(isChatFeature), $(targetingChatBranch))
 
 jobs:
-  - template: CI-build.yml
+  - template: CI-build-job.yml
+  # - template: UI-test-job.yml
 
-  # - job: RunUITests
-  #   displayName: "Run UI Tests"
-  #   pool:
-  #     name: vsts-mac-1231-xcode-1331
-  #     demands: xcode
-  #   steps:
-  #     - task: servicetree-link-build-task@1
-  #       displayName: "ServiceTree: [$(BuildOutputUsage)] "
-  #       inputs:
-  #         ServiceTreeGateway: "ServiceTree Gateway"
-  #         Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
-  #       condition: always()
-
-    
+  
