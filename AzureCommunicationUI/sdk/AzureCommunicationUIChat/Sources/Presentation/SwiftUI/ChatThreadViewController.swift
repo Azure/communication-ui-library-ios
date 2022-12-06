@@ -15,9 +15,9 @@ public class ChatThreadViewController: UIViewController {
         let localizationProvider = chatAdapter.client.localizationProvider
 
         let containerUIHostingController = chatAdapter.client.makeContainerUIHostingController(
-            router: chatAdapter.client.navigationRouter!,
-            logger: chatAdapter.client.logger,
-            viewFactory: chatAdapter.client.compositeViewFactory!,
+            router: chatAdapter.navigationRouter!,
+            logger: chatAdapter.logger,
+            viewFactory: chatAdapter.compositeViewFactory!,
             isRightToLeft: localizationProvider.isRightToLeft,
             canDismiss: true)
 

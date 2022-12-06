@@ -42,7 +42,7 @@ class ErrorManager: ErrorManagerProtocol {
               let compositeError = getChatCompositeError(errorState: errorState) else {
             return
         }
-        didFail(compositeError)
+        didFail(store.state.chatState.threadId, compositeError)
     }
 
     private func updateFatalError(_ errorState: ErrorState) {

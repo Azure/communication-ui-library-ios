@@ -17,9 +17,9 @@ public struct ChatThreadView: View {
     public init(with chatAdapter: ChatThreadAdapter) {
         self.chatAdapter = chatAdapter
 
-        self.router = self.chatAdapter.client.navigationRouter!
-        self.logger = self.chatAdapter.client.logger
-        self.viewFactory = self.chatAdapter.client.compositeViewFactory!
+        self.router = self.chatAdapter.navigationRouter!
+        self.logger = self.chatAdapter.logger
+        self.viewFactory = self.chatAdapter.compositeViewFactory!
 
         let localizationProvider = self.chatAdapter.client.localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft

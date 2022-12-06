@@ -197,9 +197,6 @@ extension ChatDemoView {
             return
         }
         self.chatAdapter = ChatThreadAdapter(chatUIClient: chatUIClient, threadId: envConfigSubject.threadId)
-//        chatAdapter.connect(threadId: envConfigSubject.threadId) { _ in
-//            print("Chat connect completionHandler called")
-//        }
     }
 
     private func getTokenCredential() throws -> CommunicationTokenCredential {

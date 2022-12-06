@@ -122,7 +122,7 @@ extension ErrorManagerTests {
 
     func getEventsHandler() -> ChatUIClient.Events {
         let handler = ChatUIClient.Events()
-        handler.onError = { [weak self] chatCompositeError in
+        handler.onError = { [weak self] _, chatCompositeError in
             guard let self = self else {
                 return
             }
