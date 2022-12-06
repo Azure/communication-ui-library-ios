@@ -1,6 +1,6 @@
-![Hero Image](/docs/images/mobile-ui-library-chat-hero-image.png?raw=true)
-
 # Azure Communication UI Mobile Library for iOS - Chat
+
+![Hero Image](/docs/images/mobile-ui-library-chat-hero-image.png?raw=true)
 
 ![Cocoapods](https://img.shields.io/cocoapods/l/AzureCommunicationUIChat)
 ![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AzureCommunicationUIChat)
@@ -14,13 +14,13 @@
 
 ### Requirements
 
-* iOS 14+
-* Xcode 13+
-* Swift 5.0+
+- iOS 14+
+- Xcode 13+
+- Swift 5.0+
 
 ### Using CocoaPods
 
-CocoaPods is a dependency manager for Cocoa projects. To set up with CocoaPods visit their [Getting Started Guide](https://guides.cocoapods.org/using/getting-started.html). To integrate UI Mobile Library into your Xcode project using CocoaPods, specify it in your `Podfile`:
+CocoaPods is a dependency manager. To set up with CocoaPods visit their [Getting Started Guide](https://guides.cocoapods.org/using/getting-started.html). To integrate UI Mobile Library into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
 pod 'AzureCommunicationUIChat', '1.0.0-beta.1'
@@ -28,11 +28,9 @@ pod 'AzureCommunicationUIChat', '1.0.0-beta.1'
 
 ### Manual Installation
 
-
 If you prefer importing Mobile UI Library as an Embedded Framework to your project, please visit our [Manual Installation] (TBA) guide.
 
 ## Quick Sample
-
 
 ```swift
 TBA
