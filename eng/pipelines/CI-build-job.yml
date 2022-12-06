@@ -18,10 +18,10 @@ jobs:
         parameters:
           buildScheme: 'AzureCommunicationUICalling'
 
-      - template: ./build-and-coverage.yml
-        parameters:
-          buildScheme: 'AzureCommunicationUIChat'
-        condition: and(succeeded(), eq(variables['buildChat'], true))
+      - ${{ if eq(variables['buildChat'], true) }}:
+        - template: ./build-and-coverage.yml
+          parameters:
+            buildScheme: 'AzureCommunicationUIChat'
 
       # Need Dot Net for the report generator (combiner) step
       - task: UseDotNet@2
