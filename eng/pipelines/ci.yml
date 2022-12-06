@@ -1,5 +1,12 @@
 # CI Pipeline
 
+schedules:
+  - cron: "0 0 * * *"  # Nightly at midnight
+    displayName: "Nightly Build"
+    branches:
+      include:
+        - develop
+
 # Run on pushes to these branches
 trigger:
   branches:
@@ -23,7 +30,7 @@ variables:
 
 jobs:
   - job: BuildAndTest
-    displayName: "Build UI Library for CI"
+    displayName: "Build UI Library (Debug) for CI"
     pool:
       name: vsts-mac-1231-xcode-1331
       demands: xcode
