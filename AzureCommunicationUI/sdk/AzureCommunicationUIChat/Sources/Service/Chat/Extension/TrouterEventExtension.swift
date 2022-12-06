@@ -67,10 +67,10 @@ extension ChatThreadPropertiesUpdatedEvent {
 }
 
 extension ParticipantsAddedEvent {
-    func toParticipantsInfo(_ participantsAdded: [SignalingChatParticipant],
-                            _ localParticipantId: CommunicationIdentifier) -> ParticipantsInfoModel {
+    func toParticipantsInfo(participantsAdded: [SignalingChatParticipant],
+                            localParticipantId: String) -> ParticipantsInfoModel {
         let participants = participantsAdded.map {
-            $0.toParticipantInfoModel(localParticipantId.rawId)
+            $0.toParticipantInfoModel(localParticipantId)
         }
         return ParticipantsInfoModel(
             participants: participants,
@@ -79,10 +79,10 @@ extension ParticipantsAddedEvent {
 }
 
 extension ParticipantsRemovedEvent {
-    func toParticipantsInfo(_ participantsRemoved: [SignalingChatParticipant],
-                            _ localParticipantId: CommunicationIdentifier) -> ParticipantsInfoModel {
+    func toParticipantsInfo(participantsRemoved: [SignalingChatParticipant],
+                            localParticipantId: String) -> ParticipantsInfoModel {
         let participants = participantsRemoved.map {
-            $0.toParticipantInfoModel(localParticipantId.rawId)
+            $0.toParticipantInfoModel(localParticipantId)
         }
         return ParticipantsInfoModel(
             participants: participants,
