@@ -7,23 +7,17 @@ parameters:
     values:
       - AzureCommunicationUICalling
       - AzureCommunicationUIChat
-
-variables:
-  workingDirectory: 'AzureCommunicationUI'
-  slatherSourceFilename: 'ui-calling-slather.yml'
-  coberturaTargetFilename: 'calling-cobertura.xml'
-
-  ${{ if eq(parameters.buildScheme, 'AzureCommunicationUIChat') }}:
-    slatherSourceFilename: 'ui-chat-slather.yml'
-    coberturaTargetFilename: 'chat-cobertura.xml'
+  - name: workingDirectory
+    type: string
+    default: 'AzureCommunicationUI'
 
 steps:
   - task: CocoaPods@0
     displayName: "pod install"
     inputs:
-      workingDirectory: ${{ variables.workingDirectory }}
+      workingDirectory: ${{ parameters.workingDirectory }}
       forceRepoUpdate: true
-      projectDirectory: ${{ variables.workingDirectory }}
+      projectDirectory: ${{ parameters.workingDirectory }}
 
   - script: |
       swift build -v \
@@ -37,10 +31,16 @@ steps:
 
   - script: |
       export SLATHER_FILE=$(system.defaultWorkingDirectory)/$(workingDirectory)/.slather.yml
-      cat ../eng/slather/$(slatherSourceFile)  > $SLATHER_FILE
+      cat ../eng/slather/$(SLATHER_SOURCE_FILE)  > $SLATHER_FILE
       cat $SLATHER_FILE
     displayName: "Inject Calling .slather.yml file"
-    workingDirectory: ${{ variables.workingDirectory }}
+    env:
+      ${{ if eq(parameters.buildScheme, 'AzureCommunicationUICalling') }}:
+        SLATHER_SOURCE_FILE: 'ui-calling-slather.yml'
+      ${{ if eq(parameters.buildScheme, 'AzureCommunicationUIChat') }}:
+        SLATHER_SOURCE_FILE: 'ui-chat-slather.yml'
+  
+    workingDirectory: ${{ parameters.workingDirectory }}
 
   - task: Xcode@5
     displayName: "Xcode build ${{ parameters.buildScheme }} scheme"
@@ -67,6 +67,12 @@ steps:
 
   - script: |
       slather
-      mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/$(coberturaTargetFilename)
+      mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/$(COBERTURA_TARGET_FILENAME)
     displayName: "Run slather for ${{ parameters.buildScheme }}"
-    workingDirectory: ${{ variables.workingDirectory }}
+    env:
+      ${{ if eq(parameters.buildScheme, 'AzureCommunicationUICalling') }}:
+        COBERTURA_TARGET_FILENAME: 'calling-cobertura.xml'
+      ${{ if eq(parameters.buildScheme, 'AzureCommunicationUIChat') }}:
+        COBERTURA_TARGET_FILENAME: 'chat-cobertura.xml'
+
+    workingDirectory: ${{ parameters.workingDirectory }}

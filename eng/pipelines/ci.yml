@@ -29,7 +29,7 @@ variables:
   buildChat: or($(isChatFeature), $(targetingChatBranch))
 
 jobs:
-  - template: CI-build-job.yml
+  - template: jobs/CI-build-job.yml
   # - template: UI-test-job.yml
 
   

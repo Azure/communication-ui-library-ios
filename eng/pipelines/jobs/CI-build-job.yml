@@ -1,4 +1,4 @@
-# 
+# Xcode build and unit test CI job
 
 jobs:
   - job: BuildAndUnitTest
@@ -14,7 +14,7 @@ jobs:
           Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
         condition: always()
 
-      - template: ./build-and-coverage.yml
+      - template: templates/build-and-coverage.yml
         parameters:
           buildScheme: 'AzureCommunicationUICalling'
 
