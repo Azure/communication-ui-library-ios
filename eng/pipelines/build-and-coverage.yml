@@ -10,10 +10,9 @@ parameters:
 
 variables:
   workingDirectory: 'AzureCommunicationUI'
+  slatherSourceFilename: 'ui-calling-slather.yml'
+  coberturaTargetFilename: 'calling-cobertura.xml'
 
-  ${{ if eq(parameters.buildScheme, 'AzureCommunicationUICalling') }}:
-    slatherSourceFilename: 'ui-calling-slather.yml'
-    coberturaTargetFilename: 'calling-cobertura.xml'
   ${{ if eq(parameters.buildScheme, 'AzureCommunicationUIChat') }}:
     slatherSourceFilename: 'ui-chat-slather.yml'
     coberturaTargetFilename: 'chat-cobertura.xml'
