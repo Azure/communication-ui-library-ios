@@ -63,6 +63,7 @@ struct LocalVideoView: View {
 
     @State private var avatarImage: UIImage?
     @State private var localVideoStreamId: String?
+    @State private var flip: Bool = false
 
     var body: some View {
         Group {
@@ -105,29 +106,37 @@ struct LocalVideoView: View {
                            height: geometry.size.height)
                     .accessibilityElement(children: .combine)
                 }
-            }
+            }.rotation3DEffect(.degrees(flip ? 180 : 0), axis: (x: 0, y: 1, z: 0))
         }.onReceive(viewModel.$localVideoStreamId) {
             viewManager.updateDisplayedLocalVideoStream($0)
             if localVideoStreamId != $0 {
                 localVideoStreamId = $0
             }
-        }
+        }.rotation3DEffect(.degrees(flip ? 180 : 0), axis: (x: 0, y: 1, z: 0))
     }
 
     var cameraSwitchButton: some View {
-        let cameraSwitchButtonPaddingPip: CGFloat = -4
-        let cameraSwitchButtonPaddingFull: CGFloat = 4
-        return Group {
-            switch viewType {
-            case .localVideoPip:
-                IconButton(viewModel: viewModel.cameraSwitchButtonPipViewModel)
-                    .padding(cameraSwitchButtonPaddingPip)
-            case .localVideofull:
-                IconButton(viewModel: viewModel.cameraSwitchButtonFullViewModel)
-                    .padding(cameraSwitchButtonPaddingFull)
-            default:
-                EmptyView()
+//        let cameraSwitchButtonPaddingPip: CGFloat = -4
+//        let cameraSwitchButtonPaddingFull: CGFloat = 4
+//        return Group {
+//            switch viewType {
+//            case .localVideoPip:
+//                IconButton(viewModel: viewModel.cameraSwitchButtonPipViewModel)
+//                    .padding(cameraSwitchButtonPaddingPip)
+//            case .localVideofull:
+//                IconButton(viewModel: viewModel.cameraSwitchButtonFullViewModel)
+//                    .padding(cameraSwitchButtonPaddingFull)
+//            default:
+//                EmptyView()
+//            }
+//        }
+        Button {
+            withAnimation {
+                viewModel.cameraSwitchButtonPipViewModel.action()
+                flip.toggle()
             }
+        } label: {
+            Text("Switch")
         }
     }
 }

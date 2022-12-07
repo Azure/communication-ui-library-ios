@@ -5,6 +5,7 @@
 
 import Combine
 import Foundation
+import SwiftUI
 
 class LocalVideoViewModel: ObservableObject {
     private let logger: Logger
@@ -23,6 +24,7 @@ class LocalVideoViewModel: ObservableObject {
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
          dispatchAction: @escaping ActionDispatch) {
+        print("!!!! init LocalVideoViewModel")
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
@@ -53,6 +55,7 @@ class LocalVideoViewModel: ObservableObject {
 
     func update(localUserState: LocalUserState) {
         if localVideoStreamId != localUserState.localVideoStreamIdentifier {
+            print("!!!! update(localUserState \(localVideoStreamId)")
             localVideoStreamId = localUserState.localVideoStreamIdentifier
         }
 
