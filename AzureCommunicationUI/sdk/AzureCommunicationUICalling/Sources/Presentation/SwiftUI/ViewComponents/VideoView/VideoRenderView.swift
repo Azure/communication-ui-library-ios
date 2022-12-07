@@ -15,6 +15,7 @@ struct VideoRendererView: UIViewRepresentable {
     }
 
     func updateUIView(_ uiView: VideoRendererUIView, context: Context) {
+        print("!!!! updateUIView")
         uiView.update(rendererView: rendererView)
     }
 }

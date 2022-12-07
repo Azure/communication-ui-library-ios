@@ -5,6 +5,7 @@
 
 import Combine
 import Foundation
+import SwiftUI
 
 class LocalVideoViewModel: ObservableObject {
     private let logger: Logger
@@ -15,6 +16,8 @@ class LocalVideoViewModel: ObservableObject {
     @Published var displayName: String?
     @Published var isMuted: Bool = false
     @Published var cameraOperationalStatus: LocalUserState.CameraOperationalStatus = .off
+    @Published var cameraDeviceSelectionStatus: LocalUserState.CameraDeviceSelectionStatus = .front
+    @Published var flipAnimation: Bool = false
 
     var cameraSwitchButtonPipViewModel: IconButtonViewModel!
     var cameraSwitchButtonFullViewModel: IconButtonViewModel!
@@ -43,17 +46,21 @@ class LocalVideoViewModel: ObservableObject {
                 guard let self = self else {
                     return
                 }
-                self.toggleCameraSwitchTapped()
+                self.flipAnimation = true// toggleCameraSwitchTapped()
         }
     }
 
     func toggleCameraSwitchTapped() {
-        dispatch(.localUserAction(.cameraSwitchTriggered))
+            dispatch(.localUserAction(.cameraSwitchTriggered))
     }
 
     func update(localUserState: LocalUserState) {
         if localVideoStreamId != localUserState.localVideoStreamIdentifier {
             localVideoStreamId = localUserState.localVideoStreamIdentifier
+        }
+
+        if cameraDeviceSelectionStatus != localUserState.cameraState.device {
+            cameraDeviceSelectionStatus = localUserState.cameraState.device
         }
 
         if displayName != localUserState.displayName {

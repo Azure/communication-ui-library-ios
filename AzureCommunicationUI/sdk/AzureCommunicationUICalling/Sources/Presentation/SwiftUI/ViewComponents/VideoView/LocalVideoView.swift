@@ -70,7 +70,7 @@ struct LocalVideoView: View {
                 if viewModel.cameraOperationalStatus == .on,
                    let streamId = localVideoStreamId,
                    let rendererView = viewManager.getLocalVideoRendererView(streamId) {
-
+                    testView
                     ZStack(alignment: viewType.cameraSwitchButtonAlignment) {
                         VideoRendererView(rendererView: rendererView)
                             .frame(width: geometry.size.width,
@@ -107,11 +107,46 @@ struct LocalVideoView: View {
                 }
             }
         }.onReceive(viewModel.$localVideoStreamId) {
+            print("!!!! onReceive $localVideoStreamId")
             viewManager.updateDisplayedLocalVideoStream($0)
             if localVideoStreamId != $0 {
                 localVideoStreamId = $0
             }
+        }.onReceive(viewModel.$flipAnimation) { _ in
+            print()
+            guard let streamId = localVideoStreamId,
+                  let view = viewManager.getLocalVideoRendererView(streamId) else {
+                viewModel.toggleCameraSwitchTapped()
+                return
+            }
+            print("!!!!!! \(view)")
+            let blurView = UIVisualEffectView(frame: view.bounds)
+            blurView.effect = UIBlurEffect(style: .dark)
+            view.addSubview(blurView)
+            NSLayoutConstraint.activate([
+                blurView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                blurView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                blurView.topAnchor.constraint(equalTo: view.topAnchor),
+                blurView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            ])
+            UIView.transition(with: view,
+                              duration: 2.0,
+                              options: .transitionFlipFromLeft,
+                              animations: {
+                viewModel.toggleCameraSwitchTapped()
+            }, completion: { _ in
+                blurView.removeFromSuperview()
+            })
         }
+    }
+
+    var testView: some View {
+        if #available(iOS 15.0, *) {
+            print("!!!! start update")
+            print(Self._printChanges())
+            print("!!!! end update")
+        }
+        return EmptyView()
     }
 
     var cameraSwitchButton: some View {
