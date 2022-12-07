@@ -1,14 +1,5 @@
 # CI Pipeline
 
-# schedules:
-#   - cron: "0 0 * * *"  # Nightly at midnight
-#     displayName: "Nightly Build"
-#     branches:
-#       include:
-#         - develop
-#         - main
-#         - feature/chat
-
 # Run on pushes to these branches
 trigger:
   branches:
@@ -20,7 +11,7 @@ pr:
   - main
   - develop
   - release/*
-  - feature/chat
+  - feature/*
 
 variables:
   targetingChatBranch: $[ eq(variables['System.PullRequest.TargetBranch'], 'feature/chat') ]
