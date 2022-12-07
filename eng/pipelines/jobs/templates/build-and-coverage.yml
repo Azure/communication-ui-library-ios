@@ -30,15 +30,14 @@ steps:
     displayName: "Build and test AzureCommunicationUICommon"
 
   - script: |
-      echo "${{ parameters.buildScheme }}"
-      echo "${{ variables.SLATHER_SOURCE_FILE }}"
+      echo "BuildScheme: ${{ parameters.buildScheme }}"
 
       case "${{ parameters.buildScheme }}" in
         AzureCommunicationUICalling)
-          export SLATHER_SOURCE_FILE=ui-calling-slather.yml
+          SLATHER_SOURCE_FILE=ui-calling-slather.yml
           ;;
         AzureCommunicationUIChat)
-          export SLATHER_SOURCE_FILE=ui-chat-slather.yml
+          SLATHER_SOURCE_FILE=ui-chat-slather.yml
           ;;
       esac
      
@@ -46,12 +45,12 @@ steps:
       cat ../eng/slather/$(SLATHER_SOURCE_FILE) > $SLATHER_FILE
       cat $SLATHER_FILE
     displayName: "Inject Calling .slather.yml file"
-    env:
-      - name: SLATHER_SOURCE_FILE
-        ${{ if eq( parameters['buildScheme'], 'AzureCommunicationUICalling') }}:
-          value: "ui-calling-slather.yml"
-        ${{ if eq( parameters['buildScheme'], 'AzureCommunicationUIChat') }}:
-          value: "ui-chat-slather.yml"
+    # env:
+    #   - name: SLATHER_SOURCE_FILE
+    #     ${{ if eq( parameters['buildScheme'], 'AzureCommunicationUICalling') }}:
+    #       value: "ui-calling-slather.yml"
+    #     ${{ if eq( parameters['buildScheme'], 'AzureCommunicationUIChat') }}:
+    #       value: "ui-chat-slather.yml"
       
     workingDirectory: ${{ parameters.workingDirectory }}
 
@@ -81,10 +80,10 @@ steps:
   - script: |
       case "${{ parameters.buildScheme }}" in
         AzureCommunicationUICalling)
-          export COBERTURA_TARGET_FILENAME=calling-cobertura.xml
+          COBERTURA_TARGET_FILENAME=calling-cobertura.xml
           ;;
         AzureCommunicationUIChat)
-          export COBERTURA_TARGET_FILENAME=chat-cobertura.xml
+          COBERTURA_TARGET_FILENAME=chat-cobertura.xml
           ;;
       esac
 
