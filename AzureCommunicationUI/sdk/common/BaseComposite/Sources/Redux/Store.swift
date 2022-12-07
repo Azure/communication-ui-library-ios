@@ -47,6 +47,7 @@ extension Store where State == AppState {
         chatService: ChatServiceProtocol,
         messageRepository: MessageRepositoryManagerProtocol,
         chatConfiguration: ChatConfiguration,
+        chatThreadId: String,
         connectEventHandler: ((Result<Void, ChatCompositeError>) -> Void)?
     ) -> Store<AppState> {
 
@@ -77,7 +78,7 @@ extension Store where State == AppState {
                         displayName: chatConfiguration.displayName ?? "",
                         isLocalParticipant: true
                     ),
-                    threadId: chatConfiguration.chatThreadId
+                    threadId: chatThreadId
                 )
             )
         )
