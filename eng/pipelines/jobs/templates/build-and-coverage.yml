@@ -30,15 +30,15 @@ steps:
     displayName: "Build and test AzureCommunicationUICommon"
 
   - script: |
+      if [ "$[parameters.buildScheme]" -eq "AzureCommunicationUICalling" ]; then
+        export SLATHER_SOURCE_FILE=ui-calling-slather.yml
+      fi
       export SLATHER_FILE=$(system.defaultWorkingDirectory)/${{ parameters.workingDirectory }}/.slather.yml
-      cat ../eng/slather/${{ SLATHER_SOURCE_FILE }} > $SLATHER_FILE
+      cat ../eng/slather/$(SLATHER_SOURCE_FILE) > $SLATHER_FILE
       cat $SLATHER_FILE
     displayName: "Inject Calling .slather.yml file"
-    env:
-      ${{ if eq(parameters.buildScheme, 'AzureCommunicationUICalling') }}:
-        SLATHER_SOURCE_FILE: 'ui-calling-slather.yml'
-      ${{ if eq(parameters.buildScheme, 'AzureCommunicationUIChat') }}:
-        SLATHER_SOURCE_FILE: 'ui-chat-slather.yml'
+    # $[ if eq(parameters.buildScheme, 'AzureCommunicationUIChat') ]:
+    #   SLATHER_SOURCE_FILE: 'ui-chat-slather.yml'
   
     workingDirectory: ${{ parameters.workingDirectory }}
 
@@ -66,13 +66,16 @@ steps:
       publishJUnitResults: true
 
   - script: |
+      if [ "$[parameters.buildScheme]" -eq "AzureCommunicationUICalling" ]; then
+        export COBERTURA_TARGET_FILENAME=calling-cobertura.xml
+      fi
       slather
-      mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/${{ COBERTURA_TARGET_FILENAME }}
+      mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/$(COBERTURA_TARGET_FILENAME)
     displayName: "Run slather for ${{ parameters.buildScheme }}"
-    env:
-      ${{ if eq(parameters.buildScheme, 'AzureCommunicationUICalling') }}:
-        COBERTURA_TARGET_FILENAME: 'calling-cobertura.xml'
-      ${{ if eq(parameters.buildScheme, 'AzureCommunicationUIChat') }}:
-        COBERTURA_TARGET_FILENAME: 'chat-cobertura.xml'
+    # env:
+      # ${{ if eq(parameters.buildScheme, 'AzureCommunicationUICalling') }}:
+      #   : 
+      # ${{ if eq(parameters.buildScheme, 'AzureCommunicationUIChat') }}:
+      #   COBERTURA_TARGET_FILENAME: 'chat-cobertura.xml'
 
     workingDirectory: ${{ parameters.workingDirectory }}
