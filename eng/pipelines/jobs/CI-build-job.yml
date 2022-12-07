@@ -23,7 +23,7 @@ jobs:
           parameters:
             buildScheme: 'AzureCommunicationUIChat'
 
-      # Need Dot Net for the report generator (combiner) step
+      # Need .Net for the report generator (combiner) step
       - task: UseDotNet@2
         displayName: "Use .NET Core sdk 3.1.x"
         inputs:

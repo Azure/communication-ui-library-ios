@@ -1,20 +1,19 @@
 # CI Pipeline
 
-schedules:
-  - cron: "0 0 * * *"  # Nightly at midnight
-    displayName: "Nightly Build"
-    branches:
-      include:
-        - develop
-        - main
-        - feature/chat
+# schedules:
+#   - cron: "0 0 * * *"  # Nightly at midnight
+#     displayName: "Nightly Build"
+#     branches:
+#       include:
+#         - develop
+#         - main
+#         - feature/chat
 
 # Run on pushes to these branches
 trigger:
   branches:
     include:
       - feature/chat
-      - emlyn/ci-yaml-nightly-job
 
 # Run on PRs to these branches
 pr:
@@ -30,6 +29,5 @@ variables:
 
 jobs:
   - template: jobs/CI-build-job.yml
-  # - template: UI-test-job.yml
 
   
