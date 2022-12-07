@@ -194,7 +194,8 @@ class MessageListViewModel: ObservableObject {
         return messageFailed || showLatestSeenMessage || showLatestSendingOrSentMessage
     }
 
-    deinit {
+    func onDisappear() {
+        self.hasFetchedInitialMessages = false
         didEndScrollingTimer?.invalidate()
     }
 }

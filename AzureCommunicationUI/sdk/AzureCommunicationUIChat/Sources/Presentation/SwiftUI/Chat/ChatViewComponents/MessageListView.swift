@@ -36,6 +36,9 @@ struct MessageListView: View {
         .onTapGesture {
             UIApplicationHelper.dismissKeyboard()
         }
+        .onDisappear {
+            viewModel.onDisappear()
+        }
     }
 
     var activityIndicator: some View {
@@ -161,7 +164,7 @@ struct MessageListView: View {
         if !message.isLocalUser {
             return Constants.remoteTrailingPadding
         }
-        if message.type == .text, viewModel.shouldShowMessageStatusView(message: message) {
+        if message.type == .text, viewModel.shouldShowMessageStatusView(message: message), message.sendStatus != nil {
             return Constants.messageWithSendStatusTrailingPadding
         }
         return Constants.horizontalPadding

@@ -193,7 +193,7 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
             }) else {
             return
         }
-        messages[index].sendStatus = messageSendStatus
+        messages[index].update(sendStatus: messageSendStatus)
     }
 
     func updateMessageReadReceiptStatus(readReceiptInfo: ReadReceiptInfoModel, state: AppState) {
