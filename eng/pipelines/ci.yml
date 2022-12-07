@@ -1,11 +1,5 @@
 # CI Pipeline
 
-# Run on pushes to these branches
-trigger:
-  branches:
-    include:
-      - feature/chat
-
 # Run on PRs to these branches
 pr:
   - main
@@ -20,5 +14,3 @@ variables:
 
 jobs:
   - template: jobs/CI-build-job.yml
-
-  

@@ -19,7 +19,7 @@ jobs:
           buildScheme: 'AzureCommunicationUICalling'
 
       - ${{ if eq(variables['buildChat'], true) }}:
-        - template: ./build-and-coverage.yml
+        - template: templates/build-and-coverage.yml
           parameters:
             buildScheme: 'AzureCommunicationUIChat'
 
