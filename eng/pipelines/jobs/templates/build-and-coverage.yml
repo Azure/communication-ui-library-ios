@@ -30,8 +30,8 @@ steps:
     displayName: "Build and test AzureCommunicationUICommon"
 
   - script: |
-      export SLATHER_FILE=$(system.defaultWorkingDirectory)/$(workingDirectory)/.slather.yml
-      cat ../eng/slather/$(SLATHER_SOURCE_FILE)  > $SLATHER_FILE
+      export SLATHER_FILE=$(system.defaultWorkingDirectory)/${{ parameters.workingDirectory }}/.slather.yml
+      cat ../eng/slather/${{ SLATHER_SOURCE_FILE }} > $SLATHER_FILE
       cat $SLATHER_FILE
     displayName: "Inject Calling .slather.yml file"
     env:
@@ -67,7 +67,7 @@ steps:
 
   - script: |
       slather
-      mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/$(COBERTURA_TARGET_FILENAME)
+      mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/${{ COBERTURA_TARGET_FILENAME }}
     displayName: "Run slather for ${{ parameters.buildScheme }}"
     env:
       ${{ if eq(parameters.buildScheme, 'AzureCommunicationUICalling') }}:
