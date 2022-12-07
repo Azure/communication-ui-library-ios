@@ -11,13 +11,6 @@ parameters:
     type: string
     default: 'AzureCommunicationUI'
 
-variables:
-  - name: SLATHER_SOURCE_FILE
-    ${{ if eq( parameters['buildScheme'], 'AzureCommunicationUICalling') }}:
-      value: "ui-calling-slather.yml"
-    ${{ if eq( parameters['buildScheme'], 'AzureCommunicationUIChat') }}:
-      value: "ui-chat-slather.yml"
-
 steps:
   - task: CocoaPods@0
     displayName: "pod install"
@@ -53,12 +46,12 @@ steps:
       cat ../eng/slather/$(SLATHER_SOURCE_FILE) > $SLATHER_FILE
       cat $SLATHER_FILE
     displayName: "Inject Calling .slather.yml file"
-    # env:
-    #   - name: SLATHER_SOURCE_FILE
-    #     ${{ if eq( parameters['buildScheme'], 'AzureCommunicationUICalling') }}:
-    #       value: "ui-calling-slather.yml"
-    #     ${{ if eq( parameters['buildScheme'], 'AzureCommunicationUIChat') }}:
-    #       value: "ui-chat-slather.yml"
+    env:
+      - name: SLATHER_SOURCE_FILE
+        ${{ if eq( parameters['buildScheme'], 'AzureCommunicationUICalling') }}:
+          value: "ui-calling-slather.yml"
+        ${{ if eq( parameters['buildScheme'], 'AzureCommunicationUIChat') }}:
+          value: "ui-chat-slather.yml"
       
     workingDirectory: ${{ parameters.workingDirectory }}
 
