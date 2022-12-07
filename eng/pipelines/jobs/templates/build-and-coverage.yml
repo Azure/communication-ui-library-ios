@@ -30,8 +30,6 @@ steps:
     displayName: "Build and test AzureCommunicationUICommon"
 
   - script: |
-      echo "BuildScheme: ${{ parameters.buildScheme }}"
-
       case "${{ parameters.buildScheme }}" in
         AzureCommunicationUICalling)
           SLATHER_SOURCE_FILE=ui-calling-slather.yml
@@ -41,17 +39,10 @@ steps:
           ;;
       esac
      
-      export SLATHER_FILE=$(system.defaultWorkingDirectory)/${{ parameters.workingDirectory }}/.slather.yml
-      cat ../eng/slather/$(SLATHER_SOURCE_FILE) > $SLATHER_FILE
-      cat $SLATHER_FILE
+      SLATHER_FILE=$(system.defaultWorkingDirectory)/${{ parameters.workingDirectory }}/.slather.yml
+      cat ../eng/slather/$SLATHER_SOURCE_FILE > $SLATHER_FILE
+
     displayName: "Inject Calling .slather.yml file"
-    # env:
-    #   - name: SLATHER_SOURCE_FILE
-    #     ${{ if eq( parameters['buildScheme'], 'AzureCommunicationUICalling') }}:
-    #       value: "ui-calling-slather.yml"
-    #     ${{ if eq( parameters['buildScheme'], 'AzureCommunicationUIChat') }}:
-    #       value: "ui-chat-slather.yml"
-      
     workingDirectory: ${{ parameters.workingDirectory }}
 
   - task: Xcode@5
@@ -88,6 +79,7 @@ steps:
       esac
 
       slather
-      mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/$(COBERTURA_TARGET_FILENAME)
+      mv slather-report/cobertura.xml $(System.ArtifactsDirectory)/$COBERTURA_TARGET_FILENAME
+    
     displayName: "Run slather for ${{ parameters.buildScheme }}"
     workingDirectory: ${{ parameters.workingDirectory }}
