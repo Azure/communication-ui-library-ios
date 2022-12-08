@@ -9,8 +9,10 @@ jobs:
 
     variables:
       - group: 'SPOOL-Communication-mobileUI'
-      - ACSFreshToken: ''
-      - displayName: 'iOS CI UI Automated Tester'
+      - name: 'acsDisplayName'
+        value: 'iOS CI UI Automated Tester'
+      - name: 'ACSFreshToken'
+        value: ''
 
     steps:
       - task: servicetree-link-build-task@1
@@ -72,7 +74,7 @@ jobs:
           
           plutil -replace groupCallId -string $(groupCallId) $INFO_PLIST_FILE
           plutil -replace teamsMeetingLink -string $(teamsMeetingLink) $INFO_PLIST_FILE
-          plutil -replace displayName -string $(displayName) $INFO_PLIST_FILE
+          plutil -replace displayName -string $(acsDisplayName) $INFO_PLIST_FILE
           plutil -replace acsTokenUrl -string $(acsTokenUrl) $INFO_PLIST_FILE
           plutil -replace expiredAcsToken -string $(expiredAcsToken)) $INFO_PLIST_FILE
           plutil -replace acsToken -string $(ACSFreshToken) $INFO_PLIST_FILE
