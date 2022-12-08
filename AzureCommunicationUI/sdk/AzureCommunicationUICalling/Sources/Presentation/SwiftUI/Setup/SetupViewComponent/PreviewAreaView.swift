@@ -36,21 +36,23 @@ struct PermissionWarningView: View {
     let displayText: String
     let goToSettingsButtonViewModel: PrimaryButtonViewModel
 
-    let verticalSpacing: CGFloat = 20
-    let horizontalSpacing: CGFloat = 16
-    let iconSize: CGFloat = 50
+    private enum Constants {
+        static var verticalSpacing: CGFloat = 20
+        static var horizontalSpacing: CGFloat = 16
+        static var iconSize: CGFloat = 50
+    }
 
     var body: some View {
         GeometryReader { geometry in
-            VStack(spacing: verticalSpacing) {
+            VStack(spacing: Constants.verticalSpacing) {
                 Spacer()
                 GeometryReader { scrollViewGeometry in
                     ScrollView() {
                         VStack {
-                            Icon(name: displayIcon, size: iconSize)
+                            Icon(name: displayIcon, size: Constants.iconSize)
                                 .foregroundColor(Color(StyleProvider.color.onSurface))
                             Text(displayText)
-                                .padding(.horizontal, horizontalSpacing)
+                                .padding(.horizontal, Constants.horizontalSpacing)
                                 .font(Fonts.subhead.font)
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(Color(StyleProvider.color.onSurface))
@@ -58,7 +60,7 @@ struct PermissionWarningView: View {
                         .frame(width: scrollViewGeometry.size.width)
                         .frame(minHeight: scrollViewGeometry.size.height)
                     }
-                    .frame(height: scrollViewGeometry.size.height - horizontalSpacing * 2)
+                    .frame(height: scrollViewGeometry.size.height - Constants.horizontalSpacing * 2)
                 }
                 PrimaryButton(viewModel: goToSettingsButtonViewModel)
                     .accessibilityIdentifier(AccessibilityIdentifier.goToSettingsAccessibilityID.rawValue)
