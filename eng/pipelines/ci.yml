@@ -1,6 +1,9 @@
 # CI Pipeline
 
-# Run on PRs to these branches
+# Don't run on push to branches
+trigger: none
+
+# Only Run on PRs to these branches
 pr:
   - main
   - develop
