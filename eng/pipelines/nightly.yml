@@ -1,0 +1,13 @@
+# Nightly Build Pipeline
+
+schedules:
+  - cron: "0 0 * * *"  # Nightly at midnight
+    displayName: "Nightly Build"
+    branches:
+      include:
+        - develop
+        - main
+        - feature/chat
+
+jobs:
+  - template: jobs/UI-test-job.yml

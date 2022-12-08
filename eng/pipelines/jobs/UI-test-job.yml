@@ -1,0 +1,112 @@
+
+
+jobs: 
+  - job: CallingAutomatedUITest
+    displayName: "Calling Automated UI Tests"
+    pool:
+    name: vsts-mac-1231-xcode-1331
+    demands: xcode
+
+#Your build pipeline references an undefined variable named ‘ACSFreshToken’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+
+variables:
+  acsConnectionString: ''
+  groupCallId: ''
+  teamsMeetingLink: ''
+  displayName: 'iOS CI UI Automated Tester'
+  acsTokenUrl: ''
+  securedExpiredACSToken: '$(expiredAcsToken)'
+
+steps:
+  - task: servicetree-link-build-task@1
+    displayName: "ServiceTree: [$(BuildOutputUsage)] "
+    inputs:
+      ServiceTreeGateway: "ServiceTree Gateway"
+      Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
+    condition: always()
+
+  - script: |
+      pip3 install azure-communication-identity
+      python3 - <<EOF
+      import os
+      from azure.communication.identity import CommunicationIdentityClient, CommunicationUserIdentifier
+
+      try:
+          # Code adapted from 
+          # https://github.com/Azure-Samples/communication-services-python-quickstarts/blob/main/access-tokens-quickstart/issue-access-tokens.py
+
+          # Get the ACS Connection String to use
+          connection_string = os.environ['ACSString']
+
+          # Instantiate the identity client
+          client = CommunicationIdentityClient.from_connection_string(connection_string)
+
+          # Create an identity
+          identity = client.create_user()
+          print("\nCreated an identity with ID: " + identity.properties['id'])
+
+          # Issue an access token with a validity of 24 hours and the "voip" scope for an identity
+          token_result = client.get_token(identity, ["voip"])
+
+          print("\nIssued an access token with 'voip' scope")
+          print('##vso[task.setvariable variable=ACSFreshToken]'+token_result.token)
+
+      except Exception as ex:
+        print("Exception:")
+        print(ex)
+
+      EOF
+
+    displayName: 'Get ACS Access Token'
+    env:
+      ACSString: $(ACSString)
+
+  - task: CocoaPods@0
+    displayName: 'pod install'
+    inputs:
+      workingDirectory: AzureCommunicationUI
+      forceRepoUpdate: true
+      projectDirectory: AzureCommunicationUI
+
+  - script: |
+      export INFO_PLIST_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/AzureCommunicationUIDemoApp/Sources/Info.plist
+      
+      plutil -replace groupCallId -string $(groupCallId) $INFO_PLIST_FILE
+      plutil -replace teamsMeetingLink -string $(teamsMeetingLink) $INFO_PLIST_FILE
+      plutil -replace displayName -string $(displayName) $INFO_PLIST_FILE
+      plutil -replace acsTokenUrl -string $(acsTokenUrl) $INFO_PLIST_FILE
+      plutil -replace expiredAcsToken -string $(securedExpiredACSToken) $INFO_PLIST_FILE
+      plutil -replace acsToken -string $(ACSFreshToken) $INFO_PLIST_FILE
+
+    displayName: 'Edit AzureCommunicationUIDemoApp Info.plist '
+
+  - script: |
+      export INFO_PLIST_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/AzureCommunicationUIDemoApp/Tests/Info.plist
+      
+      plutil -replace expiredAcsToken -string $(securedExpiredACSToken) $INFO_PLIST_FILE
+
+    displayName: 'Edit AzureCommunicationUIDemoAppUITests Info.plist'
+
+  - task: Xcode@5
+    displayName: 'Xcode build'
+    inputs:
+      configuration: Release
+      sdk: iphoneos
+      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+      scheme: AzureCommunicationUICalling
+      xcodeVersion: default
+
+  - task: Xcode@5
+    displayName: 'Xcode Demo UI test'
+    inputs:
+      actions: test
+      configuration: Debug
+      sdk: iphoneos
+      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+      scheme: AzureCommunicationUIDemoApp
+      xcodeVersion: default
+      destinationPlatformOption: iOS
+      destinationSimulators: 'iPhone 12 Pro'
+      args: '-verbose'
+      publishJUnitResults: true
+
