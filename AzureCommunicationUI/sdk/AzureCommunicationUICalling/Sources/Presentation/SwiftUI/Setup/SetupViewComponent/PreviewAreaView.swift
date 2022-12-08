@@ -37,22 +37,33 @@ struct PermissionWarningView: View {
     let goToSettingsButtonViewModel: PrimaryButtonViewModel
 
     let verticalSpacing: CGFloat = 20
+    let horizontalSpacing: CGFloat = 16
     let iconSize: CGFloat = 50
-    let width: CGFloat = 220
 
     var body: some View {
         GeometryReader { geometry in
             VStack(spacing: verticalSpacing) {
-                Icon(name: displayIcon, size: iconSize)
-                    .foregroundColor(Color(StyleProvider.color.onSurface))
-                Text(displayText)
-                    .frame(width: width)
-                    .font(Fonts.subhead.font)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(Color(StyleProvider.color.onSurface))
+                Spacer()
+                GeometryReader { scrollViewGeometry in
+                    ScrollView() {
+                        VStack {
+                            Icon(name: displayIcon, size: iconSize)
+                                .foregroundColor(Color(StyleProvider.color.onSurface))
+                            Text(displayText)
+                                .padding(.horizontal, horizontalSpacing)
+                                .font(Fonts.subhead.font)
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(Color(StyleProvider.color.onSurface))
+                        }
+                        .frame(width: scrollViewGeometry.size.width)
+                        .frame(minHeight: scrollViewGeometry.size.height)
+                    }
+                    .frame(height: scrollViewGeometry.size.height - horizontalSpacing * 2)
+                }
                 PrimaryButton(viewModel: goToSettingsButtonViewModel)
                     .accessibilityIdentifier(AccessibilityIdentifier.goToSettingsAccessibilityID.rawValue)
                     .padding()
+                Spacer()
             }.frame(width: geometry.size.width,
                     height: geometry.size.height)
             .accessibilityElement(children: .combine)
