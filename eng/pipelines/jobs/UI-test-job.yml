@@ -24,8 +24,6 @@ jobs:
 
       - script: |
           pip3 install azure-communication-identity
-          echo "Connection String: $(acsConnectionString)"
-          echo "ACSFreshToken: $(ACSFreshToken)"
           python3 - <<EOF
           import os
           from azure.communication.identity import CommunicationIdentityClient, CommunicationUserIdentifier
@@ -55,12 +53,8 @@ jobs:
             print(ex)
           EOF
 
-          echo "ACSFreshToken after: $(ACSFreshToken)"
-          if [[ -z "$(ACSFreshToken)" ]]; then
-            exit 1
-          fi
-
         displayName: 'Get ACS Access Token'
+        failOnStderr: true
         env:
           ACSString: $(acsConnectionString)
 
