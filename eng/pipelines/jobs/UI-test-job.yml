@@ -22,10 +22,6 @@ jobs:
           Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
         condition: always()
 
-      - task: UsePythonVersion@0
-        inputs:
-          versionSpec: '3.x'
-
       - task: PythonScript@0
         displayName: 'Get ACS Access Token'
         inputs:
@@ -57,8 +53,7 @@ jobs:
                 print('##vso[task.setvariable variable=ACSFreshToken]'+token_result.token)
 
             except Exception as ex:
-              print("Exception: ", file=sys.stderr)
-              print(ex, file=sys.stderr)
+              sys.stderr.write("Exception:\n"+ex)
 
       # - script: |
       #     pip3 install azure-communication-identity
