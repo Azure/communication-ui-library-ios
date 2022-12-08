@@ -164,7 +164,9 @@ struct MessageListView: View {
         if !message.isLocalUser {
             return Constants.remoteTrailingPadding
         }
-        if message.type == .text, viewModel.shouldShowMessageStatusView(message: message), message.sendStatus != nil {
+        if message.type == .text,
+           viewModel.shouldShowMessageStatusView(message: message),
+           message.sendStatus != nil {
             return Constants.messageWithSendStatusTrailingPadding
         }
         return Constants.horizontalPadding
