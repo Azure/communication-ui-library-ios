@@ -22,41 +22,74 @@ jobs:
           Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
         condition: always()
 
-      - script: |
-          pip3 install azure-communication-identity
-          python3 - <<EOF
-          import os,sys
-          from azure.communication.identity import CommunicationIdentityClient, CommunicationUserIdentifier
-
-          try:
-              # Code adapted from 
-              # https://github.com/Azure-Samples/communication-services-python-quickstarts/blob/main/access-tokens-quickstart/issue-access-tokens.py
-
-              # Get the ACS Connection String to use
-              connection_string = os.environ['ACSString']
-
-              # Instantiate the identity client
-              client = CommunicationIdentityClient.from_connection_string(connection_string)
-
-              # Create an identity
-              identity = client.create_user()
-              print("\nCreated an identity with ID: " + identity.properties['id'])
-
-              # Issue an access token with a validity of 24 hours and the "voip" scope for an identity
-              token_result = client.get_token(identity, ["voip"])
-
-              print("\nIssued an access token with 'voip' scope")
-              print('##vso[task.setvariable variable=ACSFreshToken]'+token_result.token)
-
-          except Exception as ex:
-            print("Exception: ", file=sys.stderr)
-            print(ex, file=sys.stderr)
-          EOF
-
+      - task: PythonScript@0
         displayName: 'Get ACS Access Token'
-        failOnStderr: true
-        env:
-          ACSString: $(acsConnectionString)
+        inputs:
+          failOnStderr: true
+          scriptSource: inline
+          script: |
+            import os,sys
+            from azure.communication.identity import CommunicationIdentityClient, CommunicationUserIdentifier
+
+            try:
+                # Code adapted from 
+                # https://github.com/Azure-Samples/communication-services-python-quickstarts/blob/main/access-tokens-quickstart/issue-access-tokens.py
+
+                # Get the ACS Connection String to use
+                connection_string = $(acsConnectionString)
+
+                # Instantiate the identity client
+                client = CommunicationIdentityClient.from_connection_string(connection_string)
+
+                # Create an identity
+                identity = client.create_user()
+                print("\nCreated an identity with ID: " + identity.properties['id'])
+
+                # Issue an access token with a validity of 24 hours and the "voip" scope for an identity
+                token_result = client.get_token(identity, ["voip"])
+
+                print("\nIssued an access token with 'voip' scope")
+                print('##vso[task.setvariable variable=ACSFreshToken]'+token_result.token)
+
+            except Exception as ex:
+              print("Exception: ", file=sys.stderr)
+              print(ex, file=sys.stderr)
+
+      # - script: |
+      #     pip3 install azure-communication-identity
+      #     python3 - <<EOF
+      #     import os,sys
+      #     from azure.communication.identity import CommunicationIdentityClient, CommunicationUserIdentifier
+
+      #     try:
+      #         # Code adapted from 
+      #         # https://github.com/Azure-Samples/communication-services-python-quickstarts/blob/main/access-tokens-quickstart/issue-access-tokens.py
+
+      #         # Get the ACS Connection String to use
+      #         connection_string = os.environ['ACSString']
+
+      #         # Instantiate the identity client
+      #         client = CommunicationIdentityClient.from_connection_string(connection_string)
+
+      #         # Create an identity
+      #         identity = client.create_user()
+      #         print("\nCreated an identity with ID: " + identity.properties['id'])
+
+      #         # Issue an access token with a validity of 24 hours and the "voip" scope for an identity
+      #         token_result = client.get_token(identity, ["voip"])
+
+      #         print("\nIssued an access token with 'voip' scope")
+      #         print('##vso[task.setvariable variable=ACSFreshToken]'+token_result.token)
+
+      #     except Exception as ex:
+      #       print("Exception: ", file=sys.stderr)
+      #       print(ex, file=sys.stderr)
+      #     EOF
+
+      #   displayName: 'Get ACS Access Token'
+      #   failOnStderr: true
+      #   env:
+      #     ACSString: $(acsConnectionString)
 
       - task: CocoaPods@0
         displayName: 'pod install'

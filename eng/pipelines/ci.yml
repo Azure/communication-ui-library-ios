@@ -1,5 +1,8 @@
 # CI Pipeline
 
+# Need to specifically disable this, else all pushes trigger a CI build
+trigger: none
+
 # Run on PRs to these branches
 pr:
   - main
