@@ -19,7 +19,7 @@ extension Reducer where State == ErrorState,
             error = rawError
             errorCategory = .fatal
         case .chatAction(.initializeChatFailed(let chatError)):
-            errorType = .disconnectFailed
+            errorType = .connectFailed
             error = chatError
             errorCategory = .fatal
         case .chatAction(.initializeChatTriggered):
