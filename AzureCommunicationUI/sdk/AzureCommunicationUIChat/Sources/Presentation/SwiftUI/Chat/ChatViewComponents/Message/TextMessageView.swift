@@ -9,23 +9,18 @@ import FluentUI
 struct TextMessageView: View {
     private enum Constants {
         static let localLeadingPadding: CGFloat = 60
-        static let localTrailingPadding: CGFloat = 10
         static let remoteAvatarLeadingPadding: CGFloat = 6
         static let remoteLeadingPadding: CGFloat = 30
-        static let remoteTrailingPadding: CGFloat = 31
         static let spacing: CGFloat = 4
 
         static let contentHorizontalPadding: CGFloat = 10
         static let contentVerticalPadding: CGFloat = 8
         static let cornerRadius: CGFloat = 5
-        static let readReceiptIconSize: CGFloat = 12
-        static let readReceiptViewPadding: CGFloat = 3
     }
 
     let messageModel: ChatMessageInfoModel
     let showUsername: Bool
     let showTime: Bool
-    let showMessageStatus: Bool
 
     var body: some View {
         HStack(spacing: Constants.spacing) {
@@ -34,13 +29,11 @@ struct TextMessageView: View {
             }
             avatar
             bubble
-            messageSendStatus
             if !messageModel.isLocalUser {
                 Spacer()
             }
         }
         .padding(.leading, getLeadingPadding)
-        .padding(.trailing, messageModel.isLocalUser ? Constants.localTrailingPadding : Constants.remoteTrailingPadding)
     }
 
     var avatar: some View {
@@ -97,24 +90,6 @@ struct TextMessageView: View {
                 Text("Edited")
                     .font(.caption)
                     .foregroundColor(Color(StyleProvider.color.textDisabled))
-            }
-        }
-    }
-
-    var messageSendStatus: some View {
-        VStack {
-            Spacer()
-            if showMessageStatus, let iconName = messageModel.getIconNameForMessageSendStatus() {
-                StyleProvider.icon.getImage(for: iconName)
-                    .frame(width: Constants.readReceiptIconSize,
-                           height: Constants.readReceiptIconSize)
-                    .foregroundColor(Color(StyleProvider.color.primaryColor))
-                    .padding(.bottom, Constants.readReceiptViewPadding)
-            } else {
-                Rectangle()
-                    .fill(Color.clear)
-                    .frame(width: Constants.readReceiptIconSize,
-                           height: Constants.readReceiptIconSize)
             }
         }
     }

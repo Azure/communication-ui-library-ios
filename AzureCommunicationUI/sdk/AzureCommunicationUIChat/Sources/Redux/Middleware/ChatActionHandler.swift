@@ -216,8 +216,7 @@ class ChatActionHandler: ChatActionHandling {
                     internalId: internalId,
                     actualId: actualId)))
             } catch {
-                // dispatch error *not handled*
-                dispatch(.repositoryAction(.sendMessageFailed(error: error)))
+                dispatch(.repositoryAction(.sendMessageFailed(internalId: internalId, error: error)))
             }
         }
     }
