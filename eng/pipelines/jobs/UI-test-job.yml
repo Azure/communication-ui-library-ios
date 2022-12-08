@@ -25,7 +25,7 @@ jobs:
       - script: |
           pip3 install azure-communication-identity
           python3 - <<EOF
-          import os
+          import os,sys
           from azure.communication.identity import CommunicationIdentityClient, CommunicationUserIdentifier
 
           try:
@@ -46,11 +46,11 @@ jobs:
               token_result = client.get_token(identity, ["voip"])
 
               print("\nIssued an access token with 'voip' scope")
-              print(##vso[task.setvariable variable=ACSFreshToken]'+token_result.token)
+              print('##vso[task.setvariable variable=ACSFreshToken]'+token_result.token)
 
           except Exception as ex:
-            print("Exception:")
-            print(ex)
+            print("Exception: ", file=sys.stderr)
+            print(ex, file=sys.stderr)
           EOF
 
         displayName: 'Get ACS Access Token'
