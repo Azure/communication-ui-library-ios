@@ -59,17 +59,12 @@ public class CallComposite {
         localizationProvider = LocalizationProvider(logger: logger)
     }
 
-    convenience init(withOptions options: CallCompositeOptions? = nil,
-                     callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
-        self.init(withOptions: options)
-        self.customCallingSdkWrapper = callingSDKWrapperProtocol
-    }
-
     init(withOptions options: CallCompositeOptions? = nil,
          callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
+        localizationProvider = LocalizationProvider(logger: logger)
         self.customCallingSdkWrapper = callingSDKWrapperProtocol
     }
 
@@ -198,17 +193,17 @@ public class CallComposite {
         self.debugInfoManager = nil
     }
 
-    private func makeContainerUIHostingController(router: NavigationRouter,
-                                                  logger: Logger,
-                                                  viewFactory: CompositeViewFactoryProtocol,
-                                                  isRightToLeft: Bool) -> ContainerUIHostingController {
+    private func makeToolkitHostingController(router: NavigationRouter,
+                                              logger: Logger,
+                                              viewFactory: CompositeViewFactoryProtocol,
+                                              isRightToLeft: Bool) -> ContainerUIHostingController {
         let rootView = ContainerView(router: router,
                                      logger: logger,
                                      viewFactory: viewFactory,
                                      isRightToLeft: isRightToLeft)
         let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
-                                                                    callComposite: self,
-                                                                    isRightToLeft: isRightToLeft)
+                                                                        callComposite: self,
+                                                                        isRightToLeft: isRightToLeft)
         containerUIHostingController.modalPresentationStyle = .fullScreen
 
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
