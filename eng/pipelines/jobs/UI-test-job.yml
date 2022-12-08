@@ -22,6 +22,7 @@ jobs:
 
       - script: |
           pip3 install azure-communication-identity
+          echo $ACSString
           python3 - <<EOF
           import os
           from azure.communication.identity import CommunicationIdentityClient, CommunicationUserIdentifier
@@ -49,9 +50,11 @@ jobs:
           except Exception as ex:
             print("Exception:")
             print(ex)
-            exit 1
-
           EOF
+
+          if [ -z $(ACSFreshToken) ]; then
+            exit 1
+          fi
 
         displayName: 'Get ACS Access Token'
         env:
