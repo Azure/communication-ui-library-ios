@@ -538,11 +538,7 @@
 				1B5D6C1329231B900072C66D /* CallingSDKEventsHandlerMocking.swift in Sources */,
 				A8FB819C272A082B00AA0930 /* DemoInputTypes.swift in Sources */,
 				A8AC66FE2735A41600632D0B /* CustomControls.swift in Sources */,
-<<<<<<< HEAD
 				A85DDCB92728B23B001297B4 /* CallingDemoView.swift in Sources */,
-=======
-				A85DDCB92728B23B001297B4 /* SwiftUIDemoView.swift in Sources */,
->>>>>>> develop
 				1B5D6C1029231B900072C66D /* UITestCallingSDKWrapper.swift in Sources */,
 				1F8881CD279B456E001427F0 /* Extension.swift in Sources */,
 				5027C1C62821A07500DC7131 /* AccessibilityId.swift in Sources */,
