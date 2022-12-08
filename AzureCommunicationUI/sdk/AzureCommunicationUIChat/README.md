@@ -8,7 +8,7 @@
 
 ## Latest Release
 
-- Public Preview: AzureCommunicationUIChat_1.0.0-beta.1 [release] (TBA)
+- Public Preview: AzureCommunicationUIChat_0.1.0-beta.1 [release] (TBA)
 
 ## Installation
 
