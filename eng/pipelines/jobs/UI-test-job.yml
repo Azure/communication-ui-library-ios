@@ -71,7 +71,7 @@ jobs:
           
           plutil -replace groupCallId -string "$(groupCallId)" $INFO_PLIST_FILE
           plutil -replace teamsMeetingLink -string "$(teamsMeetingLink)" $INFO_PLIST_FILE
-          plutil -replace displayName -string "$(acsDisplayName) $INFO_PLIST_FILE
+          plutil -replace displayName -string "$(acsDisplayName)" $INFO_PLIST_FILE
           plutil -replace acsTokenUrl -string "$(acsTokenUrl)" $INFO_PLIST_FILE
           plutil -replace expiredAcsToken -string "$(expiredAcsToken)" $INFO_PLIST_FILE
           plutil -replace acsToken -string "$(ACSFreshToken)" $INFO_PLIST_FILE
