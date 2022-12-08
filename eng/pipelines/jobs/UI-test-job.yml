@@ -53,7 +53,9 @@ jobs:
                 print('##vso[task.setvariable variable=ACSFreshToken]'+token_result.token)
 
             except Exception as ex:
-              sys.stderr.write("Exception:\n"+ex)
+              sys.stderr.write("Exception:\n")
+              sys.stderr.write(ex)
+              sys.exit(1)
 
       # - script: |
       #     pip3 install azure-communication-identity
