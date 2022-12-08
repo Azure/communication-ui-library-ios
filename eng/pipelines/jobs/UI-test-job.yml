@@ -22,11 +22,16 @@ jobs:
           Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
         condition: always()
 
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.x'
+
       - task: PythonScript@0
         displayName: 'Get ACS Access Token'
         inputs:
           failOnStderr: true
           scriptSource: inline
+          pythonInterpreter: 'python3'
           script: |
             import os,sys
             from azure.communication.identity import CommunicationIdentityClient, CommunicationUserIdentifier
