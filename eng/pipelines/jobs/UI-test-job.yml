@@ -24,7 +24,8 @@ jobs:
 
       - script: |
           pip3 install azure-communication-identity
-          echo $ACSString
+          echo "Connection String: $(ACSString)"
+          echo "ACSFreshToken: $(ACSFreshToken)"
           python3 - <<EOF
           import os
           from azure.communication.identity import CommunicationIdentityClient, CommunicationUserIdentifier
@@ -47,14 +48,15 @@ jobs:
               token_result = client.get_token(identity, ["voip"])
 
               print("\nIssued an access token with 'voip' scope")
-              print('##vso[task.setvariable variable=ACSFreshToken]'+token_result.token)
+              echo "##vso[task.setvariable variable=ACSFreshToken;]token_result.token"
 
           except Exception as ex:
             print("Exception:")
             print(ex)
           EOF
 
-          if [ -z $(ACSFreshToken) ]; then
+          echo "ACSFreshToken after: $(ACSFreshToken)"
+          if [[ -z "$(ACSFreshToken)" ]]; then
             exit 1
           fi
 
