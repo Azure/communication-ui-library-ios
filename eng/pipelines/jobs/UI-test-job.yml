@@ -8,13 +8,9 @@ jobs:
       demands: xcode
 
     variables:
-      ACSFreshToken: ''
-      acsConnectionString: ''
-      groupCallId: ''
-      teamsMeetingLink: ''
-      displayName: 'iOS CI UI Automated Tester'
-      acsTokenUrl: ''
-      securedExpiredACSToken: '$(expiredAcsToken)'
+      - group: 'SPOOL-Communication-mobileUI'
+      - ACSFreshToken: ''
+      - displayName: 'iOS CI UI Automated Tester'
 
     steps:
       - task: servicetree-link-build-task@1
@@ -53,12 +49,13 @@ jobs:
           except Exception as ex:
             print("Exception:")
             print(ex)
+            exit 1
 
           EOF
 
         displayName: 'Get ACS Access Token'
         env:
-          ACSString: $(ACSString)
+          ACSString: $(acsConnectionString)
 
       - task: CocoaPods@0
         displayName: 'pod install'
@@ -74,14 +71,14 @@ jobs:
           plutil -replace teamsMeetingLink -string $(teamsMeetingLink) $INFO_PLIST_FILE
           plutil -replace displayName -string $(displayName) $INFO_PLIST_FILE
           plutil -replace acsTokenUrl -string $(acsTokenUrl) $INFO_PLIST_FILE
-          plutil -replace expiredAcsToken -string $(securedExpiredACSToken) $INFO_PLIST_FILE
+          plutil -replace expiredAcsToken -string $(expiredAcsToken)) $INFO_PLIST_FILE
           plutil -replace acsToken -string $(ACSFreshToken) $INFO_PLIST_FILE
 
         displayName: 'Edit AzureCommunicationUIDemoApp Info.plist'
 
       - script: |
           export INFO_PLIST_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/AzureCommunicationUIDemoApp/Tests/Info.plist
-          plutil -replace expiredAcsToken -string $(securedExpiredACSToken) $INFO_PLIST_FILE
+          plutil -replace expiredAcsToken -string $(expiredAcsToken)) $INFO_PLIST_FILE
 
         displayName: 'Edit AzureCommunicationUIDemoAppUITests Info.plist'
 
