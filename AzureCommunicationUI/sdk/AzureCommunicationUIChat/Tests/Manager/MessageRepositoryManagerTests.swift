@@ -245,6 +245,13 @@ class MessageRepositoryManagerTests: XCTestCase {
         XCTAssertEqual(sut.messages.count, initialMessages.count + 1)
     }
 
+    func test_messageRepositoryManager_addReceivedMessage_when_localUserMessage_then_messagesCountWillNotBeIncremented() {
+        let sut = makeSUT()
+        let message = ChatMessageInfoModel(isLocalUser: true)
+        sut.addReceivedMessage(message: message)
+        XCTAssertEqual(sut.messages.count, 0)
+    }
+
     func test_messageRepositoryManager_updateMessageEdited_when_foundMatchingInternalId_then_messageEditedOnNotNil() {
         let initialMessages = [
             ChatMessageInfoModel(),
@@ -321,7 +328,7 @@ class MessageRepositoryManagerTests: XCTestCase {
         }
     }
 
-    func test_messageRepositoryManager_updateMessageSendStatus_when_everyParticipantHasReadMessage_then_sendStatusWillBeUpdated() {
+    func test_messageRepositoryManager_updateMessageReadReceiptStatus_when_everyParticipantHasReadMessage_then_sendStatusWillBeUpdated() {
         let lastMessageId = "1668456344995"
         let initialMessages = [
             ChatMessageInfoModel(id: "1668436344995"),
@@ -341,13 +348,13 @@ class MessageRepositoryManagerTests: XCTestCase {
             "Participant3": Date(timeIntervalSince1970: (messageIdDouble + 100) / 1000)
         ]
         let participantsState = ParticipantsState(readReceiptMap: readReceiptMap)
-        sut.updateMessageSendStatus(readReceiptInfo: readReceiptInfo, state: getAppState(participantsState: participantsState))
+        sut.updateMessageReadReceiptStatus(readReceiptInfo: readReceiptInfo, state: getAppState(participantsState: participantsState))
 
         XCTAssertNil(sut.messages.first?.sendStatus)
         XCTAssertEqual(sut.messages.last?.sendStatus, .seen)
     }
 
-    func test_messageRepositoryManager_updateMessageSendStatus_when_someParticipantsHaveReadMessage_then_sendStatusWillNotBeUpdated() {
+    func test_messageRepositoryManager_updateMessageReadReceiptStatus_when_someParticipantsHaveReadMessage_then_sendStatusWillNotBeUpdated() {
         let lastMessageId = "1668456344995"
         let initialMessages = [
             ChatMessageInfoModel(id: "1668436344995"),
@@ -367,7 +374,7 @@ class MessageRepositoryManagerTests: XCTestCase {
             "Participant3": Date(timeIntervalSince1970: (messageIdDouble) / 1000)
         ]
         let participantsState = ParticipantsState(readReceiptMap: readReceiptMap)
-        sut.updateMessageSendStatus(readReceiptInfo: readReceiptInfo, state: getAppState(participantsState: participantsState))
+        sut.updateMessageReadReceiptStatus(readReceiptInfo: readReceiptInfo, state: getAppState(participantsState: participantsState))
 
         XCTAssertNil(sut.messages.first?.sendStatus)
         XCTAssertNil(sut.messages.last?.sendStatus)
@@ -377,6 +384,32 @@ class MessageRepositoryManagerTests: XCTestCase {
         let sut = makeSUT()
         sut.addLocalUserRemovedMessage()
         XCTAssertEqual(sut.messages.count, 1)
+    }
+
+    func test_messageRepositoryManager_updateMessageSendStatus_when_foundMatchingMessageId_then_messageSendStatusWillBeUpdated() {
+        let initialMessages = [
+            ChatMessageInfoModel(id: "id1"),
+            ChatMessageInfoModel(id: "id2"),
+            ChatMessageInfoModel(id: "id3")
+        ]
+
+        let sut = makeSUT(messages: initialMessages)
+        sut.updateMessageSendStatus(messageId: "id3", messageSendStatus: .failed)
+        XCTAssertEqual(sut.messages.last?.sendStatus, .failed)
+    }
+
+    func test_messageRepositoryManager_updateMessageSendStatus_when_notFoundMatchingMessageId_then_messageDeletedOnIsNil() {
+        let initialMessages = [
+            ChatMessageInfoModel(id: "id1"),
+            ChatMessageInfoModel(id: "id2"),
+            ChatMessageInfoModel(id: "id3")
+        ]
+
+        let sut = makeSUT(messages: initialMessages)
+        sut.updateMessageSendStatus(messageId: "wrongMessageId", messageSendStatus: .failed)
+        XCTAssertNil(sut.messages[0].sendStatus)
+        XCTAssertNil(sut.messages[1].sendStatus)
+        XCTAssertNil(sut.messages[2].sendStatus)
     }
 }
 

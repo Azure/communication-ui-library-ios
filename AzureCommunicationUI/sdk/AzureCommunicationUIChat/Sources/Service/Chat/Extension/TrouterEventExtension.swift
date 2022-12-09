@@ -9,7 +9,7 @@ import AzureCore
 import Foundation
 
 extension ChatMessageReceivedEvent {
-    func toChatMessageInfoModel(localUserId: CommunicationIdentifier? = nil) -> ChatMessageInfoModel {
+    func toChatMessageInfoModel(localUserId: String) -> ChatMessageInfoModel {
         return ChatMessageInfoModel(
             id: self.id,
             version: self.version,
@@ -18,12 +18,12 @@ extension ChatMessageReceivedEvent {
             senderDisplayName: self.senderDisplayName,
             content: self.message,
             createdOn: self.createdOn,
-            isLocalUser: self.sender != nil && self.sender?.rawId == localUserId?.rawId)
+            isLocalUser: self.sender != nil && self.sender?.rawId == localUserId)
     }
 }
 
 extension ChatMessageEditedEvent {
-    func toChatMessageInfoModel(localUserId: CommunicationIdentifier? = nil) -> ChatMessageInfoModel {
+    func toChatMessageInfoModel(localUserId: String) -> ChatMessageInfoModel {
         return ChatMessageInfoModel(
             id: self.id,
             version: self.version,
@@ -33,12 +33,12 @@ extension ChatMessageEditedEvent {
             content: self.message,
             createdOn: self.createdOn,
             editedOn: self.editedOn,
-            isLocalUser: self.sender != nil && self.sender?.rawId == localUserId?.rawId)
+            isLocalUser: self.sender != nil && self.sender?.rawId == localUserId)
     }
 }
 
 extension ChatMessageDeletedEvent {
-    func toChatMessageInfoModel(localUserId: CommunicationIdentifier? = nil) -> ChatMessageInfoModel {
+    func toChatMessageInfoModel(localUserId: String) -> ChatMessageInfoModel {
         return ChatMessageInfoModel(
             id: self.id,
             version: self.version,
@@ -47,7 +47,7 @@ extension ChatMessageDeletedEvent {
             senderDisplayName: self.senderDisplayName,
             createdOn: self.createdOn,
             deletedOn: self.deletedOn,
-            isLocalUser: self.sender != nil && self.sender?.rawId == localUserId?.rawId)
+            isLocalUser: self.sender != nil && self.sender?.rawId == localUserId)
     }
 }
 
@@ -67,8 +67,8 @@ extension ChatThreadPropertiesUpdatedEvent {
 }
 
 extension ParticipantsAddedEvent {
-    func toParticipantsInfo(_ participantsAdded: [SignalingChatParticipant],
-                            _ localParticipantId: String) -> ParticipantsInfoModel {
+    func toParticipantsInfo(participantsAdded: [SignalingChatParticipant],
+                            localParticipantId: String) -> ParticipantsInfoModel {
         let participants = participantsAdded.map {
             $0.toParticipantInfoModel(localParticipantId)
         }
@@ -79,8 +79,8 @@ extension ParticipantsAddedEvent {
 }
 
 extension ParticipantsRemovedEvent {
-    func toParticipantsInfo(_ participantsRemoved: [SignalingChatParticipant],
-                            _ localParticipantId: String) -> ParticipantsInfoModel {
+    func toParticipantsInfo(participantsRemoved: [SignalingChatParticipant],
+                            localParticipantId: String) -> ParticipantsInfoModel {
         let participants = participantsRemoved.map {
             $0.toParticipantInfoModel(localParticipantId)
         }

@@ -12,7 +12,8 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
     var addNewSentMessageCalled: ((Bool) -> Void)?
     var updateNewEditedMessageCalled: ((Bool) -> Void)?
     var updateNewDeletedMessageCalled: ((Bool) -> Void)?
-    var updateSentMessageIdCalled: ((Bool) -> Void)?
+    var updateSentMessageIdAndSendStatusCalled: ((Bool) -> Void)?
+    var updateMessageSendStatusCalled: ((Bool) -> Void)?
     var updateEditedMessageTimestampCalled: ((Bool) -> Void)?
     var updateDeletedMessageTimestampCalled: ((Bool) -> Void)?
     var addTopicUpdatedMessageCalled: ((Bool) -> Void)?
@@ -23,6 +24,7 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
     var updateReceivedDeletedMessageCalled: ((Bool) -> Void)?
     var readReceiptReceivedCalled: ((Bool) -> Void)?
     var addLocalUserRemovedMessage: ((Bool) -> Void)?
+    var updateMessageReadReceiptStatusCalled: ((Bool) -> Void)?
 
     func loadInitialMessages(messages: [ChatMessageInfoModel], state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
@@ -54,9 +56,22 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
         }
     }
 
-    func updateSentMessageId(internalId: String, actualId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func updateSentMessageIdAndSendStatus(
+                            internalId: String,
+                            actualId: String,
+                            state: AppState,
+                            dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
-            updateSentMessageIdCalled?(true)
+            updateSentMessageIdAndSendStatusCalled?(true)
+        }
+    }
+
+    func updateMessageSendStatus(
+                            messageId: String,
+                            messageSendStatus: AzureCommunicationUIChat.MessageSendStatus,
+                            dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
+        Task {
+            updateMessageSendStatusCalled?(true)
         }
     }
 
@@ -110,12 +125,12 @@ class RepositoryHandlerMocking: RepositoryMiddlewareHandling {
         }
     }
 
-    func readReceiptReceived(
+    func updateMessageReceiptReceivedStatus(
         readReceiptInfo: ReadReceiptInfoModel,
         state: AppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
-            readReceiptReceivedCalled?(true)
+            updateMessageReadReceiptStatusCalled?(true)
         }
     }
     func addLocalUserRemovedMessage(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {

@@ -156,8 +156,8 @@ class RepositoryMiddlewareTests: XCTestCase {
     func test_repositoryMiddleware_apply_when_sendMessageSuccessRepositoryAction_then_handlerLoadInitialMessagesCalledBeingCalled() {
 
         let middlewareDispatch = getEmptyChatMiddlewareFunction()
-        let expectation = expectation(description: "updateSentMessageIdCalled")
-        mockRepositoryHandler.updateSentMessageIdCalled = { value in
+        let expectation = expectation(description: "updateSentMessageIdAndSendStatusCalled")
+        mockRepositoryHandler.updateSentMessageIdAndSendStatusCalled = { value in
             XCTAssertTrue(value)
             expectation.fulfill()
         }
@@ -238,11 +238,11 @@ class RepositoryMiddlewareTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_repositoryMiddleware_apply_when_readReceiptReceivedParticipantsAction_then_handlerReadReceiptReceivedBeingCalled() {
+    func test_repositoryMiddleware_apply_when_readReceiptReceivedParticipantsAction_then_handlerUpdateMessageReadReceiptStatusCalledBeingCalled() {
 
         let middlewareDispatch = getEmptyChatMiddlewareFunction()
-        let expectation = expectation(description: "readReceiptReceivedCalled")
-        mockRepositoryHandler.readReceiptReceivedCalled = { value in
+        let expectation = expectation(description: "updateMessageReadReceiptStatusCalled")
+        mockRepositoryHandler.updateMessageReadReceiptStatusCalled = { value in
             XCTAssertTrue(value)
             expectation.fulfill()
         }

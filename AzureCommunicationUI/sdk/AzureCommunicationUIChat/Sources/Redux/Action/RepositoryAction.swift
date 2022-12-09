@@ -20,7 +20,7 @@ enum RepositoryAction: Equatable {
                               content: String)
     case sendMessageSuccess(internalId: String,
                             actualId: String)
-    case sendMessageFailed(error: Error)
+    case sendMessageFailed(internalId: String, error: Error)
 
     case editMessageTriggered(messageId: String,
                               content: String,
@@ -46,6 +46,9 @@ enum RepositoryAction: Equatable {
         case let (.fetchInitialMessagesFailed(lErr), .fetchInitialMessagesFailed(rErr)),
             let (.fetchPreviousMessagesFailed(lErr), .fetchPreviousMessagesFailed(rErr)):
             return (lErr as NSError).code == (rErr as NSError).code
+
+        case let (.sendMessageFailed(lInternalId, lErr), .sendMessageFailed(rInternalId, rErr)):
+            return lInternalId == rInternalId && (lErr as NSError).code == (rErr as NSError).code
 
         case (.fetchInitialMessagesTriggered, .fetchInitialMessagesTriggered),
             (.fetchPreviousMessagesTriggered, .fetchPreviousMessagesTriggered),
