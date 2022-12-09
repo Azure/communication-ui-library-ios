@@ -42,17 +42,17 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
         case let .chatMessageReceivedEvent(event):
             eventModel = ChatEventModel(
                 eventType: .chatMessageReceived,
-                infoModel: event.toChatMessageInfoModel(localUserId: localUserId),
+                infoModel: event.toChatMessageInfoModel(localUserId: localUserId.rawId),
                 threadId: event.threadId)
         case let .chatMessageEdited(event):
             eventModel = ChatEventModel(
                 eventType: .chatMessageEdited,
-                infoModel: event.toChatMessageInfoModel(localUserId: localUserId),
+                infoModel: event.toChatMessageInfoModel(localUserId: localUserId.rawId),
                 threadId: event.threadId)
         case let .chatMessageDeleted(event):
             eventModel = ChatEventModel(
                 eventType: .chatMessageDeleted,
-                infoModel: event.toChatMessageInfoModel(localUserId: localUserId),
+                infoModel: event.toChatMessageInfoModel(localUserId: localUserId.rawId),
                 threadId: event.threadId)
         case let .typingIndicatorReceived(event):
             guard event.threadId == self.threadId,
@@ -83,8 +83,8 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
             }
             eventModel = ChatEventModel(
                 eventType: .participantsAdded,
-                infoModel: event.toParticipantsInfo(participants,
-                                                    localUserId.stringValue),
+                infoModel: event.toParticipantsInfo(participantsAdded: participants,
+                                                    localParticipantId: localUserId.rawId),
                 threadId: event.threadId)
         case let .participantsRemoved(event):
             guard let participants = event.participantsRemoved else {
@@ -92,8 +92,8 @@ class ChatSDKEventsHandler: NSObject, ChatSDKEventsHandling {
             }
             eventModel = ChatEventModel(
                 eventType: .participantsRemoved,
-                infoModel: event.toParticipantsInfo(participants,
-                                                    localUserId.stringValue),
+                infoModel: event.toParticipantsInfo(participantsRemoved: participants,
+                                                    localParticipantId: localUserId.rawId),
                 threadId: event.threadId)
         default:
             logger.info("Event received will not handled \(response)")

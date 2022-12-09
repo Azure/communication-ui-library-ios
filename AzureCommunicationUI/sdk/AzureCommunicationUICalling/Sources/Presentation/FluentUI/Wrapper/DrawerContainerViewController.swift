@@ -113,6 +113,7 @@ class DrawerContainerViewController<T: Equatable>: UIViewController,
         controller.backgroundColor = backgroundColor
 
         self.controller = controller
+        controller.overrideUserInterfaceStyle = StyleProvider.color.colorSchemeOverride
         resizeDrawer()
         self.controller?.contentView?.semanticContentAttribute = self.isRightToLeft ?
                                                             .forceRightToLeft : .forceLeftToRight

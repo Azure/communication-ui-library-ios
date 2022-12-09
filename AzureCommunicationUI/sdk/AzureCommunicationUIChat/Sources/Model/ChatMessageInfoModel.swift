@@ -15,8 +15,8 @@ enum MessageType: Equatable {
 }
 
 enum MessageSendStatus: Equatable {
+    case sending
     case sent
-    case delivering
     case seen
     case failed
 }
@@ -130,22 +130,19 @@ extension ChatMessageInfoModel {
     }
 
     func getIconNameForMessageSendStatus() -> CompositeIcon? {
-        guard isLocalUser else {
+        guard isLocalUser, let sendStatus = sendStatus else {
             return nil
         }
 
-        // Other cases will be handled in another PR
         switch sendStatus {
-        case .delivering:
-            return nil
+        case .sending:
+            return .messageSending
         case .sent:
-            return nil
+            return .messageSent
         case .seen:
             return .readReceipt
         case .failed:
-            return nil
-        case .none:
-            return nil
+            return .messageSendFailed
         }
     }
 

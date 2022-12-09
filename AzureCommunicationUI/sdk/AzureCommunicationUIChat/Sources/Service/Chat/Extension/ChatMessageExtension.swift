@@ -8,7 +8,7 @@ import AzureCommunicationCommon
 import Foundation
 
 extension ChatMessage {
-    func toChatMessageInfoModel(localUserId: CommunicationIdentifier? = nil) -> ChatMessageInfoModel {
+    func toChatMessageInfoModel(localUserId: String) -> ChatMessageInfoModel {
         return ChatMessageInfoModel(
             id: self.id,
             version: self.version,
@@ -19,8 +19,8 @@ extension ChatMessage {
             createdOn: self.createdOn,
             editedOn: self.editedOn,
             deletedOn: self.deletedOn,
-            participants: self.content?.participants?.map { $0.toParticipantInfoModel() } ?? [],
-            isLocalUser: self.sender != nil && self.sender?.rawId == localUserId?.rawId)
+            participants: self.content?.participants?.map { $0.toParticipantInfoModel(localUserId) } ?? [],
+            isLocalUser: self.sender != nil && self.sender?.rawId == localUserId)
     }
 }
 
