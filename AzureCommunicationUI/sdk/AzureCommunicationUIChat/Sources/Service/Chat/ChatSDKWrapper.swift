@@ -59,7 +59,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                         let messages = self.pagedCollection?.pageItems?
                             .map({
                                 $0.toChatMessageInfoModel(
-                                    localUserId: self.chatConfiguration.identifier)
+                                    localUserId: self.chatConfiguration.identifier.rawId)
                             })
                         continuation.resume(returning: messages?.reversed() ?? [])
                     case .failure(let error):
@@ -109,10 +109,14 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                   let items = pagedResult.items else {
                 return []
             }
-            var allChatParticipants = items.map({ $0.toParticipantInfoModel() })
+            var allChatParticipants = items.map({
+                $0.toParticipantInfoModel(self.chatConfiguration.identifier.rawId)
+            })
             while !pagedResult.isExhausted {
                 let nextPage = try await pagedResult.nextPage()
-                let pageParticipants = nextPage.map { $0.toParticipantInfoModel() }
+                let pageParticipants = nextPage.map {
+                    $0.toParticipantInfoModel(self.chatConfiguration.identifier.rawId)
+                }
                 allChatParticipants.append(contentsOf: pageParticipants)
             }
             return allChatParticipants
@@ -133,7 +137,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                     case .success(let messagesResult):
                         let previousMessages = messagesResult.map({
                             $0.toChatMessageInfoModel(
-                                localUserId: self.chatConfiguration.identifier)
+                                localUserId: self.chatConfiguration.identifier.rawId)
                         })
                         continuation.resume(returning: previousMessages)
                     case .failure(let error):

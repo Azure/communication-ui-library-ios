@@ -12,9 +12,9 @@ import UIKit
 public class ChatAdapter {
 
     /// The class to configure events closures for Chat Composite.
-    class Events {
+    public class Events {
         /// Closure to execute when error event occurs inside Chat Composite.
-        var onError: ((ChatCompositeError) -> Void)?
+        public var onError: ((ChatCompositeError) -> Void)?
         /// Closures to execute when participant has joined a chat inside Chat Composite.
         var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
         /// Closure to execute when Chat Composite UI is hidden and receive new message
@@ -24,7 +24,7 @@ public class ChatAdapter {
     }
 
     /// The events handler for Chat Composite
-    let events: Events
+    public let events: Events
 
     // Dependencies
     var logger: Logger = DefaultLogger(category: "ChatComponent")

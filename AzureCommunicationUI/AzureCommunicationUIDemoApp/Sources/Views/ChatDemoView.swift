@@ -9,8 +9,10 @@ import SwiftUI
 
 struct ChatDemoView: View {
 
+    @State var isErrorDisplayed: Bool = false
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @State var isShowingChatView: Bool = false
+    @State var errorMessage: String = ""
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
@@ -31,7 +33,14 @@ struct ChatDemoView: View {
             AppDelegate.orientationLock = UIInterfaceOrientationMask.portrait
         }.onDisappear {
             AppDelegate.orientationLock = UIInterfaceOrientationMask.all
-        }
+        }.modifier(ErrorView(isPresented: $isErrorDisplayed,
+                             errorMessage: errorMessage,
+                             onDismiss: {
+            isErrorDisplayed = false
+            self.isShowingChatView = false
+            self.chatAdapter?.disconnect()
+            self.chatAdapter = nil
+        }))
     }
 
     var launchView: some View {
@@ -195,6 +204,7 @@ extension ChatDemoView {
         guard let chatAdapter = self.chatAdapter else {
             return
         }
+        chatAdapter.events.onError = showError(error:)
         chatAdapter.connect(threadId: envConfigSubject.threadId) { _ in
             print("Chat connect completionHandler called")
         }
@@ -225,6 +235,22 @@ extension ChatDemoView {
     }
 
     private func showError(error: ChatCompositeError) {
+        print("::::SwiftUIChatDemoView::showError \(error)")
+        print("::::SwiftUIChatDemoView error.code \(error.code)")
         print("Error - \(error.code): \(error.error?.localizedDescription ?? error.localizedDescription)")
+        switch error.code {
+        case "connectFailed":
+            errorMessage = "Connection Failed"
+        case "authorizationFailed":
+            errorMessage = "Authorization Failed"
+        case "disconnectFailed":
+            errorMessage = "Disconnect Failed"
+        case "messageSendFailed":
+            // no alert
+            return
+        default:
+            errorMessage = "Unknown error"
+        }
+        isErrorDisplayed = true
     }
 }
