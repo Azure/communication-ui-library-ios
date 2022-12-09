@@ -169,9 +169,9 @@
 			children = (
 				1F18191827B45050006AF3B3 /* Utilities */,
 				1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift */,
-				1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */,
-				1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */,
 				FA93E3A92942B61D006476A5 /* AzureCommunicationUIDemoAppTokenTests.swift */,
+				1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */,
+				1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */,
 				FA93E3AB2942B6DA006476A5 /* AzureCommunicationUIDemoAppDebugInfoTests.swift */,
 				1FBA6B1B27B4F61A00FF3835 /* Info.plist */,
 			);
