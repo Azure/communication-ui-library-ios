@@ -1,0 +1,18 @@
+# Nightly Build Pipeline
+
+# Need to specifically disable this, else all pushes trigger a CI build
+trigger: none
+pr: none
+
+# Just want a scheduled run
+schedules:
+  - cron: "0 0 * * *"  # Nightly at midnight
+    displayName: "Nightly Build"
+    branches:
+      include:
+        - develop
+        - main
+        - feature/chat
+
+jobs:
+  - template: jobs/UI-test-job.yml
