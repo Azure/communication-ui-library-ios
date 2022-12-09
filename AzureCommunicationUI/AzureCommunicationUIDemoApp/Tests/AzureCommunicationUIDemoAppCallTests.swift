@@ -49,8 +49,8 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     // MARK: End call tests
 
-    func testCallCompositeEndCallGroupCallSwiftUI() {
-        tapInterfaceFor(.swiftUI)
+    func testCallCompositeE2ETokenURLGroupCall() {
+        tapInterfaceFor(.uiKit)
         tapConnectionTokenType(.acsTokenUrl)
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
@@ -61,7 +61,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         toggleLeaveCallDrawer(leaveCall: true)
     }
 
-    func testCallCompositeEndCallTeamsCallSwiftUI() {
+    func testCallCompositeE2ETokenURLTeamsCall() {
         tapInterfaceFor(.swiftUI)
         tapConnectionTokenType(.acsTokenUrl)
         tapMeetingType(.teamsCall)
@@ -74,8 +74,8 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         toggleLeaveCallDrawer(leaveCall: true)
     }
 
-    func testCallCompositeEndCallGroupCallUIKit() {
-        tapInterfaceFor(.uiKit)
+    func testCallCompositeE2ETokenValueGroupCall() {
+        tapInterfaceFor(.swiftUI)
         tapEnabledButton(
             accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
             shouldWait: true)
@@ -85,7 +85,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         toggleLeaveCallDrawer(leaveCall: true)
     }
 
-    func testCallCompositeEndCallTeamsCallUIKit() {
+    func testCallCompositeE2ETokenValueTeamsCall() {
         tapInterfaceFor(.uiKit)
         tapMeetingType(.teamsCall)
         tapEnabledButton(
@@ -95,55 +95,6 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
             accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
             shouldWait: true)
         toggleLeaveCallDrawer(leaveCall: true)
-    }
-
-    // MARK: Share call info
-    func testCallCompositeShareDiagnosticInfo() {
-        tapInterfaceFor(.uiKit)
-        tapMeetingType(.groupCall)
-        tapEnabledButton(
-            accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-            shouldWait: true)
-        tapButton(
-            accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
-            shouldWait: true)
-        tapButton(
-            accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
-            shouldWait: true)
-        tapCell(
-            accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
-            shouldWait: true)
-        wait(for: app.otherElements["ActivityListView"])
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            app.otherElements["PopoverDismissRegion"].tap()
-        } else if UIDevice.current.userInterfaceIdiom == .phone {
-            tapButton(
-                accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCloseButtonAccessibilityID.rawValue,
-                shouldWait: true)
-        }
-        XCTAssertFalse(app.otherElements["ActivityListView"].exists)
-    }
-
-    func testCallCompositeCopyDiagnosticInfo() {
-        tapInterfaceFor(.uiKit)
-        tapMeetingType(.groupCall)
-        tapEnabledButton(
-            accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-            shouldWait: true)
-        tapButton(
-            accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
-            shouldWait: true)
-        tapButton(
-            accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
-            shouldWait: true)
-        tapCell(
-            accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
-            shouldWait: true)
-        wait(for: app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue])
-        tapButton(
-            accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCopyButtonAccessibilityID.rawValue,
-            shouldWait: true)
-        XCTAssertFalse(app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue].exists)
     }
 
     // MARK: Private / helper functions

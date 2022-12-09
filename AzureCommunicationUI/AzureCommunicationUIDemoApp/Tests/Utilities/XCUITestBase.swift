@@ -59,6 +59,12 @@ class XCUITestBase: XCTestCase {
         setupSystemPromptMonitor()
     }
 
+    override func tearDown() {
+        super.tearDown()
+        // terminate app on tear down
+        app.terminate()
+    }
+
     // MARK: Private / helper functions
 
     /// Responds to app permission prompts and system prompt
