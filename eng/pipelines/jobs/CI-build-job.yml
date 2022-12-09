@@ -43,8 +43,8 @@ jobs:
 
       - task: BuildQualityChecks@8
         displayName: "Check build quality"
-        enabled: false
         inputs:
           checkCoverage: true
+          coverageThreshold: 50
           coverageFailOption: fixed
           coverageType: lines
