@@ -24,6 +24,8 @@ class ColorThemeProvider {
     let iconSecondary: UIColor = Colors.iconSecondary
     let iconDisabled: UIColor = Colors.iconDisabled
 
+    let dangerPrimary: UIColor = Colors.error
+
     init(themeOptions: ThemeOptions?) {
         self.colorSchemeOverride = themeOptions?.colorSchemeOverride ?? .unspecified
 

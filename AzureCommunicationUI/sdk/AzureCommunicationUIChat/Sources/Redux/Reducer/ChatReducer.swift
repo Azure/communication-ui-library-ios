@@ -15,7 +15,8 @@ extension Reducer where State == ChatState,
         var lastReadReceiptReceivedTimestamp = chatState.lastReadReceiptReceivedTimestamp
         var lastReadReceiptSentTimestamp = chatState.lastReadReceiptSentTimestamp
         var lastReceivedMessageTimestamp = chatState.lastReceivedMessageTimestamp
-        var lastSentMessageTimestamp = chatState.lastSentMessageTimestamp
+        var lastSendingMessageTimestamp = chatState.lastSendingMessageTimestamp
+        var lastSentOrFailedMessageTimestamp = chatState.lastSentOrFailedMessageTimestamp
         var isLocalUserRemovedFromChat = chatState.isLocalUserRemovedFromChat
 
         switch action {
@@ -33,9 +34,14 @@ extension Reducer where State == ChatState,
         case .participantsAction(.sendReadReceiptSuccess(messageId: let messageId)):
             lastReadReceiptSentTimestamp = messageId.convertEpochStringToTimestamp()
         case .repositoryAction(.sendMessageTriggered(_, _)):
-            lastSentMessageTimestamp = Date()
-        case .repositoryAction(.chatMessageReceived(_)):
-            lastReceivedMessageTimestamp = Date()
+            lastSendingMessageTimestamp = Date()
+        case .repositoryAction(.sendMessageSuccess(_, _)),
+             .repositoryAction(.sendMessageFailed(_, _)):
+            lastSentOrFailedMessageTimestamp = Date()
+        case .repositoryAction(.chatMessageReceived(let message)):
+            if !message.isLocalUser {
+                lastReceivedMessageTimestamp = Date()
+            }
         default:
             return chatState
         }
@@ -45,7 +51,7 @@ extension Reducer where State == ChatState,
                          lastReadReceiptReceivedTimestamp: lastReadReceiptReceivedTimestamp,
                          lastReadReceiptSentTimestamp: lastReadReceiptSentTimestamp,
                          lastReceivedMessageTimestamp: lastReceivedMessageTimestamp,
-                         lastSentMesssageTimestamp: lastSentMessageTimestamp,
+                         lastSentOrFailedMessageTimestamp: lastSentOrFailedMessageTimestamp,
                          isLocalUserRemovedFromChat: isLocalUserRemovedFromChat)
     }
 }

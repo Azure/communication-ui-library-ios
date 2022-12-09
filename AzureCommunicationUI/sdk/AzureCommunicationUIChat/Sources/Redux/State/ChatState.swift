@@ -12,7 +12,8 @@ struct ChatState {
     let lastReadReceiptReceivedTimestamp: Date
     let lastReadReceiptSentTimestamp: Date?
     let lastReceivedMessageTimestamp: Date
-    let lastSentMessageTimestamp: Date
+    let lastSendingMessageTimestamp: Date
+    let lastSentOrFailedMessageTimestamp: Date
     let isLocalUserRemovedFromChat: Bool
 
     init(localUser: ParticipantInfoModel? = nil,
@@ -21,7 +22,8 @@ struct ChatState {
          lastReadReceiptReceivedTimestamp: Date = Date(),
          lastReadReceiptSentTimestamp: Date? = nil,
          lastReceivedMessageTimestamp: Date = Date(),
-         lastSentMesssageTimestamp: Date = Date(),
+         lastSendingMessageTimestamp: Date = Date(),
+         lastSentOrFailedMessageTimestamp: Date = Date(),
          isLocalUserRemovedFromChat: Bool = false) {
         self.localUser = localUser
         self.threadId = threadId
@@ -29,7 +31,8 @@ struct ChatState {
         self.lastReadReceiptReceivedTimestamp = lastReadReceiptReceivedTimestamp
         self.lastReadReceiptSentTimestamp = lastReadReceiptSentTimestamp
         self.lastReceivedMessageTimestamp = lastReceivedMessageTimestamp
-        self.lastSentMessageTimestamp = lastSentMesssageTimestamp
+        self.lastSendingMessageTimestamp = lastSendingMessageTimestamp
+        self.lastSentOrFailedMessageTimestamp = lastSentOrFailedMessageTimestamp
         self.isLocalUserRemovedFromChat = isLocalUserRemovedFromChat
     }
 }

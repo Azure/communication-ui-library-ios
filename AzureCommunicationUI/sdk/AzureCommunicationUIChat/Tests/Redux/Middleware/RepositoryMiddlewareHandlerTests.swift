@@ -74,13 +74,14 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
         XCTAssertTrue(mockMessageRepositoryManager.deleteMessageCalled)
     }
 
-    func test_repositoryMiddlewareHandler_updateSentMessageId_then_replaceMessageIdCalled() async {
-        await repositoryMiddlewareHandler.updateSentMessageId(
+    func test_repositoryMiddlewareHandler_updateSentMessageIdAndSendStatus_then_replaceMessageIdCalled() async {
+        await repositoryMiddlewareHandler.updateSentMessageIdAndSendStatus(
             internalId: "internalId",
             actualId: "actualId",
             state: getEmptyState(),
             dispatch: getEmptyDispatch()).value
         XCTAssertTrue(mockMessageRepositoryManager.replaceMessageIdCalled)
+        XCTAssertTrue(mockMessageRepositoryManager.updateMessageSendStatusCalled)
     }
 
     func test_repositoryMiddlewareHandler_updateEditedMessageTimestamp_then_updateEditMessageTimestampCalled() async {
@@ -174,13 +175,16 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
         XCTAssertTrue(mockMessageRepositoryManager.updateMessageDeletedCalled)
     }
 
-    func test_repositoryMiddlewareHandler_readReceiptReceived_then_readReceiptReceivedCalled() async {
+    func test_repositoryMiddlewareHandler_updateMessageReceiptReceivedStatus_then_updateMessageReceiptReceivedStatusCalled() async {
         let readReceiptInfo = ReadReceiptInfoModel(
             senderIdentifier: CommunicationUserIdentifier("Identifier"),
             chatMessageId: "messageId",
             readOn: Iso8601Date())
-        await repositoryMiddlewareHandler.readReceiptReceived(readReceiptInfo: readReceiptInfo, state: getEmptyState(), dispatch: getEmptyDispatch()).value
-        XCTAssertTrue(mockMessageRepositoryManager.updateMessageSendStatusCalled)
+        await repositoryMiddlewareHandler.updateMessageReceiptReceivedStatus(
+                                                    readReceiptInfo: readReceiptInfo,
+                                                    state: getEmptyState(),
+                                                    dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockMessageRepositoryManager.updateMessageReadReceiptStatusCalled)
     }
 
     func test_repositoryMiddlewareHandler_addLocalUserRemovedMessage_then_addLocalUserRemovedMessageCalled() async {
@@ -188,6 +192,27 @@ class RepositoryMiddlewareHandlerTests: XCTestCase {
         await repositoryMiddlewareHandler.addLocalUserRemovedMessage(state: getEmptyState(),
                                                                      dispatch: getEmptyDispatch()) .value
         XCTAssertTrue(mockMessageRepositoryManager.addlocalUserRemovedMessageCalled)
+    }
+
+    func test_repositoryMiddlewareHandler_updateMessageSendStatus_then_updateMessageSendStatusCalled() async {
+        let message = ChatMessageInfoModel(id: "messageId")
+        await repositoryMiddlewareHandler.updateMessageSendStatus(
+            messageId: "messageId",
+            messageSendStatus: .failed,
+            dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockMessageRepositoryManager.updateMessageSendStatusCalled)
+    }
+
+    func test_repositoryMiddlewareHandler_updateMessageReceiptReceivedStatus_then_updateMessageReadReceiptStatusCalled() async {
+        let readReceiptInfo = ReadReceiptInfoModel(
+            senderIdentifier: CommunicationUserIdentifier("Identifier"),
+            chatMessageId: "messageId",
+            readOn: Iso8601Date())
+        await repositoryMiddlewareHandler.updateMessageReceiptReceivedStatus(
+                                                    readReceiptInfo: readReceiptInfo,
+                                                    state: getEmptyState(),
+                                                    dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockMessageRepositoryManager.updateMessageReadReceiptStatusCalled)
     }
 }
 
