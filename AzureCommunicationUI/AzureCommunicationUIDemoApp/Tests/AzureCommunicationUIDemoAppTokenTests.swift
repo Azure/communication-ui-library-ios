@@ -14,7 +14,7 @@ class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
         let expiredTokenToggle = app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue]
         wait(for: expiredTokenToggle)
         // first tap doesn't trigger switch to be toggled
-        expiredTokenToggle.tap()
+//        app.staticTexts["UI Library - Settings"].tap()
         expiredTokenToggle.tap()
         XCTAssertTrue(expiredTokenToggle.value as? String == "1")
         app.buttons["Close"].tap()
