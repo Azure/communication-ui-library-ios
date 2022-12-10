@@ -8,17 +8,18 @@ import XCTest
 class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
     func testCallCompositeSwiftUILaunch() {
         tapInterfaceFor(.swiftUI)
-        tapEnabledButton(
-            accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-            shouldWait: true)
-        wait(for: app.buttons[AccessibilityIdentifier.joinCallAccessibilityID.rawValue])
+        startApp()
     }
 
     func testCallCompositeUIKitLaunch() {
         tapInterfaceFor(.uiKit)
-        tapEnabledButton(
-            accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-            shouldWait: true)
+        startApp()
+    }
+}
+
+extension AzureCommunicationUIDemoAppLaunchTests {
+    func startApp() {
+        app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue].tap()
         wait(for: app.buttons[AccessibilityIdentifier.joinCallAccessibilityID.rawValue])
     }
 }
