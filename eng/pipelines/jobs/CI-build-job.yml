@@ -22,7 +22,7 @@ jobs:
           echo "TargetBranch: $(system.pullRequest.targetBranch)"
           echo "SourceBranch: $(system.pullRequest.sourceBranch)"
 
-      - ${{ if or( meq(variables['system.pullRequest.targetBranch'], 'feature/chat'),     or( contains(variables['system.pullRequest.sourceBranch'], 'chat'), contains(variables['system.pullRequest.sourceBranch'], 'Chat') ) ) }}:
+      - ${{ if or( eq(variables['system.pullRequest.targetBranch'], 'feature/chat'),     or( contains(variables['system.pullRequest.sourceBranch'], 'chat'), contains(variables['system.pullRequest.sourceBranch'], 'Chat') ) ) }}:
         - template: templates/build-and-coverage.yml
           parameters:
             buildScheme: 'AzureCommunicationUIChat'
