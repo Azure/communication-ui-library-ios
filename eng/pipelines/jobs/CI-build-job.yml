@@ -1,10 +1,11 @@
 # Xcode build and unit test CI job
 
-variables:
-  targetingChatBranch: $[ eq(variables['System.PullRequest.TargetBranch'], 'feature/chat') ]
-  isChatFeature: $[ or(contains(variables['Build.SourceBranch'], 'chat'), contains(variables['Build.SourceBranch'], 'Chat')) ]
-  buildChat: or($(isChatFeature), $(targetingChatBranch))
-  
+parameters:
+  - name: buildChat
+    displayName: Build Chat or not
+    type: boolean
+    default: false
+
 jobs:
   - job: BuildAndUnitTest
     displayName: "Build UI Library (Debug) for CI"
@@ -23,7 +24,7 @@ jobs:
         parameters:
           buildScheme: 'AzureCommunicationUICalling'
 
-      - ${{ if eq(variables['buildChat'], true) }}:
+      - ${{ if eq(parameters.buildChat, true) }}:
         - template: templates/build-and-coverage.yml
           parameters:
             buildScheme: 'AzureCommunicationUIChat'
