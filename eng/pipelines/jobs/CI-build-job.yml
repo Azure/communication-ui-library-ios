@@ -19,7 +19,7 @@ jobs:
           buildScheme: 'AzureCommunicationUICalling'
 
       # For now, build chat on PRs to feature/chat ONLY
-      - ${{ eq(variables['system.pullRequest.targetBranch'], 'feature/chat') }}:
+      - ${{ if eq(variables['system.pullRequest.targetBranch'], 'feature/chat') }}:
         - template: templates/build-and-coverage.yml
           parameters:
             buildScheme: 'AzureCommunicationUIChat'
