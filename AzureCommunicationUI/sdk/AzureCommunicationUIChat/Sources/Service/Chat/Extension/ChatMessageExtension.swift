@@ -15,7 +15,7 @@ extension ChatMessage {
             type: self.type.toMessageType(),
             senderId: self.sender?.stringValue,
             senderDisplayName: self.senderDisplayName,
-            content: self.content?.message,
+            content: type == .topicUpdated ? self.content?.topic : self.content?.message,
             createdOn: self.createdOn,
             editedOn: self.editedOn,
             deletedOn: self.deletedOn,
