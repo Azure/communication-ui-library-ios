@@ -17,4 +17,4 @@ variables:
 jobs:
   - template: jobs/CI-build-job.yml
     parameters:
-      buildChat: or($(isChatFeature), $(targetingChatBranch))
+      buildChat: $[ or($(isChatFeature), $(targetingChatBranch)) ]
