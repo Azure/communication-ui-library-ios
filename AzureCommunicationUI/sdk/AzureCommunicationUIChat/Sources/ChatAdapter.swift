@@ -63,8 +63,8 @@ public class ChatAdapter {
     public func connect(threadId: String,
                         completionHandler: ((Result<Void, ChatCompositeError>) -> Void)?) {
         constructDependencies(
-            self.chatConfiguration,
-            threadId,
+            chatConfiguration: self.chatConfiguration,
+            chatThreadId: threadId,
             chatCompositeEventsHandler: events,
             connectEventHandler: completionHandler
         )
@@ -88,8 +88,8 @@ public class ChatAdapter {
     }
 
     private func constructDependencies(
-        _ chatConfiguration: ChatConfiguration,
-        _ chatThreadId: String,
+        chatConfiguration: ChatConfiguration,
+        chatThreadId: String,
         chatCompositeEventsHandler: ChatAdapter.Events,
         connectEventHandler: ((Result<Void, ChatCompositeError>) -> Void)? = nil
     ) {
