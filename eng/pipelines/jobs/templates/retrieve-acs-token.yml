@@ -1,0 +1,39 @@
+# Retrieves an ACS Token
+
+steps:
+  - script: |
+      pip3 install azure-communication-identity
+      python3 - <<EOF
+      import os,sys
+      from azure.communication.identity import CommunicationIdentityClient, CommunicationUserIdentifier
+
+      try:
+        # Code adapted from 
+        # https://github.com/Azure-Samples/communication-services-python-quickstarts/blob/main/access-tokens-quickstart/issue-access-tokens.py
+
+        # Get the ACS Connection String to use
+        connection_string = os.environ['ACSString']
+
+        # Instantiate the identity client
+        client = CommunicationIdentityClient.from_connection_string(connection_string)
+
+        # Create an identity
+        identity = client.create_user()
+        print("\nCreated an identity with ID: " + identity.properties['id'])
+
+        # Issue an access token with a validity of 24 hours and the "voip" scope for an identity
+        token_result = client.get_token(identity, ["voip"])
+
+        print("\nIssued an access token with 'voip' scope")
+        print('##vso[task.setvariable variable=ACSFreshToken]'+token_result.token)
+
+      except Exception as ex:
+        print("Exception: ", file=sys.stderr)
+        print(ex, file=sys.stderr)
+        sys.exit(1)
+      EOF
+
+    displayName: 'Get ACS Access Token'
+    failOnStderr: false # Warnings generated need to be ignored
+    env:
+      ACSString: $(acsConnectionString)
