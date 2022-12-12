@@ -19,9 +19,7 @@ Get started with Azure Communication Services by using the UI Library to integra
 
 Azure Communication Service Mobile UI currently offers the following libraries:
 
-```ruby
-pod 'AzureCommunicationUICalling', '1.1.0'
-```
+### [Calling](AzureCommunicationUI/sdk/AzureCommunicationUICalling)
 
 <p>
 <img width="50%" alt="image" src="/docs/images/calling.png">
