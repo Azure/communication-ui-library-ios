@@ -13,4 +13,4 @@ pr:
 jobs:
   - template: jobs/CI-build-job.yml
     parameters:
-      buildChat: $[ or( eq(variables['System.PullRequest.TargetBranch'], 'feature/chat'), or(contains(variables['Build.SourceBranch'], 'chat'), contains(variables['Build.SourceBranch'], 'Chat')) )]
+      buildChat: ${{ or( eq(variables['System.PullRequest.TargetBranch'], 'feature/chat'), or(contains(variables['Build.SourceBranch'], 'chat'), contains(variables['Build.SourceBranch'], 'Chat')) ) }}
