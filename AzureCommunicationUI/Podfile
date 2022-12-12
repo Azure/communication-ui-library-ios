@@ -55,7 +55,7 @@ target 'AzureCommunicationUIDemoApp' do
   pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.8.9'
   pod 'SwiftLint', '0.42.0'
   pod 'AppCenter/Crashes', '4.4.1'
-  
+
   target 'AzureCommunicationUIDemoAppUITests' do
     # Pods for testing
     pod 'SwiftLint', '0.42.0'
