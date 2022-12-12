@@ -18,11 +18,8 @@ jobs:
         parameters:
           buildScheme: 'AzureCommunicationUICalling'
 
-      - script: |
-          echo "TargetBranch: $(system.pullRequest.targetBranch)"
-          echo "SourceBranch: $(system.pullRequest.sourceBranch)"
-
-      - ${{ if or( eq(variables['system.pullRequest.targetBranch'], 'feature/chat'),     or( contains(variables['system.pullRequest.sourceBranch'], 'chat'), contains(variables['system.pullRequest.sourceBranch'], 'Chat') ) ) }}:
+      # For now, build chat on PRs to feature/chat ONLY
+      - ${{ eq(variables['system.pullRequest.targetBranch'], 'feature/chat') }}:
         - template: templates/build-and-coverage.yml
           parameters:
             buildScheme: 'AzureCommunicationUIChat'
