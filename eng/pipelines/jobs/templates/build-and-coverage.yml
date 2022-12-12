@@ -42,7 +42,7 @@ steps:
       SLATHER_FILE=$(system.defaultWorkingDirectory)/${{ parameters.workingDirectory }}/.slather.yml
       cat ../eng/slather/$SLATHER_SOURCE_FILE > $SLATHER_FILE
 
-    displayName: "Inject Calling .slather.yml file"
+    displayName: "Inject .slather.yml file"
     workingDirectory: ${{ parameters.workingDirectory }}
 
   - task: Xcode@5
