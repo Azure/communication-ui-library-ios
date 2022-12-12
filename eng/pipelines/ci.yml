@@ -12,5 +12,3 @@ pr:
 
 jobs:
   - template: jobs/CI-build-job.yml
-    parameters:
-      buildChat: $[ or( eq(variables['system.pullRequest.targetBranch'], 'feature/chat'), or(contains(variables['system.pullRequest.sourceBranch'], 'chat'), contains(variables['system.pullRequest.sourceBranch'], 'Chat')) ) ]
