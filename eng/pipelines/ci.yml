@@ -10,12 +10,7 @@ pr:
   - release/*
   - feature/*
 
-variables:
-  targetingChatBranch: $[ eq(variables['System.PullRequest.TargetBranch'], 'feature/chat') ]
-  isChatFeature: $[ or(contains(variables['Build.SourceBranch'], 'chat'), contains(variables['Build.SourceBranch'], 'Chat')) ]
-  buildChat: $[ or($(isChatFeature), $(targetingChatBranch)) ]
-
 jobs:
   - template: jobs/CI-build-job.yml
     parameters:
-      buildChat: ${{ variables.buildChat }}
+      buildChat: $[ or( eq(variables['System.PullRequest.TargetBranch'], 'feature/chat'), or(contains(variables['Build.SourceBranch'], 'chat'), contains(variables['Build.SourceBranch'], 'Chat')) )]
