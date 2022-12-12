@@ -10,10 +10,5 @@ pr:
   - release/*
   - feature/*
 
-variables:
-  ${{ if contains(variables['system.pullRequest.targetBranch'], 'chat') }}:
-    buildChat: true
-  buildChat: false
-  
 jobs:
   - template: jobs/CI-build-job.yml

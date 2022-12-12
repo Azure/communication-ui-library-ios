@@ -17,12 +17,10 @@ jobs:
       - template: templates/build-and-coverage.yml
         parameters:
           buildScheme: 'AzureCommunicationUICalling'
-
-      # For now, build chat on PRs to *chat* ONLY
-      - ${{ if eq(variables['buildChat'], 'true') }}:
-        - template: templates/build-and-coverage.yml
-          parameters:
-            buildScheme: 'AzureCommunicationUIChat'
+          
+      - template: templates/build-and-coverage.yml
+        parameters:
+          buildScheme: 'AzureCommunicationUIChat'
 
       # Need .Net for the report generator (combiner) step
       - task: UseDotNet@2
