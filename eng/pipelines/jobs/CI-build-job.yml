@@ -3,7 +3,7 @@
 parameters:
   - name: buildChat
     displayName: Build Chat or not
-    type: boolean
+    type: string
     default: false
 
 jobs:
