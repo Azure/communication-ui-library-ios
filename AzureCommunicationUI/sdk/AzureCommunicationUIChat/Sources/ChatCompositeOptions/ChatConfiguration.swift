@@ -7,7 +7,6 @@ import AzureCommunicationCommon
 import Foundation
 
 struct ChatConfiguration {
-    var chatThreadId: String
     let endpoint: String
     let identifier: CommunicationIdentifier
     let credential: CommunicationTokenCredential
@@ -19,7 +18,6 @@ struct ChatConfiguration {
          credential: CommunicationTokenCredential,
          endpoint: String,
          displayName: String?) {
-        self.chatThreadId = ""
         self.identifier = identifier
         self.credential = credential
         self.endpoint = endpoint

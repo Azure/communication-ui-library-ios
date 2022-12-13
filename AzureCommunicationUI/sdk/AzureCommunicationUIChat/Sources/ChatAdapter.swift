@@ -62,9 +62,9 @@ public class ChatAdapter {
     /// Start connection to the chat composite to Azure Communication Service.
     public func connect(threadId: String,
                         completionHandler: ((Result<Void, ChatCompositeError>) -> Void)?) {
-        self.chatConfiguration.chatThreadId = threadId
         constructDependencies(
-            self.chatConfiguration,
+            chatConfiguration: self.chatConfiguration,
+            chatThreadId: threadId,
             chatCompositeEventsHandler: events,
             connectEventHandler: completionHandler
         )
@@ -88,20 +88,22 @@ public class ChatAdapter {
     }
 
     private func constructDependencies(
-        _ chatConfiguration: ChatConfiguration,
+        chatConfiguration: ChatConfiguration,
+        chatThreadId: String,
         chatCompositeEventsHandler: ChatAdapter.Events,
         connectEventHandler: ((Result<Void, ChatCompositeError>) -> Void)? = nil
     ) {
         let eventHandler = ChatSDKEventsHandler(
             logger: logger,
-            threadId: chatConfiguration.chatThreadId,
+            threadId: chatThreadId,
             localUserId: chatConfiguration.identifier
         )
 
         let chatSdk = ChatSDKWrapper(
             logger: logger,
             chatEventsHandler: eventHandler,
-            chatConfiguration: chatConfiguration
+            chatConfiguration: chatConfiguration,
+            chatThreadId: chatThreadId
         )
 
         let repositoryManager = MessageRepositoryManager(
@@ -116,6 +118,7 @@ public class ChatAdapter {
             ),
             messageRepository: repositoryManager,
             chatConfiguration: chatConfiguration,
+            chatThreadId: chatThreadId,
             connectEventHandler: connectEventHandler
         )
 

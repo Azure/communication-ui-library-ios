@@ -59,12 +59,9 @@ public class CallComposite {
         localizationProvider = LocalizationProvider(logger: logger)
     }
 
-    init(withOptions options: CallCompositeOptions? = nil,
-         callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
-        events = Events()
-        themeOptions = options?.themeOptions
-        localizationOptions = options?.localizationOptions
-        localizationProvider = LocalizationProvider(logger: logger)
+    convenience init(withOptions options: CallCompositeOptions? = nil,
+                     callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
+        self.init(withOptions: options)
         self.customCallingSdkWrapper = callingSDKWrapperProtocol
     }
 

@@ -1035,44 +1035,6 @@
 			path = AzureCommunicationCalling;
 			sourceTree = "<group>";
 		};
-		751D70F129119A0100323141 /* Shared Sources */ = {
-			isa = PBXGroup;
-			children = (
-				751D70F229119A2100323141 /* AzureCommunicationUICommon */,
-			);
-			name = "Shared Sources";
-			sourceTree = "<group>";
-		};
-		751D70F229119A2100323141 /* AzureCommunicationUICommon */ = {
-			isa = PBXGroup;
-			children = (
-				FAD20A832928344F0063D8A9 /* ArrayExtension.swift */,
-				FAD20A87292834500063D8A9 /* CancelBag.swift */,
-				FAD20A852928344F0063D8A9 /* DeviceExtension.swift */,
-				FAD20A862928344F0063D8A9 /* Logger.swift */,
-				FAD20A88292834500063D8A9 /* MappedSequence.swift */,
-				FAD20A842928344F0063D8A9 /* StringConstants.swift */,
-			);
-			name = AzureCommunicationUICommon;
-			path = ../AzureCommunicationUICommon/Sources/AzureCommunicationUICommon;
-			sourceTree = "<group>";
-		};
-		75C1EE0D28E4BEF600FF78B1 /* AzureCommunicationCalling */ = {
-			isa = PBXGroup;
-			children = (
-				1FDBF9F0281F8D2E00B92273 /* ACSCallEndReasonExtension.swift */,
-				1F13D37226AB3F1200E31666 /* ACSCallingStateExtension.swift */,
-				5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */,
-				1FB0A1C028412A5000D57B0F /* ACSParticipantStateExtension.swift */,
-				1FD299652728B72B0084B9ED /* CallingSDKEventsHandler.swift */,
-				1FBCB6AB2649993500F57EEA /* CallingSDKWrapper.swift */,
-				75C1EE0E28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift */,
-				1FBCB6B02649EB1200F57EEA /* RemoteParticipantExtension.swift */,
-				1F4B0F0426A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift */,
-			);
-			path = AzureCommunicationCalling;
-			sourceTree = "<group>";
-		};
 		982C282C267BF07300427246 /* FluentUI */ = {
 			isa = PBXGroup;
 			children = (
