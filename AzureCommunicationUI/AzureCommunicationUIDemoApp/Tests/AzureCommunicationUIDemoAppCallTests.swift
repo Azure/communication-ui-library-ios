@@ -24,7 +24,8 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
 
         // join call
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+                  shouldWait: true)
 
         // mute / unmute local mic
         let micButton = app.buttons[AccessibilityIdentifier.micAccessibilityID.rawValue]
@@ -41,7 +42,8 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapInterfaceFor(.callUIKit)
         tapConnectionTokenType(.acsTokenUrl)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+                  shouldWait: true)
         leaveCall()
     }
 
@@ -50,14 +52,16 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapConnectionTokenType(.acsTokenUrl)
         tapMeetingType(.teamsCall)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+                  shouldWait: true)
         leaveCall()
     }
 
     func testCallCompositeE2ETokenValueGroupCall() {
         tapInterfaceFor(.callSwiftUI)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+                  shouldWait: true)
         leaveCall()
     }
 
@@ -65,7 +69,8 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapInterfaceFor(.callUIKit)
         tapMeetingType(.teamsCall)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+                  shouldWait: true)
         leaveCall()
     }
 
