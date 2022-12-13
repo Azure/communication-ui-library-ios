@@ -142,8 +142,7 @@ public class CallComposite {
         let rootView = ContainerView(router: router,
                                      logger: logger,
                                      viewFactory: viewFactory,
-                                     isRightToLeft: isRightToLeft,
-                                     isUITestEnabled: self.customCallingSdkWrapper != nil)
+                                     isRightToLeft: isRightToLeft)
         let toolkitHostingController = ContainerUIHostingController(rootView: rootView,
                                                                     callComposite: self,
                                                                     isRightToLeft: isRightToLeft)

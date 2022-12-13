@@ -25,7 +25,6 @@ struct CallingView: View {
 
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
-    @Environment(\.uiTestEnabled) var uiTestEnabled: Bool
 
     @State private var orientation: UIDeviceOrientation = UIDevice.current.orientation
 

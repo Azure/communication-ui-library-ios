@@ -95,12 +95,6 @@ class CallingViewModel: ObservableObject {
         store.dispatch(action: .callingAction(.resumeRequested))
     }
 
-    /// Responds to simulated action from the UITestSettingsView
-    /// - Parameter action: action to perform
-    func respondTo(action: Action) {
-        store.dispatch(action: action)
-    }
-
     func receive(_ state: AppState) {
         if appState != state.lifeCycleState.currentStatus {
             appState = state.lifeCycleState.currentStatus

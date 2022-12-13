@@ -28,10 +28,6 @@ struct OrientationKey: EnvironmentKey {
     static let defaultValue: OrientationManager = .shared
 }
 
-struct UITestStatusKey: EnvironmentKey {
-    static let defaultValue: Bool = false
-}
-
 extension EnvironmentValues {
     var screenSizeClass: ScreenSizeClassType {
         get { self[ScreenSizeClassKey.self] }
@@ -46,10 +42,5 @@ extension EnvironmentValues {
     var orientation: OrientationManager {
         get { return self[OrientationKey.self] }
         set { self[OrientationKey.self] = newValue }
-    }
-
-    var uiTestEnabled: Bool {
-        get { return self[UITestStatusKey.self] }
-        set { self[UITestStatusKey.self] = newValue }
     }
 }
