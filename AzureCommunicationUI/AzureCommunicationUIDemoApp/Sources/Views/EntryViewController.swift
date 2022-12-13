@@ -10,10 +10,22 @@ import CoreGraphics
 
 class EntryViewController: UIViewController {
     private var envConfigSubject: EnvConfigSubject
+    private var window: FloatingUITestWindow?
+    private var callingSDKWrapperMock: UITestCallingSDKWrapper?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        let scenes = UIApplication.shared.connectedScenes
+        if let windowScenes = scenes.first as? UIWindowScene {
+            let callSDKWrapperMock = UITestCallingSDKWrapper()
+            self.callingSDKWrapperMock = callSDKWrapperMock
+            window = FloatingUITestWindow(windowScene: windowScenes)
+            window?.callingSDKWrapperMock = callSDKWrapperMock
+            window?.isHidden = false
+            window?.windowLevel = .alert + 1
+            window?.makeKeyAndVisible()
+        }
     }
 
     init(envConfigSubject: EnvConfigSubject) {
@@ -86,14 +98,16 @@ class EntryViewController: UIViewController {
     }
 
     @objc func onSwiftUIPressed() {
-        let swiftUIDemoView = SwiftUIDemoView(envConfigSubject: envConfigSubject)
+        let swiftUIDemoView = SwiftUIDemoView(envConfigSubject: envConfigSubject,
+                                              callingSDKWrapperMock: callingSDKWrapperMock)
         let swiftUIDemoViewHostingController = UIHostingController(rootView: swiftUIDemoView)
         swiftUIDemoViewHostingController.modalPresentationStyle = .fullScreen
         present(swiftUIDemoViewHostingController, animated: true, completion: nil)
     }
 
     @objc func onUIKitPressed() {
-        let uiKitDemoViewController = UIKitDemoViewController(envConfigSubject: envConfigSubject)
+        let uiKitDemoViewController = UIKitDemoViewController(envConfigSubject: envConfigSubject,
+                                                              callingSDKHandlerMock: callingSDKWrapperMock)
         uiKitDemoViewController.modalPresentationStyle = .fullScreen
         present(uiKitDemoViewController, animated: true, completion: nil)
     }

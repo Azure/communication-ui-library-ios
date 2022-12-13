@@ -47,7 +47,6 @@ class UIKitDemoViewController: UIViewController {
 
     private var cancellable = Set<AnyCancellable>()
     private var envConfigSubject: EnvConfigSubject
-    private var window: FloatingUITestWindow?
     private var callingSDKWrapperMock: UITestCallingSDKWrapper?
 
     private lazy var contentView: UIView = {
@@ -77,8 +76,10 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
-    init(envConfigSubject: EnvConfigSubject) {
+    init(envConfigSubject: EnvConfigSubject,
+         callingSDKHandlerMock: UITestCallingSDKWrapper? = nil) {
         self.envConfigSubject = envConfigSubject
+        self.callingSDKWrapperMock = callingSDKHandlerMock
         super.init(nibName: nil, bundle: nil)
         self.combineEnvConfigSubject()
     }
@@ -91,16 +92,6 @@ class UIKitDemoViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         registerNotifications()
-        callingSDKWrapperMock = UITestCallingSDKWrapper()
-
-        let scenes = UIApplication.shared.connectedScenes
-        if let windowScenes = scenes.first as? UIWindowScene {
-            window = FloatingUITestWindow(windowScene: windowScenes)
-            window?.callingSDKWrapperMock = callingSDKWrapperMock
-            window?.isHidden = false
-            window?.windowLevel = .alert + 1
-            window?.makeKeyAndVisible()
-        }
     }
 
     override func viewWillLayoutSubviews() {

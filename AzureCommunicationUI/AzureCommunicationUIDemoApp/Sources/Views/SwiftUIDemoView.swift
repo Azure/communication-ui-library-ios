@@ -19,6 +19,7 @@ struct SwiftUIDemoView: View {
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
+    var callingSDKWrapperMock: UITestCallingSDKWrapper?
 
     var body: some View {
         VStack {
@@ -169,7 +170,7 @@ extension SwiftUIDemoView {
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         let callComposite = useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
-                          callingSDKWrapperProtocol: UITestCallingSDKWrapper())
+                          callingSDKWrapperProtocol: callingSDKWrapperMock)
             : CallComposite(withOptions: callCompositeOptions)
         #else
         let callComposite = CallComposite(withOptions: callCompositeOptions)
