@@ -1,0 +1,50 @@
+# Xcode build and unit test CI job
+  
+jobs:
+  - job: BuildAndUnitTest
+    displayName: "Build UI Library (Debug) for CI"
+    pool:
+      name: vsts-mac-1231-xcode-1331
+      demands: xcode
+    steps:
+      - task: servicetree-link-build-task@1
+        displayName: "ServiceTree: [$(BuildOutputUsage)] "
+        inputs:
+          ServiceTreeGateway: "ServiceTree Gateway"
+          Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
+        condition: always()
+
+      - template: templates/build-and-coverage.yml
+        parameters:
+          buildScheme: 'AzureCommunicationUICalling'
+
+      # Build chat on the chat branch
+      - template: templates/build-and-coverage.yml
+        parameters:
+          buildScheme: 'AzureCommunicationUIChat'
+
+      # Need .Net for the report generator (combiner) step
+      - task: UseDotNet@2
+        displayName: "Use .NET Core sdk 3.1.x"
+        inputs:
+          version: 3.1.x
+
+      - task: reportgenerator@5
+        displayName: "Combine Cobertura Reports"
+        inputs:
+          reports: "$(System.ArtifactsDirectory)/*cobertura.xml"
+          reporttypes: "Cobertura"
+          targetdir: $(Pipeline.Workspace)/coveragereport
+
+      - task: PublishCodeCoverageResults@1
+        inputs:
+          codeCoverageTool: "Cobertura"
+          summaryFileLocation: $(Pipeline.Workspace)/coveragereport/Cobertura.xml
+
+      - task: BuildQualityChecks@8
+        displayName: "Check build quality"
+        inputs:
+          checkCoverage: true
+          coverageThreshold: 51
+          coverageFailOption: fixed
+          coverageType: lines
