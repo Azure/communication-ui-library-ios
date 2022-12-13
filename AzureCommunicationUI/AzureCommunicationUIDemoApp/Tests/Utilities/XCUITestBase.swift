@@ -72,24 +72,24 @@ class XCUITestBase: XCTestCase {
         addUIInterruptionMonitor(withDescription: "System Dialog") { _ in
             let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
             let allowBtn = springboard.buttons["Allow"]
-            if allowBtn.waitForExistence(timeout: 2) {
+            if allowBtn.exists {
                 allowBtn.tap()
                 return true
             }
 
             let okBtn = springboard.buttons["OK"]
-            if okBtn.waitForExistence(timeout: 2) {
+            if okBtn.exists {
                 okBtn.tap()
                 return true
             }
 
             let dismissBtn = springboard.buttons["Dismiss"]
-            if dismissBtn.waitForExistence(timeout: 2) {
+            if dismissBtn.exists {
                 dismissBtn.tap()
                 return true
             }
 
-            return true
+            return false
         }
         app.tap()
     }
@@ -118,7 +118,7 @@ extension XCUITestBase {
         if shouldWait {
             wait(for: button)
         }
-        button.forceTapElement()
+        button.tap()
     }
 
     /// Taps the button that matches with the given accessibility label
@@ -140,13 +140,13 @@ extension XCUITestBase {
     /// Selects the interface before entering the composite
     /// - Note: Only call this function before entering composite.
     func tapInterfaceFor(_ interface: CompositeSampleInterface) {
-        app.buttons[interface.name].tap()
+        tapButton(buttonName: interface.name, shouldWait: true)
     }
 
     /// Selects the meeting type before entering the composite
     /// - Note: Only call this function before entering composite.
     func tapMeetingType(_ meetingType: CompositeMeetingType) {
-        app.buttons[meetingType.name].tap()
+        tapButton(buttonName: meetingType.name, shouldWait: true)
     }
 
     /// Selects the call connection type before entering the composite
@@ -164,7 +164,7 @@ extension XCUITestBase {
         if shouldWait {
             wait(for: cell)
         }
-        cell.forceTapElement()
+        cell.tap()
     }
 
     func takeScreenshot(name: String = "App Screenshot - \(Date().description)",

@@ -8,16 +8,8 @@ import XCTest
 
  class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
     func testCallCompositeShareDiagnosticInfo() {
-        tapInterfaceFor(.uiKit)
-        tapMeetingType(.groupCall)
-        tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
-                  shouldWait: true)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
-                  shouldWait: true)
-        tapCell(accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
-                shouldWait: true)
-        wait(for: app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue])
+        startCall()
+        openShareDiagnosticsInfoMenu()
         if UIDevice.current.userInterfaceIdiom == .pad {
             let popoverDismissRegion = app.otherElements["PopoverDismissRegion"]
             wait(for: popoverDismissRegion)
@@ -30,16 +22,8 @@ import XCTest
     }
 
     func testCallCompositeCopyDiagnosticInfo() {
-        tapInterfaceFor(.uiKit)
-        tapMeetingType(.groupCall)
-        tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
-                  shouldWait: true)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
-                  shouldWait: true)
-        tapCell(accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
-                shouldWait: true)
-        wait(for: app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue])
+        startCall()
+        openShareDiagnosticsInfoMenu()
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCopyButtonAccessibilityID.rawValue,
                   shouldWait: true)
         checkActivityViewControllerDismissed()
@@ -47,6 +31,23 @@ import XCTest
  }
 
  extension AzureCommunicationUIDemoAppDebugInfoTests {
+     func startCall() {
+         tapInterfaceFor(.uiKit)
+         tapMeetingType(.groupCall)
+         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+         tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+                   shouldWait: true)
+     }
+
+     func openShareDiagnosticsInfoMenu() {
+         tapButton(accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
+                   shouldWait: true)
+         tapCell(accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
+                 shouldWait: true)
+         wait(for: app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue])
+         app.tap()
+     }
+
     func checkActivityViewControllerDismissed() {
         let activityListView = app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue]
         let isDismissedPredicate = NSPredicate(format: "exists == 0")
