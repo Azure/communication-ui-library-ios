@@ -11,13 +11,17 @@ import XCTest
         tapInterfaceFor(.uiKit)
         tapMeetingType(.groupCall)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+                  shouldWait: true)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
+                  shouldWait: true)
         tapCell(accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
                 shouldWait: true)
         wait(for: app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue])
         if UIDevice.current.userInterfaceIdiom == .pad {
-            app.otherElements["PopoverDismissRegion"].tap()
+            let popoverDismissRegion = app.otherElements["PopoverDismissRegion"]
+            wait(for: popoverDismissRegion)
+            popoverDismissRegion.tap()
         } else if UIDevice.current.userInterfaceIdiom == .phone {
             tapButton(accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCloseButtonAccessibilityID.rawValue,
                       shouldWait: true)
@@ -29,12 +33,15 @@ import XCTest
         tapInterfaceFor(.uiKit)
         tapMeetingType(.groupCall)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+                  shouldWait: true)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
+                  shouldWait: true)
         tapCell(accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
                 shouldWait: true)
         wait(for: app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue])
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCopyButtonAccessibilityID.rawValue)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCopyButtonAccessibilityID.rawValue,
+                  shouldWait: true)
         checkActivityViewControllerDismissed()
     }
  }

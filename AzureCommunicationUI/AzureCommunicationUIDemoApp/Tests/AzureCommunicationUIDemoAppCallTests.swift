@@ -23,7 +23,7 @@
 //        tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
 //
 //        // join call
-//        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
+//        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue, shouldWait: true)
 //
 //        // mute / unmute local mic
 //        let micButton = app.buttons[AccessibilityIdentifier.micAccessibilityID.rawValue]
@@ -40,7 +40,7 @@
 //        tapInterfaceFor(.uiKit)
 //        tapConnectionTokenType(.acsTokenUrl)
 //        tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-//        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
+//        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue, shouldWait: true)
 //        leaveCall()
 //    }
 //
@@ -49,14 +49,14 @@
 //        tapConnectionTokenType(.acsTokenUrl)
 //        tapMeetingType(.teamsCall)
 //        tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-//        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
+//        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue, shouldWait: true)
 //        leaveCall()
 //    }
 //
 //    func testCallCompositeE2ETokenValueGroupCall() {
 //        tapInterfaceFor(.swiftUI)
 //        tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-//        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
+//        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue, shouldWait: true)
 //        leaveCall()
 //    }
 //
@@ -64,7 +64,7 @@
 //        tapInterfaceFor(.uiKit)
 //        tapMeetingType(.teamsCall)
 //        tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-//        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
+//        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue, shouldWait: true)
 //        leaveCall()
 //    }
 //
