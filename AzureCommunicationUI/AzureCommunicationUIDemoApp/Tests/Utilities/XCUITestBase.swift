@@ -99,8 +99,8 @@ extension XCUITestBase {
 
     /// Taps the button that matches with the given name
     /// - Parameters:
-    ///   - accesiibilityLabel: accessibility label of the button
-    ///   - shouldWait: determienes whether app should wait for the tap test to complete
+    ///   - buttonName: accessibility label of the button
+    ///   - shouldWait: determines whether app should wait for the tap test to complete
     private func tapEnabledButton(buttonName: String, shouldWait: Bool) {
         let button = app.buttons[buttonName]
         if shouldWait {
@@ -111,8 +111,8 @@ extension XCUITestBase {
 
     /// Taps the enabled button that matches with the given name
     /// - Parameters:
-    ///   - accesiibilityLabel: accessibility label of the button
-    ///   - shouldWait: determienes whether app should wait for the tap test to complete
+    ///   - buttonName: accessibility label of the button
+    ///   - shouldWait: determines whether app should wait for the tap test to complete
     private func tapButton(buttonName: String, shouldWait: Bool) {
         let button = app.buttons[buttonName]
         if shouldWait {
@@ -123,16 +123,16 @@ extension XCUITestBase {
 
     /// Taps the button that matches with the given accessibility label
     /// - Parameters:
-    ///   - accesiibilityLabel: accessibility label of the button
-    ///   - shouldWait: determienes whether app should wait for the tap test to complete
-    func tapButton(accessibilityIdentifier: String, shouldWait: Bool) {
+    ///   - accessibilityIdentifier: accessibility label of the button
+    ///   - shouldWait: determines whether app should wait for the tap test to complete. Default value is `false`
+    func tapButton(accessibilityIdentifier: String, shouldWait: Bool = false) {
         tapButton(buttonName: accessibilityIdentifier, shouldWait: shouldWait)
     }
 
     /// Taps the enabled button that matches with the given accessibility label
     /// - Parameters:
-    ///   - accesiibilityLabel: accessibility label of the button
-    ///   - shouldWait: determienes whether app should wait for the tap test to complete
+    ///   - accessibilityIdentifier: accessibility label of the button
+    ///   - shouldWait: determines whether app should wait for the tap test to complete
     func tapEnabledButton(accessibilityIdentifier: String, shouldWait: Bool) {
         tapEnabledButton(buttonName: accessibilityIdentifier, shouldWait: shouldWait)
     }
@@ -158,8 +158,8 @@ extension XCUITestBase {
     /// Taps the cell that matches with the given accessibility id
     /// - Parameters:
     ///   - accessibilityIdentifier: accessibility id of the cell
-    ///   - shouldWait: determines whether app should wait for the tap test to complete
-    func tapCell(accessibilityIdentifier: String, shouldWait: Bool) {
+    ///   - shouldWait: determines whether app should wait for the tap test to complete. Default value is `true`
+    func tapCell(accessibilityIdentifier: String, shouldWait: Bool = true) {
         let cell = app.cells[accessibilityIdentifier]
         if shouldWait {
             wait(for: cell)

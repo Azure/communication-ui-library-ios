@@ -9,32 +9,32 @@ import XCTest
 class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
     func testCallCompositeWithExpiredToken() {
         tapInterfaceFor(.swiftUI)
-        app.buttons[AccessibilityId.settingsButtonAccessibilityID.rawValue].tap()
-        let expiredTokenToggle = app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue]
+        tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
         app.tap()
+        let expiredTokenToggle = app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue]
         expiredTokenToggle.tap()
         XCTAssertTrue(expiredTokenToggle.value as? String == "1")
-        app.buttons["Close"].tap()
-        app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue].tap()
-        app.buttons[AccessibilityIdentifier.joinCallAccessibilityID.rawValue].tap()
+        tapButton(accessibilityIdentifier: "Close")
+        tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
         wait(for: app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue])
     }
 
     func testCallCompositeWithEmptyToken() {
         tapInterfaceFor(.swiftUI)
-        app.buttons[AccessibilityId.clearTokenTextFieldAccessibilityID.rawValue].tap()
+        tapButton(accessibilityIdentifier: AccessibilityId.clearTokenTextFieldAccessibilityID.rawValue)
 
         XCTAssertFalse(app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue].isEnabled)
     }
 
     func testCallCompositeWithInvalidToken() {
         tapInterfaceFor(.swiftUI)
-        app.buttons[AccessibilityId.clearTokenTextFieldAccessibilityID.rawValue].tap()
+        tapButton(accessibilityIdentifier: AccessibilityId.clearTokenTextFieldAccessibilityID.rawValue)
 
         let acsTokenTextField = app.textFields["ACS Token"]
         acsTokenTextField.setText(text: "invalidToken", application: app)
 
-        app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue].tap()
-        app.buttons["Dismiss"].tap()
+        tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+        tapButton(accessibilityIdentifier: "Dismiss")
     }
 }
