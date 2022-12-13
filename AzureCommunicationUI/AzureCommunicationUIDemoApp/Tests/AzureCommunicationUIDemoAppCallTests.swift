@@ -28,7 +28,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
         // mute / unmute local mic
         let micButton = app.buttons[AccessibilityIdentifier.micAccessibilityID.rawValue]
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.micAccessibilityID.rawValue)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.micAccessibilityID.rawValue, shouldWait: true)
         XCTAssertEqual(micButton.label, "Mute")
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.micAccessibilityID.rawValue)
         XCTAssertEqual(micButton.label, "Unmute")
