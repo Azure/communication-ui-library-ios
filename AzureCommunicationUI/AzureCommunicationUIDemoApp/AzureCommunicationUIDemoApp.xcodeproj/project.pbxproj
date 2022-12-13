@@ -14,8 +14,6 @@
 		1B5D6C1129231B900072C66D /* CallClientMockings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D6C0B29231B900072C66D /* CallClientMockings.swift */; };
 		1B5D6C1329231B900072C66D /* CallingSDKEventsHandlerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D6C0D29231B900072C66D /* CallingSDKEventsHandlerMocking.swift */; };
 		1B981B0429480DA8002EB167 /* FloatingUITestWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B981B0329480DA8002EB167 /* FloatingUITestWindow.swift */; };
-		1BB34DB5293EB9A600B22D67 /* UITestSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB34DB4293EB9A600B22D67 /* UITestSettingView.swift */; };
-		1BB34DB7293EE4C800B22D67 /* UITestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BB34DB6293EE4C800B22D67 /* UITestViewController.swift */; };
 		1F18191727B39F36006AF3B3 /* XCUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18191627B39F36006AF3B3 /* XCUITestBase.swift */; };
 		1F18191A27B45050006AF3B3 /* XCUIElementExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18191927B45050006AF3B3 /* XCUIElementExtension.swift */; };
 		1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift */; };
@@ -79,8 +77,6 @@
 		1B5D6C0B29231B900072C66D /* CallClientMockings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallClientMockings.swift; sourceTree = "<group>"; };
 		1B5D6C0D29231B900072C66D /* CallingSDKEventsHandlerMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallingSDKEventsHandlerMocking.swift; sourceTree = "<group>"; };
 		1B981B0329480DA8002EB167 /* FloatingUITestWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingUITestWindow.swift; sourceTree = "<group>"; };
-		1BB34DB4293EB9A600B22D67 /* UITestSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UITestSettingView.swift; path = Sources/Views/UITestSettingView.swift; sourceTree = SOURCE_ROOT; };
-		1BB34DB6293EE4C800B22D67 /* UITestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestViewController.swift; sourceTree = "<group>"; };
 		1F18191627B39F36006AF3B3 /* XCUITestBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUITestBase.swift; sourceTree = "<group>"; };
 		1F18191927B45050006AF3B3 /* XCUIElementExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCUIElementExtension.swift; sourceTree = "<group>"; };
 		1F8881BA27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzureCommunicationUIDemoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -182,7 +178,6 @@
 			isa = PBXGroup;
 			children = (
 				1F8881C92798D5E7001427F0 /* TextFieldClearButton.swift */,
-				1BB34DB4293EB9A600B22D67 /* UITestSettingView.swift */,
 			);
 			path = ViewModifier;
 			sourceTree = "<group>";
@@ -266,7 +261,6 @@
 				A87CEABB2729ECA600F3AE16 /* EntryViewController.swift */,
 				A85DDCB52728B23B001297B4 /* SwiftUIDemoView.swift */,
 				A85DDCB42728B23A001297B4 /* UIKitDemoViewController.swift */,
-				1BB34DB6293EE4C800B22D67 /* UITestViewController.swift */,
 				50B390CE27D2996E0010A2ED /* SettingsView.swift */,
 				A8AC66FD2735A41600632D0B /* CustomControls.swift */,
 				A8C69FBE2728AE1C00143DB7 /* LaunchScreen.storyboard */,
@@ -537,7 +531,6 @@
 				A8AC66FE2735A41600632D0B /* CustomControls.swift in Sources */,
 				A85DDCB92728B23B001297B4 /* SwiftUIDemoView.swift in Sources */,
 				1B5D6C1029231B900072C66D /* UITestCallingSDKWrapper.swift in Sources */,
-				1BB34DB7293EE4C800B22D67 /* UITestViewController.swift in Sources */,
 				1F8881CD279B456E001427F0 /* Extension.swift in Sources */,
 				5027C1C62821A07500DC7131 /* AccessibilityId.swift in Sources */,
 				1B5D6C0F29231B900072C66D /* CallConfigurationMocking.swift in Sources */,
@@ -550,7 +543,6 @@
 				A87CEABC2729ECA600F3AE16 /* EntryViewController.swift in Sources */,
 				1F8881CA2798D5E7001427F0 /* TextFieldClearButton.swift in Sources */,
 				A8849E532732FFA10049FB1A /* AuthenticationHelper.swift in Sources */,
-				1BB34DB5293EB9A600B22D67 /* UITestSettingView.swift in Sources */,
 				50B390CF27D2996E0010A2ED /* SettingsView.swift in Sources */,
 				1B5D6C1129231B900072C66D /* CallClientMockings.swift in Sources */,
 			);
