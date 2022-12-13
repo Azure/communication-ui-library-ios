@@ -15,9 +15,10 @@ class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
         expiredTokenToggle.tap()
         XCTAssertTrue(expiredTokenToggle.value as? String == "1")
         tapButton(accessibilityIdentifier: "Close")
-        tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
-                  shouldWait: true)
+        tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
+                         shouldWait: true)
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+                         shouldWait: true)
         wait(for: app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue])
     }
 
@@ -35,7 +36,8 @@ class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
         let acsTokenTextField = app.textFields["ACS Token"]
         acsTokenTextField.setText(text: "invalidToken", application: app)
 
-        tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+        tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
+                         shouldWait: true)
         tapButton(accessibilityIdentifier: "Dismiss", shouldWait: true)
     }
 }

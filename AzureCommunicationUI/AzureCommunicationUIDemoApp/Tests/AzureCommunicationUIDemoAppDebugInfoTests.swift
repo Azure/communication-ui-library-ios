@@ -32,7 +32,8 @@ import XCTest
      func startCall() {
          tapInterfaceFor(.callUIKit)
          tapMeetingType(.groupCall)
-         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
+                         shouldWait: true)
          tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
                           shouldWait: true)
      }

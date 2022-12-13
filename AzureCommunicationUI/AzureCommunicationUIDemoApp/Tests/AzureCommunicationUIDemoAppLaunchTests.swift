@@ -19,7 +19,8 @@ class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
 
 extension AzureCommunicationUIDemoAppLaunchTests {
     func startApp() {
-        tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+        tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
+                         shouldWait: true)
         wait(for: app.buttons[AccessibilityIdentifier.joinCallAccessibilityID.rawValue])
     }
 }
