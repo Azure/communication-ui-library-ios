@@ -47,6 +47,8 @@ class UIKitDemoViewController: UIViewController {
 
     private var cancellable = Set<AnyCancellable>()
     private var envConfigSubject: EnvConfigSubject
+    private var window: FloatingUITestWindow?
+    private var callingSDKWrapperMock: UITestCallingSDKWrapper?
 
     private lazy var contentView: UIView = {
         let view = UIView()
@@ -89,6 +91,16 @@ class UIKitDemoViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         registerNotifications()
+        callingSDKWrapperMock = UITestCallingSDKWrapper()
+
+        let scenes = UIApplication.shared.connectedScenes
+        if let windowScenes = scenes.first as? UIWindowScene {
+            window = FloatingUITestWindow(windowScene: windowScenes)
+            window?.callingSDKWrapperMock = callingSDKWrapperMock
+            window?.isHidden = false
+            window?.windowLevel = .alert + 1
+            window?.makeKeyAndVisible()
+        }
     }
 
     override func viewWillLayoutSubviews() {
@@ -168,7 +180,7 @@ class UIKitDemoViewController: UIViewController {
         #if DEBUG
         let callComposite = envConfigSubject.useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
-                          callingSDKWrapperProtocol: UITestCallingSDKWrapper())
+                          callingSDKWrapperProtocol: callingSDKWrapperMock)
             : CallComposite(withOptions: callCompositeOptions)
         #else
         let callComposite = CallComposite(withOptions: callCompositeOptions)

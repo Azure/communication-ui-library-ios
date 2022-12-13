@@ -28,6 +28,14 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         // mute / unmute local mic
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.micAccessibilityID.rawValue,
                   shouldWait: true)
+
+        app.windows["debugger_Window"].buttons["Hold"].forceTapElement()
+        app.windows["debugger_Window"].buttons["Resume"].tap()
+        app.windows["debugger_Window"].buttons["Transcription on"].tap()
+        app.windows["debugger_Window"].buttons["Transcription off"].tap()
+        app.windows["debugger_Window"].buttons["Recording on"].tap()
+        app.windows["debugger_Window"].buttons["Recording off"].tap()
+
         let micButton = app.buttons[AccessibilityIdentifier.micAccessibilityID.rawValue]
         XCTAssertNotNil(micButton)
         XCTAssertTrue(micButton.isEnabled)
@@ -35,45 +43,6 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.micAccessibilityID.rawValue,
                   shouldWait: true)
         XCTAssertEqual(micButton.label, "Unmute")
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateCallOnHold.rawValue, shouldWait: true)
-        let button = app.buttons["Resume"].firstMatch
-        if button.waitForExistence(timeout: 3) {
-            button.tap()
-        }
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateCallOnResume.rawValue, shouldWait: true)
-
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateRecordingStart.rawValue, shouldWait: true)
-        let bannerView = app.otherElements[AccessibilityIdentifier.bannerViewAccessibilityID.rawValue]
-        XCTAssertNotNil(bannerView)
-
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateRecordingEnd.rawValue, shouldWait: true)
-
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateTranscriptionStart.rawValue, shouldWait: true)
-
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateTranscriptionEnd.rawValue, shouldWait: true)
-
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulate1ParticipantJoin.rawValue, shouldWait: true)
-        let draggablePipView = app.otherElements[AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue]
-        XCTAssertTrue(draggablePipView.exists)
-
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulate3NewParticipantJoin.rawValue, shouldWait: true)
-
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulate6NewParticipantJoin.rawValue, shouldWait: true)
-
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulate1ParticipantLeave.rawValue, shouldWait: true)
-
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestSettingsLaunchButton.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.uitestsimulateAllParticipantsLeave.rawValue, shouldWait: true)
 
         toggleLeaveCallDrawer(leaveCall: true)
         let draggablePipViewRetest = app.otherElements[AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue]

@@ -137,6 +137,30 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             handler.resumeCall()
         }
     }
+
+    func transcriptionOn() async throws {
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.transcriptionOn()
+        }
+    }
+
+    func transcriptionOff() async throws {
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.transcriptionOff()
+        }
+    }
+
+    func recordingOn() async throws {
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.recordingOn()
+        }
+    }
+
+    func recordingOff() async throws {
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.recordingOff()
+        }
+    }
 }
 
 extension UITestCallingSDKWrapper {

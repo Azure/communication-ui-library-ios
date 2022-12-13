@@ -66,24 +66,30 @@ class XCUITestBase: XCTestCase {
         addUIInterruptionMonitor(withDescription: "System Dialog") { _ in
             let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
             let allowBtn = springboard.buttons["Allow"]
-            if allowBtn.waitForExistence(timeout: 2) {
+            if allowBtn.waitForExistence(timeout: 1) {
                 allowBtn.tap()
                 return true
             }
 
             let okBtn = springboard.buttons["OK"]
-            if okBtn.waitForExistence(timeout: 2) {
+            if okBtn.waitForExistence(timeout: 1) {
                 okBtn.tap()
                 return true
             }
 
             let dismissBtn = springboard.buttons["Dismiss"]
-            if dismissBtn.waitForExistence(timeout: 2) {
+            if dismissBtn.waitForExistence(timeout: 1) {
                 dismissBtn.tap()
                 return true
             }
 
-            return true
+            let cancelBtn = springboard.buttons["Cancel"]
+            if cancelBtn.waitForExistence(timeout: 1) {
+                cancelBtn.tap()
+                return true
+            }
+
+            return false
         }
         app.tap()
     }
