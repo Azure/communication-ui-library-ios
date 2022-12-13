@@ -32,9 +32,9 @@ steps:
 
         url = "https://login.microsoftonline.com/7bcd2220-f576-41b0-b47a-de4b6f2ebac1/oauth2/v2.0/token"
         body = {
-            'client_id': os.environ['client_id'],
+            'client_id': os.environ['ClientId'],
             'scope': 'https://acsuidev.onmicrosoft.com/sample-apps-apis/.default',
-            'client_secret': os.environ['client_secret'],
+            'client_secret': os.environ['ClientSecret'],
             'grant_type': "client_credentials",
         }
         response = requests.post(url, data=body)
@@ -54,3 +54,5 @@ steps:
     failOnStderr: false # Warnings generated need to be ignored
     env:
       ACSString: $(acsConnectionString)
+      ClientId: $(client_id)
+      ClientSecret: $(client_secret)
