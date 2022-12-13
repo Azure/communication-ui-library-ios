@@ -42,8 +42,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapConnectionTokenType(.acsTokenUrl)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue, shouldWait: true)
-        wait(for: app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue])
-//        leaveCall()
+        leaveCall()
     }
 
     func testCallCompositeE2ETokenURLTeamsCall() {
