@@ -18,7 +18,6 @@ jobs:
         parameters:
           buildScheme: 'AzureCommunicationUICalling'
 
-      # Build chat on the chat branch
       - template: templates/build-and-coverage.yml
         parameters:
           buildScheme: 'AzureCommunicationUIChat'

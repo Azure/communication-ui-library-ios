@@ -278,14 +278,14 @@ extension CallingDemoView {
     }
 
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
-        print("::::SwiftUIDemoView::getEventsHandler::onError \(error)")
-        print("::::SwiftUIDemoView error.code \(error.code)")
-        print("::::SwiftUIDemoView debug info \(callComposite.debugInfo.currentOrLastCallId ?? "Unknown")")
+        print("::::CallingDemoView::getEventsHandler::onError \(error)")
+        print("::::CallingDemoView error.code \(error.code)")
+        print("::::CallingDemoView debug info \(callComposite.debugInfo.currentOrLastCallId ?? "Unknown")")
         showError(for: error.code)
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
-        print("::::SwiftUIDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
+        print("::::CallingDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }
