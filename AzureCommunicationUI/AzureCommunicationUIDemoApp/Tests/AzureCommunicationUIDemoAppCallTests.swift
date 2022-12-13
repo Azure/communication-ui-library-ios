@@ -42,6 +42,8 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapConnectionTokenType(.acsTokenUrl)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue, shouldWait: true)
+        print(app.staticTexts)
+        print(app.buttons)
         leaveCall()
     }
 
