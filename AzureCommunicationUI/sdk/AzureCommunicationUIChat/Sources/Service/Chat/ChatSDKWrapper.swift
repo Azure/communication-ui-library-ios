@@ -13,16 +13,19 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
 
     private let logger: Logger
     private let chatConfiguration: ChatConfiguration
+    private let threadId: String
     private var chatClient: ChatClient?
     private var chatThreadClient: ChatThreadClient?
     private var pagedCollection: PagedCollection<ChatMessage>?
 
     init(logger: Logger,
          chatEventsHandler: ChatSDKEventsHandling,
-         chatConfiguration: ChatConfiguration) {
+         chatConfiguration: ChatConfiguration,
+         chatThreadId: String) {
         self.logger = logger
         self.chatEventsHandler = chatEventsHandler
         self.chatConfiguration = chatConfiguration
+        self.threadId = chatThreadId
         super.init()
     }
 
@@ -268,7 +271,7 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         do {
             logger.info("Creating Chat Thread Client...")
             self.chatThreadClient = try chatClient?.createClient(
-                forThread: self.chatConfiguration.chatThreadId)
+                forThread: self.threadId)
         } catch {
             logger.error("Create Chat Thread Client failed: \(error)")
             throw error
