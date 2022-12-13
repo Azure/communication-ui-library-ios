@@ -31,7 +31,6 @@ class CallingViewModel: ObservableObject {
     var controlBarViewModel: ControlBarViewModel!
     var infoHeaderViewModel: InfoHeaderViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
-    var uiTestSettingsViewOverlayViewModel: UITestSettingsOverlayViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -57,10 +56,6 @@ class CallingViewModel: ObservableObject {
         let isCallConnected = store.state.callingState.status == .connected
         let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
         isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
-        uiTestSettingsViewOverlayViewModel = compositeViewModelFactory
-            .makeSettingsOverlayViewModel(store: store) { [weak self] action in
-                self?.respondTo(action: action)
-            }
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
                 guard let self = self else {

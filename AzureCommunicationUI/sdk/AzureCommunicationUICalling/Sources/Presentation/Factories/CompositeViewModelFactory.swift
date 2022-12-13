@@ -32,8 +32,6 @@ protocol CompositeViewModelFactoryProtocol {
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
-    func makeSettingsOverlayViewModel(store: Store<AppState>,
-                                      action: @escaping ((Action) -> Void)) -> UITestSettingsOverlayViewModel
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel
@@ -198,10 +196,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
         LobbyOverlayViewModel(localizationProvider: localizationProvider,
                               accessibilityProvider: accessibilityProvider)
-    }
-    func makeSettingsOverlayViewModel(store: Store<AppState>,
-                                      action: @escaping ((Action) -> Void)) -> UITestSettingsOverlayViewModel {
-        return UITestSettingsOverlayViewModel(store: store, action: action)
     }
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
         OnHoldOverlayViewModel(localizationProvider: localizationProvider,

@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1B14287B291192A100E65D81 /* UITestSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B14287A291192A100E65D81 /* UITestSettingsView.swift */; };
-		1B14287D29119E4100E65D81 /* UITestSettingsOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B14287C29119E4100E65D81 /* UITestSettingsOverlayViewModel.swift */; };
 		1B315123284EA8630043231B /* OnHoldOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */; };
 		1B3A8EED285129CC002ED55A /* AudioSessionReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */; };
 		1B5F169D27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */; };
@@ -267,8 +265,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1B14287A291192A100E65D81 /* UITestSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestSettingsView.swift; sourceTree = "<group>"; };
-		1B14287C29119E4100E65D81 /* UITestSettingsOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestSettingsOverlayViewModel.swift; sourceTree = "<group>"; };
 		1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionReducerTests.swift; sourceTree = "<group>"; };
 		1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLeaveCallConfirmationList.swift; sourceTree = "<group>"; };
@@ -590,7 +586,6 @@
 				1F4B0EFF26A2024100E87014 /* Grid */,
 				50FA45F6267D45FD001844AC /* CallingViewComponent */,
 				1F03D3CD2638A6AE0055C456 /* CallingView.swift */,
-				1B14287A291192A100E65D81 /* UITestSettingsView.swift */,
 				1F03D3D12638A6B70055C456 /* CallingViewModel.swift */,
 			);
 			path = Calling;
@@ -1274,7 +1269,6 @@
 				8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */,
 				BD3CC698283D952E0052DE4A /* OverlayViewModelProtocol.swift */,
 				BD3CC69A283D953E0052DE4A /* OnHoldOverlayViewModel.swift */,
-				1B14287C29119E4100E65D81 /* UITestSettingsOverlayViewModel.swift */,
 			);
 			path = Overlay;
 			sourceTree = "<group>";
@@ -1710,7 +1704,6 @@
 				98B1869D27C858D500B837E6 /* CompositeAudioDevicesListCell.swift in Sources */,
 				9885BA0726A2116200CC514B /* SetupControlBarViewModel.swift in Sources */,
 				1B5F169D27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift in Sources */,
-				1B14287B291192A100E65D81 /* UITestSettingsView.swift in Sources */,
 				1FD299662728B72B0084B9ED /* CallingSDKEventsHandler.swift in Sources */,
 				1FBCB6AC2649993500F57EEA /* CallingSDKWrapper.swift in Sources */,
 				1F2BED72262F8F4D00D98266 /* Reducer.swift in Sources */,
@@ -1764,7 +1757,6 @@
 				1F3F0C69283E860600C66054 /* AudioSessionReducer.swift in Sources */,
 				50137D0626A7479C00AB843E /* EnvironmentValuesExtension.swift in Sources */,
 				1FE1BE7F26FE38C9000A8D18 /* CallCompositeInternalError.swift in Sources */,
-				1B14287D29119E4100E65D81 /* UITestSettingsOverlayViewModel.swift in Sources */,
 				985DF374269D096000CFDA55 /* SetupControlBarView.swift in Sources */,
 				FAACEE3828FA0E4C003F7D7C /* MoreCallOptionsList.swift in Sources */,
 				A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */,
