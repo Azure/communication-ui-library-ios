@@ -38,32 +38,6 @@
                BlueprintName = "AzureCommunicationUIDemoAppUITests"
                ReferencedContainer = "container:AzureCommunicationUIDemoApp.xcodeproj">
             </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "AzureCommunicationUIDemoAppCallTests/testCallCompositeE2ETokenURLTeamsCall()">
-               </Test>
-               <Test
-                  Identifier = "AzureCommunicationUIDemoAppCallTests/testCallCompositeE2ETokenValueGroupCall()">
-               </Test>
-               <Test
-                  Identifier = "AzureCommunicationUIDemoAppCallTests/testCallCompositeE2ETokenValueTeamsCall()">
-               </Test>
-               <Test
-                  Identifier = "AzureCommunicationUIDemoAppCallTests/testJoinCallEndCallWithMockCallCallingSDKWrapperHandler()">
-               </Test>
-               <Test
-                  Identifier = "AzureCommunicationUIDemoAppDebugInfoTests">
-               </Test>
-               <Test
-                  Identifier = "AzureCommunicationUIDemoAppLaunchTests">
-               </Test>
-               <Test
-                  Identifier = "AzureCommunicationUIDemoAppSetupViewTests">
-               </Test>
-               <Test
-                  Identifier = "AzureCommunicationUIDemoAppTokenTests">
-               </Test>
-            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>
