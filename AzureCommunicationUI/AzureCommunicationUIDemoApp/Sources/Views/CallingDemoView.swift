@@ -144,7 +144,7 @@ struct SwiftUIDemoView: View {
     }
 }
 
-extension CallingDemoView {
+extension SwiftUIDemoView {
     func startCallComposite() async {
         let link = getMeetingLink()
 
