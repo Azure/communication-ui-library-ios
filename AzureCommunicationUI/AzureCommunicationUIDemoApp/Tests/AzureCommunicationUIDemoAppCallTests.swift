@@ -24,7 +24,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
 
         // join call
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue, shouldWait: true)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
 
         // mute / unmute local mic
         let micButton = app.buttons[AccessibilityIdentifier.micAccessibilityID.rawValue]
@@ -41,7 +41,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapInterfaceFor(.callUIKit)
         tapConnectionTokenType(.acsTokenUrl)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue, shouldWait: true)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
         leaveCall()
     }
 
@@ -50,14 +50,14 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapConnectionTokenType(.acsTokenUrl)
         tapMeetingType(.teamsCall)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue, shouldWait: true)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
         leaveCall()
     }
 
     func testCallCompositeE2ETokenValueGroupCall() {
         tapInterfaceFor(.callSwiftUI)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue, shouldWait: true)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
         leaveCall()
     }
 
@@ -65,7 +65,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapInterfaceFor(.callUIKit)
         tapMeetingType(.teamsCall)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue, shouldWait: true)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
         leaveCall()
     }
 
@@ -74,7 +74,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     /// Toggles the leave call overlay  in the calling screen and triggers call end
     private func leaveCall() {
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityID.rawValue, shouldWait: true)
-        tapCell(accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue, shouldWait: true)
+        tapCell(accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue)
         wait(for: app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue])
     }
 }

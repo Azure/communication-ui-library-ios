@@ -91,6 +91,28 @@ class XCUITestBase: XCTestCase {
 
             return false
         }
+        addUIInterruptionMonitor(withDescription: "System Dialog") { _ in
+            let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+            let okBtn = springboard.buttons["OK"]
+            if okBtn.exists {
+                okBtn.tap()
+                return true
+            }
+
+            let allowBtn = springboard.buttons["Allow"]
+            if allowBtn.exists {
+                allowBtn.tap()
+                return true
+            }
+
+            let dismissBtn = springboard.buttons["Dismiss"]
+            if dismissBtn.exists {
+                dismissBtn.tap()
+                return true
+            }
+
+            return false
+        }
         app.tap()
     }
 }
@@ -140,13 +162,13 @@ extension XCUITestBase {
     /// Selects the interface before entering the composite
     /// - Note: Only call this function before entering composite.
     func tapInterfaceFor(_ interface: CompositeSampleInterface) {
-        tapButton(buttonName: interface.name, shouldWait: true)
+        app.buttons[interface.name].tap()
     }
 
     /// Selects the meeting type before entering the composite
     /// - Note: Only call this function before entering composite.
     func tapMeetingType(_ meetingType: CompositeMeetingType) {
-        tapButton(buttonName: meetingType.name, shouldWait: true)
+        app.buttons[meetingType.name].tap()
     }
 
     /// Selects the call connection type before entering the composite

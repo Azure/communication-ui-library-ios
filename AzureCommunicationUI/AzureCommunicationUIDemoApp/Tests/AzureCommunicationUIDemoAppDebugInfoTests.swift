@@ -15,8 +15,7 @@ import XCTest
             wait(for: popoverDismissRegion)
             popoverDismissRegion.tap()
         } else if UIDevice.current.userInterfaceIdiom == .phone {
-            tapButton(accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCloseButtonAccessibilityID.rawValue,
-                      shouldWait: true)
+            tapButton(accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCloseButtonAccessibilityID.rawValue)
         }
         checkActivityViewControllerDismissed()
     }
@@ -24,8 +23,7 @@ import XCTest
     func testCallCompositeCopyDiagnosticInfo() {
         startCall()
         openShareDiagnosticsInfoMenu()
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCopyButtonAccessibilityID.rawValue,
-                  shouldWait: true)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCopyButtonAccessibilityID.rawValue)
         checkActivityViewControllerDismissed()
     }
  }
@@ -35,15 +33,13 @@ import XCTest
          tapInterfaceFor(.callUIKit)
          tapMeetingType(.groupCall)
          tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
-         tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
-                   shouldWait: true)
+         tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue)
      }
 
      func openShareDiagnosticsInfoMenu() {
          tapButton(accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
                    shouldWait: true)
-         tapCell(accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
-                 shouldWait: true)
+         tapCell(accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue)
          wait(for: app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue])
          app.tap()
      }
