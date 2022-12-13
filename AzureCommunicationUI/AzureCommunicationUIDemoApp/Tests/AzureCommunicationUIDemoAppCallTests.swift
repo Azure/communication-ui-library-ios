@@ -9,7 +9,7 @@ import XCTest
 class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testJoinCallEndCallWithMockCallCallingSDKWrapperHandler() {
-        tapInterfaceFor(.uiKit)
+        tapInterfaceFor(.callUIKit)
 
         // turn on calling sdk mock in settings modal
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
@@ -38,7 +38,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     // MARK: End call tests
 
     func testCallCompositeE2ETokenURLGroupCall() {
-        tapInterfaceFor(.uiKit)
+        tapInterfaceFor(.callUIKit)
         tapConnectionTokenType(.acsTokenUrl)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue, shouldWait: true)
@@ -46,7 +46,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     }
 
     func testCallCompositeE2ETokenURLTeamsCall() {
-        tapInterfaceFor(.swiftUI)
+        tapInterfaceFor(.callSwiftUI)
         tapConnectionTokenType(.acsTokenUrl)
         tapMeetingType(.teamsCall)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
@@ -55,14 +55,14 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     }
 
     func testCallCompositeE2ETokenValueGroupCall() {
-        tapInterfaceFor(.swiftUI)
+        tapInterfaceFor(.callSwiftUI)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue, shouldWait: true)
         leaveCall()
     }
 
     func testCallCompositeE2ETokenValueTeamsCall() {
-        tapInterfaceFor(.uiKit)
+        tapInterfaceFor(.callUIKit)
         tapMeetingType(.teamsCall)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue, shouldWait: true)

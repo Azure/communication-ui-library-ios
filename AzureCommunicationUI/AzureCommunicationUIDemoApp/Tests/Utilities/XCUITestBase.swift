@@ -9,15 +9,15 @@ import XCTest
 class XCUITestBase: XCTestCase {
 
     enum CompositeSampleInterface {
-        case swiftUI
-        case uiKit
+        case callSwiftUI
+        case callUIKit
 
         var name: String {
             switch self {
-            case .swiftUI:
-                return "Swift UI"
-            case .uiKit:
-                return "UI Kit"
+            case .callSwiftUI:
+                return "Call - Swift UI"
+            case .callUIKit:
+                return "Call - UI Kit"
             }
         }
     }

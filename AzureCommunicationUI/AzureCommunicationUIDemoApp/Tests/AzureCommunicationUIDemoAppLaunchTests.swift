@@ -7,12 +7,12 @@ import XCTest
 
 class AzureCommunicationUIDemoAppLaunchTests: XCUITestBase {
     func testCallCompositeSwiftUILaunch() {
-        tapInterfaceFor(.swiftUI)
+        tapInterfaceFor(.callSwiftUI)
         startApp()
     }
 
     func testCallCompositeUIKitLaunch() {
-        tapInterfaceFor(.uiKit)
+        tapInterfaceFor(.callUIKit)
         startApp()
     }
 }

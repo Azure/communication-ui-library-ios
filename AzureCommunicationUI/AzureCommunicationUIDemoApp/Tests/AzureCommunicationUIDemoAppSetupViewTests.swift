@@ -10,7 +10,7 @@ import XCTest
 
     // MARK: Setup view tests
     func testCallCompositeSetupCallGroupCallSwiftUI() {
-        tapInterfaceFor(.swiftUI)
+        tapInterfaceFor(.callSwiftUI)
         tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
 
         // shouldWait is set to true to finalize animations

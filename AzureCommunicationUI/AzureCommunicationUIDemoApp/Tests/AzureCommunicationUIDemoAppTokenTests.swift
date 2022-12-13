@@ -8,7 +8,7 @@ import XCTest
 
 class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
     func testCallCompositeWithExpiredToken() {
-        tapInterfaceFor(.swiftUI)
+        tapInterfaceFor(.callSwiftUI)
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
         wait(for: app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue])
         let expiredTokenToggle = app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue]
@@ -22,14 +22,14 @@ class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
     }
 
     func testCallCompositeWithEmptyToken() {
-        tapInterfaceFor(.swiftUI)
+        tapInterfaceFor(.callSwiftUI)
         tapButton(accessibilityIdentifier: AccessibilityId.clearTokenTextFieldAccessibilityID.rawValue)
 
         XCTAssertFalse(app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue].isEnabled)
     }
 
     func testCallCompositeWithInvalidToken() {
-        tapInterfaceFor(.swiftUI)
+        tapInterfaceFor(.callSwiftUI)
         tapButton(accessibilityIdentifier: AccessibilityId.clearTokenTextFieldAccessibilityID.rawValue)
 
         let acsTokenTextField = app.textFields["ACS Token"]

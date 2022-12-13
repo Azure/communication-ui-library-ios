@@ -32,7 +32,7 @@ import XCTest
 
  extension AzureCommunicationUIDemoAppDebugInfoTests {
      func startCall() {
-         tapInterfaceFor(.uiKit)
+         tapInterfaceFor(.callUIKit)
          tapMeetingType(.groupCall)
          tapButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
          tapButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
