@@ -50,7 +50,6 @@
 		1F48CF1F283447F400A44D58 /* CallingSDKWrapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F48CF1E283447F400A44D58 /* CallingSDKWrapperProtocol.swift */; };
 		1F4A24BC26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A24BB26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift */; };
 		1F4B0EF8269BD17600E87014 /* CompositeErrorManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B0EF7269BD17600E87014 /* CompositeErrorManagerTests.swift */; };
-		1F4B0EFA269BD3D000E87014 /* CallCompositeMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B0EF9269BD3D000E87014 /* CallCompositeMocking.swift */; };
 		1F4B0EFE26A1466D00E87014 /* ParticipantGridCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FA46012681409D001844AC /* ParticipantGridCellView.swift */; };
 		1F4B0F0126A2025900E87014 /* ParticipantGridLayoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B0F0026A2025900E87014 /* ParticipantGridLayoutView.swift */; };
 		1F4B0F0526A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B0F0426A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift */; };
@@ -130,7 +129,6 @@
 		5A314059D7E61D1083A8C473 /* LocalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314A985811198B09DA2688 /* LocalVideoView.swift */; };
 		5A3140EA80ACDCB14140A060 /* CompositeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3145FC912A71B20D5ECBF6 /* CompositeViewFactory.swift */; };
 		5A3142646DD55C66CF290F7A /* LocalVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314317E4A1B700E6BE5E2E /* LocalVideoViewModel.swift */; };
-		5A31429C377C213B53F19163 /* DependencyContainerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314F041B5D1869C41C242E /* DependencyContainerTests.swift */; };
 		5A3142DAFAB4EE338ABF2196 /* CompositeViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3148FC4DC06C7515E1E8D9 /* CompositeViewModelFactory.swift */; };
 		5A31489916982D3699CD756D /* LocalVideoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3141390FEFB58AD2A2E22F /* LocalVideoViewModelTests.swift */; };
 		5A31497E0DEBAB0256AD0B91 /* ErrorMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3146B0B684264EB57EDA69 /* ErrorMocking.swift */; };
@@ -138,6 +136,7 @@
 		5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */; };
 		696AD14928DBAFCE0043F807 /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696AD14828DBAFCE0043F807 /* ButtonState.swift */; };
 		752B953C2863A40F001C52E8 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752B953B2863A40E001C52E8 /* Action.swift */; };
+		756F180F29391F27004EDAFD /* CallCompositeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F180E29391F27004EDAFD /* CallCompositeTests.swift */; };
 		759BDEF728FF0839002B6853 /* ColorThemeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEF628FF0839002B6853 /* ColorThemeProvider.swift */; };
 		759BDEF928FF0851002B6853 /* StyleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEF828FF0851002B6853 /* StyleProvider.swift */; };
 		759BDEFD28FF0A81002B6853 /* LocalizationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEFC28FF0A81002B6853 /* LocalizationOptions.swift */; };
@@ -187,7 +186,6 @@
 		A830C30A264C8AAC00766E3D /* CallingMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */; };
 		A830C30C264D7C0900766E3D /* PermissionReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C30B264D7C0900766E3D /* PermissionReducerTests.swift */; };
 		A830C317264D8A0C00766E3D /* ContainerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C316264D8A0C00766E3D /* ContainerViewModelTests.swift */; };
-		A837397A261CE9FF00D46787 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8373979261CE9FF00D46787 /* DependencyContainer.swift */; };
 		A8373994261F9D7600D46787 /* CallCompositeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8373993261F9D7600D46787 /* CallCompositeOptions.swift */; };
 		A83F35BE28203EA9008C1ECE /* ViewModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A83F35BD28203EA9008C1ECE /* ViewModifer.swift */; };
 		A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */ = {isa = PBXBuildFile; fileRef = A865AF0827B7116B008347B4 /* IconAndLabelConversion.swift */; };
@@ -308,7 +306,6 @@
 		1F48CF1E283447F400A44D58 /* CallingSDKWrapperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKWrapperProtocol.swift; sourceTree = "<group>"; };
 		1F4A24BB26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeViewModelFactoryMocking.swift; sourceTree = "<group>"; };
 		1F4B0EF7269BD17600E87014 /* CompositeErrorManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeErrorManagerTests.swift; sourceTree = "<group>"; };
-		1F4B0EF9269BD3D000E87014 /* CallCompositeMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeMocking.swift; sourceTree = "<group>"; };
 		1F4B0F0026A2025900E87014 /* ParticipantGridLayoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantGridLayoutView.swift; sourceTree = "<group>"; };
 		1F4B0F0426A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantsEventsAdapter.swift; sourceTree = "<group>"; };
 		1F6470A82639DCFA0008B9E9 /* CallingService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallingService.swift; sourceTree = "<group>"; };
@@ -433,10 +430,10 @@
 		5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LobbyOverlayView.swift; sourceTree = "<group>"; };
 		5A3148FC4DC06C7515E1E8D9 /* CompositeViewModelFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeViewModelFactory.swift; sourceTree = "<group>"; };
 		5A314A985811198B09DA2688 /* LocalVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoView.swift; sourceTree = "<group>"; };
-		5A314F041B5D1869C41C242E /* DependencyContainerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DependencyContainerTests.swift; sourceTree = "<group>"; };
 		696AD14828DBAFCE0043F807 /* ButtonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonState.swift; sourceTree = "<group>"; };
 		69FC33B2B556CC3B9164A78E /* Pods-AzureCommunicationUICalling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling/Pods-AzureCommunicationUICalling.release.xcconfig"; sourceTree = "<group>"; };
 		752B953B2863A40E001C52E8 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
+		756F180E29391F27004EDAFD /* CallCompositeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeTests.swift; sourceTree = "<group>"; };
 		759BDEF628FF0839002B6853 /* ColorThemeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorThemeProvider.swift; sourceTree = "<group>"; };
 		759BDEF828FF0851002B6853 /* StyleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleProvider.swift; sourceTree = "<group>"; };
 		759BDEFC28FF0A81002B6853 /* LocalizationOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationOptions.swift; sourceTree = "<group>"; };
@@ -485,7 +482,6 @@
 		A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingMiddlewareTests.swift; sourceTree = "<group>"; };
 		A830C30B264D7C0900766E3D /* PermissionReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionReducerTests.swift; sourceTree = "<group>"; };
 		A830C316264D8A0C00766E3D /* ContainerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerViewModelTests.swift; sourceTree = "<group>"; };
-		A8373979261CE9FF00D46787 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		A8373993261F9D7600D46787 /* CallCompositeOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeOptions.swift; sourceTree = "<group>"; };
 		A83F35BD28203EA9008C1ECE /* ViewModifer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifer.swift; sourceTree = "<group>"; };
 		A8659FC52602A22000C807DE /* AzureCommunicationUICalling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AzureCommunicationUICalling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -653,17 +649,17 @@
 		1F09A10B26BA484000BACED7 /* Calling */ = {
 			isa = PBXGroup;
 			children = (
-				1F09A10C26BA484000BACED7 /* ControlBarViewModelTests.swift */,
-				1F09A10E26BA484000BACED7 /* ParticipantCellViewModelTests.swift */,
-				1F09A10F26BA484000BACED7 /* CallingViewModelTests.swift */,
-				1F09A11026BA484000BACED7 /* ParticipantGridsViewModelTests.swift */,
-				50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */,
-				50E2D6A826FA52A3006B0EF4 /* ParticipantsListViewModelTests.swift */,
-				503300FB2706763800289BB5 /* BannerViewModelTests.swift */,
-				503300FD27079FC900289BB5 /* BannerTextViewModelTests.swift */,
 				50C6DECE270E4F020085D04B /* BannerInfoTypeTests.swift */,
+				503300FD27079FC900289BB5 /* BannerTextViewModelTests.swift */,
+				503300FB2706763800289BB5 /* BannerViewModelTests.swift */,
+				1F09A10F26BA484000BACED7 /* CallingViewModelTests.swift */,
+				1F09A10C26BA484000BACED7 /* ControlBarViewModelTests.swift */,
+				50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */,
 				8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */,
 				1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */,
+				1F09A10E26BA484000BACED7 /* ParticipantCellViewModelTests.swift */,
+				1F09A11026BA484000BACED7 /* ParticipantGridsViewModelTests.swift */,
+				50E2D6A826FA52A3006B0EF4 /* ParticipantsListViewModelTests.swift */,
 			);
 			path = Calling;
 			sourceTree = "<group>";
@@ -886,7 +882,6 @@
 				1F4B0EF6269BD08100E87014 /* Manager */,
 				1FBCB6A7264528A900F57EEA /* Info.plist */,
 				5A314192C1EC6B1FB3D9A707 /* CallCompositeOptions */,
-				5A31454AEB090BC1B66FB680 /* DI */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -981,8 +976,8 @@
 		5A314192C1EC6B1FB3D9A707 /* CallCompositeOptions */ = {
 			isa = PBXGroup;
 			children = (
-				500C0F202847E30E000BA2DC /* RemoteOptionsTests.swift */,
 				1F48B40227496E2800B6E5F9 /* DiagnosticConfigTests.swift */,
+				500C0F202847E30E000BA2DC /* RemoteOptionsTests.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -990,18 +985,10 @@
 		5A3142665337D92211691536 /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
-				5A3141390FEFB58AD2A2E22F /* LocalVideoViewModelTests.swift */,
 				98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */,
+				5A3141390FEFB58AD2A2E22F /* LocalVideoViewModelTests.swift */,
 			);
 			path = ViewComponents;
-			sourceTree = "<group>";
-		};
-		5A31454AEB090BC1B66FB680 /* DI */ = {
-			isa = PBXGroup;
-			children = (
-				5A314F041B5D1869C41C242E /* DependencyContainerTests.swift */,
-			);
-			path = DI;
 			sourceTree = "<group>";
 		};
 		751D70F129119A0100323141 /* Shared Sources */ = {
@@ -1076,11 +1063,12 @@
 		98966FE426A5E91A00069857 /* Setup */ = {
 			isa = PBXGroup;
 			children = (
-				1F09A10926BA47EC00BACED7 /* SetupViewModelTests.swift */,
-				98966FE226A5E58D00069857 /* SetupControlBarViewModelTests.swift */,
-				985DF36B269650C900CFDA55 /* PreviewAreaViewModelTests.swift */,
-				50B390D927DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift */,
 				881D8F6F27F2327B008EC897 /* ErrorInfoViewModelTests.swift */,
+				50B390D927DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift */,
+				985DF36B269650C900CFDA55 /* PreviewAreaViewModelTests.swift */,
+				98966FE226A5E58D00069857 /* SetupControlBarViewModelTests.swift */,
+				1F09A10926BA47EC00BACED7 /* SetupViewModelTests.swift */,
+				756F180E29391F27004EDAFD /* CallCompositeTests.swift */,
 			);
 			path = Setup;
 			sourceTree = "<group>";
@@ -1184,7 +1172,6 @@
 				1F94DADE2673E94F00691D1E /* CallComposite.swift */,
 				1F11D2B92640AD2200D33838 /* Presentation */,
 				A83739AF26210CC200D46787 /* CallCompositeOptions */,
-				A8810CDE2640A39700C88545 /* DI */,
 				1F2BED62262F859D00D98266 /* Redux */,
 				1FBCB6AD2649DA4100F57EEA /* Model */,
 				1F2BED862631EB5100D98266 /* Service */,
@@ -1199,22 +1186,21 @@
 		A869A62E26546A16003CC4F2 /* Mocking */ = {
 			isa = PBXGroup;
 			children = (
-				FA03CC7527C8189900986D4E /* ViewModels */,
-				1F4B0EFB269BD3D800E87014 /* Redux */,
+				FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */,
+				FAFA427C28380F7500053EA7 /* AvatarViewManagerMocking.swift */,
+				1F8E0B73268697B700DDD18E /* CallingMiddlewareHandlerMocking.swift */,
+				FAD845432819FFE6007DAFE1 /* CallingSDKEventsHandlerMocking.swift */,
 				A869A63526546A2D003CC4F2 /* CallingSDKWrapperMocking.swift */,
 				A869A62F26546A2D003CC4F2 /* CallingServiceMocking.swift */,
+				1F4A24BB26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift */,
+				FA25C13D28FF711E00417715 /* DebugInfoManagerMocking.swift */,
+				5A3146B0B684264EB57EDA69 /* ErrorMocking.swift */,
+				50B390D027D82D7E0010A2ED /* LocalizationProviderMocking.swift */,
 				A869A63026546A2D003CC4F2 /* LoggerMocking.swift */,
 				A869A63226546A2D003CC4F2 /* PermissionsManagerMocking.swift */,
+				1F4B0EFB269BD3D800E87014 /* Redux */,
 				A869A63626546A2E003CC4F2 /* VideoViewManagerMocking.swift */,
-				1F8E0B73268697B700DDD18E /* CallingMiddlewareHandlerMocking.swift */,
-				1F4B0EF9269BD3D000E87014 /* CallCompositeMocking.swift */,
-				1F4A24BB26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift */,
-				5A3146B0B684264EB57EDA69 /* ErrorMocking.swift */,
-				FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */,
-				50B390D027D82D7E0010A2ED /* LocalizationProviderMocking.swift */,
-				FAD845432819FFE6007DAFE1 /* CallingSDKEventsHandlerMocking.swift */,
-				FAFA427C28380F7500053EA7 /* AvatarViewManagerMocking.swift */,
-				FA25C13D28FF711E00417715 /* DebugInfoManagerMocking.swift */,
+				FA03CC7527C8189900986D4E /* ViewModels */,
 			);
 			name = Mocking;
 			sourceTree = "<group>";
@@ -1234,14 +1220,6 @@
 				A874EDCB2666DF07003C7D92 /* ContainerUIHostingController.swift */,
 			);
 			path = Container;
-			sourceTree = "<group>";
-		};
-		A8810CDE2640A39700C88545 /* DI */ = {
-			isa = PBXGroup;
-			children = (
-				A8373979261CE9FF00D46787 /* DependencyContainer.swift */,
-			);
-			path = DI;
 			sourceTree = "<group>";
 		};
 		A8810CDF2640A3E100C88545 /* Factories */ = {
@@ -1599,7 +1577,6 @@
 				88BC24C12832D29D00818446 /* AvatarManagerTests.swift in Sources */,
 				FAC1FECF27C98FC200D95845 /* InfoHeaderViewModelMocking.swift in Sources */,
 				FAC1FECA27C98FC200D95845 /* ControlBarViewModelMocking.swift in Sources */,
-				1F4B0EFA269BD3D000E87014 /* CallCompositeMocking.swift in Sources */,
 				FA03CC8927C8189900986D4E /* PrimaryButtonViewModelMocking.swift in Sources */,
 				985DF36C269650C900CFDA55 /* PreviewAreaViewModelTests.swift in Sources */,
 				A830C30A264C8AAC00766E3D /* CallingMiddlewareTests.swift in Sources */,
@@ -1654,7 +1631,7 @@
 				FAC3128F27F24A8B00A4F1D0 /* IconButtonViewModelMocking.swift in Sources */,
 				FAC1FECD27C98FC200D95845 /* ParticipantGridCellViewModelMocking.swift in Sources */,
 				FAFA427D28380F7500053EA7 /* AvatarViewManagerMocking.swift in Sources */,
-				5A31429C377C213B53F19163 /* DependencyContainerTests.swift in Sources */,
+				756F180F29391F27004EDAFD /* CallCompositeTests.swift in Sources */,
 				1F09A10426BA472A00BACED7 /* ParticipantInfoModelBuilder.swift in Sources */,
 				FAC1FECE27C98FC200D95845 /* ParticipantGridViewModelMocking.swift in Sources */,
 				FAC1FEC127C94D9200D95845 /* AudioDeviceListViewModelMocking.swift in Sources */,
@@ -1821,7 +1798,6 @@
 				1F4B0F0526A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift in Sources */,
 				88D8DD7628EF9A93006A4AC4 /* DebugInfoManager.swift in Sources */,
 				1F4B0F0126A2025900E87014 /* ParticipantGridLayoutView.swift in Sources */,
-				A837397A261CE9FF00D46787 /* DependencyContainer.swift in Sources */,
 				1B5F16A127FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift in Sources */,
 				5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */,
 				5A3142646DD55C66CF290F7A /* LocalVideoViewModel.swift in Sources */,
