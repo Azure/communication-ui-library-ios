@@ -125,7 +125,7 @@ class EntryViewController: UIViewController {
     }
 
     @objc func onCallingSwiftUIPressed() {
-        let swiftUIDemoView = SwiftUIDemoView(envConfigSubject: envConfigSubject)
+        let swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject)
         let swiftUIDemoViewHostingController = UIHostingController(rootView: swiftUIDemoView)
         swiftUIDemoViewHostingController.modalPresentationStyle = .fullScreen
         present(swiftUIDemoViewHostingController, animated: true, completion: nil)
