@@ -22,13 +22,13 @@ extension XCUIElement {
 }
 
 extension XCTestCase {
-    func wait(for element: XCUIElement, timeout: TimeInterval = 10.0) {
+    func wait(for element: XCUIElement, timeout: TimeInterval = 20.0) {
     let predicate = NSPredicate(format: "exists == true")
     let expectation = expectation(for: predicate, evaluatedWith: element, handler: nil)
     wait(for: [expectation], timeout: timeout)
   }
 
-    func waitEnabled(for element: XCUIElement, timeout: TimeInterval = 10.0) {
+    func waitEnabled(for element: XCUIElement, timeout: TimeInterval = 20.0) {
       let predicate = NSPredicate(format: "enabled == true")
       let expectation = expectation(for: predicate, evaluatedWith: element, handler: nil)
       wait(for: [expectation], timeout: timeout)
