@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 class SetupViewModel: ObservableObject {
     private let logger: Logger
@@ -145,6 +145,11 @@ class SetupViewModel: ObservableObject {
                                         callingState: callingState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
         errorInfoViewModel.update(errorState: state.errorState)
+    }
+
+    func shouldShowSetupControlBarView() -> Bool {
+        let cameraStatus = store.state.localUserState.cameraState.operation
+        return cameraStatus == .off || !isJoinRequested
     }
 
     private func handleOffline() {

@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 class SetupControlBarViewModel: ObservableObject {
     @Published var cameraPermission: AppPermission.Status = .unknown

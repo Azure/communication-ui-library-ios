@@ -15,7 +15,7 @@
 "AzureCommunicationUICalling.SetupView.Title"="Configura";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Indietro";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Partecipa alla chiamata";
-"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Partecipazione alla chiamata…";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Partecipazione alla chiamata...";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video disattivato";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Attiva la fotocamera";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video attivato";
@@ -43,6 +43,7 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="In attesa di altri partecipanti";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="Chiamata con 1 persona";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Chiamata con %d persone"; // %d is for number of people in call
+"AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Partecipanti";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Partecipante senza nome";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (me)"; // %@ is local participant name
@@ -65,6 +66,9 @@
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Abbandona";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Annulla";
 "AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="Vuoi uscire dalla chiamata?";
+
+"AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Altro";
+"AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Condividi informazioni di diagnostica";
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Registrazione e trascrizione avviate.";

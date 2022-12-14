@@ -6,9 +6,13 @@
 import UIKit
 import Combine
 import SwiftUI
-import AzureCommunicationUICalling
 import AzureCommunicationCommon
 import AppCenterCrashes
+#if DEBUG
+@testable import AzureCommunicationUICalling
+#else
+import AzureCommunicationUICalling
+#endif
 
 class UIKitDemoViewController: UIViewController {
 
@@ -100,14 +104,14 @@ class UIKitDemoViewController: UIViewController {
                                    after: stackView.arrangedSubviews.first!)
     }
 
-    func combineEnvConfigSubject() {
+    private func combineEnvConfigSubject() {
         envConfigSubject.objectWillChange
             .throttle(for: 0.5, scheduler: DispatchQueue.main, latest: true).sink(receiveValue: { [weak self] _ in
                 self?.updateFromEnvConfig()
             }).store(in: &cancellable)
     }
 
-    func updateFromEnvConfig() {
+    private func updateFromEnvConfig() {
         if !envConfigSubject.acsToken.isEmpty {
             acsTokenTextField.text = envConfigSubject.acsToken
             acsTokenTypeSegmentedControl.selectedSegmentIndex = 2
@@ -127,12 +131,13 @@ class UIKitDemoViewController: UIViewController {
         }
     }
 
-    func onError(_ error: CallCompositeError) {
+    private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::UIKitDemoView::getEventsHandler::onError \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
+        print("::::SwiftUIDemoView debug info \(callComposite.debugInfo.currentOrLastCallId ?? "Unknown")")
     }
 
-    func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
+    private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
         print("::::UIKitDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
@@ -142,7 +147,7 @@ class UIKitDemoViewController: UIViewController {
                                                                 identifiers: identifiers)
     }
 
-    func startExperience(with link: String) async {
+    private func startExperience(with link: String) async {
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         if !envConfigSubject.localeIdentifier.isEmpty {
@@ -160,7 +165,14 @@ class UIKitDemoViewController: UIViewController {
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig)
+        #if DEBUG
+        let callComposite = envConfigSubject.useMockCallingSDKHandler ?
+            CallComposite(withOptions: callCompositeOptions,
+                          callingSDKWrapperProtocol: UITestCallingSDKWrapper())
+            : CallComposite(withOptions: callCompositeOptions)
+        #else
         let callComposite = CallComposite(withOptions: callCompositeOptions)
+        #endif
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
@@ -168,15 +180,16 @@ class UIKitDemoViewController: UIViewController {
             self.onRemoteParticipantJoined(to: composite,
                                            identifiers: ids)
         }
-
-        callComposite.events.onError = { [weak self] error in
-            guard let errorHandler = self?.onError else {
+        let onErrorHandler: (CallCompositeError) -> Void = { [weak callComposite] error in
+            guard let composite = callComposite else {
                 return
             }
-            Task { @MainActor in errorHandler(error) }
+            self.onError(error,
+                         callComposite: composite)
         }
-
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
+        callComposite.events.onError = onErrorHandler
+
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
@@ -455,6 +468,7 @@ class UIKitDemoViewController: UIViewController {
                                                              left: LayoutConstants.buttonHorizontalInset,
                                                              bottom: LayoutConstants.buttonVerticalInset,
                                                              right: LayoutConstants.buttonHorizontalInset)
+        settingsButton.accessibilityIdentifier = AccessibilityId.settingsButtonAccessibilityID.rawValue
 
         startExperienceButton = UIButton()
         startExperienceButton.backgroundColor = .systemBlue
@@ -544,7 +558,7 @@ class UIKitDemoViewController: UIViewController {
         stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,
                                            constant: LayoutConstants.stackViewSpacingPortrait).isActive = true
         stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,
-                                            constant: LayoutConstants.stackViewSpacingPortrait).isActive = true
+                                            constant: -LayoutConstants.stackViewSpacingPortrait).isActive = true
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
 
         settingButtonHSpacer2.widthAnchor.constraint(equalTo: settingButtonHSpacer1.widthAnchor).isActive = true

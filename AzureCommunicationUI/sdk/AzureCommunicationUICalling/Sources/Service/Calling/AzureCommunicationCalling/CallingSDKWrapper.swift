@@ -3,9 +3,10 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
-import Combine
 import AzureCommunicationCalling
+
+import Combine
+import Foundation
 
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
@@ -118,12 +119,8 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         return castValue
     }
 
-    func communicationIdForParticipant(identifier: String) -> CommunicationIdentifier? {
-        findParticipant(identifier: identifier)?.identifier
-    }
-
     private func findParticipant(identifier: String) -> AzureCommunicationCalling.RemoteParticipant? {
-        call?.remoteParticipants.first(where: { $0.identifier.stringValue == identifier })
+        call?.remoteParticipants.first(where: { $0.identifier.rawId == identifier })
     }
 
     func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String)

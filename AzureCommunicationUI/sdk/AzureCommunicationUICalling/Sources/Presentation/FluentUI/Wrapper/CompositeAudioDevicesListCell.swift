@@ -11,7 +11,7 @@ class CompositeAudioDevicesListCell: TableViewCell {
 
     /// Set up the audio device list item in the audio device list
     /// - Parameter viewModel: the audio device view model needed to set up audio device list cell
-    func setup(viewModel: AudioDevicesListCellViewModel) {
+    func setup(viewModel: SelectableDrawerListItemViewModel) {
         let speakerImage = StyleProvider.icon.getUIImage(for: viewModel.icon)?
             .withTintColor(StyleProvider.color.onSurface, renderingMode: .alwaysOriginal)
         let speakerImageView = UIImageView(image: speakerImage)
@@ -25,6 +25,7 @@ class CompositeAudioDevicesListCell: TableViewCell {
         }
 
         selectionStyle = .none
+        backgroundStyleType = .custom
         backgroundColor = UIDevice.current.userInterfaceIdiom == .pad
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor

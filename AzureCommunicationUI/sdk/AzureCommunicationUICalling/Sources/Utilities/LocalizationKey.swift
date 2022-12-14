@@ -77,6 +77,9 @@ enum LocalizationKey: String {
     case leaveCall = "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"
     case cancel = "AzureCommunicationUICalling.CallingView.Overlay.Cancel"
 
+    case moreAccessibilityLabel = "AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel"
+    case shareDiagnosticsInfo = "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo"
+
     /* ComplianceBanner title */
     case bannerTitleRecordingAndTranscriptionStarted =
             "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"

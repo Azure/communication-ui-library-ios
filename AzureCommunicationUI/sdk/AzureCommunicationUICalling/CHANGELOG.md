@@ -1,5 +1,10 @@
 # Azure Communication UI Calling Release History
 
+## 1.2.0-beta.1 (2022-12-14)
+### New Features
+- Introduced `DebugInfo` to get debug information for `CallComposite` [#446](https://github.com/Azure/communication-ui-library-ios/pull/446), [#476](https://github.com/Azure/communication-ui-library-ios/pull/476)
+- Additional localization support for 6 languages (Arabic, Finnish, Hebrew, Norwegian Bokmål, Polish, Swedish) [#484](https://github.com/Azure/communication-ui-library-ios/pull/484)
+
 ## 1.1.0 (2022-11-09)
 ### New Features
 - Implemented new feature where local user would be removed from the participant list when the app is terminated [#352](https://github.com/Azure/communication-ui-library-ios/pull/352)

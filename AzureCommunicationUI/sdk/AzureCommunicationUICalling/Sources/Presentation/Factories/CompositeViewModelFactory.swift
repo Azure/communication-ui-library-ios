@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import FluentUI
+import Foundation
 
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
@@ -17,11 +17,11 @@ protocol CompositeViewModelFactoryProtocol {
                                  isDisabled: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
     func makeIconWithLabelButtonViewModel<ButtonStateType>(
-                                 selectedButtonState: ButtonStateType,
-                                 localizationProvider: LocalizationProviderProtocol,
-                                 buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
-                                 isDisabled: Bool,
-                                 action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<ButtonStateType>
+        selectedButtonState: ButtonStateType,
+        localizationProvider: LocalizationProviderProtocol,
+        buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
+        isDisabled: Bool,
+        action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<ButtonStateType>
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel
     func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
                                     buttonLabel: String,
@@ -30,10 +30,6 @@ protocol CompositeViewModelFactoryProtocol {
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
-    func makeAudioDevicesListCellViewModel(icon: CompositeIcon,
-                                           title: String,
-                                           isSelected: Bool,
-                                           onSelectedAction: @escaping (() -> Void)) -> AudioDevicesListCellViewModel
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
 
@@ -51,6 +47,17 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
+    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+    func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
+    func makeDrawerListItemViewModel(icon: CompositeIcon,
+                                     title: String,
+                                     accessibilityIdentifier: String,
+                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel
+    func makeSelectableDrawerListItemViewModel(
+        icon: CompositeIcon,
+        title: String,
+        isSelected: Bool,
+        onSelectedAction: @escaping (() -> Void)) -> SelectableDrawerListItemViewModel
 
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
@@ -65,6 +72,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let networkManager: NetworkManager
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
+    private let debugInfoManager: DebugInfoManagerProtocol
     private let localOptions: LocalOptions?
 
     private weak var setupViewModel: SetupViewModel?
@@ -75,12 +83,14 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          networkManager: NetworkManager,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
+         debugInfoManager: DebugInfoManagerProtocol,
          localOptions: LocalOptions? = nil) {
         self.logger = logger
         self.store = store
         self.networkManager = networkManager
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
+        self.debugInfoManager = debugInfoManager
         self.localOptions = localOptions
     }
 
@@ -126,18 +136,18 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             action: action)
     }
     func makeIconWithLabelButtonViewModel<T: ButtonState>(
-                                          selectedButtonState: T,
-                                          localizationProvider: LocalizationProviderProtocol,
-                                          buttonTypeColor: IconWithLabelButtonViewModel<T>.ButtonTypeColor,
-                                          isDisabled: Bool,
-                                          action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<T> {
-        IconWithLabelButtonViewModel(
-                                     selectedButtonState: selectedButtonState,
-                                     localizationProvider: localizationProvider,
-                                     buttonTypeColor: buttonTypeColor,
-                                     isDisabled: isDisabled,
-                                     action: action)
-    }
+        selectedButtonState: T,
+        localizationProvider: LocalizationProviderProtocol,
+        buttonTypeColor: IconWithLabelButtonViewModel<T>.ButtonTypeColor,
+        isDisabled: Bool,
+        action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<T> {
+            IconWithLabelButtonViewModel(
+                selectedButtonState: selectedButtonState,
+                localizationProvider: localizationProvider,
+                buttonTypeColor: buttonTypeColor,
+                isDisabled: isDisabled,
+                action: action)
+        }
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel {
         LocalVideoViewModel(compositeViewModelFactory: self,
                             logger: logger,
@@ -163,14 +173,16 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                   localizationProvider: localizationProvider)
     }
 
-    func makeAudioDevicesListCellViewModel(icon: CompositeIcon,
-                                           title: String,
-                                           isSelected: Bool,
-                                           onSelectedAction: @escaping (() -> Void)) -> AudioDevicesListCellViewModel {
-        AudioDevicesListCellViewModel(icon: icon,
-                                      title: title,
-                                      isSelected: isSelected,
-                                      onSelected: onSelectedAction)
+    func makeSelectableDrawerListItemViewModel(icon: CompositeIcon,
+                                               title: String,
+                                               isSelected: Bool,
+                                               onSelectedAction: @escaping (() -> Void)) ->
+    SelectableDrawerListItemViewModel {
+        SelectableDrawerListItemViewModel(icon: icon,
+                                          title: title,
+                                          accessibilityIdentifier: "",
+                                          isSelected: isSelected,
+                                          action: onSelectedAction)
     }
 
     func makeErrorInfoViewModel(title: String,
@@ -243,6 +255,27 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     -> ParticipantsListCellViewModel {
         ParticipantsListCellViewModel(participantInfoModel: participantInfoModel,
                                       localizationProvider: localizationProvider)
+    }
+
+    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
+        MoreCallOptionsListViewModel(compositeViewModelFactory: self,
+                                     localizationProvider: localizationProvider,
+                                     showSharingViewAction: showSharingViewAction)
+    }
+
+    func makeDrawerListItemViewModel(icon: CompositeIcon,
+                                     title: String,
+                                     accessibilityIdentifier: String,
+                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel {
+        DrawerListItemViewModel(icon: icon,
+                                title: title,
+                                accessibilityIdentifier: accessibilityIdentifier,
+                                action: action)
+    }
+
+    func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {
+        DebugInfoSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
+                                          debugInfoManager: debugInfoManager)
     }
 
     // MARK: SetupViewModels

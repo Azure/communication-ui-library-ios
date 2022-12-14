@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 class InfoHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String
@@ -21,6 +21,7 @@ class InfoHeaderViewModel: ObservableObject {
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
+
     var isPad: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,

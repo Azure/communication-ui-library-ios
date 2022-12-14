@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 class ControlBarViewModel: ObservableObject {
     private let logger: Logger
@@ -16,12 +16,16 @@ class ControlBarViewModel: ObservableObject {
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var isAudioDeviceSelectionDisplayed: Bool = false
     @Published var isConfirmLeaveListDisplayed: Bool = false
+    @Published var isMoreCallOptionsListDisplayed: Bool = false
+    @Published var isShareActivityDisplayed: Bool = false
 
     let audioDevicesListViewModel: AudioDevicesListViewModel
-
     var micButtonViewModel: IconButtonViewModel!
     var audioDeviceButtonViewModel: IconButtonViewModel!
     var hangUpButtonViewModel: IconButtonViewModel!
+    var moreButtonViewModel: IconButtonViewModel!
+    var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
+    var debugInfoSharingActivityViewModel: DebugInfoSharingActivityViewModel!
     var callingStatus: CallingStatus = .none
     var cameraState = LocalUserState.CameraState(operation: .off,
                                                  device: .front,
@@ -44,7 +48,6 @@ class ControlBarViewModel: ObservableObject {
         audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
             localUserState: localUserState)
-
         cameraButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .videoOff,
             buttonType: .controlButton,
@@ -96,6 +99,27 @@ class ControlBarViewModel: ObservableObject {
         }
         hangUpButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .leaveCall)
+        moreButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
+            iconName: .more,
+            buttonType: .controlButton,
+            isDisabled: false) {
+                [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.moreButtonTapped()
+        }
+        moreButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
+            .moreAccessibilityLabel)
+
+        moreCallOptionsListViewModel = compositeViewModelFactory.makeMoreCallOptionsListViewModel(
+            showSharingViewAction: { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.isShareActivityDisplayed = true
+            })
+        debugInfoSharingActivityViewModel = compositeViewModelFactory.makeDebugInfoSharingActivityViewModel()
     }
 
     func endCallButtonTapped() {
@@ -123,6 +147,10 @@ class ControlBarViewModel: ObservableObject {
         self.isAudioDeviceSelectionDisplayed = true
     }
 
+    func moreButtonTapped() {
+        isMoreCallOptionsListDisplayed = true
+    }
+
     func dismissConfirmLeaveDrawerList() {
         self.isConfirmLeaveListDisplayed = false
     }
@@ -140,8 +168,8 @@ class ControlBarViewModel: ObservableObject {
         callingStatus == .localHold
     }
 
-    func getLeaveCallButtonViewModel() -> LeaveCallConfirmationViewModel {
-        return LeaveCallConfirmationViewModel(
+    func getLeaveCallButtonViewModel() -> DrawerListItemViewModel {
+        return DrawerListItemViewModel(
             icon: .endCallRegular,
             title: localizationProvider.getLocalizedString(.leaveCall),
             accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue,
@@ -154,8 +182,8 @@ class ControlBarViewModel: ObservableObject {
             })
     }
 
-    func getCancelButtonViewModel() -> LeaveCallConfirmationViewModel {
-        return LeaveCallConfirmationViewModel(
+    func getCancelButtonViewModel() -> DrawerListItemViewModel {
+        return DrawerListItemViewModel(
             icon: .dismiss,
             title: localizationProvider.getLocalizedString(.cancel),
             accessibilityIdentifier: AccessibilityIdentifier.cancelAccessibilityID.rawValue,
@@ -169,7 +197,7 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func getLeaveCallConfirmationListViewModel() -> LeaveCallConfirmationListViewModel {
-        let leaveCallConfirmationVm: [LeaveCallConfirmationViewModel] = [
+        let leaveCallConfirmationVm: [DrawerListItemViewModel] = [
             getLeaveCallButtonViewModel(),
             getCancelButtonViewModel()
         ]

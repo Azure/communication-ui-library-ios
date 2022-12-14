@@ -10,7 +10,7 @@ import UIKit
 class CompositeLeaveCallConfirmationListCell: TableViewCell {
 
     /// Set up the participant list item  in the participant list
-    func setup(viewModel: LeaveCallConfirmationViewModel) {
+    func setup(viewModel: DrawerListItemViewModel) {
         let isNameEmpty = viewModel.title.trimmingCharacters(in: .whitespaces).isEmpty
         var micImageView: UIImageView?
         let micImage = StyleProvider.icon.getUIImage(for: viewModel.icon)?
@@ -18,6 +18,7 @@ class CompositeLeaveCallConfirmationListCell: TableViewCell {
         micImageView = UIImageView(image: micImage)
 
         selectionStyle = .none
+        backgroundStyleType = .custom
         backgroundColor = UIDevice.current.userInterfaceIdiom == .pad
             ? StyleProvider.color.popoverColor
             : StyleProvider.color.drawerColor

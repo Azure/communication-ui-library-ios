@@ -33,13 +33,17 @@ struct CallingView: View {
     }
 
     var body: some View {
-        ZStack {
-            if getSizeClass() != .iphoneLandscapeScreenSize {
-                portraitCallingView
-            } else {
-                landscapeCallingView
+        GeometryReader { geometry in
+            ZStack {
+                if getSizeClass() != .iphoneLandscapeScreenSize {
+                    portraitCallingView
+                } else {
+                    landscapeCallingView
+                }
+                errorInfoView
             }
-            errorInfoView
+            .frame(width: geometry.size.width,
+                   height: geometry.size.height)
         }
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
@@ -198,8 +202,10 @@ extension CallingView {
 
     private func updateChildViewIfNeededWith(newOrientation: UIDeviceOrientation) {
         guard !viewModel.controlBarViewModel.isAudioDeviceSelectionDisplayed,
-                  !viewModel.controlBarViewModel.isConfirmLeaveListDisplayed,
-                  !viewModel.infoHeaderViewModel.isParticipantsListDisplayed else {
+              !viewModel.controlBarViewModel.isConfirmLeaveListDisplayed,
+              !viewModel.infoHeaderViewModel.isParticipantsListDisplayed,
+              !viewModel.controlBarViewModel.isMoreCallOptionsListDisplayed,
+              !viewModel.controlBarViewModel.isShareActivityDisplayed else {
                 return
             }
         let areAllOrientationsSupported = SupportedOrientationsPreferenceKey.defaultValue == .all

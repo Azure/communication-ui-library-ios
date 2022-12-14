@@ -8,11 +8,11 @@ import FluentUI
 @testable import AzureCommunicationUICalling
 
 struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
-
     private let logger: Logger
     private let store: Store<AppState>
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
+    private let debugInfoManager: DebugInfoManagerProtocol
 
     var bannerTextViewModel: BannerTextViewModel?
     var controlBarViewModel: ControlBarViewModel?
@@ -32,7 +32,10 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var setupViewModel: SetupViewModel?
     var callingViewModel: CallingViewModel?
     var localParticipantsListCellViewModel: ParticipantsListCellViewModel?
-    var audioDevicesListCellViewModel: AudioDevicesListCellViewModel?
+    var audioDevicesListCellViewModel: SelectableDrawerListItemViewModel?
+    var moreCallOptionsListViewModel: MoreCallOptionsListViewModel?
+    var debugInfoSharingActivityViewModel: DebugInfoSharingActivityViewModel?
+    var moreCallOptionsListCellViewModel: DrawerListItemViewModel?
 
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
     var createParticipantsListCellViewModel: ((ParticipantInfoModel) -> ParticipantsListCellViewModel?)?
@@ -45,11 +48,13 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     init(logger: Logger,
          store: Store<AppState>,
          accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking(),
-         localizationProvider: LocalizationProviderProtocol = LocalizationProviderMocking()) {
+         localizationProvider: LocalizationProviderProtocol = LocalizationProviderMocking(),
+         debugInfoManager: DebugInfoManagerProtocol = DebugInfoManagerMocking()) {
         self.logger = logger
         self.store = store
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
+        self.debugInfoManager = debugInfoManager
     }
 
     func getSetupViewModel() -> SetupViewModel {
@@ -142,14 +147,15 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                         subtitle: subtitle)
     }
 
-    func makeAudioDevicesListCellViewModel(icon: CompositeIcon,
-                                           title: String,
-                                           isSelected: Bool,
-                                           onSelectedAction: @escaping (() -> Void)) -> AudioDevicesListCellViewModel {
-        return audioDevicesListCellViewModel ?? AudioDevicesListCellViewModel(icon: icon,
-                                                                              title: title,
+    func makeSelectableDrawerListItemViewModel(icon: CompositeIcon,
+                                               title: String,
+                                               isSelected: Bool,
+                                               onSelectedAction: @escaping (() -> Void)) -> SelectableDrawerListItemViewModel {
+        return audioDevicesListCellViewModel ?? SelectableDrawerListItemViewModel(icon: icon,
+                                                                                  title: title,
+                                                                                  accessibilityIdentifier: "",
                                                                               isSelected: isSelected,
-                                                                              onSelected: onSelectedAction)
+                                                                              action: onSelectedAction)
     }
 
     // MARK: CallingViewModels
@@ -213,6 +219,28 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel {
         createParticipantsListCellViewModel?(participantInfoModel) ?? ParticipantsListCellViewModel(participantInfoModel: participantInfoModel,
                                                                                                     localizationProvider: localizationProvider)
+    }
+
+    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
+        moreCallOptionsListViewModel ?? MoreCallOptionsListViewModel(compositeViewModelFactory: self,
+                                                                     localizationProvider: localizationProvider,
+                                                                     showSharingViewAction: showSharingViewAction)
+    }
+
+    func makeDrawerListItemViewModel(icon: CompositeIcon,
+                                     title: String,
+                                     accessibilityIdentifier: String,
+                                     action: @escaping (() -> Void)) -> DrawerListItemViewModel {
+        moreCallOptionsListCellViewModel ?? DrawerListItemViewModel(icon: icon,
+                                                                             title: title,
+                                                                             accessibilityIdentifier: accessibilityIdentifier,
+                                                                             action: action)
+    }
+
+    func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel {
+        debugInfoSharingActivityViewModel ??
+        DebugInfoSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
+                                          debugInfoManager: debugInfoManager)
     }
 
     // MARK: SetupViewModels

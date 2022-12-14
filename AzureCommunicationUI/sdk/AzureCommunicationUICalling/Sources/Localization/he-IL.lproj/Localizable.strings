@@ -1,0 +1,107 @@
+//
+//  Copyright (c) Microsoft Corporation. All rights reserved.
+//  Licensed under the MIT License.
+//
+
+/* Devices */
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iOS"="iOS";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Speaker"="רמקול";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPhone"="iPhone";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.iPad"="iPad";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Headphones"="אוזניות";
+"AzureCommunicationUICalling.AudioDevice.DeviceDrawer.Bluetooth"="Bluetooth";
+
+/* SetupView */
+"AzureCommunicationUICalling.SetupView.Title"="הגדרה";
+"AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="הקודם";
+"AzureCommunicationUICalling.SetupView.Button.JoinCall"="הצטרף לשיחה";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="מצטרף לשיחה…";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff"="וידאו כבוי";
+"AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="הפעל מצלמה";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn"="וידאו מופעל";
+"AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="בטל מצלמה";
+"AzureCommunicationUICalling.SetupView.Button.MicOff"="מיקרופון כבוי";
+"AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="בטל השתקה";
+"AzureCommunicationUICalling.SetupView.Button.MicOn"="מיקרופון מופעל";
+"AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="השתק";
+"AzureCommunicationUICalling.SetupView.Button.Device"="התקן";
+"AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="בחר התקן שמע";
+"AzureCommunicationUICalling.SetupView.Button.GoToSettings"="עבור אל ‘הגדרות‘";
+"AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="המצלמה שלך מושבתת. כדי להפעיל אותה, עבור אל 'הגדרות' כדי לאפשר גישה.";
+"AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="המצלמה והשמע שלך אינם זמינים. כדי להפוך אות לזמינים, עבור אל 'הגדרות' כדי לאפשר גישה. עליך להפוך שמע לזמין כדי להתחיל שיחה זו.";
+"AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="השמע שלך מושבת. כדי להפעיל אותו, עבור אל 'הגדרות' כדי לאפשר גישה. עליך להפעיל שמע כדי להתחיל את שיחה זו.";
+
+/* LobbyView */
+"AzureCommunicationUICalling.LobbyView.Text.WaitingForHost"="ממתין למארח"; // host (people not server) of a meeting
+"AzureCommunicationUICalling.LobbyView.Text.WaitingDetails"="מישהו בפגישה יכניס אותך בקרוב";
+
+/* OnHoldView */
+"AzureCommunicationUICalling.OnHoldView.Text.OnHold"="אתה בהמתנה";
+"AzureCommunicationUICalling.OnHoldView.Button.Resume"="המשך";
+
+/* CallingView */
+"AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="מחכה שאחרים יצטרפו";
+"AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="שיחה עם אדם אחד";
+"AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="שיחה עם %d אנשים"; // %d is for number of people in call
+"AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="משתתפים";
+
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="משתתף ללא שם";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (אני)"; // %@ is local participant name
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="מושתק";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="לא מושתק";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="מדבר";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="בהמתנה";
+
+"AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="עבור למצלמה אחורית";
+"AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="עבור למצלמה קדמית";
+
+"AzureCommunicationUICalling.CallingView.OnePersonJoined"="%@ הצטרף/ה לפגישה";
+"AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d משתתפים הצטרפו לפגישה";
+"AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ עזב/ה את הפגישה";
+"AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d משתתפים עזבו את הפגישה";
+"AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="הצטרפת לשיחה";
+"AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="התוכן משותף";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="שיתוף התוכן הסתיים";
+
+"AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="עזוב";
+"AzureCommunicationUICalling.CallingView.Overlay.Cancel"="בטל";
+"AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="לעזוב שיחה?";
+
+"AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "עוד";
+"AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "שתף פרטי אבחון";
+
+/* ComplianceBanner title */
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="הקלטה ותעתוק התחילו.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStarted"="ההקלטה התחילה.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="התעתוק הופסק.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStarted"="התעתוק התחיל.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStopped"="מתבצע תהליך שמירה של התעתוק.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="ההקלטה הופסקה.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStopped"="ההקלטה נשמרת.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStopped"="ההקלטה והתעתוק בתהליך שמירה.";
+
+/* ComplianceBanner body */
+"AzureCommunicationUICalling.CallingView.BannerBody.Consent"="על-ידי הצטרפות, אתה נותן הסכמה לתעתק פגישה זו.";
+"AzureCommunicationUICalling.CallingView.BannerBody.Recording"="אתה כעת רק מקליט את הפגישה.";
+"AzureCommunicationUICalling.CallingView.BannerBody.TranscriptionStopped"="התעתוק הופסק.";
+"AzureCommunicationUICalling.CallingView.BannerBody.OnlyTranscribing"="אתה רק מתעתק את הפגישה כעת.";
+"AzureCommunicationUICalling.CallingView.BannerBody.RecordingStopped"="ההקלטה הופסקה.";
+"AzureCommunicationUICalling.CallingView.BannerBody.RecordingAndTranscriptionStopped"="ההקלטה והתעתוק הופסקו.";
+
+/* ComplianceBanner display link */
+"AzureCommunicationUICalling.CallingView.BannerLink.PrivacyPolicy"="מדיניות פרטיות";
+"AzureCommunicationUICalling.CallingView.BannerLink.LearnMore"="מידע נוסף";
+
+/* PopUp warning */
+"AzureCommunicationUICalling.SnackBar.Button.Dismiss"="התעלם מזה";
+"AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityLabel"="בטל את הכרזה";
+"AzureCommunicationUICalling.SnackBar.Button.Dismiss.AccessibilityHint"="מפסיק את הודעה זו";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallJoin"="לא ניתן להצטרף לשיחה עקב שגיאה.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEnd"="הוסרת מהשיחה עקב שגיאה.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallEvicted"="הוסרת מהשיחה.";
+"AzureCommunicationUICalling.SnackBar.Text.Error"="אירעה שגיאה.";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="לא ניתן לחדש את השיחה";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="המיקרופון שלך נמצא בשימוש על-ידי אפליקציה אחרת";
+"AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="הגישה שלך לשיחה נדחתה.";
+"AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="שגיאה בהחלפת וידאו";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="לא ניתן להצטרף לשיחה. בדוק את חיבור הרשת שלך.";
