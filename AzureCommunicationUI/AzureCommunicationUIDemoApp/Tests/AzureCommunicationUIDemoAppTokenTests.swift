@@ -10,6 +10,7 @@ class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
     func testCallCompositeWithExpiredToken() {
         tapInterfaceFor(.callSwiftUI)
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
+        wait(for: app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue])
         let expiredTokenToggle = app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue]
         app.tap()
         expiredTokenToggle.tap()
