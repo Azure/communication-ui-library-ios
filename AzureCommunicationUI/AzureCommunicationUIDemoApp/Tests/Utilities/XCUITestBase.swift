@@ -9,14 +9,14 @@ import XCTest
 class XCUITestBase: XCTestCase {
 
     enum CompositeSampleInterface {
-        case swiftUI
-        case uiKit
+        case callSwiftUI
+        case callUIKit
 
         var name: String {
             switch self {
-            case .swiftUI:
+            case .callSwiftUI:
                 return "Call - Swift UI"
-            case .uiKit:
+            case .callUIKit:
                 return "Call - UI Kit"
             }
         }
@@ -59,6 +59,12 @@ class XCUITestBase: XCTestCase {
         setupSystemPromptMonitor()
     }
 
+    override func tearDown() {
+        super.tearDown()
+        // terminate app on tear down
+        app.terminate()
+    }
+
     // MARK: Private / helper functions
 
     /// Responds to app permission prompts and system prompt
@@ -66,26 +72,42 @@ class XCUITestBase: XCTestCase {
         addUIInterruptionMonitor(withDescription: "System Dialog") { _ in
             let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
             let allowBtn = springboard.buttons["Allow"]
-            if allowBtn.waitForExistence(timeout: 1) {
+            if allowBtn.exists {
                 allowBtn.tap()
                 return true
             }
 
             let okBtn = springboard.buttons["OK"]
-            if okBtn.waitForExistence(timeout: 1) {
+            if okBtn.exists {
                 okBtn.tap()
                 return true
             }
 
             let dismissBtn = springboard.buttons["Dismiss"]
-            if dismissBtn.waitForExistence(timeout: 1) {
+            if dismissBtn.exists {
                 dismissBtn.tap()
                 return true
             }
 
-            let cancelBtn = springboard.buttons["Cancel"]
-            if cancelBtn.waitForExistence(timeout: 1) {
-                cancelBtn.tap()
+            return false
+        }
+        addUIInterruptionMonitor(withDescription: "System Dialog") { _ in
+            let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+            let okBtn = springboard.buttons["OK"]
+            if okBtn.exists {
+                okBtn.tap()
+                return true
+            }
+
+            let allowBtn = springboard.buttons["Allow"]
+            if allowBtn.exists {
+                allowBtn.tap()
+                return true
+            }
+
+            let dismissBtn = springboard.buttons["Dismiss"]
+            if dismissBtn.exists {
+                dismissBtn.tap()
                 return true
             }
 
@@ -99,8 +121,8 @@ extension XCUITestBase {
 
     /// Taps the button that matches with the given name
     /// - Parameters:
-    ///   - accesiibilityLabel: accessibility label of the button
-    ///   - shouldWait: determienes whether app should wait for the tap test to complete
+    ///   - buttonName: accessibility label of the button
+    ///   - shouldWait: determines whether app should wait for the tap test to complete
     private func tapEnabledButton(buttonName: String, shouldWait: Bool) {
         let button = app.buttons[buttonName]
         if shouldWait {
@@ -111,28 +133,28 @@ extension XCUITestBase {
 
     /// Taps the enabled button that matches with the given name
     /// - Parameters:
-    ///   - accesiibilityLabel: accessibility label of the button
-    ///   - shouldWait: determienes whether app should wait for the tap test to complete
+    ///   - buttonName: accessibility label of the button
+    ///   - shouldWait: determines whether app should wait for the tap test to complete
     private func tapButton(buttonName: String, shouldWait: Bool) {
         let button = app.buttons[buttonName]
         if shouldWait {
             wait(for: button)
         }
-        button.forceTapElement()
+        button.tap()
     }
 
     /// Taps the button that matches with the given accessibility label
     /// - Parameters:
-    ///   - accesiibilityLabel: accessibility label of the button
-    ///   - shouldWait: determienes whether app should wait for the tap test to complete
-    func tapButton(accessibilityIdentifier: String, shouldWait: Bool) {
+    ///   - accessibilityIdentifier: accessibility label of the button
+    ///   - shouldWait: determines whether app should wait for the tap test to complete. Default value is `false`
+    func tapButton(accessibilityIdentifier: String, shouldWait: Bool = false) {
         tapButton(buttonName: accessibilityIdentifier, shouldWait: shouldWait)
     }
 
     /// Taps the enabled button that matches with the given accessibility label
     /// - Parameters:
-    ///   - accesiibilityLabel: accessibility label of the button
-    ///   - shouldWait: determienes whether app should wait for the tap test to complete
+    ///   - accessibilityIdentifier: accessibility label of the button
+    ///   - shouldWait: determines whether app should wait for the tap test to complete
     func tapEnabledButton(accessibilityIdentifier: String, shouldWait: Bool) {
         tapEnabledButton(buttonName: accessibilityIdentifier, shouldWait: shouldWait)
     }
@@ -156,27 +178,39 @@ extension XCUITestBase {
     }
 
     func toggleMockSDKWrapperSwitch(enable: Bool) {
-        tapButton(
-            accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue,
-            shouldWait: false)
+        tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
+        wait(for: app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue])
         app.tap()
         let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
-        if toggle.waitForExistence(timeout: 3), let enabled = toggle.isOn, enabled != enable {
+        if let enabled = toggle.isOn, enabled != enabled {
             toggle.tap()
         }
+        XCTAssertTrue(toggle.isOn == enable)
         app.buttons["Close"].tap()
+
+        // tapButton(
+        //     accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue,
+        //     shouldWait: false)
+        // app.tap()
+        // let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
+        // if toggle.waitForExistence(timeout: 3), 
+        //     let enabled = toggle.isOn, 
+        //        enabled != enable {
+        //     toggle.tap()
+        // }
+        // app.buttons["Close"].tap()
     }
 
     /// Taps the cell that matches with the given accessibility id
     /// - Parameters:
     ///   - accessibilityIdentifier: accessibility id of the cell
-    ///   - shouldWait: determines whether app should wait for the tap test to complete
-    func tapCell(accessibilityIdentifier: String, shouldWait: Bool) {
+    ///   - shouldWait: determines whether app should wait for the tap test to complete. Default value is `true`
+    func tapCell(accessibilityIdentifier: String, shouldWait: Bool = true) {
         let cell = app.cells[accessibilityIdentifier]
         if shouldWait {
             wait(for: cell)
         }
-        cell.forceTapElement()
+        cell.tap()
     }
 
     func takeScreenshot(name: String = "App Screenshot - \(Date().description)",
