@@ -134,7 +134,7 @@ struct SetupTitleView: View {
             ZStack(alignment: .leading) {
                 IconButton(viewModel: viewModel.dismissButtonViewModel)
                     .flipsForRightToLeftLayoutDirection(true)
-                    .accessibilityIdentifier(AccessibilityIdentifier.dismisButtonAccessibilityID.rawValue)
+                    .accessibilityIdentifier(AccessibilityIdentifier.dismissButtonAccessibilityID.rawValue)
                 HStack {
                     Spacer()
                     VStack {
