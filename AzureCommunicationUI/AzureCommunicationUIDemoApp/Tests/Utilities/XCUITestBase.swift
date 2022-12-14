@@ -171,7 +171,7 @@ extension XCUITestBase {
             shouldWait: false)
         app.tap()
         let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
-        if toggle.waitForExistence(timeout: 3), let enabled = toggle.isOn, enabled != enable {
+        if toggle.waitForExistence(timeout: 3), toggle.isOn != enable {
             toggle.tap()
         }
         app.buttons["Close"].tap()
@@ -200,7 +200,7 @@ extension XCUITestBase {
 }
 
 extension XCUIElement {
-    var isOn: Bool? {
-        return (self.value as? String).map { $0 == "1" }
+    var isOn: Bool {
+        return ((self.value as? String).map { $0 == "1" }) ?? false
     }
 }
