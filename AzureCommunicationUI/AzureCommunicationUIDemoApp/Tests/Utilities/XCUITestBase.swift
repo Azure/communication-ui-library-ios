@@ -15,9 +15,9 @@ class XCUITestBase: XCTestCase {
         var name: String {
             switch self {
             case .swiftUI:
-                return "Swift UI"
+                return "Call - Swift UI"
             case .uiKit:
-                return "UI Kit"
+                return "Call - UI Kit"
             }
         }
     }
