@@ -836,16 +836,16 @@
 		1F94DAE22673F72000691D1E /* Manager */ = {
 			isa = PBXGroup;
 			children = (
+				FA94AF3E27D68DFD001063A6 /* AccessibilityProvider.swift */,
+				A874EDC3266152AA003C7D92 /* AppLifeCycleManager.swift */,
 				98546EB926DEF24D0069B246 /* AudioDeviceType.swift */,
 				98546EB526D9B9990069B246 /* AudioSessionManager.swift */,
-				1F2BED872631EB7900D98266 /* PermissionsManager.swift */,
-				A874EDC3266152AA003C7D92 /* AppLifeCycleManager.swift */,
-				1F8E0B77268D0EF000DDD18E /* CompositeErrorManager.swift */,
-				FA94AF3E27D68DFD001063A6 /* AccessibilityProvider.swift */,
 				881D8F7327FCA6B3008EC897 /* AvatarViewManager.swift */,
-				FAD8453F2819C129007DAFE1 /* RemoteParticipantsManager.swift */,
-				529C34E228A4B25400ACD918 /* NetworkManager.swift */,
+				1F8E0B77268D0EF000DDD18E /* CompositeErrorManager.swift */,
 				88D8DD7528EF9A93006A4AC4 /* DebugInfoManager.swift */,
+				529C34E228A4B25400ACD918 /* NetworkManager.swift */,
+				1F2BED872631EB7900D98266 /* PermissionsManager.swift */,
+				FAD8453F2819C129007DAFE1 /* RemoteParticipantsManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1134,13 +1134,13 @@
 				1F94DAF42677D48400691D1E /* CallCompositeError.swift */,
 				A8373993261F9D7600D46787 /* CallCompositeOptions.swift */,
 				A810038A26A0C1740015C26E /* CallConfiguration.swift */,
+				FA538277292FE86200963FFC /* DebugInfo.swift */,
 				1F48B400274879F000B6E5F9 /* DiagnosticConfig.swift */,
 				759BDEFC28FF0A81002B6853 /* LocalizationOptions.swift */,
 				881D8F7127FB6992008EC897 /* LocalOptions.swift */,
 				500C0F1E2847DE18000BA2DC /* RemoteOptions.swift */,
 				FA378671284152CA005B6288 /* SetParticipantViewDataError.swift */,
 				1F94DADB2673E87700691D1E /* ThemeOptions.swift */,
-				FA538277292FE86200963FFC /* DebugInfo.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1879,7 +1879,7 @@
 			baseConfigurationReference = E3504C0C167BEEE155CF30AD /* Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9KBH5RKYEW;
+				DEVELOPMENT_TEAM = UBF8T346G9;
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1899,7 +1899,7 @@
 			baseConfigurationReference = E7792CEA9A8EE93D3F8391F4 /* Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 9KBH5RKYEW;
+				DEVELOPMENT_TEAM = UBF8T346G9;
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -19,26 +19,16 @@ extension XCUIElement {
         }
         application.menuItems["Paste"].tap()
     }
-
-    func forceTapElement() {
-        if self.isHittable {
-            self.tap()
-        } else {
-            let coordinate: XCUICoordinate = self.coordinate(withNormalizedOffset:
-                                                                CGVector(dx: 0.0, dy: 0.0))
-            coordinate.tap()
-        }
-    }
 }
 
 extension XCTestCase {
-  func wait(for element: XCUIElement, timeout: TimeInterval = 10) {
+    func wait(for element: XCUIElement, timeout: TimeInterval = 20.0) {
     let predicate = NSPredicate(format: "exists == true")
     let expectation = expectation(for: predicate, evaluatedWith: element, handler: nil)
     wait(for: [expectation], timeout: timeout)
   }
 
-    func waitEnabled(for element: XCUIElement, timeout: TimeInterval = 10) {
+    func waitEnabled(for element: XCUIElement, timeout: TimeInterval = 20.0) {
       let predicate = NSPredicate(format: "enabled == true")
       let expectation = expectation(for: predicate, evaluatedWith: element, handler: nil)
       wait(for: [expectation], timeout: timeout)

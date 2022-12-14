@@ -9,6 +9,9 @@ import AppCenterCrashes
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+
+    static var orientationLock: UIInterfaceOrientationMask = .all
+
     let envConfigSubject = EnvConfigSubject()
 
     func application(_ application: UIApplication,
@@ -28,5 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
+    }
+
+    func application(_ application: UIApplication,
+                     supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return AppDelegate.orientationLock
     }
 }

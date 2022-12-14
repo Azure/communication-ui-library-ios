@@ -199,17 +199,17 @@ public class CallComposite {
                                      logger: logger,
                                      viewFactory: viewFactory,
                                      isRightToLeft: isRightToLeft)
-        let toolkitHostingController = ContainerUIHostingController(rootView: rootView,
-                                                                    callComposite: self,
-                                                                    isRightToLeft: isRightToLeft)
-        toolkitHostingController.modalPresentationStyle = .fullScreen
+        let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
+                                                                        callComposite: self,
+                                                                        isRightToLeft: isRightToLeft)
+        containerUIHostingController.modalPresentationStyle = .fullScreen
 
-        router.setDismissComposite { [weak toolkitHostingController, weak self] in
-            toolkitHostingController?.dismissSelf()
+        router.setDismissComposite { [weak containerUIHostingController, weak self] in
+            containerUIHostingController?.dismissSelf()
             self?.cleanUpManagers()
         }
 
-        return toolkitHostingController
+        return containerUIHostingController
     }
 
     private func present(_ viewController: UIViewController) {
