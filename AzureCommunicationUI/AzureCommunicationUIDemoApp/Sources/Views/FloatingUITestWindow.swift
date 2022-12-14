@@ -67,13 +67,6 @@ class FloatingUITestWindow: UIWindow {
         stackView.addArrangedSubview(button)
     }
 
-//    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-//        guard let button = button else {
-//            return false
-//        }
-//        let buttonPoint = convert(point, to: button)
-//        return button.point(inside: buttonPoint, with: event)
-//    }
     @objc func holdButtonTapped(sender: UIButton) {
         debugPrint("UI Test:: holdButtonTapped")
         Task {
