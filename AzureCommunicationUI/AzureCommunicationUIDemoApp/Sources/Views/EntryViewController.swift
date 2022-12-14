@@ -24,9 +24,9 @@ class EntryViewController: UIViewController {
             self.callingSDKWrapperMock = callSDKWrapperMock
             window = FloatingUITestWindow(windowScene: windowScenes)
             window?.callingSDKWrapperMock = callSDKWrapperMock
-            window?.isHidden = true
             window?.windowLevel = .alert + 1
             window?.makeKeyAndVisible()
+            window?.isHidden = true
         }
     }
 
