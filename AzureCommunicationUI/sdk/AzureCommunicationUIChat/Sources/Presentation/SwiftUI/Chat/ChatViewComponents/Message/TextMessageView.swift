@@ -57,9 +57,7 @@ struct TextMessageView: View {
         }
         .padding([.leading, .trailing], Constants.contentHorizontalPadding)
         .padding([.top, .bottom], Constants.contentVerticalPadding)
-        .background(messageModel.isLocalUser
-                    ? Color(StyleProvider.color.primaryColorTint30)
-                    : Color(StyleProvider.color.surfaceTertiary))
+        .background(getMessageBubbleBackground(messageModel: messageModel))
         .cornerRadius(Constants.cornerRadius)
     }
 
@@ -103,6 +101,18 @@ struct TextMessageView: View {
             return Constants.remoteAvatarLeadingPadding
         } else {
             return Constants.remoteLeadingPadding
+        }
+    }
+
+    private func getMessageBubbleBackground(messageModel: ChatMessageInfoModel) -> Color {
+        guard messageModel.isLocalUser else {
+            return Color(StyleProvider.color.surfaceTertiary)
+        }
+
+        if messageModel.sendStatus == .failed {
+            return Color(StyleProvider.color.dangerPrimary).opacity(0.2)
+        } else {
+            return Color(StyleProvider.color.primaryColorTint30)
         }
     }
 }
