@@ -3,6 +3,7 @@ platform :ios, '14.0'
 workspace 'AzureCommunicationUI'
 
 project 'sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
+project 'sdk/AzureCommunicationUICalling/AzureCommunicationUIChat.xcodeproj'
 project 'AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj'
 
 target 'AzureCommunicationUICalling' do
@@ -14,9 +15,28 @@ target 'AzureCommunicationUICalling' do
   pod 'MicrosoftFluentUI/Button_ios', '0.8.9'
   pod 'MicrosoftFluentUI/PopupMenu_ios', '0.8.9'
   pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.8.9'
+  pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.8.9'
   pod 'SwiftLint', '0.42.0'
 
   target 'AzureCommunicationUICallingTests' do
+    # Pods for testing
+    pod 'SwiftLint', '0.42.0'
+  end
+end
+
+target 'AzureCommunicationUIChat' do
+  project 'sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj'
+  use_frameworks!
+  pod 'AzureCommunicationChat', '1.3.0'
+  pod 'MicrosoftFluentUI/Avatar_ios', '0.8.9'
+  pod 'MicrosoftFluentUI/BottomSheet_ios', '0.8.9'
+  pod 'MicrosoftFluentUI/Button_ios', '0.8.9'
+  pod 'MicrosoftFluentUI/PopupMenu_ios', '0.8.9'
+  pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.8.9'
+  pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.8.9'
+  pod 'SwiftLint', '0.42.0'
+
+  target 'AzureCommunicationUIChatTests' do
     # Pods for testing
     pod 'SwiftLint', '0.42.0'
   end
@@ -26,11 +46,13 @@ target 'AzureCommunicationUIDemoApp' do
   project 'AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj'
   use_frameworks!
   pod 'AzureCommunicationCalling', '2.2.1'
+  pod 'AzureCommunicationChat', '1.3.0'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.8.9'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.8.9'
   pod 'MicrosoftFluentUI/Button_ios', '0.8.9'
   pod 'MicrosoftFluentUI/PopupMenu_ios', '0.8.9'
   pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.8.9'
+  pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.8.9'
   pod 'SwiftLint', '0.42.0'
   pod 'AppCenter/Crashes', '4.4.1'
   
@@ -38,7 +60,6 @@ target 'AzureCommunicationUIDemoApp' do
     # Pods for testing
     pod 'SwiftLint', '0.42.0'
   end
-
 end
 
 post_install do |installer|
@@ -47,6 +68,9 @@ post_install do |installer|
       target.build_configurations.each do |config|
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '14.0'
       end
+    end
+    target.build_configurations.each do |config|
+        config.build_settings['ENABLE_BITCODE'] = 'NO'
     end
   end
 end

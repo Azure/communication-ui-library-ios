@@ -27,5 +27,4 @@ struct DiagnosticConfig {
     init() {
         tags.append(callCompositeTag)
     }
-
 }

@@ -4,11 +4,18 @@ PODS:
     - AppCenter/Core
   - AzureCommunicationCalling (2.2.1):
     - AzureCommunicationCommon (~> 1.0)
-  - AzureCommunicationCommon (1.1.0)
+  - AzureCommunicationChat (1.3.0):
+    - AzureCommunicationCommon (~> 1.0)
+    - AzureCore (= 1.0.0-beta.15)
+    - Trouter (= 0.1.0)
+  - AzureCommunicationCommon (1.1.1)
+  - AzureCore (1.0.0-beta.15)
   - MicrosoftFluentUI/ActivityIndicator_ios (0.8.9):
     - MicrosoftFluentUI/Core_ios
   - MicrosoftFluentUI/Avatar_ios (0.8.9):
     - MicrosoftFluentUI/Core_ios
+  - MicrosoftFluentUI/AvatarGroup_ios (0.8.9):
+    - MicrosoftFluentUI/Avatar_ios
   - MicrosoftFluentUI/BottomSheet_ios (0.8.9):
     - MicrosoftFluentUI/Obscurable_ios
     - MicrosoftFluentUI/ResizingHandleView_ios
@@ -39,12 +46,15 @@ PODS:
   - MicrosoftFluentUI/TouchForwardingView_ios (0.8.9):
     - MicrosoftFluentUI/Core_ios
   - SwiftLint (0.42.0)
+  - Trouter (0.1.0)
 
 DEPENDENCIES:
   - AppCenter/Crashes (= 4.4.1)
   - AzureCommunicationCalling (= 2.2.1)
+  - AzureCommunicationChat (= 1.3.0)
   - MicrosoftFluentUI/ActivityIndicator_ios (= 0.8.9)
   - MicrosoftFluentUI/Avatar_ios (= 0.8.9)
+  - MicrosoftFluentUI/AvatarGroup_ios (= 0.8.9)
   - MicrosoftFluentUI/BottomSheet_ios (= 0.8.9)
   - MicrosoftFluentUI/Button_ios (= 0.8.9)
   - MicrosoftFluentUI/PopupMenu_ios (= 0.8.9)
@@ -54,17 +64,23 @@ SPEC REPOS:
   trunk:
     - AppCenter
     - AzureCommunicationCalling
+    - AzureCommunicationChat
     - AzureCommunicationCommon
+    - AzureCore
     - MicrosoftFluentUI
     - SwiftLint
+    - Trouter
 
 SPEC CHECKSUMS:
   AppCenter: b0b6f1190215b5f983c42934db718f3b46fff3c0
   AzureCommunicationCalling: aee011f293544e151958a7d5888d6239199adba1
-  AzureCommunicationCommon: feb813845d73fc5666ab1a87e0f7bb18fa5698d6
+  AzureCommunicationChat: c3a67d67e85daba4d9d81874e50187c91f556f2d
+  AzureCommunicationCommon: cc520a89f3f8db6d58de42ec4a70cfb79a1b76a3
+  AzureCore: ebbf7cf4dfe72afc7584088c38d1c99f5a35d647
   MicrosoftFluentUI: a204df7fac4bf62b608ad0f9683a5ca64faec2be
   SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
+  Trouter: 62f6db5519829c0897832d404338c3b78ea64fa2
 
-PODFILE CHECKSUM: 836c51de1db53c87c573738d8d4b7a0f44181e2b
+PODFILE CHECKSUM: 8f7791be9cee03c486dc808d5d4ca189faa4afce
 
 COCOAPODS: 1.11.3
