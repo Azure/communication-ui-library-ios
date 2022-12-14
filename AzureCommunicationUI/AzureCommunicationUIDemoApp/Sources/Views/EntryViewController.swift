@@ -3,6 +3,7 @@
 //  Licensed under the MIT License.
 //
 
+import Combine
 import Foundation
 import UIKit
 import SwiftUI
@@ -12,6 +13,7 @@ class EntryViewController: UIViewController {
     private var envConfigSubject: EnvConfigSubject
     private var window: FloatingUITestWindow?
     private var callingSDKWrapperMock: UITestCallingSDKWrapper?
+    private var cancellables = Set<AnyCancellable>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +24,7 @@ class EntryViewController: UIViewController {
             self.callingSDKWrapperMock = callSDKWrapperMock
             window = FloatingUITestWindow(windowScene: windowScenes)
             window?.callingSDKWrapperMock = callSDKWrapperMock
-            window?.isHidden = false
+            window?.isHidden = true
             window?.windowLevel = .alert + 1
             window?.makeKeyAndVisible()
         }
@@ -31,6 +33,10 @@ class EntryViewController: UIViewController {
     init(envConfigSubject: EnvConfigSubject) {
         self.envConfigSubject = envConfigSubject
         super.init(nibName: nil, bundle: nil)
+        envConfigSubject.$useMockCallingSDKHandler.sink { [weak self] newVal in
+            // If callingSDK Mock is used, then show the hidden window
+            self?.window?.isHidden = !newVal
+        }.store(in: &cancellables)
     }
 
     required init?(coder: NSCoder) {
