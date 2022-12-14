@@ -7,34 +7,43 @@ import Foundation
 import UIKit
 import SwiftUI
 import CoreGraphics
+import Combine
 
 class EntryViewController: UIViewController {
     private var envConfigSubject: EnvConfigSubject
     private var window: FloatingUITestWindow?
     private var callingSDKWrapperMock: UITestCallingSDKWrapper?
+    private var cancellables = Set<AnyCancellable>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        addDebuggerWindow()
+    }
+
+    init(envConfigSubject: EnvConfigSubject) {
+        self.envConfigSubject = envConfigSubject
+        super.init(nibName: nil, bundle: nil)
+        envConfigSubject.$useMockCallingSDKHandler.sink { [weak self] newVal in
+            self?.window?.isHidden = !newVal
+        }.store(in: &cancellables)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    private func addDebuggerWindow() {
         let scenes = UIApplication.shared.connectedScenes
         if let windowScenes = scenes.first as? UIWindowScene {
             let callSDKWrapperMock = UITestCallingSDKWrapper()
             self.callingSDKWrapperMock = callSDKWrapperMock
             window = FloatingUITestWindow(windowScene: windowScenes)
             window?.callingSDKWrapperMock = callSDKWrapperMock
-            window?.isHidden = false
             window?.windowLevel = .alert + 1
             window?.makeKeyAndVisible()
+            window?.isHidden = true
         }
-    }
-
-    init(envConfigSubject: EnvConfigSubject) {
-        self.envConfigSubject = envConfigSubject
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
     private func setupUI() {
