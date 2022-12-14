@@ -24,14 +24,14 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         // mute / un-mute local mic
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.micAccessibilityID.rawValue,
                   shouldWait: true)
-        // KG
-        // app.windows["debugger_Window"].buttons["Hold"].forceTapElement()
-        // app.windows["debugger_Window"].buttons["Resume"].tap()
-        // app.windows["debugger_Window"].buttons["Transcription on"].tap()
-        // app.windows["debugger_Window"].buttons["Transcription off"].tap()
-        // app.windows["debugger_Window"].buttons["Recording on"].tap()
-        // app.windows["debugger_Window"].buttons["Recording off"].tap()
 
+        app.windows["debugger_Window"].buttons["Hold"].tap()
+        app.windows["debugger_Window"].buttons["Resume"].tap()
+        app.windows["debugger_Window"].buttons["Transcription on"].tap()
+        app.windows["debugger_Window"].buttons["Transcription off"].tap()
+        app.windows["debugger_Window"].buttons["Recording on"].tap()
+        app.windows["debugger_Window"].buttons["Recording off"].tap()
+        
         let micButton = app.buttons[AccessibilityIdentifier.micAccessibilityID.rawValue]
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.micAccessibilityID.rawValue, shouldWait: true)
         XCTAssertEqual(micButton.label, "Mute")
