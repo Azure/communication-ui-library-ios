@@ -75,18 +75,18 @@ struct TextEditorView: View {
                                            value: $0.frame(in: .local).size.height)
                 })
             ZStack(alignment: .leading) {
-                if text.isEmpty {
-                    Text("Type a message") // Localization
-                        .foregroundColor(Color(StyleProvider.color.textDisabled))
-                        .padding(Constants.padding)
-                }
                 TextEditor(text: $text)
                     .font(.system(.body))
                     .frame(height: max(Constants.minimumHeight, textEditorHeight))
                     .padding([.top], Constants.padding)
-                    .opacity(text.isEmpty ? 0.1 : 1)
                     .overlay(RoundedRectangle(cornerRadius: Constants.cornerRadius)
                         .stroke(Color(StyleProvider.color.dividerOnPrimary)))
+                if text.isEmpty {
+                    Text("Type a message") // Localization
+                        .foregroundColor(Color(StyleProvider.color.textDisabled))
+                        .padding(Constants.padding)
+                        .allowsHitTesting(false)
+                }
             }
         }.onPreferenceChange(ViewHeightKey.self) {
             textEditorHeight = $0 + (text.numberOfLines() > 1 ? Constants.multilineHeightOffset : 0)
