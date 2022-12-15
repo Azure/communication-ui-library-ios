@@ -83,8 +83,9 @@ struct CallingView: View {
                                                     orientation: $orientation,
                                                     screenSize: getSizeClass())
                         }
-                        .accessibilityElement(children: .ignore)
-                        .accessibilityIdentifier(AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue)
+                        // Determine if we need this for e2e tests in subsequent PR
+//                        .accessibilityElement(children: .ignore)
+//                        .accessibilityIdentifier(AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue)
                     }
                     topAlertAreaView
                         .accessibilityElement(children: .contain)
