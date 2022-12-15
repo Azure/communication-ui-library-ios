@@ -55,5 +55,29 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
             self?.isLocalUserMutedSubject.send(false)
         }
     }
+
+    func transcriptionOn() {
+        DispatchQueue.main.async { [weak self] in
+            self?.isTranscriptionActiveSubject.send(true)
+        }
+    }
+
+    func transcriptionOff() {
+        DispatchQueue.main.async { [weak self] in
+            self?.isTranscriptionActiveSubject.send(false)
+        }
+    }
+
+    func recordingOn() {
+        DispatchQueue.main.async { [weak self] in
+            self?.isRecordingActiveSubject.send(true)
+        }
+    }
+
+    func recordingOff() {
+        DispatchQueue.main.async { [weak self] in
+            self?.isRecordingActiveSubject.send(false)
+        }
+    }
 }
 #endif

@@ -177,6 +177,30 @@ extension XCUITestBase {
         app.buttons[connectionType.name].tap()
     }
 
+    func toggleMockSDKWrapperSwitch(enable: Bool) {
+        tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
+        wait(for: app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue])
+        app.tap()
+        let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
+        if let enabled = toggle.isOn, enabled != enable {
+            toggle.tap()
+        }
+        XCTAssertTrue(toggle.isOn == enable)
+        app.buttons["Close"].tap()
+
+        // tapButton(
+        //     accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue,
+        //     shouldWait: false)
+        // app.tap()
+        // let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
+        // if toggle.waitForExistence(timeout: 3), 
+        //     let enabled = toggle.isOn, 
+        //        enabled != enable {
+        //     toggle.tap()
+        // }
+        // app.buttons["Close"].tap()
+    }
+
     /// Taps the cell that matches with the given accessibility id
     /// - Parameters:
     ///   - accessibilityIdentifier: accessibility id of the cell
@@ -196,5 +220,11 @@ extension XCUITestBase {
         attachment.name = name
         attachment.lifetime = lifetime
         add(attachment)
+    }
+}
+
+extension XCUIElement {
+    var isOn: Bool? {
+        return (self.value as? String).map { $0 == "1" }
     }
 }

@@ -47,6 +47,7 @@ class CallingDemoViewController: UIViewController {
 
     private var cancellable = Set<AnyCancellable>()
     private var envConfigSubject: EnvConfigSubject
+    private var callingSDKWrapperMock: UITestCallingSDKWrapper?
 
     private lazy var contentView: UIView = {
         let view = UIView()
@@ -75,8 +76,10 @@ class CallingDemoViewController: UIViewController {
         }
     }
 
-    init(envConfigSubject: EnvConfigSubject) {
+    init(envConfigSubject: EnvConfigSubject,
+         callingSDKHandlerMock: UITestCallingSDKWrapper? = nil) {
         self.envConfigSubject = envConfigSubject
+        self.callingSDKWrapperMock = callingSDKHandlerMock
         super.init(nibName: nil, bundle: nil)
         self.combineEnvConfigSubject()
     }
@@ -168,7 +171,7 @@ class CallingDemoViewController: UIViewController {
         #if DEBUG
         let callComposite = envConfigSubject.useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
-                          callingSDKWrapperProtocol: UITestCallingSDKWrapper())
+                          callingSDKWrapperProtocol: callingSDKWrapperMock)
             : CallComposite(withOptions: callCompositeOptions)
         #else
         let callComposite = CallComposite(withOptions: callCompositeOptions)
