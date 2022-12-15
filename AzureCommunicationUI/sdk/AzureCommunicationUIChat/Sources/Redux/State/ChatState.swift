@@ -12,7 +12,7 @@ struct ChatState {
     let lastReadReceiptReceivedTimestamp: Date
     let lastReadReceiptSentTimestamp: Date?
     let lastReceivedMessageTimestamp: Date
-    let lastSendingMessageTimestamp: Date
+    let lastSendingMessageTimestamp: Date?
     let lastSentOrFailedMessageTimestamp: Date
     let isLocalUserRemovedFromChat: Bool
 
@@ -22,7 +22,7 @@ struct ChatState {
          lastReadReceiptReceivedTimestamp: Date = Date(),
          lastReadReceiptSentTimestamp: Date? = nil,
          lastReceivedMessageTimestamp: Date = Date(),
-         lastSendingMessageTimestamp: Date = Date(),
+         lastSendingMessageTimestamp: Date? = nil,
          lastSentOrFailedMessageTimestamp: Date = Date(),
          isLocalUserRemovedFromChat: Bool = false) {
         self.localUser = localUser
