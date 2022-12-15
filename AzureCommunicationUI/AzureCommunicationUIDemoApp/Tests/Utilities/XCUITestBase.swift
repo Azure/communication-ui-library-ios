@@ -182,7 +182,7 @@ extension XCUITestBase {
         wait(for: app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue])
         app.tap()
         let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
-        if let enabled = toggle.isOn, enabled != enabled {
+        if let enabled = toggle.isOn, enabled != enable {
             toggle.tap()
         }
         XCTAssertTrue(toggle.isOn == enable)
