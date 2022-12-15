@@ -46,13 +46,13 @@ struct SetupControlBarView: View {
 
     var micButton: some View {
         IconWithLabelButton(viewModel: viewModel.micButtonViewModel)
-            .accessibility(identifier: AccessibilityIdentifier.togglMicAccessibilityID.rawValue)
+            .accessibility(identifier: AccessibilityIdentifier.toggleMicAccessibilityID.rawValue)
     }
 
     var audioDeviceButton: some View {
         IconWithLabelButton(viewModel: viewModel.audioDeviceButtonViewModel)
             .background(SourceViewSpace(sourceView: audioDeviceButtonSourceView))
-            .accessibility(identifier: AccessibilityIdentifier.toggleAudioDeviceAccesibiiltyID.rawValue)
+            .accessibility(identifier: AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue)
     }
 
     var audioDeviceSelectionListView: some View {
