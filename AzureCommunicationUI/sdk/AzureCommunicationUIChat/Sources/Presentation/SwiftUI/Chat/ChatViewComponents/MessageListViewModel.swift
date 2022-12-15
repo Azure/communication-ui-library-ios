@@ -75,7 +75,10 @@ class MessageListViewModel: ObservableObject {
     }
 
     func updateReadReceiptToBeSentMessageId(message: ChatMessageInfoModel) {
-        guard !message.isLocalUser else {
+        guard !message.isLocalUser,
+              message.type != .participantsAdded,
+              message.type != .participantsRemoved,
+              message.type != .topicUpdated else {
             return
         }
         guard readReceiptToBeSentMessageId != nil else {
@@ -138,8 +141,9 @@ class MessageListViewModel: ObservableObject {
             }
 
             // Scroll to new sending message and get latest sending message id
-            if self.lastSendingMessageTimestamp < chatState.lastSendingMessageTimestamp {
-                self.lastSendingMessageTimestamp = chatState.lastSendingMessageTimestamp
+            if let lastSendingMessageTimestamp = chatState.lastSendingMessageTimestamp,
+               self.lastSendingMessageTimestamp < lastSendingMessageTimestamp {
+                self.lastSendingMessageTimestamp = lastSendingMessageTimestamp
                 shouldScrollToBottom = true
                 if let latestSendingMessage = messages.last(where: {$0.sendStatus == .sending}) {
                     latestSendingOrSentMessageId = latestSendingMessage.id
@@ -167,11 +171,13 @@ class MessageListViewModel: ObservableObject {
     }
 
     func getNumberOfNewMessages() -> Int {
-        if let lastReadIndex = messages.firstIndex(where: { $0.id == readReceiptToBeSentMessageId }),
-           let lastSentIndex = messages.lastIndex(where: { $0.isLocalUser }) {
+        let messageList = messages.filter {
+            $0.type != .topicUpdated && $0.type != .participantsRemoved && $0.type != .participantsAdded
+        }
+        if let lastReadIndex = messageList.firstIndex(where: { $0.id == readReceiptToBeSentMessageId }),
+           let lastSentIndex = messageList.lastIndex(where: { $0.isLocalUser }) {
             let lastIndex = max(lastReadIndex, lastSentIndex)
-
-             return (messages.count - 1) - lastIndex
+            return (messageList.count - 1) - lastIndex
         }
         return 0
     }
