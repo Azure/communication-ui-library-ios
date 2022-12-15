@@ -11,14 +11,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     func testJoinCallEndCallWithMockCallCallingSDKWrapperHandler() {
         tapInterfaceFor(.callUIKit)
 
-        // turn on calling sdk mock in settings modal
-        tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
-        wait(for: app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue])
-        app.tap()
-        let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
-        toggle.tap()
-        XCTAssertTrue(toggle.value as? String == "1")
-        app.buttons["Close"].tap()
+        toggleMockSDKWrapperSwitch(enable: true)
 
         // go to setup screen
         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
@@ -28,19 +21,31 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
                          shouldWait: true)
 
-        // mute / unmute local mic
+//        app.windows["debugger_Window"].buttons["Hold"].tap()
+//        app.windows["debugger_Window"].buttons["Resume"].tap()
+//        app.windows["debugger_Window"].buttons["Transcription on"].tap()
+//        app.windows["debugger_Window"].buttons["Transcription off"].tap()
+//        app.windows["debugger_Window"].buttons["Recording on"].tap()
+//        app.windows["debugger_Window"].buttons["Recording off"].tap()
+
         let micButton = app.buttons[AccessibilityIdentifier.micAccessibilityID.rawValue]
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.micAccessibilityID.rawValue, shouldWait: true)
         XCTAssertEqual(micButton.label, "Mute")
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.micAccessibilityID.rawValue)
         XCTAssertEqual(micButton.label, "Unmute")
+
+        // KG
+        // toggleLeaveCallDrawer(leaveCall: true)
+        // let draggablePipViewRetest = app.otherElements[AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue]
+        // XCTAssertFalse(draggablePipViewRetest.exists)
+
         leaveCall()
     }
 
     // MARK: End call tests
-
     func testCallCompositeE2ETokenURLGroupCall() {
         tapInterfaceFor(.callUIKit)
+        // toggleMockSDKWrapperSwitch(enable: false)
         tapConnectionTokenType(.acsTokenUrl)
         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
                          shouldWait: true)
@@ -51,6 +56,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeE2ETokenURLTeamsCall() {
         tapInterfaceFor(.callSwiftUI)
+//        toggleMockSDKWrapperSwitch(enable: false)
         tapConnectionTokenType(.acsTokenUrl)
         tapMeetingType(.teamsCall)
         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
@@ -62,6 +68,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeE2ETokenValueGroupCall() {
         tapInterfaceFor(.callSwiftUI)
+        //  toggleMockSDKWrapperSwitch(enable: false)
         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
                          shouldWait: true)
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
@@ -72,6 +79,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     func testCallCompositeE2ETokenValueTeamsCall() {
         tapInterfaceFor(.callUIKit)
         tapMeetingType(.teamsCall)
+        //  toggleMockSDKWrapperSwitch(enable: false)
         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
                          shouldWait: true)
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,

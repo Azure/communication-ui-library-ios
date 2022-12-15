@@ -6,6 +6,12 @@
 import Foundation
 
 enum AccessibilityIdentifier: String {
+    case bannerViewAccessibilityID = "AzureCommunicationUICalling.CallingView.Banner.AccessibilityID"
+    case participantGridCellViewAccessibilityID =
+            "AzureCommunicationUICalling.CallingView.ParticipantGridCellView.AccessibilityID"
+    case participantGridLayoutViewAccessibilityID =
+            "AzureCommunicationUICalling.CallingView.ParticipantGridLayoutView.AccessibilityID"
+    case draggablePipViewAccessibilityID = "AzureCommunicationUICalling.CallingView.DraggablePipView.AccessibilityID"
     case leaveCallAccessibilityID = "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall.AccessibilityID"
     case joinCallAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.JoinCall.AccessibilityID"
     case toggleVideoAccessibilityID = "AzureCommunicationUICalling.SetupView.Button.Video.AccessibilityID"
