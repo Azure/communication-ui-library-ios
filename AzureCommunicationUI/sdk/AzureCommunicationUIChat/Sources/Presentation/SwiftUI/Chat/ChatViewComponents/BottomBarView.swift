@@ -85,6 +85,7 @@ struct TextEditorView: View {
                     Text("Type a message") // Localization
                         .foregroundColor(Color(StyleProvider.color.textDisabled))
                         .padding(Constants.padding)
+                        .allowsHitTesting(false)
                 }
             }
         }.onPreferenceChange(ViewHeightKey.self) {

@@ -36,6 +36,7 @@ struct ParticipantGridCellView: View {
             }
             .accessibilityElement(children: .combine)
             .accessibilityLabel(Text(viewModel.accessibilityLabel))
+            .accessibilityIdentifier(AccessibilityIdentifier.participantGridCellViewAccessibilityID.rawValue)
         }
         .onReceive(viewModel.$videoViewModel) { model in
             if model?.videoStreamId != displayedVideoStreamId {
