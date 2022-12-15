@@ -75,9 +75,10 @@ class MessageListViewModel: ObservableObject {
     }
 
     func updateReadReceiptToBeSentMessageId(message: ChatMessageInfoModel) {
-        guard !message.isLocalUser, message.type != .participantsAdded ||
-                                     message.type != .participantsRemoved ||
-                                     message.type != .topicUpdated else {
+        guard !message.isLocalUser,
+              message.type != .participantsAdded,
+              message.type != .participantsRemoved,
+              message.type != .topicUpdated else {
             return
         }
         guard readReceiptToBeSentMessageId != nil else {
