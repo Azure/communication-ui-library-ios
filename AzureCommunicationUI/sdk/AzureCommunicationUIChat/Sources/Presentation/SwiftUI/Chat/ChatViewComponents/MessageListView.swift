@@ -74,6 +74,7 @@ struct MessageListView: View {
                                 }
                                 createMessageSendStatus(message: message)
                             }
+                            .id(index)
                         }
                     }
                 })
@@ -81,9 +82,8 @@ struct MessageListView: View {
             .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
             .onChange(of: viewModel.shouldScrollToBottom) { _ in
                 if viewModel.shouldScrollToBottom {
-                    if let lastMessage = viewModel.messages.last {
-                        scrollProxy.scrollTo(lastMessage, anchor: .bottom)
-                    }
+                    let lastIndex = viewModel.messages.count - 1 > 0 ? viewModel.messages.count - 1 : 0
+                    scrollProxy.scrollTo(lastIndex, anchor: .bottom)
                     viewModel.shouldScrollToBottom = false
                 }
             }
