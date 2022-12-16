@@ -51,7 +51,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     // MARK: End call tests
     func testCallCompositeE2ETokenURLGroupCall() {
         tapInterfaceFor(.callUIKit)
-         toggleMockSDKWrapperSwitch(enable: true)
+        toggleMockSDKWrapperSwitch(enable: true)
         tapConnectionTokenType(.acsTokenUrl)
         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
                          shouldWait: true)
