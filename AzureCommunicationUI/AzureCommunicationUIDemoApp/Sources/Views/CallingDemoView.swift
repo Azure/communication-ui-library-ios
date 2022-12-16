@@ -19,8 +19,9 @@ struct CallingDemoView: View {
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
+#if DEBUG
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
-
+#endif
     var body: some View {
         VStack {
             Text("UI Library - SwiftUI Sample")
