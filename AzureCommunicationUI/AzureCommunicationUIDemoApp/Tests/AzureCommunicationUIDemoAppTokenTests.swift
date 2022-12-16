@@ -9,7 +9,6 @@ import XCTest
 class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
     func testCallCompositeWithExpiredToken() {
         tapInterfaceFor(.callSwiftUI)
-        toggleMockSDKWrapperSwitch(enable: true)
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
         wait(for: app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue])
         let expiredTokenToggle = app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue]
@@ -17,8 +16,7 @@ class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
         expiredTokenToggle.tap()
         XCTAssertTrue(expiredTokenToggle.value as? String == "1")
         tapButton(accessibilityIdentifier: "Close")
-        tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-                         shouldWait: true)
+        startExperience(useCallingSDKMock: false)
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
                          shouldWait: true)
         wait(for: app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue])
@@ -26,7 +24,6 @@ class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
 
     func testCallCompositeWithEmptyToken() {
         tapInterfaceFor(.callSwiftUI)
-        toggleMockSDKWrapperSwitch(enable: true)
         tapButton(accessibilityIdentifier: AccessibilityId.clearTokenTextFieldAccessibilityID.rawValue)
 
         XCTAssertFalse(app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue].isEnabled)
@@ -34,14 +31,12 @@ class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
 
     func testCallCompositeWithInvalidToken() {
         tapInterfaceFor(.callSwiftUI)
-        toggleMockSDKWrapperSwitch(enable: true)
         tapButton(accessibilityIdentifier: AccessibilityId.clearTokenTextFieldAccessibilityID.rawValue)
 
         let acsTokenTextField = app.textFields["ACS Token"]
         acsTokenTextField.setText(text: "invalidToken", application: app)
 
-        tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-                         shouldWait: true)
+        startExperience(useCallingSDKMock: false)
         tapButton(accessibilityIdentifier: "Dismiss", shouldWait: true)
     }
 }

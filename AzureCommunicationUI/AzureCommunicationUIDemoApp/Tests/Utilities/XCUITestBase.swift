@@ -177,15 +177,13 @@ extension XCUITestBase {
         app.buttons[connectionType.name].tap()
     }
 
-    func toggleMockSDKWrapperSwitch(enable: Bool) {
+    func enableMockCallingSDKWrapper() {
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
         wait(for: app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue])
         app.tap()
         let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
-        if let enabled = toggle.isOn, enabled != enable {
-            toggle.tap()
-        }
-        XCTAssertTrue(toggle.isOn == enable)
+        toggle.tap()
+        XCTAssertEqual(toggle.isOn, true)
         app.buttons["Close"].tap()
     }
 
@@ -208,6 +206,16 @@ extension XCUITestBase {
         attachment.name = name
         attachment.lifetime = lifetime
         add(attachment)
+    }
+
+    /// Enables CallingSDK mock and taps Start experience button
+    /// - Parameter useCallingSDKMock: Option to enable callingSDK mock. Default value is `true`
+    func startExperience(useCallingSDKMock: Bool = true) {
+        if useCallingSDKMock {
+            enableMockCallingSDKWrapper()
+        }
+        tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
+                         shouldWait: true)
     }
 }
 

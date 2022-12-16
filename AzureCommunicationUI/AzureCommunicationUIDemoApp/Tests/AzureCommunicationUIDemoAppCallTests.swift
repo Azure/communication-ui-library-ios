@@ -10,12 +10,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testJoinCallEndCallWithMockCallCallingSDKWrapperHandler() {
         tapInterfaceFor(.callUIKit)
-
-        toggleMockSDKWrapperSwitch(enable: true)
-
-        // go to setup screen
-        tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-                         shouldWait: true)
+        startExperience()
 
         // join call
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
@@ -51,10 +46,8 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     // MARK: End call tests
     func testCallCompositeE2ETokenURLGroupCall() {
         tapInterfaceFor(.callUIKit)
-        toggleMockSDKWrapperSwitch(enable: true)
         tapConnectionTokenType(.acsTokenUrl)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-                         shouldWait: true)
+        startExperience()
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
                          shouldWait: true)
         leaveCall()
@@ -62,11 +55,9 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeE2ETokenURLTeamsCall() {
         tapInterfaceFor(.callSwiftUI)
-        toggleMockSDKWrapperSwitch(enable: true)
         tapConnectionTokenType(.acsTokenUrl)
         tapMeetingType(.teamsCall)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-                         shouldWait: true)
+        startExperience()
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
                          shouldWait: true)
         leaveCall()
@@ -74,9 +65,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeE2ETokenValueGroupCall() {
         tapInterfaceFor(.callSwiftUI)
-        toggleMockSDKWrapperSwitch(enable: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-                         shouldWait: true)
+        startExperience()
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
                          shouldWait: true)
         leaveCall()
@@ -85,9 +74,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     func testCallCompositeE2ETokenValueTeamsCall() {
         tapInterfaceFor(.callUIKit)
         tapMeetingType(.teamsCall)
-        toggleMockSDKWrapperSwitch(enable: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-                         shouldWait: true)
+        startExperience()
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
                          shouldWait: true)
         leaveCall()

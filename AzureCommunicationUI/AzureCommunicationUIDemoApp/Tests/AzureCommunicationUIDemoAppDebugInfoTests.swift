@@ -33,10 +33,7 @@ import XCTest
          tapInterfaceFor(.callUIKit)
          tapMeetingType(.groupCall)
 
-         toggleMockSDKWrapperSwitch(enable: true)
-
-         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-                         shouldWait: true)
+         startExperience()
          tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
                           shouldWait: true)
      }
