@@ -11,8 +11,6 @@ jobs:
       - group: 'SPOOL-Communication-mobileUI'
       - name: 'acsDisplayName'
         value: 'iOS CI UI Automated Tester'
-      - name: 'ACSFreshToken'
-        value: ''
 
     steps:
       - task: servicetree-link-build-task@1
@@ -21,8 +19,6 @@ jobs:
           ServiceTreeGateway: "ServiceTree Gateway"
           Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
         condition: always()
-      
-      - template: templates/retrieve-acs-token.yml
 
       - task: CocoaPods@0
         displayName: 'pod install'
@@ -31,24 +27,7 @@ jobs:
           forceRepoUpdate: true
           projectDirectory: AzureCommunicationUI
 
-      - script: |
-          export INFO_PLIST_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/AzureCommunicationUIDemoApp/Sources/Info.plist
-          
-          plutil -replace groupCallId -string "$(groupCallId)" $INFO_PLIST_FILE
-          plutil -replace teamsMeetingLink -string "$(teamsMeetingLink)" $INFO_PLIST_FILE
-          plutil -replace displayName -string "$(acsDisplayName)" $INFO_PLIST_FILE
-          plutil -replace acsTokenUrl -string "$(acsTokenUrl)" $INFO_PLIST_FILE
-          plutil -replace expiredAcsToken -string "$(expiredAcsToken)" $INFO_PLIST_FILE
-          plutil -replace acsToken -string "$(ACSFreshToken)" $INFO_PLIST_FILE
-          plutil -replace aadToken -string "$(AADToken)" $INFO_PLIST_FILE
-
-        displayName: 'Edit AzureCommunicationUIDemoApp Info.plist'
-
-      - script: |
-          export INFO_PLIST_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/AzureCommunicationUIDemoApp/Tests/Info.plist
-          plutil -replace expiredAcsToken -string "$(expiredAcsToken)" $INFO_PLIST_FILE
-
-        displayName: 'Edit AzureCommunicationUIDemoAppUITests Info.plist'
+      - template: templates/update-demo-app-plist-for-testing.yml
 
       - task: Xcode@5
         displayName: 'Xcode build'
