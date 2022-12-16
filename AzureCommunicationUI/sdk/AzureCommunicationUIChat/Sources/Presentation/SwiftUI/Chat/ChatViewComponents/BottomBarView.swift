@@ -55,11 +55,12 @@ struct BottomBarView: View {
 struct TextEditorView: View {
     private enum Constants {
         static let cornerRadius: CGFloat = 10
-        static let shadow: CGFloat = 1
         static let minimumHeight: CGFloat = 40
         // Extra padding needed when more that one line displayed
         static let multilineHeightOffset: CGFloat = 14
+        static let leadingPadding: CGFloat = 4
         static let padding: CGFloat = 6
+        static let placeHolderPadding: CGFloat = 8
     }
 
     @Binding var text: String
@@ -67,29 +68,44 @@ struct TextEditorView: View {
 
     var body: some View {
         ZStack(alignment: .leading) {
-            Text(text)
-                .font(.system(.body))
-                .foregroundColor(.clear)
-                .background(GeometryReader {
-                    Color.clear.preference(key: ViewHeightKey.self,
-                                           value: $0.frame(in: .local).size.height)
-                })
+            heightMeasureWorkAround
             ZStack(alignment: .leading) {
-                TextEditor(text: $text)
-                    .font(.system(.body))
-                    .frame(height: max(Constants.minimumHeight, textEditorHeight))
-                    .padding([.top], Constants.padding)
-                    .overlay(RoundedRectangle(cornerRadius: Constants.cornerRadius)
-                        .stroke(Color(StyleProvider.color.dividerOnPrimary)))
-                if text.isEmpty {
-                    Text("Type a message") // Localization
-                        .foregroundColor(Color(StyleProvider.color.textDisabled))
-                        .padding(Constants.padding)
-                        .allowsHitTesting(false)
-                }
+                textEditor
+                placeHolder
             }
         }.onPreferenceChange(ViewHeightKey.self) {
             textEditorHeight = $0 + (text.numberOfLines() > 1 ? Constants.multilineHeightOffset : 0)
+        }
+    }
+
+    var heightMeasureWorkAround: some View {
+        Text(text)
+            .font(.system(.body))
+            .foregroundColor(.clear)
+            .background(GeometryReader {
+                Color.clear.preference(key: ViewHeightKey.self,
+                                       value: $0.frame(in: .local).size.height)
+            })
+    }
+
+    var textEditor: some View {
+        TextEditor(text: $text)
+            .font(.system(.body))
+            .frame(height: max(Constants.minimumHeight, textEditorHeight))
+            .padding([.leading], Constants.leadingPadding)
+            .padding([.top], Constants.padding)
+            .overlay(RoundedRectangle(cornerRadius: Constants.cornerRadius)
+                .stroke(Color(StyleProvider.color.dividerOnPrimary)))
+    }
+
+    var placeHolder: some View {
+        Group {
+            if text.isEmpty {
+                Text("Type a message") // Localization
+                    .foregroundColor(Color(StyleProvider.color.textDisabled))
+                    .padding(Constants.placeHolderPadding)
+                    .allowsHitTesting(false)
+            }
         }
     }
 }
