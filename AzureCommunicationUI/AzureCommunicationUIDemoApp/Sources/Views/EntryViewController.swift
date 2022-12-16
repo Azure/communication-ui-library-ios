@@ -3,6 +3,7 @@
 //  Licensed under the MIT License.
 //
 
+import Combine
 import Foundation
 import UIKit
 import SwiftUI
@@ -10,15 +11,32 @@ import CoreGraphics
 
 class EntryViewController: UIViewController {
     private var envConfigSubject: EnvConfigSubject
+    private var window: FloatingUITestWindow?
+    private var callingSDKWrapperMock: UITestCallingSDKWrapper?
+    private var cancellables = Set<AnyCancellable>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        let scenes = UIApplication.shared.connectedScenes
+        if let windowScenes = scenes.first as? UIWindowScene {
+            let callSDKWrapperMock = UITestCallingSDKWrapper()
+            self.callingSDKWrapperMock = callSDKWrapperMock
+            window = FloatingUITestWindow(windowScene: windowScenes)
+            window?.callingSDKWrapperMock = callSDKWrapperMock
+            window?.windowLevel = .alert + 1
+            window?.makeKeyAndVisible()
+            window?.isHidden = true
+        }
     }
 
     init(envConfigSubject: EnvConfigSubject) {
         self.envConfigSubject = envConfigSubject
         super.init(nibName: nil, bundle: nil)
+        envConfigSubject.$useMockCallingSDKHandler.sink { [weak self] newVal in
+            // If callingSDK Mock is used, then show the hidden window
+            self?.window?.isHidden = !newVal
+        }.store(in: &cancellables)
     }
 
     required init?(coder: NSCoder) {
@@ -125,14 +143,16 @@ class EntryViewController: UIViewController {
     }
 
     @objc func onCallingSwiftUIPressed() {
-        let swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject)
+        let swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject,
+                                              callingSDKWrapperMock: callingSDKWrapperMock)
         let swiftUIDemoViewHostingController = UIHostingController(rootView: swiftUIDemoView)
         swiftUIDemoViewHostingController.modalPresentationStyle = .fullScreen
         present(swiftUIDemoViewHostingController, animated: true, completion: nil)
     }
 
     @objc func onCallingUIKitPressed() {
-        let uiKitDemoViewController = CallingDemoViewController(envConfigSubject: envConfigSubject)
+        let uiKitDemoViewController = CallingDemoViewController(envConfigSubject: envConfigSubject,
+                                                                callingSDKHandlerMock: callingSDKWrapperMock)
         uiKitDemoViewController.modalPresentationStyle = .fullScreen
         present(uiKitDemoViewController, animated: true, completion: nil)
     }
