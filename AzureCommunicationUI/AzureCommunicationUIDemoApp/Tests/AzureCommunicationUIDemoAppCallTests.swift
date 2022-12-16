@@ -47,37 +47,25 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     func testCallCompositeE2ETokenURLGroupCall() {
         tapInterfaceFor(.callUIKit)
         tapConnectionTokenType(.acsTokenUrl)
-        startExperience()
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
-                         shouldWait: true)
-        leaveCall()
+        e2eTest()
     }
 
     func testCallCompositeE2ETokenURLTeamsCall() {
         tapInterfaceFor(.callSwiftUI)
         tapConnectionTokenType(.acsTokenUrl)
         tapMeetingType(.teamsCall)
-        startExperience()
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
-                         shouldWait: true)
-        leaveCall()
+        e2eTest()
     }
 
     func testCallCompositeE2ETokenValueGroupCall() {
         tapInterfaceFor(.callSwiftUI)
-        startExperience()
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
-                         shouldWait: true)
-        leaveCall()
+        e2eTest()
     }
 
     func testCallCompositeE2ETokenValueTeamsCall() {
         tapInterfaceFor(.callUIKit)
         tapMeetingType(.teamsCall)
-        startExperience()
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
-                         shouldWait: true)
-        leaveCall()
+        e2eTest()
     }
 
     // MARK: Private / helper functions
@@ -87,5 +75,12 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityID.rawValue, shouldWait: true)
         tapCell(accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue)
         wait(for: app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue])
+    }
+
+    private func e2eTest() {
+        startExperience()
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+                         shouldWait: true)
+        leaveCall()
     }
 }
