@@ -72,4 +72,5 @@ jobs:
           destinationSimulators: 'iPhone 14 Pro'
           args: '-verbose'
           publishJUnitResults: true
+          useXcpretty: false
 
