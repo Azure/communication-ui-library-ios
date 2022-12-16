@@ -51,7 +51,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     // MARK: End call tests
     func testCallCompositeE2ETokenURLGroupCall() {
         tapInterfaceFor(.callUIKit)
-        // toggleMockSDKWrapperSwitch(enable: false)
+         toggleMockSDKWrapperSwitch(enable: true)
         tapConnectionTokenType(.acsTokenUrl)
         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
                          shouldWait: true)
@@ -62,7 +62,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeE2ETokenURLTeamsCall() {
         tapInterfaceFor(.callSwiftUI)
-//        toggleMockSDKWrapperSwitch(enable: false)
+        toggleMockSDKWrapperSwitch(enable: true)
         tapConnectionTokenType(.acsTokenUrl)
         tapMeetingType(.teamsCall)
         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
@@ -74,7 +74,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     func testCallCompositeE2ETokenValueGroupCall() {
         tapInterfaceFor(.callSwiftUI)
-        //  toggleMockSDKWrapperSwitch(enable: false)
+        toggleMockSDKWrapperSwitch(enable: true)
         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
                          shouldWait: true)
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
@@ -85,7 +85,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
     func testCallCompositeE2ETokenValueTeamsCall() {
         tapInterfaceFor(.callUIKit)
         tapMeetingType(.teamsCall)
-        //  toggleMockSDKWrapperSwitch(enable: false)
+        toggleMockSDKWrapperSwitch(enable: true)
         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
                          shouldWait: true)
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
