@@ -16,3 +16,5 @@ schedules:
 
 jobs:
   - template: jobs/UI-test-job.yml
+
+useXcpretty: false
