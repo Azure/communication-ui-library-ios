@@ -11,13 +11,16 @@ import CoreGraphics
 
 class EntryViewController: UIViewController {
     private var envConfigSubject: EnvConfigSubject
+#if DEBUG
     private var window: FloatingUITestWindow?
     private var callingSDKWrapperMock: UITestCallingSDKWrapper?
+#endif
     private var cancellables = Set<AnyCancellable>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+#if DEBUG
         let scenes = UIApplication.shared.connectedScenes
         if let windowScenes = scenes.first as? UIWindowScene {
             let callSDKWrapperMock = UITestCallingSDKWrapper()
@@ -28,15 +31,18 @@ class EntryViewController: UIViewController {
             window?.makeKeyAndVisible()
             window?.isHidden = true
         }
+#endif
     }
 
     init(envConfigSubject: EnvConfigSubject) {
         self.envConfigSubject = envConfigSubject
         super.init(nibName: nil, bundle: nil)
+#if DEBUG
         envConfigSubject.$useMockCallingSDKHandler.sink { [weak self] newVal in
             // If callingSDK Mock is used, then show the hidden window
             self?.window?.isHidden = !newVal
         }.store(in: &cancellables)
+#endif
     }
 
     required init?(coder: NSCoder) {
@@ -143,16 +149,24 @@ class EntryViewController: UIViewController {
     }
 
     @objc func onCallingSwiftUIPressed() {
+#if DEBUG
         let swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject,
                                               callingSDKWrapperMock: callingSDKWrapperMock)
+#else
+        let swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject)
+#endif
         let swiftUIDemoViewHostingController = UIHostingController(rootView: swiftUIDemoView)
         swiftUIDemoViewHostingController.modalPresentationStyle = .fullScreen
         present(swiftUIDemoViewHostingController, animated: true, completion: nil)
     }
 
     @objc func onCallingUIKitPressed() {
+#if DEBUG
         let uiKitDemoViewController = CallingDemoViewController(envConfigSubject: envConfigSubject,
                                                                 callingSDKHandlerMock: callingSDKWrapperMock)
+#else
+        let uiKitDemoViewController = CallingDemoViewController(envConfigSubject: envConfigSubject)
+#endif
         uiKitDemoViewController.modalPresentationStyle = .fullScreen
         present(uiKitDemoViewController, animated: true, completion: nil)
     }
