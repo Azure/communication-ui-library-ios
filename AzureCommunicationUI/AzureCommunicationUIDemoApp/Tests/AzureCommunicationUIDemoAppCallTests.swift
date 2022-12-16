@@ -21,7 +21,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
                          shouldWait: true)
 
-//        app.windows["debugger_Window"].buttons["Hold"].tap()
+        app.windows["debugger_Window"].buttons["Hold"].tap()
 //        app.windows["debugger_Window"].buttons["Resume"].tap()
 //        app.windows["debugger_Window"].buttons["Transcription on"].tap()
 //        app.windows["debugger_Window"].buttons["Transcription off"].tap()
