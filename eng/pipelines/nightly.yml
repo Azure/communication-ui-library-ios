@@ -12,7 +12,7 @@ schedules:
       include:
         - develop
         - main
-        - feature/chat
+        - feature/*
 
 jobs:
   - template: jobs/UI-test-job.yml

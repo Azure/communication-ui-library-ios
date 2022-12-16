@@ -187,18 +187,6 @@ extension XCUITestBase {
         }
         XCTAssertTrue(toggle.isOn == enable)
         app.buttons["Close"].tap()
-
-        // tapButton(
-        //     accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue,
-        //     shouldWait: false)
-        // app.tap()
-        // let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
-        // if toggle.waitForExistence(timeout: 3), 
-        //     let enabled = toggle.isOn, 
-        //        enabled != enable {
-        //     toggle.tap()
-        // }
-        // app.buttons["Close"].tap()
     }
 
     /// Taps the cell that matches with the given accessibility id

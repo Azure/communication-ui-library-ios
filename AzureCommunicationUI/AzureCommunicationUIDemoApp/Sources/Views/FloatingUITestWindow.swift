@@ -26,7 +26,6 @@ class FloatingUITestWindow: UIWindow {
     }
 
     private func setupUIs() {
-//        self.accessibilityViewIsModal = true
         backgroundColor = .clear
         accessibilityIdentifier = "debugger_Window"
         stackView = UIStackView(arrangedSubviews: [])
@@ -38,9 +37,6 @@ class FloatingUITestWindow: UIWindow {
         createButton(title: "Hold",
                      accessibilityID: "callOnHold-AID",
                      selector: #selector(holdButtonTapped))
-        createButton(title: "Resume",
-                     accessibilityID: "callResume-AID",
-                     selector: #selector(resumeButtonTapped))
         createButton(title: "Transcription on",
                      accessibilityID: "callTranscriptionOn-AID",
                      selector: #selector(transcriptionOnButtonTapped))
@@ -70,7 +66,6 @@ class FloatingUITestWindow: UIWindow {
         button.setTitle(title, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 12)
         button.accessibilityIdentifier = accessibilityID
-        button.isAccessibilityElement = true
         button.addTarget(self, action: selector, for: .touchUpInside)
         stackView.addArrangedSubview(button)
     }
@@ -141,6 +136,6 @@ extension FloatingUITestWindow {
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         let hitView = super.hitTest(point, with: event)
 
-        return hitView == stackView ? hitView : nil
+        return (hitView == stackView || hitView?.superview == stackView) ? hitView : nil
     }
 }

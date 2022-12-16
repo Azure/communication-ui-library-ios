@@ -21,8 +21,14 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
                          shouldWait: true)
 
+        wait(for: app.buttons[AccessibilityIdentifier.hangupAccessibilityID.rawValue])
+
         app.windows["debugger_Window"].buttons["Hold"].tap()
-//        app.windows["debugger_Window"].buttons["Resume"].tap()
+        let onHoldText = app.staticTexts["You're on hold"]
+        XCTAssertTrue(onHoldText.exists)
+        app.buttons[AccessibilityIdentifier.callResumeAccessibilityID.rawValue].tap()
+        XCTAssertFalse(onHoldText.exists)
+        
 //        app.windows["debugger_Window"].buttons["Transcription on"].tap()
 //        app.windows["debugger_Window"].buttons["Transcription off"].tap()
 //        app.windows["debugger_Window"].buttons["Recording on"].tap()
