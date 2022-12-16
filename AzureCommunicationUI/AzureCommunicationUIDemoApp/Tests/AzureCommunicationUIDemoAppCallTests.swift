@@ -28,7 +28,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         XCTAssertTrue(onHoldText.exists)
         app.buttons[AccessibilityIdentifier.callResumeAccessibilityID.rawValue].tap()
         XCTAssertFalse(onHoldText.exists)
-        
+
 //        app.windows["debugger_Window"].buttons["Transcription on"].tap()
 //        app.windows["debugger_Window"].buttons["Transcription off"].tap()
 //        app.windows["debugger_Window"].buttons["Recording on"].tap()
