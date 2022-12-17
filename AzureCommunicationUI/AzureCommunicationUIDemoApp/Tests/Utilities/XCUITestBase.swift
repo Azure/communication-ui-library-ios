@@ -177,16 +177,6 @@ extension XCUITestBase {
         app.buttons[connectionType.name].tap()
     }
 
-    func enableMockCallingSDKWrapper() {
-        tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
-        wait(for: app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue])
-        app.tap()
-        let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
-        toggle.tap()
-        XCTAssertEqual(toggle.isOn, true)
-        app.buttons["Close"].tap()
-    }
-
     /// Taps the cell that matches with the given accessibility id
     /// - Parameters:
     ///   - accessibilityIdentifier: accessibility id of the cell
@@ -208,6 +198,9 @@ extension XCUITestBase {
         add(attachment)
     }
 
+}
+
+extension XCUITestBase {
     /// Enables CallingSDK mock and taps Start experience button
     /// - Parameter useCallingSDKMock: Option to enable callingSDK mock. Default value is `true`
     func startExperience(useCallingSDKMock: Bool = true) {
@@ -217,10 +210,19 @@ extension XCUITestBase {
         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
                          shouldWait: true)
     }
-}
 
-extension XCUIElement {
-    var isOn: Bool? {
-        return (self.value as? String).map { $0 == "1" }
+    func enableMockCallingSDKWrapper() {
+        tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
+        wait(for: app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue])
+        app.tap()
+        let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
+        toggle.tap()
+        XCTAssertEqual(toggle.isOn, true)
+        app.buttons["Close"].tap()
+    }
+
+    func joinCall() {
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+                         shouldWait: true)
     }
 }

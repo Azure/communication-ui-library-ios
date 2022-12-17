@@ -12,9 +12,7 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapInterfaceFor(.callUIKit)
         startExperience()
 
-        // join call
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
-                         shouldWait: true)
+        joinCall()
 
         wait(for: app.buttons[AccessibilityIdentifier.hangupAccessibilityID.rawValue])
 
@@ -24,8 +22,11 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         app.buttons[AccessibilityIdentifier.callResumeAccessibilityID.rawValue].tap()
         XCTAssertFalse(onHoldText.exists)
 
-//        app.windows["debugger_Window"].buttons["Transcription on"].tap()
-//        app.windows["debugger_Window"].buttons["Transcription off"].tap()
+        app.windows["debugger_Window"].buttons["Transcription on"].tap()
+        XCTAssertTrue(app.staticTexts["Transcription has started. By joining, you are giving consent for this meeting to be transcribed. Privacy policy"].exists)
+
+        app.windows["debugger_Window"].buttons["Transcription off"].tap()
+        XCTAssertTrue(app.staticTexts["Transcription is being saved. Transcription has stopped. Learn more"].exists)
 //        app.windows["debugger_Window"].buttons["Recording on"].tap()
 //        app.windows["debugger_Window"].buttons["Recording off"].tap()
 
@@ -72,15 +73,15 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
 
     /// Toggles the leave call overlay  in the calling screen and triggers call end
     private func leaveCall() {
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityID.rawValue, shouldWait: true)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityID.rawValue,
+                  shouldWait: true)
         tapCell(accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue)
         wait(for: app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue])
     }
 
     private func e2eTest() {
         startExperience()
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
-                         shouldWait: true)
+        joinCall()
         leaveCall()
     }
 }

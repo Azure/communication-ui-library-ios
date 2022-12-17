@@ -34,8 +34,7 @@ import XCTest
          tapMeetingType(.groupCall)
 
          startExperience()
-         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
-                          shouldWait: true)
+         joinCall()
      }
 
      func openShareDiagnosticsInfoMenu() {

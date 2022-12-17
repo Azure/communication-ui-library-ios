@@ -42,6 +42,7 @@
 		A8C69FBD2728AE1C00143DB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8C69FBC2728AE1C00143DB7 /* Assets.xcassets */; };
 		A8C69FC02728AE1C00143DB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C69FBE2728AE1C00143DB7 /* LaunchScreen.storyboard */; };
 		A8FB819C272A082B00AA0930 /* DemoInputTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */; };
+		FA2E532D294D3DA800E87DDF /* XCTestCaseExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2E532C294D3DA800E87DDF /* XCTestCaseExtension.swift */; };
 		FA7B53EC282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */; };
 		FA93E3AA2942B61D006476A5 /* AzureCommunicationUIDemoAppTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA93E3A92942B61D006476A5 /* AzureCommunicationUIDemoAppTokenTests.swift */; };
 		FA93E3AC2942B6DA006476A5 /* AzureCommunicationUIDemoAppDebugInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA93E3AB2942B6DA006476A5 /* AzureCommunicationUIDemoAppDebugInfoTests.swift */; };
@@ -128,6 +129,7 @@
 		A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoInputTypes.swift; sourceTree = "<group>"; };
 		BDAA751E28E4BDC4008C2789 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		BDAA751F28E4BDC4008C2789 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FA2E532C294D3DA800E87DDF /* XCTestCaseExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestCaseExtension.swift; sourceTree = "<group>"; };
 		FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantAvatarHelper.swift; sourceTree = "<group>"; };
 		FA93E3A92942B61D006476A5 /* AzureCommunicationUIDemoAppTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppTokenTests.swift; sourceTree = "<group>"; };
 		FA93E3AB2942B6DA006476A5 /* AzureCommunicationUIDemoAppDebugInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppDebugInfoTests.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 			children = (
 				1F18191627B39F36006AF3B3 /* XCUITestBase.swift */,
 				1F18191927B45050006AF3B3 /* XCUIElementExtension.swift */,
+				FA2E532C294D3DA800E87DDF /* XCTestCaseExtension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 				1B0D8DC627F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift in Sources */,
 				1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift in Sources */,
 				FA93E3AC2942B6DA006476A5 /* AzureCommunicationUIDemoAppDebugInfoTests.swift in Sources */,
+				FA2E532D294D3DA800E87DDF /* XCTestCaseExtension.swift in Sources */,
 				1B3E3B4F285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

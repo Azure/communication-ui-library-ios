@@ -19,18 +19,8 @@ extension XCUIElement {
         }
         application.menuItems["Paste"].tap()
     }
-}
 
-extension XCTestCase {
-    func wait(for element: XCUIElement, timeout: TimeInterval = 20.0) {
-    let predicate = NSPredicate(format: "exists == true")
-    let expectation = expectation(for: predicate, evaluatedWith: element, handler: nil)
-    wait(for: [expectation], timeout: timeout)
-  }
-
-    func waitEnabled(for element: XCUIElement, timeout: TimeInterval = 20.0) {
-      let predicate = NSPredicate(format: "enabled == true")
-      let expectation = expectation(for: predicate, evaluatedWith: element, handler: nil)
-      wait(for: [expectation], timeout: timeout)
+    var isOn: Bool? {
+        return (self.value as? String).map { $0 == "1" }
     }
 }
