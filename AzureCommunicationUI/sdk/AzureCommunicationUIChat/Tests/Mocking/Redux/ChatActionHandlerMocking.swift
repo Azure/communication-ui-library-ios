@@ -12,6 +12,7 @@ class ChatActionHandlerMocking: ChatActionHandling {
     var enterForegroundCalled: ((Bool) -> Void)?
     var onChatThreadDeletedCalled: ((Bool) -> Void)?
     var initializeCalled: ((Bool) -> Void)?
+    var disconnectChatCalled: ((Bool) -> Void)?
     var getInitialMessagesCalled: ((Bool) -> Void)?
     var getListOfParticipantsCalled: ((Bool) -> Void)?
     var getPreviousMessagesCalled: ((Bool) -> Void)?
@@ -44,6 +45,12 @@ class ChatActionHandlerMocking: ChatActionHandling {
     func initialize(state: AppState, dispatch: @escaping ActionDispatch, serviceListener: ChatServiceEventHandling) -> Task<Void, Never> {
         Task {
             initializeCalled?(true)
+        }
+    }
+
+    func disconnectChat() -> Task<Void, Never> {
+        Task {
+            disconnectChatCalled?(true)
         }
     }
 
