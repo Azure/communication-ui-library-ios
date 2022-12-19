@@ -7,11 +7,6 @@ import SwiftUI
 import FluentUI
 
 struct MessageListView: View {
-//    private enum Constants {
-//        static let horizontalPadding: CGFloat = 16
-//        static let bottomPadding: CGFloat = 0
-//        static let topPadding: CGFloat = 8
-//        static let topConsecutivePadding: CGFloat = 4
     private enum Constants {
         static let defaultMinListRowHeight: CGFloat = 10
 
