@@ -3,13 +3,13 @@
 
 steps:
   - bash: |
-      if [[ "$(Build.Reason)" != "Scheduled" ]]; then
-        # If not scheduled, use AppCenterDevices variable if set, otherwise default device set
-        if [ -z "${APPCENTER_DEVICES}" ]; then
-          echo "##vso[task.setvariable variable=AppCenterDevices]Azure-Communication-Services/defaults"  
-        fi
-        exit 0
-      fi
+      # if [[ "$(Build.Reason)" != "Scheduled" ]]; then
+      #   # If not scheduled, use AppCenterDevices variable if set, otherwise default device set
+      #   if [ -z "${APPCENTER_DEVICES}" ]; then
+      #     echo "##vso[task.setvariable variable=AppCenterDevices]Azure-Communication-Services/defaults"  
+      #   fi
+      #   exit 0
+      # fi
 
       # If scheduled, use the schedule defined IN UTC TIME AS PER ADO CRON SCHEDULES
       echo "Server Day is $UTC_DAY_OF_WEEK, server HOUR is $UTC_HOUR_OF_DAY"
