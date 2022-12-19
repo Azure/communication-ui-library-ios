@@ -12,6 +12,7 @@ steps:
         # https://github.com/Azure-Samples/communication-services-python-quickstarts/blob/main/access-tokens-quickstart/issue-access-tokens.py
 
         # Get the ACS Connection String to use
+        print(os.environ['ACSString'])
         connection_string = os.environ['ACSString']
 
         # Instantiate the identity client
@@ -25,7 +26,7 @@ steps:
         token_result = client.get_token(identity, ["voip"])
 
         print("\nIssued an access token with 'voip' scope")
-        print('##vso[task.setvariable variable=ACSFreshToken]'+token_result.token)
+        print('##vso[task.setvariable variable=ACSFreshToken;isOutput=true]'+token_result.token)
 
         # Grab AAD Token
         print("------- fetching aad token ---------")
@@ -41,7 +42,7 @@ steps:
         responseObj = json.loads(response.text)
 
         aad_token = responseObj["access_token"]
-        print('##vso[task.setvariable variable=AADToken]'+ aad_token)
+        print('##vso[task.setvariable variable=AADToken;isOutput=true]'+ aad_token)
         print('AAD Token Set')
 
       except Exception as ex:

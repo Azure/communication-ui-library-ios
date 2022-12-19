@@ -49,6 +49,5 @@ jobs:
           xcodeVersion: default
           destinationPlatformOption: iOS
           destinationSimulators: 'iPhone 14 Pro'
-          args: '-verbose'
           publishJUnitResults: true
 

@@ -46,10 +46,12 @@ jobs:
       demands: xcode
 
     variables:
-      group: 'SPOOL-Communication-mobileUI'
-      archivePath: '$(agent.builddirectory)/output/archive'
-      exportPath: '$(agent.builddirectory)/output/package'
-      signedExtractedPath: '$(exportPath)/signed'
+      - group: 'SPOOL-Communication-mobileUI'
+      - archivePath: '$(agent.builddirectory)/output/archive'
+      - exportPath: '$(agent.builddirectory)/output/package'
+      - signedExtractedPath: '$(exportPath)/signed'
+      - name: 'acsDisplayName'
+        value: 'iOS UI Automated Tester'
 
     steps:
       - template: jobs/appcenter-test-job-steps.yml
