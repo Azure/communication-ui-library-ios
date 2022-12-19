@@ -46,9 +46,12 @@ jobs:
       demands: xcode
 
     variables:
-      - group: 'SPOOL-Communication-mobileUI'
+      group: 'SPOOL-Communication-mobileUI'
+      archivePath: '$(agent.builddirectory)/output/archive'
+      exportPath: '$(agent.builddirectory)/output/package'
+      signedExtractedPath: '$(exportPath)/signed'
 
     steps:
-      - template: jobs/appcenter-test-job.yml
+      - template: jobs/appcenter-test-job-steps.yml
         parameters:
           DeviceSet: $[ dependencies.ConfigureDevices.outputs['DetermineDeviceSet.AppCenterDevices'] ]

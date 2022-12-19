@@ -3,7 +3,7 @@
 parameters:
   - name: devices
     type: string
-    default: 'Azure-Communication-Services/defaults'
+    default: ''
 
 steps:
   - task: AppCenterTest@1

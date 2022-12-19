@@ -48,13 +48,12 @@ steps:
       useXcpretty: false
     
   - task: Xcode@5
-    displayName: 'Xcode ipa'
+    displayName: 'Xcode - Package to IPA'
     inputs:
       configuration: Release
       sdk: iphoneos
-      xcWorkspacePath: '$(Parameters.xcWorkspacePath)'
-      scheme: '$(Parameters.scheme)'
-      xcodeVersion: '$(Parameters.xcodeVersion)'
+      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+      scheme: AzureCommunicationUIDemoApp
       packageApp: true
       archivePath: '$(archivePath)'
       exportPath: '$(exportPath)'
@@ -135,7 +134,7 @@ steps:
   - task: ExtractFiles@1
     displayName: 'Extract signed build'
     inputs:
-      archiveFilePatterns: '$(signedZip)'
+      archiveFilePatterns: '$(archivePath)/AzureCommunicationUIDemoApp.zip'
       destinationFolder: '$(signedExtractedPath)'
 
   - task: CopyFiles@2
@@ -155,5 +154,5 @@ steps:
   # Run the tests on the configured devices
   - template: templates/run-appcenter-test.yml
     parameters:
-      devices: $[ parameters.devices ]
+      devices: $[ parameters.DeviceSet ]
       # devices: $[ variables['AppCenterDevices'] ]
