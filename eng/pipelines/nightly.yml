@@ -1,4 +1,4 @@
-# Nightly Build Pipeline
+# Nightly Build and Test pipeline
 
 # Need to specifically disable this, else all pushes trigger a CI build
 trigger: none
@@ -13,8 +13,20 @@ schedules:
         - develop
         - main
 
+  # Disabled until working properly
+  # - cron: "0 */2 * * *" # Check the AppCenter build schedule every 2 hours
+  #   displayName: "AppCenter UI Test Run Trigger"
+  #   branches:
+  #     include:
+  #       - develop
+variables:
+    buildHourOfDay: $[format('{0:H}', pipeline.startTime)]
+
 jobs:
-  # - template: jobs/UI-test-job.yml
+  # If it's midnight-ish pacific time and it was a scheduled build, then run the UI tests
+  - ${{ if and(eq(variables['Build.Reason'], 'Schedule'), eq( variables['buildHourOfDay'], '08')) }}:
+    - template: jobs/UI-test-job.yml
+
   - job: AutomatedUITestWithAppCenter
     displayName: "Run XCUITests on AppCenter with specific devices"
     pool:
@@ -27,3 +39,5 @@ jobs:
     
     steps:
       - template: jobs/templates/set-appcenter-devices.yml
+      - ${{ if ne(variables['AppCenterDevices'], '') }}:
+        - template: jobs/appcenter-test-job.yml

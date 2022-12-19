@@ -1,0 +1,20 @@
+# Runs AppCenter tests with a specific device set
+
+parameters:
+  - name: devices
+    type: string
+    default: 'Azure-Communication-Services/defaults'
+
+steps:
+  - task: AppCenterTest@1
+    displayName: 'Test with Visual Studio App Center ($[parameters.devices])'
+    inputs:
+      appFile: '**/*.ipa'
+      frameworkOption: xcuitest
+      xcUITestBuildDirectory: '$(build.artifactStagingDirectory)/DerivedData/Build/Products/Debug-iphoneos'
+      serverEndpoint: 'SPOOL-CallingComposite-iOS-AppCenter2'
+      appSlug: 'Azure-Communication-Services/Azure-Communication-Services-Call-UI-Library-Sample-iOS-Internal'
+      devices: '$(parameters.devices)'
+      dsymDirectory: '**/*.dSYM/**'
+      skipWaitingForResults: true
+      showDebugOutput: true

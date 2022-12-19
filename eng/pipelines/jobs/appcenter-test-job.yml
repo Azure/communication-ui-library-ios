@@ -1,0 +1,154 @@
+
+
+steps:
+  - task: servicetree-link-build-task@1
+    displayName: "ServiceTree: [$(BuildOutputUsage)] "
+    inputs:
+      ServiceTreeGateway: "ServiceTree Gateway"
+      Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
+    condition: always()
+
+  - task: NodeTool@0
+    displayName: 'Use Node 16.x.x'
+    inputs:
+      versionSpec: 16.x.x
+
+  - task: Npm@1
+    displayName: 'install -g appcenter-cli'
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: 'install -g appcenter-cli'
+      customRegistry: useFeed
+      customFeed: 'e9602887-252b-435e-a3c1-57ec07c93667'
+
+  - template: templates/update-demo-app-plist-for-testing.yml
+  - template: templates/configure-for-enterprise-signing.yml
+
+  - task: CocoaPods@0
+    displayName: 'pod install'
+    inputs:
+      workingDirectory: AzureCommunicationUI
+      forceRepoUpdate: true
+      projectDirectory: AzureCommunicationUI
+
+  - task: Xcode@5
+    displayName: 'Xcode Build for Testing'
+    inputs:
+      actions: 'build-for-testing'
+      configuration: Debug
+      sdk: iphoneos
+      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+      scheme: AzureCommunicationUIDemoApp
+      args: '-derivedDataPath $(build.artifactStagingDirectory)/DerivedData'
+      useXcpretty: false
+    
+  - task: Xcode@5
+    displayName: 'Xcode ipa'
+    inputs:
+      configuration: Release
+      sdk: iphoneos
+      xcWorkspacePath: '$(Parameters.xcWorkspacePath)'
+      scheme: '$(Parameters.scheme)'
+      xcodeVersion: '$(Parameters.xcodeVersion)'
+      packageApp: true
+      archivePath: '$(archivePath)'
+      exportPath: '$(exportPath)'
+      signingOption: manual
+      signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
+      provisioningProfileUuid: '$(APPLE_PROV_PROFILE_UUID)'
+      provisioningProfileName: 'Azure communication UI calling Dogfood Dev'
+      args: '"DEVELOPMENT_TEAM=9KBH5RKYEW"'
+      workingDirectory: AzureCommunicationUI
+      useXcpretty: false
+
+  - task: DownloadSecureFile@1
+    displayName: 'Download Distribution Profile from Azure secure files storage'
+    inputs:
+      secureFile: 'spoolCallCompositeDogfoodProfileDist-exp230603.mobileprovision'
+      retryCount: 5
+
+  - task: DownloadSecureFile@1
+    displayName: 'Download ExportOptions.plist from Azure secure files storage'
+    inputs:
+      secureFile: spoolCallCompositeExportOptions.plist
+      retryCount: 5
+
+  - task: CopyFiles@2
+    displayName: 'Copy Provisioning Profile to archive path'
+    inputs:
+      SourceFolder: '$(Agent.TempDirectory)'
+      Contents: 'spoolCallCompositeDogfoodProfileDist-exp230603.mobileprovision'
+      TargetFolder: '$(archivePath)'
+      flattenFolders: true
+
+  - task: CopyFiles@2
+    displayName: 'Copy ExportOptions to archive path'
+    inputs:
+      SourceFolder: '$(Agent.TempDirectory)'
+      Contents: spoolCallCompositeExportOptions.plist
+      TargetFolder: '$(archivePath)'
+      flattenFolders: true
+
+  - script: |
+      mv $(archivePath)/spoolCallCompositeExportOptions.plist $(archivePath)/ExportOptions.plist
+      
+      echo "List files to zip"
+      ls $(archivePath)
+      
+    displayName: 'Rename ExportOptions.plist'
+
+  - task: ArchiveFiles@2
+    displayName: 'Create zip for signing'
+    inputs:
+      rootFolderOrFile: '$(archivePath)'
+      includeRootFolder: false
+      archiveFile: '$(zipToSign)'
+
+  - task: UseDotNet@2
+    displayName: 'Use .NET Core sdk 2.1.x'
+    inputs:
+      version: 2.1.x
+
+  - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
+    displayName: 'Dogfood ESRP CodeSigning'
+    inputs:
+      ConnectedServiceName: 'ESRP CodeSign Global'
+      FolderPath: '$(archivePath)'
+      Pattern: '*.zip'
+      signConfigType: inlineSignParams
+      inlineOperation: |
+        [
+          {
+            "KeyCode": "CP-464234-Apple",
+            "OperationCode": "iOSAppSign",
+            "Parameters": {},
+            "ToolName": "sign",
+            "ToolVersion": "1.0"
+          }
+        ]
+
+  - task: ExtractFiles@1
+    displayName: 'Extract signed build'
+    inputs:
+      archiveFilePatterns: '$(signedZip)'
+      destinationFolder: '$(signedExtractedPath)'
+
+  - task: CopyFiles@2
+    displayName: 'Copy dSYMs Files to: $(archivePath)'
+    inputs:
+      SourceFolder: '$(archivePath)'
+      Contents: '**/*.dSYM/**'
+      TargetFolder: '$(build.sourcesdirectory)'
+
+  - task: CopyFiles@2
+    displayName: 'Copy Signed Files to: $(build.sourcesdirectory)'
+    inputs:
+      SourceFolder: '$(signedExtractedPath)'
+      Contents: '**/*.ipa'
+      TargetFolder: '$(build.sourcesdirectory)'
+
+  # Run the tests on the configured devices
+  - template: templates/appcenter-test.yml
+    parameters:
+      devices: $[variables['AppCenterDevices']]
