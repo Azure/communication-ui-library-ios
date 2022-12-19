@@ -3,9 +3,9 @@
 
 steps:
   - bash: |
-      if [ $BUILD_REASON != "Scheduled" ]; then
+      if [[ "$(Build.Reason)" != "Scheduled" ]]; then
         # If not scheduled, use AppCenterDevices variable if set, otherwise default device set
-        if [ $APPCENTER_DEVICES == "" ]; then
+        if [ -z "${APPCENTER_DEVICES}" ]; then
           echo "##vso[task.setvariable variable=AppCenterDevices]Azure-Communication-Services/defaults"  
         fi
         exit 0
@@ -193,6 +193,6 @@ steps:
     displayName: 'Set AppCenterDevices variable based on calling'
     env:
       APPCENTER_DEVICES: $(AppCenterDevices)
-      UTC_DAY_OF_WEEK: $[format('Hello {0}', pipeline.startTime)]
+      UTC_DAY_OF_WEEK: $[format('{0:A}', pipeline.startTime)]
       UTC_HOUR_OF_DAY: $[format('{0:HH}', pipeline.startTime)]
 
