@@ -38,7 +38,7 @@ jobs:
       - template: jobs/templates/set-appcenter-devices.yml
 
   - job: AutomatedUITestWithAppCenter
-    dependsOn: ConfigureAppCenterDevices
+    dependsOn: ConfigureDevices
     displayName: "Run XCUITests on AppCenter with specific devices"
     condition: ne(dependencies.ConfigureDevices.outputs['DetermineDeviceSet.AppCenterDevices'], '')
     pool:
