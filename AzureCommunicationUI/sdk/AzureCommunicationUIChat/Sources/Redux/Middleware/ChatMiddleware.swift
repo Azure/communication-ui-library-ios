@@ -64,7 +64,8 @@ private func handleChatAction(_ action: ChatAction,
         // stub: stop-pulling msg to be implemented for GA
         break
     case .realTimeNotificationDisconnected:
-        print("real time notification disconnected!!!!!!!!!!!!!!!!!!")
+        // stub: stop-pulling msg to be implemented for GA
+        break
     case .chatThreadDeleted:
         actionHandler.onChatThreadDeleted(dispatch: dispatch)
     default:
