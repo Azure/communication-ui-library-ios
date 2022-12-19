@@ -1,0 +1,30 @@
+# Scheduled runs for different hardware configurations with AppCenter
+
+schedules:
+  - cron: "0 */2 * * *"  # Every 2 hours
+    displayName: "Nightly Build"
+    branches:
+      include:
+        - develop
+        - main
+
+jobs:
+  - job: AutomatedUITestWithAppCenter
+    displayName: "Run XCUITests on AppCenter with specific devices"
+    pool:
+      name: vsts-mac-1301-xcode-141
+      demands: xcode
+
+    variables:
+      - group: 'SPOOL-Communication-mobileUI'
+      - name: 'AppCenterDevices'
+    
+    steps:
+      - template: jobs/templates/set-appcenter-devices.yml
+
+      # # Only run the test job if it is configured to do so. 
+      # # Schedule does not always run a test set
+      # - ${{ if ne(variables['AppCenterDevices'], '') }}:
+      #   - template: jobs/appcenter-test-job.yml
+      
+      

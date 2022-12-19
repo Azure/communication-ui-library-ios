@@ -1,7 +1,7 @@
 # Populates the info.plist with values needed for testing properly
 
 steps:
-  # Grab dynamic values
+  # Grab dynamic values for auth setup
   - template: retrieve-acs-token.yml
 
   # Update the property list files

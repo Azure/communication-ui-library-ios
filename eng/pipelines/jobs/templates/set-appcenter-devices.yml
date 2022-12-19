@@ -1,0 +1,199 @@
+# Configures which target to use for AppCenter tests based on type of build and day of week
+
+
+steps:
+  - bash: |
+      if [ $(BUILD_REASON) != "Scheduled" ]; then
+        # If not scheduled, use AppCenterDevices variable if set, otherwise default device set
+        if [ $(APPCENTER_DEVICES) == "" ]; then
+          echo "##vso[task.setvariable variable=AppCenterDevices]Azure-Communication-Services/defaults"  
+        fi
+        exit 0
+      fi
+
+      # If scheduled, use the schedule defined IN UTC TIME AS PER ADO CRON SCHEDULES
+      echo "Server Day is $(DAY_OF_WEEK), server HOUR is $(HOUR_OF_DAY)"
+
+      APPCENTER_DEVICES=''
+
+      case $DAY_OF_WEEK in 
+
+        Monday)
+          case $HOUR_OF_DAY in
+            00)
+              APPCENTER_DEVICES=ipadpro11set
+              ;;
+            02)
+              APPCENTER_DEVICES=ipadpro12set
+              ;;
+            08)
+              APPCENTER_DEVICES=iphone11promaxset
+              ;;
+            10)
+              APPCENTER_DEVICES=iphone11proset
+              ;;
+            12)
+              APPCENTER_DEVICES=iphone11set
+              ;;
+          esac
+          ;;
+
+        Tuesday)
+          case $HOUR_OF_DAY in
+            00)
+              APPCENTER_DEVICES=ipadairset
+              ;;
+            02)
+              APPCENTER_DEVICES=ipadminiset
+              ;;
+            08)
+              APPCENTER_DEVICES=iphone12promaxset
+              ;;
+            10)
+              APPCENTER_DEVICES=iphone12proset
+              ;;
+            12)
+              APPCENTER_DEVICES=iphone12set
+              ;;
+          esac
+          ;;
+
+        Wednesday)
+          case $HOUR_OF_DAY in
+            00)
+              APPCENTER_DEVICES=ipadpro10set
+              ;;
+            02)
+              APPCENTER_DEVICES=ipadpro11set
+              ;;
+            08)
+              APPCENTER_DEVICES=iphone13promaxset
+              ;;
+            10)
+              APPCENTER_DEVICES=iphone13proset
+              ;;
+            12)
+              APPCENTER_DEVICES=iphone13set
+              ;;
+          esac
+          ;;
+
+        Thursday)
+          case $HOUR_OF_DAY in
+            00)
+              APPCENTER_DEVICES=ipadpro12set
+              ;;
+            08)
+              APPCENTER_DEVICES=iphone7plusset
+              ;;
+            10)
+              APPCENTER_DEVICES=iphone7set
+              ;;
+            12)
+              APPCENTER_DEVICES=iphone8plusset
+              ;;
+            14)
+              APPCENTER_DEVICES=iphone8set
+              ;;
+          esac
+          ;;
+
+        Friday)
+          case $HOUR_OF_DAY in
+            08)
+              APPCENTER_DEVICES=iphoneseset
+              ;;
+            10)
+              APPCENTER_DEVICES=iphonexrset
+              ;;
+            12)
+              APPCENTER_DEVICES=iphonexrmaxset
+              ;;
+            14)
+              APPCENTER_DEVICES=iphonexsset
+              ;;
+          esac
+          ;;
+
+        Saturday)
+          case $HOUR_OF_DAY in
+            08)
+              APPCENTER_DEVICES=iphone11promaxset
+              ;;
+            10)
+              APPCENTER_DEVICES=iphone11proset
+              ;;
+            12)
+              APPCENTER_DEVICES=iphone11set
+              ;;
+            14)
+              APPCENTER_DEVICES=iphone12promaxset
+              ;;
+            16)
+              APPCENTER_DEVICES=iphone12proset
+              ;;
+            18)
+              APPCENTER_DEVICES=iphone12set
+              ;;
+            20)
+              APPCENTER_DEVICES=iphone13promaxset
+              ;;
+            22)
+              APPCENTER_DEVICES=iphone13proset
+              ;;
+          esac
+          ;;  
+
+        Sunday)
+          case $HOUR_OF_DAY in
+            00)
+              APPCENTER_DEVICES=iphone13set
+              ;;
+            02)
+              APPCENTER_DEVICES=iphone7plusset
+              ;;
+            04)
+              APPCENTER_DEVICES=iphone7set
+              ;;
+            06)
+              APPCENTER_DEVICES=iphone8plusset
+              ;;
+            08)
+              APPCENTER_DEVICES=iphone8set
+              ;;
+            10)
+              APPCENTER_DEVICES=iphoneseset
+              ;;
+            12)
+              APPCENTER_DEVICES=iphonexrset
+              ;;
+            14)
+              APPCENTER_DEVICES=iphonexsmaxset
+              ;;
+            16)
+              APPCENTER_DEVICES=iphonexsset
+              ;;
+            18)
+              APPCENTER_DEVICES=ipadairset
+              ;;
+            20)
+              APPCENTER_DEVICES=ipadminiset
+              ;;
+            22)
+              APPCENTER_DEVICES=ipadpro10set
+              ;;
+          esac
+          ;;
+      esac
+
+      if [ $(APPCENTER_DEVICES) != "" ]; then
+         echo "##vso[task.setvariable variable=AppCenterDevices]Azure-Communication-Services/$(APPCENTER_DEVICES)"
+      fi
+
+    displayName: 'Set AppCenterDevices variable based on calling'
+    env:
+      BUILD_REASON: $(Build.Reason)
+      APPCENTER_DEVICES: $(AppCenterDevices)
+      UTC_DAY_OF_WEEK: $[format('Hello {0}', pipeline.startTime)]
+      UTC_HOUR_OF_DAY: $[format('{0:HH}', pipeline.startTime)]
+

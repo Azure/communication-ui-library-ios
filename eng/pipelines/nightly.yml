@@ -6,13 +6,12 @@ pr: none
 
 # Just want a scheduled run
 schedules:
-  - cron: "0 0 * * *"  # Nightly at midnight
+  - cron: "0 8 * * *"  # Nightly at midnight PST
     displayName: "Nightly Build"
     branches:
       include:
         - develop
         - main
-        - feature/chat
 
 jobs:
   - template: jobs/UI-test-job.yml
