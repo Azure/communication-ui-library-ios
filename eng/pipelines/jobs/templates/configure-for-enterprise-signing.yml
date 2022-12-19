@@ -14,17 +14,15 @@ steps:
     
     displayName: 'Edit Bundle Identifiers in project files'
 
-  - task: InstallAppleCertificate@2
-    displayName: 'Install Enterprise certificate'
-    disable: true
-    inputs:
-      # certSecureFile: 'spoolCallCompositeDogfoodCert-jim-9KBH5RKYEW.p12'
-      certSecureFile: spoolCallCompositeDogfoodCert.p12
-      certPwd: '$(P12password)'
-      setUpPartitionIdACLForPrivateKey: false
+  # - task: InstallAppleCertificate@2
+  #   displayName: 'Install Enterprise certificate'
+  #   inputs:
+  #     # certSecureFile: 'spoolCallCompositeDogfoodCert-jim-9KBH5RKYEW.p12'
+  #     certSecureFile: spoolCallCompositeDogfoodCert.p12
+  #     certPwd: '$(P12password)'
+  #     setUpPartitionIdACLForPrivateKey: false
 
-  - task: InstallAppleProvisioningProfile@1
-    displayName: 'Install Enterprise provisioning profile'
-    disable: true
-    inputs:
-      provProfileSecureFile: 'spoolCallCompositeDogfoodProfileDev-exp230603.mobileprovision'
+  # - task: InstallAppleProvisioningProfile@1
+  #   displayName: 'Install Enterprise provisioning profile'
+  #   inputs:
+  #     provProfileSecureFile: 'spoolCallCompositeDogfoodProfileDev-exp230603.mobileprovision'
