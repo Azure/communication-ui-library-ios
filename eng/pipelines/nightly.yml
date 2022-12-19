@@ -40,7 +40,7 @@ jobs:
   - job: AutomatedUITestWithAppCenter
     dependsOn: ConfigureAppCenterDevices
     displayName: "Run XCUITests on AppCenter with specific devices"
-    condition: and(succeeded(), ne(variables.AppCenterDevices, ''))
+    condition: and(succeeded(), ne(variables['AppCenterDevices'], ''))
     pool:
       name: vsts-mac-1301-xcode-141
       demands: xcode
