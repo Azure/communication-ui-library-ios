@@ -149,6 +149,6 @@ steps:
       TargetFolder: '$(build.sourcesdirectory)'
 
   # Run the tests on the configured devices
-  - template: templates/appcenter-test.yml
+  - template: templates/run-appcenter-test.yml
     parameters:
-      devices: $[variables['AppCenterDevices']]
+      devices: $[ variables['AppCenterDevices'] ]
