@@ -30,7 +30,7 @@ public struct ChatCompositeView: View {
 
     }
 
-    /// The View's body would be used to render ChatCompositeView
+    /// The view body would be used to render the ChatCompositeView
     public var body: some View {
         VStack {
             ContainerView(router: self.router,
