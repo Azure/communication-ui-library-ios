@@ -1,4 +1,8 @@
 
+parameters:
+  - name: DeviceSet
+    type: string
+    default: ''
 
 steps:
   - task: servicetree-link-build-task@1
@@ -151,4 +155,5 @@ steps:
   # Run the tests on the configured devices
   - template: templates/run-appcenter-test.yml
     parameters:
-      devices: $[ variables['AppCenterDevices'] ]
+      devices: $[ parameters.devices ]
+      # devices: $[ variables['AppCenterDevices'] ]
