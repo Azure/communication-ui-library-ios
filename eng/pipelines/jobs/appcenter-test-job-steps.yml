@@ -106,7 +106,7 @@ steps:
     inputs:
       rootFolderOrFile: '$(archivePath)'
       includeRootFolder: false
-      archiveFile: '$(zipToSign)'
+      archiveFile: '$(archivePath)/AzureCommunicationUIDemoApp.zip'
 
   - task: UseDotNet@2
     displayName: 'Use .NET Core sdk 2.1.x'
