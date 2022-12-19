@@ -6,6 +6,7 @@
 import Foundation
 import UIKit
 
+#if DEBUG
 class FloatingUITestWindow: UIWindow {
 
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
@@ -139,3 +140,4 @@ extension FloatingUITestWindow {
         return (hitView == stackView || hitView?.superview == stackView) ? hitView : nil
     }
 }
+#endif

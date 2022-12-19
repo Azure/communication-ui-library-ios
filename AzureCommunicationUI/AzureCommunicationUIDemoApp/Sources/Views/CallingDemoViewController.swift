@@ -47,8 +47,9 @@ class CallingDemoViewController: UIViewController {
 
     private var cancellable = Set<AnyCancellable>()
     private var envConfigSubject: EnvConfigSubject
+#if DEBUG
     private var callingSDKWrapperMock: UITestCallingSDKWrapper?
-
+#endif
     private lazy var contentView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
@@ -76,6 +77,7 @@ class CallingDemoViewController: UIViewController {
         }
     }
 
+#if DEBUG
     init(envConfigSubject: EnvConfigSubject,
          callingSDKHandlerMock: UITestCallingSDKWrapper? = nil) {
         self.envConfigSubject = envConfigSubject
@@ -83,7 +85,13 @@ class CallingDemoViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.combineEnvConfigSubject()
     }
-
+#else
+    init(envConfigSubject: EnvConfigSubject) {
+        self.envConfigSubject = envConfigSubject
+        super.init(nibName: nil, bundle: nil)
+        self.combineEnvConfigSubject()
+    }
+#endif
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
