@@ -161,6 +161,7 @@ struct ChatDemoView: View {
                 .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
 
                 Button("Stop") {
+                    self.chatAdapter?.disconnect()
                     self.chatAdapter = nil
                     self.isShowingChatView = false
                 }

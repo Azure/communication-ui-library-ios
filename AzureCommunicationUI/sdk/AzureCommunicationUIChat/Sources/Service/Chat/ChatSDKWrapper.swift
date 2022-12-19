@@ -279,7 +279,6 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
     }
 
     private func registerRealTimeNotifications() throws {
-        logger.info("Register real time notification not implemented")
         self.chatClient?.startRealTimeNotifications { [self] result in
             switch result {
             case .success:
@@ -291,9 +290,16 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         }
     }
 
+    func unregisterRealTimeNotifications() {
+        guard let client = self.chatClient else {
+            return
+        }
+        client.stopRealTimeNotifications()
+    }
+
     private func registerEvents() {
         guard let client = self.chatClient else {
-                     return
+            return
         }
         client.register(event: .realTimeNotificationConnected, handler: chatEventsHandler.handle)
         client.register(event: .realTimeNotificationDisconnected, handler: chatEventsHandler.handle)

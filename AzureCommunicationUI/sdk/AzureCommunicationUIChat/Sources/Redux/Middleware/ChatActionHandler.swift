@@ -16,6 +16,8 @@ protocol ChatActionHandling {
     // MARK: ChatActionHandler
     @discardableResult
     func onChatThreadDeleted(dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func disconnectChat() -> Task<Void, Never>
 
     // MARK: Participants Handler
 
@@ -117,6 +119,12 @@ class ChatActionHandler: ChatActionHandling {
         Task {
             // may be extracted to function in the future
             dispatch(.errorAction(.fatalErrorUpdated(internalError: .chatEvicted, error: nil)))
+        }
+    }
+
+    func disconnectChat() -> Task<Void, Never> {
+        Task {
+            chatService.disconnectChatService()
         }
     }
 

@@ -340,6 +340,7 @@ class ChatDemoViewController: UIViewController {
 
     @objc func onStopBtnPressed() {
         Task { @MainActor in
+            self.chatAdapter?.disconnect()
             self.chatAdapter = nil
             updateExperieceButton()
         }

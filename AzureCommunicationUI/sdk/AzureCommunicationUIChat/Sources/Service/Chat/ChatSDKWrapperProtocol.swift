@@ -18,5 +18,6 @@ protocol ChatSDKWrapperProtocol {
     func sendReadReceipt(messageId: String) async throws
     func sendTypingIndicator() async throws
 
+    func unregisterRealTimeNotifications()
     var chatEventsHandler: ChatSDKEventsHandling { get }
 }

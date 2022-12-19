@@ -27,7 +27,7 @@ class CompositeManager: CompositeManagerProtocol {
     }
 
     func stop(completionHandler: @escaping (() -> Void)) {
-        store.dispatch(action: .compositeExitAction)
+        store.dispatch(action: .chatAction(.disconnectChatTriggered))
         compositeCompletionHandler = completionHandler
     }
 }

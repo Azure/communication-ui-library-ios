@@ -84,7 +84,7 @@ public class ChatAdapter {
     public func disconnect() {
 //    public func disconnect(threadId: String? = nil
 //                           completionHandler: ((Result<Void, ChatCompositeError>) -> Void)? = nil) {
-
+        compositeManager?.stop(completionHandler: {})
     }
 
     private func constructDependencies(
