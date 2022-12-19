@@ -20,24 +20,33 @@ schedules:
   #     include:
   #       - develop
 variables:
-    buildHourOfDay: $[format('{0:H}', pipeline.startTime)]
+  AppCenterDevices: ''
+  buildHourOfDay: $[format('{0:H}', pipeline.startTime)]
 
 jobs:
   # If it's midnight-ish pacific time and it was a scheduled build, then run the UI tests
   - ${{ if and(eq(variables['Build.Reason'], 'Schedule'), eq( variables['buildHourOfDay'], '08')) }}:
     - template: jobs/UI-test-job.yml
 
+  - job: ConfigureAppCenterDevices
+    displayName: "Determine AppCenter device set to use"
+    pool:
+      name: vsts-mac-1301-xcode-141
+      demands: xcode
+    steps:
+      # Sets the AppCenterDevices variable
+      - template: jobs/templates/set-appcenter-devices.yml
+
   - job: AutomatedUITestWithAppCenter
+    dependsOn: ConfigureAppCenterDevices
     displayName: "Run XCUITests on AppCenter with specific devices"
+    condition: and(succeeded(), ne(variables.AppCenterDevices, ''))
     pool:
       name: vsts-mac-1301-xcode-141
       demands: xcode
 
     variables:
       - group: 'SPOOL-Communication-mobileUI'
-      - name: 'AppCenterDevices'
-    
+
     steps:
-      - template: jobs/templates/set-appcenter-devices.yml
-      - ${{ if ne(variables['AppCenterDevices'], '') }}:
-        - template: jobs/appcenter-test-job.yml
+      - template: jobs/appcenter-test-job.yml
