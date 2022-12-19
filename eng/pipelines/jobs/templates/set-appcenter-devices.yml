@@ -4,7 +4,6 @@
 steps:
   - bash: |
       #!/bin/bash
-      echo "Start: $(pipeline.startTime)"
       
       # if [[ "$(Build.Reason)" != "Scheduled" ]]; then
       #   # If not scheduled, use AppCenterDevices variable if set, otherwise default device set
@@ -16,9 +15,9 @@ steps:
       # fi
 
       # If scheduled, use the schedule defined IN UTC TIME AS PER ADO CRON SCHEDULES
-
+      UTC_DAY_OF_WEEK=`TZ=UTC date "+%A"`
+      UTC_HOUR_OF_DAY=`TZ=UTC date "+%H"`
       echo "Server Day is $UTC_DAY_OF_WEEK, server HOUR is $UTC_HOUR_OF_DAY"
-      echo "${"
       case $UTC_DAY_OF_WEEK in 
 
         Monday)
@@ -195,9 +194,7 @@ steps:
          echo "##vso[task.setvariable variable=AppCenterDevices]Azure-Communication-Services/$APPCENTER_DEVICES"
       fi
 
-    displayName: 'Set AppCenterDevices variable based on calling'
+    displayName: 'Set AppCenterDevices variable based on trigger and date'
     env:
       APPCENTER_DEVICES: $(AppCenterDevices)
-      UTC_DAY_OF_WEEK: $[format('{0:A}', pipeline.startTime)]
-      UTC_HOUR_OF_DAY: $[format('{0:HH}', pipeline.startTime)]
 
