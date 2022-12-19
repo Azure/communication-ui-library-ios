@@ -85,6 +85,9 @@ struct MessageListView: View {
                     let lastIndex = viewModel.messages.count - 1 > 0 ? viewModel.messages.count - 1 : 0
                     scrollProxy.scrollTo(lastIndex, anchor: .bottom)
                     viewModel.shouldScrollToBottom = false
+                    if viewModel.scrollSize < UIScreen.main.bounds.size.height {
+                        viewModel.startDidEndScrollingTimer(currentOffset: nil)
+                    }
                 }
             }
         }
