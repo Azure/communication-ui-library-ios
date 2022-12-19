@@ -7,9 +7,13 @@ import UIKit
 import Combine
 import SwiftUI
 
+/// The Chat Composite View Controller is a view component for a single chat thread
 public class ChatCompositeViewController: UIViewController {
     var chatView: UIHostingController<ContainerView>!
 
+    /// Create an instance of ChatCompositeViewController with chatAdapter for a single chat thread
+    /// - Parameters:
+    ///    - chatAdapter: The required parameter to create a view component
     public init(with chatAdapter: ChatAdapter) {
         super.init(nibName: nil, bundle: nil)
         let localizationProvider = chatAdapter.localizationProvider
