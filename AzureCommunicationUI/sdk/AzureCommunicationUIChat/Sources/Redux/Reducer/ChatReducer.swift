@@ -51,6 +51,7 @@ extension Reducer where State == ChatState,
                          lastReadReceiptReceivedTimestamp: lastReadReceiptReceivedTimestamp,
                          lastReadReceiptSentTimestamp: lastReadReceiptSentTimestamp,
                          lastReceivedMessageTimestamp: lastReceivedMessageTimestamp,
+                         lastSendingMessageTimestamp: lastSendingMessageTimestamp,
                          lastSentOrFailedMessageTimestamp: lastSentOrFailedMessageTimestamp,
                          isLocalUserRemovedFromChat: isLocalUserRemovedFromChat)
     }
