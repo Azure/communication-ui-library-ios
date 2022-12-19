@@ -11,7 +11,6 @@ schedules:
     branches:
       include:
         - develop
-        - main
 
   # Disabled until working properly
   # - cron: "0 */2 * * *" # Check the AppCenter build schedule every 2 hours
@@ -19,13 +18,14 @@ schedules:
   #   branches:
   #     include:
   #       - develop
+
 variables:
   AppCenterDevicesOverride: ''
-  buildHourOfDay: $[format('{0:H}', pipeline.startTime)]
+  buildHourOfDayUtc: $[format('{0:H}', pipeline.startTime)]
 
 jobs:
   # If it's midnight-ish pacific time and it was a scheduled build, then run the UI tests
-  - ${{ if and(eq(variables['Build.Reason'], 'Schedule'), eq( variables['buildHourOfDay'], '08')) }}:
+  - ${{ if and(eq(variables['Build.Reason'], 'Schedule'), eq( variables['buildHourOfDayUtc'], '08')) }}:
     - template: jobs/UI-test-job.yml
 
   - job: ConfigureDevices

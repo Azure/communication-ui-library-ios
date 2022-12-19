@@ -10,6 +10,9 @@ steps:
         if [ -z "$(AppCenterDevicesOverride)" ]; then
           echo "Non-scheduled, no AppCenter device set specified. Setting defaults"
           echo "##vso[task.setvariable variable=AppCenterDevices;isOutput=true]Azure-Communication-Services/defaults"  
+        else 
+          echo "Non-scheduled, AppCenterDevicesOverride set to $(AppCenterDevicesOverride)"
+          echo "##vso[task.setvariable variable=AppCenterDevices;isOutput=true]$(AppCenterDevicesOverride)"  
         fi
         exit 0
       fi
