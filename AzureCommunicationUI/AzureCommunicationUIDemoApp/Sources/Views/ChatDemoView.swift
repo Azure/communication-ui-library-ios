@@ -238,6 +238,8 @@ extension ChatDemoView {
         print("::::SwiftUIChatDemoView::showError \(error)")
         print("::::SwiftUIChatDemoView error.code \(error.code)")
         print("Error - \(error.code): \(error.error?.localizedDescription ?? error.localizedDescription)")
+        // cases are hard coded for now
+        // since ChatCompositeErrorCode is internal
         switch error.code {
         case "connectFailed":
             errorMessage = "Connection Failed"
