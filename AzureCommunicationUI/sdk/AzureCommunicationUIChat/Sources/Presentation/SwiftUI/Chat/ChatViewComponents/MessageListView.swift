@@ -30,7 +30,6 @@ struct MessageListView: View {
     var body: some View {
         ZStack {
             activityIndicator
-            messageList
             jumpToNewMessagesButton
         }
         .onTapGesture {
@@ -57,37 +56,38 @@ struct MessageListView: View {
     var messageList: some View {
         ScrollViewReader { scrollProxy in
             ObservableScrollView(
-				showsIndicators: false, // Hide scroll indicator due to swiftUI issue where it jumps around
+                showsIndicators: false, // Hide scroll indicator due to swiftUI issue where it jumps around
                 offsetChanged: {
-                    viewModel.startDidEndScrollingTimer(currentOffset: $0)
                     viewModel.scrollOffset = $0
                 },
                 heightChanged: { viewModel.scrollSize = $0 },
                 content: {
                     LazyVStack(spacing: 0) {
-                        ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
+                        ForEach(viewModel.messages.reversed()) { message in
                             HStack(spacing: Constants.messageSendStatusViewPadding) {
-                                createMessage(message: message, messages: viewModel.messages, index: index)
-                                .onAppear {
-                                    viewModel.fetchMessages(index: index)
-                                    viewModel.updateReadReceiptToBeSentMessageId(message: message)
-                                }
+                                createMessage(message: message, messages: viewModel.messages)
+                                    .onAppear {
+                                        viewModel.fetchMessages(lastSeenMessage: message)
+                                        viewModel.updateReadReceiptToBeSentMessageId(message: message)
+                                    }
                                 createMessageSendStatus(message: message)
                             }
-                            .id(index)
+                            .flippedUpsideDown()
                         }
                     }
                 })
+            .flippedUpsideDown()
             .listStyle(.plain)
             .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
             .onChange(of: viewModel.shouldScrollToBottom) { _ in
                 if viewModel.shouldScrollToBottom {
-                    let lastIndex = viewModel.messages.count - 1 > 0 ? viewModel.messages.count - 1 : 0
-                    scrollProxy.scrollTo(lastIndex, anchor: .bottom)
-                    viewModel.shouldScrollToBottom = false
-                    if viewModel.scrollSize < UIScreen.main.bounds.size.height {
-                        viewModel.startDidEndScrollingTimer(currentOffset: nil)
+                    if let lastMessageId = viewModel.messages.last?.id {
+                        scrollProxy.scrollTo(lastMessageId, anchor: .bottom)
+                        if viewModel.scrollSize < UIScreen.main.bounds.size.height {
+                            viewModel.startDidEndScrollingTimer(currentOffset: nil)
+                        }
                     }
+                    viewModel.shouldScrollToBottom = false
                 }
             }
         }
@@ -119,8 +119,8 @@ struct MessageListView: View {
 
     @ViewBuilder
     private func createMessage(message: ChatMessageInfoModel,
-                               messages: [ChatMessageInfoModel],
-                               index: Int) -> some View {
+                               messages: [ChatMessageInfoModel]) -> some View {
+        let index = messages.firstIndex(where: { $0 == message }) ?? 0
         let lastMessageIndex = index == 0 ? 0 : index - 1
         let lastMessage = messages[lastMessageIndex]
         let showDateHeader = index == 0 || message.createdOn.dayOfYear - lastMessage.createdOn.dayOfYear > 0

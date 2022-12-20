@@ -19,6 +19,7 @@ class MessageListViewModel: ObservableObject {
     private var lastSentOrFailedMessageTimestamp: Date = .distantPast
     private var lastSentReadReceiptTimestamp: Date = .distantPast
     private var hasFetchedInitialMessages: Bool = false
+    private var hasFetchedPreviousMessages: Bool = true
     private var didEndScrollingTimer: Timer?
     private var readReceiptToBeSentMessageId: String?
     private var lastReadReceiptReceivedTimestamp: Date = .distantPast
@@ -68,8 +69,11 @@ class MessageListViewModel: ObservableObject {
         shouldScrollToBottom = true
     }
 
-    func fetchMessages(index: Int) {
-        if index == minFetchIndex {
+    func fetchMessages(lastSeenMessage: ChatMessageInfoModel) {
+        if lastSeenMessage == messages.first && hasFetchedPreviousMessages {
+            print("SCROLL: Fetch Messages")
+            hasFetchedPreviousMessages = false
+            showActivityIndicator = true
             dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
         }
     }
@@ -164,6 +168,11 @@ class MessageListViewModel: ObservableObject {
                 if let latestSeenMessage = messages.last(where: {$0.sendStatus == .seen}) {
                     latestSeenMessageId = latestSeenMessage.id
                 }
+            }
+
+            if self.hasFetchedPreviousMessages != repositoryState.hasFetchedPreviousMessages {
+                self.hasFetchedPreviousMessages = repositoryState.hasFetchedPreviousMessages
+                showActivityIndicator = !hasFetchedPreviousMessages
             }
 
             updateJumpToNewMessages()
