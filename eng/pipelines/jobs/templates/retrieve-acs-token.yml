@@ -12,7 +12,6 @@ steps:
         # https://github.com/Azure-Samples/communication-services-python-quickstarts/blob/main/access-tokens-quickstart/issue-access-tokens.py
 
         # Get the ACS Connection String to use
-        print(os.environ['ACSString'])
         connection_string = os.environ['ACSString']
 
         # Instantiate the identity client
