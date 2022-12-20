@@ -13,6 +13,9 @@ parameters:
   - name: signedExtractedPath
     type: string
     default: '$(agent.builddirectory)/output/package/signed'
+  - name: provisioningProfileFile
+    type: string
+    default: 'ACS-UI-calling-df-Dev-20231219.mobileprovision'
 
 steps:
   - task: servicetree-link-build-task@1
@@ -38,6 +41,9 @@ steps:
 
   - template: templates/update-demo-app-plist-for-testing.yml
   - template: templates/configure-for-enterprise-signing.yml
+    parameters:
+      certificateFile: 'Emlyn-Enterprise-Dev-Cert.p12'
+      provisioningProfileFile: ${{ parameters.provisioningProfileFile }}
 
   - task: CocoaPods@0
     displayName: 'pod install'
@@ -78,7 +84,7 @@ steps:
   - task: DownloadSecureFile@1
     displayName: 'Download Distribution Profile from Azure secure files storage'
     inputs:
-      secureFile: 'spoolCallCompositeDogfoodProfileDist-exp230603.mobileprovision'
+      secureFile: '${{ parameters.provisioningProfileName }}'
       retryCount: 5
 
   - task: DownloadSecureFile@1
@@ -91,7 +97,7 @@ steps:
     displayName: 'Copy Provisioning Profile to archive path'
     inputs:
       SourceFolder: '$(Agent.TempDirectory)'
-      Contents: 'spoolCallCompositeDogfoodProfileDist-exp230603.mobileprovision'
+      Contents: '${{ parameters.provisioningProfileName }}'
       TargetFolder: '${{ parameters.archivePath }}'
       flattenFolders: true
 

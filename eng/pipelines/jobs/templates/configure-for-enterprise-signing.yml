@@ -1,5 +1,13 @@
 # Adjusts the project file bundle identifiers, podfile signing requirements and includes signing artifacts
 
+parameters:
+  - name: provisioningProfileFile
+    type: string
+    default: ''
+  - name: certificateFile
+    type: string
+    default: ''
+
 steps:
   # Configure signing for enterprise target
   - script: |
@@ -32,11 +40,11 @@ steps:
   - task: InstallAppleCertificate@2
     displayName: 'Install Enterprise certificate'
     inputs:
-      certSecureFile: Emlyn-Enterprise-Dev-Cert.p12
+      certSecureFile: ${{ parameters.certificateFile }}
       certPwd: '$(P12password)'
       setUpPartitionIdACLForPrivateKey: false
 
   - task: InstallAppleProvisioningProfile@1
     displayName: 'Install Enterprise provisioning profile'
     inputs:
-      provProfileSecureFile: 'ACS-UI-calling-df-Dev-20231219.mobileprovision'
+      provProfileSecureFile: ${{ parameters.provisioningProfileFile }}
