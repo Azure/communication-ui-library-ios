@@ -26,6 +26,7 @@ parameters:
 steps:
   - script: |
       echo "DeviceSet is ${{ parameters.DeviceSet }}"
+      echo "AppcenterDeviceSet is $(AppcenterDeviceSet)"
     
     displayName: "Show deviceSet"
 
