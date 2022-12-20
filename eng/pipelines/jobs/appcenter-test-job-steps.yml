@@ -65,8 +65,8 @@ steps:
       xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
       scheme: AzureCommunicationUIDemoApp
       packageApp: true
-      archivePath: '$(archivePath)'
-      exportPath: '$(exportPath)'
+      archivePath: '${{ parameters.archivePath }}'
+      exportPath: '${{ parameters.exportPath }}'
       signingOption: manual
       signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
       provisioningProfileUuid: '$(APPLE_PROV_PROFILE_UUID)'
@@ -92,7 +92,7 @@ steps:
     inputs:
       SourceFolder: '$(Agent.TempDirectory)'
       Contents: 'spoolCallCompositeDogfoodProfileDist-exp230603.mobileprovision'
-      TargetFolder: '$(archivePath)'
+      TargetFolder: '${{ parameters.archivePath }}'
       flattenFolders: true
 
   - task: CopyFiles@2
@@ -100,7 +100,7 @@ steps:
     inputs:
       SourceFolder: '$(Agent.TempDirectory)'
       Contents: spoolCallCompositeExportOptions.plist
-      TargetFolder: '$(archivePath)'
+      TargetFolder: '${{ parameters.archivePath }}'
       flattenFolders: true
 
   - script: |
@@ -114,9 +114,9 @@ steps:
   - task: ArchiveFiles@2
     displayName: 'Create zip for signing'
     inputs:
-      rootFolderOrFile: '$(archivePath)'
+      rootFolderOrFile: '${{ parameters.archivePath }}'
       includeRootFolder: false
-      archiveFile: '$(archivePath)/AzureCommunicationUIDemoApp.zip'
+      archiveFile: '${{ parameters.archivePath }}/AzureCommunicationUIDemoApp.zip'
 
   - task: UseDotNet@2
     displayName: 'Use .NET Core sdk 2.1.x'
@@ -127,7 +127,7 @@ steps:
     displayName: 'Dogfood ESRP CodeSigning'
     inputs:
       ConnectedServiceName: 'ESRP CodeSign Global'
-      FolderPath: '$(archivePath)'
+      FolderPath: '${{ parameters.archivePath }}'
       Pattern: '*.zip'
       signConfigType: inlineSignParams
       inlineOperation: |
@@ -144,20 +144,20 @@ steps:
   - task: ExtractFiles@1
     displayName: 'Extract signed build'
     inputs:
-      archiveFilePatterns: '$(archivePath)/AzureCommunicationUIDemoApp.zip'
-      destinationFolder: '$(signedExtractedPath)'
+      archiveFilePatterns: '${{ parameters.archivePath }}/AzureCommunicationUIDemoApp.zip'
+      destinationFolder: '${{ parameters.signedExtractedPath }}'
 
   - task: CopyFiles@2
-    displayName: 'Copy dSYMs Files to: $(archivePath)'
+    displayName: 'Copy dSYMs Files to: ${{ parameters.archivePath }}'
     inputs:
-      SourceFolder: '$(archivePath)'
+      SourceFolder: '${{ parameters.archivePath }}'
       Contents: '**/*.dSYM/**'
       TargetFolder: '$(build.sourcesdirectory)'
 
   - task: CopyFiles@2
     displayName: 'Copy Signed Files to: $(build.sourcesdirectory)'
     inputs:
-      SourceFolder: '$(signedExtractedPath)'
+      SourceFolder: '${{ parameters.signedExtractedPath }}'
       Contents: '**/*.ipa'
       TargetFolder: '$(build.sourcesdirectory)'
 
@@ -165,4 +165,3 @@ steps:
   - template: templates/run-appcenter-test.yml
     parameters:
       devices: $[ parameters.DeviceSet ]
-      # devices: $[ variables['AppCenterDevices'] ]
