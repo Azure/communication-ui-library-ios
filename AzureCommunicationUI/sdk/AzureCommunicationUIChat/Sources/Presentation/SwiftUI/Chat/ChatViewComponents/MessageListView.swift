@@ -30,6 +30,7 @@ struct MessageListView: View {
     var body: some View {
         ZStack {
             activityIndicator
+            messageList
             jumpToNewMessagesButton
         }
         .onTapGesture {
