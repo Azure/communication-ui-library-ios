@@ -15,8 +15,10 @@ parameters:
     default: '$(agent.builddirectory)/output/package/signed'
   - name: provisioningProfileFile
     type: string
-    # default: 'ACS-UI-calling-df-Dev-20231219.mobileprovision'
-    default: 'spoolCallCompositeDogfoodProfileDist-exp230603.mobileprovision'
+    default: 'ACS-UI-calling-df-Dev-20231219.mobileprovision'
+  - name: signingCertificateFile
+    type: string
+    default: 'Emlyn-Enterprise-Dev-Cert.p12'
 
 steps:
   - task: servicetree-link-build-task@1
@@ -43,9 +45,8 @@ steps:
   - template: templates/update-demo-app-plist-for-testing.yml
   - template: templates/configure-for-enterprise-signing.yml
     parameters:
-      certificateFile: 'Emlyn-Enterprise-Dev-Cert.p12'
-      provisioningProfileFile: 'ACS-UI-calling-df-Dev-20231219.mobileprovision'
-      # provisioningProfileFile: '${{ parameters.provisioningProfileFile }}''
+      certificateFile: '${{ parameters.signingCertificateFile }}'
+      provisioningProfileFile: '${{ parameters.provisioningProfileFile }}'
 
   - task: CocoaPods@0
     displayName: 'pod install'
@@ -53,16 +54,6 @@ steps:
       workingDirectory: AzureCommunicationUI
       forceRepoUpdate: true
       projectDirectory: AzureCommunicationUI
-
-  - task: Xcode@5
-    displayName: 'Xcode Clean'
-    inputs:
-      actions: clean
-      configuration: Debug
-      sdk: iphoneos
-      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
-      scheme: AzureCommunicationUIDemoApp
-      args: '-derivedDataPath $(build.artifactStagingDirectory)/DerivedData'
 
   - task: Xcode@5
     displayName: 'Xcode Build for Testing'
@@ -142,11 +133,11 @@ steps:
       version: 3.1.x
 
   - task: EsrpCodeSigning@1
-    displayName: 'Dogfood ESRP CodeSigning'
+    displayName: 'ESRP CodeSigning'
     inputs:
       ConnectedServiceName: 'ESRP CodeSign Global'
       FolderPath: '${{ parameters.archivePath }}'
-      Pattern: '*.zip'
+      Pattern: 'AzureCommunicationUIDemoApp.zip'
       signConfigType: inlineSignParams
       inlineOperation: |
         [
@@ -184,3 +175,10 @@ steps:
   - template: templates/run-appcenter-test.yml
     parameters:
       devices: ${{ parameters.DeviceSet }}
+
+  - script: |
+      rm -rf ${{ parameters.archivePath }}
+      rm -rf ${{ parameters.exportPath }}
+
+    displayName: 'Clean up file storage usage'
+    condition: always()
