@@ -4,12 +4,15 @@ parameters:
   - name: devices
     type: string
     default: ''
+  - name: appFile
+    type: string
+    default: ''
 
 steps:
   - task: AppCenterTest@1
     displayName: 'Test with Visual Studio App Center (${{ parameters.devices }})'
     inputs:
-      appFile: '**/*.ipa'
+      appFile: '${{ parameters.appFile }}'
       frameworkOption: xcuitest
       xcUITestBuildDirectory: '$(build.artifactStagingDirectory)/DerivedData/Build/Products/Debug-iphoneos'
       serverEndpoint: 'SPOOL-CallingComposite-iOS-AppCenter2'
