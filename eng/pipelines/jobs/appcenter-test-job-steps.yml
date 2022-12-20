@@ -104,10 +104,10 @@ steps:
       flattenFolders: true
 
   - script: |
-      mv $(archivePath)/spoolCallCompositeExportOptions.plist $(archivePath)/ExportOptions.plist
+      mv ${{ parameters.archivePath }}/spoolCallCompositeExportOptions.plist ${{ parameters.archivePath }}/ExportOptions.plist
       
       echo "List files to zip"
-      ls $(archivePath)
+      ls ${{ parameters.archivePath }}
       
     displayName: 'Rename ExportOptions.plist'
 
