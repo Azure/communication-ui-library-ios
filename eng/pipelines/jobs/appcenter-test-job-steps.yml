@@ -4,6 +4,16 @@ parameters:
     type: string
     default: ''
 
+  - name: archivePath
+    type: string
+    default: '$(agent.builddirectory)/output/archive'
+  - name: 'exportPath'
+    type: string
+    default: '$(agent.builddirectory)/output/package'
+  - name: signedExtractedPath
+    type: string
+    default: '$(agent.builddirectory)/output/package/signed'
+
 steps:
   - task: servicetree-link-build-task@1
     displayName: "ServiceTree: [$(BuildOutputUsage)] "

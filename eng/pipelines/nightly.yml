@@ -44,12 +44,8 @@ jobs:
     pool:
       name: vsts-mac-1301-xcode-141
       demands: xcode
-
     variables:
       - group: 'SPOOL-Communication-mobileUI'
-      - archivePath: '$(agent.builddirectory)/output/archive'
-      - exportPath: '$(agent.builddirectory)/output/package'
-      - signedExtractedPath: '$(exportPath)/signed'
       - name: 'acsDisplayName'
         value: 'iOS UI Automated Tester'
 
