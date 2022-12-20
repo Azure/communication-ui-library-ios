@@ -6,26 +6,26 @@ pr: none
 
 # Just want a scheduled run
 schedules:
-  - cron: "0 8 * * *"  # Nightly at midnight PST
+  - cron: "0 11 * * *"  # Nightly at 3am PST
     displayName: "Nightly Build"
     branches:
       include:
         - develop
+        - main
 
-  # Disabled until working properly
-  # - cron: "0 */2 * * *" # Check the AppCenter build schedule every 2 hours
-  #   displayName: "AppCenter UI Test Run Trigger"
-  #   branches:
-  #     include:
-  #       - develop
+  - cron: "0 */2 * * *" # Check the AppCenter build schedule every 2 hours
+    displayName: "AppCenter UI Test Run Trigger"
+    branches:
+      include:
+        - develop
 
 variables:
   AppCenterDevicesOverride: ''
   buildHourOfDayUtc: $[format('{0:H}', pipeline.startTime)]
 
 jobs:
-  # If it's midnight-ish pacific time and it was a scheduled build, then run the UI tests
-  - ${{ if and(eq(variables['Build.Reason'], 'Schedule'), eq( variables['buildHourOfDayUtc'], '08')) }}:
+  # If it's 3am-ish pacific time and it was a scheduled build, then run the UI tests
+  - ${{ if and(eq(variables['Build.Reason'], 'Schedule'), eq( variables['buildHourOfDayUtc'], '11')) }}:
     - template: jobs/UI-test-job.yml
 
   - job: ConfigureDevices
