@@ -48,8 +48,10 @@ jobs:
       - group: 'SPOOL-Communication-mobileUI'
       - name: 'acsDisplayName'
         value: 'iOS UI Automated Tester'
+      - name: DeviceSet
+        value: $[ dependencies.ConfigureDevices.outputs['DetermineDeviceSet.AppCenterDevices'] ]
 
     steps:
       - template: jobs/appcenter-test-job-steps.yml
         parameters:
-          DeviceSet: $[ dependencies.ConfigureDevices.outputs['DetermineDeviceSet.AppCenterDevices'] ]
+          DeviceSet: ${{ DeviceSet }}
