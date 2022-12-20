@@ -54,4 +54,4 @@ jobs:
     steps:
       - template: jobs/appcenter-test-job-steps.yml
         parameters:
-          DeviceSet: ${{ DeviceSet }}
+          DeviceSet: ${{ variables['DeviceSet'] }}
