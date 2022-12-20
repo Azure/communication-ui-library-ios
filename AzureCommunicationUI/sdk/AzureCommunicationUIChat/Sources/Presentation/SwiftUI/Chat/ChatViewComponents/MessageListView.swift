@@ -81,7 +81,6 @@ struct MessageListView: View {
             .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
             .onChange(of: viewModel.shouldScrollToBottom) { _ in
                 if viewModel.shouldScrollToBottom {
-						withAnimation(.linear(duration: 0.1))
                     if let lastMessageId = viewModel.messages.last?.id {
 						withAnimation(.linear(duration: 0.1)) {
                         	scrollProxy.scrollTo(lastMessageId, anchor: .bottom)
