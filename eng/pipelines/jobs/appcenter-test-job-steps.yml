@@ -1,9 +1,5 @@
 
 parameters:
-  - name: DeviceSet
-    type: string
-    default: ''
-
   - name: archivePath
     type: string
     default: '$(agent.builddirectory)/output/archive'
@@ -24,12 +20,6 @@ parameters:
     default: 'Emlyn-Enterprise-Dev-Cert.p12'
 
 steps:
-  - script: |
-      echo "DeviceSet is ${{ parameters.DeviceSet }}"
-      echo "AppcenterDeviceSet is $(AppcenterDeviceSet)"
-    
-    displayName: "Show deviceSet"
-
   - task: servicetree-link-build-task@1
     displayName: "ServiceTree: [$(BuildOutputUsage)] "
     inputs:
@@ -183,7 +173,7 @@ steps:
   # Run the tests on the configured devices
   - template: templates/run-appcenter-test.yml
     parameters:
-      devices: ${{ parameters.DeviceSet }}
+      devices: '$(AppcenterDeviceSet)'
       appFile: '${{ parameters.signedExtractedPath }}/AzureCommunicationUIDemoApp.ipa'
 
   - script: |

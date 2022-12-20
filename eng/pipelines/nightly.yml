@@ -52,6 +52,6 @@ jobs:
         value: $[dependencies.ConfigureDevices.outputs['DetermineDeviceSet.AppCenterDevices'] ]
 
     steps:
+      # This takes the AppcenterDeviceSet VARIABLE to configure the test devices
       - template: jobs/appcenter-test-job-steps.yml
-        parameters:
-          DeviceSet: ${{ variables['AppcenterDeviceSet'] }}
+      
