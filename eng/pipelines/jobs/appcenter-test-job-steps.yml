@@ -178,7 +178,7 @@ steps:
   - template: templates/run-appcenter-test.yml
     parameters:
       devices: ${{ parameters.DeviceSet }}
-      appFile: '**/AzureCommunicationUIDemoApp.ipa'
+      appFile: '${{ parameters.signedExtractedPath }}/AzureCommunicationUIDemoApp.ipa'
 
   - script: |
       rm -rf ${{ parameters.archivePath }}
