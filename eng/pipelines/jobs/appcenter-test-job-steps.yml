@@ -84,7 +84,7 @@ steps:
   - task: DownloadSecureFile@1
     displayName: 'Download Distribution Profile from Azure secure files storage'
     inputs:
-      secureFile: '${{ parameters.provisioningProfileName }}'
+      secureFile: '${{ parameters.provisioningProfileFile }}'
       retryCount: 5
 
   - task: DownloadSecureFile@1
@@ -97,7 +97,7 @@ steps:
     displayName: 'Copy Provisioning Profile to archive path'
     inputs:
       SourceFolder: '$(Agent.TempDirectory)'
-      Contents: '${{ parameters.provisioningProfileName }}'
+      Contents: '${{ parameters.provisioningProfileFile }}'
       TargetFolder: '${{ parameters.archivePath }}'
       flattenFolders: true
 
