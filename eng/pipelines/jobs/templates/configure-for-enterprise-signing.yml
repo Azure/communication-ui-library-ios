@@ -1,7 +1,7 @@
-# Adjusts the project files bundle identifiers and includes signing artifacts
+# Adjusts the project file bundle identifiers, podfile signing requirements and includes signing artifacts
 
 steps:
-  # Configure signing for dog-food build
+  # Configure signing for enterprise target
   - script: |
       export PROJ_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj/project.pbxproj
       sed -i -e '/PRODUCT_BUNDLE_IDENTIFIER =/ s/= .*/= "com.microsoft.azure.communication.ui.calling-df";/' $PROJ_FILE
@@ -13,6 +13,21 @@ steps:
       sed -i -e '/PRODUCT_BUNDLE_IDENTIFIER =/ s/= .*/= "277WSW7QTT.com.microsoft.azure.communication.ui.chat-df"; CODE_SIGNING_REQUIRED = "NO"; CODE_SIGNING_ALLOWED = "NO";/' $CHAT_PROJ_FILE_COMPOSITE
     
     displayName: 'Edit Bundle Identifiers in project files'
+
+  - script: |
+      export POD_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/Podfile
+      sed -i '' '/post_install do |installer|/,$d' $POD_FILE
+
+      cat << 'EOF' | tee -a $POD_FILE
+      post_install do |installer|
+        installer.pods_project.build_configurations.each do |config|
+          config.build_settings['CODE_SIGNING_REQUIRED'] = "NO"
+          config.build_settings['CODE_SIGNING_ALLOWED'] = "NO"
+        end
+      end
+      EOF
+
+    displayName: 'Edit Podfile'
 
   - task: InstallAppleCertificate@2
     displayName: 'Install Enterprise certificate'
