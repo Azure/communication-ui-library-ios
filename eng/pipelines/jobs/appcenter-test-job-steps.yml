@@ -15,7 +15,8 @@ parameters:
     default: '$(agent.builddirectory)/output/package/signed'
   - name: provisioningProfileFile
     type: string
-    default: 'ACS-UI-calling-df-Dev-20231219.mobileprovision'
+    # default: 'ACS-UI-calling-df-Dev-20231219.mobileprovision'
+    default: 'spoolCallCompositeDogfoodProfileDist-exp230603.mobileprovision'
 
 steps:
   - task: servicetree-link-build-task@1
@@ -43,7 +44,8 @@ steps:
   - template: templates/configure-for-enterprise-signing.yml
     parameters:
       certificateFile: 'Emlyn-Enterprise-Dev-Cert.p12'
-      provisioningProfileFile: ${{ parameters.provisioningProfileFile }}
+      provisioningProfileFile: 'ACS-UI-calling-df-Dev-20231219.mobileprovision'
+      # provisioningProfileFile: '${{ parameters.provisioningProfileFile }}''
 
   - task: CocoaPods@0
     displayName: 'pod install'
@@ -139,7 +141,7 @@ steps:
     inputs:
       version: 3.1.x
 
-  - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
+  - task: EsrpCodeSigning@1
     displayName: 'Dogfood ESRP CodeSigning'
     inputs:
       ConnectedServiceName: 'ESRP CodeSign Global'
