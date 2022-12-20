@@ -38,9 +38,9 @@ jobs:
       - template: jobs/templates/set-appcenter-devices.yml
 
   - job: AutomatedUITestWithAppCenter
-    dependsOn: ConfigureDevices
+    dependsOn: ['ConfigureDevices']
     displayName: "Run XCUITests on AppCenter with specific devices"
-    condition: ne(dependencies.ConfigureDevices.outputs['DetermineDeviceSet.AppCenterDevices'], '')
+    condition: ne(dependencies.ConfigureDevices.outputs['setVariable.AppCenterDevices'], '')
     pool:
       name: vsts-mac-1301-xcode-141
       demands: xcode
@@ -49,7 +49,7 @@ jobs:
       - name: 'acsDisplayName'
         value: 'iOS UI Automated Tester'
       - name: DeviceSet
-        value: $[ dependencies.ConfigureDevices.outputs['DetermineDeviceSet.AppCenterDevices'] ]
+        value: $[ dependencies.ConfigureDevices.outputs['setVariable.AppCenterDevices'] ]
 
     steps:
       - template: jobs/appcenter-test-job-steps.yml

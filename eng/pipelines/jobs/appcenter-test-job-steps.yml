@@ -24,6 +24,11 @@ parameters:
     default: 'Emlyn-Enterprise-Dev-Cert.p12'
 
 steps:
+  - script: |
+      echo "DeviceSet is ${{ parameters.DeviceSet }}"
+    
+    displayName: "Show deviceSet"
+
   - task: servicetree-link-build-task@1
     displayName: "ServiceTree: [$(BuildOutputUsage)] "
     inputs:
