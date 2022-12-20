@@ -117,6 +117,9 @@ steps:
       
       echo "List files to zip"
       ls ${{ parameters.archivePath }}
+
+      echo "ExportOptions.plist is:"
+      cat ${{ parameters.archivePath }}/ExportOptions.plist
       
     displayName: 'Rename ExportOptions.plist'
 
