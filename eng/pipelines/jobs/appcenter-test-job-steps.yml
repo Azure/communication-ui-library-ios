@@ -53,6 +53,16 @@ steps:
       projectDirectory: AzureCommunicationUI
 
   - task: Xcode@5
+    displayName: 'Xcode Clean'
+    inputs:
+      actions: clean
+      configuration: Debug
+      sdk: iphoneos
+      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+      scheme: AzureCommunicationUIDemoApp
+      args: '-derivedDataPath $(build.artifactStagingDirectory)/DerivedData'
+
+  - task: Xcode@5
     displayName: 'Xcode Build for Testing'
     inputs:
       actions: 'build-for-testing'
@@ -125,9 +135,9 @@ steps:
       archiveFile: '${{ parameters.archivePath }}/AzureCommunicationUIDemoApp.zip'
 
   - task: UseDotNet@2
-    displayName: 'Use .NET Core sdk 2.1.x'
+    displayName: "Use .NET Core sdk 3.1.x"
     inputs:
-      version: 2.1.x
+      version: 3.1.x
 
   - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@1
     displayName: 'Dogfood ESRP CodeSigning'
@@ -166,8 +176,9 @@ steps:
       SourceFolder: '${{ parameters.signedExtractedPath }}'
       Contents: '**/*.ipa'
       TargetFolder: '$(build.sourcesdirectory)'
+      OverWrite: true
 
   # Run the tests on the configured devices
   - template: templates/run-appcenter-test.yml
     parameters:
-      devices: $[ parameters.DeviceSet ]
+      devices: ${{ parameters.DeviceSet }}
