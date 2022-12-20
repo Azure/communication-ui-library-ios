@@ -70,7 +70,8 @@ class MessageListViewModel: ObservableObject {
     }
 
     func fetchMessages(lastSeenMessage: ChatMessageInfoModel) {
-        if lastSeenMessage == messages.first && hasFetchedPreviousMessages {
+        let lastSeenMessageIndex = messages.firstIndex(where: { $0.id == lastSeenMessage.id })
+        if let lastSeenMessageIndex, lastSeenMessageIndex <= minFetchIndex && hasFetchedPreviousMessages {
             print("SCROLL: Fetch Messages")
             hasFetchedPreviousMessages = false
             showActivityIndicator = true
@@ -130,14 +131,12 @@ class MessageListViewModel: ObservableObject {
             // Scroll to new received message
             if self.lastReceivedMessageTimestamp < chatState.lastReceivedMessageTimestamp {
                 self.lastReceivedMessageTimestamp = chatState.lastReceivedMessageTimestamp
-                shouldScrollToBottom = isAtBottom()
+//                shouldScrollToBottom = isAtBottom()
             }
 
-            // Scroll to bottom for initial messages
             if self.hasFetchedInitialMessages != repositoryState.hasFetchedInitialMessages {
                 self.hasFetchedInitialMessages = repositoryState.hasFetchedInitialMessages
                 showActivityIndicator = false
-                shouldScrollToBottom = true
                 // Assume all messages are seen by others when re-joining the chat
                 if let latestSeenMessage = messages.last(where: {$0.isLocalUser}) {
                     latestSeenMessageId = latestSeenMessage.id

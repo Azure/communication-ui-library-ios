@@ -29,8 +29,10 @@ struct MessageListView: View {
 
     var body: some View {
         ZStack {
-            activityIndicator
-            messageList
+            VStack {
+                activityIndicator
+                messageList
+            }
             jumpToNewMessagesButton
         }
         .onTapGesture {
@@ -44,12 +46,8 @@ struct MessageListView: View {
     var activityIndicator: some View {
         Group {
             if viewModel.showActivityIndicator {
-                VStack {
-                    Spacer()
-                    ActivityIndicator(size: .large)
-                        .isAnimating(true)
-                    Spacer()
-                }
+                ActivityIndicator(size: .large)
+                    .isAnimating(true)
             }
         }
     }
