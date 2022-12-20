@@ -16,6 +16,9 @@ parameters:
   - name: provisioningProfileFile
     type: string
     default: 'ACS-UI-calling-df-Dev-20231219.mobileprovision'
+  - name: distributionProvisioningProfileFile
+    type: string
+    default: 'spoolCallCompositeDogfoodProfileDist-exp230603.mobileprovision'
   - name: signingCertificateFile
     type: string
     default: 'Emlyn-Enterprise-Dev-Cert.p12'
@@ -87,7 +90,7 @@ steps:
   - task: DownloadSecureFile@1
     displayName: 'Download Distribution Profile from Azure secure files storage'
     inputs:
-      secureFile: '${{ parameters.provisioningProfileFile }}'
+      secureFile: '${{ parameters.distributionProvisioningProfileFile }}'
       retryCount: 5
 
   - task: DownloadSecureFile@1
@@ -97,10 +100,10 @@ steps:
       retryCount: 5
 
   - task: CopyFiles@2
-    displayName: 'Copy Provisioning Profile to archive path'
+    displayName: 'Copy Dist Provisioning Profile to archive path'
     inputs:
       SourceFolder: '$(Agent.TempDirectory)'
-      Contents: '${{ parameters.provisioningProfileFile }}'
+      Contents: '${{ parameters.distributionProvisioningProfileFile }}'
       TargetFolder: '${{ parameters.archivePath }}'
       flattenFolders: true
 
@@ -117,11 +120,8 @@ steps:
       
       echo "List files to zip"
       ls ${{ parameters.archivePath }}
-
-      echo "ExportOptions.plist is:"
-      cat ${{ parameters.archivePath }}/ExportOptions.plist
       
-    displayName: 'Rename ExportOptions.plist'
+    displayName: 'Rename to ExportOptions.plist'
 
   - task: ArchiveFiles@2
     displayName: 'Create zip for signing'
