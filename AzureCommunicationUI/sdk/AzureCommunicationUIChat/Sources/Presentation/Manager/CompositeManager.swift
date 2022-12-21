@@ -16,7 +16,7 @@ class CompositeManager: CompositeManagerProtocol {
     private let store: Store<AppState>
 
     var cancellables = Set<AnyCancellable>()
-    private var compositeCompletionHandlerQueue: [((Result<Void, ChatCompositeError>) -> Void)] = []
+    private var compositeCompletionHandlers: [((Result<Void, ChatCompositeError>) -> Void)] = []
 
     init(store: Store<AppState>,
          logger: Logger) {
@@ -42,17 +42,17 @@ class CompositeManager: CompositeManagerProtocol {
 
     private func onErrorDisconnecting(errorState: ErrorState) {
         let error = ChatCompositeError(code: ChatCompositeErrorCode.disconnectFailed, error: errorState.error)
-        for handler in compositeCompletionHandlerQueue {
+        for handler in compositeCompletionHandlers {
             handler(.failure(error))
         }
-        compositeCompletionHandlerQueue.removeAll()
+        compositeCompletionHandlers.removeAll()
     }
 
     private func onSuccessDisconnecting() {
-        for handler in compositeCompletionHandlerQueue {
+        for handler in compositeCompletionHandlers {
             handler(.success(Void()))
         }
-        compositeCompletionHandlerQueue.removeAll()
+        compositeCompletionHandlers.removeAll()
     }
 
     func start() {
@@ -61,6 +61,6 @@ class CompositeManager: CompositeManagerProtocol {
 
     func stop(completionHandler: @escaping ((Result<Void, ChatCompositeError>) -> Void)) {
         store.dispatch(action: .chatAction(.disconnectChatTriggered))
-        compositeCompletionHandlerQueue.append(completionHandler)
+        compositeCompletionHandlers.append(completionHandler)
     }
 }

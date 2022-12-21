@@ -82,14 +82,12 @@ public class ChatAdapter {
         }
     }
 
-    /// Stop connection to chat composite to Azure Communication Service
+    /// Unsubscribe all the chat client events from Azure Communication Service
     public func disconnect(completionHandler: @escaping ((Result<Void, ChatCompositeError>) -> Void)) {
         compositeManager?.stop(completionHandler: completionHandler)
     }
 
-    /// Stop connection to chat composite to Azure Communication Service
-    /// unsubscribe from the chat client
-    /// inside the callback developers should clean up the adapter.dispose
+    /// Unsubscribe all the chat client events from Azure Communication Service
     public func disconnect() async throws {
         return try await withCheckedThrowingContinuation { continuation in
             compositeManager?.stop(completionHandler: { result in
