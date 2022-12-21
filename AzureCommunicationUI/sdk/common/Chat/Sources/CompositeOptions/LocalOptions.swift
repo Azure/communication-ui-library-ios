@@ -8,19 +8,13 @@ import UIKit
 
 /// Object for local options for the Composite
 public struct LocalOptions {
-    /// The boolean flag to control if the Composite should be running in background mode
-    let isBackgroundMode: Bool
     /// The ParticipantViewData of the local participant.
     let participantViewData: ParticipantViewData
     /// Create an instance of LocalOptions. All information in this object is only stored locally in the composite.
     /// - Parameters:
     ///    - participantViewData: The ParticipantViewData to be displayed for local participants avatar
-    ///    - isBackgroundMode: The boolean flag of setting background mode for the Composite
-    ///                        if this parameter is not provided, a default value of false would be used instead.
-    public init(participantViewData: ParticipantViewData,
-                isBackgroundMode: Bool = false) {
+    public init(participantViewData: ParticipantViewData) {
         self.participantViewData = participantViewData
-        self.isBackgroundMode = isBackgroundMode
     }
 }
 /// Object to represent participants data
