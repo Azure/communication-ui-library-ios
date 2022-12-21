@@ -5,7 +5,7 @@ steps:
   - bash: |
       #!/bin/bash
       
-      if [[ "$(Build.Reason)" != "Scheduled" ]]; then
+      if [[ "$(Build.Reason)" != "Schedule" ]]; then
         # If not scheduled, use AppCenterDevices variable if set, otherwise default device set
         if [ -z "$(AppCenterDevicesOverride)" ]; then
           echo "Non-scheduled, no AppCenter device set specified. Setting defaults"
