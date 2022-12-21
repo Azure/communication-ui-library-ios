@@ -56,7 +56,9 @@ private func handleChatAction(_ action: ChatAction,
                                  dispatch: dispatch,
                                  serviceListener: serviceListener)
     case .disconnectChatTriggered:
-        actionHandler.disconnectChat()
+        actionHandler.disconnectChat(dispatch: dispatch)
+    case .disconnectChatSuccess:
+        break
     case .sendTypingIndicatorTriggered:
        actionHandler.sendTypingIndicator(state: getState(),
                                          dispatch: dispatch)

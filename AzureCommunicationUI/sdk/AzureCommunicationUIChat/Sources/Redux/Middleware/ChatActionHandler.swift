@@ -17,7 +17,7 @@ protocol ChatActionHandling {
     @discardableResult
     func onChatThreadDeleted(dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func disconnectChat() -> Task<Void, Never>
+    func disconnectChat(dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 
     // MARK: Participants Handler
 
@@ -76,6 +76,7 @@ class ChatActionHandler: ChatActionHandling {
             do {
                 try await chatService.initialize()
                 serviceListener.subscription(dispatch: dispatch)
+                dispatch(.chatAction(.initializeChatSuccess))
                 connectEventHandler?(.success(Void()))
             } catch {
                 connectEventHandler?(.failure(ChatCompositeError(
@@ -122,9 +123,15 @@ class ChatActionHandler: ChatActionHandling {
         }
     }
 
-    func disconnectChat() -> Task<Void, Never> {
+    func disconnectChat(dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
-            chatService.disconnectChatService()
+            do {
+                try await chatService.disconnectChatService()
+                dispatch(.chatAction(.disconnectChatSuccess))
+            } catch {
+                logger.error("ChatActionHandler disconnectChat failed: \(error)")
+                dispatch(.chatAction(.disconnectChatFailed(error: error)))
+            }
         }
     }
 

@@ -38,8 +38,16 @@ struct ChatDemoView: View {
                              onDismiss: {
             isErrorDisplayed = false
             self.isShowingChatView = false
-            self.chatAdapter?.disconnect()
-            self.chatAdapter = nil
+            self.chatAdapter?.disconnect(completionHandler: { result in
+                switch result {
+                case .success:
+                    self.chatAdapter = nil
+                default:
+                    break
+                }
+                
+            })
+            
         }))
     }
 
@@ -161,9 +169,15 @@ struct ChatDemoView: View {
                 .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
 
                 Button("Stop") {
-                    self.chatAdapter?.disconnect()
-                    self.chatAdapter = nil
-                    self.isShowingChatView = false
+                    self.chatAdapter?.disconnect(completionHandler: { result in
+                        switch result {
+                        case .success:
+                            self.chatAdapter = nil
+                            self.isShowingChatView = false
+                        default:
+                            break
+                        }
+                    })
                 }
                 .buttonStyle(DemoButtonStyle())
                 .disabled(self.chatAdapter == nil)

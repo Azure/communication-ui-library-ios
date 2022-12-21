@@ -141,7 +141,16 @@ class ChatDemoViewController: UIViewController {
     @objc func onBackBtnPressed() {
         Task { @MainActor in
             print("Dismissing chat")
-            self.dismiss(animated: true, completion: nil)
+            self.dismiss(animated: true, completion: { [weak self] in
+                self?.chatAdapter?.disconnect(completionHandler: { result in
+                    switch result {
+                    case .success:
+                        self?.chatAdapter = nil
+                    default:
+                        break
+                    }
+                })
+            })
         }
     }
 
@@ -199,7 +208,7 @@ class ChatDemoViewController: UIViewController {
             guard let self = self else {
                 return
             }
-            self.chatAdapter?.disconnect()
+            self.chatAdapter?.disconnect(completionHandler: { _ in })
             self.chatAdapter = nil
             self.updateExperieceButton()
             self.startExperienceButton.isEnabled = true
@@ -340,8 +349,15 @@ class ChatDemoViewController: UIViewController {
 
     @objc func onStopBtnPressed() {
         Task { @MainActor in
-            self.chatAdapter?.disconnect()
-            self.chatAdapter = nil
+            self.chatAdapter?.disconnect(completionHandler: { result in
+                switch result {
+                case .success:
+                    self.chatAdapter = nil
+                default:
+                    break
+                }
+            })
+
             updateExperieceButton()
         }
     }

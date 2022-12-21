@@ -290,11 +290,20 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
         }
     }
 
-    func unregisterRealTimeNotifications() {
+    func unregisterRealTimeNotifications() async throws {
         guard let client = self.chatClient else {
             return
         }
-        client.stopRealTimeNotifications()
+
+        do {
+            return try await withCheckedThrowingContinuation { continuation in
+                client.stopRealTimeNotifications()
+                continuation.resume(returning: Void())
+            }
+        } catch {
+            self.logger.error("Stop real time notification failed: \(error)")
+            throw error
+        }
     }
 
     private func registerEvents() {

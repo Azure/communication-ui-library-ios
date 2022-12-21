@@ -48,7 +48,7 @@ class ChatActionHandlerMocking: ChatActionHandling {
         }
     }
 
-    func disconnectChat() -> Task<Void, Never> {
+    func disconnectChat(dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
         Task {
             disconnectChatCalled?(true)
         }

@@ -18,6 +18,10 @@ extension Reducer where State == ErrorState,
             errorType = internalError
             error = rawError
             errorCategory = .fatal
+        case .chatAction(.disconnectChatFailed(let chatError)):
+            errorType = .disconnectFailed
+            error = chatError
+            errorCategory = .none
         case .chatAction(.initializeChatFailed(let chatError)):
             errorType = .connectFailed
             error = chatError

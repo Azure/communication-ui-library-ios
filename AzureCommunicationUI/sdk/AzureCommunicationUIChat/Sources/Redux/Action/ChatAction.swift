@@ -7,9 +7,12 @@ import Foundation
 
 enum ChatAction: Equatable {
     case initializeChatTriggered
+    case initializeChatSuccess
     case initializeChatFailed(error: Error)
     case topicRetrieved(topic: String)
     case disconnectChatTriggered
+    case disconnectChatSuccess
+    case disconnectChatFailed(error: Error)
 
     // MARK: Events from SDK
     case realTimeNotificationConnected

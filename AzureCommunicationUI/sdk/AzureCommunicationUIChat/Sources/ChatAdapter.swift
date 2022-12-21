@@ -81,8 +81,8 @@ public class ChatAdapter {
     }
 
     /// Stop connection to chat composite to Azure Communication Service
-    public func disconnect() {
-        compositeManager?.stop(completionHandler: {})
+    public func disconnect(completionHandler: @escaping ((Result<Void, ChatCompositeError>) -> Void)) {
+        compositeManager?.stop(completionHandler: completionHandler)
     }
 
     private func constructDependencies(
