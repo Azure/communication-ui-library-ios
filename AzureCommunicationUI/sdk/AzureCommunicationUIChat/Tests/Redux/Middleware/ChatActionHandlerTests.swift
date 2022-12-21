@@ -41,7 +41,7 @@ class ChatActionHandlerTests: XCTestCase {
 
     func test_chatActionHandler_disconnect_then_disconnectCalled() async {
         let sut = makeSUT()
-        await sut.disconnectChat().value
+        await sut.disconnectChat(dispatch: getEmptyDispatch()).value
         XCTAssertTrue(mockChatService.disconnectChatServiceCalled)
     }
 
