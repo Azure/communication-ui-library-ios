@@ -63,10 +63,10 @@ private func handleChatAction(_ action: ChatAction,
        actionHandler.sendTypingIndicator(state: getState(),
                                          dispatch: dispatch)
     case .realTimeNotificationConnected:
-        // stub: stop-pulling msg to be implemented for GA
+        // stub: recieved event that trouter has connected to backend services
         break
     case .realTimeNotificationDisconnected:
-        // stub: stop-pulling msg to be implemented for GA
+        // stub: network disconnected, trouter is unable to reach services
         break
     case .chatThreadDeleted:
         actionHandler.onChatThreadDeleted(dispatch: dispatch)
