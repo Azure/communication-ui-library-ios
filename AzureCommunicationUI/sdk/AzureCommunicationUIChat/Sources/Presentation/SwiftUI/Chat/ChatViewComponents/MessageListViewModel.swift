@@ -93,8 +93,8 @@ class MessageListViewModel: ObservableObject {
         }
     }
 
-    func startDidEndScrollingTimer(currentOffset: CGFloat) {
-        guard currentOffset != scrollOffset else {
+    func startDidEndScrollingTimer(currentOffset: CGFloat?) {
+        guard currentOffset == nil || currentOffset != scrollOffset else {
             return
         }
         if didEndScrollingTimer != nil {
@@ -156,11 +156,6 @@ class MessageListViewModel: ObservableObject {
                 if let latestSentMessage = messages.last(where: {$0.sendStatus == .sent}) {
                     latestSendingOrSentMessageId = latestSentMessage.id
                 }
-            }
-
-            // Send read receipt when initial screen is loaded
-            if self.lastSentReadReceiptTimestamp == .distantPast, self.readReceiptToBeSentMessageId != nil {
-                sendReadReceipt(messageId: self.readReceiptToBeSentMessageId)
             }
 
             // Get latest seen message
