@@ -31,9 +31,10 @@ class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
     func testCallCompositeWithInvalidToken() {
         tapInterfaceFor(.callSwiftUI)
         tapButton(accessibilityIdentifier: AccessibilityId.clearTokenTextFieldAccessibilityID.rawValue)
-
         let acsTokenTextField = app.textFields["ACS Token"]
-        acsTokenTextField.setText(text: "invalidToken", application: app)
+
+        acsTokenTextField.tap()
+        acsTokenTextField.typeText("invalidToken")
 
         startExperience(useCallingSDKMock: false)
         tapButton(accessibilityIdentifier: "Dismiss", shouldWait: true)

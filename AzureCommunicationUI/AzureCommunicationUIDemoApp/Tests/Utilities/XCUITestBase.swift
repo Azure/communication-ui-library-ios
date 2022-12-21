@@ -118,37 +118,19 @@ class XCUITestBase: XCTestCase {
 }
 
 extension XCUITestBase {
-
-    /// Taps the button that matches with the given name
-    /// - Parameters:
-    ///   - buttonName: accessibility label of the button
-    ///   - shouldWait: determines whether app should wait for the tap test to complete
-    private func tapEnabledButton(buttonName: String, shouldWait: Bool) {
-        let button = app.buttons[buttonName]
-        if shouldWait {
-            waitEnabled(for: button)
-        }
-        button.tap()
-    }
-
-    /// Taps the enabled button that matches with the given name
-    /// - Parameters:
-    ///   - buttonName: accessibility label of the button
-    ///   - shouldWait: determines whether app should wait for the tap test to complete
-    private func tapButton(buttonName: String, shouldWait: Bool) {
-        let button = app.buttons[buttonName]
-        if shouldWait {
-            wait(for: button)
-        }
-        button.tap()
-    }
-
     /// Taps the button that matches with the given accessibility label
     /// - Parameters:
     ///   - accessibilityIdentifier: accessibility label of the button
     ///   - shouldWait: determines whether app should wait for the tap test to complete. Default value is `false`
     func tapButton(accessibilityIdentifier: String, shouldWait: Bool = false) {
-        tapButton(buttonName: accessibilityIdentifier, shouldWait: shouldWait)
+        let button = app.buttons[accessibilityIdentifier]
+        if shouldWait {
+            wait(for: button)
+        }
+        button.tap()
+        if #unavailable(iOS 16) {
+            sleep(1)
+        }
     }
 
     /// Taps the enabled button that matches with the given accessibility label
@@ -156,25 +138,32 @@ extension XCUITestBase {
     ///   - accessibilityIdentifier: accessibility label of the button
     ///   - shouldWait: determines whether app should wait for the tap test to complete
     func tapEnabledButton(accessibilityIdentifier: String, shouldWait: Bool) {
-        tapEnabledButton(buttonName: accessibilityIdentifier, shouldWait: shouldWait)
+        let button = app.buttons[accessibilityIdentifier]
+        if shouldWait {
+            waitEnabled(for: button)
+        }
+        button.tap()
+        if #unavailable(iOS 16) {
+            sleep(1)
+        }
     }
 
     /// Selects the interface before entering the composite
     /// - Note: Only call this function before entering composite.
     func tapInterfaceFor(_ interface: CompositeSampleInterface) {
-        app.buttons[interface.name].tap()
+        tapButton(accessibilityIdentifier: interface.name)
     }
 
     /// Selects the meeting type before entering the composite
     /// - Note: Only call this function before entering composite.
     func tapMeetingType(_ meetingType: CompositeMeetingType) {
-        app.buttons[meetingType.name].tap()
+        tapButton(accessibilityIdentifier: meetingType.name)
     }
 
     /// Selects the call connection type before entering the composite
     /// - Note: Only call this function before entering composite.
     func tapConnectionTokenType(_ connectionType: CompositeConnectionType) {
-        app.buttons[connectionType.name].tap()
+        tapButton(accessibilityIdentifier: connectionType.name)
     }
 
     /// Taps the cell that matches with the given accessibility id
@@ -187,6 +176,9 @@ extension XCUITestBase {
             wait(for: cell)
         }
         cell.tap()
+        if #unavailable(iOS 16) {
+            sleep(1)
+        }
     }
 
     func takeScreenshot(name: String = "App Screenshot - \(Date().description)",
