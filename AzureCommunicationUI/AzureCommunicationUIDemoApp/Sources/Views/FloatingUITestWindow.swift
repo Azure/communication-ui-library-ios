@@ -6,6 +6,7 @@
 import Foundation
 import UIKit
 
+#if DEBUG
 class FloatingUITestWindow: UIWindow {
 
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
@@ -127,3 +128,4 @@ class FloatingUITestWindow: UIWindow {
         }
     }
 }
+#endif

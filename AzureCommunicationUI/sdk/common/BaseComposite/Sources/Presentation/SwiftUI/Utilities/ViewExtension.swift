@@ -4,6 +4,7 @@
 //
 
 import SwiftUI
+import Combine
 
 extension View {
     @ViewBuilder func hidden(_ shouldHide: Bool) -> some View {
@@ -31,5 +32,13 @@ extension View {
 
     func onRotate(perform action: @escaping (UIDeviceOrientation) -> Void) -> some View {
         self.modifier(DeviceRotationViewModifier(action: action))
+    }
+
+    var keyboardWillShow: AnyPublisher<Void, Never> {
+        NotificationCenter.default.publisher(for: UIResponder.keyboardWillShowNotification).map { _ in }
+        // 0.5 delay added to allow Bottom Bar View to finish updating its position
+        // so scroll view can move up by (keyboard height + Bottom Bar View height)
+        .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
+        .eraseToAnyPublisher()
     }
 }
