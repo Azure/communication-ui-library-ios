@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import FluentUI
 
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
