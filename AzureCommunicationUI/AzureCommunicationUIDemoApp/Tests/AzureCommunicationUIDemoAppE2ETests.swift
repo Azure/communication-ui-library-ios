@@ -6,7 +6,7 @@
 import XCTest
 @testable import AzureCommunicationUICalling
 
-class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
+class AzureCommunicationUIDemoAppE2ETests: XCUITestBase {
     func testCallCompositeE2ETokenURLGroupCall() {
         tapInterfaceFor(.callUIKit)
         tapConnectionTokenType(.acsTokenUrl)
