@@ -7,18 +7,18 @@ import Foundation
 import UIKit
 
 /// Object for local options for the Composite
-public struct LocalOptions {
+struct LocalOptions {
     /// The ParticipantViewData of the local participant.
     let participantViewData: ParticipantViewData
     /// Create an instance of LocalOptions. All information in this object is only stored locally in the composite.
     /// - Parameters:
     ///    - participantViewData: The ParticipantViewData to be displayed for local participants avatar
-    public init(participantViewData: ParticipantViewData) {
+    init(participantViewData: ParticipantViewData) {
         self.participantViewData = participantViewData
     }
 }
 /// Object to represent participants data
-public struct ParticipantViewData {
+struct ParticipantViewData {
     /// The image that will be drawn on the avatar view
     let avatarImage: UIImage?
     /// The display name that will be locally rendered for this participant
@@ -30,7 +30,7 @@ public struct ParticipantViewData {
     ///              If this is `nil` the default avatar with user's initials will be used instead.
     ///    - displayName: The display name  to be rendered.
     ///                   If this is `nil` the display name provided in the Options will be used instead.
-    public init(avatar: UIImage? = nil,
+    init(avatar: UIImage? = nil,
                 displayName: String? = nil) {
         self.avatarImage = avatar
         self.displayName = displayName
