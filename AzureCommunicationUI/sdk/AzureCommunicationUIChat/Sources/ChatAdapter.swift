@@ -40,9 +40,11 @@ public class ChatAdapter {
 
     private var themeOptions: ThemeOptions?
 
+    private var threadId: String = ""
     /// Create an instance of ChatComposite with options.
     public init(identifier: CommunicationIdentifier,
                 credential: CommunicationTokenCredential,
+                threadId: String,
                 endpoint: String,
                 displayName: String? = nil) {
         localizationProvider = LocalizationProvider(logger: logger)
@@ -53,6 +55,7 @@ public class ChatAdapter {
             endpoint: endpoint,
             displayName: displayName)
         self.events = Events()
+        self.threadId = threadId
     }
 
     deinit {
@@ -60,8 +63,7 @@ public class ChatAdapter {
     }
 
     /// Start connection to the chat composite to Azure Communication Service.
-    public func connect(threadId: String,
-                        completionHandler: ((Result<Void, ChatCompositeError>) -> Void)?) {
+    public func connect(completionHandler: ((Result<Void, ChatCompositeError>) -> Void)?) {
         constructDependencies(
             chatConfiguration: self.chatConfiguration,
             chatThreadId: threadId,
@@ -72,9 +74,9 @@ public class ChatAdapter {
     }
 
     /// Start connection to the chat composite to Azure Communication Service.
-    public func connect(threadId: String) async throws {
+    public func connect() async throws {
         return try await withCheckedThrowingContinuation { continuation in
-            connect(threadId: threadId) { result in
+            connect() { result in
                 continuation.resume(with: result)
             }
         }
@@ -83,6 +85,17 @@ public class ChatAdapter {
     /// Stop connection to chat composite to Azure Communication Service
     public func disconnect(completionHandler: @escaping ((Result<Void, ChatCompositeError>) -> Void)) {
         compositeManager?.stop(completionHandler: completionHandler)
+    }
+
+    /// Stop connection to chat composite to Azure Communication Service
+    /// unsubscribe from the chat client
+    /// inside the callback developers should clean up the adapter.dispose
+    public func disconnect() async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            compositeManager?.stop(completionHandler: { result in
+                continuation.resume(with: result)
+            })
+        }
     }
 
     private func constructDependencies(

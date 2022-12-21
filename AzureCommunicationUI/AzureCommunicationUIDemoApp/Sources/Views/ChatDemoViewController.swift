@@ -165,6 +165,7 @@ class ChatDemoViewController: UIViewController {
         self.chatAdapter = ChatAdapter(
             identifier: communicationIdentifier,
             credential: communicationTokenCredential,
+            threadId: envConfigSubject.threadId,
             endpoint: envConfigSubject.endpointUrl,
             displayName: envConfigSubject.displayName)
         setupErrorHandler()
@@ -208,10 +209,19 @@ class ChatDemoViewController: UIViewController {
             guard let self = self else {
                 return
             }
-            self.chatAdapter?.disconnect(completionHandler: { _ in })
-            self.chatAdapter = nil
-            self.updateExperieceButton()
-            self.startExperienceButton.isEnabled = true
+            self.chatAdapter?.disconnect(completionHandler: { [weak self] result in
+                guard let self = self else {
+                    return
+                }
+                switch result {
+                case .success:
+                    self.chatAdapter = nil
+                    self.updateExperieceButton()
+                    self.startExperienceButton.isEnabled = true
+                case .failure(let error):
+                    print("disconnect error \(error)")
+                }
+            })
         }))
         present(errorAlert,
                 animated: true,
@@ -322,11 +332,10 @@ class ChatDemoViewController: UIViewController {
             if self.chatAdapter == nil {
                 await self.startExperience(with: link)
             }
-            guard let chatAdapter = self.chatAdapter,
-                  let threadId = self.threadId else {
+            guard let chatAdapter = self.chatAdapter else {
                 return
             }
-            try await chatAdapter.connect(threadId: threadId)
+            try await chatAdapter.connect()
             let chatCompositeViewController = ChatCompositeViewController(
                 with: chatAdapter)
 
@@ -353,8 +362,8 @@ class ChatDemoViewController: UIViewController {
                 switch result {
                 case .success:
                     self.chatAdapter = nil
-                default:
-                    break
+                case .failure(let error):
+                    print("error disconnecting: \(error)")
                 }
             })
 

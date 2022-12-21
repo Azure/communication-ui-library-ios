@@ -42,12 +42,10 @@ struct ChatDemoView: View {
                 switch result {
                 case .success:
                     self.chatAdapter = nil
-                default:
-                    break
+                case .failure(let error):
+                    print("disconnect error \(error)")
                 }
-                
             })
-            
         }))
     }
 
@@ -174,8 +172,8 @@ struct ChatDemoView: View {
                         case .success:
                             self.chatAdapter = nil
                             self.isShowingChatView = false
-                        default:
-                            break
+                        case .failure(let error):
+                            print("disconnect error \(error)")
                         }
                     })
                 }
@@ -214,13 +212,14 @@ extension ChatDemoView {
         self.chatAdapter = ChatAdapter(
             identifier: communicationIdentifier,
             credential: communicationTokenCredential,
+            threadId: envConfigSubject.threadId,
             endpoint: envConfigSubject.endpointUrl,
             displayName: envConfigSubject.displayName)
         guard let chatAdapter = self.chatAdapter else {
             return
         }
         chatAdapter.events.onError = showError(error:)
-        chatAdapter.connect(threadId: envConfigSubject.threadId) { _ in
+        chatAdapter.connect() { _ in
             print("Chat connect completionHandler called")
         }
     }
