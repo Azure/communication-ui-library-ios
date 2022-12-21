@@ -9,6 +9,10 @@ import SwiftUI
 
 struct ChatDemoView: View {
 
+    private enum Constant {
+        static let oneSecond: UInt64 = 1 * 1_000_000_000
+    }
+
     @State var isErrorDisplayed: Bool = false
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @State var isShowingChatView: Bool = false
@@ -162,7 +166,8 @@ struct ChatDemoView: View {
 
                 Button("Stop") {
                     self.chatAdapter = nil
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                    Task { @MainActor  in
+                        try await Task.sleep(nanoseconds: Constant.oneSecond / 100)
                         self.isShowingChatView = false
                     }
                 }
