@@ -162,7 +162,9 @@ struct ChatDemoView: View {
 
                 Button("Stop") {
                     self.chatAdapter = nil
-                    self.isShowingChatView = false
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+                        self.isShowingChatView = false
+                    }
                 }
                 .buttonStyle(DemoButtonStyle())
                 .disabled(self.chatAdapter == nil)
