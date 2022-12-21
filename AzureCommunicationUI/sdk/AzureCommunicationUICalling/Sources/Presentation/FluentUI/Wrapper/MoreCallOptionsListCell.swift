@@ -15,6 +15,10 @@ class MoreCallOptionsListCell: TableViewCell {
         let iconImageView = UIImageView(image: iconImage)
 
         selectionStyle = .none
+        backgroundStyleType = .custom
+        backgroundColor = UIDevice.current.userInterfaceIdiom == .pad
+            ? StyleProvider.color.popoverColor
+            : StyleProvider.color.drawerColor
         setup(title: viewModel.title,
               customView: iconImageView)
         bottomSeparatorType = .none

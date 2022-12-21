@@ -1,8 +1,8 @@
 # Azure Communication UI Calling Release History
 
-## 1.2.0-beta.1 (TBD)
+## 1.2.0-beta.1 (2022-12-14)
 ### New Features
-- Introduced CallDiagnostics to get diagnostics information for the call [#446](https://github.com/Azure/communication-ui-library-ios/pull/446)
+- Introduced `DebugInfo` to get debug information for `CallComposite` [#446](https://github.com/Azure/communication-ui-library-ios/pull/446), [#476](https://github.com/Azure/communication-ui-library-ios/pull/476)
 - Additional localization support for 6 languages (Arabic, Finnish, Hebrew, Norwegian Bokmål, Polish, Swedish) [#484](https://github.com/Azure/communication-ui-library-ios/pull/484)
 
 ## 1.1.0 (2022-11-09)

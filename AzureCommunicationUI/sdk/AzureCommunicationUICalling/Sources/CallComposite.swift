@@ -175,7 +175,8 @@ public class CallComposite {
                 networkManager: NetworkManager(),
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
-                debugInfoManager: debugInfoManager
+                debugInfoManager: debugInfoManager,
+                localOptions: localOptions
             )
         )
     }
