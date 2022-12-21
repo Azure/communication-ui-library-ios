@@ -29,10 +29,7 @@ struct MessageListView: View {
 
     var body: some View {
         ZStack {
-            VStack {
-                activityIndicator
-                messageList
-            }
+            messageList
             jumpToNewMessagesButton
         }
         .onTapGesture {
@@ -45,9 +42,11 @@ struct MessageListView: View {
 
     var activityIndicator: some View {
         Group {
+            // Need to hide when all all messages fetched =
             if viewModel.showActivityIndicator {
                 ActivityIndicator(size: .large)
                     .isAnimating(true)
+                    .padding()
             }
         }
     }
@@ -57,19 +56,22 @@ struct MessageListView: View {
             ObservableScrollView(
                 showsIndicators: false, // Hide scroll indicator due to swiftUI issue where it jumps around
                 offsetChanged: {
+                    viewModel.startDidEndScrollingTimer(currentOffset: $0)
                     viewModel.scrollOffset = $0
                 },
                 heightChanged: { viewModel.scrollSize = $0 },
                 content: {
                     LazyVStack(spacing: 0) {
-                        ForEach(viewModel.messages.reversed()) { message in
-                            HStack(spacing: Constants.messageSendStatusViewPadding) {
-                                createMessage(message: message, messages: viewModel.messages)
-                                    .onAppear {
-                                        viewModel.fetchMessages(lastSeenMessage: message)
-                                        viewModel.updateReadReceiptToBeSentMessageId(message: message)
-                                    }
-                                createMessageSendStatus(message: message)
+                        Section(footer: activityIndicator) {
+                            ForEach(viewModel.messages.reversed()) { message in
+                                HStack(spacing: Constants.messageSendStatusViewPadding) {
+                                    createMessage(message: message, messages: viewModel.messages)
+                                        .onAppear {
+                                            viewModel.fetchMessages(lastSeenMessage: message)
+                                            viewModel.updateReadReceiptToBeSentMessageId(message: message)
+                                        }
+                                    createMessageSendStatus(message: message)
+                                }
                             }
                             .flippedUpsideDown()
                         }
@@ -81,9 +83,9 @@ struct MessageListView: View {
             .onChange(of: viewModel.shouldScrollToBottom) { _ in
                 if viewModel.shouldScrollToBottom {
                     if let lastMessageId = viewModel.messages.last?.id {
-						withAnimation(.linear(duration: 0.1)) {
-                        	scrollProxy.scrollTo(lastMessageId, anchor: .bottom)
-						}
+                        withAnimation(.linear(duration: 0.1)) {
+                            scrollProxy.scrollTo(lastMessageId, anchor: .bottom)
+                        }
                         if viewModel.scrollSize < UIScreen.main.bounds.size.height {
                             viewModel.startDidEndScrollingTimer(currentOffset: nil)
                         }
