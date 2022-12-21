@@ -44,9 +44,10 @@ public class ChatAdapter {
     /// - Parameters:
     ///    - identifier: The CommunicationIdentifier that uniquely identifies an user
     ///    - credential: The credential that authenticates the user to a chat thread
-    ///    - endpoint: The endpoint URL of The Communication Services endpoint.
+    ///    - endpoint: The endpoint URL of The Communication Services.
     ///    - displayName: The display name that would be used when sending a chat message
-    ///                   If this is `nil` the display name defined when adding the user to chat thread from the service would be used
+    ///                   If this is `nil` the display name defined when adding the user to
+        ///               chat thread from the service would be used
     public init(identifier: CommunicationIdentifier,
                 credential: CommunicationTokenCredential,
                 endpoint: String,
