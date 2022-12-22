@@ -33,7 +33,7 @@ Calling experience allows users to start or join a call. Inside the experience, 
 <img width="50%" alt="image" src="/docs/images/chat.png">
 </p>
 
-Chat experience brings a real-time text messaging experience to users. Specifically, users can send and receive a chat message with events from typing indicators and read receipt. In addition, users can also receive system messages such as participant added or removed and changes to chat title.
+Chat experience brings a real-time text communication to your applications. Specifically, users can send and receive a chat message with events from typing indicators and read receipt. In addition, users can also receive system messages such as participant added or removed and changes to chat title.
 
 Learn more about how to integrate Chat to your applications, click [here](/AzureCommunicationUI/sdk/AzureCommunicationUIChat).
 
