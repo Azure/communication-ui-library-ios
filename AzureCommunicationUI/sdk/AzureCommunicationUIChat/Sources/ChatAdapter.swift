@@ -86,8 +86,6 @@ public class ChatAdapter {
 
     /// Start connection with chat client and registers for chat events
     /// This function should be called before adding the Chat Composite to a view
-    /// - Parameters:
-    ///    - threadId: The unique identifier of a chat thread
     public func connect() async throws {
         return try await withCheckedThrowingContinuation { continuation in
             connect() { result in
@@ -97,6 +95,8 @@ public class ChatAdapter {
     }
 
     /// Unsubscribe all the chat client events from Azure Communication Service
+    /// - Parameters:
+    ///    - completionHandler: The closure that would be executed when disconnection is complete
     public func disconnect(completionHandler: @escaping ((Result<Void, ChatCompositeError>) -> Void)) {
         compositeManager?.stop(completionHandler: completionHandler)
     }
