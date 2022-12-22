@@ -25,7 +25,7 @@ steps:
         token_result = client.get_token(identity, ["voip"])
 
         print("\nIssued an access token with 'voip' scope")
-        print('##vso[task.setvariable variable=ACSFreshToken;isOutput=true]'+token_result.token)
+        print('##vso[task.setvariable variable=ACSFreshToken;isOutput=true;isSecret=true]'+token_result.token)
 
         # Grab AAD Token
         print("------- fetching aad token ---------")
@@ -41,7 +41,7 @@ steps:
         responseObj = json.loads(response.text)
 
         aad_token = responseObj["access_token"]
-        print('##vso[task.setvariable variable=AADToken;isOutput=true]'+ aad_token)
+        print('##vso[task.setvariable variable=AADToken;isOutput=true;isSecret=true]'+ aad_token)
         print('AAD Token Set')
 
       except Exception as ex:
