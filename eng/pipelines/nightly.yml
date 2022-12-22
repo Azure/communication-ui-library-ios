@@ -1,4 +1,4 @@
-# Nightly Build and Test pipeline
+7# Nightly Build and Test pipeline
 
 # Need to specifically disable this, else all pushes trigger a CI build
 trigger: none
@@ -20,7 +20,7 @@ schedules:
         - develop
 
 variables:
-  AppCenterDevicesOverride: ''
+  AppCenterDevicesOverride: 'ios16set'
   buildHourOfDayUtc: $[format('{0:H}', pipeline.startTime)]
 
 jobs:
