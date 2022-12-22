@@ -74,40 +74,27 @@ class XCUITestBase: XCTestCase {
             let allowBtn = springboard.buttons["Allow"]
             if allowBtn.exists {
                 allowBtn.tap()
+                if #unavailable(iOS 16) {
+                    sleep(1)
+                }
                 return true
             }
 
             let okBtn = springboard.buttons["OK"]
             if okBtn.exists {
                 okBtn.tap()
+                if #unavailable(iOS 16) {
+                    sleep(1)
+                }
                 return true
             }
 
             let dismissBtn = springboard.buttons["Dismiss"]
             if dismissBtn.exists {
                 dismissBtn.tap()
-                return true
-            }
-
-            return false
-        }
-        addUIInterruptionMonitor(withDescription: "System Dialog") { _ in
-            let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
-            let okBtn = springboard.buttons["OK"]
-            if okBtn.exists {
-                okBtn.tap()
-                return true
-            }
-
-            let allowBtn = springboard.buttons["Allow"]
-            if allowBtn.exists {
-                allowBtn.tap()
-                return true
-            }
-
-            let dismissBtn = springboard.buttons["Dismiss"]
-            if dismissBtn.exists {
-                dismissBtn.tap()
+                if #unavailable(iOS 16) {
+                    sleep(1)
+                }
                 return true
             }
 
@@ -195,20 +182,15 @@ extension XCUITestBase {
 extension XCUITestBase {
     /// Enables CallingSDK mock and taps Start experience button
     /// - Parameter useCallingSDKMock: Option to enable callingSDK mock. Default value is `true`
-    @available(iOS 15, *)
-    func startExperienceWithCallingSDKMock() {
-        enableMockCallingSDKWrapper()
-        startExperience
-    }
-
-    /// Taps Start experience button
-    func startExperience() {
+    func startExperience(useCallingSDKMock: Bool = true) {
+        if useCallingSDKMock {
+            enableMockCallingSDKWrapper()
+        }
         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
                          shouldWait: true)
     }
 
     // switches don't handle tap correctly for iOS < 14. Possible problem can be Rosetta usage
-    @available(iOS 15, *)
     func enableMockCallingSDKWrapper() {
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
         wait(for: app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue])
@@ -216,11 +198,23 @@ extension XCUITestBase {
         let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
         toggle.tap()
         XCTAssertEqual(toggle.isOn, true)
-        app.buttons["Close"].tap()
+
+        if #unavailable(iOS 16) {
+            sleep(1)
+        }
+        tapButton(accessibilityIdentifier: "Close")
     }
 
     func joinCall() {
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
                          shouldWait: true)
+    }
+
+    /// Throws XCTSkip if iOS version is less than 15
+    func skipTestIfNeeded() throws {
+        // switches don't handle tap correctly sometimes for iOS < 14. Possible problem can be Rosetta usage
+        guard #available(iOS 15, *) else {
+            throw XCTSkip("Required API is not available for this test.")
+        }
     }
 }

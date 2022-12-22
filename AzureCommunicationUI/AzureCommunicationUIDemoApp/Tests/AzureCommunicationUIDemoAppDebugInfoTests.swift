@@ -7,9 +7,8 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
-    @available(iOS 15, *)
-    func testCallCompositeShareDiagnosticInfo() {
-        startCall()
+    func testCallCompositeShareDiagnosticInfo() throws {
+        try startCall()
         openShareDiagnosticsInfoMenu()
         if UIDevice.current.userInterfaceIdiom == .pad {
             let popoverDismissRegion = app.otherElements["PopoverDismissRegion"]
@@ -21,9 +20,8 @@ class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
         checkActivityViewControllerDismissed()
     }
 
-    @available(iOS 15, *)
-    func testCallCompositeCopyDiagnosticInfo() {
-        startCall()
+    func testCallCompositeCopyDiagnosticInfo() throws {
+        try startCall()
         openShareDiagnosticsInfoMenu()
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCopyButtonAccessibilityID.rawValue)
         checkActivityViewControllerDismissed()
@@ -31,12 +29,12 @@ class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
 }
 
 extension AzureCommunicationUIDemoAppDebugInfoTests {
-    @available(iOS 15, *)
-    func startCall() {
+    func startCall() throws {
+        try skipTestIfNeeded()
         tapInterfaceFor(.callUIKit)
         tapMeetingType(.groupCall)
 
-        startExperienceWithCallingSDKMock()
+        startExperience()
         joinCall()
     }
 

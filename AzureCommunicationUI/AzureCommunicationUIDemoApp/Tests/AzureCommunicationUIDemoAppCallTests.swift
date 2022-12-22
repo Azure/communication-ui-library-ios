@@ -7,10 +7,10 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
-    @available(iOS 15, *)
-    func testCallCompositeOnHoldHandler() {
+    func testCallCompositeOnHoldHandler() throws {
+        try skipTestIfNeeded()
         tapInterfaceFor(.callUIKit)
-        startExperienceWithCallingSDKMock()
+        startExperience()
 
         joinCall()
 
@@ -19,14 +19,14 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         app.windows["debugger_Window"].buttons["Hold"].tap()
         let onHoldText = app.staticTexts["You're on hold"]
         XCTAssertTrue(onHoldText.exists)
-        app.buttons[AccessibilityIdentifier.callResumeAccessibilityID.rawValue].tap()
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.callResumeAccessibilityID.rawValue)
         XCTAssertFalse(onHoldText.exists)
     }
 
-    @available(iOS 15, *)
-    func testCallCompositeTranscriptionHandler() {
+    func testCallCompositeTranscriptionHandler() throws {
+        try skipTestIfNeeded()
         tapInterfaceFor(.callUIKit)
-        startExperienceWithCallingSDKMock()
+        startExperience()
 
         joinCall()
 
@@ -39,10 +39,10 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         XCTAssertTrue(app.staticTexts["Transcription is being saved. Transcription has stopped. Learn more"].exists)
     }
 
-    @available(iOS 15, *)
-    func testCallCompositeRecordingHandler() {
+    func testCallCompositeRecordingHandler() throws {
+        try skipTestIfNeeded()
         tapInterfaceFor(.callUIKit)
-        startExperienceWithCallingSDKMock()
+        startExperience()
 
         joinCall()
 
@@ -54,10 +54,10 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         XCTAssertTrue(app.staticTexts["Recording is being saved. Recording has stopped. Learn more"].exists)
     }
 
-    @available(iOS 15, *)
-    func testCallCompositeCallMicrophoneHandler() {
+    func testCallCompositeCallMicrophoneHandler() throws {
+        try skipTestIfNeeded()
         tapInterfaceFor(.callUIKit)
-        startExperienceWithCallingSDKMock()
+        startExperience()
 
         joinCall()
 
@@ -68,18 +68,5 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         XCTAssertEqual(micButton.label, "Mute")
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.micAccessibilityID.rawValue)
         XCTAssertEqual(micButton.label, "Unmute")
-    }
-
-    @available(iOS 15, *)
-    func testCallCompositeCurrentParticipantOnlyCallNoPIP() {
-        tapInterfaceFor(.callUIKit)
-        startExperienceWithCallingSDKMock()
-
-        joinCall()
-
-        wait(for: app.buttons[AccessibilityIdentifier.hangupAccessibilityID.rawValue])
-        
-        let draggablePipViewRetest = app.otherElements[AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue]
-        XCTAssertFalse(draggablePipViewRetest.exists)
     }
 }
