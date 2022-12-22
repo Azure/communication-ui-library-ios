@@ -73,7 +73,7 @@ public class ChatAdapter {
     /// Start connection with chat client and registers for chat events
     /// This function should be called before adding the ChatComposite to a view
     /// - Parameters:
-    ///    - completionHandler: The closure that would be executed when connection is established
+    ///    - completionHandler: The closure that will be called back when connection is established
     public func connect(completionHandler: ((Result<Void, ChatCompositeError>) -> Void)?) {
         constructDependencies(
             chatConfiguration: self.chatConfiguration,
@@ -96,7 +96,7 @@ public class ChatAdapter {
 
     /// Unsubscribe all the chat client events from Azure Communication Service
     /// - Parameters:
-    ///    - completionHandler: The closure that would be executed when disconnection is complete
+    ///    - completionHandler: The closure that will be called back when disconnection is complete
     public func disconnect(completionHandler: @escaping ((Result<Void, ChatCompositeError>) -> Void)) {
         compositeManager?.stop(completionHandler: completionHandler)
     }
