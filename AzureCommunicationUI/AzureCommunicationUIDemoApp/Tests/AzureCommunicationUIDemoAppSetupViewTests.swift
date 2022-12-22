@@ -11,7 +11,7 @@ import XCTest
     // MARK: Setup view tests
     func testCallCompositeSetupCallGroupCallSwiftUI() {
         tapInterfaceFor(.callSwiftUI)
-        startExperience(useCallingSDKMock: false)
+        startExperience()
 
         // shouldWait is set to true to finalize animations
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue, shouldWait: true)

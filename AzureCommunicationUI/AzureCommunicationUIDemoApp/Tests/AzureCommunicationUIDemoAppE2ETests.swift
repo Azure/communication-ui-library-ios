@@ -7,12 +7,14 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class AzureCommunicationUIDemoAppE2ETests: XCUITestBase {
+    @available(iOS 15, *)
     func testCallCompositeE2ETokenURLGroupCall() {
         tapInterfaceFor(.callUIKit)
         tapConnectionTokenType(.acsTokenUrl)
         e2eTest()
     }
 
+    @available(iOS 15, *)
     func testCallCompositeE2ETokenURLTeamsCall() {
         tapInterfaceFor(.callSwiftUI)
         tapConnectionTokenType(.acsTokenUrl)
@@ -20,11 +22,13 @@ class AzureCommunicationUIDemoAppE2ETests: XCUITestBase {
         e2eTest()
     }
 
+    @available(iOS 15, *)
     func testCallCompositeE2ETokenValueGroupCall() {
         tapInterfaceFor(.callSwiftUI)
         e2eTest()
     }
 
+    @available(iOS 15, *)
     func testCallCompositeE2ETokenValueTeamsCall() {
         tapInterfaceFor(.callUIKit)
         tapMeetingType(.teamsCall)
@@ -41,8 +45,9 @@ class AzureCommunicationUIDemoAppE2ETests: XCUITestBase {
         wait(for: app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue])
     }
 
+    @available(iOS 15, *)
     private func e2eTest() {
-        startExperience()
+        startExperienceWithCallingSDKMock()
         joinCall()
         leaveCall()
     }

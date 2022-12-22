@@ -195,14 +195,20 @@ extension XCUITestBase {
 extension XCUITestBase {
     /// Enables CallingSDK mock and taps Start experience button
     /// - Parameter useCallingSDKMock: Option to enable callingSDK mock. Default value is `true`
-    func startExperience(useCallingSDKMock: Bool = true) {
-        if useCallingSDKMock {
-            enableMockCallingSDKWrapper()
-        }
+    @available(iOS 15, *)
+    func startExperienceWithCallingSDKMock() {
+        enableMockCallingSDKWrapper()
+        startExperience
+    }
+
+    /// Taps Start experience button
+    func startExperience() {
         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
                          shouldWait: true)
     }
 
+    // switches don't handle tap correctly for iOS < 14. Possible problem can be Rosetta usage
+    @available(iOS 15, *)
     func enableMockCallingSDKWrapper() {
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
         wait(for: app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue])

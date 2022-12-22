@@ -7,9 +7,10 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
+    @available(iOS 15, *)
     func testCallCompositeOnHoldHandler() {
         tapInterfaceFor(.callUIKit)
-        startExperience()
+        startExperienceWithCallingSDKMock()
 
         joinCall()
 
@@ -22,9 +23,10 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         XCTAssertFalse(onHoldText.exists)
     }
 
+    @available(iOS 15, *)
     func testCallCompositeTranscriptionHandler() {
         tapInterfaceFor(.callUIKit)
-        startExperience()
+        startExperienceWithCallingSDKMock()
 
         joinCall()
 
@@ -37,9 +39,10 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         XCTAssertTrue(app.staticTexts["Transcription is being saved. Transcription has stopped. Learn more"].exists)
     }
 
+    @available(iOS 15, *)
     func testCallCompositeRecordingHandler() {
         tapInterfaceFor(.callUIKit)
-        startExperience()
+        startExperienceWithCallingSDKMock()
 
         joinCall()
 
@@ -51,9 +54,10 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         XCTAssertTrue(app.staticTexts["Recording is being saved. Recording has stopped. Learn more"].exists)
     }
 
+    @available(iOS 15, *)
     func testCallCompositeCallMicrophoneHandler() {
         tapInterfaceFor(.callUIKit)
-        startExperience()
+        startExperienceWithCallingSDKMock()
 
         joinCall()
 
@@ -66,30 +70,16 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         XCTAssertEqual(micButton.label, "Unmute")
     }
 
+    @available(iOS 15, *)
     func testCallCompositeCurrentParticipantOnlyCallNoPIP() {
         tapInterfaceFor(.callUIKit)
-        startExperience()
+        startExperienceWithCallingSDKMock()
 
         joinCall()
 
         wait(for: app.buttons[AccessibilityIdentifier.hangupAccessibilityID.rawValue])
-
-         let draggablePipViewRetest = app.otherElements[AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue]
-         XCTAssertFalse(draggablePipViewRetest.exists)
-    }
-
-    // MARK: Private / helper functions
-    /// Toggles the leave call overlay  in the calling screen and triggers call end
-    private func leaveCall() {
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.hangupAccessibilityID.rawValue,
-                  shouldWait: true)
-        tapCell(accessibilityIdentifier: AccessibilityIdentifier.leaveCallAccessibilityID.rawValue)
-        wait(for: app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue])
-    }
-
-    private func e2eTest() {
-        startExperience()
-        joinCall()
-        leaveCall()
+        
+        let draggablePipViewRetest = app.otherElements[AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue]
+        XCTAssertFalse(draggablePipViewRetest.exists)
     }
 }

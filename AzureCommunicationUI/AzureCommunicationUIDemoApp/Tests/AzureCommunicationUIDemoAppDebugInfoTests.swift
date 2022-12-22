@@ -6,7 +6,8 @@
 import XCTest
 @testable import AzureCommunicationUICalling
 
- class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
+class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
+    @available(iOS 15, *)
     func testCallCompositeShareDiagnosticInfo() {
         startCall()
         openShareDiagnosticsInfoMenu()
@@ -20,30 +21,32 @@ import XCTest
         checkActivityViewControllerDismissed()
     }
 
+    @available(iOS 15, *)
     func testCallCompositeCopyDiagnosticInfo() {
         startCall()
         openShareDiagnosticsInfoMenu()
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCopyButtonAccessibilityID.rawValue)
         checkActivityViewControllerDismissed()
     }
- }
+}
 
- extension AzureCommunicationUIDemoAppDebugInfoTests {
-     func startCall() {
-         tapInterfaceFor(.callUIKit)
-         tapMeetingType(.groupCall)
+extension AzureCommunicationUIDemoAppDebugInfoTests {
+    @available(iOS 15, *)
+    func startCall() {
+        tapInterfaceFor(.callUIKit)
+        tapMeetingType(.groupCall)
 
-         startExperience()
-         joinCall()
-     }
+        startExperienceWithCallingSDKMock()
+        joinCall()
+    }
 
-     func openShareDiagnosticsInfoMenu() {
-         tapButton(accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
-                   shouldWait: true)
-         tapCell(accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue)
-         wait(for: app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue])
-         app.tap()
-     }
+    func openShareDiagnosticsInfoMenu() {
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
+                  shouldWait: true)
+        tapCell(accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue)
+        wait(for: app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue])
+        app.tap()
+    }
 
     func checkActivityViewControllerDismissed() {
         let activityListView = app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue]
@@ -54,4 +57,4 @@ import XCTest
         }
         wait(for: [expectation], timeout: 10.0)
     }
- }
+}
