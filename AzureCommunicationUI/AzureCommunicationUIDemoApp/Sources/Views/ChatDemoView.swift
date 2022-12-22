@@ -38,8 +38,14 @@ struct ChatDemoView: View {
                              onDismiss: {
             isErrorDisplayed = false
             self.isShowingChatView = false
-            self.chatAdapter?.disconnect()
-            self.chatAdapter = nil
+            self.chatAdapter?.disconnect(completionHandler: { result in
+                switch result {
+                case .success:
+                    self.chatAdapter = nil
+                case .failure(let error):
+                    print("disconnect error \(error)")
+                }
+            })
         }))
     }
 
@@ -161,8 +167,15 @@ struct ChatDemoView: View {
                 .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
 
                 Button("Stop") {
-                    self.chatAdapter = nil
-                    self.isShowingChatView = false
+                    self.chatAdapter?.disconnect(completionHandler: { result in
+                        switch result {
+                        case .success:
+                            self.chatAdapter = nil
+                            self.isShowingChatView = false
+                        case .failure(let error):
+                            print("disconnect error \(error)")
+                        }
+                    })
                 }
                 .buttonStyle(DemoButtonStyle())
                 .disabled(self.chatAdapter == nil)
@@ -199,13 +212,14 @@ extension ChatDemoView {
         self.chatAdapter = ChatAdapter(
             identifier: communicationIdentifier,
             credential: communicationTokenCredential,
+            threadId: envConfigSubject.threadId,
             endpoint: envConfigSubject.endpointUrl,
             displayName: envConfigSubject.displayName)
         guard let chatAdapter = self.chatAdapter else {
             return
         }
         chatAdapter.events.onError = showError(error:)
-        chatAdapter.connect(threadId: envConfigSubject.threadId) { _ in
+        chatAdapter.connect() { _ in
             print("Chat connect completionHandler called")
         }
     }

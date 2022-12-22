@@ -8,6 +8,7 @@ import Foundation
 enum ErrorCategory {
     case fatal
     case chatState
+    case trouter
     case none
 }
 
