@@ -15,17 +15,18 @@
 "AzureCommunicationUICalling.SetupView.Title"="Einrichten";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Zurück";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="An Anruf teilnehmen";
-"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Teilnehmen am Anruf…";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Teilnahme am Anruf …";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video aus";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Kamera einschalten";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video ein";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn.AccessibilityLabel"="Kamera ausschalten";
-"AzureCommunicationUICalling.SetupView.Button.MicOff"="Mikro deaktiviert";
+"AzureCommunicationUICalling.SetupView.Button.MicOff"="Mikrofon aus";
 "AzureCommunicationUICalling.SetupView.Button.MicOff.AccessibilityLabel"="Stummschaltung aufheben";
-"AzureCommunicationUICalling.SetupView.Button.MicOn"="Mikro ein";
+"AzureCommunicationUICalling.SetupView.Button.MicOn"="Mikrofon ein";
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Stummschalten";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Gerät";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Audiogerät auswählen";
+"AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Zu „Einstellungen“ wechseln";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Ihre Kamera ist deaktiviert. Um sie zu aktivieren, wechseln Sie bitte zu „Einstellungen“, um den Zugriff zuzulassen.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="Kamera und Audio sind deaktiviert. Um sie zu aktivieren, wechseln Sie bitte zu „Einstellungen“, um den Zugriff zuzulassen. Sie müssen Audio aktivieren, um diesen Anruf zu starten.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="Ihr Audio ist deaktiviert. Um es zu aktivieren, wechseln Sie bitte zu „Einstellungen“, um den Zugriff zuzulassen. Sie müssen Audio aktivieren, um diesen Anruf zu starten.";
@@ -42,6 +43,7 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Warten auf andere Teilnehmer";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="Anruf mit 1 Person";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Anruf mit %d Personen"; // %d is for number of people in call
+"AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Teilnehmer";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Unbenannter Teilnehmer";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (ich)"; // %@ is local participant name
@@ -59,11 +61,14 @@
 "AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d Teilnehmer*innen haben die Besprechung verlassen";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Sie sind dem Anruf beigetreten.";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Inhalte werden geteilt";
-"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Die Inhaltsfreigabe wurde beendet";
+"AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Inhaltsfreigabe wurde beendet";
 
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Verlassen";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Abbrechen";
 "AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="Anruf verlassen?";
+
+"AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Mehr";
+"AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Diagnoseinformationen freigeben";
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Die Aufzeichnung und Transkription haben begonnen.";
@@ -98,3 +103,5 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Anruf kann nicht fortgesetzt werden";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Ihr Mikrofon wird von einer anderen App verwendet.";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Ihnen wurde der Zugriff auf den Anruf verweigert.";
+"AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Fehler beim Umschalten des Videos";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Teilnahme am Anruf nicht möglich. Überprüfen Sie Ihre Netzwerkverbindung.";

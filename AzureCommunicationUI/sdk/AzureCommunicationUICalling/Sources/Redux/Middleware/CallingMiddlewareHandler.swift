@@ -101,6 +101,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
             do {
                 try await callingService.holdCall()
+                await requestCameraPause(state: state, dispatch: dispatch).value
             } catch {
                 handle(error: error, errorType: .callHoldFailed, dispatch: dispatch)
             }
@@ -115,6 +116,9 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
             do {
                 try await callingService.resumeCall()
+                if state.localUserState.cameraState.operation == .paused {
+                    await requestCameraOn(state: state, dispatch: dispatch).value
+                }
             } catch {
                 handle(error: error, errorType: .callResumeFailed, dispatch: dispatch)
             }
@@ -123,22 +127,13 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
-            guard state.callingState.status == .connected,
-                  state.localUserState.cameraState.operation == .on else {
-                return
-            }
-
-            do {
-                try await callingService.stopLocalVideoStream()
-            } catch {
-                dispatch(.localUserAction(.cameraPausedFailed(error: error)))
-            }
+            await requestCameraPause(state: state, dispatch: dispatch).value
         }
     }
 
     func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
-            guard state.callingState.status == .connected || state.callingState.status == .localHold,
+            guard state.callingState.status == .connected,
                   state.localUserState.cameraState.operation == .paused else {
                 return
             }
@@ -193,6 +188,22 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 dispatch(.localUserAction(.cameraOffSucceeded))
             } catch {
                 dispatch(.localUserAction(.cameraOffFailed(error: error)))
+            }
+        }
+    }
+
+    func requestCameraPause(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.status == .connected,
+                  state.localUserState.cameraState.operation == .on else {
+                return
+            }
+
+            do {
+                try await callingService.stopLocalVideoStream()
+                dispatch(.localUserAction(.cameraPausedSucceeded))
+            } catch {
+                dispatch(.localUserAction(.cameraPausedFailed(error: error)))
             }
         }
     }
@@ -307,6 +318,12 @@ extension CallingMiddlewareHandler {
             .removeDuplicates()
             .sink { isLocalUserMuted in
                 dispatch(.localUserAction(.microphoneMuteStateUpdated(isMuted: isLocalUserMuted)))
+            }.store(in: subscription)
+
+        callingService.callIdSubject
+            .removeDuplicates()
+            .sink { callId in
+                dispatch(.callingAction(.callIdUpdated(callId: callId)))
             }.store(in: subscription)
     }
 }

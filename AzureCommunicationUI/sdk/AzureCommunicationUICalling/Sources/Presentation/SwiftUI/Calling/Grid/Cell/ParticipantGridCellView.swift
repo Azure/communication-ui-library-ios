@@ -3,9 +3,9 @@
 //  Licensed under the MIT License.
 //
 
-import SwiftUI
-import FluentUI
 import Combine
+import FluentUI
+import SwiftUI
 
 struct ParticipantGridCellView: View {
     @ObservedObject var viewModel: ParticipantGridCellViewModel
@@ -36,6 +36,7 @@ struct ParticipantGridCellView: View {
             }
             .accessibilityElement(children: .combine)
             .accessibilityLabel(Text(viewModel.accessibilityLabel))
+            .accessibilityIdentifier(AccessibilityIdentifier.participantGridCellViewAccessibilityID.rawValue)
         }
         .onReceive(viewModel.$videoViewModel) { model in
             if model?.videoStreamId != displayedVideoStreamId {

@@ -17,27 +17,25 @@ struct CompositeLeaveCallConfirmationList: UIViewControllerRepresentable {
         Coordinator(isPresented: $isPresented)
     }
 
-    func makeUIViewController(context: Context) -> DrawerContainerViewController<LeaveCallConfirmationViewModel> {
-        let controller = LeaveCallConfirmationListViewController(items: getLeaveCallConfirmationList(),
-                                                                 sourceView: sourceView,
+    func makeUIViewController(context: Context) -> DrawerContainerViewController<DrawerListItemViewModel> {
+        let controller = LeaveCallConfirmationListViewController(sourceView: sourceView,
                                                                  headerName: viewModel.headerName,
-                                                                 showHeader: true,
                                                                  isRightToLeft: layoutDirection == .rightToLeft)
         controller.delegate = context.coordinator
         return controller
     }
 
-    func updateUIViewController(_ uiViewController: DrawerContainerViewController<LeaveCallConfirmationViewModel>,
+    func updateUIViewController(_ uiViewController: DrawerContainerViewController<DrawerListItemViewModel>,
                                 context: Context) {
         uiViewController.updateDrawerList(items: getLeaveCallConfirmationList())
     }
 
-    static func dismantleUIViewController(_ controller: DrawerContainerViewController<LeaveCallConfirmationViewModel>,
+    static func dismantleUIViewController(_ controller: DrawerContainerViewController<DrawerListItemViewModel>,
                                           coordinator: Coordinator) {
         controller.dismissDrawer()
     }
 
-    private func getLeaveCallConfirmationList() -> [LeaveCallConfirmationViewModel] {
+    private func getLeaveCallConfirmationList() -> [DrawerListItemViewModel] {
         return viewModel.listItemViewModel
     }
 

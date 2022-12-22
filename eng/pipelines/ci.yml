@@ -1,0 +1,14 @@
+# CI Pipeline
+
+# Don't run on push to branches
+trigger: none
+
+# Only Run on PRs to these branches
+pr:
+  - main
+  - develop
+  - release/*
+  - feature/*
+
+jobs:
+  - template: jobs/CI-build-job.yml

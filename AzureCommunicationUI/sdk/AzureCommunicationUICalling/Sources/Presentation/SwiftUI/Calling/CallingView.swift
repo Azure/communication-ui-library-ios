@@ -33,13 +33,17 @@ struct CallingView: View {
     }
 
     var body: some View {
-        ZStack {
-            if getSizeClass() != .iphoneLandscapeScreenSize {
-                portraitCallingView
-            } else {
-                landscapeCallingView
+        GeometryReader { geometry in
+            ZStack {
+                if getSizeClass() != .iphoneLandscapeScreenSize {
+                    portraitCallingView
+                } else {
+                    landscapeCallingView
+                }
+                errorInfoView
             }
-            errorInfoView
+            .frame(width: geometry.size.width,
+                   height: geometry.size.height)
         }
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
@@ -79,6 +83,9 @@ struct CallingView: View {
                                                     orientation: $orientation,
                                                     screenSize: getSizeClass())
                         }
+                        // Determine if we need this for e2e tests in subsequent PR
+//                        .accessibilityElement(children: .ignore)
+//                        .accessibilityIdentifier(AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue)
                     }
                     topAlertAreaView
                         .accessibilityElement(children: .contain)
@@ -198,8 +205,10 @@ extension CallingView {
 
     private func updateChildViewIfNeededWith(newOrientation: UIDeviceOrientation) {
         guard !viewModel.controlBarViewModel.isAudioDeviceSelectionDisplayed,
-                  !viewModel.controlBarViewModel.isConfirmLeaveListDisplayed,
-                  !viewModel.infoHeaderViewModel.isParticipantsListDisplayed else {
+              !viewModel.controlBarViewModel.isConfirmLeaveListDisplayed,
+              !viewModel.infoHeaderViewModel.isParticipantsListDisplayed,
+              !viewModel.controlBarViewModel.isMoreCallOptionsListDisplayed,
+              !viewModel.controlBarViewModel.isShareActivityDisplayed else {
                 return
             }
         let areAllOrientationsSupported = SupportedOrientationsPreferenceKey.defaultValue == .all
@@ -210,6 +219,9 @@ extension CallingView {
             && (areAllOrientationsSupported || (!areAllOrientationsSupported
                                                 && newOrientation != .portraitUpsideDown)) {
             orientation = newOrientation
+            if UIDevice.current.userInterfaceIdiom == .phone {
+                UIViewController.attemptRotationToDeviceOrientation()
+            }
         }
     }
 }

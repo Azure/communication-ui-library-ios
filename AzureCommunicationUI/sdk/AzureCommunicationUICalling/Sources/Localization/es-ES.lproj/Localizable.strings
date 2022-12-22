@@ -43,6 +43,7 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Esperando a que se unan otros usuarios";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="Llamada con 1 persona";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Llamada con %d personas"; // %d is for number of people in call
+"AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Participantes";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Participante sin nombre";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (yo)"; // %@ is local participant name
@@ -65,6 +66,9 @@
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Salir";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="Cancelar";
 "AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="¿Quieres salir de la llamada?";
+
+"AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Más";
+"AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Compartir información de diagnóstico";
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Se han iniciado la grabación y la transcripción.";
@@ -100,3 +104,4 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Otra aplicación está usando el micrófono";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Se le denegó el acceso a la llamada.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Error al alternar el vídeo";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="No se puede unir a la llamada. Comprueba la conexión de red.";

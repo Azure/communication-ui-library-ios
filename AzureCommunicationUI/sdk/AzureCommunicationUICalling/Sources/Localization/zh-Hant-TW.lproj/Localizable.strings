@@ -43,6 +43,7 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="正在等待其他人加入";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="與 1 個人通話";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="與 %d 個人通話"; // %d is for number of people in call
+"AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="參與者";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="未命名的參與者";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (我)"; // %@ is local participant name
@@ -65,6 +66,9 @@
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="離開";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="取消";
 "AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="離開通話";
+
+"AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "其他";
+"AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "分享診斷資訊";
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="已開始錄製並進行轉錄。";
@@ -100,3 +104,4 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="您的麥克風正由另一個應用程式使用中";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="您被拒絕存取通話。";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="切換影片時發生錯誤";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="無法加入通話。檢查您的網路連線。";

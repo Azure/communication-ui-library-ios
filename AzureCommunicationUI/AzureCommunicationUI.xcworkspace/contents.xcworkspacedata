@@ -5,9 +5,15 @@
       location = "group:sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj">
    </FileRef>
    <FileRef
+      location = "group:sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj">
    </FileRef>
 </Workspace>

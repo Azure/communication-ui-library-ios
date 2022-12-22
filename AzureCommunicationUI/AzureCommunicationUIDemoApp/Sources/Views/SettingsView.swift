@@ -5,7 +5,7 @@
 
 import SwiftUI
 import AzureCommunicationUICalling
-import AzureCommunicationCalling
+import AzureCommunicationCommon
 
 struct SettingsView: View {
     private enum ThemeMode: String, CaseIterable, Identifiable {
@@ -35,6 +35,7 @@ struct SettingsView: View {
                 localizationSettings
                 localParticipantSettings
                 avatarSettings
+                useMockCallingSDKHandler
                 navigationSettings
                 remoteParticipantsAvatarsSettings
                 themeSettings
@@ -86,7 +87,7 @@ struct SettingsView: View {
     }
 
     var navigationSettings: some View {
-        Section(header: Text("Navigation Bar View Data")) {
+        Section(header: Text("Setup View Data")) {
             TextField("Navigation Title", text: $envConfigSubject.navigationTitle)
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
@@ -102,6 +103,18 @@ struct SettingsView: View {
         Section(header: Text("Remote Participants View Data")) {
             Toggle("Inject avatars", isOn: $envConfigSubject.useCustomRemoteParticipantViewData)
         }
+    }
+
+    var useMockCallingSDKHandler: some View {
+        #if DEBUG
+        Section(header: Text("Calling SDK Wrapper Handler Mocking")) {
+            Toggle("Use mock Calling SDK Wrapper Handler",
+                   isOn: $envConfigSubject.useMockCallingSDKHandler)
+                .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
+        }
+        #else
+        EmptyView()
+        #endif
     }
 
     var themeSettings: some View {

@@ -6,7 +6,9 @@
 import FluentUI
 import UIKit
 
-class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelegate {
+class DrawerContainerViewController<T: Equatable>: UIViewController,
+                                                    DrawerControllerDelegate,
+                                                    DrawerViewControllerProtocol {
     weak var delegate: DrawerControllerDelegate?
     lazy var drawerTableView: UITableView? = nil
     let backgroundColor: UIColor = UIDevice.current.userInterfaceIdiom == .pad
@@ -17,20 +19,27 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
     private let sourceView: UIView
     private let showHeader: Bool
     private let isRightToLeft: Bool
-    private var halfScreenHeight: CGFloat {
-        UIScreen.main.bounds.height / 2
-    }
     private weak var controller: DrawerController?
 
-    init(items: [T],
-         sourceView: UIView,
+    // MARK: Constants
+    private enum Constants {
+        static var drawerWidth: CGFloat { return 400.0 }
+        static var resizeBarHeight: CGFloat {
+            UIDevice.current.userInterfaceIdiom == .phone ? 20 : 0
+        }
+        static var halfScreenHeight: CGFloat {
+            UIScreen.main.bounds.height / 2
+        }
+        static var drawerHeaderMargin: CGFloat {
+            UIDevice.current.userInterfaceIdiom == .phone ? 20 : 35
+        }
+    }
+    init(sourceView: UIView,
          headerName: String? = nil,
-         showHeader: Bool = false,
          isRightToLeft: Bool = false
     ) {
-        self.items = items
         self.sourceView = sourceView
-        self.showHeader = showHeader
+        self.showHeader = headerName != nil && headerName?.isEmpty == false
         self.headerName = headerName
         self.isRightToLeft = isRightToLeft
         super.init(nibName: nil, bundle: nil)
@@ -51,10 +60,7 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
             sourceView.superview?.isUserInteractionEnabled = true
             sourceView.removeFromSuperview()
         }
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            UIDevice.current.setValue(UIDevice.current.orientation.rawValue, forKey: "orientation")
-            UIViewController.attemptRotationToDeviceOrientation()
-        }
+        resetOrientation()
     }
 
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -66,9 +72,15 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         self.controller?.dismiss(animated: animated)
     }
 
-    func updateDrawerList(items: [T]) {
-        self.items = items
-        resizeDrawer()
+    func updateDrawerList(items updatedItems: [T]) {
+        // if contents are identical, do nothing
+        guard self.items != updatedItems else {
+            return
+        }
+        // should update layout if items count increases/decreases
+        let shouldUpdateLayout = self.items.count != updatedItems.count
+        self.items = updatedItems
+        resizeDrawer(withLayoutUpdate: shouldUpdateLayout)
     }
 
     private func showDrawerView() {
@@ -101,13 +113,14 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
         controller.backgroundColor = backgroundColor
 
         self.controller = controller
+        controller.overrideUserInterfaceStyle = StyleProvider.color.colorSchemeOverride
         resizeDrawer()
         self.controller?.contentView?.semanticContentAttribute = self.isRightToLeft ?
                                                             .forceRightToLeft : .forceLeftToRight
         return controller
     }
 
-    private func resizeDrawer() {
+    private func resizeDrawer(withLayoutUpdate shouldUpdateLayout: Bool = true) {
         let isiPhoneLayout = UIDevice.current.userInterfaceIdiom == .phone
         var isScrollEnabled = !isiPhoneLayout
 
@@ -115,8 +128,15 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
             guard let self = self, let drawerTableView = self.drawerTableView else {
                 return
             }
-
             drawerTableView.reloadData()
+
+            guard shouldUpdateLayout else {
+                return
+            }
+
+            if drawerTableView.frame == CGRect.zero {
+                self.setInitialTableViewFrame(isiPhoneLayout)
+            }
 
             var drawerHeight = self.getDrawerHeight(
                 tableView: drawerTableView,
@@ -124,12 +144,12 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
                 showHeader: self.showHeader,
                 isiPhoneLayout: isiPhoneLayout)
 
-            if drawerHeight > self.halfScreenHeight {
-                drawerHeight = self.halfScreenHeight
+            if drawerHeight > Constants.halfScreenHeight {
+                drawerHeight = Constants.halfScreenHeight
                 isScrollEnabled = true
             }
             drawerTableView.isScrollEnabled = isScrollEnabled
-            self.controller?.preferredContentSize = CGSize(width: 400,
+            self.controller?.preferredContentSize = CGSize(width: Constants.drawerWidth,
                                                            height: drawerHeight)
         }
     }
@@ -139,11 +159,10 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
                                  showHeader: Bool,
                                  isiPhoneLayout: Bool) -> CGFloat {
         let headerHeight = self.getHeaderHeight(tableView: tableView, isiPhoneLayout: isiPhoneLayout)
-        let resizeBarHeight: CGFloat = isiPhoneLayout ? 20 : 0
         let dividerOffsetHeight = CGFloat(numberOfItems * 3)
 
         var drawerHeight: CGFloat = getTotalCellsHeight(tableView: tableView, numberOfItems: numberOfItems)
-        drawerHeight += showHeader ? headerHeight : resizeBarHeight
+        drawerHeight += showHeader ? headerHeight : Constants.resizeBarHeight
         drawerHeight += dividerOffsetHeight
 
         return drawerHeight
@@ -151,7 +170,7 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
 
     private func getHeaderHeight(tableView: UITableView,
                                  isiPhoneLayout: Bool) -> CGFloat {
-        return isiPhoneLayout ? tableView.sectionHeaderHeight + 20 : tableView.sectionHeaderHeight + 35
+        return tableView.sectionHeaderHeight + Constants.drawerHeaderMargin
     }
 
     private func getTotalCellsHeight(tableView: UITableView,
@@ -161,5 +180,14 @@ class DrawerContainerViewController<T>: UIViewController, DrawerControllerDelega
                 return IndexPath(row: row, section: section)
             }
         }.map { index in return tableView.rectForRow(at: index).height }.reduce(0, +)
+    }
+
+    private func setInitialTableViewFrame(_ isiPhoneLayout: Bool) {
+        guard let tableView = self.drawerTableView else {
+            return
+        }
+        let initialWidth = isiPhoneLayout ? UIScreen.main.bounds.width : Constants.drawerWidth
+        tableView.frame = CGRect(x: 0, y: Constants.resizeBarHeight, width: initialWidth, height: 0)
+        tableView.setNeedsDisplay()
     }
 }

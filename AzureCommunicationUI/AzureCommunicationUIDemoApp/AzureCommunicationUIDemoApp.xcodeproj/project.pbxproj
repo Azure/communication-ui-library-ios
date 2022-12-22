@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		1B0D8DC627F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */; };
 		1B3E3B4F285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */; };
+		1B5D6C0F29231B900072C66D /* CallConfigurationMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D6C0929231B900072C66D /* CallConfigurationMocking.swift */; };
+		1B5D6C1029231B900072C66D /* UITestCallingSDKWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D6C0A29231B900072C66D /* UITestCallingSDKWrapper.swift */; };
+		1B5D6C1129231B900072C66D /* CallClientMockings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D6C0B29231B900072C66D /* CallClientMockings.swift */; };
+		1B5D6C1329231B900072C66D /* CallingSDKEventsHandlerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D6C0D29231B900072C66D /* CallingSDKEventsHandlerMocking.swift */; };
+		1B981B0429480DA8002EB167 /* FloatingUITestWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B981B0329480DA8002EB167 /* FloatingUITestWindow.swift */; };
 		1F18191727B39F36006AF3B3 /* XCUITestBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18191627B39F36006AF3B3 /* XCUITestBase.swift */; };
 		1F18191A27B45050006AF3B3 /* XCUIElementExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F18191927B45050006AF3B3 /* XCUIElementExtension.swift */; };
 		1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift */; };
@@ -19,11 +24,16 @@
 		5027C1C72821A55E00DC7131 /* AccessibilityId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5027C1C52821A07500DC7131 /* AccessibilityId.swift */; };
 		5075FEA127FFA8C200136B34 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5075FEA327FFA8C200136B34 /* Localizable.strings */; };
 		50B390CF27D2996E0010A2ED /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B390CE27D2996E0010A2ED /* SettingsView.swift */; };
+		50CB82E128C9200300680566 /* AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB82E028C9200300680566 /* AzureCommunicationUIChat.framework */; };
+		50CB82E228C9200E00680566 /* AzureCommunicationUIChat.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB82E028C9200300680566 /* AzureCommunicationUIChat.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		50D8EE9F2926C0C6003C3A95 /* ChatDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8EE9E2926C0C6003C3A95 /* ChatDemoView.swift */; };
+		50D8EEA12926C0DD003C3A95 /* ChatDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8EEA02926C0DD003C3A95 /* ChatDemoViewController.swift */; };
+		52EFB3FE293938FF006D41B9 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52EFB3FD293938FF006D41B9 /* ErrorView.swift */; };
 		8926B039F67555DE4F89893B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 026F091CB7F97EBA5A39610B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework */; };
 		A85DDCB12728B12D001297B4 /* EnvConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCAF2728B12D001297B4 /* EnvConfig.swift */; };
 		A85DDCB32728B140001297B4 /* ThemeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCB22728B140001297B4 /* ThemeOptions.swift */; };
-		A85DDCB82728B23B001297B4 /* UIKitDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCB42728B23A001297B4 /* UIKitDemoViewController.swift */; };
-		A85DDCB92728B23B001297B4 /* SwiftUIDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCB52728B23B001297B4 /* SwiftUIDemoView.swift */; };
+		A85DDCB82728B23B001297B4 /* CallingDemoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCB42728B23A001297B4 /* CallingDemoViewController.swift */; };
+		A85DDCB92728B23B001297B4 /* CallingDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A85DDCB52728B23B001297B4 /* CallingDemoView.swift */; };
 		A87CEABC2729ECA600F3AE16 /* EntryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87CEABB2729ECA600F3AE16 /* EntryViewController.swift */; };
 		A8849E532732FFA10049FB1A /* AuthenticationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8849E522732FFA10049FB1A /* AuthenticationHelper.swift */; };
 		A8AC66FE2735A41600632D0B /* CustomControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AC66FD2735A41600632D0B /* CustomControls.swift */; };
@@ -33,6 +43,8 @@
 		A8C69FC02728AE1C00143DB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C69FBE2728AE1C00143DB7 /* LaunchScreen.storyboard */; };
 		A8FB819C272A082B00AA0930 /* DemoInputTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */; };
 		FA7B53EC282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */; };
+		FA93E3AA2942B61D006476A5 /* AzureCommunicationUIDemoAppTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA93E3A92942B61D006476A5 /* AzureCommunicationUIDemoAppTokenTests.swift */; };
+		FA93E3AC2942B6DA006476A5 /* AzureCommunicationUIDemoAppDebugInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA93E3AB2942B6DA006476A5 /* AzureCommunicationUIDemoAppDebugInfoTests.swift */; };
 		FAA448A0282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; };
 		FAA448A1282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FACEE494287364F4001D62BE /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = FACEE493287364F4001D62BE /* AccessibilityIdentifier.swift */; };
@@ -55,6 +67,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				50CB82E228C9200E00680566 /* AzureCommunicationUIChat.framework in Embed Frameworks */,
 				FAA448A1282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -67,6 +80,11 @@
 		1AA61EC7BE9A4B43EEC5DBCC /* Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppCallTests.swift; sourceTree = "<group>"; };
 		1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppSetupViewTests.swift; sourceTree = "<group>"; };
+		1B5D6C0929231B900072C66D /* CallConfigurationMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallConfigurationMocking.swift; sourceTree = "<group>"; };
+		1B5D6C0A29231B900072C66D /* UITestCallingSDKWrapper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITestCallingSDKWrapper.swift; sourceTree = "<group>"; };
+		1B5D6C0B29231B900072C66D /* CallClientMockings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallClientMockings.swift; sourceTree = "<group>"; };
+		1B5D6C0D29231B900072C66D /* CallingSDKEventsHandlerMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallingSDKEventsHandlerMocking.swift; sourceTree = "<group>"; };
+		1B981B0329480DA8002EB167 /* FloatingUITestWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingUITestWindow.swift; sourceTree = "<group>"; };
 		1F18191627B39F36006AF3B3 /* XCUITestBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCUITestBase.swift; sourceTree = "<group>"; };
 		1F18191927B45050006AF3B3 /* XCUIElementExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = XCUIElementExtension.swift; sourceTree = "<group>"; };
 		1F8881BA27909E08001427F0 /* AzureCommunicationUIDemoAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AzureCommunicationUIDemoAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,6 +95,8 @@
 		1FEC635827588B5600EA746B /* AppConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = AppConfig.xcconfig; sourceTree = "<group>"; };
 		2EA3EA0A623669E62A5E601F /* Pods-AzureCommunicationUIDemoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp/Pods-AzureCommunicationUIDemoApp.release.xcconfig"; sourceTree = "<group>"; };
 		5027C1C52821A07500DC7131 /* AccessibilityId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityId.swift; sourceTree = "<group>"; };
+		506E1D5729356002002B0D0A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		506E1D5829356002002B0D0A /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5075FE9C27FFA87200136B34 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		5075FE9D27FFA87600136B34 /* fr-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fr-CA"; path = "fr-CA.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		5075FE9E27FFA87C00136B34 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
@@ -85,13 +105,17 @@
 		5075FEA627FFA8C900136B34 /* fr-CA */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fr-CA"; path = "fr-CA.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		5075FEA727FFA9D700136B34 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		50B390CE27D2996E0010A2ED /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		50CB82E028C9200300680566 /* AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		50D8EE9E2926C0C6003C3A95 /* ChatDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDemoView.swift; sourceTree = "<group>"; };
+		50D8EEA02926C0DD003C3A95 /* ChatDemoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDemoViewController.swift; sourceTree = "<group>"; };
+		52EFB3FD293938FF006D41B9 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		55177298464F41939884F1C8 /* Pods-AzureCommunicationUIDemoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp/Pods-AzureCommunicationUIDemoApp.debug.xcconfig"; sourceTree = "<group>"; };
 		645D1D3003E302ECA00BB66C /* Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		747FFD0380FFBF53EC331032 /* Pods_AzureCommunicationUIDemoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIDemoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A85DDCAF2728B12D001297B4 /* EnvConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvConfig.swift; sourceTree = "<group>"; };
 		A85DDCB22728B140001297B4 /* ThemeOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeOptions.swift; sourceTree = "<group>"; };
-		A85DDCB42728B23A001297B4 /* UIKitDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIKitDemoViewController.swift; sourceTree = "<group>"; };
-		A85DDCB52728B23B001297B4 /* SwiftUIDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftUIDemoView.swift; sourceTree = "<group>"; };
+		A85DDCB42728B23A001297B4 /* CallingDemoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallingDemoViewController.swift; sourceTree = "<group>"; };
+		A85DDCB52728B23B001297B4 /* CallingDemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallingDemoView.swift; sourceTree = "<group>"; };
 		A87CEABB2729ECA600F3AE16 /* EntryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryViewController.swift; sourceTree = "<group>"; };
 		A8849E522732FFA10049FB1A /* AuthenticationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationHelper.swift; sourceTree = "<group>"; };
 		A8AC66FD2735A41600632D0B /* CustomControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomControls.swift; sourceTree = "<group>"; };
@@ -102,7 +126,11 @@
 		A8C69FBF2728AE1C00143DB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8C69FC12728AE1C00143DB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoInputTypes.swift; sourceTree = "<group>"; };
+		BDAA751E28E4BDC4008C2789 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		BDAA751F28E4BDC4008C2789 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantAvatarHelper.swift; sourceTree = "<group>"; };
+		FA93E3A92942B61D006476A5 /* AzureCommunicationUIDemoAppTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppTokenTests.swift; sourceTree = "<group>"; };
+		FA93E3AB2942B6DA006476A5 /* AzureCommunicationUIDemoAppDebugInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppDebugInfoTests.swift; sourceTree = "<group>"; };
 		FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AzureCommunicationUICalling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FACEE493287364F4001D62BE /* AccessibilityIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AccessibilityIdentifier.swift; path = ../sdk/AzureCommunicationUICalling/Sources/Utilities/AccessibilityIdentifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,6 +148,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50CB82E128C9200300680566 /* AzureCommunicationUIChat.framework in Frameworks */,
 				FAA448A0282585F700BD0DC0 /* AzureCommunicationUICalling.framework in Frameworks */,
 				3507F9550C99D777E493AA92 /* Pods_AzureCommunicationUIDemoApp.framework in Frameworks */,
 			);
@@ -128,6 +157,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1B5D6BFB2922F9DF0072C66D /* Mockings */ = {
+			isa = PBXGroup;
+			children = (
+				1B5D6C0B29231B900072C66D /* CallClientMockings.swift */,
+				1B5D6C0929231B900072C66D /* CallConfigurationMocking.swift */,
+				1B5D6C0D29231B900072C66D /* CallingSDKEventsHandlerMocking.swift */,
+				1B5D6C0A29231B900072C66D /* UITestCallingSDKWrapper.swift */,
+			);
+			path = Mockings;
+			sourceTree = "<group>";
+		};
 		1F18191827B45050006AF3B3 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -142,9 +182,11 @@
 			children = (
 				1F18191827B45050006AF3B3 /* Utilities */,
 				1F8881BC27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift */,
-				1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */,
-				1FBA6B1B27B4F61A00FF3835 /* Info.plist */,
+				FA93E3A92942B61D006476A5 /* AzureCommunicationUIDemoAppTokenTests.swift */,
 				1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */,
+				1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */,
+				FA93E3AB2942B6DA006476A5 /* AzureCommunicationUIDemoAppDebugInfoTests.swift */,
+				1FBA6B1B27B4F61A00FF3835 /* Info.plist */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -153,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				1F8881C92798D5E7001427F0 /* TextFieldClearButton.swift */,
+				52EFB3FD293938FF006D41B9 /* ErrorView.swift */,
 			);
 			path = ViewModifier;
 			sourceTree = "<group>";
@@ -211,6 +254,7 @@
 		A8C69FB22728AE1A00143DB7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				1B5D6BFB2922F9DF0072C66D /* Mockings */,
 				1F8881CB279B4521001427F0 /* Utilities */,
 				A8FB819D272A0B3500AA0930 /* Views */,
 				5075FE9B27FFA84B00136B34 /* Localization */,
@@ -233,11 +277,14 @@
 			children = (
 				1F8881C82798D5C2001427F0 /* ViewModifier */,
 				A87CEABB2729ECA600F3AE16 /* EntryViewController.swift */,
-				A85DDCB52728B23B001297B4 /* SwiftUIDemoView.swift */,
-				A85DDCB42728B23A001297B4 /* UIKitDemoViewController.swift */,
+				A85DDCB52728B23B001297B4 /* CallingDemoView.swift */,
+				A85DDCB42728B23A001297B4 /* CallingDemoViewController.swift */,
+				50D8EE9E2926C0C6003C3A95 /* ChatDemoView.swift */,
+				50D8EEA02926C0DD003C3A95 /* ChatDemoViewController.swift */,
 				50B390CE27D2996E0010A2ED /* SettingsView.swift */,
 				A8AC66FD2735A41600632D0B /* CustomControls.swift */,
 				A8C69FBE2728AE1C00143DB7 /* LaunchScreen.storyboard */,
+				1B981B0329480DA8002EB167 /* FloatingUITestWindow.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -245,6 +292,7 @@
 		F74ACD1C99B1428891E02585 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50CB82E028C9200300680566 /* AzureCommunicationUIChat.framework */,
 				FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */,
 				747FFD0380FFBF53EC331032 /* Pods_AzureCommunicationUIDemoApp.framework */,
 				026F091CB7F97EBA5A39610B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework */,
@@ -326,6 +374,8 @@
 				fr,
 				"fr-CA",
 				"zh-Hant",
+				it,
+				ar,
 			);
 			mainGroup = A8C69FA72728AE1A00143DB7;
 			productRefGroup = A8C69FB12728AE1A00143DB7 /* Products */;
@@ -361,6 +411,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		1FC9AB9927BC4E8F0027F9DB /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -379,6 +430,7 @@
 		};
 		1FF252D427B5E44E006A113E /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -483,9 +535,11 @@
 				5027C1C72821A55E00DC7131 /* AccessibilityId.swift in Sources */,
 				1F18191A27B45050006AF3B3 /* XCUIElementExtension.swift in Sources */,
 				FACEE494287364F4001D62BE /* AccessibilityIdentifier.swift in Sources */,
+				FA93E3AA2942B61D006476A5 /* AzureCommunicationUIDemoAppTokenTests.swift in Sources */,
 				1F18191727B39F36006AF3B3 /* XCUITestBase.swift in Sources */,
 				1B0D8DC627F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift in Sources */,
 				1F8881BD27909E08001427F0 /* AzureCommunicationUIDemoAppLaunchTests.swift in Sources */,
+				FA93E3AC2942B6DA006476A5 /* AzureCommunicationUIDemoAppDebugInfoTests.swift in Sources */,
 				1B3E3B4F285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -495,20 +549,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				A8C69FB42728AE1A00143DB7 /* AppDelegate.swift in Sources */,
+				1B5D6C1329231B900072C66D /* CallingSDKEventsHandlerMocking.swift in Sources */,
 				A8FB819C272A082B00AA0930 /* DemoInputTypes.swift in Sources */,
+				52EFB3FE293938FF006D41B9 /* ErrorView.swift in Sources */,
 				A8AC66FE2735A41600632D0B /* CustomControls.swift in Sources */,
-				A85DDCB92728B23B001297B4 /* SwiftUIDemoView.swift in Sources */,
+				A85DDCB92728B23B001297B4 /* CallingDemoView.swift in Sources */,
+				1B5D6C1029231B900072C66D /* UITestCallingSDKWrapper.swift in Sources */,
 				1F8881CD279B456E001427F0 /* Extension.swift in Sources */,
 				5027C1C62821A07500DC7131 /* AccessibilityId.swift in Sources */,
+				1B5D6C0F29231B900072C66D /* CallConfigurationMocking.swift in Sources */,
 				A85DDCB12728B12D001297B4 /* EnvConfig.swift in Sources */,
 				FA7B53EC282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift in Sources */,
 				A85DDCB32728B140001297B4 /* ThemeOptions.swift in Sources */,
-				A85DDCB82728B23B001297B4 /* UIKitDemoViewController.swift in Sources */,
+				A85DDCB82728B23B001297B4 /* CallingDemoViewController.swift in Sources */,
+				50D8EE9F2926C0C6003C3A95 /* ChatDemoView.swift in Sources */,
+				50D8EEA12926C0DD003C3A95 /* ChatDemoViewController.swift in Sources */,
 				A8C69FB62728AE1A00143DB7 /* SceneDelegate.swift in Sources */,
+				1B981B0429480DA8002EB167 /* FloatingUITestWindow.swift in Sources */,
 				A87CEABC2729ECA600F3AE16 /* EntryViewController.swift in Sources */,
 				1F8881CA2798D5E7001427F0 /* TextFieldClearButton.swift in Sources */,
 				A8849E532732FFA10049FB1A /* AuthenticationHelper.swift in Sources */,
 				50B390CF27D2996E0010A2ED /* SettingsView.swift in Sources */,
+				1B5D6C1129231B900072C66D /* CallClientMockings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,6 +592,8 @@
 				5075FEA527FFA8C800136B34 /* fr */,
 				5075FEA627FFA8C900136B34 /* fr-CA */,
 				5075FEA727FFA9D700136B34 /* zh-Hant */,
+				BDAA751F28E4BDC4008C2789 /* it */,
+				506E1D5829356002002B0D0A /* ar */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -541,6 +605,8 @@
 				5075FE9C27FFA87200136B34 /* fr */,
 				5075FE9D27FFA87600136B34 /* fr-CA */,
 				5075FE9E27FFA87C00136B34 /* zh-Hant */,
+				BDAA751E28E4BDC4008C2789 /* it */,
+				506E1D5729356002002B0D0A /* ar */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

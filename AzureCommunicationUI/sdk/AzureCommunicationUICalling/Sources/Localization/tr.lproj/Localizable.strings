@@ -15,7 +15,7 @@
 "AzureCommunicationUICalling.SetupView.Title"="Kur";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Geri";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Aramaya katıl";
-"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Aramaya katılıyor...";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Aramaya katılıyorsunuz...";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Görüntü kapalı";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Kamerayı Aç";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Görüntü açık";
@@ -26,6 +26,7 @@
 "AzureCommunicationUICalling.SetupView.Button.MicOn.AccessibilityLabel"="Sesi kapat";
 "AzureCommunicationUICalling.SetupView.Button.Device"="Cihaz";
 "AzureCommunicationUICalling.SetupView.Button.Device.AccessibilityLabel"="Ses cihazını seç";
+"AzureCommunicationUICalling.SetupView.Button.GoToSettings"="Ayarlara Git";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioGrantedCameraDisabled"="Kameranız devre dışı. Etkinleştirmek için Ayarlar seçeneğine giderek erişime izin verin.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabledCameraDenied"="Kameranız ve sesiniz devre dışı. Etkinleştirmek için Ayarlar seçeneğine giderek erişime izin verin. Bu aramayı başlatmak için sesi etkinleştirmeniz gerekiyor.";
 "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"="Sesiniz devre dışı. Etkinleştirmek için Ayarlar seçeneğine giderek erişime izin verin. Bu aramayı başlatmak için sesi etkinleştirmeniz gerekiyor.";
@@ -42,6 +43,7 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"="Diğerlerinin katılması bekleniyor";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWith1Person"="1 kişi ile arama";
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="%d kişi ile arama"; // %d is for number of people in call
+"AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Katılımcılar";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Adsız Katılımcı";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (ben)"; // %@ is local participant name
@@ -64,6 +66,9 @@
 "AzureCommunicationUICalling.CallingView.Overlay.LeaveCall"="Çık";
 "AzureCommunicationUICalling.CallingView.Overlay.Cancel"="İptal";
 "AzureCommunicationUICalling.CallingView.LeaveCallList.Header.LeaveCall"="Aramadan çıkılsın mı?";
+
+"AzureCommunicationUICalling.CallingView.Button.More.AccessibilityLabel" = "Tümü";
+"AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "Tanılama bilgilerini paylaş";
 
 /* ComplianceBanner title */
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="Kayıt ve döküm başlatıldı.";
@@ -98,3 +103,5 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallTitle"="Arama sürdürülemiyor";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorResumeCallSubTitle"="Mikrofonunuz başka bir uygulama tarafından kullanılıyor";
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Aramaya erişiminiz reddedildi.";
+"AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Videoyu açma/kapatma sırasında hata oluştu";
+"AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Aramaya katılınamıyor. Ağ bağlantınızı kontrol edin.";

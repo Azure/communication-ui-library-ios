@@ -3,10 +3,11 @@
 //  Licensed under the MIT License.
 //
 
+import AzureCommunicationCommon
+
 import UIKit
 import SwiftUI
 import FluentUI
-import AzureCommunicationCalling
 
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
@@ -21,15 +22,33 @@ public class CallComposite {
 
     /// The events handler for Call Composite
     public let events: Events
-    private var logger: Logger?
+
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
+
+    // Internal dependencies
+    private var logger: Logger = DefaultLogger(category: "Calling")
+    private var accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()
+    private var localizationProvider: LocalizationProviderProtocol
+
+    private var store: Store<AppState>?
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
     private var audioSessionManager: AudioSessionManagerProtocol?
     private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
     private var avatarViewManager: AvatarViewManagerProtocol?
+    private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
+    private var debugInfoManager: DebugInfoManagerProtocol?
+
+    /// Get debug information for the Call Composite.
+    public var debugInfo: DebugInfo {
+        guard let debugInfoManager = debugInfoManager else {
+            return DebugInfo()
+        }
+
+        return debugInfoManager.getDebugInfo()
+    }
 
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
@@ -37,33 +56,46 @@ public class CallComposite {
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
+        localizationProvider = LocalizationProvider(logger: logger)
+    }
+
+    convenience init(withOptions options: CallCompositeOptions? = nil,
+                     callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
+        self.init(withOptions: options)
+        self.customCallingSdkWrapper = callingSDKWrapperProtocol
     }
 
     deinit {
-        logger?.debug("Composite deallocated")
+        logger.debug("Call Composite deallocated")
     }
 
     private func launch(_ callConfiguration: CallConfiguration,
                         localOptions: LocalOptions?) {
-        let dependencyContainer = DependencyContainer()
-        logger = dependencyContainer.resolve() as Logger
-        logger?.debug("launch composite experience")
+        logger.debug("launch composite experience")
+        let viewFactory = constructViewFactoryAndDependencies(
+            for: callConfiguration,
+            localOptions: localOptions,
+            callCompositeEventsHandler: events,
+            withCallingSDKWrapper: self.customCallingSdkWrapper
+        )
 
-        dependencyContainer.registerDependencies(callConfiguration,
-                                                 localOptions: localOptions,
-                                                 callCompositeEventsHandler: events)
-        let localizationProvider = dependencyContainer.resolve() as LocalizationProviderProtocol
         setupColorTheming()
         setupLocalization(with: localizationProvider)
-        let toolkitHostingController = makeToolkitHostingController(router: dependencyContainer.resolve(),
-                                                                    logger: dependencyContainer.resolve(),
-                                                                    viewFactory: dependencyContainer.resolve(),
-                                                                    isRightToLeft: localizationProvider.isRightToLeft)
-        setupManagers(with: dependencyContainer)
+
+        guard let store = self.store else {
+            fatalError("Construction of dependencies failed")
+        }
+        let toolkitHostingController = makeToolkitHostingController(
+            router: NavigationRouter(store: store, logger: logger),
+            logger: logger,
+            viewFactory: viewFactory,
+            isRightToLeft: localizationProvider.isRightToLeft
+        )
+
         present(toolkitHostingController)
     }
 
-    /// Start call composite experience with joining a Teams meeting.
+    /// Start Call Composite experience with joining a Teams meeting.
     /// - Parameter remoteOptions: RemoteOptions used to send to ACS to locate the call.
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This is data is not sent up to ACS.
@@ -94,13 +126,59 @@ public class CallComposite {
                           completionHandler: completionHandler)
     }
 
-    private func setupManagers(with dependencyContainer: DependencyContainer) {
-        self.errorManager = dependencyContainer.resolve() as ErrorManagerProtocol
-        self.lifeCycleManager = dependencyContainer.resolve() as LifeCycleManagerProtocol
-        self.permissionManager = dependencyContainer.resolve() as PermissionsManagerProtocol
-        self.audioSessionManager = dependencyContainer.resolve() as AudioSessionManagerProtocol
-        self.avatarViewManager = dependencyContainer.resolve() as AvatarViewManagerProtocol
-        self.remoteParticipantsManager = dependencyContainer.resolve() as RemoteParticipantsManagerProtocol
+    private func constructViewFactoryAndDependencies(
+        for callConfiguration: CallConfiguration,
+        localOptions: LocalOptions?,
+        callCompositeEventsHandler: CallComposite.Events,
+        withCallingSDKWrapper wrapper: CallingSDKWrapperProtocol? = nil
+    ) -> CompositeViewFactoryProtocol {
+        let callingSdkWrapper = wrapper ?? CallingSDKWrapper(
+            logger: logger,
+            callingEventsHandler: CallingSDKEventsHandler(logger: logger),
+            callConfiguration: callConfiguration
+        )
+
+        let store = Store.constructStore(
+            logger: logger,
+            callingService: CallingService(logger: logger, callingSDKWrapper: callingSdkWrapper),
+            displayName: localOptions?.participantViewData?.displayName ?? callConfiguration.displayName
+        )
+        self.store = store
+
+        // Construct managers
+        let avatarViewManager = AvatarViewManager(
+            store: store,
+            localParticipantViewData: localOptions?.participantViewData
+        )
+        self.avatarViewManager = avatarViewManager
+
+        self.errorManager = CompositeErrorManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
+        self.lifeCycleManager = UIKitAppLifeCycleManager(store: store, logger: logger)
+        self.permissionManager = PermissionsManager(store: store)
+        self.audioSessionManager = AudioSessionManager(store: store, logger: logger)
+        self.remoteParticipantsManager = RemoteParticipantsManager(
+            store: store,
+            callCompositeEventsHandler: callCompositeEventsHandler,
+            avatarViewManager: avatarViewManager
+        )
+
+        let debugInfoManager = DebugInfoManager(store: store)
+        self.debugInfoManager = debugInfoManager
+
+        return CompositeViewFactory(
+            logger: logger,
+            avatarManager: avatarViewManager,
+            videoViewManager: VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger),
+            compositeViewModelFactory: CompositeViewModelFactory(
+                logger: logger,
+                store: store,
+                networkManager: NetworkManager(),
+                localizationProvider: localizationProvider,
+                accessibilityProvider: accessibilityProvider,
+                debugInfoManager: debugInfoManager,
+                localOptions: localOptions
+            )
+        )
     }
 
     private func cleanUpManagers() {
@@ -110,6 +188,7 @@ public class CallComposite {
         self.audioSessionManager = nil
         self.avatarViewManager = nil
         self.remoteParticipantsManager = nil
+        self.debugInfoManager = nil
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,
@@ -120,21 +199,21 @@ public class CallComposite {
                                      logger: logger,
                                      viewFactory: viewFactory,
                                      isRightToLeft: isRightToLeft)
-        let toolkitHostingController = ContainerUIHostingController(rootView: rootView,
-                                                                    callComposite: self,
-                                                                    isRightToLeft: isRightToLeft)
-        toolkitHostingController.modalPresentationStyle = .fullScreen
+        let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
+                                                                        callComposite: self,
+                                                                        isRightToLeft: isRightToLeft)
+        containerUIHostingController.modalPresentationStyle = .fullScreen
 
-        router.setDismissComposite { [weak toolkitHostingController, weak self] in
-            toolkitHostingController?.dismissSelf()
+        router.setDismissComposite { [weak containerUIHostingController, weak self] in
+            containerUIHostingController?.dismissSelf()
             self?.cleanUpManagers()
         }
 
-        return toolkitHostingController
+        return containerUIHostingController
     }
 
     private func present(_ viewController: UIViewController) {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             guard self.isCompositePresentable(),
                   let topViewController = UIWindow.keyWindow?.topViewController else {
                 // go to throw the error in the delegate handler
@@ -147,7 +226,7 @@ public class CallComposite {
     private func setupColorTheming() {
         let colorProvider = ColorThemeProvider(themeOptions: themeOptions)
         StyleProvider.color = colorProvider
-        DispatchQueue.main.async {
+        Task { @MainActor in
             if let window = UIWindow.keyWindow {
                 Colors.setProvider(provider: colorProvider, for: window)
             }

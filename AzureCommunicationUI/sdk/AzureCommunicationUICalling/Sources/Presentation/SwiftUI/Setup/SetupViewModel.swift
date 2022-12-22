@@ -3,8 +3,8 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 class SetupViewModel: ObservableObject {
     private let logger: Logger
@@ -33,7 +33,7 @@ class SetupViewModel: ObservableObject {
          store: Store<AppState>,
          networkManager: NetworkManager,
          localizationProvider: LocalizationProviderProtocol,
-         navigationBarViewData: NavigationBarViewData? = nil) {
+         setupScreenViewData: SetupScreenViewData? = nil) {
         self.store = store
         self.networkManager = networkManager
         self.networkManager.startMonitor()
@@ -41,12 +41,12 @@ class SetupViewModel: ObservableObject {
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
 
-        if let title = navigationBarViewData?.title, !title.isEmpty {
+        if let title = setupScreenViewData?.title, !title.isEmpty {
             // if title is not nil/empty, use given title and optional subtitle
             self.title = title
-            self.subTitle = navigationBarViewData?.subtitle
+            self.subTitle = setupScreenViewData?.subtitle
         } else {
-            // else if title is nil/empty, use default title and disregard given subtitle
+            // else if title is nil/empty, use default title
             self.title = self.localizationProvider.getLocalizedString(.setupTitle)
             self.subTitle = nil
         }
@@ -117,8 +117,8 @@ class SetupViewModel: ObservableObject {
             handleOffline()
             return
         }
-        store.dispatch(action: .callingAction(.callStartRequested))
         isJoinRequested = true
+        store.dispatch(action: .callingAction(.callStartRequested))
     }
 
     func dismissButtonTapped() {
@@ -145,6 +145,11 @@ class SetupViewModel: ObservableObject {
                                         callingState: callingState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
         errorInfoViewModel.update(errorState: state.errorState)
+    }
+
+    func shouldShowSetupControlBarView() -> Bool {
+        let cameraStatus = store.state.localUserState.cameraState.operation
+        return cameraStatus == .off || !isJoinRequested
     }
 
     private func handleOffline() {

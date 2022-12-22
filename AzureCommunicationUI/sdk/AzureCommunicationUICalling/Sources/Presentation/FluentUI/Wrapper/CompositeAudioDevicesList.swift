@@ -17,25 +17,25 @@ struct CompositeAudioDevicesList: UIViewControllerRepresentable {
         Coordinator(isPresented: $isPresented)
     }
 
-    func makeUIViewController(context: Context) -> DrawerContainerViewController<AudioDevicesListCellViewModel> {
-        let controller = AudioDevicesListViewController(items: getAudioDevicesList(),
-                                                        sourceView: sourceView,
+    func makeUIViewController(context: Context) -> DrawerContainerViewController<SelectableDrawerListItemViewModel> {
+        let controller = AudioDevicesListViewController(sourceView: sourceView,
                                                         isRightToLeft: layoutDirection == .rightToLeft)
         controller.delegate = context.coordinator
         return controller
     }
 
-    func updateUIViewController(_ uiViewController: DrawerContainerViewController<AudioDevicesListCellViewModel>,
+    func updateUIViewController(_ uiViewController: DrawerContainerViewController<SelectableDrawerListItemViewModel>,
                                 context: Context) {
         uiViewController.updateDrawerList(items: getAudioDevicesList())
     }
 
-    static func dismantleUIViewController(_ controller: DrawerContainerViewController<AudioDevicesListCellViewModel>,
+    static func dismantleUIViewController(_
+                                          controller: DrawerContainerViewController<SelectableDrawerListItemViewModel>,
                                           coordinator: Coordinator) {
         controller.dismissDrawer()
     }
 
-    private func getAudioDevicesList() -> [AudioDevicesListCellViewModel] {
+    private func getAudioDevicesList() -> [SelectableDrawerListItemViewModel] {
         return viewModel.audioDevicesList
     }
 

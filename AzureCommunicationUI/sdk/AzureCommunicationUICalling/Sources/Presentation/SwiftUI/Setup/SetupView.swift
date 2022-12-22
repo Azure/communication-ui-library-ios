@@ -37,7 +37,9 @@ struct SetupView: View {
                                 PreviewAreaView(viewModel: viewModel.previewAreaViewModel,
                                                 viewManager: viewManager,
                                                 avatarManager: avatarManager)
-                                SetupControlBarView(viewModel: viewModel.setupControlBarViewModel)
+                                if viewModel.shouldShowSetupControlBarView() {
+                                    SetupControlBarView(viewModel: viewModel.setupControlBarViewModel)
+                                }
                             }
                             .background(Color(StyleProvider.color.surface))
                             .cornerRadius(4)
@@ -132,7 +134,7 @@ struct SetupTitleView: View {
             ZStack(alignment: .leading) {
                 IconButton(viewModel: viewModel.dismissButtonViewModel)
                     .flipsForRightToLeftLayoutDirection(true)
-                    .accessibilityIdentifier(AccessibilityIdentifier.dismisButtonAccessibilityID.rawValue)
+                    .accessibilityIdentifier(AccessibilityIdentifier.dismissButtonAccessibilityID.rawValue)
                 HStack {
                     Spacer()
                     VStack {

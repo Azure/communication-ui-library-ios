@@ -24,7 +24,7 @@ class Store<State>: ObservableObject {
             .reduce({ [unowned self] action in
                 self._dispatch(action: action)
             }, { nextDispatch, middleware in
-                let dispatch: (Action) -> Void = { [unowned self] in self.dispatch(action: $0) }
+                let dispatch: (Action) -> Void = { [weak self] in self?.dispatch(action: $0) }
                 let getState = { [unowned self] in self.state }
                 return middleware.apply(dispatch, getState)(nextDispatch)
             })
@@ -38,5 +38,28 @@ class Store<State>: ObservableObject {
 
     private func _dispatch(action: Action) {
         state = reducer.reduce(state, action)
+    }
+}
+
+extension Store where State == AppState {
+    static func constructStore(
+        logger: Logger,
+        callingService: CallingServiceProtocol,
+        displayName: String?
+    ) -> Store<AppState> {
+        let localUserState = LocalUserState(displayName: displayName)
+
+        return Store<AppState>(
+            reducer: Reducer<AppState, Action>.appStateReducer(),
+            middlewares: [
+                Middleware<AppState>.liveCallingMiddleware(
+                    callingMiddlewareHandler: CallingMiddlewareHandler(
+                        callingService: callingService,
+                        logger: logger
+                    )
+                )
+            ],
+            state: AppState(localUserState: localUserState)
+        )
     }
 }
