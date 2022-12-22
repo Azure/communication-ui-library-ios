@@ -34,8 +34,10 @@ class MessageListViewModel: ObservableObject {
     @Published var showJumpToNewMessages: Bool = false
     @Published var jumpToNewMessagesButtonLabel: String = ""
     @Published var shouldScrollToBottom: Bool = false
+    @Published var shouldScrollToId: Bool = false
     @Published var latestSeenMessageId: String?
     @Published var latestSendingOrSentMessageId: String?
+    @Published var messageIdsOnScreen: [String] = []
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          messageRepositoryManager: MessageRepositoryManagerProtocol,
@@ -131,7 +133,7 @@ class MessageListViewModel: ObservableObject {
             // Scroll to new received message
             if self.lastReceivedMessageTimestamp < chatState.lastReceivedMessageTimestamp {
                 self.lastReceivedMessageTimestamp = chatState.lastReceivedMessageTimestamp
-//                shouldScrollToBottom = isAtBottom()
+                shouldScrollToId = !isAtBottom()
             }
 
             if self.hasFetchedInitialMessages != repositoryState.hasFetchedInitialMessages {

@@ -21,9 +21,6 @@ struct MessageListView: View {
 
     @StateObject var viewModel: MessageListViewModel
 
-//    @State private var stored: Int = 0
-    @State private var current: [String] = []
-
     var body: some View {
         ZStack {
             messageList
@@ -66,12 +63,10 @@ struct MessageListView: View {
                                         .onAppear {
                                             viewModel.fetchMessages(lastSeenMessage: message)
                                             viewModel.updateReadReceiptToBeSentMessageId(message: message)
-                                            print("SCROLL: Add: \(message.content)")
-                                            current.append(message.id)
+                                            viewModel.messageIdsOnScreen.append(message.id)
                                         }
                                         .onDisappear {
-                                            current.removeAll { $0 == message.id }
-                                            print("SCROLL: Remove: \(message.content)")
+                                            viewModel.messageIdsOnScreen.removeAll { $0 == message.id }
                                         }
                                     createMessageSendStatus(message: message)
                                 }
@@ -94,6 +89,14 @@ struct MessageListView: View {
                         }
                     }
                     viewModel.shouldScrollToBottom = false
+                }
+            }
+            .onChange(of: viewModel.shouldScrollToId) { _ in
+                if viewModel.shouldScrollToId {
+                    let lastMessageIndex = viewModel.messageIdsOnScreen.count - 2 < 0 ? 0 : viewModel.messageIdsOnScreen.count - 2
+                    let lastMessageId = viewModel.messageIdsOnScreen[lastMessageIndex]
+                    scrollProxy.scrollTo(lastMessageId, anchor: .bottom)
+                    viewModel.shouldScrollToId = false
                 }
             }
         }.onReceive(keyboardWillShow) { _ in
