@@ -13,9 +13,10 @@ steps:
       plutil -replace displayName -string "$(acsDisplayName)" $INFO_PLIST_FILE
       plutil -replace acsTokenUrl -string "$(acsTokenUrl)" $INFO_PLIST_FILE
       plutil -replace expiredAcsToken -string "$(expiredAcsToken)" $INFO_PLIST_FILE
-      plutil -replace acsToken -string "$(ACSFreshToken)" $INFO_PLIST_FILE
-      plutil -replace aadToken -string "$(AADToken)" $INFO_PLIST_FILE
+      plutil -replace acsToken -string "$(RetrieveTokens.ACSFreshToken)" $INFO_PLIST_FILE
+      plutil -replace aadToken -string "$(RetrieveTokens.AADToken)" $INFO_PLIST_FILE
 
+      cat $INFO_PLIST_FILE
     displayName: 'Edit AzureCommunicationUIDemoApp Info.plist'
 
   - script: |
