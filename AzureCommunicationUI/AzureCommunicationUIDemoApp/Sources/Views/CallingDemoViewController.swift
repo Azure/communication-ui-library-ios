@@ -133,12 +133,16 @@ class CallingDemoViewController: UIViewController {
 
         if !envConfigSubject.groupCallId.isEmpty {
             groupCallTextField.text = envConfigSubject.groupCallId
-            meetingTypeSegmentedControl.selectedSegmentIndex = 1
         }
 
         if !envConfigSubject.teamsMeetingLink.isEmpty {
             teamsMeetingTextField.text = envConfigSubject.teamsMeetingLink
-            meetingTypeSegmentedControl.selectedSegmentIndex = 2
+        }
+
+        if envConfigSubject.selectedMeetingType == .groupCall {
+            meetingTypeSegmentedControl.selectedSegmentIndex = 0
+        } else if envConfigSubject.selectedMeetingType == .teamsMeeting {
+            meetingTypeSegmentedControl.selectedSegmentIndex = 1
         }
     }
 

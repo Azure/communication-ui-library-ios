@@ -100,7 +100,6 @@ class XCUITestBase: XCTestCase {
 
             return false
         }
-        app.tap()
     }
 }
 
@@ -194,9 +193,14 @@ extension XCUITestBase {
     func enableMockCallingSDKWrapper() {
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
         wait(for: app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue])
-        app.tap()
+        if #unavailable(iOS 16) {
+            app.tables.firstMatch.swipeUp()
+        } else {
+            app.collectionViews.firstMatch.swipeUp()
+        }
+
         let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
-        toggle.tap()
+        app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue].tap()
         XCTAssertEqual(toggle.isOn, true)
 
         if #unavailable(iOS 16) {

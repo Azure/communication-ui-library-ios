@@ -27,13 +27,11 @@ class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
         checkActivityViewControllerDismissed()
     }
 }
-// app.tap should be removed everywhere - may lead to issues
-// add scroll for switches
 
 extension AzureCommunicationUIDemoAppDebugInfoTests {
     func startCall() throws {
         try skipTestIfNeeded()
-        tapInterfaceFor(.callUIKit)
+        tapInterfaceFor(.callSwiftUI)
         tapMeetingType(.groupCall)
 
         startExperience()
