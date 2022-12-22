@@ -1,4 +1,4 @@
-7# Nightly Build and Test pipeline
+# Nightly Build and Test pipeline
 
 # Need to specifically disable this, else all pushes trigger a CI build
 trigger: none
