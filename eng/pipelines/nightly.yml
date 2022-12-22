@@ -20,7 +20,7 @@ schedules:
         - develop
 
 variables:
-  AppCenterDevicesOverride: 'ios16set'
+  AppCenterDevicesOverride: ''
   buildHourOfDayUtc: $[format('{0:H}', pipeline.startTime)]
 
 jobs:
