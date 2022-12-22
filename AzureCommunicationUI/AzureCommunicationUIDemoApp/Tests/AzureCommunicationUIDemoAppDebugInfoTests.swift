@@ -27,6 +27,8 @@ class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
         checkActivityViewControllerDismissed()
     }
 }
+// app.tap should be removed everywhere - may lead to issues
+// add scroll for switches
 
 extension AzureCommunicationUIDemoAppDebugInfoTests {
     func startCall() throws {
@@ -43,16 +45,15 @@ extension AzureCommunicationUIDemoAppDebugInfoTests {
                   shouldWait: true)
         tapCell(accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue)
         wait(for: app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue])
-        app.tap()
     }
 
     func checkActivityViewControllerDismissed() {
         let activityListView = app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue]
-        let isDismissedPredicate = NSPredicate(format: "exists == 0")
+        let isDismissedPredicate = NSPredicate(format: "exists == false")
         let expectation = expectation(for: isDismissedPredicate,
                                       evaluatedWith: activityListView) {
             return true
         }
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 20.0)
     }
 }
