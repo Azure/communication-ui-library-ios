@@ -8,7 +8,7 @@ import FluentUI
 import SwiftUI
 import UIKit
 
-/// The main class representing the entry point for the Chat Composite.
+/// This class represents the data-layer components of the Chat Composite.
 public class ChatAdapter {
 
     /// The class to configure events closures for Chat Composite.
@@ -40,9 +40,19 @@ public class ChatAdapter {
 
     private var themeOptions: ThemeOptions?
 
-    /// Create an instance of ChatComposite with options.
+    private var threadId: String = ""
+    /// Create an instance of this class with options.
+    /// - Parameters:
+    ///    - identifier: The CommunicationIdentifier that uniquely identifies an user
+    ///    - credential: The credential that authenticates the user to a chat thread
+    ///    - threadId: The unique identifier of a chat thread
+    ///    - endpoint: The endpoint URL of The Communication Services.
+    ///    - displayName: The display name that would be used when sending a chat message
+    ///                   If this is `nil` the display name defined when adding the user to
+    ///                   chat thread from the service would be used
     public init(identifier: CommunicationIdentifier,
                 credential: CommunicationTokenCredential,
+                threadId: String,
                 endpoint: String,
                 displayName: String? = nil) {
         localizationProvider = LocalizationProvider(logger: logger)
@@ -53,15 +63,18 @@ public class ChatAdapter {
             endpoint: endpoint,
             displayName: displayName)
         self.events = Events()
+        self.threadId = threadId
     }
 
     deinit {
         logger.debug("Composite deallocated")
     }
 
-    /// Start connection to the chat composite to Azure Communication Service.
-    public func connect(threadId: String,
-                        completionHandler: ((Result<Void, ChatCompositeError>) -> Void)?) {
+    /// Start connection with chat client and registers for chat events
+    /// This function should be called before adding the ChatComposite to a view
+    /// - Parameters:
+    ///    - completionHandler: The closure that will be called back when connection is established
+    public func connect(completionHandler: ((Result<Void, ChatCompositeError>) -> Void)?) {
         constructDependencies(
             chatConfiguration: self.chatConfiguration,
             chatThreadId: threadId,
@@ -71,20 +84,30 @@ public class ChatAdapter {
         compositeManager?.start()
     }
 
-    /// Start connection to the chat composite to Azure Communication Service.
-    public func connect(threadId: String) async throws {
+    /// Start connection with chat client and registers for chat events
+    /// This function should be called before adding the Chat Composite to a view
+    public func connect() async throws {
         return try await withCheckedThrowingContinuation { continuation in
-            connect(threadId: threadId) { result in
+            connect() { result in
                 continuation.resume(with: result)
             }
         }
     }
 
-    /// Stop connection to chat composite to Azure Communication Service
-    public func disconnect() {
-//    public func disconnect(threadId: String? = nil
-//                           completionHandler: ((Result<Void, ChatCompositeError>) -> Void)? = nil) {
+    /// Unsubscribe all the chat client events from Azure Communication Service
+    /// - Parameters:
+    ///    - completionHandler: The closure that will be called back when disconnection is complete
+    public func disconnect(completionHandler: @escaping ((Result<Void, ChatCompositeError>) -> Void)) {
+        compositeManager?.stop(completionHandler: completionHandler)
+    }
 
+    /// Unsubscribe all the chat client events from Azure Communication Service
+    public func disconnect() async throws {
+        return try await withCheckedThrowingContinuation { continuation in
+            compositeManager?.stop(completionHandler: { result in
+                continuation.resume(with: result)
+            })
+        }
     }
 
     private func constructDependencies(

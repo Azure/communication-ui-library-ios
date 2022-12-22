@@ -8,10 +8,6 @@ import FluentUI
 
 struct MessageListView: View {
     private enum Constants {
-        static let horizontalPadding: CGFloat = 16
-        static let bottomPadding: CGFloat = 0
-        static let topPadding: CGFloat = 8
-        static let topConsecutivePadding: CGFloat = 4
         static let defaultMinListRowHeight: CGFloat = 10
 
         static let buttonIconSize: CGFloat = 24
@@ -19,8 +15,6 @@ struct MessageListView: View {
         static let buttonShadowOffset: CGFloat = 4
         static let buttonBottomPadding: CGFloat = 20
 
-        static let remoteTrailingPadding: CGFloat = 60
-        static let messageWithSendStatusTrailingPadding: CGFloat = 1
         static let messageSendStatusIconSize: CGFloat = 12
         static let messageSendStatusViewPadding: CGFloat = 3
     }
@@ -131,20 +125,14 @@ struct MessageListView: View {
         let isConsecutive = message.senderId == lastMessage.senderId
         let showUsername = !message.isLocalUser && !isConsecutive
         let showTime = !isConsecutive
-
-        let edgeInsets = EdgeInsets(top: isConsecutive
-                                        ? Constants.topConsecutivePadding
-                                        : Constants.topPadding,
-                                    leading: Constants.horizontalPadding,
-                                    bottom: Constants.bottomPadding,
-                                    trailing: getMessageTrailingPadding(for: message))
+        let showMessageStatus = viewModel.shouldShowMessageStatusView(message: message)
 
         MessageView(messageModel: message,
                     showDateHeader: showDateHeader,
                     isConsecutive: isConsecutive,
                     showUsername: showUsername,
-                    showTime: showTime)
-        .padding(edgeInsets)
+                    showTime: showTime,
+                    showMessageStatus: showMessageStatus)
     }
 
     @ViewBuilder
@@ -165,17 +153,5 @@ struct MessageListView: View {
                     .padding([.bottom, .trailing], Constants.messageSendStatusViewPadding)
             }
         }
-    }
-
-    private func getMessageTrailingPadding(for message: ChatMessageInfoModel) -> CGFloat {
-        if !message.isLocalUser {
-            return Constants.remoteTrailingPadding
-        }
-        if message.type == .text,
-           viewModel.shouldShowMessageStatusView(message: message),
-           message.sendStatus != nil {
-            return Constants.messageWithSendStatusTrailingPadding
-        }
-        return Constants.horizontalPadding
     }
 }

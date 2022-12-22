@@ -1,4 +1,4 @@
-# Nightly Build Pipeline
+# Nightly Build and Test pipeline
 
 # Need to specifically disable this, else all pushes trigger a CI build
 trigger: none
@@ -6,13 +6,48 @@ pr: none
 
 # Just want a scheduled run
 schedules:
-  - cron: "0 0 * * *"  # Nightly at midnight
+  - cron: "0 11 * * *"  # Nightly at 3am PST
     displayName: "Nightly Build"
     branches:
       include:
         - develop
         - main
-        - feature/chat
+
+  - cron: "0 */2 * * *" # Check the AppCenter build schedule every 2 hours
+    displayName: "AppCenter UI Test Run Trigger"
+    branches:
+      include:
+        - develop
+
+variables:
+  AppCenterDevicesOverride: ''
+  buildHourOfDayUtc: $[format('{0:H}', pipeline.startTime)]
 
 jobs:
-  - template: jobs/UI-test-job.yml
+  # If it's 3am-ish pacific time and it was a scheduled build, then run the UI tests
+  - ${{ if and(eq(variables['Build.Reason'], 'Schedule'), eq( variables['buildHourOfDayUtc'], '11')) }}:
+    - template: jobs/UI-test-job.yml
+
+  - job: ConfigureDevices
+    displayName: "Determine AppCenter device set to use"
+    steps:
+      # Sets the AppCenterDevices variable
+      - template: jobs/templates/set-appcenter-devices.yml
+
+  - job: AutomatedUITestWithAppCenter
+    dependsOn: ['ConfigureDevices']
+    displayName: "Run XCUITests on AppCenter with specific devices"
+    condition: ne(dependencies.ConfigureDevices.outputs['DetermineDeviceSet.AppCenterDevices'], '')
+    pool:
+      name: vsts-mac-1301-xcode-141
+      demands: xcode
+    variables:
+      - group: 'SPOOL-Communication-mobileUI'
+      - name: 'acsDisplayName'
+        value: 'iOS UI Automated Tester'
+      - name: AppcenterDeviceSet
+        value: $[dependencies.ConfigureDevices.outputs['DetermineDeviceSet.AppCenterDevices'] ]
+
+    steps:
+      # This takes the AppcenterDeviceSet VARIABLE to configure the test devices
+      - template: jobs/appcenter-test-job-steps.yml
