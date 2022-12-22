@@ -93,7 +93,9 @@ struct MessageListView: View {
             }
             .onChange(of: viewModel.shouldScrollToId) { _ in
                 if viewModel.shouldScrollToId {
-                    let lastMessageIndex = viewModel.messageIdsOnScreen.count - 2 < 0 ? 0 : viewModel.messageIdsOnScreen.count - 2
+                    let lastMessageIndex = viewModel.messageIdsOnScreen.count - 2 < 0
+                    ? 0
+                    : viewModel.messageIdsOnScreen.count - 2
                     let lastMessageId = viewModel.messageIdsOnScreen[lastMessageIndex]
                     scrollProxy.scrollTo(lastMessageId, anchor: .bottom)
                     viewModel.shouldScrollToId = false
