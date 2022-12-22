@@ -39,6 +39,12 @@ class ChatActionHandlerTests: XCTestCase {
         XCTAssertTrue(mockChatService.initializeCalled)
     }
 
+    func test_chatActionHandler_disconnect_then_disconnectCalled() async {
+        let sut = makeSUT()
+        await sut.disconnectChat(dispatch: getEmptyDispatch()).value
+        XCTAssertTrue(mockChatService.disconnectChatServiceCalled)
+    }
+
     func test_chatActionHandler_getInitialMessages_then_getInitialMessagesCalled() async {
         let sut = makeSUT()
         await sut.getInitialMessages(

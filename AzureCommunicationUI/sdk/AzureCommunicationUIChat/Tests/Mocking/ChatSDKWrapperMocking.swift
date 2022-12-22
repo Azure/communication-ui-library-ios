@@ -18,6 +18,7 @@ class ChatSDKWrapperMocking: ChatSDKWrapperProtocol {
         localUserId: CommunicationUserIdentifier("userId"))
 
     var initializeCalled: Bool = false
+    var unregisterRealTimeNotificationCalled: Bool = false
     var getInitialMessagesCalled: Bool = false
     var retrieveChatThreadPropertiesCalled: Bool = false
     var getListOfParticipantsCalled: Bool = false
@@ -38,6 +39,10 @@ class ChatSDKWrapperMocking: ChatSDKWrapperProtocol {
         return try await Task<[ChatMessageInfoModel], Error> {
             []
         }.value
+    }
+
+    func unregisterRealTimeNotifications() {
+        unregisterRealTimeNotificationCalled = true
     }
 
     func retrieveChatThreadProperties() async throws -> ChatThreadInfoModel {

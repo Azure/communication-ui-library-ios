@@ -7,6 +7,7 @@ import Foundation
 
 struct ChatState {
     let localUser: ParticipantInfoModel?
+    let isRealTimeNotificationConnected: Bool
     let threadId: String
     let topic: String
     let lastReadReceiptReceivedTimestamp: Date
@@ -17,6 +18,7 @@ struct ChatState {
     let isLocalUserRemovedFromChat: Bool
 
     init(localUser: ParticipantInfoModel? = nil,
+         isRealTimeNotificationConnected: Bool = false,
          threadId: String = "",
          topic: String = "",
          lastReadReceiptReceivedTimestamp: Date = Date(),
@@ -26,6 +28,7 @@ struct ChatState {
          lastSentOrFailedMessageTimestamp: Date = Date(),
          isLocalUserRemovedFromChat: Bool = false) {
         self.localUser = localUser
+        self.isRealTimeNotificationConnected = isRealTimeNotificationConnected
         self.threadId = threadId
         self.topic = topic
         self.lastReadReceiptReceivedTimestamp = lastReadReceiptReceivedTimestamp
