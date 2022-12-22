@@ -8,7 +8,7 @@ import FluentUI
 import SwiftUI
 import UIKit
 
-/// This class contains the data-layer components of the Chat Composite.
+/// This class represents the data-layer components of the Chat Composite.
 public class ChatAdapter {
 
     /// The class to configure events closures for Chat Composite.
@@ -66,7 +66,8 @@ public class ChatAdapter {
         logger.debug("Composite deallocated")
     }
 
-    /// Start connection to the chat composite to Azure Communication Service.
+    /// Start connection with chat client and registers for chat events
+    /// This function should be called before adding the ChatComposite to a view
     /// - Parameters:
     ///    - threadId: The unique identifier of a chat thread
     ///    - completionHandler: The closure that would be executed when connection is established
@@ -81,7 +82,8 @@ public class ChatAdapter {
         compositeManager?.start()
     }
 
-    /// Start connection to the chat composite to Azure Communication Service.
+    /// Start connection with chat client and registers for chat events
+    /// This function should be called before adding the Chat Composite to a view
     /// - Parameters:
     ///    - threadId: The unique identifier of a chat thread
     public func connect(threadId: String) async throws {
@@ -92,7 +94,7 @@ public class ChatAdapter {
         }
     }
 
-    /// Stop connection to chat composite to Azure Communication Service
+    /// Stop connection with chat client and registers for chat events
     public func disconnect() {
 //    public func disconnect(threadId: String? = nil
 //                           completionHandler: ((Result<Void, ChatCompositeError>) -> Void)? = nil) {
