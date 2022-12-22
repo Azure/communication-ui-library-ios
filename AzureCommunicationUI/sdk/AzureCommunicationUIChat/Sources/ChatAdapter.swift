@@ -8,7 +8,7 @@ import FluentUI
 import SwiftUI
 import UIKit
 
-/// The main class representing the entry point for the Chat Composite.
+/// This class represents the data-layer components of the Chat Composite.
 public class ChatAdapter {
 
     /// The class to configure events closures for Chat Composite.
@@ -40,7 +40,14 @@ public class ChatAdapter {
 
     private var themeOptions: ThemeOptions?
 
-    /// Create an instance of ChatComposite with options.
+    /// Create an instance of this class with options.
+    /// - Parameters:
+    ///    - identifier: The CommunicationIdentifier that uniquely identifies an user
+    ///    - credential: The credential that authenticates the user to a chat thread
+    ///    - endpoint: The endpoint URL of The Communication Services.
+    ///    - displayName: The display name that would be used when sending a chat message
+    ///                   If this is `nil` the display name defined when adding the user to
+        ///               chat thread from the service would be used
     public init(identifier: CommunicationIdentifier,
                 credential: CommunicationTokenCredential,
                 endpoint: String,
@@ -59,7 +66,11 @@ public class ChatAdapter {
         logger.debug("Composite deallocated")
     }
 
-    /// Start connection to the chat composite to Azure Communication Service.
+    /// Start connection with chat client and registers for chat events
+    /// This function should be called before adding the ChatComposite to a view
+    /// - Parameters:
+    ///    - threadId: The unique identifier of a chat thread
+    ///    - completionHandler: The closure that would be executed when connection is established
     public func connect(threadId: String,
                         completionHandler: ((Result<Void, ChatCompositeError>) -> Void)?) {
         constructDependencies(
@@ -71,7 +82,10 @@ public class ChatAdapter {
         compositeManager?.start()
     }
 
-    /// Start connection to the chat composite to Azure Communication Service.
+    /// Start connection with chat client and registers for chat events
+    /// This function should be called before adding the Chat Composite to a view
+    /// - Parameters:
+    ///    - threadId: The unique identifier of a chat thread
     public func connect(threadId: String) async throws {
         return try await withCheckedThrowingContinuation { continuation in
             connect(threadId: threadId) { result in
@@ -80,7 +94,7 @@ public class ChatAdapter {
         }
     }
 
-    /// Stop connection to chat composite to Azure Communication Service
+    /// Stop connection with chat client and registers for chat events
     public func disconnect() {
 //    public func disconnect(threadId: String? = nil
 //                           completionHandler: ((Result<Void, ChatCompositeError>) -> Void)? = nil) {
