@@ -21,6 +21,9 @@ struct MessageListView: View {
 
     @StateObject var viewModel: MessageListViewModel
 
+//    @State private var stored: Int = 0
+    @State private var current: [String] = []
+
     var body: some View {
         ZStack {
             messageList
@@ -63,6 +66,12 @@ struct MessageListView: View {
                                         .onAppear {
                                             viewModel.fetchMessages(lastSeenMessage: message)
                                             viewModel.updateReadReceiptToBeSentMessageId(message: message)
+                                            print("SCROLL: Add: \(message.content)")
+                                            current.append(message.id)
+                                        }
+                                        .onDisappear {
+                                            current.removeAll { $0 == message.id }
+                                            print("SCROLL: Remove: \(message.content)")
                                         }
                                     createMessageSendStatus(message: message)
                                 }
