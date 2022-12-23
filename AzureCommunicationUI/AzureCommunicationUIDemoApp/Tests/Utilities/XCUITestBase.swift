@@ -59,11 +59,11 @@ class XCUITestBase: XCTestCase {
         setupSystemPromptMonitor()
     }
 
-    override func tearDown() {
-        super.tearDown()
+//    override func tearDown() {
+//        super.tearDown()
         // terminate app on tear down
-        app.terminate()
-    }
+//        app.terminate()
+//    }
 
     // MARK: Private / helper functions
 
