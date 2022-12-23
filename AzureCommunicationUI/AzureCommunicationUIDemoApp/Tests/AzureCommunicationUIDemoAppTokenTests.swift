@@ -7,21 +7,25 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
-    func testCallCompositeWithExpiredToken() throws {
-        try skipTestIfNeeded()
-        tapInterfaceFor(.callSwiftUI)
+    func testCallCompositeWithExpiredToken() {
+        tapInterfaceFor(.callUIKit)
+
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
         wait(for: app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue])
-
         if #unavailable(iOS 16) {
+            // for <iOS 16, the table is shown
             app.tables.firstMatch.swipeUp()
         } else {
+            // for iOS 16, the collection is shown
             app.collectionViews.firstMatch.swipeUp()
         }
+
         let toggle = app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue]
-        toggle.tap()
+        app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue].tap()
         XCTAssertEqual(toggle.isOn, true)
-        tapButton(accessibilityIdentifier: "Close")
+
+        closeDemoAppSettingsPage()
+
         startExperience(useCallingSDKMock: false)
         joinCall()
         wait(for: app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue])

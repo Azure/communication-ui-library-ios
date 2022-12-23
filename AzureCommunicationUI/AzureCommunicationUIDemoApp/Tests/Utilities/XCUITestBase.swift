@@ -194,8 +194,10 @@ extension XCUITestBase {
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
         wait(for: app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue])
         if #unavailable(iOS 16) {
+            // for <iOS 16, the table is shown
             app.tables.firstMatch.swipeUp()
         } else {
+            // for iOS 16, the collection is shown
             app.collectionViews.firstMatch.swipeUp()
         }
 
@@ -203,22 +205,24 @@ extension XCUITestBase {
         app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue].tap()
         XCTAssertEqual(toggle.isOn, true)
 
-        if #unavailable(iOS 16) {
-            sleep(1)
+        closeDemoAppSettingsPage()
+    }
+
+    func closeDemoAppSettingsPage() {
+        if #unavailable(iOS 15) {
+            // Close button in toolbar is unavailable for iOS 14 (because isAccessibleElement = false)
+            // so closing the presented view with a swipe
+            // this issue is fixed for iOS 15
+            let startPoint = app.navigationBars.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
+            let finishPoint = startPoint.withOffset(CGVector(dx: 0, dy: 500))
+            startPoint.press(forDuration: 0, thenDragTo: finishPoint)
+        } else {
+            tapButton(accessibilityIdentifier: AccessibilityId.settingsCloseButtonAccessibilityID.rawValue)
         }
-        tapButton(accessibilityIdentifier: "Close")
     }
 
     func joinCall() {
         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
                          shouldWait: true)
-    }
-
-    /// Throws XCTSkip if iOS version is less than 15
-    func skipTestIfNeeded() throws {
-        // switches don't handle tap correctly sometimes for iOS < 14. Possible problem can be Rosetta usage
-        guard #available(iOS 15, *) else {
-            throw XCTSkip("Required API is not available for this test.")
-        }
     }
 }

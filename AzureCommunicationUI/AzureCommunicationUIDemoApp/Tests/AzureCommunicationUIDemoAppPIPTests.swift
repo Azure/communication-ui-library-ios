@@ -7,8 +7,7 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class AzureCommunicationUIDemoAppPIPTests: XCUITestBase {
-    func testCallCompositeCurrentParticipantOnlyCallNoPIP() throws {
-        try skipTestIfNeeded()
+    func testCallCompositeCurrentParticipantOnlyCallNoPIP() {
         tapInterfaceFor(.callUIKit)
         startExperience()
 

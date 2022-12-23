@@ -7,29 +7,35 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class AzureCommunicationUIDemoAppE2ETests: XCUITestBase {
-    func testCallCompositeE2ETokenURLGroupCall() throws {
-        try skipTestIfNeeded()
+    func testCallCompositeE2ETokenURLGroupCall() {
         tapInterfaceFor(.callUIKit)
         tapConnectionTokenType(.acsTokenUrl)
         e2eTest()
     }
 
-    func testCallCompositeE2ETokenURLTeamsCall() throws {
-        try skipTestIfNeeded()
-        tapInterfaceFor(.callSwiftUI)
+    func testCallCompositeE2ETokenURLTeamsCall() {
+        if #unavailable(iOS 15) {
+            // switches doesn't work as expected for callSwiftUI for iOS 14
+            tapInterfaceFor(.callUIKit)
+        } else {
+            tapInterfaceFor(.callSwiftUI)
+        }
         tapConnectionTokenType(.acsTokenUrl)
         tapMeetingType(.teamsCall)
         e2eTest()
     }
 
-    func testCallCompositeE2ETokenValueGroupCall() throws {
-        try skipTestIfNeeded()
-        tapInterfaceFor(.callSwiftUI)
+    func testCallCompositeE2ETokenValueGroupCall() {
+        if #unavailable(iOS 15) {
+            // switches doesn't work as expected for callSwiftUI for iOS 14
+            tapInterfaceFor(.callUIKit)
+        } else {
+            tapInterfaceFor(.callSwiftUI)
+        }
         e2eTest()
     }
 
-    func testCallCompositeE2ETokenValueTeamsCall() throws {
-        try skipTestIfNeeded()
+    func testCallCompositeE2ETokenValueTeamsCall() {
         tapInterfaceFor(.callUIKit)
         tapMeetingType(.teamsCall)
         e2eTest()
