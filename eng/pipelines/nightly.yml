@@ -20,7 +20,7 @@ schedules:
         - develop
 
 variables:
-  AppCenterDevicesOverride: ''
+  AppCenterDevicesOverride: ''  # This should be in the form 'Azure-Communication-Services/<your_device_set_name>'
   buildHourOfDayUtc: $[format('{0:H}', pipeline.startTime)]
 
 jobs:
