@@ -33,7 +33,7 @@ If you prefer importing Mobile UI Library as an Embedded Framework to your proje
 ## Quick Sample
 
 The Chat Composite requires two objects to work together, the adapter and the view.
-The `ChatAdapter` is requires a communication identifier, token credential, a thread id, end point url of the chat, and an optional display name.  
+The `ChatAdapter` requires a communication identifier, token credential, a thread id, end point url of the chat, and an optional display name.  
 The `ChatCompositeView` is a SwiftUI view object that developers use to add to their View. It is initialized with the above adapter that you created.
 
 ```swift
