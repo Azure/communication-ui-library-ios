@@ -10,7 +10,7 @@ import SwiftUI
 struct ChatDemoView: View {
 
     private enum Constant {
-        static let oneSecond: UInt64 = 1 * 1_000_000_000
+        static let oneMiliSecond: UInt64 = 10_000_000
     }
 
     @State var isErrorDisplayed: Bool = false
@@ -167,7 +167,7 @@ struct ChatDemoView: View {
                 Button("Stop") {
                     self.chatAdapter = nil
                     Task { @MainActor  in
-                        try await Task.sleep(nanoseconds: Constant.oneSecond / 100)
+                        try await Task.sleep(nanoseconds: Constant.oneMiliSecond)
                         self.isShowingChatView = false
                     }
                 }
