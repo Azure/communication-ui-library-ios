@@ -18,6 +18,7 @@ class ChatServiceMocking: ChatServiceProtocol {
 
     var initializeCalled: Bool = false
     var getInitialMessagesCalled: Bool = false
+    var disconnectChatServiceCalled: Bool = false
     var getMaskedParticipantIdsCalled: Bool = false
     var getListOfParticipantsCalled: Bool = false
     var getPreviousMessagesCalled: Bool = false
@@ -41,6 +42,10 @@ class ChatServiceMocking: ChatServiceProtocol {
             return initialMessages
         }
         return try await task.value
+    }
+
+    func disconnectChatService() {
+        disconnectChatServiceCalled = true
     }
 
     func getMaskedParticipantIds() async throws -> Set<String> {

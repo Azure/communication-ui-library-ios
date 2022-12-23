@@ -10,6 +10,7 @@ extension Reducer where State == ChatState,
                         Actions == Action {
     static var liveChatReducer: Self = Reducer { chatState, action in
         var localUser = chatState.localUser
+        var isRealTimeNotificationConnected = chatState.isRealTimeNotificationConnected
         var threadId = chatState.threadId
         var topic = chatState.topic
         var lastReadReceiptReceivedTimestamp = chatState.lastReadReceiptReceivedTimestamp
@@ -20,6 +21,10 @@ extension Reducer where State == ChatState,
         var isLocalUserRemovedFromChat = chatState.isLocalUserRemovedFromChat
 
         switch action {
+        case .chatAction(.initializeChatSuccess):
+            isRealTimeNotificationConnected = true
+        case .chatAction(.disconnectChatSuccess):
+            isRealTimeNotificationConnected = false
         case .chatAction(.topicRetrieved(let newTopic)):
             topic = newTopic
         case .chatAction(.chatTopicUpdated(let threadInfo)):
