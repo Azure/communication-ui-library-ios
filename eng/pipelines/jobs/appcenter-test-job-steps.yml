@@ -68,7 +68,7 @@ steps:
   - task: Xcode@5
     displayName: 'Xcode - Package to IPA'
     inputs:
-      configuration: Release
+      configuration: Debug
       sdk: iphoneos
       xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
       scheme: AzureCommunicationUIDemoApp
