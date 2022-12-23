@@ -49,7 +49,7 @@ class BottomBarViewModel: ObservableObject {
     func sendMessage() {
         dispatch(.repositoryAction(.sendMessageTriggered(
             internalId: UUID().uuidString,
-            content: message)))
+            content: message.trim())))
         message = ""
     }
 

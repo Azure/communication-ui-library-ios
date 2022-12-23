@@ -12,13 +12,15 @@ schedules:
       include:
         - develop
         - main
+    always: true
 
   - cron: "0 */2 * * *" # Check the AppCenter build schedule every 2 hours
     displayName: "AppCenter UI Test Run Trigger"
     branches:
       include:
         - develop
-
+    always: true
+    
 variables:
   AppCenterDevicesOverride: ''  # This should be in the form 'Azure-Communication-Services/<your_device_set_name>'
   buildHourOfDayUtc: $[format('{0:H}', pipeline.startTime)]
