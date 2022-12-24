@@ -8,7 +8,7 @@ import XCTest
 
 class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
     func testCallCompositeShareDiagnosticInfo() {
-        try startCall()
+        startCall()
         openShareDiagnosticsInfoMenu()
         if UIDevice.current.userInterfaceIdiom == .pad {
             let popoverDismissRegion = app.otherElements["PopoverDismissRegion"]
@@ -21,7 +21,7 @@ class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
     }
 
     func testCallCompositeCopyDiagnosticInfo() {
-        try startCall()
+        startCall()
         openShareDiagnosticsInfoMenu()
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCopyButtonAccessibilityID.rawValue)
         checkActivityViewControllerDismissed()
