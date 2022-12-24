@@ -208,7 +208,7 @@ extension XCUITestBase {
             // this issue is fixed for iOS 15
             // closing the presented view with a swipe
             let startPoint = app.navigationBars.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
-            //the value shouldn't be less than 500
+            // the value shouldn't be less than 500
             // as swipe won't performed as expected for hiding the presented view
             let finishYOffset = 500
                 let finishPoint = startPoint.withOffset(CGVector(dx: 0, dy: finishYOffset))
