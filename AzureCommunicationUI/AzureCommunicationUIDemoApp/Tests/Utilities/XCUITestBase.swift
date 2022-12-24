@@ -59,12 +59,6 @@ class XCUITestBase: XCTestCase {
         setupSystemPromptMonitor()
     }
 
-//    override func tearDown() {
-//        super.tearDown()
-        // terminate app on tear down
-//        app.terminate()
-//    }
-
     // MARK: Private / helper functions
 
     /// Responds to app permission prompts and system prompt
@@ -210,12 +204,15 @@ extension XCUITestBase {
 
     func closeDemoAppSettingsPage() {
         if #unavailable(iOS 15) {
-            // Close button in toolbar is unavailable for iOS 14 (because isAccessibleElement = false)
-            // so closing the presented view with a swipe
+            // Close button in toolbar is unavailable for iOS 14
             // this issue is fixed for iOS 15
-            let startPoint = app.navigationBars.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
-            let finishPoint = startPoint.withOffset(CGVector(dx: 0, dy: 500))
-            startPoint.press(forDuration: 0, thenDragTo: finishPoint)
+            // closing the presented view with a swipe
+            let startPoint = app.navigationBars.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            //the value shouldn't be less than 500
+            // as swipe won't performed as expected for hiding the presented view
+            let finishYOffset = 500
+                let finishPoint = startPoint.withOffset(CGVector(dx: 0, dy: finishYOffset))
+                startPoint.press(forDuration: 0, thenDragTo: finishPoint)
         } else {
             tapButton(accessibilityIdentifier: AccessibilityId.settingsCloseButtonAccessibilityID.rawValue)
         }
