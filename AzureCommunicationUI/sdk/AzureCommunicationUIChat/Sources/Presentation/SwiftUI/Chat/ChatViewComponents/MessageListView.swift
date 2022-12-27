@@ -24,6 +24,7 @@ struct MessageListView: View {
     var body: some View {
         ZStack {
             messageList
+            initialFetchActivityIndicator
             jumpToNewMessagesButton
         }
         .onTapGesture {
@@ -34,10 +35,19 @@ struct MessageListView: View {
         }
     }
 
-    var activityIndicator: some View {
+    var initialFetchActivityIndicator: some View {
         Group {
-            // Need to hide when all all messages fetched =
-            if viewModel.showActivityIndicator {
+            if viewModel.showInitialFetchActivityIndicator {
+                ActivityIndicator(size: .large)
+                    .isAnimating(true)
+                    .padding()
+            }
+        }
+    }
+
+    var previousFetchActivityIndicator: some View {
+        Group {
+            if viewModel.showPreviousFetchActivityIndicator {
                 ActivityIndicator(size: .large)
                     .isAnimating(true)
                     .padding()
@@ -56,7 +66,7 @@ struct MessageListView: View {
                 heightChanged: { viewModel.scrollSize = $0 },
                 content: {
                     LazyVStack(spacing: 0) {
-                        Section(footer: activityIndicator) {
+                        Section(footer: previousFetchActivityIndicator) {
                             ForEach(viewModel.messages.reversed()) { message in
                                 HStack(spacing: Constants.messageSendStatusViewPadding) {
                                     createMessage(message: message, messages: viewModel.messages)

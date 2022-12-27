@@ -18,8 +18,8 @@ class MessageListViewModel: ObservableObject {
     private var lastSendingMessageTimestamp: Date = .distantPast
     private var lastSentOrFailedMessageTimestamp: Date = .distantPast
     private var lastSentReadReceiptTimestamp: Date = .distantPast
-    private var hasFetchedInitialMessages: Bool = false
-    private var hasFetchedPreviousMessages: Bool = true
+    private var hasFetchedInitialMessages: Bool = true
+    private var hasFetchedPreviousMessages: Bool = false
     private var didEndScrollingTimer: Timer?
     private var readReceiptToBeSentMessageId: String?
     private var lastReadReceiptReceivedTimestamp: Date = .distantPast
@@ -30,7 +30,8 @@ class MessageListViewModel: ObservableObject {
     var scrollSize: CGFloat = .zero
 
     @Published var messages: [ChatMessageInfoModel]
-    @Published var showActivityIndicator: Bool = true
+    @Published var showInitialFetchActivityIndicator: Bool = true
+    @Published var showPreviousFetchActivityIndicator: Bool = false
     @Published var showJumpToNewMessages: Bool = false
     @Published var jumpToNewMessagesButtonLabel: String = ""
     @Published var shouldScrollToBottom: Bool = false
@@ -76,7 +77,7 @@ class MessageListViewModel: ObservableObject {
         if let lastSeenMessageIndex, lastSeenMessageIndex <= minFetchIndex && hasFetchedPreviousMessages {
             print("SCROLL: Fetch Messages")
             hasFetchedPreviousMessages = false
-            showActivityIndicator = true
+            showPreviousFetchActivityIndicator = true
             dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
         }
     }
@@ -136,13 +137,21 @@ class MessageListViewModel: ObservableObject {
                 shouldScrollToId = !isAtBottom()
             }
 
+            // Check if initial messages have been fetched
             if self.hasFetchedInitialMessages != repositoryState.hasFetchedInitialMessages {
                 self.hasFetchedInitialMessages = repositoryState.hasFetchedInitialMessages
-                showActivityIndicator = false
+                showInitialFetchActivityIndicator = !hasFetchedInitialMessages
+
                 // Assume all messages are seen by others when re-joining the chat
                 if let latestSeenMessage = messages.last(where: {$0.isLocalUser}) {
                     latestSeenMessageId = latestSeenMessage.id
                 }
+            }
+
+            // Check if previous messages have been fetched
+            if self.hasFetchedPreviousMessages != repositoryState.hasFetchedPreviousMessages {
+                self.hasFetchedPreviousMessages = repositoryState.hasFetchedPreviousMessages
+                showPreviousFetchActivityIndicator = !hasFetchedPreviousMessages
             }
 
             // Scroll to new sending message and get latest sending message id
@@ -150,6 +159,7 @@ class MessageListViewModel: ObservableObject {
                self.lastSendingMessageTimestamp < lastSendingMessageTimestamp {
                 self.lastSendingMessageTimestamp = lastSendingMessageTimestamp
                 shouldScrollToBottom = true
+
                 if let latestSendingMessage = messages.last(where: {$0.sendStatus == .sending}) {
                     latestSendingOrSentMessageId = latestSendingMessage.id
                 }
@@ -169,11 +179,6 @@ class MessageListViewModel: ObservableObject {
                 if let latestSeenMessage = messages.last(where: {$0.sendStatus == .seen}) {
                     latestSeenMessageId = latestSeenMessage.id
                 }
-            }
-
-            if self.hasFetchedPreviousMessages != repositoryState.hasFetchedPreviousMessages {
-                self.hasFetchedPreviousMessages = repositoryState.hasFetchedPreviousMessages
-                showActivityIndicator = !hasFetchedPreviousMessages
             }
 
             updateJumpToNewMessages()
