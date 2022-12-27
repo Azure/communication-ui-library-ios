@@ -89,30 +89,39 @@ struct MessageListView: View {
             .listStyle(.plain)
             .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
             .onChange(of: viewModel.shouldScrollToBottom) { _ in
-                if viewModel.shouldScrollToBottom {
-                    if let lastMessageId = viewModel.messages.last?.id {
-                        withAnimation(.linear(duration: 0.1)) {
-                            scrollProxy.scrollTo(lastMessageId, anchor: .bottom)
-                        }
-                        if viewModel.scrollSize < UIScreen.main.bounds.size.height {
-                            viewModel.startDidEndScrollingTimer(currentOffset: nil)
-                        }
-                    }
-                    viewModel.shouldScrollToBottom = false
-                }
+                scrollToBottom(proxy: scrollProxy)
             }
             .onChange(of: viewModel.shouldScrollToId) { _ in
-                if viewModel.shouldScrollToId {
-                    let lastMessageIndex = viewModel.messageIdsOnScreen.count - 2 < 0
-                    ? 0
-                    : viewModel.messageIdsOnScreen.count - 2
-                    let lastMessageId = viewModel.messageIdsOnScreen[lastMessageIndex]
-                    scrollProxy.scrollTo(lastMessageId, anchor: .bottom)
-                    viewModel.shouldScrollToId = false
-                }
+                scrollToId(proxy: scrollProxy)
             }
         }.onReceive(keyboardWillShow) { _ in
             viewModel.shouldScrollToBottom = true
+        }
+    }
+
+    private func scrollToBottom(proxy: ScrollViewProxy) {
+        if viewModel.shouldScrollToBottom {
+            if let lastMessageId = viewModel.messages.last?.id {
+                withAnimation(.linear(duration: 0.1)) {
+                    proxy.scrollTo(lastMessageId, anchor: .bottom)
+                }
+                if viewModel.scrollSize < UIScreen.main.bounds.size.height {
+                    viewModel.startDidEndScrollingTimer(currentOffset: nil)
+                }
+            }
+            viewModel.shouldScrollToBottom = false
+        }
+    }
+
+    // Keep scroll location when receiving messages
+    private func scrollToId(proxy: ScrollViewProxy) {
+        if viewModel.shouldScrollToId {
+            let lastMessageIndex = viewModel.messageIdsOnScreen.count - 2 < 0
+            ? 0
+            : viewModel.messageIdsOnScreen.count - 2
+            let lastMessageId = viewModel.messageIdsOnScreen[lastMessageIndex]
+            proxy.scrollTo(lastMessageId, anchor: .bottom)
+            viewModel.shouldScrollToId = false
         }
     }
 
