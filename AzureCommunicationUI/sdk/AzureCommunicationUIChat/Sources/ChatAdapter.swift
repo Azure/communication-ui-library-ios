@@ -43,24 +43,24 @@ public class ChatAdapter {
     private var threadId: String = ""
     /// Create an instance of this class with options.
     /// - Parameters:
+    ///    - endpoint: The endpoint URL of The Communication Services.
     ///    - identifier: The CommunicationIdentifier that uniquely identifies an user
     ///    - credential: The credential that authenticates the user to a chat thread
     ///    - threadId: The unique identifier of a chat thread
-    ///    - endpoint: The endpoint URL of The Communication Services.
     ///    - displayName: The display name that would be used when sending a chat message
     ///                   If this is `nil` the display name defined when adding the user to
     ///                   chat thread from the service would be used
-    public init(identifier: CommunicationIdentifier,
+    public init(endpoint: String,
+                identifier: CommunicationIdentifier,
                 credential: CommunicationTokenCredential,
                 threadId: String,
-                endpoint: String,
                 displayName: String? = nil) {
         localizationProvider = LocalizationProvider(logger: logger)
 
         self.chatConfiguration = ChatConfiguration(
+            endpoint: endpoint,
             identifier: identifier,
             credential: credential,
-            endpoint: endpoint,
             displayName: displayName)
         self.events = Events()
         self.threadId = threadId
