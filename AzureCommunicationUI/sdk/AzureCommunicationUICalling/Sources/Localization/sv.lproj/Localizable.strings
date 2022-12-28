@@ -15,7 +15,7 @@
 "AzureCommunicationUICalling.SetupView.Title"="Konfigurera";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Tillbaka";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Anslut till samtal";
-"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Ansluter till ett samtal …";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Ansluter till ett samtal…";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video av";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Starta kameran";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video på";
