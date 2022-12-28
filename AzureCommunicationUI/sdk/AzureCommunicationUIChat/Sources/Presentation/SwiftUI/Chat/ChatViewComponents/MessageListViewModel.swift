@@ -28,8 +28,8 @@ class MessageListViewModel: ObservableObject {
     var scrollSize: CGFloat = .zero
 
     @Published var messages: [ChatMessageInfoModel]
-    @Published var hasFetchedInitialMessages: Bool = true
-    @Published var hasFetchedPreviousMessages: Bool = false
+    @Published var hasFetchedInitialMessages: Bool = false
+    @Published var hasFetchedPreviousMessages: Bool = true
     @Published var showJumpToNewMessages: Bool = false
     @Published var jumpToNewMessagesButtonLabel: String = ""
     @Published var shouldScrollToBottom: Bool = false
