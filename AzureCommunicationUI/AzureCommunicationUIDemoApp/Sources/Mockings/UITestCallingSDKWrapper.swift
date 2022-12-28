@@ -86,6 +86,7 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         logger.debug("Call ended successfully")
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
             handler.endCall()
+            callMocking = nil
         }
     }
 
@@ -115,50 +116,92 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     }
 
     func muteLocalMic() async throws {
+        guard callMocking != nil else {
+            return
+        }
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
             handler.muteLocalMic()
         }
     }
 
     func unmuteLocalMic() async throws {
+        guard callMocking != nil else {
+            return
+        }
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
             handler.unmuteLocalMic()
         }
     }
 
     func holdCall() async throws {
+        guard callMocking != nil else {
+            return
+        }
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
             handler.holdCall()
         }
     }
 
     func resumeCall() async throws {
+        guard callMocking != nil else {
+            return
+        }
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
             handler.resumeCall()
         }
     }
 
     func transcriptionOn() async throws {
+        guard callMocking != nil else {
+            return
+        }
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
             handler.transcriptionOn()
         }
     }
 
     func transcriptionOff() async throws {
+        guard callMocking != nil else {
+            return
+        }
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
             handler.transcriptionOff()
         }
     }
 
     func recordingOn() async throws {
+        guard callMocking != nil else {
+            return
+        }
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
             handler.recordingOn()
         }
     }
 
     func recordingOff() async throws {
+        guard callMocking != nil else {
+            return
+        }
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
             handler.recordingOff()
+        }
+    }
+
+    func addParticipant() async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.addParticipant()
+        }
+    }
+
+    func removeParticipant() async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.removeParticipant()
         }
     }
 }

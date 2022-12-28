@@ -9,6 +9,8 @@ import Foundation
 @testable import AzureCommunicationCommon
 
 class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
+    private var remoteParticipantsMocking: [ParticipantInfoModel] = []
+
     func joinCall() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
             self?.callInfoSubject.send(CallInfoModel(status: .connected,
@@ -77,6 +79,35 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
     func recordingOff() {
         DispatchQueue.main.async { [weak self] in
             self?.isRecordingActiveSubject.send(false)
+        }
+    }
+
+    func addParticipant() {
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self else {
+                return
+            }
+            let participantNameIdentifier = "RM-\(strongSelf.remoteParticipantsMocking.count + 1)"
+            let newParticipant = ParticipantInfoModel(displayName: participantNameIdentifier,
+                                                      isSpeaking: false,
+                                                      isMuted: true,
+                                                      isRemoteUser: true,
+                                                      userIdentifier: participantNameIdentifier,
+                                                      status: .connected, recentSpeakingStamp: Date(),
+                                                      screenShareVideoStreamModel: nil,
+                                                      cameraVideoStreamModel: nil)
+            strongSelf.remoteParticipantsMocking.append(newParticipant)
+            self?.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
+        }
+    }
+
+    func removeParticipant() {
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self, !strongSelf.remoteParticipantsMocking.isEmpty else {
+                return
+            }
+            strongSelf.remoteParticipantsMocking.removeLast()
+            self?.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
         }
     }
 }
