@@ -1,0 +1,184 @@
+
+parameters:
+  - name: archivePath
+    type: string
+    default: '$(agent.builddirectory)/output/archive'
+  - name: 'exportPath'
+    type: string
+    default: '$(agent.builddirectory)/output/package'
+  - name: signedExtractedPath
+    type: string
+    default: '$(agent.builddirectory)/output/package/signed'
+  - name: provisioningProfileFile
+    type: string
+    default: 'ACS-UI-calling-df-Dev-20231219.mobileprovision'
+  - name: distributionProvisioningProfileFile
+    type: string
+    default: 'spoolCallCompositeDogfoodProfileDist-exp230603.mobileprovision'
+  - name: signingCertificateFile
+    type: string
+    default: 'Emlyn-Enterprise-Dev-Cert.p12'
+
+steps:
+  - task: servicetree-link-build-task@1
+    displayName: "ServiceTree: [$(BuildOutputUsage)] "
+    inputs:
+      ServiceTreeGateway: "ServiceTree Gateway"
+      Service: "e38fcba7-191b-47ad-bb71-aeff7c983e3f"
+    condition: always()
+
+  - task: NodeTool@0
+    displayName: 'Use Node 16.x.x'
+    inputs:
+      versionSpec: 16.x.x
+
+  - task: Npm@1
+    displayName: 'install -g appcenter-cli'
+    inputs:
+      command: custom
+      verbose: false
+      customCommand: 'install -g appcenter-cli'
+      customRegistry: useFeed
+      customFeed: 'e9602887-252b-435e-a3c1-57ec07c93667'
+
+  - template: templates/update-demo-app-plist-for-testing.yml
+  - template: templates/configure-for-enterprise-signing.yml
+    parameters:
+      certificateFile: '${{ parameters.signingCertificateFile }}'
+      provisioningProfileFile: '${{ parameters.provisioningProfileFile }}'
+
+  - task: CocoaPods@0
+    displayName: 'pod install'
+    inputs:
+      workingDirectory: AzureCommunicationUI
+      forceRepoUpdate: true
+      projectDirectory: AzureCommunicationUI
+
+  - task: Xcode@5
+    displayName: 'Xcode Build for Testing'
+    inputs:
+      actions: 'build-for-testing'
+      configuration: Debug
+      sdk: iphoneos
+      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+      scheme: AzureCommunicationUIDemoApp
+      args: '-derivedDataPath $(build.artifactStagingDirectory)/DerivedData'
+      useXcpretty: false
+    
+  - task: Xcode@5
+    displayName: 'Xcode - Package to IPA'
+    inputs:
+      configuration: Debug
+      sdk: iphoneos
+      xcWorkspacePath: AzureCommunicationUI/AzureCommunicationUI.xcworkspace
+      scheme: AzureCommunicationUIDemoApp
+      packageApp: true
+      archivePath: '${{ parameters.archivePath }}'
+      exportPath: '${{ parameters.exportPath }}'
+      signingOption: manual
+      signingIdentity: '$(APPLE_CERTIFICATE_SIGNING_IDENTITY)'
+      provisioningProfileUuid: '$(APPLE_PROV_PROFILE_UUID)'
+      provisioningProfileName: 'Azure communication UI calling Dogfood Dev'
+      args: '"DEVELOPMENT_TEAM=9KBH5RKYEW"'
+      workingDirectory: AzureCommunicationUI
+      useXcpretty: false
+
+  - task: DownloadSecureFile@1
+    displayName: 'Download Distribution Profile from Azure secure files storage'
+    inputs:
+      secureFile: '${{ parameters.distributionProvisioningProfileFile }}'
+      retryCount: 5
+
+  - task: DownloadSecureFile@1
+    displayName: 'Download ExportOptions.plist from Azure secure files storage'
+    inputs:
+      secureFile: spoolCallCompositeExportOptions.plist
+      retryCount: 5
+
+  - task: CopyFiles@2
+    displayName: 'Copy Dist Provisioning Profile to archive path'
+    inputs:
+      SourceFolder: '$(Agent.TempDirectory)'
+      Contents: '${{ parameters.distributionProvisioningProfileFile }}'
+      TargetFolder: '${{ parameters.archivePath }}'
+      flattenFolders: true
+
+  - task: CopyFiles@2
+    displayName: 'Copy ExportOptions to archive path'
+    inputs:
+      SourceFolder: '$(Agent.TempDirectory)'
+      Contents: spoolCallCompositeExportOptions.plist
+      TargetFolder: '${{ parameters.archivePath }}'
+      flattenFolders: true
+
+  - script: |
+      mv ${{ parameters.archivePath }}/spoolCallCompositeExportOptions.plist ${{ parameters.archivePath }}/ExportOptions.plist
+      
+      echo "List files to zip"
+      ls ${{ parameters.archivePath }}
+      
+    displayName: 'Rename to ExportOptions.plist'
+
+  - task: ArchiveFiles@2
+    displayName: 'Create zip for signing'
+    inputs:
+      rootFolderOrFile: '${{ parameters.archivePath }}'
+      includeRootFolder: false
+      archiveFile: '${{ parameters.archivePath }}/AzureCommunicationUIDemoApp.zip'
+
+  - task: UseDotNet@2
+    displayName: "Use .NET Core sdk 3.1.x"
+    inputs:
+      version: 3.1.x
+
+  - task: EsrpCodeSigning@1
+    displayName: 'ESRP CodeSigning'
+    inputs:
+      ConnectedServiceName: 'ESRP CodeSign Global'
+      FolderPath: '${{ parameters.archivePath }}'
+      Pattern: 'AzureCommunicationUIDemoApp.zip'
+      signConfigType: inlineSignParams
+      inlineOperation: |
+        [
+          {
+            "KeyCode": "CP-464234-Apple",
+            "OperationCode": "iOSAppSign",
+            "Parameters": {},
+            "ToolName": "sign",
+            "ToolVersion": "1.0"
+          }
+        ]
+
+  - task: ExtractFiles@1
+    displayName: 'Extract signed build'
+    inputs:
+      archiveFilePatterns: '${{ parameters.archivePath }}/AzureCommunicationUIDemoApp.zip'
+      destinationFolder: '${{ parameters.signedExtractedPath }}'
+
+  - task: CopyFiles@2
+    displayName: 'Copy dSYMs Files to: ${{ parameters.archivePath }}'
+    inputs:
+      SourceFolder: '${{ parameters.archivePath }}'
+      Contents: '**/*.dSYM/**'
+      TargetFolder: '$(build.sourcesdirectory)'
+
+  - task: CopyFiles@2
+    displayName: 'Copy Signed Files to: $(build.sourcesdirectory)'
+    inputs:
+      SourceFolder: '${{ parameters.signedExtractedPath }}'
+      Contents: '**/*.ipa'
+      TargetFolder: '$(build.sourcesdirectory)'
+      OverWrite: true
+
+  # Run the tests on the configured devices
+  - template: templates/run-appcenter-test.yml
+    parameters:
+      devices: '$(AppcenterDeviceSet)'
+      appFile: '${{ parameters.signedExtractedPath }}/AzureCommunicationUIDemoApp.ipa'
+
+  - script: |
+      rm -rf ${{ parameters.archivePath }}
+      rm -rf ${{ parameters.exportPath }}
+
+    displayName: 'Clean up file storage usage'
+    condition: always()
