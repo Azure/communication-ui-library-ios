@@ -32,8 +32,22 @@ If you prefer importing Mobile UI Library as an Embedded Framework to your proje
 
 ## Quick Sample
 
+The Chat Composite requires two objects to work together, the adapter and the view.
+The `ChatAdapter` requires a communication identifier, token credential, a thread id, end point url of the chat, and an optional display name.  
+The `ChatCompositeView` is a SwiftUI view object that developers use to add to their View. It is initialized with the above adapter that you created.
+
 ```swift
-TBA
+let identifier = UnknownIdentifier(<ACS_IDENTIFIER>)
+let communicationTokenCredential = try! CommunicationTokenCredential(token: <USER_ACCESS_TOKEN>)
+self.chatAdapter = ChatAdapter(identifier: identifier,
+                                 credential: communicationTokenCredential,
+                                 threadId: <CHAT_THREAD_ID>,
+                                 endpoint: <CHAT_ENDPOINT>,
+                                 displayName: <DISPLAY_NAME>)
+self.chatAdapter.connect() { _ in
+    print("Chat connect completionHandler called")
+}
+let chatView = ChatCompositeView(with: chatAdapter)
 ```
 
 For more details on Mobile UI Library functionalities visit the [API Reference Documentation] (https:!//azure.github.io/azure-sdk-for-ios/AzureCommunicationUIChat/index.html).
