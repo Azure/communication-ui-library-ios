@@ -153,6 +153,7 @@ class MessageListViewModel: ObservableObject {
             if let lastSendingMessageTimestamp = chatState.lastSendingMessageTimestamp,
                self.lastSendingMessageTimestamp < lastSendingMessageTimestamp {
                 self.lastSendingMessageTimestamp = lastSendingMessageTimestamp
+                shouldScrollToBottom = true
 
                 if let latestSendingMessage = messages.last(where: {$0.sendStatus == .sending}) {
                     latestSendingOrSentMessageId = latestSendingMessage.id
