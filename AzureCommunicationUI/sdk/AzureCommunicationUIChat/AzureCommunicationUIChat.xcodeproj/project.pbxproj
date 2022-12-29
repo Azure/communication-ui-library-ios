@@ -321,6 +321,7 @@
 		75848430291D82D4006373B3 /* CancelBag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CancelBag.swift; sourceTree = "<group>"; };
 		75848431291D82D4006373B3 /* MappedSequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MappedSequence.swift; sourceTree = "<group>"; };
 		78EED6E1D0BF91A2966AC0C7 /* Pods-AzureCommunicationUIChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat/Pods-AzureCommunicationUIChat.debug.xcconfig"; sourceTree = "<group>"; };
+		88152CA8295E07CC003E4C99 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		A63BF349E7BC31AD5300412A /* Pods_AzureCommunicationUIChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A88000EC29070F790076B0E2 /* HtmlMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HtmlMessageView.swift; sourceTree = "<group>"; };
 		A8BB977F28F770FE008142DB /* SystemMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemMessageView.swift; sourceTree = "<group>"; };
@@ -374,6 +375,7 @@
 		50CB81B828C26E0B00680566 = {
 			isa = PBXGroup;
 			children = (
+				88152CA8295E07CC003E4C99 /* Package.swift */,
 				7584840C291D81AE006373B3 /* Shared Sources */,
 				50CB81C428C26E0C00680566 /* Sources */,
 				50CB81CE28C26E0C00680566 /* Tests */,
