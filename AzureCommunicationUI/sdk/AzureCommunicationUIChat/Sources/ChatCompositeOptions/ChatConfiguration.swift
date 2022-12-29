@@ -14,9 +14,9 @@ struct ChatConfiguration {
     let diagnosticConfig: DiagnosticConfig
     let pageSize: Int32 = 100
 
-    init(identifier: CommunicationIdentifier,
+    init(endpoint: String,
+         identifier: CommunicationIdentifier,
          credential: CommunicationTokenCredential,
-         endpoint: String,
          displayName: String?) {
         self.identifier = identifier
         self.credential = credential
