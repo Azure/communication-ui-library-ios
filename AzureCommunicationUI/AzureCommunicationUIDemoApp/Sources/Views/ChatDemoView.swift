@@ -217,10 +217,10 @@ extension ChatDemoView {
         }
 
         self.chatAdapter = ChatAdapter(
+            endpoint: envConfigSubject.endpointUrl,
             identifier: communicationIdentifier,
             credential: communicationTokenCredential,
             threadId: envConfigSubject.threadId,
-            endpoint: envConfigSubject.endpointUrl,
             displayName: envConfigSubject.displayName)
         guard let chatAdapter = self.chatAdapter else {
             return

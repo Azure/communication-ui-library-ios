@@ -39,10 +39,10 @@ The `ChatCompositeView` is a SwiftUI view object that developers use to add to t
 ```swift
 let identifier = UnknownIdentifier(<ACS_IDENTIFIER>)
 let communicationTokenCredential = try! CommunicationTokenCredential(token: <USER_ACCESS_TOKEN>)
-self.chatAdapter = ChatAdapter(identifier: identifier,
+self.chatAdapter = ChatAdapter(endpoint: <CHAT_ENDPOINT>,
+                                 identifier: identifier,
                                  credential: communicationTokenCredential,
                                  threadId: <CHAT_THREAD_ID>,
-                                 endpoint: <CHAT_ENDPOINT>,
                                  displayName: <DISPLAY_NAME>)
 self.chatAdapter.connect() { _ in
     print("Chat connect completionHandler called")
