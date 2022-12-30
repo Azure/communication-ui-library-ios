@@ -73,6 +73,7 @@ class MessageListViewModel: ObservableObject {
     func fetchMessages(lastSeenMessage: ChatMessageInfoModel) {
         if let lastSeenMessageIndex = messages.firstIndex(where: { $0.id == lastSeenMessage.id }),
             lastSeenMessageIndex <= minFetchIndex && hasFetchedPreviousMessages {
+            hasFetchedPreviousMessages = false
             dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
         }
     }
