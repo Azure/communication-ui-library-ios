@@ -9,6 +9,10 @@ import SwiftUI
 
 struct ChatDemoView: View {
 
+    private enum Constant {
+        static let oneMiliSecond: UInt64 = 10_000_000
+    }
+
     @State var isErrorDisplayed: Bool = false
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @State var isShowingChatView: Bool = false
@@ -171,7 +175,10 @@ struct ChatDemoView: View {
                         switch result {
                         case .success:
                             self.chatAdapter = nil
-                            self.isShowingChatView = false
+                            Task { @MainActor  in
+                                try await Task.sleep(nanoseconds: Constant.oneMiliSecond)
+                                self.isShowingChatView = false
+                            }
                         case .failure(let error):
                             print("disconnect error \(error)")
                         }
