@@ -4,7 +4,6 @@
 //
 
 import AzureCommunicationCommon
-import FluentUI
 import SwiftUI
 import UIKit
 

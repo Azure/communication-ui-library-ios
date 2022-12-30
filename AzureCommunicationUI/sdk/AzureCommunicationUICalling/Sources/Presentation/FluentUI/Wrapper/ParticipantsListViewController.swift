@@ -3,7 +3,6 @@
 //  Licensed under the MIT License.
 //
 
-import FluentUI
 import UIKit
 
 class ParticipantsListViewController: DrawerContainerViewController<ParticipantsListCellViewModel> {
