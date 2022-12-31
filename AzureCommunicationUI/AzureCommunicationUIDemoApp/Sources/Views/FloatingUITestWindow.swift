@@ -56,6 +56,12 @@ class FloatingUITestWindow: UIWindow {
         createButton(title: "Remove Participant",
                      accessibilityID: "callRemoveParticipant-AID",
                      selector: #selector(removeParticipantButtonTapped))
+        createButton(title: "Unmute Participant",
+                     accessibilityID: "callUnmuteParticipant-AID",
+                     selector: #selector(unmuteParticipantButtonTapped))
+        createButton(title: "Hold Participant",
+                     accessibilityID: "callHoldParticipant-AID",
+                     selector: #selector(holdParticipantButtonTapped))
 
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
@@ -148,10 +154,30 @@ class FloatingUITestWindow: UIWindow {
     }
 
     @objc func removeParticipantButtonTapped(sender: UIButton) {
-        debugPrint("UI Test:: AddParticipantButtonTapped")
+        debugPrint("UI Test:: RemoveParticipantButtonTapped")
         Task {
             do {
                 try await callingSDKWrapperMock?.removeParticipant()
+            } catch {
+            }
+        }
+    }
+
+    @objc func unmuteParticipantButtonTapped(sender: UIButton) {
+        debugPrint("UI Test:: ParticipantButtonTapped")
+        Task {
+            do {
+                try await callingSDKWrapperMock?.unmuteParticipant()
+            } catch {
+            }
+        }
+    }
+
+    @objc func holdParticipantButtonTapped(sender: UIButton) {
+        debugPrint("UI Test:: HoldParticipantButtonTapped")
+        Task {
+            do {
+                try await callingSDKWrapperMock?.holdParticipant()
             } catch {
             }
         }

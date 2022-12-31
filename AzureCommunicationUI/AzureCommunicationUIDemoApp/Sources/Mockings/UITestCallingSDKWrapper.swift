@@ -204,6 +204,24 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             handler.removeParticipant()
         }
     }
+
+    func unmuteParticipant() async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.unmuteParticipant()
+        }
+    }
+
+    func holdParticipant() async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.holdParticipant()
+        }
+    }
 }
 
 extension UITestCallingSDKWrapper {

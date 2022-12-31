@@ -80,7 +80,22 @@ class AzureCommunicationUIDemoAppCallTests: XCUITestBase {
         tapButton(accessibilityIdentifier: "Add Participant")
         XCTAssertTrue(app.staticTexts["RM-1"].exists)
 
-        tapButton(accessibilityIdentifier: "Remove Participant")
-        XCTAssertFalse(app.staticTexts["RM-1"].exists)
+        tapButton(accessibilityIdentifier: "Unmute Participant")
+        tapButton(accessibilityIdentifier: "Hold Participant")
+    }
+
+    func testCallCompositeCallHoldRemoteParticipantHandler() {
+        tapInterfaceFor(.callUIKit)
+        startExperience()
+
+        joinCall()
+
+        wait(for: app.buttons[AccessibilityIdentifier.hangupAccessibilityID.rawValue])
+
+        tapButton(accessibilityIdentifier: "Add Participant")
+        XCTAssertTrue(app.staticTexts["RM-1"].exists)
+
+        tapButton(accessibilityIdentifier: "Hold Participant")
+        XCTAssertTrue(app.staticTexts["On hold"].exists)
     }
 }

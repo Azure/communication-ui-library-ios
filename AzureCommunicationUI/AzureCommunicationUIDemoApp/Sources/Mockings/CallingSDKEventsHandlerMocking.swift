@@ -110,5 +110,45 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
             self?.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
         }
     }
+
+    func unmuteParticipant() {
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self, !strongSelf.remoteParticipantsMocking.isEmpty else {
+                return
+            }
+            let last = strongSelf.remoteParticipantsMocking.removeLast()
+            let lastUnmuted = ParticipantInfoModel(displayName: last.displayName,
+                                                   isSpeaking: last.isSpeaking,
+                                                   isMuted: !last.isMuted,
+                                                   isRemoteUser: last.isRemoteUser,
+                                                   userIdentifier: last.userIdentifier,
+                                                   status: last.status,
+                                                   recentSpeakingStamp: last.recentSpeakingStamp,
+                                                   screenShareVideoStreamModel: last.screenShareVideoStreamModel,
+                                                   cameraVideoStreamModel: last.cameraVideoStreamModel)
+            strongSelf.remoteParticipantsMocking.append(lastUnmuted)
+            self?.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
+        }
+    }
+
+    func holdParticipant() {
+        DispatchQueue.main.async { [weak self] in
+            guard let strongSelf = self, !strongSelf.remoteParticipantsMocking.isEmpty else {
+                return
+            }
+            let last = strongSelf.remoteParticipantsMocking.removeLast()
+            let lastUnmuted = ParticipantInfoModel(displayName: last.displayName,
+                                                   isSpeaking: last.isSpeaking,
+                                                   isMuted: !last.isMuted,
+                                                   isRemoteUser: last.isRemoteUser,
+                                                   userIdentifier: last.userIdentifier,
+                                                   status: .hold,
+                                                   recentSpeakingStamp: last.recentSpeakingStamp,
+                                                   screenShareVideoStreamModel: last.screenShareVideoStreamModel,
+                                                   cameraVideoStreamModel: last.cameraVideoStreamModel)
+            strongSelf.remoteParticipantsMocking.append(lastUnmuted)
+            self?.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
+        }
+    }
 }
 #endif
