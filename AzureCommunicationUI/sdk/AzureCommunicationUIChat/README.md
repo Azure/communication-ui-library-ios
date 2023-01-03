@@ -8,7 +8,7 @@
 
 ## Latest Release
 
-- Public Preview: AzureCommunicationUIChat_0.1.0-beta.1 [release] (TBA)
+- Public Preview: [AzureCommunicationUIChat_1.0.0-beta.1](https://github.com/Azure/communication-ui-library-ios/releases/tag/AzureCommunicationUIChat_1.0.0-beta.1)
 
 ## Installation
 
@@ -23,12 +23,8 @@
 CocoaPods is a dependency manager. To set up with CocoaPods visit their [Getting Started Guide](https://guides.cocoapods.org/using/getting-started.html). To integrate UI Mobile Library into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-pod 'AzureCommunicationUIChat', '0.1.0-beta.1'
+pod 'AzureCommunicationUIChat', '1.0.0-beta.1'
 ```
-
-### Manual Installation
-
-If you prefer importing Mobile UI Library as an Embedded Framework to your project, please visit our [Manual Installation] (TBA) guide.
 
 ## Quick Sample
 
@@ -50,8 +46,8 @@ self.chatAdapter.connect() { _ in
 let chatView = ChatCompositeView(with: chatAdapter)
 ```
 
-For more details on Mobile UI Library functionalities visit the [API Reference Documentation] (https:!//azure.github.io/azure-sdk-for-ios/AzureCommunicationUIChat/index.html).
+For more details on Mobile UI Library functionalities visit the [API Reference Documentation](https://azure.github.io/azure-sdk-for-ios/AzureCommunicationUIChat/index.html) and [Quickstart](https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/ui-library/get-started-chat-ui-library)
 
 ## Known Issues
 
-Please refer to the [wiki] (https:!//github.com/Azure/communication-ui-library-ios/wiki/Known-Issues-Chat) for known issues related to chat.
+Please refer to the [wiki](https://github.com/Azure/communication-ui-library-ios/wiki/Known-Issues-Chat) for known issues related to chat.
