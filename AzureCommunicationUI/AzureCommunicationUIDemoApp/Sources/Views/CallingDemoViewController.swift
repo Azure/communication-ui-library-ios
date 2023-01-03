@@ -123,22 +123,35 @@ class CallingDemoViewController: UIViewController {
     }
 
     private func updateFromEnvConfig() {
-        if !envConfigSubject.acsToken.isEmpty {
-            acsTokenTextField.text = envConfigSubject.acsToken
-            acsTokenTypeSegmentedControl.selectedSegmentIndex = 2
+        if envConfigSubject.useExpiredToken {
+            updateToken(envConfigSubject.expiredAcsToken)
+        } else {
+            updateToken(envConfigSubject.acsToken)
         }
+
         if !envConfigSubject.displayName.isEmpty {
             displayNameTextField.text = envConfigSubject.displayName
         }
 
         if !envConfigSubject.groupCallId.isEmpty {
             groupCallTextField.text = envConfigSubject.groupCallId
-            meetingTypeSegmentedControl.selectedSegmentIndex = 1
         }
 
         if !envConfigSubject.teamsMeetingLink.isEmpty {
             teamsMeetingTextField.text = envConfigSubject.teamsMeetingLink
-            meetingTypeSegmentedControl.selectedSegmentIndex = 2
+        }
+
+        if envConfigSubject.selectedMeetingType == .groupCall {
+            meetingTypeSegmentedControl.selectedSegmentIndex = 0
+        } else if envConfigSubject.selectedMeetingType == .teamsMeeting {
+            meetingTypeSegmentedControl.selectedSegmentIndex = 1
+        }
+    }
+
+    private func updateToken(_ token: String) {
+        if !token.isEmpty {
+            acsTokenTextField.text = token
+            acsTokenTypeSegmentedControl.selectedSegmentIndex = 1
         }
     }
 
