@@ -97,7 +97,7 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                                       screenShareVideoStreamModel: nil,
                                                       cameraVideoStreamModel: nil)
             strongSelf.remoteParticipantsMocking.append(newParticipant)
-            self?.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
+            strongSelf.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
         }
     }
 
@@ -107,7 +107,7 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                 return
             }
             strongSelf.remoteParticipantsMocking.removeLast()
-            self?.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
+            strongSelf.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
         }
     }
 
@@ -127,7 +127,7 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                                    screenShareVideoStreamModel: last.screenShareVideoStreamModel,
                                                    cameraVideoStreamModel: last.cameraVideoStreamModel)
             strongSelf.remoteParticipantsMocking.append(lastUnmuted)
-            self?.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
+            strongSelf.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
         }
     }
 
@@ -147,7 +147,7 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                                    screenShareVideoStreamModel: last.screenShareVideoStreamModel,
                                                    cameraVideoStreamModel: last.cameraVideoStreamModel)
             strongSelf.remoteParticipantsMocking.append(lastUnmuted)
-            self?.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
+            strongSelf.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
         }
     }
 }
