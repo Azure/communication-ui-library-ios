@@ -114,9 +114,10 @@ class ChatDemoViewController: UIViewController {
     }
 
     func updateFromEnvConfig() {
-        if !envConfigSubject.acsToken.isEmpty {
-            acsTokenTextField.text = envConfigSubject.acsToken
-            acsTokenTypeSegmentedControl.selectedSegmentIndex = 2
+        if envConfigSubject.useExpiredToken {
+            updateToken(envConfigSubject.expiredAcsToken)
+        } else {
+            updateToken(envConfigSubject.acsToken)
         }
         if !envConfigSubject.displayName.isEmpty {
             displayNameTextField.text = envConfigSubject.displayName
@@ -129,12 +130,19 @@ class ChatDemoViewController: UIViewController {
         }
         if !envConfigSubject.threadId.isEmpty {
             chatThreadIdTextField.text = envConfigSubject.threadId
-            meetingTypeSegmentedControl.selectedSegmentIndex = 1
+            meetingTypeSegmentedControl.selectedSegmentIndex = 0
         }
 
         if !envConfigSubject.teamsMeetingLink.isEmpty {
             teamsMeetingTextField.text = envConfigSubject.teamsMeetingLink
-            meetingTypeSegmentedControl.selectedSegmentIndex = 2
+            meetingTypeSegmentedControl.selectedSegmentIndex = 1
+        }
+    }
+
+    private func updateToken(_ token: String) {
+        if !token.isEmpty {
+            acsTokenTextField.text = token
+            acsTokenTypeSegmentedControl.selectedSegmentIndex = 1
         }
     }
 
