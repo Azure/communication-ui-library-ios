@@ -40,5 +40,17 @@ extension View {
         // so scroll view can move up by (keyboard height + Bottom Bar View height)
         .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
         .eraseToAnyPublisher()
+	}
+
+    func flippedUpsideDown() -> some View {
+        modifier(FlippedUpsideDown())
+    }
+}
+
+struct FlippedUpsideDown: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .rotationEffect(.radians(Double.pi))
+            .scaleEffect(x: -1, y: 1, anchor: .center)
     }
 }

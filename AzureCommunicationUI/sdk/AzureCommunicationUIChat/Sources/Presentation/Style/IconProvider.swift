@@ -4,7 +4,6 @@
 //
 
 import UIKit
-import FluentUI
 import SwiftUI
 
 enum CompositeIcon: String {

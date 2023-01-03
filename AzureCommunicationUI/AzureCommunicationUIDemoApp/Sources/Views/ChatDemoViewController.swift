@@ -171,10 +171,10 @@ class ChatDemoViewController: UIViewController {
         }
         self.threadId = envConfigSubject.threadId
         self.chatAdapter = ChatAdapter(
+            endpoint: envConfigSubject.endpointUrl,
             identifier: communicationIdentifier,
             credential: communicationTokenCredential,
             threadId: envConfigSubject.threadId,
-            endpoint: envConfigSubject.endpointUrl,
             displayName: envConfigSubject.displayName)
         setupErrorHandler()
     }
