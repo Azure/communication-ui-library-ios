@@ -43,12 +43,7 @@ struct ChatDemoView: View {
             isErrorDisplayed = false
             self.isShowingChatView = false
             self.chatAdapter?.disconnect(completionHandler: { result in
-                switch result {
-                case .success:
-                    self.chatAdapter = nil
-                case .failure(let error):
-                    print("disconnect error \(error)")
-                }
+                self.onDisconnectFromChat(with: result)
             })
         }))
     }
@@ -172,16 +167,7 @@ struct ChatDemoView: View {
 
                 Button("Stop") {
                     self.chatAdapter?.disconnect(completionHandler: { result in
-                        switch result {
-                        case .success:
-                            self.chatAdapter = nil
-                            Task { @MainActor  in
-                                try await Task.sleep(nanoseconds: Constant.oneMiliSecond)
-                                self.isShowingChatView = false
-                            }
-                        case .failure(let error):
-                            print("disconnect error \(error)")
-                        }
+                        self.onDisconnectFromChat(with: result)
                     })
                 }
                 .buttonStyle(DemoButtonStyle())
@@ -252,6 +238,19 @@ extension ChatDemoView {
                 }
             }
             throw DemoError.invalidToken
+        }
+    }
+
+    private func onDisconnectFromChat(with result: Result<Void, ChatCompositeError>) {
+        switch result {
+        case .success:
+            self.chatAdapter = nil
+            Task { @MainActor  in
+                try await Task.sleep(nanoseconds: Constant.oneMiliSecond)
+                self.isShowingChatView = false
+            }
+        case .failure(let error):
+            print("disconnect error \(error)")
         }
     }
 
