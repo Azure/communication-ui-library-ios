@@ -32,10 +32,13 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
+                // for UI tests in iOS 14
+                // switches need to be shown on the first appearance of the view
+                // otherwise, it won't be able to handle tap even if switch is visible
                 localizationSettings
+                useMockCallingSDKHandler
                 localParticipantSettings
                 avatarSettings
-                useMockCallingSDKHandler
                 navigationSettings
                 remoteParticipantsAvatarsSettings
                 themeSettings
