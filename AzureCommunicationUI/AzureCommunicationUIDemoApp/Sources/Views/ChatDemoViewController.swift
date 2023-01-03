@@ -130,19 +130,19 @@ class ChatDemoViewController: UIViewController {
         }
         if !envConfigSubject.threadId.isEmpty {
             chatThreadIdTextField.text = envConfigSubject.threadId
-            meetingTypeSegmentedControl.selectedSegmentIndex = 1
+            meetingTypeSegmentedControl.selectedSegmentIndex = 0
         }
 
         if !envConfigSubject.teamsMeetingLink.isEmpty {
             teamsMeetingTextField.text = envConfigSubject.teamsMeetingLink
-            meetingTypeSegmentedControl.selectedSegmentIndex = 2
+            meetingTypeSegmentedControl.selectedSegmentIndex = 1
         }
     }
 
     private func updateToken(_ token: String) {
         if !token.isEmpty {
             acsTokenTextField.text = token
-            acsTokenTypeSegmentedControl.selectedSegmentIndex = 2
+            acsTokenTypeSegmentedControl.selectedSegmentIndex = 1
         }
     }
 

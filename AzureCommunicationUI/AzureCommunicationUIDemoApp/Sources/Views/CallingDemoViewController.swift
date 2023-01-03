@@ -151,7 +151,7 @@ class CallingDemoViewController: UIViewController {
     private func updateToken(_ token: String) {
         if !token.isEmpty {
             acsTokenTextField.text = token
-            acsTokenTypeSegmentedControl.selectedSegmentIndex = 2
+            acsTokenTypeSegmentedControl.selectedSegmentIndex = 1
         }
     }
 
