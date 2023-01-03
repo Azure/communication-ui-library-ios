@@ -123,10 +123,12 @@ class CallingDemoViewController: UIViewController {
     }
 
     private func updateFromEnvConfig() {
-        if !envConfigSubject.acsToken.isEmpty {
-            acsTokenTextField.text = envConfigSubject.acsToken
-            acsTokenTypeSegmentedControl.selectedSegmentIndex = 2
+        if envConfigSubject.useExpiredToken {
+            updateToken(envConfigSubject.expiredAcsToken)
+        } else {
+            updateToken(envConfigSubject.acsToken)
         }
+
         if !envConfigSubject.displayName.isEmpty {
             displayNameTextField.text = envConfigSubject.displayName
         }
@@ -143,6 +145,13 @@ class CallingDemoViewController: UIViewController {
             meetingTypeSegmentedControl.selectedSegmentIndex = 0
         } else if envConfigSubject.selectedMeetingType == .teamsMeeting {
             meetingTypeSegmentedControl.selectedSegmentIndex = 1
+        }
+    }
+
+    private func updateToken(_ token: String) {
+        if !token.isEmpty {
+            acsTokenTextField.text = token
+            acsTokenTypeSegmentedControl.selectedSegmentIndex = 1
         }
     }
 
