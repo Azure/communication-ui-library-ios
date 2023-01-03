@@ -42,6 +42,8 @@ extension ChatMessageType {
             return .participantsAdded
         case .participantRemoved:
             return .participantsRemoved
+        @unknown default:
+            return .custom("Unknown Type")
         }
     }
 }

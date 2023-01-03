@@ -4,7 +4,6 @@
 //
 
 import SwiftUI
-import FluentUI
 
 struct CallingView: View {
     enum InfoHeaderViewConstants {

@@ -23,8 +23,8 @@ struct MessageListView: View {
 
     var body: some View {
         ZStack {
-            activityIndicator
             messageList
+            initialFetchActivityIndicator
             jumpToNewMessagesButton
         }
         .onTapGesture {
@@ -35,15 +35,22 @@ struct MessageListView: View {
         }
     }
 
-    var activityIndicator: some View {
+    var initialFetchActivityIndicator: some View {
         Group {
-            if viewModel.showActivityIndicator {
-                VStack {
-                    Spacer()
-                    ActivityIndicator(size: .large)
-                        .isAnimating(true)
-                    Spacer()
-                }
+            if !viewModel.hasFetchedInitialMessages {
+                ActivityIndicator(size: .large)
+                    .isAnimating(true)
+                    .padding()
+            }
+        }
+    }
+
+    var previousFetchActivityIndicator: some View {
+        Group {
+            if !viewModel.hasFetchedPreviousMessages {
+                ActivityIndicator(size: .large)
+                    .isAnimating(true)
+                    .padding()
             }
         }
     }
@@ -51,7 +58,7 @@ struct MessageListView: View {
     var messageList: some View {
         ScrollViewReader { scrollProxy in
             ObservableScrollView(
-				showsIndicators: false, // Hide scroll indicator due to swiftUI issue where it jumps around
+                showsIndicators: false, // Hide scroll indicator due to swiftUI issue where it jumps around
                 offsetChanged: {
                     viewModel.startDidEndScrollingTimer(currentOffset: $0)
                     viewModel.scrollOffset = $0
@@ -59,35 +66,62 @@ struct MessageListView: View {
                 heightChanged: { viewModel.scrollSize = $0 },
                 content: {
                     LazyVStack(spacing: 0) {
-                        ForEach(Array(viewModel.messages.enumerated()), id: \.element) { index, message in
-                            HStack(spacing: Constants.messageSendStatusViewPadding) {
-                                createMessage(message: message, messages: viewModel.messages, index: index)
-                                .onAppear {
-                                    viewModel.fetchMessages(index: index)
-                                    viewModel.updateReadReceiptToBeSentMessageId(message: message)
+                        Section(footer: previousFetchActivityIndicator) {
+                            ForEach(viewModel.messages.reversed()) { message in
+                                HStack(spacing: Constants.messageSendStatusViewPadding) {
+                                    createMessage(message: message, messages: viewModel.messages)
+                                        .onAppear {
+                                            viewModel.fetchMessages(lastSeenMessage: message)
+                                            viewModel.updateReadReceiptToBeSentMessageId(message: message)
+                                            viewModel.messageIdsOnScreen.append(message.id)
+                                        }
+                                        .onDisappear {
+                                            viewModel.messageIdsOnScreen.removeAll { $0 == message.id }
+                                        }
+                                    createMessageSendStatus(message: message)
                                 }
-                                createMessageSendStatus(message: message)
                             }
-                            .id(index)
+                            .flippedUpsideDown()
                         }
                     }
                 })
+            .flippedUpsideDown()
             .listStyle(.plain)
             .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
             .onChange(of: viewModel.shouldScrollToBottom) { _ in
-                if viewModel.shouldScrollToBottom {
-                    let lastIndex = viewModel.messages.count - 1 > 0 ? viewModel.messages.count - 1 : 0
-                    withAnimation(.linear(duration: 0.1)) {
-                        scrollProxy.scrollTo(lastIndex, anchor: .bottom)
-                        viewModel.shouldScrollToBottom = false
-                    }
-                    if viewModel.scrollSize < UIScreen.main.bounds.size.height {
-                        viewModel.startDidEndScrollingTimer(currentOffset: nil)
-                    }
-                }
+                scrollToBottom(proxy: scrollProxy)
+            }
+            .onChange(of: viewModel.shouldScrollToId) { _ in
+                scrollToId(proxy: scrollProxy)
             }
         }.onReceive(keyboardWillShow) { _ in
             viewModel.shouldScrollToBottom = true
+        }
+    }
+
+    private func scrollToBottom(proxy: ScrollViewProxy) {
+        if viewModel.shouldScrollToBottom {
+            if let lastMessageId = viewModel.messages.last?.id {
+                withAnimation(.linear(duration: 0.1)) {
+                    proxy.scrollTo(lastMessageId, anchor: .bottom)
+                }
+                if viewModel.scrollSize < UIScreen.main.bounds.size.height {
+                    viewModel.startDidEndScrollingTimer(currentOffset: nil)
+                }
+            }
+            viewModel.shouldScrollToBottom = false
+        }
+    }
+
+    // Keep scroll location when receiving messages
+    private func scrollToId(proxy: ScrollViewProxy) {
+        if viewModel.shouldScrollToId {
+            let lastMessageIndex = viewModel.messageIdsOnScreen.count - 2 < 0
+            ? 0
+            : viewModel.messageIdsOnScreen.count - 2
+            let lastMessageId = viewModel.messageIdsOnScreen[lastMessageIndex]
+            proxy.scrollTo(lastMessageId, anchor: .bottom)
+            viewModel.shouldScrollToId = false
         }
     }
 
@@ -117,8 +151,8 @@ struct MessageListView: View {
 
     @ViewBuilder
     private func createMessage(message: ChatMessageInfoModel,
-                               messages: [ChatMessageInfoModel],
-                               index: Int) -> some View {
+                               messages: [ChatMessageInfoModel]) -> some View {
+        let index = messages.firstIndex(where: { $0 == message }) ?? 0
         let lastMessageIndex = index == 0 ? 0 : index - 1
         let lastMessage = messages[lastMessageIndex]
         let showDateHeader = index == 0 || message.createdOn.dayOfYear - lastMessage.createdOn.dayOfYear > 0

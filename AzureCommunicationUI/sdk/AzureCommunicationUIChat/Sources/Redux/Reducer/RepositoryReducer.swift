@@ -10,16 +10,22 @@ extension Reducer where State == RepositoryState,
     static var liveRepositoryReducer: Self = Reducer { repositoryState, action in
         var lastUpdated = repositoryState.lastUpdatedTimestamp
         var hasFetchedInitialMessages = repositoryState.hasFetchedInitialMessages
+        var hasFetchedPreviousMessages = repositoryState.hasFetchedPreviousMessages
 
         switch action {
         case .repositoryAction(.repositoryUpdated):
             lastUpdated = Date()
         case .repositoryAction(.fetchInitialMessagesSuccess):
             hasFetchedInitialMessages = true
+        case .repositoryAction(.fetchPreviousMessagesTriggered):
+            hasFetchedPreviousMessages = false
+        case .repositoryAction(.fetchPreviousMessagesSuccess):
+            hasFetchedPreviousMessages = true
         default:
             return repositoryState
         }
         return RepositoryState(lastUpdatedTimestamp: lastUpdated,
-                               hasFetchedInitialMessages: hasFetchedInitialMessages)
+                               hasFetchedInitialMessages: hasFetchedInitialMessages,
+                               hasFetchedPreviousMessages: hasFetchedPreviousMessages)
     }
 }
