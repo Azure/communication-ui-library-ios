@@ -6,31 +6,7 @@
 import XCTest
 
 extension XCUIElement {
-    func setText(text: String?, application: XCUIApplication) {
-        tap()
-        UIPasteboard.general.string = text
-        guard UIPasteboard.general.hasStrings else {
-            typeText(text ?? "")
-            return
-        }
-
-        while application.menuItems.count == 0 {
-            doubleTap()
-        }
-        application.menuItems["Paste"].tap()
-    }
-}
-
-extension XCTestCase {
-    func wait(for element: XCUIElement, timeout: TimeInterval = 20.0) {
-    let predicate = NSPredicate(format: "exists == true")
-    let expectation = expectation(for: predicate, evaluatedWith: element, handler: nil)
-    wait(for: [expectation], timeout: timeout)
-  }
-
-    func waitEnabled(for element: XCUIElement, timeout: TimeInterval = 20.0) {
-      let predicate = NSPredicate(format: "enabled == true")
-      let expectation = expectation(for: predicate, evaluatedWith: element, handler: nil)
-      wait(for: [expectation], timeout: timeout)
+    var isOn: Bool? {
+        return (self.value as? String).map { $0 == "1" }
     }
 }
