@@ -192,13 +192,4 @@ extension FloatingUITestWindow {
         return (hitView == stackView || hitView?.superview == stackView) ? hitView : nil
     }
 }
-
-extension FloatingUITestWindow {
-    // pass taps through window if not in stack view
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let hitView = super.hitTest(point, with: event)
-
-        return (hitView == stackView || hitView?.superview == stackView) ? hitView : nil
-    }
-}
 #endif
