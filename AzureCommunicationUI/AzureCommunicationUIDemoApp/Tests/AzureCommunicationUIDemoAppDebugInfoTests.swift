@@ -6,7 +6,7 @@
 import XCTest
 @testable import AzureCommunicationUICalling
 
- class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
+class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
     func testCallCompositeShareDiagnosticInfo() {
         startCall()
         openShareDiagnosticsInfoMenu()
@@ -26,36 +26,36 @@ import XCTest
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.activityViewControllerCopyButtonAccessibilityID.rawValue)
         checkActivityViewControllerDismissed()
     }
- }
+}
 
- extension AzureCommunicationUIDemoAppDebugInfoTests {
-     func startCall() {
-         tapInterfaceFor(.callUIKit)
-         tapMeetingType(.groupCall)
+extension AzureCommunicationUIDemoAppDebugInfoTests {
+    func startCall() {
+        if #unavailable(iOS 15) {
+            // switches doesn't work as expected for callSwiftUI for iOS 14
+            tapInterfaceFor(.callUIKit)
+        } else {
+            tapInterfaceFor(.callSwiftUI)
+        }
+        tapMeetingType(.groupCall)
 
-        //  toggleMockSDKWrapperSwitch(enable: false)
+        startExperience()
+        joinCall()
+    }
 
-         tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-                         shouldWait: true)
-         tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
-                          shouldWait: true)
-     }
-
-     func openShareDiagnosticsInfoMenu() {
-         tapButton(accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
-                   shouldWait: true)
-         tapCell(accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue)
-         wait(for: app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue])
-         app.tap()
-     }
+    func openShareDiagnosticsInfoMenu() {
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.moreAccessibilityID.rawValue,
+                  shouldWait: true)
+        tapCell(accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue)
+        wait(for: app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue])
+    }
 
     func checkActivityViewControllerDismissed() {
         let activityListView = app.otherElements[AccessibilityIdentifier.activityViewControllerAccessibilityID.rawValue]
-        let isDismissedPredicate = NSPredicate(format: "exists == 0")
+        let isDismissedPredicate = NSPredicate(format: "exists == false")
         let expectation = expectation(for: isDismissedPredicate,
                                       evaluatedWith: activityListView) {
             return true
         }
-        wait(for: [expectation], timeout: 10.0)
+        wait(for: [expectation], timeout: 20.0)
     }
- }
+}

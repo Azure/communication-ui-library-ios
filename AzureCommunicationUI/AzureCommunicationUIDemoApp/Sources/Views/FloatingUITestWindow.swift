@@ -13,7 +13,8 @@ class FloatingUITestWindow: UIWindow {
     var stackView: UIStackView!
 
     init() {
-        super.init(frame: CGRect(x: 50, y: 50, width: 100, height: 100) )
+        let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        super.init(frame: keyWindow?.frame ?? .zero )
     }
 
     override init(windowScene: UIWindowScene) {
@@ -26,20 +27,17 @@ class FloatingUITestWindow: UIWindow {
     }
 
     private func setupUIs() {
-        self.frame = CGRect(x: 0, y: 120, width: 100, height: 150)
+        backgroundColor = .clear
         accessibilityIdentifier = "debugger_Window"
-        backgroundColor = UIColor(white: 0, alpha: 0.7)
         stackView = UIStackView(arrangedSubviews: [])
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
-        stackView.frame = self.bounds
+        stackView.backgroundColor = UIColor(white: 0, alpha: 0.7)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(stackView)
         createButton(title: "Hold",
                      accessibilityID: "callOnHold-AID",
                      selector: #selector(holdButtonTapped))
-        createButton(title: "Resume",
-                     accessibilityID: "callResume-AID",
-                     selector: #selector(resumeButtonTapped))
         createButton(title: "Transcription on",
                      accessibilityID: "callTranscriptionOn-AID",
                      selector: #selector(transcriptionOnButtonTapped))
@@ -52,19 +50,24 @@ class FloatingUITestWindow: UIWindow {
         createButton(title: "Recording off",
                      accessibilityID: "callRecordingOff-AID",
                      selector: #selector(recordingOffButtonTapped))
+
+        NSLayoutConstraint.activate([
+            stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            stackView.widthAnchor.constraint(equalToConstant: 120.0),
+            stackView.topAnchor.constraint(equalTo: topAnchor, constant: 120),
+            stackView.heightAnchor.constraint(equalToConstant: CGFloat(stackView.arrangedSubviews.count) * 20.0)
+        ])
     }
 
     private func createButton(title: String,
                               accessibilityID: String? = nil,
                               selector: Selector) {
-        let button = UIButton()
+        // size will be updated when view is added to the stack view
+        let button = UIButton(frame: .zero)
         button.setTitle(title, for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 12)
-        button.frame = self.bounds
         button.accessibilityIdentifier = accessibilityID
-        button.isAccessibilityElement = true
         button.addTarget(self, action: selector, for: .touchUpInside)
-        // addSubview(button)
         stackView.addArrangedSubview(button)
     }
 
@@ -126,6 +129,15 @@ class FloatingUITestWindow: UIWindow {
             } catch {
             }
         }
+    }
+}
+
+extension FloatingUITestWindow {
+    // pass taps through window if not in stack view
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let hitView = super.hitTest(point, with: event)
+
+        return (hitView == stackView || hitView?.superview == stackView) ? hitView : nil
     }
 }
 #endif

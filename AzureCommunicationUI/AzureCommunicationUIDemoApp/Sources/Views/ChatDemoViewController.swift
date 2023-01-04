@@ -30,7 +30,6 @@ class ChatDemoViewController: UIViewController {
     private var selectedMeetingType: ChatType = .groupChat
     private var chatThreadIdTextField: UITextField!
     private var teamsMeetingTextField: UITextField!
-    private var settingsButton: UIButton!
     private var startExperienceButton: UIButton!
     private var stopButton: UIButton!
     private var acsTokenTypeSegmentedControl: UISegmentedControl!
@@ -114,9 +113,10 @@ class ChatDemoViewController: UIViewController {
     }
 
     func updateFromEnvConfig() {
-        if !envConfigSubject.acsToken.isEmpty {
-            acsTokenTextField.text = envConfigSubject.acsToken
-            acsTokenTypeSegmentedControl.selectedSegmentIndex = 2
+        if envConfigSubject.useExpiredToken {
+            updateToken(envConfigSubject.expiredAcsToken)
+        } else {
+            updateToken(envConfigSubject.acsToken)
         }
         if !envConfigSubject.displayName.isEmpty {
             displayNameTextField.text = envConfigSubject.displayName
@@ -129,12 +129,19 @@ class ChatDemoViewController: UIViewController {
         }
         if !envConfigSubject.threadId.isEmpty {
             chatThreadIdTextField.text = envConfigSubject.threadId
-            meetingTypeSegmentedControl.selectedSegmentIndex = 1
+            meetingTypeSegmentedControl.selectedSegmentIndex = 0
         }
 
         if !envConfigSubject.teamsMeetingLink.isEmpty {
             teamsMeetingTextField.text = envConfigSubject.teamsMeetingLink
-            meetingTypeSegmentedControl.selectedSegmentIndex = 2
+            meetingTypeSegmentedControl.selectedSegmentIndex = 1
+        }
+    }
+
+    private func updateToken(_ token: String) {
+        if !token.isEmpty {
+            acsTokenTextField.text = token
+            acsTokenTypeSegmentedControl.selectedSegmentIndex = 1
         }
     }
 
@@ -314,13 +321,6 @@ class ChatDemoViewController: UIViewController {
                    replacementString string: String) -> Bool {
         userIsEditing = true
         return true
-    }
-
-    @objc func onSettingsPressed() {
-        let settingsView = SettingsView(envConfigSubject: envConfigSubject)
-        let settingsViewHostingController = UIHostingController(rootView: settingsView)
-        settingsViewHostingController.modalPresentationStyle = .formSheet
-        present(settingsViewHostingController, animated: true, completion: nil)
     }
 
     @objc func onStartExperienceBtnPressed() {
@@ -513,16 +513,6 @@ class ChatDemoViewController: UIViewController {
                                               for: .valueChanged)
         selectedMeetingType = envConfigSubject.selectedChatType
 
-        settingsButton = UIButton()
-        settingsButton.setTitle("Settings", for: .normal)
-        settingsButton.backgroundColor = .systemBlue
-        settingsButton.addTarget(self, action: #selector(onSettingsPressed), for: .touchUpInside)
-        settingsButton.layer.cornerRadius = 8
-        settingsButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
-                                                             left: LayoutConstants.buttonHorizontalInset,
-                                                             bottom: LayoutConstants.buttonVerticalInset,
-                                                             right: LayoutConstants.buttonHorizontalInset)
-
         startExperienceButton = UIButton()
         startExperienceButton.backgroundColor = .systemBlue
         startExperienceButton.setTitleColor(UIColor.white, for: .normal)
@@ -554,23 +544,6 @@ class ChatDemoViewController: UIViewController {
         stopButton.addTarget(self, action: #selector(onStopBtnPressed), for: .touchUpInside)
 
         stopButton.accessibilityLabel = AccessibilityId.stopChatAccessibilityID.rawValue
-
-        // horizontal stack view for the settingButton and startExperienceButton
-        let settingButtonHSpacer1 = UIView()
-        settingButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
-        settingButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
-
-        let settingButtonHSpacer2 = UIView()
-        settingButtonHSpacer2.translatesAutoresizingMaskIntoConstraints = false
-        settingButtonHSpacer2.setContentHuggingPriority(.defaultLow, for: .horizontal)
-
-        let settingsButtonHStack = UIStackView(arrangedSubviews: [settingButtonHSpacer1,
-                                                                  settingsButton,
-                                                                  settingButtonHSpacer2])
-        settingsButtonHStack.axis = .horizontal
-        settingsButtonHStack.alignment = .fill
-        settingsButtonHStack.distribution = .fill
-        settingsButtonHStack.translatesAutoresizingMaskIntoConstraints = false
 
         let startButtonHSpacer1 = UIView()
         startButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
@@ -604,7 +577,6 @@ class ChatDemoViewController: UIViewController {
                                                    meetingTypeSegmentedControl,
                                                    chatThreadIdTextField,
                                                    teamsMeetingTextField,
-                                                   settingsButtonHStack,
                                                    startButtonHStack])
         stackView.spacing = LayoutConstants.stackViewSpacingPortrait
         stackView.axis = .vertical
@@ -635,7 +607,6 @@ class ChatDemoViewController: UIViewController {
                                             constant: LayoutConstants.stackViewSpacingPortrait).isActive = true
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
 
-        settingButtonHSpacer2.widthAnchor.constraint(equalTo: settingButtonHSpacer1.widthAnchor).isActive = true
         startButtonHSpacer2.widthAnchor.constraint(equalTo: startButtonHSpacer1.widthAnchor).isActive = true
 
         updateAcsTokenTypeFields()
