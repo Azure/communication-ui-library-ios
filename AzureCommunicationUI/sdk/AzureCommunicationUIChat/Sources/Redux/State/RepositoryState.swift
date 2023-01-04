@@ -9,15 +9,15 @@ struct RepositoryState {
     let lastUpdatedTimestamp: Date
     let hasFetchedInitialMessages: Bool
     let hasFetchedPreviousMessages: Bool
-    let hasExhaustedPreviousMessages: Bool
+    let hasFetchedAllMessages: Bool
 
     init(lastUpdatedTimestamp: Date = Date(),
          hasFetchedInitialMessages: Bool = false,
          hasFetchedPreviousMessages: Bool = true,
-         hasExhaustedPreviousMessages: Bool = false) {
+         hasFetchedAllMessages: Bool = false) {
         self.lastUpdatedTimestamp = lastUpdatedTimestamp
         self.hasFetchedInitialMessages = hasFetchedInitialMessages
         self.hasFetchedPreviousMessages = hasFetchedPreviousMessages
-        self.hasExhaustedPreviousMessages = hasExhaustedPreviousMessages
+        self.hasFetchedAllMessages = hasFetchedAllMessages
     }
 }

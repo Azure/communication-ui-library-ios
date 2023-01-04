@@ -30,7 +30,7 @@ class MessageListViewModel: ObservableObject {
     @Published var messages: [ChatMessageInfoModel]
     @Published var hasFetchedInitialMessages: Bool = false
     @Published var hasFetchedPreviousMessages: Bool = true
-    @Published var hasExhaustedPreviousMessages: Bool = false
+    @Published var hasFetchedAllMessages: Bool = false
     @Published var showJumpToNewMessages: Bool = false
     @Published var jumpToNewMessagesButtonLabel: String = ""
     @Published var shouldScrollToBottom: Bool = false
@@ -75,7 +75,7 @@ class MessageListViewModel: ObservableObject {
         if let lastSeenMessageIndex = messages.firstIndex(where: { $0.id == lastSeenMessage.id }),
             lastSeenMessageIndex <= minFetchIndex &&
             hasFetchedPreviousMessages &&
-            !hasExhaustedPreviousMessages {
+            !hasFetchedAllMessages {
             hasFetchedPreviousMessages = false
             dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
         }
@@ -152,8 +152,8 @@ class MessageListViewModel: ObservableObject {
             }
 
             // Check if no more messages to be fetched
-            if self.hasExhaustedPreviousMessages != repositoryState.hasExhaustedPreviousMessages {
-                self.hasExhaustedPreviousMessages = repositoryState.hasExhaustedPreviousMessages
+            if self.hasFetchedAllMessages != repositoryState.hasFetchedAllMessages {
+                self.hasFetchedAllMessages = repositoryState.hasFetchedAllMessages
             }
 
             // Scroll to new sending message and get latest sending message id

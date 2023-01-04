@@ -33,7 +33,7 @@ class RepositoryReducerTests: XCTestCase {
         let initialTimestamp = Date()
         let state = RepositoryState(
             hasFetchedInitialMessages: false,
-            hasExhaustedPreviousMessages: false)
+            hasFetchedAllMessages: false)
         let action = Action.repositoryAction(.fetchPreviousMessagesSuccess(messages: [
             ChatMessageInfoModel()
         ]))
@@ -41,20 +41,20 @@ class RepositoryReducerTests: XCTestCase {
         let resultState = sut.reduce(state, action)
 
         XCTAssertTrue(resultState.hasFetchedPreviousMessages)
-        XCTAssertFalse(resultState.hasExhaustedPreviousMessages)
+        XCTAssertFalse(resultState.hasFetchedAllMessages)
     }
 
     func test_repositoryReducer_reduce_when_fetchPreviousMessagesSuccessAction_emptyMessages_then_stateUpdated() {
         let initialTimestamp = Date()
         let state = RepositoryState(
             hasFetchedInitialMessages: false,
-            hasExhaustedPreviousMessages: false)
+            hasFetchedAllMessages: false)
         let action = Action.repositoryAction(.fetchPreviousMessagesSuccess(messages: []))
         let sut = getSUT()
         let resultState = sut.reduce(state, action)
 
         XCTAssertTrue(resultState.hasFetchedPreviousMessages)
-        XCTAssertTrue(resultState.hasExhaustedPreviousMessages)
+        XCTAssertTrue(resultState.hasFetchedAllMessages)
     }
 }
 

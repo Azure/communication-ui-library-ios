@@ -11,7 +11,7 @@ extension Reducer where State == RepositoryState,
         var lastUpdated = repositoryState.lastUpdatedTimestamp
         var hasFetchedInitialMessages = repositoryState.hasFetchedInitialMessages
         var hasFetchedPreviousMessages = repositoryState.hasFetchedPreviousMessages
-        var hasExhaustedPreviousMessages = repositoryState.hasExhaustedPreviousMessages
+        var hasFetchedAllMessages = repositoryState.hasFetchedAllMessages
 
         switch action {
         case .repositoryAction(.repositoryUpdated):
@@ -19,14 +19,14 @@ extension Reducer where State == RepositoryState,
         case .repositoryAction(.fetchInitialMessagesSuccess(let messages)):
             hasFetchedInitialMessages = true
             if messages.isEmpty {
-                hasExhaustedPreviousMessages = true
+                hasFetchedAllMessages = true
             }
         case .repositoryAction(.fetchPreviousMessagesTriggered):
             hasFetchedPreviousMessages = false
         case .repositoryAction(.fetchPreviousMessagesSuccess(let messages)):
             hasFetchedPreviousMessages = true
             if messages.isEmpty {
-                hasExhaustedPreviousMessages = true
+                hasFetchedAllMessages = true
             }
         default:
             return repositoryState
@@ -34,6 +34,6 @@ extension Reducer where State == RepositoryState,
         return RepositoryState(lastUpdatedTimestamp: lastUpdated,
                                hasFetchedInitialMessages: hasFetchedInitialMessages,
                                hasFetchedPreviousMessages: hasFetchedPreviousMessages,
-                               hasExhaustedPreviousMessages: hasExhaustedPreviousMessages)
+                               hasFetchedAllMessages: hasFetchedAllMessages)
     }
 }
