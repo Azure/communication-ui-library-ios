@@ -165,7 +165,6 @@ opt_in_rules:
   - weak_delegate
 
 disabled_rules: # rule identifiers turned on by default to exclude from running
- - function_parameter_count
 
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Pods
@@ -197,3 +196,7 @@ function_body_length:
 cyclomatic_complexity:
   - 25 # Warning
   - 50 # Error
+
+function_parameter_count:
+  - 7
+  - 8
