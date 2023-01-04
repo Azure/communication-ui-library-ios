@@ -89,11 +89,9 @@
 		50CB82C228C2AD2300680566 /* Store.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829B28C2AD2300680566 /* Store.swift */; };
 		50CB82C328C2AD2300680566 /* StyleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB829E28C2AD2300680566 /* StyleProvider.swift */; };
 		50CB82C428C2AD2300680566 /* AppLifeCycleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82A028C2AD2300680566 /* AppLifeCycleManager.swift */; };
-		50CB82C528C2AD2300680566 /* AccessibilityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82A128C2AD2300680566 /* AccessibilityProvider.swift */; };
 		50CB82C628C2AD2300680566 /* OrientationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82A428C2AD2300680566 /* OrientationManager.swift */; };
 		50CB82C728C2AD2300680566 /* PreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82A528C2AD2300680566 /* PreferenceKey.swift */; };
 		50CB82C828C2AD2300680566 /* EnvironmentValuesExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82A628C2AD2300680566 /* EnvironmentValuesExtension.swift */; };
-		50CB82C928C2AD2300680566 /* AccessibilityProviderNotificationsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82A728C2AD2300680566 /* AccessibilityProviderNotificationsObserver.swift */; };
 		50CB82CA28C2AD2300680566 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82A828C2AD2300680566 /* ViewExtension.swift */; };
 		50CB82CB28C2AD2300680566 /* ViewModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82A928C2AD2300680566 /* ViewModifer.swift */; };
 		50CB82CD28C2AD2300680566 /* ThemeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82B028C2AD2300680566 /* ThemeOptions.swift */; };
@@ -141,6 +139,9 @@
 		521A024528FE1E8D002CAD8E /* TypingParticipantsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521A024328FE1E8D002CAD8E /* TypingParticipantsView.swift */; };
 		6956EB16291341B0003CCC7E /* ReadReceiptInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6956EB15291341B0003CCC7E /* ReadReceiptInfoModel.swift */; };
 		69FEF0822909D68500F54FC4 /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69FEF0812909D68500F54FC4 /* StringExtension.swift */; };
+		756F59722966014600BAFBF7 /* AccessibilityProviderNotificationsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F59712966014600BAFBF7 /* AccessibilityProviderNotificationsObserver.swift */; };
+		756F5974296601BA00BAFBF7 /* AccessibilityProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F5973296601BA00BAFBF7 /* AccessibilityProviderProtocol.swift */; };
+		756F597C296602E300BAFBF7 /* AccessibilityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F597B296602E300BAFBF7 /* AccessibilityProvider.swift */; };
 		75848432291D82D4006373B3 /* DeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7584842C291D82D4006373B3 /* DeviceExtension.swift */; };
 		75848434291D82D4006373B3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7584842E291D82D4006373B3 /* Logger.swift */; };
 		75848435291D82D4006373B3 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7584842F291D82D4006373B3 /* ArrayExtension.swift */; };
@@ -262,11 +263,9 @@
 		50CB829B28C2AD2300680566 /* Store.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Store.swift; sourceTree = "<group>"; };
 		50CB829E28C2AD2300680566 /* StyleProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleProvider.swift; sourceTree = "<group>"; };
 		50CB82A028C2AD2300680566 /* AppLifeCycleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppLifeCycleManager.swift; sourceTree = "<group>"; };
-		50CB82A128C2AD2300680566 /* AccessibilityProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityProvider.swift; sourceTree = "<group>"; };
 		50CB82A428C2AD2300680566 /* OrientationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OrientationManager.swift; sourceTree = "<group>"; };
 		50CB82A528C2AD2300680566 /* PreferenceKey.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceKey.swift; sourceTree = "<group>"; };
 		50CB82A628C2AD2300680566 /* EnvironmentValuesExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnvironmentValuesExtension.swift; sourceTree = "<group>"; };
-		50CB82A728C2AD2300680566 /* AccessibilityProviderNotificationsObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderNotificationsObserver.swift; sourceTree = "<group>"; };
 		50CB82A828C2AD2300680566 /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		50CB82A928C2AD2300680566 /* ViewModifer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModifer.swift; sourceTree = "<group>"; };
 		50CB82B028C2AD2300680566 /* ThemeOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeOptions.swift; sourceTree = "<group>"; };
@@ -315,6 +314,9 @@
 		5BE15140BA042B0F23F23BE3 /* Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests/Pods-AzureCommunicationUIChat-AzureCommunicationUIChatTests.release.xcconfig"; sourceTree = "<group>"; };
 		6956EB15291341B0003CCC7E /* ReadReceiptInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadReceiptInfoModel.swift; sourceTree = "<group>"; };
 		69FEF0812909D68500F54FC4 /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		756F59712966014600BAFBF7 /* AccessibilityProviderNotificationsObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderNotificationsObserver.swift; sourceTree = "<group>"; };
+		756F5973296601BA00BAFBF7 /* AccessibilityProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderProtocol.swift; sourceTree = "<group>"; };
+		756F597B296602E300BAFBF7 /* AccessibilityProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityProvider.swift; sourceTree = "<group>"; };
 		7584842C291D82D4006373B3 /* DeviceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceExtension.swift; sourceTree = "<group>"; };
 		7584842E291D82D4006373B3 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		7584842F291D82D4006373B3 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
@@ -910,7 +912,6 @@
 			isa = PBXGroup;
 			children = (
 				50CB82A028C2AD2300680566 /* AppLifeCycleManager.swift */,
-				50CB82A128C2AD2300680566 /* AccessibilityProvider.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -930,7 +931,6 @@
 				50CB82A428C2AD2300680566 /* OrientationManager.swift */,
 				50CB82A528C2AD2300680566 /* PreferenceKey.swift */,
 				50CB82A628C2AD2300680566 /* EnvironmentValuesExtension.swift */,
-				50CB82A728C2AD2300680566 /* AccessibilityProviderNotificationsObserver.swift */,
 				50CB82A828C2AD2300680566 /* ViewExtension.swift */,
 				50CB82A928C2AD2300680566 /* ViewModifer.swift */,
 			);
@@ -996,6 +996,9 @@
 		7584842B291D82D4006373B3 /* AzureCommunicationUICommon */ = {
 			isa = PBXGroup;
 			children = (
+				756F597B296602E300BAFBF7 /* AccessibilityProvider.swift */,
+				756F5973296601BA00BAFBF7 /* AccessibilityProviderProtocol.swift */,
+				756F59712966014600BAFBF7 /* AccessibilityProviderNotificationsObserver.swift */,
 				7584842F291D82D4006373B3 /* ArrayExtension.swift */,
 				75848430291D82D4006373B3 /* CancelBag.swift */,
 				7584842C291D82D4006373B3 /* DeviceExtension.swift */,
@@ -1333,15 +1336,16 @@
 				50CB82CD28C2AD2300680566 /* ThemeOptions.swift in Sources */,
 				50CB826D28C29E8400680566 /* LocalizationKey.swift in Sources */,
 				50CB82C628C2AD2300680566 /* OrientationManager.swift in Sources */,
+				756F59722966014600BAFBF7 /* AccessibilityProviderNotificationsObserver.swift in Sources */,
 				5085BF1E28F729990057586D /* ChatThreadInfoModel.swift in Sources */,
 				50CB822928C2996200680566 /* ChatActionHandler.swift in Sources */,
 				50CB822B28C2996D00680566 /* ChatServiceEventHandler.swift in Sources */,
+				756F597C296602E300BAFBF7 /* AccessibilityProvider.swift in Sources */,
 				50370CD128EE4AD900ACD234 /* ChatEventModel.swift in Sources */,
 				50CB824F28C29B2000680566 /* NavigationReducer.swift in Sources */,
 				50CB820528C2867700680566 /* ErrorManager.swift in Sources */,
 				69FEF0822909D68500F54FC4 /* StringExtension.swift in Sources */,
 				50CB823928C29AB900680566 /* ErrorAction.swift in Sources */,
-				50CB82C928C2AD2300680566 /* AccessibilityProviderNotificationsObserver.swift in Sources */,
 				50CB820B28C2869D00680566 /* RemoteParticipantsManager.swift in Sources */,
 				50CB823128C2999200680566 /* Action.swift in Sources */,
 				50CB825928C29B7200680566 /* UserEventTimestampModel.swift in Sources */,
@@ -1349,7 +1353,6 @@
 				521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */,
 				50CB823328C2999B00680566 /* LifecycleAction.swift in Sources */,
 				50CB821528C286EA00680566 /* ColorThemeProvider.swift in Sources */,
-				50CB82C528C2AD2300680566 /* AccessibilityProvider.swift in Sources */,
 				50D8EE9B2926B6D7003C3A95 /* ChatCompositeView.swift in Sources */,
 				75848437291D82D4006373B3 /* MappedSequence.swift in Sources */,
 				50CB820228C2866200680566 /* CompositeViewModelFactory.swift in Sources */,
@@ -1371,6 +1374,7 @@
 				BD80293828ECA7D700A55CAC /* BottomBarView.swift in Sources */,
 				50CB824D28C29B1700680566 /* ParticipantsReducer.swift in Sources */,
 				50CB825D28C29DEF00680566 /* ChatService.swift in Sources */,
+				756F5974296601BA00BAFBF7 /* AccessibilityProviderProtocol.swift in Sources */,
 				50CB824528C29AEB00680566 /* ErrorState.swift in Sources */,
 				50D8EE99291C6CFB003C3A95 /* ChatSDKAsyncExtension.swift in Sources */,
 				50CB82CA28C2AD2300680566 /* ViewExtension.swift in Sources */,
