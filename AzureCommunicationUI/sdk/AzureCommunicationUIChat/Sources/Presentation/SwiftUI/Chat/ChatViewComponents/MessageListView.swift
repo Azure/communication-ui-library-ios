@@ -57,51 +57,53 @@ struct MessageListView: View {
 
     var messageList: some View {
         ScrollViewReader { scrollProxy in
-            ObservableScrollView(
-                showsIndicators: false, // Hide scroll indicator due to swiftUI issue where it jumps around
-                offsetChanged: {
-                    viewModel.startDidEndScrollingTimer(currentOffset: $0)
-                    viewModel.scrollOffset = $0
-                },
-                heightChanged: { viewModel.scrollSize = $0 },
-                content: {
-                    LazyVStack(spacing: 0) {
-                        Section(footer: previousFetchActivityIndicator) {
-                            ForEach(viewModel.messages.reversed()) { message in
-                                HStack(spacing: Constants.messageSendStatusViewPadding) {
-                                    createMessage(message: message, messages: viewModel.messages)
-                                        .onAppear {
-                                            viewModel.fetchMessages(lastSeenMessage: message)
-                                            viewModel.updateReadReceiptToBeSentMessageId(message: message)
-                                            viewModel.messageIdsOnScreen.append(message.id)
-                                        }
-                                        .onDisappear {
-                                            viewModel.messageIdsOnScreen.removeAll { $0 == message.id }
-                                        }
-                                    createMessageSendStatus(message: message)
+            GeometryReader { geometry in
+                ObservableScrollView(
+                    showsIndicators: false, // Hide scroll indicator due to swiftUI issue where it jumps around
+                    offsetChanged: {
+                        viewModel.startDidEndScrollingTimer(currentOffset: $0)
+                        viewModel.scrollOffset = $0
+                    },
+                    heightChanged: { viewModel.scrollSize = $0 },
+                    content: {
+                        LazyVStack(spacing: 0) {
+                            Section(footer: previousFetchActivityIndicator) {
+                                ForEach(viewModel.messages.reversed()) { message in
+                                    HStack(spacing: Constants.messageSendStatusViewPadding) {
+                                        createMessage(message: message, messages: viewModel.messages)
+                                            .onAppear {
+                                                viewModel.fetchMessages(lastSeenMessage: message)
+                                                viewModel.updateReadReceiptToBeSentMessageId(message: message)
+                                                viewModel.messageIdsOnScreen.append(message.id)
+                                            }
+                                            .onDisappear {
+                                                viewModel.messageIdsOnScreen.removeAll { $0 == message.id }
+                                            }
+                                        createMessageSendStatus(message: message)
+                                    }
                                 }
+                                .flippedUpsideDown()
                             }
-                            .flippedUpsideDown()
                         }
-                    }
-                })
-            .flippedUpsideDown()
-            .listStyle(.plain)
-            .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
-            .onChange(of: viewModel.shouldScrollToBottom) { _ in
-                viewModel.startDidEndScrollingTimer(currentOffset: nil)
-                scrollToBottom(proxy: scrollProxy)
-            }
-            .onChange(of: viewModel.shouldScrollToId) { _ in
-                viewModel.startDidEndScrollingTimer(currentOffset: nil)
-                scrollToId(proxy: scrollProxy)
-            }
-            .onChange(of: viewModel.hasFetchedInitialMessages) { _ in
-                viewModel.startDidEndScrollingTimer(currentOffset: nil)
-            }
-            .onChange(of: viewModel.messages) { _ in
-                if viewModel.scrollSize < UIScreen.main.bounds.size.height {
+                    })
+                .flippedUpsideDown()
+                .listStyle(.plain)
+                .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
+                .onChange(of: viewModel.shouldScrollToBottom) { _ in
                     viewModel.startDidEndScrollingTimer(currentOffset: nil)
+                    scrollToBottom(proxy: scrollProxy)
+                }
+                .onChange(of: viewModel.shouldScrollToId) { _ in
+                    viewModel.startDidEndScrollingTimer(currentOffset: nil)
+                    scrollToId(proxy: scrollProxy)
+                }
+                .onChange(of: viewModel.hasFetchedInitialMessages) { _ in
+                    viewModel.startDidEndScrollingTimer(currentOffset: nil)
+                }
+                .onChange(of: viewModel.messages) { _ in
+                    if viewModel.scrollSize < geometry.size.height {
+                        viewModel.startDidEndScrollingTimer(currentOffset: nil)
+                    }
                 }
             }
         }.onReceive(keyboardWillShow) { _ in
