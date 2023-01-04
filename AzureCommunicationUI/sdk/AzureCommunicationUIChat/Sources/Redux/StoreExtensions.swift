@@ -8,42 +8,7 @@ import Foundation
 
 typealias ActionDispatch = CommonActionDispatch<Action>
 
-class Store<State>: ObservableObject {
-
-    @Published var state: State
-
-    private var dispatchFunction: ActionDispatch!
-    private let reducer: Reducer<State, Action>
-    private let actionDispatchQueue = DispatchQueue(label: "ActionDispatchQueue")
-
-    init(reducer: Reducer<State, Action>,
-         middlewares: [Middleware<State, Action>],
-         state: State) {
-        self.reducer = reducer
-        self.state = state
-        self.dispatchFunction = middlewares
-            .reversed()
-            .reduce({ [unowned self] action in
-                self._dispatch(action: action)
-            }, { nextDispatch, middleware in
-                let dispatch: (Action) -> Void = { [unowned self] in self.dispatch(action: $0) }
-                let getState = { [unowned self] in self.state }
-                return middleware.apply(dispatch, getState)(nextDispatch)
-            })
-    }
-
-    func dispatch(action: Action) {
-        actionDispatchQueue.async {
-            self.dispatchFunction(action)
-        }
-    }
-
-    private func _dispatch(action: Action) {
-        state = reducer.reduce(state, action)
-    }
-}
-
-extension Store where State == ChatAppState {
+extension Store where State == ChatAppState, Action == AzureCommunicationUIChat.Action {
     static func constructStore(
         logger: Logger,
         chatService: ChatServiceProtocol,
@@ -51,12 +16,12 @@ extension Store where State == ChatAppState {
         chatConfiguration: ChatConfiguration,
         chatThreadId: String,
         connectEventHandler: ((Result<Void, ChatCompositeError>) -> Void)?
-    ) -> Store<State> {
+    ) -> Store<State, Action> {
 
-        return Store<State>(
-            reducer: Reducer<State, Action>.appStateReducer(),
+        return Store<State, Action>(
+            reducer: .appStateReducer(),
             middlewares: [
-                Middleware<State, Action>.liveChatMiddleware(
+                .liveChatMiddleware(
                     chatActionHandler: ChatActionHandler(
                         chatService: chatService,
                         logger: logger,
@@ -66,7 +31,7 @@ extension Store where State == ChatAppState {
                         chatService: chatService, logger: logger
                     )
                 ),
-                Middleware<State, Action>.liveRepositoryMiddleware(
+                .liveRepositoryMiddleware(
                     repositoryMiddlewareHandler: RepositoryMiddlewareHandler(
                         messageRepository: messageRepository,
                         logger: logger

@@ -10,7 +10,7 @@ enum ViewType {
 }
 
 class NavigationRouter: ObservableObject {
-    private let store: Store<ChatAppState>
+    private let store: Store<ChatAppState, Action>
     private let logger: Logger
     private var isDismissed: Bool = false
     private let eventsHandler: ChatAdapter.Events
@@ -19,7 +19,7 @@ class NavigationRouter: ObservableObject {
     var cancellables = Set<AnyCancellable>()
     private var dismissCompositeHostingVC: (() -> Void)?
 
-    init(store: Store<ChatAppState>,
+    init(store: Store<ChatAppState, Action>,
          logger: Logger,
          chatCompositeEventsHandler: ChatAdapter.Events) {
         self.store = store

@@ -7,14 +7,14 @@ import Foundation
 @testable import AzureCommunicationUIChat
 
 class StoreFactoryMocking {
-    var store: Store<ChatAppState>!
+    var store: Store<ChatAppState, Action>!
     var actions = [Action]()
     var firstAction: Action? { return actions.first }
     var didRecordAction: Bool { return !actions.isEmpty }
 
     init() {
         let middleWare = getMiddleware()
-        self.store = Store<ChatAppState>(
+        self.store = Store<ChatAppState, Action>(
             reducer: .mockReducer(),
             middlewares: [middleWare],
             state: ChatAppState()

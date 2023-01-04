@@ -7,14 +7,14 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class StoreFactoryMocking {
-    var store: Store<AppState>!
+    var store: Store<AppState, Action>!
     var actions = [Action]()
     var firstAction: Action? { return actions.first }
     var didRecordAction: Bool { return !actions.isEmpty }
 
     init() {
         let middleWare = getMiddleware()
-        self.store = Store<AppState>(
+        self.store = Store<AppState, Action>(
             reducer: .mockReducer(),
             middlewares: [middleWare],
             state: AppState()

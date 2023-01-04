@@ -13,12 +13,12 @@ protocol CompositeManagerProtocol {
 
 class CompositeManager: CompositeManagerProtocol {
     private let logger: Logger
-    private let store: Store<ChatAppState>
+    private let store: Store<ChatAppState, Action>
 
     var cancellables = Set<AnyCancellable>()
     private var compositeCompletionHandlers: [((Result<Void, ChatCompositeError>) -> Void)] = []
 
-    init(store: Store<ChatAppState>,
+    init(store: Store<ChatAppState, Action>,
          logger: Logger) {
         self.logger = logger
         self.store = store

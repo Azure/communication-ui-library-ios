@@ -3,17 +3,16 @@
 //  Licensed under the MIT License.
 //
 
-extension Reducer where State == ChatAppState {
+extension Reducer where State == ChatAppState, Actions == Action {
     static func appStateReducer(
-        lifeCycleReducer: Reducer<LifeCycleState, Action> = .liveLifecycleReducer,
-        chatReducer: Reducer<ChatState, Action> = .liveChatReducer,
-        participantsReducer: Reducer<ParticipantsState, Action> = .liveParticipantsReducer,
-        navigationReducer: Reducer<NavigationState, Action> = .liveNavigationReducer,
-        repositoryReducer: Reducer<RepositoryState, Action> = .liveRepositoryReducer,
-        errorReducer: Reducer<ErrorState, Action> = .liveErrorReducer
-    ) -> Reducer<State, Action> {
-
-        return Reducer<State, Action> { state, action in
+        lifeCycleReducer: Reducer<LifeCycleState, Actions> = .liveLifecycleReducer,
+        chatReducer: Reducer<ChatState, Actions> = .liveChatReducer,
+        participantsReducer: Reducer<ParticipantsState, Actions> = .liveParticipantsReducer,
+        navigationReducer: Reducer<NavigationState, Actions> = .liveNavigationReducer,
+        repositoryReducer: Reducer<RepositoryState, Actions> = .liveRepositoryReducer,
+        errorReducer: Reducer<ErrorState, Actions> = .liveErrorReducer
+    ) -> Reducer<State, Actions> {
+        .init { state, action in
 
             var lifeCycleState = state.lifeCycleState
             var chatState = state.chatState

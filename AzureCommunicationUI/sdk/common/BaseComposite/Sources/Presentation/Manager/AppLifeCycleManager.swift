@@ -14,11 +14,11 @@ protocol LifeCycleManagerProtocol {
 class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
 
     private let logger: Logger
-    private let store: Store<ChatAppState>
+    private let store: Store<ChatAppState, Action>
 
     var cancellables = Set<AnyCancellable>()
 
-    init(store: Store<ChatAppState>,
+    init(store: Store<ChatAppState, Action>,
          logger: Logger) {
         self.logger = logger
         self.store = store

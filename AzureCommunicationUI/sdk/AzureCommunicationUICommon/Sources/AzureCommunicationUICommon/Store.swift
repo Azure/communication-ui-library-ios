@@ -3,15 +3,13 @@
 //  Licensed under the MIT License.
 //
 
-import Combine
 import Foundation
 
-typealias ActionDispatch = CommonActionDispatch<Action>
-class Store<State>: ObservableObject {
+class Store<State, Action>: ObservableObject {
 
     @Published var state: State
 
-    private var dispatchFunction: ActionDispatch!
+    private var dispatchFunction: CommonActionDispatch<Action>!
     private let reducer: Reducer<State, Action>
     private let actionDispatchQueue = DispatchQueue(label: "ActionDispatchQueue")
 
@@ -39,28 +37,5 @@ class Store<State>: ObservableObject {
 
     private func _dispatch(action: Action) {
         state = reducer.reduce(state, action)
-    }
-}
-
-extension Store where State == AppState {
-    static func constructStore(
-        logger: Logger,
-        callingService: CallingServiceProtocol,
-        displayName: String?
-    ) -> Store<AppState> {
-        let localUserState = LocalUserState(displayName: displayName)
-
-        return Store<AppState>(
-            reducer: Reducer<AppState, Action>.appStateReducer(),
-            middlewares: [
-                Middleware<AppState, Action>.liveCallingMiddleware(
-                    callingMiddlewareHandler: CallingMiddlewareHandler(
-                        callingService: callingService,
-                        logger: logger
-                    )
-                )
-            ],
-            state: AppState(localUserState: localUserState)
-        )
     }
 }
