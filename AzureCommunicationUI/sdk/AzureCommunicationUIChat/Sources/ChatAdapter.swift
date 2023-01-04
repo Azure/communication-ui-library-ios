@@ -26,7 +26,6 @@ public class ChatAdapter {
     // Dependencies
     var logger: Logger = DefaultLogger(category: "ChatComponent")
     var localizationProvider: LocalizationProviderProtocol
-    var navigationRouter: NavigationRouter?
     var compositeViewFactory: CompositeViewFactoryProtocol?
 
     private var chatConfiguration: ChatConfiguration
@@ -137,12 +136,6 @@ public class ChatAdapter {
             chatConfiguration: chatConfiguration,
             chatThreadId: chatThreadId,
             connectEventHandler: connectEventHandler
-        )
-
-        navigationRouter = NavigationRouter(
-            store: store,
-            logger: logger,
-            chatCompositeEventsHandler: chatCompositeEventsHandler
         )
 
         compositeViewFactory = CompositeViewFactory(
