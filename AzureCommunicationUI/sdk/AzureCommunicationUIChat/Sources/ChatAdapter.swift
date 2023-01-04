@@ -4,8 +4,6 @@
 //
 
 import AzureCommunicationCommon
-import SwiftUI
-import UIKit
 
 /// This class represents the data-layer components of the Chat Composite.
 public class ChatAdapter {
@@ -27,7 +25,6 @@ public class ChatAdapter {
 
     // Dependencies
     var logger: Logger = DefaultLogger(category: "ChatComponent")
-    var accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()
     var localizationProvider: LocalizationProviderProtocol
     var navigationRouter: NavigationRouter?
     var compositeViewFactory: CompositeViewFactoryProtocol?
@@ -36,8 +33,6 @@ public class ChatAdapter {
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var compositeManager: CompositeManagerProtocol?
-
-    private var themeOptions: ThemeOptions?
 
     private var threadId: String = ""
     /// Create an instance of this class with options.
@@ -155,7 +150,6 @@ public class ChatAdapter {
             compositeViewModelFactory: CompositeViewModelFactory(
                 logger: logger,
                 localizationProvider: localizationProvider,
-                accessibilityProvider: accessibilityProvider,
                 messageRepositoryManager: repositoryManager,
                 store: store
             )
@@ -179,22 +173,5 @@ public class ChatAdapter {
     private func cleanUpComposite() {
         self.errorManager = nil
         self.lifeCycleManager = nil
-    }
-
-    func makeContainerUIHostingController(router: NavigationRouter,
-                                          logger: Logger,
-                                          viewFactory: CompositeViewFactoryProtocol,
-                                          isRightToLeft: Bool,
-                                          canDismiss: Bool) -> ContainerUIHostingController {
-        let rootView = ContainerView(router: router,
-                                     logger: logger,
-                                     viewFactory: viewFactory,
-                                     isRightToLeft: isRightToLeft)
-        let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
-                                                                        chatAdapter: self,
-                                                                        isRightToLeft: isRightToLeft)
-        containerUIHostingController.modalPresentationStyle = .fullScreen
-
-        return containerUIHostingController
     }
 }

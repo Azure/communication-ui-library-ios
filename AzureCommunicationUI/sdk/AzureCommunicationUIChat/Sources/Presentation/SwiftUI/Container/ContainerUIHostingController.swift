@@ -7,14 +7,10 @@ import Foundation
 import SwiftUI
 
 class ContainerUIHostingController: UIHostingController<ContainerUIHostingController.Root> {
-
-    private let chatAdapter: ChatAdapter
     private let cancelBag = CancelBag()
 
     init(rootView: ContainerView,
-         chatAdapter: ChatAdapter,
          isRightToLeft: Bool) {
-        self.chatAdapter = chatAdapter
         super.init(rootView: Root(containerView: rootView))
         UIView.appearance().semanticContentAttribute = isRightToLeft ?
             .forceRightToLeft : .forceLeftToRight

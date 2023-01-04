@@ -18,9 +18,7 @@ public class ChatCompositeViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         let localizationProvider = chatAdapter.localizationProvider
 
-        let containerUIHostingController = chatAdapter.makeContainerUIHostingController(
-            router: chatAdapter.navigationRouter!,
-            logger: chatAdapter.logger,
+        let containerUIHostingController = makeContainerUIHostingController(
             viewFactory: chatAdapter.compositeViewFactory!,
             isRightToLeft: localizationProvider.isRightToLeft,
             canDismiss: true)
@@ -34,5 +32,17 @@ public class ChatCompositeViewController: UIViewController {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func makeContainerUIHostingController(viewFactory: CompositeViewFactoryProtocol,
+                                          isRightToLeft: Bool,
+                                          canDismiss: Bool) -> ContainerUIHostingController {
+        let rootView = ContainerView(viewFactory: viewFactory,
+                                     isRightToLeft: isRightToLeft)
+        let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
+                                                                        isRightToLeft: isRightToLeft)
+        containerUIHostingController.modalPresentationStyle = .fullScreen
+
+        return containerUIHostingController
     }
 }
