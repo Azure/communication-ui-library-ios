@@ -7,8 +7,8 @@ import Combine
 
 extension Middleware {
     static func liveCallingMiddleware(callingMiddlewareHandler actionHandler: CallingMiddlewareHandling)
-    -> Middleware<AppState> {
-        Middleware<AppState>(
+    -> Middleware<AppState, AzureCommunicationUICalling.Action> {
+        .init(
             apply: { dispatch, getState in
                 return { next in
                     return { action in

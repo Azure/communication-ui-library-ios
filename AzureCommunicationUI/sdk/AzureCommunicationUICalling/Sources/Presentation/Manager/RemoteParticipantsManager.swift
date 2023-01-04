@@ -11,7 +11,7 @@ protocol RemoteParticipantsManagerProtocol {
 }
 
 class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
     private let eventsHandler: CallComposite.Events
     private let avatarViewManager: AvatarViewManagerProtocol
     private var participantsLastUpdateTimeStamp = Date()
@@ -19,7 +19,7 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
 
     var cancellables = Set<AnyCancellable>()
 
-    init(store: Store<AppState>,
+    init(store: Store<AppState, Action>,
          callCompositeEventsHandler: CallComposite.Events,
          avatarViewManager: AvatarViewManagerProtocol) {
         self.store = store

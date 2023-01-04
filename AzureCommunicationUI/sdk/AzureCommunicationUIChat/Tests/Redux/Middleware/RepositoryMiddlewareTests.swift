@@ -13,7 +13,7 @@ import XCTest
 class RepositoryMiddlewareTests: XCTestCase {
 
     var mockRepositoryHandler: RepositoryHandlerMocking!
-    var mockMiddleware: Middleware<AppState>!
+    var mockMiddleware: Middleware<ChatAppState, AzureCommunicationUIChat.Action>!
 
     override func setUp() {
         super.setUp()
@@ -269,13 +269,13 @@ class RepositoryMiddlewareTests: XCTestCase {
 
 extension RepositoryMiddlewareTests {
 
-    private func getEmptyState() -> AppState {
-        return AppState()
+    private func getEmptyState() -> ChatAppState {
+        ChatAppState()
     }
 
-    private func getEmptyStateWithLocalUser() -> AppState {
+    private func getEmptyStateWithLocalUser() -> ChatAppState {
         let chatState = ChatState(localUser: ParticipantInfoModel(identifier: CommunicationUserIdentifier(""), displayName: ""))
-        return AppState(chatState: chatState)
+        return ChatAppState(chatState: chatState)
     }
 
     private func getEmptyDispatch() -> ActionDispatch {

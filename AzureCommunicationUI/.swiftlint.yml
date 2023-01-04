@@ -166,7 +166,6 @@ opt_in_rules:
 
 disabled_rules: # rule identifiers turned on by default to exclude from running
 
-
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - Pods
 explicit_type_interface: # requires type annotation on everything but local variables and constants
@@ -197,3 +196,7 @@ function_body_length:
 cyclomatic_complexity:
   - 25 # Warning
   - 50 # Error
+
+function_parameter_count:
+  - 7
+  - 8

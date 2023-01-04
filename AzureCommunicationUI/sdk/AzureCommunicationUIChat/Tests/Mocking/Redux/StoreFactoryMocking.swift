@@ -7,17 +7,17 @@ import Foundation
 @testable import AzureCommunicationUIChat
 
 class StoreFactoryMocking {
-    var store: Store<AppState>!
+    var store: Store<ChatAppState, Action>!
     var actions = [Action]()
     var firstAction: Action? { return actions.first }
     var didRecordAction: Bool { return !actions.isEmpty }
 
     init() {
         let middleWare = getMiddleware()
-        self.store = Store<AppState>(
+        self.store = Store<ChatAppState, Action>(
             reducer: .mockReducer(),
             middlewares: [middleWare],
-            state: AppState()
+            state: ChatAppState()
         )
     }
 
@@ -25,12 +25,12 @@ class StoreFactoryMocking {
         actions = []
     }
 
-    func setState(_ state: AppState) {
+    func setState(_ state: ChatAppState) {
         store.state = state
     }
 
-    func getMiddleware() -> Middleware<AppState> {
-        return Middleware<AppState>.mock { [weak self] _, _ in
+    func getMiddleware() -> Middleware<ChatAppState, AzureCommunicationUIChat.Action> {
+        return .mock { [weak self] _, _ in
             return { next in
                 return { action in
                     self?.actions.append(action)
