@@ -102,22 +102,22 @@ class ErrorManagerTests: XCTestCase {
 }
 
 extension ErrorManagerTests {
-    func getAppState(naviState: NavigationState = NavigationState(status: .inChat)) -> AppState {
-        return AppState(lifeCycleState: LifeCycleState(),
-                        chatState: ChatState(),
-                        participantsState: ParticipantsState(),
-                        navigationState: naviState,
-                        repositoryState: RepositoryState(),
-                        errorState: .init())
+    func getAppState(naviState: NavigationState = NavigationState(status: .inChat)) -> ChatAppState {
+        ChatAppState(lifeCycleState: LifeCycleState(),
+                     chatState: ChatState(),
+                     participantsState: ParticipantsState(),
+                     navigationState: naviState,
+                     repositoryState: RepositoryState(),
+                     errorState: .init())
     }
 
-    func getAppState(errorState: ErrorState) -> AppState {
-        return AppState(lifeCycleState: LifeCycleState(),
-                        chatState: ChatState(),
-                        participantsState: ParticipantsState(),
-                        navigationState: NavigationState(status: .inChat),
-                        repositoryState: RepositoryState(),
-                        errorState: errorState)
+    func getAppState(errorState: ErrorState) -> ChatAppState {
+        ChatAppState(lifeCycleState: LifeCycleState(),
+                     chatState: ChatState(),
+                     participantsState: ParticipantsState(),
+                     navigationState: NavigationState(status: .inChat),
+                     repositoryState: RepositoryState(),
+                     errorState: errorState)
     }
 
     func getEventsHandler() -> ChatAdapter.Events {

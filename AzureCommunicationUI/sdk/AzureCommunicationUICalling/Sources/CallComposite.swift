@@ -31,7 +31,7 @@ public class CallComposite {
     private var accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()
     private var localizationProvider: LocalizationProviderProtocol
 
-    private var store: Store<AppState>?
+    private var store: Store<AppState, Action>?
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
