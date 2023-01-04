@@ -12,20 +12,10 @@ struct ChatView: View {
         VStack {
             MessageListView(viewModel: viewModel.messageListViewModel)
             TypingParticipantsView(viewModel: viewModel.typingParticipantsViewModel)
-            messageInput
+            BottomBarView(viewModel: viewModel.bottomBarViewModel)
         }
         .onAppear {
             viewModel.getInitialMessages()
-        }
-    }
-
-    var messageInput: some View {
-        Group {
-            if #available(iOS 15, *) {
-                BottomBarView(viewModel: viewModel.bottomBarViewModel)
-            } else {
-                // Use Custom legacy textfeld to handle focusing on iOS 14
-            }
         }
     }
 }

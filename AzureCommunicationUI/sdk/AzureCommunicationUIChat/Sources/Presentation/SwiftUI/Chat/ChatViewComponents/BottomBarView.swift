@@ -5,7 +5,6 @@
 
 import SwiftUI
 
-@available(iOS 15.0, *)
 struct BottomBarView: View {
     private enum Constants {
         static let minimumHeight: CGFloat = 50
