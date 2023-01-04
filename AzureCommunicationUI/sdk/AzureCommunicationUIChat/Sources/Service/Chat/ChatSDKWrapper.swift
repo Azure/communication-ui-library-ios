@@ -61,11 +61,9 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                                 $0.toChatMessageInfoModel(
                                     localUserId: self.chatConfiguration.identifier.rawId)
                             })
-                        print("getInitialMessages success \(messages)")
                         continuation.resume(returning: messages?.reversed() ?? [])
                     case .failure(let error):
                         self.pagedCollection = nil
-                        print("getInitialMessages error \(error)")
                         continuation.resume(throwing: error)
                     }
                 }
