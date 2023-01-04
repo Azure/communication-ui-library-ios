@@ -10,9 +10,6 @@ struct ChatView: View {
 
     var body: some View {
         VStack {
-//            TopBarView(viewModel: viewModel.topBarViewModel)
-            Divider()
-            Spacer()
             MessageListView(viewModel: viewModel.messageListViewModel)
             TypingParticipantsView(viewModel: viewModel.typingParticipantsViewModel)
             messageInput
