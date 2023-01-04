@@ -420,12 +420,12 @@ extension MessageRepositoryManagerTests {
         return sut
     }
 
-    func getAppState(participantsState: ParticipantsState) -> AppState {
-        return AppState(lifeCycleState: LifeCycleState(),
-                        chatState: ChatState(),
-                        participantsState: participantsState,
-                        navigationState: NavigationState(),
-                        repositoryState: RepositoryState(),
-                        errorState: ErrorState())
+    func getAppState(participantsState: ParticipantsState) -> ChatAppState {
+        ChatAppState(lifeCycleState: LifeCycleState(),
+                     chatState: ChatState(),
+                     participantsState: participantsState,
+                     navigationState: NavigationState(),
+                     repositoryState: RepositoryState(),
+                     errorState: ErrorState())
     }
 }

@@ -9,7 +9,6 @@ struct BottomBarView: View {
     private enum Constants {
         static let minimumHeight: CGFloat = 50
         static let focusDelay: CGFloat = 1.0
-        static let topPadding: CGFloat = 8
         static let padding: CGFloat = 12
     }
     @StateObject var viewModel: BottomBarViewModel
@@ -17,18 +16,15 @@ struct BottomBarView: View {
     @State var textEditorHeight: CGFloat = 20
 
     var body: some View {
-        HStack(spacing: Constants.padding) {
-          Group {
+        HStack(alignment: .bottom, spacing: Constants.padding) {
             if viewModel.isLocalUserRemoved {
                 localParticipantRemovedBanner
             } else {
                 messageTextField
                 sendButton
             }
-          }
         }
-        .padding([.top], Constants.topPadding)
-        .padding([.leading, .trailing, .bottom], Constants.padding)
+        .padding([.leading, .trailing], Constants.padding)
     }
 
     var messageTextField: some View {

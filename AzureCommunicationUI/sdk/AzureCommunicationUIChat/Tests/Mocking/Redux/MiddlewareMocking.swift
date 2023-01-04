@@ -6,12 +6,12 @@
 import Foundation
 @testable import AzureCommunicationUIChat
 
-extension Middleware {
+extension Middleware where State == ChatAppState, Action == AzureCommunicationUIChat.Action {
     static func mock<State>(
         applyingClosure: @escaping (
             @escaping ActionDispatch,
             @escaping () -> State) -> (@escaping ActionDispatch) -> ActionDispatch
-    ) -> Middleware<State> {
-        return Middleware<State>(apply: applyingClosure)
+    ) -> Middleware<State, Action> {
+        .init(apply: applyingClosure)
     }
 }
