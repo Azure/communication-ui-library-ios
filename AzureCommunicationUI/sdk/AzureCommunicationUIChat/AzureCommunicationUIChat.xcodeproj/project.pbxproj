@@ -399,18 +399,18 @@
 		50CB81C428C26E0C00680566 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				BDB1B8D528F8C8D30000300F /* Assets.xcassets */,
 				50CB81DA28C26EEB00680566 /* ChatAdapter.swift */,
-				50CB829628C2AD2300680566 /* Redux */,
-				50CB828128C2AD2300680566 /* common */,
-				50CB81DE28C26FB300680566 /* Presentation */,
 				50CB81E528C26FEF00680566 /* ChatCompositeOptions */,
-				50CB81E328C26FE500680566 /* Redux */,
+				50CB828128C2AD2300680566 /* common */,
+				50CB827028C2A02500680566 /* Info.plist */,
+				50CB81DF28C26FC700680566 /* Localization */,
 				50CB81E228C26FE100680566 /* Model */,
+				50CB81DE28C26FB300680566 /* Presentation */,
+				50CB829628C2AD2300680566 /* Redux */,
+				50CB81E328C26FE500680566 /* Redux */,
 				50CB81E128C26FDC00680566 /* Service */,
 				50CB81E028C26FD600680566 /* Utilities */,
-				50CB81DF28C26FC700680566 /* Localization */,
-				50CB827028C2A02500680566 /* Info.plist */,
-				BDB1B8D528F8C8D30000300F /* Assets.xcassets */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
