@@ -205,9 +205,7 @@ class ChatActionHandler: ChatActionHandling {
         Task {
             do {
                 let previousMessages = try await chatService.getPreviousMessages()
-                if !previousMessages.isEmpty {
-                    dispatch(.repositoryAction(.fetchPreviousMessagesSuccess(messages: previousMessages)))
-                }
+                dispatch(.repositoryAction(.fetchPreviousMessagesSuccess(messages: previousMessages)))
             } catch {
                 // dispatch error *not handled*
                 dispatch(.repositoryAction(.fetchPreviousMessagesFailed(error: error)))

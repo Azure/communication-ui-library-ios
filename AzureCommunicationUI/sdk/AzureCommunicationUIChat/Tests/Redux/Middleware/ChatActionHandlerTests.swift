@@ -81,9 +81,10 @@ class ChatActionHandlerTests: XCTestCase {
 
     func test_chatActionHandler_getPreviousMessages_when_emptyPreviousMessages_then_getPreviousMessagesCalled() async {
         let expectation = XCTestExpectation(description: "Not dispatch the new action")
-        expectation.isInverted = true
         func dispatch(action: Action) {
-            XCTFail("Should not call this")
+            XCTAssertTrue(mockChatService.getPreviousMessagesCalled)
+            XCTAssertTrue(action == Action.repositoryAction(.fetchPreviousMessagesSuccess(messages: [])))
+            expectation.fulfill()
         }
         let sut = makeSUT(previousMessages: [])
         await sut.getPreviousMessages(

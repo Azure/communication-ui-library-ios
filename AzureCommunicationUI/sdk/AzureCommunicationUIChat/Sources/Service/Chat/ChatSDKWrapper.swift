@@ -61,9 +61,11 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                                 $0.toChatMessageInfoModel(
                                     localUserId: self.chatConfiguration.identifier.rawId)
                             })
+                        print("getInitialMessages success \(messages)")
                         continuation.resume(returning: messages?.reversed() ?? [])
                     case .failure(let error):
                         self.pagedCollection = nil
+                        print("getInitialMessages error \(error)")
                         continuation.resume(throwing: error)
                     }
                 }
@@ -132,16 +134,20 @@ class ChatSDKWrapper: NSObject, ChatSDKWrapperProtocol {
                 return try await self.getInitialMessages()
             }
             return try await withCheckedThrowingContinuation { continuation in
-                messagePagedCollection.nextPage { result in
-                    switch result {
-                    case .success(let messagesResult):
-                        let previousMessages = messagesResult.map({
-                            $0.toChatMessageInfoModel(
-                                localUserId: self.chatConfiguration.identifier.rawId)
-                        })
-                        continuation.resume(returning: previousMessages)
-                    case .failure(let error):
-                        continuation.resume(throwing: error)
+                if messagePagedCollection.isExhausted {
+                    continuation.resume(returning: [])
+                } else {
+                    messagePagedCollection.nextPage { result in
+                        switch result {
+                        case .success(let messagesResult):
+                            let previousMessages = messagesResult.map({
+                                $0.toChatMessageInfoModel(
+                                    localUserId: self.chatConfiguration.identifier.rawId)
+                            })
+                            continuation.resume(returning: previousMessages)
+                        case .failure(let error):
+                            continuation.resume(throwing: error)
+                        }
                     }
                 }
             }
