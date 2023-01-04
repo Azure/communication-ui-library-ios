@@ -208,7 +208,7 @@ extension CallingMiddlewareTests {
     }
 
     private func getEmptyCallingMiddlewareFunction() -> (@escaping ActionDispatch) -> ActionDispatch {
-        let mockMiddleware: Middleware<AppState> = .liveCallingMiddleware(callingMiddlewareHandler: mockMiddlewareHandler)
+        let mockMiddleware: Middleware<AppState, AzureCommunicationUICalling.Action> = .liveCallingMiddleware(callingMiddlewareHandler: mockMiddlewareHandler)
         return mockMiddleware.apply(getEmptyDispatch(), getEmptyState)
     }
 

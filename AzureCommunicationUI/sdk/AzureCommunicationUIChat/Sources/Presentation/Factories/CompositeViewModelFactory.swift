@@ -28,7 +28,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let messageRepositoryManager: MessageRepositoryManagerProtocol
-    private let store: Store<AppState>
+    private let store: Store<ChatAppState, Action>
 
     private weak var chatViewModel: ChatViewModel?
 
@@ -38,7 +38,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          messageRepositoryManager: MessageRepositoryManagerProtocol,
-         store: Store<AppState>) {
+         store: Store<ChatAppState, Action>) {
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider

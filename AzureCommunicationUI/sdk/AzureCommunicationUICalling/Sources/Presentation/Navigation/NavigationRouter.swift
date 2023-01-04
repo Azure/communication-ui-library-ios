@@ -12,7 +12,7 @@ enum ViewType {
 }
 
 class NavigationRouter: ObservableObject {
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
     private let logger: Logger
     private var isDismissed: Bool = false
     @Published var currentView: ViewType = .setupView
@@ -20,7 +20,7 @@ class NavigationRouter: ObservableObject {
     var cancellables = Set<AnyCancellable>()
     private var dismissCompositeHostingVC: (() -> Void)?
 
-    init(store: Store<AppState>, logger: Logger) {
+    init(store: Store<AppState, Action>, logger: Logger) {
         self.store = store
         self.logger = logger
 
