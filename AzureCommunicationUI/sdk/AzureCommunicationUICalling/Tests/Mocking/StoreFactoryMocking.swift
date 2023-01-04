@@ -29,8 +29,8 @@ class StoreFactoryMocking {
         store.state = state
     }
 
-    func getMiddleware() -> Middleware<AppState> {
-        return Middleware<AppState>.mock { [weak self] _, _ in
+    func getMiddleware() -> Middleware<AppState, AzureCommunicationUICalling.Action> {
+        return Middleware<AppState, AzureCommunicationUICalling.Action>.mock { [weak self] _, _ in
             return { next in
                 return { action in
                     self?.actions.append(action)

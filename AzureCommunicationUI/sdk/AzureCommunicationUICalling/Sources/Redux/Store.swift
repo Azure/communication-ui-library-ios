@@ -6,6 +6,7 @@
 import Combine
 import Foundation
 
+typealias ActionDispatch = CommonActionDispatch<Action>
 class Store<State>: ObservableObject {
 
     @Published var state: State
@@ -15,7 +16,7 @@ class Store<State>: ObservableObject {
     private let actionDispatchQueue = DispatchQueue(label: "ActionDispatchQueue")
 
     init(reducer: Reducer<State, Action>,
-         middlewares: [Middleware<State>],
+         middlewares: [Middleware<State, Action>],
          state: State) {
         self.reducer = reducer
         self.state = state
@@ -52,7 +53,7 @@ extension Store where State == AppState {
         return Store<AppState>(
             reducer: Reducer<AppState, Action>.appStateReducer(),
             middlewares: [
-                Middleware<AppState>.liveCallingMiddleware(
+                Middleware<AppState, Action>.liveCallingMiddleware(
                     callingMiddlewareHandler: CallingMiddlewareHandler(
                         callingService: callingService,
                         logger: logger

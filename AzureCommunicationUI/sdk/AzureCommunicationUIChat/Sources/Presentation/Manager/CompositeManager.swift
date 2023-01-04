@@ -13,12 +13,12 @@ protocol CompositeManagerProtocol {
 
 class CompositeManager: CompositeManagerProtocol {
     private let logger: Logger
-    private let store: Store<AppState>
+    private let store: Store<ChatAppState>
 
     var cancellables = Set<AnyCancellable>()
     private var compositeCompletionHandlers: [((Result<Void, ChatCompositeError>) -> Void)] = []
 
-    init(store: Store<AppState>,
+    init(store: Store<ChatAppState>,
          logger: Logger) {
         self.logger = logger
         self.store = store
@@ -28,7 +28,7 @@ class CompositeManager: CompositeManagerProtocol {
             }.store(in: &cancellables)
     }
 
-    private func receive(_ state: AppState) {
+    private func receive(_ state: ChatAppState) {
         let chatState = state.chatState
         let errorState = state.errorState
         if !chatState.isRealTimeNotificationConnected {

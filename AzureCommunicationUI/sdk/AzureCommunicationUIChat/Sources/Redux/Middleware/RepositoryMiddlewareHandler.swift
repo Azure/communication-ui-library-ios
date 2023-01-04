@@ -11,76 +11,76 @@ protocol RepositoryMiddlewareHandling {
     @discardableResult
     func loadInitialMessages(
         messages: [ChatMessageInfoModel],
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func addPreviousMessages(
         messages: [ChatMessageInfoModel],
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func addNewSentMessage(
         internalId: String,
         content: String,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func updateNewEditedMessage(
         messageId: String,
         content: String,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func updateNewDeletedMessage(
         messageId: String,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func updateSentMessageIdAndSendStatus(
         internalId: String,
         actualId: String,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func updateEditedMessageTimestamp(
         messageId: String,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func updateDeletedMessageTimestamp(
         messageId: String,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 
     @discardableResult
     func addTopicUpdatedMessage(
         threadInfo: ChatThreadInfoModel,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func participantAddedMessage(participants: [ParticipantInfoModel],
-                                 state: AppState,
+                                 state: ChatAppState,
                                  dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func participantRemovedMessage(participants: [ParticipantInfoModel],
                                    dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func addLocalUserRemovedMessage(state: AppState,
+    func addLocalUserRemovedMessage(state: ChatAppState,
                                     dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func addReceivedMessage(
         message: ChatMessageInfoModel,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func updateReceivedEditedMessage(
         message: ChatMessageInfoModel,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func updateReceivedDeletedMessage(
         message: ChatMessageInfoModel,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func updateMessageSendStatus(
@@ -90,7 +90,7 @@ protocol RepositoryMiddlewareHandling {
     @discardableResult
     func updateMessageReceiptReceivedStatus(
         readReceiptInfo: ReadReceiptInfoModel,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 }
 
@@ -106,7 +106,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
 
     func loadInitialMessages(
         messages: [ChatMessageInfoModel],
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 let filteredMessages = getMessagesWithoutMaskedParticipants(messages: messages, state: state)
@@ -117,7 +117,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
 
     func addPreviousMessages(
         messages: [ChatMessageInfoModel],
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 let filteredMessages = getMessagesWithoutMaskedParticipants(messages: messages, state: state)
@@ -129,7 +129,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
     func addNewSentMessage(
         internalId: String,
         content: String,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 guard let localUserId = state.chatState.localUser?.identifier.stringValue,
@@ -152,7 +152,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
     func updateNewEditedMessage(
         messageId: String,
         content: String,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 messageRepository.editMessage(messageId: messageId, content: content)
@@ -162,7 +162,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
 
     func updateNewDeletedMessage(
         messageId: String,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 messageRepository.deleteMessage(messageId: messageId)
@@ -173,7 +173,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
     func updateSentMessageIdAndSendStatus(
         internalId: String,
         actualId: String,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 messageRepository.replaceMessageId(internalId: internalId,
@@ -185,7 +185,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
 
     func updateEditedMessageTimestamp(
         messageId: String,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 messageRepository.updateEditMessageTimestamp(messageId: messageId)
@@ -195,7 +195,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
 
     func updateDeletedMessageTimestamp(
         messageId: String,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 messageRepository.updateDeletedMessageTimestamp(messageId: messageId)
@@ -205,15 +205,15 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
 
     func addTopicUpdatedMessage(
         threadInfo: ChatThreadInfoModel,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 messageRepository.addTopicUpdatedMessage(chatThreadInfo: threadInfo)
                 dispatch(.repositoryAction(.repositoryUpdated))
             }
-    }
+        }
 
-    func addLocalUserRemovedMessage(state: AppState,
+    func addLocalUserRemovedMessage(state: ChatAppState,
                                     dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             messageRepository.addLocalUserRemovedMessage()
@@ -222,7 +222,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
     }
 
     func participantAddedMessage(participants: [ParticipantInfoModel],
-                                 state: AppState,
+                                 state: ChatAppState,
                                  dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             let filteredParticipants = filterOutMaskedParticipantsFromMessage(participants: participants, state: state)
@@ -252,7 +252,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
 
     func addReceivedMessage(
         message: ChatMessageInfoModel,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 messageRepository.addReceivedMessage(message: message)
@@ -262,7 +262,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
 
     func updateReceivedEditedMessage(
         message: ChatMessageInfoModel,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 messageRepository.updateMessageEdited(message: message)
@@ -272,7 +272,7 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
 
     func updateReceivedDeletedMessage(
         message: ChatMessageInfoModel,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 messageRepository.updateMessageDeleted(message: message)
@@ -284,15 +284,15 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         messageId: String,
         messageSendStatus: MessageSendStatus,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
-        Task {
-            messageRepository.updateMessageSendStatus(messageId: messageId, messageSendStatus: messageSendStatus)
-            dispatch(.repositoryAction(.repositoryUpdated))
+            Task {
+                messageRepository.updateMessageSendStatus(messageId: messageId, messageSendStatus: messageSendStatus)
+                dispatch(.repositoryAction(.repositoryUpdated))
+            }
         }
-    }
 
     func updateMessageReceiptReceivedStatus(
         readReceiptInfo: ReadReceiptInfoModel,
-        state: AppState,
+        state: ChatAppState,
         dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
             Task {
                 messageRepository.updateMessageReadReceiptStatus(readReceiptInfo: readReceiptInfo, state: state)
@@ -301,35 +301,35 @@ class RepositoryMiddlewareHandler: RepositoryMiddlewareHandling {
         }
 
     private func getMessagesWithoutMaskedParticipants(
-                                                messages: [ChatMessageInfoModel],
-                                                state: AppState) -> [ChatMessageInfoModel] {
-        var newMessages = messages
-        var messageIdsToRemove: Set<String> = []
-        for (index, message) in messages.enumerated() where message.type == .participantsAdded {
-            let filteredParticipants = filterOutMaskedParticipantsFromMessage(
-                                                                participants: message.participants,
-                                                                state: state)
-            guard !filteredParticipants.isEmpty else {
-                messageIdsToRemove.insert(message.id)
-                continue
+        messages: [ChatMessageInfoModel],
+        state: ChatAppState) -> [ChatMessageInfoModel] {
+            var newMessages = messages
+            var messageIdsToRemove: Set<String> = []
+            for (index, message) in messages.enumerated() where message.type == .participantsAdded {
+                let filteredParticipants = filterOutMaskedParticipantsFromMessage(
+                    participants: message.participants,
+                    state: state)
+                guard !filteredParticipants.isEmpty else {
+                    messageIdsToRemove.insert(message.id)
+                    continue
+                }
+                var newMessage = message
+                newMessage.participants = filteredParticipants
+                newMessages[index] = newMessage
             }
-            var newMessage = message
-            newMessage.participants = filteredParticipants
-            newMessages[index] = newMessage
+            newMessages = newMessages.filter {
+                !messageIdsToRemove.contains($0.id)
+            }
+            return newMessages
         }
-        newMessages = newMessages.filter {
-            !messageIdsToRemove.contains($0.id)
-        }
-        return newMessages
-    }
 
     private func filterOutMaskedParticipantsFromMessage(
-                                                    participants: [ParticipantInfoModel],
-                                                    state: AppState) -> [ParticipantInfoModel] {
-        let maskedParticipants = state.participantsState.maskedParticipants
-        let participants = participants.filter {
-            !maskedParticipants.contains($0.id)
+        participants: [ParticipantInfoModel],
+        state: ChatAppState) -> [ParticipantInfoModel] {
+            let maskedParticipants = state.participantsState.maskedParticipants
+            let participants = participants.filter {
+                !maskedParticipants.contains($0.id)
+            }
+            return participants
         }
-        return participants
-    }
 }

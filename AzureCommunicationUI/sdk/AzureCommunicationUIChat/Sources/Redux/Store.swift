@@ -6,6 +6,8 @@
 import Combine
 import Foundation
 
+typealias ActionDispatch = CommonActionDispatch<Action>
+
 class Store<State>: ObservableObject {
 
     @Published var state: State
@@ -15,7 +17,7 @@ class Store<State>: ObservableObject {
     private let actionDispatchQueue = DispatchQueue(label: "ActionDispatchQueue")
 
     init(reducer: Reducer<State, Action>,
-         middlewares: [Middleware<State>],
+         middlewares: [Middleware<State, Action>],
          state: State) {
         self.reducer = reducer
         self.state = state
@@ -41,7 +43,7 @@ class Store<State>: ObservableObject {
     }
 }
 
-extension Store where State == AppState {
+extension Store where State == ChatAppState {
     static func constructStore(
         logger: Logger,
         chatService: ChatServiceProtocol,
@@ -49,12 +51,12 @@ extension Store where State == AppState {
         chatConfiguration: ChatConfiguration,
         chatThreadId: String,
         connectEventHandler: ((Result<Void, ChatCompositeError>) -> Void)?
-    ) -> Store<AppState> {
+    ) -> Store<State> {
 
-        return Store<AppState>(
-            reducer: Reducer<AppState, Action>.appStateReducer(),
+        return Store<State>(
+            reducer: Reducer<State, Action>.appStateReducer(),
             middlewares: [
-                Middleware<AppState>.liveChatMiddleware(
+                Middleware<State, Action>.liveChatMiddleware(
                     chatActionHandler: ChatActionHandler(
                         chatService: chatService,
                         logger: logger,
@@ -64,14 +66,14 @@ extension Store where State == AppState {
                         chatService: chatService, logger: logger
                     )
                 ),
-                Middleware<AppState>.liveRepositoryMiddleware(
+                Middleware<State, Action>.liveRepositoryMiddleware(
                     repositoryMiddlewareHandler: RepositoryMiddlewareHandler(
                         messageRepository: messageRepository,
                         logger: logger
                     )
                 )
             ],
-            state: AppState(
+            state: ChatAppState(
                 chatState: ChatState(
                     localUser: ParticipantInfoModel(
                         identifier: chatConfiguration.identifier,
