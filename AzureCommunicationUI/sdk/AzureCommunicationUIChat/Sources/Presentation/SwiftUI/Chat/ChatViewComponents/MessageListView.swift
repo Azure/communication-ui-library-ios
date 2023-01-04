@@ -89,10 +89,20 @@ struct MessageListView: View {
             .listStyle(.plain)
             .environment(\.defaultMinListRowHeight, Constants.defaultMinListRowHeight)
             .onChange(of: viewModel.shouldScrollToBottom) { _ in
+                viewModel.startDidEndScrollingTimer(currentOffset: nil)
                 scrollToBottom(proxy: scrollProxy)
             }
             .onChange(of: viewModel.shouldScrollToId) { _ in
+                viewModel.startDidEndScrollingTimer(currentOffset: nil)
                 scrollToId(proxy: scrollProxy)
+            }
+            .onChange(of: viewModel.hasFetchedInitialMessages) { _ in
+                viewModel.startDidEndScrollingTimer(currentOffset: nil)
+            }
+            .onChange(of: viewModel.messages) { _ in
+                if viewModel.scrollSize < UIScreen.main.bounds.size.height {
+                    viewModel.startDidEndScrollingTimer(currentOffset: nil)
+                }
             }
         }.onReceive(keyboardWillShow) { _ in
             viewModel.shouldScrollToBottom = true
@@ -104,9 +114,6 @@ struct MessageListView: View {
             if let lastMessageId = viewModel.messages.last?.id {
                 withAnimation(.linear(duration: 0.1)) {
                     proxy.scrollTo(lastMessageId, anchor: .bottom)
-                }
-                if viewModel.scrollSize < UIScreen.main.bounds.size.height {
-                    viewModel.startDidEndScrollingTimer(currentOffset: nil)
                 }
             }
             viewModel.shouldScrollToBottom = false

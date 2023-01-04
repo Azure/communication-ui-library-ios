@@ -15,6 +15,8 @@ extension Reducer where State == RepositoryState,
         switch action {
         case .repositoryAction(.repositoryUpdated):
             lastUpdated = Date()
+        case .repositoryAction(.fetchInitialMessagesTriggered):
+            hasFetchedInitialMessages = false
         case .repositoryAction(.fetchInitialMessagesSuccess):
             hasFetchedInitialMessages = true
         case .repositoryAction(.fetchPreviousMessagesTriggered):
