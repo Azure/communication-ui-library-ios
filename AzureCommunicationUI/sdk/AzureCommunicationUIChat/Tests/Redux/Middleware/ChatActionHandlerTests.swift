@@ -189,12 +189,12 @@ extension ChatActionHandlerTests {
             connectEventHandler: nil)
     }
 
-    private func getEmptyState() -> AppState {
+    private func getEmptyState() -> ChatAppState {
         let localUser = ParticipantInfoModel(
             identifier: CommunicationUserIdentifier("identifier"),
             displayName: "displayName")
         let chatState = ChatState(localUser: localUser)
-        return AppState(chatState: chatState)
+        return ChatAppState(chatState: chatState)
     }
 
     private func getEmptyDispatch() -> ActionDispatch {
