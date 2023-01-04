@@ -137,6 +137,9 @@
 		696AD14928DBAFCE0043F807 /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696AD14828DBAFCE0043F807 /* ButtonState.swift */; };
 		752B953C2863A40F001C52E8 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752B953B2863A40E001C52E8 /* Action.swift */; };
 		756F180F29391F27004EDAFD /* CallCompositeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F180E29391F27004EDAFD /* CallCompositeTests.swift */; };
+		756F59772966020800BAFBF7 /* AccessibilityProviderNotificationsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F59752966020800BAFBF7 /* AccessibilityProviderNotificationsObserver.swift */; };
+		756F59782966020800BAFBF7 /* AccessibilityProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F59762966020800BAFBF7 /* AccessibilityProviderProtocol.swift */; };
+		756F597A2966026300BAFBF7 /* AccessibilityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F59792966026300BAFBF7 /* AccessibilityProvider.swift */; };
 		759BDEF728FF0839002B6853 /* ColorThemeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEF628FF0839002B6853 /* ColorThemeProvider.swift */; };
 		759BDEF928FF0851002B6853 /* StyleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEF828FF0851002B6853 /* StyleProvider.swift */; };
 		759BDEFD28FF0A81002B6853 /* LocalizationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEFC28FF0A81002B6853 /* LocalizationOptions.swift */; };
@@ -219,13 +222,11 @@
 		FA378672284152CA005B6288 /* SetParticipantViewDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA378671284152CA005B6288 /* SetParticipantViewDataError.swift */; };
 		FA40424A27E3E86700875368 /* ParticipantsListViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA40424927E3E86700875368 /* ParticipantsListViewModelMocking.swift */; };
 		FA538278292FE86200963FFC /* DebugInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA538277292FE86200963FFC /* DebugInfo.swift */; };
-		FA62233327DAC7BC008B5466 /* AccessibilityProviderNotificationsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62233227DAC7BC008B5466 /* AccessibilityProviderNotificationsObserver.swift */; };
 		FA62233727DAD9AF008B5466 /* AccessibilityProviderMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */; };
 		FA6B619F290C5987004B8188 /* SharingActivityContainerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B619E290C5987004B8188 /* SharingActivityContainerController.swift */; };
 		FA6B61A1290C89EC004B8188 /* DrawerViewControllerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B61A0290C89EC004B8188 /* DrawerViewControllerProtocol.swift */; };
 		FA6B61A3290C9F55004B8188 /* DebugInfoSharingActivityViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6B61A2290C9F55004B8188 /* DebugInfoSharingActivityViewModel.swift */; };
 		FA6DF038290339430088A945 /* SharingActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA6DF037290339430088A945 /* SharingActivityView.swift */; };
-		FA94AF3F27D68DFD001063A6 /* AccessibilityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA94AF3E27D68DFD001063A6 /* AccessibilityProvider.swift */; };
 		FAACEE3828FA0E4C003F7D7C /* MoreCallOptionsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAACEE3728FA0E4C003F7D7C /* MoreCallOptionsList.swift */; };
 		FAACEE3A28FA0FAE003F7D7C /* MoreCallOptionsListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAACEE3928FA0FAE003F7D7C /* MoreCallOptionsListViewController.swift */; };
 		FAACEE3E28FA1190003F7D7C /* MoreCallOptionsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAACEE3C28FA1190003F7D7C /* MoreCallOptionsListViewModel.swift */; };
@@ -434,6 +435,9 @@
 		69FC33B2B556CC3B9164A78E /* Pods-AzureCommunicationUICalling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling/Pods-AzureCommunicationUICalling.release.xcconfig"; sourceTree = "<group>"; };
 		752B953B2863A40E001C52E8 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		756F180E29391F27004EDAFD /* CallCompositeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeTests.swift; sourceTree = "<group>"; };
+		756F59752966020800BAFBF7 /* AccessibilityProviderNotificationsObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderNotificationsObserver.swift; sourceTree = "<group>"; };
+		756F59762966020800BAFBF7 /* AccessibilityProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderProtocol.swift; sourceTree = "<group>"; };
+		756F59792966026300BAFBF7 /* AccessibilityProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityProvider.swift; sourceTree = "<group>"; };
 		759BDEF628FF0839002B6853 /* ColorThemeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorThemeProvider.swift; sourceTree = "<group>"; };
 		759BDEF828FF0851002B6853 /* StyleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleProvider.swift; sourceTree = "<group>"; };
 		759BDEFC28FF0A81002B6853 /* LocalizationOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationOptions.swift; sourceTree = "<group>"; };
@@ -522,13 +526,11 @@
 		FA378671284152CA005B6288 /* SetParticipantViewDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetParticipantViewDataError.swift; sourceTree = "<group>"; };
 		FA40424927E3E86700875368 /* ParticipantsListViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsListViewModelMocking.swift; sourceTree = "<group>"; };
 		FA538277292FE86200963FFC /* DebugInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugInfo.swift; sourceTree = "<group>"; };
-		FA62233227DAC7BC008B5466 /* AccessibilityProviderNotificationsObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderNotificationsObserver.swift; sourceTree = "<group>"; };
 		FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderMocking.swift; sourceTree = "<group>"; };
 		FA6B619E290C5987004B8188 /* SharingActivityContainerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingActivityContainerController.swift; sourceTree = "<group>"; };
 		FA6B61A0290C89EC004B8188 /* DrawerViewControllerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawerViewControllerProtocol.swift; sourceTree = "<group>"; };
 		FA6B61A2290C9F55004B8188 /* DebugInfoSharingActivityViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugInfoSharingActivityViewModel.swift; sourceTree = "<group>"; };
 		FA6DF037290339430088A945 /* SharingActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharingActivityView.swift; sourceTree = "<group>"; };
-		FA94AF3E27D68DFD001063A6 /* AccessibilityProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityProvider.swift; sourceTree = "<group>"; };
 		FAACEE3728FA0E4C003F7D7C /* MoreCallOptionsList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreCallOptionsList.swift; sourceTree = "<group>"; };
 		FAACEE3928FA0FAE003F7D7C /* MoreCallOptionsListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreCallOptionsListViewController.swift; sourceTree = "<group>"; };
 		FAACEE3C28FA1190003F7D7C /* MoreCallOptionsListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoreCallOptionsListViewModel.swift; sourceTree = "<group>"; };
@@ -625,7 +627,6 @@
 		1F04A651273496670028AAC8 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				FA62233227DAC7BC008B5466 /* AccessibilityProviderNotificationsObserver.swift */,
 				50137D0526A7479C00AB843E /* EnvironmentValuesExtension.swift */,
 				1FFEA01326A68D0D00E90816 /* FontExtension.swift */,
 				A865AF0827B7116B008347B4 /* IconAndLabelConversion.swift */,
@@ -836,7 +837,6 @@
 		1F94DAE22673F72000691D1E /* Manager */ = {
 			isa = PBXGroup;
 			children = (
-				FA94AF3E27D68DFD001063A6 /* AccessibilityProvider.swift */,
 				A874EDC3266152AA003C7D92 /* AppLifeCycleManager.swift */,
 				98546EB926DEF24D0069B246 /* AudioDeviceType.swift */,
 				98546EB526D9B9990069B246 /* AudioSessionManager.swift */,
@@ -1002,6 +1002,9 @@
 		751D70F229119A2100323141 /* AzureCommunicationUICommon */ = {
 			isa = PBXGroup;
 			children = (
+				756F59792966026300BAFBF7 /* AccessibilityProvider.swift */,
+				756F59752966020800BAFBF7 /* AccessibilityProviderNotificationsObserver.swift */,
+				756F59762966020800BAFBF7 /* AccessibilityProviderProtocol.swift */,
 				FAD20A832928344F0063D8A9 /* ArrayExtension.swift */,
 				FAD20A87292834500063D8A9 /* CancelBag.swift */,
 				FAD20A852928344F0063D8A9 /* DeviceExtension.swift */,
@@ -1653,7 +1656,6 @@
 				503F4B692704EDD100C17DA6 /* BannerViewModel.swift in Sources */,
 				982C2835267D15AF00427246 /* CompositeAvatar.swift in Sources */,
 				FAD20A8D292834500063D8A9 /* CancelBag.swift in Sources */,
-				FA62233327DAC7BC008B5466 /* AccessibilityProviderNotificationsObserver.swift in Sources */,
 				50FA460C26829162001844AC /* IconWithLabelButton.swift in Sources */,
 				1B7ABF82278CFFC400D79DF7 /* ZoomableVideoRenderView.swift in Sources */,
 				50FA4623269CA1D4001844AC /* IconButtonViewModel.swift in Sources */,
@@ -1697,7 +1699,6 @@
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
 				FAD20A8B292834500063D8A9 /* DeviceExtension.swift in Sources */,
-				FA94AF3F27D68DFD001063A6 /* AccessibilityProvider.swift in Sources */,
 				881D8F7427FCA6B3008EC897 /* AvatarViewManager.swift in Sources */,
 				1BAD44BC283DAF2100C9E6A9 /* DraggableLocalVideoView.swift in Sources */,
 				50E2D69726EBCD15006B0EF4 /* CompositeParticipantsListCell.swift in Sources */,
@@ -1768,6 +1769,7 @@
 				503F4B6B2704EE6800C17DA6 /* BannerTextViewModel.swift in Sources */,
 				982C2833267D0C4500427246 /* CompositeButton.swift in Sources */,
 				1F13D37326AB3F1200E31666 /* ACSCallingStateExtension.swift in Sources */,
+				756F59782966020800BAFBF7 /* AccessibilityProviderProtocol.swift in Sources */,
 				988799912745EABE00AA3759 /* SourceViewSpace.swift in Sources */,
 				1FBCB6B12649EB1200F57EEA /* RemoteParticipantExtension.swift in Sources */,
 				FA6B61A1290C89EC004B8188 /* DrawerViewControllerProtocol.swift in Sources */,
@@ -1786,12 +1788,14 @@
 				50FA461026829B7A001844AC /* ControlBarViewModel.swift in Sources */,
 				1F2BED882631EB7900D98266 /* PermissionsManager.swift in Sources */,
 				1FA23F9E265DA21400B4A080 /* VideoStreamInfoModel.swift in Sources */,
+				756F59772966020800BAFBF7 /* AccessibilityProviderNotificationsObserver.swift in Sources */,
 				98FFD82826CC5FD900655398 /* PreferenceKey.swift in Sources */,
 				1F13D36E26AA82D400E31666 /* NavigationState.swift in Sources */,
 				1F2BED6C262F8B7000D98266 /* Store.swift in Sources */,
 				881D8F7227FB6992008EC897 /* LocalOptions.swift in Sources */,
 				50E2D69126EAAB33006B0EF4 /* CompositeParticipantsList.swift in Sources */,
 				FA378672284152CA005B6288 /* SetParticipantViewDataError.swift in Sources */,
+				756F597A2966026300BAFBF7 /* AccessibilityProvider.swift in Sources */,
 				985DF378269E07F400CFDA55 /* PrimaryButtonViewModel.swift in Sources */,
 				1FC30846266949E8007EC537 /* ColorExtension.swift in Sources */,
 				1FDBF9F1281F8D2F00B92273 /* ACSCallEndReasonExtension.swift in Sources */,
