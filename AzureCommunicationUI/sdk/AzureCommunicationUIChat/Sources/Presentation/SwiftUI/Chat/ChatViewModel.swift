@@ -9,7 +9,7 @@ import Combine
 class ChatViewModel: ObservableObject {
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
-    private let store: Store<AppState>
+    private let store: Store<ChatAppState, Action>
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -21,7 +21,7 @@ class ChatViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
-         store: Store<AppState>) {
+         store: Store<ChatAppState, Action>) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.logger = logger
         self.store = store
@@ -43,7 +43,7 @@ class ChatViewModel: ObservableObject {
         store.dispatch(action: .repositoryAction(.fetchInitialMessagesTriggered))
     }
 
-    func receive(_ state: AppState) {
+    func receive(_ state: ChatAppState) {
         messageListViewModel.update(chatState: state.chatState, repositoryState: state.repositoryState)
         typingParticipantsViewModel.update(participantsState: state.participantsState)
         topBarViewModel.update(participantsState: state.participantsState)

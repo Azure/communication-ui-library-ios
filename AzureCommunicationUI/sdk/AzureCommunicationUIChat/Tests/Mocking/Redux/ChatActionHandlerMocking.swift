@@ -24,13 +24,13 @@ class ChatActionHandlerMocking: ChatActionHandling {
     var sendReadReceiptCalled: ((Bool) -> Void)?
     var sendReadReceiptSuccessCalled: ((Bool) -> Void)?
 
-    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func enterBackground(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             enterBackgroundCalled?(true)
         }
     }
 
-    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func enterForeground(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             enterForegroundCalled?(true)
         }
@@ -42,7 +42,7 @@ class ChatActionHandlerMocking: ChatActionHandling {
         }
     }
 
-    func initialize(state: AppState, dispatch: @escaping ActionDispatch, serviceListener: ChatServiceEventHandling) -> Task<Void, Never> {
+    func initialize(state: ChatAppState, dispatch: @escaping ActionDispatch, serviceListener: ChatServiceEventHandling) -> Task<Void, Never> {
         Task {
             initializeCalled?(true)
         }
@@ -54,50 +54,50 @@ class ChatActionHandlerMocking: ChatActionHandling {
         }
     }
 
-    func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func getInitialMessages(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             getInitialMessagesCalled?(true)
         }
     }
 
-    func getListOfParticipants(state: AzureCommunicationUIChat.AppState, dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
+    func getListOfParticipants(state: AzureCommunicationUIChat.ChatAppState, dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
         Task {
             getListOfParticipantsCalled?(true)
         }
     }
 
-    func getPreviousMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func getPreviousMessages(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             getPreviousMessagesCalled?(true)
         }
     }
 
-    func sendMessage(internalId: String, content: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func sendMessage(internalId: String, content: String, state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             sendMessageCalled?(true)
         }
     }
 
-    func editMessage(messageId: String, content: String, prevContent: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func editMessage(messageId: String, content: String, prevContent: String, state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             editMessageCalled?(true)
         }
     }
 
-    func deleteMessage(messageId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func deleteMessage(messageId: String, state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             deleteMessageCalled?(true)
         }
     }
 
-    func sendTypingIndicator(state: AzureCommunicationUIChat.AppState,
+    func sendTypingIndicator(state: AzureCommunicationUIChat.ChatAppState,
                              dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
         Task {
             sendTypingIndicatorCalled?(true)
         }
     }
 
-    func setTypingParticipantTimer(_ getState: @escaping () -> AzureCommunicationUIChat.AppState,
+    func setTypingParticipantTimer(_ getState: @escaping () -> AzureCommunicationUIChat.ChatAppState,
                                    _ dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) {
         Task {
             setTypingIndicatorTimeoutCalled?(true)
@@ -106,7 +106,7 @@ class ChatActionHandlerMocking: ChatActionHandling {
 
     func sendReadReceipt(
               messageId: String,
-              state: AzureCommunicationUIChat.AppState,
+              state: AzureCommunicationUIChat.ChatAppState,
               dispatch: @escaping AzureCommunicationUIChat.ActionDispatch) -> Task<Void, Never> {
         Task {
             sendReadReceiptCalled?(true)

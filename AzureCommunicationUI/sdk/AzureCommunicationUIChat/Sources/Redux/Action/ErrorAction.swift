@@ -13,8 +13,6 @@ enum ErrorAction: Equatable {
         case let (.fatalErrorUpdated(internalError: lErr, error: _),
                   .fatalErrorUpdated(internalError: rErr, error: _)):
             return lErr == rErr
-        default:
-            return false
         }
     }
 }
