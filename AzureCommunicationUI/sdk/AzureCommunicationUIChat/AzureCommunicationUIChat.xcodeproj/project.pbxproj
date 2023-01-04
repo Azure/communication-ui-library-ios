@@ -143,6 +143,7 @@
 		756F59722966014600BAFBF7 /* AccessibilityProviderNotificationsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F59712966014600BAFBF7 /* AccessibilityProviderNotificationsObserver.swift */; };
 		756F5974296601BA00BAFBF7 /* AccessibilityProviderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F5973296601BA00BAFBF7 /* AccessibilityProviderProtocol.swift */; };
 		756F597C296602E300BAFBF7 /* AccessibilityProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F597B296602E300BAFBF7 /* AccessibilityProvider.swift */; };
+		7529F5E0296618AE002F7CE1 /* BaseLocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7529F5DF296618AE002F7CE1 /* BaseLocalizationProvider.swift */; };
 		75848432291D82D4006373B3 /* DeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7584842C291D82D4006373B3 /* DeviceExtension.swift */; };
 		75848434291D82D4006373B3 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7584842E291D82D4006373B3 /* Logger.swift */; };
 		75848435291D82D4006373B3 /* ArrayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7584842F291D82D4006373B3 /* ArrayExtension.swift */; };
@@ -319,6 +320,7 @@
 		756F59712966014600BAFBF7 /* AccessibilityProviderNotificationsObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderNotificationsObserver.swift; sourceTree = "<group>"; };
 		756F5973296601BA00BAFBF7 /* AccessibilityProviderProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderProtocol.swift; sourceTree = "<group>"; };
 		756F597B296602E300BAFBF7 /* AccessibilityProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityProvider.swift; sourceTree = "<group>"; };
+		7529F5DF296618AE002F7CE1 /* BaseLocalizationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLocalizationProvider.swift; sourceTree = "<group>"; };
 		7584842C291D82D4006373B3 /* DeviceExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceExtension.swift; sourceTree = "<group>"; };
 		7584842E291D82D4006373B3 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		7584842F291D82D4006373B3 /* ArrayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtension.swift; sourceTree = "<group>"; };
@@ -966,6 +968,7 @@
 				756F597B296602E300BAFBF7 /* AccessibilityProvider.swift */,
 				756F5973296601BA00BAFBF7 /* AccessibilityProviderProtocol.swift */,
 				756F59712966014600BAFBF7 /* AccessibilityProviderNotificationsObserver.swift */,
+				7529F5DF296618AE002F7CE1 /* BaseLocalizationProvider.swift */,
 				7584842F291D82D4006373B3 /* ArrayExtension.swift */,
 				75848430291D82D4006373B3 /* CancelBag.swift */,
 				7584842C291D82D4006373B3 /* DeviceExtension.swift */,
@@ -1278,6 +1281,7 @@
 				50CB82C228C2AD2300680566 /* StoreExtensions.swift in Sources */,
 				50CB81F828C2860200680566 /* ChatCompositeError.swift in Sources */,
 				50CB82D028C2AD9900680566 /* SetParticipantViewDataError.swift in Sources */,
+				7529F5E0296618AE002F7CE1 /* BaseLocalizationProvider.swift in Sources */,
 				50CB824128C29ADA00680566 /* ParticipantsState.swift in Sources */,
 				50CB826128C29E0600680566 /* ChatSDKWrapperProtocol.swift in Sources */,
 				50CB821128C286D400680566 /* IconProvider.swift in Sources */,

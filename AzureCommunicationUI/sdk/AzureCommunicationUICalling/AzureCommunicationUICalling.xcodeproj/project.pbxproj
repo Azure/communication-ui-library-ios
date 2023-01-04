@@ -133,6 +133,7 @@
 		5A314D26A09E235A6509C1C7 /* ACSCameraFacingExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */; };
 		5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */; };
 		696AD14928DBAFCE0043F807 /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 696AD14828DBAFCE0043F807 /* ButtonState.swift */; };
+		7529F5DE29661888002F7CE1 /* BaseLocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7529F5DD29661888002F7CE1 /* BaseLocalizationProvider.swift */; };
 		752B953C2863A40F001C52E8 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = 752B953B2863A40E001C52E8 /* Action.swift */; };
 		756F180F29391F27004EDAFD /* CallCompositeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F180E29391F27004EDAFD /* CallCompositeTests.swift */; };
 		756F59772966020800BAFBF7 /* AccessibilityProviderNotificationsObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 756F59752966020800BAFBF7 /* AccessibilityProviderNotificationsObserver.swift */; };
@@ -432,6 +433,7 @@
 		5A314A985811198B09DA2688 /* LocalVideoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoView.swift; sourceTree = "<group>"; };
 		696AD14828DBAFCE0043F807 /* ButtonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonState.swift; sourceTree = "<group>"; };
 		69FC33B2B556CC3B9164A78E /* Pods-AzureCommunicationUICalling.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling/Pods-AzureCommunicationUICalling.release.xcconfig"; sourceTree = "<group>"; };
+		7529F5DD29661888002F7CE1 /* BaseLocalizationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLocalizationProvider.swift; sourceTree = "<group>"; };
 		752B953B2863A40E001C52E8 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
 		756F180E29391F27004EDAFD /* CallCompositeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeTests.swift; sourceTree = "<group>"; };
 		756F59752966020800BAFBF7 /* AccessibilityProviderNotificationsObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderNotificationsObserver.swift; sourceTree = "<group>"; };
@@ -1005,6 +1007,7 @@
 				756F59792966026300BAFBF7 /* AccessibilityProvider.swift */,
 				756F59752966020800BAFBF7 /* AccessibilityProviderNotificationsObserver.swift */,
 				756F59762966020800BAFBF7 /* AccessibilityProviderProtocol.swift */,
+				7529F5DD29661888002F7CE1 /* BaseLocalizationProvider.swift */,
 				FAD20A832928344F0063D8A9 /* ArrayExtension.swift */,
 				FAD20A87292834500063D8A9 /* CancelBag.swift */,
 				FAD20A852928344F0063D8A9 /* DeviceExtension.swift */,
@@ -1717,6 +1720,7 @@
 				985DF376269E07E700CFDA55 /* PrimaryButton.swift in Sources */,
 				1FBCB6AF2649DC7900F57EEA /* ParticipantInfoModel.swift in Sources */,
 				988799932746CDEC00AA3759 /* LockPhoneOrientation.swift in Sources */,
+				7529F5DE29661888002F7CE1 /* BaseLocalizationProvider.swift in Sources */,
 				1F47F78726E9E18E000AE4B7 /* DrawerContainerViewController.swift in Sources */,
 				1FBCB6AA2645AC2F00F57EEA /* VideoRenderView.swift in Sources */,
 				756F59642965DABA00BAFBF7 /* Reducer.swift in Sources */,
