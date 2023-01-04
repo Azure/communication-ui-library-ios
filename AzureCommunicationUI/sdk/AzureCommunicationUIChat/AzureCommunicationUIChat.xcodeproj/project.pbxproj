@@ -407,7 +407,6 @@
 				50CB81DF28C26FC700680566 /* Localization */,
 				50CB81E228C26FE100680566 /* Model */,
 				50CB81DE28C26FB300680566 /* Presentation */,
-				50CB829628C2AD2300680566 /* Redux */,
 				50CB81E328C26FE500680566 /* Redux */,
 				50CB81E128C26FDC00680566 /* Service */,
 				50CB81E028C26FD600680566 /* Utilities */,
@@ -864,14 +863,6 @@
 				50CB829428C2AD2300680566 /* UIWindowExtension.swift */,
 			);
 			path = Utilities;
-			sourceTree = "<group>";
-		};
-		50CB829628C2AD2300680566 /* Redux */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Redux;
-			path = ../../common/BaseComposite/Sources/Redux;
 			sourceTree = "<group>";
 		};
 		50CB829C28C2AD2300680566 /* Presentation */ = {
