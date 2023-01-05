@@ -34,8 +34,8 @@ class OnHoldOverlayViewModelTests: XCTestCase {
     func test_onHoldOverlayViewModel_errorInfoMode_hasTitle_and_subtitle_from_LocalizationMocking() {
         let sut = makeSUTLocalizationMocking()
         XCTAssertNotNil(sut.errorInfoViewModel)
-        XCTAssertEqual(sut.errorInfoViewModel?.title, localizationProvider.getLocalizedString(.snackBarErrorOnHoldTitle))
-        XCTAssertEqual(sut.errorInfoViewModel?.subtitle, localizationProvider.getLocalizedString(.snackBarErrorOnHoldSubtitle))
+        XCTAssertEqual(sut.errorInfoViewModel?.title, localizationProvider.getLocalizedString(LocalizationKey.snackBarErrorOnHoldTitle))
+        XCTAssertEqual(sut.errorInfoViewModel?.subtitle, localizationProvider.getLocalizedString(LocalizationKey.snackBarErrorOnHoldSubtitle))
     }
 
     func test_onHoldOverlayViewModel_tapActionPeformed_when_actionButton_isTapped() {

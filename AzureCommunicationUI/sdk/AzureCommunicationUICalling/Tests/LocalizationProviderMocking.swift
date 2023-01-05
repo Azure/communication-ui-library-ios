@@ -6,30 +6,27 @@
 import Foundation
 @testable import AzureCommunicationUICalling
 
-class LocalizationProviderMocking: BaseLocalizationProvider, LocalizationProviderProtocol {
+class LocalizationProviderMocking: LocalizationProviderProtocol {
 
     var isApplyCalled: Bool = false
     var isGetLocalizedStringCalled: Bool = false
     var isGetLocalizedStringWithArgsCalled: Bool = false
 
-    init() {
-        super.init(logger: LoggerMocking(), bundleClass: LocalizationProviderMocking.self)
-    }
-
-    override var isRightToLeft: Bool {
+    var isRightToLeft: Bool {
         return false
     }
 
-    override func apply(localeConfig: LocalizationOptions) {
+    func apply(localeConfig: LocalizationOptions) {
         isApplyCalled = true
     }
 
-    func getLocalizedString(_ key: LocalizationKey) -> String {
+    func getLocalizedString<Key>(_ key: Key) -> String
+    where Key: RawRepresentable, Key.RawValue == String {
         isGetLocalizedStringCalled = true
         return key.rawValue
     }
 
-    func getLocalizedString(_ key: LocalizationKey, _ args: CVarArg...) -> String {
+    func getLocalizedString<Key>(_ key: Key, _ args: CVarArg...) -> String where Key: RawRepresentable, Key.RawValue == String {
         isGetLocalizedStringWithArgsCalled = true
         return key.rawValue
     }
