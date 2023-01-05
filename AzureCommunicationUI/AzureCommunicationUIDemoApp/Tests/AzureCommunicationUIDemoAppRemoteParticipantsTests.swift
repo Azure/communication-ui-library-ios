@@ -16,7 +16,9 @@ class AzureCommunicationUIDemoAppRemoteParticipantsTests: XCUITestBase {
         wait(for: app.buttons[AccessibilityIdentifier.hangupAccessibilityID.rawValue])
 
         tapButton(accessibilityIdentifier: "Add Participant")
-        XCTAssertTrue(app.staticTexts["RM-1"].exists)
+
+        let predicate = NSPredicate(format: "label CONTAINS %@", "RM-1")
+        wait(for: app.staticTexts.element(matching: predicate))
     }
 
     func testCallCompositeUnmuteRemoteParticipantHandler() {
@@ -31,7 +33,14 @@ class AzureCommunicationUIDemoAppRemoteParticipantsTests: XCUITestBase {
 
         wait(for: app.staticTexts["RM-1 Muted"])
         tapButton(accessibilityIdentifier: "Unmute Participant")
-        XCTAssertFalse(app.staticTexts["RM-1 Muted"].exists)
+
+        let mutedText = app.staticTexts["RM-1 Muted"]
+        let predicate = NSPredicate(format: "exists == false")
+        let expectation = expectation(for: predicate,
+                                      evaluatedWith: mutedText) {
+            return true
+        }
+        wait(for: [expectation], timeout: 20.0)
     }
 
     func testCallCompositeHoldRemoteParticipantHandler() {
@@ -44,6 +53,6 @@ class AzureCommunicationUIDemoAppRemoteParticipantsTests: XCUITestBase {
 
         tapButton(accessibilityIdentifier: "Add Participant")
         tapButton(accessibilityIdentifier: "Hold Participant")
-        XCTAssertTrue(app.staticTexts["On hold"].exists)
+        wait(for: app.staticTexts["RM-1 On hold"])
     }
 }
