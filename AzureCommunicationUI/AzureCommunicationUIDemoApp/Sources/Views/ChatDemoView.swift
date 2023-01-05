@@ -10,7 +10,7 @@ import SwiftUI
 struct ChatDemoView: View {
 
     private enum Constant {
-        static let oneMiliSecond: UInt64 = 10_000_000
+        static let oneMillisecond: UInt64 = 10_000_000
     }
 
     @State var isErrorDisplayed: Bool = false
@@ -43,12 +43,7 @@ struct ChatDemoView: View {
             isErrorDisplayed = false
             self.isShowingChatView = false
             self.chatAdapter?.disconnect(completionHandler: { result in
-                switch result {
-                case .success:
-                    self.chatAdapter = nil
-                case .failure(let error):
-                    print("disconnect error \(error)")
-                }
+                self.onDisconnectFromChat(with: result)
             })
         }))
     }
@@ -131,28 +126,12 @@ struct ChatDemoView: View {
     }
 
     var meetingSelector: some View {
-        Group {
-            Picker("Chat Type", selection: $envConfigSubject.selectedChatType) {
-                Text("Group Chat").tag(ChatType.groupChat)
-                Text("Teams Meeting").tag(ChatType.teamsChat)
-            }.pickerStyle(.segmented)
-            switch envConfigSubject.selectedChatType {
-            case .groupChat:
-                TextField(
-                    "Group Chat ThreadId",
-                    text: $envConfigSubject.threadId)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-                .textFieldStyle(.roundedBorder)
-            case .teamsChat:
-                TextField(
-                    "Team Meeting",
-                    text: $envConfigSubject.teamsMeetingLink)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-                .textFieldStyle(.roundedBorder)
-            }
-        }
+        TextField(
+            "Group Chat ThreadId",
+            text: $envConfigSubject.threadId)
+        .autocapitalization(.none)
+        .disableAutocorrection(true)
+        .textFieldStyle(.roundedBorder)
         .padding(.vertical, verticalPadding)
         .padding(.horizontal, horizontalPadding)
     }
@@ -172,16 +151,7 @@ struct ChatDemoView: View {
 
                 Button("Stop") {
                     self.chatAdapter?.disconnect(completionHandler: { result in
-                        switch result {
-                        case .success:
-                            self.chatAdapter = nil
-                            Task { @MainActor  in
-                                try await Task.sleep(nanoseconds: Constant.oneMiliSecond)
-                                self.isShowingChatView = false
-                            }
-                        case .failure(let error):
-                            print("disconnect error \(error)")
-                        }
+                        self.onDisconnectFromChat(with: result)
                     })
                 }
                 .buttonStyle(DemoButtonStyle())
@@ -195,12 +165,8 @@ struct ChatDemoView: View {
     var isStartExperienceDisabled: Bool {
         let acsToken = envConfigSubject.useExpiredToken ? envConfigSubject.expiredAcsToken : envConfigSubject.acsToken
         if (envConfigSubject.selectedAcsTokenType == .token && acsToken.isEmpty)
-            || envConfigSubject.selectedAcsTokenType == .tokenUrl && envConfigSubject.acsTokenUrl.isEmpty {
-            return true
-        }
-
-        if (envConfigSubject.selectedChatType == .groupChat && envConfigSubject.threadId.isEmpty)
-            || envConfigSubject.selectedChatType == .teamsChat && envConfigSubject.teamsMeetingLink.isEmpty {
+            || envConfigSubject.selectedAcsTokenType == .tokenUrl && envConfigSubject.acsTokenUrl.isEmpty
+            || envConfigSubject.threadId.isEmpty {
             return true
         }
 
@@ -252,6 +218,19 @@ extension ChatDemoView {
                 }
             }
             throw DemoError.invalidToken
+        }
+    }
+
+    private func onDisconnectFromChat(with result: Result<Void, ChatCompositeError>) {
+        switch result {
+        case .success:
+            self.chatAdapter = nil
+            Task { @MainActor  in
+                try await Task.sleep(nanoseconds: Constant.oneMillisecond)
+                self.isShowingChatView = false
+            }
+        case .failure(let error):
+            print("disconnect error \(error)")
         }
     }
 
