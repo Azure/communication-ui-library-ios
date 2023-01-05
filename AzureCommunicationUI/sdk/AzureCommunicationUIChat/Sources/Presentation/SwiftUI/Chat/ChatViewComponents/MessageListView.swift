@@ -60,10 +60,7 @@ struct MessageListView: View {
         ScrollViewReader { scrollProxy in
             ObservableScrollView(
                 showsIndicators: false, // Hide scroll indicator due to swiftUI issue where it jumps around
-                offsetChanged: {
-                    viewModel.startDidEndScrollingTimer(currentOffset: $0)
-                    viewModel.scrollOffset = $0
-                },
+                offsetChanged: { viewModel.scrollOffset = $0 },
                 heightChanged: { viewModel.scrollSize = $0 },
                 content: {
                     LazyVStack(spacing: 0) {
@@ -75,6 +72,7 @@ struct MessageListView: View {
                                             viewModel.fetchMessages(lastSeenMessage: message)
                                             viewModel.updateReadReceiptToBeSentMessageId(message: message)
                                             viewModel.messageIdsOnScreen.append(message.id)
+                                            viewModel.startDidEndScrollingTimer()
                                         }
                                         .onDisappear {
                                             viewModel.messageIdsOnScreen.removeAll { $0 == message.id }
@@ -105,9 +103,6 @@ struct MessageListView: View {
             if let lastMessageId = viewModel.messages.last?.id {
                 withAnimation(.linear(duration: 0.1)) {
                     proxy.scrollTo(lastMessageId, anchor: .bottom)
-                }
-                if viewModel.scrollSize < UIScreen.main.bounds.size.height {
-                    viewModel.startDidEndScrollingTimer(currentOffset: nil)
                 }
             }
             viewModel.shouldScrollToBottom = false

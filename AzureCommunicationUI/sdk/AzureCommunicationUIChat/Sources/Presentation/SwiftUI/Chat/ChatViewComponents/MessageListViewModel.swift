@@ -100,10 +100,7 @@ class MessageListViewModel: ObservableObject {
         }
     }
 
-    func startDidEndScrollingTimer(currentOffset: CGFloat?) {
-        guard currentOffset == nil || currentOffset != scrollOffset else {
-            return
-        }
+    func startDidEndScrollingTimer() {
         if didEndScrollingTimer != nil {
             didEndScrollingTimer?.invalidate()
         }
@@ -136,7 +133,6 @@ class MessageListViewModel: ObservableObject {
             // Check if initial messages have been fetched
             if self.hasFetchedInitialMessages != repositoryState.hasFetchedInitialMessages {
                 self.hasFetchedInitialMessages = repositoryState.hasFetchedInitialMessages
-
                 // Assume all messages are seen by others when re-joining the chat
                 if let latestSeenMessage = messages.last(where: {$0.isLocalUser}) {
                     latestSeenMessageId = latestSeenMessage.id

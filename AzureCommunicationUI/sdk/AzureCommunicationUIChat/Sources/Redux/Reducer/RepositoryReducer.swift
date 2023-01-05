@@ -16,6 +16,8 @@ extension Reducer where State == RepositoryState,
         switch action {
         case .repositoryAction(.repositoryUpdated):
             lastUpdated = Date()
+        case .repositoryAction(.fetchInitialMessagesTriggered):
+            hasFetchedInitialMessages = false
         case .repositoryAction(.fetchInitialMessagesSuccess(let messages)):
             hasFetchedInitialMessages = true
             if messages.isEmpty {

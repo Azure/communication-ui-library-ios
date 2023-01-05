@@ -183,10 +183,11 @@ extension XCUITestBase {
                          shouldWait: true)
     }
 
-    // switches don't handle tap correctly for iOS < 14. Possible problem can be Rosetta usage
     func enableMockCallingSDKWrapper() {
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
         wait(for: app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue])
+        // scrolling is needed for devices with smaller screens as the switch may not be tappable
+        // because cells weren't loaded to memory
         if #unavailable(iOS 16) {
             // for <iOS 16, the table is shown
             app.tables.firstMatch.swipeUp()
@@ -204,15 +205,15 @@ extension XCUITestBase {
 
     func closeDemoAppSettingsPage() {
         if #unavailable(iOS 15) {
-            // Close button in toolbar is unavailable for iOS 14
+            // Close button in toolbar is unavailable for iOS 14 because of how Forms handles events
             // this issue is fixed for iOS 15
             // closing the presented view with a swipe
             let startPoint = app.navigationBars.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
             // the value shouldn't be less than 500
             // as swipe won't performed as expected for hiding the presented view
             let finishYOffset = 500
-                let finishPoint = startPoint.withOffset(CGVector(dx: 0, dy: finishYOffset))
-                startPoint.press(forDuration: 0, thenDragTo: finishPoint)
+            let finishPoint = startPoint.withOffset(CGVector(dx: 0, dy: finishYOffset))
+            startPoint.press(forDuration: 0, thenDragTo: finishPoint)
         } else {
             tapButton(accessibilityIdentifier: AccessibilityId.settingsCloseButtonAccessibilityID.rawValue)
         }
