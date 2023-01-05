@@ -50,6 +50,18 @@ class FloatingUITestWindow: UIWindow {
         createButton(title: "Recording off",
                      accessibilityID: "callRecordingOff-AID",
                      selector: #selector(recordingOffButtonTapped))
+        createButton(title: "Add Participant",
+                     accessibilityID: "callAddParticipant-AID",
+                     selector: #selector(addParticipantButtonTapped))
+        createButton(title: "Remove Participant",
+                     accessibilityID: "callRemoveParticipant-AID",
+                     selector: #selector(removeParticipantButtonTapped))
+        createButton(title: "Unmute Participant",
+                     accessibilityID: "callUnmuteParticipant-AID",
+                     selector: #selector(unmuteParticipantButtonTapped))
+        createButton(title: "Hold Participant",
+                     accessibilityID: "callHoldParticipant-AID",
+                     selector: #selector(holdParticipantButtonTapped))
 
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
@@ -126,6 +138,46 @@ class FloatingUITestWindow: UIWindow {
         Task {
             do {
                 try await callingSDKWrapperMock?.recordingOff()
+            } catch {
+            }
+        }
+    }
+
+    @objc func addParticipantButtonTapped(sender: UIButton) {
+        debugPrint("UI Test:: AddParticipantButtonTapped")
+        Task {
+            do {
+                try await callingSDKWrapperMock?.addParticipant()
+            } catch {
+            }
+        }
+    }
+
+    @objc func removeParticipantButtonTapped(sender: UIButton) {
+        debugPrint("UI Test:: RemoveParticipantButtonTapped")
+        Task {
+            do {
+                try await callingSDKWrapperMock?.removeParticipant()
+            } catch {
+            }
+        }
+    }
+
+    @objc func unmuteParticipantButtonTapped(sender: UIButton) {
+        debugPrint("UI Test:: ParticipantButtonTapped")
+        Task {
+            do {
+                try await callingSDKWrapperMock?.unmuteParticipant()
+            } catch {
+            }
+        }
+    }
+
+    @objc func holdParticipantButtonTapped(sender: UIButton) {
+        debugPrint("UI Test:: HoldParticipantButtonTapped")
+        Task {
+            do {
+                try await callingSDKWrapperMock?.holdParticipant()
             } catch {
             }
         }
