@@ -118,7 +118,7 @@ steps:
         Saturday)
           case $HOUR_OF_DAY in
             00)
-              APPCENTER_DEVICES=iphone11promaxset
+              APPCENTER_DEVICES=iphone14set
               ;;
             02)
               APPCENTER_DEVICES=iphone11proset
