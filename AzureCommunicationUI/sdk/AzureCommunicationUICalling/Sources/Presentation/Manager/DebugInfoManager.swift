@@ -11,11 +11,11 @@ protocol DebugInfoManagerProtocol {
 }
 
 class DebugInfoManager: DebugInfoManagerProtocol {
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
     private var cancellables = Set<AnyCancellable>()
     private var callId: String?
 
-    init(store: Store<AppState>) {
+    init(store: Store<AppState, Action>) {
         self.store = store
         self.store.$state
             .receive(on: DispatchQueue.main)

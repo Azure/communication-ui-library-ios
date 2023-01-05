@@ -93,7 +93,7 @@ class MessageRepositoryManagerMocking: MessageRepositoryManagerProtocol {
         updateMessageSendStatusCalled = true
     }
 
-    func updateMessageReadReceiptStatus(readReceiptInfo: AzureCommunicationUIChat.ReadReceiptInfoModel, state: AzureCommunicationUIChat.AppState) {
+    func updateMessageReadReceiptStatus(readReceiptInfo: AzureCommunicationUIChat.ReadReceiptInfoModel, state: ChatAppState) {
         updateMessageReadReceiptStatusCalled = true
     }
 

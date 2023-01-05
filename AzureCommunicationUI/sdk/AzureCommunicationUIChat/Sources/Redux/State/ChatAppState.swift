@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct AppState {
+struct ChatAppState {
     let lifeCycleState: LifeCycleState
     let chatState: ChatState
     let participantsState: ParticipantsState

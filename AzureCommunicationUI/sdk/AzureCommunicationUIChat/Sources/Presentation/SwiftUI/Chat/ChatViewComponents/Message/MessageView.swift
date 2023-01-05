@@ -33,6 +33,7 @@ struct MessageView: View {
                                     trailing: getMessageTrailingPadding(for: messageModel))
         VStack {
             dateHeader
+            .padding(.top, Constants.topPadding)
             message
             .padding(edgeInsets)
         }

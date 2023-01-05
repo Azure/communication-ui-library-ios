@@ -14,7 +14,7 @@ class ChatMiddlewareTests: XCTestCase {
 
     var mockChatActionHandler: ChatActionHandlerMocking!
     var mockChatServiceEventHandler: ChatServiceEventHandlerMocking!
-    var mockMiddleware: Middleware<AppState>!
+    var mockMiddleware: Middleware<ChatAppState, Action>!
 
     override func setUp() {
         super.setUp()
@@ -175,8 +175,8 @@ class ChatMiddlewareTests: XCTestCase {
 
 extension ChatMiddlewareTests {
 
-    private func getEmptyState() -> AppState {
-        return AppState()
+    private func getEmptyState() -> ChatAppState {
+        ChatAppState()
     }
     private func getEmptyDispatch() -> ActionDispatch {
         return { _ in }
