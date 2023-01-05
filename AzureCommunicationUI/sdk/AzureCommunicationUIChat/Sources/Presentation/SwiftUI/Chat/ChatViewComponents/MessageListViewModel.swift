@@ -121,8 +121,6 @@ class MessageListViewModel: ObservableObject {
         }
     }
 
-
-
     func update(chatState: ChatState, repositoryState: RepositoryState) {
         // Update messages
         if self.repositoryUpdatedTimestamp < repositoryState.lastUpdatedTimestamp {
