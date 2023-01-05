@@ -126,28 +126,12 @@ struct ChatDemoView: View {
     }
 
     var meetingSelector: some View {
-        Group {
-            Picker("Chat Type", selection: $envConfigSubject.selectedChatType) {
-                Text("Group Chat").tag(ChatType.groupChat)
-                Text("Teams Meeting").tag(ChatType.teamsChat)
-            }.pickerStyle(.segmented)
-            switch envConfigSubject.selectedChatType {
-            case .groupChat:
-                TextField(
-                    "Group Chat ThreadId",
-                    text: $envConfigSubject.threadId)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-                .textFieldStyle(.roundedBorder)
-            case .teamsChat:
-                TextField(
-                    "Team Meeting",
-                    text: $envConfigSubject.teamsMeetingLink)
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-                .textFieldStyle(.roundedBorder)
-            }
-        }
+        TextField(
+            "Group Chat ThreadId",
+            text: $envConfigSubject.threadId)
+        .autocapitalization(.none)
+        .disableAutocorrection(true)
+        .textFieldStyle(.roundedBorder)
         .padding(.vertical, verticalPadding)
         .padding(.horizontal, horizontalPadding)
     }
@@ -181,12 +165,8 @@ struct ChatDemoView: View {
     var isStartExperienceDisabled: Bool {
         let acsToken = envConfigSubject.useExpiredToken ? envConfigSubject.expiredAcsToken : envConfigSubject.acsToken
         if (envConfigSubject.selectedAcsTokenType == .token && acsToken.isEmpty)
-            || envConfigSubject.selectedAcsTokenType == .tokenUrl && envConfigSubject.acsTokenUrl.isEmpty {
-            return true
-        }
-
-        if (envConfigSubject.selectedChatType == .groupChat && envConfigSubject.threadId.isEmpty)
-            || envConfigSubject.selectedChatType == .teamsChat && envConfigSubject.teamsMeetingLink.isEmpty {
+            || envConfigSubject.selectedAcsTokenType == .tokenUrl && envConfigSubject.acsTokenUrl.isEmpty
+            || envConfigSubject.threadId.isEmpty {
             return true
         }
 

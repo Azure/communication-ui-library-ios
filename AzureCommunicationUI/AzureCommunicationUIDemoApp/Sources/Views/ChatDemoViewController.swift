@@ -27,13 +27,10 @@ class ChatDemoViewController: UIViewController {
     private var displayNameTextField: UITextField!
     private var userIdTextField: UITextField!
     private var endpointUrlTextField: UITextField!
-    private var selectedMeetingType: ChatType = .groupChat
     private var chatThreadIdTextField: UITextField!
-    private var teamsMeetingTextField: UITextField!
     private var startExperienceButton: UIButton!
     private var stopButton: UIButton!
     private var acsTokenTypeSegmentedControl: UISegmentedControl!
-    private var meetingTypeSegmentedControl: UISegmentedControl!
     private var stackView: UIStackView!
     private var titleLabel: UILabel!
     private var titleLabelConstraint: NSLayoutConstraint!
@@ -129,12 +126,6 @@ class ChatDemoViewController: UIViewController {
         }
         if !envConfigSubject.threadId.isEmpty {
             chatThreadIdTextField.text = envConfigSubject.threadId
-            meetingTypeSegmentedControl.selectedSegmentIndex = 0
-        }
-
-        if !envConfigSubject.teamsMeetingLink.isEmpty {
-            teamsMeetingTextField.text = envConfigSubject.teamsMeetingLink
-            meetingTypeSegmentedControl.selectedSegmentIndex = 1
         }
     }
 
@@ -265,12 +256,7 @@ class ChatDemoViewController: UIViewController {
     }
 
     private func getMeetingLink() -> String {
-        switch selectedMeetingType {
-        case .groupChat:
-            return chatThreadIdTextField.text ?? ""
-        case .teamsChat:
-            return teamsMeetingTextField.text ?? ""
-        }
+        return chatThreadIdTextField.text ?? ""
     }
 
     private func registerNotifications() {
@@ -296,10 +282,6 @@ class ChatDemoViewController: UIViewController {
     @objc func onAcsTokenTypeValueChanged(_ sender: UISegmentedControl!) {
         selectedAcsTokenType = ACSTokenType(rawValue: sender.selectedSegmentIndex)!
         updateAcsTokenTypeFields()
-    }
-    @objc func onMeetingTypeValueChanged(_ sender: UISegmentedControl!) {
-        selectedMeetingType = ChatType(rawValue: sender.selectedSegmentIndex)!
-        updateMeetingTypeFields()
     }
 
     @objc func keyboardWillShow(notification: NSNotification) {
@@ -382,17 +364,6 @@ class ChatDemoViewController: UIViewController {
         }
     }
 
-    private func updateMeetingTypeFields() {
-        switch selectedMeetingType {
-        case .groupChat:
-            chatThreadIdTextField.isHidden = false
-            teamsMeetingTextField.isHidden = true
-        case .teamsChat:
-            chatThreadIdTextField.isHidden = true
-            teamsMeetingTextField.isHidden = false
-        }
-    }
-
     private func updateExperieceButton() {
         if isStartExperienceDisabled {
             startExperienceButton.backgroundColor = .systemGray3
@@ -413,8 +384,7 @@ class ChatDemoViewController: UIViewController {
             || (selectedAcsTokenType == .tokenUrl && acsTokenUrlTextField.text!.isEmpty)
             || (userIdTextField.text!.isEmpty)
             || (endpointUrlTextField.text!.isEmpty)
-            || (selectedMeetingType == .groupChat && chatThreadIdTextField.text!.isEmpty)
-            || (selectedMeetingType == .teamsChat && teamsMeetingTextField.text!.isEmpty) {
+            || (chatThreadIdTextField.text!.isEmpty) {
             return true
         }
 
@@ -496,23 +466,6 @@ class ChatDemoViewController: UIViewController {
         chatThreadIdTextField.borderStyle = .roundedRect
         chatThreadIdTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
 
-        teamsMeetingTextField = UITextField()
-        teamsMeetingTextField.placeholder = "Teams Meeting Link"
-        teamsMeetingTextField.text = envConfigSubject.teamsMeetingLink
-        teamsMeetingTextField.delegate = self
-        teamsMeetingTextField.sizeToFit()
-        teamsMeetingTextField.translatesAutoresizingMaskIntoConstraints = false
-        teamsMeetingTextField.borderStyle = .roundedRect
-        teamsMeetingTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
-
-        meetingTypeSegmentedControl = UISegmentedControl(items: ["Group Chat", "Teams Chat"])
-        meetingTypeSegmentedControl.selectedSegmentIndex = envConfigSubject.selectedMeetingType.rawValue
-        meetingTypeSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        meetingTypeSegmentedControl.addTarget(self,
-                                              action: #selector(onMeetingTypeValueChanged(_:)),
-                                              for: .valueChanged)
-        selectedMeetingType = envConfigSubject.selectedChatType
-
         startExperienceButton = UIButton()
         startExperienceButton.backgroundColor = .systemBlue
         startExperienceButton.setTitleColor(UIColor.white, for: .normal)
@@ -574,9 +527,7 @@ class ChatDemoViewController: UIViewController {
                                                    displayNameTextField,
                                                    userIdTextField,
                                                    endpointUrlTextField,
-                                                   meetingTypeSegmentedControl,
                                                    chatThreadIdTextField,
-                                                   teamsMeetingTextField,
                                                    startButtonHStack])
         stackView.spacing = LayoutConstants.stackViewSpacingPortrait
         stackView.axis = .vertical
@@ -610,7 +561,6 @@ class ChatDemoViewController: UIViewController {
         startButtonHSpacer2.widthAnchor.constraint(equalTo: startButtonHSpacer1.widthAnchor).isActive = true
 
         updateAcsTokenTypeFields()
-        updateMeetingTypeFields()
         startExperienceButton.isEnabled = !isStartExperienceDisabled
         updateExperieceButton()
     }
