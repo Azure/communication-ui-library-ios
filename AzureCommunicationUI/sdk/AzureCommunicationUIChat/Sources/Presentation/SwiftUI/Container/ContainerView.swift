@@ -7,10 +7,8 @@ import SwiftUI
 
 struct ContainerView: View {
     let viewFactory: CompositeViewFactoryProtocol
-    let isRightToLeft: Bool
 
     var body: some View {
         viewFactory.makeChatView()
-        .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
     }
 }

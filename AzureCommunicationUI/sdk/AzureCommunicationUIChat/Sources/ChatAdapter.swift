@@ -25,7 +25,6 @@ public class ChatAdapter {
 
     // Dependencies
     var logger: Logger = DefaultLogger(category: "ChatComponent")
-    var localizationProvider: LocalizationProviderProtocol
     var compositeViewFactory: CompositeViewFactoryProtocol?
 
     private var chatConfiguration: ChatConfiguration
@@ -48,8 +47,6 @@ public class ChatAdapter {
                 credential: CommunicationTokenCredential,
                 threadId: String,
                 displayName: String? = nil) {
-        localizationProvider = LocalizationProvider(logger: logger)
-
         self.chatConfiguration = ChatConfiguration(
             endpoint: endpoint,
             identifier: identifier,
@@ -137,6 +134,8 @@ public class ChatAdapter {
             chatThreadId: chatThreadId,
             connectEventHandler: connectEventHandler
         )
+
+        let localizationProvider = LocalizationProvider(logger: logger)
 
         compositeViewFactory = CompositeViewFactory(
             logger: logger,

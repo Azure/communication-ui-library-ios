@@ -9,11 +9,8 @@ import SwiftUI
 class ContainerUIHostingController: UIHostingController<ContainerUIHostingController.Root> {
     private let cancelBag = CancelBag()
 
-    init(rootView: ContainerView,
-         isRightToLeft: Bool) {
+    init(rootView: ContainerView) {
         super.init(rootView: Root(containerView: rootView))
-        UIView.appearance().semanticContentAttribute = isRightToLeft ?
-            .forceRightToLeft : .forceLeftToRight
     }
 
     @objc required dynamic init?(coder aDecoder: NSCoder) {

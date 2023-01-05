@@ -9,7 +9,6 @@ import SwiftUI
 public struct ChatCompositeView: View {
     let chatAdapter: ChatAdapter
     let viewFactory: CompositeViewFactoryProtocol
-    let isRightToLeft: Bool
 
     /// Create an instance of ChatCompositeView with chatAdapter for a single chat thread
     /// - Parameters:
@@ -17,15 +16,12 @@ public struct ChatCompositeView: View {
     public init(with chatAdapter: ChatAdapter) {
         self.chatAdapter = chatAdapter
         self.viewFactory = self.chatAdapter.compositeViewFactory!
-        let localizationProvider = self.chatAdapter.localizationProvider
-        self.isRightToLeft = localizationProvider.isRightToLeft
     }
 
     /// The view body would be used to render the ChatCompositeView
     public var body: some View {
         VStack {
-            ContainerView(viewFactory: self.viewFactory,
-                          isRightToLeft: self.isRightToLeft)
+            ContainerView(viewFactory: self.viewFactory)
         }
     }
 }
