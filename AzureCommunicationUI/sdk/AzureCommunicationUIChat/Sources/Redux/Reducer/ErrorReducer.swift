@@ -30,8 +30,31 @@ extension Reducer where State == ErrorState,
             errorType = nil
             error = nil
             errorCategory = .none
-
-            // Exhaustive unimplemented actions
+        case .chatAction(.sendTypingIndicatorFailed(let chatError)):
+            errorType = .typingIndicatorFailed
+            error = chatError
+            errorCategory = .chatState
+        case .participantsAction(.sendReadReceiptFailed(let participantError)):
+            errorType = .sendReadReceiptFailed
+            error = participantError
+            errorCategory = .chatState
+        case .repositoryAction(.fetchInitialMessagesFailed(let chatError)):
+            errorType = .fetchMessagesFailed
+            error = chatError
+            errorCategory = .chatState
+        case .participantsAction(.fetchListOfParticipantsFailed(let participantError)):
+            errorType = .requestParticipantsFetchFailed
+            error = participantError
+            errorCategory = .chatState
+        case .repositoryAction(.fetchPreviousMessagesFailed(let chatError)):
+            errorType = .fetchMessagesFailed
+            error = chatError
+            errorCategory = .chatState
+        case .repositoryAction(.sendMessageFailed(_, let chatError)):
+            errorType = .sendMessageFailed
+            error = chatError
+            errorCategory = .chatState
+        // Exhaustive unimplemented actions
         case .chatAction(_),
                 .participantsAction(_),
                 .lifecycleAction(_),
