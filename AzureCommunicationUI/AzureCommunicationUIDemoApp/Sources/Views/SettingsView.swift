@@ -40,6 +40,7 @@ struct SettingsView: View {
                 remoteParticipantsAvatarsSettings
                 themeSettings
             }
+            .accessibilityElement(children: .contain)
             .navigationTitle("UI Library - Settings")
             .toolbar {
                 Button(
@@ -54,21 +55,56 @@ struct SettingsView: View {
 
     var localParticipantSettings: some View {
         Section(header: Text("Local Participant Settings")) {
-            Toggle("Use expired token", isOn: $envConfigSubject.useExpiredToken)
-                .accessibilityIdentifier(AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue)
+            toggleWrapper {
+                expiredTokenToggle
+            } onTapGesture: {
+                envConfigSubject.useExpiredToken = !envConfigSubject.useExpiredToken
+            }
         }
+        .accessibilityElement(children: .contain)
+    }
+
+    // for iOS 14, taps are intercepted by Form for UI tests
+    // fix: add a tag gesture recognizer for a toggle
+    @ViewBuilder
+    func toggleWrapper(_ content: () -> some View,
+                       onTapGesture: @escaping () -> Void) -> some View {
+        if #unavailable(iOS 15) {
+            #if DEBUG
+            content()
+                .onTapGesture(perform: onTapGesture)
+            #else
+            content()
+            #endif
+        } else {
+            content()
+        }
+    }
+
+    var expiredTokenToggle: some View {
+        Toggle("Use expired token", isOn: $envConfigSubject.useExpiredToken)
+            .accessibilityIdentifier(AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue)
     }
 
     var useMockCallingSDKHandler: some View {
         #if DEBUG
         Section(header: Text("Calling SDK Wrapper Handler Mocking")) {
-            Toggle("Use mock Calling SDK Wrapper Handler",
-                   isOn: $envConfigSubject.useMockCallingSDKHandler)
-                .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
+            toggleWrapper {
+                mockCallingSDKToggle
+            } onTapGesture: {
+                envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
+            }
         }
+        .accessibilityElement(children: .contain)
         #else
         EmptyView()
         #endif
+    }
+
+    var mockCallingSDKToggle: some View {
+        Toggle("Use mock Calling SDK Wrapper Handler",
+               isOn: $envConfigSubject.useMockCallingSDKHandler)
+        .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
     }
 
     var localizationSettings: some View {

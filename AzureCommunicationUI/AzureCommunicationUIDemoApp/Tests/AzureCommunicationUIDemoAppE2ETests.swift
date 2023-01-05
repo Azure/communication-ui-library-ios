@@ -14,24 +14,14 @@ class AzureCommunicationUIDemoAppE2ETests: XCUITestBase {
     }
 
     func testCallCompositeE2ETokenURLTeamsCall() {
-        if #unavailable(iOS 15) {
-            // switches doesn't work as expected for callSwiftUI for iOS 14
-            tapInterfaceFor(.callUIKit)
-        } else {
-            tapInterfaceFor(.callSwiftUI)
-        }
+        tapInterfaceFor(.callSwiftUI)
         tapConnectionTokenType(.acsTokenUrl)
         tapMeetingType(.teamsCall)
         e2eTest()
     }
 
     func testCallCompositeE2ETokenValueGroupCall() {
-        if #unavailable(iOS 15) {
-            // switches doesn't work as expected for callSwiftUI for iOS 14
-            tapInterfaceFor(.callUIKit)
-        } else {
-            tapInterfaceFor(.callSwiftUI)
-        }
+        tapInterfaceFor(.callSwiftUI)
         e2eTest()
     }
 

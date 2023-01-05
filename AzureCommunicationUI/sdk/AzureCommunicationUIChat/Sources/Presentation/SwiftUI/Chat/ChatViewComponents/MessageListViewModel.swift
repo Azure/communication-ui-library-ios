@@ -100,28 +100,22 @@ class MessageListViewModel: ObservableObject {
         }
     }
 
-    func startDidEndScrollingTimer(currentOffset: CGFloat?) {
-        guard currentOffset == nil || currentOffset != scrollOffset else {
-            return
-        }
+    func startDidEndScrollingTimer() {
         if didEndScrollingTimer != nil {
             didEndScrollingTimer?.invalidate()
         }
         didEndScrollingTimer = Timer.scheduledTimer(
             withTimeInterval: scrollEndsTolerance,
             repeats: false) { [weak self]_ in
-            self?.sendReadReceipt(messageId: self?.readReceiptToBeSentMessageId)
+                guard let messageId = self?.readReceiptToBeSentMessageId,
+                    let toBeSentReadReceiptTimestamp = messageId.convertEpochStringToTimestamp(),
+                    let lastSentReadReceiptTimestamp = self?.lastSentReadReceiptTimestamp,
+                    toBeSentReadReceiptTimestamp > lastSentReadReceiptTimestamp else {
+                    return
+                }
+                self?.dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: messageId)))
+                self?.lastSentReadReceiptTimestamp = toBeSentReadReceiptTimestamp
         }
-    }
-
-    func sendReadReceipt(messageId: String?) {
-        guard let messageId = messageId,
-            let toBeSentReadReceiptTimestamp = messageId.convertEpochStringToTimestamp(),
-            toBeSentReadReceiptTimestamp > lastSentReadReceiptTimestamp else {
-            return
-        }
-        dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: messageId)))
-        lastSentReadReceiptTimestamp = toBeSentReadReceiptTimestamp
     }
 
     func update(chatState: ChatState, repositoryState: RepositoryState) {
@@ -139,7 +133,6 @@ class MessageListViewModel: ObservableObject {
             // Check if initial messages have been fetched
             if self.hasFetchedInitialMessages != repositoryState.hasFetchedInitialMessages {
                 self.hasFetchedInitialMessages = repositoryState.hasFetchedInitialMessages
-
                 // Assume all messages are seen by others when re-joining the chat
                 if let latestSeenMessage = messages.last(where: {$0.isLocalUser}) {
                     latestSeenMessageId = latestSeenMessage.id

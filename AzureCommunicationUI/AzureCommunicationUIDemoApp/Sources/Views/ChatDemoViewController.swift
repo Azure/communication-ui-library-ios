@@ -196,16 +196,17 @@ class ChatDemoViewController: UIViewController {
 
     private func showError(errorCode: String) {
         var errorMessage = ""
-        // cases are hard coded for now
-        // since ChatCompositeErrorCode is internal
         switch errorCode {
-        case "connectFailed":
+        case ChatCompositeErrorCode.joinFailed:
             errorMessage = "Connection Failed"
-        case "authorizationFailed":
-            errorMessage = "Authorization Failed"
-        case "disconnectFailed":
+        case ChatCompositeErrorCode.disconnectFailed:
             errorMessage = "Disconnect Failed"
-        case "messageSendFailed":
+        case ChatCompositeErrorCode.sendMessageFailed,
+            ChatCompositeErrorCode.fetchMessagesFailed,
+            ChatCompositeErrorCode.requestParticipantsFetchFailed,
+            ChatCompositeErrorCode.sendReadReceiptFailed,
+            ChatCompositeErrorCode.sendTypingIndicatorFailed,
+            ChatCompositeErrorCode.disconnectFailed:
             // no alert
             return
         default:

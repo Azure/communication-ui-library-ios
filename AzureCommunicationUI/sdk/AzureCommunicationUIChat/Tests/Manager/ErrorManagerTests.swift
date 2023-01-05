@@ -50,7 +50,7 @@ class ErrorManagerTests: XCTestCase {
     }
 
     func test_errorManager_receiveState_when_nonFatalErrorSendMessage_then_receiveDidFail() {
-        let nonFatalError = ChatCompositeError(code: ChatCompositeErrorCode.messageSendFailed, error: nil)
+        let nonFatalError = ChatCompositeError(code: ChatCompositeErrorCode.sendMessageFailed, error: nil)
         self.expectedError = nonFatalError
         let errorState = ErrorState(internalError: .messageSendFailed,
                                     error: nil,
@@ -62,7 +62,7 @@ class ErrorManagerTests: XCTestCase {
     }
 
     func test_errorManager_receiveState_when_fatalErrorChatConnect_then_receiveDidFail() {
-        let fatalError = ChatCompositeError(code: ChatCompositeErrorCode.connectFailed, error: nil)
+        let fatalError = ChatCompositeError(code: ChatCompositeErrorCode.joinFailed, error: nil)
         self.expectedError = fatalError
         let errorState = ErrorState(internalError: .connectFailed,
                                     error: nil,
@@ -75,7 +75,7 @@ class ErrorManagerTests: XCTestCase {
 
     func test_errorManager_receiveState_when_fatalErrorTokenExpired_then_receiveEmergencyExitAction() {
         let fatalError = ChatCompositeError(
-            code: ChatCompositeErrorCode.connectFailed,
+            code: ChatCompositeErrorCode.joinFailed,
             error: nil)
 
         self.expectedError = fatalError

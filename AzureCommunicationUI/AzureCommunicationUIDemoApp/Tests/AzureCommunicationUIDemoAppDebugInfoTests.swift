@@ -30,12 +30,7 @@ class AzureCommunicationUIDemoAppDebugInfoTests: XCUITestBase {
 
 extension AzureCommunicationUIDemoAppDebugInfoTests {
     func startCall() {
-        if #unavailable(iOS 15) {
-            // switches doesn't work as expected for callSwiftUI for iOS 14
-            tapInterfaceFor(.callUIKit)
-        } else {
-            tapInterfaceFor(.callSwiftUI)
-        }
+        tapInterfaceFor(.callSwiftUI)
         tapMeetingType(.groupCall)
 
         startExperience()

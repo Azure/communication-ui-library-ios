@@ -238,16 +238,17 @@ extension ChatDemoView {
         print("::::SwiftUIChatDemoView::showError \(error)")
         print("::::SwiftUIChatDemoView error.code \(error.code)")
         print("Error - \(error.code): \(error.error?.localizedDescription ?? error.localizedDescription)")
-        // cases are hard coded for now
-        // since ChatCompositeErrorCode is internal
         switch error.code {
-        case "connectFailed":
+        case ChatCompositeErrorCode.joinFailed:
             errorMessage = "Connection Failed"
-        case "authorizationFailed":
-            errorMessage = "Authorization Failed"
-        case "disconnectFailed":
+        case ChatCompositeErrorCode.disconnectFailed:
             errorMessage = "Disconnect Failed"
-        case "messageSendFailed":
+        case ChatCompositeErrorCode.sendMessageFailed,
+            ChatCompositeErrorCode.fetchMessagesFailed,
+            ChatCompositeErrorCode.requestParticipantsFetchFailed,
+            ChatCompositeErrorCode.sendReadReceiptFailed,
+            ChatCompositeErrorCode.sendTypingIndicatorFailed,
+            ChatCompositeErrorCode.disconnectFailed:
             // no alert
             return
         default:
