@@ -107,18 +107,15 @@ class MessageListViewModel: ObservableObject {
         didEndScrollingTimer = Timer.scheduledTimer(
             withTimeInterval: scrollEndsTolerance,
             repeats: false) { [weak self]_ in
-            self?.sendReadReceipt(messageId: self?.readReceiptToBeSentMessageId)
+                guard let messageId = self?.readReceiptToBeSentMessageId,
+                    let toBeSentReadReceiptTimestamp = messageId.convertEpochStringToTimestamp(),
+                    let lastSentReadReceiptTimestamp = self?.lastSentReadReceiptTimestamp,
+                    toBeSentReadReceiptTimestamp > lastSentReadReceiptTimestamp else {
+                    return
+                }
+                self?.dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: messageId)))
+                self?.lastSentReadReceiptTimestamp = toBeSentReadReceiptTimestamp
         }
-    }
-
-    func sendReadReceipt(messageId: String?) {
-        guard let messageId = messageId,
-            let toBeSentReadReceiptTimestamp = messageId.convertEpochStringToTimestamp(),
-            toBeSentReadReceiptTimestamp > lastSentReadReceiptTimestamp else {
-            return
-        }
-        dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: messageId)))
-        lastSentReadReceiptTimestamp = toBeSentReadReceiptTimestamp
     }
 
     func update(chatState: ChatState, repositoryState: RepositoryState) {
