@@ -91,6 +91,64 @@ class MessageRepositoryManagerTests: XCTestCase {
                        duplicateCount)
     }
 
+    func test_messageRepositoryManager_addPreviousMessages_with_messagesBeforeInitialFetchTimestamp_then_messagesCountWillBeMatching() {
+        let expectedMessageCount = 3
+        let initialMessages = [
+            ChatMessageInfoModel()
+        ]
+        let initialFetchTimestamp = Iso8601Date()
+
+        let sut = makeSUT(messages: initialMessages)
+        sut.initialFetchTimestamp = initialFetchTimestamp
+
+        let previousMessages1 = [
+            ChatMessageInfoModel(createdOn: Iso8601Date(initialFetchTimestamp.value - 1)),
+            ChatMessageInfoModel(type: .participantsAdded, createdOn: Iso8601Date(initialFetchTimestamp.value - 2))
+        ]
+
+        sut.addPreviousMessages(previousMessages: previousMessages1)
+        XCTAssertEqual(initialMessages.count +
+                       previousMessages1.count,
+                       expectedMessageCount)
+    }
+
+    func test_messageRepositoryManager_addPreviousMessages_with_messagesAfterInitialFetchTimestamp_then_messagesCountWillBeIgnoreSystemMessages() {
+        let expectedMessageCount = 4
+        let initialMessages = [
+            ChatMessageInfoModel()
+        ]
+        let initialFetchTimestamp = Iso8601Date()
+        let sut = makeSUT(messages: initialMessages)
+        sut.initialFetchTimestamp = initialFetchTimestamp
+
+        let systemMessagesAfterCount = 3
+        let previousMessages1 = [
+            ChatMessageInfoModel(
+                type: .participantsAdded,
+                createdOn: Iso8601Date(initialFetchTimestamp.value - 2)),
+            ChatMessageInfoModel(
+                createdOn: Iso8601Date(initialFetchTimestamp.value - 1)),
+            ChatMessageInfoModel(
+                createdOn: Iso8601Date(initialFetchTimestamp.value + 1)),
+            // below will not be added
+            ChatMessageInfoModel(
+                type: .participantsAdded,
+                createdOn: Iso8601Date(initialFetchTimestamp.value + 2)),
+            ChatMessageInfoModel(
+                type: .participantsRemoved,
+                createdOn: Iso8601Date(initialFetchTimestamp.value + 3)),
+            ChatMessageInfoModel(
+                type: .topicUpdated,
+                createdOn: Iso8601Date(initialFetchTimestamp.value + 4))
+        ]
+
+        sut.addPreviousMessages(previousMessages: previousMessages1)
+        XCTAssertEqual(initialMessages.count +
+                       previousMessages1.count -
+                       systemMessagesAfterCount,
+                       expectedMessageCount)
+    }
+
     func test_messageRepositoryManager_addNewSentMessage_when_nonEmptyInitialMessages_then_messagesCountWillBeIncrementByOne() {
         let initialMessages = [
             ChatMessageInfoModel(),
