@@ -10,6 +10,10 @@
 
 - Public Preview: [AzureCommunicationUIChat_1.0.0-beta.1](https://github.com/Azure/communication-ui-library-ios/releases/tag/AzureCommunicationUIChat_1.0.0-beta.1)
 
+## Getting Started
+
+Get started with Azure Communication Services by using the UI Library to integrate communication experiences into your applications. For detailed instructions to quickly integrate the UI Library functionalities visit the [Quick-start Documentation](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/ui-library/get-started-chat-ui-library?tabs=kotlin&pivots=platform-ios).
+
 ## Installation
 
 ### Requirements
