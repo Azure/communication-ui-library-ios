@@ -81,7 +81,7 @@ class ChatActionHandler: ChatActionHandling {
                 connectEventHandler?(.success(Void()))
             } catch {
                 connectEventHandler?(.failure(ChatCompositeError(
-                    code: ChatCompositeErrorCode.connectFailed,
+                    code: ChatCompositeErrorCode.joinFailed,
                     error: error)))
                 logger.error("Failed to initialize chat client due to error: \(error)")
                 dispatch(.chatAction(.initializeChatFailed(error: error)))
@@ -182,7 +182,6 @@ class ChatActionHandler: ChatActionHandling {
                 let initialMessages = try await chatService.getInitialMessages()
                 dispatch(.repositoryAction(.fetchInitialMessagesSuccess(messages: initialMessages)))
             } catch {
-                // dispatch error *not handled*
                 dispatch(.repositoryAction(.fetchInitialMessagesFailed(error: error)))
             }
         }
