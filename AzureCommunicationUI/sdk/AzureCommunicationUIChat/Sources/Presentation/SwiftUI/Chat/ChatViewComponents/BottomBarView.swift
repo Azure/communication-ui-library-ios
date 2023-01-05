@@ -24,7 +24,7 @@ struct BottomBarView: View {
                 sendButton
             }
         }
-        .padding([.leading, .trailing], Constants.padding)
+        .padding([.leading, .trailing, .bottom], Constants.padding)
     }
 
     var messageTextField: some View {
