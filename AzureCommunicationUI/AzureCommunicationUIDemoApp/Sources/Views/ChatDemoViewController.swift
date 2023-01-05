@@ -149,13 +149,11 @@ class ChatDemoViewController: UIViewController {
         Task { @MainActor in
             print("Dismissing chat")
             self.dismiss(animated: true, completion: { [weak self] in
-                self?.chatAdapter?.disconnect(completionHandler: { result in
-                    switch result {
-                    case .success:
-                        self?.chatAdapter = nil
-                    default:
-                        break
+                self?.chatAdapter?.disconnect(completionHandler: { [weak self] result in
+                    guard let self else {
+                        return
                     }
+                    self.onDisconnectFromChat(with: result)
                 })
             })
         }
@@ -183,7 +181,7 @@ class ChatDemoViewController: UIViewController {
             return
         }
         adapter.events.onError = { [weak self] chatCompositeError in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             print("::::UIKitChatDemoView::setupErrorHandler::onError \(chatCompositeError)")
@@ -191,6 +189,17 @@ class ChatDemoViewController: UIViewController {
             print("Error - \(chatCompositeError.code): " +
                   "\(chatCompositeError.error?.localizedDescription ?? chatCompositeError.localizedDescription)")
             self.showError(errorCode: chatCompositeError.code)
+        }
+    }
+
+    private func onDisconnectFromChat(with result: Result<Void, ChatCompositeError>) {
+        switch result {
+        case .success:
+            self.chatAdapter = nil
+            self.updateExperieceButton()
+            self.startExperienceButton.isEnabled = true
+        case .failure(let error):
+            print("disconnect error \(error)")
         }
     }
 
@@ -213,21 +222,14 @@ class ChatDemoViewController: UIViewController {
         }
         let errorAlert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
         errorAlert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: { [weak self] _ in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             self.chatAdapter?.disconnect(completionHandler: { [weak self] result in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
-                switch result {
-                case .success:
-                    self.chatAdapter = nil
-                    self.updateExperieceButton()
-                    self.startExperienceButton.isEnabled = true
-                case .failure(let error):
-                    print("disconnect error \(error)")
-                }
+                self.onDisconnectFromChat(with: result)
             })
         }))
         present(errorAlert,
@@ -358,13 +360,11 @@ class ChatDemoViewController: UIViewController {
 
     @objc func onStopBtnPressed() {
         Task { @MainActor in
-            self.chatAdapter?.disconnect(completionHandler: { result in
-                switch result {
-                case .success:
-                    self.chatAdapter = nil
-                case .failure(let error):
-                    print("error disconnecting: \(error)")
+            self.chatAdapter?.disconnect(completionHandler: { [weak self] result in
+                guard let self else {
+                    return
                 }
+                self.onDisconnectFromChat(with: result)
             })
 
             updateExperieceButton()
