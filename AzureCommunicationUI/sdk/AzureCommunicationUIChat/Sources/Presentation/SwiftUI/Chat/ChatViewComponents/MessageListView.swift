@@ -116,12 +116,15 @@ struct MessageListView: View {
 
     // Keep scroll location when receiving messages
     private func scrollToId(proxy: ScrollViewProxy) {
-        if viewModel.shouldScrollToId, viewModel.messageIdsOnScreen.count > 2 {
+        guard viewModel.shouldScrollToId else {
+            return
+        }
+        if viewModel.messageIdsOnScreen.count > 2 {
             let lastMessageIndex = viewModel.messageIdsOnScreen.count - 2
             let lastMessageId = viewModel.messageIdsOnScreen[lastMessageIndex]
             proxy.scrollTo(lastMessageId, anchor: .bottom)
-            viewModel.shouldScrollToId = false
         }
+        viewModel.shouldScrollToId = false
     }
 
     var jumpToNewMessagesButton: some View {
