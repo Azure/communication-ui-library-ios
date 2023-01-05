@@ -137,6 +137,9 @@ class MessageListViewModel: ObservableObject {
             if self.hasFetchedInitialMessages != repositoryState.hasFetchedInitialMessages {
                 self.hasFetchedInitialMessages = repositoryState.hasFetchedInitialMessages
 
+                if self.hasFetchedInitialMessages == true {
+                    startDidEndScrollingTimer(currentOffset: nil)
+                }
                 // Assume all messages are seen by others when re-joining the chat
                 if let latestSeenMessage = messages.last(where: {$0.isLocalUser}) {
                     latestSeenMessageId = latestSeenMessage.id

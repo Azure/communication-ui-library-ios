@@ -97,9 +97,6 @@ struct MessageListView: View {
                     viewModel.startDidEndScrollingTimer(currentOffset: nil)
                     scrollToId(proxy: scrollProxy)
                 }
-                .onChange(of: viewModel.hasFetchedInitialMessages) { _ in
-                    viewModel.startDidEndScrollingTimer(currentOffset: nil)
-                }
                 .onChange(of: viewModel.messages) { _ in
                     if viewModel.scrollSize < geometry.size.height {
                         viewModel.startDidEndScrollingTimer(currentOffset: nil)
