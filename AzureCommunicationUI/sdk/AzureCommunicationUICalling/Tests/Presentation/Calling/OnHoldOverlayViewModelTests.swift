@@ -8,11 +8,13 @@ import XCTest
 @testable import AzureCommunicationUICalling
 
 class OnHoldOverlayViewModelTests: XCTestCase {
-    var localizationProvider: LocalizationProviderMocking!
+    var localizationProviderMock: LocalizationProviderMocking!
+    var localizationProvider: LocalizationProviderProtocol!
 
     override func setUp() {
         super.setUp()
-        localizationProvider = LocalizationProviderMocking()
+        localizationProviderMock = LocalizationProviderMocking()
+        localizationProvider = localizationProviderMock
     }
 
     override func tearDown() {
@@ -28,7 +30,7 @@ class OnHoldOverlayViewModelTests: XCTestCase {
     func test_onHoldOverlayViewModel_displays_title_from_LocalizationMocking() {
         let sut = makeSUTLocalizationMocking()
         XCTAssertEqual(sut.title, "AzureCommunicationUICalling.OnHoldView.Text.OnHold")
-        XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
+        XCTAssertTrue(localizationProviderMock.isGetLocalizedStringCalled)
     }
 
     func test_onHoldOverlayViewModel_errorInfoMode_hasTitle_and_subtitle_from_LocalizationMocking() {
@@ -50,7 +52,7 @@ class OnHoldOverlayViewModelTests: XCTestCase {
 }
 
 extension OnHoldOverlayViewModelTests {
-    func makeSUT(localizationProvider: LocalizationProviderMocking? = nil) -> OnHoldOverlayViewModel {
+    func makeSUT(localizationProvider: LocalizationProviderProtocol? = nil) -> OnHoldOverlayViewModel {
         let logger = LoggerMocking()
         let storeFactory = StoreFactoryMocking()
         let factoryMocking = CompositeViewModelFactoryMocking(logger: logger, store: storeFactory.store)
