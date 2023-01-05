@@ -68,7 +68,7 @@ protocol CompositeViewModelFactoryProtocol {
 
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
     private let networkManager: NetworkManager
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
@@ -79,7 +79,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private weak var callingViewModel: CallingViewModel?
 
     init(logger: Logger,
-         store: Store<AppState>,
+         store: Store<AppState, Action>,
          networkManager: NetworkManager,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,

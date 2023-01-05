@@ -131,7 +131,7 @@ steps:
     inputs:
       version: 2.1.x
 
-  - task: EsrpCodeSigning@1
+  - task: EsrpCodeSigning@2
     displayName: 'ESRP CodeSigning'
     inputs:
       ConnectedServiceName: 'ESRP CodeSign Global'
