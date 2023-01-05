@@ -116,7 +116,7 @@ struct MessageListView: View {
 
     // Keep scroll location when receiving messages
     private func scrollToId(proxy: ScrollViewProxy) {
-        if viewModel.shouldScrollToId {
+        if viewModel.shouldScrollToId, viewModel.messageIdsOnScreen.count > 0 {
             let lastMessageIndex = viewModel.messageIdsOnScreen.count - 2 < 0
             ? 0
             : viewModel.messageIdsOnScreen.count - 2
