@@ -7,9 +7,13 @@ import Foundation
 
 enum ChatCompositeInternalError: String, Error, Equatable {
     case connectFailed
-    case authorizationFailed
     case disconnectFailed
+    case typingIndicatorFailed
     case messageSendFailed
+    case sendReadReceiptFailed
+    case fetchMessagesFailed
+    case requestParticipantsFetchFailed
+    case sendMessageFailed
 
     // event code
     case chatEvicted
@@ -18,29 +22,42 @@ enum ChatCompositeInternalError: String, Error, Equatable {
     func toChatCompositeErrorCode() -> String? {
         switch self {
         case .connectFailed:
-            return ChatCompositeErrorCode.connectFailed
-        case .authorizationFailed:
-            return ChatCompositeErrorCode.authorizationFailed
+            return ChatCompositeErrorCode.joinFailed
         case .disconnectFailed:
             return ChatCompositeErrorCode.disconnectFailed
+        case .typingIndicatorFailed:
+            return ChatCompositeErrorCode.sendTypingIndicatorFailed
+        case .messageSendFailed:
+            return ChatCompositeErrorCode.sendMessageFailed
+        case .sendReadReceiptFailed:
+            return ChatCompositeErrorCode.sendReadReceiptFailed
+        case .fetchMessagesFailed:
+            return ChatCompositeErrorCode.fetchMessagesFailed
+        case .requestParticipantsFetchFailed:
+            return ChatCompositeErrorCode.requestParticipantsFetchFailed
+        case .sendMessageFailed:
+            return ChatCompositeErrorCode.sendMessageFailed
         case .chatEvicted:
             return ChatCompositeEventCode.chatEvicted
         case .chatDenied:
             return ChatCompositeEventCode.chatDenied
-        case .messageSendFailed:
-            return ChatCompositeErrorCode.messageSendFailed
+
         }
     }
 
     func isFatalError() -> Bool {
         switch self {
         case .connectFailed,
-                .authorizationFailed,
                 .disconnectFailed:
             return true
-        case .chatDenied,
-                .chatEvicted,
-                .messageSendFailed:
+        case .typingIndicatorFailed,
+                .messageSendFailed,
+                .sendReadReceiptFailed,
+                .fetchMessagesFailed,
+                .requestParticipantsFetchFailed,
+                .sendMessageFailed,
+                .chatDenied,
+                .chatEvicted:
             return false
         }
     }
