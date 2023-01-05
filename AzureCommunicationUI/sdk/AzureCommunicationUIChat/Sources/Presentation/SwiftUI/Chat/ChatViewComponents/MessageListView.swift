@@ -47,7 +47,8 @@ struct MessageListView: View {
 
     var previousFetchActivityIndicator: some View {
         Group {
-            if !viewModel.hasFetchedPreviousMessages {
+            if !viewModel.hasFetchedPreviousMessages &&
+                !viewModel.hasFetchedAllMessages {
                 ActivityIndicator(size: .large)
                     .isAnimating(true)
                     .padding()
