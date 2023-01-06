@@ -42,6 +42,13 @@ The Chat UI Library requires a few dependencies. Please embed the following libr
 - Find the project [AzureCommunicationCommon.xcodeproj](https://github.com/Azure/azure-sdk-for-ios/tree/main/sdk/communication/AzureCommunicationCommon) in the repo source code and drag it into your project.
 - Follow [steps 1-6](#manual-installation-steps) of embedding `AzureCommunicationUIChat` and add `AzureCommunicationCommon` to your project.
 
+#### 3. [Trouter](https://github.com/microsoft/trouter-client-ios) version: [0.1.0](https://github.com/microsoft/trouter-client-ios/releases/tag/v0.1.0)
+
+- Download Trouter to your application folder
+- In Xcode, expand `AzureCommunicationChat`, then expand "Frameworks", drag `Trouter.xcframework` to it.
+- Remove old `Touter` reference under "Frameworks" which should be marked in red.
+
+
 **Related Issues**
 
 - **Buildtime issue: 'framework not found AzureCore'**
