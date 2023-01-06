@@ -16,82 +16,85 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
     private var remoteParticipantsMocking: [ParticipantInfoModel] = []
 
     func joinCall() {
-        Task { @MainActor in
+        Task { @MainActor [weak self] in
             try await Task<Never, Never>.sleep(nanoseconds: 2 * Constants.nanosecondsInSecond)
 
-            self.callInfoSubject.send(CallInfoModel(status: .connected,
+            self?.callInfoSubject.send(CallInfoModel(status: .connected,
                                                     internalError: nil))
         }
     }
 
     func joinLobby() {
-        Task { @MainActor in
+        Task { @MainActor [weak self] in
             try await Task<Never, Never>.sleep(nanoseconds: 2 * Constants.nanosecondsInSecond)
 
-            self.callInfoSubject.send(CallInfoModel(status: .inLobby,
+            self?.callInfoSubject.send(CallInfoModel(status: .inLobby,
                                                     internalError: nil))
         }
     }
 
     func endCall() {
-        Task { @MainActor in
-            self.callInfoSubject.send(CallInfoModel(status: .disconnected,
+        Task { @MainActor [weak self] in
+            self?.callInfoSubject.send(CallInfoModel(status: .disconnected,
                                                     internalError: nil))
         }
     }
 
     func holdCall() {
-        Task { @MainActor in
-            self.callInfoSubject.send(CallInfoModel(status: .localHold,
+        Task { @MainActor [weak self] in
+            self?.callInfoSubject.send(CallInfoModel(status: .localHold,
                                                     internalError: nil))
         }
     }
 
     func resumeCall() {
-        Task { @MainActor in
-            self.callInfoSubject.send(CallInfoModel(status: .connected,
+        Task { @MainActor [weak self] in
+            self?.callInfoSubject.send(CallInfoModel(status: .connected,
                                                     internalError: nil))
         }
     }
 
     func muteLocalMic() {
-        Task { @MainActor in
-            self.isLocalUserMutedSubject.send(true)
+        Task { @MainActor [weak self] in
+            self?.isLocalUserMutedSubject.send(true)
         }
     }
 
     func unmuteLocalMic() {
-        Task { @MainActor in
-            self.isLocalUserMutedSubject.send(false)
+        Task { @MainActor [weak self] in
+            self?.isLocalUserMutedSubject.send(false)
         }
     }
 
     func transcriptionOn() {
-        Task { @MainActor in
-            self.isTranscriptionActiveSubject.send(true)
+        Task { @MainActor [weak self] in
+            self?.isTranscriptionActiveSubject.send(true)
         }
     }
 
     func transcriptionOff() {
-        Task { @MainActor in
-            self.isTranscriptionActiveSubject.send(false)
+        Task { @MainActor [weak self] in
+            self?.isTranscriptionActiveSubject.send(false)
         }
     }
 
     func recordingOn() {
-        Task { @MainActor in
-            self.isRecordingActiveSubject.send(true)
+        Task { @MainActor [weak self] in
+            self?.isRecordingActiveSubject.send(true)
         }
     }
 
     func recordingOff() {
-        Task { @MainActor in
-            self.isRecordingActiveSubject.send(false)
+        Task { @MainActor [weak self] in
+            self?.isRecordingActiveSubject.send(false)
         }
     }
 
     func addParticipant() {
-        Task { @MainActor in
+        Task { @MainActor [weak self] in
+            guard let self else {
+                return
+            }
             let participantNameIdentifier = "RM-\(self.remoteParticipantsMocking.count + 1)"
             let newParticipant = ParticipantInfoModel(displayName: participantNameIdentifier,
                                                       isSpeaking: false,
@@ -107,8 +110,9 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
     }
 
     func removeParticipant() {
-        Task { @MainActor in
-            guard !self.remoteParticipantsMocking.isEmpty else {
+        Task { @MainActor [weak self] in
+            guard let self,
+                  !self.remoteParticipantsMocking.isEmpty else {
                 return
             }
             self.remoteParticipantsMocking.removeLast()
@@ -117,8 +121,9 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
     }
 
     func unmuteParticipant() {
-        Task { @MainActor in
-            guard !self.remoteParticipantsMocking.isEmpty else {
+        Task { @MainActor [weak self] in
+            guard let self,
+                  !self.remoteParticipantsMocking.isEmpty else {
                 return
             }
             let last = self.remoteParticipantsMocking.removeLast()
@@ -137,8 +142,9 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
     }
 
     func holdParticipant() {
-        Task { @MainActor in
-            guard self.remoteParticipantsMocking.isEmpty else {
+        Task { @MainActor [weak self] in
+            guard let self,
+                  self.remoteParticipantsMocking.isEmpty else {
                 return
             }
             let last = self.remoteParticipantsMocking.removeLast()
