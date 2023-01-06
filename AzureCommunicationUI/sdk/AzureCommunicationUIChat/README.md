@@ -30,9 +30,6 @@ CocoaPods is a dependency manager. To set up with CocoaPods visit their [Getting
 pod 'AzureCommunicationUIChat', '1.0.0-beta.1'
 ```
 
-### Manual Installation
-If you prefer importing Mobile UI Library as an Embedded Framework to your project, please see [Manual Installation](manual-installation.md) for instructions.
-
 ## Quick Sample
 
 The Chat Composite requires two objects to work together, the adapter and the view.
