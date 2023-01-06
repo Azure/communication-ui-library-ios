@@ -20,7 +20,7 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
             try await Task<Never, Never>.sleep(nanoseconds: 2 * Constants.nanosecondsInSecond)
 
             self.callInfoSubject.send(CallInfoModel(status: .connected,
-                                                     internalError: nil))
+                                                    internalError: nil))
         }
     }
 
@@ -29,28 +29,28 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
             try await Task<Never, Never>.sleep(nanoseconds: 2 * Constants.nanosecondsInSecond)
 
             self.callInfoSubject.send(CallInfoModel(status: .inLobby,
-                                                     internalError: nil))
+                                                    internalError: nil))
         }
     }
 
     func endCall() {
         Task { @MainActor in
             self.callInfoSubject.send(CallInfoModel(status: .disconnected,
-                                               internalError: nil))
+                                                    internalError: nil))
         }
     }
 
     func holdCall() {
         Task { @MainActor in
             self.callInfoSubject.send(CallInfoModel(status: .localHold,
-                                               internalError: nil))
+                                                    internalError: nil))
         }
     }
 
     func resumeCall() {
         Task { @MainActor in
             self.callInfoSubject.send(CallInfoModel(status: .connected,
-                                               internalError: nil))
+                                                    internalError: nil))
         }
     }
 
