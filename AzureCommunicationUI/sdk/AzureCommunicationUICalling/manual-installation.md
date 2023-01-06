@@ -8,7 +8,7 @@ This documentation is meant to facilitate developers who wish to embed UI librar
 2. Open your existing iOS application Xcode project in `xcworkspace`.
 3. Drag the `AzureCommunicationUICalling.xcodeproj` from path `<ROOT>/AzureCommunicationUI/sdk/AzureCommunicationUICalling` into your Xcode project's `xcworkspace` in Xcode.
 4. Select your application project in the Xcode Navigator, and open the target in which you want to import Mobile UI Library to.
-5. Open the "General" panel and click on the `+` button under the "Frameworks, Libraries and Embedded Content"  section.
+5. Open the "General" panel and click on the `+` button under the "Frameworks, Libraries and Embedded Content" section.
 6. Select `AzureCommunicationUICalling.framework` and click "Add." Now you can `import AzureCommunicationUIChat` inside your project to use Mobile UI Library.
 7. Follow the [Dependencies Installation](#dependencies-installation) section to include all dependencies in your project.
 8. Select project `AzureCommunicationUICalling.xcodeproj` in your workspace, open the target and scroll to the "Frameworks and Libraries" section, link dependent frameworks `libFluentUI.a`, `AzureCommunicationCalling` and `AzureCommunicationCommon`. Set the frameworks to `Do Not Embed` for reducing the app size if needed.
@@ -102,4 +102,4 @@ if #available(iOS 14.0, *) {
 }
 ```
 
-This method provides a way to load a framework into your application only if it is supported by the version of iOS. 
+This method provides a way to load a framework into your application only if it is supported by the version of iOS.
