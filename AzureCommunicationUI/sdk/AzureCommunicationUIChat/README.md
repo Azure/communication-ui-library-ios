@@ -1,6 +1,6 @@
-# Azure Communication UI Mobile Library for iOS - Chat
-
 ![Hero Image](/docs/images/mobile-ui-library-chat-hero-image.png?raw=true)
+
+# Azure Communication UI Mobile Library for iOS - Chat
 
 ![Cocoapods](https://img.shields.io/cocoapods/l/AzureCommunicationUIChat)
 ![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AzureCommunicationUIChat)
