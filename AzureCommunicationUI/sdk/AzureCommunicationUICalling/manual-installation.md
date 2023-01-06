@@ -8,7 +8,7 @@ It is possible to add the UI library manually, rather than using cocoapods.
 2. Open your existing iOS application Xcode project in `xcworkspace`.
 3. Drag the `AzureCommunicationUICalling.xcodeproj` from the newly added subfolder path `/AzureCommunicationUI/sdk/AzureCommunicationUICalling` into your Xcode project's `xcworkspace`.
 4. Select your application project in the Xcode Navigator, and open the target that you want to import Mobile UI Library.
-5. Open the "General" panel and click on the `+` button under the "Frameworks and Libraries" section.
+5. Open the "General" panel and click on the `+` button under the "Frameworks, Libraries, and Embedded Content" section.
 6. Select `AzureCommunicationUICalling.framework` and then you can `import AzureCommunicationUICalling` inside your project to use Mobile UI Library.
 7. Follow the [Other Dependencies Installation](#other-dependencies-installation) section to include all dependencies in your project.
 8. Select project `AzureCommunicationUICalling.xcodeproj` in your workspace, open the target and scroll to the "Frameworks and Libraries" section, link dependent frameworks `libFluentUI.a`, `AzureCommunicationCalling` and `AzureCommunicationCommon`. Update the frameworks to `Do Not Embed` for reducing the app size purpose.
