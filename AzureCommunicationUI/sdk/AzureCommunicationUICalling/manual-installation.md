@@ -4,7 +4,7 @@ This documentation is meant to facilitate developers who wish to embed UI librar
 
 ## Manual Installation Steps
 
-1. Download, clone or submodule the latest [`AzureCommunicationUICalling`](https://github.com/Azure/azure-communication-ui-library-ios) Library to your project root directory ("<ROOT>").
+1. Download, clone or submodule the latest [`AzureCommunicationUICalling`](https://github.com/Azure/azure-communication-ui-library-ios) Library to your project root directory ("`<ROOT>`").
 2. Open your existing iOS application Xcode project in `xcworkspace`.
 3. Drag the `AzureCommunicationUICalling.xcodeproj` from path `<ROOT>/AzureCommunicationUI/sdk/AzureCommunicationUICalling` into your Xcode project's `xcworkspace` in Xcode.
 4. Select your application project in the Xcode Navigator, and open the target in which you want to import Mobile UI Library to.
