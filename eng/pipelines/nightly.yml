@@ -22,7 +22,7 @@ schedules:
     always: true
     
 variables:
-  AppCenterDevicesOverride: ''  # This should be in the form 'Azure-Communication-Services/<your_device_set_name>'
+  AppCenterDevicesOverride: 'Azure-Communication-Services/ios14problemset'  # This should be in the form 'Azure-Communication-Services/<your_device_set_name>'
   buildHourOfDayUtc: $[format('{0:H}', pipeline.startTime)]
 
 jobs:
