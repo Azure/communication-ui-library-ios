@@ -3,6 +3,7 @@
 //  Licensed under the MIT License.
 //
 
+import Combine
 import Foundation
 import UIKit
 import SwiftUI
@@ -10,15 +11,38 @@ import CoreGraphics
 
 class EntryViewController: UIViewController {
     private var envConfigSubject: EnvConfigSubject
+#if DEBUG
+    private var window: FloatingUITestWindow?
+    private var callingSDKWrapperMock: UITestCallingSDKWrapper?
+#endif
+    private var cancellables = Set<AnyCancellable>()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+#if DEBUG
+        let scenes = UIApplication.shared.connectedScenes
+        if let windowScenes = scenes.first as? UIWindowScene {
+            let callSDKWrapperMock = UITestCallingSDKWrapper()
+            self.callingSDKWrapperMock = callSDKWrapperMock
+            window = FloatingUITestWindow(windowScene: windowScenes)
+            window?.callingSDKWrapperMock = callSDKWrapperMock
+            window?.windowLevel = .alert + 1
+            window?.makeKeyAndVisible()
+            window?.isHidden = true
+        }
+#endif
     }
 
     init(envConfigSubject: EnvConfigSubject) {
         self.envConfigSubject = envConfigSubject
         super.init(nibName: nil, bundle: nil)
+#if DEBUG
+        envConfigSubject.$useMockCallingSDKHandler.sink { [weak self] newVal in
+            // If callingSDK Mock is used, then show the hidden window
+            self?.window?.isHidden = !newVal
+        }.store(in: &cancellables)
+#endif
     }
 
     required init?(coder: NSCoder) {
@@ -41,28 +65,67 @@ class EntryViewController: UIViewController {
         startSwiftUIButton.backgroundColor = .systemBlue
         startSwiftUIButton.contentEdgeInsets = UIEdgeInsets.init(top: 10, left: 20, bottom: 10, right: 20)
         startSwiftUIButton.layer.cornerRadius = 8
-        startSwiftUIButton.setTitle("Swift UI", for: .normal)
+        startSwiftUIButton.setTitle("Call - Swift UI", for: .normal)
         startSwiftUIButton.sizeToFit()
         startSwiftUIButton.translatesAutoresizingMaskIntoConstraints = false
-        startSwiftUIButton.addTarget(self, action: #selector(onSwiftUIPressed), for: .touchUpInside)
+        startSwiftUIButton.addTarget(self, action: #selector(onCallingSwiftUIPressed), for: .touchUpInside)
 
         let startUiKitButton = UIButton()
         startUiKitButton.backgroundColor = .systemBlue
         startUiKitButton.contentEdgeInsets = UIEdgeInsets.init(top: 10, left: 20, bottom: 10, right: 20)
         startUiKitButton.layer.cornerRadius = 8
-        startUiKitButton.setTitle("UI Kit", for: .normal)
+        startUiKitButton.setTitle("Call - UI Kit", for: .normal)
         startUiKitButton.sizeToFit()
         startUiKitButton.translatesAutoresizingMaskIntoConstraints = false
-        startUiKitButton.addTarget(self, action: #selector(onUIKitPressed), for: .touchUpInside)
+        startUiKitButton.addTarget(self, action: #selector(onCallingUIKitPressed), for: .touchUpInside)
 
-        let stackView = UIStackView(arrangedSubviews: [startSwiftUIButton,
-                                                       startUiKitButton])
-        stackView.spacing = margin
-        stackView.axis = .horizontal
-        stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(stackView)
+        let startChatSwiftUIButton = UIButton()
+        startChatSwiftUIButton.backgroundColor = .systemBlue
+        startChatSwiftUIButton.contentEdgeInsets = UIEdgeInsets.init(top: 10, left: 20, bottom: 10, right: 20)
+        startChatSwiftUIButton.layer.cornerRadius = 8
+        startChatSwiftUIButton.setTitle("Chat - Swift UI", for: .normal)
+        startChatSwiftUIButton.sizeToFit()
+        startChatSwiftUIButton.translatesAutoresizingMaskIntoConstraints = false
+        startChatSwiftUIButton.addTarget(self, action: #selector(onChatSwiftUIPressed), for: .touchUpInside)
+
+        let startChatUIKitButton = UIButton()
+        startChatUIKitButton.backgroundColor = .systemBlue
+        startChatUIKitButton.contentEdgeInsets = UIEdgeInsets.init(top: 10, left: 20, bottom: 10, right: 20)
+        startChatUIKitButton.layer.cornerRadius = 8
+        startChatUIKitButton.setTitle("Chat - UI Kit", for: .normal)
+        startChatUIKitButton.sizeToFit()
+        startChatUIKitButton.translatesAutoresizingMaskIntoConstraints = false
+        startChatUIKitButton.addTarget(self, action: #selector(onChatUIKitPressed), for: .touchUpInside)
+
+        let horizontalCallingStackView = UIStackView(arrangedSubviews: [
+            startSwiftUIButton,
+            startUiKitButton])
+        horizontalCallingStackView.spacing = margin
+        horizontalCallingStackView.axis = .horizontal
+        horizontalCallingStackView.alignment = .fill
+        horizontalCallingStackView.distribution = .fillEqually
+        horizontalCallingStackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(horizontalCallingStackView)
+
+        let horizontalChatStackView = UIStackView(arrangedSubviews: [
+            startChatSwiftUIButton,
+            startChatUIKitButton])
+        horizontalChatStackView.spacing = margin
+        horizontalChatStackView.axis = .horizontal
+        horizontalChatStackView.alignment = .fill
+        horizontalChatStackView.distribution = .fillEqually
+        horizontalChatStackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(horizontalChatStackView)
+
+        let verticalStackView = UIStackView(arrangedSubviews: [
+            horizontalCallingStackView,
+            horizontalChatStackView])
+        verticalStackView.spacing = margin
+        verticalStackView.axis = .vertical
+        verticalStackView.alignment = .fill
+        verticalStackView.distribution = .fillEqually
+        verticalStackView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(verticalStackView)
 
         let versionLabel = UILabel()
         versionLabel.text = getAppVersion()
@@ -74,10 +137,10 @@ class EntryViewController: UIViewController {
             titleLabel.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: margins.topAnchor, constant: margin),
 
-            stackView.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: margins.centerYAnchor),
-            stackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: margin),
-            stackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -margin),
+            verticalStackView.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
+            verticalStackView.centerYAnchor.constraint(equalTo: margins.centerYAnchor, constant: margin * 2),
+            verticalStackView.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: margin),
+            verticalStackView.trailingAnchor.constraint(equalTo: margins.trailingAnchor, constant: -margin),
 
             versionLabel.centerXAnchor.constraint(equalTo: margins.centerXAnchor),
             versionLabel.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -margin)
@@ -85,17 +148,41 @@ class EntryViewController: UIViewController {
         NSLayoutConstraint.activate(constraints)
     }
 
-    @objc func onSwiftUIPressed() {
-        let swiftUIDemoView = SwiftUIDemoView(envConfigSubject: envConfigSubject)
+    @objc func onCallingSwiftUIPressed() {
+#if DEBUG
+        let swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject,
+                                              callingSDKWrapperMock: callingSDKWrapperMock)
+#else
+        let swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject)
+#endif
         let swiftUIDemoViewHostingController = UIHostingController(rootView: swiftUIDemoView)
         swiftUIDemoViewHostingController.modalPresentationStyle = .fullScreen
         present(swiftUIDemoViewHostingController, animated: true, completion: nil)
     }
 
-    @objc func onUIKitPressed() {
-        let uiKitDemoViewController = UIKitDemoViewController(envConfigSubject: envConfigSubject)
+    @objc func onCallingUIKitPressed() {
+#if DEBUG
+        let uiKitDemoViewController = CallingDemoViewController(envConfigSubject: envConfigSubject,
+                                                                callingSDKHandlerMock: callingSDKWrapperMock)
+#else
+        let uiKitDemoViewController = CallingDemoViewController(envConfigSubject: envConfigSubject)
+#endif
         uiKitDemoViewController.modalPresentationStyle = .fullScreen
         present(uiKitDemoViewController, animated: true, completion: nil)
+    }
+
+    @objc func onChatSwiftUIPressed() {
+        let chatSwiftUIDemoView = ChatDemoView(
+            envConfigSubject: envConfigSubject)
+        let chatSwiftUIDemoHostingController = UIHostingController(rootView: chatSwiftUIDemoView)
+        chatSwiftUIDemoHostingController.modalPresentationStyle = .fullScreen
+        present(chatSwiftUIDemoHostingController, animated: true, completion: nil)
+    }
+
+    @objc func onChatUIKitPressed() {
+        let chatUIKitDemoViewController = ChatDemoViewController(envConfigSubject: envConfigSubject)
+        chatUIKitDemoViewController.modalPresentationStyle = .fullScreen
+        present(chatUIKitDemoViewController, animated: true, completion: nil)
     }
 
     func getAppVersion() -> String {
