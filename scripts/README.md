@@ -6,7 +6,7 @@ This ```script``` folder contains a list of scripts that facilitates the release
 
 | Name                 | Area        | Link |
 |----------------------|-------------|------|
-| main-repo-updater.py | Main Repo   | [Go](main-repo-updater.py)     |
+| main-repo-updater.py | Main Repo (Calling Only)  | [Go](main-repo-updater.py)     |
 | TBA                  | CocoaPods   | TBA  |
 | TBA                  | QuickStarts | TBA  |
 | TBA                  | MS Doc      | TBA  |
@@ -14,7 +14,7 @@ This ```script``` folder contains a list of scripts that facilitates the release
 ## Main Repo Script
 #### Details
 
-The ```main-repo-updater.py ``` would perform version update for the following files:
+The ```main-repo-updater.py ``` would perform version update for the following files for calling:
 - Info.plist
 - DiagnosticConfigTests
 - project.pbxproj
