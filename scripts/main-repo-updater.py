@@ -11,7 +11,7 @@ acs_UI_library_Path = '../'
 info_plist_path = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Info.plist'
 telemetry_Tag_path = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/Tests/CallCompositeOptions/DiagnosticConfigTests.swift'
 pbx_path = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj/project.pbxproj'
-main_readme_path = 'README.md'
+main_readme_path = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/README.md'
 pattern_pod = "pod 'AzureCommunicationUICalling', '%s'"
 pattern_telemetry = 'aci110/%s'
 pattern_pbx = 'MARKETING_VERSION = %s'
