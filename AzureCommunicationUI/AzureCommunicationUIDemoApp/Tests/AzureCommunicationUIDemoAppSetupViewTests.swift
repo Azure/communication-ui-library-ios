@@ -26,8 +26,7 @@ class AzureCommunicationUIDemoAppSetupViewTests: XCUITestBase {
         let audioDeviceButtonValue = app.buttons[AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue].value as? String
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue)
 
-        let cell = app.tables.cells.firstMatch
-        wait(for: cell)
+        let cell = app.tables.cells.firstMatch.waitForExistence(timeout: 20.0)
         cell.tap()
         if #unavailable(iOS 16) {
             sleep(1)
