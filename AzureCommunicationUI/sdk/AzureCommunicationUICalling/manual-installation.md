@@ -1,17 +1,17 @@
 # Embedded Framework Installation
 
-This documentation is meant to facilitate developers who wish to embed UI library manually without using Cocoapods. Since UI library contains a couple of dependencies, you would need to embed those manually as well.
+It is possible to add the UI library manually, rather than using cocoapods.
 
 ## Manual Installation Steps
 
-1. Download, clone or submodule the latest [`AzureCommunicationUICalling`](https://github.com/Azure/azure-communication-ui-library-ios) Library to your project root directory ("`<ROOT>`").
+1. Download/clone/submodule the latest [`AzureCommunicationUICalling`](https://github.com/Azure/azure-communication-ui-library-ios) Library to your project root directory.
 2. Open your existing iOS application Xcode project in `xcworkspace`.
-3. Drag the `AzureCommunicationUICalling.xcodeproj` from path `<ROOT>/AzureCommunicationUI/sdk/AzureCommunicationUICalling` into your Xcode project's `xcworkspace` in Xcode.
-4. Select your application project in the Xcode Navigator, and open the target in which you want to import Mobile UI Library to.
-5. Open the "General" panel and click on the `+` button under the "Frameworks, Libraries and Embedded Content" section.
-6. Select `AzureCommunicationUICalling.framework` and click "Add." Now you can `import AzureCommunicationUIChat` inside your project to use Mobile UI Library.
-7. Follow the [Dependencies Installation](#dependencies-installation) section to include all dependencies in your project.
-8. Select project `AzureCommunicationUICalling.xcodeproj` in your workspace, open the target and scroll to the "Frameworks and Libraries" section, link dependent frameworks `libFluentUI.a`, `AzureCommunicationCalling` and `AzureCommunicationCommon`. Set the frameworks to `Do Not Embed` for reducing the app size if needed.
+3. Drag the `AzureCommunicationUICalling.xcodeproj` from the newly added subfolder path `/AzureCommunicationUI/sdk/AzureCommunicationUICalling` into your Xcode project's `xcworkspace`.
+4. Select your application project in the Xcode Navigator, and open the target that you want to import Mobile UI Library.
+5. Open the "General" panel and click on the `+` button under the "Frameworks and Libraries" section.
+6. Select `AzureCommunicationUICalling.framework` and then you can `import AzureCommunicationUICalling` inside your project to use Mobile UI Library.
+7. Follow the [Other Dependencies Installation](#other-dependencies-installation) section to include all dependencies in your project.
+8. Select project `AzureCommunicationUICalling.xcodeproj` in your workspace, open the target and scroll to the "Frameworks and Libraries" section, link dependent frameworks `libFluentUI.a`, `AzureCommunicationCalling` and `AzureCommunicationCommon`. Update the frameworks to `Do Not Embed` for reducing the app size purpose.
 
 ### How to fix the issues
 
@@ -29,7 +29,7 @@ This documentation is meant to facilitate developers who wish to embed UI librar
     1. Select Navigator and navigate to the target `AzureCommunicationUICalling` and choose `Build Phases`.
     2. Delete the script `[CP] Check Pods Manifest.lock`.
 
-### Dependencies Installation
+### Other Dependencies Installation
 
 Azure Communication Mobile UI Library requires a few dependencies. Please embed the following libraries into your project if you prefer manually embedding Mobile UI Library. And you can refer from each library's Podspec file for the required source files.
 
@@ -102,4 +102,4 @@ if #available(iOS 14.0, *) {
 }
 ```
 
-This method provides a way to load a framework into your application only if it is supported by the version of iOS.
+This method provides a way to load a framework into your application only if it is supported by the version of iOS. 
