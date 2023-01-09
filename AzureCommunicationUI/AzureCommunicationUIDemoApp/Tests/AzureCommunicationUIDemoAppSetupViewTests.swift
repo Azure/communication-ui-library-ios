@@ -20,15 +20,17 @@ class AzureCommunicationUIDemoAppSetupViewTests: XCUITestBase {
         check(predicate: NSPredicate(format: "label != %@", audioButtonLabel),
               for: app.buttons[AccessibilityIdentifier.toggleMicAccessibilityID.rawValue])
 
+        takeScreenshot()
         let videoButtonLabel = app.buttons[AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue].label
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue)
 
+        takeScreenshot()
         let audioDeviceButtonValue = app.buttons[AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue].value as? String
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue)
-
-        let exists = app.tables.cells.firstMatch.waitForExistence(timeout: 20.0)
-        XCTAssertTrue(exists)
-        app.tables.cells.firstMatch.tap()
+        takeScreenshot()
+        let cell = app.tables.cells.firstMatch
+        wait(for: cell)
+        cell.tap()
         if #unavailable(iOS 16) {
             sleep(1)
         }
