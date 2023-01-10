@@ -26,5 +26,5 @@ The script would attempt to find current version from Info.plist by looking for 
 
 1. make sure this script is located under ```communication-ui-library-ios/scripts``` folder
 2. make sure you have ```python3``` installed
-3. run ```python3 main-repo-updater.py -c <COMPOSITE> -v <NEW_VERSION>``` or ```python3 main-repo-updater.py --composite <COMPOSITE> --version <NEW_VERSION>``` in your terminal where ```<NEW_VERSION>``` should be the upcoming release version and <COMPOSITE> should be the type of composite with options of `Calling` and `Chat`
+3. run ```python3 main-repo-updater.py -c <COMPOSITE> -v <NEW_VERSION>``` or ```python3 main-repo-updater.py --composite <COMPOSITE> --version <NEW_VERSION>``` in your terminal where ```<NEW_VERSION>``` should be the upcoming release version and <COMPOSITE> should be the type of composite with options of `calling` and `chat` (case sensitive).
 4. done!
