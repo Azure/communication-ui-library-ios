@@ -10,6 +10,7 @@ This ```script``` folder contains a list of scripts that facilitates the release
 | TBA                  | CocoaPods   | TBA  |
 | TBA                  | QuickStarts | TBA  |
 | TBA                  | MS Doc      | TBA  |
+| TBA                  | Hero Samples| TBA  |
 
 ## Main Repo Script
 #### Details
