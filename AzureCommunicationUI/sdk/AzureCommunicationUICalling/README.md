@@ -8,8 +8,7 @@
 
 ## Latest Release
 
-- Stable: [1.1.0 release](https://github.com/Azure/communication-ui-library-ios/releases/tag/AzureCommunicationUICalling_1.1.0)
-- Public Preview: [1.2.0-beta.1](https://github.com/Azure/communication-ui-library-ios/releases/tag/AzureCommunicationUICalling_1.2.0-beta.1)
+- [1.1.0 release](https://github.com/Azure/communication-ui-library-ios/releases/tag/AzureCommunicationUICalling_1.1.0) 
 
 ## Getting Started
 
