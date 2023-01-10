@@ -32,7 +32,7 @@ The sample app is a native iOS application developed using both SwiftUI and UIKi
    - for Chat:
       - `userId`: the ID of the local user for Chat
       - `threadId`: the ID of chat thread for Chat
-      - `endpointUrl`: the URL where the chat endpoint is
+      - `endpointUrl`: the URL of where the chat endpoint should be
 
     ![EnvConfig](/docs/images/EnvConfig.png)
 
