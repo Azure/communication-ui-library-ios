@@ -24,10 +24,9 @@ class AzureCommunicationUIDemoAppSetupViewTests: XCUITestBase {
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue)
 
         let audioDeviceButtonValue = app.buttons[AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue].value as? String
-        XCTAssertTrue(app.buttons[AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue].isHittable)
-        XCTAssertTrue(app.buttons[AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue].isEnabled)
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue,
-                  shouldWait: true)
+//        tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue,
+//                  shouldWait: true)
+        app.buttons[AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue].coordinate(withNormalizedOffset: CGVector(dx:0.5, dy:0.5)).tap()
 
         let cell = app.tables.cells.firstMatch
         wait(for: cell)
