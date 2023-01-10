@@ -37,13 +37,10 @@ class AzureCommunicationUIDemoAppSetupViewTests: XCUITestBase {
 
     func testCallCompositeAudioDeviceSetup() {
         tapInterfaceFor(.callSwiftUI)
-        if #unavailable(iOS 14.2) {
-            // fix for an issue when the AppCenter test fails for devices with iOS<14.2 when useCallingSDKMock = true
-            // however, the test can be run locally without any issues for all supported iOS versions
-            startExperience()
-        } else {
-            startExperience(useCallingSDKMock: false)
-        }
+
+        // there is an AppCenter issue for devices with iOS<14.2 when useCallingSDKMock = false
+        // however, the test can be run locally without any issues for all supported iOS versions
+        startExperience(useCallingSDKMock: false)
 
         wait(for: app.buttons[AccessibilityIdentifier.joinCallAccessibilityID.rawValue])
 
