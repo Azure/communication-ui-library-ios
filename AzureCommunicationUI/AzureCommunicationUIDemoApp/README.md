@@ -12,6 +12,7 @@ The sample app is a native iOS application developed using both SwiftUI and UIKi
 - Azure Communication Services Token. [See example](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/identity/quick-create-identity)
 - (Optional) Create Azure Communication Services Token service URL. [See example](https://docs.microsoft.com/azure/communication-services/tutorials/trusted-service-tutorial).
 
+
 ### Before running the sample for the first time
 
 1. After cloning the [Repo](https://github.com/Azure/azure-communication-ui-library-ios) in your local environment, `cd` to the `AzureCommunicationUI` folder in the root of the project directory.
@@ -19,12 +20,19 @@ The sample app is a native iOS application developed using both SwiftUI and UIKi
 3. (Optional) cd to the <project_folder>/AzureCommunicationUI/AzureCommunicationUIDemoApp/Sources folder.
 4. (Optional) Run `touch EnvConfig.xcconfig` via the Command Line. 
 5. (Optional) Add constants from following list to `EnvConfig.xcconfig` as the sample app's local configurations. 
-   - `acsToken`: a generated Azure Communication Services token
-   - `acsTokenUrl`: the URL to request Azure Communication Services token (You must use https:/$()/ in the format of URL)
-   - `displayName`: your preferred display name
-   - `groupCallId`: this a type of UUID used to start and join a meeting
-   - `teamsMeetingLink`: the URL to a Teams meeting (You must use https:/$()/ in the format of URL)
-   - `expiredAcsToken`: an expired Azure Communication Services token for UI testing
+   - Shared:
+      - `acsToken`: a generated Azure Communication Services token
+      - `acsTokenUrl`: the URL to request Azure Communication Services token (You must use https:/$()/ in the format of URL)
+      - `displayName`: your preferred display name
+      - `expiredAcsToken`: an expired Azure Communication Services token for UI testing
+   - for Calling:
+      - `groupCallId`: this a type of UUID used to start and join a meeting for Calling
+      - `teamsMeetingLink`: the URL to a Teams meeting (You must use https:/$()/ in the format of URL) for Calling
+      - `aadToken`: the AAD token for Calling
+   - for Chat:
+      - `userId`: the ID of the local user for Chat
+      - `threadId`: the ID of chat thread for Chat
+      - `endpointUrl`: the URL where the chat endpoint is
 
     ![EnvConfig](/docs/images/EnvConfig.png)
 
@@ -37,3 +45,4 @@ The sample app is a native iOS application developed using both SwiftUI and UIKi
 3. Hit `Run` or `⌘+R` to start running.
 
     ![SelectSimulator](/docs/images/SelectSimulator.png)
+    
