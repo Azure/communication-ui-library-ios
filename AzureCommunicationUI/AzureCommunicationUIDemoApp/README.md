@@ -24,8 +24,8 @@ The sample app is a native iOS application developed using both SwiftUI and UIKi
       - `acsToken`: a generated Azure Communication Services token
       - `acsTokenUrl`: the URL to request Azure Communication Services token (You must use https:/$()/ in the format of URL)
       - `displayName`: your preferred display name
-      - `expiredAcsToken`: an expired Azure Communication Services token for UI testing
    - for Calling:
+      - `expiredAcsToken`: an expired Azure Communication Services token for UI testing
       - `groupCallId`: this a type of UUID used to start and join a meeting for Calling
       - `teamsMeetingLink`: the URL to a Teams meeting (You must use https:/$()/ in the format of URL) for Calling
       - `aadToken`: the AAD token for Calling
