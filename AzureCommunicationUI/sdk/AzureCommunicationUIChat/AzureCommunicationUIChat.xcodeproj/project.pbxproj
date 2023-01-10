@@ -92,7 +92,6 @@
 		50CB82CA28C2AD2300680566 /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82A828C2AD2300680566 /* ViewExtension.swift */; };
 		50CB82CB28C2AD2300680566 /* ViewModifer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82A928C2AD2300680566 /* ViewModifer.swift */; };
 		50CB82CD28C2AD2300680566 /* ThemeOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82B028C2AD2300680566 /* ThemeOptions.swift */; };
-		50CB82CE28C2AD2300680566 /* LocalOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82B428C2AD2300680566 /* LocalOptions.swift */; };
 		50CB82D028C2AD9900680566 /* SetParticipantViewDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82CF28C2AD9900680566 /* SetParticipantViewDataError.swift */; };
 		50CB82D228C2B2B800680566 /* CommunicationIdentifierExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CB82D128C2B2B800680566 /* CommunicationIdentifierExtension.swift */; };
 		50D8EE99291C6CFB003C3A95 /* ChatSDKAsyncExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8EE98291C6CFB003C3A95 /* ChatSDKAsyncExtension.swift */; };
@@ -269,7 +268,6 @@
 		50CB82A828C2AD2300680566 /* ViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		50CB82A928C2AD2300680566 /* ViewModifer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModifer.swift; sourceTree = "<group>"; };
 		50CB82B028C2AD2300680566 /* ThemeOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeOptions.swift; sourceTree = "<group>"; };
-		50CB82B428C2AD2300680566 /* LocalOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalOptions.swift; sourceTree = "<group>"; };
 		50CB82CF28C2AD9900680566 /* SetParticipantViewDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetParticipantViewDataError.swift; sourceTree = "<group>"; };
 		50CB82D128C2B2B800680566 /* CommunicationIdentifierExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunicationIdentifierExtension.swift; sourceTree = "<group>"; };
 		50D8EE98291C6CFB003C3A95 /* ChatSDKAsyncExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatSDKAsyncExtension.swift; sourceTree = "<group>"; };
@@ -828,7 +826,6 @@
 			children = (
 				50CB828228C2AD2300680566 /* BaseComposite */,
 				50CB82AA28C2AD2300680566 /* Core */,
-				50CB82B128C2AD2300680566 /* Chat */,
 			);
 			name = common;
 			path = ../../common;
@@ -890,8 +887,8 @@
 		50CB82A228C2AD2300680566 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
-				BDB1B8C628F8A17C0000300F /* ViewComponents */,
 				50CB82A328C2AD2300680566 /* Utilities */,
+				BDB1B8C628F8A17C0000300F /* ViewComponents */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -928,30 +925,6 @@
 			isa = PBXGroup;
 			children = (
 				50CB82B028C2AD2300680566 /* ThemeOptions.swift */,
-			);
-			path = CompositeOptions;
-			sourceTree = "<group>";
-		};
-		50CB82B128C2AD2300680566 /* Chat */ = {
-			isa = PBXGroup;
-			children = (
-				50CB82B228C2AD2300680566 /* Sources */,
-			);
-			path = Chat;
-			sourceTree = "<group>";
-		};
-		50CB82B228C2AD2300680566 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				50CB82B328C2AD2300680566 /* CompositeOptions */,
-			);
-			path = Sources;
-			sourceTree = "<group>";
-		};
-		50CB82B328C2AD2300680566 /* CompositeOptions */ = {
-			isa = PBXGroup;
-			children = (
-				50CB82B428C2AD2300680566 /* LocalOptions.swift */,
 			);
 			path = CompositeOptions;
 			sourceTree = "<group>";
@@ -1009,13 +982,6 @@
 			path = Message;
 			sourceTree = "<group>";
 		};
-		BD31EA7C291420A300A1C213 /* Wrapper */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Wrapper;
-			sourceTree = "<group>";
-		};
 		BD73352B292D4356004E4E05 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -1044,7 +1010,6 @@
 		BDB1B8CC28F8A9040000300F /* FluentUI */ = {
 			isa = PBXGroup;
 			children = (
-				BD31EA7C291420A300A1C213 /* Wrapper */,
 				BDB1B8CD28F8A91A0000300F /* Icon.swift */,
 			);
 			path = FluentUI;
@@ -1302,7 +1267,6 @@
 				50370CD328EE507A00ACD234 /* TrouterEventExtension.swift in Sources */,
 				BD231EF22913257C00B56882 /* ObservableScrollView.swift in Sources */,
 				BD73352D292D43A0004E4E05 /* UIApplicationHelper.swift in Sources */,
-				50CB82CE28C2AD2300680566 /* LocalOptions.swift in Sources */,
 				50CB824B28C29B0700680566 /* ChatReducer.swift in Sources */,
 				50CB822728C2995A00680566 /* ChatMiddleware.swift in Sources */,
 				50CB82C828C2AD2300680566 /* EnvironmentValuesExtension.swift in Sources */,
