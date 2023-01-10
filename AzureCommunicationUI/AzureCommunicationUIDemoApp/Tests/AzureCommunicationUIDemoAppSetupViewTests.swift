@@ -15,13 +15,13 @@ class AzureCommunicationUIDemoAppSetupViewTests: XCUITestBase {
 
         wait(for: app.buttons[AccessibilityIdentifier.joinCallAccessibilityID.rawValue])
 
+        let videoButtonLabel = app.buttons[AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue].label
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue)
+
         let audioButtonLabel = app.buttons[AccessibilityIdentifier.toggleMicAccessibilityID.rawValue].label
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleMicAccessibilityID.rawValue, shouldWait: true)
         check(predicate: NSPredicate(format: "label != %@", audioButtonLabel),
               for: app.buttons[AccessibilityIdentifier.toggleMicAccessibilityID.rawValue])
-
-        let videoButtonLabel = app.buttons[AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue].label
-        tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue)
 
         // check for camera button is moved to the end as
         // video button invoke camera access alert on the first run and
