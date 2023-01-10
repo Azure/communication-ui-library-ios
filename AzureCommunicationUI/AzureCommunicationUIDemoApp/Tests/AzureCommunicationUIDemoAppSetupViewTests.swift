@@ -12,8 +12,9 @@ class AzureCommunicationUIDemoAppSetupViewTests: XCUITestBase {
     func testCallCompositeSetupCallGroupCallSwiftUI() {
         tapInterfaceFor(.callSwiftUI)
         if #unavailable(iOS 14.2) {
-            // there is an AppCenter issue for devices with iOS<14.2 when useCallingSDKMock = false
-            // however, the test can be run locally without any issues for all supported iOS versions
+            // there is an AppCenter issue for devices with iOS < 14.2 when useCallingSDKMock = false
+            // that cause testCallCompositeSetupCallGroupCallSwiftUI to fail
+            // however, the test can be run locally without any issues for all supported iOS versions (including iOS < 14.2)
             startExperience()
         } else {
             startExperience(useCallingSDKMock: false)
