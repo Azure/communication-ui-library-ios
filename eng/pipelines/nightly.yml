@@ -32,6 +32,9 @@ jobs:
 
   - job: ConfigureDevices
     displayName: "Determine AppCenter device set to use"
+    pool:
+      name: vsts-mac-1301-xcode-141
+      demands: xcode
     steps:
       # Sets the AppCenterDevices variable
       - template: jobs/templates/set-appcenter-devices.yml
