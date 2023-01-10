@@ -62,7 +62,7 @@ def main(argv):
 		opts, args = getopt.getopt(argv, "hv:c:", ["help", "version=", "composite="])
 	except getopt.GetoptError:
 		sys.exit('Inputs are missing ' +
-			'Usage: main-repo-updater.py -c COMPOSITE -v NEW_VERSION, where COMPOSITE should be either CALLING or CHAT.')
+			'Usage: main-repo-updater.py -c COMPOSITE -v NEW_VERSION, where COMPOSITE should be either calling or chat.')
 	for opt, arg in opts:
 		if opt == '-h':
 			sys.exit('Expected parameters: 1. -c or --composite of options of CALLING or CHAT 2. -v or --version')
@@ -73,7 +73,7 @@ def main(argv):
 			global selectedComposite 
 			selectedComposite = Composite(arg)
 	if selectedComposite == Composite.UNKNOWN:
-		sys.exit('Composite is Unknown. Supported Composites are \'Calling\' and \'Chat\'.')
+		sys.exit('Composite is Unknown. Supported Composites are \'calling\' and \'chat\'.')
 	result = getCurrentVersion()
 	pList = result[0]
 	oldVersion = result[1]
