@@ -14,14 +14,14 @@ protocol LifeCycleManagerProtocol {
 class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
 
     private let logger: Logger
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
     private var operationStatus: OperationStatus
     private var callingStatus: CallingStatus
     private var runLoop: CFRunLoop?
 
     var cancellables = Set<AnyCancellable>()
 
-    init(store: Store<AppState>,
+    init(store: Store<AppState, Action>,
          logger: Logger) {
         self.logger = logger
         self.store = store

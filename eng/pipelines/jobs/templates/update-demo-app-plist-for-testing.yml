@@ -1,0 +1,25 @@
+# Populates the info.plist with values needed for testing properly
+
+steps:
+  # Grab dynamic values for auth setup
+  - template: retrieve-acs-token.yml
+
+  # Update the property list files
+  - script: |
+      export INFO_PLIST_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/AzureCommunicationUIDemoApp/Sources/Info.plist
+      
+      plutil -replace groupCallId -string "$(groupCallId)" $INFO_PLIST_FILE
+      plutil -replace teamsMeetingLink -string "$(teamsMeetingLink)" $INFO_PLIST_FILE
+      plutil -replace displayName -string "$(acsDisplayName)" $INFO_PLIST_FILE
+      plutil -replace acsTokenUrl -string "$(acsTokenUrl)" $INFO_PLIST_FILE
+      plutil -replace expiredAcsToken -string "$(expiredAcsToken)" $INFO_PLIST_FILE
+      plutil -replace acsToken -string "$(RetrieveTokens.ACSFreshToken)" $INFO_PLIST_FILE
+      plutil -replace aadToken -string "$(RetrieveTokens.AADToken)" $INFO_PLIST_FILE
+
+    displayName: 'Edit AzureCommunicationUIDemoApp Info.plist'
+
+  - script: |
+      export INFO_PLIST_FILE=$(system.defaultWorkingDirectory)/AzureCommunicationUI/AzureCommunicationUIDemoApp/Tests/Info.plist
+      plutil -replace expiredAcsToken -string "$(expiredAcsToken)" $INFO_PLIST_FILE
+
+    displayName: 'Edit AzureCommunicationUIDemoAppUITests Info.plist'

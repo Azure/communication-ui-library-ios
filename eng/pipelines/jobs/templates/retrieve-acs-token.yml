@@ -4,7 +4,7 @@ steps:
   - script: |
       pip3 install azure-communication-identity
       python3 - <<EOF
-      import os,sys
+      import os,sys,json,requests
       from azure.communication.identity import CommunicationIdentityClient, CommunicationUserIdentifier
 
       try:
@@ -25,7 +25,24 @@ steps:
         token_result = client.get_token(identity, ["voip"])
 
         print("\nIssued an access token with 'voip' scope")
-        print('##vso[task.setvariable variable=ACSFreshToken]'+token_result.token)
+        print('##vso[task.setvariable variable=ACSFreshToken;isOutput=true;isSecret=true]'+token_result.token)
+
+        # Grab AAD Token
+        print("------- fetching aad token ---------")
+
+        url = "https://login.microsoftonline.com/7bcd2220-f576-41b0-b47a-de4b6f2ebac1/oauth2/v2.0/token"
+        body = {
+            'client_id': os.environ['ClientId'],
+            'scope': 'https://acsuidev.onmicrosoft.com/sample-apps-apis/.default',
+            'client_secret': os.environ['ClientSecret'],
+            'grant_type': "client_credentials",
+        }
+        response = requests.post(url, data=body)
+        responseObj = json.loads(response.text)
+
+        aad_token = responseObj["access_token"]
+        print('##vso[task.setvariable variable=AADToken;isOutput=true;isSecret=true]'+ aad_token)
+        print('AAD Token Set')
 
       except Exception as ex:
         print("Exception: ", file=sys.stderr)
@@ -34,6 +51,9 @@ steps:
       EOF
 
     displayName: 'Get ACS Access Token'
+    name: RetrieveTokens
     failOnStderr: false # Warnings generated need to be ignored
     env:
       ACSString: $(acsConnectionString)
+      ClientId: $(client_id)
+      ClientSecret: $(client_secret)
