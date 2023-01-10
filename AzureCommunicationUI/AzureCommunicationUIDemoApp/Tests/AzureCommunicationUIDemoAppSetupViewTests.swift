@@ -11,7 +11,7 @@ class AzureCommunicationUIDemoAppSetupViewTests: XCUITestBase {
     // MARK: Setup view tests
     func testCallCompositeSetupCallGroupCallSwiftUI() {
         tapInterfaceFor(.callSwiftUI)
-        startExperience(useCallingSDKMock: false)
+        startExperience()
 
         wait(for: app.buttons[AccessibilityIdentifier.joinCallAccessibilityID.rawValue])
 
@@ -24,9 +24,8 @@ class AzureCommunicationUIDemoAppSetupViewTests: XCUITestBase {
         tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue)
 
         let audioDeviceButtonValue = app.buttons[AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue].value as? String
-//        tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue,
-//                  shouldWait: true)
-        app.buttons[AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue].coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue,
+                  shouldWait: true)
 
         let cell = app.tables.cells.firstMatch
         wait(for: cell)
