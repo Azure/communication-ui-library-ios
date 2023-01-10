@@ -47,32 +47,6 @@
                BlueprintName = "AzureCommunicationUIDemoAppUITests"
                ReferencedContainer = "container:AzureCommunicationUIDemoApp.xcodeproj">
             </BuildableReference>
-            <SkippedTests>
-               <Test
-                  Identifier = "AzureCommunicationUIDemoAppCallTests">
-               </Test>
-               <Test
-                  Identifier = "AzureCommunicationUIDemoAppDebugInfoTests">
-               </Test>
-               <Test
-                  Identifier = "AzureCommunicationUIDemoAppE2ETests">
-               </Test>
-               <Test
-                  Identifier = "AzureCommunicationUIDemoAppLaunchTests">
-               </Test>
-               <Test
-                  Identifier = "AzureCommunicationUIDemoAppPIPTests">
-               </Test>
-               <Test
-                  Identifier = "AzureCommunicationUIDemoAppRemoteParticipantsTests">
-               </Test>
-               <Test
-                  Identifier = "AzureCommunicationUIDemoAppTokenTests">
-               </Test>
-               <Test
-                  Identifier = "XCUITestBase">
-               </Test>
-            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

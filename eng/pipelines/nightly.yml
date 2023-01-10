@@ -22,7 +22,7 @@ schedules:
     always: true
     
 variables:
-  AppCenterDevicesOverride: 'Azure-Communication-Services/ios14problemset'  # This should be in the form 'Azure-Communication-Services/<your_device_set_name>'
+  AppCenterDevicesOverride: ''  # This should be in the form 'Azure-Communication-Services/<your_device_set_name>'
   buildHourOfDayUtc: $[format('{0:H}', pipeline.startTime)]
 
 jobs:
@@ -32,9 +32,6 @@ jobs:
 
   - job: ConfigureDevices
     displayName: "Determine AppCenter device set to use"
-    pool:
-      name: vsts-mac-1301-xcode-141
-      demands: xcode
     steps:
       # Sets the AppCenterDevices variable
       - template: jobs/templates/set-appcenter-devices.yml
