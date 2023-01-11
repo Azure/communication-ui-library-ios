@@ -31,7 +31,7 @@ public class CallComposite {
     private var accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()
     private var localizationProvider: LocalizationProviderProtocol
 
-    private var store: Store<AppState>?
+    private var store: Store<AppState, Action>?
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
@@ -199,17 +199,17 @@ public class CallComposite {
                                      logger: logger,
                                      viewFactory: viewFactory,
                                      isRightToLeft: isRightToLeft)
-        let toolkitHostingController = ContainerUIHostingController(rootView: rootView,
-                                                                    callComposite: self,
-                                                                    isRightToLeft: isRightToLeft)
-        toolkitHostingController.modalPresentationStyle = .fullScreen
+        let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
+                                                                        callComposite: self,
+                                                                        isRightToLeft: isRightToLeft)
+        containerUIHostingController.modalPresentationStyle = .fullScreen
 
-        router.setDismissComposite { [weak toolkitHostingController, weak self] in
-            toolkitHostingController?.dismissSelf()
+        router.setDismissComposite { [weak containerUIHostingController, weak self] in
+            containerUIHostingController?.dismissSelf()
             self?.cleanUpManagers()
         }
 
-        return toolkitHostingController
+        return containerUIHostingController
     }
 
     private func present(_ viewController: UIViewController) {

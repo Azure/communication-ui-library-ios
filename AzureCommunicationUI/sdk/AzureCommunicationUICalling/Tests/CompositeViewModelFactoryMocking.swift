@@ -9,7 +9,7 @@ import FluentUI
 
 struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     private let logger: Logger
-    private let store: Store<AppState>
+    private let store: Store<AppState, Action>
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
@@ -46,7 +46,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var createAudioIconWithLabelButtonViewModel: ((AudioButtonState) -> IconWithLabelButtonViewModel<AudioButtonState>?)?
 
     init(logger: Logger,
-         store: Store<AppState>,
+         store: Store<AppState, Action>,
          accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking(),
          localizationProvider: LocalizationProviderProtocol = LocalizationProviderMocking(),
          debugInfoManager: DebugInfoManagerProtocol = DebugInfoManagerMocking()) {

@@ -1,26 +1,45 @@
 #!/usr/bin/env python3
 import sys, getopt
 import plistlib
+from enum import Enum
 
 # parse argument from command line
 new_Version = ''
+class Composite(Enum):
+	CHAT = 'chat'
+	CALLING = 'calling'
+	UNKNOWN = ''
+selectedComposite = Composite('')
 
 # Start of the script
 # gloabl constants
 acs_UI_library_Path = '../'
-info_plist_path = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Info.plist'
-telemetry_Tag_path = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/Tests/CallCompositeOptions/DiagnosticConfigTests.swift'
-pbx_path = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj/project.pbxproj'
-main_readme_path = 'README.md'
-pattern_pod = "pod 'AzureCommunicationUICalling', '%s'"
-pattern_telemetry = 'aci110/%s'
+
+# Calling
+calling_info_plist_path = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Info.plist'
+calling_telemetry_Tag_path = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/Tests/CallCompositeOptions/DiagnosticConfigTests.swift'
+calling_pbx_path = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj/project.pbxproj'
+calling_main_readme = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/README.md'
+calling_pattern_pod = "pod 'AzureCommunicationUICalling', '%s'"
+calling_pattern_telemetry = 'aci110/%s'
+
+# Chat
+chat_info_plist_path = 'AzureCommunicationUI/sdk/AzureCommunicationUIChat/Sources/Info.plist'
+chat_telemetry_Tag_path = 'AzureCommunicationUI/sdk/AzureCommunicationUIChat/Tests/ChatCompositeOptions/DiagnosticConfigTests.swift'
+chat_pbx_path = 'AzureCommunicationUI/sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.xcodeproj/project.pbxproj'
+chat_main_readme = 'AzureCommunicationUI/sdk/AzureCommunicationUIChat/README.md'
+chat_pattern_pod = "pod 'AzureCommunicationUIChat', '%s'"
+chat_pattern_telemetry = 'aci120/%s'
+
+# Common
 pattern_pbx = 'MARKETING_VERSION = %s'
 
 def getCurrentVersion():
+	local_path = calling_info_plist_path if selectedComposite == Composite.CALLING else chat_info_plist_path
 	if new_Version == '':
 		sys.exit('new version is required for this script.' + 
 			' Usage: main-repo-updater.py -v NEW_VERSION')
-	with open(acs_UI_library_Path + info_plist_path, 'rb') as fi_info:
+	with open(acs_UI_library_Path + local_path, 'rb') as fi_info:
 		pList = plistlib.load(fi_info)
 	oldVersion = pList['UILibrarySemVersion']
 	if new_Version == oldVersion:
@@ -40,39 +59,57 @@ def update(path, replaceFrom, replaceTo):
 
 def main(argv):
 	try:
-		opts, args = getopt.getopt(argv, "hv:", ["help", "version="])
+		opts, args = getopt.getopt(argv, "hv:c:", ["help", "version=", "composite="])
 	except getopt.GetoptError:
-		sys.exit('require new version for this script. ' +
-			'Usage: main-repo-updater.py -v NEW_VERSION or main-repo-updater.py --version NEW_VERSION')
+		sys.exit('Inputs are missing ' +
+			'Usage: main-repo-updater.py -c COMPOSITE -v NEW_VERSION, where COMPOSITE should be either calling or chat.')
 	for opt, arg in opts:
 		if opt == '-h':
-			sys.exit('Usage: main-repo-updater.py -v NEW_VERSION or ' + 
-				' main-repo-updater.py --version NEW_VERSION')
+			sys.exit('Expected parameters: 1. -c or --composite of options of CALLING or CHAT 2. -v or --version')
 		elif opt in ('-v', '--version'):
 			global new_Version 
 			new_Version = arg
+		elif opt in ('-c', '--composite'):
+			global selectedComposite 
+			selectedComposite = Composite(arg)
+	if selectedComposite == Composite.UNKNOWN:
+		sys.exit('Composite is Unknown. Supported Composites are \'calling\' and \'chat\'.')
 	result = getCurrentVersion()
 	pList = result[0]
 	oldVersion = result[1]
-	# telemetry update
-	update(acs_UI_library_Path + telemetry_Tag_path, 
-		pattern_telemetry % oldVersion, 
-		pattern_telemetry % new_Version)
+
+	# telemetry update, supports '-beta.1' syntax
+	telemetry = calling_telemetry_Tag_path if selectedComposite == Composite.CALLING else chat_telemetry_Tag_path
+	telemetry_pattern = calling_pattern_telemetry if selectedComposite == Composite.CALLING else chat_pattern_telemetry
+	update(acs_UI_library_Path + telemetry, 
+		telemetry_pattern % oldVersion, 
+		telemetry_pattern % new_Version)
 	print("telemetry - done, 1 of 4")
 	
-	# Readme in main repo
-	update(acs_UI_library_Path + main_readme_path, 
-		pattern_pod % oldVersion, 
-		pattern_pod % new_Version)
-	print("readme - done, 2 of 4")
+	# Readme in main repo, should skip this for beta releases, does not support '-beta.1' syntax
+	if not 'beta' in new_Version:
+		main_repo = calling_main_readme if selectedComposite == Composite.CALLING else chat_main_readme
+		pod_pattern = calling_pattern_pod if selectedComposite == Composite.CALLING else chat_pattern_pod
+		update(acs_UI_library_Path + main_repo, 
+			pod_pattern % oldVersion, 
+			pod_pattern % new_Version)
+		print("readme - done, 2 of 4")
+	else:
+		print("readme skipped for beta releases - done, 2 of 4")
 	
-	# xcodeproj update
+	# xcodeproj update, does not support '-beta.1' syntax
+	# need to remove '-beta.1'
+	release_tag_pattern = '-beta'
+	oldVersion_stripped = oldVersion.split(release_tag_pattern, 1)[0]
+	newVersion_stripped = new_Version.split(release_tag_pattern, 1)[0]
+	pbx_path = calling_pbx_path if selectedComposite == Composite.CALLING else chat_pbx_path
 	update(acs_UI_library_Path + pbx_path, 
-		pattern_pbx % oldVersion, 
-		pattern_pbx % new_Version)
+		pattern_pbx % oldVersion_stripped, 
+		pattern_pbx % newVersion_stripped)
 	print("pbxproj - done, 3 of 4")
 	
-	# Info.plist update
+	# Info.plist update, supports '-beta.1' syntax
+	info_plist_path = calling_info_plist_path if selectedComposite == Composite.CALLING else chat_info_plist_path
 	pList['UILibrarySemVersion'] = new_Version
 	with open(acs_UI_library_Path + info_plist_path, 'wb') as fo_info:
 		plistlib.dump(pList, fo_info)

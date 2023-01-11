@@ -4,7 +4,6 @@
 //
 
 import SwiftUI
-import FluentUI
 
 struct CallingView: View {
     enum InfoHeaderViewConstants {
@@ -83,6 +82,8 @@ struct CallingView: View {
                                                     orientation: $orientation,
                                                     screenSize: getSizeClass())
                         }
+                        .accessibilityElement(children: .contain)
+                        .accessibilityIdentifier(AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue)
                     }
                     topAlertAreaView
                         .accessibilityElement(children: .contain)

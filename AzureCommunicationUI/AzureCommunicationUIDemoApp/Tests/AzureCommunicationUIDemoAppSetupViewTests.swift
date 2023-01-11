@@ -6,24 +6,28 @@
 import XCTest
 @testable import AzureCommunicationUICalling
 
-class AzureCommunicationUIDemoAppSetupViewTests: XCUITestBase {
+ class AzureCommunicationUIDemoAppSetupViewTests: XCUITestBase {
 
     // MARK: Setup view tests
-
     func testCallCompositeSetupCallGroupCallSwiftUI() {
-        tapInterfaceFor(.swiftUI)
-        tapEnabledButton(
-            accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-            shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.togglMicAccessibilityID.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.toggleAudioDeviceAccesibiiltyID.rawValue, shouldWait: true)
+        tapInterfaceFor(.callSwiftUI)
+        startExperience(useCallingSDKMock: false)
+
+        // shouldWait is set to true to finalize animations
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue, shouldWait: true)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleMicAccessibilityID.rawValue)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleAudioDeviceAccessibilityID.rawValue)
+
         let cell = app.tables.cells.firstMatch
-        if cell.waitForExistence(timeout: 3) {
-            cell.tap()
+        wait(for: cell)
+        cell.tap()
+        if #unavailable(iOS 16) {
+            sleep(1)
         }
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.togglMicAccessibilityID.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue, shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.dismisButtonAccessibilityID.rawValue, shouldWait: true)
+
+        // shouldWait is set to true to finalize animations
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue, shouldWait: true)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.toggleMicAccessibilityID.rawValue)
+        tapButton(accessibilityIdentifier: AccessibilityIdentifier.dismissButtonAccessibilityID.rawValue, shouldWait: true)
     }
-}
+ }

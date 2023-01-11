@@ -57,6 +57,8 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
                     self.errorInfoViewModel?.show()
                 }
         }
+        self.actionButtonViewModel?
+            .update(accessibilityLabel: AccessibilityIdentifier.callResumeAccessibilityID.rawValue)
     }
 
     func update(callingStatus: CallingStatus,
