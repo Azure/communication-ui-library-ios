@@ -9,7 +9,7 @@ struct ChatView: View {
     @StateObject var viewModel: ChatViewModel
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
             MessageListView(viewModel: viewModel.messageListViewModel)
             TypingParticipantsView(viewModel: viewModel.typingParticipantsViewModel)
             BottomBarView(viewModel: viewModel.bottomBarViewModel)
