@@ -50,7 +50,7 @@ class ErrorManagerTests: XCTestCase {
     }
 
     func test_errorManager_receiveState_when_nonFatalErrorSendMessage_then_receiveDidFail() {
-        let nonFatalError = ChatCompositeError(code: ChatCompositeErrorCode.messageSendFailed, error: nil)
+        let nonFatalError = ChatCompositeError(code: ChatCompositeErrorCode.sendMessageFailed, error: nil)
         self.expectedError = nonFatalError
         let errorState = ErrorState(internalError: .messageSendFailed,
                                     error: nil,
@@ -62,7 +62,7 @@ class ErrorManagerTests: XCTestCase {
     }
 
     func test_errorManager_receiveState_when_fatalErrorChatConnect_then_receiveDidFail() {
-        let fatalError = ChatCompositeError(code: ChatCompositeErrorCode.connectFailed, error: nil)
+        let fatalError = ChatCompositeError(code: ChatCompositeErrorCode.joinFailed, error: nil)
         self.expectedError = fatalError
         let errorState = ErrorState(internalError: .connectFailed,
                                     error: nil,
@@ -75,7 +75,7 @@ class ErrorManagerTests: XCTestCase {
 
     func test_errorManager_receiveState_when_fatalErrorTokenExpired_then_receiveEmergencyExitAction() {
         let fatalError = ChatCompositeError(
-            code: ChatCompositeErrorCode.connectFailed,
+            code: ChatCompositeErrorCode.joinFailed,
             error: nil)
 
         self.expectedError = fatalError
@@ -102,22 +102,22 @@ class ErrorManagerTests: XCTestCase {
 }
 
 extension ErrorManagerTests {
-    func getAppState(naviState: NavigationState = NavigationState(status: .inChat)) -> AppState {
-        return AppState(lifeCycleState: LifeCycleState(),
-                        chatState: ChatState(),
-                        participantsState: ParticipantsState(),
-                        navigationState: naviState,
-                        repositoryState: RepositoryState(),
-                        errorState: .init())
+    func getAppState(naviState: NavigationState = NavigationState(status: .inChat)) -> ChatAppState {
+        ChatAppState(lifeCycleState: LifeCycleState(),
+                     chatState: ChatState(),
+                     participantsState: ParticipantsState(),
+                     navigationState: naviState,
+                     repositoryState: RepositoryState(),
+                     errorState: .init())
     }
 
-    func getAppState(errorState: ErrorState) -> AppState {
-        return AppState(lifeCycleState: LifeCycleState(),
-                        chatState: ChatState(),
-                        participantsState: ParticipantsState(),
-                        navigationState: NavigationState(status: .inChat),
-                        repositoryState: RepositoryState(),
-                        errorState: errorState)
+    func getAppState(errorState: ErrorState) -> ChatAppState {
+        ChatAppState(lifeCycleState: LifeCycleState(),
+                     chatState: ChatState(),
+                     participantsState: ParticipantsState(),
+                     navigationState: NavigationState(status: .inChat),
+                     repositoryState: RepositoryState(),
+                     errorState: errorState)
     }
 
     func getEventsHandler() -> ChatAdapter.Events {

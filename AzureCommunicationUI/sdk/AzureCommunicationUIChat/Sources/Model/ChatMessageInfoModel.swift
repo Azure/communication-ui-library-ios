@@ -12,6 +12,17 @@ enum MessageType: Equatable {
     case topicUpdated
     case participantsAdded
     case participantsRemoved
+
+    var isSystemMessage: Bool {
+        switch self {
+        case .topicUpdated,
+                .participantsAdded,
+                .participantsRemoved:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 enum MessageSendStatus: Equatable {

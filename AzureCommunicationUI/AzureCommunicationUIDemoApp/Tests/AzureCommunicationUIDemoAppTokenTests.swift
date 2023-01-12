@@ -8,25 +8,23 @@ import XCTest
 
 class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
     func testCallCompositeWithExpiredToken() {
-        tapInterfaceFor(.callSwiftUI)
-                //  toggleMockSDKWrapperSwitch(enable: false)
+        tapInterfaceFor(.callUIKit)
+
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
         wait(for: app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue])
-        let expiredTokenToggle = app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue]
-        app.tap()
-        expiredTokenToggle.tap()
-        XCTAssertTrue(expiredTokenToggle.value as? String == "1")
-        tapButton(accessibilityIdentifier: "Close")
-        tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-                         shouldWait: true)
-        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
-                         shouldWait: true)
+        let toggle = app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue]
+        app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue].tap()
+        XCTAssertEqual(toggle.isOn, true)
+
+        closeDemoAppSettingsPage()
+
+        startExperience(useCallingSDKMock: false)
+        joinCall()
         wait(for: app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue])
     }
 
     func testCallCompositeWithEmptyToken() {
         tapInterfaceFor(.callSwiftUI)
-                //  toggleMockSDKWrapperSwitch(enable: false)
         tapButton(accessibilityIdentifier: AccessibilityId.clearTokenTextFieldAccessibilityID.rawValue)
 
         XCTAssertFalse(app.buttons[AccessibilityId.startExperienceAccessibilityID.rawValue].isEnabled)
@@ -34,14 +32,13 @@ class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
 
     func testCallCompositeWithInvalidToken() {
         tapInterfaceFor(.callSwiftUI)
-                //  toggleMockSDKWrapperSwitch(enable: false)
         tapButton(accessibilityIdentifier: AccessibilityId.clearTokenTextFieldAccessibilityID.rawValue)
-
         let acsTokenTextField = app.textFields["ACS Token"]
-        acsTokenTextField.setText(text: "invalidToken", application: app)
 
-        tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
-                         shouldWait: true)
+        acsTokenTextField.tap()
+        acsTokenTextField.typeText("invalidToken")
+
+        startExperience(useCallingSDKMock: false)
         tapButton(accessibilityIdentifier: "Dismiss", shouldWait: true)
     }
 }

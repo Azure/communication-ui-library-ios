@@ -59,12 +59,6 @@ class XCUITestBase: XCTestCase {
         setupSystemPromptMonitor()
     }
 
-    override func tearDown() {
-        super.tearDown()
-        // terminate app on tear down
-        app.terminate()
-    }
-
     // MARK: Private / helper functions
 
     /// Responds to app permission prompts and system prompt
@@ -74,81 +68,49 @@ class XCUITestBase: XCTestCase {
             let allowBtn = springboard.buttons["Allow"]
             if allowBtn.exists {
                 allowBtn.tap()
+                if #unavailable(iOS 16) {
+                    sleep(1)
+                }
                 return true
             }
 
             let okBtn = springboard.buttons["OK"]
             if okBtn.exists {
                 okBtn.tap()
+                if #unavailable(iOS 16) {
+                    sleep(1)
+                }
                 return true
             }
 
             let dismissBtn = springboard.buttons["Dismiss"]
             if dismissBtn.exists {
                 dismissBtn.tap()
+                if #unavailable(iOS 16) {
+                    sleep(1)
+                }
                 return true
             }
 
             return false
         }
-        addUIInterruptionMonitor(withDescription: "System Dialog") { _ in
-            let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
-            let okBtn = springboard.buttons["OK"]
-            if okBtn.exists {
-                okBtn.tap()
-                return true
-            }
-
-            let allowBtn = springboard.buttons["Allow"]
-            if allowBtn.exists {
-                allowBtn.tap()
-                return true
-            }
-
-            let dismissBtn = springboard.buttons["Dismiss"]
-            if dismissBtn.exists {
-                dismissBtn.tap()
-                return true
-            }
-
-            return false
-        }
-        app.tap()
     }
 }
 
 extension XCUITestBase {
-
-    /// Taps the button that matches with the given name
-    /// - Parameters:
-    ///   - buttonName: accessibility label of the button
-    ///   - shouldWait: determines whether app should wait for the tap test to complete
-    private func tapEnabledButton(buttonName: String, shouldWait: Bool) {
-        let button = app.buttons[buttonName]
-        if shouldWait {
-            waitEnabled(for: button)
-        }
-        button.tap()
-    }
-
-    /// Taps the enabled button that matches with the given name
-    /// - Parameters:
-    ///   - buttonName: accessibility label of the button
-    ///   - shouldWait: determines whether app should wait for the tap test to complete
-    private func tapButton(buttonName: String, shouldWait: Bool) {
-        let button = app.buttons[buttonName]
-        if shouldWait {
-            wait(for: button)
-        }
-        button.tap()
-    }
-
     /// Taps the button that matches with the given accessibility label
     /// - Parameters:
     ///   - accessibilityIdentifier: accessibility label of the button
     ///   - shouldWait: determines whether app should wait for the tap test to complete. Default value is `false`
     func tapButton(accessibilityIdentifier: String, shouldWait: Bool = false) {
-        tapButton(buttonName: accessibilityIdentifier, shouldWait: shouldWait)
+        let button = app.buttons[accessibilityIdentifier]
+        if shouldWait {
+            wait(for: button)
+        }
+        button.tap()
+        if #unavailable(iOS 16) {
+            sleep(1)
+        }
     }
 
     /// Taps the enabled button that matches with the given accessibility label
@@ -156,49 +118,32 @@ extension XCUITestBase {
     ///   - accessibilityIdentifier: accessibility label of the button
     ///   - shouldWait: determines whether app should wait for the tap test to complete
     func tapEnabledButton(accessibilityIdentifier: String, shouldWait: Bool) {
-        tapEnabledButton(buttonName: accessibilityIdentifier, shouldWait: shouldWait)
+        let button = app.buttons[accessibilityIdentifier]
+        if shouldWait {
+            waitEnabled(for: button)
+        }
+        button.tap()
+        if #unavailable(iOS 16) {
+            sleep(1)
+        }
     }
 
     /// Selects the interface before entering the composite
     /// - Note: Only call this function before entering composite.
     func tapInterfaceFor(_ interface: CompositeSampleInterface) {
-        app.buttons[interface.name].tap()
+        tapButton(accessibilityIdentifier: interface.name)
     }
 
     /// Selects the meeting type before entering the composite
     /// - Note: Only call this function before entering composite.
     func tapMeetingType(_ meetingType: CompositeMeetingType) {
-        app.buttons[meetingType.name].tap()
+        tapButton(accessibilityIdentifier: meetingType.name)
     }
 
     /// Selects the call connection type before entering the composite
     /// - Note: Only call this function before entering composite.
     func tapConnectionTokenType(_ connectionType: CompositeConnectionType) {
-        app.buttons[connectionType.name].tap()
-    }
-
-    func toggleMockSDKWrapperSwitch(enable: Bool) {
-        tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
-        wait(for: app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue])
-        app.tap()
-        let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
-        if let enabled = toggle.isOn, enabled != enable {
-            toggle.tap()
-        }
-        XCTAssertTrue(toggle.isOn == enable)
-        app.buttons["Close"].tap()
-
-        // tapButton(
-        //     accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue,
-        //     shouldWait: false)
-        // app.tap()
-        // let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
-        // if toggle.waitForExistence(timeout: 3), 
-        //     let enabled = toggle.isOn, 
-        //        enabled != enable {
-        //     toggle.tap()
-        // }
-        // app.buttons["Close"].tap()
+        tapButton(accessibilityIdentifier: connectionType.name)
     }
 
     /// Taps the cell that matches with the given accessibility id
@@ -211,6 +156,9 @@ extension XCUITestBase {
             wait(for: cell)
         }
         cell.tap()
+        if #unavailable(iOS 16) {
+            sleep(1)
+        }
     }
 
     func takeScreenshot(name: String = "App Screenshot - \(Date().description)",
@@ -221,10 +169,58 @@ extension XCUITestBase {
         attachment.lifetime = lifetime
         add(attachment)
     }
+
 }
 
-extension XCUIElement {
-    var isOn: Bool? {
-        return (self.value as? String).map { $0 == "1" }
+extension XCUITestBase {
+    /// Enables CallingSDK mock and taps Start experience button
+    /// - Parameter useCallingSDKMock: Option to enable callingSDK mock. Default value is `true`
+    func startExperience(useCallingSDKMock: Bool = true) {
+        if useCallingSDKMock {
+            enableMockCallingSDKWrapper()
+        }
+        tapEnabledButton(accessibilityIdentifier: AccessibilityId.startExperienceAccessibilityID.rawValue,
+                         shouldWait: true)
+    }
+
+    func enableMockCallingSDKWrapper() {
+        tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
+        wait(for: app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue])
+        // scrolling is needed for devices with smaller screens as the switch may not be tappable
+        // because cells weren't loaded to memory
+        if #unavailable(iOS 16) {
+            // for <iOS 16, the table is shown
+            app.tables.firstMatch.swipeUp()
+        } else {
+            // for iOS 16, the collection is shown
+            app.collectionViews.firstMatch.swipeUp()
+        }
+
+        let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
+        app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue].tap()
+        XCTAssertEqual(toggle.isOn, true)
+
+        closeDemoAppSettingsPage()
+    }
+
+    func closeDemoAppSettingsPage() {
+        if #unavailable(iOS 15) {
+            // Close button in toolbar is unavailable for iOS 14 because of how Forms handles events
+            // this issue is fixed for iOS 15
+            // closing the presented view with a swipe
+            let startPoint = app.navigationBars.firstMatch.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5))
+            // the value shouldn't be less than 500
+            // as swipe won't performed as expected for hiding the presented view
+            let finishYOffset = 500
+            let finishPoint = startPoint.withOffset(CGVector(dx: 0, dy: finishYOffset))
+            startPoint.press(forDuration: 0, thenDragTo: finishPoint)
+        } else {
+            tapButton(accessibilityIdentifier: AccessibilityId.settingsCloseButtonAccessibilityID.rawValue)
+        }
+    }
+
+    func joinCall() {
+        tapEnabledButton(accessibilityIdentifier: AccessibilityIdentifier.joinCallAccessibilityID.rawValue,
+                         shouldWait: true)
     }
 }

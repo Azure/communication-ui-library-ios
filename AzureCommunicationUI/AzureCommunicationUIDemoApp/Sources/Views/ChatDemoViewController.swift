@@ -27,14 +27,10 @@ class ChatDemoViewController: UIViewController {
     private var displayNameTextField: UITextField!
     private var userIdTextField: UITextField!
     private var endpointUrlTextField: UITextField!
-    private var selectedMeetingType: ChatType = .groupChat
     private var chatThreadIdTextField: UITextField!
-    private var teamsMeetingTextField: UITextField!
-    private var settingsButton: UIButton!
     private var startExperienceButton: UIButton!
     private var stopButton: UIButton!
     private var acsTokenTypeSegmentedControl: UISegmentedControl!
-    private var meetingTypeSegmentedControl: UISegmentedControl!
     private var stackView: UIStackView!
     private var titleLabel: UILabel!
     private var titleLabelConstraint: NSLayoutConstraint!
@@ -114,9 +110,10 @@ class ChatDemoViewController: UIViewController {
     }
 
     func updateFromEnvConfig() {
-        if !envConfigSubject.acsToken.isEmpty {
-            acsTokenTextField.text = envConfigSubject.acsToken
-            acsTokenTypeSegmentedControl.selectedSegmentIndex = 2
+        if envConfigSubject.useExpiredToken {
+            updateToken(envConfigSubject.expiredAcsToken)
+        } else {
+            updateToken(envConfigSubject.acsToken)
         }
         if !envConfigSubject.displayName.isEmpty {
             displayNameTextField.text = envConfigSubject.displayName
@@ -129,12 +126,13 @@ class ChatDemoViewController: UIViewController {
         }
         if !envConfigSubject.threadId.isEmpty {
             chatThreadIdTextField.text = envConfigSubject.threadId
-            meetingTypeSegmentedControl.selectedSegmentIndex = 1
         }
+    }
 
-        if !envConfigSubject.teamsMeetingLink.isEmpty {
-            teamsMeetingTextField.text = envConfigSubject.teamsMeetingLink
-            meetingTypeSegmentedControl.selectedSegmentIndex = 2
+    private func updateToken(_ token: String) {
+        if !token.isEmpty {
+            acsTokenTextField.text = token
+            acsTokenTypeSegmentedControl.selectedSegmentIndex = 1
         }
     }
 
@@ -142,13 +140,11 @@ class ChatDemoViewController: UIViewController {
         Task { @MainActor in
             print("Dismissing chat")
             self.dismiss(animated: true, completion: { [weak self] in
-                self?.chatAdapter?.disconnect(completionHandler: { result in
-                    switch result {
-                    case .success:
-                        self?.chatAdapter = nil
-                    default:
-                        break
+                self?.chatAdapter?.disconnect(completionHandler: { [weak self] result in
+                    guard let self else {
+                        return
                     }
+                    self.onDisconnectFromChat(with: result)
                 })
             })
         }
@@ -163,10 +159,10 @@ class ChatDemoViewController: UIViewController {
         }
         self.threadId = envConfigSubject.threadId
         self.chatAdapter = ChatAdapter(
+            endpoint: envConfigSubject.endpointUrl,
             identifier: communicationIdentifier,
             credential: communicationTokenCredential,
             threadId: envConfigSubject.threadId,
-            endpoint: envConfigSubject.endpointUrl,
             displayName: envConfigSubject.displayName)
         setupErrorHandler()
     }
@@ -176,7 +172,7 @@ class ChatDemoViewController: UIViewController {
             return
         }
         adapter.events.onError = { [weak self] chatCompositeError in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             print("::::UIKitChatDemoView::setupErrorHandler::onError \(chatCompositeError)")
@@ -187,18 +183,30 @@ class ChatDemoViewController: UIViewController {
         }
     }
 
+    private func onDisconnectFromChat(with result: Result<Void, ChatCompositeError>) {
+        switch result {
+        case .success:
+            self.chatAdapter = nil
+            self.updateExperieceButton()
+            self.startExperienceButton.isEnabled = true
+        case .failure(let error):
+            print("disconnect error \(error)")
+        }
+    }
+
     private func showError(errorCode: String) {
         var errorMessage = ""
-        // cases are hard coded for now
-        // since ChatCompositeErrorCode is internal
         switch errorCode {
-        case "connectFailed":
+        case ChatCompositeErrorCode.joinFailed:
             errorMessage = "Connection Failed"
-        case "authorizationFailed":
-            errorMessage = "Authorization Failed"
-        case "disconnectFailed":
+        case ChatCompositeErrorCode.disconnectFailed:
             errorMessage = "Disconnect Failed"
-        case "messageSendFailed":
+        case ChatCompositeErrorCode.sendMessageFailed,
+            ChatCompositeErrorCode.fetchMessagesFailed,
+            ChatCompositeErrorCode.requestParticipantsFetchFailed,
+            ChatCompositeErrorCode.sendReadReceiptFailed,
+            ChatCompositeErrorCode.sendTypingIndicatorFailed,
+            ChatCompositeErrorCode.disconnectFailed:
             // no alert
             return
         default:
@@ -206,21 +214,14 @@ class ChatDemoViewController: UIViewController {
         }
         let errorAlert = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
         errorAlert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: { [weak self] _ in
-            guard let self = self else {
+            guard let self else {
                 return
             }
             self.chatAdapter?.disconnect(completionHandler: { [weak self] result in
-                guard let self = self else {
+                guard let self else {
                     return
                 }
-                switch result {
-                case .success:
-                    self.chatAdapter = nil
-                    self.updateExperieceButton()
-                    self.startExperienceButton.isEnabled = true
-                case .failure(let error):
-                    print("disconnect error \(error)")
-                }
+                self.onDisconnectFromChat(with: result)
             })
         }))
         present(errorAlert,
@@ -256,12 +257,7 @@ class ChatDemoViewController: UIViewController {
     }
 
     private func getMeetingLink() -> String {
-        switch selectedMeetingType {
-        case .groupChat:
-            return chatThreadIdTextField.text ?? ""
-        case .teamsChat:
-            return teamsMeetingTextField.text ?? ""
-        }
+        return chatThreadIdTextField.text ?? ""
     }
 
     private func registerNotifications() {
@@ -288,10 +284,6 @@ class ChatDemoViewController: UIViewController {
         selectedAcsTokenType = ACSTokenType(rawValue: sender.selectedSegmentIndex)!
         updateAcsTokenTypeFields()
     }
-    @objc func onMeetingTypeValueChanged(_ sender: UISegmentedControl!) {
-        selectedMeetingType = ChatType(rawValue: sender.selectedSegmentIndex)!
-        updateMeetingTypeFields()
-    }
 
     @objc func keyboardWillShow(notification: NSNotification) {
         isKeyboardShowing = true
@@ -314,13 +306,6 @@ class ChatDemoViewController: UIViewController {
                    replacementString string: String) -> Bool {
         userIsEditing = true
         return true
-    }
-
-    @objc func onSettingsPressed() {
-        let settingsView = SettingsView(envConfigSubject: envConfigSubject)
-        let settingsViewHostingController = UIHostingController(rootView: settingsView)
-        settingsViewHostingController.modalPresentationStyle = .formSheet
-        present(settingsViewHostingController, animated: true, completion: nil)
     }
 
     @objc func onStartExperienceBtnPressed() {
@@ -358,13 +343,11 @@ class ChatDemoViewController: UIViewController {
 
     @objc func onStopBtnPressed() {
         Task { @MainActor in
-            self.chatAdapter?.disconnect(completionHandler: { result in
-                switch result {
-                case .success:
-                    self.chatAdapter = nil
-                case .failure(let error):
-                    print("error disconnecting: \(error)")
+            self.chatAdapter?.disconnect(completionHandler: { [weak self] result in
+                guard let self else {
+                    return
                 }
+                self.onDisconnectFromChat(with: result)
             })
 
             updateExperieceButton()
@@ -379,17 +362,6 @@ class ChatDemoViewController: UIViewController {
         case .token:
             acsTokenUrlTextField.isHidden = true
             acsTokenTextField.isHidden = false
-        }
-    }
-
-    private func updateMeetingTypeFields() {
-        switch selectedMeetingType {
-        case .groupChat:
-            chatThreadIdTextField.isHidden = false
-            teamsMeetingTextField.isHidden = true
-        case .teamsChat:
-            chatThreadIdTextField.isHidden = true
-            teamsMeetingTextField.isHidden = false
         }
     }
 
@@ -413,8 +385,7 @@ class ChatDemoViewController: UIViewController {
             || (selectedAcsTokenType == .tokenUrl && acsTokenUrlTextField.text!.isEmpty)
             || (userIdTextField.text!.isEmpty)
             || (endpointUrlTextField.text!.isEmpty)
-            || (selectedMeetingType == .groupChat && chatThreadIdTextField.text!.isEmpty)
-            || (selectedMeetingType == .teamsChat && teamsMeetingTextField.text!.isEmpty) {
+            || (chatThreadIdTextField.text!.isEmpty) {
             return true
         }
 
@@ -496,33 +467,6 @@ class ChatDemoViewController: UIViewController {
         chatThreadIdTextField.borderStyle = .roundedRect
         chatThreadIdTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
 
-        teamsMeetingTextField = UITextField()
-        teamsMeetingTextField.placeholder = "Teams Meeting Link"
-        teamsMeetingTextField.text = envConfigSubject.teamsMeetingLink
-        teamsMeetingTextField.delegate = self
-        teamsMeetingTextField.sizeToFit()
-        teamsMeetingTextField.translatesAutoresizingMaskIntoConstraints = false
-        teamsMeetingTextField.borderStyle = .roundedRect
-        teamsMeetingTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
-
-        meetingTypeSegmentedControl = UISegmentedControl(items: ["Group Chat", "Teams Chat"])
-        meetingTypeSegmentedControl.selectedSegmentIndex = envConfigSubject.selectedMeetingType.rawValue
-        meetingTypeSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        meetingTypeSegmentedControl.addTarget(self,
-                                              action: #selector(onMeetingTypeValueChanged(_:)),
-                                              for: .valueChanged)
-        selectedMeetingType = envConfigSubject.selectedChatType
-
-        settingsButton = UIButton()
-        settingsButton.setTitle("Settings", for: .normal)
-        settingsButton.backgroundColor = .systemBlue
-        settingsButton.addTarget(self, action: #selector(onSettingsPressed), for: .touchUpInside)
-        settingsButton.layer.cornerRadius = 8
-        settingsButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
-                                                             left: LayoutConstants.buttonHorizontalInset,
-                                                             bottom: LayoutConstants.buttonVerticalInset,
-                                                             right: LayoutConstants.buttonHorizontalInset)
-
         startExperienceButton = UIButton()
         startExperienceButton.backgroundColor = .systemBlue
         startExperienceButton.setTitleColor(UIColor.white, for: .normal)
@@ -555,23 +499,6 @@ class ChatDemoViewController: UIViewController {
 
         stopButton.accessibilityLabel = AccessibilityId.stopChatAccessibilityID.rawValue
 
-        // horizontal stack view for the settingButton and startExperienceButton
-        let settingButtonHSpacer1 = UIView()
-        settingButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
-        settingButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
-
-        let settingButtonHSpacer2 = UIView()
-        settingButtonHSpacer2.translatesAutoresizingMaskIntoConstraints = false
-        settingButtonHSpacer2.setContentHuggingPriority(.defaultLow, for: .horizontal)
-
-        let settingsButtonHStack = UIStackView(arrangedSubviews: [settingButtonHSpacer1,
-                                                                  settingsButton,
-                                                                  settingButtonHSpacer2])
-        settingsButtonHStack.axis = .horizontal
-        settingsButtonHStack.alignment = .fill
-        settingsButtonHStack.distribution = .fill
-        settingsButtonHStack.translatesAutoresizingMaskIntoConstraints = false
-
         let startButtonHSpacer1 = UIView()
         startButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
         startButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -601,10 +528,7 @@ class ChatDemoViewController: UIViewController {
                                                    displayNameTextField,
                                                    userIdTextField,
                                                    endpointUrlTextField,
-                                                   meetingTypeSegmentedControl,
                                                    chatThreadIdTextField,
-                                                   teamsMeetingTextField,
-                                                   settingsButtonHStack,
                                                    startButtonHStack])
         stackView.spacing = LayoutConstants.stackViewSpacingPortrait
         stackView.axis = .vertical
@@ -635,11 +559,9 @@ class ChatDemoViewController: UIViewController {
                                             constant: LayoutConstants.stackViewSpacingPortrait).isActive = true
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
 
-        settingButtonHSpacer2.widthAnchor.constraint(equalTo: settingButtonHSpacer1.widthAnchor).isActive = true
         startButtonHSpacer2.widthAnchor.constraint(equalTo: startButtonHSpacer1.widthAnchor).isActive = true
 
         updateAcsTokenTypeFields()
-        updateMeetingTypeFields()
         startExperienceButton.isEnabled = !isStartExperienceDisabled
         updateExperieceButton()
     }

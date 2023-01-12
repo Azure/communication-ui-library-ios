@@ -4,9 +4,6 @@
 //
 
 import AzureCommunicationCommon
-import FluentUI
-import SwiftUI
-import UIKit
 
 /// This class represents the data-layer components of the Chat Composite.
 public class ChatAdapter {
@@ -28,9 +25,6 @@ public class ChatAdapter {
 
     // Dependencies
     var logger: Logger = DefaultLogger(category: "ChatComponent")
-    var accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()
-    var localizationProvider: LocalizationProviderProtocol
-    var navigationRouter: NavigationRouter?
     var compositeViewFactory: CompositeViewFactoryProtocol?
 
     private var chatConfiguration: ChatConfiguration
@@ -38,29 +32,25 @@ public class ChatAdapter {
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var compositeManager: CompositeManagerProtocol?
 
-    private var themeOptions: ThemeOptions?
-
     private var threadId: String = ""
     /// Create an instance of this class with options.
     /// - Parameters:
+    ///    - endpoint: The endpoint URL of The Communication Services.
     ///    - identifier: The CommunicationIdentifier that uniquely identifies an user
     ///    - credential: The credential that authenticates the user to a chat thread
     ///    - threadId: The unique identifier of a chat thread
-    ///    - endpoint: The endpoint URL of The Communication Services.
     ///    - displayName: The display name that would be used when sending a chat message
     ///                   If this is `nil` the display name defined when adding the user to
     ///                   chat thread from the service would be used
-    public init(identifier: CommunicationIdentifier,
+    public init(endpoint: String,
+                identifier: CommunicationIdentifier,
                 credential: CommunicationTokenCredential,
                 threadId: String,
-                endpoint: String,
                 displayName: String? = nil) {
-        localizationProvider = LocalizationProvider(logger: logger)
-
         self.chatConfiguration = ChatConfiguration(
+            endpoint: endpoint,
             identifier: identifier,
             credential: credential,
-            endpoint: endpoint,
             displayName: displayName)
         self.events = Events()
         self.threadId = threadId
@@ -145,18 +135,13 @@ public class ChatAdapter {
             connectEventHandler: connectEventHandler
         )
 
-        navigationRouter = NavigationRouter(
-            store: store,
-            logger: logger,
-            chatCompositeEventsHandler: chatCompositeEventsHandler
-        )
+        let localizationProvider = LocalizationProvider(logger: logger)
 
         compositeViewFactory = CompositeViewFactory(
             logger: logger,
             compositeViewModelFactory: CompositeViewModelFactory(
                 logger: logger,
                 localizationProvider: localizationProvider,
-                accessibilityProvider: accessibilityProvider,
                 messageRepositoryManager: repositoryManager,
                 store: store
             )
@@ -180,22 +165,5 @@ public class ChatAdapter {
     private func cleanUpComposite() {
         self.errorManager = nil
         self.lifeCycleManager = nil
-    }
-
-    func makeContainerUIHostingController(router: NavigationRouter,
-                                          logger: Logger,
-                                          viewFactory: CompositeViewFactoryProtocol,
-                                          isRightToLeft: Bool,
-                                          canDismiss: Bool) -> ContainerUIHostingController {
-        let rootView = ContainerView(router: router,
-                                     logger: logger,
-                                     viewFactory: viewFactory,
-                                     isRightToLeft: isRightToLeft)
-        let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
-                                                                        chatAdapter: self,
-                                                                        isRightToLeft: isRightToLeft)
-        containerUIHostingController.modalPresentationStyle = .fullScreen
-
-        return containerUIHostingController
     }
 }

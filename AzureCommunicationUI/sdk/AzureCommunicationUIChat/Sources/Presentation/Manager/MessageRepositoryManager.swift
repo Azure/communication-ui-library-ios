@@ -29,12 +29,13 @@ protocol MessageRepositoryManagerProtocol {
     func addReceivedMessage(message: ChatMessageInfoModel)
     func updateMessageEdited(message: ChatMessageInfoModel)
     func updateMessageDeleted(message: ChatMessageInfoModel)
-    func updateMessageReadReceiptStatus(readReceiptInfo: ReadReceiptInfoModel, state: AppState)
+    func updateMessageReadReceiptStatus(readReceiptInfo: ReadReceiptInfoModel, state: ChatAppState)
     func updateMessageSendStatus(messageId: String, messageSendStatus: MessageSendStatus)
 }
 
 class MessageRepositoryManager: MessageRepositoryManagerProtocol {
     var messages: [ChatMessageInfoModel] = []
+    var initialFetchTimestamp = Iso8601Date()
 
     private let eventsHandler: ChatAdapter.Events
 
@@ -53,6 +54,7 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
         if let index = messages.lastIndex(where: {$0.isLocalUser}) {
             messages[index].update(sendStatus: .seen)
         }
+        initialFetchTimestamp = Iso8601Date()
     }
 
     func addPreviousMessages(previousMessages: [ChatMessageInfoModel]) {
@@ -62,7 +64,11 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
                 $0.id == m.id
             }) {
                 messages[index] = m
-            } else {
+            } else if m.createdOn < initialFetchTimestamp {
+                // Add all previous message
+                messages.append(m)
+            } else if !m.type.isSystemMessage {
+                // Workaround: for system message, use trouter msg, drop new fetched message after initialFetchTimestamp
                 messages.append(m)
             }
         }
@@ -196,7 +202,7 @@ class MessageRepositoryManager: MessageRepositoryManagerProtocol {
         messages[index].update(sendStatus: messageSendStatus)
     }
 
-    func updateMessageReadReceiptStatus(readReceiptInfo: ReadReceiptInfoModel, state: AppState) {
+    func updateMessageReadReceiptStatus(readReceiptInfo: ReadReceiptInfoModel, state: ChatAppState) {
         guard readReceiptInfo.senderIdentifier.stringValue != state.chatState.localUser?.identifier.stringValue else {
             return
         }

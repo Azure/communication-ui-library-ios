@@ -6,18 +6,23 @@
 import UIKit
 
 /// Chat Composite runtime error types.
-struct ChatCompositeErrorCode {
+public struct ChatCompositeErrorCode {
     /// Error when adapter fails to connect to a chat.
-    static let connectFailed: String = "connectFailed"
-
-    /// Error when the input token is not authorized for the threadId.
-    static let authorizationFailed: String = "authorizationFailed"
-
-    /// Error when a chat disconnects unexpectedly or fails on ending. (event code?)
-    static let disconnectFailed: String = "disconnectFailed"
-
+    public static let joinFailed: String = "joinFailed"
     /// Error when local user fails to send message.
-    static let messageSendFailed: String = "messageSendFailed"
+    public static let sendMessageFailed: String = "sendMessageFailed"
+    /// Error when local user fails to connect to real time notification service
+    public static let startEventNotificationsFailed: String = "startEventNotificationsFailed"
+    /// Error when trying to fetch the messages from service
+    public static let fetchMessagesFailed: String = "fetchMessagesFailed"
+    /// Error when trying to retrieve the participants in chat
+    public static let requestParticipantsFetchFailed: String = "requestParticipantsFetchFailed"
+    /// Error sending the read receipts up to the service
+    public static let sendReadReceiptFailed: String = "sendReadReceiptFailed"
+    /// Error sending the typing indicator event up to the service
+    public static let sendTypingIndicatorFailed: String = "sendTypingIndicatorFailed"
+    /// Error when a chat disconnects unexpectedly or fails on ending. (event code?)
+    public static let disconnectFailed: String = "disconnectFailed"
 }
 
 /// The error thrown after Chat Composite launching.

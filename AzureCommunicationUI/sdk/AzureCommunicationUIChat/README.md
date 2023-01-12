@@ -8,7 +8,7 @@
 
 ## Latest Release
 
-- Public Preview: AzureCommunicationUIChat_0.1.0-beta.1 [release] (TBA)
+- Public Preview: [AzureCommunicationUIChat_1.0.0-beta.1](https://github.com/Azure/communication-ui-library-ios/releases/tag/AzureCommunicationUIChat_1.0.0-beta.1)
 
 ## Installation
 
@@ -23,21 +23,31 @@
 CocoaPods is a dependency manager. To set up with CocoaPods visit their [Getting Started Guide](https://guides.cocoapods.org/using/getting-started.html). To integrate UI Mobile Library into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```ruby
-pod 'AzureCommunicationUIChat', '0.1.0-beta.1'
+pod 'AzureCommunicationUIChat', '1.0.0-beta.1'
 ```
-
-### Manual Installation
-
-If you prefer importing Mobile UI Library as an Embedded Framework to your project, please visit our [Manual Installation] (TBA) guide.
 
 ## Quick Sample
 
+The Chat Composite requires two objects to work together, the adapter and the view.
+The `ChatAdapter` requires a communication identifier, token credential, a thread id, end point url of the chat, and an optional display name.  
+The `ChatCompositeView` is a SwiftUI view object that developers use to add to their View. It is initialized with the above adapter that you created.
+
 ```swift
-TBA
+let identifier = UnknownIdentifier(<ACS_IDENTIFIER>)
+let communicationTokenCredential = try! CommunicationTokenCredential(token: <USER_ACCESS_TOKEN>)
+self.chatAdapter = ChatAdapter(endpoint: <CHAT_ENDPOINT>,
+                                 identifier: identifier,
+                                 credential: communicationTokenCredential,
+                                 threadId: <CHAT_THREAD_ID>,
+                                 displayName: <DISPLAY_NAME>)
+self.chatAdapter.connect() { _ in
+    print("Chat connect completionHandler called")
+}
+let chatView = ChatCompositeView(with: chatAdapter)
 ```
 
-For more details on Mobile UI Library functionalities visit the [API Reference Documentation] (https:!//azure.github.io/azure-sdk-for-ios/AzureCommunicationUIChat/index.html).
+For more details on Mobile UI Library functionalities visit the [API Reference Documentation](https://azure.github.io/azure-sdk-for-ios/AzureCommunicationUIChat/index.html) and [Quickstart](https://learn.microsoft.com/en-us/azure/communication-services/quickstarts/ui-library/get-started-chat-ui-library)
 
 ## Known Issues
 
-Please refer to the [wiki] (https:!//github.com/Azure/communication-ui-library-ios/wiki/Known-Issues-Chat) for known issues related to chat.
+Please refer to the [wiki](https://github.com/Azure/communication-ui-library-ios/wiki/Known-Issues-Chat) for known issues related to chat.

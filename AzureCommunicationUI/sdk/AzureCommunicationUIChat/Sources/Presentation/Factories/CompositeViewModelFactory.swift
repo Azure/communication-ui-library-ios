@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import FluentUI
 
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
@@ -27,9 +26,8 @@ protocol CompositeViewModelFactoryProtocol {
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let localizationProvider: LocalizationProviderProtocol
-    private let accessibilityProvider: AccessibilityProviderProtocol
     private let messageRepositoryManager: MessageRepositoryManagerProtocol
-    private let store: Store<AppState>
+    private let store: Store<ChatAppState, Action>
 
     private weak var chatViewModel: ChatViewModel?
 
@@ -37,12 +35,10 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     // - only skeleton code to show view, class not finalized yet
     init(logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
-         accessibilityProvider: AccessibilityProviderProtocol,
          messageRepositoryManager: MessageRepositoryManagerProtocol,
-         store: Store<AppState>) {
+         store: Store<ChatAppState, Action>) {
         self.logger = logger
         self.localizationProvider = localizationProvider
-        self.accessibilityProvider = accessibilityProvider
         self.messageRepositoryManager = messageRepositoryManager
         self.store = store
     }

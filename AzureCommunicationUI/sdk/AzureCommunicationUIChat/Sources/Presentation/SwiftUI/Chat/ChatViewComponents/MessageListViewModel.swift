@@ -18,7 +18,6 @@ class MessageListViewModel: ObservableObject {
     private var lastSendingMessageTimestamp: Date = .distantPast
     private var lastSentOrFailedMessageTimestamp: Date = .distantPast
     private var lastSentReadReceiptTimestamp: Date = .distantPast
-    private var hasFetchedInitialMessages: Bool = false
     private var didEndScrollingTimer: Timer?
     private var readReceiptToBeSentMessageId: String?
     private var lastReadReceiptReceivedTimestamp: Date = .distantPast
@@ -29,12 +28,16 @@ class MessageListViewModel: ObservableObject {
     var scrollSize: CGFloat = .zero
 
     @Published var messages: [ChatMessageInfoModel]
-    @Published var showActivityIndicator: Bool = true
+    @Published var hasFetchedInitialMessages: Bool = false
+    @Published var hasFetchedPreviousMessages: Bool = true
+    @Published var hasFetchedAllMessages: Bool = false
     @Published var showJumpToNewMessages: Bool = false
     @Published var jumpToNewMessagesButtonLabel: String = ""
     @Published var shouldScrollToBottom: Bool = false
+    @Published var shouldScrollToId: Bool = false
     @Published var latestSeenMessageId: String?
     @Published var latestSendingOrSentMessageId: String?
+    @Published var messageIdsOnScreen: [String] = []
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          messageRepositoryManager: MessageRepositoryManagerProtocol,
@@ -68,8 +71,12 @@ class MessageListViewModel: ObservableObject {
         shouldScrollToBottom = true
     }
 
-    func fetchMessages(index: Int) {
-        if index == minFetchIndex {
+    func fetchMessages(lastSeenMessage: ChatMessageInfoModel) {
+        if let lastSeenMessageIndex = messages.firstIndex(where: { $0.id == lastSeenMessage.id }),
+            lastSeenMessageIndex <= minFetchIndex &&
+            hasFetchedPreviousMessages &&
+            !hasFetchedAllMessages {
+            hasFetchedPreviousMessages = false
             dispatch(.repositoryAction(.fetchPreviousMessagesTriggered))
         }
     }
@@ -93,28 +100,22 @@ class MessageListViewModel: ObservableObject {
         }
     }
 
-    func startDidEndScrollingTimer(currentOffset: CGFloat?) {
-        guard currentOffset == nil || currentOffset != scrollOffset else {
-            return
-        }
+    func startDidEndScrollingTimer() {
         if didEndScrollingTimer != nil {
             didEndScrollingTimer?.invalidate()
         }
         didEndScrollingTimer = Timer.scheduledTimer(
             withTimeInterval: scrollEndsTolerance,
             repeats: false) { [weak self]_ in
-            self?.sendReadReceipt(messageId: self?.readReceiptToBeSentMessageId)
+                guard let messageId = self?.readReceiptToBeSentMessageId,
+                    let toBeSentReadReceiptTimestamp = messageId.convertEpochStringToTimestamp(),
+                    let lastSentReadReceiptTimestamp = self?.lastSentReadReceiptTimestamp,
+                    toBeSentReadReceiptTimestamp > lastSentReadReceiptTimestamp else {
+                    return
+                }
+                self?.dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: messageId)))
+                self?.lastSentReadReceiptTimestamp = toBeSentReadReceiptTimestamp
         }
-    }
-
-    func sendReadReceipt(messageId: String?) {
-        guard let messageId = messageId,
-            let toBeSentReadReceiptTimestamp = messageId.convertEpochStringToTimestamp(),
-            toBeSentReadReceiptTimestamp > lastSentReadReceiptTimestamp else {
-            return
-        }
-        dispatch(.participantsAction(.sendReadReceiptTriggered(messageId: messageId)))
-        lastSentReadReceiptTimestamp = toBeSentReadReceiptTimestamp
     }
 
     func update(chatState: ChatState, repositoryState: RepositoryState) {
@@ -126,18 +127,26 @@ class MessageListViewModel: ObservableObject {
             // Scroll to new received message
             if self.lastReceivedMessageTimestamp < chatState.lastReceivedMessageTimestamp {
                 self.lastReceivedMessageTimestamp = chatState.lastReceivedMessageTimestamp
-                shouldScrollToBottom = isAtBottom()
+                shouldScrollToId = !isAtBottom()
             }
 
-            // Scroll to bottom for initial messages
+            // Check if initial messages have been fetched
             if self.hasFetchedInitialMessages != repositoryState.hasFetchedInitialMessages {
                 self.hasFetchedInitialMessages = repositoryState.hasFetchedInitialMessages
-                showActivityIndicator = false
-                shouldScrollToBottom = true
                 // Assume all messages are seen by others when re-joining the chat
                 if let latestSeenMessage = messages.last(where: {$0.isLocalUser}) {
                     latestSeenMessageId = latestSeenMessage.id
                 }
+            }
+
+            // Check if previous messages have been fetched
+            if self.hasFetchedPreviousMessages != repositoryState.hasFetchedPreviousMessages {
+                self.hasFetchedPreviousMessages = repositoryState.hasFetchedPreviousMessages
+            }
+
+            // Check if no more messages to be fetched
+            if self.hasFetchedAllMessages != repositoryState.hasFetchedAllMessages {
+                self.hasFetchedAllMessages = repositoryState.hasFetchedAllMessages
             }
 
             // Scroll to new sending message and get latest sending message id
@@ -145,6 +154,7 @@ class MessageListViewModel: ObservableObject {
                self.lastSendingMessageTimestamp < lastSendingMessageTimestamp {
                 self.lastSendingMessageTimestamp = lastSendingMessageTimestamp
                 shouldScrollToBottom = true
+
                 if let latestSendingMessage = messages.last(where: {$0.sendStatus == .sending}) {
                     latestSendingOrSentMessageId = latestSendingMessage.id
                 }
@@ -196,7 +206,6 @@ class MessageListViewModel: ObservableObject {
     }
 
     func onDisappear() {
-        self.hasFetchedInitialMessages = false
         didEndScrollingTimer?.invalidate()
     }
 }

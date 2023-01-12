@@ -9,9 +9,9 @@ import Foundation
 protocol ChatActionHandling {
     // MARK: LifeCycleHandler
     @discardableResult
-    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func enterBackground(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func enterForeground(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 
     // MARK: ChatActionHandler
     @discardableResult
@@ -23,35 +23,36 @@ protocol ChatActionHandling {
 
     // MARK: Repository Handler
     @discardableResult
-    func initialize(state: AppState,
+    func initialize(state: ChatAppState,
                     dispatch: @escaping ActionDispatch,
                     serviceListener: ChatServiceEventHandling) -> Task<Void, Never>
     @discardableResult
-    func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func getInitialMessages(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func getListOfParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func getListOfParticipants(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func getPreviousMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func getPreviousMessages(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func sendMessage(internalId: String,
                      content: String,
-                     state: AppState,
+                     state: ChatAppState,
                      dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func editMessage(messageId: String,
                      content: String,
                      prevContent: String,
-                     state: AppState,
+                     state: ChatAppState,
                      dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func deleteMessage(messageId: String,
-                       state: AppState,
+                       state: ChatAppState,
                        dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func sendTypingIndicator(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    func sendTypingIndicator(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
-    func sendReadReceipt(messageId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
-    func setTypingParticipantTimer(_ getState: @escaping () -> AppState, _ dispatch: @escaping ActionDispatch)
+    func sendReadReceipt(messageId: String, state: ChatAppState, dispatch: @escaping ActionDispatch)
+    -> Task<Void, Never>
+    func setTypingParticipantTimer(_ getState: @escaping () -> ChatAppState, _ dispatch: @escaping ActionDispatch)
 }
 
 class ChatActionHandler: ChatActionHandling {
@@ -69,7 +70,7 @@ class ChatActionHandler: ChatActionHandling {
         self.connectEventHandler = connectEventHandler
     }
 
-    func initialize(state: AppState,
+    func initialize(state: ChatAppState,
                     dispatch: @escaping ActionDispatch,
                     serviceListener: ChatServiceEventHandling) -> Task<Void, Never> {
         Task {
@@ -80,7 +81,7 @@ class ChatActionHandler: ChatActionHandling {
                 connectEventHandler?(.success(Void()))
             } catch {
                 connectEventHandler?(.failure(ChatCompositeError(
-                    code: ChatCompositeErrorCode.connectFailed,
+                    code: ChatCompositeErrorCode.joinFailed,
                     error: error)))
                 logger.error("Failed to initialize chat client due to error: \(error)")
                 dispatch(.chatAction(.initializeChatFailed(error: error)))
@@ -89,14 +90,14 @@ class ChatActionHandler: ChatActionHandling {
     }
 
     // MARK: LifeCycleHandler
-    func enterBackground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func enterBackground(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         // Pause UI update
         Task {
             print("ChatActionHandler `enterBackground` not implemented")
         }
     }
 
-    func enterForeground(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func enterForeground(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         // rehydrate UI based on latest state, move to last unread message
         Task {
             print("ChatActionHandler `enterForeground` not implemented")
@@ -104,7 +105,7 @@ class ChatActionHandler: ChatActionHandling {
     }
 
     // MARK: Chat Handler
-    func sendTypingIndicator(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func sendTypingIndicator(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             do {
                 try await chatService.sendTypingIndicator()
@@ -136,7 +137,8 @@ class ChatActionHandler: ChatActionHandling {
     }
 
     // MARK: Participants Handler
-    func sendReadReceipt(messageId: String, state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func sendReadReceipt(messageId: String, state: ChatAppState, dispatch: @escaping ActionDispatch)
+    -> Task<Void, Never> {
         Task {
             guard let lastReadReceiptSentTimestamp = state.chatState.lastReadReceiptSentTimestamp else {
                 await sendReadReceiptToChatService(messageId: messageId, dispatch: dispatch)
@@ -161,7 +163,7 @@ class ChatActionHandler: ChatActionHandling {
         }
     }
 
-    func setTypingParticipantTimer(_ getState: @escaping () -> AppState,
+    func setTypingParticipantTimer(_ getState: @escaping () -> ChatAppState,
                                    _ dispatch: @escaping ActionDispatch) {
         // If timer in progress, do nothing
         guard timer == nil else {
@@ -174,40 +176,37 @@ class ChatActionHandler: ChatActionHandling {
     }
 
     // MARK: Repository Handler
-    func getInitialMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func getInitialMessages(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             do {
                 let initialMessages = try await chatService.getInitialMessages()
                 dispatch(.repositoryAction(.fetchInitialMessagesSuccess(messages: initialMessages)))
             } catch {
-                // dispatch error *not handled*
                 dispatch(.repositoryAction(.fetchInitialMessagesFailed(error: error)))
             }
         }
     }
 
-    func getListOfParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func getListOfParticipants(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             do {
                 let maskedParticipantIds = try await chatService.getMaskedParticipantIds()
                 dispatch(.participantsAction(.maskedParticipantsReceived(participantIds: maskedParticipantIds)))
                 let listOfParticipants = try await chatService.getListOfParticipants()
                 dispatch(.participantsAction(.fetchListOfParticipantsSuccess(
-                                                participants: listOfParticipants,
-                                                localParticipantId: state.chatState.localUser?.id)))
+                    participants: listOfParticipants,
+                    localParticipantId: state.chatState.localUser?.id)))
             } catch {
                 dispatch(.participantsAction(.fetchListOfParticipantsFailed(error: error)))
             }
         }
     }
 
-    func getPreviousMessages(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+    func getPreviousMessages(state: ChatAppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             do {
                 let previousMessages = try await chatService.getPreviousMessages()
-                if !previousMessages.isEmpty {
-                    dispatch(.repositoryAction(.fetchPreviousMessagesSuccess(messages: previousMessages)))
-                }
+                dispatch(.repositoryAction(.fetchPreviousMessagesSuccess(messages: previousMessages)))
             } catch {
                 // dispatch error *not handled*
                 dispatch(.repositoryAction(.fetchPreviousMessagesFailed(error: error)))
@@ -217,7 +216,7 @@ class ChatActionHandler: ChatActionHandling {
 
     func sendMessage(internalId: String,
                      content: String,
-                     state: AppState,
+                     state: ChatAppState,
                      dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             do {
@@ -239,7 +238,7 @@ class ChatActionHandler: ChatActionHandling {
     func editMessage(messageId: String,
                      content: String,
                      prevContent: String,
-                     state: AppState,
+                     state: ChatAppState,
                      dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             do {
@@ -256,7 +255,7 @@ class ChatActionHandler: ChatActionHandling {
     }
 
     func deleteMessage(messageId: String,
-                       state: AppState,
+                       state: ChatAppState,
                        dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
             do {
@@ -276,7 +275,7 @@ class ChatActionHandler: ChatActionHandling {
 extension ChatActionHandler {
     // MARK: Typing Participant Helpers
     private func scheduleTimer(timeInterval: TimeInterval,
-                               getState: @escaping () -> AppState,
+                               getState: @escaping () -> ChatAppState,
                                dispatch: @escaping ActionDispatch) {
         DispatchQueue.main.async {
             self.timer = Timer.scheduledTimer(withTimeInterval: timeInterval,
@@ -289,7 +288,7 @@ extension ChatActionHandler {
 
     private func handleTimerInterval(_ timer: Timer,
                                      _ dispatch: @escaping ActionDispatch,
-                                     _ getState: @escaping () -> AppState) {
+                                     _ getState: @escaping () -> ChatAppState) {
         dispatch(.participantsAction(.clearIdleTypingParticipants))
         // get next participant with expiring timestamp
         let expiringParticipant = getState().participantsState.typingParticipants
