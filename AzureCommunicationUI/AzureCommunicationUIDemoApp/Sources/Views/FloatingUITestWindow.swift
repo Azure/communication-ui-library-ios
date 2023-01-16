@@ -86,100 +86,70 @@ class FloatingUITestWindow: UIWindow {
     @objc func holdButtonTapped(sender: UIButton) {
         debugPrint("UI Test:: holdButtonTapped")
         Task {
-            do {
-                try await callingSDKWrapperMock?.holdCall()
-            } catch {
-            }
+            try? await callingSDKWrapperMock?.holdCall()
         }
     }
 
     @objc func resumeButtonTapped(sender: UIButton) {
         debugPrint("UI Test:: resumeButtonTapped")
         Task {
-            do {
-                try await callingSDKWrapperMock?.resumeCall()
-            } catch {
-            }
+            try? await callingSDKWrapperMock?.resumeCall()
         }
     }
 
     @objc func transcriptionOnButtonTapped(sender: UIButton) {
         debugPrint("UI Test:: transcriptionOnButtonTapped")
         Task {
-            do {
-                try await callingSDKWrapperMock?.transcriptionOn()
-            } catch {
-            }
+            try? await callingSDKWrapperMock?.transcriptionOn()
         }
     }
 
     @objc func transcriptionOffButtonTapped(sender: UIButton) {
         debugPrint("UI Test:: transcriptionOffButtonTapped")
         Task {
-            do {
-                try await callingSDKWrapperMock?.transcriptionOff()
-            } catch {
-            }
+            try? await callingSDKWrapperMock?.transcriptionOff()
         }
     }
 
     @objc func recordingOnButtonTapped(sender: UIButton) {
         debugPrint("UI Test:: recordingOnButtonTapped")
         Task {
-            do {
-                try await callingSDKWrapperMock?.recordingOn()
-            } catch {
-            }
+            try? await callingSDKWrapperMock?.recordingOn()
         }
     }
 
     @objc func recordingOffButtonTapped(sender: UIButton) {
         debugPrint("UI Test:: recordingOffButtonTapped")
         Task {
-            do {
-                try await callingSDKWrapperMock?.recordingOff()
-            } catch {
-            }
+            try? await callingSDKWrapperMock?.recordingOff()
         }
     }
 
     @objc func addParticipantButtonTapped(sender: UIButton) {
         debugPrint("UI Test:: AddParticipantButtonTapped")
         Task {
-            do {
-                try await callingSDKWrapperMock?.addParticipant()
-            } catch {
-            }
+            try? await callingSDKWrapperMock?.addParticipant()
         }
     }
 
     @objc func removeParticipantButtonTapped(sender: UIButton) {
         debugPrint("UI Test:: RemoveParticipantButtonTapped")
         Task {
-            do {
-                try await callingSDKWrapperMock?.removeParticipant()
-            } catch {
-            }
+            try? await callingSDKWrapperMock?.removeParticipant()
         }
     }
 
     @objc func unmuteParticipantButtonTapped(sender: UIButton) {
         debugPrint("UI Test:: ParticipantButtonTapped")
         Task {
-            do {
-                try await callingSDKWrapperMock?.unmuteParticipant()
-            } catch {
-            }
+            try? await callingSDKWrapperMock?.unmuteParticipant()
         }
     }
 
     @objc func holdParticipantButtonTapped(sender: UIButton) {
         debugPrint("UI Test:: HoldParticipantButtonTapped")
         Task {
-            do {
-                try await callingSDKWrapperMock?.holdParticipant()
-            } catch {
-            }
+            try? await callingSDKWrapperMock?.holdParticipant()
         }
     }
 }
