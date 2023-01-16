@@ -28,7 +28,7 @@ For more information about calling composite and how you can integrate it into y
 ### [Chat](/AzureCommunicationUI/sdk/AzureCommunicationUIChat)
 
 <p>
-<img width="50%" alt="a screenshot that shows some use cases of the Chat UI library." src="https://github.com/Azure/communication-ui-library-ios/blob/main/docs/images/chat.png?raw=true">
+<img width="50%" alt="A screenshot that shows some use cases of the Chat UI library." src="https://github.com/Azure/communication-ui-library-ios/blob/main/docs/images/chat.png?raw=true">
 </p>
 
 Chat experience brings a real-time text communication to your applications. Specifically, users can send and receive a chat message with events from typing indicators and read receipt. In addition, users can also receive system messages such as participant added or removed and changes to chat title.
