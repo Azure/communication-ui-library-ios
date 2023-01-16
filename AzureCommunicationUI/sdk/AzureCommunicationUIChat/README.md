@@ -1,4 +1,4 @@
-![Hero Image](https://github.com/Azure/communication-ui-library-ios/blob/main/docs/images/mobile-ui-library-chat-hero-image.png?raw=true)
+![A banner image that shows some use cases of the Chat UI library](https://github.com/Azure/communication-ui-library-ios/blob/main/docs/images/mobile-ui-library-chat-hero-image.png?raw=true)
 
 # Azure Communication UI Mobile Library for iOS - Chat
 
