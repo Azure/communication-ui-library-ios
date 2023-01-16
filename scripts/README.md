@@ -30,7 +30,7 @@ The script would attempt to find current version from Info.plist by looking for 
 3. run the command:
     - ```python3 main-repo-updater.py -c <COMPOSITE> -v <NEW_VERSION>``` or 
     - ```python3 main-repo-updater.py --composite <COMPOSITE> --version <NEW_VERSION>``` in your terminal
-    - where ```<NEW_VERSION>``` should be the upcoming release version and <COMPOSITE> should be the type of composite with options of `calling` and `chat` (case insensitive).
+    - where ```<NEW_VERSION>``` should be the upcoming release version and `<COMPOSITE>` should be the type of composite with options of `calling` and `chat` (case insensitive).
 4. done!
 
 
