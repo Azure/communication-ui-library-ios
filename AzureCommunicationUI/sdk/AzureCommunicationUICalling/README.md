@@ -1,4 +1,4 @@
-![Hero Image](https://github.com/Azure/communication-ui-library-ios/blob/main/docs/images/mobile-ui-library-calling-hero-image.png?raw=true)
+![A banner image that shows some use cases of the Calling library with a text that reads Azure Communication Service Mobile UI library](https://github.com/Azure/communication-ui-library-ios/blob/main/docs/images/mobile-ui-library-calling-hero-image.png?raw=true)
 
 # Azure Communication UI Mobile Library for iOS - Calling
 
