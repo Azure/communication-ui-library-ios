@@ -31,6 +31,7 @@ The script would attempt to find current version from Info.plist by looking for 
     - ```python3 main-repo-updater.py -c <COMPOSITE> -v <NEW_VERSION>``` or 
     - ```python3 main-repo-updater.py --composite <COMPOSITE> --version <NEW_VERSION>``` in your terminal
     - where ```<NEW_VERSION>``` should be the upcoming release version and `<COMPOSITE>` should be the type of composite with options of `calling` and `chat` (case insensitive).
+     - the order of input arguments does not matter.
 4. done!
 
 
@@ -41,7 +42,7 @@ The ```podspec-updater.py ``` would perform version update for the following fil
 - AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.podspec
 - AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUIChat.podspec
 
-In addition, the script would update the following sections:
+In addition, the script would update the following sections in PodSpec:
 - spec.version
 - spec.source
 - spec.swift_version  
@@ -55,5 +56,6 @@ In addition, the script would update the following sections:
     - ```python3 podspec-updater.py -c <COMPOSITE> -v <NEW_VERSION> -s <SWIFT_VERSION> -p <PLATFORM_VERSION>``` or 
     - ```python3 podspec-updater.py --composite <COMPOSITE> --version <NEW_VERSION> --swift <SWIFT_VERSION> --platform <PLATFORM_VERSION>``` in your terminal
     - where ```<NEW_VERSION>``` should be the upcoming release version and `<COMPOSITE>` should be the type of composite with options of `calling` and `chat` (case insensitive). 
-    - swift version and platform version are optional, if there are not given, then script would not update them. 
+    - the order of input arguments does not matter.
+    - swift version and platform version are optional. If there are not provided, then the script will not update them. 
 4. done!
