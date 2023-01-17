@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import sys, getopt, re, plistlib
-from Composite import Composite
+from composite import Composite
 
 new_version = ''
 swift_version = ''

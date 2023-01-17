@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import sys, getopt
 import plistlib
-from Composite import Composite
+from composite import Composite
 
 # parse argument from command line
 new_Version = ''
