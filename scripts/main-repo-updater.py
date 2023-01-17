@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
 import sys, getopt
 import plistlib
-from enum import Enum
+from Composite import Composite
 
 # parse argument from command line
 new_Version = ''
-class Composite(Enum):
-	CHAT = 'chat'
-	CALLING = 'calling'
-	UNKNOWN = ''
-	@classmethod
-	def _missing_(cls, value):
-		for member in cls:
-			if member.value == value.lower():
-				return member
 selectedComposite = Composite('')
 
 # Start of the script

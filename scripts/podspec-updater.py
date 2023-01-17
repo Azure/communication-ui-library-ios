@@ -1,16 +1,6 @@
 #!/usr/bin/env python3
 import sys, getopt, re, plistlib
-from enum import Enum
-
-class Composite(Enum):
-	CHAT = 'chat'
-	CALLING = 'calling'
-	UNKNOWN = ''
-	@classmethod
-	def _missing_(cls, value):
-		for member in cls:
-			if member.value == value.lower():
-				return member
+from Composite import Composite
 
 new_version = ''
 swift_version = ''
