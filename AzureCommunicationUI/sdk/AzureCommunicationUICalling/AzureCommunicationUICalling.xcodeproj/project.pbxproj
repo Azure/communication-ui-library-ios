@@ -1003,7 +1003,6 @@
 				756F59752966020800BAFBF7 /* AccessibilityProviderNotificationsObserver.swift */,
 				756F59762966020800BAFBF7 /* AccessibilityProviderProtocol.swift */,
 				FAD20A832928344F0063D8A9 /* ArrayExtension.swift */,
-				7529F5DD29661888002F7CE1 /* BaseLocalizationProvider.swift */,
 				FAD20A87292834500063D8A9 /* CancelBag.swift */,
 				FAD20A852928344F0063D8A9 /* DeviceExtension.swift */,
 				50137D0526A7479C00AB843E /* EnvironmentValuesExtension.swift */,
@@ -1142,6 +1141,7 @@
 		A83739AF26210CC200D46787 /* CallCompositeOptions */ = {
 			isa = PBXGroup;
 			children = (
+				7529F5DD29661888002F7CE1 /* BaseLocalizationProvider.swift */,
 				1F94DAF42677D48400691D1E /* CallCompositeError.swift */,
 				A8373993261F9D7600D46787 /* CallCompositeOptions.swift */,
 				A810038A26A0C1740015C26E /* CallConfiguration.swift */,
