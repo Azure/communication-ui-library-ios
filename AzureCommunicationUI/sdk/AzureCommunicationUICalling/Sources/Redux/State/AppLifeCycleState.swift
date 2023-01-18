@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 enum AppStatus {
     case foreground
@@ -18,16 +17,5 @@ struct LifeCycleState {
 
     init(currentStatus: AppStatus = .foreground) {
         self.currentStatus = currentStatus
-    }
-}
-
-struct AppPhaseKey: EnvironmentKey {
-    static let defaultValue: AppStatus = .foreground
-}
-
-extension EnvironmentValues {
-    var appPhase: AppStatus {
-        get { self[AppPhaseKey.self] }
-        set { self[AppPhaseKey.self] = newValue }
     }
 }
