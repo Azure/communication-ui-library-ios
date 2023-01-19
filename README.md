@@ -18,7 +18,7 @@ Azure Communication Service Mobile UI currently offers the following libraries:
 ### [Calling](AzureCommunicationUI/sdk/AzureCommunicationUICalling)
 
 <p>
-<img width="50%" alt="A screenshot that shows few typical use cases of the Calling UI library." src="https://github.com/Azure/communication-ui-library-ios/blob/main/docs/images/calling.png?raw=true">
+<img width="50%" alt="A screenshot that shows some use cases of the Calling UI library." src="https://github.com/Azure/communication-ui-library-ios/blob/main/docs/images/calling.png?raw=true">
 </p>
 
 Calling experience allows users to start or join a call. Inside the experience, users can configure their devices, participate in the call with video, and see other participants, including those ones with video turned on. For Teams interoperability, CallComposite includes lobby functionality so that users can wait to be admitted. 
