@@ -1,5 +1,9 @@
 # Release History
 
+## 1.0.0-beta.2 (TBA)
+### Bugs Fixed
+- Addressed the issue where LocalizationProvider not being marked as internal.
+- Addressed the issue where README's banner image not shown up on API doc.
 
 ## 1.0.0-beta.1 (2023-01-10)
 This is the initial release of Azure Communication UI Chat Library. For more information, please see the [README](./README.md).
