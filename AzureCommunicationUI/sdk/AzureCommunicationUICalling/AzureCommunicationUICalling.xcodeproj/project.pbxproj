@@ -148,7 +148,7 @@
 		759BDEF928FF0851002B6853 /* StyleProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEF828FF0851002B6853 /* StyleProvider.swift */; };
 		759BDEFD28FF0A81002B6853 /* SupportedLocale.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEFC28FF0A81002B6853 /* SupportedLocale.swift */; };
 		759BDEFF28FF0B0B002B6853 /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEFE28FF0B0A002B6853 /* LocalizationProvider.swift */; };
-		75B3693D297896BA00D67281 /* PreferencKeyExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B3693C297896BA00D67281 /* PreferencKeyExtensions.swift */; };
+		75B3693D297896BA00D67281 /* AppPhaseKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B3693C297896BA00D67281 /* AppPhaseKey.swift */; };
 		75C1EE0F28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C1EE0E28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift */; };
 		8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */; };
 		8815B6E427DA9B350065A184 /* LobbyOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */; };
@@ -450,7 +450,7 @@
 		759BDEF828FF0851002B6853 /* StyleProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleProvider.swift; sourceTree = "<group>"; };
 		759BDEFC28FF0A81002B6853 /* SupportedLocale.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SupportedLocale.swift; sourceTree = "<group>"; };
 		759BDEFE28FF0B0A002B6853 /* LocalizationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationProvider.swift; sourceTree = "<group>"; };
-		75B3693C297896BA00D67281 /* PreferencKeyExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencKeyExtensions.swift; sourceTree = "<group>"; };
+		75B3693C297896BA00D67281 /* AppPhaseKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPhaseKey.swift; sourceTree = "<group>"; };
 		75C1EE0E28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalVideoStreamExtension.swift; sourceTree = "<group>"; };
 		8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyOverlayViewModel.swift; sourceTree = "<group>"; };
 		8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyOverlayViewModelTests.swift; sourceTree = "<group>"; };
@@ -635,10 +635,10 @@
 		1F04A651273496670028AAC8 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				75B3693C297896BA00D67281 /* AppPhaseKey.swift */,
+				696AD14828DBAFCE0043F807 /* ButtonState.swift */,
 				1FFEA01326A68D0D00E90816 /* FontExtension.swift */,
 				A865AF0827B7116B008347B4 /* IconAndLabelConversion.swift */,
-				696AD14828DBAFCE0043F807 /* ButtonState.swift */,
-				75B3693C297896BA00D67281 /* PreferencKeyExtensions.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1672,7 +1672,7 @@
 				756F596E2965F8EA00BAFBF7 /* Store.swift in Sources */,
 				1B7ABF82278CFFC400D79DF7 /* ZoomableVideoRenderView.swift in Sources */,
 				50FA4623269CA1D4001844AC /* IconButtonViewModel.swift in Sources */,
-				75B3693D297896BA00D67281 /* PreferencKeyExtensions.swift in Sources */,
+				75B3693D297896BA00D67281 /* AppPhaseKey.swift in Sources */,
 				7589CE1A297765E30092AE38 /* ViewExtension.swift in Sources */,
 				1F8E0B722684EBC100DDD18E /* CallingMiddlewareHandler.swift in Sources */,
 				9823AB4B26A13F4B0006266D /* PreviewAreaViewModel.swift in Sources */,
