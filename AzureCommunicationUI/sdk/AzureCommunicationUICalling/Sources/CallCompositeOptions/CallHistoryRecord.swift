@@ -12,10 +12,10 @@ public struct CallHistoryRecord {
     public let callStartedOn: Date
 
     /// Call Ids associated with particular call.
-    public let callIds: [String]
+    public let callIdList: [String]
 
-    init(callStartedOn: Date, callIds: [String]) {
+    init(callStartedOn: Date, callIdList: [String]) {
         self.callStartedOn = callStartedOn
-        self.callIds = callIds
+        self.callIdList = callIdList
     }
 }

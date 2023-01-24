@@ -28,7 +28,7 @@ class DebugInfoManager: DebugInfoManagerProtocol {
         let grouped = Dictionary(grouping: callHistoryRecords, by: { $0.date })
 
         let mapped = grouped.map({ (callDate: Date, callRecord: [CallHistoryRecordData]) in
-            return CallHistoryRecord(callStartedOn: callDate, callIds: callRecord.map { $0.callId })
+            return CallHistoryRecord(callStartedOn: callDate, callIdList: callRecord.map { $0.callId })
         })
 
         let sorted = mapped.sorted(by: { a, b in
