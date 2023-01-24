@@ -280,9 +280,10 @@ extension CallingDemoView {
     }
 
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
+        let callId = callComposite.debugInfo.callHistoryRecordList.last?.callIds.last ?? "Unknown"
         print("::::CallingDemoView::getEventsHandler::onError \(error)")
         print("::::CallingDemoView error.code \(error.code)")
-        print("::::CallingDemoView debug info \(callComposite.debugInfo.currentOrLastCallId ?? "Unknown")")
+        print("::::CallingDemoView debug info \(callId)")
         showError(for: error.code)
     }
 

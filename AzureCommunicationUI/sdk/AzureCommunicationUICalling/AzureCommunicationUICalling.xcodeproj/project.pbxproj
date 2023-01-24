@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */; };
+		05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C829297F516D006EDD0D /* CallHistoryService.swift */; };
+		05C1C831297F5680006EDD0D /* CallHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */; };
+		05C1C836297F69A9006EDD0D /* CallHistoryRecordData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C835297F69A9006EDD0D /* CallHistoryRecordData.swift */; };
 		1B315123284EA8630043231B /* OnHoldOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */; };
 		1B3A8EED285129CC002ED55A /* AudioSessionReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */; };
 		1B5F169D27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */; };
@@ -268,6 +272,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRecord.swift; sourceTree = "<group>"; };
+		05C1C829297F516D006EDD0D /* CallHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryService.swift; sourceTree = "<group>"; };
+		05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryRepository.swift; sourceTree = "<group>"; };
+		05C1C835297F69A9006EDD0D /* CallHistoryRecordData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryRecordData.swift; sourceTree = "<group>"; };
 		1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionReducerTests.swift; sourceTree = "<group>"; };
 		1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLeaveCallConfirmationList.swift; sourceTree = "<group>"; };
@@ -586,6 +594,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05C1C82F297F5680006EDD0D /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				05C1C834297F69A9006EDD0D /* Model */,
+				05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		05C1C834297F69A9006EDD0D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				05C1C835297F69A9006EDD0D /* CallHistoryRecordData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		1F03D3CC2638A6860055C456 /* Calling */ = {
 			isa = PBXGroup;
 			children = (
@@ -867,6 +892,7 @@
 				75C1EE0D28E4BEF600FF78B1 /* AzureCommunicationCalling */,
 				1F6470A82639DCFA0008B9E9 /* CallingService.swift */,
 				1F48CF1E283447F400A44D58 /* CallingSDKWrapperProtocol.swift */,
+				05C1C829297F516D006EDD0D /* CallHistoryService.swift */,
 			);
 			path = Calling;
 			sourceTree = "<group>";
@@ -1156,6 +1182,7 @@
 				FA378671284152CA005B6288 /* SetParticipantViewDataError.swift */,
 				759BDEFC28FF0A81002B6853 /* SupportedLocale.swift */,
 				1F94DADB2673E87700691D1E /* ThemeOptions.swift */,
+				05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1190,6 +1217,7 @@
 				1F2BED62262F859D00D98266 /* Redux */,
 				1FBCB6AD2649DA4100F57EEA /* Model */,
 				1F2BED862631EB5100D98266 /* Service */,
+				05C1C82F297F5680006EDD0D /* Data */,
 				1F6470AA2639FE560008B9E9 /* Utilities */,
 				505460EB27BAC6E900040467 /* Localization */,
 				A8659FC92602A22000C807DE /* Info.plist */,
@@ -1711,6 +1739,7 @@
 				1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
+				05C1C836297F69A9006EDD0D /* CallHistoryRecordData.swift in Sources */,
 				FAD20A8B292834500063D8A9 /* DeviceExtension.swift in Sources */,
 				881D8F7427FCA6B3008EC897 /* AvatarViewManager.swift in Sources */,
 				1BAD44BC283DAF2100C9E6A9 /* DraggableLocalVideoView.swift in Sources */,
@@ -1728,6 +1757,7 @@
 				985DF376269E07E700CFDA55 /* PrimaryButton.swift in Sources */,
 				1FBCB6AF2649DC7900F57EEA /* ParticipantInfoModel.swift in Sources */,
 				988799932746CDEC00AA3759 /* LockPhoneOrientation.swift in Sources */,
+				05C1C831297F5680006EDD0D /* CallHistoryRepository.swift in Sources */,
 				7529F5DE29661888002F7CE1 /* BaseLocalizationProvider.swift in Sources */,
 				1F47F78726E9E18E000AE4B7 /* DrawerContainerViewController.swift in Sources */,
 				1FBCB6AA2645AC2F00F57EEA /* VideoRenderView.swift in Sources */,
@@ -1761,6 +1791,7 @@
 				1F2BEDBB26328EBA00D98266 /* PermissionReducer.swift in Sources */,
 				1FBCB6B9264BA90000F57EEA /* ParticipantGridCellVideoView.swift in Sources */,
 				1F48B401274879F000B6E5F9 /* DiagnosticConfig.swift in Sources */,
+				05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */,
 				9823AB4926A13F220006266D /* PreviewAreaView.swift in Sources */,
 				50FA46212698EA7A001844AC /* IconWithLabelButtonViewModel.swift in Sources */,
 				50E2D69926F4FA05006B0EF4 /* ParticipantsListCellViewModel.swift in Sources */,
@@ -1800,6 +1831,7 @@
 				1F13D36C26A8B83300E31666 /* RemoteParticipantsState.swift in Sources */,
 				1FFEA01426A68D0D00E90816 /* FontExtension.swift in Sources */,
 				1FBCB666264519DA00F57EEA /* VideoViewManager.swift in Sources */,
+				05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */,
 				50FA461026829B7A001844AC /* ControlBarViewModel.swift in Sources */,
 				1F2BED882631EB7900D98266 /* PermissionsManager.swift in Sources */,
 				1FA23F9E265DA21400B4A080 /* VideoStreamInfoModel.swift in Sources */,
