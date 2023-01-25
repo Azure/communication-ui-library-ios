@@ -4,6 +4,7 @@
 //
 
 import Combine
+import Foundation
 
 extension Reducer where State == CallingState,
                         Actions == Action {
@@ -14,6 +15,7 @@ extension Reducer where State == CallingState,
         var callIdValue = callingState.callId
         var isRecordingActive = callingState.isRecordingActive
         var isTranscriptionActive = callingState.isTranscriptionActive
+        var callStartDate = callingState.callStartDate
 
         switch action {
         case .callingAction(.stateUpdated(let status)):
@@ -35,9 +37,10 @@ extension Reducer where State == CallingState,
             operationStatus = .none
             isRecordingActive = false
             isTranscriptionActive = false
+        case .callingAction(.callStartRequested):
+            callStartDate = Date()
         // Exhaustive un-implemented actions
         case .audioSessionAction,
-                .callingAction(.callStartRequested),
                 .callingAction(.setupCall),
                 .callingAction(.dismissSetup),
                 .callingAction(.resumeRequested),
@@ -55,6 +58,7 @@ extension Reducer where State == CallingState,
                             operationStatus: operationStatus,
                             callId: callIdValue,
                             isRecordingActive: isRecordingActive,
-                            isTranscriptionActive: isTranscriptionActive)
+                            isTranscriptionActive: isTranscriptionActive,
+                            callStartDate: callStartDate)
     }
 }

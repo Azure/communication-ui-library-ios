@@ -32,7 +32,7 @@ class DebugInfoManager: DebugInfoManagerProtocol {
         })
 
         let sorted = mapped.sorted(by: { a, b in
-            return a.callStartedOn > b.callStartedOn
+            return a.callStartedOn < b.callStartedOn
         })
 
         return sorted
