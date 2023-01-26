@@ -45,16 +45,16 @@ class CallHistoryService: CallHistoryServiceProtocol {
         let currentDate = Date()
         var dateComponent = DateComponents()
         dateComponent.day = -31
-        let thresholdDate = Calendar.current.date(byAdding: dateComponent, to: currentDate)!
-
-        let callRecords = callHistoryRepository.getAll()
-        let callRecordIds = callRecords
-            .filter { callHistoryRecord in
-                thresholdDate > callHistoryRecord.date
-            }
-            .map { callHistoryRecord in
-                callHistoryRecord.id
-            }
-        callHistoryRepository.remove(ids: callRecordIds)
+        if let thresholdDate = Calendar.current.date(byAdding: dateComponent, to: currentDate) {
+            let callRecords = callHistoryRepository.getAll()
+            let callRecordIds = callRecords
+                .filter { callHistoryRecord in
+                    thresholdDate > callHistoryRecord.date
+                }
+                .map { callHistoryRecord in
+                    callHistoryRecord.id
+                }
+            callHistoryRepository.remove(ids: callRecordIds)
+        }
     }
 }

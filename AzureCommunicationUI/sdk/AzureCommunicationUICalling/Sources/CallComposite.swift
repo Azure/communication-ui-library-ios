@@ -41,7 +41,7 @@ public class CallComposite {
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
     private var callHistoryService: CallHistoryServiceProtocol?
-    private var callHistoryRepository: CallHistoryRepositoryProtocol?
+    private lazy var callHistoryRepository: CallHistoryRepositoryProtocol = CallHistoryRepository(dbHelper: DBHelper())
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -160,10 +160,9 @@ public class CallComposite {
             callCompositeEventsHandler: callCompositeEventsHandler,
             avatarViewManager: avatarViewManager
         )
-
-        self.callHistoryRepository = createCallHistoryRepository()
         let debugInfoManager = createDebugInfoManager()
-        self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository!)
+        self.debugInfoManager = debugInfoManager
+        self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
 
         return CompositeViewFactory(
             logger: logger,
@@ -181,12 +180,8 @@ public class CallComposite {
         )
     }
 
-    private func createDebugInfoManager() -> DebugInfoManager {
-        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository ?? createCallHistoryRepository())
-    }
-
-    private func createCallHistoryRepository() -> CallHistoryRepositoryProtocol {
-        return CallHistoryRepository(dbHelper: DBHelper())
+    private func createDebugInfoManager() -> DebugInfoManagerProtocol {
+        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository)
     }
 
     private func cleanUpManagers() {
@@ -197,6 +192,7 @@ public class CallComposite {
         self.avatarViewManager = nil
         self.remoteParticipantsManager = nil
         self.debugInfoManager = nil
+        self.callHistoryService = nil
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,
