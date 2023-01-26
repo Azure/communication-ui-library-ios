@@ -7,11 +7,11 @@ import Foundation
 
 /// A Call Composite debug information.
 public struct DebugInfo {
-    /// The current or last known call id for the current CallComposite object. 
-    /// `Nil` is returned if a call hasn't started for CallComposite.
-    public let currentOrLastCallId: String?
+    /// The current or last known call id for the current CallComposite object.
+    public let callHistoryRecordList: [CallHistoryRecord]
 
-    init(lastCallId: String? = nil) {
-        self.currentOrLastCallId = lastCallId
+    /// Call history.
+    init(callHistoryRecordList: [CallHistoryRecord]) {
+        self.callHistoryRecordList = callHistoryRecordList
     }
 }

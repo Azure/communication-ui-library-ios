@@ -40,14 +40,13 @@ public class CallComposite {
     private var avatarViewManager: AvatarViewManagerProtocol?
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
+    private var callHistoryService: CallHistoryServiceProtocol?
+    private var callHistoryRepository: CallHistoryRepositoryProtocol?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
-        guard let debugInfoManager = debugInfoManager else {
-            return DebugInfo()
-        }
-
-        return debugInfoManager.getDebugInfo()
+        let localDebugInfoManager = debugInfoManager ?? createDebugInfoManager()
+        return localDebugInfoManager.getDebugInfo()
     }
 
     /// Create an instance of CallComposite with options.
@@ -162,8 +161,9 @@ public class CallComposite {
             avatarViewManager: avatarViewManager
         )
 
-        let debugInfoManager = DebugInfoManager(store: store)
-        self.debugInfoManager = debugInfoManager
+        self.callHistoryRepository = CallHistoryRepository()
+        let debugInfoManager = createDebugInfoManager()
+        self.callHistoryService = CallHistoryService(store: store)
 
         return CompositeViewFactory(
             logger: logger,
@@ -179,6 +179,10 @@ public class CallComposite {
                 localOptions: localOptions
             )
         )
+    }
+
+    private func createDebugInfoManager() -> DebugInfoManager {
+        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository ?? CallHistoryRepository())
     }
 
     private func cleanUpManagers() {
