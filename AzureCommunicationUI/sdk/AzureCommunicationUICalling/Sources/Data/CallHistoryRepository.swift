@@ -9,7 +9,7 @@ import SQLite3
 protocol CallHistoryRepositoryProtocol {
     func insert(callDate: Date, callId: String)
     func getAll() -> [CallHistoryRecordData]
-    func remove(id: Int64)
+    func remove(ids: [Int64])
 }
 
 class CallHistoryRepository: CallHistoryRepositoryProtocol {
@@ -29,7 +29,7 @@ class CallHistoryRepository: CallHistoryRepositoryProtocol {
             let sql = "INSERT INTO CallHistory (Date,CallId) VALUES('"
             + fmtr.string(from: callDate) + "','" + callId + "')"
 
-            var result = sqlite3_exec(db, sql, nil, nil, nil)
+            sqlite3_exec(db, sql, nil, nil, nil)
 
             self.dbHelper.dbClose(db: db)
         }
@@ -66,7 +66,19 @@ class CallHistoryRepository: CallHistoryRepositoryProtocol {
         return callHistory
     }
 
-    func remove(id: Int64) {
+    func remove(ids: [Int64]) {
+        guard !ids.isEmpty else {
+            return
+        }
+        if let db = dbHelper.openDatabase() {
+            let idVals = ids.map { id in
+                "'" + String(id) + "'"
+            }
+                .joined(separator: ",")
 
+            let sql = "DELETE FROM CallHistory WHERE Id in (\(idVals))"
+            sqlite3_exec(db, sql, nil, nil, nil)
+            _ = self.dbHelper.dbClose(db: db)
+        }
     }
 }
