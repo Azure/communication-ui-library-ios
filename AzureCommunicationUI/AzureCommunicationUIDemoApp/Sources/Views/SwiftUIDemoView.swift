@@ -278,7 +278,7 @@ extension SwiftUIDemoView {
     }
 
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
-        let callId = callComposite.debugInfo.callHistoryRecordList.last?.callIdList.last ?? "Unknown"
+        let callId = callComposite.debugInfo.callHistoryRecordList.last?.callIds.last ?? "Unknown"
         print("::::SwiftUIDemoView::getEventsHandler::onError \(error)")
         print("::::SwiftUIDemoView error.code \(error.code)")
         print("::::SwiftUIDemoView debug info \(callId)")

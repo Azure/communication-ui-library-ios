@@ -134,7 +134,7 @@ class UIKitDemoViewController: UIViewController {
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::UIKitDemoView::getEventsHandler::onError \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
-        let callId = callComposite.debugInfo.callHistoryRecordList.last?.callIdList.last ?? "Unknown"
+        let callId = callComposite.debugInfo.callHistoryRecords.last?.callIds.last ?? "Unknown"
         print("::::SwiftUIDemoView debug info \(callId)")
     }
 
