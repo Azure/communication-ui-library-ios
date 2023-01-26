@@ -161,9 +161,9 @@ public class CallComposite {
             avatarViewManager: avatarViewManager
         )
 
-        self.callHistoryRepository = CallHistoryRepository()
+        self.callHistoryRepository = createCallHistoryRepository()
         let debugInfoManager = createDebugInfoManager()
-        self.callHistoryService = CallHistoryService(store: store)
+        self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository!)
 
         return CompositeViewFactory(
             logger: logger,
@@ -182,7 +182,11 @@ public class CallComposite {
     }
 
     private func createDebugInfoManager() -> DebugInfoManager {
-        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository ?? CallHistoryRepository())
+        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository ?? createCallHistoryRepository())
+    }
+
+    private func createCallHistoryRepository() -> CallHistoryRepositoryProtocol {
+        return CallHistoryRepository(dbHelper: DBHelper())
     }
 
     private func cleanUpManagers() {

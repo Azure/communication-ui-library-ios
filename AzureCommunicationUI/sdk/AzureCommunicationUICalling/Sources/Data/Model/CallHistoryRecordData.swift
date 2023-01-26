@@ -5,8 +5,8 @@
 
 import Foundation
 
-struct CallHistoryRecordData {
-    let id: Int
+struct CallHistoryRecordData: Identifiable {
+    let id: Int64
     let callId: String
     let date: Date
 }

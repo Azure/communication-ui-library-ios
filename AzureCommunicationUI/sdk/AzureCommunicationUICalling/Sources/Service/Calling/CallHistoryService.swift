@@ -12,23 +12,28 @@ protocol CallHistoryServiceProtocol {
 class CallHistoryService: CallHistoryServiceProtocol {
     private let store: Store<AppState, Action>
     private var cancellables = Set<AnyCancellable>()
-    private var callId: String?
+    private let callHistoryRepository: CallHistoryRepositoryProtocol
+    private var updatedCallId: String?
 
-    init(store: Store<AppState, Action>) {
+    init(store: Store<AppState, Action>, callHistoryRepository: CallHistoryRepositoryProtocol) {
+        self.callHistoryRepository = callHistoryRepository
         self.store = store
         self.store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.receive(state)
-            }.store(in: &cancellables)
+            }
+            .store(in: &cancellables)
     }
 
     private func receive(_ state: AppState) {
-        // call id should be persisted after a call is finished
         guard let updatedCallId = state.callingState.callId,
-              !updatedCallId.isEmpty else {
+                !updatedCallId.isEmpty,
+              let callStartDate = state.callingState.callStartDate,
+              self.updatedCallId != updatedCallId else {
             return
         }
+        self.updatedCallId = updatedCallId
 
-        callId = state.callingState.callId
+        callHistoryRepository.insert(callDate: callStartDate, callId: updatedCallId)
     }}
