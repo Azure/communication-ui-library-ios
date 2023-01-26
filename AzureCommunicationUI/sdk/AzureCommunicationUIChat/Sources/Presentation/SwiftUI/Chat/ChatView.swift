@@ -20,6 +20,7 @@ struct ChatView: View {
             TypingParticipantsView(viewModel: viewModel.typingParticipantsViewModel)
                 .padding(.bottom, Constants.typingParticipantsBottomPadding)
             BottomBarView(viewModel: viewModel.bottomBarViewModel)
+                .padding(.bottom)
         }
         .onAppear {
             viewModel.getInitialMessages()
