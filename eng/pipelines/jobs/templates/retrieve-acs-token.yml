@@ -2,11 +2,12 @@
 
 steps:
   - script: |
-      pip install azure-communication-identity
+      pip3 install azure-communication-identity
       python3 - <<EOF
       import os,sys,json,requests
       from azure.communication.identity import CommunicationIdentityClient, CommunicationUserIdentifier
 
+      print("Installed")
       try:
         # Code adapted from 
         # https://github.com/Azure-Samples/communication-services-python-quickstarts/blob/main/access-tokens-quickstart/issue-access-tokens.py
