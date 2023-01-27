@@ -16,15 +16,16 @@ short_version_pattern = re.compile(r"[0-9]+\.[0-9]+", re.IGNORECASE)
 calling_podspec = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.podspec'
 
 # chat
-chat_podspec = 'AzureCommunicationUI/sdk/AzureCommunicationUICalling/AzureCommunicationUIChat.podspec'
+chat_podspec = 'AzureCommunicationUI/sdk/AzureCommunicationUIChat/AzureCommunicationUIChat.podspec'
 
 
 def update(path, replaceFrom, replaceTo):
-	with open(path, 'r') as fi:
-		s = fi.read()
-	with open(path, "w") as fo:
+	with open(path, 'r+') as f:
+		s = f.read()
+		f.seek(0)
 		s = s.replace(replaceFrom, replaceTo)
-		fo.write(s)
+		f.write(s)
+		f.truncate()
 
 def extract_string(string, start, end):
 	str = "(?s)(?<=%s).*?(?=%s)" % (start, end)
