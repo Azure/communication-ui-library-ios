@@ -2,9 +2,9 @@
 
 steps:
   - script: |
+      python3 -m pip install --upgrade pip
       pip3 install azure-communication-identity
       python3 - <<EOF
-      print("Installed")
       import os,sys,json,requests
       from azure.communication.identity import CommunicationIdentityClient, CommunicationUserIdentifier
 
