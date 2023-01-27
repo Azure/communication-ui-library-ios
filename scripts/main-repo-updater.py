@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
 import sys, getopt
 import plistlib
-from enum import Enum
+from composite import Composite
 
 # parse argument from command line
 new_Version = ''
-class Composite(Enum):
-	CHAT = 'chat'
-	CALLING = 'calling'
-	UNKNOWN = ''
 selectedComposite = Composite('')
 
 # Start of the script
@@ -51,11 +47,12 @@ def getCurrentVersion():
 	return [pList, oldVersion]
 
 def update(path, replaceFrom, replaceTo):
-	with open(path, 'r') as fi:
-		s = fi.read()
-	with open(path, "w") as fo:
+	with open(path, 'r+') as f:
+		s = f.read()
+		f.seek(0)
 		s = s.replace(replaceFrom, replaceTo)
-		fo.write(s)
+		f.write(s)
+		f.truncate()
 
 def main(argv):
 	try:
