@@ -15,7 +15,11 @@ protocol CallHistoryRepositoryProtocol {
 class CallHistoryRepository: CallHistoryRepositoryProtocol {
 
     private let dbHelper: DBHelper
-    private let dateFormat: String = "yyyy-MM-dd'T'hh:mm:SS"
+    private lazy var dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return formatter
+    }()
 
     init(dbHelper: DBHelper) {
         self.dbHelper = dbHelper
@@ -23,11 +27,8 @@ class CallHistoryRepository: CallHistoryRepositoryProtocol {
 
     func insert(callDate: Date, callId: String) {
         if let db = dbHelper.openDatabase() {
-            let fmtr = DateFormatter()
-            fmtr.dateFormat = dateFormat
-
             let sql = "INSERT INTO CallHistory (Date,CallId) VALUES('"
-            + fmtr.string(from: callDate) + "','" + callId + "')"
+            + dateFormatter.string(from: callDate) + "','" + callId + "')"
 
             sqlite3_exec(db, sql, nil, nil, nil)
 
@@ -38,8 +39,6 @@ class CallHistoryRepository: CallHistoryRepositoryProtocol {
     func getAll() -> [CallHistoryRecordData] {
         var callHistory: [CallHistoryRecordData] = []
         if let db = dbHelper.openDatabase() {
-            let fmtr = DateFormatter()
-            fmtr.dateFormat = dateFormat
 
             let sql = "SELECT Id, Date, CallId FROM CallHistory ORDER BY Date ASC"
             var stmt: OpaquePointer?
@@ -51,12 +50,12 @@ class CallHistoryRepository: CallHistoryRepositoryProtocol {
                     let id: Int64 = sqlite3_column_int64(stmt, 0)
                     let dateStr = String(cString: sqlite3_column_text(stmt, 1))
                     let callId = String(cString: sqlite3_column_text(stmt, 2))
-                    let date = fmtr.date(from: dateStr)!
+                    if let date = dateFormatter.date(from: dateStr) {
+                        let callHistoryRecordData = CallHistoryRecordData(id: id, callId: callId, date: date)
+                        callHistory.append(callHistoryRecordData)
 
-                    let callHistoryRecordData = CallHistoryRecordData(id: id, callId: callId, date: date)
-                    callHistory.append(callHistoryRecordData)
-
-                    result = sqlite3_step(stmt)
+                        result = sqlite3_step(stmt)
+                    }
                 }
                 sqlite3_finalize(stmt)
             }
@@ -78,7 +77,7 @@ class CallHistoryRepository: CallHistoryRepositoryProtocol {
 
             let sql = "DELETE FROM CallHistory WHERE Id in (\(idVals))"
             sqlite3_exec(db, sql, nil, nil, nil)
-            _ = self.dbHelper.dbClose(db: db)
+            self.dbHelper.dbClose(db: db)
         }
     }
 }
