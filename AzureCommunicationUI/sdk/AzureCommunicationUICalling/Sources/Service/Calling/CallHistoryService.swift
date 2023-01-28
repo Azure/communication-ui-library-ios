@@ -19,7 +19,9 @@ class CallHistoryService: CallHistoryServiceProtocol {
         self.callHistoryRepository = callHistoryRepository
         self.store = store
 
-        cleanOldRecords()
+        Task {
+            await cleanOldRecords()
+        }
 
         self.store.$state
             .receive(on: DispatchQueue.main)
@@ -41,7 +43,7 @@ class CallHistoryService: CallHistoryServiceProtocol {
         callHistoryRepository.insert(callDate: callStartDate, callId: updatedCallId)
     }
 
-    private func cleanOldRecords() {
+    private func cleanOldRecords() async {
         let currentDate = Date()
         var dateComponent = DateComponents()
         dateComponent.day = -31
