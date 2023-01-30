@@ -175,7 +175,7 @@ struct ChatDemoView: View {
 }
 
 extension ChatDemoView {
-    func startChatComposite(headless: Bool = false) {
+    func startChatComposite() {
         let communicationIdentifier = CommunicationUserIdentifier(envConfigSubject.userId)
         guard let communicationTokenCredential = try? CommunicationTokenCredential(
             token: envConfigSubject.acsToken) else {

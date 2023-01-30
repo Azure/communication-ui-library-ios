@@ -5,13 +5,11 @@
 
 import SwiftUI
 import AzureCommunicationCommon
-#if DEBUG
-@testable import AzureCommunicationUICalling
-#else
 import AzureCommunicationUICalling
-#endif
+import AzureCommunicationUIChat
 
 struct CallWithChatDemoView: View {
+    @State var chatAdapter: ChatAdapter?
     @State var callComposite: CallComposite?
     @State var isErrorDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
@@ -308,6 +306,28 @@ extension CallWithChatDemoView {
         }
     }
 
+    func startChatComposite() {
+        let communicationIdentifier = CommunicationUserIdentifier(envConfigSubject.userId)
+        guard let communicationTokenCredential = try? CommunicationTokenCredential(
+            token: envConfigSubject.acsToken) else {
+            return
+        }
+
+        self.chatAdapter = ChatAdapter(
+            endpoint: envConfigSubject.endpointUrl,
+            identifier: communicationIdentifier,
+            credential: communicationTokenCredential,
+            threadId: envConfigSubject.threadId,
+            displayName: envConfigSubject.displayName)
+        guard let chatAdapter = self.chatAdapter else {
+            return
+        }
+        chatAdapter.events.onError = showError(error:)
+        chatAdapter.connect() { _ in
+            print("Chat connect completionHandler called")
+        }
+    }
+
     private func getTokenCredential() async throws -> CommunicationTokenCredential {
         switch envConfigSubject.selectedAcsTokenType {
         case .token:
@@ -381,11 +401,16 @@ extension CallWithChatDemoView {
         let state = CustomButtonViewData(type: .callingViewInfoHeader,
                                          image: UIImage(named: "messageIcon")!,
                                          label: "messageIcon",
-                                         badgeNumber: 0) { _ in // [weak callComposite = self.callComposite] _ in
-//            guard let composite = callComposite else {
-//                return
-//            }
+                                         badgeNumber: 0) { [weak callComposite = self.callComposite,
+                                                            weak chatAdapter = self.chatAdapter] _ in
+            guard let callComposite = callComposite,
+                  let chatCompositeAdaptor = chatAdapter else {
+                return
+            }
 
+            let chatCompositeView = ChatCompositeView(with: chatCompositeAdaptor)
+                .navigationTitle("Chat")
+                .navigationBarTitleDisplayMode(.inline)
             //            guard let chatCompositeView = try? self.chatComposite?.getCompositeView() else {
             //                print("Couldn't show Chat Composite UI")
             //                return
