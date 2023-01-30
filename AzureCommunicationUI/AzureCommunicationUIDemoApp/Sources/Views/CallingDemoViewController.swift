@@ -32,6 +32,7 @@ class CallingDemoViewController: UIViewController {
     private var groupCallTextField: UITextField!
     private var teamsMeetingTextField: UITextField!
     private var settingsButton: UIButton!
+    private var showCallHistoryButton: UIButton!
     private var startExperienceButton: UIButton!
     private var acsTokenTypeSegmentedControl: UISegmentedControl!
     private var meetingTypeSegmentedControl: UISegmentedControl!
@@ -355,6 +356,28 @@ class CallingDemoViewController: UIViewController {
         present(settingsViewHostingController, animated: true, completion: nil)
     }
 
+    @objc func onShowHistoryBtnPressed() {
+        let callComposite = CallComposite()
+        let debugInfo = callComposite.debugInfo
+        let callHistory = debugInfo.callHistoryRecords
+        var callHistoryTitle = "Total calls: \(callHistory.count)"
+        var callHistoryMessage = "Last Call: none"
+        if let lastHistoryRecord = callHistory.last {
+            var formatter = DateFormatter()
+            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            callHistoryMessage = "Last Call: \(formatter.string(from: lastHistoryRecord.callStartedOn))"
+            lastHistoryRecord.callIds.forEach { callId in
+                callHistoryMessage += "\nCallId: \(callId)"
+            }
+        }
+
+        let errorAlert = UIAlertController(title: callHistoryTitle, message: callHistoryMessage, preferredStyle: .alert)
+        errorAlert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        present(errorAlert,
+                animated: true,
+                completion: nil)
+    }
+
     @objc func onStartExperienceBtnPressed() {
         startExperienceButton.isEnabled = false
         startExperienceButton.backgroundColor = .systemGray3
@@ -495,6 +518,18 @@ class CallingDemoViewController: UIViewController {
                                                              right: LayoutConstants.buttonHorizontalInset)
         settingsButton.accessibilityIdentifier = AccessibilityId.settingsButtonAccessibilityID.rawValue
 
+        showCallHistoryButton = UIButton()
+        showCallHistoryButton.setTitle("Show call history", for: .normal)
+        showCallHistoryButton.backgroundColor = .systemBlue
+//        showCallHistoryButton.setTitleColor(UIColor.white, for: .normal)
+//        showCallHistoryButton.setTitleColor(UIColor.systemGray6, for: .disabled)
+        showCallHistoryButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
+                                                                    left: LayoutConstants.buttonHorizontalInset,
+                                                                    bottom: LayoutConstants.buttonVerticalInset,
+                                                                    right: LayoutConstants.buttonHorizontalInset)
+        showCallHistoryButton.layer.cornerRadius = 8
+        showCallHistoryButton.addTarget(self, action: #selector(onShowHistoryBtnPressed), for: .touchUpInside)
+
         startExperienceButton = UIButton()
         startExperienceButton.backgroundColor = .systemBlue
         startExperienceButton.setTitleColor(UIColor.white, for: .normal)
@@ -528,6 +563,22 @@ class CallingDemoViewController: UIViewController {
         settingsButtonHStack.distribution = .fill
         settingsButtonHStack.translatesAutoresizingMaskIntoConstraints = false
 
+        let showHistoryButtonHSpacer1 = UIView()
+        showHistoryButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
+        showHistoryButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let showHistoryButtonHSpacer2 = UIView()
+        showHistoryButtonHSpacer2.translatesAutoresizingMaskIntoConstraints = false
+        showHistoryButtonHSpacer2.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let showHistoryButtonHStack = UIStackView(arrangedSubviews: [showHistoryButtonHSpacer1,
+                                                                  showCallHistoryButton,
+                                                                  showHistoryButtonHSpacer2])
+        showHistoryButtonHStack.axis = .horizontal
+        showHistoryButtonHStack.alignment = .fill
+        showHistoryButtonHStack.distribution = .fill
+        showHistoryButtonHStack.translatesAutoresizingMaskIntoConstraints = false
+
         let startButtonHSpacer1 = UIView()
         startButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
         startButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -556,6 +607,7 @@ class CallingDemoViewController: UIViewController {
                                                    groupCallTextField,
                                                    teamsMeetingTextField,
                                                    settingsButtonHStack,
+                                                   showHistoryButtonHStack,
                                                    startButtonHStack])
         stackView.spacing = LayoutConstants.stackViewSpacingPortrait
         stackView.axis = .vertical
@@ -587,6 +639,7 @@ class CallingDemoViewController: UIViewController {
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
 
         settingButtonHSpacer2.widthAnchor.constraint(equalTo: settingButtonHSpacer1.widthAnchor).isActive = true
+        showHistoryButtonHSpacer2.widthAnchor.constraint(equalTo: showHistoryButtonHSpacer1.widthAnchor).isActive = true
         startButtonHSpacer2.widthAnchor.constraint(equalTo: startButtonHSpacer1.widthAnchor).isActive = true
 
         updateAcsTokenTypeFields()

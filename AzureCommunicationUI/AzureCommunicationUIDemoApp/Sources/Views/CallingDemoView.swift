@@ -15,6 +15,9 @@ struct CallingDemoView: View {
     @State var isSettingsDisplayed: Bool = false
     @State var isStartExperienceLoading: Bool = false
     @State var errorMessage: String = ""
+    @State var isShowingCallHistory: Bool = false
+    @State var callHistoryTitle: String = ""
+    @State var callHistoryMessage: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
 
     let verticalPadding: CGFloat = 5
@@ -30,6 +33,7 @@ struct CallingDemoView: View {
             displayNameTextField
             meetingSelector
             settingButton
+            showCallHistoryButton
             startExperienceButton
             Spacer()
         }
@@ -42,6 +46,15 @@ struct CallingDemoView: View {
                         .default(Text("Dismiss"), action: {
                     isErrorDisplayed = false
                 }))
+        }
+        .alert(isPresented: $isShowingCallHistory) {
+            Alert(
+                title: Text(callHistoryTitle),
+                message: Text(callHistoryMessage),
+                dismissButton:
+                        .default(Text("Dismiss"), action: {
+                            isShowingCallHistory = false
+                        }))
         }
         .sheet(isPresented: $isSettingsDisplayed) {
             SettingsView(envConfigSubject: envConfigSubject)
@@ -128,6 +141,26 @@ struct CallingDemoView: View {
         .buttonStyle(DemoButtonStyle())
         .disabled(isStartExperienceDisabled || isStartExperienceLoading)
         .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+    }
+
+    var showCallHistoryButton: some View {
+        Button("Show call history") {
+            let callComposite = CallComposite()
+            let debugInfo = callComposite.debugInfo
+            let callHistory = debugInfo.callHistoryRecords
+            callHistoryTitle = "Total calls: \(callHistory.count)"
+            callHistoryMessage = "Last Call: none"
+            if let lastHistoryRecord = callHistory.last {
+                var formatter = DateFormatter()
+                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                callHistoryMessage = "Last Call: \(formatter.string(from: lastHistoryRecord.callStartedOn))"
+                lastHistoryRecord.callIds.forEach { callId in
+                    callHistoryMessage += "\nCallId: \(callId)"
+                }
+            }
+            isShowingCallHistory = true
+        }
+        .buttonStyle(DemoButtonStyle())
     }
 
     var isStartExperienceDisabled: Bool {
