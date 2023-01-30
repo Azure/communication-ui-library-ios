@@ -15,7 +15,7 @@ jobs:
   - job: BuildJazzy
     displayName: "Build API docs with Jazzy Gem"
     pool:
-      name: vsts-mac-1231-xcode-1331
+      name: vsts-mac-131-xcode-142
       demands: xcode
 
     steps:
