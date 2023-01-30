@@ -201,10 +201,7 @@ struct CallWithChatDemoView: View {
     var startExperienceButton: some View {
         Button("Start Experience") {
             isStartExperienceLoading = true
-            Task { @MainActor in
-                await startCallComposite()
-                isStartExperienceLoading = false
-            }
+            startChatComposite()
         }
         .buttonStyle(DemoButtonStyle())
         .disabled(isStartExperienceDisabled || isStartExperienceLoading)
@@ -262,6 +259,7 @@ extension CallWithChatDemoView {
             customizationOptions: createCustomizationOption())
 
         let callComposite = CallComposite(withOptions: callCompositeOptions)
+        self.callComposite = callComposite
 
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
@@ -325,7 +323,12 @@ extension CallWithChatDemoView {
 //        chatAdapter.events.onError = showError(error:)
         chatAdapter.connect() { _ in
             print("Chat connect completionHandler called")
+            Task { @MainActor in
+                await startCallComposite()
+                isStartExperienceLoading = false
+            }
         }
+        self.chatAdapter = chatAdapter
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {
@@ -402,9 +405,9 @@ extension CallWithChatDemoView {
             type: .callingViewInfoHeader,
             image: UIImage(named: "messageIcon")!,
             label: "messageIcon",
-            badgeNumber: 0) { [weak callComposite = self.callComposite, weak chatAdapter = self.chatAdapter] _ in
-                guard let callComposite = callComposite,
-                      let chatCompositeAdaptor = chatAdapter else {
+            badgeNumber: 0) { _ in
+                guard let callComposite = self.callComposite,
+                      let chatCompositeAdaptor = self.chatAdapter else {
                     return
                 }
 
@@ -434,6 +437,9 @@ extension CallWithChatDemoView {
                 //            self.callComposite?.setOverlay(overlayOptions: overlayOptions, overlay: {
                 //                chatCompositeView
                 //            })
+                callComposite.setOverlay(overlay: {
+                    chatCompositeView
+                })
         }
 
         return state

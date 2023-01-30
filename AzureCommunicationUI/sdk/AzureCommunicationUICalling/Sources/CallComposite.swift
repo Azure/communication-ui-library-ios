@@ -41,6 +41,7 @@ public class CallComposite {
     private var avatarViewManager: AvatarViewManagerProtocol?
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
+    private var injectedOverlayState: InjectedOverlayState
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -59,16 +60,17 @@ public class CallComposite {
         localizationOptions = options?.localizationOptions
         localizationProvider = LocalizationProvider(logger: logger)
         customizationOptions = options?.customizationOptions
+        injectedOverlayState = InjectedOverlayState()
     }
 
     public func setOverlay<V>(// overlayOptions: OverlayOptions,
                               @ViewBuilder overlay: () -> V) where V: View {
-//        withAnimation {
-//            let view = overlay()
+        withAnimation {
+            let view = overlay()
 //            injectedOverlayState.injectedViewController = nil
-//            injectedOverlayState.injectedView = AnyView(view)
+            injectedOverlayState.injectedView = AnyView(view)
 //            injectedOverlayState.overlayOptions = overlayOptions
-//        }
+        }
     }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
@@ -184,6 +186,7 @@ public class CallComposite {
             avatarManager: avatarViewManager,
             videoViewManager: VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger),
             customizationOptions: customizationOptions,
+            injectedOverlayState: injectedOverlayState,
             compositeViewModelFactory: CompositeViewModelFactory(
                 logger: logger,
                 store: store,

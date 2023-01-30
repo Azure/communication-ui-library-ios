@@ -228,6 +228,7 @@
 		FA3FB43C29884938007843F0 /* CustomButtonViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3FB43B29884938007843F0 /* CustomButtonViewData.swift */; };
 		FA3FB43E29884985007843F0 /* CustomButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3FB43D29884985007843F0 /* CustomButtonState.swift */; };
 		FA3FB44329885AAA007843F0 /* CustomIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3FB44229885AAA007843F0 /* CustomIconButton.swift */; };
+		FA3FB44529886F09007843F0 /* InjectedOverlayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3FB44429886F09007843F0 /* InjectedOverlayState.swift */; };
 		FA40424A27E3E86700875368 /* ParticipantsListViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA40424927E3E86700875368 /* ParticipantsListViewModelMocking.swift */; };
 		FA538278292FE86200963FFC /* DebugInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA538277292FE86200963FFC /* DebugInfo.swift */; };
 		FA62233727DAD9AF008B5466 /* AccessibilityProviderMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */; };
@@ -540,6 +541,7 @@
 		FA3FB43B29884938007843F0 /* CustomButtonViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonViewData.swift; sourceTree = "<group>"; };
 		FA3FB43D29884985007843F0 /* CustomButtonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonState.swift; sourceTree = "<group>"; };
 		FA3FB44229885AAA007843F0 /* CustomIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomIconButton.swift; sourceTree = "<group>"; };
+		FA3FB44429886F09007843F0 /* InjectedOverlayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InjectedOverlayState.swift; sourceTree = "<group>"; };
 		FA40424927E3E86700875368 /* ParticipantsListViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsListViewModelMocking.swift; sourceTree = "<group>"; };
 		FA538277292FE86200963FFC /* DebugInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugInfo.swift; sourceTree = "<group>"; };
 		FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderMocking.swift; sourceTree = "<group>"; };
@@ -1168,6 +1170,7 @@
 				1F94DADB2673E87700691D1E /* ThemeOptions.swift */,
 				FA3FB43929884910007843F0 /* CustomizationOptions.swift */,
 				FA3FB43B29884938007843F0 /* CustomButtonViewData.swift */,
+				FA3FB44429886F09007843F0 /* InjectedOverlayState.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1836,6 +1839,7 @@
 				FA378672284152CA005B6288 /* SetParticipantViewDataError.swift in Sources */,
 				756F597A2966026300BAFBF7 /* AccessibilityProvider.swift in Sources */,
 				985DF378269E07F400CFDA55 /* PrimaryButtonViewModel.swift in Sources */,
+				FA3FB44529886F09007843F0 /* InjectedOverlayState.swift in Sources */,
 				1FC30846266949E8007EC537 /* ColorExtension.swift in Sources */,
 				1FDBF9F1281F8D2F00B92273 /* ACSCallEndReasonExtension.swift in Sources */,
 				1F4B0F0526A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift in Sources */,

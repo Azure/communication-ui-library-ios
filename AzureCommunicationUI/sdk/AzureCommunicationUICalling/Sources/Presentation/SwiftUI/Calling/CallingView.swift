@@ -18,6 +18,7 @@ struct CallingView: View {
     }
 
     @ObservedObject var viewModel: CallingViewModel
+    @ObservedObject var injectedOverlayState: InjectedOverlayState
     let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
     let leaveCallConfirmationListSourceView = UIView()
@@ -33,17 +34,26 @@ struct CallingView: View {
     }
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                if getSizeClass() != .iphoneLandscapeScreenSize {
-                    portraitCallingView
-                } else {
-                    landscapeCallingView
+        Group {
+            if let injectedView = injectedOverlayState.injectedView {
+//               let overlayOptions = injectedOverlayState.overlayOptions,
+//               overlayOptions.showPIP {
+                injectedView
+//                    .transition(overlayOptions.overlayTransition)
+            } else {
+                GeometryReader { geometry in
+                    ZStack {
+                        if getSizeClass() != .iphoneLandscapeScreenSize {
+                            portraitCallingView
+                        } else {
+                            landscapeCallingView
+                        }
+                        errorInfoView
+                    }
+                    .frame(width: geometry.size.width,
+                           height: geometry.size.height)
                 }
-                errorInfoView
             }
-            .frame(width: geometry.size.width,
-                   height: geometry.size.height)
         }
         .environment(\.screenSizeClass, getSizeClass())
         .environment(\.appPhase, viewModel.appState)
