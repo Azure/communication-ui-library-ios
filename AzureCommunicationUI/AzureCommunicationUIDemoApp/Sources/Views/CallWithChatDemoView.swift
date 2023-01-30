@@ -322,7 +322,7 @@ extension CallWithChatDemoView {
         guard let chatAdapter = self.chatAdapter else {
             return
         }
-        chatAdapter.events.onError = showError(error:)
+//        chatAdapter.events.onError = showError(error:)
         chatAdapter.connect() { _ in
             print("Chat connect completionHandler called")
         }
@@ -398,42 +398,42 @@ extension CallWithChatDemoView {
     }
 
     private func getMessageButtonViewData() -> CustomButtonViewData {
-        let state = CustomButtonViewData(type: .callingViewInfoHeader,
-                                         image: UIImage(named: "messageIcon")!,
-                                         label: "messageIcon",
-                                         badgeNumber: 0) { [weak callComposite = self.callComposite,
-                                                            weak chatAdapter = self.chatAdapter] _ in
-            guard let callComposite = callComposite,
-                  let chatCompositeAdaptor = chatAdapter else {
-                return
-            }
+        let state = CustomButtonViewData(
+            type: .callingViewInfoHeader,
+            image: UIImage(named: "messageIcon")!,
+            label: "messageIcon",
+            badgeNumber: 0) { [weak callComposite = self.callComposite, weak chatAdapter = self.chatAdapter] _ in
+                guard let callComposite = callComposite,
+                      let chatCompositeAdaptor = chatAdapter else {
+                    return
+                }
 
-            let chatCompositeView = ChatCompositeView(with: chatCompositeAdaptor)
-                .navigationTitle("Chat")
-                .navigationBarTitleDisplayMode(.inline)
-            //            guard let chatCompositeView = try? self.chatComposite?.getCompositeView() else {
-            //                print("Couldn't show Chat Composite UI")
-            //                return
-            //            }
-            //            guard let chatCompositeViewController =
-            // try? self.chatComposite?.getCompositeViewController() else {
-            //                print("Couldn't show Chat Composite UI")
-            //                return
-            //            }
+                let chatCompositeView = ChatCompositeView(with: chatCompositeAdaptor)
+                    .navigationTitle("Chat")
+                    .navigationBarTitleDisplayMode(.inline)
+                //            guard let chatCompositeView = try? self.chatComposite?.getCompositeView() else {
+                //                print("Couldn't show Chat Composite UI")
+                //                return
+                //            }
+                //            guard let chatCompositeViewController =
+                // try? self.chatComposite?.getCompositeViewController() else {
+                //                print("Couldn't show Chat Composite UI")
+                //                return
+                //            }
 
-            //            let pipOptions = PIPViewOptions(
-            //                isDraggable: true,
-            //                pipDraggableAreaMargins: UIEdgeInsets(top: 60, left: 12, bottom: 82, right: 12),
-            //                defaultPosition: .bottomRight)
-            //            let overlayOptions = OverlayOptions(overlayTransition: .move(edge: .trailing),
-            //                                                showPIP: true,
-            //                                                pipViewOptions: pipOptions)
-//            callComposite?.setOverlay(chatCompositeViewController)// ,
-            // overlayOptions: overlayOptions)
-            // SwiftUI version
-            //            self.callComposite?.setOverlay(overlayOptions: overlayOptions, overlay: {
-            //                chatCompositeView
-            //            })
+                //            let pipOptions = PIPViewOptions(
+                //                isDraggable: true,
+                //                pipDraggableAreaMargins: UIEdgeInsets(top: 60, left: 12, bottom: 82, right: 12),
+                //                defaultPosition: .bottomRight)
+                //            let overlayOptions = OverlayOptions(overlayTransition: .move(edge: .trailing),
+                //                                                showPIP: true,
+                //                                                pipViewOptions: pipOptions)
+                //            callComposite?.setOverlay(chatCompositeViewController)// ,
+                // overlayOptions: overlayOptions)
+                // SwiftUI version
+                //            self.callComposite?.setOverlay(overlayOptions: overlayOptions, overlay: {
+                //                chatCompositeView
+                //            })
         }
 
         return state
