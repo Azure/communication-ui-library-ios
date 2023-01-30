@@ -45,7 +45,7 @@ When submitting a pull request, please add relevant tests and ensure your change
 #### Running unit tests
 
 1. Open the `AzureCommunicationUI.xcworkspace` with Xcode
-2. Select `AzureCommunicationUICalling` scheme and target at any iOS simulator
+2. Select `AzureCommunicationUICalling` or `AzureCommunicationUIChat` scheme and target at any iOS simulator
 3. Navigate to `Product` -> `Test` or hit `⌘+U` to start testing
 
 ### Running UI tests
