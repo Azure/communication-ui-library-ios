@@ -224,6 +224,10 @@
 		FA03CC8D27C8420300986D4E /* IconWithLabelButtonViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC8C27C8420300986D4E /* IconWithLabelButtonViewModelMocking.swift */; };
 		FA25C13E28FF711E00417715 /* DebugInfoManagerMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA25C13D28FF711E00417715 /* DebugInfoManagerMocking.swift */; };
 		FA378672284152CA005B6288 /* SetParticipantViewDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA378671284152CA005B6288 /* SetParticipantViewDataError.swift */; };
+		FA3FB43A29884910007843F0 /* CustomizationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3FB43929884910007843F0 /* CustomizationOptions.swift */; };
+		FA3FB43C29884938007843F0 /* CustomButtonViewData.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3FB43B29884938007843F0 /* CustomButtonViewData.swift */; };
+		FA3FB43E29884985007843F0 /* CustomButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3FB43D29884985007843F0 /* CustomButtonState.swift */; };
+		FA3FB44329885AAA007843F0 /* CustomIconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3FB44229885AAA007843F0 /* CustomIconButton.swift */; };
 		FA40424A27E3E86700875368 /* ParticipantsListViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA40424927E3E86700875368 /* ParticipantsListViewModelMocking.swift */; };
 		FA538278292FE86200963FFC /* DebugInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA538277292FE86200963FFC /* DebugInfo.swift */; };
 		FA62233727DAD9AF008B5466 /* AccessibilityProviderMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */; };
@@ -532,6 +536,10 @@
 		FA03CC8C27C8420300986D4E /* IconWithLabelButtonViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithLabelButtonViewModelMocking.swift; sourceTree = "<group>"; };
 		FA25C13D28FF711E00417715 /* DebugInfoManagerMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DebugInfoManagerMocking.swift; path = Mocking/DebugInfoManagerMocking.swift; sourceTree = "<group>"; };
 		FA378671284152CA005B6288 /* SetParticipantViewDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetParticipantViewDataError.swift; sourceTree = "<group>"; };
+		FA3FB43929884910007843F0 /* CustomizationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomizationOptions.swift; sourceTree = "<group>"; };
+		FA3FB43B29884938007843F0 /* CustomButtonViewData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonViewData.swift; sourceTree = "<group>"; };
+		FA3FB43D29884985007843F0 /* CustomButtonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonState.swift; sourceTree = "<group>"; };
+		FA3FB44229885AAA007843F0 /* CustomIconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomIconButton.swift; sourceTree = "<group>"; };
 		FA40424927E3E86700875368 /* ParticipantsListViewModelMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantsListViewModelMocking.swift; sourceTree = "<group>"; };
 		FA538277292FE86200963FFC /* DebugInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugInfo.swift; sourceTree = "<group>"; };
 		FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityProviderMocking.swift; sourceTree = "<group>"; };
@@ -600,12 +608,14 @@
 		1F04A64E273491230028AAC8 /* Button */ = {
 			isa = PBXGroup;
 			children = (
+				FA3FB44129885A9C007843F0 /* CustomIconButton */,
 				50FA460B26829162001844AC /* IconWithLabelButton.swift */,
 				50FA46202698EA7A001844AC /* IconWithLabelButtonViewModel.swift */,
 				50FA461C2698DCEB001844AC /* IconButton.swift */,
 				50FA4622269CA1D3001844AC /* IconButtonViewModel.swift */,
 				985DF375269E07E700CFDA55 /* PrimaryButton.swift */,
 				985DF377269E07F400CFDA55 /* PrimaryButtonViewModel.swift */,
+				FA3FB43D29884985007843F0 /* CustomButtonState.swift */,
 			);
 			path = Button;
 			sourceTree = "<group>";
@@ -1156,6 +1166,8 @@
 				FA378671284152CA005B6288 /* SetParticipantViewDataError.swift */,
 				759BDEFC28FF0A81002B6853 /* SupportedLocale.swift */,
 				1F94DADB2673E87700691D1E /* ThemeOptions.swift */,
+				FA3FB43929884910007843F0 /* CustomizationOptions.swift */,
+				FA3FB43B29884938007843F0 /* CustomButtonViewData.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1320,6 +1332,14 @@
 				FA6B61A2290C9F55004B8188 /* DebugInfoSharingActivityViewModel.swift */,
 			);
 			path = SharingActivity;
+			sourceTree = "<group>";
+		};
+		FA3FB44129885A9C007843F0 /* CustomIconButton */ = {
+			isa = PBXGroup;
+			children = (
+				FA3FB44229885AAA007843F0 /* CustomIconButton.swift */,
+			);
+			path = CustomIconButton;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1725,6 +1745,8 @@
 				50FA45FC26813FB8001844AC /* ParticipantGridView.swift in Sources */,
 				1F2BEDD126329E7C00D98266 /* CallingAction.swift in Sources */,
 				50B6AC7F28208C750077FC01 /* AccessibilityIdentifier.swift in Sources */,
+				FA3FB44329885AAA007843F0 /* CustomIconButton.swift in Sources */,
+				FA3FB43C29884938007843F0 /* CustomButtonViewData.swift in Sources */,
 				985DF376269E07E700CFDA55 /* PrimaryButton.swift in Sources */,
 				1FBCB6AF2649DC7900F57EEA /* ParticipantInfoModel.swift in Sources */,
 				988799932746CDEC00AA3759 /* LockPhoneOrientation.swift in Sources */,
@@ -1809,6 +1831,7 @@
 				1F13D36E26AA82D400E31666 /* NavigationState.swift in Sources */,
 				1F2BED6C262F8B7000D98266 /* StoreExtensions.swift in Sources */,
 				881D8F7227FB6992008EC897 /* LocalOptions.swift in Sources */,
+				FA3FB43E29884985007843F0 /* CustomButtonState.swift in Sources */,
 				50E2D69126EAAB33006B0EF4 /* CompositeParticipantsList.swift in Sources */,
 				FA378672284152CA005B6288 /* SetParticipantViewDataError.swift in Sources */,
 				756F597A2966026300BAFBF7 /* AccessibilityProvider.swift in Sources */,
@@ -1828,6 +1851,7 @@
 				5A3140EA80ACDCB14140A060 /* CompositeViewFactory.swift in Sources */,
 				5A3142DAFAB4EE338ABF2196 /* CompositeViewModelFactory.swift in Sources */,
 				5A314D26A09E235A6509C1C7 /* ACSCameraFacingExtension.swift in Sources */,
+				FA3FB43A29884910007843F0 /* CustomizationOptions.swift in Sources */,
 				5A31497E0DEBAB0256AD0B91 /* ErrorMocking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

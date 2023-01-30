@@ -15,15 +15,18 @@ struct CompositeViewFactory: CompositeViewFactoryProtocol {
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let avatarManager: AvatarViewManagerProtocol
     private let videoViewManager: VideoViewManager
+    private let customizationOptions: CustomizationOptions?
 
     init(logger: Logger,
          avatarManager: AvatarViewManagerProtocol,
          videoViewManager: VideoViewManager,
+         customizationOptions: CustomizationOptions?,
          compositeViewModelFactory: CompositeViewModelFactoryProtocol) {
         self.logger = logger
         self.avatarManager = avatarManager
         self.videoViewManager = videoViewManager
         self.compositeViewModelFactory = compositeViewModelFactory
+        self.customizationOptions = customizationOptions
     }
 
     func makeSetupView() -> SetupView {
@@ -33,8 +36,15 @@ struct CompositeViewFactory: CompositeViewFactoryProtocol {
     }
 
     func makeCallingView() -> CallingView {
+        let headerButtonStates = customizationOptions?.customButtonViewData.filter {
+            $0.state.type == .callingViewInfoHeader
+        }.compactMap {
+            $0.state
+        }
+
         return CallingView(viewModel: compositeViewModelFactory.getCallingViewModel(),
                            avatarManager: avatarManager,
-                           viewManager: videoViewManager)
+                           viewManager: videoViewManager,
+                           headerButtonStates: headerButtonStates ?? [])
     }
 }

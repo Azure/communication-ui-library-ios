@@ -25,6 +25,7 @@ public class CallComposite {
 
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
+    private let customizationOptions: CustomizationOptions?
 
     // Internal dependencies
     private var logger: Logger = DefaultLogger(category: "Calling")
@@ -57,6 +58,17 @@ public class CallComposite {
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
         localizationProvider = LocalizationProvider(logger: logger)
+        customizationOptions = options?.customizationOptions
+    }
+
+    public func setOverlay<V>(// overlayOptions: OverlayOptions,
+                              @ViewBuilder overlay: () -> V) where V: View {
+//        withAnimation {
+//            let view = overlay()
+//            injectedOverlayState.injectedViewController = nil
+//            injectedOverlayState.injectedView = AnyView(view)
+//            injectedOverlayState.overlayOptions = overlayOptions
+//        }
     }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
@@ -75,6 +87,7 @@ public class CallComposite {
         let viewFactory = constructViewFactoryAndDependencies(
             for: callConfiguration,
             localOptions: localOptions,
+            customizationOptions: customizationOptions,
             callCompositeEventsHandler: events,
             withCallingSDKWrapper: self.customCallingSdkWrapper
         )
@@ -129,6 +142,7 @@ public class CallComposite {
     private func constructViewFactoryAndDependencies(
         for callConfiguration: CallConfiguration,
         localOptions: LocalOptions?,
+        customizationOptions: CustomizationOptions?,
         callCompositeEventsHandler: CallComposite.Events,
         withCallingSDKWrapper wrapper: CallingSDKWrapperProtocol? = nil
     ) -> CompositeViewFactoryProtocol {
@@ -169,6 +183,7 @@ public class CallComposite {
             logger: logger,
             avatarManager: avatarViewManager,
             videoViewManager: VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger),
+            customizationOptions: customizationOptions,
             compositeViewModelFactory: CompositeViewModelFactory(
                 logger: logger,
                 store: store,

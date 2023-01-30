@@ -11,6 +11,7 @@ struct InfoHeaderView: View {
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @State var participantsListButtonSourceView = UIView()
     let avatarViewManager: AvatarViewManagerProtocol
+    let customButtonStates: [CustomButtonState]
 
     private enum Constants {
         static let shapeCornerRadius: CGFloat = 5
@@ -64,7 +65,7 @@ struct InfoHeaderView: View {
                                     Constants.accessibilityFontScale :
                                         Constants.defaultFontScale)
             Spacer()
-            participantListButton
+            headerButtons
         }
         .padding(EdgeInsets(top: 0,
                             leading: Constants.hStackHorizontalPadding,
@@ -72,6 +73,15 @@ struct InfoHeaderView: View {
                             trailing: Constants.hStackHorizontalPadding / 2.0))
         .background(Color(StyleProvider.color.surfaceDarkColor))
         .clipShape(RoundedRectangle(cornerRadius: Constants.shapeCornerRadius))
+    }
+
+    var headerButtons: some View {
+        HStack(spacing: 0) {
+            if let customButtonState = customButtonStates.first {
+                CustomIconButton(viewModel: customButtonState)
+            }
+            participantListButton
+        }
     }
 
     var participantListButton: some View {

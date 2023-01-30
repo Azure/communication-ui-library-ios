@@ -21,6 +21,7 @@ struct CallingView: View {
     let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
     let leaveCallConfirmationListSourceView = UIView()
+    let headerButtonStates: [CustomButtonState]
 
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
@@ -137,7 +138,8 @@ struct CallingView: View {
 
     var infoHeaderView: some View {
         InfoHeaderView(viewModel: viewModel.infoHeaderViewModel,
-                       avatarViewManager: avatarManager)
+                       avatarViewManager: avatarManager,
+                       customButtonStates: headerButtonStates)
     }
 
     var bannerView: some View {
