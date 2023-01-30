@@ -24,7 +24,7 @@ jobs:
 
       - script: |
           JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
-          jazzy $JAZZY_CONFIG_FILE
+          jazzy --config $JAZZY_CONFIG_FILE
         displayName: "Run Jazzy on $(TargetProject)"
         workingDirectory: AzureCommunicationUI/sdk/${{ variables['TargetProject'] }}
 
