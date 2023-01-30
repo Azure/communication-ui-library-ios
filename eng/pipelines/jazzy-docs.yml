@@ -3,8 +3,9 @@
 # Manual runs only
 trigger: none
 
-variables:
+parameters:
   - name: TargetProject
+    type: string
     values:
       - AzureCommunicationUICalling
       - AzureCommunicationUIChat
