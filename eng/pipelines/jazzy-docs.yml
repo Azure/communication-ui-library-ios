@@ -19,13 +19,13 @@ jobs:
       demands: xcode
 
     steps:
-      - task: UseRubyVersion@0
-        inputs:
-          versionSpec: '>= 3.0'
+      # - task: UseRubyVersion@0
+      #   inputs:
+      #     versionSpec: '>= 3.0'
 
-      - script: |
-          gem install jazzy
-        displayName: "Install Jazzy Gem"
+      # - script: |
+      #     gem install jazzy
+      #   displayName: "Install Jazzy Gem"
 
       - script: |
           JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
