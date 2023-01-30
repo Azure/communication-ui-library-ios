@@ -19,7 +19,7 @@ jobs:
       demands: xcode
 
     steps:
-    - task: UseRubyVersion@0
+      - task: UseRubyVersion@0
       inputs:
         versionSpec: '>= 2.5'
         addToPath: true
