@@ -20,9 +20,8 @@ jobs:
 
     steps:
       - task: UseRubyVersion@0
-      inputs:
-        versionSpec: '>= 2.5'
-        addToPath: true
+        inputs:
+          versionSpec: '>= 2.4'
 
       - script: |
           gem install jazzy
