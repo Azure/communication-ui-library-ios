@@ -1,5 +1,10 @@
 # Jazzy Docs Pipeline
-
+resources:
+  repositories:
+  - repository: internal_tools_acs-mobile-ui # In a different organization
+    endpoint: https://skype.visualstudio.com/SCC/
+    type: git
+    name: internal_tools_acs-mobile-ui
 # Manual runs only
 trigger: none
 
@@ -26,13 +31,14 @@ jobs:
       # - script: |
       #     gem install jazzy
       #   displayName: "Install Jazzy Gem"
-
+      - checkout: internal_tools_acs-mobile-ui
+      - script: ls $(system.defaultWorkingDirectory)
       - script: |
           JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
           jazzy --config $JAZZY_CONFIG_FILE
         displayName: "Run Jazzy on $(TargetProject)"
         workingDirectory: AzureCommunicationUI/sdk/${{ variables['TargetProject'] }}
-      
+
       # Grab source code of 'acs_ui_api_doc_jazzy' azure function from internal tools repo
       # Auth maybe required?
 
