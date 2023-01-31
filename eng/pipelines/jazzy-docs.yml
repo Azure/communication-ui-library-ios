@@ -16,17 +16,6 @@ parameters:
     default: 'AzureCommunicationUIChat'
       
 jobs:
-  - job: PullJazzy
-    displayName: "Pull Jazzy Function App"
-    steps:
-      - script: ls $(system.defaultWorkingDirectory)
-      - checkout: internal_tools_acs-mobile-ui
-      - script: ls $(system.defaultWorkingDirectory)
-
-  - job: UpdateJazzy
-    displayName: "Update Jazzy Content"
-    steps:
-      - script: ls 
     
   - job: BuildJazzy
     displayName: "Build API docs with Jazzy Gem"
@@ -42,6 +31,9 @@ jobs:
       # - script: |
       #     gem install jazzy
       #   displayName: "Install Jazzy Gem"
+      - script: ls $(system.defaultWorkingDirectory)
+      - checkout: internal_tools_acs-mobile-ui
+      - script: ls $(system.defaultWorkingDirectory)
       - script: |
           JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
           jazzy --config $JAZZY_CONFIG_FILE
