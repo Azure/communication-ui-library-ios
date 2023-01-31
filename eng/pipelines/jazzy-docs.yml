@@ -27,19 +27,15 @@ jobs:
       #     gem install jazzy
       #   displayName: "Install Jazzy Gem"
 
-      # Grab source code of azure function
-
       - script: |
           JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
           jazzy --config $JAZZY_CONFIG_FILE
         displayName: "Run Jazzy on $(TargetProject)"
         workingDirectory: AzureCommunicationUI/sdk/${{ variables['TargetProject'] }}
       
-      # Find Jazzy results
+      # Grab source code of 'acs_ui_api_doc_jazzy' azure function from internal tools repo
+      # Auth maybe required?
 
-      # Put Jazzy results in azure function source code
+      # Take Jazzy results and override local copy in 'acs_ui_api_doc_jazzy'
 
       # Deploy jazzy app
-
-
-  
