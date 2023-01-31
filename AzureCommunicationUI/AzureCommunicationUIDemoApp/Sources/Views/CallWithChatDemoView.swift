@@ -218,13 +218,13 @@ extension CallWithChatDemoView {
             switch status {
             case .connected:
                 if !loadingChat {
-                    Task { @MainActor [weak self] in
-                        await self?.startChatComposite()
+                    Task { @MainActor in
+                        await self.startChatComposite()
                     }
                 }
             case .disconnected:
-                Task { @MainActor [weak self] in
-                    await self?.chatAdapter?.disconnect()
+                Task { @MainActor in
+                    await self.chatAdapter?.disconnect()
                 }
 
             default:
