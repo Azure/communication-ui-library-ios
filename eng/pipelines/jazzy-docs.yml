@@ -22,9 +22,16 @@ pool:
     demands: xcode
 
 jobs:
+  - job: Test
+    displayName: "testing"
+    steps:
+      - script: ls $(Build.SourcesDirectory)
+      - script: ls $(system.defaultWorkingDirectory)
+      - checkout: internal_tools_acs-mobile-ui
+        path: jazzy-app
+      - script: ls $(system.defaultWorkingDirectory)
   - job: BuildJazzy
     displayName: "Build API docs with Jazzy Gem"
-
     steps:
       # - task: UseRubyVersion@0
       #   inputs:
@@ -33,6 +40,7 @@ jobs:
       # - script: |
       #     gem install jazzy
       #   displayName: "Install Jazzy Gem"
+      - script: az --version
       - script: ls $(Build.SourcesDirectory)
       - script: ls $(system.defaultWorkingDirectory)
       - checkout: internal_tools_acs-mobile-ui
@@ -41,7 +49,7 @@ jobs:
       - script: |
           JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
           jazzy --config $JAZZY_CONFIG_FILE
-        displayName: "Run Jazzy on $(TargetProject)"
+        # displayName: "Run Jazzy on $(TargetProject)"
         # workingDirectory: AzureCommunicationUI/sdk/${{ variables['TargetProject'] }}
 
 
