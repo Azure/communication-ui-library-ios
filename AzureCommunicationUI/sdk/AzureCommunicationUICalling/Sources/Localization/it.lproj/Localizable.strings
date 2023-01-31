@@ -15,7 +15,7 @@
 "AzureCommunicationUICalling.SetupView.Title"="Configura";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Indietro";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Partecipa alla chiamata";
-"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Partecipazione alla chiamata...";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Partecipazione alla chiamata…";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video disattivato";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Attiva la fotocamera";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video attivato";
