@@ -438,7 +438,22 @@ extension CallWithChatDemoView {
                 //                chatCompositeView
                 //            })
                 callComposite.setOverlay(overlay: {
-                    chatCompositeView
+                    NavigationView {
+                        chatCompositeView
+                            .navigationTitle("Chat")
+                            .navigationBarTitleDisplayMode(.inline)
+                            .toolbar {
+                                ToolbarItem(placement: .navigationBarLeading) {
+                                    Button {
+                                        callComposite.removeOverlay()
+                                    } label: {
+                                        Text("Back")
+                                    }
+
+                                }
+                            }
+                    }
+                    .transition(.move(edge: .trailing))
                 })
         }
 

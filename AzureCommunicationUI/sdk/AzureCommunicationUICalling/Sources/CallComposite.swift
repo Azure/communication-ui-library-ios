@@ -73,6 +73,15 @@ public class CallComposite {
         }
     }
 
+    /// Remove added overlay
+    public func removeOverlay() {
+        withAnimation {
+//            injectedOverlayState.overlayOptions = nil
+//            injectedOverlayState.injectedViewController = nil
+            injectedOverlayState.injectedView = nil
+        }
+    }
+
     convenience init(withOptions options: CallCompositeOptions? = nil,
                      callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
         self.init(withOptions: options)

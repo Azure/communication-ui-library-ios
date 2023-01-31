@@ -36,10 +36,7 @@ struct CallingView: View {
     var body: some View {
         Group {
             if let injectedView = injectedOverlayState.injectedView {
-//               let overlayOptions = injectedOverlayState.overlayOptions,
-//               overlayOptions.showPIP {
                 injectedView
-//                    .transition(overlayOptions.overlayTransition)
             } else {
                 GeometryReader { geometry in
                     ZStack {
@@ -161,7 +158,7 @@ struct CallingView: View {
                             avatarViewManager: avatarManager,
                             videoViewManager: viewManager,
                             screenSize: getSizeClass())
-            .edgesIgnoringSafeArea(safeAreaIgnoreArea)
+        .edgesIgnoringSafeArea(safeAreaIgnoreArea)
     }
 
     var localVideoFullscreenView: some View {
@@ -170,8 +167,8 @@ struct CallingView: View {
                            viewManager: viewManager,
                            viewType: .localVideofull,
                            avatarManager: avatarManager)
-                .background(Color(StyleProvider.color.surface))
-                .edgesIgnoringSafeArea(safeAreaIgnoreArea)
+            .background(Color(StyleProvider.color.surface))
+            .edgesIgnoringSafeArea(safeAreaIgnoreArea)
         }
     }
 
@@ -206,7 +203,7 @@ extension CallingView {
         case (.compact, .regular):
             return .iphonePortraitScreenSize
         case (.compact, .compact),
-             (.regular, .compact):
+            (.regular, .compact):
             return .iphoneLandscapeScreenSize
         default:
             return .ipadScreenSize
@@ -219,8 +216,8 @@ extension CallingView {
               !viewModel.infoHeaderViewModel.isParticipantsListDisplayed,
               !viewModel.controlBarViewModel.isMoreCallOptionsListDisplayed,
               !viewModel.controlBarViewModel.isShareActivityDisplayed else {
-                return
-            }
+            return
+        }
         let areAllOrientationsSupported = SupportedOrientationsPreferenceKey.defaultValue == .all
         if newOrientation != orientation
             && newOrientation != .unknown
