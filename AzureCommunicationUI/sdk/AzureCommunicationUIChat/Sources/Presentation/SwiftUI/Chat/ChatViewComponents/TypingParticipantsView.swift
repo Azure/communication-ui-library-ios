@@ -10,7 +10,7 @@ struct TypingParticipantsView: View {
     @StateObject var viewModel: TypingParticipantsViewModel
 
     private enum Constants {
-        static let padding: CGFloat = 37.0
+        static let leadingPadding: CGFloat = 37.0
         static let sectionHeight: CGFloat = 10.0
         static let avatarWidth: CGFloat = 16.0
         static let maxAvatarShown: Int = 3
@@ -37,7 +37,7 @@ struct TypingParticipantsView: View {
                 // give an explicit frame to constraint avatargroup layout
                 .frame(width: UIScreen.main.bounds.size.width,
                        height: Constants.sectionHeight)
-                .padding(.leading, Constants.padding)
+                .padding([.leading], Constants.leadingPadding)
             }
         }
     }

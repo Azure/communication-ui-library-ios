@@ -41,7 +41,7 @@ jobs:
     displayName: "Run XCUITests on AppCenter with specific devices"
     condition: ne(dependencies.ConfigureDevices.outputs['DetermineDeviceSet.AppCenterDevices'], '')
     pool:
-      name: vsts-mac-1301-xcode-141
+      name: vsts-mac-131-xcode-142
       demands: xcode
     variables:
       - group: 'SPOOL-Communication-mobileUI'

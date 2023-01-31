@@ -9,85 +9,93 @@ import Foundation
 @testable import AzureCommunicationCommon
 
 class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
+    enum Constants {
+        static let nanosecondsInSecond: UInt64 = 1_000_000_000
+    }
+
     private var remoteParticipantsMocking: [ParticipantInfoModel] = []
 
     func joinCall() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+        Task { @MainActor [weak self] in
+            try await Task<Never, Never>.sleep(nanoseconds: 2 * Constants.nanosecondsInSecond)
+
             self?.callInfoSubject.send(CallInfoModel(status: .connected,
-                                                     internalError: nil))
+                                                    internalError: nil))
         }
     }
 
     func joinLobby() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+        Task { @MainActor [weak self] in
+            try await Task<Never, Never>.sleep(nanoseconds: 2 * Constants.nanosecondsInSecond)
+
             self?.callInfoSubject.send(CallInfoModel(status: .inLobby,
-                                                     internalError: nil))
+                                                    internalError: nil))
         }
     }
 
     func endCall() {
-        DispatchQueue.main.async { [weak self] in
+        Task { @MainActor [weak self] in
             self?.callInfoSubject.send(CallInfoModel(status: .disconnected,
-                                               internalError: nil))
+                                                    internalError: nil))
         }
     }
 
     func holdCall() {
-        DispatchQueue.main.async { [weak self] in
+        Task { @MainActor [weak self] in
             self?.callInfoSubject.send(CallInfoModel(status: .localHold,
-                                               internalError: nil))
+                                                    internalError: nil))
         }
     }
 
     func resumeCall() {
-        DispatchQueue.main.async { [weak self] in
+        Task { @MainActor [weak self] in
             self?.callInfoSubject.send(CallInfoModel(status: .connected,
-                                               internalError: nil))
+                                                    internalError: nil))
         }
     }
 
     func muteLocalMic() {
-        DispatchQueue.main.async { [weak self] in
+        Task { @MainActor [weak self] in
             self?.isLocalUserMutedSubject.send(true)
         }
     }
 
     func unmuteLocalMic() {
-        DispatchQueue.main.async { [weak self] in
+        Task { @MainActor [weak self] in
             self?.isLocalUserMutedSubject.send(false)
         }
     }
 
     func transcriptionOn() {
-        DispatchQueue.main.async { [weak self] in
+        Task { @MainActor [weak self] in
             self?.isTranscriptionActiveSubject.send(true)
         }
     }
 
     func transcriptionOff() {
-        DispatchQueue.main.async { [weak self] in
+        Task { @MainActor [weak self] in
             self?.isTranscriptionActiveSubject.send(false)
         }
     }
 
     func recordingOn() {
-        DispatchQueue.main.async { [weak self] in
+        Task { @MainActor [weak self] in
             self?.isRecordingActiveSubject.send(true)
         }
     }
 
     func recordingOff() {
-        DispatchQueue.main.async { [weak self] in
+        Task { @MainActor [weak self] in
             self?.isRecordingActiveSubject.send(false)
         }
     }
 
     func addParticipant() {
-        DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self else {
+        Task { @MainActor [weak self] in
+            guard let self else {
                 return
             }
-            let participantNameIdentifier = "RM-\(strongSelf.remoteParticipantsMocking.count + 1)"
+            let participantNameIdentifier = "RM-\(self.remoteParticipantsMocking.count + 1)"
             let newParticipant = ParticipantInfoModel(displayName: participantNameIdentifier,
                                                       isSpeaking: false,
                                                       isMuted: true,
@@ -96,27 +104,29 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                                       status: .connected, recentSpeakingStamp: Date(),
                                                       screenShareVideoStreamModel: nil,
                                                       cameraVideoStreamModel: nil)
-            strongSelf.remoteParticipantsMocking.append(newParticipant)
-            strongSelf.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
+            self.remoteParticipantsMocking.append(newParticipant)
+            self.participantsInfoListSubject.send(self.remoteParticipantsMocking)
         }
     }
 
     func removeParticipant() {
-        DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self, !strongSelf.remoteParticipantsMocking.isEmpty else {
+        Task { @MainActor [weak self] in
+            guard let self,
+                  !self.remoteParticipantsMocking.isEmpty else {
                 return
             }
-            strongSelf.remoteParticipantsMocking.removeLast()
-            strongSelf.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
+            self.remoteParticipantsMocking.removeLast()
+            self.participantsInfoListSubject.send(self.remoteParticipantsMocking)
         }
     }
 
     func unmuteParticipant() {
-        DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self, !strongSelf.remoteParticipantsMocking.isEmpty else {
+        Task { @MainActor [weak self] in
+            guard let self,
+                  !self.remoteParticipantsMocking.isEmpty else {
                 return
             }
-            let last = strongSelf.remoteParticipantsMocking.removeLast()
+            let last = self.remoteParticipantsMocking.removeLast()
             let lastUnmuted = ParticipantInfoModel(displayName: last.displayName,
                                                    isSpeaking: last.isSpeaking,
                                                    isMuted: !last.isMuted,
@@ -126,17 +136,18 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                                    recentSpeakingStamp: last.recentSpeakingStamp,
                                                    screenShareVideoStreamModel: last.screenShareVideoStreamModel,
                                                    cameraVideoStreamModel: last.cameraVideoStreamModel)
-            strongSelf.remoteParticipantsMocking.append(lastUnmuted)
-            strongSelf.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
+            self.remoteParticipantsMocking.append(lastUnmuted)
+            self.participantsInfoListSubject.send(self.remoteParticipantsMocking)
         }
     }
 
     func holdParticipant() {
-        DispatchQueue.main.async { [weak self] in
-            guard let strongSelf = self, !strongSelf.remoteParticipantsMocking.isEmpty else {
+        Task { @MainActor [weak self] in
+            guard let self,
+                  !self.remoteParticipantsMocking.isEmpty else {
                 return
             }
-            let last = strongSelf.remoteParticipantsMocking.removeLast()
+            let last = self.remoteParticipantsMocking.removeLast()
             let lastUnmuted = ParticipantInfoModel(displayName: last.displayName,
                                                    isSpeaking: last.isSpeaking,
                                                    isMuted: !last.isMuted,
@@ -146,8 +157,8 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                                    recentSpeakingStamp: last.recentSpeakingStamp,
                                                    screenShareVideoStreamModel: last.screenShareVideoStreamModel,
                                                    cameraVideoStreamModel: last.cameraVideoStreamModel)
-            strongSelf.remoteParticipantsMocking.append(lastUnmuted)
-            strongSelf.participantsInfoListSubject.send(strongSelf.remoteParticipantsMocking)
+            self.remoteParticipantsMocking.append(lastUnmuted)
+            self.participantsInfoListSubject.send(self.remoteParticipantsMocking)
         }
     }
 }
