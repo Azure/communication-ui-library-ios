@@ -224,7 +224,7 @@ extension CallWithChatDemoView {
                 }
             case .disconnected:
                 Task { @MainActor in
-                    await self.chatAdapter?.disconnect()
+                    try? await self.chatAdapter?.disconnect()
                 }
 
             default:
