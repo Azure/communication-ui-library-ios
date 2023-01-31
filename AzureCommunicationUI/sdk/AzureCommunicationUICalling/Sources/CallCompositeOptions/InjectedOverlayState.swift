@@ -8,6 +8,4 @@ import SwiftUI
 
 class InjectedOverlayState: ObservableObject {
     @Published var injectedView: AnyView?
-//    @Published var injectedViewController: UIViewController?
-//    @Published var overlayOptions: OverlayOptions?
 }

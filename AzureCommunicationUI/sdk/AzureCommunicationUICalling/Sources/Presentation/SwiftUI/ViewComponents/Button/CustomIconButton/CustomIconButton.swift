@@ -85,7 +85,7 @@ struct CustomIconButton: View {
 
     var badgeView: some View {
         Group {
-            if let badgeCount = viewModel.badgeNumber {
+            if let badgeCount = viewModel.badgeNumber, badgeCount > 0 {
                 let badgeString = badgeCount > 99 ? String("99+") : String(badgeCount)
                 Badge(text: badgeString)
             } else {

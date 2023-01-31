@@ -119,84 +119,37 @@ struct CallWithChatDemoView: View {
     }
 
     var meetingSelector: some View {
-        TextField(
-            "Group Chat ThreadId",
-            text: $envConfigSubject.threadId)
-        .autocapitalization(.none)
-        .disableAutocorrection(true)
-        .textFieldStyle(.roundedBorder)
+        Group {
+            Picker("Call Type", selection: $envConfigSubject.selectedMeetingType) {
+                Text("Group Call with Chat").tag(MeetingType.groupCall)
+                Text("Teams Meeting").tag(MeetingType.teamsMeeting)
+            }.pickerStyle(.segmented)
+            switch envConfigSubject.selectedMeetingType {
+            case .groupCall:
+                TextField(
+                    "Group Call Id",
+                    text: $envConfigSubject.groupCallId)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .textFieldStyle(.roundedBorder)
+                TextField(
+                    "Group Chat ThreadId",
+                    text: $envConfigSubject.threadId)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .textFieldStyle(.roundedBorder)
+            case .teamsMeeting:
+                TextField(
+                    "Teams Meeting",
+                    text: $envConfigSubject.teamsMeetingLink)
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                .textFieldStyle(.roundedBorder)
+            }
+        }
         .padding(.vertical, verticalPadding)
         .padding(.horizontal, horizontalPadding)
     }
-
-    //    var acsTokenSelector: some View {
-    //        Group {
-    //            Picker("Token Type", selection: $envConfigSubject.selectedAcsTokenType) {
-    //                Text("Token URL").tag(ACSTokenType.tokenUrl)
-    //                Text("Token").tag(ACSTokenType.token)
-    //            }.pickerStyle(.segmented)
-    //            switch envConfigSubject.selectedAcsTokenType {
-    //            case .tokenUrl:
-    //                TextField("ACS Token URL", text: $envConfigSubject.acsTokenUrl)
-    //                    .disableAutocorrection(true)
-    //                    .autocapitalization(.none)
-    //                    .textFieldStyle(.roundedBorder)
-    //            case .token:
-    //                TextField("ACS Token", text:
-    //                            !envConfigSubject.useExpiredToken ?
-    //                          $envConfigSubject.acsToken : $envConfigSubject.expiredAcsToken)
-    //                    .modifier(TextFieldClearButton(text: $envConfigSubject.acsToken))
-    //                    .disableAutocorrection(true)
-    //                    .autocapitalization(.none)
-    //                    .textFieldStyle(.roundedBorder)
-    //            }
-    //        }
-    //        .padding(.vertical, verticalPadding)
-    //        .padding(.horizontal, horizontalPadding)
-    //    }
-    //
-    //    var displayNameTextField: some View {
-    //        TextField("Display Name", text: $envConfigSubject.displayName)
-    //            .disableAutocorrection(true)
-    //            .padding(.vertical, verticalPadding)
-    //            .padding(.horizontal, horizontalPadding)
-    //            .textFieldStyle(.roundedBorder)
-    //    }
-    //
-    //    var meetingSelector: some View {
-    //        Group {
-    //            Picker("Call Type", selection: $envConfigSubject.selectedMeetingType) {
-    //                Text("Group Call").tag(MeetingType.groupCall)
-    //                Text("Teams Meeting").tag(MeetingType.teamsMeeting)
-    //            }.pickerStyle(.segmented)
-    //            switch envConfigSubject.selectedMeetingType {
-    //            case .groupCall:
-    //                TextField(
-    //                    "Group Call Id",
-    //                    text: $envConfigSubject.groupCallId)
-    //                    .autocapitalization(.none)
-    //                    .disableAutocorrection(true)
-    //                    .textFieldStyle(.roundedBorder)
-    //            case .teamsMeeting:
-    //                TextField(
-    //                    "Team Meeting",
-    //                    text: $envConfigSubject.teamsMeetingLink)
-    //                    .autocapitalization(.none)
-    //                    .disableAutocorrection(true)
-    //                    .textFieldStyle(.roundedBorder)
-    //            }
-    //        }
-    //        .padding(.vertical, verticalPadding)
-    //        .padding(.horizontal, horizontalPadding)
-    //    }
-    //
-    //    var settingButton: some View {
-    //        Button("Settings") {
-    //            isSettingsDisplayed = true
-    //        }
-    //        .buttonStyle(DemoButtonStyle())
-    //        .accessibility(identifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
-    //    }
 
     var startExperienceButton: some View {
         Button("Start Experience") {
@@ -209,29 +162,23 @@ struct CallWithChatDemoView: View {
     }
 
     var isStartExperienceDisabled: Bool {
-        let acsToken = envConfigSubject.useExpiredToken ? envConfigSubject.expiredAcsToken : envConfigSubject.acsToken
+        let acsToken = envConfigSubject.useExpiredToken ? envConfigSubject.expiredAcsToken :
+        envConfigSubject.acsToken
         if (envConfigSubject.selectedAcsTokenType == .token && acsToken.isEmpty)
-            || envConfigSubject.selectedAcsTokenType == .tokenUrl && envConfigSubject.acsTokenUrl.isEmpty
-            || envConfigSubject.threadId.isEmpty {
+            || envConfigSubject.selectedAcsTokenType == .tokenUrl && envConfigSubject.acsTokenUrl.isEmpty {
+            return true
+        }
+
+        let groupIsStartExperienceDisabledCheck = envConfigSubject.selectedMeetingType == .groupCall
+        && (envConfigSubject.groupCallId.isEmpty || envConfigSubject.threadId.isEmpty)
+        let teamsIsStartExperienceDisabledCheck = (envConfigSubject.selectedMeetingType == .teamsMeeting
+                                                   && envConfigSubject.teamsMeetingLink.isEmpty)
+
+        if groupIsStartExperienceDisabledCheck || teamsIsStartExperienceDisabledCheck {
             return true
         }
 
         return false
-
-        //        let acsToken = envConfigSubject.useExpiredToken ? envConfigSubject.expiredAcsToken :
-        // envConfigSubject.acsToken
-        //        if (envConfigSubject.selectedAcsTokenType == .token && acsToken.isEmpty)
-        //            || envConfigSubject.selectedAcsTokenType == .tokenUrl && envConfigSubject.acsTokenUrl.isEmpty {
-        //            return true
-        //        }
-        //
-        //        if (envConfigSubject.selectedMeetingType == .groupCall && envConfigSubject.groupCallId.isEmpty)
-        //            || envConfigSubject.selectedMeetingType == .teamsMeeting
-        // && envConfigSubject.teamsMeetingLink.isEmpty {
-        //            return true
-        //        }
-        //
-        //        return false
     }
 }
 
@@ -299,7 +246,7 @@ extension CallWithChatDemoView {
                                      localOptions: localOptions)
             }
         } else {
-            showError(for: DemoError.invalidToken.getErrorCode())
+            showCallError(for: DemoError.invalidToken.getErrorCode())
             return
         }
     }
@@ -320,7 +267,7 @@ extension CallWithChatDemoView {
         guard let chatAdapter = self.chatAdapter else {
             return
         }
-//        chatAdapter.events.onError = showError(error:)
+        chatAdapter.events.onError = showChatError(error:)
         chatAdapter.connect() { _ in
             print("Chat connect completionHandler called")
             Task { @MainActor in
@@ -357,16 +304,16 @@ extension CallWithChatDemoView {
         }
     }
 
-    //    private func getMeetingLink() -> String {
-    //        switch envConfigSubject.selectedMeetingType {
-    //        case .groupCall:
-    //            return envConfigSubject.groupCallId
-    //        case .teamsMeeting:
-    //            return envConfigSubject.teamsMeetingLink
-    //        }
-    //    }
+    private func getMeetingLink() -> String {
+        switch envConfigSubject.selectedMeetingType {
+        case .groupCall:
+            return envConfigSubject.groupCallId
+        case .teamsMeeting:
+            return envConfigSubject.teamsMeetingLink
+        }
+    }
 
-    private func showError(for errorCode: String) {
+    private func showCallError(for errorCode: String) {
         switch errorCode {
         case CallCompositeErrorCode.tokenExpired:
             errorMessage = "Token is invalid"
@@ -377,20 +324,43 @@ extension CallWithChatDemoView {
     }
 
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
-        print("::::CallingDemoView::getEventsHandler::onError \(error)")
-        print("::::CallingDemoView error.code \(error.code)")
-        print("::::CallingDemoView debug info \(callComposite.debugInfo.currentOrLastCallId ?? "Unknown")")
-        showError(for: error.code)
+        print("::::CallWithChatDemoView::getEventsHandler::onError \(error)")
+        print("::::CallWithChatDemoView error.code \(error.code)")
+        print("::::CallWithChatDemoView debug info \(callComposite.debugInfo.currentOrLastCallId ?? "Unknown")")
+        showCallError(for: error.code)
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
-        print("::::CallingDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
+        print("::::CallWithChatDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }
 
         RemoteParticipantAvatarHelper.onRemoteParticipantJoined(to: callComposite,
                                                                 identifiers: identifiers)
+    }
+
+    private func showChatError(error: ChatCompositeError) {
+        print("::::CallWithChatDemoView::showChatError \(error)")
+        print("::::CallWithChatDemoView error.code \(error.code)")
+        print("Error - \(error.code): \(error.error?.localizedDescription ?? error.localizedDescription)")
+        switch error.code {
+        case ChatCompositeErrorCode.joinFailed:
+            errorMessage = "Connection Failed"
+        case ChatCompositeErrorCode.disconnectFailed:
+            errorMessage = "Disconnect Failed"
+        case ChatCompositeErrorCode.sendMessageFailed,
+            ChatCompositeErrorCode.fetchMessagesFailed,
+            ChatCompositeErrorCode.requestParticipantsFetchFailed,
+            ChatCompositeErrorCode.sendReadReceiptFailed,
+            ChatCompositeErrorCode.sendTypingIndicatorFailed,
+            ChatCompositeErrorCode.disconnectFailed:
+            // no alert
+            return
+        default:
+            errorMessage = "Unknown error"
+        }
+        isErrorDisplayed = true
     }
 }
 
@@ -404,8 +374,7 @@ extension CallWithChatDemoView {
         let state = CustomButtonViewData(
             type: .callingViewInfoHeader,
             image: UIImage(named: "messageIcon")!,
-            label: "messageIcon",
-            badgeNumber: 0) { _ in
+            label: "messageIcon") { _ in
                 guard let callComposite = self.callComposite,
                       let chatCompositeAdaptor = self.chatAdapter else {
                     return
@@ -414,29 +383,6 @@ extension CallWithChatDemoView {
                 let chatCompositeView = ChatCompositeView(with: chatCompositeAdaptor)
                     .navigationTitle("Chat")
                     .navigationBarTitleDisplayMode(.inline)
-                //            guard let chatCompositeView = try? self.chatComposite?.getCompositeView() else {
-                //                print("Couldn't show Chat Composite UI")
-                //                return
-                //            }
-                //            guard let chatCompositeViewController =
-                // try? self.chatComposite?.getCompositeViewController() else {
-                //                print("Couldn't show Chat Composite UI")
-                //                return
-                //            }
-
-                //            let pipOptions = PIPViewOptions(
-                //                isDraggable: true,
-                //                pipDraggableAreaMargins: UIEdgeInsets(top: 60, left: 12, bottom: 82, right: 12),
-                //                defaultPosition: .bottomRight)
-                //            let overlayOptions = OverlayOptions(overlayTransition: .move(edge: .trailing),
-                //                                                showPIP: true,
-                //                                                pipViewOptions: pipOptions)
-                //            callComposite?.setOverlay(chatCompositeViewController)// ,
-                // overlayOptions: overlayOptions)
-                // SwiftUI version
-                //            self.callComposite?.setOverlay(overlayOptions: overlayOptions, overlay: {
-                //                chatCompositeView
-                //            })
                 callComposite.setOverlay(overlay: {
                     NavigationView {
                         chatCompositeView
@@ -449,7 +395,6 @@ extension CallWithChatDemoView {
                                     } label: {
                                         Text("Back")
                                     }
-
                                 }
                             }
                     }

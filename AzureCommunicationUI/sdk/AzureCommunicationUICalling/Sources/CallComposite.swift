@@ -67,17 +67,14 @@ public class CallComposite {
                               @ViewBuilder overlay: () -> V) where V: View {
         withAnimation {
             let view = overlay()
-//            injectedOverlayState.injectedViewController = nil
+            // review how we can do this without AnyView but with templates
             injectedOverlayState.injectedView = AnyView(view)
-//            injectedOverlayState.overlayOptions = overlayOptions
         }
     }
 
     /// Remove added overlay
     public func removeOverlay() {
         withAnimation {
-//            injectedOverlayState.overlayOptions = nil
-//            injectedOverlayState.injectedViewController = nil
             injectedOverlayState.injectedView = nil
         }
     }

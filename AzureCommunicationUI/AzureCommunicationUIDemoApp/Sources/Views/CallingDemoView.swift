@@ -98,7 +98,7 @@ struct CallingDemoView: View {
                     .textFieldStyle(.roundedBorder)
             case .teamsMeeting:
                 TextField(
-                    "Team Meeting",
+                    "Teams Meeting",
                     text: $envConfigSubject.teamsMeetingLink)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
