@@ -22,14 +22,6 @@ pool:
     demands: xcode
 
 jobs:
-  - job: Test
-    displayName: "testing"
-    steps:
-      - script: ls $(Build.SourcesDirectory)
-      - script: ls $(system.defaultWorkingDirectory)
-      - checkout: internal_tools_acs-mobile-ui
-        path: jazzy-app
-      - script: ls $(system.defaultWorkingDirectory)
   - job: BuildJazzy
     displayName: "Build API docs with Jazzy Gem"
     steps:
@@ -44,7 +36,8 @@ jobs:
       - script: ls $(Build.SourcesDirectory)
       - script: ls $(system.defaultWorkingDirectory)
       - checkout: internal_tools_acs-mobile-ui
-        path: jazzy-app
+        path: ../jazzy-app
+      - script: ls ../$(system.defaultWorkingDirectory)
       - script: ls $(system.defaultWorkingDirectory)
       - script: |
           JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
