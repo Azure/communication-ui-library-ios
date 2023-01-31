@@ -4,6 +4,7 @@ resources:
   - repository: internal_tools_acs-mobile-ui # In a different organization
     type: git
     name: SCC/internal_tools_acs-mobile-ui
+    ref: $(add-jazzy-function-app)
 # Manual runs only
 trigger: none
 
@@ -14,8 +15,24 @@ parameters:
       - AzureCommunicationUICalling
       - AzureCommunicationUIChat
     default: 'AzureCommunicationUIChat'
-
+  - job: UpdateJazzy
+    displayName: "Update Jazzy Content"
+    steps:
+      - script: ls 
+      
 jobs:
+  - job: PullJazzy
+    displayName: "Pull Jazzy Function App"
+    steps:
+      - script: ls $(system.defaultWorkingDirectory)
+      - checkout: internal_tools_acs-mobile-ui
+      - script: ls $(system.defaultWorkingDirectory)
+
+  - job: UpdateJazzy
+    displayName: "Update Jazzy Content"
+    steps:
+      - script: ls 
+    
   - job: BuildJazzy
     displayName: "Build API docs with Jazzy Gem"
     pool:
@@ -30,16 +47,12 @@ jobs:
       # - script: |
       #     gem install jazzy
       #   displayName: "Install Jazzy Gem"
-      - checkout: internal_tools_acs-mobile-ui
-      - script: ls $(system.defaultWorkingDirectory)
       - script: |
           JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
           jazzy --config $JAZZY_CONFIG_FILE
         displayName: "Run Jazzy on $(TargetProject)"
         workingDirectory: AzureCommunicationUI/sdk/${{ variables['TargetProject'] }}
 
-      # Grab source code of 'acs_ui_api_doc_jazzy' azure function from internal tools repo
-      # Auth maybe required?
 
       # Take Jazzy results and override local copy in 'acs_ui_api_doc_jazzy'
 
