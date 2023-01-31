@@ -15,7 +15,7 @@
 "AzureCommunicationUICalling.SetupView.Title"="Oppsett";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Tilbake";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Bli med i samtale";
-"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Blir med i samtalen ...";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Blir med i samtalen …";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video av";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Slå på kamera";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video på";

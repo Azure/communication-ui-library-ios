@@ -15,7 +15,7 @@
 "AzureCommunicationUICalling.SetupView.Title"="設定";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="上一步";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="加入通話";
-"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="正在加入通話...";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="正在加入通話…";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="視訊關閉";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="開啟相機";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="視訊開啟";
