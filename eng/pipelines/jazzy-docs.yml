@@ -22,11 +22,6 @@ pool:
     demands: xcode
 
 jobs:
-  - job: Test
-    displayName: "some testing"
-    steps:
-      - script: ls $(Build.SourcesDirectory)
-      - script: ls $(system.defaultWorkingDirectory)
   - job: BuildJazzy
     displayName: "Build API docs with Jazzy Gem"
 
@@ -42,12 +37,12 @@ jobs:
       - script: ls $(system.defaultWorkingDirectory)
       - checkout: internal_tools_acs-mobile-ui
         path: jazzy-app
-      - script: ls $(system.defaultWorkingDirectory) && ls $(system.defaultWorkingDirectory)/jazzy-app
+      - script: ls $(system.defaultWorkingDirectory)
       - script: |
           JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
           jazzy --config $JAZZY_CONFIG_FILE
         displayName: "Run Jazzy on $(TargetProject)"
-        workingDirectory: AzureCommunicationUI/sdk/${{ variables['TargetProject'] }}
+        # workingDirectory: AzureCommunicationUI/sdk/${{ variables['TargetProject'] }}
 
 
       # Take Jazzy results and override local copy in 'acs_ui_api_doc_jazzy'
