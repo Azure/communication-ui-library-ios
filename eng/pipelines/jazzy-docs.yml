@@ -5,11 +5,6 @@ resources:
     type: git
     name: SCC/internal_tools_acs-mobile-ui
     ref: feature/add-jazzy-function-app
-  - repository: communication-ui-library-ios # The name used to reference this repository in the checkout step
-    type: github
-    endpoint: github.com
-    name: Azure/communication-ui-library-ios
-    ref: feature/jazzy-docs-pipeline
 
 # Manual runs only
 trigger: none
@@ -23,7 +18,11 @@ parameters:
     default: 'AzureCommunicationUIChat'
       
 jobs:
-    
+  - job: Test
+    displayName: "some testing"
+    steps:
+      - script: ls $(Build.SourcesDirectory)
+      - script: ls $(system.defaultWorkingDirectory)
   - job: BuildJazzy
     displayName: "Build API docs with Jazzy Gem"
     pool:
@@ -42,9 +41,7 @@ jobs:
       - script: ls $(system.defaultWorkingDirectory)
       - checkout: internal_tools_acs-mobile-ui
         path: jazzy-app
-      - checkout: communication-ui-library-ios
-        path: ios-repo
-      - script: ls $(system.defaultWorkingDirectory) && ls $(system.defaultWorkingDirectory)/ios-repo && ls $(system.defaultWorkingDirectory)/jazzy-app
+      - script: ls $(system.defaultWorkingDirectory) && ls $(system.defaultWorkingDirectory)/jazzy-app
       - script: |
           JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
           jazzy --config $JAZZY_CONFIG_FILE
