@@ -312,14 +312,9 @@ extension CallWithChatDemoView {
             return
         }
         chatAdapter.events.onError = showChatError(error:)
-        Task { @MainActor in
-//            try? await Task.sleep(nanoseconds: 5_000_000_000)
-            chatAdapter.connect() { _ in
-                print("Chat connect completionHandler called")
-                loadingChat = false
-            }
-        }
-
+        try? await chatAdapter.connect()
+        print("Chat connected")
+        loadingChat = false
         self.chatAdapter = chatAdapter
     }
 
