@@ -7,6 +7,7 @@ resources:
     ref: feature/add-jazzy-function-app
   - repository: communication-ui-library-ios # The name used to reference this repository in the checkout step
     type: github
+    endpoint: github.com
     name: Azure/communication-ui-library-ios
     ref: feature/jazzy-docs-pipeline
 
