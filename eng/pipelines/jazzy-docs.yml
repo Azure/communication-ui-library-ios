@@ -27,7 +27,7 @@ jobs:
       #     gem install jazzy
       #   displayName: "Install Jazzy Gem"
 
-      # Grab source code
+      # Grab source code of azure function
 
       - script: |
           JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
