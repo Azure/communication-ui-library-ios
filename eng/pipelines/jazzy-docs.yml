@@ -4,7 +4,6 @@ resources:
   - repository: internal_tools_acs-mobile-ui # In a different organization
     type: git
     name: SCC/internal_tools_acs-mobile-ui
-    ref: add-jazzy-function-app
 # Manual runs only
 trigger: none
 
