@@ -2,7 +2,6 @@
 resources:
   repositories:
   - repository: internal_tools_acs-mobile-ui # In a different organization
-    endpoint: https://skype.visualstudio.com/
     type: git
     name: SCC/internal_tools_acs-mobile-ui
 # Manual runs only
