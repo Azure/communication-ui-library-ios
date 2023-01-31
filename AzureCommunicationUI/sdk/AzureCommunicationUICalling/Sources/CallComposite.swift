@@ -4,7 +4,7 @@
 //
 
 import AzureCommunicationCommon
-
+import Combine
 import UIKit
 import SwiftUI
 import FluentUI
@@ -16,8 +16,10 @@ public class CallComposite {
     public class Events {
         /// Closure to execute when error event occurs inside Call Composite.
         public var onError: ((CallCompositeError) -> Void)?
-        /// Closures to execute when participant has joined a call inside Call Composite.
+        /// Closure to execute when participant has joined a call inside Call Composite.
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
+        /// Closure to execute on update of call status
+        public var onCallStatusChanged: ((CallingStatus) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -42,6 +44,7 @@ public class CallComposite {
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
     private var injectedOverlayState: InjectedOverlayState
+    private var cancellables = Set<AnyCancellable>()
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -173,6 +176,12 @@ public class CallComposite {
             localParticipantViewData: localOptions?.participantViewData
         )
         self.avatarViewManager = avatarViewManager
+        store.$state
+            .receive(on: RunLoop.main)
+            .sink { [weak self] state in
+                self?.events.onCallStatusChanged?(state.callingState.status)
+            }
+            .store(in: &cancellables)
 
         self.errorManager = CompositeErrorManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
         self.lifeCycleManager = UIKitAppLifeCycleManager(store: store, logger: logger)

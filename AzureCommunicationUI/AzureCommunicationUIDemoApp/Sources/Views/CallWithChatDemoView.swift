@@ -19,6 +19,7 @@ struct CallWithChatDemoView: View {
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
+    @State var loadingChat: Bool = false
 
     var body: some View {
         VStack {
@@ -46,27 +47,12 @@ struct CallWithChatDemoView: View {
         VStack {
             acsTokenSelector
             displayNameTextField
-            userIdField
             endpointUrlField
             meetingSelector
             startExperienceButton
         }
         .padding()
     }
-
-    //    var chatView: some View {
-    //        VStack {
-    //            if let chatAdapter = chatAdapter {
-    //                ChatCompositeView(with: chatAdapter)
-    //                    .navigationTitle("Chat")
-    //                    .navigationBarTitleDisplayMode(.inline)
-    //            } else {
-    //                EmptyView()
-    //                    .navigationTitle("Failed to start chat")
-    //                    .navigationBarTitleDisplayMode(.inline)
-    //            }
-    //        }
-    //    }
 
     var acsTokenSelector: some View {
         Group {
@@ -88,6 +74,7 @@ struct CallWithChatDemoView: View {
                 .disableAutocorrection(true)
                 .autocapitalization(.none)
                 .textFieldStyle(.roundedBorder)
+                userIdField
             }
         }
         .padding(.vertical, verticalPadding)
@@ -154,7 +141,10 @@ struct CallWithChatDemoView: View {
     var startExperienceButton: some View {
         Button("Start Experience") {
             isStartExperienceLoading = true
-            startChatComposite()
+            Task { @MainActor in
+                await startCallComposite()
+                isStartExperienceLoading = false
+            }
         }
         .buttonStyle(DemoButtonStyle())
         .disabled(isStartExperienceDisabled || isStartExperienceLoading)
@@ -184,7 +174,7 @@ struct CallWithChatDemoView: View {
 
 extension CallWithChatDemoView {
     func startCallComposite() async {
-        let link = envConfigSubject.groupCallId
+        let link = getMeetingLink()
 
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
@@ -224,6 +214,23 @@ extension CallWithChatDemoView {
         }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
+        callComposite.events.onCallStatusChanged = { status in
+            switch status {
+            case .connected:
+                if !loadingChat {
+                    Task { @MainActor [weak self] in
+                        await self?.startChatComposite()
+                    }
+                }
+            case .disconnected:
+                Task { @MainActor [weak self] in
+                    await self?.chatAdapter?.disconnect()
+                }
+
+            default:
+                print(status)
+            }
+        }
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
         nil:envConfigSubject.renderedDisplayName
@@ -234,16 +241,30 @@ extension CallWithChatDemoView {
         let localOptions = LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData)
         if let credential = try? await getTokenCredential() {
-            let uuid = UUID(uuidString: link) ?? UUID()
-            if envConfigSubject.displayName.isEmpty {
-                callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
-                                                                  credential: credential),
-                                     localOptions: localOptions)
-            } else {
-                callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
-                                                                  credential: credential,
-                                                                  displayName: envConfigSubject.displayName),
-                                     localOptions: localOptions)
+            switch envConfigSubject.selectedMeetingType {
+            case .groupCall:
+                let uuid = UUID(uuidString: link) ?? UUID()
+                if envConfigSubject.displayName.isEmpty {
+                    callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
+                                                                      credential: credential),
+                                         localOptions: localOptions)
+                } else {
+                    callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
+                                                                      credential: credential,
+                                                                      displayName: envConfigSubject.displayName),
+                                         localOptions: localOptions)
+                }
+            case .teamsMeeting:
+                if envConfigSubject.displayName.isEmpty {
+                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                                                                      credential: credential),
+                                         localOptions: localOptions)
+                } else {
+                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                                                                      credential: credential,
+                                                                      displayName: envConfigSubject.displayName),
+                                         localOptions: localOptions)
+                }
             }
         } else {
             showCallError(for: DemoError.invalidToken.getErrorCode())
@@ -251,30 +272,54 @@ extension CallWithChatDemoView {
         }
     }
 
-    func startChatComposite() {
+    func startChatComposite() async {
+        loadingChat = true
         let communicationIdentifier = CommunicationUserIdentifier(envConfigSubject.userId)
-        guard let communicationTokenCredential = try? CommunicationTokenCredential(
-            token: envConfigSubject.acsToken) else {
-            return
+        guard let communicationTokenCredential = try? await self.getTokenCredential(),
+              let teamsMeetingLink = envConfigSubject.teamsMeetingLink.removingPercentEncoding else {
+                  return
+              }
+        var threadId = ""
+        switch envConfigSubject.selectedMeetingType {
+        case .groupCall:
+            threadId = envConfigSubject.threadId
+        case .teamsMeeting:
+            if let threadMatcher = try? NSRegularExpression(
+                pattern: "(.*meetup-join\\/)(?<threadId>19.*)(\\/.*)"
+            ) {
+                let matches = threadMatcher.matches(
+                    in: teamsMeetingLink,
+                    range: NSRange(
+                        teamsMeetingLink.startIndex..<teamsMeetingLink.endIndex,
+                        in: teamsMeetingLink
+                    )
+                )
+                if let matchedRange = matches.first?.range(withName: "threadId"),
+                   let substringRange = Range(matchedRange, in: teamsMeetingLink) {
+                    threadId = String(teamsMeetingLink[substringRange])
+                }
+            } else {
+                fatalError("Regular expression is invalid!")
+            }
         }
-
         self.chatAdapter = ChatAdapter(
             endpoint: envConfigSubject.endpointUrl,
             identifier: communicationIdentifier,
             credential: communicationTokenCredential,
-            threadId: envConfigSubject.threadId,
+            threadId: threadId,
             displayName: envConfigSubject.displayName)
         guard let chatAdapter = self.chatAdapter else {
             return
         }
         chatAdapter.events.onError = showChatError(error:)
-        chatAdapter.connect() { _ in
-            print("Chat connect completionHandler called")
-            Task { @MainActor in
-                await startCallComposite()
-                isStartExperienceLoading = false
+        Task { @MainActor in
+//            try? await Task.sleep(nanoseconds: 5_000_000_000)
+            chatAdapter.connect() { _ in
+                print("Chat connect completionHandler called")
+                loadingChat = false
             }
         }
+
         self.chatAdapter = chatAdapter
     }
 

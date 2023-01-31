@@ -5,7 +5,7 @@
 
 import Foundation
 
-enum CallingStatus: Int {
+public enum CallingStatus: Int {
     case none
     case earlyMedia
     case connecting
