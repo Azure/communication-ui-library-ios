@@ -16,7 +16,11 @@ parameters:
       - AzureCommunicationUICalling
       - AzureCommunicationUIChat
     default: 'AzureCommunicationUIChat'
-      
+
+pool:
+    name: vsts-mac-1231-xcode-1331
+    demands: xcode
+
 jobs:
   - job: Test
     displayName: "some testing"
@@ -25,9 +29,6 @@ jobs:
       - script: ls $(system.defaultWorkingDirectory)
   - job: BuildJazzy
     displayName: "Build API docs with Jazzy Gem"
-    pool:
-      name: vsts-mac-1231-xcode-1331
-      demands: xcode
 
     steps:
       # - task: UseRubyVersion@0
