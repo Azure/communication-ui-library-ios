@@ -49,7 +49,7 @@ jobs:
       - task: AzureCLI@2
         displayName: Azure CLI
         inputs:
-          azureSubscription: 'Azure Communication Services'
+          azureSubscription: ${{ parameters.adoSubscription }}
           scriptType: ps
           scriptLocation: inlineScript
           inlineScript: |
