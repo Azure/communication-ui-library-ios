@@ -15,7 +15,7 @@
 "AzureCommunicationUICalling.SetupView.Title"="Настройка";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Назад";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Присоединиться к звонку";
-"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Присоединение к вызову…";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Присоединение к звонку...";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Видео отключено";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Включить камеру";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Видео включено";
