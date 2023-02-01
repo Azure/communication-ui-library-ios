@@ -159,7 +159,8 @@ class EntryViewController: UIViewController {
     }
 
     @objc func onCallWithChatPressed() {
-        let swiftUIDemoView = CallWithChatDemoView(envConfigSubject: envConfigSubject)
+        let viewModel = CallWithChatDemoViewModel(envConfigSubject: envConfigSubject)
+        let swiftUIDemoView = CallWithChatDemoView(viewModel: viewModel)
         let swiftUIDemoViewHostingController = UIHostingController(rootView: swiftUIDemoView)
         swiftUIDemoViewHostingController.modalPresentationStyle = .fullScreen
         present(swiftUIDemoViewHostingController, animated: true, completion: nil)

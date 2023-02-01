@@ -223,6 +223,7 @@ public class CallComposite {
         self.avatarViewManager = nil
         self.remoteParticipantsManager = nil
         self.debugInfoManager = nil
+        self.removeOverlay()
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,

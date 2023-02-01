@@ -45,6 +45,7 @@
 		FA1AEBEC2964B5CA008D9931 /* AzureCommunicationUIDemoAppRemoteParticipantsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1AEBEB2964B5CA008D9931 /* AzureCommunicationUIDemoAppRemoteParticipantsTests.swift */; };
 		FA2E532D294D3DA800E87DDF /* XCTestCaseExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2E532C294D3DA800E87DDF /* XCTestCaseExtension.swift */; };
 		FA3FB44029884F57007843F0 /* CallWithChatDemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA3FB43F29884F57007843F0 /* CallWithChatDemoView.swift */; };
+		FA4FE5FB298B0BD9003F3C46 /* CallWithChatDemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA4FE5FA298B0BD9003F3C46 /* CallWithChatDemoViewModel.swift */; };
 		FA7B53EC282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */; };
 		FA93E3AA2942B61D006476A5 /* AzureCommunicationUIDemoAppTokenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA93E3A92942B61D006476A5 /* AzureCommunicationUIDemoAppTokenTests.swift */; };
 		FA93E3AC2942B6DA006476A5 /* AzureCommunicationUIDemoAppDebugInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA93E3AB2942B6DA006476A5 /* AzureCommunicationUIDemoAppDebugInfoTests.swift */; };
@@ -136,6 +137,7 @@
 		FA1AEBEB2964B5CA008D9931 /* AzureCommunicationUIDemoAppRemoteParticipantsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppRemoteParticipantsTests.swift; sourceTree = "<group>"; };
 		FA2E532C294D3DA800E87DDF /* XCTestCaseExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestCaseExtension.swift; sourceTree = "<group>"; };
 		FA3FB43F29884F57007843F0 /* CallWithChatDemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallWithChatDemoView.swift; sourceTree = "<group>"; };
+		FA4FE5FA298B0BD9003F3C46 /* CallWithChatDemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallWithChatDemoViewModel.swift; sourceTree = "<group>"; };
 		FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantAvatarHelper.swift; sourceTree = "<group>"; };
 		FA93E3A92942B61D006476A5 /* AzureCommunicationUIDemoAppTokenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppTokenTests.swift; sourceTree = "<group>"; };
 		FA93E3AB2942B6DA006476A5 /* AzureCommunicationUIDemoAppDebugInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppDebugInfoTests.swift; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 				A8C69FBE2728AE1C00143DB7 /* LaunchScreen.storyboard */,
 				1B981B0329480DA8002EB167 /* FloatingUITestWindow.swift */,
 				FA3FB43F29884F57007843F0 /* CallWithChatDemoView.swift */,
+				FA4FE5FA298B0BD9003F3C46 /* CallWithChatDemoViewModel.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -571,6 +574,7 @@
 				1B5D6C1329231B900072C66D /* CallingSDKEventsHandlerMocking.swift in Sources */,
 				A8FB819C272A082B00AA0930 /* DemoInputTypes.swift in Sources */,
 				52EFB3FE293938FF006D41B9 /* ErrorView.swift in Sources */,
+				FA4FE5FB298B0BD9003F3C46 /* CallWithChatDemoViewModel.swift in Sources */,
 				A8AC66FE2735A41600632D0B /* CustomControls.swift in Sources */,
 				FA3FB44029884F57007843F0 /* CallWithChatDemoView.swift in Sources */,
 				A85DDCB92728B23B001297B4 /* CallingDemoView.swift in Sources */,
