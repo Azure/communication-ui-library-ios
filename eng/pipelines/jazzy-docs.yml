@@ -51,7 +51,7 @@ jobs:
           scriptType: 'bash'
           azureSubscription: $(ado)
           scriptLocation: 'inlineScript'
-          inlineScript: echo "Hello" && az group list -otable && az configure --defaults group=rg-acs-ui-dev
+          inlineScript: echo "Hello" && az group list -otable && az configure --defaults group=rg-acs-ui-dev && az functionapp deployment source config-zip -n john-jazzy-test --src output_file.zip --resource-group rg-acs-ui-dev
           # az configure --defaults group=rg-acs-ui-dev && az functionapp deployment source config-zip -n john-jazzy-test --src output_file.zip --resource-group rg-acs-ui-dev 
       # Take Jazzy results and override local copy in 'acs_ui_api_doc_jazzy'
       
