@@ -52,7 +52,7 @@ jobs:
       - task: ArchiveFiles@2
         displayName: "Archive files"
         inputs:
-          rootFolderOrFile: "$(System.DefaultWorkingDirectory)"
+          rootFolderOrFile: "$(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy"
           includeRootFolder: false
           archiveFile: "$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip"
       - task: PublishBuildArtifacts@1
