@@ -46,14 +46,14 @@ jobs:
       #    jazzy --config $JAZZY_CONFIG_FILE
         # displayName: "Run Jazzy on $(TargetProject)"
         # workingDirectory: AzureCommunicationUI/sdk/${{ variables['TargetProject'] }}
-      - task: AzurePowerShell@5
+      - task: AzureCLI@2
         inputs:
-          ScriptType: 'InlineScript'
-          Inline: |
+          scriptType: 'ps'
+          azureSubscription: ${env:ADOSUBSCRIPTION}
+          scriptLocation: 'inlineScript'
+          inlineScript: |
             az --version
             az functionapp deployment source config-zip -g acsuidevtest -n john-jazzy-test --src output_file.zip
-          azurePowerShellVersion: 'LatestVersion'
-
       # Take Jazzy results and override local copy in 'acs_ui_api_doc_jazzy'
 
       # Deploy jazzy app
