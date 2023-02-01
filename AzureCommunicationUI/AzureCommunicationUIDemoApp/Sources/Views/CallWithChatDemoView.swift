@@ -92,8 +92,6 @@ struct CallWithChatDemoView: View {
     var userIdField: some View {
         TextField("Communication User Id", text: $envConfigSubject.userId)
             .disableAutocorrection(true)
-            .padding(.vertical, verticalPadding)
-            .padding(.horizontal, horizontalPadding)
             .textFieldStyle(.roundedBorder)
     }
 
@@ -217,14 +215,20 @@ extension CallWithChatDemoView {
         callComposite.events.onCallStatusChanged = { status in
             switch status {
             case .connected:
-                if !loadingChat {
+                if !loadingChat && self.chatAdapter == nil {
+                    loadingChat = true
                     Task { @MainActor in
                         await self.startChatComposite()
                     }
                 }
             case .disconnected:
+                guard self.chatAdapter != nil else {
+                    return
+                }
                 Task { @MainActor in
-                    try? await self.chatAdapter?.disconnect()
+                    self.chatAdapter?.disconnect(completionHandler: { result in
+                        self.onDisconnectFromChat(with: result)
+                    })
                 }
 
             default:
@@ -273,7 +277,6 @@ extension CallWithChatDemoView {
     }
 
     func startChatComposite() async {
-        loadingChat = true
         let communicationIdentifier = CommunicationUserIdentifier(envConfigSubject.userId)
         guard let communicationTokenCredential = try? await self.getTokenCredential(),
               let teamsMeetingLink = envConfigSubject.teamsMeetingLink.removingPercentEncoding else {
@@ -313,14 +316,11 @@ extension CallWithChatDemoView {
         }
         chatAdapter.events.onError = showChatError(error:)
         Task { @MainActor in
-//            try? await Task.sleep(nanoseconds: 5_000_000_000)
             chatAdapter.connect() { _ in
                 print("Chat connect completionHandler called")
                 loadingChat = false
             }
         }
-
-        self.chatAdapter = chatAdapter
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {
@@ -406,6 +406,16 @@ extension CallWithChatDemoView {
             errorMessage = "Unknown error"
         }
         isErrorDisplayed = true
+    }
+
+    private func onDisconnectFromChat(with result: Result<Void, ChatCompositeError>) {
+        switch result {
+        case .success:
+            self.chatAdapter = nil
+            self.callComposite = nil
+        case .failure(let error):
+            print("Chat disconnect error \(error)")
+        }
     }
 }
 
