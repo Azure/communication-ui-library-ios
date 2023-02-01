@@ -49,7 +49,7 @@ jobs:
       - task: AzureCLI@2
         inputs:
           scriptType: 'bash'
-          azureSubscription: $(env:SUBKEY)
+          azureSubscription: $(SUBKEY)
           scriptLocation: 'inlineScript'
           inlineScript: az --version && echo $(ADOSUBSCRIPTION) && az functionapp deployment source config-zip -g acsuidevtest -n john-jazzy-test --src output_file.zip
         env:
