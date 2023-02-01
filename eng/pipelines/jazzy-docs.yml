@@ -36,9 +36,9 @@ jobs:
       - script: ls $(Pipeline.Workspace)
       - script: ls $(system.defaultWorkingDirectory)
       - checkout: internal_tools_acs-mobile-ui
-        path: $(system.defaultWorkingDirectory)/internal_tools_acs-mobile-ui
+        path: internal_tools_acs-mobile-ui-1
       - checkout: self
-        path: $(system.defaultWorkingDirectory)/communication-ui-library-ios
+        path: communication-ui-library-ios-1
       - script: ls $(Pipeline.Workspace)
       - script: ls $(system.defaultWorkingDirectory)
       - script: |
