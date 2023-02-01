@@ -92,8 +92,6 @@ struct CallWithChatDemoView: View {
     var userIdField: some View {
         TextField("Communication User Id", text: $envConfigSubject.userId)
             .disableAutocorrection(true)
-            .padding(.vertical, verticalPadding)
-            .padding(.horizontal, horizontalPadding)
             .textFieldStyle(.roundedBorder)
     }
 
@@ -217,14 +215,20 @@ extension CallWithChatDemoView {
         callComposite.events.onCallStatusChanged = { status in
             switch status {
             case .connected:
-                if !loadingChat {
+                if !loadingChat && self.chatAdapter == nil {
                     Task { @MainActor in
                         await self.startChatComposite()
                     }
                 }
             case .disconnected:
                 Task { @MainActor in
-                    try? await self.chatAdapter?.disconnect()
+                    do {
+                        try await self.chatAdapter?.disconnect()
+                        self.chatAdapter = nil
+                        self.callComposite = nil
+                    } catch {
+                        print("Chat disconnect error \(error)")
+                    }
                 }
 
             default:
@@ -312,10 +316,13 @@ extension CallWithChatDemoView {
             return
         }
         chatAdapter.events.onError = showChatError(error:)
-        try? await chatAdapter.connect()
-        print("Chat connected")
-        loadingChat = false
-        self.chatAdapter = chatAdapter
+        do {
+            try await chatAdapter.connect()
+            print("Chat connected")
+            loadingChat = false
+        } catch {
+            print(error)
+        }
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {
