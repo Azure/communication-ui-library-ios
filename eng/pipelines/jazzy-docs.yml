@@ -51,7 +51,7 @@ jobs:
           scriptType: 'bash'
           azureSubscription: $(adoSubscription)
           scriptLocation: 'inlineScript'
-          inlineScript: az --version && echo $env:SUBKEY && az functionapp deployment source config-zip -g acsuidevtest -n john-jazzy-test --src output_file.zip
+          inlineScript: echo $env:SUBKEY && az functionapp deployment source config-zip -g acsuidevtest -n john-jazzy-test --src output_file.zip
         env:
           SUBKEY: $(adoSubscription)
       # Take Jazzy results and override local copy in 'acs_ui_api_doc_jazzy'
