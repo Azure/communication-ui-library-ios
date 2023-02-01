@@ -216,19 +216,24 @@ extension CallWithChatDemoView {
             switch status {
             case .connected:
                 if !loadingChat && self.chatAdapter == nil {
+                    self.loadingChat = true
                     Task { @MainActor in
                         await self.startChatComposite()
                     }
                 }
             case .disconnected:
+                guard let chatAdapter = self.chatAdapter else {
+                    self.callComposite = nil
+                    return
+                }
                 Task { @MainActor in
                     do {
-                        try await self.chatAdapter?.disconnect()
+                        try await chatAdapter.disconnect()
                         self.chatAdapter = nil
-                        self.callComposite = nil
                     } catch {
                         print("Chat disconnect error \(error)")
                     }
+                    self.callComposite = nil
                 }
 
             default:
@@ -319,10 +324,10 @@ extension CallWithChatDemoView {
         do {
             try await chatAdapter.connect()
             print("Chat connected")
-            loadingChat = false
         } catch {
             print(error)
         }
+        loadingChat = false
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {
