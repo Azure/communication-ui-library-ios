@@ -1,6 +1,6 @@
-# Azure Communication UI Mobile Library for iOS - Calling
+![A banner image that shows some use cases of the Calling library](https://github.com/Azure/communication-ui-library-ios/blob/main/docs/images/mobile-ui-library-calling-hero-image.png?raw=true)
 
-![Hero Image](/docs/images/mobile-ui-library-calling-hero-image.png)
+# Azure Communication UI Mobile Library for iOS - Calling
 
 ![Cocoapods](https://img.shields.io/cocoapods/l/AzureCommunicationUICalling)
 ![CocoaPods Compatible](https://img.shields.io/cocoapods/v/AzureCommunicationUICalling)
@@ -8,7 +8,11 @@
 
 ## Latest Release
 
-- [1.1.0 release](https://github.com/Azure/communication-ui-library-ios/releases/tag/AzureCommunicationUICalling_1.1.0)
+- [1.1.0 release](https://github.com/Azure/communication-ui-library-ios/releases/tag/AzureCommunicationUICalling_1.1.0) 
+
+## Getting Started
+
+Get started with Azure Communication Services by using the UI Library to integrate communication experiences into your applications. For detailed instructions to quickly integrate the UI Library functionalities visit the [Quick-start Documentation](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/ui-library/get-started-call?tabs=kotlin&pivots=platform-ios).
 
 ## Installation
 
