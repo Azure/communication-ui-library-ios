@@ -48,12 +48,10 @@ jobs:
         # workingDirectory: AzureCommunicationUI/sdk/${{ variables['TargetProject'] }}
       - task: AzureCLI@2
         inputs:
-          scriptType: 'ps'
+          scriptType: 'bash'
           azureSubscription: $(adoSubscription)
           scriptLocation: 'inlineScript'
-          inlineScript: |
-            az --version
-            az functionapp deployment source config-zip -g acsuidevtest -n john-jazzy-test --src output_file.zip
+          inlineScript: az --version && az functionapp deployment source config-zip -g acsuidevtest -n john-jazzy-test --src output_file.zip
       # Take Jazzy results and override local copy in 'acs_ui_api_doc_jazzy'
 
       # Deploy jazzy app
