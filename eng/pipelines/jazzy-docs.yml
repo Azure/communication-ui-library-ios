@@ -53,5 +53,10 @@ jobs:
           scriptLocation: 'inlineScript'
           inlineScript: az functionapp deployment source config-zip -g acsuidevtest -n john-jazzy-test --src output_file.zip
       # Take Jazzy results and override local copy in 'acs_ui_api_doc_jazzy'
-
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'ACS-UI-Dev-Service-Connection'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: 'az functionapp deployment source config-zip -g acsuidevtest -n john-jazzy-test --src output_file.zip'
       # Deploy jazzy app
