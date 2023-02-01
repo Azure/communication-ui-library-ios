@@ -40,10 +40,11 @@ jobs:
       - checkout: self
         path: communication-ui-library-ios-1
       - script: ls $(Pipeline.Workspace)
-      - script: ls $(system.defaultWorkingDirectory)
-      - script: |
-          JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
-          jazzy --config $JAZZY_CONFIG_FILE
+      - script: zip -r output_file.zip $(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy
+      - script: az functionapp deployment source config-zip -g acsuidevtest -n john-jazzy-test --src output_file.zip
+      #- script: |
+      #    JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
+      #    jazzy --config $JAZZY_CONFIG_FILE
         # displayName: "Run Jazzy on $(TargetProject)"
         # workingDirectory: AzureCommunicationUI/sdk/${{ variables['TargetProject'] }}
 
