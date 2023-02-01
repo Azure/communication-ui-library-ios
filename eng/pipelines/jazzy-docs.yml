@@ -33,11 +33,13 @@ jobs:
       #     gem install jazzy
       #   displayName: "Install Jazzy Gem"
       - script: az --version
-      - script: ls $(Build.ArtifactStagingDirectory)
+      - script: ls $(Pipeline.Workspace)
       - script: ls $(system.defaultWorkingDirectory)
       - checkout: internal_tools_acs-mobile-ui
-        path: $(Build.ArtifactStagingDirectory)
-      - script: ls $(Build.ArtifactStagingDirectory)
+        path: $(Pipeline.Workspace)
+      - checkout: self
+        path: $(Pipeline.Workspace)
+      - script: ls $(Pipeline.Workspace)
       - script: ls $(system.defaultWorkingDirectory)
       - script: |
           JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
