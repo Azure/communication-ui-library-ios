@@ -50,6 +50,25 @@ If you find a bug or have a feature request, please raise the issue on [GitHub I
 
 Please refer to the [wiki](https://github.com/Azure/azure-communication-ui-library-ios/wiki/Known-Issues) for known issues related to the library.
 
+## Call with Chat teams interop demo
+
+The demo application in the repository contains a demo app that will allow ACS interop with teams chat, during a teams call. To run this, clone this repository and in the AzureCommunicationUI/AzureCommunicationUIDemoApp run `pod install`.
+
+Configure the ACS settings by placing an `EnvConfig.xcconfig` file in the `Sources` directory within the AzureCommunicationUIDemoApp folder. The file should contain the key-value pairs, with substituted values for your confguration:
+
+``` text
+endpointUrl = https:/$()/<ACS_ENDPOINT_URL>
+userId = <ACS_USER_ID>
+acsToken = <ACS_USER_TOKEN>
+teamsMeetingLink = https:/$()/<TEAMS_MEETING_LINK>
+
+```
+
+Open the AzureCommunicationUIDemoApp.xcworkspace in that directory and run the demo app target.
+You can use the call with chat button to access the demo, making sure that the token is used (token URL not currently supported) and the teams meeting URL is correctly populated.
+
+You'll need to connect the call first, which enables the ACS user to enter the teams meeting. Once in call, tap the screen to show the participants bar at the top of the screen, on which there is a tappable icon for chat. Tap this to go to the chat screen.
+
 ## Further Reading
 
 * [Azure Communication UI Library Conceptual Documentation](https://docs.microsoft.com/azure/communication-services/concepts/ui-framework/ui-sdk-overview)
