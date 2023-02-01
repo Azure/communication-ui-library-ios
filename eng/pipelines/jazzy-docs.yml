@@ -41,17 +41,41 @@ jobs:
         path: communication-ui-library-ios-1
       - script: ls $(Pipeline.Workspace)
       - script: zip -r output_file.zip $(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy
+      - bash: |
+          if [ -f extensions.csproj ]
+          then
+              dotnet build extensions.csproj --output ./bin
+          fi
+          npm install 
+          npm run build --if-present
+          npm prune --production
+      - task: ArchiveFiles@2
+        displayName: "Archive files"
+        inputs:
+          rootFolderOrFile: "$(System.DefaultWorkingDirectory)"
+          includeRootFolder: false
+          archiveFile: "$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip"
+      - task: PublishBuildArtifacts@1
+        inputs:
+          PathtoPublish: '$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip'
+          artifactName: 'drop'
+      - task: AzureFunctionApp@1 # Add this at the end of your file
+        inputs:
+          azureSubscription: $(ado)
+          appType: functionAppLinux # default is functionApp
+          appName: john-jazzy-test
+          package: $(System.ArtifactsDirectory)/**/*.zip
       #- script: |
       #    JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
       #    jazzy --config $JAZZY_CONFIG_FILE
         # displayName: "Run Jazzy on $(TargetProject)"
         # workingDirectory: AzureCommunicationUI/sdk/${{ variables['TargetProject'] }}
-      - task: AzureCLI@2
-        inputs:
-          scriptType: 'bash'
-          azureSubscription: $(ado)
-          scriptLocation: 'inlineScript'
-          inlineScript: echo "Hello" && az group list -otable && az configure --defaults group=rg-acs-ui-dev && az functionapp deployment source config-zip -n john-jazzy-test --src output_file.zip --resource-group rg-acs-ui-dev
+      #- task: AzureCLI@2
+      #  inputs:
+      #    scriptType: 'bash'
+      #    azureSubscription: $(ado)
+      #    scriptLocation: 'inlineScript'
+      #    inlineScript: echo "Hello" && az group list -otable && az configure --defaults group=rg-acs-ui-dev && az functionapp deployment source config-zip -n john-jazzy-test --src output_file.zip --resource-group rg-acs-ui-dev
           # az configure --defaults group=rg-acs-ui-dev && az functionapp deployment source config-zip -n john-jazzy-test --src output_file.zip --resource-group rg-acs-ui-dev 
       # Take Jazzy results and override local copy in 'acs_ui_api_doc_jazzy'
       
