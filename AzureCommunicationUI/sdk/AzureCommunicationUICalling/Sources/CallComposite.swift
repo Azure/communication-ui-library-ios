@@ -178,6 +178,7 @@ public class CallComposite {
         self.avatarViewManager = avatarViewManager
         store.$state
             .receive(on: RunLoop.main)
+            .removeDuplicates(by: { $0.callingState.status == $1.callingState.status })
             .sink { [weak self] state in
                 self?.events.onCallStatusChanged?(state.callingState.status)
             }
