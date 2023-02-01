@@ -49,7 +49,7 @@ jobs:
       - task: AzureCLI@2
         inputs:
           scriptType: 'ps'
-          azureSubscription: ${env:ADOSUBSCRIPTION}
+          azureSubscription: ${ADOSUBSCRIPTION}
           scriptLocation: 'inlineScript'
           inlineScript: |
             az --version
