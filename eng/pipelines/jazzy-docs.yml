@@ -40,10 +40,12 @@ jobs:
       - checkout: self
         path: communication-ui-library-ios-1
       - script: ls $(Pipeline.Workspace)
-      - script: zip -r output_file.zip $(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy
+      # - script: zip -r output_file.zip $(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy
       - bash: |
           ls 
+          echo "-----"
           cd $(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy
+          echo "-----"
           ls
           if [ -f extensions.csproj ]
           then
