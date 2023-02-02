@@ -3,7 +3,7 @@ resources:
   repositories:
   - repository: internal_tools_acs-mobile-ui
     type: git
-    name: SCC/internal_tools_acs-mobile-ui
+    name: SCC/$(ado-repo)
     ref: feature/add-jazzy-function-app
 
 # Manual runs only
@@ -31,8 +31,8 @@ jobs:
           versionSource: 'spec'
           versionSpec: '6.x'
     # 2. clone repos (data source)
-      - checkout: internal_tools_acs-mobile-ui
-        path: internal_tools_acs-mobile-ui
+      - checkout: $(ado-repo)
+        path: $(ado-repo)
       - checkout: self
         path: communication-ui-library-ios
     # 3. generate Jazzy docs and replace it in fucntion app  
@@ -52,7 +52,7 @@ jobs:
       - bash: |
           ls 
           echo "-----"
-          cd $(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy
+          cd $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy
           echo "-----"
           ls
           npm install typescript
@@ -65,8 +65,8 @@ jobs:
           npm prune --production
     # 5. update root endpoint to api/sdk so traffic can be routed properly
       - bash: |
-          echo "$(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy/${{ parameters.TargetProject}}"
-          cd $(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy
+          echo "$(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy/${{ parameters.TargetProject}}"
+          cd $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy
           echo "starting endpoint update...."
           ls
           sh ./endpoint-update.sh "${{ parameters.TargetProject}}"
@@ -76,7 +76,7 @@ jobs:
       - task: ArchiveFiles@2
         displayName: "Archive files"
         inputs:
-          rootFolderOrFile: "$(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy"
+          rootFolderOrFile: "$(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy"
           includeRootFolder: false
           archiveFile: "$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip"
     # 7. publish the artifacts of the function app
