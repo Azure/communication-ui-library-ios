@@ -25,12 +25,19 @@ jobs:
   - job: BuildDeployJazzy
     displayName: "Build and Deploy Jazzy Docs"
     steps:
-    # 1. environment set up - install nodejs
+    # 1. environment set up
       - task: NodeTool@0
-        displayName: "1. environment set up - install nodejs"
+        displayName: "1.1 environment set up - install nodejs"
         inputs:
           versionSource: 'spec'
           versionSpec: '6.x'
+      - task: UseRubyVersion@0
+        inputs:
+          versionSpec: '>= 2.4'
+        displayName: "1.2 environment set up - install ruby"
+      - script: |
+           gem install jazzy
+        displayName: "1.3 environment set up - install jazzy"
     # 2. clone repos (data source)
       - checkout: internal_tools_acs-mobile-ui
         path: $(ado-repo)
@@ -39,12 +46,9 @@ jobs:
         path: communication-ui-library-ios
         displayName: "2.2 clone repos (data source) - SDK repo"
     # 3. generate Jazzy docs and replace it in fucntion app  
-      # - task: UseRubyVersion@0
-      #   inputs:
-      #     versionSpec: '>= 1.0'
-      # - script: |
-      #     gem install jazzy
-      #   displayName: "Install Jazzy Gem"
+      - script: |
+          jazzy -version
+        displayName: "3.1 jazzy check"
       # - script: |
       #    JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
       #    jazzy --config $JAZZY_CONFIG_FILE
