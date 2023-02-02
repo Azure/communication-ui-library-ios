@@ -27,7 +27,7 @@ jobs:
     steps:
     # 1. environment set up - install nodejs
       - task: NodeTool@0
-        displayName: "environment set up - install nodejs"
+        displayName: "1. environment set up - install nodejs"
         inputs:
           versionSource: 'spec'
           versionSpec: '6.x'
