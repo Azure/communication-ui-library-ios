@@ -60,12 +60,12 @@ jobs:
           npm run build --if-present
           npm prune --production
       - bash: |
-          echo "$(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy/${{ variables['TargetProject'] }}"
-          cd $(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy/${{ variables['TargetProject'] }}
+          echo "$(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy/${{ parameters.TargetProject}}"
+          cd $(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy/${{ parameters.TargetProject }}
           echo "hello!"
           ls
           echo "----------"
-          cat index.html | sed -e "s/href=\"Classes/href=\"\\/api\\/${{ variables['TargetProject'] }}\\/Classes/" | sed -e "s/href=\"Structs/href=\"\\/api\\/${{ variables['TargetProject'] }}\\/Structs/" | sed -e "s/src=\"js/src=\"\\/api\\/${{ variables['TargetProject'] }}\\/js/" | sed -e "s/href=\"css/href=\"\\/api\\/${{ variables['TargetProject'] }}\\/css/" | sed -e "s/src=\"img/src=\"\\/api\\/${{ variables['TargetProject'] }}\\/img/" | sed -e "s/href=\"index/href=\"\\/api\\/${{ variables['TargetProject'] }}\\/index/" > index-temp.html
+          cat index.html | sed -e "s/href=\"Classes/href=\"\\/api\\/${{ parameters.TargetProject }}\\/Classes/" | sed -e "s/href=\"Structs/href=\"\\/api\\/${{ parameters.TargetProject }}\\/Structs/" | sed -e "s/src=\"js/src=\"\\/api\\/${{ parameters.TargetProject }}\\/js/" | sed -e "s/href=\"css/href=\"\\/api\\/${{ parameters.TargetProject }}\\/css/" | sed -e "s/src=\"img/src=\"\\/api\\/${{ parameters.TargetProject }}\\/img/" | sed -e "s/href=\"index/href=\"\\/api\\/${{ parameters.TargetProject }}\\/index/" > index-temp.html
           echo "----------"
           mv index-temp.html index.html
       - task: ArchiveFiles@2
