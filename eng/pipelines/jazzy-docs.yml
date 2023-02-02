@@ -59,6 +59,9 @@ jobs:
           npm install 
           npm run build --if-present
           npm prune --production
+      - bash: |
+          cat index.html | sed -e "s/href=\"Classes/href=\"\\/api\\/$(TargetProject)\\/Classes/" | sed -e "s/href=\"Structs/href=\"\\/api\\/$(TargetProject)\\/Structs/" | sed -e "s/src=\"js/src=\"\\/api\\/$(TargetProject)\\/js/" | sed -e "s/href=\"css/href=\"\\/api\\/$(TargetProject)\\/css/" | sed -e "s/src=\"img/src=\"\\/api\\/$(TargetProject)\\/img/" | sed -e "s/href=\"index/href=\"\\/api\\/$(TargetProject)\\/index/" > index-temp.html
+          mv index-temp.html index.html
       - task: ArchiveFiles@2
         displayName: "Archive files"
         inputs:
