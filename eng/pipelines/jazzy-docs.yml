@@ -22,29 +22,33 @@ pool:
     demands: xcode
 
 jobs:
-  - job: BuildJazzy
-    displayName: "Build API docs with Jazzy Gem"
+  - job: BuildDeployJazzy
+    displayName: "Build and Deploy Jazzy Docs"
     steps:
-      # - task: UseRubyVersion@0
-      #   inputs:
-      #     versionSpec: '>= 1.0'
-
-      # - script: |
-      #     gem install jazzy
-      #   displayName: "Install Jazzy Gem"
+    # 1. environment set up - install nodejs
       - task: NodeTool@0
         inputs:
           versionSource: 'spec'
           versionSpec: '6.x'
-      - script: az --version
-      - script: ls $(Pipeline.Workspace)
-      - script: ls $(system.defaultWorkingDirectory)
+    # 2. clone repos (data source)
       - checkout: internal_tools_acs-mobile-ui
-        path: internal_tools_acs-mobile-ui-1
+        path: internal_tools_acs-mobile-ui
       - checkout: self
-        path: communication-ui-library-ios-1
-      - script: ls $(Pipeline.Workspace)
-      # - script: zip -r output_file.zip $(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy
+        path: communication-ui-library-ios
+    # 3. generate Jazzy docs and replace it in fucntion app  
+      # - task: UseRubyVersion@0
+      #   inputs:
+      #     versionSpec: '>= 1.0'
+      # - script: |
+      #     gem install jazzy
+      #   displayName: "Install Jazzy Gem"
+      # - script: |
+      #    JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
+      #    jazzy --config $JAZZY_CONFIG_FILE
+      #    displayName: "Run Jazzy on $(TargetProject)"
+      #    workingDirectory: AzureCommunicationUI/sdk/${{ variables['TargetProject'] }}
+
+    # 4. build the function app and prepare for deployment 
       - bash: |
           ls 
           echo "-----"
@@ -59,6 +63,7 @@ jobs:
           npm install 
           npm run build --if-present
           npm prune --production
+    # 5. update root endpoint to api/sdk so traffic can be routed properly
       - bash: |
           echo "$(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy/${{ parameters.TargetProject}}"
           cd $(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy
@@ -67,34 +72,27 @@ jobs:
           sh ./endpoint-update.sh "${{ parameters.TargetProject}}"
           echo "----------"
           echo "done!"
+    # 6. Archive function app
       - task: ArchiveFiles@2
         displayName: "Archive files"
         inputs:
           rootFolderOrFile: "$(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy"
           includeRootFolder: false
           archiveFile: "$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip"
+    # 7. publish the artifacts of the function app
       - task: PublishBuildArtifacts@1
         inputs:
           PathtoPublish: '$(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip'
           artifactName: 'drop'
+    # 8. deploy to azure resource group
       - task: AzureFunctionApp@1 
         inputs:
           azureSubscription: $(ado)
           appType: functionAppLinux # default is functionApp
           appName: john-jazzy-test
           package: $(System.DefaultWorkingDirectory)/build$(Build.BuildId).zip
-      #- script: |
-      #    JAZZY_CONFIG_FILE=$(system.defaultWorkingDirectory)/eng/jazzy/${{ variables['TargetProject'] }}.yml
-      #    jazzy --config $JAZZY_CONFIG_FILE
-        # displayName: "Run Jazzy on $(TargetProject)"
-        # workingDirectory: AzureCommunicationUI/sdk/${{ variables['TargetProject'] }}
-      #- task: AzureCLI@2
-      #  inputs:
-      #    scriptType: 'bash'
-      #    azureSubscription: $(ado)
-      #    scriptLocation: 'inlineScript'
-      #    inlineScript: echo "Hello" && az group list -otable && az configure --defaults group=rg-acs-ui-dev && az functionapp deployment source config-zip -n john-jazzy-test --src output_file.zip --resource-group rg-acs-ui-dev
-          # az configure --defaults group=rg-acs-ui-dev && az functionapp deployment source config-zip -n john-jazzy-test --src output_file.zip --resource-group rg-acs-ui-dev 
-      # Take Jazzy results and override local copy in 'acs_ui_api_doc_jazzy'
-      
-      # Deploy jazzy app
+    # 9. done
+      - bash: |
+          echo "------"
+          echo "Check doc at http://john-jazzy-test.azurewebsites.net/api/${{ parameters.TargetProject}}"
+          echo "------"
