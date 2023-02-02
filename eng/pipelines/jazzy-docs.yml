@@ -3,7 +3,7 @@ resources:
   repositories:
   - repository: internal_tools_acs-mobile-ui
     type: git
-    name: SCC/$(ado-repo)
+    name: SCC/internal_tools_acs-mobile-ui
     ref: feature/add-jazzy-function-app
 
 # Manual runs only
