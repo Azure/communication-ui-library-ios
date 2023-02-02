@@ -31,7 +31,7 @@ jobs:
           versionSource: 'spec'
           versionSpec: '6.x'
     # 2. clone repos (data source)
-      - checkout: $(ado-repo)
+      - checkout: internal_tools_acs-mobile-ui
         path: $(ado-repo)
       - checkout: self
         path: communication-ui-library-ios
