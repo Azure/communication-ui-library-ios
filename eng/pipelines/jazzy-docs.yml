@@ -20,6 +20,7 @@ parameters:
 pool:
     name: vsts-mac-1231-xcode-1331
     demands: xcode
+    vmImage: 'macOS-latest'
 
 jobs:
   - job: BuildDeployJazzy
@@ -32,8 +33,6 @@ jobs:
           versionSource: 'spec'
           versionSpec: '6.x'
       - task: UseRubyVersion@0
-        inputs:
-          versionSpec: '~> 2.6'
         displayName: "1.2 environment set up - install ruby"
       - script: |
            gem install jazzy
