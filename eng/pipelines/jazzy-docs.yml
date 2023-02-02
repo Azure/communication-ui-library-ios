@@ -32,6 +32,10 @@ jobs:
       # - script: |
       #     gem install jazzy
       #   displayName: "Install Jazzy Gem"
+      - task: NodeTool@0
+        inputs:
+          versionSource: 'spec'
+          versionSpec: '6.x'
       - script: az --version
       - script: ls $(Pipeline.Workspace)
       - script: ls $(system.defaultWorkingDirectory)
@@ -47,6 +51,7 @@ jobs:
           cd $(Pipeline.Workspace)/internal_tools_acs-mobile-ui-1/acs_ui_api_doc_jazzy
           echo "-----"
           ls
+          npm install typescript
           if [ -f extensions.csproj ]
           then
               dotnet build extensions.csproj --output ./bin
