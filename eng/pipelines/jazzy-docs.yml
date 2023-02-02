@@ -9,14 +9,6 @@ resources:
 # Manual runs only
 trigger: none
 
-parameters:
-  - name: TargetProject
-    type: string
-    values:
-      - AzureCommunicationUICalling
-      - AzureCommunicationUIChat
-    default: 'AzureCommunicationUIChat'
-
 pool:
     name: vsts-mac-1231-xcode-1331
     demands: xcode
@@ -50,12 +42,19 @@ jobs:
       #    jazzy -version
       #  displayName: "3.1 jazzy check"
       # - script: |
-      #    JAZZY_CONFIG_FILE=$(Pipeline.Workspace)/communication-ui-library-ios/eng/jazzy/${{ parameters.TargetProject}}.yml
+      #    JAZZY_CONFIG_FILE=$(Pipeline.Workspace)/communication-ui-library-ios/eng/jazzy/AzureCommunicationUICalling.yml
       #    jazzy --config $JAZZY_CONFIG_FILE
-      #  displayName: "3.2 Run Jazzy for SDK - ${{ parameters.TargetProject}}"
+      #  displayName: "3.2 Run Jazzy for Calling - AzureCommunicationUICalling"
       # - script: |
-      #    cp -Rf $(Pipeline.Workspace)/communication-ui-library-ios/build/jazzy/${{ parameters.TargetProject}} $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy/${{ parameters.TargetProject}}
-      #  displayName: "3.3 Replace Jazzy doc in function app"
+      #    cp -Rf $(Pipeline.Workspace)/communication-ui-library-ios/build/jazzy/AzureCommunicationUICalling $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy/AzureCommunicationUICalling
+      #  displayName: "3.3 Replace Calling Jazzy doc in function app"
+      # - script: |
+      #    JAZZY_CONFIG_FILE=$(Pipeline.Workspace)/communication-ui-library-ios/eng/jazzy/AzureCommunicationUIChat.yml
+      #    jazzy --config $JAZZY_CONFIG_FILE
+      #  displayName: "3.4 Run Jazzy for Chat - AzureCommunicationUIChat"
+      # - script: |
+      #    cp -Rf $(Pipeline.Workspace)/communication-ui-library-ios/build/jazzy/AzureCommunicationUIChat $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy/AzureCommunicationUIChat
+      #  displayName: "3.5 Replace Chat Jazzy doc in function app"
 
     # 4. build the function app and prepare for deployment 
       - bash: |
@@ -75,11 +74,12 @@ jobs:
         displayName: "4. build function app with latest doc"
     # 5. update root endpoint to api/sdk so traffic can be routed properly
       - bash: |
-          echo "$(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy/${{ parameters.TargetProject}}"
           cd $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy
-          echo "starting endpoint update...."
           ls
-          sh ./endpoint-update.sh "${{ parameters.TargetProject}}"
+          echo "starting endpoint update...."
+          sh ./endpoint-update.sh "AzureCommunicationUIChat"
+          echo "----------"
+          sh ./endpoint-update.sh "AzureCommunicationUICalling"
           echo "----------"
           echo "done!"
         displayName: "5. Update root endpoint"
@@ -107,6 +107,7 @@ jobs:
     # 9. done
       - bash: |
           echo "------"
-          echo "Check doc at http://john-jazzy-test.azurewebsites.net/api/${{ parameters.TargetProject}}"
+          echo "Check doc for chat at http://john-jazzy-test.azurewebsites.net/api/AzureCommunicationUIChat"
           echo "------"
+          echo "Check doc for calling at http://john-jazzy-test.azurewebsites.net/api/AzureCommunicationUICalling"
         displayName: "9. Endpoint available"
