@@ -32,8 +32,6 @@ jobs:
           versionSource: 'spec'
           versionSpec: '6.x'
       - task: UseRubyVersion@0
-        inputs:
-          versionSpec: '>= 2.4'
         displayName: "1.2 environment set up - install ruby"
       - script: |
            gem install jazzy
