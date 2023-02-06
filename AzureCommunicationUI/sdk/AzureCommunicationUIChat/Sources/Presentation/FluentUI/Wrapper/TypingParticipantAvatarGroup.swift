@@ -31,7 +31,7 @@ class TypingParticipantAvatarGroup: UIView {
 
 extension TypingParticipantAvatarGroup {
     private func initAvatarGroup() {
-        group = MSFAvatarGroup(style: .stack, size: .xsmall)
+        group = MSFAvatarGroup(style: .stack, size: .size16)
         guard let group = group else {
             return
         }
