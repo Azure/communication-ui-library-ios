@@ -7,7 +7,7 @@ readme: ../../AzureCommunicationUI/sdk/AzureCommunicationUICalling/README.md
 skip_undocumented: false
 hide_unlisted_documentation: false
 theme: fullwidth
-output: ../build/jazzy/AzureCommunicationUICalling
+output: ../../build/jazzy/AzureCommunicationUICalling
 clean: true
 sdk: iphonesimulator
 xcodebuild_arguments:
