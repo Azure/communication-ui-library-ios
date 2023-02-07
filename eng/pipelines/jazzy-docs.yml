@@ -23,10 +23,15 @@ jobs:
         inputs:
           versionSource: 'spec'
           versionSpec: '6.x'
+      #- script: |
+      #     softwareupdate --list
+      #     softwareupdate -i "Command Line Tools for Xcode-13.4"
+      #     xcode-select -print-path
+      #  displayName: "1.2 environment set up - xcode update"
       - script: |
-           softwareupdate --list
-           softwareupdate -i "Command Line Tools for Xcode-13.4"
-           xcode-select -print-path
+           cd $(Pipeline.Workspace)/communication-ui-library-ios/AzureCommunicationUI
+           pod repo update
+           pod install
         displayName: "1.2 environment set up - xcode update"
     # 2. clone repos (data source)
       - checkout: internal_tools_acs-mobile-ui
