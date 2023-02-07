@@ -28,13 +28,6 @@ jobs:
            softwareupdate -i "Command Line Tools for Xcode-13.4"
            xcode-select -print-path
         displayName: "1.2 environment set up - xcode update"
-      - task: Xcode@5
-        inputs:
-          actions: 'build'
-          xcWorkspacePath: '$(Pipeline.Workspace)/communication-ui-library-ios/AzureCommunicationUI/AzureCommunicationUI.xcworkspace'
-          scheme: 'AzureCommunicationUICalling'
-          sdk: 'iphonesimulator'
-          packageApp: false
     # 2. clone repos (data source)
       - checkout: internal_tools_acs-mobile-ui
         path: $(ado-repo)
@@ -42,6 +35,14 @@ jobs:
       - checkout: self
         path: communication-ui-library-ios
         displayName: "2.2 clone repos (data source) - SDK repo"
+      - task: Xcode@5
+        inputs:
+          actions: 'build'
+          xcWorkspacePath: '$(Pipeline.Workspace)/communication-ui-library-ios/AzureCommunicationUI/AzureCommunicationUI.xcworkspace'
+          scheme: 'AzureCommunicationUICalling'
+          configuration: 'Debug'
+          sdk: 'iphonesimulator'
+          packageApp: false
     # 3. generate Jazzy docs and replace it in fucntion app  
       - script: |
             jazzy -version
