@@ -6,8 +6,16 @@ resources:
     name: SCC/internal_tools_acs-mobile-ui
     ref: feature/add-jazzy-function-app
 
-# Manual runs only
 trigger: none
+pr: none
+
+schedules:
+  - cron: "0 11 * * *"  # Nightly at 3am PST
+    displayName: "Nightly Build"
+    branches:
+      include:
+        - develop
+    always: true
 
 pool:
     name: vsts-mac-1231-xcode-1331
@@ -19,15 +27,10 @@ jobs:
     steps:
     # 1. environment set up
       - task: NodeTool@0
-        displayName: "1.1 environment set up - install nodejs"
+        displayName: "1 environment set up - install nodejs"
         inputs:
           versionSource: 'spec'
           versionSpec: '6.x'
-      #- script: |
-      #     softwareupdate --list
-      #     softwareupdate -i "Command Line Tools for Xcode-13.4"
-      #     xcode-select -print-path
-      #  displayName: "1.2 environment set up - xcode update"
     # 2. clone repos (data source)
       - checkout: internal_tools_acs-mobile-ui
         path: $(ado-repo)
@@ -35,25 +38,23 @@ jobs:
       - checkout: self
         path: communication-ui-library-ios
         displayName: "2.2 clone repos (data source) - SDK repo"
-      - script: |
-          cd $(Pipeline.Workspace)/communication-ui-library-ios/AzureCommunicationUI
-          pod repo update
-          pod install
-        displayName: "1.2 environment set up - xcode update"
-      - task: Xcode@5
-        inputs:
-          actions: 'build'
-          xcWorkspacePath: '$(Pipeline.Workspace)/communication-ui-library-ios/AzureCommunicationUI/AzureCommunicationUI.xcworkspace'
-          scheme: 'AzureCommunicationUICalling'
-          configuration: 'Debug'
-          sdk: 'iphonesimulator'
-          packageApp: false
-          archivePath: '$(Pipeline.Workspace)/communication-ui-library-ios/build'
-          signingOption: nosign
+      # - task: Xcode@5 # for debug of xcode build failures
+      #  inputs:
+      #    actions: 'build'
+      #    xcWorkspacePath: '$(Pipeline.Workspace)/communication-ui-library-ios/AzureCommunicationUI/AzureCommunicationUI.xcworkspace'
+      #    scheme: 'AzureCommunicationUICalling'
+      #    configuration: 'Debug'
+      #    sdk: 'iphonesimulator'
+      #    packageApp: false
+      #    archivePath: '$(Pipeline.Workspace)/communication-ui-library-ios/build'
+      #    signingOption: nosign
     # 3. generate Jazzy docs and replace it in fucntion app  
       - script: |
             jazzy -version
-        displayName: "3.1 jazzy check"
+            cd $(Pipeline.Workspace)/communication-ui-library-ios/AzureCommunicationUI
+            pod repo update
+            pod install
+        displayName: "3.1 pod install"
       - script: |
             cd $(Pipeline.Workspace)/communication-ui-library-ios/eng/jazzy
             jazzy --config AzureCommunicationUICalling.yml
