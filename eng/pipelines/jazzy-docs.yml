@@ -43,6 +43,8 @@ jobs:
           configuration: 'Debug'
           sdk: 'iphonesimulator'
           packageApp: false
+          archivePath: '$(Pipeline.Workspace)/communication-ui-library-ios/build'
+          signingOption: nosign
     # 3. generate Jazzy docs and replace it in fucntion app  
       - script: |
             jazzy -version
