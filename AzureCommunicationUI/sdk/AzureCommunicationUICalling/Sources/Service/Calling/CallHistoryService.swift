@@ -19,10 +19,6 @@ class CallHistoryService: CallHistoryServiceProtocol {
         self.callHistoryRepository = callHistoryRepository
         self.store = store
 
-        Task {
-            await cleanOldRecords()
-        }
-
         self.store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
@@ -40,23 +36,6 @@ class CallHistoryService: CallHistoryServiceProtocol {
         }
         self.updatedCallId = updatedCallId
 
-        callHistoryRepository.insert(callDate: callStartDate, callId: updatedCallId)
-    }
-
-    private func cleanOldRecords() async {
-        let currentDate = Date()
-        var dateComponent = DateComponents()
-        dateComponent.day = -31
-        if let thresholdDate = Calendar.current.date(byAdding: dateComponent, to: currentDate) {
-            let callRecords = callHistoryRepository.getAll()
-            let callRecordIds = callRecords
-                .filter { callHistoryRecord in
-                    thresholdDate > callHistoryRecord.date
-                }
-                .map { callHistoryRecord in
-                    callHistoryRecord.id
-                }
-            callHistoryRepository.remove(ids: callRecordIds)
-        }
+        callHistoryRepository.insert(callStartedOn: callStartDate, callId: updatedCallId)
     }
 }

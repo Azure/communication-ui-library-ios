@@ -10,8 +10,6 @@
 		05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */; };
 		05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C829297F516D006EDD0D /* CallHistoryService.swift */; };
 		05C1C831297F5680006EDD0D /* CallHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */; };
-		05C1C836297F69A9006EDD0D /* CallHistoryRecordData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C835297F69A9006EDD0D /* CallHistoryRecordData.swift */; };
-		05C1C8382980B1A1006EDD0D /* DBHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C8372980B1A1006EDD0D /* DBHelper.swift */; };
 		1B315123284EA8630043231B /* OnHoldOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */; };
 		1B3A8EED285129CC002ED55A /* AudioSessionReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */; };
 		1B5F169D27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */; };
@@ -276,8 +274,6 @@
 		05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRecord.swift; sourceTree = "<group>"; };
 		05C1C829297F516D006EDD0D /* CallHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryService.swift; sourceTree = "<group>"; };
 		05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryRepository.swift; sourceTree = "<group>"; };
-		05C1C835297F69A9006EDD0D /* CallHistoryRecordData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryRecordData.swift; sourceTree = "<group>"; };
-		05C1C8372980B1A1006EDD0D /* DBHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DBHelper.swift; sourceTree = "<group>"; };
 		1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionReducerTests.swift; sourceTree = "<group>"; };
 		1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLeaveCallConfirmationList.swift; sourceTree = "<group>"; };
@@ -599,19 +595,9 @@
 		05C1C82F297F5680006EDD0D /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				05C1C834297F69A9006EDD0D /* Model */,
 				05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */,
-				05C1C8372980B1A1006EDD0D /* DBHelper.swift */,
 			);
 			path = Data;
-			sourceTree = "<group>";
-		};
-		05C1C834297F69A9006EDD0D /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				05C1C835297F69A9006EDD0D /* CallHistoryRecordData.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		1F03D3CC2638A6860055C456 /* Calling */ = {
@@ -1742,7 +1728,6 @@
 				1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
-				05C1C836297F69A9006EDD0D /* CallHistoryRecordData.swift in Sources */,
 				FAD20A8B292834500063D8A9 /* DeviceExtension.swift in Sources */,
 				881D8F7427FCA6B3008EC897 /* AvatarViewManager.swift in Sources */,
 				1BAD44BC283DAF2100C9E6A9 /* DraggableLocalVideoView.swift in Sources */,
@@ -1832,7 +1817,6 @@
 				500C0F1F2847DE18000BA2DC /* RemoteOptions.swift in Sources */,
 				759BDEFF28FF0B0B002B6853 /* LocalizationProvider.swift in Sources */,
 				1F13D36C26A8B83300E31666 /* RemoteParticipantsState.swift in Sources */,
-				05C1C8382980B1A1006EDD0D /* DBHelper.swift in Sources */,
 				1FFEA01426A68D0D00E90816 /* FontExtension.swift in Sources */,
 				1FBCB666264519DA00F57EEA /* VideoViewManager.swift in Sources */,
 				05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */,

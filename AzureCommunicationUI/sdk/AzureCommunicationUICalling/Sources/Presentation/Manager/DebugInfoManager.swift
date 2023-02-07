@@ -11,7 +11,6 @@ protocol DebugInfoManagerProtocol {
 }
 
 class DebugInfoManager: DebugInfoManagerProtocol {
-
     private let callHistoryRepository: CallHistoryRepositoryProtocol
 
     init(callHistoryRepository: CallHistoryRepositoryProtocol) {
@@ -23,18 +22,12 @@ class DebugInfoManager: DebugInfoManagerProtocol {
     }
 
     private func getCallHistory() -> [CallHistoryRecord] {
-
-        let callHistoryRecords = callHistoryRepository.getAll()
-        let grouped = Dictionary(grouping: callHistoryRecords, by: { $0.date })
-
-        let mapped = grouped.map({ (callDate, callRecord) in
-            return CallHistoryRecord(callStartedOn: callDate, callIds: callRecord.map { $0.callId })
-        })
-
-        let sorted = mapped.sorted(by: { a, b in
-            return a.callStartedOn < b.callStartedOn
-        })
-
-        return sorted
+        return callHistoryRepository.getAll()
+            .map({ (callStartedOn, callIds) in
+                return CallHistoryRecord(callStartedOn: callStartedOn, callIds: callIds)
+            })
+            .sorted(by: { a, b in
+                return a.callStartedOn < b.callStartedOn
+            })
     }
 }
