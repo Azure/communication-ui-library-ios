@@ -23,11 +23,9 @@ jobs:
         inputs:
           versionSource: 'spec'
           versionSpec: '6.x'
-      # - task: UseRubyVersion@0
-      #  displayName: "1.2 environment set up - install ruby"
-      # - script: |
-      #     gem install jazzy
-      #  displayName: "1.3 environment set up - install jazzy"
+      - script: |
+           softwareupdate --list
+        displayName: "1.2 environment set up - xcode update"
     
     # 2. clone repos (data source)
       - checkout: internal_tools_acs-mobile-ui
@@ -36,7 +34,12 @@ jobs:
       - checkout: self
         path: communication-ui-library-ios
         displayName: "2.2 clone repos (data source) - SDK repo"
-      
+      - task: Xcode@5
+        inputs:
+          actions: 'build'
+          xcWorkspacePath: '$(Pipeline.Workspace)/communication-ui-library-ios/AzureCommunicationUI/AzureCommunicationUI.xcworkspace'
+          scheme: 'AzureCommunicationUICalling'
+          packageApp: false
     # 3. generate Jazzy docs and replace it in fucntion app  
       - script: |
             jazzy -version
@@ -55,7 +58,6 @@ jobs:
       - script: |
             cp -Rf $(Pipeline.Workspace)/communication-ui-library-ios/build/jazzy/AzureCommunicationUIChat $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy/AzureCommunicationUIChat
         displayName: "3.5 Replace Chat Jazzy doc in function app"
-
     # 4. build the function app and prepare for deployment 
       - bash: |
           ls 
