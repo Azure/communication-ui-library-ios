@@ -39,21 +39,22 @@ jobs:
       
     # 3. generate Jazzy docs and replace it in fucntion app  
       - script: |
-          jazzy -version
-          displayName: "3.1 jazzy check"
-      #    JAZZY_CONFIG_FILE=$(Pipeline.Workspace)/communication-ui-library-ios/eng/jazzy/AzureCommunicationUICalling.yml
-      #    jazzy --config $JAZZY_CONFIG_FILE
-      #  displayName: "3.2 Run Jazzy for Calling - AzureCommunicationUICalling"
-      # - script: |
-      #    cp -Rf $(Pipeline.Workspace)/communication-ui-library-ios/build/jazzy/AzureCommunicationUICalling $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy/AzureCommunicationUICalling
-      #  displayName: "3.3 Replace Calling Jazzy doc in function app"
-      # - script: |
-      #    JAZZY_CONFIG_FILE=$(Pipeline.Workspace)/communication-ui-library-ios/eng/jazzy/AzureCommunicationUIChat.yml
-      #    jazzy --config $JAZZY_CONFIG_FILE
-      #  displayName: "3.4 Run Jazzy for Chat - AzureCommunicationUIChat"
-      # - script: |
-      #    cp -Rf $(Pipeline.Workspace)/communication-ui-library-ios/build/jazzy/AzureCommunicationUIChat $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy/AzureCommunicationUIChat
-      #  displayName: "3.5 Replace Chat Jazzy doc in function app"
+            jazzy -version
+        displayName: "3.1 jazzy check"
+      - script: |
+            JAZZY_CONFIG_FILE=$(Pipeline.Workspace)/communication-ui-library-ios/eng/jazzy/AzureCommunicationUICalling.yml
+            jazzy --config $JAZZY_CONFIG_FILE
+        displayName: "3.2 Run Jazzy for Calling - AzureCommunicationUICalling"
+      - script: |
+            cp -Rf $(Pipeline.Workspace)/communication-ui-library-ios/build/jazzy/AzureCommunicationUICalling $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy/AzureCommunicationUICalling
+        displayName: "3.3 Replace Calling Jazzy doc in function app"
+      - script: |
+            JAZZY_CONFIG_FILE=$(Pipeline.Workspace)/communication-ui-library-ios/eng/jazzy/AzureCommunicationUIChat.yml
+            jazzy --config $JAZZY_CONFIG_FILE
+        displayName: "3.4 Run Jazzy for Chat - AzureCommunicationUIChat"
+      - script: |
+            cp -Rf $(Pipeline.Workspace)/communication-ui-library-ios/build/jazzy/AzureCommunicationUIChat $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy/AzureCommunicationUIChat
+        displayName: "3.5 Replace Chat Jazzy doc in function app"
 
     # 4. build the function app and prepare for deployment 
       - bash: |
