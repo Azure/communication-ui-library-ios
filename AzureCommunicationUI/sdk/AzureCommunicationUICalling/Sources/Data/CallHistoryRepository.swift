@@ -4,7 +4,6 @@
 //
 
 import Foundation
-import SQLite3
 
 protocol CallHistoryRepositoryProtocol {
     func insert(callStartedOn: Date, callId: String)
