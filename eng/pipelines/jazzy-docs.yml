@@ -35,13 +35,6 @@ jobs:
       - checkout: self
         path: communication-ui-library-ios
         displayName: "2.2 clone repos (data source) - SDK repo"
-      - task: Xcode@5
-        inputs:
-          actions: 'build'
-          sdk: 'iphonesimulator'
-          xcWorkspacePath: '$(Pipeline.Workspace)/communication-ui-library-ios/AzureCommunicationUI/AzureCommunicationUI.xcworkspace'
-          scheme: 'AzureCommunicationUICalling'
-          packageApp: false
     # 3. generate Jazzy docs and replace it in fucntion app  
       - script: |
             jazzy -version
