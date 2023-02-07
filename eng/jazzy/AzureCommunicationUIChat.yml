@@ -7,7 +7,7 @@ readme: ../../AzureCommunicationUI/sdk/AzureCommunicationUIChat/README.md
 skip_undocumented: false
 hide_unlisted_documentation: false
 theme: fullwidth
-output: ../build/jazzy/AzureCommunicationUIChat
+output: ../../build/jazzy/AzureCommunicationUIChat
 clean: true
 sdk: iphonesimulator
 xcodebuild_arguments:
