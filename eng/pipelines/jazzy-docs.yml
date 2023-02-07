@@ -38,10 +38,9 @@ jobs:
         displayName: "2.2 clone repos (data source) - SDK repo"
       
     # 3. generate Jazzy docs and replace it in fucntion app  
-      # - script: |
-      #    jazzy -version
-      #  displayName: "3.1 jazzy check"
-      # - script: |
+      - script: |
+          jazzy -version
+          displayName: "3.1 jazzy check"
       #    JAZZY_CONFIG_FILE=$(Pipeline.Workspace)/communication-ui-library-ios/eng/jazzy/AzureCommunicationUICalling.yml
       #    jazzy --config $JAZZY_CONFIG_FILE
       #  displayName: "3.2 Run Jazzy for Calling - AzureCommunicationUICalling"
