@@ -11,7 +11,12 @@ protocol CallHistoryRepositoryProtocol {
 }
 
 class CallHistoryRepository: CallHistoryRepositoryProtocol {
-    private let storageKey: String = "com.azure.android.communication.ui.calling.CallHistory"
+    private let storageKey: String = "com.azure.ios.communication.ui.calling.CallHistory"
+    private let userDefaults: UserDefaults
+
+    init(userDefaults: UserDefaults) {
+        self.userDefaults = userDefaults
+    }
 
     func insert(callStartedOn: Date, callId: String) {
         var historyRecords = getAll()
@@ -29,13 +34,13 @@ class CallHistoryRepository: CallHistoryRepositoryProtocol {
             do {
                 let encoder = JSONEncoder()
                 let data = try encoder.encode(historyRecords)
-                UserDefaults.standard.set(data, forKey: storageKey)
+                userDefaults.set(data, forKey: storageKey)
             } catch { }
         }
     }
 
     func getAll() -> [Date: [String]] {
-        if let data = UserDefaults.standard.data(forKey: storageKey) {
+        if let data = userDefaults.data(forKey: storageKey) {
             do {
                 let decoder = JSONDecoder()
                 return try decoder.decode([Date: [String]].self, from: data)
