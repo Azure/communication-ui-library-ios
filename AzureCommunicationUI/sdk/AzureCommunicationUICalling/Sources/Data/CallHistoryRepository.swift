@@ -23,7 +23,7 @@ class CallHistoryRepository: CallHistoryRepositoryProtocol {
 
         if let thresholdDate = Calendar.current.date(byAdding: DateComponents(day: -31), to: Date()) {
             historyRecords = historyRecords.filter { callHistoryRecord in
-                callHistoryRecord.key > thresholdDate
+                callHistoryRecord.key >= thresholdDate
             }
 
             if var existingCall = historyRecords[callStartedOn] {
