@@ -4,7 +4,6 @@ resources:
   - repository: internal_tools_acs-mobile-ui
     type: git
     name: SCC/internal_tools_acs-mobile-ui
-    ref: feature/add-jazzy-function-app
 
 trigger: none
 pr: none
