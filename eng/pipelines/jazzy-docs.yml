@@ -37,7 +37,8 @@ jobs:
       - checkout: self
         path: communication-ui-library-ios
         displayName: "2.2 clone repos (data source) - SDK repo"
-      # - task: Xcode@5 # for debug of xcode build failures
+      # special task for debugging of xcode build failures  
+      # - task: Xcode@5 
       #  inputs:
       #    actions: 'build'
       #    xcWorkspacePath: '$(Pipeline.Workspace)/communication-ui-library-ios/AzureCommunicationUI/AzureCommunicationUI.xcworkspace'
@@ -54,20 +55,12 @@ jobs:
             pod repo update
             pod install
         displayName: "3.1 pod install"
-      - script: |
-            cd $(Pipeline.Workspace)/communication-ui-library-ios/eng/jazzy
-            jazzy --config AzureCommunicationUICalling.yml
-        displayName: "3.2 Run Jazzy for Calling - AzureCommunicationUICalling"
-      - script: |
-            cp -Rf $(Pipeline.Workspace)/communication-ui-library-ios/build/jazzy/AzureCommunicationUICalling $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy
-        displayName: "3.3 Replace Calling Jazzy doc in function app"
-      - script: |
-            cd $(Pipeline.Workspace)/communication-ui-library-ios/eng/jazzy
-            jazzy --config AzureCommunicationUIChat.yml
-        displayName: "3.4 Run Jazzy for Chat - AzureCommunicationUIChat"
-      - script: |
-            cp -Rf $(Pipeline.Workspace)/communication-ui-library-ios/build/jazzy/AzureCommunicationUIChat $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy
-        displayName: "3.5 Replace Chat Jazzy doc in function app"
+      - template: jobs/templates/jazzy-build-script.yml
+        parameters:
+          buildScheme: $(calling-ui)
+      - template: jobs/templates/jazzy-build-script.yml
+        parameters:
+          buildScheme: $(chat-ui)
     # 4. build the function app and prepare for deployment 
       - bash: |
           ls 
@@ -91,7 +84,7 @@ jobs:
           echo "starting endpoint update...."
           sh ./endpoint-update.sh "AzureCommunicationUIChat"
           echo "----------"
-          sh ./endpoint-update.sh "AzureCommunicationUICalling"
+          sh ./endpoint-update.sh "$(calling-ui)"
           echo "----------"
           echo "done!"
         displayName: "5. Update root endpoint"
@@ -119,7 +112,7 @@ jobs:
     # 9. done
       - bash: |
           echo "------"
-          echo "Check doc for chat at http://john-jazzy-test.azurewebsites.net/api/AzureCommunicationUIChat"
+          echo "Check doc for chat at http://john-jazzy-test.azurewebsites.net/api/$(chat-ui)"
           echo "------"
-          echo "Check doc for calling at http://john-jazzy-test.azurewebsites.net/api/AzureCommunicationUICalling"
+          echo "Check doc for calling at http://john-jazzy-test.azurewebsites.net/api/$(calling-ui)"
         displayName: "9. Endpoint available"
