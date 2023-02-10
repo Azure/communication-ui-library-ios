@@ -1,0 +1,17 @@
+
+parameters:
+  - name: buildScheme
+    type: string
+    default: 'AzureCommunicationUICalling'
+    values:
+      - AzureCommunicationUICalling
+      - AzureCommunicationUIChat
+
+steps:
+  - script: |
+        cd $(Pipeline.Workspace)/communication-ui-library-ios/eng/jazzy
+        jazzy --config ${{ parameters.buildScheme }}.yml
+    displayName: "Run Jazzy for ${{ parameters.buildScheme }}"
+  - script: |
+        cp -Rf $(Pipeline.Workspace)/communication-ui-library-ios/build/jazzy/${{ parameters.buildScheme }} $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy
+    displayName: "Replace ${{ parameters.buildScheme }} Jazzy doc in function app"
