@@ -58,13 +58,13 @@ jobs:
       - template: jobs/templates/jazzy-build-script.yml
         parameters:
           buildScheme: "AzureCommunicationUICalling"
-          first-step: "3.2"
-          second-step: "3.3"
+          firstStep: "3.2"
+          secondStep: "3.3"
       - template: jobs/templates/jazzy-build-script.yml
         parameters:
           buildScheme: "AzureCommunicationUIChat"
-          first-step: "3.4"
-          second-step: "3.5"
+          firstStep: "3.4"
+          secondStep: "3.5"
     # 4. build the function app and prepare for deployment 
       - bash: |
           ls 
