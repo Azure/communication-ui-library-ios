@@ -57,12 +57,12 @@ jobs:
         displayName: "3.1 pod install"
       - template: jobs/templates/jazzy-build-script.yml
         parameters:
-          buildScheme: $(calling-ui)
+          buildScheme: "$(calling-ui)"
           first-step: "3.2"
           second-step: "3.3"
       - template: jobs/templates/jazzy-build-script.yml
         parameters:
-          buildScheme: $(chat-ui)
+          buildScheme: "$(chat-ui)"
           first-step: "3.4"
           second-step: "3.5"
     # 4. build the function app and prepare for deployment 
@@ -86,9 +86,9 @@ jobs:
           cd $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy
           ls
           echo "starting endpoint update...."
-          sh ./endpoint-update.sh "AzureCommunicationUIChat"
+          sh ./endpoint-update.sh $(chat-ui)
           echo "----------"
-          sh ./endpoint-update.sh "$(calling-ui)"
+          sh ./endpoint-update.sh $(calling-ui)
           echo "----------"
           echo "done!"
         displayName: "5. Update root endpoint"
