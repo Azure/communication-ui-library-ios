@@ -58,9 +58,13 @@ jobs:
       - template: jobs/templates/jazzy-build-script.yml
         parameters:
           buildScheme: $(calling-ui)
+          first-step: "3.2"
+          second-step: "3.3"
       - template: jobs/templates/jazzy-build-script.yml
         parameters:
           buildScheme: $(chat-ui)
+          first-step: "3.4"
+          second-step: "3.5"
     # 4. build the function app and prepare for deployment 
       - bash: |
           ls 
