@@ -5,12 +5,10 @@ parameters:
     default: 'AzureCommunicationUICalling'
     values:
       - AzureCommunicationUICalling
-      - AzureCommunicationUIChat
-      
+      - AzureCommunicationUIChat     
   - name: first-step
     type: string
-    default: ''
-   
+    default: ''   
   - name: second-step
     type: string
     default: ''
