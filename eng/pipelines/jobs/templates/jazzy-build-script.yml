@@ -6,10 +6,10 @@ parameters:
     values:
       - AzureCommunicationUICalling
       - AzureCommunicationUIChat     
-  - name: first-step
+  - name: firstStep
     type: string
     default: ''   
-  - name: second-step
+  - name: secondStep
     type: string
     default: ''
  
@@ -17,7 +17,7 @@ steps:
   - script: |
         cd $(Pipeline.Workspace)/communication-ui-library-ios/eng/jazzy
         jazzy --config ${{ parameters.buildScheme }}.yml
-    displayName: "${{ parameters.first-step }} Run Jazzy for ${{ parameters.buildScheme }}"
+    displayName: "${{ parameters.firstStep }} Run Jazzy for ${{ parameters.buildScheme }}"
   - script: |
         cp -Rf $(Pipeline.Workspace)/communication-ui-library-ios/build/jazzy/${{ parameters.buildScheme }} $(Pipeline.Workspace)/$(ado-repo)/acs_ui_api_doc_jazzy
-    displayName: "${{ parameters.second-step }} Replace ${{ parameters.buildScheme }} Jazzy doc in function app"
+    displayName: "${{ parameters.secondStep }} Replace ${{ parameters.buildScheme }} Jazzy doc in function app"
