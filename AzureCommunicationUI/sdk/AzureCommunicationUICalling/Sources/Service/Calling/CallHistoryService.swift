@@ -12,10 +12,10 @@ protocol CallHistoryServiceProtocol {
 class CallHistoryService: CallHistoryServiceProtocol {
     private let store: Store<AppState, Action>
     private var cancellables = Set<AnyCancellable>()
-    private let callHistoryRepository: CallHistoryRepositoryProtocol
+    private let callHistoryRepository: CallHistoryRepository
     private var updatedCallId: String?
 
-    init(store: Store<AppState, Action>, callHistoryRepository: CallHistoryRepositoryProtocol) {
+    init(store: Store<AppState, Action>, callHistoryRepository: CallHistoryRepository) {
         self.callHistoryRepository = callHistoryRepository
         self.store = store
 

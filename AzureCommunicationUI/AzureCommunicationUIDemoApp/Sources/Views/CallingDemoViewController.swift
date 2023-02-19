@@ -23,6 +23,7 @@ class CallingDemoViewController: UIViewController {
         static let buttonHorizontalInset: CGFloat = 20.0
         static let buttonVerticalInset: CGFloat = 10.0
     }
+    @ObservedObject var callingViewModel: CallingDemoViewModel
 
     private var selectedAcsTokenType: ACSTokenType = .token
     private var acsTokenUrlTextField: UITextField!
@@ -80,15 +81,19 @@ class CallingDemoViewController: UIViewController {
 
 #if DEBUG
     init(envConfigSubject: EnvConfigSubject,
+         callingViewModel: CallingDemoViewModel,
          callingSDKHandlerMock: UITestCallingSDKWrapper? = nil) {
         self.envConfigSubject = envConfigSubject
+        self.callingViewModel = callingViewModel
         self.callingSDKWrapperMock = callingSDKHandlerMock
         super.init(nibName: nil, bundle: nil)
         self.combineEnvConfigSubject()
     }
 #else
-    init(envConfigSubject: EnvConfigSubject) {
+    init(envConfigSubject: EnvConfigSubject,
+         callingViewModel: CallingDemoViewModel) {
         self.envConfigSubject = envConfigSubject
+        self.callingViewModel = callingViewModel
         super.init(nibName: nil, bundle: nil)
         self.combineEnvConfigSubject()
     }
@@ -159,8 +164,7 @@ class CallingDemoViewController: UIViewController {
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::UIKitDemoView::getEventsHandler::onError \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
-        let callId = callComposite.debugInfo.callHistoryRecords.last?.callIds.last ?? "Unknown"
-        print("::::SwiftUIDemoView debug info \(callId)")
+        callingViewModel.callHistory.forEach { print("::::CallingDemoView call id \($0)") }
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
@@ -357,18 +361,14 @@ class CallingDemoViewController: UIViewController {
     }
 
     @objc func onShowHistoryBtnPressed() {
-        let callComposite = CallComposite()
-        let debugInfo = callComposite.debugInfo
-        let callHistory = debugInfo.callHistoryRecords
+        let callHistory = callingViewModel.callHistory
         var callHistoryTitle = "Total calls: \(callHistory.count)"
         var callHistoryMessage = "Last Call: none"
         if let lastHistoryRecord = callHistory.last {
-            var formatter = DateFormatter()
-            formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            callHistoryMessage = "Last Call: \(formatter.string(from: lastHistoryRecord.callStartedOn))"
-            lastHistoryRecord.callIds.forEach { callId in
-                callHistoryMessage += "\nCallId: \(callId)"
-            }
+            let formattedDate = callingViewModel.dateFormatter.string(from: lastHistoryRecord.callStartedOn)
+            callHistoryMessage = "Last Call: \(formattedDate)\n"
+            callHistoryMessage += "Call Ids:\n"
+            callHistoryMessage += lastHistoryRecord.callIds.joined(separator: "\n")
         }
 
         let errorAlert = UIAlertController(title: callHistoryTitle, message: callHistoryMessage, preferredStyle: .alert)
@@ -521,8 +521,6 @@ class CallingDemoViewController: UIViewController {
         showCallHistoryButton = UIButton()
         showCallHistoryButton.setTitle("Show call history", for: .normal)
         showCallHistoryButton.backgroundColor = .systemBlue
-//        showCallHistoryButton.setTitleColor(UIColor.white, for: .normal)
-//        showCallHistoryButton.setTitleColor(UIColor.systemGray6, for: .disabled)
         showCallHistoryButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
                                                                     left: LayoutConstants.buttonHorizontalInset,
                                                                     bottom: LayoutConstants.buttonVerticalInset,

@@ -41,7 +41,7 @@ public class CallComposite {
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
     private var callHistoryService: CallHistoryServiceProtocol?
-    private lazy var callHistoryRepository: CallHistoryRepositoryProtocol = CallHistoryRepository(
+    private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
 
     /// Get debug information for the Call Composite.

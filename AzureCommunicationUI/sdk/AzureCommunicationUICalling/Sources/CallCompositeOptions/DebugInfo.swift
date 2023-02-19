@@ -7,7 +7,7 @@ import Foundation
 
 /// A Call Composite debug information.
 public struct DebugInfo {
-    /// The history of calls up to 30 days.
+    /// The history of calls up to 30 days. Ordered ascending by call started date.
     public let callHistoryRecords: [CallHistoryRecord]
 
     /// Call history.

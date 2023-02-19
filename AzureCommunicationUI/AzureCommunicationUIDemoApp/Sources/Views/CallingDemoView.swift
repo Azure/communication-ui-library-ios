@@ -19,6 +19,7 @@ struct CallingDemoView: View {
     @State var callHistoryTitle: String = ""
     @State var callHistoryMessage: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
+    @ObservedObject var callingViewModel: CallingDemoViewModel
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
@@ -145,18 +146,14 @@ struct CallingDemoView: View {
 
     var showCallHistoryButton: some View {
         Button("Show call history") {
-            let callComposite = CallComposite()
-            let debugInfo = callComposite.debugInfo
-            let callHistory = debugInfo.callHistoryRecords
+            let callHistory = callingViewModel.callHistory
             callHistoryTitle = "Total calls: \(callHistory.count)"
             callHistoryMessage = "Last Call: none"
             if let lastHistoryRecord = callHistory.last {
-                var formatter = DateFormatter()
-                formatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                callHistoryMessage = "Last Call: \(formatter.string(from: lastHistoryRecord.callStartedOn))"
-                lastHistoryRecord.callIds.forEach { callId in
-                    callHistoryMessage += "\nCallId: \(callId)"
-                }
+                let formattedDate = callingViewModel.dateFormatter.string(from: lastHistoryRecord.callStartedOn)
+                callHistoryMessage = "Last Call: \(formattedDate)\n"
+                callHistoryMessage += "Call Ids:\n"
+                callHistoryMessage += lastHistoryRecord.callIds.joined(separator: "\n")
             }
             isShowingCallHistory = true
         }
@@ -313,10 +310,9 @@ extension CallingDemoView {
     }
 
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
-        let callId = callComposite.debugInfo.callHistoryRecords.last?.callIds.last ?? "Unknown"
         print("::::CallingDemoView::getEventsHandler::onError \(error)")
         print("::::CallingDemoView error.code \(error.code)")
-        print("::::CallingDemoView debug info \(callId)")
+        callingViewModel.callHistory.forEach { print("::::CallingDemoView call id \($0)") }
         showError(for: error.code)
     }
 

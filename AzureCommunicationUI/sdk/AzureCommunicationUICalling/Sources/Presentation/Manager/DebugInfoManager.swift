@@ -11,21 +11,19 @@ protocol DebugInfoManagerProtocol {
 }
 
 class DebugInfoManager: DebugInfoManagerProtocol {
-    private let callHistoryRepository: CallHistoryRepositoryProtocol
+    private let callHistoryRepository: CallHistoryRepository
 
-    init(callHistoryRepository: CallHistoryRepositoryProtocol) {
+    init(callHistoryRepository: CallHistoryRepository) {
         self.callHistoryRepository = callHistoryRepository
     }
 
+    /// The history of calls up to 30 days. Ordered ascending by call started date.
     func getDebugInfo() -> DebugInfo {
         return DebugInfo(callHistoryRecords: getCallHistory())
     }
 
     private func getCallHistory() -> [CallHistoryRecord] {
         return callHistoryRepository.getAll()
-            .map({ (callStartedOn, callIds) in
-                return CallHistoryRecord(callStartedOn: callStartedOn, callIds: callIds)
-            })
             .sorted(by: { a, b in
                 return a.callStartedOn < b.callStartedOn
             })
