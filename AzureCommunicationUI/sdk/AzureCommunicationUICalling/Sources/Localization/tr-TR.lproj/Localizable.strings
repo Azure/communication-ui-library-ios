@@ -15,7 +15,7 @@
 "AzureCommunicationUICalling.SetupView.Title"="Kur";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Geri";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Aramaya katıl";
-"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Aramaya katılıyorsunuz...";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Aramaya katılıyorsunuz…";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Görüntü kapalı";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Kamerayı Aç";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Görüntü açık";
