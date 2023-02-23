@@ -16,7 +16,7 @@ class EntryViewController: UIViewController {
     private var callingSDKWrapperMock: UITestCallingSDKWrapper?
 #endif
     private var cancellables = Set<AnyCancellable>()
-    private var callingViewModel = CallingDemoViewModel()
+    private let callingViewModel = CallingDemoViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
