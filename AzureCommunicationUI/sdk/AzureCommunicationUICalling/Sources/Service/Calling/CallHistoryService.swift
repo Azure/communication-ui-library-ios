@@ -6,16 +6,14 @@
 import Combine
 import Foundation
 
-protocol CallHistoryServiceProtocol {
-}
-
-class CallHistoryService: CallHistoryServiceProtocol {
+class CallHistoryService {
+    private let callHistoryDispatchQueue = DispatchQueue(label: "CallHistoryDispatchQueue")
     private let store: Store<AppState, Action>
     private var cancellables = Set<AnyCancellable>()
-    private let callHistoryRepository: CallHistoryRepository
+    private let callHistoryRepository: CallHistoryRepositoryProtocol
     private var updatedCallId: String?
 
-    init(store: Store<AppState, Action>, callHistoryRepository: CallHistoryRepository) {
+    init(store: Store<AppState, Action>, callHistoryRepository: CallHistoryRepositoryProtocol) {
         self.callHistoryRepository = callHistoryRepository
         self.store = store
 
@@ -27,7 +25,7 @@ class CallHistoryService: CallHistoryServiceProtocol {
             .store(in: &cancellables)
     }
 
-    private func receive(_ state: AppState) {
+    func receive(_ state: AppState) {
         guard let updatedCallId = state.callingState.callId,
                 !updatedCallId.isEmpty,
               let callStartDate = state.callingState.callStartDate,
@@ -36,6 +34,8 @@ class CallHistoryService: CallHistoryServiceProtocol {
         }
         self.updatedCallId = updatedCallId
 
-        callHistoryRepository.insert(callStartedOn: callStartDate, callId: updatedCallId)
+        callHistoryDispatchQueue.async {
+            self.callHistoryRepository.insert(callStartedOn: callStartDate, callId: updatedCallId)
+        }
     }
 }

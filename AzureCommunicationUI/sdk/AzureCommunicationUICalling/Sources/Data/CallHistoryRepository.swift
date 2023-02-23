@@ -5,37 +5,39 @@
 
 import Foundation
 
-class CallHistoryRepository {
-    private let callHistoryDispatchQueue = DispatchQueue(label: "CallHistoryDispatchQueue")
+protocol CallHistoryRepositoryProtocol {
+    func insert(callStartedOn: Date, callId: String)
+    func getAll() -> [CallHistoryRecord]
+}
+
+class CallHistoryRepository: CallHistoryRepositoryProtocol {
     private let storageKey: String = "com.azure.ios.communication.ui.calling.CallHistory"
     private let logger: Logger
-    private let userDefaults: UserDefaults
+    private let userDefaults: UserDefaultsStorageProtocol
 
-    init(logger: Logger, userDefaults: UserDefaults) {
+    init(logger: Logger, userDefaults: UserDefaultsStorageProtocol) {
         self.logger = logger
         self.userDefaults = userDefaults
     }
 
     func insert(callStartedOn: Date, callId: String) {
-        callHistoryDispatchQueue.async {
-            var historyRecords = self.getAllAsDictionary()
-            if let thresholdDate = Calendar.current.date(byAdding: DateComponents(day: -31), to: Date()) {
-                historyRecords = historyRecords.filter { callHistoryRecord in
-                    callHistoryRecord.key >= thresholdDate
-                }
-                if var existingCalls = historyRecords[callStartedOn] {
-                    existingCalls.append(callId)
-                    historyRecords[callStartedOn] = existingCalls
-                } else {
-                    historyRecords[callStartedOn] = [callId]
-                }
-                do {
-                    let encoder = JSONEncoder()
-                    let data = try encoder.encode(historyRecords)
-                    self.userDefaults.set(data, forKey: self.storageKey)
-                } catch let error {
-                    self.logger.error("Failed to save call history, reason: \(error.localizedDescription)")
-                }
+        var historyRecords = self.getAllAsDictionary()
+        if let thresholdDate = Calendar.current.date(byAdding: DateComponents(day: -31), to: Date()) {
+            if var existingCalls = historyRecords[callStartedOn] {
+                existingCalls.append(callId)
+                historyRecords[callStartedOn] = existingCalls
+            } else {
+                historyRecords[callStartedOn] = [callId]
+            }
+            historyRecords = historyRecords.filter { callHistoryRecord in
+                callHistoryRecord.key >= thresholdDate
+            }
+            do {
+                let encoder = JSONEncoder()
+                let data = try encoder.encode(historyRecords)
+                self.userDefaults.set(data, forKey: self.storageKey)
+            } catch let error {
+                self.logger.error("Failed to save call history, reason: \(error.localizedDescription)")
             }
         }
     }
