@@ -13,6 +13,8 @@ struct CallConfiguration {
     let credential: CommunicationTokenCredential
     let displayName: String?
     let diagnosticConfig: DiagnosticConfig
+    let roomId: String?
+    let roomRole: RoomRole?
 
     init(locator: JoinLocator,
          credential: CommunicationTokenCredential,
@@ -21,11 +23,21 @@ struct CallConfiguration {
         case let .groupCall(groupId: groupId):
             self.groupId = groupId
             self.meetingLink = nil
+            self.roomId = nil
+            self.roomRole = nil
             self.compositeCallType = .groupCall
         case let .teamsMeeting(teamsLink: meetingLink):
             self.groupId = nil
             self.meetingLink = meetingLink
+            self.roomId = nil
+            self.roomRole = nil
             self.compositeCallType = .teamsMeeting
+        case let .roomCall(roomId: roomId, roomRole: roomRole):
+            self.roomId = roomId
+            self.roomRole = roomRole
+            self.groupId = nil
+            self.meetingLink = nil
+            self.compositeCallType = .roomsCall
         }
         self.credential = credential
         self.displayName = displayName
@@ -36,4 +48,5 @@ struct CallConfiguration {
 enum CompositeCallType {
     case groupCall
     case teamsMeeting
+    case roomsCall
 }
