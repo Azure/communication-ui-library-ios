@@ -15,7 +15,7 @@
 "AzureCommunicationUICalling.SetupView.Title"="설정";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="뒤로";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="통화 참여";
-"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="통화에 참가하는 중...";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="통화에 참가하는 중…";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="비디오 끄기";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="카메라 켜기";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="비디오 켜짐";
