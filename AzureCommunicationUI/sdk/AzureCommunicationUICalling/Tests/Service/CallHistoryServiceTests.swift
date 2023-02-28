@@ -19,6 +19,7 @@ class CallHistoryServiceTests: XCTestCase {
     override func tearDown() {
         super.tearDown()
         callHistoryRepository = nil
+        storeFactory = nil
     }
 
     func test_callingHistoryService_whenCallIDChanges_shouldCallinsertOnRepository() {
@@ -28,8 +29,6 @@ class CallHistoryServiceTests: XCTestCase {
         XCTAssertFalse(callHistoryRepository.insertWasCalled())
 
         sut.receive(AppState(callingState: CallingState(callStartDate: callStartDate)))
-        // CallHistoryService is saving call history record async, so we need to allow time to call repository
-        Thread.sleep(forTimeInterval: 5)
 
         XCTAssertFalse(callHistoryRepository.insertWasCalled())
         sut.receive(AppState(callingState: CallingState(callId: callId)))

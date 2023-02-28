@@ -7,7 +7,6 @@ import Combine
 import Foundation
 
 class CallHistoryService {
-    private let callHistoryDispatchQueue = DispatchQueue(label: "CallHistoryDispatchQueue")
     private let store: Store<AppState, Action>
     private var cancellables = Set<AnyCancellable>()
     private let callHistoryRepository: CallHistoryRepositoryProtocol
@@ -34,8 +33,6 @@ class CallHistoryService {
         }
         self.updatedCallId = updatedCallId
 
-        callHistoryDispatchQueue.async {
-            self.callHistoryRepository.insert(callStartedOn: callStartDate, callId: updatedCallId)
-        }
+        self.callHistoryRepository.insert(callStartedOn: callStartDate, callId: updatedCallId)
     }
 }
