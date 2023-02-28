@@ -64,7 +64,7 @@ class CallHistoryRepositoryTests: XCTestCase {
         let sut = makeSUT()
         let callId1 = "call id 1"
         let callStartDate = Date()
-        
+
         sut.insert(callStartedOn: callStartDate, callId: callId1)
         Thread.sleep(forTimeInterval: 5)
 
