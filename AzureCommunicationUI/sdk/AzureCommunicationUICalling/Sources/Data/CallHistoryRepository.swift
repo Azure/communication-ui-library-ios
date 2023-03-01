@@ -5,12 +5,7 @@
 
 import Foundation
 
-protocol CallHistoryRepositoryProtocol {
-    func insert(callStartedOn: Date, callId: String)
-    func getAll() -> [CallHistoryRecord]
-}
-
-class CallHistoryRepository: CallHistoryRepositoryProtocol {
+class CallHistoryRepository {
     private let callHistoryDispatchQueue = DispatchQueue(label: "CallHistoryDispatchQueue")
     private let storageKey: String = "com.azure.ios.communication.ui.calling.CallHistory"
     private let logger: Logger

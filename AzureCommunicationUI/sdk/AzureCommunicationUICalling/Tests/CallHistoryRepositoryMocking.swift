@@ -6,9 +6,15 @@
 import Foundation
 @testable import AzureCommunicationUICalling
 
-class CallHistoryRepositoryMocking: CallHistoryRepositoryProtocol {
+class CallHistoryRepositoryMocking: CallHistoryRepository {
     var insertCallCount: Int = 0
-    func insert(callStartedOn: Date, callId: String) {
+
+    init() {
+        super.init(logger: LoggerMocking(),
+                   userDefaults: UserDefaultsStorageMocking(data: {_ in return nil }, set: {_, _ in }))
+    }
+
+    override func insert(callStartedOn: Date, callId: String) {
         insertCallCount += 1
     }
 
@@ -16,7 +22,7 @@ class CallHistoryRepositoryMocking: CallHistoryRepositoryProtocol {
         return insertCallCount > 0
     }
 
-    func getAll() -> [AzureCommunicationUICalling.CallHistoryRecord] {
+    override func getAll() -> [AzureCommunicationUICalling.CallHistoryRecord] {
         return []
     }
 }
