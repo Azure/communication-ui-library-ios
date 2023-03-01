@@ -32,18 +32,15 @@ class CallHistoryServiceTests: XCTestCase {
 
         XCTAssertFalse(callHistoryRepository.insertWasCalled())
         sut.receive(AppState(callingState: CallingState(callId: callId)))
-        Thread.sleep(forTimeInterval: 5)
 
         XCTAssertFalse(callHistoryRepository.insertWasCalled())
 
         sut.receive(AppState(callingState: CallingState(callId: callId, callStartDate: callStartDate)))
-        Thread.sleep(forTimeInterval: 5)
 
         XCTAssertTrue(callHistoryRepository.insertWasCalled())
         let newCallId = "new call id"
 
         sut.receive(AppState(callingState: CallingState(callId: newCallId, callStartDate: callStartDate)))
-        Thread.sleep(forTimeInterval: 5)
 
         XCTAssertTrue(callHistoryRepository.insertCallCount == 2)
     }
