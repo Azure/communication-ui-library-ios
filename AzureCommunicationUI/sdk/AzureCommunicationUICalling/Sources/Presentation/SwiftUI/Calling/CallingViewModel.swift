@@ -25,6 +25,7 @@ class CallingViewModel: ObservableObject {
     let participantGridsViewModel: ParticipantGridViewModel
     let bannerViewModel: BannerViewModel
     let lobbyOverlayViewModel: LobbyOverlayViewModel
+    let loadingOverlayViewModel: LoadingOverlayViewModel
     var onHoldOverlayViewModel: OnHoldOverlayViewModel!
     let isRightToLeft: Bool
 
@@ -50,6 +51,7 @@ class CallingViewModel: ObservableObject {
                                                                                                 isIpadInterface)
         bannerViewModel = compositeViewModelFactory.makeBannerViewModel()
         lobbyOverlayViewModel = compositeViewModelFactory.makeLobbyOverlayViewModel()
+        loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()
 
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
@@ -115,6 +117,7 @@ class CallingViewModel: ObservableObject {
                                          remoteParticipantsState: state.remoteParticipantsState)
         bannerViewModel.update(callingState: state.callingState)
         lobbyOverlayViewModel.update(callingStatus: state.callingState.status)
+        loadingOverlayViewModel.update(callingState: state.callingState)
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
                                       audioSessionStatus: state.audioSessionState.status)
 

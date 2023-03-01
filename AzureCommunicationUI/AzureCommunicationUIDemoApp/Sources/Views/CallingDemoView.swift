@@ -201,7 +201,10 @@ extension CallingDemoView {
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let localOptions = LocalOptions(participantViewData: participantViewData,
-                                        setupScreenViewData: setupScreenViewData)
+                                        setupScreenViewData: setupScreenViewData,
+                                        microphoneOnByDefacult: false,
+                                        skipSetup: true
+        )
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:

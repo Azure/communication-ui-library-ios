@@ -61,6 +61,9 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                    state.errorState.internalError == nil {
                     dispatch(.localUserAction(.cameraPreviewOnTriggered))
                 }
+                if state.callingState.operationStatus == .bypassRequested {
+                    dispatch(.callingAction(.callStartRequested))
+                }
             } catch {
                 handle(error: error, errorType: .callJoinFailed, dispatch: dispatch)
             }

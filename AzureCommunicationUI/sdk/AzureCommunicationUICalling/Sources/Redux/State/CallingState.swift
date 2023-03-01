@@ -20,6 +20,7 @@ enum CallingStatus: Int {
 
 enum OperationStatus: Int {
     case none
+    case bypassRequested
     case callEndRequested
     case callEnded
 }

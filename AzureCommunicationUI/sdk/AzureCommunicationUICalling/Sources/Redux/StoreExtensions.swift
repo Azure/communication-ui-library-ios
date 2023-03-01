@@ -12,10 +12,14 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
     static func constructStore(
         logger: Logger,
         callingService: CallingServiceProtocol,
-        displayName: String?
+        displayName: String?,
+        localOptions: LocalOptions
     ) -> Store<AppState, Action> {
         let localUserState = LocalUserState(displayName: displayName)
-
+        let callingState = localOptions.skipSetup ?? false ?
+                CallingState(operationStatus: .bypassRequested): CallingState()
+        let navigationStatus: NavigationStatus = localOptions.skipSetup ?? false ? .inCall : .setup
+        let navigationState = NavigationState(status: navigationStatus)
         return .init(
             reducer: .appStateReducer(),
             middlewares: [
@@ -26,7 +30,10 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
                     )
                 )
             ],
-            state: AppState(localUserState: localUserState)
+            state: AppState(callingState: callingState,
+                            localUserState: localUserState,
+                            navigationState: navigationState
+                           )
         )
     }
 }
