@@ -24,23 +24,18 @@ class CallHistoryRepository: CallHistoryRepositoryProtocol {
     func insert(callStartedOn: Date, callId: String) {
         callHistoryDispatchQueue.async {
             var historyRecords = self.getAllAsDictionary()
-            if let thresholdDate = Calendar.current.date(byAdding: DateComponents(day: -31), to: Date()) {
-                if var existingCalls = historyRecords[callStartedOn] {
-                    existingCalls.append(callId)
-                    historyRecords[callStartedOn] = existingCalls
-                } else {
-                    historyRecords[callStartedOn] = [callId]
-                }
-                historyRecords = historyRecords.filter { callHistoryRecord in
-                    callHistoryRecord.key >= thresholdDate
-                }
-                do {
-                    let encoder = JSONEncoder()
-                    let data = try encoder.encode(historyRecords)
-                    self.userDefaults.set(data, forKey: self.storageKey)
-                } catch let error {
-                    self.logger.error("Failed to save call history, reason: \(error.localizedDescription)")
-                }
+            if var existingCalls = historyRecords[callStartedOn] {
+                existingCalls.append(callId)
+                historyRecords[callStartedOn] = existingCalls
+            } else {
+                historyRecords[callStartedOn] = [callId]
+            }
+            do {
+                let encoder = JSONEncoder()
+                let data = try encoder.encode(historyRecords)
+                self.userDefaults.set(data, forKey: self.storageKey)
+            } catch let error {
+                self.logger.error("Failed to save call history, reason: \(error.localizedDescription)")
             }
         }
     }
@@ -52,11 +47,21 @@ class CallHistoryRepository: CallHistoryRepositoryProtocol {
             })
     }
 
+    private func cleanupOldRecords(_ historyRecords: [Date: [String]]) -> [Date: [String]] {
+        guard let thresholdDate = Calendar.current.date(byAdding: DateComponents(day: -31), to: Date()) else {
+            return historyRecords
+        }
+
+        return historyRecords.filter { callHistoryRecord in
+            callHistoryRecord.key >= thresholdDate
+        }
+    }
+
     private func getAllAsDictionary() -> [Date: [String]] {
         if let data = userDefaults.data(forKey: storageKey) {
             do {
                 let decoder = JSONDecoder()
-                return try decoder.decode([Date: [String]].self, from: data)
+                return try cleanupOldRecords(decoder.decode([Date: [String]].self, from: data))
             } catch {
                 return [:]
             }

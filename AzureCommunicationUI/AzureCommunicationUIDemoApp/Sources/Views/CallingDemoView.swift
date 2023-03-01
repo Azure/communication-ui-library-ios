@@ -312,7 +312,7 @@ extension CallingDemoView {
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onError \(error)")
         print("::::CallingDemoView error.code \(error.code)")
-        callingViewModel.callHistory.forEach { print("::::CallingDemoView call id \($0)") }
+        callingViewModel.callHistory.last?.callIds.forEach { print("::::CallingDemoView call id \($0)") }
         showError(for: error.code)
     }
 

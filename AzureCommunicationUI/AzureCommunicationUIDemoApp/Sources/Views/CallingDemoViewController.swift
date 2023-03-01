@@ -164,7 +164,7 @@ class CallingDemoViewController: UIViewController {
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::UIKitDemoView::getEventsHandler::onError \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
-        callingViewModel.callHistory.forEach { print("::::CallingDemoView call id \($0)") }
+        callingViewModel.callHistory.last?.callIds.forEach { print("::::CallingDemoView call id \($0)") }
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
