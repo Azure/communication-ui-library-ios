@@ -4,16 +4,23 @@
 //
 
 import Foundation
+import XCTest
 @testable import AzureCommunicationUICalling
 
 class UserDefaultsStorageMocking: UserDefaultsStorageProtocol {
-    var values: [String: Any] = [:]
+    let data: (String) -> Data?
+    let set: (Any?, String) -> Void
+
+    init(data: @escaping (String) -> Data?, set: @escaping (Any?, String) -> Void) {
+        self.data = data
+        self.set = set
+    }
 
     func data(forKey defaultName: String) -> Data? {
-        return values[defaultName] as? Data
+        return self.data(defaultName)
     }
 
     func set(_ value: Any?, forKey key: String) {
-        values[key] = value
+        self.set(value, key)
     }
 }
