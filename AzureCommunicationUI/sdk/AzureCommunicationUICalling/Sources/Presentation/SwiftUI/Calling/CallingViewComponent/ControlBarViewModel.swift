@@ -26,7 +26,7 @@ class ControlBarViewModel: ObservableObject {
     var moreButtonViewModel: IconButtonViewModel!
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
     var debugInfoSharingActivityViewModel: DebugInfoSharingActivityViewModel!
-    var callingStatus: CallingStatus = .none
+    var callingState = CallingState()
     var cameraState = LocalUserState.CameraState(operation: .off,
                                                  device: .front,
                                                  transmission: .local)
@@ -157,15 +157,17 @@ class ControlBarViewModel: ObservableObject {
 
     func isCameraDisabled() -> Bool {
         cameraPermission == .denied || cameraState.operation == .pending ||
-        callingStatus == .localHold || isCameraStateUpdating
+        callingState.status == .localHold || isCameraStateUpdating ||
+        callingState.operationStatus == .bypassRequested
     }
 
     func isMicDisabled() -> Bool {
-        audioState.operation == .pending || callingStatus == .localHold
+        audioState.operation == .pending || callingState.status == .localHold ||
+        callingState.operationStatus == .bypassRequested
     }
 
     func isAudioDeviceDisabled() -> Bool {
-        callingStatus == .localHold
+        callingState.status == .localHold || callingState.operationStatus == .bypassRequested
     }
 
     func getLeaveCallButtonViewModel() -> DrawerListItemViewModel {
@@ -209,7 +211,7 @@ class ControlBarViewModel: ObservableObject {
     func update(localUserState: LocalUserState,
                 permissionState: PermissionState,
                 callingState: CallingState) {
-        callingStatus = callingState.status
+        self.callingState = callingState
         if cameraPermission != permissionState.cameraPermission {
             cameraPermission = permissionState.cameraPermission
         }
