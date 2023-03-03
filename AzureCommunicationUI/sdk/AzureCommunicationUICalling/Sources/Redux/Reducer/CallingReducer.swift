@@ -50,7 +50,7 @@ extension Reducer where State == CallingState,
                 .callingViewLaunched:
             return callingState
         case .callingAction(.callStartRequested):
-            operationStatus = .none
+            operationStatus = operationStatus
         }
         return CallingState(status: callingStatus,
                             operationStatus: operationStatus,

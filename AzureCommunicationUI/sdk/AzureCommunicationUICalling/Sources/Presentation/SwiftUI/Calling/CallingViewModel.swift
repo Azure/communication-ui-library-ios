@@ -20,6 +20,7 @@ class CallingViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected: Bool = false
+    private var callClientRequested: Bool = false
 
     let localVideoViewModel: LocalVideoViewModel
     let participantGridsViewModel: ParticipantGridViewModel
@@ -88,6 +89,11 @@ class CallingViewModel: ObservableObject {
         self.isConfirmLeaveListDisplayed = false
     }
 
+    func requestCallClient() {
+        store.dispatch(action: .callingAction(.setupCall))
+        callClientRequested = true
+    }
+
     func endCall() {
         store.dispatch(action: .callingAction(.callEndRequested))
         dismissConfirmLeaveDrawerList()
@@ -106,6 +112,10 @@ class CallingViewModel: ObservableObject {
             return
         }
 
+        if state.callingState.operationStatus == .bypassRequested && callClientRequested == false {
+            requestCallClient()
+        }
+
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState)
@@ -117,7 +127,6 @@ class CallingViewModel: ObservableObject {
                                          remoteParticipantsState: state.remoteParticipantsState)
         bannerViewModel.update(callingState: state.callingState)
         lobbyOverlayViewModel.update(callingStatus: state.callingState.status)
-        loadingOverlayViewModel.update(callingState: state.callingState)
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
                                       audioSessionStatus: state.audioSessionState.status)
 

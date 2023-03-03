@@ -89,7 +89,8 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilitySortPriority(1)
                         .accessibilityHidden(viewModel.lobbyOverlayViewModel.isDisplayed
-                                             || viewModel.onHoldOverlayViewModel.isDisplayed)
+                                             || viewModel.onHoldOverlayViewModel.isDisplayed
+                                             || viewModel.loadingOverlayViewModel.isDisplayed)
                 }
                 .contentShape(Rectangle())
                 .animation(.linear(duration: 0.167))
@@ -172,7 +173,7 @@ struct CallingView: View {
         Group {
             if viewModel.isParticipantGridDisplayed {
                 participantGridsView
-            } else {
+            } else if !viewModel.loadingOverlayViewModel.isDisplayed {
                 localVideoFullscreenView
             }
         }

@@ -13,7 +13,7 @@ struct LoadingOverlayView: View {
     private let verticalButtonPaddingSize: CGFloat = 32
     private let horizontalPaddingSize: CGFloat = 16
 
-    let viewModel: OverlayViewModelProtocol
+    let viewModel: LoadingOverlayViewModel
 
     var body: some View {
         Color(viewModel.background)
@@ -49,5 +49,8 @@ struct LoadingOverlayView: View {
                     }
                 }
             )
+            .onAppear {
+                viewModel.setupAudioPermissions()
+            }
     }
 }

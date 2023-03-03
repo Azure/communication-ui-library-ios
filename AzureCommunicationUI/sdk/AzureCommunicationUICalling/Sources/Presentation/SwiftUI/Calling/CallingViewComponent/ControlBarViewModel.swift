@@ -157,17 +157,19 @@ class ControlBarViewModel: ObservableObject {
 
     func isCameraDisabled() -> Bool {
         cameraPermission == .denied || cameraState.operation == .pending ||
-        callingState.status == .localHold || isCameraStateUpdating ||
-        callingState.operationStatus == .bypassRequested
+        callingState.status == .localHold || isCameraStateUpdating || isBypassLoadingOverlay()
     }
 
     func isMicDisabled() -> Bool {
-        audioState.operation == .pending || callingState.status == .localHold ||
-        callingState.operationStatus == .bypassRequested
+        audioState.operation == .pending || callingState.status == .localHold || isBypassLoadingOverlay()
     }
 
     func isAudioDeviceDisabled() -> Bool {
-        callingState.status == .localHold || callingState.operationStatus == .bypassRequested
+        callingState.status == .localHold || isBypassLoadingOverlay()
+    }
+
+    func isBypassLoadingOverlay() -> Bool {
+        callingState.operationStatus == .bypassRequested && callingState.status != .connected
     }
 
     func getLeaveCallButtonViewModel() -> DrawerListItemViewModel {
