@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1166B05229B6920500641740 /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1166B05129B6920500641740 /* Shape.swift */; };
 		3C8A38C00C940E491F39B0A2 /* Pods_AzureCommunicationUIChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A63BF349E7BC31AD5300412A /* Pods_AzureCommunicationUIChat.framework */; };
 		50370C6528EB542100ACD234 /* RepositoryReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6428EB542100ACD234 /* RepositoryReducer.swift */; };
 		50370C6928EB544400ACD234 /* RepositoryAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50370C6828EB544400ACD234 /* RepositoryAction.swift */; };
@@ -180,6 +181,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1166B05129B6920500641740 /* Shape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shape.swift; sourceTree = "<group>"; };
 		1B9C157344D512A9F069F9CC /* Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIChat_AzureCommunicationUIChatTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		50370C6428EB542100ACD234 /* RepositoryReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryReducer.swift; sourceTree = "<group>"; };
 		50370C6628EB543200ACD234 /* RepositoryState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryState.swift; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 		50CB81C428C26E0C00680566 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				1166B05129B6920500641740 /* Shape.swift */,
 				BDB1B8D528F8C8D30000300F /* Assets.xcassets */,
 				50CB81DA28C26EEB00680566 /* ChatAdapter.swift */,
 				50CB81E528C26FEF00680566 /* ChatCompositeOptions */,
@@ -1178,6 +1181,7 @@
 				50CB825928C29B7200680566 /* UserEventTimestampModel.swift in Sources */,
 				50CB82C428C2AD2300680566 /* AppLifeCycleManager.swift in Sources */,
 				521A024428FE1E8D002CAD8E /* TypingParticipantsViewModel.swift in Sources */,
+				1166B05229B6920500641740 /* Shape.swift in Sources */,
 				7589CE2E29776FD70092AE38 /* BaseLocalizationProviderProtocol.swift in Sources */,
 				756F59682965DAD100BAFBF7 /* StringConstants.swift in Sources */,
 				50CB823328C2999B00680566 /* LifecycleAction.swift in Sources */,
