@@ -25,18 +25,11 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
         self.accessibilityProvider = accessibilityProvider
         self.store = store
         self.audioPermission = store.state.permissionState.audioPermission
-        let actionDispatch: ActionDispatch = store.dispatch
         store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.receive(state)
             }.store(in: &cancellables)
-        controlBarViewModel = compositeViewModelFactory
-            .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
-                guard self != nil else {
-                    return
-                }
-            }, localUserState: store.state.localUserState)
     }
 
     var title: String {
@@ -44,7 +37,6 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
     }
 
     var subtitle: String = ""
-    var controlBarViewModel: ControlBarViewModel!
 
     @Published var isDisplayed: Bool = false
 
@@ -63,9 +55,6 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
         if isDisplayed && permissionState.audioPermission == .denied {
             store.dispatch(action: .callingAction(.callEndRequested))
         }
-        controlBarViewModel.update(localUserState: state.localUserState,
-                                   permissionState: state.permissionState,
-                                   callingState: state.callingState)
     }
     func setupAudioPermissions() {
         if audioPermission == .notAsked || audioPermission == .denied {

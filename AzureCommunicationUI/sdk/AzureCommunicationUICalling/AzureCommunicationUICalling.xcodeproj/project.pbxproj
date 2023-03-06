@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1166B05029B691EB00641740 /* Shape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1166B04F29B691EB00641740 /* Shape.swift */; };
 		11F792E229AFCFB100EAABB8 /* LoadingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F792E029AFCFAF00EAABB8 /* LoadingOverlayView.swift */; };
 		11F792E329AFCFB100EAABB8 /* LoadingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F792E129AFCFB100EAABB8 /* LoadingOverlayViewModel.swift */; };
 		1B315123284EA8630043231B /* OnHoldOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */; };
@@ -271,7 +270,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1166B04F29B691EB00641740 /* Shape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Shape.swift; path = ../../../../../../../AzureCommunicationUIChat/Sources/Shape.swift; sourceTree = "<group>"; };
 		11F792E029AFCFAF00EAABB8 /* LoadingOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlayView.swift; sourceTree = "<group>"; };
 		11F792E129AFCFB100EAABB8 /* LoadingOverlayViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModel.swift; sourceTree = "<group>"; };
 		1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModelTests.swift; sourceTree = "<group>"; };
@@ -909,7 +907,6 @@
 				1FBCB6B5264BA8A200F57EEA /* ParticipantGridCellViewModel.swift */,
 				50FA46012681409D001844AC /* ParticipantGridCellView.swift */,
 				1B7ABF81278CFFC400D79DF7 /* ZoomableVideoRenderView.swift */,
-				1166B04F29B691EB00641740 /* Shape.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1674,7 +1671,6 @@
 				1F03D3CE2638A6AE0055C456 /* CallingView.swift in Sources */,
 				1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */,
 				1B79BD50273F2D87002D5A36 /* UIViewControllerExtension.swift in Sources */,
-				1166B05029B691EB00641740 /* Shape.swift in Sources */,
 				503F4B692704EDD100C17DA6 /* BannerViewModel.swift in Sources */,
 				982C2835267D15AF00427246 /* CompositeAvatar.swift in Sources */,
 				FAD20A8D292834500063D8A9 /* CancelBag.swift in Sources */,
