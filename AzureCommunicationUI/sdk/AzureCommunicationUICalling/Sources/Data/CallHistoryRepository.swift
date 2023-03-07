@@ -6,33 +6,32 @@
 import Foundation
 
 class CallHistoryRepository {
-    private let callHistoryDispatchQueue = DispatchQueue(label: "CallHistoryDispatchQueue")
     private let storageKey: String = "com.azure.ios.communication.ui.calling.CallHistory"
     private let logger: Logger
-    private let userDefaults: UserDefaultsStorageProtocol
+    private let userDefaults: UserDefaults
 
-    init(logger: Logger, userDefaults: UserDefaultsStorageProtocol) {
+    init(logger: Logger, userDefaults: UserDefaults = .standard) {
         self.logger = logger
         self.userDefaults = userDefaults
     }
 
-    func insert(callStartedOn: Date, callId: String) {
-        callHistoryDispatchQueue.async {
-            var historyRecords = self.getAllAsDictionary()
-            if var existingCalls = historyRecords[callStartedOn] {
-                existingCalls.append(callId)
-                historyRecords[callStartedOn] = existingCalls
-            } else {
-                historyRecords[callStartedOn] = [callId]
-            }
-            do {
-                let encoder = JSONEncoder()
-                let data = try encoder.encode(historyRecords)
-                self.userDefaults.set(data, forKey: self.storageKey)
-            } catch let error {
-                self.logger.error("Failed to save call history, reason: \(error.localizedDescription)")
-            }
+    func insert(callStartedOn: Date, callId: String) -> Error? {
+        var historyRecords = self.getAllAsDictionary()
+        if var existingCalls = historyRecords[callStartedOn] {
+            existingCalls.append(callId)
+            historyRecords[callStartedOn] = existingCalls
+        } else {
+            historyRecords[callStartedOn] = [callId]
         }
+        do {
+            let encoder = JSONEncoder()
+            let data = try encoder.encode(historyRecords)
+            self.userDefaults.set(data, forKey: self.storageKey)
+        } catch let error {
+            self.logger.error("Failed to save call history, reason: \(error.localizedDescription)")
+            return error
+        }
+        return nil
     }
 
     func getAll() -> [CallHistoryRecord] {

@@ -8,10 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		05317E2629A2E1FB00149F57 /* CallHistoryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2529A2E1FB00149F57 /* CallHistoryServiceTests.swift */; };
-		05317E2829A2E2B900149F57 /* CallHistoryRepositoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2729A2E2B900149F57 /* CallHistoryRepositoryMocking.swift */; };
 		05317E2A29A7DBC100149F57 /* CallHistoryRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */; };
-		05317E3029A7E2D400149F57 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2F29A7E2D400149F57 /* UserDefaultsStorage.swift */; };
-		05317E3329A7E81700149F57 /* UserDefaultsStorageMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E3229A7E81700149F57 /* UserDefaultsStorageMocking.swift */; };
 		05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */; };
 		05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C829297F516D006EDD0D /* CallHistoryService.swift */; };
 		05C1C831297F5680006EDD0D /* CallHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */; };
@@ -158,6 +155,7 @@
 		759BDEFF28FF0B0B002B6853 /* LocalizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 759BDEFE28FF0B0A002B6853 /* LocalizationProvider.swift */; };
 		75B3693D297896BA00D67281 /* AppPhaseKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B3693C297896BA00D67281 /* AppPhaseKey.swift */; };
 		75C1EE0F28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C1EE0E28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift */; };
+		75E71FBA29B7B259001F58B9 /* CallHistoryRepositoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75E71FB929B7B259001F58B9 /* CallHistoryRepositoryMocking.swift */; };
 		8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */; };
 		8815B6E427DA9B350065A184 /* LobbyOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */; };
 		881D8F7027F2327B008EC897 /* ErrorInfoViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 881D8F6F27F2327B008EC897 /* ErrorInfoViewModelTests.swift */; };
@@ -277,10 +275,7 @@
 
 /* Begin PBXFileReference section */
 		05317E2529A2E1FB00149F57 /* CallHistoryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryServiceTests.swift; sourceTree = "<group>"; };
-		05317E2729A2E2B900149F57 /* CallHistoryRepositoryMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRepositoryMocking.swift; sourceTree = "<group>"; };
 		05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRepositoryTests.swift; sourceTree = "<group>"; };
-		05317E2F29A7E2D400149F57 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
-		05317E3229A7E81700149F57 /* UserDefaultsStorageMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorageMocking.swift; sourceTree = "<group>"; };
 		05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRecord.swift; sourceTree = "<group>"; };
 		05C1C829297F516D006EDD0D /* CallHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryService.swift; sourceTree = "<group>"; };
 		05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryRepository.swift; sourceTree = "<group>"; };
@@ -468,6 +463,7 @@
 		759BDEFE28FF0B0A002B6853 /* LocalizationProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalizationProvider.swift; sourceTree = "<group>"; };
 		75B3693C297896BA00D67281 /* AppPhaseKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppPhaseKey.swift; sourceTree = "<group>"; };
 		75C1EE0E28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalVideoStreamExtension.swift; sourceTree = "<group>"; };
+		75E71FB929B7B259001F58B9 /* CallHistoryRepositoryMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryRepositoryMocking.swift; sourceTree = "<group>"; };
 		8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyOverlayViewModel.swift; sourceTree = "<group>"; };
 		8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		881D8F6F27F2327B008EC897 /* ErrorInfoViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorInfoViewModelTests.swift; sourceTree = "<group>"; };
@@ -606,7 +602,6 @@
 			isa = PBXGroup;
 			children = (
 				05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */,
-				05317E2F29A7E2D400149F57 /* UserDefaultsStorage.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -1231,6 +1226,7 @@
 		A869A62E26546A16003CC4F2 /* Mocking */ = {
 			isa = PBXGroup;
 			children = (
+				75E71FB929B7B259001F58B9 /* CallHistoryRepositoryMocking.swift */,
 				FA62233627DAD9AF008B5466 /* AccessibilityProviderMocking.swift */,
 				FAFA427C28380F7500053EA7 /* AvatarViewManagerMocking.swift */,
 				1F8E0B73268697B700DDD18E /* CallingMiddlewareHandlerMocking.swift */,
@@ -1239,8 +1235,6 @@
 				A869A62F26546A2D003CC4F2 /* CallingServiceMocking.swift */,
 				1F4A24BB26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift */,
 				FA25C13D28FF711E00417715 /* DebugInfoManagerMocking.swift */,
-				05317E2729A2E2B900149F57 /* CallHistoryRepositoryMocking.swift */,
-				05317E3229A7E81700149F57 /* UserDefaultsStorageMocking.swift */,
 				5A3146B0B684264EB57EDA69 /* ErrorMocking.swift */,
 				50B390D027D82D7E0010A2ED /* LocalizationProviderMocking.swift */,
 				A869A63026546A2D003CC4F2 /* LoggerMocking.swift */,
@@ -1612,7 +1606,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05317E2829A2E2B900149F57 /* CallHistoryRepositoryMocking.swift in Sources */,
 				A830C317264D8A0C00766E3D /* ContainerViewModelTests.swift in Sources */,
 				A8ED23302649EA61008A26B2 /* NavigationRouterTests.swift in Sources */,
 				50B390DA27DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift in Sources */,
@@ -1640,13 +1633,13 @@
 				98E8564826FA609D00ECA304 /* AudioDevicesListViewModelTests.swift in Sources */,
 				1F48B40327496E2800B6E5F9 /* DiagnosticConfigTests.swift in Sources */,
 				50B390D627D915F00010A2ED /* LocalizationProviderTests.swift in Sources */,
+				75E71FBA29B7B259001F58B9 /* CallHistoryRepositoryMocking.swift in Sources */,
 				1F9184AD26B491840049EF5B /* LifeCycleReducerTests.swift in Sources */,
 				A869A63E26546A2E003CC4F2 /* CallingSDKWrapperMocking.swift in Sources */,
 				88701EB42742D54C00660EAB /* ErrorReducerTests.swift in Sources */,
 				FAC1FED027C98FC200D95845 /* BannerTextViewModelMocking.swift in Sources */,
 				1F09A11426BA484000BACED7 /* CallingViewModelTests.swift in Sources */,
 				FA62233727DAD9AF008B5466 /* AccessibilityProviderMocking.swift in Sources */,
-				05317E3329A7E81700149F57 /* UserDefaultsStorageMocking.swift in Sources */,
 				1B9668AF2852A114002F5783 /* OnHoldOverlayViewModelMocking.swift in Sources */,
 				FAC1FECC27C98FC200D95845 /* BannerViewModelMocking.swift in Sources */,
 				50E2D6A926FA52A3006B0EF4 /* ParticipantsListViewModelTests.swift in Sources */,
@@ -1814,7 +1807,6 @@
 				1FB0A1C128412A5100D57B0F /* ACSParticipantStateExtension.swift in Sources */,
 				756F596A2965E25A00BAFBF7 /* Middleware.swift in Sources */,
 				981ACABC2685459400CD6A40 /* IconProvider.swift in Sources */,
-				05317E3029A7E2D400149F57 /* UserDefaultsStorage.swift in Sources */,
 				1F2BEDCD26329E5600D98266 /* PermissionAction.swift in Sources */,
 				98B186A127C85F9800B837E6 /* AudioDevicesListViewModel.swift in Sources */,
 				1F94DADC2673E87700691D1E /* ThemeOptions.swift in Sources */,

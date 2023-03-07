@@ -11,11 +11,12 @@ class CallHistoryRepositoryMocking: CallHistoryRepository {
 
     init() {
         super.init(logger: LoggerMocking(),
-                   userDefaults: UserDefaultsStorageMocking(data: {_ in return nil }, set: {_, _ in }))
+                   userDefaults: UserDefaults())
     }
 
-    override func insert(callStartedOn: Date, callId: String) {
+    override func insert(callStartedOn: Date, callId: String) -> Error? {
         insertCallCount += 1
+        return nil
     }
 
     func insertWasCalled() -> Bool {
