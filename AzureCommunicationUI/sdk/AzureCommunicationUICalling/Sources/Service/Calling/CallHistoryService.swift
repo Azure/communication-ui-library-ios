@@ -33,6 +33,10 @@ class CallHistoryService {
         }
         self.updatedCallId = updatedCallId
 
-        self.callHistoryRepository.insert(callStartedOn: callStartDate, callId: updatedCallId)
+        Task { @MainActor in
+            let error = await self.callHistoryRepository.insert(
+                callStartedOn: callStartDate, callId: updatedCallId
+            )
+        }
     }
 }

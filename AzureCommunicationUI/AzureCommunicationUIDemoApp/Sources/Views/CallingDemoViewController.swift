@@ -23,7 +23,7 @@ class CallingDemoViewController: UIViewController {
         static let buttonHorizontalInset: CGFloat = 20.0
         static let buttonVerticalInset: CGFloat = 10.0
     }
-    @ObservedObject var callingViewModel: CallingDemoViewModel
+    var callingViewModel: CallingDemoViewModel
 
     private var selectedAcsTokenType: ACSTokenType = .token
     private var acsTokenUrlTextField: UITextField!

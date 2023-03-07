@@ -17,20 +17,20 @@ class CallHistoryRepositoryTests: XCTestCase {
         testUserDefaults.removePersistentDomain(forName: #file)
     }
 
-    func test_callingHistoryRepository_whenRecordsInserted_shouldInsertInDefaultStorage() {
+    func test_callingHistoryRepository_whenRecordsInserted_shouldInsertInDefaultStorage() async {
         let callId1 = "call id 1"
         let callStartDate1 = Date()
 
         let sut = makeSUT(testUserDefaults)
         let records = sut.getAll()
         XCTAssertEqual(records.count, 0)
-        XCTAssertNil(sut.insert(callStartedOn: callStartDate1, callId: callId1))
-
+        let result = await sut.insert(callStartedOn: callStartDate1, callId: callId1)
+        XCTAssertNil(result)
         let updatedRecords = sut.getAll()
         XCTAssertEqual(updatedRecords.count, 1)
     }
 
-    func test_callingHistoryRepository_whenRecordsInserted_shouldReturnRecords2() {
+    func test_callingHistoryRepository_whenRecordsInserted_shouldReturnRecords2() async {
 
         let callId1 = "call id 1"
         let callId2 = "call id 2"
@@ -39,10 +39,14 @@ class CallHistoryRepositoryTests: XCTestCase {
         let olderThen31DaysDate = Calendar.current.date(byAdding: DateComponents(day: -32), to: Date())!
 
         let sut = makeSUT(testUserDefaults)
-        XCTAssertNil(sut.insert(callStartedOn: callStartDate1, callId: callId1))
-        XCTAssertNil(sut.insert(callStartedOn: callStartDate1, callId: callId2))
-        XCTAssertNil(sut.insert(callStartedOn: callStartDate2, callId: callId1))
-        XCTAssertNil(sut.insert(callStartedOn: olderThen31DaysDate, callId: callId2))
+        var result = await sut.insert(callStartedOn: callStartDate1, callId: callId1)
+        XCTAssertNil(result)
+        result = await sut.insert(callStartedOn: callStartDate1, callId: callId2)
+        XCTAssertNil(result)
+        result = await sut.insert(callStartedOn: callStartDate2, callId: callId1)
+        XCTAssertNil(result)
+        result = await sut.insert(callStartedOn: olderThen31DaysDate, callId: callId2)
+        XCTAssertNil(result)
 
         // Verify values
         let records = sut.getAll()

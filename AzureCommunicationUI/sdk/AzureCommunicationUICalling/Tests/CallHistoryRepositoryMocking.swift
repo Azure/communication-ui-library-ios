@@ -14,7 +14,7 @@ class CallHistoryRepositoryMocking: CallHistoryRepository {
                    userDefaults: UserDefaults())
     }
 
-    override func insert(callStartedOn: Date, callId: String) -> Error? {
+    override func insert(callStartedOn: Date, callId: String) async -> Error? {
         insertCallCount += 1
         return nil
     }

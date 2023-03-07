@@ -15,23 +15,25 @@ class CallHistoryRepository {
         self.userDefaults = userDefaults
     }
 
-    func insert(callStartedOn: Date, callId: String) -> Error? {
-        var historyRecords = self.getAllAsDictionary()
-        if var existingCalls = historyRecords[callStartedOn] {
-            existingCalls.append(callId)
-            historyRecords[callStartedOn] = existingCalls
-        } else {
-            historyRecords[callStartedOn] = [callId]
+    func insert(callStartedOn: Date, callId: String) async -> Error? {
+        await withCheckedContinuation { continuation in
+            var historyRecords = self.getAllAsDictionary()
+            if var existingCalls = historyRecords[callStartedOn] {
+                existingCalls.append(callId)
+                historyRecords[callStartedOn] = existingCalls
+            } else {
+                historyRecords[callStartedOn] = [callId]
+            }
+            do {
+                let encoder = JSONEncoder()
+                let data = try encoder.encode(historyRecords)
+                self.userDefaults.set(data, forKey: self.storageKey)
+                continuation.resume(returning: nil)
+            } catch let error {
+                self.logger.error("Failed to save call history, reason: \(error.localizedDescription)")
+                continuation.resume(returning: error)
+            }
         }
-        do {
-            let encoder = JSONEncoder()
-            let data = try encoder.encode(historyRecords)
-            self.userDefaults.set(data, forKey: self.storageKey)
-        } catch let error {
-            self.logger.error("Failed to save call history, reason: \(error.localizedDescription)")
-            return error
-        }
-        return nil
     }
 
     func getAll() -> [CallHistoryRecord] {
