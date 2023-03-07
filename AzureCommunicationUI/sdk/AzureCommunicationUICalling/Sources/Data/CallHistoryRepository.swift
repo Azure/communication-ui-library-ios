@@ -6,18 +6,17 @@
 import Foundation
 
 class CallHistoryRepository {
-    private let callHistoryDispatchQueue = DispatchQueue(label: "CallHistoryDispatchQueue")
     private let storageKey: String = "com.azure.ios.communication.ui.calling.CallHistory"
     private let logger: Logger
-    private let userDefaults: UserDefaultsStorageProtocol
+    private let userDefaults: UserDefaults
 
-    init(logger: Logger, userDefaults: UserDefaultsStorageProtocol) {
+    init(logger: Logger, userDefaults: UserDefaults = .standard) {
         self.logger = logger
         self.userDefaults = userDefaults
     }
 
-    func insert(callStartedOn: Date, callId: String) {
-        callHistoryDispatchQueue.async {
+    func insert(callStartedOn: Date, callId: String) async -> Error? {
+        await withCheckedContinuation { continuation in
             var historyRecords = self.getAllAsDictionary()
             if var existingCalls = historyRecords[callStartedOn] {
                 existingCalls.append(callId)
@@ -29,8 +28,10 @@ class CallHistoryRepository {
                 let encoder = JSONEncoder()
                 let data = try encoder.encode(historyRecords)
                 self.userDefaults.set(data, forKey: self.storageKey)
+                continuation.resume(returning: nil)
             } catch let error {
                 self.logger.error("Failed to save call history, reason: \(error.localizedDescription)")
+                continuation.resume(returning: error)
             }
         }
     }

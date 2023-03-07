@@ -23,7 +23,7 @@ class CallingDemoViewController: UIViewController {
         static let buttonHorizontalInset: CGFloat = 20.0
         static let buttonVerticalInset: CGFloat = 10.0
     }
-    @ObservedObject var callingViewModel: CallingDemoViewModel
+    var callingViewModel: CallingDemoViewModel
 
     private var selectedAcsTokenType: ACSTokenType = .token
     private var acsTokenUrlTextField: UITextField!
@@ -164,7 +164,7 @@ class CallingDemoViewController: UIViewController {
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::UIKitDemoView::getEventsHandler::onError \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
-        callingViewModel.callHistory.last?.callIds.forEach { print("::::CallingDemoView call id \($0)") }
+        callingViewModel.callHistory.last?.callIds.forEach { print("::::UIKitDemoView call id \($0)") }
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
@@ -361,17 +361,9 @@ class CallingDemoViewController: UIViewController {
     }
 
     @objc func onShowHistoryBtnPressed() {
-        let callHistory = callingViewModel.callHistory
-        var callHistoryTitle = "Total calls: \(callHistory.count)"
-        var callHistoryMessage = "Last Call: none"
-        if let lastHistoryRecord = callHistory.last {
-            let formattedDate = callingViewModel.dateFormatter.string(from: lastHistoryRecord.callStartedOn)
-            callHistoryMessage = "Last Call: \(formattedDate)\n"
-            callHistoryMessage += "Call Ids:\n"
-            callHistoryMessage += lastHistoryRecord.callIds.joined(separator: "\n")
-        }
-
-        let errorAlert = UIAlertController(title: callHistoryTitle, message: callHistoryMessage, preferredStyle: .alert)
+        let errorAlert = UIAlertController(title: callingViewModel.callHistoryTitle,
+                                           message: callingViewModel.callHistoryMessage,
+                                           preferredStyle: .alert)
         errorAlert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
         present(errorAlert,
                 animated: true,

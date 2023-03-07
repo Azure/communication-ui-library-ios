@@ -30,24 +30,24 @@ class CallHistoryServiceTests: XCTestCase {
 
         sut.receive(AppState(callingState: CallingState(callStartDate: callStartDate)))
 
-        XCTAssertFalse(callHistoryRepository.insertWasCalled())
+        XCTAssertFalse(sut.recordCallHistoryWasCalled())
         sut.receive(AppState(callingState: CallingState(callId: callId)))
 
-        XCTAssertFalse(callHistoryRepository.insertWasCalled())
+        XCTAssertFalse(sut.recordCallHistoryWasCalled())
 
         sut.receive(AppState(callingState: CallingState(callId: callId, callStartDate: callStartDate)))
 
-        XCTAssertTrue(callHistoryRepository.insertWasCalled())
+        XCTAssertTrue(sut.recordCallHistoryWasCalled())
         let newCallId = "new call id"
 
         sut.receive(AppState(callingState: CallingState(callId: newCallId, callStartDate: callStartDate)))
 
-        XCTAssertTrue(callHistoryRepository.insertCallCount == 2)
+        XCTAssertTrue(sut.recordCallHistoryCallCount == 2)
     }
 }
 
 extension CallHistoryServiceTests {
-    func makeSUT() -> CallHistoryService {
-        return CallHistoryService(store: storeFactory.store, callHistoryRepository: callHistoryRepository)
+    func makeSUT() -> CallHistoryServiceMocking {
+        return CallHistoryServiceMocking(store: storeFactory.store, callHistoryRepository: callHistoryRepository)
     }
 }

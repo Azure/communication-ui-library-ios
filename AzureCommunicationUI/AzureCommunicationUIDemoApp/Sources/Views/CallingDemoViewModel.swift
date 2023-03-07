@@ -16,6 +16,22 @@ class CallingDemoViewModel: ObservableObject {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         return dateFormatter
     }()
+
+    var callHistoryTitle: String {
+        return "Total calls: \(callHistory.count)"
+    }
+
+    var callHistoryMessage: String {
+        var callHistoryMessage = "Last Call: none"
+        if let lastHistoryRecord = callHistory.last {
+            let formattedDate = dateFormatter.string(from: lastHistoryRecord.callStartedOn)
+            callHistoryMessage = "Last Call: \(formattedDate)\n"
+            callHistoryMessage += "Call Ids:\n"
+            callHistoryMessage += lastHistoryRecord.callIds.joined(separator: "\n")
+        }
+        return callHistoryMessage
+    }
+
     var callHistory: [CallHistoryRecord] {
         let callComposite = CallComposite()
         let debugInfo = callComposite.debugInfo

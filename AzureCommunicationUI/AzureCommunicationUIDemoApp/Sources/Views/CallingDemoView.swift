@@ -16,8 +16,6 @@ struct CallingDemoView: View {
     @State var isStartExperienceLoading: Bool = false
     @State var errorMessage: String = ""
     @State var isShowingCallHistory: Bool = false
-    @State var callHistoryTitle: String = ""
-    @State var callHistoryMessage: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
 
@@ -50,8 +48,8 @@ struct CallingDemoView: View {
         }
         .alert(isPresented: $isShowingCallHistory) {
             Alert(
-                title: Text(callHistoryTitle),
-                message: Text(callHistoryMessage),
+                title: Text(callingViewModel.callHistoryTitle),
+                message: Text(callingViewModel.callHistoryMessage),
                 dismissButton:
                         .default(Text("Dismiss"), action: {
                             isShowingCallHistory = false
@@ -146,15 +144,6 @@ struct CallingDemoView: View {
 
     var showCallHistoryButton: some View {
         Button("Show call history") {
-            let callHistory = callingViewModel.callHistory
-            callHistoryTitle = "Total calls: \(callHistory.count)"
-            callHistoryMessage = "Last Call: none"
-            if let lastHistoryRecord = callHistory.last {
-                let formattedDate = callingViewModel.dateFormatter.string(from: lastHistoryRecord.callStartedOn)
-                callHistoryMessage = "Last Call: \(formattedDate)\n"
-                callHistoryMessage += "Call Ids:\n"
-                callHistoryMessage += lastHistoryRecord.callIds.joined(separator: "\n")
-            }
             isShowingCallHistory = true
         }
         .buttonStyle(DemoButtonStyle())
