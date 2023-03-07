@@ -10,9 +10,13 @@ import XCTest
 class CallHistoryServiceTests: XCTestCase {
     private var callHistoryRepository: CallHistoryRepositoryMocking!
     private var storeFactory: StoreFactoryMocking!
+    private var testUserDefaults: UserDefaults!
+
     override func setUp() {
         super.setUp()
-        callHistoryRepository = CallHistoryRepositoryMocking()
+        testUserDefaults = UserDefaults(suiteName: #file)
+        testUserDefaults.removePersistentDomain(forName: #file)
+        callHistoryRepository = CallHistoryRepositoryMocking(userDefaults: testUserDefaults)
         storeFactory = StoreFactoryMocking()
     }
 
