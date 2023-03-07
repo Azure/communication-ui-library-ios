@@ -6,6 +6,7 @@
 import Foundation
 
 class CallHistoryRepository {
+    private let numberOfDaysToKeepHistoryRecords = 31
     private let storageKey: String = "com.azure.ios.communication.ui.calling.CallHistory"
     private let logger: Logger
     private let userDefaults: UserDefaults
@@ -37,14 +38,11 @@ class CallHistoryRepository {
     }
 
     func getAll() -> [CallHistoryRecord] {
-        return getAllAsDictionary()
-            .map({ (callStartedOn, callIds) in
-                return CallHistoryRecord(callStartedOn: callStartedOn, callIds: callIds)
-            })
+        getAllAsDictionary().map(CallHistoryRecord.init(callStartedOn:callIds:))
     }
 
-    private func cleanupOldRecords(_ historyRecords: [Date: [String]]) -> [Date: [String]] {
-        guard let thresholdDate = Calendar.current.date(byAdding: DateComponents(day: -31), to: Date()) else {
+    private func filterExpiredRecords(_ historyRecords: [Date: [String]]) -> [Date: [String]] {
+        guard let thresholdDate = Calendar.current.date(byAdding: DateComponents(day: numberOfDaysToKeepHistoryRecords * -1), to: Date()) else {
             return historyRecords
         }
 
@@ -57,7 +55,7 @@ class CallHistoryRepository {
         if let data = userDefaults.data(forKey: storageKey) {
             do {
                 let decoder = JSONDecoder()
-                return try cleanupOldRecords(decoder.decode([Date: [String]].self, from: data))
+                return try filterExpiredRecords(decoder.decode([Date: [String]].self, from: data))
             } catch {
                 return [:]
             }

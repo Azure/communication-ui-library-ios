@@ -8,7 +8,7 @@ import Foundation
 /// Call history.
 public struct CallHistoryRecord {
 
-    /// Local date call started on.
+    /// Device-generated timestamp for the call start.
     public let callStartedOn: Date
 
     /// Call Ids associated with particular call started on callStartedOn date.

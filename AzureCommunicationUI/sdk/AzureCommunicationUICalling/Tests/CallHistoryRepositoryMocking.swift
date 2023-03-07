@@ -8,10 +8,13 @@ import Foundation
 
 class CallHistoryRepositoryMocking: CallHistoryRepository {
     var insertCallCount: Int = 0
+    private var testUserDefaults: UserDefaults!
 
     init() {
+        testUserDefaults = UserDefaults(suiteName: #file)
+        testUserDefaults.removePersistentDomain(forName: #file)
         super.init(logger: LoggerMocking(),
-                   userDefaults: UserDefaults())
+                   userDefaults: testUserDefaults)
     }
 
     override func insert(callStartedOn: Date, callId: String) async -> Error? {
