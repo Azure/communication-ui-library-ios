@@ -15,6 +15,7 @@ enum CallCompositeInternalError: Error, Equatable {
     case callResumeFailed
     case callEvicted
     case callDenied
+    case callJoinFailedByMicPermission
     case cameraSwitchFailed
     case cameraOnFailed
 
@@ -30,6 +31,8 @@ enum CallCompositeInternalError: Error, Equatable {
             return CallCompositeErrorCode.callEnd
         case .cameraOnFailed:
             return CallCompositeErrorCode.cameraFailure
+        case .callJoinFailedByMicPermission:
+            return CallCompositeErrorCode.microphonePermissionRequired
         case .callHoldFailed,
                 .callResumeFailed,
                 .callEvicted,
@@ -45,6 +48,7 @@ enum CallCompositeInternalError: Error, Equatable {
         case .deviceManagerFailed,
                 .callTokenFailed,
                 .callJoinFailed,
+                .callJoinFailedByMicPermission,
                 .callEndFailed:
             return true
         case .callHoldFailed,

@@ -52,6 +52,8 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
         }
 
         if isDisplayed && permissionState.audioPermission == .denied {
+            store.dispatch(action: .errorAction(.fatalErrorUpdated(
+                internalError: .callJoinFailedByMicPermission, error: nil)))
             store.dispatch(action: .callingAction(.callEndRequested))
         }
     }
