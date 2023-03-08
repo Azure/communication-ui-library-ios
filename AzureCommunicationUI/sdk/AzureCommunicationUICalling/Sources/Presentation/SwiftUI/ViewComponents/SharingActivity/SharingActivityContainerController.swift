@@ -46,9 +46,11 @@ class SharingActivityContainerController: UIViewController, DrawerViewController
                 return
             }
 
-            // when UIActivityViewController is dismissed by itself
-            guard self.controller?.isBeingPresented == true else {
-                self.dismissPresentedController()
+            if self.controller?.presentingViewController == nil,
+               activityType != nil {
+                // when UIActivityViewController is dismissed by itself
+                // like navigating to another app from the activity
+                self.controller = nil
                 self.activityControllerCompletion?()
                 return
             }
