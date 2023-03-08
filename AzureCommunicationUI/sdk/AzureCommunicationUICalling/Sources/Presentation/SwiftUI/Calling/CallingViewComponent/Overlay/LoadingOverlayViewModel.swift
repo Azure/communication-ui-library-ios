@@ -15,8 +15,7 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
     private var audioPermission: AppPermission.Status = .unknown
     var cancellables = Set<AnyCancellable>()
 
-    init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
-         localizationProvider: LocalizationProviderProtocol,
+    init(localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          store: Store<AppState, Action>
     ) {

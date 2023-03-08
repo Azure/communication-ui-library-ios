@@ -38,15 +38,6 @@ struct LoadingOverlayView: View {
                         }
                         Spacer()
                     }
-                    if let errorInfoViewModel = viewModel.errorInfoViewModel {
-                        VStack {
-                            Spacer()
-                            ErrorInfoView(viewModel: errorInfoViewModel)
-                                .padding([.bottom])
-                                .accessibilityElement(children: .contain)
-                                .accessibilityAddTraits(.isModal)
-                        }
-                    }
                 }
             )
             .onAppear {

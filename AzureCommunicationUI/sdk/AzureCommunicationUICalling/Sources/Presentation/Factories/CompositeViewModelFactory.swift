@@ -199,8 +199,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                               accessibilityProvider: accessibilityProvider)
     }
     func makeLoadingOverlayViewModel() -> LoadingOverlayViewModel {
-        LoadingOverlayViewModel(compositeViewModelFactory: self,
-                                localizationProvider: localizationProvider,
+        LoadingOverlayViewModel(localizationProvider: localizationProvider,
                               accessibilityProvider: accessibilityProvider,
                                 store: store)
     }
