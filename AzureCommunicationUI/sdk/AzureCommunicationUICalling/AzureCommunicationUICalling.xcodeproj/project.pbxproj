@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1105E8FC29B9352400FC8628 /* LoadingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */; };
 		11F792E229AFCFB100EAABB8 /* LoadingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F792E029AFCFAF00EAABB8 /* LoadingOverlayView.swift */; };
 		11F792E329AFCFB100EAABB8 /* LoadingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F792E129AFCFB100EAABB8 /* LoadingOverlayViewModel.swift */; };
 		1B315123284EA8630043231B /* OnHoldOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */; };
@@ -270,6 +271,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		11F792E029AFCFAF00EAABB8 /* LoadingOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlayView.swift; sourceTree = "<group>"; };
 		11F792E129AFCFB100EAABB8 /* LoadingOverlayViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModel.swift; sourceTree = "<group>"; };
 		1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModelTests.swift; sourceTree = "<group>"; };
@@ -669,6 +671,7 @@
 				1F09A10E26BA484000BACED7 /* ParticipantCellViewModelTests.swift */,
 				1F09A11026BA484000BACED7 /* ParticipantGridsViewModelTests.swift */,
 				50E2D6A826FA52A3006B0EF4 /* ParticipantsListViewModelTests.swift */,
+				1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */,
 			);
 			path = Calling;
 			sourceTree = "<group>";
@@ -1590,6 +1593,7 @@
 				A8ED23302649EA61008A26B2 /* NavigationRouterTests.swift in Sources */,
 				50B390DA27DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift in Sources */,
 				A869A63D26546A2E003CC4F2 /* ReducerMocking.swift in Sources */,
+				1105E8FC29B9352400FC8628 /* LoadingOverlayViewModelTests.swift in Sources */,
 				503E361C26CC2D0900158CB4 /* CompositeViewModelFactoryTests.swift in Sources */,
 				503300FC2706763800289BB5 /* BannerViewModelTests.swift in Sources */,
 				A869A63F26546A2E003CC4F2 /* VideoViewManagerMocking.swift in Sources */,

@@ -26,6 +26,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var setupControlBarViewModel: SetupControlBarViewModel?
     var errorInfoViewModel: ErrorInfoViewModel?
     var lobbyOverlayViewModel: LobbyOverlayViewModel?
+    var loadingOverlayViewModel: LoadingOverlayViewModel?
     var audioDevicesListViewModel: AudioDevicesListViewModel?
     var primaryButtonViewModel: PrimaryButtonViewModel?
     var iconButtonViewModel: IconButtonViewModel?
@@ -162,6 +163,14 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
         return lobbyOverlayViewModel ?? LobbyOverlayViewModel(localizationProvider: localizationProvider,
                                                               accessibilityProvider: accessibilityProvider)
+    }
+
+    func makeLoadingOverlayViewModel() -> LoadingOverlayViewModel {
+        return loadingOverlayViewModel ?? LoadingOverlayViewModel(compositeViewModelFactory: self,
+                                                                  localizationProvider: localizationProvider,
+                                                              accessibilityProvider: accessibilityProvider,
+                                                                  store: store
+        )
     }
 
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
