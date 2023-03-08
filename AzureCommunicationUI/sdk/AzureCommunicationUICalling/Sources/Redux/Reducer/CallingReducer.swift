@@ -11,6 +11,8 @@ extension Reducer where State == CallingState,
 
         var callingStatus = callingState.status
         var operationStatus = callingState.operationStatus
+        var errorOperationStatus = operationStatus == OperationStatus.bypassRequested ?
+        OperationStatus.bypassRequested : OperationStatus.none
         var callIdValue = callingState.callId
         var isRecordingActive = callingState.isRecordingActive
         var isTranscriptionActive = callingState.isTranscriptionActive
@@ -32,7 +34,7 @@ extension Reducer where State == CallingState,
             operationStatus = .none
         case .errorAction(.statusErrorAndCallReset):
             callingStatus = .none
-            operationStatus = operationStatus == .bypassRequested ? .bypassRequested : .none
+            operationStatus = errorOperationStatus
             isRecordingActive = false
             isTranscriptionActive = false
         // Exhaustive un-implemented actions
