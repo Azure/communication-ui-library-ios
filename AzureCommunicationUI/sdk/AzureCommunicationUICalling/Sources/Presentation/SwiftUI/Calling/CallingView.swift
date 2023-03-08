@@ -102,7 +102,8 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityHidden(!viewModel.lobbyOverlayViewModel.isDisplayed)
                 })
-                .modifier(PopupModalView(isPresented: viewModel.loadingOverlayViewModel.isDisplayed) {
+                .modifier(PopupModalView(isPresented: viewModel.loadingOverlayViewModel.isDisplayed &&
+                                         !viewModel.lobbyOverlayViewModel.isDisplayed) {
                     LoadingOverlayView(viewModel: viewModel.loadingOverlayViewModel)
                         .accessibilityElement(children: .contain)
                         .accessibilityHidden(!viewModel.loadingOverlayViewModel.isDisplayed)
