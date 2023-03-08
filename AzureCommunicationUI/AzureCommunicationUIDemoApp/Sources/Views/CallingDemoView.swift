@@ -19,6 +19,8 @@ struct CallingDemoView: View {
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    let roomRoleChoices: [String] = ["Presenter", "Attendee"]
 #if DEBUG
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
 #endif
@@ -29,6 +31,11 @@ struct CallingDemoView: View {
             acsTokenSelector
             displayNameTextField
             meetingSelector
+            if envConfigSubject.selectedMeetingType == .roomCall {
+                roomRoleSelector
+            } else {
+                roomRoleSelector.hidden()
+            }
             settingButton
             startExperienceButton
             Spacer()
@@ -87,6 +94,7 @@ struct CallingDemoView: View {
             Picker("Call Type", selection: $envConfigSubject.selectedMeetingType) {
                 Text("Group Call").tag(MeetingType.groupCall)
                 Text("Teams Meeting").tag(MeetingType.teamsMeeting)
+                Text("Room Call").tag(MeetingType.roomCall)
             }.pickerStyle(.segmented)
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -103,10 +111,26 @@ struct CallingDemoView: View {
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .textFieldStyle(.roundedBorder)
+            case .roomCall:
+                TextField(
+                    "Room Id",
+                    text: $envConfigSubject.roomId)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .textFieldStyle(.roundedBorder)
             }
         }
         .padding(.vertical, verticalPadding)
         .padding(.horizontal, horizontalPadding)
+    }
+    var roomRoleSelector: some View {
+
+        Section {
+            Picker("Room Role Type", selection: $envConfigSubject.selectedRoomRoleType) {
+                Text("Presenter").tag(RoomRoleType.presenter)
+                Text("Attendee").tag(RoomRoleType.attendee)
+            }.pickerStyle(.segmented)
+        }
     }
 
     var settingButton: some View {
@@ -198,6 +222,13 @@ extension CallingDemoView {
                                 nil:envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
+        let roomRole = envConfigSubject.selectedRoomRoleType
+        var roomRoleData = RoomRole.presenter
+        if roomRole == .presenter {
+            roomRoleData = RoomRole.presenter
+        } else {
+            roomRoleData = RoomRole.attendee
+        }
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let localOptions = LocalOptions(participantViewData: participantViewData,
@@ -224,6 +255,23 @@ extension CallingDemoView {
                 } else {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                       credential: credential,
+                                                                      displayName: envConfigSubject.displayName),
+                                         localOptions: localOptions)
+                }
+            case .roomCall:
+                if envConfigSubject.displayName.isEmpty {
+                    callComposite.launch(remoteOptions:
+                                            RemoteOptions(for:
+                                                    .roomCall(roomId: link,
+                                                              roomRole: roomRoleData),
+                                                          credential: credential),
+                                         localOptions: localOptions)
+                } else {
+                    callComposite.launch(
+                        remoteOptions: RemoteOptions(for:
+                                .roomCall(roomId: link,
+                                          roomRole: roomRoleData),
+                                                     credential: credential,
                                                                       displayName: envConfigSubject.displayName),
                                          localOptions: localOptions)
                 }
@@ -266,6 +314,8 @@ extension CallingDemoView {
             return envConfigSubject.groupCallId
         case .teamsMeeting:
             return envConfigSubject.teamsMeetingLink
+        case .roomCall:
+            return envConfigSubject.roomId
         }
     }
 
