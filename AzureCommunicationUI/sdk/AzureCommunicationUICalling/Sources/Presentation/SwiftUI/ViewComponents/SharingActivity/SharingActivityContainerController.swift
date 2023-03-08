@@ -40,13 +40,21 @@ class SharingActivityContainerController: UIViewController, DrawerViewController
         }
         let activityController = UIActivityViewController(activityItems: [viewModel.getDebugInfo()],
                                                           applicationActivities: applicationActivities)
+
         activityController.completionWithItemsHandler = { [weak self] activityType, completed, _, _ in
             guard let self = self else {
                 return
             }
+
+            // when UIActivityViewController is dismissed by itself
+            // because of navigating to the activity
+            let isNavigatedToActivity =
+            self.controller?.presentingViewController == nil && activityType != nil
+            // when UIActivityViewController is closed
             let isActivityControllerCancelled = activityType == nil && !completed
+            // when data is shared
             let isDataSuccessfullyShared = activityType != nil && completed
-            guard isActivityControllerCancelled || isDataSuccessfullyShared else {
+            guard isActivityControllerCancelled || isDataSuccessfullyShared || isNavigatedToActivity else {
                 return
             }
             // the controller and overlay can be dismissed
