@@ -17,13 +17,11 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
     ) -> Store<AppState, Action> {
         let cameraState = localOptions.cameraOnByDefaultIfPermissionIsGranted
         ?? false ? LocalUserState.CameraState(operation: .on, device: .front, transmission: .local) :
-        LocalUserState.CameraState(operation: .paused, device: .front, transmission: .local)
+        LocalUserState.CameraState(operation: .off, device: .front, transmission: .local)
         let audioState = localOptions.microphoneOnByDefaultIfPermissionIsGranted
         ?? false ? LocalUserState.AudioState(operation: .on, device: .receiverSelected) :
         LocalUserState.AudioState(operation: .off, device: .receiverSelected)
-        let localUserState = localOptions.skipSetup ?? false || cameraState.operation == .paused ?
-        LocalUserState(cameraState: cameraState, audioState: audioState, displayName: displayName):
-        LocalUserState(audioState: audioState, displayName: displayName)
+        let localUserState = LocalUserState(cameraState: cameraState, audioState: audioState, displayName: displayName)
 
         let callingState = localOptions.skipSetup ?? false ?
                 CallingState(operationStatus: .bypassRequested): CallingState()
