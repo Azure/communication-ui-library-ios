@@ -2,8 +2,7 @@
 
 ## 1.2.0 (2023-03-08)
 ### New Features
-- Introduced `DebugInfo` to get debug information for `CallComposite` [#446](https://github.com/Azure/communication-ui-library-ios/pull/446), [#476](https://github.com/Azure/communication-ui-library-ios/pull/476), [610](https://github.com/Azure/communication-ui-library-ios/pull/610)
-- Additional localization support for 6 languages (Arabic, Finnish, Hebrew, Norwegian Bokmål, Polish, Swedish) [#484](https://github.com/Azure/communication-ui-library-ios/pull/484)
+- Introduced a Call History available with `DebugInfo` on the `CallComposite` [610](https://github.com/Azure/communication-ui-library-ios/pull/610)
 
 ## 1.2.0-beta.1 (2022-12-14)
 ### New Features
