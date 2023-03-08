@@ -18,7 +18,7 @@ class CompositeParticipantsListCell: TableViewCell {
         let avatarParticipantName = viewModel.getParticipantName(with: participantViewData)
         let isNameEmpty = avatarParticipantName.trimmingCharacters(in: .whitespaces).isEmpty
 
-        let avatar = MSFAvatar(style: isNameEmpty ? .outlined : .accent, size: .medium)
+        let avatar = MSFAvatar(style: isNameEmpty ? .outlined : .accent, size: .size32)
         avatar.state.primaryText = !isNameEmpty ? avatarParticipantName : nil
         avatar.state.image = participantViewData?.avatarImage
 

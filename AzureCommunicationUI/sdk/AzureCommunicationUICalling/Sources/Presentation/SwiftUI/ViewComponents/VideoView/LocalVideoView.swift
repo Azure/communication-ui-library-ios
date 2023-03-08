@@ -26,9 +26,9 @@ enum LocalVideoViewType {
         switch self {
         case .localVideofull,
              .preview:
-            return .xxlarge
+            return .size72
         case .localVideoPip:
-            return .large
+            return .size40
         }
     }
 
