@@ -45,7 +45,7 @@ class SharingActivityContainerController: UIViewController, DrawerViewController
             guard let self = self else {
                 return
             }
-            // when activity redirects user somewhere
+            // when activity redirects user to the selected app
             let isActivityOpen = activityType != nil && !completed
             // when UIActivityViewController is closed
             let isActivityControllerCancelled = activityType == nil && !completed
