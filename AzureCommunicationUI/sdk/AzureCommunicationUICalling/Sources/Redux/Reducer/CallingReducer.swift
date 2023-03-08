@@ -37,6 +37,7 @@ extension Reducer where State == CallingState,
             isTranscriptionActive = false
         // Exhaustive un-implemented actions
         case .audioSessionAction,
+                .callingAction(.callStartRequested),
                 .callingAction(.setupCall),
                 .callingAction(.dismissSetup),
                 .callingAction(.resumeRequested),
@@ -49,8 +50,6 @@ extension Reducer where State == CallingState,
                 .compositeExitAction,
                 .callingViewLaunched:
             return callingState
-        case .callingAction(.callStartRequested):
-            operationStatus = operationStatus
         }
         return CallingState(status: callingStatus,
                             operationStatus: operationStatus,
