@@ -155,6 +155,10 @@ class ControlBarViewModel: ObservableObject {
         self.isConfirmLeaveListDisplayed = false
     }
 
+    func isMoreButtonDisabled() -> Bool {
+        isBypassLoadingOverlay()
+    }
+
     func isCameraDisabled() -> Bool {
         cameraPermission == .denied || cameraState.operation == .pending ||
         callingState.status == .localHold || isCameraStateUpdating || isBypassLoadingOverlay()
@@ -244,5 +248,7 @@ class ControlBarViewModel: ObservableObject {
         audioDeviceButtonViewModel.update(
             accessibilityValue: audioDeviceState.getLabel(localizationProvider: localizationProvider))
         audioDevicesListViewModel.update(audioDeviceStatus: audioDeviceState)
+
+        moreButtonViewModel.update(isDisabled: isMoreButtonDisabled())
     }
 }
