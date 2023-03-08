@@ -108,6 +108,11 @@ class SetupViewModel: ObservableObject {
         }
     }
 
+    func dismissSetupScreen() {
+        if store.state.callingState.operationStatus == .bypassRequested {
+            store.dispatch(action: .callingAction(.dismissSetup))
+        }
+    }
     func setupCall() {
         store.dispatch(action: .callingAction(.setupCall))
     }
