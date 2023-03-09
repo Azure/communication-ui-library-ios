@@ -61,8 +61,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                    state.errorState.internalError == nil {
                     dispatch(.localUserAction(.cameraPreviewOnTriggered))
                 }
-                if state.callingState.operationStatus == .bypassRequested &&
-                    state.localUserState.audioState.operation == .on {
+                if state.callingState.operationStatus == .bypassRequested {
                     dispatch(.callingAction(.callStartRequested))
                 }
             } catch {
