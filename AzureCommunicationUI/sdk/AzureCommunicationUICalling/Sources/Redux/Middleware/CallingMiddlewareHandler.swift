@@ -56,8 +56,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         Task {
             do {
                 try await callingService.setupCall()
-                if state.permissionState.cameraPermission == .granted,
-                   state.localUserState.cameraState.operation == .on,
+                if state.localUserState.cameraState.operation == .on,
                    state.errorState.internalError == nil {
                     dispatch(.localUserAction(.cameraPreviewOnTriggered))
                 }

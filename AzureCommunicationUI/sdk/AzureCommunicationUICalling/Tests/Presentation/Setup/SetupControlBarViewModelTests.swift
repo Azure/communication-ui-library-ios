@@ -252,8 +252,8 @@ class SetupControlBarViewModelTests: XCTestCase {
     func test_setupControlBarViewModel_updateStates_when_stateUpdated_then_cameraButtonViewModelButtonInfoUpdated() {
         let expectation = XCTestExpectation(description: "CameraButtonViewModel button info is updated")
         let updateButtonInfoCompletion: ((CameraButtonState) -> Void) = { buttonState in
-            XCTAssertEqual(buttonState.iconName, .videoOff)
-            XCTAssertEqual(buttonState.localizationKey, .videoOff)
+            XCTAssertEqual(buttonState.iconName, .videoOn)
+            XCTAssertEqual(buttonState.localizationKey, .videoOn)
             expectation.fulfill()
         }
         factoryMocking.createCameraIconWithLabelButtonViewModel = { buttonState in
@@ -378,8 +378,8 @@ class SetupControlBarViewModelTests: XCTestCase {
     func test_setupControlBarViewModel_display_videoButtonLabel__from_LocalizationMocking() {
         let expectation = XCTestExpectation(description: "CameraButtonViewModel button info is updated")
         let updateButtonInfoCompletion: ((CameraButtonState) -> Void) = { buttonState in
-            XCTAssertEqual(buttonState.iconName, .videoOff)
-            XCTAssertEqual(buttonState.localizationKey, .videoOff)
+            XCTAssertEqual(buttonState.iconName, .videoOn)
+            XCTAssertEqual(buttonState.localizationKey, .videoOn)
             expectation.fulfill()
         }
         factoryMocking.createCameraIconWithLabelButtonViewModel = { buttonState in

@@ -156,10 +156,8 @@ class SetupControlBarViewModel: ObservableObject {
 
     private func updateButtonViewModel(localUserState: LocalUserState) {
         cameraButtonViewModel.update(
-            selectedButtonState: cameraStatus == .on &&
-            cameraPermission == .granted ? CameraButtonState.videoOn : CameraButtonState.videoOff)
-        cameraButtonViewModel.update(accessibilityLabel: cameraStatus == .on &&
-                                     cameraPermission == .granted
+            selectedButtonState: cameraStatus == .on ? CameraButtonState.videoOn : CameraButtonState.videoOff)
+        cameraButtonViewModel.update(accessibilityLabel: cameraStatus == .on
                                      ? localizationProvider.getLocalizedString(.videoOnAccessibilityLabel)
                                      : localizationProvider.getLocalizedString(.videoOffAccessibilityLabel))
         cameraButtonViewModel.update(isDisabled: isCameraDisabled())
