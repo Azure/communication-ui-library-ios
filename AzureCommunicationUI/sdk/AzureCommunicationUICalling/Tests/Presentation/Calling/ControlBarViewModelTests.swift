@@ -493,7 +493,7 @@ class ControlBarViewModelTests: XCTestCase {
 
             let iconButtonViewModel = IconButtonViewModelMocking(iconName: .clock)
             iconButtonViewModel.updateIcon = { icon in
-                XCTAssertEqual(icon, CompositeIcon.videoOn)
+                XCTAssertEqual(icon, CompositeIcon.videoOff)
                 expectation.fulfill()
             }
             return iconButtonViewModel

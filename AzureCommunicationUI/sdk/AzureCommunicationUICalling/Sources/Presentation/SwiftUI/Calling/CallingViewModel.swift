@@ -10,6 +10,7 @@ class CallingViewModel: ObservableObject {
     @Published var isConfirmLeaveListDisplayed: Bool = false
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
+    @Published var shouldShowLocalVideoView: Bool = false
     @Published var appState: AppStatus = .foreground
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
@@ -59,6 +60,8 @@ class CallingViewModel: ObservableObject {
         let isCallConnected = store.state.callingState.status == .connected
         let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
         isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
+        shouldShowLocalVideoView = !(loadingOverlayViewModel.isDisplayed
+        && store.state.localUserState.cameraState.operation == .off)
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
                 guard let self = self else {
