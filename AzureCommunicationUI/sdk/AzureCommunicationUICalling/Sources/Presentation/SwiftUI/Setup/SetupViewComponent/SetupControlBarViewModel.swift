@@ -134,6 +134,9 @@ class SetupControlBarViewModel: ObservableObject {
         if audioPermission != permissionState.audioPermission {
             audioPermission = permissionState.audioPermission
         }
+        if cameraPermission == .notAsked && localUserState.cameraState.operation == .on {
+            dispatch(.permissionAction(.cameraPermissionRequested))
+        }
         callingStatus = callingState.status
         cameraStatus = localUserState.cameraState.operation
         micStatus = localUserState.audioState.operation

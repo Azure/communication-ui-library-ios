@@ -43,5 +43,8 @@ struct LoadingOverlayView: View {
             .onAppear {
                 viewModel.setupAudioPermissions()
             }
+            .onDisappear {
+                viewModel.setupCameraPermissions()
+            }
     }
 }

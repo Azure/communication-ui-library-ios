@@ -112,7 +112,9 @@ class CallingViewModel: ObservableObject {
             return
         }
 
-        if state.callingState.operationStatus == .bypassRequested && callClientRequested == false {
+        if state.callingState.operationStatus == .bypassRequested
+            && state.permissionState.audioPermission == .granted
+            && callClientRequested == false {
             requestCallClient()
         }
 
