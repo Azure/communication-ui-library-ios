@@ -134,9 +134,6 @@ class SetupControlBarViewModel: ObservableObject {
         if audioPermission != permissionState.audioPermission {
             audioPermission = permissionState.audioPermission
         }
-        if cameraPermission == .notAsked && localUserState.cameraState.operation == .on {
-            dispatch(.permissionAction(.cameraPermissionRequested))
-        }
         callingStatus = callingState.status
         cameraStatus = localUserState.cameraState.operation
         micStatus = localUserState.audioState.operation
@@ -159,8 +156,10 @@ class SetupControlBarViewModel: ObservableObject {
 
     private func updateButtonViewModel(localUserState: LocalUserState) {
         cameraButtonViewModel.update(
-            selectedButtonState: cameraStatus == .on ? CameraButtonState.videoOn : CameraButtonState.videoOff)
-        cameraButtonViewModel.update(accessibilityLabel: cameraStatus == .on
+            selectedButtonState: cameraStatus == .on &&
+            cameraPermission == .granted ? CameraButtonState.videoOn : CameraButtonState.videoOff)
+        cameraButtonViewModel.update(accessibilityLabel: cameraStatus == .on &&
+                                     cameraPermission == .granted
                                      ? localizationProvider.getLocalizedString(.videoOnAccessibilityLabel)
                                      : localizationProvider.getLocalizedString(.videoOffAccessibilityLabel))
         cameraButtonViewModel.update(isDisabled: isCameraDisabled())

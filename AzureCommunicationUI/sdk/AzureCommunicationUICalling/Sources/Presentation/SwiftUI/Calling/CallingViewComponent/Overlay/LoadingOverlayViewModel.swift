@@ -60,9 +60,4 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
             store.dispatch(action: .permissionAction(.audioPermissionRequested))
         }
     }
-    func setupCameraPermissions() {
-        if audioPermission == .notAsked && store.state.localUserState.cameraState.operation == .on {
-            store.dispatch(action: .permissionAction(.cameraPermissionRequested))
-        }
-    }
 }
