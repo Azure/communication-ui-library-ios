@@ -10,6 +10,6 @@ class DebugInfoManagerMocking: DebugInfoManagerProtocol {
     var debugInfo: DebugInfo?
 
     func getDebugInfo() -> DebugInfo {
-        return debugInfo ?? DebugInfo()
+        return debugInfo ?? DebugInfo(callHistoryRecords: [])
     }
 }

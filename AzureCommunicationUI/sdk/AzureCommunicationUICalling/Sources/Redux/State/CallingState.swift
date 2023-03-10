@@ -30,17 +30,20 @@ struct CallingState: Equatable {
     let callId: String?
     let isRecordingActive: Bool
     let isTranscriptionActive: Bool
+    let callStartDate: Date?
 
     init(status: CallingStatus = .none,
          operationStatus: OperationStatus = .none,
          callId: String? = nil,
          isRecordingActive: Bool = false,
-         isTranscriptionActive: Bool = false) {
+         isTranscriptionActive: Bool = false,
+         callStartDate: Date? = nil) {
         self.status = status
         self.operationStatus = operationStatus
         self.callId = callId
         self.isRecordingActive = isRecordingActive
         self.isTranscriptionActive = isTranscriptionActive
+        self.callStartDate = callStartDate
     }
 
     static func == (lhs: CallingState, rhs: CallingState) -> Bool {
