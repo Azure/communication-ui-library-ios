@@ -173,7 +173,8 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func isBypassLoadingOverlay() -> Bool {
-        callingState.operationStatus == .bypassRequested && callingState.status != .connected
+        callingState.operationStatus == .bypassRequested && callingState.status != .connected &&
+                                                             callingState.status != .inLobby
     }
 
     func getLeaveCallButtonViewModel() -> DrawerListItemViewModel {

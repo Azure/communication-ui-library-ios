@@ -43,7 +43,8 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
         let callingState = state.callingState
         callingStatus = callingState.status
         operationStatus = callingState.operationStatus
-        let shouldDisplay = operationStatus == .bypassRequested && callingStatus != .connected
+        let shouldDisplay = operationStatus == .bypassRequested && callingStatus != .connected &&
+        callingState.status != .inLobby
 
         if shouldDisplay != isDisplayed {
             isDisplayed = shouldDisplay
