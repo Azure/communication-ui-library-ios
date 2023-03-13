@@ -15,7 +15,9 @@ struct CallingDemoView: View {
     @State var isSettingsDisplayed: Bool = false
     @State var isStartExperienceLoading: Bool = false
     @State var errorMessage: String = ""
+    @State var isShowingCallHistory: Bool = false
     @ObservedObject var envConfigSubject: EnvConfigSubject
+    @ObservedObject var callingViewModel: CallingDemoViewModel
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
@@ -30,6 +32,7 @@ struct CallingDemoView: View {
             displayNameTextField
             meetingSelector
             settingButton
+            showCallHistoryButton
             startExperienceButton
             Spacer()
         }
@@ -42,6 +45,15 @@ struct CallingDemoView: View {
                         .default(Text("Dismiss"), action: {
                     isErrorDisplayed = false
                 }))
+        }
+        .alert(isPresented: $isShowingCallHistory) {
+            Alert(
+                title: Text(callingViewModel.callHistoryTitle),
+                message: Text(callingViewModel.callHistoryMessage),
+                dismissButton:
+                        .default(Text("Dismiss"), action: {
+                            isShowingCallHistory = false
+                        }))
         }
         .sheet(isPresented: $isSettingsDisplayed) {
             SettingsView(envConfigSubject: envConfigSubject)
@@ -128,6 +140,13 @@ struct CallingDemoView: View {
         .buttonStyle(DemoButtonStyle())
         .disabled(isStartExperienceDisabled || isStartExperienceLoading)
         .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+    }
+
+    var showCallHistoryButton: some View {
+        Button("Show call history") {
+            isShowingCallHistory = true
+        }
+        .buttonStyle(DemoButtonStyle())
     }
 
     var isStartExperienceDisabled: Bool {
@@ -286,7 +305,7 @@ extension CallingDemoView {
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onError \(error)")
         print("::::CallingDemoView error.code \(error.code)")
-        print("::::CallingDemoView debug info \(callComposite.debugInfo.currentOrLastCallId ?? "Unknown")")
+        callingViewModel.callHistory.last?.callIds.forEach { print("::::CallingDemoView call id \($0)") }
         showError(for: error.code)
     }
 

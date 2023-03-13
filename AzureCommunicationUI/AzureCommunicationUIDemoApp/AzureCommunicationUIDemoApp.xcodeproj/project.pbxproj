@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0570901C299EBAC000D7AE5F /* CallingDemoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0570901B299EBAC000D7AE5F /* CallingDemoViewModel.swift */; };
 		1B0D8DC627F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */; };
 		1B3E3B4F285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */; };
 		1B5D6C0F29231B900072C66D /* CallConfigurationMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5D6C0929231B900072C66D /* CallConfigurationMocking.swift */; };
@@ -81,6 +82,7 @@
 
 /* Begin PBXFileReference section */
 		026F091CB7F97EBA5A39610B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0570901B299EBAC000D7AE5F /* CallingDemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingDemoViewModel.swift; sourceTree = "<group>"; };
 		1AA61EC7BE9A4B43EEC5DBCC /* Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppCallTests.swift; sourceTree = "<group>"; };
 		1B3E3B4E285A8F690010E24E /* AzureCommunicationUIDemoAppSetupViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppSetupViewTests.swift; sourceTree = "<group>"; };
@@ -291,6 +293,7 @@
 				A87CEABB2729ECA600F3AE16 /* EntryViewController.swift */,
 				A85DDCB52728B23B001297B4 /* CallingDemoView.swift */,
 				A85DDCB42728B23A001297B4 /* CallingDemoViewController.swift */,
+				0570901B299EBAC000D7AE5F /* CallingDemoViewModel.swift */,
 				50D8EE9E2926C0C6003C3A95 /* ChatDemoView.swift */,
 				50D8EEA02926C0DD003C3A95 /* ChatDemoViewController.swift */,
 				50B390CE27D2996E0010A2ED /* SettingsView.swift */,
@@ -580,6 +583,7 @@
 				A85DDCB82728B23B001297B4 /* CallingDemoViewController.swift in Sources */,
 				50D8EE9F2926C0C6003C3A95 /* ChatDemoView.swift in Sources */,
 				50D8EEA12926C0DD003C3A95 /* ChatDemoViewController.swift in Sources */,
+				0570901C299EBAC000D7AE5F /* CallingDemoViewModel.swift in Sources */,
 				A8C69FB62728AE1A00143DB7 /* SceneDelegate.swift in Sources */,
 				1B981B0429480DA8002EB167 /* FloatingUITestWindow.swift in Sources */,
 				A87CEABC2729ECA600F3AE16 /* EntryViewController.swift in Sources */,
