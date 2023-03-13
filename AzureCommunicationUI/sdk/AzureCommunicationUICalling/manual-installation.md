@@ -56,7 +56,7 @@ Note: Please refer to [How to fix the issues](#how-to-fix-the-issues) to fix som
     2. Select Navigator and navigate to the target `AzureCommunicationCommon` and choose `Build Phases`.
     3. Delete the script `Format And Lint`.
 
-#### 3. [MicrosoftFluentUI](https://github.com/microsoft/fluentui-apple) - version [0.3.9](https://github.com/microsoft/fluentui-apple/releases/tag/0.3.9_main_0.3)
+#### 3. [MicrosoftFluentUI](https://github.com/microsoft/fluentui-apple) - version [0.10.0](https://github.com/microsoft/fluentui-apple/releases/tag/0.10.0)
 
 - Follow this [Manual Installation Instruction](https://github.com/microsoft/fluentui-apple#manual-installation) to embed the `libFluentUI.a` in your target's "Frameworks and Libraries" section.
 
