@@ -229,8 +229,7 @@ class ControlBarViewModel: ObservableObject {
                                     localUserState.cameraState.operation != .off
         }
         cameraState = localUserState.cameraState
-        cameraButtonViewModel.update(iconName: cameraState.operation == .on
-                                     ? .videoOn : .videoOff)
+        cameraButtonViewModel.update(iconName: cameraState.operation == .on ? .videoOn : .videoOff)
         cameraButtonViewModel.update(accessibilityLabel: cameraState.operation == .on
                                      ? localizationProvider.getLocalizedString(.videoOnAccessibilityLabel)
                                      : localizationProvider.getLocalizedString(.videoOffAccessibilityLabel))

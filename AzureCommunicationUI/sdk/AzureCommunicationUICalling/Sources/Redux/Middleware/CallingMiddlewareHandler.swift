@@ -156,6 +156,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         Task {
             if state.permissionState.cameraPermission == .notAsked {
                 dispatch(.permissionAction(.cameraPermissionRequested))
+            } else if state.permissionState.cameraPermission == .denied {
+                dispatch(.localUserAction(.cameraOffTriggered))
             } else {
                 do {
                     let identifier = try await callingService.requestCameraPreviewOn()
