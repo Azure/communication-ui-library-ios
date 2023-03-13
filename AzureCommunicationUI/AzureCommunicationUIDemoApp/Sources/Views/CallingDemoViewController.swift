@@ -227,7 +227,11 @@ class CallingDemoViewController: UIViewController {
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
         let localOptions = LocalOptions(participantViewData: participantViewData,
-                                        setupScreenViewData: setupScreenViewData)
+                                        setupScreenViewData: setupScreenViewData,
+                                        cameraOnByDefaultIfPermissionIsGranted: envConfigSubject.cameraDefault,
+                                        microphoneOnByDefaultIfPermissionIsGranted: envConfigSubject.micDefault,
+                                        skipSetup: envConfigSubject.skipSetupScreen
+        )
 
         if let credential = try? await getTokenCredential() {
             switch selectedMeetingType {
