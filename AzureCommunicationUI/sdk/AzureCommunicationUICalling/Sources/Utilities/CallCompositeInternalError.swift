@@ -32,7 +32,7 @@ enum CallCompositeInternalError: Error, Equatable {
         case .cameraOnFailed:
             return CallCompositeErrorCode.cameraFailure
         case .callJoinFailedByMicPermission:
-            return CallCompositeErrorCode.microphonePermissionRequired
+            return CallCompositeErrorCode.microphonePermissionNotGranted
         case .callHoldFailed,
                 .callResumeFailed,
                 .callEvicted,

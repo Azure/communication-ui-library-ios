@@ -8,6 +8,7 @@ import Combine
 import SwiftUI
 import AzureCommunicationCommon
 import AppCenterCrashes
+import AVFoundation
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else
@@ -295,6 +296,8 @@ class CallingDemoViewController: UIViewController {
         switch errorCode {
         case CallCompositeErrorCode.tokenExpired:
             errorMessage = "Token is invalid"
+        case CallCompositeErrorCode.microphonePermissionNotGranted:
+            errorMessage = "Microphone Permission is denied"
         default:
             errorMessage = "Unknown error"
         }
@@ -380,6 +383,12 @@ class CallingDemoViewController: UIViewController {
 
         let link = self.getMeetingLink()
         Task { @MainActor in
+            if getAudioPermissionStatus() == .denied && envConfigSubject.skipSetupScreen {
+                showError(for: CallCompositeErrorCode.microphonePermissionNotGranted)
+                startExperienceButton.isEnabled = true
+                startExperienceButton.backgroundColor = .systemBlue
+                return
+            }
             await self.startExperience(with: link)
             startExperienceButton.isEnabled = true
             startExperienceButton.backgroundColor = .systemBlue
@@ -425,6 +434,11 @@ class CallingDemoViewController: UIViewController {
         }
 
         return false
+    }
+
+    private func getAudioPermissionStatus() -> AppPermission.Status {
+            let audioSession = AVAudioSession.sharedInstance().recordPermission
+            return audioSession.map
     }
 
     private func setupUI() {

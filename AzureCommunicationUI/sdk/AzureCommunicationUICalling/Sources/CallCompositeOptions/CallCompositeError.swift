@@ -20,7 +20,7 @@ public struct CallCompositeErrorCode {
     public static let tokenExpired: String = "tokenExpired"
 
     /// Error when microphone did not have the permission and join call failed.
-    public static let microphonePermissionRequired: String = "microphonePermissionRequired"
+    public static let microphonePermissionNotGranted: String = "microphonePermissionNotGranted"
 
     /// Error when a participant is evicted from the call by another participant
     static let callEvicted: String = "callEvicted"

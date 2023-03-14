@@ -5,6 +5,7 @@
 
 import SwiftUI
 import AzureCommunicationCommon
+import AVFoundation
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else
@@ -33,28 +34,28 @@ struct CallingDemoView: View {
             meetingSelector
             settingButton
             showCallHistoryButton
+            .alert(isPresented: $isShowingCallHistory) {
+                Alert(
+                    title: Text(callingViewModel.callHistoryTitle),
+                    message: Text(callingViewModel.callHistoryMessage),
+                    dismissButton:
+                            .default(Text("Dismiss"), action: {
+                                isShowingCallHistory = false
+                            }))
+            }
             startExperienceButton
+            .alert(isPresented: $isErrorDisplayed) {
+                 Alert(
+                    title: Text("Error"),
+                    message: Text(errorMessage),
+                    dismissButton:
+                            .default(Text("Dismiss"), action: {
+                        isErrorDisplayed = false
+                    }))
+            }
             Spacer()
         }
         .padding()
-        .alert(isPresented: $isErrorDisplayed) {
-            Alert(
-                title: Text("Error"),
-                message: Text(errorMessage),
-                dismissButton:
-                        .default(Text("Dismiss"), action: {
-                    isErrorDisplayed = false
-                }))
-        }
-        .alert(isPresented: $isShowingCallHistory) {
-            Alert(
-                title: Text(callingViewModel.callHistoryTitle),
-                message: Text(callingViewModel.callHistoryMessage),
-                dismissButton:
-                        .default(Text("Dismiss"), action: {
-                            isShowingCallHistory = false
-                        }))
-        }
         .sheet(isPresented: $isSettingsDisplayed) {
             SettingsView(envConfigSubject: envConfigSubject)
         }
@@ -133,6 +134,11 @@ struct CallingDemoView: View {
         Button("Start Experience") {
             isStartExperienceLoading = true
             Task { @MainActor in
+                if getAudioPermissionStatus() == .denied && envConfigSubject.skipSetupScreen {
+                    showError(for: CallCompositeErrorCode.microphonePermissionNotGranted)
+                    isStartExperienceLoading = false
+                    return
+                }
                 await startCallComposite()
                 isStartExperienceLoading = false
             }
@@ -296,10 +302,17 @@ extension CallingDemoView {
         switch errorCode {
         case CallCompositeErrorCode.tokenExpired:
             errorMessage = "Token is invalid"
+        case CallCompositeErrorCode.microphonePermissionNotGranted:
+            errorMessage = "Microphone Permission is denied"
         default:
             errorMessage = "Unknown error"
         }
         isErrorDisplayed = true
+    }
+
+    private func getAudioPermissionStatus() -> AppPermission.Status {
+        let audioSession = AVAudioSession.sharedInstance().recordPermission
+        return audioSession.map
     }
 
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
