@@ -436,9 +436,8 @@ class CallingDemoViewController: UIViewController {
         return false
     }
 
-    private func getAudioPermissionStatus() -> AppPermission.Status {
-            let audioSession = AVAudioSession.sharedInstance().recordPermission
-            return audioSession.map
+    private func getAudioPermissionStatus() -> AVAudioSession.RecordPermission {
+            return AVAudioSession.sharedInstance().recordPermission
     }
 
     private func setupUI() {

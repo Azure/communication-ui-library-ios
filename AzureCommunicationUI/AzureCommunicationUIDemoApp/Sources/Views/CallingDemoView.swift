@@ -310,9 +310,8 @@ extension CallingDemoView {
         isErrorDisplayed = true
     }
 
-    private func getAudioPermissionStatus() -> AppPermission.Status {
-        let audioSession = AVAudioSession.sharedInstance().recordPermission
-        return audioSession.map
+    private func getAudioPermissionStatus() -> AVAudioSession.RecordPermission {
+        return AVAudioSession.sharedInstance().recordPermission
     }
 
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
