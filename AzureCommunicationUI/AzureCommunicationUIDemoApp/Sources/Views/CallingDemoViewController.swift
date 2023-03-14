@@ -228,8 +228,8 @@ class CallingDemoViewController: UIViewController {
                                                       displayName: renderDisplayName)
         let localOptions = LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
-                                        cameraOnByDefaultIfPermissionIsGranted: envConfigSubject.cameraDefault,
-                                        microphoneOnByDefaultIfPermissionIsGranted: envConfigSubject.micDefault,
+                                        cameraOnByDefault: envConfigSubject.cameraDefault,
+                                        microphoneOnByDefault: envConfigSubject.micDefault,
                                         skipSetup: envConfigSubject.skipSetupScreen
         )
 

@@ -58,7 +58,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 try await callingService.setupCall()
                 if state.localUserState.cameraState.operation == .on,
                    state.errorState.internalError == nil {
-                    dispatch(.localUserAction(.cameraPreviewOnTriggered))
+                    await requestCameraPreviewOn(state: state, dispatch: dispatch).value
                 }
                 if state.callingState.operationStatus == .bypassRequested {
                     dispatch(.callingAction(.callStartRequested))

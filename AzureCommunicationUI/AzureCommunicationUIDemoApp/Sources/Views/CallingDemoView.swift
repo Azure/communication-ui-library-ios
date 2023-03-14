@@ -221,8 +221,8 @@ extension CallingDemoView {
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let localOptions = LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
-                                        cameraOnByDefaultIfPermissionIsGranted: envConfigSubject.cameraDefault,
-                                        microphoneOnByDefaultIfPermissionIsGranted: envConfigSubject.micDefault,
+                                        cameraOnByDefault: envConfigSubject.cameraDefault,
+                                        microphoneOnByDefault: envConfigSubject.micDefault,
                                         skipSetup: envConfigSubject.skipSetupScreen
         )
         if let credential = try? await getTokenCredential() {
