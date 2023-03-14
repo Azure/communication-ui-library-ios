@@ -174,7 +174,7 @@ struct CallingView: View {
         Group {
             if viewModel.isParticipantGridDisplayed {
                 participantGridsView
-            } else if !viewModel.loadingOverlayViewModel.isDisplayed {
+            } else {
                 localVideoFullscreenView
             }
         }
