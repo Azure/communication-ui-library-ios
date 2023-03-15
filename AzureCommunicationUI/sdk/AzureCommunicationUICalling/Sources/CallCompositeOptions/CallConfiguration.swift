@@ -14,27 +14,28 @@ struct CallConfiguration {
     let displayName: String?
     let diagnosticConfig: DiagnosticConfig
     let roomId: String?
-    let roomRole: RoomRole?
+    let roomRoleHint: ParticipantRole?
 
     init(locator: JoinLocator,
          credential: CommunicationTokenCredential,
-         displayName: String?) {
+         displayName: String?,
+         roomRole: ParticipantRole?) {
         switch locator {
         case let .groupCall(groupId: groupId):
             self.groupId = groupId
             self.meetingLink = nil
             self.roomId = nil
-            self.roomRole = nil
+            self.roomRoleHint = nil
             self.compositeCallType = .groupCall
         case let .teamsMeeting(teamsLink: meetingLink):
             self.groupId = nil
             self.meetingLink = meetingLink
             self.roomId = nil
-            self.roomRole = nil
+            self.roomRoleHint = nil
             self.compositeCallType = .teamsMeeting
-        case let .roomCall(roomId: roomId, roomRole: roomRole):
+        case let .roomCall(roomId: roomId):
             self.roomId = roomId
-            self.roomRole = roomRole
+            self.roomRoleHint = roomRole
             self.groupId = nil
             self.meetingLink = nil
             self.compositeCallType = .roomsCall

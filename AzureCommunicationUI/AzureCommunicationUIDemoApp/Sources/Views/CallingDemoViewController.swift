@@ -225,11 +225,13 @@ class CallingDemoViewController: UIViewController {
         callComposite.events.onError = onErrorHandler
 
         let roomRole = envConfigSubject.selectedRoomRoleType
-        var roomRoleData = RoomRole.presenter
-        if roomRole == .presenter {
-            roomRoleData = RoomRole.presenter
-        } else {
-            roomRoleData = RoomRole.attendee
+        var roomRoleData: ParticipantRole?
+        if envConfigSubject.selectedMeetingType == .roomCall {
+            if roomRole == .presenter {
+                roomRoleData = ParticipantRole.presenter
+            } else if roomRole == .attendee {
+                roomRoleData = ParticipantRole.attendee
+            }
         }
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
@@ -238,7 +240,8 @@ class CallingDemoViewController: UIViewController {
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
         let localOptions = LocalOptions(participantViewData: participantViewData,
-                                        setupScreenViewData: setupScreenViewData)
+                                        setupScreenViewData: setupScreenViewData,
+                                        roleHint: roomRoleData)
 
         if let credential = try? await getTokenCredential() {
             switch selectedMeetingType {
@@ -256,8 +259,7 @@ class CallingDemoViewController: UIViewController {
             case .roomCall:
                 callComposite.launch(remoteOptions:
                                         RemoteOptions(for:
-                                                .roomCall(roomId: link,
-                                                          roomRole: roomRoleData),
+                                                .roomCall(roomId: link),
                                                       credential: credential, displayName: getDisplayName()),
                                      localOptions: localOptions)
             }

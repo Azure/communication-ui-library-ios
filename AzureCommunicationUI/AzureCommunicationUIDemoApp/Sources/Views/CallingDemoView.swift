@@ -223,16 +223,20 @@ extension CallingDemoView {
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
         let roomRole = envConfigSubject.selectedRoomRoleType
-        var roomRoleData = RoomRole.presenter
-        if roomRole == .presenter {
-            roomRoleData = RoomRole.presenter
-        } else {
-            roomRoleData = RoomRole.attendee
+        var roomRoleData: ParticipantRole?
+        if envConfigSubject.selectedMeetingType == .roomCall {
+            if roomRole == .presenter {
+                roomRoleData = ParticipantRole.presenter
+            } else if roomRole == .attendee {
+                roomRoleData = ParticipantRole.attendee
+            }
         }
+
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let localOptions = LocalOptions(participantViewData: participantViewData,
-                                        setupScreenViewData: setupScreenViewData)
+                                        setupScreenViewData: setupScreenViewData,
+                                        roleHint: roomRoleData)
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -261,19 +265,16 @@ extension CallingDemoView {
             case .roomCall:
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions:
-                                            RemoteOptions(for:
-                                                    .roomCall(roomId: link,
-                                                              roomRole: roomRoleData),
+                                            RemoteOptions(for: .roomCall(roomId: link),
                                                           credential: credential),
                                          localOptions: localOptions)
                 } else {
                     callComposite.launch(
                         remoteOptions: RemoteOptions(for:
-                                .roomCall(roomId: link,
-                                          roomRole: roomRoleData),
+                                .roomCall(roomId: link),
                                                      credential: credential,
-                                                                      displayName: envConfigSubject.displayName),
-                                         localOptions: localOptions)
+                                                     displayName: envConfigSubject.displayName),
+                        localOptions: localOptions)
                 }
             }
         } else {

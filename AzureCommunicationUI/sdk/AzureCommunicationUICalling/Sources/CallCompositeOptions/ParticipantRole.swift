@@ -2,11 +2,12 @@
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
 //
-import Foundation
-import AzureCore
 
-public struct RoomRole: Equatable, RequestStringConvertible {
-    internal enum RoomRoleKV {
+import AzureCore
+import Foundation
+
+public struct ParticipantRole: Equatable, RequestStringConvertible {
+    internal enum ParticipantRoleKV {
         case presenter
         case attendee
         case unknown(String)
@@ -32,20 +33,20 @@ public struct RoomRole: Equatable, RequestStringConvertible {
         }
     }
 
-    private let value: RoomRoleKV
+    private let value: ParticipantRoleKV
 
     public var requestString: String {
         return value.rawValue
     }
 
     private init(rawValue: String) {
-        self.value = RoomRoleKV(rawValue: rawValue)
+        self.value = ParticipantRoleKV(rawValue: rawValue)
     }
 
-    public static func == (lhs: RoomRole, rhs: RoomRole) -> Bool {
+    public static func == (lhs: ParticipantRole, rhs: ParticipantRole) -> Bool {
         return lhs.requestString == rhs.requestString
     }
 
-    public static let presenter: RoomRole = .init(rawValue: "presenter")
-    public static let attendee: RoomRole = .init(rawValue: "attendee")
+    public static let presenter: ParticipantRole = .init(rawValue: "presenter")
+    public static let attendee: ParticipantRole = .init(rawValue: "attendee")
 }
