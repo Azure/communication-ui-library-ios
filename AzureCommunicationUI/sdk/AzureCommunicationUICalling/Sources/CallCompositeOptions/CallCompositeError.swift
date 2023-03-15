@@ -22,6 +22,9 @@ public struct CallCompositeErrorCode {
     /// Error when microphone did not have the permission and join call failed.
     public static let microphonePermissionNotGranted: String = "microphonePermissionNotGranted"
 
+    /// Error when internet is unavailable and call join fails
+    public static let internetDisconnected: String = "internetDisconnected"
+
     /// Error when a participant is evicted from the call by another participant
     static let callEvicted: String = "callEvicted"
 
