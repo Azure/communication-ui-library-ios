@@ -12,7 +12,8 @@ public enum JoinLocator {
     case groupCall(groupId: UUID)
     /// Teams Meeting with string teamsLink URI.
     case teamsMeeting(teamsLink: String)
-    /// Rooms Call with room ID.
+    /// Rooms Call with room ID. You need to use LocalOptions parameter for
+    /// CallComposite.launch() method with roleHint provided.
     case roomCall(roomId: String)
 }
 
