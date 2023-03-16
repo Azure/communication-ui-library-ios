@@ -23,6 +23,9 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
         self.accessibilityProvider = accessibilityProvider
         self.store = store
         self.audioPermission = store.state.permissionState.audioPermission
+        if isDisplayed {
+            handleOffline()
+        }
         store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
@@ -55,10 +58,16 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
             store.dispatch(action: .errorAction(.fatalErrorUpdated(
                 internalError: .callJoinFailedByMicPermission, error: nil)))
         }
+        if isDisplayed {
+            handleOffline()
+        }
     }
     func setupAudioPermissions() {
         if audioPermission == .notAsked {
             store.dispatch(action: .permissionAction(.audioPermissionRequested))
         }
+    }
+    private func handleOffline() {
+        store.dispatch(action: .errorAction(.fatalErrorUpdated(internalError: .internetDisconnected, error: nil)))
     }
 }
