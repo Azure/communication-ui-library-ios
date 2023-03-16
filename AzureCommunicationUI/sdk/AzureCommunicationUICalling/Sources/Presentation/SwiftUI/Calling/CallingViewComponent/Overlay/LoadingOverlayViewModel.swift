@@ -14,13 +14,17 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
     private var operationStatus: OperationStatus = .bypassRequested
     private var audioPermission: AppPermission.Status = .unknown
     var cancellables = Set<AnyCancellable>()
+    var networkManager: NetworkManager
 
     init(localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
+         networkManager: NetworkManager,
          store: Store<AppState, Action>
     ) {
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
+        self.networkManager = networkManager
+        self.networkManager.startMonitor()
         self.store = store
         self.audioPermission = store.state.permissionState.audioPermission
         if isDisplayed {
@@ -31,6 +35,10 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
             .sink { [weak self] state in
                 self?.receive(state)
             }.store(in: &cancellables)
+    }
+
+    deinit {
+        networkManager.stopMonitor()
     }
 
     var title: String {
@@ -58,8 +66,9 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
             store.dispatch(action: .errorAction(.fatalErrorUpdated(
                 internalError: .callJoinFailedByMicPermission, error: nil)))
         }
-        if isDisplayed {
+        guard networkManager.isOnline() else {
             handleOffline()
+            return
         }
     }
     func setupAudioPermissions() {

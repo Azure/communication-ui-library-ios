@@ -18,9 +18,11 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
         let cameraState = localOptions.cameraOnByDefault
         ?? false ? LocalUserState.CameraState(operation: .on, device: .front, transmission: .local) :
         LocalUserState.CameraState(operation: .off, device: .front, transmission: .local)
+
         let audioState = localOptions.microphoneOnByDefault
         ?? false ? LocalUserState.AudioState(operation: .on, device: .receiverSelected) :
         LocalUserState.AudioState(operation: .off, device: .receiverSelected)
+
         let localUserState = LocalUserState(cameraState: cameraState, audioState: audioState, displayName: displayName)
 
         let callingState = localOptions.skipSetup ?? false ?

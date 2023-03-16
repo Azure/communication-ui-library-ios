@@ -26,7 +26,8 @@ class ControlBarViewModel: ObservableObject {
     var moreButtonViewModel: IconButtonViewModel!
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
     var debugInfoSharingActivityViewModel: DebugInfoSharingActivityViewModel!
-    var callingState = CallingState()
+    var callingStatus: CallingStatus = .none
+    var operationStatus: OperationStatus = .none
     var cameraState = LocalUserState.CameraState(operation: .off,
                                                  device: .front,
                                                  transmission: .local)
@@ -161,20 +162,20 @@ class ControlBarViewModel: ObservableObject {
 
     func isCameraDisabled() -> Bool {
         cameraPermission == .denied || cameraState.operation == .pending ||
-        callingState.status == .localHold || isCameraStateUpdating || isBypassLoadingOverlay()
+        callingStatus == .localHold || isCameraStateUpdating || isBypassLoadingOverlay()
     }
 
     func isMicDisabled() -> Bool {
-        audioState.operation == .pending || callingState.status == .localHold || isBypassLoadingOverlay()
+        audioState.operation == .pending || callingStatus == .localHold || isBypassLoadingOverlay()
     }
 
     func isAudioDeviceDisabled() -> Bool {
-        callingState.status == .localHold || isBypassLoadingOverlay()
+        callingStatus == .localHold || isBypassLoadingOverlay()
     }
 
     func isBypassLoadingOverlay() -> Bool {
-        callingState.operationStatus == .bypassRequested && callingState.status != .connected &&
-                                                             callingState.status != .inLobby
+        operationStatus == .bypassRequested && callingStatus != .connected &&
+        callingStatus != .inLobby
     }
 
     func getLeaveCallButtonViewModel() -> DrawerListItemViewModel {
@@ -218,7 +219,8 @@ class ControlBarViewModel: ObservableObject {
     func update(localUserState: LocalUserState,
                 permissionState: PermissionState,
                 callingState: CallingState) {
-        self.callingState = callingState
+        callingStatus = callingState.status
+        operationStatus = callingState.operationStatus
         if cameraPermission != permissionState.cameraPermission {
             cameraPermission = permissionState.cameraPermission
         }

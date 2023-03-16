@@ -304,6 +304,8 @@ extension CallingDemoView {
             errorMessage = "Token is invalid"
         case CallCompositeErrorCode.microphonePermissionNotGranted:
             errorMessage = "Microphone Permission is denied"
+        case CallCompositeErrorCode.internetDisconnected:
+            errorMessage = "Internet error"
         default:
             errorMessage = "Unknown error"
         }
