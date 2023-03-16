@@ -168,6 +168,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     func makeLoadingOverlayViewModel() -> LoadingOverlayViewModel {
         return loadingOverlayViewModel ?? LoadingOverlayViewModel(localizationProvider: localizationProvider,
                                                               accessibilityProvider: accessibilityProvider,
+                                                                  networkManager: NetworkManager(),
                                                                   store: store
         )
     }

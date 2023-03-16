@@ -33,6 +33,7 @@ extension LoadingOverlayViewModelTests {
     func makeSUT(localizationProvider: LocalizationProviderMocking? = nil) -> LoadingOverlayViewModel {
         return LoadingOverlayViewModel(localizationProvider: localizationProvider ?? LocalizationProvider(logger: LoggerMocking()),
                                      accessibilityProvider: AccessibilityProviderMocking(),
+                                       networkManager: NetworkManager(),
                                        store: storeFactory.store
         )
     }
