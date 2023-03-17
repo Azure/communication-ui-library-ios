@@ -35,7 +35,7 @@ enum CallCompositeInternalError: Error, Equatable {
         case .callJoinFailedByMicPermission:
             return CallCompositeErrorCode.microphonePermissionNotGranted
         case .internetDisconnected:
-            return CallCompositeErrorCode.internetNotAvailable
+            return CallCompositeErrorCode.networkConnectionNotAvailable
         case .callHoldFailed,
                 .callResumeFailed,
                 .callEvicted,

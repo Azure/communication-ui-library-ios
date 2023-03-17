@@ -325,7 +325,7 @@ class CallingDemoViewController: UIViewController {
             errorMessage = "Token is invalid"
         case CallCompositeErrorCode.microphonePermissionNotGranted:
             errorMessage = "Microphone Permission is denied"
-        case CallCompositeErrorCode.internetNotAvailable:
+        case CallCompositeErrorCode.networkConnectionNotAvailable:
             errorMessage = "Internet error"
         default:
             errorMessage = "Unknown error"
