@@ -231,7 +231,7 @@ class CallingDemoViewController: UIViewController {
                                         setupScreenViewData: setupScreenViewData,
                                         cameraOnByDefault: envConfigSubject.cameraDefault,
                                         microphoneOnByDefault: envConfigSubject.micDefault,
-                                        skipSetup: envConfigSubject.skipSetupScreen
+                                        bypassSetupScreen: envConfigSubject.skipSetupScreen
         )
 
         if let credential = try? await getTokenCredential() {
