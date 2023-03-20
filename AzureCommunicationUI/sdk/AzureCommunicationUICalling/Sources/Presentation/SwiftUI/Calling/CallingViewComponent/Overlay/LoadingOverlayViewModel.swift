@@ -67,7 +67,9 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
                 internalError: .callJoinFailedByMicPermission, error: nil)))
         }
         guard networkManager.isOnline() else {
-            handleOffline()
+            if operationStatus == .bypassRequested {
+                handleOffline()
+            }
             return
         }
     }
