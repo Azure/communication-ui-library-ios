@@ -25,9 +25,9 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
 
         let localUserState = LocalUserState(cameraState: cameraState, audioState: audioState, displayName: displayName)
 
-        let callingState = localOptions.skipSetup ?? false ?
+        let callingState = localOptions.bypassSetupScreen ?? false ?
                 CallingState(operationStatus: .bypassRequested): CallingState()
-        let navigationStatus: NavigationStatus = localOptions.skipSetup ?? false ? .inCall : .setup
+        let navigationStatus: NavigationStatus = localOptions.bypassSetupScreen ?? false ? .inCall : .setup
         let navigationState = NavigationState(status: navigationStatus)
         return .init(
             reducer: .appStateReducer(),
