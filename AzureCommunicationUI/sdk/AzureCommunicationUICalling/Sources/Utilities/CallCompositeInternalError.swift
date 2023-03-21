@@ -18,7 +18,7 @@ enum CallCompositeInternalError: Error, Equatable {
     case callJoinFailedByMicPermission
     case cameraSwitchFailed
     case cameraOnFailed
-    case internetDisconnected
+    case networkConnectionNotAvailable
 
     func toCallCompositeErrorCode() -> String? {
         switch self {
@@ -34,7 +34,7 @@ enum CallCompositeInternalError: Error, Equatable {
             return CallCompositeErrorCode.cameraFailure
         case .callJoinFailedByMicPermission:
             return CallCompositeErrorCode.microphonePermissionNotGranted
-        case .internetDisconnected:
+        case .networkConnectionNotAvailable:
             return CallCompositeErrorCode.networkConnectionNotAvailable
         case .callHoldFailed,
                 .callResumeFailed,
@@ -52,7 +52,7 @@ enum CallCompositeInternalError: Error, Equatable {
                 .callTokenFailed,
                 .callJoinFailed,
                 .callJoinFailedByMicPermission,
-                .internetDisconnected,
+                .networkConnectionNotAvailable,
                 .callEndFailed:
             return true
         case .callHoldFailed,
@@ -80,6 +80,7 @@ extension CallCompositeInternalError {
             (.callEvicted, .callEvicted),
             (.callDenied, .callDenied),
             (.cameraSwitchFailed, .cameraSwitchFailed),
+            (.networkConnectionNotAvailable, .networkConnectionNotAvailable),
             (.cameraOnFailed, .cameraOnFailed):
             return true
         default:

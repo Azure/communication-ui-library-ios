@@ -63,19 +63,19 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
             store.dispatch(action: .errorAction(.fatalErrorUpdated(
                 internalError: .callJoinFailedByMicPermission, error: nil)))
         }
-        guard networkManager.isOnline() else {
-            if operationStatus == .bypassRequested {
-                handleOffline()
-            }
-            return
-        }
     }
     func setupAudioPermissions() {
         if audioPermission == .notAsked {
             store.dispatch(action: .permissionAction(.audioPermissionRequested))
         }
     }
-    private func handleOffline() {
-        store.dispatch(action: .errorAction(.fatalErrorUpdated(internalError: .internetDisconnected, error: nil)))
+    func handleOffline() {
+        guard networkManager.isOnline() else {
+            if operationStatus == .bypassRequested {
+                store.dispatch(action: .errorAction(
+                    .fatalErrorUpdated(internalError: .networkConnectionNotAvailable, error: nil)))
+            }
+            return
+        }
     }
 }
