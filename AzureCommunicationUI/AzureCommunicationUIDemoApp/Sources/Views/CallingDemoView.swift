@@ -12,11 +12,11 @@ import AVFoundation
 import AzureCommunicationUICalling
 #endif
 struct CallingDemoView: View {
-    @State var isErrorDisplayed: Bool = false
+    @State var isAlertDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
     @State var isStartExperienceLoading: Bool = false
-    @State var errorMessage: String = ""
-    @State var isShowingCallHistory: Bool = false
+    @State var alertTitle: String = ""
+    @State var alertMessage: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
 
@@ -34,28 +34,19 @@ struct CallingDemoView: View {
             meetingSelector
             settingButton
             showCallHistoryButton
-            .alert(isPresented: $isShowingCallHistory) {
-                Alert(
-                    title: Text(callingViewModel.callHistoryTitle),
-                    message: Text(callingViewModel.callHistoryMessage),
-                    dismissButton:
-                            .default(Text("Dismiss"), action: {
-                                isShowingCallHistory = false
-                            }))
-            }
             startExperienceButton
-            .alert(isPresented: $isErrorDisplayed) {
-                 Alert(
-                    title: Text("Error"),
-                    message: Text(errorMessage),
-                    dismissButton:
-                            .default(Text("Dismiss"), action: {
-                        isErrorDisplayed = false
-                    }))
-            }
             Spacer()
         }
         .padding()
+        .alert(isPresented: $isAlertDisplayed) {
+            Alert(
+                title: Text(alertTitle),
+                message: Text(alertMessage),
+                dismissButton:
+                        .default(Text("Dismiss"), action: {
+                            isAlertDisplayed = false
+                }))
+        }
         .sheet(isPresented: $isSettingsDisplayed) {
             SettingsView(envConfigSubject: envConfigSubject)
         }
@@ -150,7 +141,9 @@ struct CallingDemoView: View {
 
     var showCallHistoryButton: some View {
         Button("Show call history") {
-            isShowingCallHistory = true
+            alertTitle = callingViewModel.callHistoryTitle
+            alertMessage = callingViewModel.callHistoryMessage
+            isAlertDisplayed = true
         }
         .buttonStyle(DemoButtonStyle())
     }
@@ -301,15 +294,16 @@ extension CallingDemoView {
     private func showError(for errorCode: String) {
         switch errorCode {
         case CallCompositeErrorCode.tokenExpired:
-            errorMessage = "Token is invalid"
+            alertMessage = "Token is invalid"
         case CallCompositeErrorCode.microphonePermissionNotGranted:
-            errorMessage = "Microphone Permission is denied"
+            alertMessage = "Microphone Permission is denied"
         case CallCompositeErrorCode.networkConnectionNotAvailable:
-            errorMessage = "Internet error"
+            alertMessage = "Internet error"
         default:
-            errorMessage = "Unknown error"
+            alertMessage = "Unknown error"
         }
-        isErrorDisplayed = true
+        alertTitle = "Error"
+        isAlertDisplayed = true
     }
 
     private func getAudioPermissionStatus() -> AVAudioSession.RecordPermission {
