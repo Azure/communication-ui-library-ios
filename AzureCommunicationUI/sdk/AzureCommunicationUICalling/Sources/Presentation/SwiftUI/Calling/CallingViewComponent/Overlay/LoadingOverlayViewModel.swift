@@ -27,9 +27,6 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
         self.networkManager.startMonitor()
         self.store = store
         self.audioPermission = store.state.permissionState.audioPermission
-        if isDisplayed {
-            handleOffline()
-        }
         store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
