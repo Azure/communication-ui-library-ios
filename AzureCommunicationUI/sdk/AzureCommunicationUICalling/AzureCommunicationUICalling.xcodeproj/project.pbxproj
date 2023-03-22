@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05317E2629A2E1FB00149F57 /* CallHistoryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2529A2E1FB00149F57 /* CallHistoryServiceTests.swift */; };
+		05317E2829A2E2B900149F57 /* CallHistoryRepositoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2729A2E2B900149F57 /* CallHistoryRepositoryMocking.swift */; };
+		05317E2A29A7DBC100149F57 /* CallHistoryRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */; };
+		05317E3729B7D6B500149F57 /* CallHistoryServiceMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E3629B7D6B500149F57 /* CallHistoryServiceMocking.swift */; };
+		05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */; };
+		05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C829297F516D006EDD0D /* CallHistoryService.swift */; };
+		05C1C831297F5680006EDD0D /* CallHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */; };
 		1B315123284EA8630043231B /* OnHoldOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */; };
 		1B3A8EED285129CC002ED55A /* AudioSessionReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */; };
 		1B5F169D27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */; };
@@ -269,6 +276,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		05317E2529A2E1FB00149F57 /* CallHistoryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryServiceTests.swift; sourceTree = "<group>"; };
+		05317E2729A2E2B900149F57 /* CallHistoryRepositoryMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRepositoryMocking.swift; sourceTree = "<group>"; };
+		05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRepositoryTests.swift; sourceTree = "<group>"; };
+		05317E3629B7D6B500149F57 /* CallHistoryServiceMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryServiceMocking.swift; sourceTree = "<group>"; };
+		05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRecord.swift; sourceTree = "<group>"; };
+		05C1C829297F516D006EDD0D /* CallHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryService.swift; sourceTree = "<group>"; };
+		05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryRepository.swift; sourceTree = "<group>"; };
 		1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionReducerTests.swift; sourceTree = "<group>"; };
 		1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLeaveCallConfirmationList.swift; sourceTree = "<group>"; };
@@ -588,6 +602,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		05C1C82F297F5680006EDD0D /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		1F03D3CC2638A6860055C456 /* Calling */ = {
 			isa = PBXGroup;
 			children = (
@@ -869,6 +891,7 @@
 				75C1EE0D28E4BEF600FF78B1 /* AzureCommunicationCalling */,
 				1F6470A82639DCFA0008B9E9 /* CallingService.swift */,
 				1F48CF1E283447F400A44D58 /* CallingSDKWrapperProtocol.swift */,
+				05C1C829297F516D006EDD0D /* CallHistoryService.swift */,
 			);
 			path = Calling;
 			sourceTree = "<group>";
@@ -1102,6 +1125,8 @@
 			children = (
 				A8ED232C2645C637008A26B2 /* CallingServiceTests.swift */,
 				A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */,
+				05317E2529A2E1FB00149F57 /* CallHistoryServiceTests.swift */,
+				05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1159,6 +1184,7 @@
 				759BDEFC28FF0A81002B6853 /* SupportedLocale.swift */,
 				1F94DADB2673E87700691D1E /* ThemeOptions.swift */,
 				2831DADE29AEC2A4005ADE30 /* ParticipantRole.swift */,
+				05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1193,6 +1219,7 @@
 				1F2BED62262F859D00D98266 /* Redux */,
 				1FBCB6AD2649DA4100F57EEA /* Model */,
 				1F2BED862631EB5100D98266 /* Service */,
+				05C1C82F297F5680006EDD0D /* Data */,
 				1F6470AA2639FE560008B9E9 /* Utilities */,
 				505460EB27BAC6E900040467 /* Localization */,
 				A8659FC92602A22000C807DE /* Info.plist */,
@@ -1212,6 +1239,8 @@
 				A869A62F26546A2D003CC4F2 /* CallingServiceMocking.swift */,
 				1F4A24BB26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift */,
 				FA25C13D28FF711E00417715 /* DebugInfoManagerMocking.swift */,
+				05317E3629B7D6B500149F57 /* CallHistoryServiceMocking.swift */,
+				05317E2729A2E2B900149F57 /* CallHistoryRepositoryMocking.swift */,
 				5A3146B0B684264EB57EDA69 /* ErrorMocking.swift */,
 				50B390D027D82D7E0010A2ED /* LocalizationProviderMocking.swift */,
 				A869A63026546A2D003CC4F2 /* LoggerMocking.swift */,
@@ -1583,6 +1612,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				05317E2829A2E2B900149F57 /* CallHistoryRepositoryMocking.swift in Sources */,
 				A830C317264D8A0C00766E3D /* ContainerViewModelTests.swift in Sources */,
 				A8ED23302649EA61008A26B2 /* NavigationRouterTests.swift in Sources */,
 				50B390DA27DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift in Sources */,
@@ -1593,6 +1623,7 @@
 				FAD845422819FC8E007DAFE1 /* RemoteParticipantsManagerTests.swift in Sources */,
 				A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */,
 				88BC24C12832D29D00818446 /* AvatarManagerTests.swift in Sources */,
+				05317E2629A2E1FB00149F57 /* CallHistoryServiceTests.swift in Sources */,
 				FAC1FECF27C98FC200D95845 /* InfoHeaderViewModelMocking.swift in Sources */,
 				FAC1FECA27C98FC200D95845 /* ControlBarViewModelMocking.swift in Sources */,
 				FA03CC8927C8189900986D4E /* PrimaryButtonViewModelMocking.swift in Sources */,
@@ -1614,6 +1645,7 @@
 				88701EB42742D54C00660EAB /* ErrorReducerTests.swift in Sources */,
 				FAC1FED027C98FC200D95845 /* BannerTextViewModelMocking.swift in Sources */,
 				1F09A11426BA484000BACED7 /* CallingViewModelTests.swift in Sources */,
+				05317E3729B7D6B500149F57 /* CallHistoryServiceMocking.swift in Sources */,
 				FA62233727DAD9AF008B5466 /* AccessibilityProviderMocking.swift in Sources */,
 				1B9668AF2852A114002F5783 /* OnHoldOverlayViewModelMocking.swift in Sources */,
 				FAC1FECC27C98FC200D95845 /* BannerViewModelMocking.swift in Sources */,
@@ -1635,6 +1667,7 @@
 				A8ED232D2645C637008A26B2 /* CallingServiceTests.swift in Sources */,
 				1F09A11526BA484000BACED7 /* ParticipantGridsViewModelTests.swift in Sources */,
 				881D8F7027F2327B008EC897 /* ErrorInfoViewModelTests.swift in Sources */,
+				05317E2A29A7DBC100149F57 /* CallHistoryRepositoryTests.swift in Sources */,
 				98966FE326A5E58D00069857 /* SetupControlBarViewModelTests.swift in Sources */,
 				FA03CC8527C8189900986D4E /* ErrorInfoViewModelMocking.swift in Sources */,
 				A830C30C264D7C0900766E3D /* PermissionReducerTests.swift in Sources */,
@@ -1732,6 +1765,7 @@
 				985DF376269E07E700CFDA55 /* PrimaryButton.swift in Sources */,
 				1FBCB6AF2649DC7900F57EEA /* ParticipantInfoModel.swift in Sources */,
 				988799932746CDEC00AA3759 /* LockPhoneOrientation.swift in Sources */,
+				05C1C831297F5680006EDD0D /* CallHistoryRepository.swift in Sources */,
 				7529F5DE29661888002F7CE1 /* BaseLocalizationProvider.swift in Sources */,
 				1F47F78726E9E18E000AE4B7 /* DrawerContainerViewController.swift in Sources */,
 				1FBCB6AA2645AC2F00F57EEA /* VideoRenderView.swift in Sources */,
@@ -1765,6 +1799,7 @@
 				1F2BEDBB26328EBA00D98266 /* PermissionReducer.swift in Sources */,
 				1FBCB6B9264BA90000F57EEA /* ParticipantGridCellVideoView.swift in Sources */,
 				1F48B401274879F000B6E5F9 /* DiagnosticConfig.swift in Sources */,
+				05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */,
 				9823AB4926A13F220006266D /* PreviewAreaView.swift in Sources */,
 				50FA46212698EA7A001844AC /* IconWithLabelButtonViewModel.swift in Sources */,
 				50E2D69926F4FA05006B0EF4 /* ParticipantsListCellViewModel.swift in Sources */,
@@ -1804,6 +1839,7 @@
 				1F13D36C26A8B83300E31666 /* RemoteParticipantsState.swift in Sources */,
 				1FFEA01426A68D0D00E90816 /* FontExtension.swift in Sources */,
 				1FBCB666264519DA00F57EEA /* VideoViewManager.swift in Sources */,
+				05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */,
 				50FA461026829B7A001844AC /* ControlBarViewModel.swift in Sources */,
 				1F2BED882631EB7900D98266 /* PermissionsManager.swift in Sources */,
 				1FA23F9E265DA21400B4A080 /* VideoStreamInfoModel.swift in Sources */,

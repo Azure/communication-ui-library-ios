@@ -40,14 +40,14 @@ public class CallComposite {
     private var avatarViewManager: AvatarViewManagerProtocol?
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
+    private var callHistoryService: CallHistoryService?
+    private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
+        userDefaults: UserDefaults.standard)
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
-        guard let debugInfoManager = debugInfoManager else {
-            return DebugInfo()
-        }
-
-        return debugInfoManager.getDebugInfo()
+        let localDebugInfoManager = debugInfoManager ?? createDebugInfoManager()
+        return localDebugInfoManager.getDebugInfo()
     }
 
     /// Create an instance of CallComposite with options.
@@ -162,9 +162,9 @@ public class CallComposite {
             callCompositeEventsHandler: callCompositeEventsHandler,
             avatarViewManager: avatarViewManager
         )
-
-        let debugInfoManager = DebugInfoManager(store: store)
+        let debugInfoManager = createDebugInfoManager()
         self.debugInfoManager = debugInfoManager
+        self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
 
         return CompositeViewFactory(
             logger: logger,
@@ -182,6 +182,10 @@ public class CallComposite {
         )
     }
 
+    private func createDebugInfoManager() -> DebugInfoManagerProtocol {
+        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository)
+    }
+
     private func cleanUpManagers() {
         self.errorManager = nil
         self.lifeCycleManager = nil
@@ -190,6 +194,7 @@ public class CallComposite {
         self.avatarViewManager = nil
         self.remoteParticipantsManager = nil
         self.debugInfoManager = nil
+        self.callHistoryService = nil
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,

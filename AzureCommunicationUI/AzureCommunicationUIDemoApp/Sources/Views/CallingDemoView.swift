@@ -11,11 +11,13 @@ import AzureCommunicationCommon
 import AzureCommunicationUICalling
 #endif
 struct CallingDemoView: View {
-    @State var isErrorDisplayed: Bool = false
+    @State var isAlertDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
     @State var isStartExperienceLoading: Bool = false
-    @State var errorMessage: String = ""
+    @State var alertTitle: String = ""
+    @State var alertMessage: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
+    @ObservedObject var callingViewModel: CallingDemoViewModel
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
@@ -37,17 +39,18 @@ struct CallingDemoView: View {
                 roomRoleSelector.hidden()
             }
             settingButton
+            showCallHistoryButton
             startExperienceButton
             Spacer()
         }
         .padding()
-        .alert(isPresented: $isErrorDisplayed) {
+        .alert(isPresented: $isAlertDisplayed) {
             Alert(
-                title: Text("Error"),
-                message: Text(errorMessage),
+                title: Text(alertTitle),
+                message: Text(alertMessage),
                 dismissButton:
                         .default(Text("Dismiss"), action: {
-                    isErrorDisplayed = false
+                            isAlertDisplayed = false
                 }))
         }
         .sheet(isPresented: $isSettingsDisplayed) {
@@ -152,6 +155,15 @@ struct CallingDemoView: View {
         .buttonStyle(DemoButtonStyle())
         .disabled(isStartExperienceDisabled || isStartExperienceLoading)
         .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+    }
+
+    var showCallHistoryButton: some View {
+        Button("Show call history") {
+            alertTitle = callingViewModel.callHistoryTitle
+            alertMessage = callingViewModel.callHistoryMessage
+            isAlertDisplayed = true
+        }
+        .buttonStyle(DemoButtonStyle())
     }
 
     var isStartExperienceDisabled: Bool {
@@ -323,17 +335,18 @@ extension CallingDemoView {
     private func showError(for errorCode: String) {
         switch errorCode {
         case CallCompositeErrorCode.tokenExpired:
-            errorMessage = "Token is invalid"
+            alertMessage = "Token is invalid"
         default:
-            errorMessage = "Unknown error"
+            alertMessage = "Unknown error"
         }
-        isErrorDisplayed = true
+        alertTitle = "Error"
+        isAlertDisplayed = true
     }
 
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onError \(error)")
         print("::::CallingDemoView error.code \(error.code)")
-        print("::::CallingDemoView debug info \(callComposite.debugInfo.currentOrLastCallId ?? "Unknown")")
+        callingViewModel.callHistory.last?.callIds.forEach { print("::::CallingDemoView call id \($0)") }
         showError(for: error.code)
     }
 

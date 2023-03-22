@@ -23,6 +23,7 @@ class CallingDemoViewController: UIViewController {
         static let buttonHorizontalInset: CGFloat = 20.0
         static let buttonVerticalInset: CGFloat = 10.0
     }
+    var callingViewModel: CallingDemoViewModel
 
     private var selectedAcsTokenType: ACSTokenType = .token
     private var acsTokenUrlTextField: UITextField!
@@ -34,6 +35,7 @@ class CallingDemoViewController: UIViewController {
     private var roomCallTextField: UITextField!
     private var selectedRoomRoleType: RoomRoleType = .presenter
     private var settingsButton: UIButton!
+    private var showCallHistoryButton: UIButton!
     private var startExperienceButton: UIButton!
     private var acsTokenTypeSegmentedControl: UISegmentedControl!
     private var meetingTypeSegmentedControl: UISegmentedControl!
@@ -82,15 +84,19 @@ class CallingDemoViewController: UIViewController {
 
 #if DEBUG
     init(envConfigSubject: EnvConfigSubject,
+         callingViewModel: CallingDemoViewModel,
          callingSDKHandlerMock: UITestCallingSDKWrapper? = nil) {
         self.envConfigSubject = envConfigSubject
+        self.callingViewModel = callingViewModel
         self.callingSDKWrapperMock = callingSDKHandlerMock
         super.init(nibName: nil, bundle: nil)
         self.combineEnvConfigSubject()
     }
 #else
-    init(envConfigSubject: EnvConfigSubject) {
+    init(envConfigSubject: EnvConfigSubject,
+         callingViewModel: CallingDemoViewModel) {
         self.envConfigSubject = envConfigSubject
+        self.callingViewModel = callingViewModel
         super.init(nibName: nil, bundle: nil)
         self.combineEnvConfigSubject()
     }
@@ -168,7 +174,7 @@ class CallingDemoViewController: UIViewController {
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
         print("::::UIKitDemoView::getEventsHandler::onError \(error)")
         print("::::UIKitDemoView error.code \(error.code)")
-        print("::::SwiftUIDemoView debug info \(callComposite.debugInfo.currentOrLastCallId ?? "Unknown")")
+        callingViewModel.callHistory.last?.callIds.forEach { print("::::UIKitDemoView call id \($0)") }
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
@@ -385,6 +391,16 @@ class CallingDemoViewController: UIViewController {
         present(settingsViewHostingController, animated: true, completion: nil)
     }
 
+    @objc func onShowHistoryBtnPressed() {
+        let errorAlert = UIAlertController(title: callingViewModel.callHistoryTitle,
+                                           message: callingViewModel.callHistoryMessage,
+                                           preferredStyle: .alert)
+        errorAlert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+        present(errorAlert,
+                animated: true,
+                completion: nil)
+    }
+
     @objc func onStartExperienceBtnPressed() {
         startExperienceButton.isEnabled = false
         startExperienceButton.backgroundColor = .systemGray3
@@ -549,6 +565,16 @@ class CallingDemoViewController: UIViewController {
                                                              right: LayoutConstants.buttonHorizontalInset)
         settingsButton.accessibilityIdentifier = AccessibilityId.settingsButtonAccessibilityID.rawValue
 
+        showCallHistoryButton = UIButton()
+        showCallHistoryButton.setTitle("Show call history", for: .normal)
+        showCallHistoryButton.backgroundColor = .systemBlue
+        showCallHistoryButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
+                                                                    left: LayoutConstants.buttonHorizontalInset,
+                                                                    bottom: LayoutConstants.buttonVerticalInset,
+                                                                    right: LayoutConstants.buttonHorizontalInset)
+        showCallHistoryButton.layer.cornerRadius = 8
+        showCallHistoryButton.addTarget(self, action: #selector(onShowHistoryBtnPressed), for: .touchUpInside)
+
         startExperienceButton = UIButton()
         startExperienceButton.backgroundColor = .systemBlue
         startExperienceButton.setTitleColor(UIColor.white, for: .normal)
@@ -582,6 +608,22 @@ class CallingDemoViewController: UIViewController {
         settingsButtonHStack.distribution = .fill
         settingsButtonHStack.translatesAutoresizingMaskIntoConstraints = false
 
+        let showHistoryButtonHSpacer1 = UIView()
+        showHistoryButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
+        showHistoryButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let showHistoryButtonHSpacer2 = UIView()
+        showHistoryButtonHSpacer2.translatesAutoresizingMaskIntoConstraints = false
+        showHistoryButtonHSpacer2.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let showHistoryButtonHStack = UIStackView(arrangedSubviews: [showHistoryButtonHSpacer1,
+                                                                  showCallHistoryButton,
+                                                                  showHistoryButtonHSpacer2])
+        showHistoryButtonHStack.axis = .horizontal
+        showHistoryButtonHStack.alignment = .fill
+        showHistoryButtonHStack.distribution = .fill
+        showHistoryButtonHStack.translatesAutoresizingMaskIntoConstraints = false
+
         let startButtonHSpacer1 = UIView()
         startButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
         startButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
@@ -612,6 +654,7 @@ class CallingDemoViewController: UIViewController {
                                                    roomCallTextField,
                                                    roomRoleTypeSegmentedControl,
                                                    settingsButtonHStack,
+                                                   showHistoryButtonHStack,
                                                    startButtonHStack])
         stackView.spacing = LayoutConstants.stackViewSpacingPortrait
         stackView.axis = .vertical
@@ -643,6 +686,7 @@ class CallingDemoViewController: UIViewController {
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
 
         settingButtonHSpacer2.widthAnchor.constraint(equalTo: settingButtonHSpacer1.widthAnchor).isActive = true
+        showHistoryButtonHSpacer2.widthAnchor.constraint(equalTo: showHistoryButtonHSpacer1.widthAnchor).isActive = true
         startButtonHSpacer2.widthAnchor.constraint(equalTo: startButtonHSpacer1.widthAnchor).isActive = true
 
         updateAcsTokenTypeFields()

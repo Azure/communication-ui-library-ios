@@ -11,30 +11,21 @@ protocol DebugInfoManagerProtocol {
 }
 
 class DebugInfoManager: DebugInfoManagerProtocol {
-    private let store: Store<AppState, Action>
-    private var cancellables = Set<AnyCancellable>()
-    private var callId: String?
+    private let callHistoryRepository: CallHistoryRepository
 
-    init(store: Store<AppState, Action>) {
-        self.store = store
-        self.store.$state
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] state in
-                self?.receive(state)
-            }.store(in: &cancellables)
+    init(callHistoryRepository: CallHistoryRepository) {
+        self.callHistoryRepository = callHistoryRepository
     }
 
-    private func receive(_ state: AppState) {
-        // call id should be persisted after a call is finished
-        guard let updatedCallId = state.callingState.callId,
-              !updatedCallId.isEmpty else {
-            return
-        }
-
-        callId = state.callingState.callId
-    }
-
+    /// The history of calls up to 30 days. Ordered ascending by call started date.
     func getDebugInfo() -> DebugInfo {
-        return DebugInfo(lastCallId: callId)
+        return DebugInfo(callHistoryRecords: getCallHistory())
+    }
+
+    private func getCallHistory() -> [CallHistoryRecord] {
+        return callHistoryRepository.getAll()
+            .sorted(by: { a, b in
+                return a.callStartedOn < b.callStartedOn
+            })
     }
 }

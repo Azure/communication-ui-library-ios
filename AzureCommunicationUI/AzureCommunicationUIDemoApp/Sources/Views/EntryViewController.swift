@@ -16,6 +16,7 @@ class EntryViewController: UIViewController {
     private var callingSDKWrapperMock: UITestCallingSDKWrapper?
 #endif
     private var cancellables = Set<AnyCancellable>()
+    private let callingViewModel = CallingDemoViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -151,9 +152,10 @@ class EntryViewController: UIViewController {
     @objc func onCallingSwiftUIPressed() {
 #if DEBUG
         let swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject,
+                                              callingViewModel: callingViewModel,
                                               callingSDKWrapperMock: callingSDKWrapperMock)
 #else
-        let swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject)
+        let swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject, callingViewModel: callingViewModel)
 #endif
         let swiftUIDemoViewHostingController = UIHostingController(rootView: swiftUIDemoView)
         swiftUIDemoViewHostingController.modalPresentationStyle = .fullScreen
@@ -163,9 +165,11 @@ class EntryViewController: UIViewController {
     @objc func onCallingUIKitPressed() {
 #if DEBUG
         let uiKitDemoViewController = CallingDemoViewController(envConfigSubject: envConfigSubject,
+                                                                callingViewModel: callingViewModel,
                                                                 callingSDKHandlerMock: callingSDKWrapperMock)
 #else
-        let uiKitDemoViewController = CallingDemoViewController(envConfigSubject: envConfigSubject)
+        let uiKitDemoViewController = CallingDemoViewController(envConfigSubject: envConfigSubject,
+                                                                callingViewModel: callingViewModel)
 #endif
         uiKitDemoViewController.modalPresentationStyle = .fullScreen
         present(uiKitDemoViewController, animated: true, completion: nil)
