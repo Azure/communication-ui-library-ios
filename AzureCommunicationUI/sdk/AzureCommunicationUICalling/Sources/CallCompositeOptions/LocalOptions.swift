@@ -12,14 +12,25 @@ public struct LocalOptions {
     let participantViewData: ParticipantViewData?
     /// The SetupScreenViewData is used for call setup screen
     let setupScreenViewData: SetupScreenViewData?
+    /// Hint the role of the user when the role is not available before a Rooms call is started.
+    /// This value should be obtained using the Rooms API. This role will determine permissions in the
+    /// Setup screen of the CallComposite.
+    /// The true role of the user will be synced with ACS services when a Rooms call starts.
+    let roleHint: ParticipantRole?
     /// Create an instance of LocalOptions. All information in this object is only stored locally in the composite.
     /// - Parameters:
     ///    - participantViewData: The ParticipantViewData to be displayed for local participants avatar
     ///    - setupScreenViewData: The SetupScreenViewData to be used to set up views on setup screen
+    /// Use this to hint the role of the user when the role is not available before a Rooms call is started.
+    /// This value should be obtained using the Rooms API. This role will determine permissions in the
+    /// Setup screen of the CallComposite.
+    /// The true role of the user will be synced with ACS services when a Rooms call starts.
     public init(participantViewData: ParticipantViewData? = nil,
-                setupScreenViewData: SetupScreenViewData? = nil) {
+                setupScreenViewData: SetupScreenViewData? = nil,
+                roleHint: ParticipantRole? = nil) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
+        self.roleHint = roleHint
     }
 }
 /// Object to represent participants data
