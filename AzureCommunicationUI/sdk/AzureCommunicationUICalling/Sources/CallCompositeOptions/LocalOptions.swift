@@ -12,9 +12,9 @@ public struct LocalOptions {
     let participantViewData: ParticipantViewData?
     /// The SetupScreenViewData is used for call setup screen
     let setupScreenViewData: SetupScreenViewData?
-    ///  The CarmeraOnByDefault is used when we skip the setup screen
+    ///  The StartWithCamera is used for setup the default Camera
     let startWithCamera: Bool?
-    ///  The MicrophoneOnByDefacult is used when we skip the setup screen
+    ///  The StartWithMicrophone is used for setup the default Microphone
     let startWithMicrophone: Bool?
     ///  The SkipSetup is used when we skip the setup screen
     let skipSetupScreen: Bool?
