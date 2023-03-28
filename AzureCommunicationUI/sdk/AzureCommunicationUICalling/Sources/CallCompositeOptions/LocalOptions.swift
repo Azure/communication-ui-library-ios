@@ -13,11 +13,11 @@ public struct LocalOptions {
     /// The SetupScreenViewData is used for call setup screen
     let setupScreenViewData: SetupScreenViewData?
     ///  The CarmeraOnByDefault is used when we skip the setup screen
-    let cameraOnByDefault: Bool?
+    let startWithCamera: Bool?
     ///  The MicrophoneOnByDefacult is used when we skip the setup screen
-    let microphoneOnByDefault: Bool?
+    let startWithMicrophone: Bool?
     ///  The SkipSetup is used when we skip the setup screen
-    let bypassSetupScreen: Bool?
+    let skipSetupScreen: Bool?
     /// Hint the role of the user when the role is not available before a Rooms call is started.
     /// This value should be obtained using the Rooms API. This role will determine permissions in the
     /// Setup screen of the CallComposite.
@@ -33,16 +33,16 @@ public struct LocalOptions {
     /// The true role of the user will be synced with ACS services when a Rooms call starts.
     public init(participantViewData: ParticipantViewData? = nil,
                 setupScreenViewData: SetupScreenViewData? = nil,
-                cameraOnByDefault: Bool? = true,
-                microphoneOnByDefault: Bool? = false,
-                bypassSetupScreen: Bool = false,
+                startWithCamera: Bool? = true,
+                startWithMicrophone: Bool? = false,
+                skipSetupScreen: Bool = false,
                 roleHint: ParticipantRole? = nil
     ) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
-        self.cameraOnByDefault = cameraOnByDefault
-        self.microphoneOnByDefault = microphoneOnByDefault
-        self.bypassSetupScreen = bypassSetupScreen
+        self.startWithCamera = startWithCamera
+        self.startWithMicrophone = startWithMicrophone
+        self.skipSetupScreen = skipSetupScreen
         self.roleHint = roleHint
     }
 }
