@@ -222,8 +222,7 @@ extension CallingDemoView {
                                         setupScreenViewData: setupScreenViewData,
                                         startWithCamera: envConfigSubject.cameraDefault,
                                         startWithMicrophone: envConfigSubject.micDefault,
-                                        skipSetupScreen: envConfigSubject.skipSetupScreen
-        )
+                                        skipSetupScreen: envConfigSubject.skipSetupScreen)
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:

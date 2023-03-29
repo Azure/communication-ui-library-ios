@@ -41,8 +41,7 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
             ],
             state: AppState(callingState: callingState,
                             localUserState: localUserState,
-                            navigationState: navigationState
-                           )
+                            navigationState: navigationState)
         )
     }
 }
