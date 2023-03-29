@@ -12,6 +12,13 @@ class AzureCommunicationUIDemoAppTokenTests: XCUITestBase {
 
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
         wait(for: app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue])
+        if #unavailable(iOS 16) {
+            // for <iOS 16, the table is shown
+            app.tables.firstMatch.swipeUp()
+        } else {
+            // for iOS 16, the collection is shown
+            app.collectionViews.firstMatch.swipeUp()
+        }
         let toggle = app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue]
         app.switches[AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue].tap()
         XCTAssertEqual(toggle.isOn, true)

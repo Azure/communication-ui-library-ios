@@ -33,7 +33,7 @@ struct SettingsView: View {
         NavigationView {
             Form {
                 localizationSettings
-                skipSetupScreenSettings
+                skipSetupSettings
                 micSettings
                 localParticipantSettings
                 avatarSettings
@@ -131,10 +131,20 @@ struct SettingsView: View {
         }
     }
 
-    var skipSetupScreenSettings: some View {
-        Section(header: Text("Skip Setup Screen Default Value")) {
-            Toggle("Skip Setup Screen", isOn: $envConfigSubject.skipSetupScreen)
+    var skipSetupSettings: some View {
+        Section(header: Text("Skip Setup Screen Settings")) {
+            toggleWrapper {
+                skipSetupScreenSettings
+            } onTapGesture: {
+                envConfigSubject.skipSetupScreen = !envConfigSubject.skipSetupScreen
+            }
         }
+                .accessibilityElement(children: .contain)
+    }
+
+    var skipSetupScreenSettings: some View {
+            Toggle("Bypass Setup Screen", isOn: $envConfigSubject.skipSetupScreen)
+            .accessibilityIdentifier(AccessibilityId.skipSetupScreenToggleAccessibilityID.rawValue)
     }
 
     var avatarSettings: some View {
