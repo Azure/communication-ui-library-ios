@@ -17,7 +17,7 @@ protocol OverlayViewModelProtocol {
 
 extension OverlayViewModelProtocol {
     var subtitle: String? { return nil }
-    var background: UIColor { return StyleProvider.color.surface }
+    var background: UIColor { return StyleProvider.color.overlay}
     var actionButtonViewModel: PrimaryButtonViewModel? { return nil }
     var errorInfoViewModel: ErrorInfoViewModel? { return nil }
 }
