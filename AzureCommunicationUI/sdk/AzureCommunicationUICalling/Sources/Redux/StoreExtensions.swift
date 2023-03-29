@@ -13,21 +13,23 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
         logger: Logger,
         callingService: CallingServiceProtocol,
         displayName: String?,
-        localOptions: LocalOptions
+        startWithCameraOn: Bool?,
+        startWithMicrophoneOn: Bool?,
+        skipSetupScreen: Bool?
     ) -> Store<AppState, Action> {
-        let cameraState = localOptions.startWithCameraOn
+        let cameraState = startWithCameraOn
         ?? false ? LocalUserState.CameraState(operation: .on, device: .front, transmission: .local) :
         LocalUserState.CameraState(operation: .off, device: .front, transmission: .local)
 
-        let audioState = localOptions.startWithMicrophoneOn
+        let audioState = startWithMicrophoneOn
         ?? false ? LocalUserState.AudioState(operation: .on, device: .receiverSelected) :
         LocalUserState.AudioState(operation: .off, device: .receiverSelected)
 
         let localUserState = LocalUserState(cameraState: cameraState, audioState: audioState, displayName: displayName)
 
-        let callingState = localOptions.skipSetupScreen ?? false ?
+        let callingState = skipSetupScreen ?? false ?
                 CallingState(operationStatus: .bypassRequested): CallingState()
-        let navigationStatus: NavigationStatus = localOptions.skipSetupScreen ?? false ? .inCall : .setup
+        let navigationStatus: NavigationStatus = skipSetupScreen ?? false ? .inCall : .setup
         let navigationState = NavigationState(status: navigationStatus)
         return .init(
             reducer: .appStateReducer(),

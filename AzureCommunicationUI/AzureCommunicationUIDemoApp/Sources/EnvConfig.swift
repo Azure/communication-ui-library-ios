@@ -52,8 +52,8 @@ class EnvConfigSubject: ObservableObject {
     @Published var locale: Locale = SupportedLocale.en
     @Published var localeIdentifier: String = ""
     @Published var isRightToLeft: Bool = false
-    @Published var micDefault: Bool = false
-    @Published var cameraDefault: Bool = false
+    @Published var startWithMicophoneOn: Bool = false
+    @Published var startWithCameraOn: Bool = false
     @Published var skipSetupScreen: Bool = false
     @Published var useCustomColors: Bool = false
     @Published var useCustomRemoteParticipantViewData: Bool = false

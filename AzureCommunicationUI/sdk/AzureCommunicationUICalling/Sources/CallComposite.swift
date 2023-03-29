@@ -142,7 +142,9 @@ public class CallComposite {
             logger: logger,
             callingService: CallingService(logger: logger, callingSDKWrapper: callingSdkWrapper),
             displayName: localOptions?.participantViewData?.displayName ?? callConfiguration.displayName,
-            localOptions: localOptions ?? LocalOptions()
+            startWithCameraOn: localOptions?.startWithCameraOn,
+            startWithMicrophoneOn: localOptions?.startWithMicrophoneOn,
+            skipSetupScreen: localOptions?.skipSetupScreen
         )
         self.store = store
 
