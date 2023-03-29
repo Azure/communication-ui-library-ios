@@ -11,16 +11,18 @@ import AzureCommunicationCommon
 import AzureCommunicationUICalling
 #endif
 struct CallingDemoView: View {
-    @State var isErrorDisplayed: Bool = false
+    @State var isAlertDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
     @State var isStartExperienceLoading: Bool = false
-    @State var errorMessage: String = ""
-    @State var isShowingCallHistory: Bool = false
+    @State var alertTitle: String = ""
+    @State var alertMessage: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    let roomRoleChoices: [String] = ["Presenter", "Attendee"]
 #if DEBUG
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
 #endif
@@ -31,29 +33,25 @@ struct CallingDemoView: View {
             acsTokenSelector
             displayNameTextField
             meetingSelector
+            if envConfigSubject.selectedMeetingType == .roomCall {
+                roomRoleSelector
+            } else {
+                roomRoleSelector.hidden()
+            }
             settingButton
             showCallHistoryButton
             startExperienceButton
             Spacer()
         }
         .padding()
-        .alert(isPresented: $isErrorDisplayed) {
+        .alert(isPresented: $isAlertDisplayed) {
             Alert(
-                title: Text("Error"),
-                message: Text(errorMessage),
+                title: Text(alertTitle),
+                message: Text(alertMessage),
                 dismissButton:
                         .default(Text("Dismiss"), action: {
-                    isErrorDisplayed = false
+                            isAlertDisplayed = false
                 }))
-        }
-        .alert(isPresented: $isShowingCallHistory) {
-            Alert(
-                title: Text(callingViewModel.callHistoryTitle),
-                message: Text(callingViewModel.callHistoryMessage),
-                dismissButton:
-                        .default(Text("Dismiss"), action: {
-                            isShowingCallHistory = false
-                        }))
         }
         .sheet(isPresented: $isSettingsDisplayed) {
             SettingsView(envConfigSubject: envConfigSubject)
@@ -99,6 +97,7 @@ struct CallingDemoView: View {
             Picker("Call Type", selection: $envConfigSubject.selectedMeetingType) {
                 Text("Group Call").tag(MeetingType.groupCall)
                 Text("Teams Meeting").tag(MeetingType.teamsMeeting)
+                Text("Room Call").tag(MeetingType.roomCall)
             }.pickerStyle(.segmented)
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -115,10 +114,26 @@ struct CallingDemoView: View {
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .textFieldStyle(.roundedBorder)
+            case .roomCall:
+                TextField(
+                    "Room Id",
+                    text: $envConfigSubject.roomId)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .textFieldStyle(.roundedBorder)
             }
         }
         .padding(.vertical, verticalPadding)
         .padding(.horizontal, horizontalPadding)
+    }
+    var roomRoleSelector: some View {
+
+        Section {
+            Picker("Room Role Type", selection: $envConfigSubject.selectedRoomRoleType) {
+                Text("Presenter").tag(RoomRoleType.presenter)
+                Text("Attendee").tag(RoomRoleType.attendee)
+            }.pickerStyle(.segmented)
+        }
     }
 
     var settingButton: some View {
@@ -144,7 +159,9 @@ struct CallingDemoView: View {
 
     var showCallHistoryButton: some View {
         Button("Show call history") {
-            isShowingCallHistory = true
+            alertTitle = callingViewModel.callHistoryTitle
+            alertMessage = callingViewModel.callHistoryMessage
+            isAlertDisplayed = true
         }
         .buttonStyle(DemoButtonStyle())
     }
@@ -217,10 +234,21 @@ extension CallingDemoView {
                                 nil:envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
+        let roomRole = envConfigSubject.selectedRoomRoleType
+        var roomRoleData: ParticipantRole?
+        if envConfigSubject.selectedMeetingType == .roomCall {
+            if roomRole == .presenter {
+                roomRoleData = ParticipantRole.presenter
+            } else if roomRole == .attendee {
+                roomRoleData = ParticipantRole.attendee
+            }
+        }
+
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let localOptions = LocalOptions(participantViewData: participantViewData,
-                                        setupScreenViewData: setupScreenViewData)
+                                        setupScreenViewData: setupScreenViewData,
+                                        roleHint: roomRoleData)
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -245,6 +273,20 @@ extension CallingDemoView {
                                                                       credential: credential,
                                                                       displayName: envConfigSubject.displayName),
                                          localOptions: localOptions)
+                }
+            case .roomCall:
+                if envConfigSubject.displayName.isEmpty {
+                    callComposite.launch(remoteOptions:
+                                            RemoteOptions(for: .roomCall(roomId: link),
+                                                          credential: credential),
+                                         localOptions: localOptions)
+                } else {
+                    callComposite.launch(
+                        remoteOptions: RemoteOptions(for:
+                                .roomCall(roomId: link),
+                                                     credential: credential,
+                                                     displayName: envConfigSubject.displayName),
+                        localOptions: localOptions)
                 }
             }
         } else {
@@ -285,17 +327,20 @@ extension CallingDemoView {
             return envConfigSubject.groupCallId
         case .teamsMeeting:
             return envConfigSubject.teamsMeetingLink
+        case .roomCall:
+            return envConfigSubject.roomId
         }
     }
 
     private func showError(for errorCode: String) {
         switch errorCode {
         case CallCompositeErrorCode.tokenExpired:
-            errorMessage = "Token is invalid"
+            alertMessage = "Token is invalid"
         default:
-            errorMessage = "Unknown error"
+            alertMessage = "Unknown error"
         }
-        isErrorDisplayed = true
+        alertTitle = "Error"
+        isAlertDisplayed = true
     }
 
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
