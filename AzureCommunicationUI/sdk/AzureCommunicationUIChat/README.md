@@ -8,7 +8,7 @@
 
 ## Latest Release
 
-- Public Preview: [1.0.0-beta.2](https://github.com/Azure/communication-ui-library-ios/releases/tag/AzureCommunicationUIChat_1.0.0-beta.2)
+- Public Preview: [1.0.0-beta.3](https://github.com/Azure/communication-ui-library-ios/releases/tag/AzureCommunicationUIChat_1.0.0-beta.3)
 
 ## Getting Started
 
