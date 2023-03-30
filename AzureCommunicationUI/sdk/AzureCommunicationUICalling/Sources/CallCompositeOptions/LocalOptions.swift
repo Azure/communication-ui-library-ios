@@ -24,9 +24,9 @@ public struct LocalOptions {
     ///    - setupScreenViewData: The SetupScreenViewData to be used to set up views on setup screen
     public init(participantViewData: ParticipantViewData? = nil,
                 setupScreenViewData: SetupScreenViewData? = nil,
-                startWithCameraOn: Bool? = nil,
-                startWithMicrophoneOn: Bool? = nil,
-                skipSetupScreen: Bool? = nil
+                startWithCameraOn: Bool? = false,
+                startWithMicrophoneOn: Bool? = false,
+                skipSetupScreen: Bool? = false
     ) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
