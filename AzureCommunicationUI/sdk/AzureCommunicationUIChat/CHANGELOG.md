@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.3 (Upcoming)
+## 1.0.0-beta.3 (2023-03-30)
 
 ### Other Changes
 - Addressed the issue where ARM64 simulators weren't supported. [#638](https://github.com/Azure/communication-ui-library-ios/pull/638)
