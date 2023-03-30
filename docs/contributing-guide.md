@@ -36,7 +36,7 @@ You can send pull requests to fix the open issues. For any pull request, it's re
 
 We recommend making small and simple pull requests. Avoid making the implementation complicated when there is a simple, small alternative.
 
-Please fork the repository and submit pull requests to `develop/beta` branch. For details on how to set up a fork of this repository and keep it up-to-date see [Fork a Repo - GitHub Help](https://help.github.com/en/github/getting-started-with-github/fork-a-repo).
+Please fork the repository and submit pull requests to `develop` branch. For details on how to set up a fork of this repository and keep it up-to-date see [Fork a Repo - GitHub Help](https://help.github.com/en/github/getting-started-with-github/fork-a-repo).
 
 ### Writing unit tests
 
@@ -49,7 +49,7 @@ When submitting a pull request, please add relevant tests and ensure your change
 3. Navigate to `Product` -> `Test` or hit `⌘+U` to start testing
 
 ### Running UI tests
-Please follow [Before running the sample for the first time](https://github.com/Azure/communication-ui-library-ios/tree/main/AzureCommunicationUI/AzureCommunicationUIDemoApp#before-running-the-sample-for-the-first-time) to have the `EnvConfig.xcconfig` in your project directory. Add the variables `acsToken`, `displayName`, `groupCallId`, `teamsMeetingLink`, and `expiredAcsToken` with values in the `EnvConfig.xcconfig` file. 
+Please follow [Before running the sample for the first time](https://github.com/Azure/communication-ui-library-ios/tree/main/AzureCommunicationUI/AzureCommunicationUIDemoApp#before-running-the-sample-for-the-first-time) to have the `EnvConfig.xcconfig` in your project directory with necessary values for Calling or Chat.
 
 1. Open the `AzureCommunicationUI.xcworkspace` with Xcode
 2. Select `AzureCommunicationUIDemoApp` scheme and target at any iOS simulator/device

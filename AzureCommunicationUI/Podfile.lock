@@ -4,60 +4,60 @@ PODS:
     - AppCenter/Core
   - AzureCommunicationCalling (2.2.1):
     - AzureCommunicationCommon (~> 1.0)
-  - AzureCommunicationChat (1.3.0):
+  - AzureCommunicationChat (1.3.1):
     - AzureCommunicationCommon (~> 1.0)
     - AzureCore (= 1.0.0-beta.15)
-    - Trouter (= 0.1.0)
+    - Trouter (= 0.2.0)
   - AzureCommunicationCommon (1.1.1)
   - AzureCore (1.0.0-beta.15)
-  - MicrosoftFluentUI/ActivityIndicator_ios (0.8.9):
+  - MicrosoftFluentUI/ActivityIndicator_ios (0.10.0):
     - MicrosoftFluentUI/Core_ios
-  - MicrosoftFluentUI/Avatar_ios (0.8.9):
+  - MicrosoftFluentUI/Avatar_ios (0.10.0):
     - MicrosoftFluentUI/Core_ios
-  - MicrosoftFluentUI/AvatarGroup_ios (0.8.9):
+  - MicrosoftFluentUI/AvatarGroup_ios (0.10.0):
     - MicrosoftFluentUI/Avatar_ios
-  - MicrosoftFluentUI/BottomSheet_ios (0.8.9):
+  - MicrosoftFluentUI/BottomSheet_ios (0.10.0):
     - MicrosoftFluentUI/Obscurable_ios
     - MicrosoftFluentUI/ResizingHandleView_ios
-  - MicrosoftFluentUI/Button_ios (0.8.9):
+  - MicrosoftFluentUI/Button_ios (0.10.0):
     - MicrosoftFluentUI/Core_ios
-  - MicrosoftFluentUI/Core_ios (0.8.9)
-  - MicrosoftFluentUI/Drawer_ios (0.8.9):
+  - MicrosoftFluentUI/Core_ios (0.10.0)
+  - MicrosoftFluentUI/Drawer_ios (0.10.0):
     - MicrosoftFluentUI/Obscurable_ios
     - MicrosoftFluentUI/ResizingHandleView_ios
     - MicrosoftFluentUI/Separator_ios
     - MicrosoftFluentUI/TouchForwardingView_ios
-  - MicrosoftFluentUI/Label_ios (0.8.9):
+  - MicrosoftFluentUI/Label_ios (0.10.0):
     - MicrosoftFluentUI/Core_ios
-  - MicrosoftFluentUI/Obscurable_ios (0.8.9):
+  - MicrosoftFluentUI/Obscurable_ios (0.10.0):
     - MicrosoftFluentUI/Core_ios
-  - MicrosoftFluentUI/PopupMenu_ios (0.8.9):
+  - MicrosoftFluentUI/PopupMenu_ios (0.10.0):
     - MicrosoftFluentUI/Drawer_ios
     - MicrosoftFluentUI/Label_ios
     - MicrosoftFluentUI/Separator_ios
     - MicrosoftFluentUI/TableView_ios
-  - MicrosoftFluentUI/ResizingHandleView_ios (0.8.9):
+  - MicrosoftFluentUI/ResizingHandleView_ios (0.10.0):
     - MicrosoftFluentUI/Core_ios
-  - MicrosoftFluentUI/Separator_ios (0.8.9):
+  - MicrosoftFluentUI/Separator_ios (0.10.0):
     - MicrosoftFluentUI/Core_ios
-  - MicrosoftFluentUI/TableView_ios (0.8.9):
+  - MicrosoftFluentUI/TableView_ios (0.10.0):
     - MicrosoftFluentUI/Label_ios
     - MicrosoftFluentUI/Separator_ios
-  - MicrosoftFluentUI/TouchForwardingView_ios (0.8.9):
+  - MicrosoftFluentUI/TouchForwardingView_ios (0.10.0):
     - MicrosoftFluentUI/Core_ios
   - SwiftLint (0.42.0)
-  - Trouter (0.1.0)
+  - Trouter (0.2.0)
 
 DEPENDENCIES:
   - AppCenter/Crashes (= 4.4.1)
   - AzureCommunicationCalling (= 2.2.1)
-  - AzureCommunicationChat (= 1.3.0)
-  - MicrosoftFluentUI/ActivityIndicator_ios (= 0.8.9)
-  - MicrosoftFluentUI/Avatar_ios (= 0.8.9)
-  - MicrosoftFluentUI/AvatarGroup_ios (= 0.8.9)
-  - MicrosoftFluentUI/BottomSheet_ios (= 0.8.9)
-  - MicrosoftFluentUI/Button_ios (= 0.8.9)
-  - MicrosoftFluentUI/PopupMenu_ios (= 0.8.9)
+  - AzureCommunicationChat (= 1.3.1)
+  - MicrosoftFluentUI/ActivityIndicator_ios (= 0.10.0)
+  - MicrosoftFluentUI/Avatar_ios (= 0.10.0)
+  - MicrosoftFluentUI/AvatarGroup_ios (= 0.10.0)
+  - MicrosoftFluentUI/BottomSheet_ios (= 0.10.0)
+  - MicrosoftFluentUI/Button_ios (= 0.10.0)
+  - MicrosoftFluentUI/PopupMenu_ios (= 0.10.0)
   - SwiftLint (= 0.42.0)
 
 SPEC REPOS:
@@ -74,13 +74,13 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   AppCenter: b0b6f1190215b5f983c42934db718f3b46fff3c0
   AzureCommunicationCalling: aee011f293544e151958a7d5888d6239199adba1
-  AzureCommunicationChat: c3a67d67e85daba4d9d81874e50187c91f556f2d
+  AzureCommunicationChat: 9be8209d32c2fc6259095ff9838ad30dcfc44f80
   AzureCommunicationCommon: cc520a89f3f8db6d58de42ec4a70cfb79a1b76a3
   AzureCore: ebbf7cf4dfe72afc7584088c38d1c99f5a35d647
-  MicrosoftFluentUI: a204df7fac4bf62b608ad0f9683a5ca64faec2be
+  MicrosoftFluentUI: f6db695718efb93f4ca9bdc366c00b80a1f91dba
   SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
-  Trouter: 62f6db5519829c0897832d404338c3b78ea64fa2
+  Trouter: 7eab36954ad740e32db3ff9f6025b0dff92193d7
 
-PODFILE CHECKSUM: dba06e7567902f624b6be4dac963332e701eb372
+PODFILE CHECKSUM: 1ff305af525c1895ae27d267c25e47a4c44abee7
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.11.3

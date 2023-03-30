@@ -15,7 +15,7 @@
 "AzureCommunicationUICalling.SetupView.Title"="Configuratie";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Terug";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Deelnemen aan gesprek";
-"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Deelnemen aan gesprek...";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Deelnemen aan gesprek…";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video uit";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Camera inschakelen";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video aan";
