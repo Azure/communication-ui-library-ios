@@ -229,8 +229,8 @@ class CallingDemoViewController: UIViewController {
                                                       displayName: renderDisplayName)
         let localOptions = LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
-                                        startWithCameraOn: envConfigSubject.startWithCameraOn,
-                                        startWithMicrophoneOn: envConfigSubject.startWithMicrophoneOn,
+                                        cameraOn: envConfigSubject.cameraOn,
+                                        microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen)
 
         if let credential = try? await getTokenCredential() {
