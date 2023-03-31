@@ -97,7 +97,7 @@ class SetupControlBarViewModel: ObservableObject {
 
     func setupDefaultUserState(state: DefaultUserState) {
         if state.audioState == .on && !isDefaultUserStateMapped {
-            dispatch(.localUserAction(.cameraPreviewOnTriggered))
+            dispatch(.localUserAction(.microphonePreviewOn))
             isDefaultUserStateMapped = true
         }
     }
