@@ -109,7 +109,7 @@ class SetupViewModel: ObservableObject {
     }
 
     func dismissSetupScreen() {
-        if store.state.callingState.operationStatus == .bypassRequested {
+        if store.state.callingState.operationStatus == .skipSetupRequested {
             store.dispatch(action: .callingAction(.dismissSetup))
         }
     }
@@ -143,11 +143,13 @@ class SetupViewModel: ObservableObject {
         let localUserState = state.localUserState
         let permissionState = state.permissionState
         let callingState = state.callingState
+        let defaultUserState = state.defaultUserState
         previewAreaViewModel.update(localUserState: localUserState,
                                     permissionState: permissionState)
         setupControlBarViewModel.update(localUserState: localUserState,
                                         permissionState: permissionState,
-                                        callingState: callingState)
+                                        callingState: callingState,
+                                        defaultUserState: defaultUserState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
         errorInfoViewModel.update(errorState: state.errorState)
     }

@@ -34,7 +34,7 @@ extension Reducer where State == CallingState,
             operationStatus = .none
         case .errorAction(.statusErrorAndCallReset):
             callingStatus = .none
-            operationStatus = operationStatus == .bypassRequested ? .bypassRequested : .none
+            operationStatus = operationStatus == .skipSetupRequested ? .skipSetupRequested : .none
             isRecordingActive = false
             isTranscriptionActive = false
         case .callingAction(.callStartRequested):

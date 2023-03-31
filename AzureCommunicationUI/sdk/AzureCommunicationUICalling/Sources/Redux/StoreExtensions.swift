@@ -18,17 +18,19 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
         skipSetupScreen: Bool?
     ) -> Store<AppState, Action> {
         let cameraState = startWithCameraOn
-        ?? false ? LocalUserState.CameraState(operation: .on, device: .front, transmission: .local) :
-        LocalUserState.CameraState(operation: .off, device: .front, transmission: .local)
+        ?? false ? DefaultUserState.CameraState.on : DefaultUserState.CameraState.off
 
         let audioState = startWithMicrophoneOn
-        ?? false ? LocalUserState.AudioState(operation: .on, device: .receiverSelected) :
-        LocalUserState.AudioState(operation: .off, device: .receiverSelected)
+        ?? false ? DefaultUserState.AudioState.on : DefaultUserState.AudioState.off
 
-        let localUserState = LocalUserState(cameraState: cameraState, audioState: audioState, displayName: displayName)
+        let defaultUserState = DefaultUserState(
+            cameraState: cameraState,
+            audioState: audioState)
+
+        let localUserState = LocalUserState(displayName: displayName)
 
         let callingState = skipSetupScreen ?? false ?
-                CallingState(operationStatus: .bypassRequested): CallingState()
+                CallingState(operationStatus: .skipSetupRequested): CallingState()
         let navigationStatus: NavigationStatus = skipSetupScreen ?? false ? .inCall : .setup
         let navigationState = NavigationState(status: navigationStatus)
         return .init(
@@ -43,7 +45,8 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
             ],
             state: AppState(callingState: callingState,
                             localUserState: localUserState,
-                            navigationState: navigationState)
+                            navigationState: navigationState,
+                            defaultUserState: defaultUserState)
         )
     }
 }

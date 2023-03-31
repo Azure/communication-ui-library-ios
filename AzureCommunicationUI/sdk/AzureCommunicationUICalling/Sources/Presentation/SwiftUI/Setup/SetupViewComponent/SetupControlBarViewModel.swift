@@ -16,6 +16,7 @@ class SetupControlBarViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
 
     private var isJoinRequested: Bool = false
+    private var isDefaultUserStateMapped: Bool = false
     private var callingStatus: CallingStatus = .none
     private var cameraStatus: LocalUserState.CameraOperationalStatus = .off
     private(set) var micStatus: LocalUserState.AudioOperationalStatus = .off
@@ -94,6 +95,13 @@ class SetupControlBarViewModel: ObservableObject {
         }
     }
 
+    func setupDefaultUserState(state: DefaultUserState) {
+        if state.audioState == .on && !isDefaultUserStateMapped {
+            microphoneButtonTapped()
+            isDefaultUserStateMapped = true
+        }
+    }
+
     func microphoneButtonTapped() {
         let isPreview = callingStatus == .none
         let isMicOn = micStatus == .on
@@ -127,7 +135,8 @@ class SetupControlBarViewModel: ObservableObject {
 
     func update(localUserState: LocalUserState,
                 permissionState: PermissionState,
-                callingState: CallingState) {
+                callingState: CallingState,
+                defaultUserState: DefaultUserState) {
         if cameraPermission != permissionState.cameraPermission {
             cameraPermission = permissionState.cameraPermission
         }
@@ -138,7 +147,7 @@ class SetupControlBarViewModel: ObservableObject {
         cameraStatus = localUserState.cameraState.operation
         micStatus = localUserState.audioState.operation
         updateButtonViewModel(localUserState: localUserState)
-
+        setupDefaultUserState(state: defaultUserState)
         if localVideoStreamId != localUserState.localVideoStreamIdentifier {
             localVideoStreamId = localUserState.localVideoStreamIdentifier
             updateButtonTypeColor(isLocalVideoOff: localVideoStreamId == nil)
