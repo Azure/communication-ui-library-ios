@@ -253,7 +253,11 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
             switch state.localUserState.cameraState.transmission {
             case .local:
-                dispatch(.localUserAction(.cameraPreviewOnTriggered))
+                if state.callingState.operationStatus == .skipSetupRequested {
+                    dispatch(.localUserAction(.cameraOnTriggered))
+                } else {
+                    dispatch(.localUserAction(.cameraPreviewOnTriggered))
+                }
             case .remote:
                 dispatch(.localUserAction(.cameraOnTriggered))
             }
