@@ -7,6 +7,7 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
+    var requestCameraOnRetry: ((Bool) -> Void)?
     var setupCallWasCalled: ((Bool) -> Void)?
     var startCallWasCalled: ((Bool) -> Void)?
     var endCallWasCalled: ((Bool) -> Void)?
@@ -23,6 +24,12 @@ class CallingMiddlewareHandlerMocking: CallingMiddlewareHandling {
     var requestHoldCalled: ((Bool) -> Void)?
     var requestResumeCalled: ((Bool) -> Void)?
     var willTerminateCalled: ((Bool) -> Void)?
+
+    func requestCameraOnRetry(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            requestCameraOnRetry?(true)
+        }
+    }
 
     func setupCall(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
