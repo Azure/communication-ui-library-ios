@@ -66,8 +66,9 @@ extension Reducer where State == LocalUserState,
             audioDeviceStatus = getSelectedDeviceStatus(for: device)
         case .audioDeviceChangeFailed(let error):
             audioDeviceStatus = .error(error)
+        case .cameraOnRetry:
+            cameraStatus = cameraStatus
         }
-
         let cameraState = LocalUserState.CameraState(operation: cameraStatus,
                                                      device: cameraDeviceStatus,
                                                      transmission: cameraTransmissionStatus)

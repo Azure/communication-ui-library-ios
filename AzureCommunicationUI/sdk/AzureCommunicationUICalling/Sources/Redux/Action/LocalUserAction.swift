@@ -10,6 +10,7 @@ enum LocalUserAction: Equatable {
 
     case cameraPreviewOnTriggered
     case cameraOnTriggered
+    case cameraOnRetry
     case cameraOnSucceeded(videoStreamIdentifier: String)
     case cameraOnFailed(error: Error)
 
@@ -54,6 +55,7 @@ enum LocalUserAction: Equatable {
 
         case (.cameraPreviewOnTriggered, .cameraPreviewOnTriggered),
             (.cameraOnTriggered, .cameraOnTriggered),
+            (.cameraOnRetry, .cameraOnRetry),
             ( .cameraOffTriggered, .cameraOffTriggered),
             ( .cameraOffSucceeded, .cameraOffSucceeded),
             (.cameraPausedSucceeded, .cameraPausedSucceeded),

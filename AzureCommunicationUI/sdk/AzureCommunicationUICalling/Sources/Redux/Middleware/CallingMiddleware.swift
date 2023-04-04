@@ -70,6 +70,8 @@ private func handleLocalUserAction(_ action: LocalUserAction,
         actionHandler.requestCameraPreviewOn(state: getState(), dispatch: dispatch)
     case .cameraOnTriggered:
         actionHandler.requestCameraOn(state: getState(), dispatch: dispatch)
+    case .cameraOnRetry:
+        actionHandler.requestCameraOnRetry(state: getState(), dispatch: dispatch)
     case .cameraOffTriggered:
         actionHandler.requestCameraOff(state: getState(), dispatch: dispatch)
     case .cameraSwitchTriggered:

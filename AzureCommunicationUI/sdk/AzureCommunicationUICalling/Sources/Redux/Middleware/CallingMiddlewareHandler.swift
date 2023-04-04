@@ -39,6 +39,8 @@ protocol CallingMiddlewareHandling {
     func requestMicrophoneUnmute(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func onCameraPermissionIsSet(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func requestCameraOnRetry(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
 }
 
 class CallingMiddlewareHandler: CallingMiddlewareHandling {
@@ -269,6 +271,18 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             dispatch(.callingAction(.holdRequested))
         }
     }
+
+    func requestCameraOnRetry(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.operationStatus == .skipSetupRequested else {
+                return
+            }
+            if state.defaultUserState.cameraState == .on &&
+                state.localUserState.cameraState.transmission == .local {
+                dispatch(.localUserAction(.cameraOnTriggered))
+            }
+        }
+    }
 }
 
 extension CallingMiddlewareHandler {
@@ -287,6 +301,9 @@ extension CallingMiddlewareHandler {
                 }
                 let internalError = callInfoModel.internalError
                 let callingStatus = callInfoModel.status
+                if callingStatus == .connected {
+                    dispatch(.localUserAction(.cameraOnRetry))
+                }
 
                 self.handle(callingStatus: callingStatus, dispatch: dispatch)
                 self.logger.debug("Dispatch State Update: \(callingStatus)")
