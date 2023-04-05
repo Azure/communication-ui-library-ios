@@ -11,6 +11,7 @@ class ControlBarViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private let dispatch: ActionDispatch
     private var isCameraStateUpdating: Bool = false
+    private var isDefaultUserStateMapped: Bool = false
     private(set) var cameraButtonViewModel: IconButtonViewModel!
 
     @Published var cameraPermission: AppPermission.Status = .unknown
@@ -174,7 +175,7 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func isBypassLoadingOverlay() -> Bool {
-        operationStatus == .bypassRequested && callingStatus != .connected &&
+        operationStatus == .skipSetupRequested && callingStatus != .connected &&
         callingStatus != .inLobby
     }
 
@@ -216,15 +217,23 @@ class ControlBarViewModel: ObservableObject {
                                                   listItemViewModel: leaveCallConfirmationVm)
     }
 
+    func setupDefaultUserState(state: DefaultUserState) {
+        if state.audioState == .on && !isDefaultUserStateMapped {
+            dispatch(.localUserAction(.microphonePreviewOn))
+            isDefaultUserStateMapped = true
+        }
+    }
+
     func update(localUserState: LocalUserState,
                 permissionState: PermissionState,
-                callingState: CallingState) {
+                callingState: CallingState,
+                defaultUserState: DefaultUserState) {
         callingStatus = callingState.status
         operationStatus = callingState.operationStatus
+        setupDefaultUserState(state: defaultUserState)
         if cameraPermission != permissionState.cameraPermission {
             cameraPermission = permissionState.cameraPermission
         }
-
         if isCameraStateUpdating,
            cameraState.operation != localUserState.cameraState.operation {
             isCameraStateUpdating = localUserState.cameraState.operation != .on &&
