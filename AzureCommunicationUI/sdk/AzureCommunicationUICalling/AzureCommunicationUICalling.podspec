@@ -7,7 +7,7 @@ Pod::Spec.new do |spec|
   spec.author               = 'Microsoft'
   spec.source               = { :git => 'https://github.com/Azure/communication-ui-library-ios.git', :tag => 'AzureCommunicationUICalling_1.3.0-beta.1' }
   spec.module_name          = 'AzureCommunicationUICalling'
-  spec.swift_version        = '5.6'
+  spec.swift_version        = '5.8'
 
   spec.platform             = :ios, '14.0'
 
@@ -18,10 +18,10 @@ Pod::Spec.new do |spec|
 
   spec.dependency             'AzureCommunicationCalling', '2.3.0-beta.1'
   spec.dependency             'AzureCore', '1.0.0-beta.15'
-  spec.dependency             'MicrosoftFluentUI/Avatar_ios', '0.8.9'
-  spec.dependency             'MicrosoftFluentUI/BottomSheet_ios', '0.8.9'
-  spec.dependency             'MicrosoftFluentUI/Button_ios', '0.8.9'
-  spec.dependency             'MicrosoftFluentUI/PopupMenu_ios', '0.8.9'
-  spec.dependency             'MicrosoftFluentUI/ActivityIndicator_ios', '0.8.9'
-  spec.dependency             'MicrosoftFluentUI/AvatarGroup_ios', '0.8.9'
+  spec.dependency             'MicrosoftFluentUI/Avatar_ios', '0.10.0'
+  spec.dependency             'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
+  spec.dependency             'MicrosoftFluentUI/Button_ios', '0.10.0'
+  spec.dependency             'MicrosoftFluentUI/PopupMenu_ios', '0.10.0'
+  spec.dependency             'MicrosoftFluentUI/ActivityIndicator_ios', '0.10.0'
+  spec.dependency             'MicrosoftFluentUI/AvatarGroup_ios', '0.10.0'
 end
