@@ -11,7 +11,7 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let store: Store<AppState, Action>
     private var callingStatus: CallingStatus = .none
-    private var operationStatus: OperationStatus = .bypassRequested
+    private var operationStatus: OperationStatus = .skipSetupRequested
     private var audioPermission: AppPermission.Status = .unknown
     var cancellables = Set<AnyCancellable>()
     var networkManager: NetworkManager
@@ -51,7 +51,7 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
         let callingState = state.callingState
         callingStatus = callingState.status
         operationStatus = callingState.operationStatus
-        let shouldDisplay = operationStatus == .bypassRequested && callingStatus != .connected &&
+        let shouldDisplay = operationStatus == .skipSetupRequested && callingStatus != .connected &&
         callingState.status != .inLobby
 
         if shouldDisplay != isDisplayed {
@@ -71,7 +71,7 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
     }
     func handleOffline() {
         guard networkManager.isOnline() else {
-            if operationStatus == .bypassRequested {
+            if operationStatus == .skipSetupRequested {
                 store.dispatch(action: .errorAction(
                     .fatalErrorUpdated(internalError: .networkConnectionNotAvailable, error: nil)))
             }

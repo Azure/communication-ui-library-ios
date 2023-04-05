@@ -56,11 +56,12 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         Task {
             do {
                 try await callingService.setupCall()
-                if state.localUserState.cameraState.operation == .on,
+                if state.defaultUserState.cameraState == .on,
                    state.errorState.internalError == nil {
                     await requestCameraPreviewOn(state: state, dispatch: dispatch).value
                 }
-                if state.callingState.operationStatus == .bypassRequested {
+
+                if state.callingState.operationStatus == .skipSetupRequested {
                     dispatch(.callingAction(.callStartRequested))
                 }
             } catch {
@@ -252,7 +253,11 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
             switch state.localUserState.cameraState.transmission {
             case .local:
-                dispatch(.localUserAction(.cameraPreviewOnTriggered))
+                if state.callingState.operationStatus == .skipSetupRequested {
+                    dispatch(.localUserAction(.cameraOnTriggered))
+                } else {
+                    dispatch(.localUserAction(.cameraPreviewOnTriggered))
+                }
             case .remote:
                 dispatch(.localUserAction(.cameraOnTriggered))
             }

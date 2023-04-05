@@ -112,7 +112,7 @@ class CallingViewModel: ObservableObject {
             return
         }
 
-        if state.callingState.operationStatus == .bypassRequested
+        if state.callingState.operationStatus == .skipSetupRequested
             && state.permissionState.audioPermission == .granted
             && callClientRequested == false {
             requestCallClient()
@@ -120,7 +120,8 @@ class CallingViewModel: ObservableObject {
 
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
-                                   callingState: state.callingState)
+                                   callingState: state.callingState,
+                                   defaultUserState: state.defaultUserState)
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState)

@@ -26,6 +26,7 @@ extension Reducer {
             var navigationState = state.navigationState
             var errorState = state.errorState
             var audioSessionState = state.audioSessionState
+            let defaultUserState = state.defaultUserState
 
             switch action {
             case let .permissionAction(permAction):
@@ -64,7 +65,8 @@ extension Reducer {
                             audioSessionState: audioSessionState,
                             navigationState: navigationState,
                             remoteParticipantsState: remoteParticipantState,
-                            errorState: errorState)
+                            errorState: errorState,
+                            defaultUserState: defaultUserState)
         }
     }
 }
