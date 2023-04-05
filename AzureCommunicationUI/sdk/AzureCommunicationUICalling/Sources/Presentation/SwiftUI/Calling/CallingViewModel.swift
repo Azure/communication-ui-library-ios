@@ -20,11 +20,13 @@ class CallingViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected: Bool = false
+    private var callClientRequested: Bool = false
 
     let localVideoViewModel: LocalVideoViewModel
     let participantGridsViewModel: ParticipantGridViewModel
     let bannerViewModel: BannerViewModel
     let lobbyOverlayViewModel: LobbyOverlayViewModel
+    let loadingOverlayViewModel: LoadingOverlayViewModel
     var onHoldOverlayViewModel: OnHoldOverlayViewModel!
     let isRightToLeft: Bool
 
@@ -50,6 +52,7 @@ class CallingViewModel: ObservableObject {
                                                                                                 isIpadInterface)
         bannerViewModel = compositeViewModelFactory.makeBannerViewModel()
         lobbyOverlayViewModel = compositeViewModelFactory.makeLobbyOverlayViewModel()
+        loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()
 
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
@@ -86,6 +89,11 @@ class CallingViewModel: ObservableObject {
         self.isConfirmLeaveListDisplayed = false
     }
 
+    func requestCallClient() {
+        store.dispatch(action: .callingAction(.setupCall))
+        callClientRequested = true
+    }
+
     func endCall() {
         store.dispatch(action: .callingAction(.callEndRequested))
         dismissConfirmLeaveDrawerList()
@@ -104,9 +112,16 @@ class CallingViewModel: ObservableObject {
             return
         }
 
+        if state.callingState.operationStatus == .skipSetupRequested
+            && state.permissionState.audioPermission == .granted
+            && callClientRequested == false {
+            requestCallClient()
+        }
+
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
-                                   callingState: state.callingState)
+                                   callingState: state.callingState,
+                                   defaultUserState: state.defaultUserState)
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState)

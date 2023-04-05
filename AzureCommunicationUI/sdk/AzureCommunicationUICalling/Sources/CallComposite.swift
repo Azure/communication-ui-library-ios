@@ -141,7 +141,10 @@ public class CallComposite {
         let store = Store.constructStore(
             logger: logger,
             callingService: CallingService(logger: logger, callingSDKWrapper: callingSdkWrapper),
-            displayName: localOptions?.participantViewData?.displayName ?? callConfiguration.displayName
+            displayName: localOptions?.participantViewData?.displayName ?? callConfiguration.displayName,
+            startWithCameraOn: localOptions?.cameraOn,
+            startWithMicrophoneOn: localOptions?.microphoneOn,
+            skipSetupScreen: localOptions?.skipSetupScreen
         )
         self.store = store
 
