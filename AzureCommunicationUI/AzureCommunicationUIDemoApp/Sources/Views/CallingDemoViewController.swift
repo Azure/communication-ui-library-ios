@@ -8,6 +8,7 @@ import Combine
 import SwiftUI
 import AzureCommunicationCommon
 import AppCenterCrashes
+import AVFoundation
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else
@@ -247,7 +248,10 @@ class CallingDemoViewController: UIViewController {
                                                       displayName: renderDisplayName)
         let localOptions = LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
-                                        roleHint: roomRoleData)
+                                        roleHint: roomRoleData,
+                                        cameraOn: envConfigSubject.cameraOn,
+                                        microphoneOn: envConfigSubject.microphoneOn,
+                                        skipSetupScreen: envConfigSubject.skipSetupScreen)
 
         if let credential = try? await getTokenCredential() {
             switch selectedMeetingType {
@@ -319,6 +323,10 @@ class CallingDemoViewController: UIViewController {
         switch errorCode {
         case CallCompositeErrorCode.tokenExpired:
             errorMessage = "Token is invalid"
+        case CallCompositeErrorCode.microphonePermissionNotGranted:
+            errorMessage = "Microphone Permission is denied"
+        case CallCompositeErrorCode.networkConnectionNotAvailable:
+            errorMessage = "Internet error"
         default:
             errorMessage = "Unknown error"
         }
@@ -407,6 +415,12 @@ class CallingDemoViewController: UIViewController {
 
         let link = self.getMeetingLink()
         Task { @MainActor in
+            if getAudioPermissionStatus() == .denied && envConfigSubject.skipSetupScreen {
+                showError(for: CallCompositeErrorCode.microphonePermissionNotGranted)
+                startExperienceButton.isEnabled = true
+                startExperienceButton.backgroundColor = .systemBlue
+                return
+            }
             await self.startExperience(with: link)
             startExperienceButton.isEnabled = true
             startExperienceButton.backgroundColor = .systemBlue
@@ -462,6 +476,10 @@ class CallingDemoViewController: UIViewController {
         }
 
         return false
+    }
+
+    private func getAudioPermissionStatus() -> AVAudioSession.RecordPermission {
+            return AVAudioSession.sharedInstance().recordPermission
     }
 
     private func setupUI() {

@@ -15,7 +15,7 @@ class IconWithLabelButtonViewModel<T: ButtonState>: ObservableObject {
     @Published var localizationProvider: LocalizationProviderProtocol
     @Published var iconName: CompositeIcon
     @Published var buttonTypeColor: ButtonTypeColor
-    @Published var buttonLabel: String
+    @Published var buttonLabel: String?
     @Published var accessibilityLabel: String?
     @Published var accessibilityValue: String?
     @Published var accessibilityHint: String?

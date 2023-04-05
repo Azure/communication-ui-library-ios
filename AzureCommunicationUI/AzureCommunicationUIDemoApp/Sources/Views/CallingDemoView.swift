@@ -5,6 +5,7 @@
 
 import SwiftUI
 import AzureCommunicationCommon
+import AVFoundation
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else
@@ -148,6 +149,11 @@ struct CallingDemoView: View {
         Button("Start Experience") {
             isStartExperienceLoading = true
             Task { @MainActor in
+                if getAudioPermissionStatus() == .denied && envConfigSubject.skipSetupScreen {
+                    showError(for: CallCompositeErrorCode.microphonePermissionNotGranted)
+                    isStartExperienceLoading = false
+                    return
+                }
                 await startCallComposite()
                 isStartExperienceLoading = false
             }
@@ -248,7 +254,10 @@ extension CallingDemoView {
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let localOptions = LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
-                                        roleHint: roomRoleData)
+                                        roleHint: roomRoleData,
+                                        cameraOn: envConfigSubject.cameraOn,
+                                        microphoneOn: envConfigSubject.microphoneOn,
+                                        skipSetupScreen: envConfigSubject.skipSetupScreen)
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -336,11 +345,19 @@ extension CallingDemoView {
         switch errorCode {
         case CallCompositeErrorCode.tokenExpired:
             alertMessage = "Token is invalid"
+        case CallCompositeErrorCode.microphonePermissionNotGranted:
+            alertMessage = "Microphone Permission is denied"
+        case CallCompositeErrorCode.networkConnectionNotAvailable:
+            alertMessage = "Internet error"
         default:
             alertMessage = "Unknown error"
         }
         alertTitle = "Error"
         isAlertDisplayed = true
+    }
+
+    private func getAudioPermissionStatus() -> AVAudioSession.RecordPermission {
+        return AVAudioSession.sharedInstance().recordPermission
     }
 
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {

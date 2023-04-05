@@ -14,6 +14,7 @@ struct AppState {
     let remoteParticipantsState: RemoteParticipantsState
     let navigationState: NavigationState
     let errorState: ErrorState
+    let defaultUserState: DefaultUserState
 
     init(callingState: CallingState = .init(),
          permissionState: PermissionState = .init(),
@@ -22,7 +23,8 @@ struct AppState {
          audioSessionState: AudioSessionState = .init(),
          navigationState: NavigationState = .init(),
          remoteParticipantsState: RemoteParticipantsState = .init(),
-         errorState: ErrorState = .init()) {
+         errorState: ErrorState = .init(),
+         defaultUserState: DefaultUserState = .init()) {
         self.callingState = callingState
         self.permissionState = permissionState
         self.localUserState = localUserState
@@ -31,5 +33,6 @@ struct AppState {
         self.navigationState = navigationState
         self.remoteParticipantsState = remoteParticipantsState
         self.errorState = errorState
+        self.defaultUserState = defaultUserState
     }
 }

@@ -57,6 +57,7 @@ struct SetupView: View {
         .onAppear {
             viewModel.setupAudioPermissions()
             viewModel.setupCall()
+            viewModel.dismissSetupScreen()
         }
     }
 
