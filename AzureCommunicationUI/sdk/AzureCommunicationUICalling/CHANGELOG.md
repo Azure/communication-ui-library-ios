@@ -1,8 +1,4 @@
 # Azure Communication UI Calling Release History
-## 1.3.0-beta.1 (2023-04-05)
-### New Features
-- Implemented new feature where user could skip setup screen and join the call [642](https://github.com/Azure/communication-ui-library-ios/pull/642)
-- Implemented new feature where user can join the rooms call [657](https://github.com/Azure/communication-ui-library-ios/pull/657)
 
 ## 1.2.0 (2023-03-09)
 ### New Features
