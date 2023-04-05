@@ -218,7 +218,8 @@ class ControlBarViewModel: ObservableObject {
     }
 
     func setupDefaultUserState(state: DefaultUserState) {
-        if state.audioState == .on && !isDefaultUserStateMapped {
+        if state.audioState == .on && !isDefaultUserStateMapped &&
+            operationStatus == .skipSetupRequested {
             dispatch(.localUserAction(.microphonePreviewOn))
             isDefaultUserStateMapped = true
         }
