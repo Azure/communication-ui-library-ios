@@ -3,6 +3,7 @@
 ### New Features
 - `LocalOptions(skipSetupScreen: Bool?)` to skip the setup screen and directly join the call. [642](https://github.com/Azure/communication-ui-library-ios/pull/642)
 - `LocalOptions(cameraOn: Bool?, microphoneOn: Bool?)` to setup the default behaviour. [642](https://github.com/Azure/communication-ui-library-ios/pull/642)
+
 ## 1.2.0 (2023-03-09)
 ### New Features
 - Introduced a Call History available with `DebugInfo` on the `CallComposite` [610](https://github.com/Azure/communication-ui-library-ios/pull/610)
