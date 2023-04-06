@@ -11,6 +11,7 @@ class ControlBarViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
     private let dispatch: ActionDispatch
     private var isCameraStateUpdating: Bool = false
+    private var isDefaultUserStateMapped: Bool = false
     private(set) var cameraButtonViewModel: IconButtonViewModel!
 
     @Published var cameraPermission: AppPermission.Status = .unknown
@@ -27,6 +28,7 @@ class ControlBarViewModel: ObservableObject {
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel!
     var debugInfoSharingActivityViewModel: DebugInfoSharingActivityViewModel!
     var callingStatus: CallingStatus = .none
+    var operationStatus: OperationStatus = .none
     var cameraState = LocalUserState.CameraState(operation: .off,
                                                  device: .front,
                                                  transmission: .local)
@@ -155,17 +157,26 @@ class ControlBarViewModel: ObservableObject {
         self.isConfirmLeaveListDisplayed = false
     }
 
+    func isMoreButtonDisabled() -> Bool {
+        isBypassLoadingOverlay()
+    }
+
     func isCameraDisabled() -> Bool {
         cameraPermission == .denied || cameraState.operation == .pending ||
-        callingStatus == .localHold || isCameraStateUpdating
+        callingStatus == .localHold || isCameraStateUpdating || isBypassLoadingOverlay()
     }
 
     func isMicDisabled() -> Bool {
-        audioState.operation == .pending || callingStatus == .localHold
+        audioState.operation == .pending || callingStatus == .localHold || isBypassLoadingOverlay()
     }
 
     func isAudioDeviceDisabled() -> Bool {
-        callingStatus == .localHold
+        callingStatus == .localHold || isBypassLoadingOverlay()
+    }
+
+    func isBypassLoadingOverlay() -> Bool {
+        operationStatus == .skipSetupRequested && callingStatus != .connected &&
+        callingStatus != .inLobby
     }
 
     func getLeaveCallButtonViewModel() -> DrawerListItemViewModel {
@@ -206,14 +217,24 @@ class ControlBarViewModel: ObservableObject {
                                                   listItemViewModel: leaveCallConfirmationVm)
     }
 
+    func setupDefaultUserState(state: DefaultUserState) {
+        if state.audioState == .on && !isDefaultUserStateMapped &&
+            operationStatus == .skipSetupRequested {
+            dispatch(.localUserAction(.microphonePreviewOn))
+            isDefaultUserStateMapped = true
+        }
+    }
+
     func update(localUserState: LocalUserState,
                 permissionState: PermissionState,
-                callingState: CallingState) {
+                callingState: CallingState,
+                defaultUserState: DefaultUserState) {
         callingStatus = callingState.status
+        operationStatus = callingState.operationStatus
+        setupDefaultUserState(state: defaultUserState)
         if cameraPermission != permissionState.cameraPermission {
             cameraPermission = permissionState.cameraPermission
         }
-
         if isCameraStateUpdating,
            cameraState.operation != localUserState.cameraState.operation {
             isCameraStateUpdating = localUserState.cameraState.operation != .on &&
@@ -240,5 +261,7 @@ class ControlBarViewModel: ObservableObject {
         audioDeviceButtonViewModel.update(
             accessibilityValue: audioDeviceState.getLabel(localizationProvider: localizationProvider))
         audioDevicesListViewModel.update(audioDeviceStatus: audioDeviceState)
+
+        moreButtonViewModel.update(isDisabled: isMoreButtonDisabled())
     }
 }

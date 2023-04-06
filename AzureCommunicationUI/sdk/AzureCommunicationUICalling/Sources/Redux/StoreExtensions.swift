@@ -12,10 +12,27 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
     static func constructStore(
         logger: Logger,
         callingService: CallingServiceProtocol,
-        displayName: String?
+        displayName: String?,
+        startWithCameraOn: Bool?,
+        startWithMicrophoneOn: Bool?,
+        skipSetupScreen: Bool?
     ) -> Store<AppState, Action> {
+        let cameraState = startWithCameraOn
+        ?? false ? DefaultUserState.CameraState.on : DefaultUserState.CameraState.off
+
+        let audioState = startWithMicrophoneOn
+        ?? false ? DefaultUserState.AudioState.on : DefaultUserState.AudioState.off
+
+        let defaultUserState = DefaultUserState(
+            cameraState: cameraState,
+            audioState: audioState)
+
         let localUserState = LocalUserState(displayName: displayName)
 
+        let callingState = skipSetupScreen ?? false ?
+                CallingState(operationStatus: .skipSetupRequested): CallingState()
+        let navigationStatus: NavigationStatus = skipSetupScreen ?? false ? .inCall : .setup
+        let navigationState = NavigationState(status: navigationStatus)
         return .init(
             reducer: .appStateReducer(),
             middlewares: [
@@ -26,7 +43,10 @@ extension Store where State == AppState, Action == AzureCommunicationUICalling.A
                     )
                 )
             ],
-            state: AppState(localUserState: localUserState)
+            state: AppState(callingState: callingState,
+                            localUserState: localUserState,
+                            navigationState: navigationState,
+                            defaultUserState: defaultUserState)
         )
     }
 }

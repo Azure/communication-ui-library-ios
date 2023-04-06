@@ -25,7 +25,8 @@ class SetupControlBarViewModelMocking: SetupControlBarViewModel {
 
     override func update(localUserState: LocalUserState,
                          permissionState: PermissionState,
-                         callingState: CallingState) {
+                         callingState: CallingState,
+                         defaultUserState: DefaultUserState) {
         updateState?(localUserState, permissionState, callingState)
     }
 

@@ -89,7 +89,8 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilitySortPriority(1)
                         .accessibilityHidden(viewModel.lobbyOverlayViewModel.isDisplayed
-                                             || viewModel.onHoldOverlayViewModel.isDisplayed)
+                                             || viewModel.onHoldOverlayViewModel.isDisplayed
+                                             || viewModel.loadingOverlayViewModel.isDisplayed)
                 }
                 .contentShape(Rectangle())
                 .animation(.linear(duration: 0.167))
@@ -100,6 +101,12 @@ struct CallingView: View {
                     OverlayView(viewModel: viewModel.lobbyOverlayViewModel)
                         .accessibilityElement(children: .contain)
                         .accessibilityHidden(!viewModel.lobbyOverlayViewModel.isDisplayed)
+                })
+                .modifier(PopupModalView(isPresented: viewModel.loadingOverlayViewModel.isDisplayed &&
+                                         !viewModel.lobbyOverlayViewModel.isDisplayed) {
+                    LoadingOverlayView(viewModel: viewModel.loadingOverlayViewModel)
+                        .accessibilityElement(children: .contain)
+                        .accessibilityHidden(!viewModel.loadingOverlayViewModel.isDisplayed)
                 })
                 .modifier(PopupModalView(isPresented: viewModel.onHoldOverlayViewModel.isDisplayed) {
                     OverlayView(viewModel: viewModel.onHoldOverlayViewModel)

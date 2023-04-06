@@ -45,7 +45,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                             localUserState: LocalUserState(cameraState: cameraState))
         sut.update(localUserState: storeFactory.store.state.localUserState,
                                         permissionState: storeFactory.store.state.permissionState,
-                                        callingState: CallingState())
+                                        callingState: CallingState(),
+                                        defaultUserState: DefaultUserState())
 
         storeFactory.store.$state
             .dropFirst()
@@ -71,7 +72,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                             localUserState: LocalUserState(cameraState: cameraState))
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    permissionState: storeFactory.store.state.permissionState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   defaultUserState: DefaultUserState())
 
         storeFactory.store.$state
             .dropFirst()
@@ -96,7 +98,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                             localUserState: LocalUserState(audioState: audioState))
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    permissionState: storeFactory.store.state.permissionState,
-                   callingState: CallingState.init())
+                   callingState: CallingState.init(),
+                   defaultUserState: DefaultUserState.init())
 
         storeFactory.store.$state
             .dropFirst()
@@ -121,7 +124,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                             localUserState: LocalUserState(audioState: audioState))
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    permissionState: storeFactory.store.state.permissionState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   defaultUserState: DefaultUserState.init())
 
         storeFactory.store.$state
             .dropFirst()
@@ -154,7 +158,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                             localUserState: LocalUserState(cameraState: cameraState))
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    permissionState: storeFactory.store.state.permissionState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   defaultUserState: DefaultUserState.init())
 
         XCTAssertTrue(sut.isControlBarHidden())
     }
@@ -169,7 +174,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                             localUserState: LocalUserState(cameraState: cameraState))
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    permissionState: storeFactory.store.state.permissionState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   defaultUserState: DefaultUserState.init())
 
         XCTAssertFalse(sut.isAudioDisabled())
         XCTAssertTrue(sut.isCameraDisabled())
@@ -219,7 +225,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: LocalUserState(),
                    permissionState: PermissionState(audioPermission: .denied,
                                                     cameraPermission: .denied),
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   defaultUserState: DefaultUserState.init())
         sut.update(isJoinRequested: false)
 
         XCTAssertTrue(sut.isCameraDisabled())
@@ -231,7 +238,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         sut.update(localUserState: LocalUserState(),
                    permissionState: PermissionState(audioPermission: .granted,
                                                     cameraPermission: .granted),
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   defaultUserState: DefaultUserState.init())
         sut.update(isJoinRequested: false)
 
         XCTAssertFalse(sut.isCameraDisabled())
@@ -244,7 +252,8 @@ class SetupControlBarViewModelTests: XCTestCase {
                                             localUserState: LocalUserState())
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    permissionState: storeFactory.store.state.permissionState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   defaultUserState: DefaultUserState.init())
 
         XCTAssertEqual(sut.micStatus, .off)
     }
@@ -273,7 +282,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(localUserState: localUserState,
                    permissionState: PermissionState(),
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   defaultUserState: DefaultUserState.init())
         wait(for: [expectation], timeout: timeout)
     }
 
@@ -298,7 +308,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(localUserState: LocalUserState(),
                    permissionState: permissionState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   defaultUserState: DefaultUserState.init())
         wait(for: [expectation], timeout: timeout)
     }
 
@@ -325,7 +336,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(localUserState: localUserState,
                    permissionState: PermissionState(),
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   defaultUserState: DefaultUserState.init())
         wait(for: [expectation], timeout: timeout)
     }
 
@@ -351,7 +363,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(localUserState: localUserState,
                    permissionState: PermissionState(),
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   defaultUserState: DefaultUserState.init())
         wait(for: [expectation], timeout: timeout)
     }
 
@@ -371,7 +384,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(localUserState: localUserState,
                    permissionState: PermissionState(),
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   defaultUserState: DefaultUserState.init())
         wait(for: [expectation], timeout: timeout)
     }
 
@@ -399,7 +413,8 @@ class SetupControlBarViewModelTests: XCTestCase {
         let sut = makeSUTLocalizationMocking()
         sut.update(localUserState: localUserState,
                    permissionState: PermissionState(),
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   defaultUserState: DefaultUserState.init())
         wait(for: [expectation], timeout: timeout)
     }
 }
