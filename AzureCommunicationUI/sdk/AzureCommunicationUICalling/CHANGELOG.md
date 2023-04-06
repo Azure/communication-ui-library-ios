@@ -1,8 +1,8 @@
 # Azure Communication UI Calling Release History
-## 1.3.0(2023-04-03)
+## 1.3.0 (2023-04-06)
 ### New Features
-- Implemented new feature where user could skip setup screen and join the call [642](https://github.com/Azure/communication-ui-library-ios/pull/642)
-
+- `LocalOptions(skipSetupScreen: Bool?)` to skip the setup screen and directly join the call. [642](https://github.com/Azure/communication-ui-library-ios/pull/642)
+- `LocalOptions(cameraOn: Bool?, microphoneOn: Bool?)` to setup the default behaviour. [642](https://github.com/Azure/communication-ui-library-ios/pull/642)
 ## 1.2.0 (2023-03-09)
 ### New Features
 - Introduced a Call History available with `DebugInfo` on the `CallComposite` [610](https://github.com/Azure/communication-ui-library-ios/pull/610)
