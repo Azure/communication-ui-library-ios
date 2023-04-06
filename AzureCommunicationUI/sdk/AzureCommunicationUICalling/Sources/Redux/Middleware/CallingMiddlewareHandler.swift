@@ -56,10 +56,13 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         Task {
             do {
                 try await callingService.setupCall()
-                if state.permissionState.cameraPermission == .granted,
-                   state.localUserState.cameraState.operation == .off,
+                if state.defaultUserState.cameraState == .on,
                    state.errorState.internalError == nil {
-                    dispatch(.localUserAction(.cameraPreviewOnTriggered))
+                    await requestCameraPreviewOn(state: state, dispatch: dispatch).value
+                }
+
+                if state.callingState.operationStatus == .skipSetupRequested {
+                    dispatch(.callingAction(.callStartRequested))
                 }
             } catch {
                 handle(error: error, errorType: .callJoinFailed, dispatch: dispatch)
@@ -154,6 +157,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
         Task {
             if state.permissionState.cameraPermission == .notAsked {
                 dispatch(.permissionAction(.cameraPermissionRequested))
+            } else if state.permissionState.cameraPermission == .denied {
+                dispatch(.localUserAction(.cameraOffTriggered))
             } else {
                 do {
                     let identifier = try await callingService.requestCameraPreviewOn()
@@ -248,7 +253,11 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
             switch state.localUserState.cameraState.transmission {
             case .local:
-                dispatch(.localUserAction(.cameraPreviewOnTriggered))
+                if state.callingState.operationStatus == .skipSetupRequested {
+                    dispatch(.localUserAction(.cameraOnTriggered))
+                } else {
+                    dispatch(.localUserAction(.cameraPreviewOnTriggered))
+                }
             case .remote:
                 dispatch(.localUserAction(.cameraOnTriggered))
             }
