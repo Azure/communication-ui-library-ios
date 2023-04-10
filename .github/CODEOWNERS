@@ -5,9 +5,7 @@
 *                                                           @Azure/acs-ui-mobile-calling-reviewer-1 @Azure/acs-ui-mobile-calling-reviewer-2 @Azure/acs-ui-mobile-chat-reviewer-1 @Azure/acs-ui-mobile-chat-reviewer-2
 
 # AzureCommunicationUICalling
-# PRLabel: %Calling
 /AzureCommunicationUI/sdk/AzureCommunicationUICalling/      @Azure/acs-ui-mobile-calling-reviewer-1 @Azure/acs-ui-mobile-calling-reviewer-2
 
 # AzureCommunicationUIChat
-# PRLabel: %Chat
 /AzureCommunicationUI/sdk/AzureCommunicationUIChat/         @Azure/acs-ui-mobile-chat-reviewer-1 @Azure/acs-ui-mobile-chat-reviewer-2
