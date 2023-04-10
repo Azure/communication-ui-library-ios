@@ -8,6 +8,7 @@ import AzureCommunicationCommon
 /// This class represents the data-layer components of the Chat Composite.
 public class ChatAdapter {
 
+
     /// The class to configure events closures for Chat Composite.
     public class Events {
         /// Closure to execute when error event occurs inside Chat Composite.
