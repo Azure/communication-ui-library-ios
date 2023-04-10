@@ -11,6 +11,7 @@ struct AccessibilityProvider: AccessibilityProviderProtocol {
         UIAccessibility.isVoiceOverRunning
     }
 
+    
     func postQueuedAnnouncement(_ announcement: String) {
         let message = NSAttributedString(string: announcement,
                                          attributes: [.accessibilitySpeechQueueAnnouncement: true])
