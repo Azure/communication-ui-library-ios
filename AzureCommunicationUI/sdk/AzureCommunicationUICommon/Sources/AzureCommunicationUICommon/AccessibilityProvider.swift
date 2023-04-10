@@ -10,7 +10,6 @@ struct AccessibilityProvider: AccessibilityProviderProtocol {
     var isVoiceOverEnabled: Bool {
         UIAccessibility.isVoiceOverRunning
     }
-
     
     func postQueuedAnnouncement(_ announcement: String) {
         let message = NSAttributedString(string: announcement,
