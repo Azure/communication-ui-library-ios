@@ -12,6 +12,7 @@ import FluentUI
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
 
+    
     /// The class to configure events closures for Call Composite.
     public class Events {
         /// Closure to execute when error event occurs inside Call Composite.
