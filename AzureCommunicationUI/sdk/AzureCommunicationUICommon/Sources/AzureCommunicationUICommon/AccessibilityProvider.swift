@@ -7,6 +7,7 @@ import Foundation
 import UIKit
 
 struct AccessibilityProvider: AccessibilityProviderProtocol {
+    
     var isVoiceOverEnabled: Bool {
         UIAccessibility.isVoiceOverRunning
     }
