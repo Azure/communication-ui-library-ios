@@ -53,6 +53,12 @@ extension Reducer {
             switch action {
             case .callingAction(.participantListUpdated(participants: let newParticipants)):
                 remoteParticipantState = RemoteParticipantsState(participantInfoList: newParticipants)
+            case .remoteParticipantsAction(.dominantSpeakersUpdated(speakers: let newSpeakers)):
+                remoteParticipantState = RemoteParticipantsState(dominantSpeakers: newSpeakers)
+            case .remoteParticipantsAction(
+                .dominantSpeakersModifiedTimestampUpdated(timestamp: let newTimestamp)):
+                remoteParticipantState = RemoteParticipantsState(
+                    dominantSpeakersModifiedTimestamp: newTimestamp)
             case .errorAction(.statusErrorAndCallReset):
                 remoteParticipantState = RemoteParticipantsState(participantInfoList: [])
             default:

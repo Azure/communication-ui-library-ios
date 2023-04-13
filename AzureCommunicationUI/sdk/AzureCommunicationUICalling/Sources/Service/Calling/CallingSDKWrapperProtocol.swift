@@ -80,4 +80,6 @@ protocol CallingSDKEventsHandling {
     var isTranscriptionActiveSubject: PassthroughSubject<Bool, Never> { get }
     var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
     var callIdSubject: PassthroughSubject<String, Never> { get }
+    var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
+    var dominantSpeakersModifiedTimestampSubject: PassthroughSubject<Date, Never> { get }
 }

@@ -48,6 +48,7 @@ extension Reducer where State == ErrorState,
                 .lifecycleAction(_),
                 .localUserAction(_),
                 .permissionAction(_),
+                .remoteParticipantsAction(_),
                 .compositeExitAction,
                 .callingViewLaunched:
             return state

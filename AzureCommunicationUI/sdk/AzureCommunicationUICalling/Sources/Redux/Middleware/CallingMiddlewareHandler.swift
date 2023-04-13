@@ -334,5 +334,17 @@ extension CallingMiddlewareHandler {
             .sink { callId in
                 dispatch(.callingAction(.callIdUpdated(callId: callId)))
             }.store(in: subscription)
+
+        callingService.dominantSpeakersSubject
+            .throttle(for: 1.0, scheduler: DispatchQueue.main, latest: true)
+            .sink { speakers in
+                dispatch(.remoteParticipantsAction(.dominantSpeakersUpdated(speakers: speakers)))
+            }.store(in: subscription)
+
+        callingService.dominantSpeakersModifiedTimestampSubject
+            .removeDuplicates()
+            .sink { timestamp in
+                dispatch(.remoteParticipantsAction(.dominantSpeakersModifiedTimestampUpdated(timestamp: timestamp)))
+            }.store(in: subscription)
     }
 }
