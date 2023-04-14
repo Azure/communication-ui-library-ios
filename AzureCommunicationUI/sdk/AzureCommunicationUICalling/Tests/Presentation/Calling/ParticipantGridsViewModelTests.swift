@@ -20,34 +20,6 @@ class ParticipantGridViewModelTests: XCTestCase {
         cancellable = nil
     }
 
-    // MARK: Sorting participant
-    func test_participantGridsViewModel_updateParticipantsState_when_newSevenInfoModels_then_participantViewModelsSortedByRecentSpeakingTimeStamp() {
-        var inputInfoModelArr = [ParticipantInfoModel]()
-        for i in 0...6 {
-            let date = Calendar.current.date(
-                byAdding: .minute,
-                value: i,
-                to: Date())!
-            inputInfoModelArr.append(ParticipantInfoModelBuilder.get(recentSpeakingStamp: date))
-        }
-        let lastUpdateTimeStamp = Calendar.current.date(
-            byAdding: .minute,
-            value: -2,
-            to: Date())!
-        let state = RemoteParticipantsState(participantInfoList: inputInfoModelArr,
-                                            lastUpdateTimeStamp: lastUpdateTimeStamp)
-        let callingState = CallingState()
-        let sut = makeSUT()
-        sut.update(callingState: callingState,
-                   remoteParticipantsState: state)
-        guard let firstUserIdentifier = sut.participantsCellViewModelArr.first?.participantIdentifier,
-              let expectedId = inputInfoModelArr.last?.userIdentifier else {
-            XCTFail("Failed with empty userIdentifier")
-            return
-        }
-        XCTAssertEqual(firstUserIdentifier, expectedId)
-    }
-
     func test_participantGridsViewModel_updateParticipantsState_when_existedTwoInfoModelsTimeStampUpdate_then_noIndexChange() {
         let previousDate = Calendar.current.date(
             byAdding: .minute,
@@ -276,24 +248,6 @@ class ParticipantGridViewModelTests: XCTestCase {
         let currentDate = Date()
         let expectedCount = 2
         let currentState = makeRemoteParticipantState(count: expectedCount, date: currentDate)
-        let callingState = CallingState()
-        let sut = makeSUT()
-        sut.update(callingState: callingState,
-                   remoteParticipantsState: firstState)
-        sut.update(callingState: callingState,
-                   remoteParticipantsState: currentState)
-        XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
-    }
-
-    func test_participantGridsViewModel_updateParticipantsState_when_viewModelLastUpdateTimeStampSame_then_noUpdateRemoteParticipantCellViewModel() {
-        let date = Calendar.current.date(
-            byAdding: .minute,
-            value: -1,
-            to: Date())
-        let expectedCount = 1
-
-        let firstState = makeRemoteParticipantState(count: expectedCount, date: date!)
-        let currentState = makeRemoteParticipantState(count: 2, date: date!)
         let callingState = CallingState()
         let sut = makeSUT()
         sut.update(callingState: callingState,

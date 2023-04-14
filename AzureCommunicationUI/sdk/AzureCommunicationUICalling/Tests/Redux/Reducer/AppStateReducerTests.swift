@@ -139,7 +139,6 @@ class AppStateReducerTests: XCTestCase {
                                                isRemoteUser: false,
                                                userIdentifier: userId,
                                                status: .idle,
-                                               recentSpeakingStamp: Date(),
                                                screenShareVideoStreamModel: nil,
                                                cameraVideoStreamModel: nil)
         let remoteParticipantsState = RemoteParticipantsState(participantInfoList: [participant])
