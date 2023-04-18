@@ -62,7 +62,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
                 return
             }
             let userIdentifier = remoteParticipant.identifier.rawId
-            self.updateRemoteParticipant(userIdentifier: userIdentifier, updateSpeakingStamp: false)
+            self.updateRemoteParticipant(userIdentifier: userIdentifier)
         }
 
         remoteParticipantEventAdapter.onIsMutedChanged = participantUpdate
@@ -122,8 +122,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         participantsInfoListSubject.send(remoteParticipantsInfoList)
     }
 
-    private func updateRemoteParticipant(userIdentifier: String,
-                                         updateSpeakingStamp: Bool) {
+    private func updateRemoteParticipant(userIdentifier: String) {
         var remoteParticipantsInfoList = participantsInfoListSubject.value
         if let remoteParticipant = remoteParticipants.value(forKey: userIdentifier),
            let index = remoteParticipantsInfoList.firstIndex(where: {
@@ -197,7 +196,6 @@ extension CallingSDKEventsHandler: CallDelegate,
             speakers.append(userIdentifier)
         }
         dominantSpeakersSubject.send(speakers)
-        dominantSpeakersModifiedTimestampSubject.send(dominantSpeakersInfo.timestamp)
     }
     func call(_ call: Call, didChangeMuteState args: PropertyChangedEventArgs) {
         isLocalUserMutedSubject.send(call.isMuted)

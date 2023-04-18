@@ -7,5 +7,5 @@ import Foundation
 
 enum RemoteParticipantsAction: Equatable {
     case dominantSpeakersUpdated(speakers: [String])
-    case dominantSpeakersModifiedTimestampUpdated(timestamp: Date)
+    case participantListUpdated(participants: [ParticipantInfoModel])
 }

@@ -111,42 +111,6 @@ class AppStateReducerTests: XCTestCase {
 
         XCTAssertEqual(result.errorState, expectedState)
     }
-
-    func test_appStateReducer_reduce_when_participantListUpdate_then_stateUpdated() {
-        let userId = UUID().uuidString
-        let infoModel = ParticipantInfoModelBuilder.get(participantIdentifier: userId,
-                                                        videoStreamId: "",
-                                                        displayName: "",
-                                                        isSpeaking: false,
-                                                        recentSpeakingStamp: Date())
-        let action = Action.callingAction(.participantListUpdated(participants: [infoModel]))
-        let sut = getSUT()
-        let state = getAppState()
-        let result = sut.reduce(state, action)
-
-        XCTAssertEqual(result.remoteParticipantsState.participantInfoList.count, 1)
-        XCTAssertEqual(result.remoteParticipantsState.participantInfoList.first?.userIdentifier, userId)
-    }
-
-    func test_appStateReducer_reduce_when_StatusErrorAndCallReset_then_remoteParticipantStateCleanup() {
-        let userId = UUID().uuidString
-        let action = Action.errorAction(.statusErrorAndCallReset(internalError: .callJoinFailed,
-                                                         error: nil))
-        let sut = getSUT()
-        let participant = ParticipantInfoModel(displayName: "displayname",
-                                               isSpeaking: false,
-                                               isMuted: true,
-                                               isRemoteUser: false,
-                                               userIdentifier: userId,
-                                               status: .idle,
-                                               screenShareVideoStreamModel: nil,
-                                               cameraVideoStreamModel: nil)
-        let remoteParticipantsState = RemoteParticipantsState(participantInfoList: [participant])
-        let state = getAppState(remoteParticipantsState: remoteParticipantsState)
-        let result = sut.reduce(state, action)
-
-        XCTAssertEqual(result.remoteParticipantsState.participantInfoList.count, 0)
-    }
 }
 
 extension AppStateReducerTests {
