@@ -25,7 +25,7 @@ steps:
         -Xswiftc "`xcrun --sdk iphonesimulator --show-sdk-path`" \
         -Xswiftc "-target" \
         -Xswiftc "x86_64-apple-ios14.0-simulator"
-      xcodebuild test -scheme AzureCommunicationUICommon -sdk "`xcrun --sdk iphonesimulator --show-sdk-path`" -destination "name=iPhone 13"
+      xcodebuild test -scheme AzureCommunicationUICommon -sdk "`xcrun --sdk iphonesimulator --show-sdk-path`" -destination "name=iPhone 14"
     workingDirectory: AzureCommunicationUI/sdk/AzureCommunicationUICommon
     displayName: "Build and test AzureCommunicationUICommon"
 
@@ -65,7 +65,7 @@ steps:
       scheme: ${{ parameters.buildScheme }}
       xcodeVersion: default
       destinationPlatformOption: iOS
-      destinationSimulators: "iPhone 12 Pro"
+      destinationSimulators: "iPhone 14"
       publishJUnitResults: true
 
   - script: |
