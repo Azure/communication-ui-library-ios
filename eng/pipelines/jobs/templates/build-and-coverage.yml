@@ -65,7 +65,7 @@ steps:
       scheme: ${{ parameters.buildScheme }}
       xcodeVersion: default
       destinationPlatformOption: iOS
-      destinationSimulators: "iPhone 12 Pro"
+      destinationSimulators: "iPhone 14"
       publishJUnitResults: true
 
   - script: |
