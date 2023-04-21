@@ -33,3 +33,30 @@ extension CallState {
         }
     }
 }
+
+extension CallingStatus {
+    func toCallCompositeCallState() -> String {
+        switch self {
+        case .none:
+            return CallCompositeCallState.none
+        case .earlyMedia:
+            return CallCompositeCallState.earlyMedia
+        case .connecting:
+            return CallCompositeCallState.connecting
+        case .ringing:
+            return CallCompositeCallState.ringing
+        case .connected:
+            return CallCompositeCallState.connected
+        case .localHold:
+            return CallCompositeCallState.localHold
+        case .disconnecting:
+            return CallCompositeCallState.disconnecting
+        case .disconnected:
+            return CallCompositeCallState.disconnected
+        case .inLobby:
+            return CallCompositeCallState.inLobby
+        case .remoteHold:
+            return CallCompositeCallState.remoteHold
+        }
+    }
+}

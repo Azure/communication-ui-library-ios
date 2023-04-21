@@ -18,6 +18,8 @@ public class CallComposite {
         public var onError: ((CallCompositeError) -> Void)?
         /// Closures to execute when participant has joined a call inside Call Composite.
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
+        /// Closure to execute when call state changes inside Call Composite.
+        public var onCallStateChanged: ((CallCompositeCallStateEvent) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -33,6 +35,7 @@ public class CallComposite {
 
     private var store: Store<AppState, Action>?
     private var errorManager: ErrorManagerProtocol?
+    private var callStateManager: CallStateManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
     private var audioSessionManager: AudioSessionManagerProtocol?
@@ -48,6 +51,11 @@ public class CallComposite {
     public var debugInfo: DebugInfo {
         let localDebugInfoManager = debugInfoManager ?? createDebugInfoManager()
         return localDebugInfoManager.getDebugInfo()
+    }
+
+    /// Get call state for the Call Composite.
+    public var callState: String {
+        return store?.state.callingState.status.toCallCompositeCallState() ?? CallCompositeCallState.none
     }
 
     /// Create an instance of CallComposite with options.
@@ -156,6 +164,7 @@ public class CallComposite {
         self.avatarViewManager = avatarViewManager
 
         self.errorManager = CompositeErrorManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
+        self.callStateManager = CallStateManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
         self.lifeCycleManager = UIKitAppLifeCycleManager(store: store, logger: logger)
         self.permissionManager = PermissionsManager(store: store)
         self.audioSessionManager = AudioSessionManager(store: store, logger: logger)
@@ -190,6 +199,7 @@ public class CallComposite {
 
     private func cleanUpManagers() {
         self.errorManager = nil
+        self.callStateManager = nil
         self.lifeCycleManager = nil
         self.permissionManager = nil
         self.audioSessionManager = nil

@@ -209,8 +209,16 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
+        let onCallStateChangedHandler: (CallCompositeCallStateEvent) -> Void = { [weak callComposite] callStateEvent in
+            guard let composite = callComposite else {
+                return
+            }
+            onCallStateChanged(callStateEvent,
+                    callComposite: composite)
+        }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
+        callComposite.events.onCallStateChanged = onCallStateChangedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
@@ -314,6 +322,11 @@ extension CallingDemoView {
         print("::::CallingDemoView error.code \(error.code)")
         callingViewModel.callHistory.last?.callIds.forEach { print("::::CallingDemoView call id \($0)") }
         showError(for: error.code)
+    }
+
+    private func onCallStateChanged(_ callStateEvent: CallCompositeCallStateEvent, callComposite: CallComposite) {
+        print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callStateEvent.callState)")
+        print("::::CallingDemoView::callComposite.callState \(callComposite.callState)")
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
