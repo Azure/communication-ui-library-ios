@@ -131,6 +131,8 @@ struct CallingDemoView: View {
                     return
                 }
                 await startCallComposite()
+                await startCallComposite()
+
                 isStartExperienceLoading = false
             }
         }
@@ -216,9 +218,30 @@ extension CallingDemoView {
             onCallStateChanged(callStateEvent,
                     callComposite: composite)
         }
+        let onExitedHandler: (CallCompositeExit) -> Void = { [weak callComposite] _ in
+            guard let composite = callComposite else {
+                return
+            }
+            print("::::CallingDemoView::getEventsHandler::onExited \(callComposite?.callState)")
+            DispatchQueue.main.async() {
+                Task { @MainActor in
+                    if getAudioPermissionStatus() == .denied && envConfigSubject.skipSetupScreen {
+                        showError(for: CallCompositeErrorCode.microphonePermissionNotGranted)
+                        isStartExperienceLoading = false
+                        return
+                    }
+                    sleep(10)
+                    print("inderpal: launching again")
+
+                   // await startCallComposite()
+                    isStartExperienceLoading = false
+                }
+            }
+        }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
+        callComposite.events.onExited = onExitedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
@@ -327,6 +350,9 @@ extension CallingDemoView {
     private func onCallStateChanged(_ callStateEvent: CallCompositeCallStateEvent, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callStateEvent.callState)")
         print("::::CallingDemoView::callComposite.callState \(callComposite.callState)")
+        if callComposite.callState == CallCompositeCallState.connected {
+            callComposite.exit()
+        }
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {

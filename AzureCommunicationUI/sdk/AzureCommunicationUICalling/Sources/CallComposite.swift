@@ -20,6 +20,8 @@ public class CallComposite {
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
         /// Closure to execute when call state changes inside Call Composite.
         public var onCallStateChanged: ((CallCompositeCallStateEvent) -> Void)?
+        /// Closure to execute when Call Composite exited.
+        public var onExited: ((CallCompositeExit) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -35,6 +37,7 @@ public class CallComposite {
 
     private var store: Store<AppState, Action>?
     private var errorManager: ErrorManagerProtocol?
+    private var exitManager: ExitManagerProtocol?
     private var callStateManager: CallStateManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
@@ -67,6 +70,11 @@ public class CallComposite {
         localizationProvider = LocalizationProvider(logger: logger)
     }
 
+    /// Exit call composite
+    public func exit() {
+        exitManager?.exit()
+    }
+
     convenience init(withOptions options: CallCompositeOptions? = nil,
                      callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
         self.init(withOptions: options)
@@ -74,6 +82,8 @@ public class CallComposite {
     }
 
     deinit {
+        print("inderpal: deinit")
+
         logger.debug("Call Composite deallocated")
     }
 
@@ -165,6 +175,7 @@ public class CallComposite {
 
         self.errorManager = CompositeErrorManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
         self.callStateManager = CallStateManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
+        self.exitManager = CompositeExitManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
         self.lifeCycleManager = UIKitAppLifeCycleManager(store: store, logger: logger)
         self.permissionManager = PermissionsManager(store: store)
         self.audioSessionManager = AudioSessionManager(store: store, logger: logger)
@@ -207,6 +218,7 @@ public class CallComposite {
         self.remoteParticipantsManager = nil
         self.debugInfoManager = nil
         self.callHistoryService = nil
+        self.exitManager = nil
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,
@@ -221,9 +233,9 @@ public class CallComposite {
                                                                         callComposite: self,
                                                                         isRightToLeft: isRightToLeft)
         containerUIHostingController.modalPresentationStyle = .fullScreen
-
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
             containerUIHostingController?.dismissSelf()
+            self?.exitManager?.onExited()
             self?.cleanUpManagers()
         }
 
