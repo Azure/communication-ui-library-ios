@@ -199,7 +199,7 @@
 		98B186A127C85F9800B837E6 /* AudioDevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B186A027C85F9800B837E6 /* AudioDevicesListViewModel.swift */; };
 		98E8564826FA609D00ECA304 /* AudioDevicesListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */; };
 		98FFD82826CC5FD900655398 /* PreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FFD82726CC5FD900655398 /* PreferenceKey.swift */; };
-		A464810429F3353B001B80A3 /* CallCompositeCallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810329F3353B001B80A3 /* CallCompositeCallState.swift */; };
+		A464810429F3353B001B80A3 /* CallCompositeCallStateCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810329F3353B001B80A3 /* CallCompositeCallStateCode.swift */; };
 		A464810629F33A43001B80A3 /* CallStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810529F33A43001B80A3 /* CallStateManager.swift */; };
 		A464810829F345E8001B80A3 /* CallCompositeExit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810729F345E8001B80A3 /* CallCompositeExit.swift */; };
 		A464810A29F34A06001B80A3 /* CompositeExitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810929F34A06001B80A3 /* CompositeExitManager.swift */; };
@@ -515,7 +515,7 @@
 		98B186A027C85F9800B837E6 /* AudioDevicesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevicesListViewModel.swift; sourceTree = "<group>"; };
 		98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevicesListViewModelTests.swift; sourceTree = "<group>"; };
 		98FFD82726CC5FD900655398 /* PreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceKey.swift; sourceTree = "<group>"; };
-		A464810329F3353B001B80A3 /* CallCompositeCallState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeCallState.swift; sourceTree = "<group>"; };
+		A464810329F3353B001B80A3 /* CallCompositeCallStateCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeCallStateCode.swift; sourceTree = "<group>"; };
 		A464810529F33A43001B80A3 /* CallStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStateManager.swift; sourceTree = "<group>"; };
 		A464810729F345E8001B80A3 /* CallCompositeExit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeExit.swift; sourceTree = "<group>"; };
 		A464810929F34A06001B80A3 /* CompositeExitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeExitManager.swift; sourceTree = "<group>"; };
@@ -1191,7 +1191,7 @@
 			children = (
 				7529F5DD29661888002F7CE1 /* BaseLocalizationProvider.swift */,
 				1F94DAF42677D48400691D1E /* CallCompositeError.swift */,
-				A464810329F3353B001B80A3 /* CallCompositeCallState.swift */,
+				A464810329F3353B001B80A3 /* CallCompositeCallStateCode.swift */,
 				A8373993261F9D7600D46787 /* CallCompositeOptions.swift */,
 				A810038A26A0C1740015C26E /* CallConfiguration.swift */,
 				FA538277292FE86200963FFC /* DebugInfo.swift */,
@@ -1717,7 +1717,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				50B390D827D976930010A2ED /* JoiningCallActivityViewModel.swift in Sources */,
-				A464810429F3353B001B80A3 /* CallCompositeCallState.swift in Sources */,
+				A464810429F3353B001B80A3 /* CallCompositeCallStateCode.swift in Sources */,
 				1F3F0C67283E858600C66054 /* AudioSessionState.swift in Sources */,
 				FAD20A8E292834500063D8A9 /* MappedSequence.swift in Sources */,
 				1FBCB6B6264BA8A200F57EEA /* ParticipantGridCellViewModel.swift in Sources */,

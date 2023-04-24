@@ -209,7 +209,7 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
-        let onCallStateChangedHandler: (CallCompositeCallStateEvent) -> Void = { [weak callComposite] callStateEvent in
+        let onCallStateChangedHandler: (CallCompositeCallState) -> Void = { [weak callComposite] callStateEvent in
             guard let composite = callComposite else {
                 return
             }
@@ -344,10 +344,10 @@ extension CallingDemoView {
         showError(for: error.code)
     }
 
-    private func onCallStateChanged(_ callStateEvent: CallCompositeCallStateEvent, callComposite: CallComposite) {
+    private func onCallStateChanged(_ callStateEvent: CallCompositeCallState, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callStateEvent.callState)")
         print("::::CallingDemoView::callComposite.callState \(callComposite.callState)")
-        if callComposite.callState == CallCompositeCallState.connected {
+        if callComposite.callState == CallCompositeCallStateCode.connected {
             callComposite.exit()
         }
     }

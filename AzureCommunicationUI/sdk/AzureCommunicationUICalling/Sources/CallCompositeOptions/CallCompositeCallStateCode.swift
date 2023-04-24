@@ -6,7 +6,7 @@
 import UIKit
 
 /// Defines values for CallCompositeCallState.
-public struct CallCompositeCallState {
+public struct CallCompositeCallStateCode {
     /// None - disposed or applicable very early in lifetime of a call.
     public static let none: String = "none"
 
@@ -39,13 +39,13 @@ public struct CallCompositeCallState {
 }
 
 /// The call state after Call Composite launching.
-public struct CallCompositeCallStateEvent {
+public struct CallCompositeCallState {
     /// The string representing the CallCompositeCallState.
     public let callState: String
 }
 
-extension CallCompositeCallStateEvent: Equatable {
-    public static func == (lhs: CallCompositeCallStateEvent, rhs: CallCompositeCallStateEvent) -> Bool {
+extension CallCompositeCallState: Equatable {
+    public static func == (lhs: CallCompositeCallState, rhs: CallCompositeCallState) -> Bool {
             return lhs.callState == rhs.callState
     }
 }

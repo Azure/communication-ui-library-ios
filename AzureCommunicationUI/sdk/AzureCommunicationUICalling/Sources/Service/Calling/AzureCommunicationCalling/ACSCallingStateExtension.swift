@@ -38,25 +38,25 @@ extension CallingStatus {
     func toCallCompositeCallState() -> String {
         switch self {
         case .none:
-            return CallCompositeCallState.none
+            return CallCompositeCallStateCode.none
         case .earlyMedia:
-            return CallCompositeCallState.earlyMedia
+            return CallCompositeCallStateCode.earlyMedia
         case .connecting:
-            return CallCompositeCallState.connecting
+            return CallCompositeCallStateCode.connecting
         case .ringing:
-            return CallCompositeCallState.ringing
+            return CallCompositeCallStateCode.ringing
         case .connected:
-            return CallCompositeCallState.connected
+            return CallCompositeCallStateCode.connected
         case .localHold:
-            return CallCompositeCallState.localHold
+            return CallCompositeCallStateCode.localHold
         case .disconnecting:
-            return CallCompositeCallState.disconnecting
+            return CallCompositeCallStateCode.disconnecting
         case .disconnected:
-            return CallCompositeCallState.disconnected
+            return CallCompositeCallStateCode.disconnected
         case .inLobby:
-            return CallCompositeCallState.inLobby
+            return CallCompositeCallStateCode.inLobby
         case .remoteHold:
-            return CallCompositeCallState.remoteHold
+            return CallCompositeCallStateCode.remoteHold
         }
     }
 }

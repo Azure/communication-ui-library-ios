@@ -19,7 +19,7 @@ public class CallComposite {
         /// Closures to execute when participant has joined a call inside Call Composite.
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
         /// Closure to execute when call state changes inside Call Composite.
-        public var onCallStateChanged: ((CallCompositeCallStateEvent) -> Void)?
+        public var onCallStateChanged: ((CallCompositeCallState) -> Void)?
         /// Closure to execute when Call Composite exited.
         public var onExited: ((CallCompositeExit) -> Void)?
     }
@@ -58,7 +58,7 @@ public class CallComposite {
 
     /// Get call state for the Call Composite.
     public var callState: String {
-        return store?.state.callingState.status.toCallCompositeCallState() ?? CallCompositeCallState.none
+        return store?.state.callingState.status.toCallCompositeCallState() ?? CallCompositeCallStateCode.none
     }
 
     /// Create an instance of CallComposite with options.
