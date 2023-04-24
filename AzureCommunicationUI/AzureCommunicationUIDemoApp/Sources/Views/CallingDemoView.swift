@@ -131,8 +131,6 @@ struct CallingDemoView: View {
                     return
                 }
                 await startCallComposite()
-                await startCallComposite()
-
                 isStartExperienceLoading = false
             }
         }
@@ -225,16 +223,15 @@ extension CallingDemoView {
             print("::::CallingDemoView::getEventsHandler::onExited \(callComposite?.callState)")
             DispatchQueue.main.async() {
                 Task { @MainActor in
-                    if getAudioPermissionStatus() == .denied && envConfigSubject.skipSetupScreen {
-                        showError(for: CallCompositeErrorCode.microphonePermissionNotGranted)
-                        isStartExperienceLoading = false
-                        return
-                    }
-                    sleep(10)
-                    print("inderpal: launching again")
+                                    if getAudioPermissionStatus() == .denied && envConfigSubject.skipSetupScreen {
+                                        showError(for: CallCompositeErrorCode.microphonePermissionNotGranted)
+                                        isStartExperienceLoading = false
+                                        return
+                                    }
+                                    print("inderpal: launching again")
 
-                   // await startCallComposite()
-                    isStartExperienceLoading = false
+                                    await startCallComposite()
+                                    isStartExperienceLoading = false
                 }
             }
         }

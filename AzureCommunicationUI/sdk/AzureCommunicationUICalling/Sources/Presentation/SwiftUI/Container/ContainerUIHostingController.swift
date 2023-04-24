@@ -51,6 +51,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
 
     override func viewDidDisappear(_ animated: Bool) {
         resetUIDeviceSetup()
+        callComposite.notifyAndExit()
         super.viewDidDisappear(animated)
     }
 

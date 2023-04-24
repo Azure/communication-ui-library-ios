@@ -75,6 +75,11 @@ public class CallComposite {
         exitManager?.exit()
     }
 
+    public func notifyAndExit() {
+        exitManager?.onExited()
+        cleanUpManagers()
+    }
+
     convenience init(withOptions options: CallCompositeOptions? = nil,
                      callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
         self.init(withOptions: options)
@@ -233,10 +238,8 @@ public class CallComposite {
                                                                         callComposite: self,
                                                                         isRightToLeft: isRightToLeft)
         containerUIHostingController.modalPresentationStyle = .fullScreen
-        router.setDismissComposite { [weak containerUIHostingController, weak self] in
+        router.setDismissComposite { [weak containerUIHostingController] in
             containerUIHostingController?.dismissSelf()
-            self?.exitManager?.onExited()
-            self?.cleanUpManagers()
         }
 
         return containerUIHostingController
