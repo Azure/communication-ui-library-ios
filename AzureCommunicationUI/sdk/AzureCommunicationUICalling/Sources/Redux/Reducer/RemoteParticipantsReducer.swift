@@ -22,6 +22,7 @@ extension Reducer where State == RemoteParticipantsState,
             lastUpdateTimeStamp = Date()
         case .errorAction(.statusErrorAndCallReset):
             participantInfoList = []
+            lastUpdateTimeStamp = Date()
         default:
             break
         }

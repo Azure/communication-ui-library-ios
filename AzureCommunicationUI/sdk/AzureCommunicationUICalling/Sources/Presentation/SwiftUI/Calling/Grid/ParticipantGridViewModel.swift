@@ -72,11 +72,6 @@ class ParticipantGridViewModel: ObservableObject {
         if infoModels.count <= maximumParticipantsDisplayed {
             return infoModels
         }
-        if dominantSpeakers.count == 0 {
-            let newDisplayRemoteParticipant =
-                infoModels.prefix(maximumParticipantsDisplayed)
-            return Array(newDisplayRemoteParticipant)
-        }
         var dominantSpeakersOrder = [String: Int]()
         for i in 0..<min(maximumParticipantsDisplayed, dominantSpeakers.count) {
             dominantSpeakersOrder[dominantSpeakers[i]] = i
@@ -92,16 +87,15 @@ class ParticipantGridViewModel: ObservableObject {
             if dominantSpeakersOrder[$1.userIdentifier] != nil {
                 return false
             }
-            if $0.isSpeaking && !$1.isSpeaking {
+            if ($0.cameraVideoStreamModel != nil && $1.cameraVideoStreamModel != nil)
+                || ($0.cameraVideoStreamModel == nil && $1.cameraVideoStreamModel == nil) {
                 return true
             }
-            if !$0.isSpeaking && $1.isSpeaking {
+            if $0.cameraVideoStreamModel != nil {
+                return true
+            } else {
                 return false
             }
-            if (!$0.isMuted && !$1.isMuted) || ($0.isMuted && $1.isMuted) {
-                return $0.displayName < $1.displayName
-            }
-            return $0.isMuted
         })
         let newDisplayRemoteParticipant = sortedInfoList.prefix(maximumParticipantsDisplayed)
         // Need to filter if the user is on the lobby or not

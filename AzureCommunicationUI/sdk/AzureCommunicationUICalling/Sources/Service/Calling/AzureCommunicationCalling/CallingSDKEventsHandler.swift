@@ -14,7 +14,6 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var isRecordingActiveSubject = PassthroughSubject<Bool, Never>()
     var isTranscriptionActiveSubject = PassthroughSubject<Bool, Never>()
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> = .init([])
-    var dominantSpeakersModifiedTimestampSubject: PassthroughSubject<Date, Never> = .init()
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
     var callIdSubject = PassthroughSubject<String, Never>()
 
@@ -69,6 +68,14 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         remoteParticipantEventAdapter.onVideoStreamsUpdated = participantUpdate
         remoteParticipantEventAdapter.onStateChanged = participantUpdate
         remoteParticipantEventAdapter.onDominantSpeakersChanged = participantUpdate
+        remoteParticipantEventAdapter.onIsSpeakingChanged = { [weak self] remoteParticipant in
+            guard let self = self else {
+                return
+            }
+            let userIdentifier = remoteParticipant.identifier.rawId
+            let updateSpeakingStamp = remoteParticipant.isSpeaking
+            self.updateRemoteParticipant(userIdentifier: userIdentifier)
+        }
     }
 
     private func removeRemoteParticipants(

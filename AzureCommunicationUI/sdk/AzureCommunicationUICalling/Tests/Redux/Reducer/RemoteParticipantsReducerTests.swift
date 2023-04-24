@@ -14,8 +14,7 @@ final class RemoteParticipantsReducerTests: XCTestCase {
         let infoModel = ParticipantInfoModelBuilder.get(participantIdentifier: userId,
                                                         videoStreamId: "",
                                                         displayName: "",
-                                                        isSpeaking: false,
-                                                        recentSpeakingStamp: Date())
+                                                        isSpeaking: false)
         let action = Action.remoteParticipantsAction(.participantListUpdated(participants: [infoModel]))
         let sut = makeSUT()
         let state = RemoteParticipantsState()
