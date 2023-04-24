@@ -14,6 +14,10 @@
 		05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */; };
 		05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C829297F516D006EDD0D /* CallHistoryService.swift */; };
 		05C1C831297F5680006EDD0D /* CallHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */; };
+		1105E8FC29B9352400FC8628 /* LoadingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */; };
+		113738FF29D638BB00D48EAB /* DefaultUserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113738FE29D638BB00D48EAB /* DefaultUserState.swift */; };
+		11F792E229AFCFB100EAABB8 /* LoadingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F792E029AFCFAF00EAABB8 /* LoadingOverlayView.swift */; };
+		11F792E329AFCFB100EAABB8 /* LoadingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F792E129AFCFB100EAABB8 /* LoadingOverlayViewModel.swift */; };
 		1B315123284EA8630043231B /* OnHoldOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */; };
 		1B3A8EED285129CC002ED55A /* AudioSessionReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */; };
 		1B5F169D27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */; };
@@ -282,6 +286,10 @@
 		05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRecord.swift; sourceTree = "<group>"; };
 		05C1C829297F516D006EDD0D /* CallHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryService.swift; sourceTree = "<group>"; };
 		05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryRepository.swift; sourceTree = "<group>"; };
+		1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModelTests.swift; sourceTree = "<group>"; };
+		113738FE29D638BB00D48EAB /* DefaultUserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserState.swift; sourceTree = "<group>"; };
+		11F792E029AFCFAF00EAABB8 /* LoadingOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlayView.swift; sourceTree = "<group>"; };
+		11F792E129AFCFB100EAABB8 /* LoadingOverlayViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModel.swift; sourceTree = "<group>"; };
 		1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		1B3A8EEC285129CC002ED55A /* AudioSessionReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionReducerTests.swift; sourceTree = "<group>"; };
 		1B5F169C27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeLeaveCallConfirmationList.swift; sourceTree = "<group>"; };
@@ -687,6 +695,7 @@
 				1F09A10E26BA484000BACED7 /* ParticipantCellViewModelTests.swift */,
 				1F09A11026BA484000BACED7 /* ParticipantGridsViewModelTests.swift */,
 				50E2D6A826FA52A3006B0EF4 /* ParticipantsListViewModelTests.swift */,
+				1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */,
 			);
 			path = Calling;
 			sourceTree = "<group>";
@@ -787,6 +796,7 @@
 				1F13D36D26AA82D400E31666 /* NavigationState.swift */,
 				1F2BED982631FA6C00D98266 /* PermissionState.swift */,
 				1F13D36B26A8B83300E31666 /* RemoteParticipantsState.swift */,
+				113738FE29D638BB00D48EAB /* DefaultUserState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -1287,6 +1297,8 @@
 		BD3CC697283D95040052DE4A /* Overlay */ = {
 			isa = PBXGroup;
 			children = (
+				11F792E029AFCFAF00EAABB8 /* LoadingOverlayView.swift */,
+				11F792E129AFCFB100EAABB8 /* LoadingOverlayViewModel.swift */,
 				5A3148DD49F9B22A8E1C3D3F /* LobbyOverlayView.swift */,
 				8815B6E127DA707B0065A184 /* LobbyOverlayViewModel.swift */,
 				BD3CC698283D952E0052DE4A /* OverlayViewModelProtocol.swift */,
@@ -1614,6 +1626,7 @@
 				A8ED23302649EA61008A26B2 /* NavigationRouterTests.swift in Sources */,
 				50B390DA27DA935D0010A2ED /* JoiningCallActivityViewModelTests.swift in Sources */,
 				A869A63D26546A2E003CC4F2 /* ReducerMocking.swift in Sources */,
+				1105E8FC29B9352400FC8628 /* LoadingOverlayViewModelTests.swift in Sources */,
 				503E361C26CC2D0900158CB4 /* CompositeViewModelFactoryTests.swift in Sources */,
 				503300FC2706763800289BB5 /* BannerViewModelTests.swift in Sources */,
 				A869A63F26546A2E003CC4F2 /* VideoViewManagerMocking.swift in Sources */,
@@ -1741,6 +1754,7 @@
 				696AD14928DBAFCE0043F807 /* ButtonState.swift in Sources */,
 				885F3F9A291DCDF500B86C9B /* DrawerListItemViewModel.swift in Sources */,
 				88701EB8274C29C600660EAB /* CallingMiddlewareHandlerExtension.swift in Sources */,
+				11F792E329AFCFB100EAABB8 /* LoadingOverlayViewModel.swift in Sources */,
 				1B5F169F27FBB70700C35126 /* LeaveCallConfirmationListViewController.swift in Sources */,
 				1F2BED992631FA6C00D98266 /* PermissionState.swift in Sources */,
 				1F94DADF2673E94F00691D1E /* CallComposite.swift in Sources */,
@@ -1779,9 +1793,11 @@
 				FAD20A8C292834500063D8A9 /* Logger.swift in Sources */,
 				FA6B61A3290C9F55004B8188 /* DebugInfoSharingActivityViewModel.swift in Sources */,
 				50FA45FE26813FCE001844AC /* ParticipantGridViewModel.swift in Sources */,
+				113738FF29D638BB00D48EAB /* DefaultUserState.swift in Sources */,
 				1F94DAE626740D4400691D1E /* AppState.swift in Sources */,
 				8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */,
 				1F3F0C69283E860600C66054 /* AudioSessionReducer.swift in Sources */,
+				11F792E229AFCFB100EAABB8 /* LoadingOverlayView.swift in Sources */,
 				50137D0626A7479C00AB843E /* EnvironmentValuesExtension.swift in Sources */,
 				1FE1BE7F26FE38C9000A8D18 /* CallCompositeInternalError.swift in Sources */,
 				985DF374269D096000CFDA55 /* SetupControlBarView.swift in Sources */,
@@ -2119,7 +2135,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.Calling;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -2149,7 +2165,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2.0;
+				MARKETING_VERSION = 1.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.Calling;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;

@@ -33,6 +33,8 @@ struct SettingsView: View {
         NavigationView {
             Form {
                 localizationSettings
+                skipSetupScreenSettings
+                micSettings
                 localParticipantSettings
                 avatarSettings
                 useMockCallingSDKHandler
@@ -119,6 +121,19 @@ struct SettingsView: View {
             .disableAutocorrection(true)
             .autocapitalization(.none)
             .textFieldStyle(.roundedBorder)
+        }
+    }
+
+    var micSettings: some View {
+        Section(header: Text("Mic & Carmera Default Vaule")) {
+            Toggle("Mic Default", isOn: $envConfigSubject.microphoneOn)
+            Toggle("Camera Default", isOn: $envConfigSubject.cameraOn)
+        }
+    }
+
+    var skipSetupScreenSettings: some View {
+        Section(header: Text("Skip Setup Screen Default Value")) {
+            Toggle("Skip Setup Screen", isOn: $envConfigSubject.skipSetupScreen)
         }
     }
 
