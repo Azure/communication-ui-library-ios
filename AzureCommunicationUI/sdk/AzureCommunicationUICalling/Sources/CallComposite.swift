@@ -75,11 +75,6 @@ public class CallComposite {
         exitManager?.exit()
     }
 
-    public func notifyAndExit() {
-        exitManager?.onExited()
-        cleanUpManagers()
-    }
-
     convenience init(withOptions options: CallCompositeOptions? = nil,
                      callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
         self.init(withOptions: options)
@@ -147,6 +142,11 @@ public class CallComposite {
         avatarManager.set(remoteParticipantViewData: remoteParticipantViewData,
                           for: identifier,
                           completionHandler: completionHandler)
+    }
+
+    private func exitComposite() {
+        exitManager?.onExited()
+        cleanUpManagers()
     }
 
     private func constructViewFactoryAndDependencies(
@@ -240,6 +240,10 @@ public class CallComposite {
         containerUIHostingController.modalPresentationStyle = .fullScreen
         router.setDismissComposite { [weak containerUIHostingController] in
             containerUIHostingController?.dismissSelf()
+        }
+
+        containerUIHostingController.onviewDisappear {[weak self] in
+            self?.exitComposite()
         }
 
         return containerUIHostingController

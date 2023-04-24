@@ -220,6 +220,7 @@ extension CallingDemoView {
             guard let composite = callComposite else {
                 return
             }
+
             print("::::CallingDemoView::getEventsHandler::onExited \(callComposite?.callState)")
             DispatchQueue.main.async() {
                 Task { @MainActor in
