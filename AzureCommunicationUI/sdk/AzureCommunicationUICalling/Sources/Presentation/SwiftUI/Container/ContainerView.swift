@@ -29,9 +29,6 @@ struct ContainerView: View {
             }
         }
         .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
-        .onDisappear {
-            logger.debug("inderpal: view disappear")
-        }
     }
     var setupView: SetupView {
         logger.debug("Displaying view: setupView")

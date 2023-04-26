@@ -18,7 +18,7 @@ public class CallComposite {
         public var onError: ((CallCompositeError) -> Void)?
         /// Closures to execute when participant has joined a call inside Call Composite.
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
-        /// Closure to execute when call state changes inside Call Composite.
+        /// Closure to execute when call state changes.
         public var onCallStateChanged: ((CallCompositeCallState) -> Void)?
         /// Closure to execute when Call Composite exited.
         public var onExited: ((CallCompositeExit) -> Void)?
@@ -82,8 +82,6 @@ public class CallComposite {
     }
 
     deinit {
-        print("inderpal: deinit")
-
         logger.debug("Call Composite deallocated")
     }
 
@@ -142,11 +140,6 @@ public class CallComposite {
         avatarManager.set(remoteParticipantViewData: remoteParticipantViewData,
                           for: identifier,
                           completionHandler: completionHandler)
-    }
-
-    private func exitComposite() {
-        exitManager?.onExited()
-        cleanUpManagers()
     }
 
     private func constructViewFactoryAndDependencies(
@@ -243,7 +236,8 @@ public class CallComposite {
         }
 
         containerUIHostingController.onviewDisappear {[weak self] in
-            self?.exitComposite()
+            self?.exitManager?.onExited()
+            self?.cleanUpManagers()
         }
 
         return containerUIHostingController

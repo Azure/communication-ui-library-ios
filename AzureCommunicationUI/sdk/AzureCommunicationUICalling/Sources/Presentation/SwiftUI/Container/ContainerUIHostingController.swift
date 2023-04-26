@@ -22,7 +22,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
     private let callComposite: CallComposite
     private let environmentProperties: EnvironmentProperty
     private let cancelBag = CancelBag()
-    private var onHostingControllerViewDidDisappear: (() -> Void)?
+    private var onViewDidDisappear: (() -> Void)?
 
     init(rootView: ContainerView,
          callComposite: CallComposite,
@@ -52,16 +52,16 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
 
     override func viewDidDisappear(_ animated: Bool) {
         resetUIDeviceSetup()
-        onHostingControllerViewDidDisappear?()
+        onViewDidDisappear?()
         super.viewDidDisappear(animated)
-    }
-
-    func onviewDisappear(_ closure: @escaping () -> Void) {
-        self.onHostingControllerViewDidDisappear = closure
     }
 
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         self.environmentProperties.supportedOrientations
+    }
+
+    func onviewDisappear(_ closure: @escaping () -> Void) {
+        self.onViewDidDisappear = closure
     }
 
     private func subscribeEnvironmentProperties(containerView: ContainerView) {

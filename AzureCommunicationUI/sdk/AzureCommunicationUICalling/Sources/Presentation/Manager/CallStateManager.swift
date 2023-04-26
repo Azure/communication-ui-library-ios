@@ -33,7 +33,7 @@ class CallStateManager: CallStateManagerProtocol {
             return
         }
         previousCallingStatus = callingStatus
-        updateEventHandler( state.callingState.status)
+        updateEventHandler(state.callingState.status)
     }
 
     private func updateEventHandler(_ callingStatus: CallingStatus) {
