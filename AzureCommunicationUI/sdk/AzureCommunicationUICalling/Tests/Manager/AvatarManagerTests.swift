@@ -47,7 +47,6 @@ class AvatarManagerTests: XCTestCase {
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
             status: .idle,
-            recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
         let remoteParticipantsState = RemoteParticipantsState(participantInfoList: [participant],

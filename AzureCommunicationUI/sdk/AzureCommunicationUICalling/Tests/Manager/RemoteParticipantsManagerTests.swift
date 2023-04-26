@@ -44,7 +44,6 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
             status: .idle,
-            recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
         let participant2 = ParticipantInfoModel(
@@ -54,7 +53,6 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier2",
             status: .idle,
-            recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
         avatarViewManager.updateStorage = { ids in
@@ -79,7 +77,6 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
             status: .idle,
-            recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
         expectedIds = [participantInfoModel.userIdentifier]
@@ -97,7 +94,6 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
             status: .idle,
-            recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
         expectedIds = [participantInfoModel.userIdentifier]
@@ -116,7 +112,6 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
             status: .idle,
-            recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
         expectedIds = [participantInfoModel.userIdentifier]
@@ -139,7 +134,6 @@ class RemoteParticipantsManagerTests: XCTestCase {
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
             status: .idle,
-            recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
         expectedIds = [participantInfoModel.userIdentifier]
@@ -165,7 +159,6 @@ class RemoteParticipantsManagerTests: XCTestCase {
                 isRemoteUser: true,
                 userIdentifier: "testUserIdentifier\(i)",
                 status: .idle,
-                recentSpeakingStamp: Date(),
                 screenShareVideoStreamModel: nil,
                 cameraVideoStreamModel: nil))
         }

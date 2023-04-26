@@ -172,7 +172,6 @@ class ParticipantsListViewModelTests: XCTestCase {
                                  isRemoteUser: false,
                                  userIdentifier: "MockUUID",
                                  status: .idle,
-                                 recentSpeakingStamp: Date(),
                                  screenShareVideoStreamModel: nil,
                                  cameraVideoStreamModel: nil)
         ]
@@ -220,7 +219,6 @@ class ParticipantsListViewModelTests: XCTestCase {
                                  isRemoteUser: false,
                                  userIdentifier: "MockUUID",
                                  status: .idle,
-                                 recentSpeakingStamp: Date(),
                                  screenShareVideoStreamModel: nil,
                                  cameraVideoStreamModel: nil)
         ]
