@@ -41,6 +41,10 @@ class CompositeExitManager: ExitManagerProtocol {
         guard let onExit = eventsHandler.onExited else {
             return
         }
-        onExit(CallCompositeExit(error: store.state.errorState.error))
+        if store.state.errorState.errorCategory == ErrorCategory.fatal {
+            onExit(CallCompositeExit(error: store.state.errorState.error))
+        } else {
+            onExit(CallCompositeExit(error: nil))
+        }
     }
 }
