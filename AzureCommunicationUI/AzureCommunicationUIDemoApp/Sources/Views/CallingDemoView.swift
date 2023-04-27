@@ -15,8 +15,10 @@ struct CallingDemoView: View {
     @State var isAlertDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
     @State var isStartExperienceLoading: Bool = false
+    @State var exitCompositeExecuted: Bool = false
     @State var alertTitle: String = ""
     @State var alertMessage: String = ""
+    @State var callState: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
 
@@ -35,6 +37,12 @@ struct CallingDemoView: View {
             settingButton
             showCallHistoryButton
             startExperienceButton
+            Group {
+                settingButton
+                showCallHistoryButton
+                startExperienceButton
+            }
+            Text(callState)
             Spacer()
         }
         .padding()
@@ -165,6 +173,20 @@ struct CallingDemoView: View {
 }
 
 extension CallingDemoView {
+    fileprivate func relaunchComposite() {
+        DispatchQueue.main.async() {
+            Task { @MainActor in
+                if getAudioPermissionStatus() == .denied && envConfigSubject.skipSetupScreen {
+                    showError(for: CallCompositeErrorCode.microphonePermissionNotGranted)
+                    isStartExperienceLoading = false
+                    return
+                }
+                print("onExitedHandler: starting composite")
+                await startCallComposite()
+                isStartExperienceLoading = false
+            }
+        }
+    }
     func startCallComposite() async {
         let link = getMeetingLink()
 
@@ -216,24 +238,19 @@ extension CallingDemoView {
             onCallStateChanged(callStateEvent,
                     callComposite: composite)
         }
-        let onExitedHandler: (CallCompositeExit) -> Void = { [weak callComposite] _ in
-            guard let composite = callComposite else {
-                return
+        let onExitedHandler: (CallCompositeExit) -> Void = { [] _ in
+            print("::::CallingDemoView::onExitedHandler")
+            if envConfigSubject.useRelaunchOnExitToggle && exitCompositeExecuted {
+                relaunchComposite()
             }
-
-            print("::::CallingDemoView::getEventsHandler::onExited \(callComposite?.callState)")
-            DispatchQueue.main.async() {
-                Task { @MainActor in
-                                    if getAudioPermissionStatus() == .denied && envConfigSubject.skipSetupScreen {
-                                        showError(for: CallCompositeErrorCode.microphonePermissionNotGranted)
-                                        isStartExperienceLoading = false
-                                        return
-                                    }
-                                    print("inderpal: launching again")
-
-                                    await startCallComposite()
-                                    isStartExperienceLoading = false
-                }
+        }
+        exitCompositeExecuted = false
+        if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
+            DispatchQueue.main.asyncAfter(deadline: .now() +
+                                          Float64(envConfigSubject.exitCompositeAfterDuration)!
+            ) { [weak callComposite] in
+                exitCompositeExecuted = true
+                callComposite?.exit()
             }
         }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
@@ -347,10 +364,7 @@ extension CallingDemoView {
 
     private func onCallStateChanged(_ callStateEvent: CallCompositeCallState, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callStateEvent.callState)")
-        print("::::CallingDemoView::callComposite.callState \(callComposite.callState)")
-        if callComposite.callState == CallCompositeCallStateCode.connected {
-            callComposite.exit()
-        }
+        callState = callStateEvent.callState
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {

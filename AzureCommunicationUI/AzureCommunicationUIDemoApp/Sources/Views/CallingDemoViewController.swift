@@ -178,6 +178,13 @@ class CallingDemoViewController: UIViewController {
                                                                 identifiers: identifiers)
     }
 
+    private func onCallStateChanged(_ callStateEvent: CallCompositeCallState, callComposite: CallComposite) {
+        print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callStateEvent.callState)")
+        if callComposite.callState == CallCompositeCallStateCode.connected {
+            callComposite.exit()
+        }
+    }
+
     private func startExperience(with link: String) async {
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
@@ -218,8 +225,26 @@ class CallingDemoViewController: UIViewController {
             self.onError(error,
                          callComposite: composite)
         }
+        let onCallStateChangedHandler: (CallCompositeCallState) -> Void = { [weak callComposite] callStateEvent in
+            guard let composite = callComposite else {
+                return
+            }
+            self.onCallStateChanged(callStateEvent,
+                    callComposite: composite)
+        }
+        let onExitedHandler: (CallCompositeExit) -> Void = { [] _ in
+            if self.envConfigSubject.useRelaunchOnExitToggle {
+                DispatchQueue.main.async() {
+                    Task { @MainActor in
+                        await self.onStartExperienceBtnPressed()
+                    }
+                }
+            }
+        }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
+        callComposite.events.onCallStateChanged = onCallStateChangedHandler
+        callComposite.events.onExited = onExitedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName

@@ -51,6 +51,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var selectedChatType: ChatType = .groupChat
     @Published var locale: Locale = SupportedLocale.en
     @Published var localeIdentifier: String = ""
+    @Published var exitCompositeAfterDuration: String = ""
     @Published var isRightToLeft: Bool = false
     @Published var microphoneOn: Bool = false
     @Published var cameraOn: Bool = false
@@ -58,6 +59,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var useCustomColors: Bool = false
     @Published var useCustomRemoteParticipantViewData: Bool = false
     @Published var useMockCallingSDKHandler: Bool = false
+    @Published var useRelaunchOnExitToggle: Bool = false
     @Published var useExpiredToken: Bool = false
     @Published var primaryColor: Color = .blue
     @Published var tint10: Color = .blue
