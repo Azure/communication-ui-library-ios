@@ -41,10 +41,22 @@ class CompositeExitManager: ExitManagerProtocol {
         guard let onExit = eventsHandler.onExited else {
             return
         }
-        if store.state.errorState.errorCategory == ErrorCategory.fatal {
-            onExit(CallCompositeExit(error: store.state.errorState.error))
-        } else {
-            onExit(CallCompositeExit(error: nil))
+        guard let compositeError = getCallCompositeError(errorState: store.state.errorState) else {
+            onExit(CallCompositeExit( code: "", error: nil))
+            return
         }
+        onExit(CallCompositeExit( code: compositeError.code, error: compositeError.error))
+   }
+
+    private func getCallCompositeError(errorState: ErrorState) -> CallCompositeError? {
+        if store.state.errorState.errorCategory == ErrorCategory.fatal {
+            guard let internalError = errorState.internalError,
+                  let errorCode = internalError.toCallCompositeErrorCode() else {
+                return nil
+            }
+            return CallCompositeError(code: errorCode,
+                                      error: errorState.error)
+        }
+        return nil
     }
 }

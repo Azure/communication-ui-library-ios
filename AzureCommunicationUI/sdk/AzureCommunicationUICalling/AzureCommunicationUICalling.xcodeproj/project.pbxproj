@@ -203,6 +203,7 @@
 		A464810629F33A43001B80A3 /* CallStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810529F33A43001B80A3 /* CallStateManager.swift */; };
 		A464810829F345E8001B80A3 /* CallCompositeExit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810729F345E8001B80A3 /* CallCompositeExit.swift */; };
 		A464810A29F34A06001B80A3 /* CompositeExitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810929F34A06001B80A3 /* CompositeExitManager.swift */; };
+		A48BE78F29FAF902009B2A46 /* CompositeExitManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE78E29FAF902009B2A46 /* CompositeExitManagerTests.swift */; };
 		A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A810038A26A0C1740015C26E /* CallConfiguration.swift */; };
 		A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C305264C3B6400766E3D /* AppStateReducerTests.swift */; };
 		A830C30A264C8AAC00766E3D /* CallingMiddlewareTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */; };
@@ -519,6 +520,7 @@
 		A464810529F33A43001B80A3 /* CallStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStateManager.swift; sourceTree = "<group>"; };
 		A464810729F345E8001B80A3 /* CallCompositeExit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeExit.swift; sourceTree = "<group>"; };
 		A464810929F34A06001B80A3 /* CompositeExitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeExitManager.swift; sourceTree = "<group>"; };
+		A48BE78E29FAF902009B2A46 /* CompositeExitManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeExitManagerTests.swift; sourceTree = "<group>"; };
 		A810038A26A0C1740015C26E /* CallConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfiguration.swift; sourceTree = "<group>"; };
 		A830C305264C3B6400766E3D /* AppStateReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateReducerTests.swift; sourceTree = "<group>"; };
 		A830C309264C8AAC00766E3D /* CallingMiddlewareTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingMiddlewareTests.swift; sourceTree = "<group>"; };
@@ -828,6 +830,7 @@
 				1F4B0EF7269BD17600E87014 /* CompositeErrorManagerTests.swift */,
 				881D8F7527FCA8C4008EC897 /* AvatarManagerTests.swift */,
 				FAD845412819FC8E007DAFE1 /* RemoteParticipantsManagerTests.swift */,
+				A48BE78E29FAF902009B2A46 /* CompositeExitManagerTests.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1695,6 +1698,7 @@
 				A830C30C264D7C0900766E3D /* PermissionReducerTests.swift in Sources */,
 				A869A63B26546A2E003CC4F2 /* PermissionsManagerMocking.swift in Sources */,
 				1F09A10A26BA47EC00BACED7 /* SetupViewModelTests.swift in Sources */,
+				A48BE78F29FAF902009B2A46 /* CompositeExitManagerTests.swift in Sources */,
 				A869A63926546A2E003CC4F2 /* LoggerMocking.swift in Sources */,
 				8815B6E427DA9B350065A184 /* LobbyOverlayViewModelTests.swift in Sources */,
 				1B315123284EA8630043231B /* OnHoldOverlayViewModelTests.swift in Sources */,

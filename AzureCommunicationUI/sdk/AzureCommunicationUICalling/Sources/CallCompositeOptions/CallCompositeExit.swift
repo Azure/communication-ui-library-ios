@@ -7,6 +7,9 @@ import UIKit
 
 /// The error thrown after Call Composite launching.
 public struct CallCompositeExit {
+    /// The string representing the CallCompositeErrorCode.
+    public let code: String
+
     /// The NSError returned from Azure Communication SDK.
     public let error: Error?
 }
@@ -18,6 +21,7 @@ extension CallCompositeExit: Equatable {
             return error1.domain == error2.domain
                 && error1.code == error2.code
                 && "\(error1.description)" == "\(error2.description)"
+                && lhs.code == rhs.code
         }
 
         return false
