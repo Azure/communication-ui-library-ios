@@ -40,13 +40,16 @@ class CallingDemoViewController: UIViewController {
     private var meetingTypeSegmentedControl: UISegmentedControl!
     private var stackView: UIStackView!
     private var titleLabel: UILabel!
+    private var callStateLabel: UILabel!
     private var titleLabelConstraint: NSLayoutConstraint!
+    private var callStateLabelConstraint: NSLayoutConstraint!
 
     // The space needed to fill the top part of the stack view,
     // in order to make the stackview content centered
     private var spaceToFullInStackView: CGFloat?
     private var userIsEditing: Bool = false
     private var isKeyboardShowing: Bool = false
+    private var exitCompositeExecuted: Bool = false
 
     private var cancellable = Set<AnyCancellable>()
     private var envConfigSubject: EnvConfigSubject
@@ -180,9 +183,7 @@ class CallingDemoViewController: UIViewController {
 
     private func onCallStateChanged(_ callStateEvent: CallCompositeCallState, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callStateEvent.callState)")
-        if callComposite.callState == CallCompositeCallStateCode.connected {
-            callComposite.exit()
-        }
+        callStateLabel.text = callStateEvent.callState
     }
 
     private func startExperience(with link: String) async {
@@ -233,12 +234,22 @@ class CallingDemoViewController: UIViewController {
                     callComposite: composite)
         }
         let onExitedHandler: (CallCompositeExit) -> Void = { [] _ in
-            if self.envConfigSubject.useRelaunchOnExitToggle {
-                DispatchQueue.main.async() {
-                    Task { @MainActor in
-                        await self.onStartExperienceBtnPressed()
-                    }
-                }
+            print("::::CallingDemoView::onExitedHandler")
+            if self.envConfigSubject.useRelaunchOnExitToggle && self.exitCompositeExecuted {
+                            DispatchQueue.main.async() {
+                                Task { @MainActor in
+                                    await self.onStartExperienceBtnPressed()
+                                }
+                            }
+                        }
+        }
+        exitCompositeExecuted = false
+        if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
+            DispatchQueue.main.asyncAfter(deadline: .now() +
+                                          Float64(envConfigSubject.exitCompositeAfterDuration)!
+            ) { [weak callComposite] in
+                self.exitCompositeExecuted = true
+                callComposite?.exit()
             }
         }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
@@ -578,6 +589,16 @@ class CallingDemoViewController: UIViewController {
         startExperienceButton.addTarget(self, action: #selector(onStartExperienceBtnPressed), for: .touchUpInside)
 
         startExperienceButton.accessibilityLabel = AccessibilityId.startExperienceAccessibilityID.rawValue
+
+        callStateLabel = UILabel()
+        callStateLabel.text = "State"
+        callStateLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(callStateLabel)
+        callStateLabelConstraint = callStateLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor,
+                                                                          constant: LayoutConstants.verticalSpacing)
+        callStateLabelConstraint.isActive = true
+        callStateLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor).isActive = true
+        callStateLabel.centerYAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -10).isActive = true
 
         // horizontal stack view for the settingButton and startExperienceButton
         let settingButtonHSpacer1 = UIView()
