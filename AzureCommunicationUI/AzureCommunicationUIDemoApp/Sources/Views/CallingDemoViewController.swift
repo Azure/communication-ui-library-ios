@@ -238,7 +238,7 @@ class CallingDemoViewController: UIViewController {
             if self.envConfigSubject.useRelaunchOnExitToggle && self.exitCompositeExecuted {
                             DispatchQueue.main.async() {
                                 Task { @MainActor in
-                                    await self.onStartExperienceBtnPressed()
+                                    self.onStartExperienceBtnPressed()
                                 }
                             }
                         }
