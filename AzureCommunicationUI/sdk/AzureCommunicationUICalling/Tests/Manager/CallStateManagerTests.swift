@@ -140,10 +140,10 @@ extension CompositeStateManagerTests {
             }
             stateChangeCount += 1
             if stateChangeCount == expectedStateChangeCount {
-                XCTAssertEqual(callCompositeCallState.callState, self.expectedCallStateCode)
+                XCTAssertEqual(callCompositeCallState.code, self.expectedCallStateCode)
                 self.handlerCallExpectation.fulfill()
             } else {
-                XCTAssertEqual(callCompositeCallState.callState, CallCompositeCallStateCode.none)
+                XCTAssertEqual(callCompositeCallState.code, CallCompositeCallStateCode.none)
             }
         }
         return handler

@@ -57,7 +57,7 @@ public class CallComposite {
     }
 
     /// Get call state for the Call Composite.
-    public var callState: String {
+    public var callStateCode: String {
         return store?.state.callingState.status.toCallCompositeCallState() ?? CallCompositeCallStateCode.none
     }
 

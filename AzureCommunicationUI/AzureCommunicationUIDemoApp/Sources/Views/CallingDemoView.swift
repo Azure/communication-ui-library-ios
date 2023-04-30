@@ -363,8 +363,8 @@ extension CallingDemoView {
     }
 
     private func onCallStateChanged(_ callStateEvent: CallCompositeCallState, callComposite: CallComposite) {
-        print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callStateEvent.callState)")
-        callState = callStateEvent.callState
+        print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callStateEvent.code)")
+        callState = callStateEvent.code
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {

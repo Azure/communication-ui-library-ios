@@ -41,11 +41,11 @@ public struct CallCompositeCallStateCode {
 /// The call state after Call Composite launching.
 public struct CallCompositeCallState {
     /// The string representing the CallCompositeCallState.
-    public let callState: String
+    public let code: String
 }
 
 extension CallCompositeCallState: Equatable {
     public static func == (lhs: CallCompositeCallState, rhs: CallCompositeCallState) -> Bool {
-            return lhs.callState == rhs.callState
+            return lhs.code == rhs.code
     }
 }

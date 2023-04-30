@@ -45,6 +45,6 @@ class CallStateManager: CallStateManagerProtocol {
     }
 
     private func getCallCompositeCallStateEvent(callingStatus: CallingStatus) -> CallCompositeCallState? {
-        return CallCompositeCallState(callState: callingStatus.toCallCompositeCallState())
+        return CallCompositeCallState(code: callingStatus.toCallCompositeCallState())
     }
 }

@@ -182,8 +182,8 @@ class CallingDemoViewController: UIViewController {
     }
 
     private func onCallStateChanged(_ callStateEvent: CallCompositeCallState, callComposite: CallComposite) {
-        print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callStateEvent.callState)")
-        callStateLabel.text = callStateEvent.callState
+        print("::::CallingDemoViewController::getEventsHandler::onCallStateChanged \(callStateEvent.code)")
+        callStateLabel.text = callStateEvent.code
     }
 
     private func startExperience(with link: String) async {
