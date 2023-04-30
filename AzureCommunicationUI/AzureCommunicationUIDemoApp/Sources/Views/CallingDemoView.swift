@@ -34,15 +34,12 @@ struct CallingDemoView: View {
             acsTokenSelector
             displayNameTextField
             meetingSelector
-            settingButton
-            showCallHistoryButton
-            startExperienceButton
             Group {
                 settingButton
                 showCallHistoryButton
                 startExperienceButton
+                Text(callState)
             }
-            Text(callState)
             Spacer()
         }
         .padding()
