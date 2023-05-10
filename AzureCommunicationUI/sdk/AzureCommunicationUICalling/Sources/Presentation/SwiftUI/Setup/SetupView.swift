@@ -31,9 +31,10 @@ struct SetupView: View {
                 SetupTitleView(viewModel: viewModel)
                 GeometryReader { geometry in
                     ZStack(alignment: .bottomLeading) {
-                        VStack(spacing: getSizeClass() == .ipadScreenSize ?
+                        VStack(alignment: .center,
+                               spacing: getSizeClass() == .ipadScreenSize ?
                                LayoutConstant.spacingLarge : LayoutConstant.spacing) {
-                            ZStack(alignment: .bottom) {
+                            ZStack(alignment: .center) {
                                 PreviewAreaView(viewModel: viewModel.previewAreaViewModel,
                                                 viewManager: viewManager,
                                                 avatarManager: avatarManager)
