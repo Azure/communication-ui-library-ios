@@ -67,7 +67,7 @@ struct PermissionWarningView: View {
                 }
             }.frame(width: geometry.size.width,
                     height: geometry.size.height)
-            .accessibilityElement(children: .combine)
+            .accessibilityElement(children: .contain)
         }
     }
 }
