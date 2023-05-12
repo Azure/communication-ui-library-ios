@@ -281,7 +281,7 @@ extension CallingMiddlewareHandler {
         callingService.participantsInfoListSubject
             .throttle(for: 1.25, scheduler: DispatchQueue.main, latest: true)
             .sink { list in
-                dispatch(.callingAction(.participantListUpdated(participants: list)))
+                dispatch(.remoteParticipantsAction(.participantListUpdated(participants: list)))
             }.store(in: subscription)
 
         callingService.callInfoSubject
@@ -333,6 +333,12 @@ extension CallingMiddlewareHandler {
             .removeDuplicates()
             .sink { callId in
                 dispatch(.callingAction(.callIdUpdated(callId: callId)))
+            }.store(in: subscription)
+
+        callingService.dominantSpeakersSubject
+            .throttle(for: 0.5, scheduler: DispatchQueue.main, latest: true)
+            .sink { speakers in
+                dispatch(.remoteParticipantsAction(.dominantSpeakersUpdated(speakers: speakers)))
             }.store(in: subscription)
     }
 }

@@ -97,6 +97,9 @@
 		1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */; };
 		1FFEA01426A68D0D00E90816 /* FontExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FFEA01326A68D0D00E90816 /* FontExtension.swift */; };
 		2831DADF29AEC2A4005ADE30 /* ParticipantRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831DADE29AEC2A4005ADE30 /* ParticipantRole.swift */; };
+		28FE266D29E804F5009CC19D /* RemoteParticipantsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FE266C29E804F5009CC19D /* RemoteParticipantsAction.swift */; };
+		28FE267329EE168E009CC19D /* RemoteParticipantsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FE267229EE168E009CC19D /* RemoteParticipantsReducer.swift */; };
+		28FE267729EE9E5A009CC19D /* RemoteParticipantsReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FE267629EE9E5A009CC19D /* RemoteParticipantsReducerTests.swift */; };
 		337789566FB3398301666ADF /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC5A1FE3C2622411DFF98147 /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework */; };
 		500C0F1F2847DE18000BA2DC /* RemoteOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500C0F1E2847DE18000BA2DC /* RemoteOptions.swift */; };
 		500C0F212847E30E000BA2DC /* RemoteOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500C0F202847E30E000BA2DC /* RemoteOptionsTests.swift */; };
@@ -371,6 +374,9 @@
 		1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoiningCallActivityView.swift; sourceTree = "<group>"; };
 		1FFEA01326A68D0D00E90816 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
 		2831DADE29AEC2A4005ADE30 /* ParticipantRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantRole.swift; sourceTree = "<group>"; };
+		28FE266C29E804F5009CC19D /* RemoteParticipantsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantsAction.swift; sourceTree = "<group>"; };
+		28FE267229EE168E009CC19D /* RemoteParticipantsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantsReducer.swift; sourceTree = "<group>"; };
+		28FE267629EE9E5A009CC19D /* RemoteParticipantsReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantsReducerTests.swift; sourceTree = "<group>"; };
 		500C0F1E2847DE18000BA2DC /* RemoteOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteOptions.swift; sourceTree = "<group>"; };
 		500C0F202847E30E000BA2DC /* RemoteOptionsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteOptionsTests.swift; sourceTree = "<group>"; };
 		50137D0526A7479C00AB843E /* EnvironmentValuesExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnvironmentValuesExtension.swift; sourceTree = "<group>"; };
@@ -782,6 +788,7 @@
 				1FBCB6D82655825200F57EEA /* LocalUserReducer.swift */,
 				1F13D36F26AB293700E31666 /* NavigationReducer.swift */,
 				1F2BEDBA26328EBA00D98266 /* PermissionReducer.swift */,
+				28FE267229EE168E009CC19D /* RemoteParticipantsReducer.swift */,
 			);
 			path = Reducer;
 			sourceTree = "<group>";
@@ -812,6 +819,7 @@
 				A874EDC726616792003C7D92 /* LifecycleAction.swift */,
 				1F3F0C64283E853800C66054 /* AudioSessionAction.swift */,
 				1F94DAE326740BCB00691D1E /* LocalUserAction.swift */,
+				28FE266C29E804F5009CC19D /* RemoteParticipantsAction.swift */,
 			);
 			path = Action;
 			sourceTree = "<group>";
@@ -1152,6 +1160,7 @@
 				50FA4615268D13E9001844AC /* LocalUserReducerTests.swift */,
 				1F9184B526B4A3340049EF5B /* NavigationReducerTests.swift */,
 				A830C30B264D7C0900766E3D /* PermissionReducerTests.swift */,
+				28FE267629EE9E5A009CC19D /* RemoteParticipantsReducerTests.swift */,
 			);
 			path = Reducer;
 			sourceTree = "<group>";
@@ -1693,6 +1702,7 @@
 				FA03CC8D27C8420300986D4E /* IconWithLabelButtonViewModelMocking.swift in Sources */,
 				1F9184B626B4A3340049EF5B /* NavigationReducerTests.swift in Sources */,
 				FAC3128F27F24A8B00A4F1D0 /* IconButtonViewModelMocking.swift in Sources */,
+				28FE267729EE9E5A009CC19D /* RemoteParticipantsReducerTests.swift in Sources */,
 				FAC1FECD27C98FC200D95845 /* ParticipantGridCellViewModelMocking.swift in Sources */,
 				FAFA427D28380F7500053EA7 /* AvatarViewManagerMocking.swift in Sources */,
 				756F180F29391F27004EDAFD /* CallCompositeTests.swift in Sources */,
@@ -1729,6 +1739,7 @@
 				1F6470A92639DCFA0008B9E9 /* CallingService.swift in Sources */,
 				BD3CC699283D952E0052DE4A /* OverlayViewModelProtocol.swift in Sources */,
 				1F83813F26803ADF0096A454 /* CallingReducer.swift in Sources */,
+				28FE266D29E804F5009CC19D /* RemoteParticipantsAction.swift in Sources */,
 				1F2BED64262F86E600D98266 /* SetupView.swift in Sources */,
 				FAD845402819C129007DAFE1 /* RemoteParticipantsManager.swift in Sources */,
 				A874EDCC2666DF07003C7D92 /* ContainerUIHostingController.swift in Sources */,
@@ -1848,6 +1859,7 @@
 				1F2BEDC026328F2700D98266 /* CallingState.swift in Sources */,
 				88F6EE1A2735F5CB001AD3E9 /* ErrorReducer.swift in Sources */,
 				A874EDC626616728003C7D92 /* AppLifeCycleState.swift in Sources */,
+				28FE267329EE168E009CC19D /* RemoteParticipantsReducer.swift in Sources */,
 				1F3F0C65283E853800C66054 /* AudioSessionAction.swift in Sources */,
 				A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */,
 				500C0F1F2847DE18000BA2DC /* RemoteOptions.swift in Sources */,

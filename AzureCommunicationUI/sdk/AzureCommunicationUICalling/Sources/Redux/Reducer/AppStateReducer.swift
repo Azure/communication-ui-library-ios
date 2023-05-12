@@ -13,6 +13,8 @@ extension Reducer {
         audioSessionReducer: Reducer<AudioSessionState, AudioSessionAction> = .liveAudioSessionReducer,
         callingReducer: Reducer<CallingState, Action> = .liveCallingReducer,
         navigationReducer: Reducer<NavigationState, Action> = .liveNavigationReducer,
+        remoteParticipantsReducer: Reducer<RemoteParticipantsState, Action>
+            = .liveRemoteParticipantsReducer,
         errorReducer: Reducer<ErrorState, Action> = .liveErrorReducer
     ) -> Reducer<AppState, Action> {
 
@@ -45,18 +47,10 @@ extension Reducer {
             callingState = callingReducer.reduce(state.callingState, action)
             navigationState = navigationReducer.reduce(state.navigationState, action)
             errorState = errorReducer.reduce(state.errorState, action)
+            remoteParticipantState = remoteParticipantsReducer.reduce(state.remoteParticipantsState, action)
 
             if case let .audioSessionAction(audioAction) = action {
                 audioSessionState = audioSessionReducer.reduce(state.audioSessionState, audioAction)
-            }
-
-            switch action {
-            case .callingAction(.participantListUpdated(participants: let newParticipants)):
-                remoteParticipantState = RemoteParticipantsState(participantInfoList: newParticipants)
-            case .errorAction(.statusErrorAndCallReset):
-                remoteParticipantState = RemoteParticipantsState(participantInfoList: [])
-            default:
-                break
             }
             return AppState(callingState: callingState,
                             permissionState: permissionState,

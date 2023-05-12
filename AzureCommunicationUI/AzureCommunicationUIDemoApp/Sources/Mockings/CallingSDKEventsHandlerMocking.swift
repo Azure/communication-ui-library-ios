@@ -101,7 +101,7 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                                       isMuted: true,
                                                       isRemoteUser: true,
                                                       userIdentifier: participantNameIdentifier,
-                                                      status: .connected, recentSpeakingStamp: Date(),
+                                                      status: .connected,
                                                       screenShareVideoStreamModel: nil,
                                                       cameraVideoStreamModel: nil)
             self.remoteParticipantsMocking.append(newParticipant)
@@ -133,7 +133,6 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                                    isRemoteUser: last.isRemoteUser,
                                                    userIdentifier: last.userIdentifier,
                                                    status: last.status,
-                                                   recentSpeakingStamp: last.recentSpeakingStamp,
                                                    screenShareVideoStreamModel: last.screenShareVideoStreamModel,
                                                    cameraVideoStreamModel: last.cameraVideoStreamModel)
             self.remoteParticipantsMocking.append(lastUnmuted)
@@ -154,7 +153,6 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                                    isRemoteUser: last.isRemoteUser,
                                                    userIdentifier: last.userIdentifier,
                                                    status: .hold,
-                                                   recentSpeakingStamp: last.recentSpeakingStamp,
                                                    screenShareVideoStreamModel: last.screenShareVideoStreamModel,
                                                    cameraVideoStreamModel: last.cameraVideoStreamModel)
             self.remoteParticipantsMocking.append(lastUnmuted)
