@@ -15,8 +15,10 @@ struct CallingDemoView: View {
     @State var isAlertDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
     @State var isStartExperienceLoading: Bool = false
+    @State var exitCompositeExecuted: Bool = false
     @State var alertTitle: String = ""
     @State var alertMessage: String = ""
+    @State var callState: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
 
@@ -39,9 +41,12 @@ struct CallingDemoView: View {
             } else {
                 roomRoleSelector.hidden()
             }
-            settingButton
-            showCallHistoryButton
-            startExperienceButton
+            Group {
+                settingButton
+                showCallHistoryButton
+                startExperienceButton
+                Text(callState)
+            }
             Spacer()
         }
         .padding()
@@ -189,6 +194,20 @@ struct CallingDemoView: View {
 }
 
 extension CallingDemoView {
+    fileprivate func relaunchComposite() {
+        DispatchQueue.main.async() {
+            Task { @MainActor in
+                if getAudioPermissionStatus() == .denied && envConfigSubject.skipSetupScreen {
+                    showError(for: CallCompositeErrorCode.microphonePermissionNotGranted)
+                    isStartExperienceLoading = false
+                    return
+                }
+                print("onExitedHandler: starting composite")
+                await startCallComposite()
+                isStartExperienceLoading = false
+            }
+        }
+    }
     func startCallComposite() async {
         let link = getMeetingLink()
 
@@ -233,8 +252,32 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
+        let onCallStateChangedHandler: (CallCompositeCallState) -> Void = { [weak callComposite] callStateEvent in
+            guard let composite = callComposite else {
+                return
+            }
+            onCallStateChanged(callStateEvent,
+                    callComposite: composite)
+        }
+        let onExitedHandler: (CallCompositeExit) -> Void = { [] _ in
+            print("::::CallingDemoView::onExitedHandler")
+            if envConfigSubject.useRelaunchOnExitToggle && exitCompositeExecuted {
+                relaunchComposite()
+            }
+        }
+        exitCompositeExecuted = false
+        if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
+            DispatchQueue.main.asyncAfter(deadline: .now() +
+                                          Float64(envConfigSubject.exitCompositeAfterDuration)!
+            ) { [weak callComposite] in
+                exitCompositeExecuted = true
+                callComposite?.exit()
+            }
+        }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
+        callComposite.events.onCallStateChanged = onCallStateChangedHandler
+        callComposite.events.onExited = onExitedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
@@ -365,6 +408,11 @@ extension CallingDemoView {
         print("::::CallingDemoView error.code \(error.code)")
         callingViewModel.callHistory.last?.callIds.forEach { print("::::CallingDemoView call id \($0)") }
         showError(for: error.code)
+    }
+
+    private func onCallStateChanged(_ callStateEvent: CallCompositeCallState, callComposite: CallComposite) {
+        print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callStateEvent.code)")
+        callState = callStateEvent.code
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
