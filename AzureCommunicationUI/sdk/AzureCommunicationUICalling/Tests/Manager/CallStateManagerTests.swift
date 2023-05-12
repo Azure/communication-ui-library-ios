@@ -19,8 +19,8 @@ class CompositeStateManagerTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        stateChangeCount = 0
-        expectedStateChangeCount = 0
+        self.stateChangeCount = 0
+        self.expectedStateChangeCount = 0
         handlerCallExpectation = XCTestExpectation(description: "Delegate expectation")
         mockStoreFactory = StoreFactoryMocking()
         cancellable = CancelBag()
