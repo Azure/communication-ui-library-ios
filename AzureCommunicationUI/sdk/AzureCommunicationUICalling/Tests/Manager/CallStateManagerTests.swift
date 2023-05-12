@@ -138,8 +138,8 @@ extension CompositeStateManagerTests {
             guard let self = self else {
                 return
             }
-            stateChangeCount += 1
-            if stateChangeCount == expectedStateChangeCount {
+            self.stateChangeCount += 1
+            if self.stateChangeCount == self.expectedStateChangeCount {
                 XCTAssertEqual(callCompositeCallState.code, self.expectedCallStateCode)
                 self.handlerCallExpectation.fulfill()
             } else {
