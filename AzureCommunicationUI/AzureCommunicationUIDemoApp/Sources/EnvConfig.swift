@@ -50,6 +50,8 @@ class EnvConfigSubject: ObservableObject {
     @Published var selectedMeetingType: MeetingType = .groupCall
     @Published var selectedChatType: ChatType = .groupChat
     @Published var locale: Locale = SupportedLocale.en
+    @Published var setupViewOrientation: OrientationOptions = .portrait
+    @Published var callingViewOrientation: OrientationOptions = .all
     @Published var localeIdentifier: String = ""
     @Published var isRightToLeft: Bool = false
     @Published var microphoneOn: Bool = false

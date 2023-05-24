@@ -8,6 +8,8 @@ import AzureCommunicationUICalling
 import AzureCommunicationCommon
 
 struct SettingsView: View {
+    @State private var setupSelectedOrientation: String = OrientationOptions.portrait.requestString
+    @State private var callingSelectedOrientation: String = OrientationOptions.portrait.requestString
     private enum ThemeMode: String, CaseIterable, Identifiable {
         case osApp = "OS / App"
         case light = "Light Mode"
@@ -32,15 +34,22 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                localizationSettings
-                skipSetupScreenSettings
-                micSettings
-                localParticipantSettings
-                avatarSettings
-                useMockCallingSDKHandler
-                navigationSettings
-                remoteParticipantsAvatarsSettings
-                themeSettings
+                Group {
+                    callingViewOrientationSettings
+                    setupViewOrientationSettings
+                }
+                Group {
+                    localizationSettings
+                    skipSetupScreenSettings
+                    micSettings
+                    localParticipantSettings
+                    avatarSettings
+                    useMockCallingSDKHandler
+                    navigationSettings
+                    remoteParticipantsAvatarsSettings
+                    themeSettings
+                    exitCompositeSettings
+                }
             }
             .accessibilityElement(children: .contain)
             .navigationTitle("UI Library - Settings")
@@ -121,6 +130,52 @@ struct SettingsView: View {
             .disableAutocorrection(true)
             .autocapitalization(.none)
             .textFieldStyle(.roundedBorder)
+        }
+    }
+
+    var callingViewOrientationSettings: some View {
+        Section(header: Text("Calling View Orientation")) {
+            Picker("Orientation", selection: $callingSelectedOrientation) {
+                ForEach([OrientationOptions.portrait.requestString, OrientationOptions.landscape.requestString,
+                         OrientationOptions.all.requestString], id: \.requestString) { orientationOption in
+                    Text(orientationOption.requestString.capitalized).tag(orientationOption.requestString)
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            .onChange(of: callingSelectedOrientation) { newValue in
+                switch newValue {
+                case OrientationOptions.portrait.requestString:
+                    envConfigSubject.callingViewOrientation = .portrait
+                case OrientationOptions.landscape.requestString:
+                    envConfigSubject.callingViewOrientation = .landscape
+                default:
+                    envConfigSubject.callingViewOrientation = .all
+                }
+            }
+        }
+    }
+
+    var setupViewOrientationSettings: some View {
+        Section(header: Text("Setup View Orientation")) {
+            Picker("Orientation", selection: $setupSelectedOrientation) {
+                ForEach([OrientationOptions.portrait.requestString, OrientationOptions.landscape.requestString,
+                         OrientationOptions.all.requestString], id: \.requestString) { orientationOption in
+                    Text(orientationOption.requestString.capitalized).tag(orientationOption.requestString)
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            .onChange(of: setupSelectedOrientation) { newValue in
+                switch newValue {
+                case OrientationOptions.portrait.requestString:
+                    envConfigSubject.setupViewOrientation = .portrait
+                case OrientationOptions.landscape.requestString:
+                    envConfigSubject.setupViewOrientation = .landscape
+                case OrientationOptions.all.requestString:
+                    envConfigSubject.setupViewOrientation = .all
+                default:
+                    envConfigSubject.setupViewOrientation = .portrait
+                }
+            }
         }
     }
 
