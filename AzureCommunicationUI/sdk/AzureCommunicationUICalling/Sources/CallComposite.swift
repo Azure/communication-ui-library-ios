@@ -73,7 +73,7 @@ public class CallComposite {
         localizationProvider = LocalizationProvider(logger: logger)
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
-        orientationProvider = OrientationProvider(orientationOptions: setupViewOrientationOptions ?? .portrait)
+        orientationProvider = OrientationProvider()
     }
 
     /// Exit call composite

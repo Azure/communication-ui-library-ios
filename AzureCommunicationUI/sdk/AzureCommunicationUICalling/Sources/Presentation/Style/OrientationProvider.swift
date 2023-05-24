@@ -7,12 +7,6 @@ import Foundation
 import UIKit
 
 class OrientationProvider {
-    private let orientationOptions: OrientationOptions
-
-    init(orientationOptions: OrientationOptions) {
-        self.orientationOptions = orientationOptions
-    }
-
     func orientationMask(for options: OrientationOptions?) -> UIInterfaceOrientationMask? {
         switch options?.requestString {
         case "portrait":
