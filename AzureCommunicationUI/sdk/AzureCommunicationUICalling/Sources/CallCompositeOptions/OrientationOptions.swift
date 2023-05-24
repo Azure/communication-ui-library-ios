@@ -68,4 +68,7 @@ public struct OrientationOptions: Equatable, RequestStringConvertible {
     public static let landscapeRight: OrientationOptions = .init(rawValue: "landscapeRight")
     public static let landscapeLeft: OrientationOptions = .init(rawValue: "landscapeLeft")
     public static let allButUpsideDown: OrientationOptions = .init(rawValue: "allButUpsideDown")
+    public static func allOptions() -> [OrientationOptions] {
+        return [.portrait, .landscape, .landscapeRight, .landscapeLeft, .allButUpsideDown]
+    }
 }
