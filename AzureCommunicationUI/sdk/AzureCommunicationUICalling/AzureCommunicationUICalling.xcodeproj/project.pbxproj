@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -1474,7 +1474,7 @@
 				};
 			};
 			buildConfigurationList = A8659FBF2602A22000C807DE /* Build configuration list for PBXProject "AzureCommunicationUICalling" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (

@@ -11,12 +11,18 @@ public struct OrientationOptions: Equatable, RequestStringConvertible {
         case portrait
         case landscape
         case all
+        case landscapeRight
+        case landscapeLeft
         var rawValue: String {
             switch self {
             case .portrait:
                 return "portrait"
             case .landscape:
                 return "landscape"
+            case .landscapeRight:
+                return "landscapeRight"
+            case .landscapeLeft:
+                return "landscapeLeft"
             case .all:
                 return "all"
             }
@@ -27,6 +33,10 @@ public struct OrientationOptions: Equatable, RequestStringConvertible {
                 self = .portrait
             case "landscape":
                 self = .landscape
+            case "landscaperight":
+                self = .landscapeRight
+            case "landscapeleft":
+                self = .landscapeLeft
             default:
                 self = .all
             }
@@ -49,5 +59,7 @@ public struct OrientationOptions: Equatable, RequestStringConvertible {
 
     public static let portrait: OrientationOptions = .init(rawValue: "portrait")
     public static let landscape: OrientationOptions = .init(rawValue: "landscape")
+    public static let landscapeRight: OrientationOptions = .init(rawValue: "landscapeRight")
+    public static let landscapeLeft: OrientationOptions = .init(rawValue: "landscapeLeft")
     public static let all: OrientationOptions = .init(rawValue: "all")
 }

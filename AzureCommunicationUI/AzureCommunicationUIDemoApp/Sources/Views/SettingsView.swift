@@ -158,6 +158,8 @@ struct SettingsView: View {
         Section(header: Text("Calling View Orientation")) {
             Picker("Orientation", selection: $callingSelectedOrientation) {
                 ForEach([OrientationOptions.portrait.requestString, OrientationOptions.landscape.requestString,
+                         OrientationOptions.landscapeLeft.requestString,
+                         OrientationOptions.landscapeRight.requestString,
                          OrientationOptions.all.requestString], id: \.requestString) { orientationOption in
                     Text(orientationOption.requestString.capitalized).tag(orientationOption.requestString)
                 }
@@ -169,6 +171,10 @@ struct SettingsView: View {
                     envConfigSubject.callingViewOrientation = .portrait
                 case OrientationOptions.landscape.requestString:
                     envConfigSubject.callingViewOrientation = .landscape
+                case OrientationOptions.landscapeRight.requestString:
+                    envConfigSubject.callingViewOrientation = .landscapeRight
+                case OrientationOptions.landscapeLeft.requestString:
+                    envConfigSubject.callingViewOrientation = .landscapeLeft
                 default:
                     envConfigSubject.callingViewOrientation = .all
                 }
@@ -180,6 +186,8 @@ struct SettingsView: View {
         Section(header: Text("Setup View Orientation")) {
             Picker("Orientation", selection: $setupSelectedOrientation) {
                 ForEach([OrientationOptions.portrait.requestString, OrientationOptions.landscape.requestString,
+                         OrientationOptions.landscapeLeft.requestString,
+                         OrientationOptions.landscapeRight.requestString,
                          OrientationOptions.all.requestString], id: \.requestString) { orientationOption in
                     Text(orientationOption.requestString.capitalized).tag(orientationOption.requestString)
                 }
@@ -191,6 +199,10 @@ struct SettingsView: View {
                     envConfigSubject.setupViewOrientation = .portrait
                 case OrientationOptions.landscape.requestString:
                     envConfigSubject.setupViewOrientation = .landscape
+                case OrientationOptions.landscapeLeft.requestString:
+                    envConfigSubject.setupViewOrientation = .landscapeLeft
+                case OrientationOptions.landscapeRight.requestString:
+                    envConfigSubject.setupViewOrientation = .landscapeRight
                 case OrientationOptions.all.requestString:
                     envConfigSubject.setupViewOrientation = .all
                 default:

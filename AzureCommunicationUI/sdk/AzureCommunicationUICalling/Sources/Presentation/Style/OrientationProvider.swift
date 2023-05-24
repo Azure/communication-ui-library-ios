@@ -21,6 +21,10 @@ class OrientationProvider {
             return .landscape
         case "all" :
             return .all
+        case "landscapeRight":
+            return .landscapeRight
+        case "landscapeLeft":
+            return .landscapeLeft
         default:
             return .portrait
         }
