@@ -18,6 +18,10 @@ public struct CallCompositeOptions {
     ///  Default value is `nil`.
     /// - Parameter localization: LocalizationOptions for specifying
     ///  localization customization. Default value is `nil`.
+    /// - Parameter setupScreenOrientation: setupScreenOrientation for specifying
+    ///  setupScreenOrientation customization. Default value is `nil`.
+    /// - Parameter callingScreenOrientation: callingScreenOrientation for specifying
+    ///  callingScreenOrientation customization. Default value is `nil`.
     public init(theme: ThemeOptions? = nil,
                 localization: LocalizationOptions? = nil,
                 setupScreenOrientation: OrientationOptions? = nil,

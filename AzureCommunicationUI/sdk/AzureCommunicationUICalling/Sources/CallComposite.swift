@@ -62,7 +62,7 @@ public class CallComposite {
         localizationProvider = LocalizationProvider(logger: logger)
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
-        orientationProvider = OrientationProvider(orientationOptions: setupViewOrientationOptions ?? .portrait)
+        orientationProvider = OrientationProvider()
     }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
@@ -95,11 +95,7 @@ public class CallComposite {
             router: NavigationRouter(store: store, logger: logger),
             logger: logger,
             viewFactory: viewFactory,
-            isRightToLeft: localizationProvider.isRightToLeft,
-            setupViewOrientationMask: orientationProvider.orientationMask(for:
-                                                                            setupViewOrientationOptions ?? .portrait),
-            callingViewOrientationMask: orientationProvider.orientationMask(for:
-                                                                                callingViewOrientationOptions ?? .all)
+            isRightToLeft: localizationProvider.isRightToLeft
         )
 
         present(toolkitHostingController)
@@ -214,10 +210,12 @@ public class CallComposite {
     private func makeToolkitHostingController(router: NavigationRouter,
                                               logger: Logger,
                                               viewFactory: CompositeViewFactoryProtocol,
-                                              isRightToLeft: Bool,
-                                              setupViewOrientationMask: UIInterfaceOrientationMask,
-                                              callingViewOrientationMask: UIInterfaceOrientationMask)
+                                              isRightToLeft: Bool)
     -> ContainerUIHostingController {
+        let setupViewOrientationMask = orientationProvider.orientationMask(for:
+                                                                            setupViewOrientationOptions)
+        let callingViewOrientationMask = orientationProvider.orientationMask(for:
+                                                                                callingViewOrientationOptions)
         let rootView = ContainerView(router: router,
                                      logger: logger,
                                      viewFactory: viewFactory,
