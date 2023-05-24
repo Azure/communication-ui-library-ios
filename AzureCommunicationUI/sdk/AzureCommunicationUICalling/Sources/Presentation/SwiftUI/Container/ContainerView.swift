@@ -11,8 +11,8 @@ struct ContainerView: View {
 
     let logger: Logger
     let viewFactory: CompositeViewFactoryProtocol
-    let setupViewOrientationMask: UIInterfaceOrientationMask =
-        UIDevice.current.userInterfaceIdiom == .phone ? .portrait : .allButUpsideDown
+    let setupViewOrientationMask: UIInterfaceOrientationMask
+    let callingViewOrientationMask: UIInterfaceOrientationMask
     let isRightToLeft: Bool
 
     var body: some View {
@@ -24,6 +24,7 @@ struct ContainerView: View {
                     .accessibilityAddTraits(.isModal)
             case .callingView:
                 callingView.proximitySensorEnabled(true)
+                    .supportedOrientations(callingViewOrientationMask)
                     .accessibilityElement(children: .contain)
                     .accessibilityAddTraits(.isModal)
             }

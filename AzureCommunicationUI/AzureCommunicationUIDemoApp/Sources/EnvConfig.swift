@@ -54,6 +54,8 @@ class EnvConfigSubject: ObservableObject {
     @Published var selectedRoomRoleType: RoomRoleType = .presenter
     @Published var selectedChatType: ChatType = .groupChat
     @Published var locale: Locale = SupportedLocale.en
+    @Published var setupViewOrientation: OrientationOptions = .portrait
+    @Published var callingViewOrientation: OrientationOptions = .all
     @Published var localeIdentifier: String = ""
     @Published var exitCompositeAfterDuration: String = ""
     @Published var isRightToLeft: Bool = false
