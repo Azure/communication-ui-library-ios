@@ -6,12 +6,18 @@
 import AzureCore
 import Foundation
 
+/// Define an enumeration for the different possible orientation options
 public struct OrientationOptions: Equatable, RequestStringConvertible {
     internal enum OrientationOptionsKV {
+        /// Portrait orientation
         case portrait
+        /// Landscape orientation
         case landscape
+        /// All orientations except upside-down
         case allButUpsideDown
+        /// Landscape orientation with the device rotated to the right
         case landscapeRight
+        /// Landscape orientation with the device rotated to the left
         case landscapeLeft
         var rawValue: String {
             switch self {
