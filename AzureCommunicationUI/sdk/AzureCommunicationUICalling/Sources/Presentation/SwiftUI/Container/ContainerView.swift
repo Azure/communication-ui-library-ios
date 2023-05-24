@@ -11,6 +11,8 @@ struct ContainerView: View {
 
     let logger: Logger
     let viewFactory: CompositeViewFactoryProtocol
+    let setupViewDefaultOrientation: UIInterfaceOrientationMask =
+    UIDevice.current.userInterfaceIdiom == .phone ? .portrait : .allButUpsideDown
     let setupViewOrientationMask: UIInterfaceOrientationMask?
     let callingViewOrientationMask: UIInterfaceOrientationMask?
     let isRightToLeft: Bool
@@ -19,7 +21,7 @@ struct ContainerView: View {
         Group {
             switch router.currentView {
             case .setupView:
-                setupView.supportedOrientations(setupViewOrientationMask ?? .portrait)
+                setupView.supportedOrientations(setupViewOrientationMask ?? setupViewDefaultOrientation)
                     .accessibilityElement(children: .contain)
                     .accessibilityAddTraits(.isModal)
             case .callingView:
