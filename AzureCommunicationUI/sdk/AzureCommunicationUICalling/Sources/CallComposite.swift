@@ -234,7 +234,8 @@ public class CallComposite {
         let setupViewOrientationMask = orientationProvider.orientationMask(for:
                                                                             setupViewOrientationOptions ?? .portrait)
         let callingViewOrientationMask = orientationProvider.orientationMask(for:
-                                                                                callingViewOrientationOptions ?? .all)
+                                                                                callingViewOrientationOptions ??
+            .allButUpsideDown)
         let rootView = ContainerView(router: router,
                                      logger: logger,
                                      viewFactory: viewFactory,

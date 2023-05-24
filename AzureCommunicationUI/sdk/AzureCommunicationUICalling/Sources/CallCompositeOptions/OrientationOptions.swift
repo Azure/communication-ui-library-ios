@@ -10,7 +10,7 @@ public struct OrientationOptions: Equatable, RequestStringConvertible {
     internal enum OrientationOptionsKV {
         case portrait
         case landscape
-        case all
+        case allButUpsideDown
         case landscapeRight
         case landscapeLeft
         var rawValue: String {
@@ -23,8 +23,8 @@ public struct OrientationOptions: Equatable, RequestStringConvertible {
                 return "landscapeRight"
             case .landscapeLeft:
                 return "landscapeLeft"
-            case .all:
-                return "all"
+            case .allButUpsideDown:
+                return "allButUpsideDown"
             }
         }
         init(rawValue: String) {
@@ -38,7 +38,7 @@ public struct OrientationOptions: Equatable, RequestStringConvertible {
             case "landscapeleft":
                 self = .landscapeLeft
             default:
-                self = .all
+                self = .allButUpsideDown
             }
         }
     }
@@ -61,5 +61,5 @@ public struct OrientationOptions: Equatable, RequestStringConvertible {
     public static let landscape: OrientationOptions = .init(rawValue: "landscape")
     public static let landscapeRight: OrientationOptions = .init(rawValue: "landscapeRight")
     public static let landscapeLeft: OrientationOptions = .init(rawValue: "landscapeLeft")
-    public static let all: OrientationOptions = .init(rawValue: "all")
+    public static let allButUpsideDown: OrientationOptions = .init(rawValue: "allButUpsideDown")
 }

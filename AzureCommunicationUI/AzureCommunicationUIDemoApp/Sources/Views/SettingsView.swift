@@ -160,7 +160,7 @@ struct SettingsView: View {
                 ForEach([OrientationOptions.portrait.requestString, OrientationOptions.landscape.requestString,
                          OrientationOptions.landscapeLeft.requestString,
                          OrientationOptions.landscapeRight.requestString,
-                         OrientationOptions.all.requestString], id: \.requestString) { orientationOption in
+                         OrientationOptions.allButUpsideDown.requestString], id: \.requestString) { orientationOption in
                     Text(orientationOption.requestString.capitalized).tag(orientationOption.requestString)
                 }
             }
@@ -176,7 +176,7 @@ struct SettingsView: View {
                 case OrientationOptions.landscapeLeft.requestString:
                     envConfigSubject.callingViewOrientation = .landscapeLeft
                 default:
-                    envConfigSubject.callingViewOrientation = .all
+                    envConfigSubject.callingViewOrientation = .allButUpsideDown
                 }
             }
         }
@@ -188,7 +188,7 @@ struct SettingsView: View {
                 ForEach([OrientationOptions.portrait.requestString, OrientationOptions.landscape.requestString,
                          OrientationOptions.landscapeLeft.requestString,
                          OrientationOptions.landscapeRight.requestString,
-                         OrientationOptions.all.requestString], id: \.requestString) { orientationOption in
+                         OrientationOptions.allButUpsideDown.requestString], id: \.requestString) { orientationOption in
                     Text(orientationOption.requestString.capitalized).tag(orientationOption.requestString)
                 }
             }
@@ -203,8 +203,8 @@ struct SettingsView: View {
                     envConfigSubject.setupViewOrientation = .landscapeLeft
                 case OrientationOptions.landscapeRight.requestString:
                     envConfigSubject.setupViewOrientation = .landscapeRight
-                case OrientationOptions.all.requestString:
-                    envConfigSubject.setupViewOrientation = .all
+                case OrientationOptions.allButUpsideDown.requestString:
+                    envConfigSubject.setupViewOrientation = .allButUpsideDown
                 default:
                     envConfigSubject.setupViewOrientation = .portrait
                 }
