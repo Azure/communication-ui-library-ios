@@ -55,7 +55,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var selectedChatType: ChatType = .groupChat
     @Published var locale: Locale = SupportedLocale.en
     @Published var setupViewOrientation: OrientationOptions = .portrait
-    @Published var callingViewOrientation: OrientationOptions = .all
+    @Published var callingViewOrientation: OrientationOptions = .allButUpsideDown
     @Published var localeIdentifier: String = ""
     @Published var exitCompositeAfterDuration: String = ""
     @Published var isRightToLeft: Bool = false

@@ -158,19 +158,29 @@ struct SettingsView: View {
         Section(header: Text("Calling View Orientation")) {
             Picker("Orientation", selection: $callingSelectedOrientation) {
                 ForEach([OrientationOptions.portrait.requestString, OrientationOptions.landscape.requestString,
-                         OrientationOptions.all.requestString], id: \.requestString) { orientationOption in
+                         OrientationOptions.landscapeLeft.requestString,
+                         OrientationOptions.landscapeRight.requestString,
+                         OrientationOptions.allButUpsideDown.requestString], id: \.requestString) { orientationOption in
                     Text(orientationOption.requestString.capitalized).tag(orientationOption.requestString)
                 }
             }
             .pickerStyle(MenuPickerStyle())
+            .onAppear {
+                callingSelectedOrientation =
+                envConfigSubject.callingViewOrientation.requestString
+            }
             .onChange(of: callingSelectedOrientation) { newValue in
                 switch newValue {
                 case OrientationOptions.portrait.requestString:
                     envConfigSubject.callingViewOrientation = .portrait
                 case OrientationOptions.landscape.requestString:
                     envConfigSubject.callingViewOrientation = .landscape
+                case OrientationOptions.landscapeRight.requestString:
+                    envConfigSubject.callingViewOrientation = .landscapeRight
+                case OrientationOptions.landscapeLeft.requestString:
+                    envConfigSubject.callingViewOrientation = .landscapeLeft
                 default:
-                    envConfigSubject.callingViewOrientation = .all
+                    envConfigSubject.callingViewOrientation = .allButUpsideDown
                 }
             }
         }
@@ -179,20 +189,29 @@ struct SettingsView: View {
     var setupViewOrientationSettings: some View {
         Section(header: Text("Setup View Orientation")) {
             Picker("Orientation", selection: $setupSelectedOrientation) {
-                ForEach([OrientationOptions.portrait.requestString, OrientationOptions.landscape.requestString,
-                         OrientationOptions.all.requestString], id: \.requestString) { orientationOption in
+                ForEach([OrientationOptions.allButUpsideDown.requestString,
+                         OrientationOptions.portrait.requestString, OrientationOptions.landscape.requestString,
+                         OrientationOptions.landscapeLeft.requestString,
+                         OrientationOptions.landscapeRight.requestString], id: \.requestString) { orientationOption in
                     Text(orientationOption.requestString.capitalized).tag(orientationOption.requestString)
                 }
             }
             .pickerStyle(MenuPickerStyle())
+            .onAppear {
+                setupSelectedOrientation = envConfigSubject.setupViewOrientation.requestString
+            }
             .onChange(of: setupSelectedOrientation) { newValue in
                 switch newValue {
                 case OrientationOptions.portrait.requestString:
                     envConfigSubject.setupViewOrientation = .portrait
                 case OrientationOptions.landscape.requestString:
                     envConfigSubject.setupViewOrientation = .landscape
-                case OrientationOptions.all.requestString:
-                    envConfigSubject.setupViewOrientation = .all
+                case OrientationOptions.landscapeLeft.requestString:
+                    envConfigSubject.setupViewOrientation = .landscapeLeft
+                case OrientationOptions.landscapeRight.requestString:
+                    envConfigSubject.setupViewOrientation = .landscapeRight
+                case OrientationOptions.allButUpsideDown.requestString:
+                    envConfigSubject.setupViewOrientation = .allButUpsideDown
                 default:
                     envConfigSubject.setupViewOrientation = .portrait
                 }

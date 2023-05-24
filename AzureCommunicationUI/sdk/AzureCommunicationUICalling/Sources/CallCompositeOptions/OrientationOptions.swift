@@ -6,19 +6,31 @@
 import AzureCore
 import Foundation
 
+/// Define an enumeration for the different possible orientation options
 public struct OrientationOptions: Equatable, RequestStringConvertible {
     internal enum OrientationOptionsKV {
+        /// Portrait orientation
         case portrait
+        /// Landscape orientation
         case landscape
-        case all
+        /// All orientations except upside-down
+        case allButUpsideDown
+        /// Landscape orientation with the device rotated to the right
+        case landscapeRight
+        /// Landscape orientation with the device rotated to the left
+        case landscapeLeft
         var rawValue: String {
             switch self {
             case .portrait:
                 return "portrait"
             case .landscape:
                 return "landscape"
-            case .all:
-                return "all"
+            case .landscapeRight:
+                return "landscapeRight"
+            case .landscapeLeft:
+                return "landscapeLeft"
+            case .allButUpsideDown:
+                return "allButUpsideDown"
             }
         }
         init(rawValue: String) {
@@ -27,8 +39,12 @@ public struct OrientationOptions: Equatable, RequestStringConvertible {
                 self = .portrait
             case "landscape":
                 self = .landscape
+            case "landscaperight":
+                self = .landscapeRight
+            case "landscapeleft":
+                self = .landscapeLeft
             default:
-                self = .all
+                self = .allButUpsideDown
             }
         }
     }
@@ -49,5 +65,10 @@ public struct OrientationOptions: Equatable, RequestStringConvertible {
 
     public static let portrait: OrientationOptions = .init(rawValue: "portrait")
     public static let landscape: OrientationOptions = .init(rawValue: "landscape")
-    public static let all: OrientationOptions = .init(rawValue: "all")
+    public static let landscapeRight: OrientationOptions = .init(rawValue: "landscapeRight")
+    public static let landscapeLeft: OrientationOptions = .init(rawValue: "landscapeLeft")
+    public static let allButUpsideDown: OrientationOptions = .init(rawValue: "allButUpsideDown")
+    public static func allOptions() -> [OrientationOptions] {
+        return [.portrait, .landscape, .landscapeRight, .landscapeLeft, .allButUpsideDown]
+    }
 }
