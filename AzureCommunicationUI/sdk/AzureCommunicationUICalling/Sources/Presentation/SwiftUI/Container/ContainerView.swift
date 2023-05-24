@@ -11,20 +11,20 @@ struct ContainerView: View {
 
     let logger: Logger
     let viewFactory: CompositeViewFactoryProtocol
-    let setupViewOrientationMask: UIInterfaceOrientationMask
-    let callingViewOrientationMask: UIInterfaceOrientationMask
+    let setupViewOrientationMask: UIInterfaceOrientationMask?
+    let callingViewOrientationMask: UIInterfaceOrientationMask?
     let isRightToLeft: Bool
 
     var body: some View {
         Group {
             switch router.currentView {
             case .setupView:
-                setupView.supportedOrientations(setupViewOrientationMask)
+                setupView.supportedOrientations(setupViewOrientationMask ?? .portrait)
                     .accessibilityElement(children: .contain)
                     .accessibilityAddTraits(.isModal)
             case .callingView:
                 callingView.proximitySensorEnabled(true)
-                    .supportedOrientations(callingViewOrientationMask)
+                    .supportedOrientations(callingViewOrientationMask ?? .allButUpsideDown)
                     .accessibilityElement(children: .contain)
                     .accessibilityAddTraits(.isModal)
             }

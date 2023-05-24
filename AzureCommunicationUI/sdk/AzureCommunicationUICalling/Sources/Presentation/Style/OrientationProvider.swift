@@ -13,8 +13,8 @@ class OrientationProvider {
         self.orientationOptions = orientationOptions
     }
 
-    func orientationMask(for options: OrientationOptions) -> UIInterfaceOrientationMask {
-        switch options.requestString {
+    func orientationMask(for options: OrientationOptions?) -> UIInterfaceOrientationMask? {
+        switch options?.requestString {
         case "portrait":
             return .portrait
         case "landscape":
@@ -26,7 +26,7 @@ class OrientationProvider {
         case "landscapeLeft":
             return .landscapeLeft
         default:
-            return .portrait
+            return nil
         }
     }
 }

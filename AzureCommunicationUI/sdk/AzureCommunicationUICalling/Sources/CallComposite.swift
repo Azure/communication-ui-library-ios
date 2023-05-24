@@ -232,10 +232,9 @@ public class CallComposite {
                                               isRightToLeft: Bool)
     -> ContainerUIHostingController {
         let setupViewOrientationMask = orientationProvider.orientationMask(for:
-                                                                            setupViewOrientationOptions ?? .portrait)
+                                                                            setupViewOrientationOptions)
         let callingViewOrientationMask = orientationProvider.orientationMask(for:
-                                                                                callingViewOrientationOptions ??
-            .allButUpsideDown)
+                                                                                callingViewOrientationOptions)
         let rootView = ContainerView(router: router,
                                      logger: logger,
                                      viewFactory: viewFactory,
