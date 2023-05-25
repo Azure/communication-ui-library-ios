@@ -232,6 +232,7 @@ class CallingDemoViewController: UIViewController {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen)
+        let enableCallKitInSDK = envConfigSubject.enableCallKitInSDK
 
         if let credential = try? await getTokenCredential() {
             switch selectedMeetingType {
@@ -239,12 +240,14 @@ class CallingDemoViewController: UIViewController {
                 let uuid = UUID(uuidString: link) ?? UUID()
                 callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
                                                                   credential: credential,
-                                                                  displayName: getDisplayName()),
+                                                                  displayName: getDisplayName(),
+                                                                  enableCallKitInSDK: enableCallKitInSDK),
                                      localOptions: localOptions)
             case .teamsMeeting:
                 callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                   credential: credential,
-                                                                  displayName: getDisplayName()),
+                                                                  displayName: getDisplayName(),
+                                                                  enableCallKitInSDK: enableCallKitInSDK),
                                      localOptions: localOptions)
             }
         } else {

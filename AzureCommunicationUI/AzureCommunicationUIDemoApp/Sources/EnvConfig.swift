@@ -19,10 +19,12 @@ enum EnvConfig: String {
     case teamsMeetingLink
     case threadId
     case endpointUrl
+    case enableCallKitInSDK
 
     func value() -> String {
         guard let infoDict = Bundle.main.infoDictionary,
               let value = infoDict[rawValue] as? String else {
+            print("Failed to get key: \(rawValue)")
             return ""
         }
         return value
@@ -45,6 +47,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
     @Published var threadId: String = EnvConfig.threadId.value()
     @Published var endpointUrl: String = EnvConfig.endpointUrl.value()
+    @Published var enableCallKitInSDK: Bool = EnvConfig.enableCallKitInSDK.value() == "true"
 
     @Published var selectedAcsTokenType: ACSTokenType = .token
     @Published var selectedMeetingType: MeetingType = .groupCall
@@ -104,6 +107,11 @@ class EnvConfigSubject: ObservableObject {
         if let acsEndpointUrl = dic["endpointurl"],
            !acsEndpointUrl.isEmpty {
             endpointUrl = acsEndpointUrl
+        }
+
+        if let enableCallKit = dic["enableCallKitInSDK"],
+           !enableCallKit.isEmpty {
+            enableCallKitInSDK = enableCallKit == "true"
         }
     }
 }
