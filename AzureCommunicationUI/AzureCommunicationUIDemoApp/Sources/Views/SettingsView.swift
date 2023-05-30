@@ -165,6 +165,10 @@ struct SettingsView: View {
                 }
             }
             .pickerStyle(MenuPickerStyle())
+            .onAppear {
+                callingSelectedOrientation =
+                envConfigSubject.callingViewOrientation.requestString
+            }
             .onChange(of: callingSelectedOrientation) { newValue in
                 switch newValue {
                 case OrientationOptions.portrait.requestString:
@@ -185,14 +189,17 @@ struct SettingsView: View {
     var setupViewOrientationSettings: some View {
         Section(header: Text("Setup View Orientation")) {
             Picker("Orientation", selection: $setupSelectedOrientation) {
-                ForEach([OrientationOptions.portrait.requestString, OrientationOptions.landscape.requestString,
+                ForEach([OrientationOptions.allButUpsideDown.requestString,
+                         OrientationOptions.portrait.requestString, OrientationOptions.landscape.requestString,
                          OrientationOptions.landscapeLeft.requestString,
-                         OrientationOptions.landscapeRight.requestString,
-                         OrientationOptions.allButUpsideDown.requestString], id: \.requestString) { orientationOption in
+                         OrientationOptions.landscapeRight.requestString], id: \.requestString) { orientationOption in
                     Text(orientationOption.requestString.capitalized).tag(orientationOption.requestString)
                 }
             }
             .pickerStyle(MenuPickerStyle())
+            .onAppear {
+                setupSelectedOrientation = envConfigSubject.setupViewOrientation.requestString
+            }
             .onChange(of: setupSelectedOrientation) { newValue in
                 switch newValue {
                 case OrientationOptions.portrait.requestString:
