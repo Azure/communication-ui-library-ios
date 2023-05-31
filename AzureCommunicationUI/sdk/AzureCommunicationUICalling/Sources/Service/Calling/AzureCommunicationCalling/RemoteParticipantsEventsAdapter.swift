@@ -12,10 +12,6 @@ class RemoteParticipantsEventsAdapter: NSObject, RemoteParticipantDelegate {
     var onIsMutedChanged: ((AzureCommunicationCalling.RemoteParticipant) -> Void) = {_ in }
     var onStateChanged: ((AzureCommunicationCalling.RemoteParticipant) -> Void) = {_ in }
     func remoteParticipant(_ remoteParticipant: AzureCommunicationCalling.RemoteParticipant,
-                           didUpdateVideoStreams args: RemoteVideoStreamsEventArgs) {
-        onVideoStreamsUpdated(remoteParticipant)
-    }
-    func remoteParticipant(_ remoteParticipant: AzureCommunicationCalling.RemoteParticipant,
                            didChangeSpeakingState args: PropertyChangedEventArgs) {
         onIsSpeakingChanged(remoteParticipant)
     }

@@ -30,25 +30,25 @@ extension AzureCommunicationCalling.RemoteParticipant {
     static func toCompositeRemoteParticipant(
         acsRemoteParticipant: AzureCommunicationCalling.RemoteParticipant?
     ) -> CompositeRemoteParticipant< AzureCommunicationCalling.RemoteParticipant,
-                            AzureCommunicationCalling.RemoteVideoStream>? {
+                            AzureCommunicationCalling.IncomingVideoStream>? {
         guard let remote = acsRemoteParticipant else {
             return nil
         }
 
         return CompositeRemoteParticipant(
             id: remote.identifier,
-            videoStreams: remote.videoStreams
-                .map(AzureCommunicationCalling.RemoteVideoStream.toCompositeRemoteVideoStream(acsRemoteVideoStream:)
+            videoStreams: remote.incomingVideoStreams
+                .map(AzureCommunicationCalling.IncomingVideoStream.toCompositeRemoteVideoStream(acsRemoteVideoStream:)
                     ),
             wrappedObject: remote
         )
     }
 }
 
-extension AzureCommunicationCalling.RemoteVideoStream {
+extension AzureCommunicationCalling.IncomingVideoStream {
     static func toCompositeRemoteVideoStream(
-        acsRemoteVideoStream: AzureCommunicationCalling.RemoteVideoStream
-    ) -> CompositeRemoteVideoStream<AzureCommunicationCalling.RemoteVideoStream> {
+        acsRemoteVideoStream: AzureCommunicationCalling.IncomingVideoStream
+    ) -> CompositeRemoteVideoStream<AzureCommunicationCalling.IncomingVideoStream> {
         CompositeRemoteVideoStream(
             id: Int(acsRemoteVideoStream.id),
             mediaStreamType: acsRemoteVideoStream.sourceType.asCompositeMediaStreamType,
