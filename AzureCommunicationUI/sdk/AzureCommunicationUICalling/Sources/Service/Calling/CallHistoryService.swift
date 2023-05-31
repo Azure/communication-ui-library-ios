@@ -37,7 +37,7 @@ class CallHistoryService {
 
     func recordCallHistory(callStartedOn: Date, callId: String) {
         Task { @MainActor in
-            let error = await self.callHistoryRepository.insert(callStartedOn: callStartedOn, callId: callId)
+            _ = await self.callHistoryRepository.insert(callStartedOn: callStartedOn, callId: callId)
         }
     }
 }

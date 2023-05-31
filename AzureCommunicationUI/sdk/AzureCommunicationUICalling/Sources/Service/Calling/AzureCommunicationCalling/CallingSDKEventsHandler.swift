@@ -73,7 +73,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
                 return
             }
             let userIdentifier = remoteParticipant.identifier.rawId
-            let updateSpeakingStamp = remoteParticipant.isSpeaking
+            _ = remoteParticipant.isSpeaking
             self.updateRemoteParticipant(userIdentifier: userIdentifier)
         }
     }
@@ -205,7 +205,7 @@ extension CallingSDKEventsHandler: CallDelegate,
         dominantSpeakersSubject.send(speakers)
     }
     func call(_ call: Call, didChangeMuteState args: PropertyChangedEventArgs) {
-        isLocalUserMutedSubject.send(call.isMuted)
+        isLocalUserMutedSubject.send(call.isOutgoingAudioMuted)
     }
 
 }

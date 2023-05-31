@@ -59,13 +59,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
         if isCameraPreferred,
            let localVideoStream = localVideoStream {
-            let localVideoStreamArray = [localVideoStream]
-            let videoOptions = VideoOptions(localVideoStreams: localVideoStreamArray)
-            joinCallOptions.videoOptions = videoOptions
+            _ = [localVideoStream]
+            let videoOptions = OutgoingVideoOptions()
+            joinCallOptions.outgoingVideoOptions = videoOptions
         }
 
-        joinCallOptions.audioOptions = AudioOptions()
-        joinCallOptions.audioOptions?.muted = !isAudioPreferred
+        joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
+        joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
 
         var joinLocator: JoinMeetingLocator
         if callConfiguration.compositeCallType == .groupCall,
@@ -137,7 +137,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             return nil
         }
         return CompositeLocalVideoStream(
-            mediaStreamType: videoStream.mediaStreamType.asCompositeMediaStreamType,
+            mediaStreamType: videoStream.sourceType.asCompositeMediaStreamType,
             wrappedObject: castVideoStream
         )
     }
@@ -187,7 +187,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
 
         do {
-            try await call.mute()
+            try await call.muteOutgoingAudio()
         } catch {
             logger.error("ERROR: It was not possible to mute. \(error)")
             throw error
@@ -201,7 +201,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
 
         do {
-            try await call.unmute()
+            try await call.unmuteOutgoingAudio()
         } catch {
             logger.error("ERROR: It was not possible to unmute. \(error)")
             throw error
