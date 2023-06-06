@@ -40,7 +40,8 @@ protocol CompositeViewModelFactoryProtocol {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel
-    func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel
+    func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
+                                 localUserState: LocalUserState) -> InfoHeaderViewModel
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel
@@ -221,9 +222,11 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             endCallConfirm: endCallConfirm,
                             localUserState: localUserState)
     }
-    func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel {
+    func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
+                                 localUserState: LocalUserState) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
+                            dispatchAction: dispatchAction,
                             localUserState: localUserState,
                             localizationProvider: localizationProvider,
                             accessibilityProvider: accessibilityProvider)

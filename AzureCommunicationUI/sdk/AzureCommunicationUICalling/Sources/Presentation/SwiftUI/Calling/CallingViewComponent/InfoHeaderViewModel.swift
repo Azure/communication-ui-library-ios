@@ -13,6 +13,7 @@ class InfoHeaderViewModel: ObservableObject {
     @Published var isParticipantsListDisplayed: Bool = false
     @Published var isVoiceOverEnabled: Bool = false
     private let logger: Logger
+    private let dispatch: ActionDispatch
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private var infoHeaderDismissTimer: Timer?
@@ -21,14 +22,17 @@ class InfoHeaderViewModel: ObservableObject {
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
+    var dismissButtonViewModel: IconButtonViewModel!
 
     var isPad: Bool = false
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
+         dispatchAction: @escaping ActionDispatch,
          localUserState: LocalUserState,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol) {
+        self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
@@ -48,6 +52,18 @@ class InfoHeaderViewModel: ObservableObject {
         }
         self.participantListButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .participantListAccessibilityLabel)
+
+        dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
+            iconName: .leftArrow,
+            buttonType: .controlButton,
+            isDisabled: false) { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.dismissButtonTapped()
+        }
+        dismissButtonViewModel.update(
+            accessibilityLabel: self.localizationProvider.getLocalizedString(.dismissAccessibilityLabel))
 
         self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
         self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
@@ -149,6 +165,10 @@ class InfoHeaderViewModel: ObservableObject {
 
     private func shouldDisplayInfoHeader(for callingStatus: CallingStatus) -> Bool {
         return callingStatus != .inLobby && callingStatus != .localHold
+    }
+
+    private func dismissButtonTapped() {
+        dispatch(.pipAction(.pipModeRequested))
     }
 }
 

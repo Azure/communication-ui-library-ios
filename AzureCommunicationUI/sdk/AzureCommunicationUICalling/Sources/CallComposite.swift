@@ -8,10 +8,11 @@ import AzureCommunicationCommon
 import UIKit
 import SwiftUI
 import FluentUI
+import AVKit
+import Combine
 
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
-
     /// The class to configure events closures for Call Composite.
     public class Events {
         /// Closure to execute when error event occurs inside Call Composite.
@@ -40,9 +41,14 @@ public class CallComposite {
     private var avatarViewManager: AvatarViewManagerProtocol?
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
+    private var pipManager: PipManagerProtocol?
     private var callHistoryService: CallHistoryService?
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
+
+    private var viewFactory: CompositeViewFactoryProtocol?
+    private var viewController: UIViewController?
+    private var pipViewController: UIViewController?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -78,6 +84,7 @@ public class CallComposite {
             callCompositeEventsHandler: events,
             withCallingSDKWrapper: self.customCallingSdkWrapper
         )
+        self.viewFactory = viewFactory
 
         setupColorTheming()
         setupLocalization(with: localizationProvider)
@@ -85,14 +92,10 @@ public class CallComposite {
         guard let store = self.store else {
             fatalError("Construction of dependencies failed")
         }
-        let toolkitHostingController = makeToolkitHostingController(
-            router: NavigationRouter(store: store, logger: logger),
-            logger: logger,
-            viewFactory: viewFactory,
-            isRightToLeft: localizationProvider.isRightToLeft
-        )
-
-        present(toolkitHostingController)
+        let viewController = makeToolkitHostingController(router: NavigationRouter(store: store, logger: logger),
+            viewFactory: viewFactory)
+        self.viewController = viewController
+        present(viewController)
     }
 
     /// Start Call Composite experience with joining a Teams meeting.
@@ -104,7 +107,6 @@ public class CallComposite {
         let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
                                                   credential: remoteOptions.credential,
                                                   displayName: remoteOptions.displayName)
-
         launch(callConfiguration, localOptions: localOptions)
     }
 
@@ -124,6 +126,23 @@ public class CallComposite {
         avatarManager.set(remoteParticipantViewData: remoteParticipantViewData,
                           for: identifier,
                           completionHandler: completionHandler)
+    }
+
+    public func show() {
+        guard let store = self.store, let viewFactory = self.viewFactory else {
+            logger.error("CallComposite was not launched yet. launch method has to be called first")
+            return
+        }
+        self.pipManager?.stopPictureInPicture()
+        self.pipViewController?.dismissSelf()
+        self.viewController?.dismissSelf()
+
+        let viewController = makeToolkitHostingController(
+            router: NavigationRouter(store: store, logger: logger), viewFactory: viewFactory)
+        self.viewController = viewController
+        present(viewController)
+
+        self.pipManager?.reset()
     }
 
     private func constructViewFactoryAndDependencies(
@@ -166,6 +185,29 @@ public class CallComposite {
         )
         let debugInfoManager = createDebugInfoManager()
         self.debugInfoManager = debugInfoManager
+        self.pipManager = PipManager(store: store, logger: logger,
+                                     onRequirePipContentView: {
+            guard let store = self.store, let viewFactory = self.viewFactory else {
+                return nil
+            }
+
+            let viewController = self.makeToolkitHostingController(
+                router: NavigationRouter(store: store, logger: self.logger),
+                viewFactory: viewFactory)
+            self.pipViewController = viewController
+            return viewController.view
+        },
+                                     onRequirePipPlaceholderView: {
+            return self.viewController?.view
+        },
+                                     onPipStarted: {
+            self.viewController?.dismissSelf()
+            self.viewController = nil
+        },
+                                     onPipStoped: {
+            self.pipViewController?.dismissSelf()
+        })
+
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
 
         return CompositeViewFactory(
@@ -196,13 +238,14 @@ public class CallComposite {
         self.avatarViewManager = nil
         self.remoteParticipantsManager = nil
         self.debugInfoManager = nil
+        self.pipManager = nil
         self.callHistoryService = nil
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,
-                                              logger: Logger,
-                                              viewFactory: CompositeViewFactoryProtocol,
-                                              isRightToLeft: Bool) -> ContainerUIHostingController {
+                                              viewFactory: CompositeViewFactoryProtocol)
+    -> ContainerUIHostingController {
+        let isRightToLeft = localizationProvider.isRightToLeft
         let rootView = ContainerView(router: router,
                                      logger: logger,
                                      viewFactory: viewFactory,
@@ -214,6 +257,8 @@ public class CallComposite {
 
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
             containerUIHostingController?.dismissSelf()
+            self?.viewController = nil
+            self?.viewFactory = nil
             self?.cleanUpManagers()
         }
 
