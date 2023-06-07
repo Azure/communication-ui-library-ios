@@ -41,6 +41,7 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
+		<string>voip</string>
 	</array>
 	<key>appCenterSecret</key>
 	<string>${appCenterSecret}</string>
@@ -52,6 +53,8 @@
 	<string>${acsTokenUrl}</string>
 	<key>displayName</key>
 	<string>${displayName}</string>
+	<key>enableCallKit</key>
+	<string>${enableCallKit}</string>
 	<key>groupCallId</key>
 	<string>${groupCallId}</string>
 	<key>teamsMeetingLink</key>

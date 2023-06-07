@@ -223,29 +223,36 @@ extension CallingDemoView {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen)
+
+        let enableCallKit = envConfigSubject.enableCallKit
+
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
-                                                                      credential: credential),
+                                                                      credential: credential,
+                                                                      enableCallKit: enableCallKit),
                                          localOptions: localOptions)
                 } else {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
                                                                       credential: credential,
-                                                                      displayName: envConfigSubject.displayName),
+                                                                      displayName: envConfigSubject.displayName,
+                                                                      enableCallKit: enableCallKit),
                                          localOptions: localOptions)
                 }
             case .teamsMeeting:
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
-                                                                      credential: credential),
+                                                                      credential: credential,
+                                                                      enableCallKit: enableCallKit),
                                          localOptions: localOptions)
                 } else {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                       credential: credential,
-                                                                      displayName: envConfigSubject.displayName),
+                                                                      displayName: envConfigSubject.displayName,
+                                                                      enableCallKit: enableCallKit),
                                          localOptions: localOptions)
                 }
             }

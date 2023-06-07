@@ -27,6 +27,9 @@ public struct RemoteOptions {
     /// The limit for string length is 256.
     public let displayName: String?
 
+    /// CallKit in ACS SDK to be enabled or not
+    public let enableCallKit: Bool
+
     /// Create an instance of a RemoteOptions with options.
     /// - Parameters:
     ///   - locator: The JoinLocator type with unique identifier for joining a specific call.
@@ -34,9 +37,11 @@ public struct RemoteOptions {
     ///   - displayName: The display name of the local participant for the call. The limit for string length is 256.
     public init(for locator: JoinLocator,
                 credential: CommunicationTokenCredential,
-                displayName: String? = nil) {
+                displayName: String? = nil,
+                enableCallKit: Bool = false) {
         self.locator = locator
         self.credential = credential
         self.displayName = displayName
+        self.enableCallKit = enableCallKit
     }
 }
