@@ -32,18 +32,18 @@ class UIKitAppLifeCycleManager: LifeCycleManagerProtocol {
             .sink { [weak self] state in
                 self?.receive(state: state)
             }.store(in: &cancellables)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(willDeactivate),
-                                               name: UIScene.willDeactivateNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(didActivate),
-                                               name: UIScene.didActivateNotification,
-                                               object: nil)
-
-        NotificationCenter.default.addObserver(self, selector: #selector(willTerminate),
-                                               name: UIApplication.willTerminateNotification,
-                                               object: nil)
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(willDeactivate),
+//                                               name: UIScene.willDeactivateNotification,
+//                                               object: nil)
+//        NotificationCenter.default.addObserver(self,
+//                                               selector: #selector(didActivate),
+//                                               name: UIScene.didActivateNotification,
+//                                               object: nil)
+//
+//        NotificationCenter.default.addObserver(self, selector: #selector(willTerminate),
+//                                               name: UIApplication.willTerminateNotification,
+//                                               object: nil)
     }
 
     private func receive(state: AppState) {

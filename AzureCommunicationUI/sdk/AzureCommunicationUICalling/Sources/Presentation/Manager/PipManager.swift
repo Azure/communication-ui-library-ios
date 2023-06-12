@@ -59,6 +59,7 @@ class PipManager: NSObject, PipManagerProtocol {
 
     public func stopPictureInPicture() {
         avKitPipController?.stopPictureInPicture()
+        store.dispatch(action: .pipAction(.pipModeExited))
     }
 
     public func reset() {
@@ -84,7 +85,6 @@ class PipManager: NSObject, PipManagerProtocol {
 
         if state.pipState.currentStatus == .pipModeRequested {
             startPictureInPicture()
-            store.dispatch(action: .pipAction(.pipModeEntered))
         }
     }
 
@@ -129,18 +129,19 @@ extension PipManager: AVPictureInPictureControllerDelegate {
         _ pictureInPictureController: AVPictureInPictureController) {
             logger.debug("pictureInPictureControllerDidStopPictureInPicture")
             self.onPipStoped()
+            store.dispatch(action: .pipAction(.pipModeExited))
     }
 
-//    public func pictureInPictureControllerWillStartPictureInPicture(
-//        _ pictureInPictureController: AVPictureInPictureController) {
-//            logger.debug("pictureInPictureControllerWillStartPictureInPicture")
-//            self.onPipStarted()
-//    }
+    public func pictureInPictureControllerWillStartPictureInPicture(
+        _ pictureInPictureController: AVPictureInPictureController) {
+            logger.debug("pictureInPictureControllerWillStartPictureInPicture")
+    }
 
     public func pictureInPictureControllerDidStartPictureInPicture(
         _ pictureInPictureController: AVPictureInPictureController) {
             logger.debug("pictureInPictureControllerDidStartPictureInPicture")
             self.onPipStarted()
+            store.dispatch(action: .pipAction(.pipModeEntered))
     }
 
     public func pictureInPictureController(_ pictureInPictureController: AVPictureInPictureController,

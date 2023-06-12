@@ -17,37 +17,39 @@ struct ControlBarView: View {
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     var body: some View {
-        Group {
-            if screenSizeClass == .ipadScreenSize {
-                centeredStack
-            } else {
-                nonCenteredStack
+        if viewModel.isDisplayed {
+            Group {
+                if screenSizeClass == .ipadScreenSize {
+                    centeredStack
+                } else {
+                    nonCenteredStack
+                }
             }
-        }
-        .padding()
-        .background(Color(StyleProvider.color.backgroundColor))
-        .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
-            audioDeviceSelectionListView
-                .accessibilityElement(children: .contain)
-                .accessibilityAddTraits(.isModal)
-        })
-        .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveListDisplayed) {
-            exitConfirmationDrawer
-                .accessibility(hidden: !viewModel.isConfirmLeaveListDisplayed)
-                .accessibilityElement(children: .contain)
-                .accessibility(addTraits: .isModal)
-        })
-        .modifier(PopupModalView(isPresented: viewModel.isMoreCallOptionsListDisplayed) {
-            moreCallOptionsList
-                .accessibilityElement(children: .contain)
-                .accessibilityAddTraits(.isModal)
-        })
-        .modifier(PopupModalView(
-            isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isShareActivityDisplayed) {
-                activityView
+            .padding()
+            .background(Color(StyleProvider.color.backgroundColor))
+            .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
+                audioDeviceSelectionListView
                     .accessibilityElement(children: .contain)
                     .accessibilityAddTraits(.isModal)
-        })
+            })
+            .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveListDisplayed) {
+                exitConfirmationDrawer
+                    .accessibility(hidden: !viewModel.isConfirmLeaveListDisplayed)
+                    .accessibilityElement(children: .contain)
+                    .accessibility(addTraits: .isModal)
+            })
+            .modifier(PopupModalView(isPresented: viewModel.isMoreCallOptionsListDisplayed) {
+                moreCallOptionsList
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isModal)
+            })
+            .modifier(PopupModalView(
+                isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isShareActivityDisplayed) {
+                    activityView
+                        .accessibilityElement(children: .contain)
+                        .accessibilityAddTraits(.isModal)
+            })
+        }
     }
 
     /// A stack view that has items centered aligned horizontally in its stack view

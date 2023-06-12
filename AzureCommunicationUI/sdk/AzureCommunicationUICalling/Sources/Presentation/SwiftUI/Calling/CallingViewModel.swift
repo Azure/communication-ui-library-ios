@@ -11,6 +11,7 @@ class CallingViewModel: ObservableObject {
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
     @Published var appState: AppStatus = .foreground
+    @Published var isInPip: Bool = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -123,11 +124,13 @@ class CallingViewModel: ObservableObject {
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
-                                   defaultUserState: state.defaultUserState)
+                                   defaultUserState: state.defaultUserState,
+                                   pipState: state.pipState)
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
-                                   callingState: state.callingState)
-        localVideoViewModel.update(localUserState: state.localUserState)
+                                   callingState: state.callingState,
+                                   pipState: state.pipState)
+        localVideoViewModel.update(localUserState: state.localUserState, pipState: state.pipState)
         participantGridsViewModel.update(callingState: state.callingState,
                                          remoteParticipantsState: state.remoteParticipantsState,
                                          pipState: state.pipState)
@@ -156,6 +159,8 @@ class CallingViewModel: ObservableObject {
 
         updateIsLocalCameraOn(with: state)
         errorInfoViewModel.update(errorState: state.errorState)
+
+        isInPip = state.pipState.currentStatus == .pipModeEntered
     }
 
     private func updateIsLocalCameraOn(with state: AppState) {
