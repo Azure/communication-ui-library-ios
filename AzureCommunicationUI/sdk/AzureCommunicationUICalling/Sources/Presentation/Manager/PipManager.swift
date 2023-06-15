@@ -23,6 +23,7 @@ class PipManager: NSObject, PipManagerProtocol {
     private var onRequirePipPlaceholderView: () -> UIView?
     private var onPipStarted: () -> Void
     private var onPipStoped: () -> Void
+    private var onPipStartFailed: () -> Void
 
     /// Pip controller for System AVKit Pip Window
     private var avKitPipController: AVPictureInPictureController?
@@ -36,7 +37,8 @@ class PipManager: NSObject, PipManagerProtocol {
          onRequirePipContentView: @escaping () -> UIView?,
          onRequirePipPlaceholderView: @escaping () -> UIView?,
          onPipStarted: @escaping () -> Void,
-         onPipStoped: @escaping () -> Void) {
+         onPipStoped: @escaping () -> Void,
+         onPipStartFailed: @escaping () -> Void) {
 
         self.store = store
         self.logger = logger
@@ -44,6 +46,7 @@ class PipManager: NSObject, PipManagerProtocol {
         self.onRequirePipPlaceholderView = onRequirePipPlaceholderView
         self.onPipStarted = onPipStarted
         self.onPipStoped = onPipStoped
+        self.onPipStartFailed = onPipStartFailed
         super.init()
 
         commonInit()
@@ -69,10 +72,6 @@ class PipManager: NSObject, PipManagerProtocol {
     }
 
     private func commonInit() {
-        guard #available(iOS 15.0, *), AVPictureInPictureController.isPictureInPictureSupported() else {
-            return
-        }
-
         store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
@@ -84,6 +83,10 @@ class PipManager: NSObject, PipManagerProtocol {
         updateStartPipAutomatically(navigationState: state.navigationState)
 
         if state.pipState.currentStatus == .pipModeRequested {
+            guard #available(iOS 15.0, *), AVPictureInPictureController.isPictureInPictureSupported() else {
+                onPipStartFailed()
+                return
+            }
             startPictureInPicture()
         }
     }

@@ -186,7 +186,7 @@ public class CallComposite {
         self.debugInfoManager = debugInfoManager
         self.pipManager = PipManager(store: store, logger: logger,
                                      onRequirePipContentView: {
-            self.logger.debug("onRequirePipContentView")
+//            self.logger.debug("onRequirePipContentView")
             guard let store = self.store, let viewFactory = self.viewFactory else {
                 return nil
             }
@@ -198,18 +198,23 @@ public class CallComposite {
             return viewController.view
         },
                                      onRequirePipPlaceholderView: {
-            self.logger.debug("onRequirePipPlaceholderView")
+//            self.logger.debug("onRequirePipPlaceholderView")
             return self.viewController?.view
         },
                                      onPipStarted: {
-            self.logger.debug("onPipStarted")
+//            self.logger.debug("onPipStarted")
             self.viewController?.dismissSelf()
             self.viewController = nil
         },
                                      onPipStoped: {
-            self.logger.debug("onPipStoped")
+//            self.logger.debug("onPipStoped")
             self.pipViewController?.dismissSelf()
             self.show()
+        },
+                                     onPipStartFailed: {
+//            self.logger.debug("onPipStartFailed")
+            self.viewController?.dismissSelf()
+            self.viewController = nil
         })
 
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
@@ -282,19 +287,19 @@ public class CallComposite {
     }
 
     private func setupColorTheming() {
-//        let colorProvider = ColorThemeProvider(themeOptions: themeOptions)
-//        StyleProvider.color = colorProvider
-//        Task { @MainActor in
-//            if let window = UIWindow.keyWindow {
-//                Colors.setProvider(provider: colorProvider, for: window)
-//            }
-//        }
+        let colorProvider = ColorThemeProvider(themeOptions: themeOptions)
+        StyleProvider.color = colorProvider
+        Task { @MainActor in
+            if let window = UIWindow.keyWindow {
+                Colors.setProvider(provider: colorProvider, for: window)
+            }
+        }
     }
 
     private func setupLocalization(with provider: LocalizationProviderProtocol) {
-//        if let localizationOptions = localizationOptions {
-//            provider.apply(localeConfig: localizationOptions)
-//        }
+        if let localizationOptions = localizationOptions {
+            provider.apply(localeConfig: localizationOptions)
+        }
     }
 
     private func isCompositePresentable() -> Bool {

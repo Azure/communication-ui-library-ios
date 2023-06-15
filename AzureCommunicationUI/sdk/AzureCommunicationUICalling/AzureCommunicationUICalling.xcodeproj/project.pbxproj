@@ -2191,7 +2191,6 @@
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/AzureCommunicationCommon\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/MicrosoftFluentUI\"",
-					"/Users/pavelprystinka/Documents/orient_workspace/SpoolCallingStack/spool/staging.d/release/GA/sdk/arm64-v8a",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
