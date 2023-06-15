@@ -176,6 +176,7 @@ public class CallComposite {
                 logger: logger,
                 store: store,
                 networkManager: NetworkManager(),
+                audioSessionManager: AudioSessionManager(store: store, logger: logger),
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,

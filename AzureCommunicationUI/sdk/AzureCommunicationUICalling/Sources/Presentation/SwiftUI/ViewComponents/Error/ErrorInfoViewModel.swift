@@ -71,6 +71,8 @@ class ErrorInfoViewModel: ObservableObject {
             title = localizationProvider.getLocalizedString(.snackBarErrorCameraOnFailed)
         case .connectionFailed:
             title = localizationProvider.getLocalizedString(.snackBarErrorConnectionError)
+        case .micNotAvailable:
+            title = localizationProvider.getLocalizedString(.snackBarErrorOnHoldSubtitle)
         default:
             title = localizationProvider.getLocalizedString(.snackBarError)
         }

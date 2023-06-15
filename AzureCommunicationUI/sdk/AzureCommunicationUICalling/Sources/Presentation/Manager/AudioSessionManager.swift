@@ -8,7 +8,6 @@ import AVFoundation
 import Combine
 
 protocol AudioSessionManagerProtocol {
-
 }
 
 class AudioSessionManager: AudioSessionManagerProtocol {
@@ -17,13 +16,14 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     private var localUserAudioDeviceState: LocalUserState.AudioDeviceSelectionStatus?
     private var audioSessionState: AudioSessionStatus = .active
     private var audioSessionDetector: Timer?
+    private (set) var isMicAvailable: Bool = true
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState, Action>,
          logger: Logger) {
         self.store = store
         self.logger = logger
-        let currentAudioDevice = getCurrentAudioDevice()
+        let currentAudioDevice = self.getCurrentAudioDevice()
         self.setupAudioSession()
         store.dispatch(action: .localUserAction(.audioDeviceChangeRequested(device: currentAudioDevice)))
         store.$state
@@ -72,6 +72,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     @objc func handleInterruption(notification: Notification) {
+        logger.debug("Mohtasim: interruption type")
         guard let userInfo = notification.userInfo,
               let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
               let interruptionType = AVAudioSession.InterruptionType(rawValue: typeValue) else {
@@ -113,7 +114,9 @@ class AudioSessionManager: AudioSessionManagerProtocol {
             // Reproduced on phone 11/13/14. iOS 14, 15, 16
             try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: options)
             try audioSession.setActive(true)
+            isMicAvailable = true
         } catch let error {
+            isMicAvailable = false
             logger.error("Failed to set audio session category:\(error.localizedDescription)")
         }
     }
@@ -173,6 +176,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         guard AVAudioSession.sharedInstance().isOtherAudioPlaying == false else {
             return
         }
+        logger.debug("Mohtasim: Other Audio Playing")
 
         guard audioSessionState == .interrupted else {
             audioSessionDetector?.invalidate()
