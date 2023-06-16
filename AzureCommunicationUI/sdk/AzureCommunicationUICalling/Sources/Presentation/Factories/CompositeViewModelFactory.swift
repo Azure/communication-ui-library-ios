@@ -206,6 +206,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         LoadingOverlayViewModel(localizationProvider: localizationProvider,
                                 accessibilityProvider: accessibilityProvider,
                                 networkManager: networkManager,
+                                audioSessionManager: audioSessionManager,
                                 store: store)
     }
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {

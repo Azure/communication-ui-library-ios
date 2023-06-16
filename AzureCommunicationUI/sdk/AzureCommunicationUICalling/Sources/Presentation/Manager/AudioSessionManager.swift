@@ -72,7 +72,6 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     @objc func handleInterruption(notification: Notification) {
-        logger.debug("Mohtasim: interruption type")
         guard let userInfo = notification.userInfo,
               let typeValue = userInfo[AVAudioSessionInterruptionTypeKey] as? UInt,
               let interruptionType = AVAudioSession.InterruptionType(rawValue: typeValue) else {
@@ -176,7 +175,6 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         guard AVAudioSession.sharedInstance().isOtherAudioPlaying == false else {
             return
         }
-        logger.debug("Mohtasim: Other Audio Playing")
 
         guard audioSessionState == .interrupted else {
             audioSessionDetector?.invalidate()

@@ -15,16 +15,19 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
     private var audioPermission: AppPermission.Status = .unknown
     var cancellables = Set<AnyCancellable>()
     var networkManager: NetworkManager
+    var audioSessionManager: AudioSessionManager
 
     init(localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          networkManager: NetworkManager,
+         audioSessionManager: AudioSessionManager,
          store: Store<AppState, Action>
     ) {
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
         self.networkManager = networkManager
         self.networkManager.startMonitor()
+        self.audioSessionManager = audioSessionManager
         self.store = store
         self.audioPermission = store.state.permissionState.audioPermission
         store.$state
@@ -76,6 +79,12 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
                     .fatalErrorUpdated(internalError: .networkConnectionNotAvailable, error: nil)))
             }
             return
+        }
+    }
+    func handleMicAvailabilityCheck() {
+        guard audioSessionManager.isMicAvailable else {
+            store.dispatch(action: .errorAction(
+                .fatalErrorUpdated(internalError: .micNotAvailable, error: nil)))
         }
     }
 }
