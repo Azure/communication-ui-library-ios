@@ -224,6 +224,7 @@ extension SetupViewModelTests {
                               logger: logger,
                               store: storeFactory.store,
                               networkManager: NetworkManager(),
+                              audioSessionManager: AudioSessionManager(store: storeFactory.store, logger: logger),
                               localizationProvider: LocalizationProviderMocking())
     }
 }
