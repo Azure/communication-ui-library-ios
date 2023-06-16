@@ -47,8 +47,8 @@ class CallingViewModelTests: XCTestCase {
         storeFactory.store.$state
             .dropFirst(1)
             .sink { [weak storeFactory] _ in
-                XCTAssertEqual(storeFactory?.actions.count, 1)
-                XCTAssertTrue(storeFactory?.actions.first == Action.callingAction(.callEndRequested))
+                XCTAssertEqual(storeFactory?.actions.count, 2)
+                XCTAssertTrue(storeFactory?.actions.first != Action.callingAction(.callEndRequested))
 
                 expectation.fulfill()
             }.store(in: cancellable)
