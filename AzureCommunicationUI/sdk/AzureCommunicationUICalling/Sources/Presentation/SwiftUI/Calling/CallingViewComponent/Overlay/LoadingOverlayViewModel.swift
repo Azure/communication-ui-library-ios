@@ -85,6 +85,7 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
         guard audioSessionManager.isMicAvailable else {
             store.dispatch(action: .errorAction(
                 .fatalErrorUpdated(internalError: .micNotAvailable, error: nil)))
+            return
         }
     }
 }
