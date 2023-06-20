@@ -5,6 +5,7 @@
 
 import Foundation
 import Combine
+import SwiftUI
 
 struct ParticipantVideoViewInfoModel {
     let videoStreamType: VideoStreamInfoModel.MediaStreamType?
@@ -24,6 +25,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
     @Published var isMuted: Bool
     @Published var isHold: Bool
     @Published var participantIdentifier: String
+    @Published var rawVideoBuffer: CVPixelBuffer?
     private var isScreenSharing: Bool = false
     private var participantName: String
     private var renderDisplayName: String?
@@ -39,6 +41,7 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         self.isHold = participantModel.status == .hold
         self.participantIdentifier = participantModel.userIdentifier
         self.isMuted = participantModel.isMuted
+        self.rawVideoBuffer = participantModel.rawVideoBuffer
         self.videoViewModel = getDisplayingVideoStreamModel(participantModel)
         self.accessibilityLabel = getAccessibilityLabel(participantModel: participantModel)
     }
@@ -87,6 +90,8 @@ class ParticipantGridCellViewModel: ObservableObject, Identifiable {
         if self.isHold != isOnHold {
             self.isHold = isOnHold
         }
+
+        self.rawVideoBuffer = participantModel.rawVideoBuffer
     }
 
     func updateParticipantNameIfNeeded(with renderDisplayName: String?) {

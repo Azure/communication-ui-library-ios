@@ -7,7 +7,7 @@ import AzureCommunicationCalling
 import Foundation
 
 extension AzureCommunicationCalling.RemoteParticipant {
-    func toParticipantInfoModel() -> ParticipantInfoModel {
+    func toParticipantInfoModel(rawVideoBuffer: CVPixelBuffer? = nil) -> ParticipantInfoModel {
         let videoInfoModels: [VideoStreamInfoModel] = self.videoStreams.compactMap { videoStream in
             VideoStreamInfoModel(
                 videoStreamIdentifier: String(videoStream.id),
@@ -24,7 +24,8 @@ extension AzureCommunicationCalling.RemoteParticipant {
                                     userIdentifier: identifier.rawId,
                                     status: state.toCompositeParticipantStatus(),
                                     screenShareVideoStreamModel: screenShareVideoStreamModel,
-                                    cameraVideoStreamModel: cameraVideoStreamModel)
+                                    cameraVideoStreamModel: cameraVideoStreamModel,
+                                    rawVideoBuffer: rawVideoBuffer)
     }
 
     static func toCompositeRemoteParticipant(

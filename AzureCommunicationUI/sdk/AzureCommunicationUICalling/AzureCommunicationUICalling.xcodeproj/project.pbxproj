@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		05286F432A300ACA00FA09B5 /* AzureCommunicationCalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05286F422A300ACA00FA09B5 /* AzureCommunicationCalling.framework */; };
 		05286F442A300ACA00FA09B5 /* AzureCommunicationCalling.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05286F422A300ACA00FA09B5 /* AzureCommunicationCalling.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		05286F512A41263500FA09B5 /* ParticipantVideoFrameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05286F502A41263500FA09B5 /* ParticipantVideoFrameModel.swift */; };
 		05317E2629A2E1FB00149F57 /* CallHistoryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2529A2E1FB00149F57 /* CallHistoryServiceTests.swift */; };
 		05317E2829A2E2B900149F57 /* CallHistoryRepositoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2729A2E2B900149F57 /* CallHistoryRepositoryMocking.swift */; };
 		05317E2A29A7DBC100149F57 /* CallHistoryRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */; };
@@ -304,6 +305,7 @@
 
 /* Begin PBXFileReference section */
 		05286F422A300ACA00FA09B5 /* AzureCommunicationCalling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AzureCommunicationCalling.framework; path = "../../../../../orient_workspace/SpoolCallingStack/spool/staging.d/release/GA/sdk/arm64-v8a/AzureCommunicationCalling.framework"; sourceTree = "<group>"; };
+		05286F502A41263500FA09B5 /* ParticipantVideoFrameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantVideoFrameModel.swift; sourceTree = "<group>"; };
 		05317E2529A2E1FB00149F57 /* CallHistoryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryServiceTests.swift; sourceTree = "<group>"; };
 		05317E2729A2E2B900149F57 /* CallHistoryRepositoryMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRepositoryMocking.swift; sourceTree = "<group>"; };
 		05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRepositoryTests.swift; sourceTree = "<group>"; };
@@ -972,6 +974,7 @@
 			isa = PBXGroup;
 			children = (
 				1FBCB6AE2649DC7900F57EEA /* ParticipantInfoModel.swift */,
+				05286F502A41263500FA09B5 /* ParticipantVideoFrameModel.swift */,
 				1FA23F9D265DA21400B4A080 /* VideoStreamInfoModel.swift */,
 				88B87C562755911B00290DD1 /* CallInfoModel.swift */,
 			);
@@ -1851,6 +1854,7 @@
 				1F03D3D22638A6B70055C456 /* CallingViewModel.swift in Sources */,
 				FAD20A8C292834500063D8A9 /* Logger.swift in Sources */,
 				FA6B61A3290C9F55004B8188 /* DebugInfoSharingActivityViewModel.swift in Sources */,
+				05286F512A41263500FA09B5 /* ParticipantVideoFrameModel.swift in Sources */,
 				50FA45FE26813FCE001844AC /* ParticipantGridViewModel.swift in Sources */,
 				113738FF29D638BB00D48EAB /* DefaultUserState.swift in Sources */,
 				1F94DAE626740D4400691D1E /* AppState.swift in Sources */,
@@ -2191,6 +2195,7 @@
 					"$(inherited)",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/AzureCommunicationCommon\"",
 					"\"${PODS_CONFIGURATION_BUILD_DIR}/MicrosoftFluentUI\"",
+					"/Users/pavelprystinka/Documents/orient_workspace/SpoolCallingStack/spool/staging.d/release/GA/sdk/arm64-v8a",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Sources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";

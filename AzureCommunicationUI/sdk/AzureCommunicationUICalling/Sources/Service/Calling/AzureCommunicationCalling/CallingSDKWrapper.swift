@@ -64,6 +64,10 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             joinCallOptions.videoOptions = videoOptions
         }
 
+        var incomingVideoOptions = IncomingVideoOptions()
+        incomingVideoOptions.streamType = VideoStreamType.rawIncoming
+        joinCallOptions.incomingVideoOptions = incomingVideoOptions
+
         joinCallOptions.audioOptions = AudioOptions()
         joinCallOptions.audioOptions?.muted = !isAudioPreferred
 

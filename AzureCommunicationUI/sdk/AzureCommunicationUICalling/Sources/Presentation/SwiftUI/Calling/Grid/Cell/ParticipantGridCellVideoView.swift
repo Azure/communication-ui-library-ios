@@ -8,23 +8,24 @@ import FluentUI
 import SwiftUI
 
 struct ParticipantGridCellVideoView: View {
-    var videoRendererViewInfo: ParticipantRendererViewInfo!
+//    var videoRendererViewInfo: ParticipantRendererViewInfo!
     let rendererViewManager: RendererViewManager?
     let zoomable: Bool
     @Binding var isSpeaking: Bool
     @Binding var displayName: String?
     @Binding var isMuted: Bool
+    @Binding var rawVideoBuffer: CVPixelBuffer?
     @Environment(\.screenSizeClass) var screenSizeClass: ScreenSizeClassType
 
     var body: some View {
         ZStack(alignment: .bottomLeading) {
             VStack(alignment: .center, spacing: 0) {
-                if zoomable {
-                    zoomableVideoRenderView
-                        .prefersHomeIndicatorAutoHidden(UIDevice.current.hasHomeBar)
-                } else {
-                    videoRenderView
-                }
+//                if zoomable {
+//                    zoomableVideoRenderView
+//                        .prefersHomeIndicatorAutoHidden(UIDevice.current.hasHomeBar)
+//                } else {
+                    RawVideoView(cvPixelBuffer: $rawVideoBuffer)
+//                }
             }
 
             ParticipantTitleView(displayName: $displayName,
@@ -45,17 +46,42 @@ struct ParticipantGridCellVideoView: View {
         ).animation(.default)
     }
 
-    var videoRenderView: some View {
-        VideoRendererView(rendererView: videoRendererViewInfo.rendererView)
+//    var videoRenderView: some View {
+//        VideoRendererView(rendererView: videoRendererViewInfo.rendererView)
+//    }
+//
+//    var zoomableVideoRenderView: some View {
+//        ZoomableVideoRenderView(videoRendererViewInfo: videoRendererViewInfo,
+//                                rendererViewManager: rendererViewManager)
+//                                .gesture(TapGesture(count: 2).onEnded({}))
+//        // The double tap action does nothing. This is a work around to
+//        // prevent the single-tap gesture (in CallingView) from being recognized
+//        // until after the double-tap gesture  recognizer (in ZoomableVideoRenderView) explicitly
+//        // reaches the failed state, which happens when the touch sequence contains only one tap.
+//    }
+}
+
+struct RawVideoView: UIViewRepresentable {
+    @Binding var cvPixelBuffer: CVPixelBuffer?
+
+    func makeUIView(context: Context) -> UIImageView {
+        let imageView = UIImageView()
+        return imageView
     }
 
-    var zoomableVideoRenderView: some View {
-        ZoomableVideoRenderView(videoRendererViewInfo: videoRendererViewInfo,
-                                rendererViewManager: rendererViewManager)
-                                .gesture(TapGesture(count: 2).onEnded({}))
-        // The double tap action does nothing. This is a work around to
-        // prevent the single-tap gesture (in CallingView) from being recognized
-        // until after the double-tap gesture  recognizer (in ZoomableVideoRenderView) explicitly
-        // reaches the failed state, which happens when the touch sequence contains only one tap.
+    func updateUIView(_ uiView: UIImageView, context: Context) {
+        // Get the pixel buffer from your video stream
+        guard let pixelBuffer = cvPixelBuffer else {
+            return
+        }
+
+        // Create a CIImage from the pixel buffer
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
+
+        // Create a UIImage from the CIImage
+        let uiImage = UIImage(ciImage: ciImage)
+
+        // Update the UIImageView with the new UIImage
+        uiView.image = uiImage
     }
 }

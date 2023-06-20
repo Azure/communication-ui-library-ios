@@ -5,7 +5,9 @@
 
 import AzureCommunicationCalling
 
+import CoreVideo
 import Foundation
+import SwiftUI
 
 struct RemoteParticipantVideoViewId {
     let userIdentifier: String
@@ -25,7 +27,7 @@ protocol RendererViewManager: AnyObject {
     func getRemoteParticipantVideoRendererViewSize() -> CGSize?
 }
 
-class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
+class VideoViewManager: NSObject, RendererDelegate, RendererViewManager, RemoteParticipantDelegate {
 
     struct VideoStreamCache {
         var renderer: VideoStreamRenderer
@@ -103,8 +105,11 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
 
     var didRenderFirstFrame: ((CGSize) -> Void)?
 
+    var rawVideoView = UIImageView()
+
     func getRemoteParticipantVideoRendererView(_ videoViewId: RemoteParticipantVideoViewId)
-                                                                -> ParticipantRendererViewInfo? {
+    -> ParticipantRendererViewInfo? {
+
         let videoStreamId = videoViewId.videoStreamIdentifier
         let userIdentifier = videoViewId.userIdentifier
         let cacheKey = generateCacheKey(userIdentifier: videoViewId.userIdentifier,
@@ -124,6 +129,11 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
               }) else {
             return nil
         }
+
+        participant.wrappedObject.delegate = self
+
+        return ParticipantRendererViewInfo(rendererView: rawVideoView,
+                                           streamSize: CGSize(width: 100, height: 100))
 
         let wrappedVideoStream = videoStream.wrappedObject
         do {
@@ -196,4 +206,68 @@ class VideoViewManager: NSObject, RendererDelegate, RendererViewManager {
     func videoStreamRenderer(didFailToStart renderer: VideoStreamRenderer) {
         logger.error("Failed to render remote screenshare video. \(renderer)")
     }
+
+//    func remoteParticipant(_ remoteParticipant: RemoteParticipant,
+//                           didChangeVideoStreamState args: VideoStreamStateChangedEventArgs) {
+//        if let rawIncomingVideoStream = args.stream as? RawIncomingVideoStream {
+//            onRawIncomingVideoStreamStateChanged(rawIncomingVideoStream: rawIncomingVideoStream)
+//        }
+//    }
+//
+//    private let rawVideoStreams = MappedSequence<Int32, RawIncomingVideoStreamDel>()
+//
+//    func onRawIncomingVideoStreamStateChanged(rawIncomingVideoStream: RawIncomingVideoStream) {
+//        switch rawIncomingVideoStream.state {
+//        case .available:
+//            /* There is a new IncomingVideoStream */
+//            let videoStreamDelegate = RawIncomingVideoStreamDel(videoViewManager: self)
+//            rawVideoStreams.append(forKey: rawIncomingVideoStream.id, value: videoStreamDelegate)
+//            rawIncomingVideoStream.delegate = videoStreamDelegate
+//
+//            rawIncomingVideoStream.start()
+//        case .started:
+//            /* Will start receiving video frames */
+//            break
+//        case .stopped, .stopping:
+//            /* Will stop receiving video frames */
+//            break
+//        case .notAvailable:
+//            /* The IncomingVideoStream should not be used anymore */
+//            rawIncomingVideoStream.delegate = nil
+//            rawVideoStreams.removeValue(forKey: rawIncomingVideoStream.id)
+//        default:
+//            break
+//        }
+//    }
+//
+//    func onVideoFrameRecieved(_ videoStreamId: Int32, _ pixelBuffer: CVPixelBuffer?) {
+//        guard let pixelBuffer = pixelBuffer else {
+//            return
+//        }
+//
+//        // Create a CIImage from the pixel buffer
+//        let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
+//
+//        // Create a UIImage from the CIImage
+//        let uiImage = UIImage(ciImage: ciImage)
+//
+//        // Update the UIImageView with the new UIImage
+//        rawVideoView.image = uiImage
+//    }
+//
+//    class RawIncomingVideoStreamDel: NSObject, RawIncomingVideoStreamDelegate {
+//        private let videoViewManager: VideoViewManager
+//
+//        init(videoViewManager: VideoViewManager) {
+//            self.videoViewManager = videoViewManager
+//        }
+//
+//        func rawIncomingVideoStream(_ rawIncomingVideoStream: RawIncomingVideoStream,
+//                                    didReceiveRawVideoFrame args: RawVideoFrameReceivedEventArgs) {
+//
+//            if let videoFrameBuffer = args.frame as? RawVideoFrameBuffer {
+//                self.videoViewManager.onVideoFrameRecieved(args.videoStreamId, videoFrameBuffer.buffer)
+//            }
+//        }
+//    }
 }

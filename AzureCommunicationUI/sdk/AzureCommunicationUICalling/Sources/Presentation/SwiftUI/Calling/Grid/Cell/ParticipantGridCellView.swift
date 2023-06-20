@@ -18,21 +18,22 @@ struct ParticipantGridCellView: View {
 
     var body: some View {
         Group {
-            GeometryReader { geometry in
-                if let videoStreamId = displayedVideoStreamId,
-                   let rendererViewInfo = getRendererViewInfo(for: videoStreamId) {
-                    let zoomable = viewModel.videoViewModel?.videoStreamType == .screenSharing
-                    ParticipantGridCellVideoView(videoRendererViewInfo: rendererViewInfo,
+            GeometryReader { _ in
+//                if let videoStreamId = displayedVideoStreamId,
+//                   let rendererViewInfo = getRendererViewInfo(for: videoStreamId) {
+//                    let zoomable = viewModel.videoViewModel?.videoStreamType == .screenSharing
+                    ParticipantGridCellVideoView(
                                                  rendererViewManager: rendererViewManager,
-                                                 zoomable: zoomable,
+                                                 zoomable: false,
                                                  isSpeaking: $viewModel.isSpeaking,
                                                  displayName: $viewModel.displayName,
-                                                 isMuted: $viewModel.isMuted)
-                } else {
-                    avatarView
-                        .frame(width: geometry.size.width,
-                               height: geometry.size.height)
-                }
+                                                 isMuted: $viewModel.isMuted,
+                                                 rawVideoBuffer: $viewModel.rawVideoBuffer)
+//                } else {
+//                    avatarView
+//                        .frame(width: geometry.size.width,
+//                               height: geometry.size.height)
+//                }
             }
             .accessibilityElement(children: .combine)
             .accessibilityLabel(Text(viewModel.accessibilityLabel))
