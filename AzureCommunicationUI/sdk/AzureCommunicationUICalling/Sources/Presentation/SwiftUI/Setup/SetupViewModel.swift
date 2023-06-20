@@ -18,7 +18,7 @@ class SetupViewModel: ObservableObject {
     var title: String
     var subTitle: String?
 
-    var networkManager: NetworkManager
+    var networkManager = NetworkManager()
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
     var joinCallButtonViewModel: PrimaryButtonViewModel!
@@ -31,11 +31,9 @@ class SetupViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState, Action>,
-         networkManager: NetworkManager,
          localizationProvider: LocalizationProviderProtocol,
          setupScreenViewData: SetupScreenViewData? = nil) {
         self.store = store
-        self.networkManager = networkManager
         self.networkManager.startMonitor()
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft

@@ -101,7 +101,6 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
             let viewModel = SetupViewModel(compositeViewModelFactory: self,
                                            logger: logger,
                                            store: store,
-                                           networkManager: networkManager,
                                            localizationProvider: localizationProvider,
                                            setupScreenViewData: localOptions?.setupScreenViewData)
             self.setupViewModel = viewModel
