@@ -16,7 +16,6 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     private var localUserAudioDeviceState: LocalUserState.AudioDeviceSelectionStatus?
     private var audioSessionState: AudioSessionStatus = .active
     private var audioSessionDetector: Timer?
-    private (set) var isMicAvailable: Bool = true
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState, Action>,
@@ -59,7 +58,9 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     private func setupAudioSession() {
-        activateAudioSessionCategory()
+        guard activateAudioSessionCategory() else {
+            return
+        }
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleRouteChange),
                                                name: AVAudioSession.routeChangeNotification,
@@ -100,7 +101,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         store.dispatch(action: .localUserAction(.audioDeviceChangeSucceeded(device: currentDevice)))
     }
 
-    private func activateAudioSessionCategory() {
+    public func activateAudioSessionCategory() -> Bool {
         let audioSession = AVAudioSession.sharedInstance()
         do {
             let options: AVAudioSession.CategoryOptions = [.allowBluetooth,
@@ -113,10 +114,10 @@ class AudioSessionManager: AudioSessionManagerProtocol {
             // Reproduced on phone 11/13/14. iOS 14, 15, 16
             try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: options)
             try audioSession.setActive(true)
-            isMicAvailable = true
+            return true
         } catch let error {
-            isMicAvailable = false
             logger.error("Failed to set audio session category:\(error.localizedDescription)")
+            return false
         }
     }
 

@@ -82,7 +82,7 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
         }
     }
     func handleMicAvailabilityCheck() {
-        guard audioSessionManager.isMicAvailable else {
+        guard audioSessionManager.activateAudioSessionCategory() else {
             store.dispatch(action: .errorAction(
                 .fatalErrorUpdated(internalError: .micNotAvailable, error: nil)))
             return
