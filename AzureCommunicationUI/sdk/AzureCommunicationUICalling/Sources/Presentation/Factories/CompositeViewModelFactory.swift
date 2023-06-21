@@ -71,7 +71,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let store: Store<AppState, Action>
     private let networkManager: NetworkManager
-    private let audioSessionManager: AudioSessionManager
+    private let audioSessionManager: AudioSessionManagerProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
@@ -83,7 +83,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     init(logger: Logger,
          store: Store<AppState, Action>,
          networkManager: NetworkManager,
-         audioSessionManager: AudioSessionManager,
+         audioSessionManager: AudioSessionManagerProtocol,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          debugInfoManager: DebugInfoManagerProtocol,

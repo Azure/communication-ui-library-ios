@@ -19,7 +19,7 @@ class SetupViewModel: ObservableObject {
     var subTitle: String?
 
     var networkManager: NetworkManager
-    var audioSessionManager: AudioSessionManager
+    var audioSessionManager: AudioSessionManagerProtocol
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
     var joinCallButtonViewModel: PrimaryButtonViewModel!
@@ -33,7 +33,7 @@ class SetupViewModel: ObservableObject {
          logger: Logger,
          store: Store<AppState, Action>,
          networkManager: NetworkManager,
-         audioSessionManager: AudioSessionManager,
+         audioSessionManager: AudioSessionManagerProtocol,
          localizationProvider: LocalizationProviderProtocol,
          setupScreenViewData: SetupScreenViewData? = nil) {
         self.store = store

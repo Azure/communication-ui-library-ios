@@ -15,12 +15,12 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
     private var audioPermission: AppPermission.Status = .unknown
     var cancellables = Set<AnyCancellable>()
     var networkManager: NetworkManager
-    var audioSessionManager: AudioSessionManager
+    var audioSessionManager: AudioSessionManagerProtocol
 
     init(localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          networkManager: NetworkManager,
-         audioSessionManager: AudioSessionManager,
+         audioSessionManager: AudioSessionManagerProtocol,
          store: Store<AppState, Action>
     ) {
         self.localizationProvider = localizationProvider

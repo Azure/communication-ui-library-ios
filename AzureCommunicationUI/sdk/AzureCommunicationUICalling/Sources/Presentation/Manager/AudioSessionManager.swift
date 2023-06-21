@@ -8,6 +8,7 @@ import AVFoundation
 import Combine
 
 protocol AudioSessionManagerProtocol {
+    func activateAudioSessionCategory() -> Bool
 }
 
 class AudioSessionManager: AudioSessionManagerProtocol {

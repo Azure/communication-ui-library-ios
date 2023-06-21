@@ -35,7 +35,7 @@ public class CallComposite {
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
-    private var audioSessionManager: AudioSessionManager?
+    private var audioSessionManager: AudioSessionManagerProtocol?
     private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
     private var avatarViewManager: AvatarViewManagerProtocol?
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
@@ -167,7 +167,8 @@ public class CallComposite {
         let debugInfoManager = createDebugInfoManager()
         self.debugInfoManager = debugInfoManager
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
-
+        let audioSessionManager = AudioSessionManager(store: store, logger: logger)
+        self.audioSessionManager = audioSessionManager
         return CompositeViewFactory(
             logger: logger,
             avatarManager: avatarViewManager,
@@ -176,7 +177,7 @@ public class CallComposite {
                 logger: logger,
                 store: store,
                 networkManager: NetworkManager(),
-                audioSessionManager: audioSessionManager ?? AudioSessionManager(store: store, logger: logger),
+                audioSessionManager: audioSessionManager,
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
