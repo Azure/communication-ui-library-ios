@@ -101,7 +101,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         store.dispatch(action: .localUserAction(.audioDeviceChangeSucceeded(device: currentDevice)))
     }
 
-    public func activateAudioSessionCategory() -> Bool {
+    func activateAudioSessionCategory() -> Bool {
         let audioSession = AVAudioSession.sharedInstance()
         do {
             let options: AVAudioSession.CategoryOptions = [.allowBluetooth,
