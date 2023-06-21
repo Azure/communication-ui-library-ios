@@ -35,7 +35,7 @@ public class CallComposite {
     private var errorManager: ErrorManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
-    private var audioSessionManager: AudioSessionManagerProtocol?
+    private var audioSessionManager: AudioSessionManager?
     private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
     private var avatarViewManager: AvatarViewManagerProtocol?
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
@@ -176,7 +176,7 @@ public class CallComposite {
                 logger: logger,
                 store: store,
                 networkManager: NetworkManager(),
-                audioSessionManager: AudioSessionManager(store: store, logger: logger),
+                audioSessionManager: audioSessionManager ?? AudioSessionManager(store: store, logger: logger),
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
