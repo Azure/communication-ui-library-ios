@@ -11,6 +11,7 @@ class CallingViewModel: ObservableObject {
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
     @Published var appState: AppStatus = .foreground
+    @Published var isInPip: Bool = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -55,7 +56,8 @@ class CallingViewModel: ObservableObject {
         loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()
 
         infoHeaderViewModel = compositeViewModelFactory
-            .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
+            .makeInfoHeaderViewModel(dispatchAction: actionDispatch,
+                                     localUserState: store.state.localUserState)
         let isCallConnected = store.state.callingState.status == .connected
         let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
         isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
@@ -108,9 +110,10 @@ class CallingViewModel: ObservableObject {
             appState = state.lifeCycleState.currentStatus
         }
 
-        guard state.lifeCycleState.currentStatus == .foreground else {
-            return
-        }
+//        guard state.lifeCycleState.currentStatus == .foreground
+//                && state.pipState.currentStatus == .none else {
+//            return
+//        }
 
         if state.callingState.operationStatus == .skipSetupRequested
             && state.permissionState.audioPermission == .granted
@@ -121,13 +124,16 @@ class CallingViewModel: ObservableObject {
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
-                                   defaultUserState: state.defaultUserState)
+                                   defaultUserState: state.defaultUserState,
+                                   pipState: state.pipState)
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
-                                   callingState: state.callingState)
-        localVideoViewModel.update(localUserState: state.localUserState)
+                                   callingState: state.callingState,
+                                   pipState: state.pipState)
+        localVideoViewModel.update(localUserState: state.localUserState, pipState: state.pipState)
         participantGridsViewModel.update(callingState: state.callingState,
-                                         remoteParticipantsState: state.remoteParticipantsState)
+                                         remoteParticipantsState: state.remoteParticipantsState,
+                                         pipState: state.pipState)
         bannerViewModel.update(callingState: state.callingState)
         lobbyOverlayViewModel.update(callingStatus: state.callingState.status)
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
@@ -153,6 +159,8 @@ class CallingViewModel: ObservableObject {
 
         updateIsLocalCameraOn(with: state)
         errorInfoViewModel.update(errorState: state.errorState)
+
+        isInPip = state.pipState.currentStatus == .pipModeEntered
     }
 
     private func updateIsLocalCameraOn(with state: AppState) {

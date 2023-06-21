@@ -45,6 +45,7 @@ struct CallingDemoView: View {
                 settingButton
                 showCallHistoryButton
                 startExperienceButton
+                showExperienceButton
                 Text(callState)
             }
             Spacer()
@@ -168,6 +169,14 @@ struct CallingDemoView: View {
         .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
     }
 
+    var showExperienceButton: some View {
+        Button("Show") {
+            showCallComposite()
+        }
+        .buttonStyle(DemoButtonStyle())
+        .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+    }
+
     var showCallHistoryButton: some View {
         Button("Show call history") {
             alertTitle = callingViewModel.callHistoryTitle
@@ -208,6 +217,11 @@ extension CallingDemoView {
             }
         }
     }
+
+    func showCallComposite() {
+        callingViewModel.callComposite?.show()
+    }
+
     func startCallComposite() async {
         let link = getMeetingLink()
 
@@ -349,6 +363,7 @@ extension CallingDemoView {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
         }
+        callingViewModel.callComposite = callComposite
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {

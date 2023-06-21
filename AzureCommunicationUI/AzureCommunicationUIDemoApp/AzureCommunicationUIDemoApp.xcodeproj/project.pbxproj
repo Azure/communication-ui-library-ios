@@ -82,6 +82,7 @@
 
 /* Begin PBXFileReference section */
 		026F091CB7F97EBA5A39610B /* Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUIDemoApp_AzureCommunicationUIDemoAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		05286F462A300B4300FA09B5 /* AzureCommunicationCalling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AzureCommunicationCalling.framework; path = "../../../../orient_workspace/SpoolCallingStack/spool/staging.d/release/GA/sdk/arm64-v8a/AzureCommunicationCalling.framework"; sourceTree = "<group>"; };
 		0570901B299EBAC000D7AE5F /* CallingDemoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingDemoViewModel.swift; sourceTree = "<group>"; };
 		1AA61EC7BE9A4B43EEC5DBCC /* Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests/Pods-AzureCommunicationUIDemoApp-AzureCommunicationUIDemoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		1B0D8DC527F3B1B800F0C47A /* AzureCommunicationUIDemoAppCallTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppCallTests.swift; sourceTree = "<group>"; };
@@ -307,6 +308,7 @@
 		F74ACD1C99B1428891E02585 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				05286F462A300B4300FA09B5 /* AzureCommunicationCalling.framework */,
 				50CB82E028C9200300680566 /* AzureCommunicationUIChat.framework */,
 				FAA4489F282585F700BD0DC0 /* AzureCommunicationUICalling.framework */,
 				747FFD0380FFBF53EC331032 /* Pods_AzureCommunicationUIDemoApp.framework */,
@@ -815,6 +817,18 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UBF8T346G9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AzureCommunicationChat\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AzureCommunicationCommon\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AzureCore\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MicrosoftFluentUI\"",
+					"\"${PODS_ROOT}/AppCenter/AppCenter-SDK-Apple\"",
+					"\"${PODS_ROOT}/Trouter\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppCenter/Core\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AppCenter/Crashes\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/Trouter\"",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This is required for calling.";

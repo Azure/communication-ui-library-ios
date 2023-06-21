@@ -33,7 +33,14 @@ class ParticipantGridViewModel: ObservableObject {
     }
 
     func update(callingState: CallingState,
-                remoteParticipantsState: RemoteParticipantsState) {
+                remoteParticipantsState: RemoteParticipantsState,
+                pipState: PictureInPictureState) {
+
+        if pipState.currentStatus == .pipModeRequested {
+            updateCellViewModel(for: [])
+            return
+        }
+
         guard lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp
                 || lastDominantSpeakersUpdatedTimestamp != remoteParticipantsState.dominantSpeakersModifiedTimestamp
         else {
