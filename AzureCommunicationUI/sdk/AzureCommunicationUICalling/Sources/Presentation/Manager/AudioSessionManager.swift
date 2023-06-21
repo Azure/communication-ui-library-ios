@@ -22,7 +22,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
          logger: Logger) {
         self.store = store
         self.logger = logger
-        let currentAudioDevice = self.getCurrentAudioDevice()
+        let currentAudioDevice = getCurrentAudioDevice()
         self.setupAudioSession()
         store.dispatch(action: .localUserAction(.audioDeviceChangeRequested(device: currentAudioDevice)))
         store.$state
