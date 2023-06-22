@@ -8,7 +8,7 @@ import AVFoundation
 import Combine
 
 protocol AudioSessionManagerProtocol {
-
+    func activateAudioSessionCategory() -> Bool
 }
 
 class AudioSessionManager: AudioSessionManagerProtocol {
@@ -59,7 +59,9 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     private func setupAudioSession() {
-        activateAudioSessionCategory()
+        guard activateAudioSessionCategory() else {
+            return
+        }
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleRouteChange),
                                                name: AVAudioSession.routeChangeNotification,
@@ -100,7 +102,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         store.dispatch(action: .localUserAction(.audioDeviceChangeSucceeded(device: currentDevice)))
     }
 
-    private func activateAudioSessionCategory() {
+    func activateAudioSessionCategory() -> Bool {
         let audioSession = AVAudioSession.sharedInstance()
         do {
             let options: AVAudioSession.CategoryOptions = [.allowBluetooth,
@@ -113,8 +115,10 @@ class AudioSessionManager: AudioSessionManagerProtocol {
             // Reproduced on phone 11/13/14. iOS 14, 15, 16
             try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: options)
             try audioSession.setActive(true)
+            return true
         } catch let error {
             logger.error("Failed to set audio session category:\(error.localizedDescription)")
+            return false
         }
     }
 

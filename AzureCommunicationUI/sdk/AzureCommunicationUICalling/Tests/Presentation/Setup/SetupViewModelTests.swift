@@ -37,7 +37,7 @@ class SetupViewModelTests: XCTestCase {
         storeFactory.store.$state
             .dropFirst(2)
             .sink { [weak self] _ in
-                XCTAssertEqual(self?.storeFactory.actions.count, 1)
+                XCTAssertEqual(self?.storeFactory.actions.count, 2)
                 XCTAssertTrue(self?.storeFactory.actions.last == Action.permissionAction(.audioPermissionRequested))
 
                 expectation.fulfill()
@@ -56,7 +56,7 @@ class SetupViewModelTests: XCTestCase {
         storeFactory.store.$state
             .dropFirst()
             .sink { [weak self] _ in
-                XCTAssertEqual(self?.storeFactory.actions.count, 1)
+                XCTAssertEqual(self?.storeFactory.actions.count, 2)
                 XCTAssertTrue(self?.storeFactory.actions.last == Action.callingAction(.setupCall))
 
                 expectation.fulfill()
@@ -73,7 +73,7 @@ class SetupViewModelTests: XCTestCase {
         storeFactory.store.$state
             .dropFirst()
             .sink { [weak self] _ in
-                XCTAssertEqual(self?.storeFactory.actions.count, 1)
+                XCTAssertEqual(self?.storeFactory.actions.count, 2)
                 XCTAssertTrue(self?.storeFactory.actions.last == Action.callingAction(.callStartRequested))
                 expectation.fulfill()
             }.store(in: cancellable)
@@ -223,6 +223,7 @@ extension SetupViewModelTests {
         return SetupViewModel(compositeViewModelFactory: factoryMocking,
                               logger: logger,
                               store: storeFactory.store,
+                              audioSessionManager: AudioSessionManager(store: storeFactory.store, logger: logger),
                               localizationProvider: LocalizationProviderMocking())
     }
 }

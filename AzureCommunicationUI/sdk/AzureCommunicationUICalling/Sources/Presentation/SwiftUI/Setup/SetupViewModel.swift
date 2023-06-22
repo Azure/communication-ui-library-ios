@@ -19,6 +19,8 @@ class SetupViewModel: ObservableObject {
     var subTitle: String?
 
     var networkManager = NetworkManager()
+    var audioSessionManager: AudioSessionManagerProtocol
+
     var errorInfoViewModel: ErrorInfoViewModel
     var dismissButtonViewModel: IconButtonViewModel!
     var joinCallButtonViewModel: PrimaryButtonViewModel!
@@ -31,10 +33,12 @@ class SetupViewModel: ObservableObject {
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          store: Store<AppState, Action>,
+         audioSessionManager: AudioSessionManagerProtocol,
          localizationProvider: LocalizationProviderProtocol,
          setupScreenViewData: SetupScreenViewData? = nil) {
         self.store = store
         self.networkManager.startMonitor()
+        self.audioSessionManager = audioSessionManager
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
@@ -120,6 +124,10 @@ class SetupViewModel: ObservableObject {
             handleOffline()
             return
         }
+        guard audioSessionManager.activateAudioSessionCategory() else {
+            handleMicUnavailableEvent()
+            return
+        }
         isJoinRequested = true
         store.dispatch(action: .callingAction(.callStartRequested))
     }
@@ -159,6 +167,15 @@ class SetupViewModel: ObservableObject {
 
     private func handleOffline() {
         store.dispatch(action: .errorAction(.statusErrorAndCallReset(internalError: .connectionFailed,
+                                                                     error: nil)))
+        // only show banner again when user taps on button explicitly
+        // banner would not reappear when other events^1 send identical error state again
+        // 1: camera on/off, audio on/off, switch to background/foreground, etc.
+        errorInfoViewModel.show()
+    }
+
+    private func handleMicUnavailableEvent() {
+        store.dispatch(action: .errorAction(.statusErrorAndCallReset(internalError: .micNotAvailable,
                                                                      error: nil)))
         // only show banner again when user taps on button explicitly
         // banner would not reappear when other events^1 send identical error state again
