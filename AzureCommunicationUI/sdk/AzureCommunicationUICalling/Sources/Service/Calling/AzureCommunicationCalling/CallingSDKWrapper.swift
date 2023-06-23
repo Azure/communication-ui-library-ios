@@ -57,6 +57,12 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         logger.debug( "Joining call")
         let joinCallOptions = JoinCallOptions()
 
+        // to fix iOS 15 issue
+        // by default on iOS 15 calling SDK incoming type is raw video
+        // because of this on iOS 15 remote video start event is not received
+        let incomingVideoOptions = IncomingVideoOptions()
+        incomingVideoOptions.streamType = .remoteIncoming
+
         if isCameraPreferred,
            let localVideoStream = localVideoStream {
             let localVideoStreamArray = [localVideoStream]
@@ -66,6 +72,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
         joinCallOptions.audioOptions = AudioOptions()
         joinCallOptions.audioOptions?.muted = !isAudioPreferred
+        joinCallOptions.incomingVideoOptions = incomingVideoOptions
 
         var joinLocator: JoinMeetingLocator
         if callConfiguration.compositeCallType == .groupCall,
