@@ -34,14 +34,14 @@ enum CallCompositeInternalError: Error, Equatable {
             return CallCompositeErrorCode.cameraFailure
         case .callJoinFailedByMicPermission:
             return CallCompositeErrorCode.microphonePermissionNotGranted
-        case .networkConnectionNotAvailable:
+        case .networkConnectionNotAvailable,
+                .connectionFailed:
             return CallCompositeErrorCode.networkConnectionNotAvailable
         case .callHoldFailed,
                 .callResumeFailed,
                 .callEvicted,
                 .callDenied,
-                .cameraSwitchFailed,
-                .connectionFailed:
+                .cameraSwitchFailed:
             return nil
         }
     }
