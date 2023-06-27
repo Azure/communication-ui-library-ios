@@ -37,6 +37,7 @@ class ParticipantGridViewModel: ObservableObject {
                 pipState: PictureInPictureState,
                 lifeCycleState: LifeCycleState) {
 
+        print("testpip: updateParticipantViewModel")
         if pipState.currentStatus == .pipModeRequested {
             // When enterin system PiP, need to remove video from rendering,
             // so it will be rendered properly after view is placed in PiP
@@ -86,6 +87,8 @@ class ParticipantGridViewModel: ObservableObject {
         }
 
         let maximumParticipantsDisplayed = pipState.currentStatus != .none ? 1 : maximumParticipantsDisplayed
+
+        print("testpip: maximumParticipantsDisplayed ", maximumParticipantsDisplayed)
 
         if infoModels.count <= maximumParticipantsDisplayed {
             return infoModels

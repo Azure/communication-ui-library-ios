@@ -130,32 +130,34 @@ class PipManager: NSObject, PipManagerProtocol {
 extension PipManager: AVPictureInPictureControllerDelegate {
     public func pictureInPictureControllerDidStopPictureInPicture(
         _ pictureInPictureController: AVPictureInPictureController) {
-            logger.debug("pictureInPictureControllerDidStopPictureInPicture")
+            logger.debug("testpip: pip Did Stop")
             self.onPipStoped()
             store.dispatch(action: .pipAction(.pipModeExited))
     }
 
     public func pictureInPictureControllerWillStartPictureInPicture(
         _ pictureInPictureController: AVPictureInPictureController) {
-            logger.debug("pictureInPictureControllerWillStartPictureInPicture")
+            logger.debug("testpip: pip Will Start")
     }
 
     public func pictureInPictureControllerDidStartPictureInPicture(
         _ pictureInPictureController: AVPictureInPictureController) {
-            logger.debug("pictureInPictureControllerDidStartPictureInPicture")
+            logger.debug("testpip: pip Did Start")
             self.onPipStarted()
-            store.dispatch(action: .pipAction(.pipModeEntered))
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.store.dispatch(action: .pipAction(.pipModeEntered))
+            }
     }
 
     public func pictureInPictureController(_ pictureInPictureController: AVPictureInPictureController,
                                            restoreUserInterfaceForPictureInPictureStopWithCompletionHandler
                                            completionHandler: @escaping (Bool) -> Void) {
 
+        logger.debug("testpip: pip restoreUserInterfac")
 //        guard let onAVKitPipTapped = onAVKitPipTapped else {
             completionHandler(true)
 //            return
 //        }
-
 //        onAVKitPipTapped(completionHandler)
     }
 
