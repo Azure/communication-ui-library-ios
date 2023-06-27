@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		05286F432A300ACA00FA09B5 /* AzureCommunicationCalling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 05286F422A300ACA00FA09B5 /* AzureCommunicationCalling.framework */; };
-		05286F442A300ACA00FA09B5 /* AzureCommunicationCalling.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 05286F422A300ACA00FA09B5 /* AzureCommunicationCalling.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		05317E2629A2E1FB00149F57 /* CallHistoryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2529A2E1FB00149F57 /* CallHistoryServiceTests.swift */; };
 		05317E2829A2E2B900149F57 /* CallHistoryRepositoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2729A2E2B900149F57 /* CallHistoryRepositoryMocking.swift */; };
 		05317E2A29A7DBC100149F57 /* CallHistoryRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */; };
@@ -287,20 +285,6 @@
 			remoteInfo = CallComposite;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		05286F452A300ACA00FA09B5 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				05286F442A300ACA00FA09B5 /* AzureCommunicationCalling.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		05286F422A300ACA00FA09B5 /* AzureCommunicationCalling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AzureCommunicationCalling.framework; path = "../../../../../orient_workspace/SpoolCallingStack/spool/staging.d/release/GA/sdk/arm64-v8a/AzureCommunicationCalling.framework"; sourceTree = "<group>"; };
@@ -634,7 +618,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				05286F432A300ACA00FA09B5 /* AzureCommunicationCalling.framework in Frameworks */,
 				FB22A9D340197CA3DC74EEBB /* Pods_AzureCommunicationUICalling.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1458,7 +1441,6 @@
 				A8659FC12602A22000C807DE /* Sources */,
 				A8659FC22602A22000C807DE /* Frameworks */,
 				A8659FC32602A22000C807DE /* Resources */,
-				05286F452A300ACA00FA09B5 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
