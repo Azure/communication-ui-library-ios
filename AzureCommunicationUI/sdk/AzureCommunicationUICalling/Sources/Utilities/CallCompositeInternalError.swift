@@ -7,7 +7,7 @@ import Foundation
 
 enum CallCompositeInternalError: Error, Equatable {
     case deviceManagerFailed(Error?)
-    case connectionFailed
+    case callJoinConnectionFailed
     case callTokenFailed
     case callJoinFailed
     case callEndFailed
@@ -27,7 +27,7 @@ enum CallCompositeInternalError: Error, Equatable {
             return CallCompositeErrorCode.cameraFailure
         case .callTokenFailed:
             return CallCompositeErrorCode.tokenExpired
-        case .callJoinFailed:
+        case .callJoinFailed, .callJoinConnectionFailed:
             return CallCompositeErrorCode.callJoin
         case .callEndFailed:
             return CallCompositeErrorCode.callEnd
@@ -41,9 +41,9 @@ enum CallCompositeInternalError: Error, Equatable {
                 .callResumeFailed,
                 .callEvicted,
                 .callDenied,
-                .cameraSwitchFailed,
                 .connectionFailed,
                 .micNotAvailable:
+                .cameraSwitchFailed:
             return nil
         }
     }
@@ -65,6 +65,7 @@ enum CallCompositeInternalError: Error, Equatable {
                 .cameraOnFailed,
                 .connectionFailed,
                 .micNotAvailable:
+                .callJoinConnectionFailed:
             return false
         }
     }
@@ -74,7 +75,7 @@ extension CallCompositeInternalError {
     static func == (lhs: CallCompositeInternalError, rhs: CallCompositeInternalError) -> Bool {
         switch(lhs, rhs) {
         case (.deviceManagerFailed, .deviceManagerFailed),
-            (.connectionFailed, .connectionFailed),
+            (.callJoinConnectionFailed, .callJoinConnectionFailed),
             (.callTokenFailed, .callTokenFailed),
             (.callJoinFailed, .callJoinFailed),
             (.callEndFailed, .callEndFailed),
