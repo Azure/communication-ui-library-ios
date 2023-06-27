@@ -54,7 +54,7 @@ class PipManager: NSObject, PipManagerProtocol {
 
     @objc
     public func startPictureInPicture() {
-        logger.debug("startPictureInPicture")
+        logger.debug("testpip: startPictureInPicture")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.avKitPipController?.startPictureInPicture()
         }

@@ -17,6 +17,8 @@ class ParticipantGridViewModel: ObservableObject {
 
     private var lastUpdateTimeStamp = Date()
     private var lastDominantSpeakersUpdatedTimestamp = Date()
+    private var pipStatus: PictureInPictureStatus = .none
+    private var appStatus: AppStatus = .foreground
     private(set) var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
 
     @Published var gridsCount: Int = 0
@@ -37,7 +39,6 @@ class ParticipantGridViewModel: ObservableObject {
                 pipState: PictureInPictureState,
                 lifeCycleState: LifeCycleState) {
 
-        print("testpip: updateParticipantViewModel")
         if pipState.currentStatus == .pipModeRequested {
             // When enterin system PiP, need to remove video from rendering,
             // so it will be rendered properly after view is placed in PiP
@@ -47,11 +48,15 @@ class ParticipantGridViewModel: ObservableObject {
 
         guard lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp
                 || lastDominantSpeakersUpdatedTimestamp != remoteParticipantsState.dominantSpeakersModifiedTimestamp
+                || pipStatus != pipState.currentStatus
+                || appStatus != lifeCycleState.currentStatus
         else {
             return
         }
         lastUpdateTimeStamp = remoteParticipantsState.lastUpdateTimeStamp
         lastDominantSpeakersUpdatedTimestamp = remoteParticipantsState.dominantSpeakersModifiedTimestamp
+        pipStatus = pipState.currentStatus
+        appStatus = lifeCycleState.currentStatus
 
         let remoteParticipants = remoteParticipantsState.participantInfoList
         let dominantSpeakers = remoteParticipantsState.dominantSpeakers

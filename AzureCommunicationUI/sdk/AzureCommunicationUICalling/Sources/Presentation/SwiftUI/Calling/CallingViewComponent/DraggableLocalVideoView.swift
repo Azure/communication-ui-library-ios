@@ -127,7 +127,7 @@ struct DraggableLocalVideoView: View {
         let isiPad = UIDevice.current.userInterfaceIdiom == .pad
 
         func pipSize() -> CGSize {
-            return CGSize(width: 40, height: 40)
+            return CGSize(width: 36, height: 52)
         }
 
         func defaultPipSize() -> CGSize {
