@@ -7,7 +7,7 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class ControlBarViewModelMocking: ControlBarViewModel {
-    private let updateState: ((LocalUserState, PermissionState) -> Void)?
+    private let updateState: ((LocalUserState, PermissionState, PictureInPictureState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -15,7 +15,7 @@ class ControlBarViewModelMocking: ControlBarViewModel {
          dispatchAction: @escaping ActionDispatch,
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState,
-         updateState: ((LocalUserState, PermissionState) -> Void)? = nil) {
+         updateState: ((LocalUserState, PermissionState, PictureInPictureState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
@@ -28,7 +28,8 @@ class ControlBarViewModelMocking: ControlBarViewModel {
     override func update(localUserState: LocalUserState,
                          permissionState: PermissionState,
                          callingState: CallingState,
-                         defaultUserState: DefaultUserState) {
-        updateState?(localUserState, permissionState)
+                         defaultUserState: DefaultUserState,
+                         pipState: PictureInPictureState) {
+        updateState?(localUserState, permissionState, pipState)
     }
 }

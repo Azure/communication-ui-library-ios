@@ -131,7 +131,7 @@ class SetupViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted),
                                 localUserState: LocalUserState(displayName: "DisplayName"))
         let expectation = XCTestExpectation(description: "PreviewAreaViewModel is updated")
-        let updatePreviewAreaViewModel: ((LocalUserState, PermissionState) -> Void) = { userState, permissionsState in
+        let updatePreviewAreaViewModel: ((LocalUserState, PermissionState, PictureInPictureState) -> Void) = { userState, permissionsState, _ in
             XCTAssertEqual(userState.displayName, appState.localUserState.displayName)
             XCTAssertEqual(permissionsState.audioPermission, appState.permissionState.audioPermission)
             expectation.fulfill()

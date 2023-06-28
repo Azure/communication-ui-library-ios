@@ -110,10 +110,10 @@ class CallingViewModel: ObservableObject {
             appState = state.lifeCycleState.currentStatus
         }
 
-//        guard state.lifeCycleState.currentStatus == .foreground
-//                && state.pipState.currentStatus == .none else {
-//            return
-//        }
+        guard state.lifeCycleState.currentStatus == .foreground
+                || state.pipState.currentStatus != .none else {
+            return
+        }
 
         if state.callingState.operationStatus == .skipSetupRequested
             && state.permissionState.audioPermission == .granted
