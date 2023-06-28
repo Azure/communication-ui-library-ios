@@ -7,12 +7,14 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class ParticipantGridViewModelMocking: ParticipantGridViewModel {
-    private let updateState: ((CallingState, RemoteParticipantsState) -> Void)?
+    private let updateState: ((CallingState, RemoteParticipantsState,
+                               PictureInPictureState, LifeCycleState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
-         updateState: ((CallingState, RemoteParticipantsState) -> Void)? = nil) {
+         updateState: ((CallingState, RemoteParticipantsState,
+                        PictureInPictureState, LifeCycleState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    localizationProvider: localizationProvider,
@@ -21,7 +23,9 @@ class ParticipantGridViewModelMocking: ParticipantGridViewModel {
     }
 
     override func update(callingState: CallingState,
-                         remoteParticipantsState: RemoteParticipantsState) {
-        updateState?(callingState, remoteParticipantsState)
+                         remoteParticipantsState: RemoteParticipantsState,
+                         pipState: PictureInPictureState,
+                         lifeCycleState: LifeCycleState) {
+        updateState?(callingState, remoteParticipantsState, pipState, lifeCycleState)
     }
 }

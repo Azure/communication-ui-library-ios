@@ -110,10 +110,10 @@ class CallingViewModel: ObservableObject {
             appState = state.lifeCycleState.currentStatus
         }
 
-//        guard state.lifeCycleState.currentStatus == .foreground
-//                && state.pipState.currentStatus == .none else {
-//            return
-//        }
+        guard state.lifeCycleState.currentStatus == .foreground
+                || state.pipState.currentStatus != .none else {
+            return
+        }
 
         if state.callingState.operationStatus == .skipSetupRequested
             && state.permissionState.audioPermission == .granted
@@ -133,7 +133,7 @@ class CallingViewModel: ObservableObject {
         localVideoViewModel.update(localUserState: state.localUserState, pipState: state.pipState)
         participantGridsViewModel.update(callingState: state.callingState,
                                          remoteParticipantsState: state.remoteParticipantsState,
-                                         pipState: state.pipState)
+                                         pipState: state.pipState, lifeCycleState: state.lifeCycleState)
         bannerViewModel.update(callingState: state.callingState)
         lobbyOverlayViewModel.update(callingStatus: state.callingState.status)
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,

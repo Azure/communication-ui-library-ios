@@ -209,14 +209,15 @@ public class CallComposite {
         )
         let debugInfoManager = createDebugInfoManager()
         self.debugInfoManager = debugInfoManager
-        self.pipManager = createPipManager(store)
+        let videoViewManager = VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger)
+        self.pipManager = createPipManager(store, videoViewManager)
 
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
 
         return CompositeViewFactory(
             logger: logger,
             avatarManager: avatarViewManager,
-            videoViewManager: VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger),
+            videoViewManager: videoViewManager,
             compositeViewModelFactory: CompositeViewModelFactory(
                 logger: logger,
                 store: store,
@@ -285,40 +286,6 @@ public class CallComposite {
 }
 
 extension CallComposite {
-    func createPipManager(_ store: Store<AppState, Action>) -> PipManager {
-        return PipManager(store: store, logger: logger, onRequirePipContentView: {
-//            self.logger.debug("onRequirePipContentView")
-            guard let store = self.store, let viewFactory = self.viewFactory else {
-                return nil
-            }
-
-            let viewController = self.makeToolkitHostingController(
-                router: NavigationRouter(store: store, logger: self.logger),
-                viewFactory: viewFactory)
-            self.pipViewController = viewController
-            return viewController.view
-        },
-                                     onRequirePipPlaceholderView: {
-//            self.logger.debug("onRequirePipPlaceholderView")
-            return self.viewController?.view
-        },
-                                     onPipStarted: {
-//            self.logger.debug("onPipStarted")
-            self.viewController?.dismissSelf()
-            self.viewController = nil
-        },
-                                     onPipStoped: {
-//            self.logger.debug("onPipStoped")
-            self.pipViewController?.dismissSelf()
-            self.show()
-        },
-                                     onPipStartFailed: {
-//            self.logger.debug("onPipStartFailed")
-            self.viewController?.dismissSelf()
-            self.viewController = nil
-        })
-    }
-
     private func makeToolkitHostingController(router: NavigationRouter,
                                               viewFactory: CompositeViewFactoryProtocol)
     -> ContainerUIHostingController {
@@ -345,5 +312,45 @@ extension CallComposite {
         }
 
         return hostingController
+    }
+
+    private func createPipManager(_ store: Store<AppState, Action>,
+                                  _ videoViewManager: VideoViewManager) -> PipManager? {
+
+        return PipManager(store: store, logger: logger,
+                          onRequirePipContentView: {
+    //            self.logger.debug("onRequirePipContentView")
+
+            guard let store = self.store, let viewFactory = self.viewFactory else {
+                return nil
+            }
+
+//            videoViewManager.disposeViews()
+
+            let viewController = self.makeToolkitHostingController(
+            router: NavigationRouter(store: store, logger: self.logger),
+            viewFactory: viewFactory)
+            self.pipViewController = viewController
+            return viewController.view
+        },
+                                     onRequirePipPlaceholderView: {
+//            self.logger.debug("onRequirePipPlaceholderView")
+            return self.viewController?.view
+        },
+                                     onPipStarted: {
+//            self.logger.debug("onPipStarted")
+            self.viewController?.dismissSelf()
+            self.viewController = nil
+        },
+                                     onPipStoped: {
+//            self.logger.debug("onPipStoped")
+            self.pipViewController?.dismissSelf()
+            self.show()
+        },
+                                     onPipStartFailed: {
+//            self.logger.debug("onPipStartFailed")
+            self.viewController?.dismissSelf()
+            self.viewController = nil
+        })
     }
 }

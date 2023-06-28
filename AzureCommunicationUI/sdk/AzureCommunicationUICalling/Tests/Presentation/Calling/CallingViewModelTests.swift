@@ -117,7 +117,7 @@ class CallingViewModelTests: XCTestCase {
         let expectation = XCTestExpectation(description: "ControlBarViewModel is updated")
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted),
                                 localUserState: LocalUserState(displayName: "DisplayName"))
-        let updateControlBarViewModel: (LocalUserState, PermissionState) -> Void = { userState, permissionState in
+        let updateControlBarViewModel: (LocalUserState, PermissionState, PictureInPictureState) -> Void = { userState, permissionState, _ in
             XCTAssertEqual(appState.localUserState.displayName, userState.displayName)
             XCTAssertEqual(appState.permissionState.audioPermission, permissionState.audioPermission)
             expectation.fulfill()
@@ -143,7 +143,7 @@ class CallingViewModelTests: XCTestCase {
         let appState = AppState(callingState: CallingState(status: .connected),
                                 localUserState: LocalUserState(displayName: "DisplayName"),
                                 remoteParticipantsState: RemoteParticipantsState(lastUpdateTimeStamp: date))
-        let updateInfoHeaderViewModel: (LocalUserState, RemoteParticipantsState, CallingState) -> Void = { userState, remoteParticipantsState, callingState in
+        let updateInfoHeaderViewModel: (LocalUserState, RemoteParticipantsState, CallingState, PictureInPictureState) -> Void = { userState, remoteParticipantsState, callingState, _ in
             XCTAssertEqual(appState.localUserState.displayName, userState.displayName)
             XCTAssertEqual(appState.remoteParticipantsState.lastUpdateTimeStamp, remoteParticipantsState.lastUpdateTimeStamp)
             XCTAssertEqual(appState.callingState.status, callingState.status)
@@ -153,6 +153,7 @@ class CallingViewModelTests: XCTestCase {
         factoryMocking.infoHeaderViewModel = InfoHeaderViewModelMocking(
                                                                         compositeViewModelFactory: factoryMocking,
                                                                         logger: logger,
+                                                                        dispatchAction: storeFactory.store.dispatch,
                                                                         localUserState: storeFactory.store.state.localUserState,
                                                                         accessibilityProvider: accessibilityProvider,
                                                                         updateState: updateInfoHeaderViewModel)
@@ -165,7 +166,7 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_receive_when_statusUpdated_then_localVideoViewModelUpdated() {
         let expectation = XCTestExpectation(description: "LocalVideoViewModel is updated")
         let appState = AppState(localUserState: LocalUserState(displayName: "DisplayName"))
-        let updateLocalVideoViewModel: (LocalUserState) -> Void = { userState in
+        let updateLocalVideoViewModel: (LocalUserState, PictureInPictureState) -> Void = { userState, _ in
             XCTAssertEqual(appState.localUserState.displayName, userState.displayName)
             expectation.fulfill()
         }
@@ -184,7 +185,7 @@ class CallingViewModelTests: XCTestCase {
     func test_callingViewModel_receive_when_statusUpdated_then_participantGridViewModelUpdated() {
         let expectation = XCTestExpectation(description: "ParticipantGridViewModel is updated")
         let appState = AppState()
-        let updateParticipantGridViewModel: (CallingState, RemoteParticipantsState) -> Void = { _, remoteParticipantsState in
+        let updateParticipantGridViewModel: (CallingState, RemoteParticipantsState, PictureInPictureState, LifeCycleState) -> Void = { _, remoteParticipantsState, _, _ in
             XCTAssertEqual(appState.remoteParticipantsState.lastUpdateTimeStamp, remoteParticipantsState.lastUpdateTimeStamp)
             expectation.fulfill()
         }

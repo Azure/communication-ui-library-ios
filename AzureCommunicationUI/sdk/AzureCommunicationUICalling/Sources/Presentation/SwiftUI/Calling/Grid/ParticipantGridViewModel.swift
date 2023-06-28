@@ -17,6 +17,8 @@ class ParticipantGridViewModel: ObservableObject {
 
     private var lastUpdateTimeStamp = Date()
     private var lastDominantSpeakersUpdatedTimestamp = Date()
+    private var pipStatus: PictureInPictureStatus = .none
+    private var appStatus: AppStatus = .foreground
     private(set) var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
 
     @Published var gridsCount: Int = 0
@@ -34,30 +36,41 @@ class ParticipantGridViewModel: ObservableObject {
 
     func update(callingState: CallingState,
                 remoteParticipantsState: RemoteParticipantsState,
-                pipState: PictureInPictureState) {
+                pipState: PictureInPictureState,
+                lifeCycleState: LifeCycleState) {
 
         if pipState.currentStatus == .pipModeRequested {
-            updateCellViewModel(for: [])
+            // When enterin system PiP, need to remove video from rendering,
+            // so it will be rendered properly after view is placed in PiP
+            updateCellViewModel(for: [], lifeCycleState: lifeCycleState)
             return
         }
 
         guard lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp
                 || lastDominantSpeakersUpdatedTimestamp != remoteParticipantsState.dominantSpeakersModifiedTimestamp
+                || pipStatus != pipState.currentStatus
+                || appStatus != lifeCycleState.currentStatus
         else {
             return
         }
         lastUpdateTimeStamp = remoteParticipantsState.lastUpdateTimeStamp
         lastDominantSpeakersUpdatedTimestamp = remoteParticipantsState.dominantSpeakersModifiedTimestamp
+        pipStatus = pipState.currentStatus
+        appStatus = lifeCycleState.currentStatus
 
         let remoteParticipants = remoteParticipantsState.participantInfoList
         let dominantSpeakers = remoteParticipantsState.dominantSpeakers
-        let newDisplayedInfoModelArr = getDisplayedInfoViewModels(remoteParticipants, dominantSpeakers)
+        var newDisplayedInfoModelArr = getDisplayedInfoViewModels(remoteParticipants, dominantSpeakers, pipState)
+        if pipState.currentStatus != .none, let firstParticipant = newDisplayedInfoModelArr.first {
+            newDisplayedInfoModelArr.removeAll()
+            newDisplayedInfoModelArr.append(firstParticipant)
+        }
         let removedModels = getRemovedInfoModels(for: newDisplayedInfoModelArr)
         let addedModels = getAddedInfoModels(for: newDisplayedInfoModelArr)
         let orderedInfoModelArr = sortDisplayedInfoModels(newDisplayedInfoModelArr,
                                                           removedModels: removedModels,
                                                           addedModels: addedModels)
-        updateCellViewModel(for: orderedInfoModelArr)
+        updateCellViewModel(for: orderedInfoModelArr, lifeCycleState: lifeCycleState)
 
         displayedParticipantInfoModelArr = orderedInfoModelArr
         if callingState.status == .connected {
@@ -71,10 +84,15 @@ class ParticipantGridViewModel: ObservableObject {
     }
 
     private func getDisplayedInfoViewModels(_ infoModels: [ParticipantInfoModel],
-                                            _ dominantSpeakers: [String]) -> [ParticipantInfoModel] {
+                                            _ dominantSpeakers: [String],
+                                            _ pipState: PictureInPictureState) -> [ParticipantInfoModel] {
         if let presentingParticipant = infoModels.first(where: { $0.screenShareVideoStreamModel != nil }) {
             return [presentingParticipant]
         }
+
+        let maximumParticipantsDisplayed = pipState.currentStatus != .none ? 1 : maximumParticipantsDisplayed
+
+        print("testpip: maximumParticipantsDisplayed ", maximumParticipantsDisplayed)
 
         if infoModels.count <= maximumParticipantsDisplayed {
             return infoModels
@@ -157,35 +175,38 @@ class ParticipantGridViewModel: ObservableObject {
         return localCacheInfoModelArr
     }
 
-    private func updateCellViewModel(for displayedRemoteParticipants: [ParticipantInfoModel]) {
+    private func updateCellViewModel(for displayedRemoteParticipants: [ParticipantInfoModel],
+                                     lifeCycleState: LifeCycleState) {
         if participantsCellViewModelArr.count == displayedRemoteParticipants.count {
-            updateOrderedCellViewModels(for: displayedRemoteParticipants)
+            updateOrderedCellViewModels(for: displayedRemoteParticipants, lifeCycleState: lifeCycleState)
         } else {
-            updateAndReorderCellViewModels(for: displayedRemoteParticipants)
+            updateAndReorderCellViewModels(for: displayedRemoteParticipants, lifeCycleState: lifeCycleState)
         }
     }
 
-    private func updateOrderedCellViewModels(for displayedRemoteParticipants: [ParticipantInfoModel]) {
+    private func updateOrderedCellViewModels(for displayedRemoteParticipants: [ParticipantInfoModel],
+                                             lifeCycleState: LifeCycleState) {
         guard participantsCellViewModelArr.count == displayedRemoteParticipants.count else {
             return
         }
         for (index, infoModel) in displayedRemoteParticipants.enumerated() {
             let cellViewModel = participantsCellViewModelArr[index]
-            cellViewModel.update(participantModel: infoModel)
+            cellViewModel.update(participantModel: infoModel, lifeCycleState: lifeCycleState)
         }
     }
 
-    private func updateAndReorderCellViewModels(for displayedRemoteParticipants: [ParticipantInfoModel]) {
+    private func updateAndReorderCellViewModels(for displayedRemoteParticipants: [ParticipantInfoModel],
+                                                lifeCycleState: LifeCycleState) {
         var newCellViewModelArr = [ParticipantGridCellViewModel]()
         for infoModel in displayedRemoteParticipants {
             if let viewModel = participantsCellViewModelArr.first(where: {
                 $0.participantIdentifier == infoModel.userIdentifier
             }) {
-                viewModel.update(participantModel: infoModel)
+                viewModel.update(participantModel: infoModel, lifeCycleState: lifeCycleState)
                 newCellViewModelArr.append(viewModel)
             } else {
                 let cellViewModel = compositeViewModelFactory
-                    .makeParticipantCellViewModel(participantModel: infoModel)
+                    .makeParticipantCellViewModel(participantModel: infoModel, lifeCycleState: lifeCycleState)
                 newCellViewModelArr.append(cellViewModel)
             }
         }
