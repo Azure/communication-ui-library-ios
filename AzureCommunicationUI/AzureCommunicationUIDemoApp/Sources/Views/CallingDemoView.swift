@@ -219,7 +219,7 @@ extension CallingDemoView {
     }
 
     func showCallComposite() {
-        callingViewModel.callComposite?.show()
+        callingViewModel.callComposite?.displayCallCompositeIfWasHidden()
     }
 
     func startCallComposite() async {
