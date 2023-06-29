@@ -128,9 +128,10 @@ public class CallComposite {
                           completionHandler: completionHandler)
     }
 
-    public func show() {
+    /// Display Call Composite if it was hidden by user going Back in navigation while on the call.
+    public func displayCallCompositeIfWasHidden() {
         guard let store = self.store, let viewFactory = self.viewFactory else {
-            logger.error("CallComposite was not launched yet. launch method has to be called first")
+            logger.error("CallComposite was not launched yet. launch() method has to be called first.")
             return
         }
         self.pipManager?.stopPictureInPicture()
@@ -315,7 +316,7 @@ extension CallComposite {
                                      onPipStoped: {
 //            self.logger.debug("onPipStoped")
             self.pipViewController?.dismissSelf()
-            self.show()
+            self.displayCallCompositeIfWasHidden()
         },
                                      onPipStartFailed: {
 //            self.logger.debug("onPipStartFailed")
