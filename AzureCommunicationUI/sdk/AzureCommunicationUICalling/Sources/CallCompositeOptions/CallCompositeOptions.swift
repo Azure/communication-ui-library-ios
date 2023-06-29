@@ -10,6 +10,8 @@ import UIKit
 public struct CallCompositeOptions {
     private(set) var themeOptions: ThemeOptions?
     private(set) var localizationOptions: LocalizationOptions?
+    private(set) var enableMultitasking: Bool = false
+    private(set) var enableSystemPiPWhenMultitasking: Bool = false
 
     /// Creates an instance of CallCompositeOptions with related options.
     /// - Parameter theme: ThemeOptions for changing color pattern.
@@ -17,8 +19,12 @@ public struct CallCompositeOptions {
     /// - Parameter localization: LocalizationOptions for specifying
     ///  localization customization. Default value is `nil`.
     public init(theme: ThemeOptions? = nil,
-                localization: LocalizationOptions? = nil) {
+                localization: LocalizationOptions? = nil,
+                enableMultitasking: Bool = false,
+                enableSystemPiPWhenMultitasking: Bool = false) {
         self.themeOptions = theme
         self.localizationOptions = localization
+        self.enableMultitasking = enableMultitasking
+        self.enableSystemPiPWhenMultitasking = enableSystemPiPWhenMultitasking
     }
 }
