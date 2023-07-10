@@ -146,6 +146,15 @@ public class CallComposite {
         self.pipManager?.reset()
     }
 
+    public func hide() {
+        self.viewController?.dismissSelf()
+        self.viewController = nil
+        
+        if store?.state.navigationState.status == .inCall {
+            store?.dispatch(action: .pipAction(.pipModeRequested))
+        }
+    }
+
     private func constructViewFactoryAndDependencies(
         for callConfiguration: CallConfiguration,
         localOptions: LocalOptions?,

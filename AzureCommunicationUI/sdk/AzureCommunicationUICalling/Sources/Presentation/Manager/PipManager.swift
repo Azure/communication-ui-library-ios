@@ -53,19 +53,19 @@ class PipManager: NSObject, PipManagerProtocol {
     }
 
     @objc
-    public func startPictureInPicture() {
+    func startPictureInPicture() {
         logger.debug("testpip: startPictureInPicture")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.avKitPipController?.startPictureInPicture()
         }
     }
 
-    public func stopPictureInPicture() {
+    func stopPictureInPicture() {
         avKitPipController?.stopPictureInPicture()
         store.dispatch(action: .pipAction(.pipModeExited))
     }
 
-    public func reset() {
+    func reset() {
         pipVideoController = nil
         avKitPipController = nil
         updateStartPipAutomatically(navigationState: store.state.navigationState)
