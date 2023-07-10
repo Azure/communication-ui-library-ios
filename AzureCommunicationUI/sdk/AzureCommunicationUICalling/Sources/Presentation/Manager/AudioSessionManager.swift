@@ -8,7 +8,7 @@ import AVFoundation
 import Combine
 
 protocol AudioSessionManagerProtocol {
-    func activateAudioSessionCategory() -> Bool
+    func isAudioUsedByOther() -> Bool
 }
 
 class AudioSessionManager: AudioSessionManagerProtocol {
@@ -59,9 +59,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     private func setupAudioSession() {
-        guard activateAudioSessionCategory() else {
-            return
-        }
+        activateAudioSessionCategory()
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleRouteChange),
                                                name: AVAudioSession.routeChangeNotification,
@@ -79,7 +77,6 @@ class AudioSessionManager: AudioSessionManagerProtocol {
               let interruptionType = AVAudioSession.InterruptionType(rawValue: typeValue) else {
             return
         }
-
         switch interruptionType {
         case .began:
             startAudioSessionDetector()
@@ -90,7 +87,6 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         default:
             break
         }
-
     }
 
     @objc func handleRouteChange(notification: Notification) {
@@ -102,7 +98,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         store.dispatch(action: .localUserAction(.audioDeviceChangeSucceeded(device: currentDevice)))
     }
 
-    func activateAudioSessionCategory() -> Bool {
+    private func activateAudioSessionCategory() {
         let audioSession = AVAudioSession.sharedInstance()
         do {
             let options: AVAudioSession.CategoryOptions = [.allowBluetooth,
@@ -115,11 +111,13 @@ class AudioSessionManager: AudioSessionManagerProtocol {
             // Reproduced on phone 11/13/14. iOS 14, 15, 16
             try audioSession.setCategory(.playAndRecord, mode: .voiceChat, options: options)
             try audioSession.setActive(true)
-            return true
         } catch let error {
             logger.error("Failed to set audio session category:\(error.localizedDescription)")
-            return false
         }
+    }
+
+    func isAudioUsedByOther() -> Bool {
+        return !AVAudioSession.sharedInstance().isOtherAudioPlaying
     }
 
     private func getCurrentAudioDevice() -> AudioDeviceType {
@@ -177,7 +175,6 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         guard AVAudioSession.sharedInstance().isOtherAudioPlaying == false else {
             return
         }
-
         guard audioSessionState == .interrupted else {
             audioSessionDetector?.invalidate()
             return
