@@ -149,7 +149,6 @@ public class CallComposite {
     public func hide() {
         self.viewController?.dismissSelf()
         self.viewController = nil
-        
         if store?.state.navigationState.status == .inCall {
             store?.dispatch(action: .pipAction(.pipModeRequested))
         }
