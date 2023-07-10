@@ -279,6 +279,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                       compositeViewModelFactory: self,
                                       logger: logger,
                                       accessibilityProvider: accessibilityProvider,
+                                      audioSessionManager: AudioSessionManager(store: store, logger: logger),
                                       resumeAction: {})
     }
 }

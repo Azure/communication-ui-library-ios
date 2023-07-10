@@ -214,6 +214,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                compositeViewModelFactory: self,
                                logger: logger,
                                accessibilityProvider: accessibilityProvider,
+                               audioSessionManager: audioSessionManager,
                                resumeAction: resumeAction)
     }
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,

@@ -125,7 +125,7 @@ class SetupViewModel: ObservableObject {
             handleOffline()
             return
         }
-        guard audioSessionManager.activateAudioSessionCategory() else {
+        guard audioSessionManager.isAudioUsedByOther() else {
             handleMicUnavailableEvent()
             return
         }
