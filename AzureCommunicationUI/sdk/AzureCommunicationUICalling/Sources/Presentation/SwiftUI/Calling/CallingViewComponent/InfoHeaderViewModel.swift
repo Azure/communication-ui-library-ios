@@ -55,7 +55,7 @@ class InfoHeaderViewModel: ObservableObject {
 
         dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .leftArrow,
-            buttonType: .controlButton,
+            buttonType: .infoButton,
             isDisabled: false) { [weak self] in
                 guard let self = self else {
                     return
