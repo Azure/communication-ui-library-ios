@@ -317,6 +317,7 @@ extension CallComposite {
             self?.viewController = nil
             self?.pipViewController = nil
             self?.viewFactory = nil
+            self?.exitManager?.onExited()
             self?.cleanUpManagers()
         }
 
