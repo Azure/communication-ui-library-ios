@@ -30,6 +30,9 @@ class PipManager: NSObject, PipManagerProtocol {
     /// Pip view controller embeds into System AVKit Pip Window
     private var pipVideoController: UIViewController?
 
+    private var startPipRequested: Bool = false
+    private var turnCameraOffWhilePipIsStarting: Bool = false
+
     var cancellables = Set<AnyCancellable>()
 
     init(store: Store<AppState, Action>,
@@ -55,6 +58,7 @@ class PipManager: NSObject, PipManagerProtocol {
     @objc
     func startPictureInPicture() {
         logger.debug("testpip: startPictureInPicture")
+        turnCameraOffWhilePipIsStarting = self.store.state.localUserState.cameraState.operation == .on
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.avKitPipController?.startPictureInPicture()
         }
@@ -82,12 +86,16 @@ class PipManager: NSObject, PipManagerProtocol {
     private func receive(state: AppState) {
         updateStartPipAutomatically(navigationState: state.navigationState)
 
-        if state.pipState.currentStatus == .pipModeRequested {
+        if state.pipState.currentStatus == .pipModeRequested && !startPipRequested {
+            startPipRequested = true
+
             guard #available(iOS 15.0, *), AVPictureInPictureController.isPictureInPictureSupported() else {
                 onPipStartFailed()
                 return
             }
             startPictureInPicture()
+        } else {
+            startPipRequested = state.pipState.currentStatus == .pipModeRequested
         }
     }
 
@@ -138,14 +146,20 @@ extension PipManager: AVPictureInPictureControllerDelegate {
     public func pictureInPictureControllerWillStartPictureInPicture(
         _ pictureInPictureController: AVPictureInPictureController) {
             logger.debug("testpip: pip Will Start")
+            if turnCameraOffWhilePipIsStarting {
+                self.store.dispatch(action: .localUserAction(.cameraOffTriggered))
+            }
     }
 
     public func pictureInPictureControllerDidStartPictureInPicture(
         _ pictureInPictureController: AVPictureInPictureController) {
             logger.debug("testpip: pip Did Start")
             self.onPipStarted()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                self.store.dispatch(action: .pipAction(.pipModeEntered))
+            self.store.dispatch(action: .pipAction(.pipModeEntered))
+
+            if turnCameraOffWhilePipIsStarting {
+                turnCameraOffWhilePipIsStarting = false
+                self.store.dispatch(action: .localUserAction(.cameraOnTriggered))
             }
     }
 
