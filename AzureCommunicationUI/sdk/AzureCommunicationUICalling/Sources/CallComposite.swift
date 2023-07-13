@@ -108,6 +108,7 @@ public class CallComposite {
             viewFactory: viewFactory)
         self.viewController = viewController
         present(viewController)
+        UIApplication.shared.isIdleTimerDisabled = true
     }
 
     /// Start Call Composite experience with joining a Teams meeting.
@@ -247,30 +248,6 @@ public class CallComposite {
         self.callHistoryService = nil
     }
 
-    private func makeToolkitHostingController(router: NavigationRouter,
-                                              viewFactory: CompositeViewFactoryProtocol)
-    -> ContainerUIHostingController {
-        let isRightToLeft = localizationProvider.isRightToLeft
-        let rootView = ContainerView(router: router,
-                                     logger: logger,
-                                     viewFactory: viewFactory,
-                                     isRightToLeft: isRightToLeft)
-        let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
-                                                                        callComposite: self,
-                                                                        isRightToLeft: isRightToLeft)
-        containerUIHostingController.modalPresentationStyle = .fullScreen
-
-        router.setDismissComposite { [weak containerUIHostingController, weak self] in
-            containerUIHostingController?.dismissSelf()
-            self?.viewController = nil
-            self?.pipViewController = nil
-            self?.viewFactory = nil
-            self?.cleanUpManagers()
-        }
-
-        return containerUIHostingController
-    }
-
     private func present(_ viewController: UIViewController) {
         store?.dispatch(action: .visibilityAction(.showNormalEntered))
         Task { @MainActor in
@@ -323,6 +300,31 @@ extension CallComposite {
             store?.dispatch(action: .visibilityAction(.hideEntered))
             hide()
         }
+    }
+
+    private func makeToolkitHostingController(router: NavigationRouter,
+                                              viewFactory: CompositeViewFactoryProtocol)
+    -> ContainerUIHostingController {
+        let isRightToLeft = localizationProvider.isRightToLeft
+        let rootView = ContainerView(router: router,
+                                     logger: logger,
+                                     viewFactory: viewFactory,
+                                     isRightToLeft: isRightToLeft)
+        let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
+                                                                        callComposite: self,
+                                                                        isRightToLeft: isRightToLeft)
+        containerUIHostingController.modalPresentationStyle = .fullScreen
+
+        router.setDismissComposite { [weak containerUIHostingController, weak self] in
+            containerUIHostingController?.dismissSelf()
+            self?.viewController = nil
+            self?.pipViewController = nil
+            self?.viewFactory = nil
+            self?.cleanUpManagers()
+            UIApplication.shared.isIdleTimerDisabled = false
+        }
+
+        return containerUIHostingController
     }
 
     private func createPipManager(_ store: Store<AppState, Action>) -> PipManager? {
