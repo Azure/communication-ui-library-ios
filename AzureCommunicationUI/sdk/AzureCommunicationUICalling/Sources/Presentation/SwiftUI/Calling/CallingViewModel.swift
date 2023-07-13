@@ -133,7 +133,7 @@ class CallingViewModel: ObservableObject {
         localVideoViewModel.update(localUserState: state.localUserState, pipState: state.visibilityState)
         participantGridsViewModel.update(callingState: state.callingState,
                                          remoteParticipantsState: state.remoteParticipantsState,
-                                         pipState: state.visibilityState, lifeCycleState: state.lifeCycleState)
+                                         visibilityState: state.visibilityState, lifeCycleState: state.lifeCycleState)
         bannerViewModel.update(callingState: state.callingState)
         lobbyOverlayViewModel.update(callingStatus: state.callingState.status)
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,

@@ -11,6 +11,21 @@ enum VisibilityStatus {
     case hidden
     case pipModeRequested
     case pipModeEntered
+
+    var description: String {
+        switch self {
+        case .visible:
+            return "visible"
+        case .hideRequested:
+            return "hideRequested"
+        case .hidden:
+            return "hidden"
+        case .pipModeRequested:
+            return "pipModeRequested"
+        case .pipModeEntered:
+            return "pipModeEntered"
+        }
+    }
 }
 
 struct VisibilityState {

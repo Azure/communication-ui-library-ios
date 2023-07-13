@@ -17,7 +17,7 @@ class ParticipantGridViewModel: ObservableObject {
 
     private var lastUpdateTimeStamp = Date()
     private var lastDominantSpeakersUpdatedTimestamp = Date()
-    private var pipStatus: VisibilityStatus = .visible
+    private var visibilityStatus: VisibilityStatus = .visible
     private var appStatus: AppStatus = .foreground
     private(set) var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
 
@@ -36,10 +36,10 @@ class ParticipantGridViewModel: ObservableObject {
 
     func update(callingState: CallingState,
                 remoteParticipantsState: RemoteParticipantsState,
-                pipState: VisibilityState,
+                visibilityState: VisibilityState,
                 lifeCycleState: LifeCycleState) {
 
-        if pipState.currentStatus == .pipModeRequested {
+        if visibilityState.currentStatus == .pipModeRequested {
             // When enterin system PiP, need to remove video from rendering,
             // so it will be rendered properly after view is placed in PiP
             updateCellViewModel(for: [], lifeCycleState: lifeCycleState)
@@ -48,20 +48,20 @@ class ParticipantGridViewModel: ObservableObject {
 
         guard lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp
                 || lastDominantSpeakersUpdatedTimestamp != remoteParticipantsState.dominantSpeakersModifiedTimestamp
-                || pipStatus != pipState.currentStatus
+                || visibilityStatus != visibilityState.currentStatus
                 || appStatus != lifeCycleState.currentStatus
         else {
             return
         }
         lastUpdateTimeStamp = remoteParticipantsState.lastUpdateTimeStamp
         lastDominantSpeakersUpdatedTimestamp = remoteParticipantsState.dominantSpeakersModifiedTimestamp
-        pipStatus = pipState.currentStatus
+        visibilityStatus = visibilityState.currentStatus
         appStatus = lifeCycleState.currentStatus
 
         let remoteParticipants = remoteParticipantsState.participantInfoList
         let dominantSpeakers = remoteParticipantsState.dominantSpeakers
-        var newDisplayedInfoModelArr = getDisplayedInfoViewModels(remoteParticipants, dominantSpeakers, pipState)
-        if pipState.currentStatus != .visible, let firstParticipant = newDisplayedInfoModelArr.first {
+        var newDisplayedInfoModelArr = getDisplayedInfoViewModels(remoteParticipants, dominantSpeakers, visibilityState)
+        if visibilityState.currentStatus != .visible, let firstParticipant = newDisplayedInfoModelArr.first {
             newDisplayedInfoModelArr.removeAll()
             newDisplayedInfoModelArr.append(firstParticipant)
         }
@@ -91,8 +91,6 @@ class ParticipantGridViewModel: ObservableObject {
         }
 
         let maximumParticipantsDisplayed = pipState.currentStatus != .visible ? 1 : maximumParticipantsDisplayed
-
-        print("testpip: maximumParticipantsDisplayed ", maximumParticipantsDisplayed)
 
         if infoModels.count <= maximumParticipantsDisplayed {
             return infoModels
