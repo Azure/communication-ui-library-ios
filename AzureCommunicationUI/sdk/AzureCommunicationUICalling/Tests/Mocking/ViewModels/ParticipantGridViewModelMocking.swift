@@ -8,13 +8,13 @@ import Foundation
 
 class ParticipantGridViewModelMocking: ParticipantGridViewModel {
     private let updateState: ((CallingState, RemoteParticipantsState,
-                               PictureInPictureState, LifeCycleState) -> Void)?
+                               VisibilityState, LifeCycleState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          updateState: ((CallingState, RemoteParticipantsState,
-                        PictureInPictureState, LifeCycleState) -> Void)? = nil) {
+                        VisibilityState, LifeCycleState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    localizationProvider: localizationProvider,
@@ -24,7 +24,7 @@ class ParticipantGridViewModelMocking: ParticipantGridViewModel {
 
     override func update(callingState: CallingState,
                          remoteParticipantsState: RemoteParticipantsState,
-                         pipState: PictureInPictureState,
+                         pipState: VisibilityState,
                          lifeCycleState: LifeCycleState) {
         updateState?(callingState, remoteParticipantsState, pipState, lifeCycleState)
     }

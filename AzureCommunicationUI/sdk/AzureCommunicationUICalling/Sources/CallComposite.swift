@@ -26,6 +26,8 @@ public class CallComposite {
 
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
+    private let enableMultitasking: Bool
+    private let enableSystemPiPWhenMultitasking: Bool
 
     // Internal dependencies
     private var logger: Logger = DefaultLogger(category: "Calling")
@@ -49,6 +51,7 @@ public class CallComposite {
     private var viewFactory: CompositeViewFactoryProtocol?
     private var viewController: UIViewController?
     private var pipViewController: UIViewController?
+    private var cancellables = Set<AnyCancellable>()
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -63,6 +66,8 @@ public class CallComposite {
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
         localizationProvider = LocalizationProvider(logger: logger)
+        enableMultitasking = options?.enableMultitasking ?? false
+        enableSystemPiPWhenMultitasking = options?.enableSystemPiPWhenMultitasking ?? false
     }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
@@ -92,6 +97,13 @@ public class CallComposite {
         guard let store = self.store else {
             fatalError("Construction of dependencies failed")
         }
+
+        store.$state
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                self?.receive(state)
+            }.store(in: &cancellables)
+
         let viewController = makeToolkitHostingController(router: NavigationRouter(store: store, logger: logger),
             viewFactory: viewFactory)
         self.viewController = viewController
@@ -149,8 +161,8 @@ public class CallComposite {
     public func hide() {
         self.viewController?.dismissSelf()
         self.viewController = nil
-        if store?.state.navigationState.status == .inCall {
-            store?.dispatch(action: .pipAction(.pipModeRequested))
+        if self.enableSystemPiPWhenMultitasking && store?.state.navigationState.status == .inCall {
+            store?.dispatch(action: .visibilityAction(.pipModeRequested))
         }
     }
 
@@ -195,7 +207,9 @@ public class CallComposite {
         self.debugInfoManager = debugInfoManager
         let videoViewManager = VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger)
 
-        self.pipManager = createPipManager(store, videoViewManager)
+        if enableSystemPiPWhenMultitasking {
+            self.pipManager = createPipManager(store, videoViewManager)
+        }
 
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
 
@@ -210,7 +224,9 @@ public class CallComposite {
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
-                localOptions: localOptions
+                localOptions: localOptions,
+                enableMultitasking: enableMultitasking,
+                enableSystemPiPWhenMultitasking: enableSystemPiPWhenMultitasking
             )
         )
     }
@@ -256,6 +272,7 @@ public class CallComposite {
     }
 
     private func present(_ viewController: UIViewController) {
+        store?.dispatch(action: .visibilityAction(.showNormalEntered))
         Task { @MainActor in
             guard self.isCompositePresentable(),
                   let topViewController = UIWindow.keyWindow?.topViewController else {
@@ -293,6 +310,21 @@ public class CallComposite {
 }
 
 extension CallComposite {
+    private func receiveStoreEvents(_ store: Store<AppState, Action>) {
+        store.$state
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                self?.receive(state)
+            }.store(in: &cancellables)
+    }
+
+    private func receive(_ state: AppState) {
+        if state.pipState.currentStatus == .hideRequested {
+            store?.dispatch(action: .visibilityAction(.hideEntered))
+            hide()
+        }
+    }
+
     private func createPipManager(_ store: Store<AppState, Action>,
                                   _ videoViewManager: VideoViewManager) -> PipManager? {
 

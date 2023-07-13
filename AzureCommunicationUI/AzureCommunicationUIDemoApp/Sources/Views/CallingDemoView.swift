@@ -197,7 +197,9 @@ extension CallingDemoView {
             theme: envConfigSubject.useCustomColors
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
-            localization: localizationConfig)
+            localization: localizationConfig,
+            enableMultitasking: true,
+            enableSystemPiPWhenMultitasking: true)
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         let callComposite = useMockCallingSDKHandler ?

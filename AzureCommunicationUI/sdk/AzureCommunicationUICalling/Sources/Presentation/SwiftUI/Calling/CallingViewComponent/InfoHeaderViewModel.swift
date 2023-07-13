@@ -19,6 +19,8 @@ class InfoHeaderViewModel: ObservableObject {
     private var infoHeaderDismissTimer: Timer?
     private var participantsCount: Int = 0
     private var callingStatus: CallingStatus = .none
+    let enableMultitasking: Bool
+    private let enableSystemPiPWhenMultitasking: Bool
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
@@ -31,7 +33,9 @@ class InfoHeaderViewModel: ObservableObject {
          dispatchAction: @escaping ActionDispatch,
          localUserState: LocalUserState,
          localizationProvider: LocalizationProviderProtocol,
-         accessibilityProvider: AccessibilityProviderProtocol) {
+         accessibilityProvider: AccessibilityProviderProtocol,
+         enableMultitasking: Bool,
+         enableSystemPiPWhenMultitasking: Bool) {
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
@@ -39,6 +43,8 @@ class InfoHeaderViewModel: ObservableObject {
         let title = localizationProvider.getLocalizedString(.callWith0Person)
         self.infoLabel = title
         self.accessibilityLabel = title
+        self.enableMultitasking = enableMultitasking
+        self.enableSystemPiPWhenMultitasking = enableSystemPiPWhenMultitasking
         self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
             localUserState: localUserState)
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
@@ -92,7 +98,7 @@ class InfoHeaderViewModel: ObservableObject {
     func update(localUserState: LocalUserState,
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState,
-                pipState: PictureInPictureState) {
+                pipState: VisibilityState) {
         isHoldingCall(callingState: callingState)
         let shouldDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingStatus)
         let newDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingState.status)
@@ -173,7 +179,11 @@ class InfoHeaderViewModel: ObservableObject {
     }
 
     private func dismissButtonTapped() {
-        dispatch(.pipAction(.pipModeRequested))
+        if self.enableSystemPiPWhenMultitasking {
+            dispatch(.visibilityAction(.pipModeRequested))
+        } else {
+            dispatch(.visibilityAction(.hideRequested))
+        }
     }
 }
 

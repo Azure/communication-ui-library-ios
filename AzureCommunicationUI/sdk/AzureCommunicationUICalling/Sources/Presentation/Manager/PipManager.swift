@@ -66,7 +66,7 @@ class PipManager: NSObject, PipManagerProtocol {
 
     func stopPictureInPicture() {
         avKitPipController?.stopPictureInPicture()
-        store.dispatch(action: .pipAction(.pipModeExited))
+        store.dispatch(action: .visibilityAction(.showNormalEntered))
     }
 
     func reset() {
@@ -140,7 +140,7 @@ extension PipManager: AVPictureInPictureControllerDelegate {
         _ pictureInPictureController: AVPictureInPictureController) {
             logger.debug("testpip: pip Did Stop")
             self.onPipStoped()
-            store.dispatch(action: .pipAction(.pipModeExited))
+            store.dispatch(action: .visibilityAction(.showNormalEntered))
     }
 
     public func pictureInPictureControllerWillStartPictureInPicture(
@@ -155,7 +155,7 @@ extension PipManager: AVPictureInPictureControllerDelegate {
         _ pictureInPictureController: AVPictureInPictureController) {
             logger.debug("testpip: pip Did Start")
             self.onPipStarted()
-            self.store.dispatch(action: .pipAction(.pipModeEntered))
+            self.store.dispatch(action: .visibilityAction(.pipModeEntered))
 
             if turnCameraOffWhilePipIsStarting {
                 turnCameraOffWhilePipIsStarting = false

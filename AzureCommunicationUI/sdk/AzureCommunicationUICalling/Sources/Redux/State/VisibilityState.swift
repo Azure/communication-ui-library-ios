@@ -5,17 +5,19 @@
 
 import Foundation
 
-enum PictureInPictureStatus {
-    case none
+enum VisibilityStatus {
+    case visible
+    case hideRequested
+    case hidden
     case pipModeRequested
     case pipModeEntered
 }
 
-struct PictureInPictureState {
+struct VisibilityState {
 
-    let currentStatus: PictureInPictureStatus
+    let currentStatus: VisibilityStatus
 
-    init(currentStatus: PictureInPictureStatus = .none) {
+    init(currentStatus: VisibilityStatus = .visible) {
         self.currentStatus = currentStatus
     }
 }

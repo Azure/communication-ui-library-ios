@@ -64,7 +64,7 @@ class PreviewAreaViewModel: ObservableObject {
         return displayText
     }
 
-    func update(localUserState: LocalUserState, permissionState: PermissionState, pipState: PictureInPictureState) {
+    func update(localUserState: LocalUserState, permissionState: PermissionState, pipState: VisibilityState) {
         self.cameraPermission = permissionState.cameraPermission
         self.audioPermission = permissionState.audioPermission
         updatePermissionsState()

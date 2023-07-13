@@ -13,7 +13,7 @@ enum Action: Equatable {
     case callingAction(CallingAction)
     case errorAction(ErrorAction)
     case lifecycleAction(LifecycleAction)
-    case pipAction(PipAction)
+    case visibilityAction(VisibilityAction)
     case localUserAction(LocalUserAction)
     case permissionAction(PermissionAction)
     case remoteParticipantsAction(RemoteParticipantsAction)

@@ -54,7 +54,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(callingState: callingState,
                    remoteParticipantsState: state,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         let expectedUserId = sut.participantsCellViewModelArr.first?.participantIdentifier
         let state2 = RemoteParticipantsState(participantInfoList: [infoModel1, infoModel2, infoModel3,
@@ -64,7 +64,7 @@ class ParticipantGridViewModelTests: XCTestCase {
                                              dominantSpeakersModifiedTimestamp: date2)
         sut.update(callingState: callingState,
                    remoteParticipantsState: state2,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         guard let firstUserIdentifier = sut.participantsCellViewModelArr.first?.participantIdentifier else {
             XCTFail("Failed with empty participantIdentifier")
@@ -109,7 +109,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(callingState: callingState,
                    remoteParticipantsState: state,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         let expectedUserId = uuid10
         let infoModel9 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid9, videoStreamId: nil)
@@ -121,7 +121,7 @@ class ParticipantGridViewModelTests: XCTestCase {
                                              dominantSpeakersModifiedTimestamp: date2)
         sut.update(callingState: callingState,
                    remoteParticipantsState: state2,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         guard let firstUserIdentifier = sut.participantsCellViewModelArr.first?.participantIdentifier else {
             XCTFail("Failed with empty participantIdentifier")
@@ -142,7 +142,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(callingState: CallingState(),
                    remoteParticipantsState: state,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         XCTAssertEqual(sut.displayedParticipantInfoModelArr.count, 1)
         XCTAssertEqual(sut.displayedParticipantInfoModelArr.first!.userIdentifier, uuid1)
@@ -167,13 +167,13 @@ class ParticipantGridViewModelTests: XCTestCase {
         }
         sut.update(callingState: callingState,
                    remoteParticipantsState: state,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         let updatedParticipantInfoList = [expectedUpdatedInfoModel]
         let updatedState = RemoteParticipantsState(participantInfoList: updatedParticipantInfoList)
         sut.update(callingState: callingState,
                    remoteParticipantsState: updatedState,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
@@ -192,7 +192,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(callingState: callingState,
                    remoteParticipantsState: state,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         guard let participant = sut.participantsCellViewModelArr.first else {
             XCTFail("Failed with empty participantsCellViewModelArr")
@@ -202,7 +202,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let updatedState = RemoteParticipantsState(participantInfoList: updatedParticipantInfoList)
         sut.update(callingState: callingState,
                    remoteParticipantsState: updatedState,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         guard let updatedParticipant = sut.participantsCellViewModelArr.first else {
             XCTFail("Failed with empty participantsCellViewModelArr")
@@ -225,7 +225,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         }
         sut.update(callingState: callingState,
                    remoteParticipantsState: state,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         guard let participant = sut.participantsCellViewModelArr.first else {
             XCTFail("Failed with empty participantsCellViewModelArr")
@@ -237,7 +237,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let updatedState = RemoteParticipantsState(participantInfoList: updatedParticipantInfoList)
         sut.update(callingState: callingState,
                    remoteParticipantsState: updatedState,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         guard let newParticipant = sut.participantsCellViewModelArr.first(where: { $0.participantIdentifier != participant.participantIdentifier }) else {
             XCTFail("Failed to find ParticipantGridCellViewModel with the same participantIdentifier")
@@ -254,7 +254,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(callingState: callingState,
                    remoteParticipantsState: state,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         guard let participantInfo = state.participantInfoList.first else {
             XCTFail("Failed with empty participantsCellViewModelArr")
@@ -266,7 +266,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let updatedState = RemoteParticipantsState(participantInfoList: updatedInfoList)
         sut.update(callingState: callingState,
                    remoteParticipantsState: updatedState,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         XCTAssertEqual(sut.participantsCellViewModelArr.count, updatedInfoList.count)
         XCTAssertEqual(sut.participantsCellViewModelArr.count, participantsInfoListCount)
@@ -281,14 +281,14 @@ class ParticipantGridViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(callingState: callingState,
                    remoteParticipantsState: state,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         var updatedInfoList = state.participantInfoList
         updatedInfoList.removeFirst()
         let updatedState = RemoteParticipantsState(participantInfoList: updatedInfoList)
         sut.update(callingState: callingState,
                    remoteParticipantsState: updatedState,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         XCTAssertEqual(sut.participantsCellViewModelArr.count, updatedInfoList.count)
         XCTAssertNotEqual(sut.participantsCellViewModelArr.count, participantsInfoListCount)
@@ -310,11 +310,11 @@ class ParticipantGridViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(callingState: callingState,
                    remoteParticipantsState: firstState,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         sut.update(callingState: callingState,
                    remoteParticipantsState: currentState,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
     }
@@ -334,7 +334,7 @@ class ParticipantGridViewModelTests: XCTestCase {
                           localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
                    remoteParticipantsState: state,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
@@ -354,11 +354,11 @@ class ParticipantGridViewModelTests: XCTestCase {
         let sut = makeSUT()
         sut.update(callingState: callingState,
                    remoteParticipantsState: firstState,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         sut.update(callingState: callingState,
                    remoteParticipantsState: currentState,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         XCTAssertEqual(sut.participantsCellViewModelArr.count, expectedCount)
     }
@@ -378,7 +378,7 @@ class ParticipantGridViewModelTests: XCTestCase {
                           localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
                    remoteParticipantsState: state,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
@@ -394,7 +394,7 @@ class ParticipantGridViewModelTests: XCTestCase {
                           localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
                    remoteParticipantsState: state,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         accessibilityProvider.postQueuedAnnouncementBlock = { message in
             XCTAssertEqual(message, expectedAnnouncement)
@@ -404,7 +404,7 @@ class ParticipantGridViewModelTests: XCTestCase {
                                                    lastUpdateTimeStamp: Date())
         sut.update(callingState: callingState,
                    remoteParticipantsState: updatedState,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
@@ -421,7 +421,7 @@ class ParticipantGridViewModelTests: XCTestCase {
                           localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
                    remoteParticipantsState: state,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         accessibilityProvider.postQueuedAnnouncementBlock = { message in
             XCTAssertEqual(message, expectedAnnouncement)
@@ -431,7 +431,7 @@ class ParticipantGridViewModelTests: XCTestCase {
                                                    lastUpdateTimeStamp: Date())
         sut.update(callingState: callingState,
                    remoteParticipantsState: updatedState,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
@@ -448,7 +448,7 @@ class ParticipantGridViewModelTests: XCTestCase {
                           localizationProvider: localizationProvider)
         sut.update(callingState: callingState,
                    remoteParticipantsState: state,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         accessibilityProvider.postQueuedAnnouncementBlock = { _ in
             expectation.fulfill()
@@ -456,7 +456,7 @@ class ParticipantGridViewModelTests: XCTestCase {
         let updatedState = makeRemoteParticipantState(count: 3)
         sut.update(callingState: callingState,
                    remoteParticipantsState: updatedState,
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
@@ -474,7 +474,7 @@ class ParticipantGridViewModelTests: XCTestCase {
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
                    remoteParticipantsState: RemoteParticipantsState(),
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
 
@@ -494,7 +494,7 @@ class ParticipantGridViewModelTests: XCTestCase {
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
                    remoteParticipantsState: makeRemoteParticipantState(count: expectedCount),
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
@@ -513,7 +513,7 @@ class ParticipantGridViewModelTests: XCTestCase {
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
                    remoteParticipantsState: makeRemoteParticipantState(count: expectedCount),
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
@@ -532,7 +532,7 @@ class ParticipantGridViewModelTests: XCTestCase {
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
                    remoteParticipantsState: makeRemoteParticipantState(count: expectedCount),
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
@@ -551,7 +551,7 @@ class ParticipantGridViewModelTests: XCTestCase {
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
                    remoteParticipantsState: makeRemoteParticipantState(count: expectedCount),
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
@@ -570,7 +570,7 @@ class ParticipantGridViewModelTests: XCTestCase {
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
                    remoteParticipantsState: makeRemoteParticipantState(count: expectedCount),
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
@@ -589,7 +589,7 @@ class ParticipantGridViewModelTests: XCTestCase {
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
                    remoteParticipantsState: makeRemoteParticipantState(count: expectedCount),
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }
@@ -608,7 +608,7 @@ class ParticipantGridViewModelTests: XCTestCase {
             }.store(in: cancellable)
         sut.update(callingState: CallingState(),
                    remoteParticipantsState: makeRemoteParticipantState(count: 7),
-                   pipState: PictureInPictureState(currentStatus: .none),
+                   pipState: VisibilityState(currentStatus: .visible),
                    lifeCycleState: LifeCycleState(currentStatus: .foreground))
         wait(for: [expectation], timeout: 1)
     }

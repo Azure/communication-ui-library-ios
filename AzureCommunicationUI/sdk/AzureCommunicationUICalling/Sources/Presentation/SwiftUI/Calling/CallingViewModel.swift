@@ -111,7 +111,7 @@ class CallingViewModel: ObservableObject {
         }
 
         guard state.lifeCycleState.currentStatus == .foreground
-                || state.pipState.currentStatus != .none else {
+                || state.pipState.currentStatus != .visible else {
             return
         }
 

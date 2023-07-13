@@ -16,7 +16,7 @@ extension Reducer {
         remoteParticipantsReducer: Reducer<RemoteParticipantsState, Action>
             = .liveRemoteParticipantsReducer,
         errorReducer: Reducer<ErrorState, Action> = .liveErrorReducer,
-        pipReducer: Reducer<PictureInPictureState, PipAction> = .pipReducer
+        pipReducer: Reducer<VisibilityState, VisibilityAction> = .visibilityReducer
     ) -> Reducer<AppState, Action> {
 
         return Reducer<AppState, Action> { state, action in
@@ -42,7 +42,7 @@ extension Reducer {
             case let .lifecycleAction(lifecycleAction):
                 lifeCycleState = lifeCycleReducer.reduce(state.lifeCycleState, lifecycleAction)
 
-            case let .pipAction(pipAction):
+            case let .visibilityAction(pipAction):
                 pipState = pipReducer.reduce(state.pipState, pipAction)
 
             default:

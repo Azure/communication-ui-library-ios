@@ -12,13 +12,13 @@
 		05317E2A29A7DBC100149F57 /* CallHistoryRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */; };
 		05317E3729B7D6B500149F57 /* CallHistoryServiceMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E3629B7D6B500149F57 /* CallHistoryServiceMocking.swift */; };
 		0532548B2A27B1D100267629 /* PipManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0532548A2A27B1D100267629 /* PipManager.swift */; };
-		05325C782A2A66CB00267629 /* PictureInPictureState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05325C772A2A66CB00267629 /* PictureInPictureState.swift */; };
+		05325C782A2A66CB00267629 /* VisibilityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05325C772A2A66CB00267629 /* VisibilityState.swift */; };
 		054F2B532A2679160017985B /* CallPipVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054F2B522A2679160017985B /* CallPipVideoViewController.swift */; };
 		05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */; };
 		05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C829297F516D006EDD0D /* CallHistoryService.swift */; };
 		05C1C831297F5680006EDD0D /* CallHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */; };
 		05F80DEE2A2E6F6700B20C87 /* PipReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F80DED2A2E6F6700B20C87 /* PipReducer.swift */; };
-		05F80DF02A2E713D00B20C87 /* PipAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F80DEF2A2E713D00B20C87 /* PipAction.swift */; };
+		05F80DF02A2E713D00B20C87 /* VisibilityAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F80DEF2A2E713D00B20C87 /* VisibilityAction.swift */; };
 		1105E8FC29B9352400FC8628 /* LoadingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */; };
 		113738FF29D638BB00D48EAB /* DefaultUserState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113738FE29D638BB00D48EAB /* DefaultUserState.swift */; };
 		11F792E229AFCFB100EAABB8 /* LoadingOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F792E029AFCFAF00EAABB8 /* LoadingOverlayView.swift */; };
@@ -293,13 +293,13 @@
 		05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRepositoryTests.swift; sourceTree = "<group>"; };
 		05317E3629B7D6B500149F57 /* CallHistoryServiceMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryServiceMocking.swift; sourceTree = "<group>"; };
 		0532548A2A27B1D100267629 /* PipManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipManager.swift; sourceTree = "<group>"; };
-		05325C772A2A66CB00267629 /* PictureInPictureState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PictureInPictureState.swift; sourceTree = "<group>"; };
+		05325C772A2A66CB00267629 /* VisibilityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibilityState.swift; sourceTree = "<group>"; };
 		054F2B522A2679160017985B /* CallPipVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPipVideoViewController.swift; sourceTree = "<group>"; };
 		05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRecord.swift; sourceTree = "<group>"; };
 		05C1C829297F516D006EDD0D /* CallHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryService.swift; sourceTree = "<group>"; };
 		05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryRepository.swift; sourceTree = "<group>"; };
 		05F80DED2A2E6F6700B20C87 /* PipReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipReducer.swift; sourceTree = "<group>"; };
-		05F80DEF2A2E713D00B20C87 /* PipAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipAction.swift; sourceTree = "<group>"; };
+		05F80DEF2A2E713D00B20C87 /* VisibilityAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibilityAction.swift; sourceTree = "<group>"; };
 		1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		113738FE29D638BB00D48EAB /* DefaultUserState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserState.swift; sourceTree = "<group>"; };
 		11F792E029AFCFAF00EAABB8 /* LoadingOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingOverlayView.swift; sourceTree = "<group>"; };
@@ -825,7 +825,7 @@
 				1F2BED982631FA6C00D98266 /* PermissionState.swift */,
 				1F13D36B26A8B83300E31666 /* RemoteParticipantsState.swift */,
 				113738FE29D638BB00D48EAB /* DefaultUserState.swift */,
-				05325C772A2A66CB00267629 /* PictureInPictureState.swift */,
+				05325C772A2A66CB00267629 /* VisibilityState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -840,7 +840,7 @@
 				1F3F0C64283E853800C66054 /* AudioSessionAction.swift */,
 				1F94DAE326740BCB00691D1E /* LocalUserAction.swift */,
 				28FE266C29E804F5009CC19D /* RemoteParticipantsAction.swift */,
-				05F80DEF2A2E713D00B20C87 /* PipAction.swift */,
+				05F80DEF2A2E713D00B20C87 /* VisibilityAction.swift */,
 			);
 			path = Action;
 			sourceTree = "<group>";
@@ -1752,7 +1752,7 @@
 				50FA460C26829162001844AC /* IconWithLabelButton.swift in Sources */,
 				756F596E2965F8EA00BAFBF7 /* Store.swift in Sources */,
 				1B7ABF82278CFFC400D79DF7 /* ZoomableVideoRenderView.swift in Sources */,
-				05325C782A2A66CB00267629 /* PictureInPictureState.swift in Sources */,
+				05325C782A2A66CB00267629 /* VisibilityState.swift in Sources */,
 				50FA4623269CA1D4001844AC /* IconButtonViewModel.swift in Sources */,
 				75B3693D297896BA00D67281 /* AppPhaseKey.swift in Sources */,
 				7589CE1A297765E30092AE38 /* ViewExtension.swift in Sources */,
@@ -1772,7 +1772,7 @@
 				529C34E328A4B25400ACD918 /* NetworkManager.swift in Sources */,
 				A874EDCA266167E5003C7D92 /* LifeCycleReducer.swift in Sources */,
 				1FBCB6D72654765D00F57EEA /* LocalUserState.swift in Sources */,
-				05F80DF02A2E713D00B20C87 /* PipAction.swift in Sources */,
+				05F80DF02A2E713D00B20C87 /* VisibilityAction.swift in Sources */,
 				FA6DF038290339430088A945 /* SharingActivityView.swift in Sources */,
 				1F94DAE82676885700691D1E /* AppStateReducer.swift in Sources */,
 				50B390D327D834FE0010A2ED /* LocalizationKey.swift in Sources */,
