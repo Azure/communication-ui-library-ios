@@ -29,7 +29,7 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
     override func update(localUserState: LocalUserState,
                          remoteParticipantsState: RemoteParticipantsState,
                          callingState: CallingState,
-                         pipState: VisibilityState) {
-        updateState?(localUserState, remoteParticipantsState, callingState, pipState)
+                         visibilityState: VisibilityState) {
+        updateState?(localUserState, remoteParticipantsState, callingState, visibilityState)
     }
 }

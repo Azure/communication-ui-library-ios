@@ -30,7 +30,7 @@ extension Reducer {
             var errorState = state.errorState
             var audioSessionState = state.audioSessionState
             let defaultUserState = state.defaultUserState
-            var pipState = state.pipState
+            var pipState = state.visibilityState
 
             switch action {
             case let .permissionAction(permAction):
@@ -43,7 +43,7 @@ extension Reducer {
                 lifeCycleState = lifeCycleReducer.reduce(state.lifeCycleState, lifecycleAction)
 
             case let .visibilityAction(pipAction):
-                pipState = pipReducer.reduce(state.pipState, pipAction)
+                pipState = pipReducer.reduce(state.visibilityState, pipAction)
 
             default:
                 break

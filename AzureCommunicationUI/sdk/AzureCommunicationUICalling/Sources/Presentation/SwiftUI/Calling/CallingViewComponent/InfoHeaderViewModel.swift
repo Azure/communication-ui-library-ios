@@ -98,7 +98,7 @@ class InfoHeaderViewModel: ObservableObject {
     func update(localUserState: LocalUserState,
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState,
-                pipState: VisibilityState) {
+                visibilityState: VisibilityState) {
         isHoldingCall(callingState: callingState)
         let shouldDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingStatus)
         let newDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingState.status)
@@ -113,8 +113,12 @@ class InfoHeaderViewModel: ObservableObject {
         participantsListViewModel.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
 
-        if pipState.currentStatus == .pipModeEntered {
+        if visibilityState.currentStatus == .pipModeEntered {
             hideInfoHeader()
+        }
+
+        if visibilityState.currentStatus != .visible {
+            isParticipantsListDisplayed = false
         }
     }
 

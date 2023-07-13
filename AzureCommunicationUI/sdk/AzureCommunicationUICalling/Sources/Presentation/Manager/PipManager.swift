@@ -86,7 +86,7 @@ class PipManager: NSObject, PipManagerProtocol {
     private func receive(state: AppState) {
         updateStartPipAutomatically(navigationState: state.navigationState)
 
-        if state.pipState.currentStatus == .pipModeRequested && !startPipRequested {
+        if state.visibilityState.currentStatus == .pipModeRequested && !startPipRequested {
             startPipRequested = true
 
             guard #available(iOS 15.0, *), AVPictureInPictureController.isPictureInPictureSupported() else {
@@ -95,7 +95,7 @@ class PipManager: NSObject, PipManagerProtocol {
             }
             startPictureInPicture()
         } else {
-            startPipRequested = state.pipState.currentStatus == .pipModeRequested
+            startPipRequested = state.visibilityState.currentStatus == .pipModeRequested
         }
     }
 

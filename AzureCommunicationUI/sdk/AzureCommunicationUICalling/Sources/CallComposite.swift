@@ -319,7 +319,7 @@ extension CallComposite {
     }
 
     private func receive(_ state: AppState) {
-        if state.pipState.currentStatus == .hideRequested {
+        if state.visibilityState.currentStatus == .hideRequested {
             store?.dispatch(action: .visibilityAction(.hideEntered))
             hide()
         }
