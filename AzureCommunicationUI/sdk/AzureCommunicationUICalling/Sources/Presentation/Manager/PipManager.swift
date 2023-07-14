@@ -66,7 +66,7 @@ class PipManager: NSObject, PipManagerProtocol {
 
     func stopPictureInPicture() {
         avKitPipController?.stopPictureInPicture()
-        store.dispatch(action: .pipAction(.pipModeExited))
+        store.dispatch(action: .visibilityAction(.showNormalEntered))
     }
 
     func reset() {
@@ -86,7 +86,7 @@ class PipManager: NSObject, PipManagerProtocol {
     private func receive(state: AppState) {
         updateStartPipAutomatically(navigationState: state.navigationState)
 
-        if state.pipState.currentStatus == .pipModeRequested && !startPipRequested {
+        if state.visibilityState.currentStatus == .pipModeRequested && !startPipRequested {
             startPipRequested = true
 
             guard #available(iOS 15.0, *), AVPictureInPictureController.isPictureInPictureSupported() else {
@@ -95,7 +95,7 @@ class PipManager: NSObject, PipManagerProtocol {
             }
             startPictureInPicture()
         } else {
-            startPipRequested = state.pipState.currentStatus == .pipModeRequested
+            startPipRequested = state.visibilityState.currentStatus == .pipModeRequested
         }
     }
 
@@ -140,7 +140,7 @@ extension PipManager: AVPictureInPictureControllerDelegate {
         _ pictureInPictureController: AVPictureInPictureController) {
             logger.debug("testpip: pip Did Stop")
             self.onPipStoped()
-            store.dispatch(action: .pipAction(.pipModeExited))
+            store.dispatch(action: .visibilityAction(.showNormalEntered))
     }
 
     public func pictureInPictureControllerWillStartPictureInPicture(
@@ -155,7 +155,7 @@ extension PipManager: AVPictureInPictureControllerDelegate {
         _ pictureInPictureController: AVPictureInPictureController) {
             logger.debug("testpip: pip Did Start")
             self.onPipStarted()
-            self.store.dispatch(action: .pipAction(.pipModeEntered))
+            self.store.dispatch(action: .visibilityAction(.pipModeEntered))
 
             if turnCameraOffWhilePipIsStarting {
                 turnCameraOffWhilePipIsStarting = false

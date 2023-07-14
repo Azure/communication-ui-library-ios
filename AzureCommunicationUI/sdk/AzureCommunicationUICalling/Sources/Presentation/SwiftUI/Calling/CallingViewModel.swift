@@ -111,7 +111,7 @@ class CallingViewModel: ObservableObject {
         }
 
         guard state.lifeCycleState.currentStatus == .foreground
-                || state.pipState.currentStatus != .none else {
+                || state.visibilityState.currentStatus != .visible else {
             return
         }
 
@@ -125,15 +125,15 @@ class CallingViewModel: ObservableObject {
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
                                    defaultUserState: state.defaultUserState,
-                                   pipState: state.pipState)
+                                   pipState: state.visibilityState)
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState,
-                                   pipState: state.pipState)
-        localVideoViewModel.update(localUserState: state.localUserState, pipState: state.pipState)
+                                   visibilityState: state.visibilityState)
+        localVideoViewModel.update(localUserState: state.localUserState, pipState: state.visibilityState)
         participantGridsViewModel.update(callingState: state.callingState,
                                          remoteParticipantsState: state.remoteParticipantsState,
-                                         pipState: state.pipState, lifeCycleState: state.lifeCycleState)
+                                         visibilityState: state.visibilityState, lifeCycleState: state.lifeCycleState)
         bannerViewModel.update(callingState: state.callingState)
         lobbyOverlayViewModel.update(callingStatus: state.callingState.status)
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
@@ -160,7 +160,7 @@ class CallingViewModel: ObservableObject {
         updateIsLocalCameraOn(with: state)
         errorInfoViewModel.update(errorState: state.errorState)
 
-        isInPip = state.pipState.currentStatus == .pipModeEntered
+        isInPip = state.visibilityState.currentStatus == .pipModeEntered
     }
 
     private func updateIsLocalCameraOn(with state: AppState) {

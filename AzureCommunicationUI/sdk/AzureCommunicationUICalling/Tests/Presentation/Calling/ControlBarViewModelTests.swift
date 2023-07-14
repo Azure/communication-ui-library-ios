@@ -139,7 +139,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: permissionState,
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.audioState.operation, .off)
         XCTAssertEqual(sut.micButtonViewModel.iconName, .micOff)
         wait(for: [expectation], timeout: 1)
@@ -164,7 +164,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: permissionState,
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.audioState.operation, .pending)
         XCTAssertEqual(sut.isMicDisabled(), true)
         wait(for: [expectation], timeout: 1)
@@ -193,7 +193,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: permissionState,
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.audioState.operation, .pending)
         XCTAssertEqual(sut.isMicDisabled(), true)
         wait(for: [expectation], timeout: 1)
@@ -223,7 +223,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: permissionState,
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.audioState.operation, .on)
         XCTAssertEqual(sut.isMicDisabled(), false)
         wait(for: [expectation], timeout: 1)
@@ -252,7 +252,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: permissionState,
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.audioState.operation, .off)
         XCTAssertEqual(sut.isMicDisabled(), false)
         wait(for: [expectation], timeout: 1)
@@ -276,7 +276,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: permissionState,
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.audioState.operation, .on)
         XCTAssertEqual(sut.isMicDisabled(), false)
         XCTAssertEqual(sut.micButtonViewModel.iconName, .micOn)
@@ -305,7 +305,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: permissionState,
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.audioState.operation, .on)
         XCTAssertEqual(sut.isMicDisabled(), false)
         XCTAssertEqual(sut.micButtonViewModel.iconName, .micOn)
@@ -333,7 +333,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: permissionState,
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.audioState.operation, .off)
         XCTAssertEqual(sut.isMicDisabled(), false)
         XCTAssertEqual(sut.micButtonViewModel.iconName, .micOff)
@@ -372,7 +372,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: PermissionState(),
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         sut.cameraButtonTapped()
         wait(for: [expectation], timeout: 1)
     }
@@ -409,7 +409,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: permissionState,
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.cameraState.operation, .off)
         XCTAssertEqual(sut.cameraButtonViewModel.iconName, .videoOff)
         wait(for: [expectation], timeout: 1)
@@ -440,7 +440,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: permissionState,
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.cameraState.operation, .on)
         XCTAssertEqual(sut.cameraButtonViewModel.iconName, .videoOn)
         wait(for: [expectation], timeout: 1)
@@ -472,7 +472,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: permissionState,
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.cameraState.operation, .on)
         XCTAssertEqual(sut.cameraButtonViewModel.iconName, .videoOn)
         wait(for: [expectation], timeout: 1)
@@ -503,7 +503,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: permissionState,
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.cameraState.operation, .off)
         XCTAssertEqual(sut.cameraButtonViewModel.iconName, .videoOff)
         wait(for: [expectation], timeout: 1)
@@ -533,7 +533,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: PermissionState(),
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -557,7 +557,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: permissionState,
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -583,7 +583,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: PermissionState(),
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -607,7 +607,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: permissionState,
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -633,7 +633,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: PermissionState(),
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -654,7 +654,7 @@ class ControlBarViewModelTests: XCTestCase {
                    permissionState: PermissionState(),
                    callingState: CallingState(),
                    defaultUserState: DefaultUserState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   pipState: VisibilityState(currentStatus: .visible))
         wait(for: [expectation], timeout: 1.0)
     }
 }

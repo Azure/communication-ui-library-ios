@@ -32,6 +32,8 @@ public class CallComposite {
     private let localizationOptions: LocalizationOptions?
     private let setupViewOrientationOptions: OrientationOptions?
     private let callingViewOrientationOptions: OrientationOptions?
+    private let enableMultitasking: Bool
+    private let enableSystemPiPWhenMultitasking: Bool
 
     // Internal dependencies
     private var logger: Logger = DefaultLogger(category: "Calling")
@@ -53,11 +55,12 @@ public class CallComposite {
     private var pipManager: PipManagerProtocol?
     private var callHistoryService: CallHistoryService?
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
-        userDefaults: UserDefaults.standard)
+                                                                   userDefaults: UserDefaults.standard)
 
     private var viewFactory: CompositeViewFactoryProtocol?
     private var viewController: UIViewController?
     private var pipViewController: UIViewController?
+    private var cancellables = Set<AnyCancellable>()
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -80,6 +83,8 @@ public class CallComposite {
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
         orientationProvider = OrientationProvider()
+        enableMultitasking = options?.enableMultitasking ?? false
+        enableSystemPiPWhenMultitasking = options?.enableSystemPiPWhenMultitasking ?? false
     }
 
     /// Exit call composite
@@ -114,10 +119,18 @@ public class CallComposite {
         guard let store = self.store else {
             fatalError("Construction of dependencies failed")
         }
+
+        store.$state
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                self?.receive(state)
+            }.store(in: &cancellables)
+
         let viewController = makeToolkitHostingController(router: NavigationRouter(store: store, logger: logger),
-            viewFactory: viewFactory)
+                                                          viewFactory: viewFactory)
         self.viewController = viewController
         present(viewController)
+        UIApplication.shared.isIdleTimerDisabled = true
     }
 
     /// Start Call Composite experience with joining a Teams meeting.
@@ -172,8 +185,8 @@ public class CallComposite {
     public func hide() {
         self.viewController?.dismissSelf()
         self.viewController = nil
-        if store?.state.navigationState.status == .inCall {
-            store?.dispatch(action: .pipAction(.pipModeRequested))
+        if self.enableSystemPiPWhenMultitasking && store?.state.navigationState.status == .inCall {
+            store?.dispatch(action: .visibilityAction(.pipModeRequested))
         }
     }
 
@@ -219,7 +232,9 @@ public class CallComposite {
         let debugInfoManager = createDebugInfoManager()
         self.debugInfoManager = debugInfoManager
         let videoViewManager = VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger)
-        self.pipManager = createPipManager(store, videoViewManager)
+        if enableSystemPiPWhenMultitasking {
+            self.pipManager = createPipManager(store)
+        }
 
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
 
@@ -234,7 +249,9 @@ public class CallComposite {
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
-                localOptions: localOptions
+                localOptions: localOptions,
+                enableMultitasking: enableMultitasking,
+                enableSystemPiPWhenMultitasking: enableSystemPiPWhenMultitasking
             )
         )
     }
@@ -256,8 +273,11 @@ public class CallComposite {
         self.callHistoryService = nil
         self.exitManager = nil
     }
+}
 
+extension CallComposite {
     private func present(_ viewController: UIViewController) {
+        store?.dispatch(action: .visibilityAction(.showNormalEntered))
         Task { @MainActor in
             guard self.isCompositePresentable(),
                   let topViewController = UIWindow.keyWindow?.topViewController else {
@@ -292,9 +312,22 @@ public class CallComposite {
 
         return !hasCallComposite
     }
-}
 
-extension CallComposite {
+    private func receiveStoreEvents(_ store: Store<AppState, Action>) {
+        store.$state
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] state in
+                self?.receive(state)
+            }.store(in: &cancellables)
+    }
+
+    private func receive(_ state: AppState) {
+        if state.visibilityState.currentStatus == .hideRequested {
+            store?.dispatch(action: .visibilityAction(.hideEntered))
+            hide()
+        }
+    }
+
     private func makeToolkitHostingController(router: NavigationRouter,
                                               viewFactory: CompositeViewFactoryProtocol)
     -> ContainerUIHostingController {
@@ -319,23 +352,19 @@ extension CallComposite {
             self?.viewFactory = nil
             self?.exitManager?.onExited()
             self?.cleanUpManagers()
+            UIApplication.shared.isIdleTimerDisabled = false
         }
 
         return hostingController
     }
 
-    private func createPipManager(_ store: Store<AppState, Action>,
-                                  _ videoViewManager: VideoViewManager) -> PipManager? {
+    private func createPipManager(_ store: Store<AppState, Action>) -> PipManager? {
 
         return PipManager(store: store, logger: logger,
                           onRequirePipContentView: {
-    //            self.logger.debug("onRequirePipContentView")
-
             guard let store = self.store, let viewFactory = self.viewFactory else {
                 return nil
             }
-
-//            videoViewManager.disposeViews()
 
             let viewController = self.makeToolkitHostingController(
             router: NavigationRouter(store: store, logger: self.logger),
@@ -344,21 +373,17 @@ extension CallComposite {
             return viewController.view
         },
                                      onRequirePipPlaceholderView: {
-//            self.logger.debug("onRequirePipPlaceholderView")
             return self.viewController?.view
         },
                                      onPipStarted: {
-//            self.logger.debug("onPipStarted")
-            self.viewController?.dismissSelf()
+            self.viewController?.dismissSelf(animated: false)
             self.viewController = nil
         },
                                      onPipStoped: {
-//            self.logger.debug("onPipStoped")
             self.pipViewController?.dismissSelf()
             self.displayCallCompositeIfWasHidden()
         },
                                      onPipStartFailed: {
-//            self.logger.debug("onPipStartFailed")
             self.viewController?.dismissSelf()
             self.viewController = nil
         })

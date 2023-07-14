@@ -5,19 +5,23 @@
 
 import Foundation
 
-extension Reducer where State == PictureInPictureState,
-                        Actions == PipAction {
-    static var pipReducer: Self = Reducer { currentState, action in
+extension Reducer where State == VisibilityState,
+                        Actions == VisibilityAction {
+    static var visibilityReducer: Self = Reducer { currentState, action in
 
-        var currentStatus = currentState.currentStatus
+        var newStatus = currentState.currentStatus
         switch action {
-        case .pipModeExited:
-            currentStatus = .none
+        case .showNormalEntered:
+            newStatus = .visible
+        case .hideRequested:
+            newStatus = .hideRequested
         case .pipModeRequested:
-            currentStatus = .pipModeRequested
+            newStatus = .pipModeRequested
         case .pipModeEntered:
-            currentStatus = .pipModeEntered
+            newStatus = .pipModeEntered
+        case .hideEntered:
+            newStatus = .hidden
         }
-        return PictureInPictureState(currentStatus: currentStatus)
+        return VisibilityState(currentStatus: newStatus)
     }
 }

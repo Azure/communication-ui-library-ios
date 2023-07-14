@@ -42,7 +42,9 @@ extension CompositeViewModelFactoryTests {
                                          networkManager: NetworkManager(),
                                          localizationProvider: LocalizationProviderMocking(),
                                          accessibilityProvider: AccessibilityProviderMocking(),
-                                         debugInfoManager: DebugInfoManagerMocking())
+                                         debugInfoManager: DebugInfoManagerMocking(),
+                                         enableMultitasking: true,
+                                         enableSystemPiPWhenMultitasking: true)
     }
 }
 

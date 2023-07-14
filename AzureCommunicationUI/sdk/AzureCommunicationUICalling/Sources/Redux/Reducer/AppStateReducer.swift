@@ -16,7 +16,7 @@ extension Reducer {
         remoteParticipantsReducer: Reducer<RemoteParticipantsState, Action>
             = .liveRemoteParticipantsReducer,
         errorReducer: Reducer<ErrorState, Action> = .liveErrorReducer,
-        pipReducer: Reducer<PictureInPictureState, PipAction> = .pipReducer
+        pipReducer: Reducer<VisibilityState, VisibilityAction> = .visibilityReducer
     ) -> Reducer<AppState, Action> {
 
         return Reducer<AppState, Action> { state, action in
@@ -30,7 +30,7 @@ extension Reducer {
             var errorState = state.errorState
             var audioSessionState = state.audioSessionState
             let defaultUserState = state.defaultUserState
-            var pipState = state.pipState
+            var pipState = state.visibilityState
 
             switch action {
             case let .permissionAction(permAction):
@@ -42,8 +42,8 @@ extension Reducer {
             case let .lifecycleAction(lifecycleAction):
                 lifeCycleState = lifeCycleReducer.reduce(state.lifeCycleState, lifecycleAction)
 
-            case let .pipAction(pipAction):
-                pipState = pipReducer.reduce(state.pipState, pipAction)
+            case let .visibilityAction(pipAction):
+                pipState = pipReducer.reduce(state.visibilityState, pipAction)
 
             default:
                 break

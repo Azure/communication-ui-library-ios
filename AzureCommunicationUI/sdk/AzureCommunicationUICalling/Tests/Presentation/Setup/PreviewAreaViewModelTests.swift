@@ -37,7 +37,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .denied,
                                                                  cameraPermission: .notAsked),
                                 localUserState: LocalUserState(cameraState: cameraState))
-        let pipState = PictureInPictureState(currentStatus: .none)
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
         sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 
@@ -56,7 +56,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted,
                                                                  cameraPermission: .denied),
                                 localUserState: LocalUserState(cameraState: cameraState))
-        let pipState = PictureInPictureState(currentStatus: .none)
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
         sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 
@@ -75,7 +75,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .denied,
                                                                  cameraPermission: .denied),
                                 localUserState: LocalUserState(cameraState: cameraState))
-        let pipState = PictureInPictureState(currentStatus: .none)
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
         sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 
@@ -94,7 +94,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted,
                                                                  cameraPermission: .notAsked),
                                 localUserState: LocalUserState(cameraState: cameraState))
-        let pipState = PictureInPictureState(currentStatus: .none)
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
         sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 
@@ -108,7 +108,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted,
                                                                  cameraPermission: .granted),
                                 localUserState: LocalUserState(cameraState: cameraState))
-        let pipState = PictureInPictureState(currentStatus: .none)
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
         sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 
@@ -122,7 +122,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted,
                                                                  cameraPermission: .granted),
                                 localUserState: LocalUserState(cameraState: cameraState))
-        let pipState = PictureInPictureState(currentStatus: .none)
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
         sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 
@@ -136,7 +136,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted,
                                                                  cameraPermission: .granted),
                                 localUserState: LocalUserState(cameraState: cameraState))
-        let pipState = PictureInPictureState(currentStatus: .none)
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
         sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 
@@ -146,7 +146,7 @@ class PreviewAreaViewModelTests: XCTestCase {
     func test_previewAreaViewModel_update_when_statesUpdated_then_localVideoViewModelUpdated() {
         let expectation = XCTestExpectation(description: "LocalVideoViewModel is updated")
         let localUserState = LocalUserState(displayName: "UpdatedDisplayName")
-        let updateState: (LocalUserState, PictureInPictureState) -> Void = { localState, _ in
+        let updateState: (LocalUserState, VisibilityState) -> Void = { localState, _ in
             XCTAssertEqual(localUserState.displayName, localState.displayName)
             expectation.fulfill()
         }
@@ -156,7 +156,7 @@ class PreviewAreaViewModelTests: XCTestCase {
                                                                         localizationProvider: localizationProvider,
                                                                         dispatchAction: storeFactory.store.dispatch,
                                                                         updateState: updateState)
-        let pipState = PictureInPictureState(currentStatus: .none)
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
         sut.update(localUserState: localUserState, permissionState: PermissionState(), pipState: pipState)
         wait(for: [expectation], timeout: 1.0)
@@ -169,7 +169,7 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .denied,
                                                                  cameraPermission: .notAsked),
                                 localUserState: LocalUserState(cameraState: cameraState))
-        let pipState = PictureInPictureState(currentStatus: .none)
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUTLocalizationMocking()
         sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 

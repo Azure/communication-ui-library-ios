@@ -38,7 +38,6 @@ struct ParticipantGridView: View {
                                                 videoStreamIdentifier: videoStreamIdentifier)
         }
 
-        print("videoCacheIds ", videoCacheIds)
         videoViewManager.updateDisplayedRemoteVideoStream(videoCacheIds)
     }
 }

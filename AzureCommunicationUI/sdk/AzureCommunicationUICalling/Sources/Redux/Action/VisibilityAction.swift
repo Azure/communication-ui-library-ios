@@ -5,8 +5,10 @@
 
 import Foundation
 
-enum PipAction: Equatable {
+enum VisibilityAction: Equatable {
+    case hideRequested
+    case hideEntered
     case pipModeRequested
     case pipModeEntered
-    case pipModeExited
+    case showNormalEntered
 }

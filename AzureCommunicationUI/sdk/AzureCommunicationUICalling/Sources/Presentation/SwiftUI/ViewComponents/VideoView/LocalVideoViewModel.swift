@@ -52,7 +52,7 @@ class LocalVideoViewModel: ObservableObject {
         dispatch(.localUserAction(.cameraSwitchTriggered))
     }
 
-    func update(localUserState: LocalUserState, pipState: PictureInPictureState) {
+    func update(localUserState: LocalUserState, pipState: VisibilityState) {
         if localVideoStreamId != localUserState.localVideoStreamIdentifier {
             localVideoStreamId = localUserState.localVideoStreamIdentifier
         }

@@ -7,11 +7,11 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class PreviewAreaViewModelMocking: PreviewAreaViewModel {
-    private let updateState: ((LocalUserState, PermissionState, PictureInPictureState) -> Void)?
+    private let updateState: ((LocalUserState, PermissionState, VisibilityState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          dispatchAction: @escaping ActionDispatch,
-         updateState: ((LocalUserState, PermissionState, PictureInPictureState) -> Void)? = nil) {
+         updateState: ((LocalUserState, PermissionState, VisibilityState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    dispatchAction: dispatchAction,
@@ -20,7 +20,7 @@ class PreviewAreaViewModelMocking: PreviewAreaViewModel {
 
     override func update(localUserState: LocalUserState,
                          permissionState: PermissionState,
-                         pipState: PictureInPictureState) {
+                         pipState: VisibilityState) {
         updateState?(localUserState, permissionState, pipState)
     }
 }

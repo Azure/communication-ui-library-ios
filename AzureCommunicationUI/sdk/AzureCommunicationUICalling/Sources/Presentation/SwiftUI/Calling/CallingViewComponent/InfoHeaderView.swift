@@ -50,9 +50,11 @@ struct InfoHeaderView: View {
     var infoHeader: some View {
         HStack {
             // correct dismissButtonAccessibilityID
-            IconButton(viewModel: viewModel.dismissButtonViewModel)
-                .flipsForRightToLeftLayoutDirection(true)
-                .accessibilityIdentifier(AccessibilityIdentifier.dismissButtonAccessibilityID.rawValue)
+            if viewModel.enableMultitasking {
+                IconButton(viewModel: viewModel.dismissButtonViewModel)
+                    .flipsForRightToLeftLayoutDirection(true)
+                    .accessibilityIdentifier(AccessibilityIdentifier.dismissButtonAccessibilityID.rawValue)
+            }
 
             Text(viewModel.infoLabel)
                 .padding(EdgeInsets(top: Constants.infoLabelHorizontalPadding,

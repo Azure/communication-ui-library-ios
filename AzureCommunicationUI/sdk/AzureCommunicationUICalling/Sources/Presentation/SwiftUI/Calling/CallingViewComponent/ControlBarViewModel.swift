@@ -230,7 +230,7 @@ class ControlBarViewModel: ObservableObject {
                 permissionState: PermissionState,
                 callingState: CallingState,
                 defaultUserState: DefaultUserState,
-                pipState: PictureInPictureState) {
+                pipState: VisibilityState) {
         callingStatus = callingState.status
         operationStatus = callingState.operationStatus
         setupDefaultUserState(state: defaultUserState)

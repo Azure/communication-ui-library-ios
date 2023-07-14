@@ -52,7 +52,7 @@ extension Reducer where State == CallingState,
                 .remoteParticipantsAction(_),
                 .compositeExitAction,
                 .callingViewLaunched,
-                .pipAction(_):
+                .visibilityAction(_):
             return callingState
         }
         return CallingState(status: callingStatus,

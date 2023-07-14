@@ -52,7 +52,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   visibilityState: VisibilityState(currentStatus: .visible))
 
         XCTAssertEqual(sut.infoLabel, "Waiting for others to join")
         wait(for: [expectation], timeout: 1)
@@ -84,7 +84,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   visibilityState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.infoLabel, "Call with 1 person")
 
         wait(for: [expectation], timeout: 1)
@@ -130,7 +130,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   visibilityState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.infoLabel, "Call with 2 people")
 
         wait(for: [expectation], timeout: 1)
@@ -159,7 +159,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: localUserStateValue,
                    remoteParticipantsState: remoteParticipantsStateValue,
                    callingState: CallingState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   visibilityState: VisibilityState(currentStatus: .visible))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -264,7 +264,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   visibilityState: VisibilityState(currentStatus: .visible))
         let expectedInfoHeaderlabel0ParticipantKey = "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"
         XCTAssertEqual(sut.infoLabel, expectedInfoHeaderlabel0ParticipantKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
@@ -315,7 +315,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState(),
-                   pipState: PictureInPictureState(currentStatus: .none))
+                   visibilityState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.infoLabel, expectedInfoHeaderlabelNParticipantKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringWithArgsCalled)
 
@@ -332,7 +332,9 @@ extension InfoHeaderViewModelTests {
                                    dispatchAction: storeFactory.store.dispatch,
                                    localUserState: LocalUserState(),
                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
-                                   accessibilityProvider: accessibilityProvider)
+                                   accessibilityProvider: accessibilityProvider,
+                                   enableMultitasking: true,
+                                   enableSystemPiPWhenMultitasking: true)
     }
 
     func makeSUTLocalizationMocking() -> InfoHeaderViewModel {
