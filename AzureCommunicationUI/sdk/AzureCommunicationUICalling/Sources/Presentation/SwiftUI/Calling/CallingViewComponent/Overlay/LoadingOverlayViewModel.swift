@@ -73,7 +73,7 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
         }
     }
     func handleOffline() {
-        guard networkManager.isOnline() else {
+        guard networkManager.isConnected else {
             if operationStatus == .skipSetupRequested {
                 store.dispatch(action: .errorAction(
                     .fatalErrorUpdated(internalError: .networkConnectionNotAvailable, error: nil)))

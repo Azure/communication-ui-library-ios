@@ -121,7 +121,7 @@ class SetupViewModel: ObservableObject {
     }
 
     func joinCallButtonTapped() {
-        guard networkManager.isOnline() else {
+        guard networkManager.isConnected else {
             handleOffline()
             return
         }
