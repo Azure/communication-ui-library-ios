@@ -19,17 +19,15 @@ class NetworkManager: NetworkManagerProtocol, ObservableObject {
 
     init() {
         networkMonitorQueue = DispatchQueue(label: Constant.networkQueue)
+    }
+
+    func startMonitor() {
+        monitor = NWPathMonitor()
         monitor?.pathUpdateHandler = { [weak self] path in
                     DispatchQueue.main.async {
                         self?.isConnected = path.status == .satisfied
                     }
                 }
-        let queue = DispatchQueue(label: "NetworkMonitor")
-        monitor?.start(queue: queue)
-    }
-
-    func startMonitor() {
-        monitor = NWPathMonitor()
         monitor?.start(queue: networkMonitorQueue)
     }
 
