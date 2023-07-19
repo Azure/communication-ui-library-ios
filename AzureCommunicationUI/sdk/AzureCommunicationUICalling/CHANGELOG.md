@@ -2,7 +2,8 @@
 ## 1.3.1 (2023-07-19)
 ### Bugs Fixed
 - Call join being blocked when microphone is unavailable to use for UI Composite at the moment
-- API Level 29, call resume from hold bug is fixed
+- Call Resume and join on hold checks microphone available
+- Call join when network is gained after it is lost bug fixed
 
 ## 1.3.0 (2023-04-06)
 ### New Features
