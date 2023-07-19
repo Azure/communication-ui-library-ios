@@ -43,6 +43,7 @@ struct LoadingOverlayView: View {
             .onAppear {
                 viewModel.setupAudioPermissions()
                 viewModel.handleOffline()
+                viewModel.handleMicAvailabilityCheck()
             }
     }
 }

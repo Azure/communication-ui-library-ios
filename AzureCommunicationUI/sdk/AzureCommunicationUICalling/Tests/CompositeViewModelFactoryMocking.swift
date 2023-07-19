@@ -63,6 +63,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                 logger: logger,
                                                 store: store,
                                                 networkManager: NetworkManager(),
+                                                audioSessionManager: AudioSessionManager(store: store, logger: logger),
                                                 localizationProvider: localizationProvider)
     }
 
@@ -169,6 +170,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         return loadingOverlayViewModel ?? LoadingOverlayViewModel(localizationProvider: localizationProvider,
                                                               accessibilityProvider: accessibilityProvider,
                                                                   networkManager: NetworkManager(),
+                                                                  audioSessionManager: AudioSessionManager(store: store, logger: logger),
                                                                   store: store
         )
     }
@@ -277,6 +279,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                       compositeViewModelFactory: self,
                                       logger: logger,
                                       accessibilityProvider: accessibilityProvider,
+                                      audioSessionManager: AudioSessionManager(store: store, logger: logger),
                                       resumeAction: {})
     }
 }

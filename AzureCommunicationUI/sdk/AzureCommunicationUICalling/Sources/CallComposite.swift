@@ -167,7 +167,8 @@ public class CallComposite {
         let debugInfoManager = createDebugInfoManager()
         self.debugInfoManager = debugInfoManager
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
-
+        let audioSessionManager = AudioSessionManager(store: store, logger: logger)
+        self.audioSessionManager = audioSessionManager
         return CompositeViewFactory(
             logger: logger,
             avatarManager: avatarViewManager,
@@ -176,6 +177,7 @@ public class CallComposite {
                 logger: logger,
                 store: store,
                 networkManager: NetworkManager(),
+                audioSessionManager: audioSessionManager,
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
