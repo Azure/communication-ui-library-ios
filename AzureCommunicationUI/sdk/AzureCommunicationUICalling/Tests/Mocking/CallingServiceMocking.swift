@@ -76,6 +76,8 @@ class CallingServiceMocking: CallingServiceProtocol {
     var isRecordingActiveSubject = PassthroughSubject<Bool, Never>()
     var isTranscriptionActiveSubject = PassthroughSubject<Bool, Never>()
     var callIdSubject = PassthroughSubject<String, Never>()
+    var dominantSpeakersSubject = CurrentValueSubject<[String], Never>([])
+    var dominantSpeakersModifiedTimestampSubject = PassthroughSubject<Date, Never>()
 
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
 

@@ -25,8 +25,6 @@ struct ParticipantInfoModel: Hashable, Equatable {
     let userIdentifier: String
     let status: ParticipantStatus
 
-    let recentSpeakingStamp: Date
-
     let screenShareVideoStreamModel: VideoStreamInfoModel?
     let cameraVideoStreamModel: VideoStreamInfoModel?
 
