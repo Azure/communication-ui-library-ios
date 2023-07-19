@@ -3,7 +3,6 @@
 ### Bugs Fixed
 - Call join being blocked when microphone is unavailable to use for UI Composite at the moment
 - API Level 29, call resume from hold bug is fixed
-- Audio Speaker issue fix for Samsung devices
 
 ## 1.3.0 (2023-04-06)
 ### New Features
