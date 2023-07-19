@@ -32,9 +32,9 @@ extension Reducer where State == NavigationState,
                 .callingAction(.transcriptionStateUpdated(isTranscriptionActive: _)),
                 .callingAction(.resumeRequested),
                 .callingAction(.holdRequested),
-                .callingAction(.participantListUpdated(participants: _)),
                 .lifecycleAction(_),
                 .localUserAction(_),
+                .remoteParticipantsAction(_),
                 .permissionAction(_):
             return state
         }

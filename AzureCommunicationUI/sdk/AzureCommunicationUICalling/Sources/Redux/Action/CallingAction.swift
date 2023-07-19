@@ -22,7 +22,6 @@ enum CallingAction: Equatable {
     case resumeRequested
     case holdRequested
     case requestFailed
-    case participantListUpdated(participants: [ParticipantInfoModel])
 }
 
 enum ErrorAction: Equatable {

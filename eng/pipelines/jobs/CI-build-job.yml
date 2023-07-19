@@ -4,7 +4,7 @@ jobs:
   - job: BuildAndUnitTest
     displayName: "Build UI Library (Debug) for CI"
     pool:
-      name: vsts-mac-1231-xcode-1331
+      name: vsts-mac-131-xcode-142
       demands: xcode
     steps:
       - task: servicetree-link-build-task@1
@@ -47,3 +47,6 @@ jobs:
           coverageThreshold: 51
           coverageFailOption: fixed
           coverageType: lines
+          
+      - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+        displayName: 'Component Detection'

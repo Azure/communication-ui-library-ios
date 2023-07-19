@@ -16,6 +16,7 @@ class ParticipantGridViewModel: ObservableObject {
     }
 
     private var lastUpdateTimeStamp = Date()
+    private var lastDominantSpeakersUpdatedTimestamp = Date()
     private(set) var participantsCellViewModelArr: [ParticipantGridCellViewModel] = []
 
     @Published var gridsCount: Int = 0
@@ -33,13 +34,17 @@ class ParticipantGridViewModel: ObservableObject {
 
     func update(callingState: CallingState,
                 remoteParticipantsState: RemoteParticipantsState) {
-        guard lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp else {
+        guard lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp
+                || lastDominantSpeakersUpdatedTimestamp != remoteParticipantsState.dominantSpeakersModifiedTimestamp
+        else {
             return
         }
         lastUpdateTimeStamp = remoteParticipantsState.lastUpdateTimeStamp
+        lastDominantSpeakersUpdatedTimestamp = remoteParticipantsState.dominantSpeakersModifiedTimestamp
 
         let remoteParticipants = remoteParticipantsState.participantInfoList
-        let newDisplayedInfoModelArr = getDisplayedInfoViewModels(remoteParticipants)
+        let dominantSpeakers = remoteParticipantsState.dominantSpeakers
+        let newDisplayedInfoModelArr = getDisplayedInfoViewModels(remoteParticipants, dominantSpeakers)
         let removedModels = getRemovedInfoModels(for: newDisplayedInfoModelArr)
         let addedModels = getAddedInfoModels(for: newDisplayedInfoModelArr)
         let orderedInfoModelArr = sortDisplayedInfoModels(newDisplayedInfoModelArr,
@@ -58,7 +63,8 @@ class ParticipantGridViewModel: ObservableObject {
         }
     }
 
-    private func getDisplayedInfoViewModels(_ infoModels: [ParticipantInfoModel]) -> [ParticipantInfoModel] {
+    private func getDisplayedInfoViewModels(_ infoModels: [ParticipantInfoModel],
+                                            _ dominantSpeakers: [String]) -> [ParticipantInfoModel] {
         if let presentingParticipant = infoModels.first(where: { $0.screenShareVideoStreamModel != nil }) {
             return [presentingParticipant]
         }
@@ -66,9 +72,30 @@ class ParticipantGridViewModel: ObservableObject {
         if infoModels.count <= maximumParticipantsDisplayed {
             return infoModels
         }
-
+        var dominantSpeakersOrder = [String: Int]()
+        for i in 0..<min(maximumParticipantsDisplayed, dominantSpeakers.count) {
+            dominantSpeakersOrder[dominantSpeakers[i]] = i
+        }
         let sortedInfoList = infoModels.sorted(by: {
-            $0.recentSpeakingStamp.compare($1.recentSpeakingStamp) == .orderedDescending
+            if let order1 = dominantSpeakersOrder[$0.userIdentifier],
+                let order2 = dominantSpeakersOrder[$1.userIdentifier] {
+                return order1 < order2
+            }
+            if dominantSpeakersOrder[$0.userIdentifier] != nil {
+                return true
+            }
+            if dominantSpeakersOrder[$1.userIdentifier] != nil {
+                return false
+            }
+            if ($0.cameraVideoStreamModel != nil && $1.cameraVideoStreamModel != nil)
+                || ($0.cameraVideoStreamModel == nil && $1.cameraVideoStreamModel == nil) {
+                return true
+            }
+            if $0.cameraVideoStreamModel != nil {
+                return true
+            } else {
+                return false
+            }
         })
         let newDisplayRemoteParticipant = sortedInfoList.prefix(maximumParticipantsDisplayed)
         // Need to filter if the user is on the lobby or not

@@ -74,7 +74,6 @@ class InfoHeaderViewModelTests: XCTestCase {
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
             status: .idle,
-            recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
         let remoteParticipantsState = RemoteParticipantsState(
@@ -107,7 +106,6 @@ class InfoHeaderViewModelTests: XCTestCase {
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
             status: .idle,
-            recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
         participantList.append(firstParticipantInfoModel)
@@ -119,7 +117,6 @@ class InfoHeaderViewModelTests: XCTestCase {
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
             status: .idle,
-            recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
         participantList.append(secondParticipantInfoModel)
@@ -290,7 +287,6 @@ class InfoHeaderViewModelTests: XCTestCase {
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
             status: .idle,
-            recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
         participantList.append(firstParticipantInfoModel)
@@ -302,7 +298,6 @@ class InfoHeaderViewModelTests: XCTestCase {
             isRemoteUser: true,
             userIdentifier: "testUserIdentifier1",
             status: .idle,
-            recentSpeakingStamp: Date(),
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
         participantList.append(secondParticipantInfoModel)
