@@ -1,7 +1,15 @@
 # Azure Communication UI Calling Release History
+
 ## 1.4.0-beta.1 (2023-04-26)
 ### New Features
 - Introduced dominant speaker into calling grid view to determine the participants order on the screen of grid view. [667](https://github.com/Azure/communication-ui-library-ios/pull/667)
+
+## 1.3.1 (2023-07-19)
+### Bugs Fixed
+- Call join being blocked when microphone is unavailable to use for UI Composite at the moment
+- API Level 29, call resume from hold bug is fixed
+- Audio Speaker issue fix for Samsung devices
+
 ## 1.3.0 (2023-04-06)
 ### New Features
 - `LocalOptions(skipSetupScreen: Bool?)` to skip the setup screen and directly join the call. [642](https://github.com/Azure/communication-ui-library-ios/pull/642)

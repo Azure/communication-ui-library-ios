@@ -32,6 +32,7 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
          compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          accessibilityProvider: AccessibilityProviderProtocol,
+         audioSessionManager: AudioSessionManagerProtocol,
          resumeAction: @escaping (() -> Void)) {
         self.localizationProvider = localizationProvider
         self.compositeViewModelFactory = compositeViewModelFactory
@@ -51,7 +52,7 @@ class OnHoldOverlayViewModel: OverlayViewModelProtocol, ObservableObject {
                     return
                 }
                 self.logger.debug("Resume from hold button tapped")
-                if self.audioSessionStatus == .active {
+                if audioSessionManager.isAudioUsedByOther() {
                     resumeAction()
                 } else {
                     self.errorInfoViewModel?.show()
