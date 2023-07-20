@@ -40,6 +40,7 @@ extension CompositeViewModelFactoryTests {
         return CompositeViewModelFactory(logger: logger,
                                          store: mockStoreFactory.store,
                                          networkManager: NetworkManager(),
+                                         audioSessionManager: AudioSessionManager(store: mockStoreFactory.store, logger: logger),
                                          localizationProvider: LocalizationProviderMocking(),
                                          accessibilityProvider: AccessibilityProviderMocking(),
                                          debugInfoManager: DebugInfoManagerMocking())

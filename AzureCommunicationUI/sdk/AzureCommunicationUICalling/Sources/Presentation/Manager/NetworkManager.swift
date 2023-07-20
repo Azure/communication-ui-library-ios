@@ -4,11 +4,12 @@
 //
 
 import Network
+import Combine
 
 protocol NetworkManagerProtocol {}
 
-class NetworkManager: NetworkManagerProtocol {
-
+class NetworkManager: NetworkManagerProtocol, ObservableObject {
+    @Published var isConnected: Bool = true
     private enum Constant {
         static let networkQueue: String = "NetworkMonitorQueue"
     }
@@ -20,12 +21,13 @@ class NetworkManager: NetworkManagerProtocol {
         networkMonitorQueue = DispatchQueue(label: Constant.networkQueue)
     }
 
-    func isOnline() -> Bool {
-        return monitor?.currentPath.status == .satisfied
-    }
-
     func startMonitor() {
         monitor = NWPathMonitor()
+        monitor?.pathUpdateHandler = { [weak self] path in
+                    DispatchQueue.main.async {
+                        self?.isConnected = path.status == .satisfied
+                    }
+                }
         monitor?.start(queue: networkMonitorQueue)
     }
 
