@@ -18,6 +18,10 @@ public class CallComposite {
         public var onError: ((CallCompositeError) -> Void)?
         /// Closures to execute when participant has joined a call inside Call Composite.
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
+        /// Closure to execute when call state changes.
+        public var onCallStateChanged: ((CallCompositeCallState) -> Void)?
+        /// Closure to execute when Call Composite exited.
+        public var onExited: ((CallCompositeExit) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -36,6 +40,8 @@ public class CallComposite {
 
     private var store: Store<AppState, Action>?
     private var errorManager: ErrorManagerProtocol?
+    private var exitManager: ExitManagerProtocol?
+    private var callStateManager: CallStateManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
     private var audioSessionManager: AudioSessionManagerProtocol?
@@ -53,6 +59,11 @@ public class CallComposite {
         return localDebugInfoManager.getDebugInfo()
     }
 
+    /// Get call state for the Call Composite.
+    public var callStateCode: String {
+        return store?.state.callingState.status.toCallCompositeCallState() ?? CallCompositeCallStateCode.none
+    }
+
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
@@ -63,6 +74,11 @@ public class CallComposite {
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
         orientationProvider = OrientationProvider()
+    }
+
+    /// Exit call composite
+    public func exit() {
+        exitManager?.exit()
     }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
@@ -162,6 +178,8 @@ public class CallComposite {
         self.avatarViewManager = avatarViewManager
 
         self.errorManager = CompositeErrorManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
+        self.callStateManager = CallStateManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
+        self.exitManager = CompositeExitManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
         self.lifeCycleManager = UIKitAppLifeCycleManager(store: store, logger: logger)
         self.permissionManager = PermissionsManager(store: store)
         self.audioSessionManager = AudioSessionManager(store: store, logger: logger)
@@ -198,6 +216,7 @@ public class CallComposite {
 
     private func cleanUpManagers() {
         self.errorManager = nil
+        self.callStateManager = nil
         self.lifeCycleManager = nil
         self.permissionManager = nil
         self.audioSessionManager = nil
@@ -205,6 +224,7 @@ public class CallComposite {
         self.remoteParticipantsManager = nil
         self.debugInfoManager = nil
         self.callHistoryService = nil
+        self.exitManager = nil
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,
@@ -226,9 +246,12 @@ public class CallComposite {
                                                                         callComposite: self,
                                                                         isRightToLeft: isRightToLeft)
         containerUIHostingController.modalPresentationStyle = .fullScreen
-
-        router.setDismissComposite { [weak containerUIHostingController, weak self] in
+        router.setDismissComposite { [weak containerUIHostingController] in
             containerUIHostingController?.dismissSelf()
+        }
+
+        containerUIHostingController.onviewDisappear {[weak self] in
+            self?.exitManager?.onExited()
             self?.cleanUpManagers()
         }
 
