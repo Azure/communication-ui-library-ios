@@ -14,9 +14,12 @@ struct CallConfiguration {
     let displayName: String?
     let diagnosticConfig: DiagnosticConfig
 
+    let enableCallKitInSDK: Bool
+
     init(locator: JoinLocator,
          credential: CommunicationTokenCredential,
-         displayName: String?) {
+         displayName: String?,
+         enableCallKitInSDK: Bool) {
         switch locator {
         case let .groupCall(groupId: groupId):
             self.groupId = groupId
@@ -29,6 +32,7 @@ struct CallConfiguration {
         }
         self.credential = credential
         self.displayName = displayName
+        self.enableCallKitInSDK = enableCallKitInSDK
         self.diagnosticConfig = DiagnosticConfig()
     }
 }
