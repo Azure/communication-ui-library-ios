@@ -81,6 +81,11 @@ public class CallComposite {
         exitManager?.exit()
     }
 
+    /// Exit call composite
+    public func exit() {
+        exitManager?.exit()
+    }
+
     convenience init(withOptions options: CallCompositeOptions? = nil,
                      callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
         self.init(withOptions: options)
