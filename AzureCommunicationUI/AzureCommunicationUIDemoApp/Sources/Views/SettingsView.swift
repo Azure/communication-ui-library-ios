@@ -49,6 +49,7 @@ struct SettingsView: View {
                     remoteParticipantsAvatarsSettings
                     themeSettings
                 }
+                exitCompositeSettings
             }
             .accessibilityElement(children: .contain)
             .navigationTitle("UI Library - Settings")
@@ -115,6 +116,26 @@ struct SettingsView: View {
         Toggle("Use mock Calling SDK Wrapper Handler",
                isOn: $envConfigSubject.useMockCallingSDKHandler)
         .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
+    }
+
+    var relaunchCompositeOnExitToggle: some View {
+        Toggle("Relaunch composite after exit api call",
+               isOn: $envConfigSubject.useRelaunchOnExitToggle)
+        .accessibilityIdentifier(AccessibilityId.useRelaunchOnExitToggleToggleAccessibilityID.rawValue)
+    }
+
+    var exitCompositeSettings: some View {
+        Section(header: Text("Exit API Testing")) {
+            relaunchCompositeOnExitToggle
+            TextField(
+                "Exit composite after seconds",
+                text: $envConfigSubject.exitCompositeAfterDuration
+            )
+            .keyboardType(.numberPad)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .textFieldStyle(.roundedBorder)
+        }
     }
 
     var localizationSettings: some View {

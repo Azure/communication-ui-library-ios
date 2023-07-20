@@ -33,7 +33,6 @@ struct ContainerView: View {
         }
         .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
     }
-
     var setupView: SetupView {
         logger.debug("Displaying view: setupView")
         return viewFactory.makeSetupView()
