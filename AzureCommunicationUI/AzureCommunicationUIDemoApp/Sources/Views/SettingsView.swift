@@ -48,7 +48,6 @@ struct SettingsView: View {
                     navigationSettings
                     remoteParticipantsAvatarsSettings
                     themeSettings
-                    exitCompositeSettings
                 }
             }
             .accessibilityElement(children: .contain)
