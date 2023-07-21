@@ -37,9 +37,6 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
-		<string>fetch</string>
-		<string>processing</string>
-		<string>voip</string>
 	</array>
 	<key>aadToken</key>
 	<string>${aadToken}</string>
