@@ -17,6 +17,7 @@ Pod::Spec.new do |spec|
   spec.info_plist           = {'UILibrarySemVersion' => "#{spec.version}"}
 
   spec.dependency             'AzureCommunicationCalling', '2.3.0'
+  spec.dependency             'AzureCore', '1.0.0-beta.15'
   spec.dependency             'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   spec.dependency             'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
   spec.dependency             'MicrosoftFluentUI/Button_ios', '0.10.0'

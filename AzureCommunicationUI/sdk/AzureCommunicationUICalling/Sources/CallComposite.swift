@@ -29,11 +29,14 @@ public class CallComposite {
 
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
+    private let setupViewOrientationOptions: OrientationOptions?
+    private let callingViewOrientationOptions: OrientationOptions?
 
     // Internal dependencies
     private var logger: Logger = DefaultLogger(category: "Calling")
     private var accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()
     private var localizationProvider: LocalizationProviderProtocol
+    private var orientationProvider: OrientationProvider
 
     private var store: Store<AppState, Action>?
     private var errorManager: ErrorManagerProtocol?
@@ -68,6 +71,9 @@ public class CallComposite {
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
         localizationProvider = LocalizationProvider(logger: logger)
+        setupViewOrientationOptions = options?.setupScreenOrientation
+        callingViewOrientationOptions = options?.callingScreenOrientation
+        orientationProvider = OrientationProvider()
     }
 
     /// Exit call composite
@@ -224,10 +230,17 @@ public class CallComposite {
     private func makeToolkitHostingController(router: NavigationRouter,
                                               logger: Logger,
                                               viewFactory: CompositeViewFactoryProtocol,
-                                              isRightToLeft: Bool) -> ContainerUIHostingController {
+                                              isRightToLeft: Bool)
+    -> ContainerUIHostingController {
+        let setupViewOrientationMask = orientationProvider.orientationMask(for:
+                                                                            setupViewOrientationOptions)
+        let callingViewOrientationMask = orientationProvider.orientationMask(for:
+                                                                                callingViewOrientationOptions)
         let rootView = ContainerView(router: router,
                                      logger: logger,
                                      viewFactory: viewFactory,
+                                     setupViewOrientationMask: setupViewOrientationMask,
+                                     callingViewOrientationMask: callingViewOrientationMask,
                                      isRightToLeft: isRightToLeft)
         let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
                                                                         callComposite: self,
