@@ -181,9 +181,9 @@ class CallingDemoViewController: UIViewController {
                                                                 identifiers: identifiers)
     }
 
-    private func onCallStateChanged(_ callStateEvent: CallCompositeCallState, callComposite: CallComposite) {
-        print("::::CallingDemoViewController::getEventsHandler::onCallStateChanged \(callStateEvent.code)")
-        callStateLabel.text = callStateEvent.code
+    private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
+        print("::::CallingDemoViewController::getEventsHandler::onCallStateChanged \(callState.requestString)")
+        callStateLabel.text = callState.requestString
     }
 
     private func startExperience(with link: String) async {
@@ -226,16 +226,14 @@ class CallingDemoViewController: UIViewController {
             self.onError(error,
                          callComposite: composite)
         }
-        let onCallStateChangedHandler: (CallCompositeCallState) -> Void = { [weak callComposite] callStateEvent in
+        let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callState in
             guard let composite = callComposite else {
                 return
             }
-            self.onCallStateChanged(callStateEvent,
-                    callComposite: composite)
+            self.onCallStateChanged(callState, callComposite: composite)
         }
-        let onExitedHandler: (CallCompositeExit) -> Void = { [] _ in
-            print("::::CallingDemoView::onExitedHandler")
-            if self.envConfigSubject.useRelaunchOnExitToggle && self.exitCompositeExecuted {
+        let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
+            if self.envConfigSubject.useRelaunchOnDismissedToggle && self.exitCompositeExecuted {
                             DispatchQueue.main.async() {
                                 Task { @MainActor in
                                     self.onStartExperienceBtnPressed()
@@ -249,13 +247,13 @@ class CallingDemoViewController: UIViewController {
                                           Float64(envConfigSubject.exitCompositeAfterDuration)!
             ) { [weak callComposite] in
                 self.exitCompositeExecuted = true
-                callComposite?.exit()
+                callComposite?.dismiss()
             }
         }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
-        callComposite.events.onExited = onExitedHandler
+        callComposite.events.onDismissed = onDismissedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName

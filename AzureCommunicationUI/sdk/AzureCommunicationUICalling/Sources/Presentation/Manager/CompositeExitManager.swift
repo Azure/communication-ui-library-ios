@@ -7,8 +7,8 @@ import Foundation
 import Combine
 
 protocol ExitManagerProtocol {
-    func exit()
-    func onExited()
+    func dismiss()
+    func onDismissed()
 }
 
 class CompositeExitManager: ExitManagerProtocol {
@@ -24,7 +24,7 @@ class CompositeExitManager: ExitManagerProtocol {
         self.eventsHandler = callCompositeEventsHandler
     }
 
-    func exit() {
+    func dismiss() {
         if store.state.callingState.status == CallingStatus.none
             || store.state.callingState.status == CallingStatus.disconnected {
             store.dispatch(action: .compositeExitAction)
@@ -33,19 +33,19 @@ class CompositeExitManager: ExitManagerProtocol {
         }
     }
 
-    func onExited() {
+    func onDismissed() {
         updateEventHandler()
     }
 
     private func updateEventHandler() {
-        guard let onExit = eventsHandler.onExited else {
+        guard let onDismissed = eventsHandler.onDismissed else {
             return
         }
         guard let compositeError = getCallCompositeError(errorState: store.state.errorState) else {
-            onExit(CallCompositeExit( code: "", error: nil))
+            onDismissed(CallCompositeDismissed(errorCode: nil, error: nil))
             return
         }
-        onExit(CallCompositeExit( code: compositeError.code, error: compositeError.error))
+        onDismissed(CallCompositeDismissed(errorCode: compositeError.code, error: compositeError.error))
    }
 
     private func getCallCompositeError(errorState: ErrorState) -> CallCompositeError? {

@@ -19,9 +19,9 @@ public class CallComposite {
         /// Closures to execute when participant has joined a call inside Call Composite.
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
         /// Closure to execute when call state changes.
-        public var onCallStateChanged: ((CallCompositeCallState) -> Void)?
-        /// Closure to execute when Call Composite exited.
-        public var onExited: ((CallCompositeExit) -> Void)?
+        public var onCallStateChanged: ((CallState) -> Void)?
+        /// Closure to Call Composite dismissed.
+        public var onDismissed: ((CallCompositeDismissed) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -57,8 +57,8 @@ public class CallComposite {
     }
 
     /// Get call state for the Call Composite.
-    public var callStateCode: String {
-        return store?.state.callingState.status.toCallCompositeCallState() ?? CallCompositeCallStateCode.none
+    public var callState: CallState {
+        return store?.state.callingState.status.toCallCompositeCallState() ?? CallState.none
     }
 
     /// Create an instance of CallComposite with options.
@@ -70,9 +70,9 @@ public class CallComposite {
         localizationProvider = LocalizationProvider(logger: logger)
     }
 
-    /// Exit call composite
-    public func exit() {
-        exitManager?.exit()
+    /// Dismiss call composite. If call is in progress, user will leave a call.
+    public func dismiss() {
+        exitManager?.dismiss()
     }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
@@ -238,7 +238,7 @@ public class CallComposite {
         }
 
         containerUIHostingController.onviewDisappear {[weak self] in
-            self?.exitManager?.onExited()
+            self?.exitManager?.onDismissed()
             self?.cleanUpManagers()
         }
 
