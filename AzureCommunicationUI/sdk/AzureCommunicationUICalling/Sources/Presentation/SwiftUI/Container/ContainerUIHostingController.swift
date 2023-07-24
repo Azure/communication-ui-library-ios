@@ -60,10 +60,6 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
         self.environmentProperties.supportedOrientations
     }
 
-    func onviewDisappear(_ closure: @escaping () -> Void) {
-        self.onViewDidDisappear = closure
-    }
-
     private func subscribeEnvironmentProperties(containerView: ContainerView) {
         environmentProperties
             .$supportedOrientations

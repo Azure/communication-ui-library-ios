@@ -233,11 +233,8 @@ public class CallComposite {
                                                                         callComposite: self,
                                                                         isRightToLeft: isRightToLeft)
         containerUIHostingController.modalPresentationStyle = .fullScreen
-        router.setDismissComposite { [weak containerUIHostingController] in
+        router.setDismissComposite { [weak containerUIHostingController, weak self] in
             containerUIHostingController?.dismissSelf()
-        }
-
-        containerUIHostingController.onviewDisappear {[weak self] in
             self?.exitManager?.onDismissed()
             self?.cleanUpManagers()
         }
