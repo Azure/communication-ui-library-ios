@@ -13,7 +13,7 @@ class CompositeExitManagerTests: XCTestCase {
     var compositeExitManager: CompositeExitManager!
     var handlerCallExpectation: XCTestExpectation!
     var expectedError: Error?
-    var expectedErrorCode: String = ""
+    var expectedErrorCode: String?
 
     override func setUp() {
         super.setUp()
@@ -54,7 +54,7 @@ class CompositeExitManagerTests: XCTestCase {
                 XCTAssertTrue(self.mockStoreFactory.actions.first == Action.callingAction(.callEndRequested))
                 actionExpectation.fulfill()
             }.store(in: cancellable)
-        compositeExitManager.exit()
+        compositeExitManager.dismiss()
 
         wait(for: [actionExpectation], timeout: 1)
     }
@@ -81,7 +81,7 @@ class CompositeExitManagerTests: XCTestCase {
                 XCTAssertTrue(self.mockStoreFactory.actions.first == Action.compositeExitAction)
                 actionExpectation.fulfill()
             }.store(in: cancellable)
-        compositeExitManager.exit()
+        compositeExitManager.dismiss()
 
         wait(for: [actionExpectation], timeout: 1)
     }
@@ -108,7 +108,7 @@ class CompositeExitManagerTests: XCTestCase {
                 XCTAssertTrue(self.mockStoreFactory.actions.first == Action.compositeExitAction)
                 actionExpectation.fulfill()
             }.store(in: cancellable)
-        compositeExitManager.exit()
+        compositeExitManager.dismiss()
 
         wait(for: [actionExpectation], timeout: 1)
     }
@@ -123,7 +123,7 @@ class CompositeExitManagerTests: XCTestCase {
         )
         let newState = getAppState(errorState: ErrorState(), callingState: callState)
         mockStoreFactory.setState(newState)
-        compositeExitManager.onExited()
+        compositeExitManager.onDismissed()
 
         wait(for: [handlerCallExpectation], timeout: 1)
     }
@@ -137,13 +137,13 @@ class CompositeExitManagerTests: XCTestCase {
                                      callStartDate: Date()
         )
         self.expectedError = nil
-        self.expectedErrorCode = ""
+        self.expectedErrorCode = nil
         let errorState = ErrorState(internalError: .callTokenFailed,
                                     error: nil,
                                     errorCategory: .none)
         let newState = getAppState(errorState: errorState, callingState: callState)
         mockStoreFactory.setState(newState)
-        compositeExitManager.onExited()
+        compositeExitManager.onDismissed()
 
         wait(for: [handlerCallExpectation], timeout: 1)
     }
@@ -163,7 +163,7 @@ class CompositeExitManagerTests: XCTestCase {
                                     errorCategory: .fatal)
         let newState = getAppState(errorState: errorState, callingState: callState)
         mockStoreFactory.setState(newState)
-        compositeExitManager.onExited()
+        compositeExitManager.onDismissed()
 
         wait(for: [handlerCallExpectation], timeout: 1)
     }
@@ -192,12 +192,12 @@ extension CompositeExitManagerTests {
 
     func getEventsHandler() -> CallComposite.Events {
         let handler = CallComposite.Events()
-        handler.onExited = { [weak self] callCompositeExit in
+        handler.onDismissed = { [weak self] callCompositeExit in
             guard let self = self else {
                 return
             }
             XCTAssertEqual(callCompositeExit.error?.localizedDescription, self.expectedError?.localizedDescription)
-            XCTAssertEqual(callCompositeExit.code, self.expectedErrorCode)
+            XCTAssertEqual(callCompositeExit.errorCode, self.expectedErrorCode)
 
             self.handlerCallExpectation.fulfill()
         }

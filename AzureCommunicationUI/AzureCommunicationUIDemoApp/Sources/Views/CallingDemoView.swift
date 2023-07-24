@@ -178,7 +178,6 @@ extension CallingDemoView {
                     isStartExperienceLoading = false
                     return
                 }
-                print("onExitedHandler: starting composite")
                 await startCallComposite()
                 isStartExperienceLoading = false
             }
@@ -232,16 +231,15 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
-        let onCallStateChangedHandler: (CallCompositeCallState) -> Void = { [weak callComposite] callStateEvent in
+        let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
             guard let composite = callComposite else {
                 return
             }
             onCallStateChanged(callStateEvent,
                     callComposite: composite)
         }
-        let onExitedHandler: (CallCompositeExit) -> Void = { [] _ in
-            print("::::CallingDemoView::onExitedHandler")
-            if envConfigSubject.useRelaunchOnExitToggle && exitCompositeExecuted {
+        let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
+            if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
                 relaunchComposite()
             }
         }
@@ -251,13 +249,13 @@ extension CallingDemoView {
                                           Float64(envConfigSubject.exitCompositeAfterDuration)!
             ) { [weak callComposite] in
                 exitCompositeExecuted = true
-                callComposite?.exit()
+                callComposite?.dismiss()
             }
         }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
-        callComposite.events.onExited = onExitedHandler
+        callComposite.events.onDismissed = onDismissedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
@@ -363,9 +361,9 @@ extension CallingDemoView {
         showError(for: error.code)
     }
 
-    private func onCallStateChanged(_ callStateEvent: CallCompositeCallState, callComposite: CallComposite) {
-        print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callStateEvent.code)")
-        callState = callStateEvent.code
+    private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
+        print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
+        self.callState = callState.requestString
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
