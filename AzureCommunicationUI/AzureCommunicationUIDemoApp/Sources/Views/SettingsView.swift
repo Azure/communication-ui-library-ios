@@ -118,15 +118,15 @@ struct SettingsView: View {
         .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
     }
 
-    var relaunchCompositeOnExitToggle: some View {
-        Toggle("Relaunch composite after exit api call",
-               isOn: $envConfigSubject.useRelaunchOnExitToggle)
-        .accessibilityIdentifier(AccessibilityId.useRelaunchOnExitToggleToggleAccessibilityID.rawValue)
+    var relaunchCompositeOnDismissedToggle: some View {
+        Toggle("Relaunch composite after dismiss api call",
+               isOn: $envConfigSubject.useRelaunchOnDismissedToggle)
+        .accessibilityIdentifier(AccessibilityId.useRelaunchOnDismissedToggleToggleAccessibilityID.rawValue)
     }
 
     var exitCompositeSettings: some View {
         Section(header: Text("Exit API Testing")) {
-            relaunchCompositeOnExitToggle
+            relaunchCompositeOnDismissedToggle
             TextField(
                 "Exit composite after seconds",
                 text: $envConfigSubject.exitCompositeAfterDuration
