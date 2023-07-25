@@ -10,6 +10,7 @@ enum VisibilityStatus {
     case hideRequested
     case hidden
     case pipModeRequested
+    case pipModeLaunching
     case pipModeEntered
 
     var description: String {
@@ -22,6 +23,8 @@ enum VisibilityStatus {
             return "hidden"
         case .pipModeRequested:
             return "pipModeRequested"
+        case .pipModeLaunching:
+            return "pipModeLaunching"
         case .pipModeEntered:
             return "pipModeEntered"
         }

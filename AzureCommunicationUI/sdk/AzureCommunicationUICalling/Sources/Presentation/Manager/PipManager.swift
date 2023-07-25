@@ -9,7 +9,6 @@ import UIKit
 import AVKit
 
 protocol PipManagerProtocol {
-    func startPictureInPicture()
     func stopPictureInPicture()
     func reset()
 }
@@ -18,7 +17,6 @@ class PipManager: NSObject, PipManagerProtocol {
     private let store: Store<AppState, Action>
     private let logger: Logger
 
-//    var callPipCoordinator: CallPipCoordinator?
     private var onRequirePipContentView: () -> UIView?
     private var onRequirePipPlaceholderView: () -> UIView?
     private var onPipStarted: () -> Void
@@ -30,7 +28,6 @@ class PipManager: NSObject, PipManagerProtocol {
     /// Pip view controller embeds into System AVKit Pip Window
     private var pipVideoController: UIViewController?
 
-    private var startPipRequested: Bool = false
     private var turnCameraOffWhilePipIsStarting: Bool = false
 
     var cancellables = Set<AnyCancellable>()
@@ -55,8 +52,7 @@ class PipManager: NSObject, PipManagerProtocol {
         commonInit()
     }
 
-    @objc
-    func startPictureInPicture() {
+    private func startPictureInPicture() {
         logger.debug("testpip: startPictureInPicture")
         turnCameraOffWhilePipIsStarting = self.store.state.localUserState.cameraState.operation == .on
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
@@ -86,16 +82,13 @@ class PipManager: NSObject, PipManagerProtocol {
     private func receive(state: AppState) {
         updateStartPipAutomatically(navigationState: state.navigationState)
 
-        if state.visibilityState.currentStatus == .pipModeRequested && !startPipRequested {
-            startPipRequested = true
-
+        if state.visibilityState.currentStatus == .pipModeRequested {
             guard #available(iOS 15.0, *), AVPictureInPictureController.isPictureInPictureSupported() else {
                 onPipStartFailed()
                 return
             }
+            store.dispatch(action: .visibilityAction(.pipModeLaunching))
             startPictureInPicture()
-        } else {
-            startPipRequested = state.visibilityState.currentStatus == .pipModeRequested
         }
     }
 

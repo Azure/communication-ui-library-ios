@@ -9,6 +9,7 @@ enum VisibilityAction: Equatable {
     case hideRequested
     case hideEntered
     case pipModeRequested
+    case pipModeLaunching
     case pipModeEntered
     case showNormalEntered
 }
