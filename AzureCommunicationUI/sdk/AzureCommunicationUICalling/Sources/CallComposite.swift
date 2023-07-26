@@ -19,6 +19,8 @@ public class CallComposite {
         public var onError: ((CallCompositeError) -> Void)?
         /// Closures to execute when participant has joined a call inside Call Composite.
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
+        /// Closure to execure when CallComposite is displayed in Picture-In-Picture.
+        public var onPictureInPictureChanged: ((_ isInPictureInPicture: Bool) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -348,10 +350,12 @@ extension CallComposite {
                                      onPipStarted: {
             self.viewController?.dismissSelf(animated: false)
             self.viewController = nil
+            self.events.onPictureInPictureChanged?(true)
         },
                                      onPipStoped: {
             self.pipViewController?.dismissSelf()
             self.displayCallCompositeIfWasHidden()
+            self.events.onPictureInPictureChanged?(false)
         },
                                      onPipStartFailed: {
             self.viewController?.dismissSelf()

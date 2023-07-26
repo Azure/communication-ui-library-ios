@@ -224,8 +224,13 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
+        let onPipChangedHandler: (Bool) -> Void = { isInPictureInPicture in
+            print("::::CallingDemoView:onPipChangedHandler: ", isInPictureInPicture)
+        }
+
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
+        callComposite.events.onPictureInPictureChanged = onPipChangedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
