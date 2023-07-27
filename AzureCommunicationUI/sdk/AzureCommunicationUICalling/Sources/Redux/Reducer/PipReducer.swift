@@ -17,8 +17,6 @@ extension Reducer where State == VisibilityState,
             newStatus = .hideRequested
         case .pipModeRequested:
             newStatus = .pipModeRequested
-        case .pipModeLaunching:
-            newStatus = .pipModeLaunching
         case .pipModeEntered:
             newStatus = .pipModeEntered
         case .hideEntered:

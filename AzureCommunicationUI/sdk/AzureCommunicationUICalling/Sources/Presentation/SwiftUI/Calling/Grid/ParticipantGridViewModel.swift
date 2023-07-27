@@ -12,7 +12,7 @@ class ParticipantGridViewModel: ObservableObject {
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let isIpadInterface: Bool
     private var maximumParticipantsDisplayed: Int {
-        return isIpadInterface ? 9 : 6
+        return  self.visibilityStatus == .pipModeEntered ? 1 : isIpadInterface ? 9 : 6
     }
 
     private var lastUpdateTimeStamp = Date()
@@ -61,10 +61,6 @@ class ParticipantGridViewModel: ObservableObject {
         let remoteParticipants = remoteParticipantsState.participantInfoList
         let dominantSpeakers = remoteParticipantsState.dominantSpeakers
         var newDisplayedInfoModelArr = getDisplayedInfoViewModels(remoteParticipants, dominantSpeakers, visibilityState)
-        if visibilityState.currentStatus != .visible, let firstParticipant = newDisplayedInfoModelArr.first {
-            newDisplayedInfoModelArr.removeAll()
-            newDisplayedInfoModelArr.append(firstParticipant)
-        }
         let removedModels = getRemovedInfoModels(for: newDisplayedInfoModelArr)
         let addedModels = getAddedInfoModels(for: newDisplayedInfoModelArr)
         let orderedInfoModelArr = sortDisplayedInfoModels(newDisplayedInfoModelArr,
@@ -89,8 +85,6 @@ class ParticipantGridViewModel: ObservableObject {
         if let presentingParticipant = infoModels.first(where: { $0.screenShareVideoStreamModel != nil }) {
             return [presentingParticipant]
         }
-
-        let maximumParticipantsDisplayed = pipState.currentStatus != .visible ? 1 : maximumParticipantsDisplayed
 
         if infoModels.count <= maximumParticipantsDisplayed {
             return infoModels
