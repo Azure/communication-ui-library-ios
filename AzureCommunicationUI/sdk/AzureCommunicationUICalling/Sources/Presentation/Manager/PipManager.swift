@@ -54,7 +54,6 @@ class PipManager: NSObject, PipManagerProtocol {
 
     private func startPictureInPicture() {
         logger.debug("testpip: startPictureInPicture")
-        turnCameraOffWhilePipIsStarting = self.store.state.localUserState.cameraState.operation == .on
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             self.avKitPipController?.startPictureInPicture()
         }
@@ -87,7 +86,6 @@ class PipManager: NSObject, PipManagerProtocol {
                 onPipStartFailed()
                 return
             }
-            store.dispatch(action: .visibilityAction(.pipModeLaunching))
             startPictureInPicture()
         }
     }
@@ -139,6 +137,7 @@ extension PipManager: AVPictureInPictureControllerDelegate {
     public func pictureInPictureControllerWillStartPictureInPicture(
         _ pictureInPictureController: AVPictureInPictureController) {
             logger.debug("testpip: pip Will Start")
+            turnCameraOffWhilePipIsStarting = self.store.state.localUserState.cameraState.operation == .on
             if turnCameraOffWhilePipIsStarting {
                 self.store.dispatch(action: .localUserAction(.cameraOffTriggered))
             }
