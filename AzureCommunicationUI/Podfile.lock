@@ -75,7 +75,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AppCenter: b0b6f1190215b5f983c42934db718f3b46fff3c0
-  AzureCommunicationCalling: ab3116181b21749210dc54c9d61c89af744eb018
+  AzureCommunicationCalling: 89e1d0baf8a953c94068377fd2560ecb80f05861
   AzureCommunicationChat: 9be8209d32c2fc6259095ff9838ad30dcfc44f80
   AzureCommunicationCommon: cc520a89f3f8db6d58de42ec4a70cfb79a1b76a3
   AzureCore: ebbf7cf4dfe72afc7584088c38d1c99f5a35d647

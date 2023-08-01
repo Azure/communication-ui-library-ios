@@ -151,7 +151,14 @@ extension PipManager: AVPictureInPictureControllerDelegate {
 
             if turnCameraOffWhilePipIsStarting {
                 turnCameraOffWhilePipIsStarting = false
-                self.store.dispatch(action: .localUserAction(.cameraOnTriggered))
+
+                Task {
+                    while self.store.state.localUserState.cameraState.operation == .pending {
+                        logger.debug("testpip: camera operation is pending")
+                        sleep(100)
+                    }
+                    self.store.dispatch(action: .localUserAction(.cameraOnTriggered))
+                }
             }
     }
 
