@@ -150,6 +150,9 @@ public class CallComposite {
             return
         }
         self.pipManager?.stopPictureInPicture()
+        if self.pipViewController != nil {
+            self.events.onPictureInPictureChanged?(false)
+        }
         self.pipViewController?.dismissSelf()
         self.viewController?.dismissSelf()
 
@@ -355,7 +358,6 @@ extension CallComposite {
                                      onPipStoped: {
             self.pipViewController?.dismissSelf()
             self.displayCallCompositeIfWasHidden()
-            self.events.onPictureInPictureChanged?(false)
         },
                                      onPipStartFailed: {
             self.viewController?.dismissSelf()
