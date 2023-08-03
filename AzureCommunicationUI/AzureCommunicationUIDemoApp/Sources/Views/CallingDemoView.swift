@@ -35,6 +35,7 @@ struct CallingDemoView: View {
             settingButton
             showCallHistoryButton
             startExperienceButton
+            showExperienceButton
             Spacer()
         }
         .padding()
@@ -139,6 +140,14 @@ struct CallingDemoView: View {
         .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
     }
 
+    var showExperienceButton: some View {
+        Button("Show") {
+            showCallComposite()
+        }
+        .buttonStyle(DemoButtonStyle())
+        .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+    }
+
     var showCallHistoryButton: some View {
         Button("Show call history") {
             alertTitle = callingViewModel.callHistoryTitle
@@ -165,6 +174,10 @@ struct CallingDemoView: View {
 }
 
 extension CallingDemoView {
+    func showCallComposite() {
+        callingViewModel.callComposite?.displayCallCompositeIfWasHidden()
+    }
+
     func startCallComposite() async {
         let link = getMeetingLink()
 
@@ -184,7 +197,9 @@ extension CallingDemoView {
             theme: envConfigSubject.useCustomColors
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
-            localization: localizationConfig)
+            localization: localizationConfig,
+            enableMultitasking: true,
+            enableSystemPiPWhenMultitasking: true)
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         let callComposite = useMockCallingSDKHandler ?
@@ -209,8 +224,13 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
+        let onPipChangedHandler: (Bool) -> Void = { isInPictureInPicture in
+            print("::::CallingDemoView:onPipChangedHandler: ", isInPictureInPicture)
+        }
+
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
+        callComposite.events.onPictureInPictureChanged = onPipChangedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
@@ -253,6 +273,7 @@ extension CallingDemoView {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
         }
+        callingViewModel.callComposite = callComposite
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {
