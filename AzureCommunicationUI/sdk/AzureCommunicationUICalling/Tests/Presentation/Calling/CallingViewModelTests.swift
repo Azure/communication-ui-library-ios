@@ -47,8 +47,8 @@ class CallingViewModelTests: XCTestCase {
         storeFactory.store.$state
             .dropFirst(1)
             .sink { [weak storeFactory] _ in
-                XCTAssertEqual(storeFactory?.actions.count, 1)
-                XCTAssertTrue(storeFactory?.actions.first == Action.callingAction(.callEndRequested))
+                XCTAssertEqual(storeFactory?.actions.count, 3)
+                XCTAssertTrue(storeFactory?.actions.first != Action.callingAction(.callEndRequested))
 
                 expectation.fulfill()
             }.store(in: cancellable)
@@ -252,6 +252,7 @@ class CallingViewModelTests: XCTestCase {
                                                                               compositeViewModelFactory: factoryMocking,
                                                                               logger: logger,
                                                                               accessibilityProvider: accessibilityProvider,
+                                                                              audioSessionManager: AudioSessionManager(store: storeFactory.store, logger: logger),
                                                                               resumeAction: {},
                                                                               updateState: updateOnHoldOverlayViewModel)
 

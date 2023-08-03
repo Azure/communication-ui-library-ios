@@ -73,6 +73,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let store: Store<AppState, Action>
     private let networkManager: NetworkManager
+    private let audioSessionManager: AudioSessionManagerProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
@@ -86,6 +87,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     init(logger: Logger,
          store: Store<AppState, Action>,
          networkManager: NetworkManager,
+         audioSessionManager: AudioSessionManagerProtocol,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          debugInfoManager: DebugInfoManagerProtocol,
@@ -95,6 +97,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.logger = logger
         self.store = store
         self.networkManager = networkManager
+        self.audioSessionManager = audioSessionManager
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         self.debugInfoManager = debugInfoManager
@@ -110,6 +113,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                            logger: logger,
                                            store: store,
                                            networkManager: networkManager,
+                                           audioSessionManager: audioSessionManager,
                                            localizationProvider: localizationProvider,
                                            setupScreenViewData: localOptions?.setupScreenViewData)
             self.setupViewModel = viewModel
@@ -200,7 +204,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                            title: title,
                            subtitle: subtitle)
     }
+}
 
+extension CompositeViewModelFactory {
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
         LobbyOverlayViewModel(localizationProvider: localizationProvider,
@@ -210,6 +216,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         LoadingOverlayViewModel(localizationProvider: localizationProvider,
                                 accessibilityProvider: accessibilityProvider,
                                 networkManager: networkManager,
+                                audioSessionManager: audioSessionManager,
                                 store: store)
     }
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
@@ -217,6 +224,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                compositeViewModelFactory: self,
                                logger: logger,
                                accessibilityProvider: accessibilityProvider,
+                               audioSessionManager: audioSessionManager,
                                resumeAction: resumeAction)
     }
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
