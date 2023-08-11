@@ -15,14 +15,14 @@ struct LockPhoneOrientation: ViewModifier {
 
     var orientationMask: UIInterfaceOrientationMask {
         switch screenSizeClass {
-        case .iphonePortraitScreenSize:
-            return .portrait
-        case .iphoneLandscapeScreenSize:
-            if UIDevice.current.orientation.isLandscape {
-                return UIDevice.current.orientation == .landscapeLeft ? .landscapeRight : .landscapeLeft
-            } else {
-                return .landscape
-            }
+//        case .iphonePortraitScreenSize:
+//            return .portrait
+//        case .iphoneLandscapeScreenSize:
+//            if UIDevice.current.orientation.isLandscape {
+//                return UIDevice.current.orientation == .landscapeLeft ? .landscapeRight : .landscapeLeft
+//            } else {
+//                return .landscape
+//            }
         default:
             return SupportedOrientationsPreferenceKey.defaultValue
         }
