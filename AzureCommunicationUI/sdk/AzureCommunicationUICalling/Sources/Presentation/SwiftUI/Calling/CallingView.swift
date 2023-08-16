@@ -230,10 +230,9 @@ extension CallingView {
             }
         }
     }
+
     private func resetOrientation() {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            UIDevice.current.setValue(UIDevice.current.orientation.rawValue, forKey: "orientation")
-            UIViewController.attemptRotationToDeviceOrientation()
-        }
+        UIDevice.current.setValue(UIDevice.current.orientation.rawValue, forKey: "orientation")
+        UIViewController.attemptRotationToDeviceOrientation()
     }
 }
