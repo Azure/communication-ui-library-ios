@@ -20,7 +20,6 @@ struct CallingView: View {
     @ObservedObject var viewModel: CallingViewModel
     let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
-    let leaveCallConfirmationListSourceView = UIView()
 
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
@@ -49,6 +48,8 @@ struct CallingView: View {
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
         .onRotate { newOrientation in
             updateChildViewIfNeededWith(newOrientation: newOrientation)
+        }.onAppear {
+            resetOrientation()
         }
     }
 
@@ -228,5 +229,10 @@ extension CallingView {
                 UIViewController.attemptRotationToDeviceOrientation()
             }
         }
+    }
+
+    private func resetOrientation() {
+        UIDevice.current.setValue(UIDevice.current.orientation.rawValue, forKey: "orientation")
+        UIViewController.attemptRotationToDeviceOrientation()
     }
 }

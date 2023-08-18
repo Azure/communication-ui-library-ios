@@ -566,7 +566,7 @@ class CallingMiddlewareHandlerTests: XCTestCase {
                                                            cameraStatus: .off,
                                                            cameraDeviceStatus: .front,
                                                            cameraPermission: .granted,
-                                                           internalError: .connectionFailed),
+                                                           internalError: .callJoinConnectionFailed),
                             dispatch: dispatch).value
     }
 }
