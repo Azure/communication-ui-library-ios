@@ -11,10 +11,10 @@ parameters:
     default: '$(agent.builddirectory)/output/package/signed'
   - name: provisioningProfileFile
     type: string
-    default: 'ACS-UI-calling-df-Dev-20231219.mobileprovision'
+    default: 'spoolCallCompositeDemoAppProfileDev-exp20240514.mobileprovision'
   - name: distributionProvisioningProfileFile
     type: string
-    default: 'spoolCallCompositeDogfoodProfileDist-exp230603.mobileprovision'
+    default: 'spoolCallCompositeDogfoodDistProfile-exp20240514.mobileprovision.mobileprovision'
   - name: signingCertificateFile
     type: string
     default: 'Emlyn-Enterprise-Dev-Cert.p12'
