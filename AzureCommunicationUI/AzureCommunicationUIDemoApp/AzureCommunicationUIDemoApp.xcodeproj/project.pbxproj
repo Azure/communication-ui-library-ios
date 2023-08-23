@@ -43,6 +43,7 @@
 		A8C69FBD2728AE1C00143DB7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A8C69FBC2728AE1C00143DB7 /* Assets.xcassets */; };
 		A8C69FC02728AE1C00143DB7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A8C69FBE2728AE1C00143DB7 /* LaunchScreen.storyboard */; };
 		A8FB819C272A082B00AA0930 /* DemoInputTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */; };
+		B2120A4F2A950BCC00E29C05 /* EnvConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = B2120A4E2A950BCC00E29C05 /* EnvConfig.xcconfig */; };
 		FA1AEBEC2964B5CA008D9931 /* AzureCommunicationUIDemoAppRemoteParticipantsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA1AEBEB2964B5CA008D9931 /* AzureCommunicationUIDemoAppRemoteParticipantsTests.swift */; };
 		FA2E532D294D3DA800E87DDF /* XCTestCaseExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA2E532C294D3DA800E87DDF /* XCTestCaseExtension.swift */; };
 		FA7B53EC282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA7B53EB282330F2001DFAB8 /* RemoteParticipantAvatarHelper.swift */; };
@@ -133,6 +134,7 @@
 		A8C69FBF2728AE1C00143DB7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A8C69FC12728AE1C00143DB7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A8FB819B272A082B00AA0930 /* DemoInputTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoInputTypes.swift; sourceTree = "<group>"; };
+		B2120A4E2A950BCC00E29C05 /* EnvConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = EnvConfig.xcconfig; path = Sources/EnvConfig.xcconfig; sourceTree = "<group>"; };
 		BDAA751E28E4BDC4008C2789 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		BDAA751F28E4BDC4008C2789 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FA1AEBEB2964B5CA008D9931 /* AzureCommunicationUIDemoAppRemoteParticipantsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AzureCommunicationUIDemoAppRemoteParticipantsTests.swift; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 		A8C69FA72728AE1A00143DB7 = {
 			isa = PBXGroup;
 			children = (
+				B2120A4E2A950BCC00E29C05 /* EnvConfig.xcconfig */,
 				FACEE493287364F4001D62BE /* AccessibilityIdentifier.swift */,
 				A8C69FB22728AE1A00143DB7 /* Sources */,
 				1F8881BB27909E08001427F0 /* Tests */,
@@ -410,6 +413,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2120A4F2A950BCC00E29C05 /* EnvConfig.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
