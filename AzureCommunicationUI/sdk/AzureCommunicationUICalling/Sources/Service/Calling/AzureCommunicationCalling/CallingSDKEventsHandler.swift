@@ -18,6 +18,11 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var callIdSubject = PassthroughSubject<String, Never>()
     var participantRoleSubject = PassthroughSubject<ParticipantRole, Never>()
 
+    // User Facing Diagnostics Subjects
+    var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
+    var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
+    var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()
+
     private let logger: Logger
     private var remoteParticipantEventAdapter = RemoteParticipantsEventsAdapter()
 
@@ -228,101 +233,135 @@ extension CallingSDKEventsHandler: CallDelegate,
         let role = call.callParticipantRole.toParticipantRole()
         participantRoleSubject.send(role)
     }
+    
+    // MARK: Diagnostics Utilities
+    private func forwardNetworkQualityEvent(with args: DiagnosticQualityChangedEventArgs) {
+        guard let diagnostic = NetworkDiagnostic(rawValue: args.name) else {
+            self.logger.debug("[UFD] Unknown diagnostic: \(args.name)")
+            return
+        }
+
+        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        let model = NetworkQualityDiagnosticModel(diagnostic: diagnostic, value: args.value)
+        self.networkQualityDiagnosticsSubject.send(model)
+    }
+
+    private func forwardNetworkFlagEvent(with args: DiagnosticFlagChangedEventArgs) {
+        guard let diagnostic = NetworkDiagnostic(rawValue: args.name) else {
+            self.logger.debug("[UFD] Unknown diagnostic: \(args.name)")
+            return
+        }
+
+        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        let model = NetworkDiagnosticModel(diagnostic: diagnostic, value: args.value)
+        self.networkDiagnosticsSubject.send(model)
+    }
+
+    private func forwardMediaFlagEvent(with args: DiagnosticFlagChangedEventArgs) {
+        guard let diagnostic = MediaDiagnostic(rawValue: args.name) else {
+            self.logger.debug("[UFD] Unknown diagnostic: \(args.name)")
+            return
+        }
+
+        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        let model = MediaDiagnosticModel(diagnostic: diagnostic, value: args.value)
+        self.mediaDiagnosticsSubject.send(model)
+    }
 
     // MARK: NetworkDiagnosticsDelegate
     func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
                             didChangeNetworkSendQuality args: DiagnosticQualityChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
-    }
-
-    func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
-                            didChangeIsNetworkUnavailable args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
-    }
-
-    func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
-                            didChangeNetworkReceiveQuality args: DiagnosticQualityChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardNetworkQualityEvent(with: args)
     }
 
     func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
                             didChangeNetworkReconnectionQuality args: DiagnosticQualityChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardNetworkQualityEvent(with: args)
+    }
+
+    func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
+                            didChangeNetworkReceiveQuality args: DiagnosticQualityChangedEventArgs) {
+        self.forwardNetworkQualityEvent(with: args)
+    }
+
+    func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
+                            didChangeIsNetworkUnavailable args: DiagnosticFlagChangedEventArgs) {
+        self.forwardNetworkFlagEvent(with: args)
     }
 
     func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
                             didChangeIsNetworkRelaysUnreachable args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardNetworkFlagEvent(with: args)
     }
 
     // MARK: MediaDiagnosticsDelegate
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsSpeakerBusy args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardMediaFlagEvent(with: args)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsCameraFrozen args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardMediaFlagEvent(with: args)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsSpeakerMuted args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardMediaFlagEvent(with: args)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsMicrophoneBusy args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardMediaFlagEvent(with: args)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsCameraStartFailed args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardMediaFlagEvent(with: args)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsSpeakerVolumeZero args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardMediaFlagEvent(with: args)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsSpeakerNotFunctioning args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardMediaFlagEvent(with: args)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsCameraPermissionDenied args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardMediaFlagEvent(with: args)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsMicrophoneNotFunctioning args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardMediaFlagEvent(with: args)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsCameraStartTimedOut args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardMediaFlagEvent(with: args)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsMicrophoneMutedUnexpectedly args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardMediaFlagEvent(with: args)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsNoSpeakerDevicesAvailable args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardMediaFlagEvent(with: args)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsNoMicrophoneDevicesAvailable args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardMediaFlagEvent(with: args)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsSpeakingWhileMicrophoneIsMuted args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
+        self.forwardMediaFlagEvent(with: args)
     }
 }
