@@ -13,7 +13,7 @@ class ContainerUIHostingController: UIHostingController<ContainerUIHostingContro
         @Published var prefersHomeIndicatorAutoHidden: Bool
 
         init() {
-            self.supportedOrientations = .portrait
+            self.supportedOrientations = .allButUpsideDown
             self.isProximitySensorOn = false
             self.prefersHomeIndicatorAutoHidden = false
         }

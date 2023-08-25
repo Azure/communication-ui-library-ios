@@ -19,6 +19,10 @@ public class CallComposite {
         public var onError: ((CallCompositeError) -> Void)?
         /// Closures to execute when participant has joined a call inside Call Composite.
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
+        /// Closure to execute when call state changes.
+        public var onCallStateChanged: ((CallState) -> Void)?
+        /// Closure to Call Composite dismissed.
+        public var onDismissed: ((CallCompositeDismissed) -> Void)?
         /// Closure to execure when CallComposite is displayed in Picture-In-Picture.
         public var onPictureInPictureChanged: ((_ isInPictureInPicture: Bool) -> Void)?
     }
@@ -28,6 +32,8 @@ public class CallComposite {
 
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
+    private let setupViewOrientationOptions: OrientationOptions?
+    private let callingViewOrientationOptions: OrientationOptions?
     private let enableMultitasking: Bool
     private let enableSystemPiPWhenMultitasking: Bool
 
@@ -35,9 +41,12 @@ public class CallComposite {
     private var logger: Logger = DefaultLogger(category: "Calling")
     private var accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()
     private var localizationProvider: LocalizationProviderProtocol
+    private var orientationProvider: OrientationProvider
 
     private var store: Store<AppState, Action>?
     private var errorManager: ErrorManagerProtocol?
+    private var exitManager: ExitManagerProtocol?
+    private var callStateManager: CallStateManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
     private var audioSessionManager: AudioSessionManagerProtocol?
@@ -61,6 +70,11 @@ public class CallComposite {
         return localDebugInfoManager.getDebugInfo()
     }
 
+    /// Get call state for the Call Composite.
+    public var callState: CallState {
+        return store?.state.callingState.status.toCallCompositeCallState() ?? CallState.none
+    }
+
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
@@ -68,8 +82,16 @@ public class CallComposite {
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
         localizationProvider = LocalizationProvider(logger: logger)
+        setupViewOrientationOptions = options?.setupScreenOrientation
+        callingViewOrientationOptions = options?.callingScreenOrientation
+        orientationProvider = OrientationProvider()
         enableMultitasking = options?.enableMultitasking ?? false
         enableSystemPiPWhenMultitasking = options?.enableSystemPiPWhenMultitasking ?? false
+    }
+
+    /// Dismiss call composite. If call is in progress, user will leave a call.
+    public func dismiss() {
+        exitManager?.dismiss()
     }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
@@ -201,6 +223,8 @@ public class CallComposite {
         self.avatarViewManager = avatarViewManager
 
         self.errorManager = CompositeErrorManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
+        self.callStateManager = CallStateManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
+        self.exitManager = CompositeExitManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
         self.lifeCycleManager = UIKitAppLifeCycleManager(store: store, logger: logger)
         self.permissionManager = PermissionsManager(store: store)
         self.audioSessionManager = AudioSessionManager(store: store, logger: logger)
@@ -245,6 +269,7 @@ public class CallComposite {
 
     private func cleanUpManagers() {
         self.errorManager = nil
+        self.callStateManager = nil
         self.lifeCycleManager = nil
         self.permissionManager = nil
         self.audioSessionManager = nil
@@ -253,7 +278,11 @@ public class CallComposite {
         self.debugInfoManager = nil
         self.pipManager = nil
         self.callHistoryService = nil
+        self.exitManager = nil
     }
+}
+
+extension CallComposite {
 
     private func present(_ viewController: UIViewController) {
         store?.dispatch(action: .visibilityAction(.showNormalEntered))
@@ -288,12 +317,9 @@ public class CallComposite {
             return false
         }
         let hasCallComposite = keyWindow.hasViewController(ofKind: ContainerUIHostingController.self)
-
         return !hasCallComposite
     }
-}
 
-extension CallComposite {
     private func receiveStoreEvents(_ store: Store<AppState, Action>) {
         store.$state
             .receive(on: DispatchQueue.main)
@@ -313,9 +339,15 @@ extension CallComposite {
                                               viewFactory: CompositeViewFactoryProtocol)
     -> ContainerUIHostingController {
         let isRightToLeft = localizationProvider.isRightToLeft
+        let setupViewOrientationMask = orientationProvider.orientationMask(for:
+                                                                            setupViewOrientationOptions)
+        let callingViewOrientationMask = orientationProvider.orientationMask(for:
+                                                                                callingViewOrientationOptions)
         let rootView = ContainerView(router: router,
                                      logger: logger,
                                      viewFactory: viewFactory,
+                                     setupViewOrientationMask: setupViewOrientationMask,
+                                     callingViewOrientationMask: callingViewOrientationMask,
                                      isRightToLeft: isRightToLeft)
         let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
                                                                         callComposite: self,
@@ -327,6 +359,7 @@ extension CallComposite {
             self?.viewController = nil
             self?.pipViewController = nil
             self?.viewFactory = nil
+            self?.exitManager?.onDismissed()
             self?.cleanUpManagers()
             UIApplication.shared.isIdleTimerDisabled = false
         }
@@ -335,9 +368,7 @@ extension CallComposite {
     }
 
     private func createPipManager(_ store: Store<AppState, Action>) -> PipManager? {
-
         return PipManager(store: store, logger: logger,
-
                           onRequirePipContentView: {
             guard let store = self.store, let viewFactory = self.viewFactory else {
                 return nil

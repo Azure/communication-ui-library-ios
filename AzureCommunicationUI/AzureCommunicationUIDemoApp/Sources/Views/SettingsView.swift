@@ -8,6 +8,8 @@ import AzureCommunicationUICalling
 import AzureCommunicationCommon
 
 struct SettingsView: View {
+    @State private var setupSelectedOrientation: String = "nil"
+    @State private var callingSelectedOrientation: String = "nil"
     private enum ThemeMode: String, CaseIterable, Identifiable {
         case osApp = "OS / App"
         case light = "Light Mode"
@@ -32,15 +34,22 @@ struct SettingsView: View {
     var body: some View {
         NavigationView {
             Form {
-                localizationSettings
-                skipSetupScreenSettings
-                micSettings
-                localParticipantSettings
-                avatarSettings
-                useMockCallingSDKHandler
-                navigationSettings
-                remoteParticipantsAvatarsSettings
-                themeSettings
+                Group {
+                    callingViewOrientationSettings
+                    setupViewOrientationSettings
+                }
+                Group {
+                    localizationSettings
+                    skipSetupScreenSettings
+                    micSettings
+                    localParticipantSettings
+                    avatarSettings
+                    useMockCallingSDKHandler
+                    navigationSettings
+                    remoteParticipantsAvatarsSettings
+                    themeSettings
+                }
+                exitCompositeSettings
             }
             .accessibilityElement(children: .contain)
             .navigationTitle("UI Library - Settings")
@@ -109,6 +118,26 @@ struct SettingsView: View {
         .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
     }
 
+    var relaunchCompositeOnDismissedToggle: some View {
+        Toggle("Relaunch composite after dismiss api call",
+               isOn: $envConfigSubject.useRelaunchOnDismissedToggle)
+        .accessibilityIdentifier(AccessibilityId.useRelaunchOnDismissedToggleToggleAccessibilityID.rawValue)
+    }
+
+    var exitCompositeSettings: some View {
+        Section(header: Text("Exit API Testing")) {
+            relaunchCompositeOnDismissedToggle
+            TextField(
+                "Exit composite after seconds",
+                text: $envConfigSubject.exitCompositeAfterDuration
+            )
+            .keyboardType(.numberPad)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .textFieldStyle(.roundedBorder)
+        }
+    }
+
     var localizationSettings: some View {
         Section(header: Text("Localilzation")) {
             LocalePicker(selection: $envConfigSubject.locale)
@@ -121,6 +150,75 @@ struct SettingsView: View {
             .disableAutocorrection(true)
             .autocapitalization(.none)
             .textFieldStyle(.roundedBorder)
+        }
+    }
+
+    var callingViewOrientationSettings: some View {
+        Section(header: Text("Calling View Orientation")) {
+            Picker("Orientation", selection: $callingSelectedOrientation) {
+                ForEach(["nil",
+                        OrientationOptions.portrait.requestString,
+                        OrientationOptions.landscape.requestString,
+                        OrientationOptions.landscapeLeft.requestString,
+                        OrientationOptions.landscapeRight.requestString,
+                        OrientationOptions.allButUpsideDown.requestString
+                        ], id: \.requestString) { orientationOption in
+                    Text(orientationOption.requestString.capitalized).tag(orientationOption.requestString)
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            .onAppear {
+                callingSelectedOrientation = envConfigSubject.callingViewOrientation?.requestString ?? "nil"
+            }
+            .onChange(of: callingSelectedOrientation) { newValue in
+                switch newValue {
+                case OrientationOptions.portrait.requestString:
+                    envConfigSubject.callingViewOrientation = .portrait
+                case OrientationOptions.landscape.requestString:
+                    envConfigSubject.callingViewOrientation = .landscape
+                case OrientationOptions.landscapeRight.requestString:
+                    envConfigSubject.callingViewOrientation = .landscapeRight
+                case OrientationOptions.landscapeLeft.requestString:
+                    envConfigSubject.callingViewOrientation = .landscapeLeft
+                default:
+                    envConfigSubject.callingViewOrientation = nil
+                }
+            }
+        }
+    }
+
+    var setupViewOrientationSettings: some View {
+        Section(header: Text("Setup View Orientation")) {
+            Picker("Orientation", selection: $setupSelectedOrientation) {
+                ForEach(["nil",
+                         OrientationOptions.allButUpsideDown.requestString,
+                         OrientationOptions.portrait.requestString,
+                         OrientationOptions.landscape.requestString,
+                         OrientationOptions.landscapeLeft.requestString,
+                         OrientationOptions.landscapeRight.requestString], id: \.requestString) { orientationOption in
+                    Text(orientationOption.requestString.capitalized).tag(orientationOption.requestString)
+                }
+            }
+            .pickerStyle(MenuPickerStyle())
+            .onAppear {
+                setupSelectedOrientation = envConfigSubject.setupViewOrientation?.requestString ?? "nil"
+            }
+            .onChange(of: setupSelectedOrientation) { newValue in
+                switch newValue {
+                case OrientationOptions.portrait.requestString:
+                    envConfigSubject.setupViewOrientation = .portrait
+                case OrientationOptions.landscape.requestString:
+                    envConfigSubject.setupViewOrientation = .landscape
+                case OrientationOptions.landscapeLeft.requestString:
+                    envConfigSubject.setupViewOrientation = .landscapeLeft
+                case OrientationOptions.landscapeRight.requestString:
+                    envConfigSubject.setupViewOrientation = .landscapeRight
+                case OrientationOptions.allButUpsideDown.requestString:
+                    envConfigSubject.setupViewOrientation = .allButUpsideDown
+                default:
+                    envConfigSubject.setupViewOrientation = .portrait
+                }
+            }
         }
     }
 
