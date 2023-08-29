@@ -207,7 +207,9 @@ class CallingDemoViewController: UIViewController {
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig,
             setupScreenOrientation: setupViewOrientation,
-            callingScreenOrientation: callingViewOrientation)
+            callingScreenOrientation: callingViewOrientation,
+            enableMultitasking: true,
+            enableSystemPiPWhenMultitasking: true)
         #if DEBUG
         let callComposite = envConfigSubject.useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
