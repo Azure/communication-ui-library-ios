@@ -17,7 +17,6 @@ target 'AzureCommunicationUICalling' do
   pod 'MicrosoftFluentUI/PopupMenu_ios', '0.10.0'
   pod 'MicrosoftFluentUI/ActivityIndicator_ios', '0.10.0'
   pod 'MicrosoftFluentUI/AvatarGroup_ios', '0.10.0'
-  pod 'AzureCore', '1.0.0-beta.15'
   pod 'SwiftLint', '0.42.0'
 
   target 'AzureCommunicationUICallingTests' do
