@@ -239,6 +239,11 @@
 		A8ED232D2645C637008A26B2 /* CallingServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ED232C2645C637008A26B2 /* CallingServiceTests.swift */; };
 		A8ED23302649EA61008A26B2 /* NavigationRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */; };
 		B2120A5C2A97E35E00E29C05 /* UserFacingDiagnosticModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2120A5B2A97E35E00E29C05 /* UserFacingDiagnosticModel.swift */; };
+		B238378B2AA26EA7001F72B3 /* DiagnosticsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238378A2AA26EA7001F72B3 /* DiagnosticsReducer.swift */; };
+		B2E5B17A2AA1322A00D54A3A /* UFDInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E5B1792AA1322A00D54A3A /* UFDInfoView.swift */; };
+		B2E5B17C2AA1326300D54A3A /* UFDInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E5B17B2AA1326300D54A3A /* UFDInfoViewModel.swift */; };
+		B2E5B17E2AA1453B00D54A3A /* DiagnosticsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E5B17D2AA1453B00D54A3A /* DiagnosticsAction.swift */; };
+		B2E5B1802AA14CC600D54A3A /* DiagnosticsState.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E5B17F2AA14CC600D54A3A /* DiagnosticsState.swift */; };
 		BD3CC699283D952E0052DE4A /* OverlayViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CC698283D952E0052DE4A /* OverlayViewModelProtocol.swift */; };
 		BD3CC69B283D953E0052DE4A /* OnHoldOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CC69A283D953E0052DE4A /* OnHoldOverlayViewModel.swift */; };
 		FA03CC8127C8189900986D4E /* PreviewAreaViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC7627C8189900986D4E /* PreviewAreaViewModelMocking.swift */; };
@@ -565,6 +570,11 @@
 		A8ED232C2645C637008A26B2 /* CallingServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingServiceTests.swift; sourceTree = "<group>"; };
 		A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouterTests.swift; sourceTree = "<group>"; };
 		B2120A5B2A97E35E00E29C05 /* UserFacingDiagnosticModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFacingDiagnosticModel.swift; sourceTree = "<group>"; };
+		B238378A2AA26EA7001F72B3 /* DiagnosticsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsReducer.swift; sourceTree = "<group>"; };
+		B2E5B1792AA1322A00D54A3A /* UFDInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UFDInfoView.swift; sourceTree = "<group>"; };
+		B2E5B17B2AA1326300D54A3A /* UFDInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UFDInfoViewModel.swift; sourceTree = "<group>"; };
+		B2E5B17D2AA1453B00D54A3A /* DiagnosticsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsAction.swift; sourceTree = "<group>"; };
+		B2E5B17F2AA14CC600D54A3A /* DiagnosticsState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsState.swift; sourceTree = "<group>"; };
 		B75F3B6936323E60658040C6 /* Pods-AzureCommunicationUICalling.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling/Pods-AzureCommunicationUICalling.debug.xcconfig"; sourceTree = "<group>"; };
 		BD3CC698283D952E0052DE4A /* OverlayViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayViewModelProtocol.swift; sourceTree = "<group>"; };
 		BD3CC69A283D953E0052DE4A /* OnHoldOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModel.swift; sourceTree = "<group>"; };
@@ -806,6 +816,7 @@
 				1F13D36F26AB293700E31666 /* NavigationReducer.swift */,
 				1F2BEDBA26328EBA00D98266 /* PermissionReducer.swift */,
 				28FE267229EE168E009CC19D /* RemoteParticipantsReducer.swift */,
+				B238378A2AA26EA7001F72B3 /* DiagnosticsReducer.swift */,
 			);
 			path = Reducer;
 			sourceTree = "<group>";
@@ -823,6 +834,7 @@
 				1F2BED982631FA6C00D98266 /* PermissionState.swift */,
 				1F13D36B26A8B83300E31666 /* RemoteParticipantsState.swift */,
 				113738FE29D638BB00D48EAB /* DefaultUserState.swift */,
+				B2E5B17F2AA14CC600D54A3A /* DiagnosticsState.swift */,
 			);
 			path = State;
 			sourceTree = "<group>";
@@ -837,6 +849,7 @@
 				1F3F0C64283E853800C66054 /* AudioSessionAction.swift */,
 				1F94DAE326740BCB00691D1E /* LocalUserAction.swift */,
 				28FE266C29E804F5009CC19D /* RemoteParticipantsAction.swift */,
+				B2E5B17D2AA1453B00D54A3A /* DiagnosticsAction.swift */,
 			);
 			path = Action;
 			sourceTree = "<group>";
@@ -1028,6 +1041,7 @@
 		50FA46192698BC01001844AC /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
+				B2E5B1782AA1320800D54A3A /* UFD */,
 				FA3F59902909B9F3008E359D /* SharingActivity */,
 				988799922746CDEC00AA3759 /* LockPhoneOrientation.swift */,
 				88A7017F270E50D100F817B8 /* PopupModalView.swift */,
@@ -1329,6 +1343,15 @@
 				A88CDFBB27505A410004E2F5 /* ErrorInfoViewModel.swift */,
 			);
 			path = Error;
+			sourceTree = "<group>";
+		};
+		B2E5B1782AA1320800D54A3A /* UFD */ = {
+			isa = PBXGroup;
+			children = (
+				B2E5B1792AA1322A00D54A3A /* UFDInfoView.swift */,
+				B2E5B17B2AA1326300D54A3A /* UFDInfoViewModel.swift */,
+			);
+			path = UFD;
 			sourceTree = "<group>";
 		};
 		BD3CC697283D95040052DE4A /* Overlay */ = {
@@ -1780,6 +1803,7 @@
 				FA6DF038290339430088A945 /* SharingActivityView.swift in Sources */,
 				1F94DAE82676885700691D1E /* AppStateReducer.swift in Sources */,
 				50B390D327D834FE0010A2ED /* LocalizationKey.swift in Sources */,
+				B238378B2AA26EA7001F72B3 /* DiagnosticsReducer.swift in Sources */,
 				FAD20A89292834500063D8A9 /* ArrayExtension.swift in Sources */,
 				1F2BED68262F86F400D98266 /* SetupViewModel.swift in Sources */,
 				98B1869D27C858D500B837E6 /* CompositeAudioDevicesListCell.swift in Sources */,
@@ -1829,6 +1853,7 @@
 				A874EDC826616792003C7D92 /* LifecycleAction.swift in Sources */,
 				1BAD44BE28404D1800C9E6A9 /* OrientationManager.swift in Sources */,
 				FAACEE4028FA241A003F7D7C /* MoreCallOptionsListCell.swift in Sources */,
+				B2E5B17E2AA1453B00D54A3A /* DiagnosticsAction.swift in Sources */,
 				9852C2D526EFD19300435252 /* ParticipantsListViewController.swift in Sources */,
 				759BDEF728FF0839002B6853 /* ColorThemeProvider.swift in Sources */,
 				503F4B672704EDC800C17DA6 /* BannerView.swift in Sources */,
@@ -1910,6 +1935,7 @@
 				1F2BED6C262F8B7000D98266 /* StoreExtensions.swift in Sources */,
 				881D8F7227FB6992008EC897 /* LocalOptions.swift in Sources */,
 				50E2D69126EAAB33006B0EF4 /* CompositeParticipantsList.swift in Sources */,
+				B2E5B17A2AA1322A00D54A3A /* UFDInfoView.swift in Sources */,
 				FA378672284152CA005B6288 /* SetParticipantViewDataError.swift in Sources */,
 				756F597A2966026300BAFBF7 /* AccessibilityProvider.swift in Sources */,
 				985DF378269E07F400CFDA55 /* PrimaryButtonViewModel.swift in Sources */,
@@ -1918,6 +1944,7 @@
 				1F4B0F0526A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift in Sources */,
 				A464810629F33A43001B80A3 /* CallStateManager.swift in Sources */,
 				88D8DD7628EF9A93006A4AC4 /* DebugInfoManager.swift in Sources */,
+				B2E5B1802AA14CC600D54A3A /* DiagnosticsState.swift in Sources */,
 				1F4B0F0126A2025900E87014 /* ParticipantGridLayoutView.swift in Sources */,
 				1B5F16A127FBB78600C35126 /* CompositeLeaveCallConfirmationListCell.swift in Sources */,
 				5A314F66ED6C53A7EFC6EDA3 /* LobbyOverlayView.swift in Sources */,
@@ -1929,6 +1956,7 @@
 				5A3140EA80ACDCB14140A060 /* CompositeViewFactory.swift in Sources */,
 				5A3142DAFAB4EE338ABF2196 /* CompositeViewModelFactory.swift in Sources */,
 				5A314D26A09E235A6509C1C7 /* ACSCameraFacingExtension.swift in Sources */,
+				B2E5B17C2AA1326300D54A3A /* UFDInfoViewModel.swift in Sources */,
 				5A31497E0DEBAB0256AD0B91 /* ErrorMocking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

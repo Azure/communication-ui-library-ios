@@ -79,6 +79,10 @@ class CallingServiceMocking: CallingServiceProtocol {
     var dominantSpeakersSubject = CurrentValueSubject<[String], Never>([])
     var dominantSpeakersModifiedTimestampSubject = PassthroughSubject<Date, Never>()
 
+    var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
+    var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
+    var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()
+
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
 
     func setupCall() async throws {

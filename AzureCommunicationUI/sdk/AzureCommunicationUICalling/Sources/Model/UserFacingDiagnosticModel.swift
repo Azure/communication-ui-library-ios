@@ -30,17 +30,34 @@ enum MediaDiagnostic {
     case cameraPermissionDenied
 }
 
-struct NetworkQualityDiagnosticModel {
+struct NetworkQualityDiagnosticModel: Equatable {
     var diagnostic: NetworkDiagnostic
     var value: DiagnosticQuality
 }
 
-struct NetworkDiagnosticModel {
+struct NetworkDiagnosticModel: Equatable {
     var diagnostic: NetworkDiagnostic
     var value: Bool
 }
 
-struct MediaDiagnosticModel {
+struct MediaDiagnosticModel: Equatable {
     var diagnostic: MediaDiagnostic
     var value: Bool
+}
+
+extension DiagnosticQuality: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case .good:
+            return "good"
+        case .poor:
+            return "poor"
+        case .bad:
+            return "bad"
+        case .unknown:
+            fallthrough
+        @unknown default:
+            return "unknown"
+        }
+    }
 }
