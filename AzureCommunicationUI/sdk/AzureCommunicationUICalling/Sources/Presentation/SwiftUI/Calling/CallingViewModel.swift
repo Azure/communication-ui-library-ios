@@ -36,6 +36,7 @@ class CallingViewModel: ObservableObject {
     var lobbyWaitingHeaderViewModel: LobbyWaitingHeaderViewModel!
     var lobbyActionErrorViewModel: LobbyErrorHeaderViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
+    var ufdInfoViewModel: UFDInfoViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -95,6 +96,7 @@ class CallingViewModel: ObservableObject {
         updateIsLocalCameraOn(with: store.state)
         errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel(title: "",
                                                                               subtitle: "")
+        ufdInfoViewModel = compositeViewModelFactory.makeUFDInfoViewModel()
     }
 
     func dismissConfirmLeaveDrawerList() {
@@ -181,6 +183,7 @@ class CallingViewModel: ObservableObject {
         errorInfoViewModel.update(errorState: state.errorState)
 
         isInPip = state.visibilityState.currentStatus == .pipModeEntered
+        ufdInfoViewModel.update(diagnosticsState: state.diagnosticsState)
     }
 
     private static func hasRemoteParticipants(_ participants: [ParticipantInfoModel]) -> Bool {

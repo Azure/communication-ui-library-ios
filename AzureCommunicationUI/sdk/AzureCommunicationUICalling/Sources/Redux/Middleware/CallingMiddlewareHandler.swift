@@ -430,6 +430,20 @@ extension CallingMiddlewareHandler {
             .removeDuplicates()
             .sink { participantRole in
                 dispatch(.localUserAction(.participantRoleChanged(participantRole: participantRole)))
+
+        callingService.networkDiagnosticsSubject
+            .sink { networkDiagnostic in
+                dispatch(.userFacingDiagnosticAction(.network(diagnostic: networkDiagnostic)))
+            }.store(in: subscription)
+
+        callingService.networkQualityDiagnosticsSubject
+            .sink { networkQualityDiagnostic in
+                dispatch(.userFacingDiagnosticAction(.networkQuality(diagnostic: networkQualityDiagnostic)))
+            }.store(in: subscription)
+
+        callingService.mediaDiagnosticsSubject
+            .sink { mediaDiagnostic in
+                dispatch(.userFacingDiagnosticAction(.media(diagnostic: mediaDiagnostic)))
             }.store(in: subscription)
     }
 }

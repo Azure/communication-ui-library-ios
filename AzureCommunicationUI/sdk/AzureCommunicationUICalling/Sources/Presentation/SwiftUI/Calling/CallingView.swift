@@ -20,6 +20,11 @@ struct CallingView: View {
     enum Constants {
         static let topAlertAreaViewTopPaddin: CGFloat = 10.0
     }
+    
+    enum DiagnosticInfoConstants {
+        static let controlBarHeight: CGFloat = 92
+        static let horizontalPadding: CGFloat = 8
+    }
 
     @ObservedObject var viewModel: CallingViewModel
     let avatarManager: AvatarViewManagerProtocol
@@ -43,6 +48,7 @@ struct CallingView: View {
                     landscapeCallingView
                 }
                 errorInfoView
+                diagnosticsView
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)
@@ -226,6 +232,20 @@ struct CallingView: View {
                                     leading: ErrorInfoConstants.horizontalPadding,
                                     bottom: ErrorInfoConstants.controlBarHeight,
                                     trailing: ErrorInfoConstants.horizontalPadding)
+                )
+                .accessibilityElement(children: .contain)
+                .accessibilityAddTraits(.isModal)
+        }
+    }
+
+    var diagnosticsView: some View {
+        return VStack {
+            Spacer()
+            UFDInfoView(viewModel: viewModel.ufdInfoViewModel)
+                .padding(EdgeInsets(top: 0,
+                                    leading: DiagnosticInfoConstants.horizontalPadding,
+                                    bottom: DiagnosticInfoConstants.controlBarHeight,
+                                    trailing: DiagnosticInfoConstants.horizontalPadding)
                 )
                 .accessibilityElement(children: .contain)
                 .accessibilityAddTraits(.isModal)
