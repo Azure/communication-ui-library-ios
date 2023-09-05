@@ -32,7 +32,7 @@ protocol CompositeViewModelFactoryProtocol {
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
-    func makeUFDInfoViewModel() -> UFDInfoViewModel
+    func makeUFDInfoViewModel() -> CallDiagnosticViewModel
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel
@@ -198,8 +198,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                            subtitle: subtitle)
     }
 
-    func makeUFDInfoViewModel() -> UFDInfoViewModel {
-        UFDInfoViewModel(localizationProvider: localizationProvider)
+    func makeUFDInfoViewModel() -> CallDiagnosticViewModel {
+        CallDiagnosticViewModel(localizationProvider: localizationProvider)
     }
 
     // MARK: CallingViewModels

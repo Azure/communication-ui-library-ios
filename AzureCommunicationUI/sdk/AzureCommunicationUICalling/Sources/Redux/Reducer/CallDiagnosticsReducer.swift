@@ -5,11 +5,11 @@
 
 import Combine
 
-extension Reducer where State == DiagnosticsState,
+extension Reducer where State == CallDiagnosticsState,
                         Actions == Action {
     static var liveDiagnosticsReducer: Self = Reducer { state, action in
         var networkDiagnostic = state.networkDiagnostic
-        var networkQualitDiagnostic = state.networkQualitDiagnostic
+        var networkQualityDiagnostic = state.networkQualityDiagnostic
         var mediaDiagnostic = state.mediaDiagnostic
 
         switch action {
@@ -18,7 +18,7 @@ extension Reducer where State == DiagnosticsState,
         case .userFacingDiagnosticAction(.network(let diagnostic)):
             networkDiagnostic = diagnostic
         case .userFacingDiagnosticAction(.networkQuality(let diagnostic)):
-            networkQualitDiagnostic = diagnostic
+            networkQualityDiagnostic = diagnostic
         // Exhaustive unimplemented actions
         case .audioSessionAction(_),
              .callingAction(_),
@@ -32,8 +32,8 @@ extension Reducer where State == DiagnosticsState,
             return state
         }
 
-        return DiagnosticsState(networkDiagnostic: networkDiagnostic,
-                                networkQualitDiagnostic: networkQualitDiagnostic,
-                                mediaDiagnostic: mediaDiagnostic)
+        return CallDiagnosticsState(networkDiagnostic: networkDiagnostic,
+                                    networkQualityDiagnostic: networkQualityDiagnostic,
+                                    mediaDiagnostic: mediaDiagnostic)
     }
 }

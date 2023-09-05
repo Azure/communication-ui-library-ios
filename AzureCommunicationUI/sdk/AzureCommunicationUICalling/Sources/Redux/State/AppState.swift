@@ -15,7 +15,7 @@ struct AppState {
     let navigationState: NavigationState
     let errorState: ErrorState
     let defaultUserState: DefaultUserState
-    let diagnosticsState: DiagnosticsState
+    let diagnosticsState: CallDiagnosticsState
 
     init(callingState: CallingState = .init(),
          permissionState: PermissionState = .init(),
@@ -26,7 +26,7 @@ struct AppState {
          remoteParticipantsState: RemoteParticipantsState = .init(),
          errorState: ErrorState = .init(),
          defaultUserState: DefaultUserState = .init(),
-         diagnosticsState: DiagnosticsState = .init()) {
+         diagnosticsState: CallDiagnosticsState = .init()) {
         self.callingState = callingState
         self.permissionState = permissionState
         self.localUserState = localUserState

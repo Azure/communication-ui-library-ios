@@ -33,7 +33,7 @@ class CallingViewModel: ObservableObject {
     var controlBarViewModel: ControlBarViewModel!
     var infoHeaderViewModel: InfoHeaderViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
-    var ufdInfoViewModel: UFDInfoViewModel!
+    var ufdInfoViewModel: CallDiagnosticViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,

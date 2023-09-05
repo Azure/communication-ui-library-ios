@@ -6,7 +6,7 @@
 import Foundation
 import Combine
 
-class UFDInfoViewModel: ObservableObject {
+class CallDiagnosticViewModel: ObservableObject {
     @Published private(set) var isDisplayed: Bool = false
     @Published private(set) var title: String = ""
     @Published private(set) var subtitle: String = ""
@@ -35,8 +35,7 @@ class UFDInfoViewModel: ObservableObject {
         isDisplayed = true
     }
 
-    func update(diagnosticsState: DiagnosticsState) {
-        // TODO: Implement UI Update on diagnostic change.
+    func update(diagnosticsState: CallDiagnosticsState) {
         print("[UFD] event here")
     }
 }
