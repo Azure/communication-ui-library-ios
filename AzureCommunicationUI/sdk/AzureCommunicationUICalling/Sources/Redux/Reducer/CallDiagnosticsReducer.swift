@@ -8,9 +8,9 @@ import Combine
 extension Reducer where State == CallDiagnosticsState,
                         Actions == Action {
     static var liveDiagnosticsReducer: Self = Reducer { state, action in
-        var networkDiagnostic = state.networkDiagnostic
-        var networkQualityDiagnostic = state.networkQualityDiagnostic
-        var mediaDiagnostic = state.mediaDiagnostic
+        var networkDiagnostic: NetworkDiagnosticModel?
+        var networkQualityDiagnostic: NetworkQualityDiagnosticModel?
+        var mediaDiagnostic: MediaDiagnosticModel?
 
         switch action {
         case .userFacingDiagnosticAction(.media(let diagnostic)):
