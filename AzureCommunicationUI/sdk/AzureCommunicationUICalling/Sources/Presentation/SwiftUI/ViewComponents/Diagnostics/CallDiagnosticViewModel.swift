@@ -12,6 +12,8 @@ class CallDiagnosticViewModel: ObservableObject {
     @Published private(set) var subtitle: String = ""
 
     private let localizationProvider: LocalizationProviderProtocol
+    private var presentingNetworkDiagnostic: NetworkDiagnostic?
+    private var presentingMediaDiagnostic: MediaDiagnostic?
 
     init(localizationProvider: LocalizationProviderProtocol) {
         self.localizationProvider = localizationProvider
@@ -29,6 +31,8 @@ class CallDiagnosticViewModel: ObservableObject {
 
     func dismiss() {
         isDisplayed = false
+        presentingNetworkDiagnostic = nil
+        presentingMediaDiagnostic = nil
     }
 
     func show() {
@@ -36,6 +40,45 @@ class CallDiagnosticViewModel: ObservableObject {
     }
 
     func update(diagnosticsState: CallDiagnosticsState) {
-        print("[UFD] event here")
+        if let networkDiagnostic = diagnosticsState.networkDiagnostic {
+            update(diagnosticModel: networkDiagnostic)
+        } else if let networkQualityDiagnostic = diagnosticsState.networkQualityDiagnostic {
+            update(diagnosticModel: networkQualityDiagnostic)
+        } else if let mediaDiagnostic = diagnosticsState.mediaDiagnostic {
+            update(diagnosticModel: mediaDiagnostic)
+        }
+    }
+
+    private func update(diagnosticModel: NetworkDiagnosticModel) {
+        if diagnosticModel.isBadState {
+            title = "Network"
+            subtitle = "\(diagnosticModel.diagnostic)"
+            presentingNetworkDiagnostic = diagnosticModel.diagnostic
+            show()
+        } else if presentingNetworkDiagnostic == diagnosticModel.diagnostic {
+            dismiss()
+        }
+    }
+
+    private func update(diagnosticModel: NetworkQualityDiagnosticModel) {
+        if diagnosticModel.isBadState {
+            title = "Network"
+            subtitle = "\(diagnosticModel.diagnostic) : \(diagnosticModel.value)"
+            presentingNetworkDiagnostic = diagnosticModel.diagnostic
+            show()
+        } else if presentingNetworkDiagnostic == diagnosticModel.diagnostic {
+            dismiss()
+        }
+    }
+
+    private func update(diagnosticModel: MediaDiagnosticModel) {
+        if diagnosticModel.isBadState {
+            title = "Media"
+            subtitle = "\(diagnosticModel.diagnostic)"
+            presentingMediaDiagnostic = diagnosticModel.diagnostic
+            show()
+        } else if presentingMediaDiagnostic == diagnosticModel.diagnostic {
+            dismiss()
+        }
     }
 }
