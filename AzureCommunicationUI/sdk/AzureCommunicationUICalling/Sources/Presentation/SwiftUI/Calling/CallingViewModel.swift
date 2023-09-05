@@ -36,7 +36,7 @@ class CallingViewModel: ObservableObject {
     var lobbyWaitingHeaderViewModel: LobbyWaitingHeaderViewModel!
     var lobbyActionErrorViewModel: LobbyErrorHeaderViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
-    var ufdInfoViewModel: UFDInfoViewModel!
+    var ufdInfoViewModel: CallDiagnosticViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,

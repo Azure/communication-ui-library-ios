@@ -17,7 +17,7 @@ extension Reducer {
             = .liveRemoteParticipantsReducer,
         errorReducer: Reducer<ErrorState, Action> = .liveErrorReducer,
         pipReducer: Reducer<VisibilityState, VisibilityAction> = .visibilityReducer,
-        diagnosticsReducer: Reducer<DiagnosticsState, Action> = .liveDiagnosticsReducer
+        diagnosticsReducer: Reducer<CallDiagnosticsState, Action> = .liveDiagnosticsReducer
     ) -> Reducer<AppState, Action> {
 
         return Reducer<AppState, Action> { state, action in
