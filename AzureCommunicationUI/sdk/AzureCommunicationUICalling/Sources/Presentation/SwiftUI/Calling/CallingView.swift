@@ -204,7 +204,7 @@ struct CallingView: View {
     var diagnosticsView: some View {
         return VStack {
             Spacer()
-            UFDInfoView(viewModel: viewModel.ufdInfoViewModel)
+            CallDiagnosticView(viewModel: viewModel.ufdInfoViewModel)
                 .padding(EdgeInsets(top: 0,
                                     leading: DiagnosticInfoConstants.horizontalPadding,
                                     bottom: DiagnosticInfoConstants.controlBarHeight,

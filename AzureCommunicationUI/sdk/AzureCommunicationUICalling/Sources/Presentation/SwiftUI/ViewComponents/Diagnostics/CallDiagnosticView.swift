@@ -6,8 +6,8 @@
 import SwiftUI
 import FluentUI
 
-struct UFDInfoView: View {
-    @ObservedObject var viewModel: UFDInfoViewModel
+struct CallDiagnosticView: View {
+    @ObservedObject var viewModel: CallDiagnosticViewModel
 
     private let cornerRadius: CGFloat = 12
 

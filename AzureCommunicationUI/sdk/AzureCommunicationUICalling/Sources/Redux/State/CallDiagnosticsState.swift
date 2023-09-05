@@ -3,17 +3,17 @@
 //  Licensed under the MIT License.
 //
 
-struct DiagnosticsState: Equatable {
+struct CallDiagnosticsState: Equatable {
 
     var networkDiagnostic: NetworkDiagnosticModel?
-    var networkQualitDiagnostic: NetworkQualityDiagnosticModel?
+    var networkQualityDiagnostic: NetworkQualityDiagnosticModel?
     var mediaDiagnostic: MediaDiagnosticModel?
 
     init(networkDiagnostic: NetworkDiagnosticModel? = nil,
-         networkQualitDiagnostic: NetworkQualityDiagnosticModel? = nil,
+         networkQualityDiagnostic: NetworkQualityDiagnosticModel? = nil,
          mediaDiagnostic: MediaDiagnosticModel? = nil) {
         self.networkDiagnostic = networkDiagnostic
-        self.networkQualitDiagnostic = networkQualitDiagnostic
+        self.networkQualityDiagnostic = networkQualityDiagnostic
         self.mediaDiagnostic = mediaDiagnostic
     }
 }
