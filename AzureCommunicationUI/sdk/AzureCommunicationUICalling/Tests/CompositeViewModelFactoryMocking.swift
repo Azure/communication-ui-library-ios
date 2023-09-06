@@ -25,7 +25,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var previewAreaViewModel: PreviewAreaViewModel?
     var setupControlBarViewModel: SetupControlBarViewModel?
     var errorInfoViewModel: ErrorInfoViewModel?
-    var ufdInfoViewModel: CallDiagnosticViewModel?
+    var callDiagnosticsViewModel: CallDiagnosticsViewModel?
     var lobbyOverlayViewModel: LobbyOverlayViewModel?
     var loadingOverlayViewModel: LoadingOverlayViewModel?
     var audioDevicesListViewModel: AudioDevicesListViewModel?
@@ -150,8 +150,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                         subtitle: subtitle)
     }
 
-    func makeUFDInfoViewModel() -> CallDiagnosticViewModel {
-        return ufdInfoViewModel ?? CallDiagnosticViewModel(localizationProvider: localizationProvider)
+    func makeCallDiagnosticsViewModel() -> CallDiagnosticsViewModel {
+        return callDiagnosticsViewModel ?? CallDiagnosticsViewModel(localizationProvider: localizationProvider)
     }
 
     func makeSelectableDrawerListItemViewModel(icon: CompositeIcon,

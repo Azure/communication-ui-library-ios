@@ -344,17 +344,17 @@ extension CallingMiddlewareHandler {
 
         callingService.networkDiagnosticsSubject
             .sink { networkDiagnostic in
-                dispatch(.userFacingDiagnosticAction(.network(diagnostic: networkDiagnostic)))
+                dispatch(.callDiagnosticAction(.network(diagnostic: networkDiagnostic)))
             }.store(in: subscription)
 
         callingService.networkQualityDiagnosticsSubject
             .sink { networkQualityDiagnostic in
-                dispatch(.userFacingDiagnosticAction(.networkQuality(diagnostic: networkQualityDiagnostic)))
+                dispatch(.callDiagnosticAction(.networkQuality(diagnostic: networkQualityDiagnostic)))
             }.store(in: subscription)
 
         callingService.mediaDiagnosticsSubject
             .sink { mediaDiagnostic in
-                dispatch(.userFacingDiagnosticAction(.media(diagnostic: mediaDiagnostic)))
+                dispatch(.callDiagnosticAction(.media(diagnostic: mediaDiagnostic)))
             }.store(in: subscription)
     }
 }
