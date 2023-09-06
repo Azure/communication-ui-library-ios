@@ -6,14 +6,14 @@
 import Foundation
 import Combine
 
-class CallDiagnosticViewModel: ObservableObject {
+class CallDiagnosticsViewModel: ObservableObject {
     @Published private(set) var isDisplayed: Bool = false
     @Published private(set) var title: String = ""
     @Published private(set) var subtitle: String = ""
 
     private let localizationProvider: LocalizationProviderProtocol
-    private var presentingNetworkDiagnostic: NetworkDiagnostic?
-    private var presentingMediaDiagnostic: MediaDiagnostic?
+    private var presentingNetworkDiagnostic: NetworkCallDiagnostic?
+    private var presentingMediaDiagnostic: MediaCallDiagnostic?
 
     init(localizationProvider: LocalizationProviderProtocol) {
         self.localizationProvider = localizationProvider

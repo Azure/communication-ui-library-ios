@@ -36,7 +36,7 @@ extension Reducer where State == NavigationState,
                 .localUserAction(_),
                 .remoteParticipantsAction(_),
                 .visibilityAction(_),
-                .userFacingDiagnosticAction(_),
+                .callDiagnosticAction(_),
                 .permissionAction(_):
             return state
         }
