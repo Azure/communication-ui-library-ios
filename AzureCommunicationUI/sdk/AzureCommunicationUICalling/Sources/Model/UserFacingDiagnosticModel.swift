@@ -5,7 +5,7 @@
 
 import AzureCommunicationCalling
 
-enum NetworkDiagnostic: String {
+enum NetworkCallDiagnostic: String {
     case networkReconnectionQuality
     case networkReceiveQuality
     case networkSendQuality
@@ -13,7 +13,7 @@ enum NetworkDiagnostic: String {
     case networkRelaysUnreachable
 }
 
-enum MediaDiagnostic: String {
+enum MediaCallDiagnostic: String {
     case speakerNotFunctioning
     case speakerBusy
     case speakerMuted
@@ -31,21 +31,21 @@ enum MediaDiagnostic: String {
 }
 
 struct NetworkQualityDiagnosticModel: Equatable {
-    var diagnostic: NetworkDiagnostic
+    var diagnostic: NetworkCallDiagnostic
     var value: DiagnosticQuality
 
     var isBadState: Bool { value == .bad || value == .poor }
 }
 
 struct NetworkDiagnosticModel: Equatable {
-    var diagnostic: NetworkDiagnostic
+    var diagnostic: NetworkCallDiagnostic
     var value: Bool
 
     var isBadState: Bool { value }
 }
 
 struct MediaDiagnosticModel: Equatable {
-    var diagnostic: MediaDiagnostic
+    var diagnostic: MediaCallDiagnostic
     var value: Bool
 
     var isBadState: Bool { value }

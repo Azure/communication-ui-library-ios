@@ -13,11 +13,11 @@ extension Reducer where State == CallDiagnosticsState,
         var mediaDiagnostic: MediaDiagnosticModel?
 
         switch action {
-        case .userFacingDiagnosticAction(.media(let diagnostic)):
+        case .callDiagnosticAction(.media(let diagnostic)):
             mediaDiagnostic = diagnostic
-        case .userFacingDiagnosticAction(.network(let diagnostic)):
+        case .callDiagnosticAction(.network(let diagnostic)):
             networkDiagnostic = diagnostic
-        case .userFacingDiagnosticAction(.networkQuality(let diagnostic)):
+        case .callDiagnosticAction(.networkQuality(let diagnostic)):
             networkQualityDiagnostic = diagnostic
         // Exhaustive unimplemented actions
         case .audioSessionAction(_),

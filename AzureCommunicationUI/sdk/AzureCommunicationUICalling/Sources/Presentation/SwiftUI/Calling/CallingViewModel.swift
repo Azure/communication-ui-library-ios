@@ -33,7 +33,7 @@ class CallingViewModel: ObservableObject {
     var controlBarViewModel: ControlBarViewModel!
     var infoHeaderViewModel: InfoHeaderViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
-    var ufdInfoViewModel: CallDiagnosticViewModel!
+    var callDiagnosticsViewModel: CallDiagnosticsViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -84,7 +84,7 @@ class CallingViewModel: ObservableObject {
         updateIsLocalCameraOn(with: store.state)
         errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel(title: "",
                                                                               subtitle: "")
-        ufdInfoViewModel = compositeViewModelFactory.makeUFDInfoViewModel()
+        callDiagnosticsViewModel = compositeViewModelFactory.makeCallDiagnosticsViewModel()
     }
 
     func dismissConfirmLeaveDrawerList() {
@@ -155,7 +155,7 @@ class CallingViewModel: ObservableObject {
 
         updateIsLocalCameraOn(with: state)
         errorInfoViewModel.update(errorState: state.errorState)
-        ufdInfoViewModel.update(diagnosticsState: state.diagnosticsState)
+        callDiagnosticsViewModel.update(diagnosticsState: state.diagnosticsState)
     }
 
     private func updateIsLocalCameraOn(with state: AppState) {
