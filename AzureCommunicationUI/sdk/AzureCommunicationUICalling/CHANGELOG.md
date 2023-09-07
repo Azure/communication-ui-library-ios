@@ -1,9 +1,22 @@
 # Azure Communication UI Calling Release History
+
+## 1.4.0 (2023-08-30)
+
+### Features
+- Use Dominant Speakers feature to determine which remove participants to display on the grid when number of participants more then 6.
+- Introducing call state changed event for `CallComposite.events.onCallStateChanged`.
+- Introducing ability to dismiss call composite `CallComposite.dismiss()` and be notified when it's dismissed `CallComposite.events.onDismissed`.
+- Configure orientation for setup screen and call screen `CallCompositeOptions(..., setupScreenOrientation, callingScreenOrientation)`.
+
 ## 1.3.1 (2023-07-19)
 ### Bugs Fixed
 - Call join being blocked when microphone is unavailable to use for UI Composite at the moment
 - Call Resume and join on hold checks microphone available
 - Call join when network is gained after it is lost bug fixed
+
+## 1.4.0-beta.1 (2023-04-26)
+### New Features
+- Introduced dominant speaker into calling grid view to determine the participants order on the screen of grid view. [667](https://github.com/Azure/communication-ui-library-ios/pull/667)
 
 ## 1.3.0 (2023-04-06)
 ### New Features

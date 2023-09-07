@@ -27,10 +27,11 @@ extension Middleware {
 
                         case .audioSessionAction(let audioAction):
                             handleAudioSessionAction(audioAction, actionHandler, getState, dispatch)
-
                         case .errorAction(_),
                                 .compositeExitAction,
                                 .callingViewLaunched:
+                            break
+                        default:
                             break
                         }
                         return next(action)

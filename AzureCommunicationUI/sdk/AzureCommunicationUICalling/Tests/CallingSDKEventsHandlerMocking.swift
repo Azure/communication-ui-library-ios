@@ -15,4 +15,6 @@ class CallingSDKEventsHandlerMocking: NSObject, CallingSDKEventsHandling {
     var isTranscriptionActiveSubject = PassthroughSubject<Bool, Never>()
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
     var callIdSubject = PassthroughSubject<String, Never>()
+    var dominantSpeakersSubject: CurrentValueSubject<[String], Never> = .init([])
+    var dominantSpeakersModifiedTimestampSubject: PassthroughSubject<Date, Never> = .init()
 }

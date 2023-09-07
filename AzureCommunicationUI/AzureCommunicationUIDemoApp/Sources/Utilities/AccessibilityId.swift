@@ -28,4 +28,7 @@ enum AccessibilityId: String {
             "AzureCommunicationUICalling.SettingsView.useMockCallingSDKHandler.AccessibilityID"
     case settingsCloseButtonAccessibilityID =
             "AzureCommunicationUICalling.SettingsView.CloseButton.AccessibilityID"
+    case useRelaunchOnDismissedToggleToggleAccessibilityID =
+            "AzureCommunicationUICalling.SettingsView.useRelaunchOnDismissed.AccessibilityID"
+
 }

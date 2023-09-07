@@ -13,6 +13,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var callInfoSubject = PassthroughSubject<CallInfoModel, Never>()
     var isRecordingActiveSubject = PassthroughSubject<Bool, Never>()
     var isTranscriptionActiveSubject = PassthroughSubject<Bool, Never>()
+    var dominantSpeakersSubject: CurrentValueSubject<[String], Never> = .init([])
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
     var callIdSubject = PassthroughSubject<String, Never>()
 
@@ -20,6 +21,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     private var remoteParticipantEventAdapter = RemoteParticipantsEventsAdapter()
     private var recordingCallFeature: RecordingCallFeature?
     private var transcriptionCallFeature: TranscriptionCallFeature?
+    private var dominantSpeakersCallFeature: DominantSpeakersCallFeature?
     private var previousCallingStatus: CallingStatus = .none
     private var remoteParticipants = MappedSequence<String, AzureCommunicationCalling.RemoteParticipant>()
 
@@ -38,11 +40,16 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         self.transcriptionCallFeature = transcriptionCallFeature
         transcriptionCallFeature.delegate = self
     }
+    func assign(_ dominantSpeakersCallFeature: DominantSpeakersCallFeature) {
+        self.dominantSpeakersCallFeature = dominantSpeakersCallFeature
+        dominantSpeakersCallFeature.delegate = self
+    }
 
     func setupProperties() {
         participantsInfoListSubject.value.removeAll()
         recordingCallFeature = nil
         transcriptionCallFeature = nil
+        dominantSpeakersCallFeature = nil
         remoteParticipants = MappedSequence<String, AzureCommunicationCalling.RemoteParticipant>()
         previousCallingStatus = .none
     }
@@ -54,20 +61,20 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
                 return
             }
             let userIdentifier = remoteParticipant.identifier.rawId
-            self.updateRemoteParticipant(userIdentifier: userIdentifier, updateSpeakingStamp: false)
+            self.updateRemoteParticipant(userIdentifier: userIdentifier)
         }
 
         remoteParticipantEventAdapter.onIsMutedChanged = participantUpdate
         remoteParticipantEventAdapter.onVideoStreamsUpdated = participantUpdate
         remoteParticipantEventAdapter.onStateChanged = participantUpdate
-
+        remoteParticipantEventAdapter.onDominantSpeakersChanged = participantUpdate
         remoteParticipantEventAdapter.onIsSpeakingChanged = { [weak self] remoteParticipant in
             guard let self = self else {
                 return
             }
             let userIdentifier = remoteParticipant.identifier.rawId
             let updateSpeakingStamp = remoteParticipant.isSpeaking
-            self.updateRemoteParticipant(userIdentifier: userIdentifier, updateSpeakingStamp: updateSpeakingStamp)
+            self.updateRemoteParticipant(userIdentifier: userIdentifier)
         }
     }
 
@@ -116,22 +123,19 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
 
         var remoteParticipantsInfoList = participantsInfoListSubject.value
         remoteParticipants.forEach {
-            let infoModel = $0.toParticipantInfoModel(recentSpeakingStamp: Date(timeIntervalSince1970: 0))
+            let infoModel = $0.toParticipantInfoModel()
             remoteParticipantsInfoList.append(infoModel)
         }
         participantsInfoListSubject.send(remoteParticipantsInfoList)
     }
 
-    private func updateRemoteParticipant(userIdentifier: String,
-                                         updateSpeakingStamp: Bool) {
+    private func updateRemoteParticipant(userIdentifier: String) {
         var remoteParticipantsInfoList = participantsInfoListSubject.value
         if let remoteParticipant = remoteParticipants.value(forKey: userIdentifier),
            let index = remoteParticipantsInfoList.firstIndex(where: {
                $0.userIdentifier == userIdentifier
            }) {
-            let speakingStamp = remoteParticipantsInfoList[index].recentSpeakingStamp
-            let timeStamp = updateSpeakingStamp ? Date() : speakingStamp
-            let newInfoModel = remoteParticipant.toParticipantInfoModel(recentSpeakingStamp: timeStamp)
+            let newInfoModel = remoteParticipant.toParticipantInfoModel()
             remoteParticipantsInfoList[index] = newInfoModel
 
             participantsInfoListSubject.send(remoteParticipantsInfoList)
@@ -147,7 +151,8 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
 
 extension CallingSDKEventsHandler: CallDelegate,
     RecordingCallFeatureDelegate,
-    TranscriptionCallFeatureDelegate {
+    TranscriptionCallFeatureDelegate,
+    DominantSpeakersCallFeatureDelegate {
     func call(_ call: Call, didChangeId args: PropertyChangedEventArgs) {
         callIdSubject.send(call.id)
     }
@@ -189,7 +194,16 @@ extension CallingSDKEventsHandler: CallDelegate,
         let newTranscriptionActive = transcriptionCallFeature.isTranscriptionActive
         isTranscriptionActiveSubject.send(newTranscriptionActive)
     }
-
+    func dominantSpeakersCallFeature(_ dominantSpeakersCallFeature: DominantSpeakersCallFeature,
+                                     didChangeDominantSpeakers args: PropertyChangedEventArgs) {
+        let dominantSpeakersInfo = dominantSpeakersCallFeature.dominantSpeakersInfo
+        var speakers = [String]()
+        for speaker in dominantSpeakersInfo.speakers {
+            let userIdentifier = speaker.rawId
+            speakers.append(userIdentifier)
+        }
+        dominantSpeakersSubject.send(speakers)
+    }
     func call(_ call: Call, didChangeMuteState args: PropertyChangedEventArgs) {
         isLocalUserMutedSubject.send(call.isMuted)
     }

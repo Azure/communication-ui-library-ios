@@ -40,13 +40,16 @@ class CallingDemoViewController: UIViewController {
     private var meetingTypeSegmentedControl: UISegmentedControl!
     private var stackView: UIStackView!
     private var titleLabel: UILabel!
+    private var callStateLabel: UILabel!
     private var titleLabelConstraint: NSLayoutConstraint!
+    private var callStateLabelConstraint: NSLayoutConstraint!
 
     // The space needed to fill the top part of the stack view,
     // in order to make the stackview content centered
     private var spaceToFullInStackView: CGFloat?
     private var userIsEditing: Bool = false
     private var isKeyboardShowing: Bool = false
+    private var exitCompositeExecuted: Bool = false
 
     private var cancellable = Set<AnyCancellable>()
     private var envConfigSubject: EnvConfigSubject
@@ -178,6 +181,11 @@ class CallingDemoViewController: UIViewController {
                                                                 identifiers: identifiers)
     }
 
+    private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
+        print("::::CallingDemoViewController::getEventsHandler::onCallStateChanged \(callState.requestString)")
+        callStateLabel.text = callState.requestString
+    }
+
     private func startExperience(with link: String) async {
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
@@ -191,11 +199,15 @@ class CallingDemoViewController: UIViewController {
                 layoutDirection: layoutDirection)
         }
 
+        let setupViewOrientation = envConfigSubject.setupViewOrientation
+        let callingViewOrientation = envConfigSubject.callingViewOrientation
         let callCompositeOptions = CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
-            localization: localizationConfig)
+            localization: localizationConfig,
+            setupScreenOrientation: setupViewOrientation,
+            callingScreenOrientation: callingViewOrientation)
         #if DEBUG
         let callComposite = envConfigSubject.useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
@@ -218,8 +230,34 @@ class CallingDemoViewController: UIViewController {
             self.onError(error,
                          callComposite: composite)
         }
+        let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callState in
+            guard let composite = callComposite else {
+                return
+            }
+            self.onCallStateChanged(callState, callComposite: composite)
+        }
+        let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
+            if self.envConfigSubject.useRelaunchOnDismissedToggle && self.exitCompositeExecuted {
+                            DispatchQueue.main.async() {
+                                Task { @MainActor in
+                                    self.onStartExperienceBtnPressed()
+                                }
+                            }
+                        }
+        }
+        exitCompositeExecuted = false
+        if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
+            DispatchQueue.main.asyncAfter(deadline: .now() +
+                                          Float64(envConfigSubject.exitCompositeAfterDuration)!
+            ) { [weak callComposite] in
+                self.exitCompositeExecuted = true
+                callComposite?.dismiss()
+            }
+        }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
+        callComposite.events.onCallStateChanged = onCallStateChangedHandler
+        callComposite.events.onDismissed = onDismissedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
@@ -553,6 +591,16 @@ class CallingDemoViewController: UIViewController {
         startExperienceButton.addTarget(self, action: #selector(onStartExperienceBtnPressed), for: .touchUpInside)
 
         startExperienceButton.accessibilityLabel = AccessibilityId.startExperienceAccessibilityID.rawValue
+
+        callStateLabel = UILabel()
+        callStateLabel.text = "State"
+        callStateLabel.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(callStateLabel)
+        callStateLabelConstraint = callStateLabel.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor,
+                                                                          constant: LayoutConstants.verticalSpacing)
+        callStateLabelConstraint.isActive = true
+        callStateLabel.centerXAnchor.constraint(equalTo: safeArea.centerXAnchor).isActive = true
+        callStateLabel.centerYAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: -10).isActive = true
 
         // horizontal stack view for the settingButton and startExperienceButton
         let settingButtonHSpacer1 = UIView()

@@ -45,11 +45,11 @@ extension Reducer where State == CallingState,
                 .callingAction(.dismissSetup),
                 .callingAction(.resumeRequested),
                 .callingAction(.holdRequested),
-                .callingAction(.participantListUpdated(participants: _)),
                 .errorAction(.fatalErrorUpdated(internalError: _, error: _)),
                 .lifecycleAction(_),
                 .localUserAction(_),
                 .permissionAction(_),
+                .remoteParticipantsAction(_),
                 .compositeExitAction,
                 .callingViewLaunched:
             return callingState

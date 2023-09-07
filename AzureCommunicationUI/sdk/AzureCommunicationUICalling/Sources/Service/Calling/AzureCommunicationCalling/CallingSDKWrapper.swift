@@ -57,6 +57,12 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         logger.debug( "Joining call")
         let joinCallOptions = JoinCallOptions()
 
+        // to fix iOS 15 issue
+        // by default on iOS 15 calling SDK incoming type is raw video
+        // because of this on iOS 15 remote video start event is not received
+        let incomingVideoOptions = IncomingVideoOptions()
+        incomingVideoOptions.streamType = .remoteIncoming
+
         if isCameraPreferred,
            let localVideoStream = localVideoStream {
             let localVideoStreamArray = [localVideoStream]
@@ -66,6 +72,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
         joinCallOptions.audioOptions = AudioOptions()
         joinCallOptions.audioOptions?.muted = !isAudioPreferred
+        joinCallOptions.incomingVideoOptions = incomingVideoOptions
 
         var joinLocator: JoinMeetingLocator
         if callConfiguration.compositeCallType == .groupCall,
@@ -89,7 +96,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             joinedCall.delegate = callingEventsHandler
         }
         call = joinedCall
-        setupCallRecordingAndTranscriptionFeature()
+        setupFeatures()
     }
 
     func endCall() async throws {
@@ -313,15 +320,17 @@ extension CallingSDKWrapper {
         }
     }
 
-    private func setupCallRecordingAndTranscriptionFeature() {
+    private func setupFeatures() {
         guard let call = call else {
             return
         }
         let recordingCallFeature = call.feature(Features.recording)
         let transcriptionCallFeature = call.feature(Features.transcription)
+        let dominantSpeakersFeature = call.feature(Features.dominantSpeakers)
         if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
             callingEventsHandler.assign(recordingCallFeature)
             callingEventsHandler.assign(transcriptionCallFeature)
+            callingEventsHandler.assign(dominantSpeakersFeature)
         }
     }
 
