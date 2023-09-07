@@ -50,7 +50,7 @@ class CallDiagnosticsViewModel: ObservableObject {
     }
 
     private func update(diagnosticModel: NetworkDiagnosticModel) {
-        if diagnosticModel.isBadState {
+        if diagnosticModel.value {
             title = "Network"
             subtitle = "\(diagnosticModel.diagnostic)"
             presentingNetworkDiagnostic = diagnosticModel.diagnostic
@@ -61,7 +61,7 @@ class CallDiagnosticsViewModel: ObservableObject {
     }
 
     private func update(diagnosticModel: NetworkQualityDiagnosticModel) {
-        if diagnosticModel.isBadState {
+        if diagnosticModel.value == .bad || diagnosticModel.value == .poor {
             title = "Network"
             subtitle = "\(diagnosticModel.diagnostic) : \(diagnosticModel.value)"
             presentingNetworkDiagnostic = diagnosticModel.diagnostic
@@ -72,7 +72,7 @@ class CallDiagnosticsViewModel: ObservableObject {
     }
 
     private func update(diagnosticModel: MediaDiagnosticModel) {
-        if diagnosticModel.isBadState {
+        if diagnosticModel.value {
             title = "Media"
             subtitle = "\(diagnosticModel.diagnostic)"
             presentingMediaDiagnostic = diagnosticModel.diagnostic

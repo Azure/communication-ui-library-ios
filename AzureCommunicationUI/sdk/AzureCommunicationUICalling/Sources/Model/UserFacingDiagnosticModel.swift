@@ -30,26 +30,19 @@ enum MediaCallDiagnostic: String {
     case cameraPermissionDenied
 }
 
-struct NetworkQualityDiagnosticModel: Equatable {
-    var diagnostic: NetworkCallDiagnostic
-    var value: DiagnosticQuality
+struct CallDiagnosticModel<DiagnosticKind, Value>: Equatable
+  where DiagnosticKind: Equatable, Value: Equatable {
 
-    var isBadState: Bool { value == .bad || value == .poor }
+    var diagnostic: DiagnosticKind
+    var value: Value
 }
 
-struct NetworkDiagnosticModel: Equatable {
-    var diagnostic: NetworkCallDiagnostic
-    var value: Bool
+typealias NetworkQualityDiagnosticModel =
+    CallDiagnosticModel<NetworkCallDiagnostic, DiagnosticQuality>
 
-    var isBadState: Bool { value }
-}
+typealias NetworkDiagnosticModel = CallDiagnosticModel<NetworkCallDiagnostic, Bool>
 
-struct MediaDiagnosticModel: Equatable {
-    var diagnostic: MediaCallDiagnostic
-    var value: Bool
-
-    var isBadState: Bool { value }
-}
+typealias MediaDiagnosticModel = CallDiagnosticModel<MediaCallDiagnostic, Bool>
 
 extension DiagnosticQuality: CustomStringConvertible {
     public var description: String {
