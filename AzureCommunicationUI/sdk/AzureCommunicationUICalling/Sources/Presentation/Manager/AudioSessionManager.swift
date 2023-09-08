@@ -8,7 +8,7 @@ import AVFoundation
 import Combine
 
 protocol AudioSessionManagerProtocol {
-
+    func isAudioUsedByOther() -> Bool
 }
 
 class AudioSessionManager: AudioSessionManagerProtocol {
@@ -77,7 +77,6 @@ class AudioSessionManager: AudioSessionManagerProtocol {
               let interruptionType = AVAudioSession.InterruptionType(rawValue: typeValue) else {
             return
         }
-
         switch interruptionType {
         case .began:
             startAudioSessionDetector()
@@ -88,7 +87,6 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         default:
             break
         }
-
     }
 
     @objc func handleRouteChange(notification: Notification) {
@@ -116,6 +114,10 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         } catch let error {
             logger.error("Failed to set audio session category:\(error.localizedDescription)")
         }
+    }
+
+    func isAudioUsedByOther() -> Bool {
+        return !AVAudioSession.sharedInstance().isOtherAudioPlaying
     }
 
     private func getCurrentAudioDevice() -> AudioDeviceType {
@@ -173,7 +175,6 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         guard AVAudioSession.sharedInstance().isOtherAudioPlaying == false else {
             return
         }
-
         guard audioSessionState == .interrupted else {
             audioSessionDetector?.invalidate()
             return

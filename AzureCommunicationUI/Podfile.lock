@@ -76,7 +76,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AppCenter: b0b6f1190215b5f983c42934db718f3b46fff3c0
-  AzureCommunicationCalling: ab3116181b21749210dc54c9d61c89af744eb018
+  AzureCommunicationCalling: 89e1d0baf8a953c94068377fd2560ecb80f05861
   AzureCommunicationChat: 9be8209d32c2fc6259095ff9838ad30dcfc44f80
   AzureCommunicationCommon: cc520a89f3f8db6d58de42ec4a70cfb79a1b76a3
   AzureCore: ebbf7cf4dfe72afc7584088c38d1c99f5a35d647
@@ -84,6 +84,6 @@ SPEC CHECKSUMS:
   SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
   Trouter: 7eab36954ad740e32db3ff9f6025b0dff92193d7
 
-PODFILE CHECKSUM: b7bbcd2d4c1691e412d7a93a811c0706f3170776
+PODFILE CHECKSUM: ecd9ab9cd41ee8db1de775eec677a404970419c0
 
 COCOAPODS: 1.12.0

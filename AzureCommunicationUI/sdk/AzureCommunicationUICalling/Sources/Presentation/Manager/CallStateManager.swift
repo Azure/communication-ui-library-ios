@@ -37,14 +37,9 @@ class CallStateManager: CallStateManagerProtocol {
     }
 
     private func updateEventHandler(_ callingStatus: CallingStatus) {
-        guard let onCallStateChanged = eventsHandler.onCallStateChanged,
-              let callCompositeCallStateEvent = getCallCompositeCallStateEvent(callingStatus: callingStatus) else {
+        guard let onCallStateChanged = eventsHandler.onCallStateChanged else {
             return
         }
-        onCallStateChanged(callCompositeCallStateEvent)
-    }
-
-    private func getCallCompositeCallStateEvent(callingStatus: CallingStatus) -> CallCompositeCallState? {
-        return CallCompositeCallState(code: callingStatus.toCallCompositeCallState())
+        onCallStateChanged(callingStatus.toCallCompositeCallState())
     }
 }

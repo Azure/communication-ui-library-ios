@@ -13,7 +13,7 @@ class CompositeStateManagerTests: XCTestCase {
     var callStateManager: CallStateManager!
 
     var handlerCallExpectation: XCTestExpectation!
-    var expectedCallStateCode: String = ""
+    var expectedCallStateCode: CallState?
     var stateChangeCount: Int = 0
     var expectedStateChangeCount: Int = 0
 
@@ -134,16 +134,16 @@ extension CompositeStateManagerTests {
 
     func getEventsHandler() -> CallComposite.Events {
         let handler = CallComposite.Events()
-        handler.onCallStateChanged = { [weak self] callCompositeCallState in
+        handler.onCallStateChanged = { [weak self] callState in
             guard let self = self else {
                 return
             }
             self.stateChangeCount += 1
             if self.stateChangeCount == self.expectedStateChangeCount {
-                XCTAssertEqual(callCompositeCallState.code, self.expectedCallStateCode)
+                XCTAssertEqual(callState, self.expectedCallStateCode)
                 self.handlerCallExpectation.fulfill()
             } else {
-                XCTAssertEqual(callCompositeCallState.code, CallCompositeCallStateCode.none)
+                XCTAssertEqual(callState, CallState.none)
             }
         }
         return handler

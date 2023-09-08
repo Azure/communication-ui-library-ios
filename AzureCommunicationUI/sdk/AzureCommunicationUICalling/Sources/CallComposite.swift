@@ -11,6 +11,7 @@ import FluentUI
 import AVKit
 import Combine
 
+// swiftlint:disable file_length
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
     /// The class to configure events closures for Call Composite.
@@ -20,9 +21,9 @@ public class CallComposite {
         /// Closures to execute when participant has joined a call inside Call Composite.
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
         /// Closure to execute when call state changes.
-        public var onCallStateChanged: ((CallCompositeCallState) -> Void)?
-        /// Closure to execute when Call Composite exited.
-        public var onExited: ((CallCompositeExit) -> Void)?
+        public var onCallStateChanged: ((CallState) -> Void)?
+        /// Closure to Call Composite dismissed.
+        public var onDismissed: ((CallCompositeDismissed) -> Void)?
         /// Closure to execure when CallComposite is displayed in Picture-In-Picture.
         public var onPictureInPictureChanged: ((_ isInPictureInPicture: Bool) -> Void)?
     }
@@ -71,8 +72,8 @@ public class CallComposite {
     }
 
     /// Get call state for the Call Composite.
-    public var callStateCode: String {
-        return store?.state.callingState.status.toCallCompositeCallState() ?? CallCompositeCallStateCode.none
+    public var callState: CallState {
+        return store?.state.callingState.status.toCallCompositeCallState() ?? CallState.none
     }
 
     /// Create an instance of CallComposite with options.
@@ -89,9 +90,9 @@ public class CallComposite {
         enableSystemPiPWhenMultitasking = options?.enableSystemPiPWhenMultitasking ?? false
     }
 
-    /// Exit call composite
-    public func exit() {
-        exitManager?.exit()
+    /// Dismiss call composite. If call is in progress, user will leave a call.
+    public func dismiss() {
+        exitManager?.dismiss()
     }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
@@ -129,7 +130,9 @@ public class CallComposite {
             }.store(in: &cancellables)
 
         let viewController = makeToolkitHostingController(router: NavigationRouter(store: store, logger: logger),
-                                                          viewFactory: viewFactory)
+                                                          logger: logger,
+                                                          viewFactory: viewFactory,
+                                                          isRightToLeft: localizationProvider.isRightToLeft)
         self.viewController = viewController
         present(viewController)
         UIApplication.shared.isIdleTimerDisabled = true
@@ -180,7 +183,10 @@ public class CallComposite {
         self.viewController?.dismissSelf()
 
         let viewController = makeToolkitHostingController(
-            router: NavigationRouter(store: store, logger: logger), viewFactory: viewFactory)
+            router: NavigationRouter(store: store, logger: logger),
+            logger: logger,
+            viewFactory: viewFactory,
+            isRightToLeft: localizationProvider.isRightToLeft)
         self.viewController = viewController
         present(viewController)
 
@@ -242,7 +248,8 @@ public class CallComposite {
         }
 
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
-
+        let audioSessionManager = AudioSessionManager(store: store, logger: logger)
+        self.audioSessionManager = audioSessionManager
         return CompositeViewFactory(
             logger: logger,
             avatarManager: avatarViewManager,
@@ -251,6 +258,7 @@ public class CallComposite {
                 logger: logger,
                 store: store,
                 networkManager: NetworkManager(),
+                audioSessionManager: audioSessionManager,
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
@@ -281,6 +289,37 @@ public class CallComposite {
 }
 
 extension CallComposite {
+    private func makeToolkitHostingController(router: NavigationRouter,
+                                              logger: Logger,
+                                              viewFactory: CompositeViewFactoryProtocol,
+                                              isRightToLeft: Bool)
+    -> ContainerUIHostingController {
+        let setupViewOrientationMask = orientationProvider.orientationMask(for:
+                                                                            setupViewOrientationOptions)
+        let callingViewOrientationMask = orientationProvider.orientationMask(for:
+                                                                                callingViewOrientationOptions)
+        let rootView = ContainerView(router: router,
+                                     logger: logger,
+                                     viewFactory: viewFactory,
+                                     setupViewOrientationMask: setupViewOrientationMask,
+                                     callingViewOrientationMask: callingViewOrientationMask,
+                                     isRightToLeft: isRightToLeft)
+        let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
+                                                                        callComposite: self,
+                                                                        isRightToLeft: isRightToLeft)
+        containerUIHostingController.modalPresentationStyle = .fullScreen
+        router.setDismissComposite { [weak containerUIHostingController, weak self] in
+            containerUIHostingController?.dismissSelf()
+            self?.viewController = nil
+            self?.pipViewController = nil
+            self?.viewFactory = nil
+            self?.exitManager?.onDismissed()
+            self?.cleanUpManagers()
+        }
+
+        return containerUIHostingController
+    }
+
     private func present(_ viewController: UIViewController) {
         store?.dispatch(action: .visibilityAction(.showNormalEntered))
         Task { @MainActor in
@@ -333,36 +372,6 @@ extension CallComposite {
         }
     }
 
-    private func makeToolkitHostingController(router: NavigationRouter,
-                                              viewFactory: CompositeViewFactoryProtocol)
-    -> ContainerUIHostingController {
-        let setupViewOrientationMask = orientationProvider.orientationMask(for:
-                                                                            setupViewOrientationOptions)
-        let callingViewOrientationMask = orientationProvider.orientationMask(for:
-                                                                                callingViewOrientationOptions)
-        let rootView = ContainerView(router: router,
-                                     logger: logger,
-                                     viewFactory: viewFactory,
-                                     setupViewOrientationMask: setupViewOrientationMask,
-                                     callingViewOrientationMask: callingViewOrientationMask,
-                                     isRightToLeft: localizationProvider.isRightToLeft)
-        let hostingController = ContainerUIHostingController(rootView: rootView, callComposite: self,
-                                                             isRightToLeft: localizationProvider.isRightToLeft)
-
-        hostingController.modalPresentationStyle = .fullScreen
-        router.setDismissComposite { [weak hostingController, weak self] in
-            hostingController?.dismissSelf()
-            self?.viewController = nil
-            self?.pipViewController = nil
-            self?.viewFactory = nil
-            self?.exitManager?.onExited()
-            self?.cleanUpManagers()
-            UIApplication.shared.isIdleTimerDisabled = false
-        }
-
-        return hostingController
-    }
-
     private func createPipManager(_ store: Store<AppState, Action>) -> PipManager? {
 
         return PipManager(store: store, logger: logger,
@@ -373,7 +382,9 @@ extension CallComposite {
 
             let viewController = self.makeToolkitHostingController(
             router: NavigationRouter(store: store, logger: self.logger),
-            viewFactory: viewFactory)
+            logger: self.logger,
+            viewFactory: viewFactory,
+            isRightToLeft: self.localizationProvider.isRightToLeft)
             self.pipViewController = viewController
             return viewController.view
         },

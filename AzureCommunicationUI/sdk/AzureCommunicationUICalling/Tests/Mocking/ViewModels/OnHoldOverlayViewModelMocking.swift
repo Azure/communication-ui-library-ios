@@ -17,6 +17,7 @@ class OnHoldOverlayViewModelMocking: OnHoldOverlayViewModel {
          compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          accessibilityProvider: AccessibilityProviderProtocol,
+         audioSessionManager: AudioSessionManagerProtocol,
          resumeAction:  @escaping (() -> Void),
          updateState: ((CallingStatus) -> Void)? = nil) {
         self.resumeAction = resumeAction
@@ -31,6 +32,7 @@ class OnHoldOverlayViewModelMocking: OnHoldOverlayViewModel {
                    compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
                    accessibilityProvider: accessibilityProvider,
+                   audioSessionManager: audioSessionManager,
                    resumeAction: resumeAction)
     }
 
