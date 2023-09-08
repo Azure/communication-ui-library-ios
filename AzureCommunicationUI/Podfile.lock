@@ -2,8 +2,8 @@ PODS:
   - AppCenter/Core (4.4.1)
   - AppCenter/Crashes (4.4.1):
     - AppCenter/Core
-  - AzureCommunicationCalling (2.6.0-beta.1):
-    - AzureCommunicationCommon (= 1.1.1)
+  - AzureCommunicationCalling (2.6.1):
+    - AzureCommunicationCommon (~> 1.0)
   - AzureCommunicationChat (1.3.1):
     - AzureCommunicationCommon (~> 1.0)
     - AzureCore (= 1.0.0-beta.15)
@@ -50,7 +50,7 @@ PODS:
 
 DEPENDENCIES:
   - AppCenter/Crashes (= 4.4.1)
-  - AzureCommunicationCalling (= 2.6.0-beta.1)
+  - AzureCommunicationCalling (= 2.6.1)
   - AzureCommunicationChat (= 1.3.1)
   - AzureCore (= 1.0.0-beta.15)
   - MicrosoftFluentUI/ActivityIndicator_ios (= 0.10.0)
@@ -62,13 +62,11 @@ DEPENDENCIES:
   - SwiftLint (= 0.42.0)
 
 SPEC REPOS:
-  "git@github.com:iaulakh/calling_native_ios_private_drop.git":
-    - AzureCommunicationCalling
-  https://github.com/CocoaPods/Specs.git:
-    - AzureCommunicationCommon
   trunk:
     - AppCenter
+    - AzureCommunicationCalling
     - AzureCommunicationChat
+    - AzureCommunicationCommon
     - AzureCore
     - MicrosoftFluentUI
     - SwiftLint
@@ -76,7 +74,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AppCenter: b0b6f1190215b5f983c42934db718f3b46fff3c0
-  AzureCommunicationCalling: ab3116181b21749210dc54c9d61c89af744eb018
+  AzureCommunicationCalling: 97199e8f1332081fcd3b1b03eb02a11f339566a1
   AzureCommunicationChat: 9be8209d32c2fc6259095ff9838ad30dcfc44f80
   AzureCommunicationCommon: cc520a89f3f8db6d58de42ec4a70cfb79a1b76a3
   AzureCore: ebbf7cf4dfe72afc7584088c38d1c99f5a35d647
@@ -84,6 +82,6 @@ SPEC CHECKSUMS:
   SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
   Trouter: 7eab36954ad740e32db3ff9f6025b0dff92193d7
 
-PODFILE CHECKSUM: b7bbcd2d4c1691e412d7a93a811c0706f3170776
+PODFILE CHECKSUM: 901ad012c629d397100ac3273225b2a0485af32f
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.12.1
