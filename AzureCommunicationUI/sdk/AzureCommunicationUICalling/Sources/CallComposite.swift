@@ -18,6 +18,10 @@ public class CallComposite {
         public var onError: ((CallCompositeError) -> Void)?
         /// Closures to execute when participant has joined a call inside Call Composite.
         public var onRemoteParticipantJoined: (([CommunicationIdentifier]) -> Void)?
+        /// Closure to execute when call state changes.
+        public var onCallStateChanged: ((CallState) -> Void)?
+        /// Closure to Call Composite dismissed.
+        public var onDismissed: ((CallCompositeDismissed) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -25,14 +29,19 @@ public class CallComposite {
 
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
+    private let setupViewOrientationOptions: OrientationOptions?
+    private let callingViewOrientationOptions: OrientationOptions?
 
     // Internal dependencies
     private var logger: Logger = DefaultLogger(category: "Calling")
     private var accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProvider()
     private var localizationProvider: LocalizationProviderProtocol
+    private var orientationProvider: OrientationProvider
 
     private var store: Store<AppState, Action>?
     private var errorManager: ErrorManagerProtocol?
+    private var exitManager: ExitManagerProtocol?
+    private var callStateManager: CallStateManagerProtocol?
     private var lifeCycleManager: LifeCycleManagerProtocol?
     private var permissionManager: PermissionsManagerProtocol?
     private var audioSessionManager: AudioSessionManagerProtocol?
@@ -50,6 +59,11 @@ public class CallComposite {
         return localDebugInfoManager.getDebugInfo()
     }
 
+    /// Get call state for the Call Composite.
+    public var callState: CallState {
+        return store?.state.callingState.status.toCallCompositeCallState() ?? CallState.none
+    }
+
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
@@ -57,6 +71,14 @@ public class CallComposite {
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
         localizationProvider = LocalizationProvider(logger: logger)
+        setupViewOrientationOptions = options?.setupScreenOrientation
+        callingViewOrientationOptions = options?.callingScreenOrientation
+        orientationProvider = OrientationProvider()
+    }
+
+    /// Dismiss call composite. If call is in progress, user will leave a call.
+    public func dismiss() {
+        exitManager?.dismiss()
     }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
@@ -156,6 +178,8 @@ public class CallComposite {
         self.avatarViewManager = avatarViewManager
 
         self.errorManager = CompositeErrorManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
+        self.callStateManager = CallStateManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
+        self.exitManager = CompositeExitManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
         self.lifeCycleManager = UIKitAppLifeCycleManager(store: store, logger: logger)
         self.permissionManager = PermissionsManager(store: store)
         self.audioSessionManager = AudioSessionManager(store: store, logger: logger)
@@ -192,6 +216,7 @@ public class CallComposite {
 
     private func cleanUpManagers() {
         self.errorManager = nil
+        self.callStateManager = nil
         self.lifeCycleManager = nil
         self.permissionManager = nil
         self.audioSessionManager = nil
@@ -199,23 +224,31 @@ public class CallComposite {
         self.remoteParticipantsManager = nil
         self.debugInfoManager = nil
         self.callHistoryService = nil
+        self.exitManager = nil
     }
 
     private func makeToolkitHostingController(router: NavigationRouter,
                                               logger: Logger,
                                               viewFactory: CompositeViewFactoryProtocol,
-                                              isRightToLeft: Bool) -> ContainerUIHostingController {
+                                              isRightToLeft: Bool)
+    -> ContainerUIHostingController {
+        let setupViewOrientationMask = orientationProvider.orientationMask(for:
+                                                                            setupViewOrientationOptions)
+        let callingViewOrientationMask = orientationProvider.orientationMask(for:
+                                                                                callingViewOrientationOptions)
         let rootView = ContainerView(router: router,
                                      logger: logger,
                                      viewFactory: viewFactory,
+                                     setupViewOrientationMask: setupViewOrientationMask,
+                                     callingViewOrientationMask: callingViewOrientationMask,
                                      isRightToLeft: isRightToLeft)
         let containerUIHostingController = ContainerUIHostingController(rootView: rootView,
                                                                         callComposite: self,
                                                                         isRightToLeft: isRightToLeft)
         containerUIHostingController.modalPresentationStyle = .fullScreen
-
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
             containerUIHostingController?.dismissSelf()
+            self?.exitManager?.onDismissed()
             self?.cleanUpManagers()
         }
 
