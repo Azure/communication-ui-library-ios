@@ -1,16 +1,21 @@
 # Azure Communication UI Calling Release History
 
-## 1.5.0-beta.1 (2023-08-31)
+## 1.5.0-beta.1 (2023-09-08)
 ### New Features
 - Introducing Picture in Picture which allows video call to continue when navigating away from calling screen.
 
+## 1.4.0 (2023-08-30)
+### Features
+- Use Dominant Speakers feature to determine which remove participants to display on the grid when number of participants more then 6.
+- Introducing call state changed event for `CallComposite.events.onCallStateChanged`.
+- Introducing ability to dismiss call composite `CallComposite.dismiss()` and be notified when it's dismissed `CallComposite.events.onDismissed`.
+- Configure orientation for setup screen and call screen `CallCompositeOptions(..., setupScreenOrientation, callingScreenOrientation)`.
 
 ## 1.3.1 (2023-07-19)
 ### Bugs Fixed
 - Call join being blocked when microphone is unavailable to use for UI Composite at the moment
 - Call Resume and join on hold checks microphone available
 - Call join when network is gained after it is lost bug fixed
-
 
 ## 1.4.0-beta.1 (2023-04-26)
 ### New Features
