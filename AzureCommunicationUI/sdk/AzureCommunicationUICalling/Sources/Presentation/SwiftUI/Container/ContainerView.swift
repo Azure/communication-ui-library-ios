@@ -16,23 +16,34 @@ struct ContainerView: View {
     let setupViewOrientationMask: UIInterfaceOrientationMask?
     let callingViewOrientationMask: UIInterfaceOrientationMask?
     let isRightToLeft: Bool
+    var isCallingScreenLocked: Bool {
+        return !(callingViewOrientationMask  == .allButUpsideDown || callingViewOrientationMask == nil)
+    }
 
     var body: some View {
         Group {
-            switch router.currentView {
-            case .setupView:
-                setupView.supportedOrientations(setupViewOrientationMask ?? setupViewDefaultOrientation)
-                    .accessibilityElement(children: .contain)
-                    .accessibilityAddTraits(.isModal)
-            case .callingView:
-                callingView.proximitySensorEnabled(true)
-                    .supportedOrientations(callingViewOrientationMask ?? .allButUpsideDown)
-                    .accessibilityElement(children: .contain)
-                    .accessibilityAddTraits(.isModal)
-            }
+            contentView
         }
+        .accessibilityElement(children: .contain)
+        .accessibilityAddTraits(.isModal)
         .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
     }
+
+    @ViewBuilder
+    private var contentView: some View {
+        switch router.currentView {
+        case .setupView:
+            setupView.supportedOrientations(setupViewOrientationMask ?? setupViewDefaultOrientation)
+        case .callingView:
+            if isCallingScreenLocked {
+                callingView.proximitySensorEnabled(true)
+                    .supportedOrientations(callingViewOrientationMask ?? .portrait)
+            } else {
+            callingView.proximitySensorEnabled(true)
+            }
+        }
+    }
+
     var setupView: SetupView {
         logger.debug("Displaying view: setupView")
         return viewFactory.makeSetupView()
