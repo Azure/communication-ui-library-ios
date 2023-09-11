@@ -46,6 +46,9 @@ end
 target 'AzureCommunicationUIDemoApp' do
   project 'AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj'
   use_frameworks!
+  pod 'FirebaseMessaging'
+  pod 'FirebaseFirestore'
+  pod 'FirebaseAuth'
   pod 'AzureCommunicationCalling', '2.6.1'
   pod 'AzureCommunicationChat', '1.3.1'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'

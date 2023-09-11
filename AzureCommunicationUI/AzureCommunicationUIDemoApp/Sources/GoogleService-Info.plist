@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>526045698422-7ahrvganhsgnnj39jm1g2hjn36f7hacn.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.526045698422-7ahrvganhsgnnj39jm1g2hjn36f7hacn</string>
+	<key>API_KEY</key>
+	<string>AIzaSyAyK-5YhrtHT496KRWkTaAwORYfn_ACvwk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>526045698422</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.azure.ios.communication.ui.meetings.AzureCommunicationUIDemoAppTest</string>
+	<key>PROJECT_ID</key>
+	<string>acscalling-d8065</string>
+	<key>STORAGE_BUCKET</key>
+	<string>acscalling-d8065.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:526045698422:ios:d3e804a08e6feb1f9cc257</string>
+	<key>DATABASE_URL</key>
+	<string>https://acscalling-d8065-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>
