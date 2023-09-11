@@ -6,9 +6,13 @@
 import UIKit
 import AppCenter
 import AppCenterCrashes
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseAuth
+import FirebaseMessaging
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
 
     static var orientationLock: UIInterfaceOrientationMask = .all
 
@@ -19,8 +23,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         AppCenter.start(withAppSecret: envConfigSubject.appCenterSecret, services: [Crashes.self])
-
+        self.setupFirebaseNotifications(application: application)
         return true
+    }
+    func setupFirebaseNotifications(application: UIApplication) {
+        UNUserNotificationCenter.current().delegate = self
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+          options: authOptions,
+          completionHandler: { _, _ in
+          }
+        )
+        application.registerForRemoteNotifications()
+        FirebaseApp.configure()
+        Messaging.messaging().delegate = self
+    }
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
     }
 
     // MARK: UISceneSession Lifecycle
@@ -36,5 +54,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return AppDelegate.orientationLock
+    }
+}
+
+extension AppDelegate: MessagingDelegate {
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        if let token = fcmToken {
+            print("FCM Token " + token)
+        }
     }
 }
