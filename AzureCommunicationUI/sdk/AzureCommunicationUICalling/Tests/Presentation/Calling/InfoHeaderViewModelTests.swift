@@ -175,7 +175,8 @@ class InfoHeaderViewModelTests: XCTestCase {
         XCTAssertEqual(sut.infoLabel, "Waiting for others to join")
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.infoLabel, "Call with 1 person")
 
         wait(for: [expectation], timeout: 1)
