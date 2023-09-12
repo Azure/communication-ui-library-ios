@@ -37,8 +37,9 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .denied,
                                                                  cameraPermission: .notAsked),
                                 localUserState: LocalUserState(cameraState: cameraState))
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
-        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
+        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 
         let expectedIcon = CompositeIcon.micOff
         let expectedText = "Your audio is disabled. To enable, please go to Settings to allow access. You must enable audio to start this call."
@@ -55,8 +56,9 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted,
                                                                  cameraPermission: .denied),
                                 localUserState: LocalUserState(cameraState: cameraState))
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
-        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
+        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 
         let expectedIcon = CompositeIcon.videoOff
         let expectedText = "Your camera is disabled. To enable, please go to Settings to allow access."
@@ -73,8 +75,9 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .denied,
                                                                  cameraPermission: .denied),
                                 localUserState: LocalUserState(cameraState: cameraState))
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
-        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
+        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 
         let expectedIcon = CompositeIcon.warning
         let expectedText = "Your camera and audio are disabled. To enable, please go to Settings to allow access. You must enable audio to start this call."
@@ -91,8 +94,9 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted,
                                                                  cameraPermission: .notAsked),
                                 localUserState: LocalUserState(cameraState: cameraState))
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
-        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
+        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 
         XCTAssertFalse(sut.isPermissionsDenied)
     }
@@ -104,8 +108,9 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted,
                                                                  cameraPermission: .granted),
                                 localUserState: LocalUserState(cameraState: cameraState))
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
-        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
+        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 
         XCTAssertFalse(sut.isPermissionsDenied)
     }
@@ -117,8 +122,9 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted,
                                                                  cameraPermission: .granted),
                                 localUserState: LocalUserState(cameraState: cameraState))
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
-        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
+        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 
         XCTAssertFalse(sut.isPermissionsDenied)
     }
@@ -130,8 +136,9 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .granted,
                                                                  cameraPermission: .granted),
                                 localUserState: LocalUserState(cameraState: cameraState))
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
-        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
+        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 
         XCTAssertFalse(sut.isPermissionsDenied)
     }
@@ -139,7 +146,7 @@ class PreviewAreaViewModelTests: XCTestCase {
     func test_previewAreaViewModel_update_when_statesUpdated_then_localVideoViewModelUpdated() {
         let expectation = XCTestExpectation(description: "LocalVideoViewModel is updated")
         let localUserState = LocalUserState(displayName: "UpdatedDisplayName")
-        let updateState: (LocalUserState) -> Void = { localState in
+        let updateState: (LocalUserState, VisibilityState) -> Void = { localState, _ in
             XCTAssertEqual(localUserState.displayName, localState.displayName)
             expectation.fulfill()
         }
@@ -149,9 +156,9 @@ class PreviewAreaViewModelTests: XCTestCase {
                                                                         localizationProvider: localizationProvider,
                                                                         dispatchAction: storeFactory.store.dispatch,
                                                                         updateState: updateState)
-
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUT()
-        sut.update(localUserState: localUserState, permissionState: PermissionState())
+        sut.update(localUserState: localUserState, permissionState: PermissionState(), pipState: pipState)
         wait(for: [expectation], timeout: 1.0)
     }
 
@@ -162,8 +169,9 @@ class PreviewAreaViewModelTests: XCTestCase {
         let appState = AppState(permissionState: PermissionState(audioPermission: .denied,
                                                                  cameraPermission: .notAsked),
                                 localUserState: LocalUserState(cameraState: cameraState))
+        let pipState = VisibilityState(currentStatus: .visible)
         let sut = makeSUTLocalizationMocking()
-        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState)
+        sut.update(localUserState: appState.localUserState, permissionState: appState.permissionState, pipState: pipState)
 
         let expectedIcon = CompositeIcon.micOff
         let expectedTextKey = "AzureCommunicationUICalling.SetupView.PreviewArea.AudioDisabled"

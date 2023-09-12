@@ -7,13 +7,13 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class LocalVideoViewModelMocking: LocalVideoViewModel {
-    private let updateState: ((LocalUserState) -> Void)?
+    private let updateState: ((LocalUserState, VisibilityState) -> Void)?
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
          localizationProvider: LocalizationProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
-         updateState: ((LocalUserState) -> Void)? = nil) {
+         updateState: ((LocalUserState, VisibilityState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
@@ -21,7 +21,7 @@ class LocalVideoViewModelMocking: LocalVideoViewModel {
                    dispatchAction: dispatchAction)
     }
 
-    override func update(localUserState: LocalUserState) {
-        updateState?(localUserState)
+    override func update(localUserState: LocalUserState, pipState: VisibilityState) {
+        updateState?(localUserState, pipState)
     }
 }
