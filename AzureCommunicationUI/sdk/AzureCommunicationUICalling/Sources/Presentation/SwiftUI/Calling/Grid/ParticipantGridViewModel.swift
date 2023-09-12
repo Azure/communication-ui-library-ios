@@ -43,6 +43,9 @@ class ParticipantGridViewModel: ObservableObject {
         lastDominantSpeakersUpdatedTimestamp = remoteParticipantsState.dominantSpeakersModifiedTimestamp
 
         let remoteParticipants = remoteParticipantsState.participantInfoList
+            .filter { participanInfoModel in
+                participanInfoModel.status != .inLobby
+            }
         let dominantSpeakers = remoteParticipantsState.dominantSpeakers
         let newDisplayedInfoModelArr = getDisplayedInfoViewModels(remoteParticipants, dominantSpeakers)
         let removedModels = getRemovedInfoModels(for: newDisplayedInfoModelArr)

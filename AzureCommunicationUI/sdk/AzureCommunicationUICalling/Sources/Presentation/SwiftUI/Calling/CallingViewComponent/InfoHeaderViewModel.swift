@@ -76,6 +76,11 @@ class InfoHeaderViewModel: ObservableObject {
     func update(localUserState: LocalUserState,
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState) {
+        let updatedRemoteparticipantCount = remoteParticipantsState.participantInfoList
+            .filter({ participantInfoModel in
+                participantInfoModel.status != .inLobby
+            })
+            .count
         isHoldingCall(callingState: callingState)
         let shouldDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingStatus)
         let newDisplayInfoHeaderValue = shouldDisplayInfoHeader(for: callingState.status)
@@ -83,8 +88,8 @@ class InfoHeaderViewModel: ObservableObject {
         if isVoiceOverEnabled && newDisplayInfoHeaderValue != shouldDisplayInfoHeaderValue {
             updateInfoHeaderAvailability()
         }
-        if participantsCount != remoteParticipantsState.participantInfoList.count {
-            participantsCount = remoteParticipantsState.participantInfoList.count
+        if participantsCount != updatedRemoteparticipantCount {
+            participantsCount = updatedRemoteparticipantCount
             updateInfoLabel()
         }
         participantsListViewModel.update(localUserState: localUserState,
