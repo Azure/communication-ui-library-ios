@@ -23,6 +23,7 @@ enum EnvConfig: String {
     case roomRole
     case enableCallKitInSDK
     case mriInfo
+    case deviceToken
 
     func value() -> String {
         guard let infoDict = Bundle.main.infoDictionary,
@@ -49,6 +50,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
     @Published var roomId: String = EnvConfig.roomId.value()
     @Published var mriInfo: String = EnvConfig.mriInfo.value()
+    @Published var deviceToken: String = EnvConfig.deviceToken.value()
     @Published var threadId: String = EnvConfig.threadId.value()
     @Published var endpointUrl: String = EnvConfig.endpointUrl.value()
 

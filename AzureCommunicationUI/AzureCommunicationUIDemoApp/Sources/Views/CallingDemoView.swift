@@ -252,6 +252,7 @@ extension CallingDemoView {
             theme: envConfigSubject.useCustomColors
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
+            deviceToken: envConfigSubject.deviceToken,
             localization: localizationConfig,
             setupScreenOrientation: setupViewOrientation,
             callingScreenOrientation: callingViewOrientation,
@@ -381,13 +382,13 @@ extension CallingDemoView {
             case .dialCall:
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions:
-                                            RemoteOptions(for: .participantDial(participantMri: "" ),
+                                            RemoteOptions(for: .participantDial(participantMri: getMeetingLink()),
                                                           credential: credential),
                                          localOptions: localOptions)
                 } else {
                     callComposite.launch(
                         remoteOptions: RemoteOptions(for:
-                                .participantDial(participantMri: ""),
+                                .participantDial(participantMri: getMeetingLink()),
                                                      credential: credential,
                                                      displayName: envConfigSubject.displayName),
                         localOptions: localOptions)

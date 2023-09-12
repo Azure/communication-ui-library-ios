@@ -10,10 +10,9 @@ import AzureCommunicationCalling
 @testable import AzureCommunicationUICalling
 
 class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
-    func resgisterIncomingCallPushNotification(deviceToken: Data) async throws {
+    func resgisterIncomingCallPushNotification(deviceToken: String) async throws {
         return
     }
-
     let callingEventsHandler: CallingSDKEventsHandling
 
     private let logger: Logger

@@ -38,6 +38,7 @@
 	<array>
 		<string>audio</string>
 		<string>remote-notification</string>
+		<string>voip</string>
 	</array>
 	<key>aadToken</key>
 	<string>${aadToken}</string>

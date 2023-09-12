@@ -62,5 +62,6 @@ extension AppDelegate: MessagingDelegate {
         if let token = fcmToken {
             print("FCM Token " + token)
         }
+        envConfigSubject.deviceToken = fcmToken ?? ""
     }
 }

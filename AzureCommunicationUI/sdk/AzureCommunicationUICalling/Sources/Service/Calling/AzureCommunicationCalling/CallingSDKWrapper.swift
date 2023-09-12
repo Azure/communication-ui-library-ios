@@ -16,6 +16,8 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     private var callClient: CallClient?
     private var callAgent: CallAgent?
     private var call: Call?
+    private var incomingCall: IncomingCall?
+    private var acceptIncomingCall: Bool = false
     private var deviceManager: DeviceManager?
     private var localVideoStream: AzureCommunicationCalling.LocalVideoStream?
 
@@ -78,6 +80,32 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                   let roomId = callConfiguration.roomId {
             joinLocator = RoomCallLocator(roomId: roomId)
         } else {
+            if callConfiguration.compositeCallType == .dialCall, let mriInfo = callConfiguration.participantMri {
+                let copyStartCallOptions = StartCallOptions()
+                let outgoingAudioOptions = OutgoingAudioOptions()
+                outgoingAudioOptions.muted = true
+
+                let incomingAudioOptions = IncomingAudioOptions()
+                incomingAudioOptions.muted = true
+
+                var copyAcceptCallOptions = AcceptCallOptions()
+                copyStartCallOptions.outgoingAudioOptions = outgoingAudioOptions
+                copyStartCallOptions.incomingAudioOptions = incomingAudioOptions
+                try await callAgent?.startCall(participants: [CommunicationUserIdentifier(mriInfo)],
+                                               options: copyStartCallOptions)
+            } else if callConfiguration.compositeCallType == .incomingCall {
+                if callConfiguration.pushNotificationInfo == nil {
+                    if callConfiguration.acceptIncomingCall ?? false {
+                        var acceptCallOptions = AcceptCallOptions()
+                        try await incomingCall?.accept(options: acceptCallOptions)
+                    } else {
+                        try await incomingCall?.reject()
+                    }
+                } else {
+                    acceptIncomingCall = callConfiguration.acceptIncomingCall ?? false
+                    try await callAgent?.handlePush(notification: callConfiguration.pushNotificationInfo!)
+                }
+            }
             logger.error("Invalid groupID / meeting link")
             throw CallCompositeInternalError.callJoinFailed
         }
@@ -96,8 +124,8 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         setupFeatures()
     }
 
-    func resgisterIncomingCallPushNotification(deviceToken: Data) async throws {
-        try await callAgent?.registerPushNotifications(deviceToken: deviceToken)
+    func resgisterIncomingCallPushNotification(deviceToken: String) async throws {
+        try await callAgent?.registerPushNotifications(deviceToken: deviceToken.data(using: .utf8)!)
     }
 
     func endCall() async throws {
@@ -130,7 +158,6 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     private func findParticipant(identifier: String) -> AzureCommunicationCalling.RemoteParticipant? {
         call?.remoteParticipants.first(where: { $0.identifier.rawId == identifier })
     }
-
     func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String)
     -> CompositeLocalVideoStream<LocalVideoStreamType>? {
 
@@ -149,12 +176,10 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             wrappedObject: castVideoStream
         )
     }
-
     func startCallLocalVideoStream() async throws -> String {
         let stream = await getValidLocalVideoStream()
         return try await startCallVideoStream(stream)
     }
-
     func stopLocalVideoStream() async throws {
         guard let call = self.call,
               let videoStream = self.localVideoStream else {
@@ -183,17 +208,14 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         try await change(videoStream, source: deviceInfo)
         return flippedFacing.toCameraDevice()
     }
-
     func startPreviewVideoStream() async throws -> String {
         _ = await getValidLocalVideoStream()
         return getLocalVideoStreamIdentifier() ?? ""
     }
-
     func muteLocalMic() async throws {
         guard let call = call else {
             return
         }
-
         do {
             try await call.mute()
         } catch {
@@ -202,12 +224,10 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
         logger.debug("Mute successful")
     }
-
     func unmuteLocalMic() async throws {
         guard let call = call else {
             return
         }
-
         do {
             try await call.unmute()
         } catch {
@@ -221,7 +241,6 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         guard let call = call else {
             return
         }
-
         do {
             try await call.hold()
             logger.debug("Hold Call successful")
@@ -234,7 +253,6 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         guard let call = call else {
             return
         }
-
         do {
             try await call.resume()
             logger.debug("Resume Call successful")
@@ -257,7 +275,6 @@ extension CallingSDKWrapper {
             throw CallCompositeInternalError.deviceManagerFailed(error)
         }
     }
-
     private func createProviderConfig() -> CXProviderConfiguration {
         let providerConfig = CXProviderConfiguration()
         providerConfig.supportsVideo = true
@@ -267,7 +284,6 @@ extension CallingSDKWrapper {
         providerConfig.supportedHandleTypes = [.phoneNumber, .generic]
         return providerConfig
     }
-
     private func setupCallAgent() async throws {
         guard callAgent == nil else {
             logger.debug("Reusing call agent")
@@ -293,7 +309,6 @@ extension CallingSDKWrapper {
             throw error
         }
     }
-
     private func makeCallClient() -> CallClient {
         let clientOptions = CallClientOptions()
         let appendingTag = self.callConfiguration.diagnosticConfig.tags
@@ -302,7 +317,6 @@ extension CallingSDKWrapper {
         clientOptions.diagnostics = diagnostics
         return CallClient(options: clientOptions)
     }
-
     private func startCallVideoStream(
         _ videoStream: AzureCommunicationCalling.LocalVideoStream
     ) async throws -> String {
@@ -321,7 +335,6 @@ extension CallingSDKWrapper {
             throw error
         }
     }
-
     private func change(
         _ videoStream: AzureCommunicationCalling.LocalVideoStream, source: VideoDeviceInfo
     ) async throws {
@@ -333,7 +346,6 @@ extension CallingSDKWrapper {
             throw error
         }
     }
-
     private func setupFeatures() {
         guard let call = call else {
             return
@@ -347,7 +359,6 @@ extension CallingSDKWrapper {
             callingEventsHandler.assign(dominantSpeakersFeature)
         }
     }
-
     private func getLocalVideoStreamIdentifier() -> String? {
         guard localVideoStream != nil else {
             return nil
@@ -355,14 +366,12 @@ extension CallingSDKWrapper {
         return "builtinCameraVideoStream"
     }
 }
-
 extension CallingSDKWrapper: DeviceManagerDelegate {
     func deviceManager(_ deviceManager: DeviceManager, didUpdateCameras args: VideoDevicesUpdatedEventArgs) {
         for newDevice in args.addedVideoDevices {
             newVideoDeviceAddedHandler?(newDevice)
         }
     }
-
     private func getVideoDeviceInfo(_ cameraFacing: CameraFacing) async -> VideoDeviceInfo {
         // If we have a camera, return the value right away
         await withCheckedContinuation({ continuation in
@@ -379,12 +388,10 @@ extension CallingSDKWrapper: DeviceManagerDelegate {
             }
         })
     }
-
     private func getValidLocalVideoStream() async -> AzureCommunicationCalling.LocalVideoStream {
         if let existingVideoStream = localVideoStream {
             return existingVideoStream
         }
-
         let videoDevice = await getVideoDeviceInfo(.front)
         let videoStream = AzureCommunicationCalling.LocalVideoStream(camera: videoDevice)
         localVideoStream = videoStream

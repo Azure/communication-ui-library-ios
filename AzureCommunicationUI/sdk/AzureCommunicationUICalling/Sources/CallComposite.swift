@@ -36,6 +36,7 @@ public class CallComposite {
     private let callingViewOrientationOptions: OrientationOptions?
     private let enableMultitasking: Bool
     private let enableSystemPiPWhenMultitasking: Bool
+    private let deviceToken: String
 
     // Internal dependencies
     private var logger: Logger = DefaultLogger(category: "Calling")
@@ -80,6 +81,7 @@ public class CallComposite {
     public init(withOptions options: CallCompositeOptions? = nil) {
         events = Events()
         themeOptions = options?.themeOptions
+        deviceToken = options?.deviceToken ?? ""
         localizationOptions = options?.localizationOptions
         localizationProvider = LocalizationProvider(logger: logger)
         setupViewOrientationOptions = options?.setupScreenOrientation
