@@ -5,6 +5,7 @@
 
 import Foundation
 import AzureCommunicationCommon
+import AzureCommunicationCalling
 
 /// CallComposite Locator for locating call destination.
 public enum JoinLocator {
@@ -15,6 +16,8 @@ public enum JoinLocator {
     /// Rooms Call with room ID. You need to use LocalOptions parameter for
     /// CallComposite.launch() method with roleHint provided.
     case roomCall(roomId: String)
+    case incomingCall(pushNotificationInfo: PushNotificationInfo, acceptIncomingCall: Bool)
+    case participantDial(participantMri: String)
 }
 
 /// Object for remote options for Call Composite.
@@ -30,6 +33,8 @@ public struct RemoteOptions {
     /// The limit for string length is 256.
     public let displayName: String?
 
+    public let enableCallKitInSDK: Bool
+
     /// Create an instance of a RemoteOptions with options.
     /// - Parameters:
     ///   - locator: The JoinLocator type with unique identifier for joining a specific call.
@@ -37,9 +42,12 @@ public struct RemoteOptions {
     ///   - displayName: The display name of the local participant for the call. The limit for string length is 256.
     public init(for locator: JoinLocator,
                 credential: CommunicationTokenCredential,
-                displayName: String? = nil) {
+                displayName: String? = nil,
+                enableCallKitInSDK: Bool = false
+    ) {
         self.locator = locator
         self.credential = credential
         self.displayName = displayName
+        self.enableCallKitInSDK = enableCallKitInSDK
     }
 }

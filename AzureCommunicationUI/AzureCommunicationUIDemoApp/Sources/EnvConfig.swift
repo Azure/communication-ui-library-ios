@@ -21,6 +21,8 @@ enum EnvConfig: String {
     case threadId
     case endpointUrl
     case roomRole
+    case enableCallKitInSDK
+    case mriInfo
 
     func value() -> String {
         guard let infoDict = Bundle.main.infoDictionary,
@@ -46,6 +48,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var groupCallId: String = EnvConfig.groupCallId.value()
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
     @Published var roomId: String = EnvConfig.roomId.value()
+    @Published var mriInfo: String = EnvConfig.mriInfo.value()
     @Published var threadId: String = EnvConfig.threadId.value()
     @Published var endpointUrl: String = EnvConfig.endpointUrl.value()
 
@@ -72,6 +75,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var tint20: Color = .blue
     @Published var tint30: Color = .blue
     @Published var colorSchemeOverride: UIUserInterfaceStyle = .unspecified
+    @Published var enableCallKitInSDK: Bool = EnvConfig.enableCallKitInSDK.value() == "true"
 
     func update(from dic: [String: String]) {
         if let token = dic["acstoken"],
@@ -112,6 +116,10 @@ class EnvConfigSubject: ObservableObject {
         if let acsEndpointUrl = dic["endpointurl"],
            !acsEndpointUrl.isEmpty {
             endpointUrl = acsEndpointUrl
+        }
+        if let enableCallKit = dic["enableCallKitInSDK"],
+                   !enableCallKit.isEmpty {
+                    enableCallKitInSDK = enableCallKit == "true"
         }
     }
 }

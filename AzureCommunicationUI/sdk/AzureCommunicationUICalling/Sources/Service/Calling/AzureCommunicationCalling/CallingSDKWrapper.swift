@@ -96,6 +96,10 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         setupFeatures()
     }
 
+    func resgisterIncomingCallPushNotification(deviceToken: Data) async throws {
+        try await callAgent?.registerPushNotifications(deviceToken: deviceToken)
+    }
+
     func endCall() async throws {
         guard call != nil else {
             throw CallCompositeInternalError.callEndFailed
@@ -254,6 +258,16 @@ extension CallingSDKWrapper {
         }
     }
 
+    private func createProviderConfig() -> CXProviderConfiguration {
+        let providerConfig = CXProviderConfiguration()
+        providerConfig.supportsVideo = true
+        providerConfig.maximumCallGroups = 1
+        providerConfig.maximumCallsPerCallGroup = 1
+        providerConfig.includesCallsInRecents = true
+        providerConfig.supportedHandleTypes = [.phoneNumber, .generic]
+        return providerConfig
+    }
+
     private func setupCallAgent() async throws {
         guard callAgent == nil else {
             logger.debug("Reusing call agent")
@@ -261,6 +275,9 @@ extension CallingSDKWrapper {
         }
 
         let options = CallAgentOptions()
+        if callConfiguration.enableCallKitInSDK {
+            options.callKitOptions = CallKitOptions(with: createProviderConfig())
+        }
         if let displayName = callConfiguration.displayName {
             options.displayName = displayName
         }

@@ -103,4 +103,8 @@ class CallingService: NSObject, CallingServiceProtocol {
     func resumeCall() async throws {
         try await callingSDKWrapper.resumeCall()
     }
+
+    func registerIncomingCallPushNotification(deviceToken: Data) async throws {
+        try await callingSDKWrapper.resgisterIncomingCallPushNotification(deviceToken: deviceToken)
+    }
 }

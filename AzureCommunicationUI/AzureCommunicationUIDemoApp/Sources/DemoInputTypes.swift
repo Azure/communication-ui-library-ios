@@ -10,6 +10,7 @@ enum MeetingType: Int {
     case groupCall
     case teamsMeeting
     case roomCall
+    case dialCall
 }
 
 enum ChatType: Int {

@@ -144,6 +144,8 @@ public class CallComposite {
         let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
                                                   credential: remoteOptions.credential,
                                                   displayName: remoteOptions.displayName,
+                                                  pushNotificationInfo: nil,
+                                                  enableCallKitInSDK: remoteOptions.enableCallKitInSDK,
                                                   roomRole: localOptions?.roleHint)
         launch(callConfiguration, localOptions: localOptions)
     }

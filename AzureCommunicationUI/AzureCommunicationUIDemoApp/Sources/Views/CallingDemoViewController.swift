@@ -31,6 +31,7 @@ class CallingDemoViewController: UIViewController {
     private var acsTokenTextField: UITextField!
     private var selectedMeetingType: MeetingType = .groupCall
     private var displayNameTextField: UITextField!
+    private var mriTextField: UITextField!
     private var groupCallTextField: UITextField!
     private var teamsMeetingTextField: UITextField!
     private var roomCallTextField: UITextField!
@@ -312,6 +313,11 @@ class CallingDemoViewController: UIViewController {
                                                 .roomCall(roomId: link),
                                                       credential: credential, displayName: getDisplayName()),
                                      localOptions: localOptions)
+            case .dialCall:
+                callComposite.launch(remoteOptions: RemoteOptions(for:
+                        .participantDial(participantMri: getMri()),
+                                                                  credential: credential,
+                                                                  displayName: getDisplayName()))
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
@@ -347,6 +353,10 @@ class CallingDemoViewController: UIViewController {
         displayNameTextField.text ?? ""
     }
 
+    private func getMri() -> String {
+        mriTextField.text ?? ""
+    }
+
     private func getMeetingLink() -> String {
         switch selectedMeetingType {
         case .groupCall:
@@ -355,6 +365,8 @@ class CallingDemoViewController: UIViewController {
             return teamsMeetingTextField.text ?? ""
         case .roomCall:
             return roomCallTextField.text ?? ""
+        case .dialCall:
+            return mriTextField.text ?? ""
         }
     }
 
@@ -495,6 +507,11 @@ class CallingDemoViewController: UIViewController {
             teamsMeetingTextField.isHidden = true
             roomCallTextField.isHidden = false
             roomRoleTypeSegmentedControl.isHidden = false
+        case .dialCall:
+            groupCallTextField.isHidden = true
+            teamsMeetingTextField.isHidden = true
+            roomCallTextField.isHidden = true
+            roomRoleTypeSegmentedControl.isHidden = true
         }
     }
 
@@ -571,6 +588,14 @@ class CallingDemoViewController: UIViewController {
         displayNameTextField.delegate = self
         displayNameTextField.borderStyle = .roundedRect
         displayNameTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
+
+        mriTextField = UITextField()
+        mriTextField.placeholder = "MRI Info"
+        mriTextField.text = envConfigSubject.mriInfo
+        mriTextField.translatesAutoresizingMaskIntoConstraints = false
+        mriTextField.delegate = self
+        mriTextField.borderStyle = .roundedRect
+        mriTextField.addTarget(self, action: #selector(textFieldEditingDidChange), for: .editingChanged)
 
         groupCallTextField = UITextField()
         groupCallTextField.placeholder = "Group Call Id"

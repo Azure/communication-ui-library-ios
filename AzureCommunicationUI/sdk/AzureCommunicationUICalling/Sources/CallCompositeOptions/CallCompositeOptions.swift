@@ -8,6 +8,7 @@ import UIKit
 
 /// User-configurable options for creating CallComposite.
 public struct CallCompositeOptions {
+    private(set) var deviceToken: String = ""
     private(set) var themeOptions: ThemeOptions?
     private(set) var localizationOptions: LocalizationOptions?
     private(set) var setupScreenOrientation: OrientationOptions?
@@ -29,12 +30,14 @@ public struct CallCompositeOptions {
     /// - Parameter enableSystemPiPWhenMultitasking: When enableMultitasking is set to true, enables a system
     ///  Picture-in-picture mode when user navigates away from call composite.
     public init(theme: ThemeOptions? = nil,
+                deviceToken: String = "",
                 localization: LocalizationOptions? = nil,
                 setupScreenOrientation: OrientationOptions? = nil,
                 callingScreenOrientation: OrientationOptions? = nil,
                 enableMultitasking: Bool = false,
                 enableSystemPiPWhenMultitasking: Bool = false) {
         self.themeOptions = theme
+        self.deviceToken = deviceToken
         self.localizationOptions = localization
         self.setupScreenOrientation = setupScreenOrientation
         self.callingScreenOrientation = callingScreenOrientation
