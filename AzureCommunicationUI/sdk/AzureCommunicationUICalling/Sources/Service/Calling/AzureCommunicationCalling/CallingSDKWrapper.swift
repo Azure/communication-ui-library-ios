@@ -2,7 +2,7 @@
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
 //
-
+// swiftlint:disable file_length
 import AzureCommunicationCalling
 
 import Combine
@@ -68,7 +68,6 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
         joinCallOptions.audioOptions = AudioOptions()
         joinCallOptions.audioOptions?.muted = !isAudioPreferred
-
         var joinLocator: JoinMeetingLocator
         if callConfiguration.compositeCallType == .groupCall,
            let groupId = callConfiguration.groupId {
@@ -91,8 +90,21 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                 var copyAcceptCallOptions = AcceptCallOptions()
                 copyStartCallOptions.outgoingAudioOptions = outgoingAudioOptions
                 copyStartCallOptions.incomingAudioOptions = incomingAudioOptions
-                try await callAgent?.startCall(participants: [CommunicationUserIdentifier(mriInfo)],
+                let joinedCallLocal = try await
+                callAgent?.startCall(participants:
+                                        [CommunicationUserIdentifier(mriInfo)],
                                                options: copyStartCallOptions)
+                guard let joinedCall = joinedCallLocal else {
+                    logger.error( "Join call failed")
+                    throw CallCompositeInternalError.callJoinFailed
+                }
+
+                if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
+                    joinedCall.delegate = callingEventsHandler
+                }
+                call = joinedCall
+                setupFeatures()
+                return
             } else if callConfiguration.compositeCallType == .incomingCall {
                 if callConfiguration.pushNotificationInfo == nil {
                     if callConfiguration.acceptIncomingCall ?? false {
@@ -110,9 +122,9 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             throw CallCompositeInternalError.callJoinFailed
         }
 
-        let joinedCall = try await callAgent?.join(with: joinLocator, joinCallOptions: joinCallOptions)
+        let joinedCallLocal = try await callAgent?.join(with: joinLocator, joinCallOptions: joinCallOptions)
 
-        guard let joinedCall = joinedCall else {
+        guard let joinedCall = joinedCallLocal else {
             logger.error( "Join call failed")
             throw CallCompositeInternalError.callJoinFailed
         }

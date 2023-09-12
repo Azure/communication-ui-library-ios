@@ -62,5 +62,7 @@
 	<string>$(threadId)</string>
 	<key>userId</key>
 	<string>$(userId)</string>
+	<key>mriInfo</key>
+	<string>$(mriInfo)</string>
 </dict>
 </plist>
