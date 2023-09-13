@@ -157,7 +157,8 @@ public class CallComposite {
         let callingSdkWrapper = wrapper ?? CallingSDKWrapper(
             logger: logger,
             callingEventsHandler: CallingSDKEventsHandler(logger: logger),
-            callConfiguration: callConfiguration
+            callConfiguration: callConfiguration,
+            localOptions: localOptions
         )
 
         let store = Store.constructStore(
