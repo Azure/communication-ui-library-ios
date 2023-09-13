@@ -67,7 +67,10 @@ struct SettingsView: View {
     var localParticipantSettings: some View {
         Section(header: Text("Local Participant Settings")) {
             toggleWrapper {
-                expiredTokenToggle
+                VStack {
+                    expiredTokenToggle
+                    enableCallDiagnosticsToggle
+                }
             } onTapGesture: {
                 envConfigSubject.useExpiredToken = !envConfigSubject.useExpiredToken
             }
@@ -95,6 +98,11 @@ struct SettingsView: View {
     var expiredTokenToggle: some View {
         Toggle("Use expired token", isOn: $envConfigSubject.useExpiredToken)
             .accessibilityIdentifier(AccessibilityId.expiredAcsTokenToggleAccessibilityID.rawValue)
+    }
+
+    var enableCallDiagnosticsToggle: some View {
+        Toggle("Enable Call Diagnostics", isOn: $envConfigSubject.displayCallDiagnosticsOn)
+            .accessibilityIdentifier(AccessibilityId.settingsAcsCallDiagnosticsAccessibilityID.rawValue)
     }
 
     var useMockCallingSDKHandler: some View {
