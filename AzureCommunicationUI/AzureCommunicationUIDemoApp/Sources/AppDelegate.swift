@@ -2,17 +2,58 @@
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
 //
-
+// swiftlint:disable multiline_parameters
 import UIKit
 import AppCenter
 import AppCenterCrashes
-import FirebaseCore
-import FirebaseFirestore
-import FirebaseAuth
-import FirebaseMessaging
+import AzureCommunicationUICalling
+import AzureCommunicationCommon
+import PushKit
+import AzureCommunicationCalling
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, PKPushRegistryDelegate {
+
+    let appPubs = AppPubs()
+
+    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
+        appPubs.pushToken = registry.pushToken(for: .voIP) ?? nil
+        envConfigSubject.deviceToken = appPubs.pushToken ?? nil
+        let callCompositeOptions = CallCompositeOptions(deviceToken: envConfigSubject.deviceToken)
+        let callComposite = CallComposite(withOptions: callCompositeOptions)
+        let acsToken = envConfigSubject.useExpiredToken ?
+                       envConfigSubject.expiredAcsToken : envConfigSubject.acsToken
+        if let communicationTokenCredential = try? CommunicationTokenCredential(token: acsToken) {
+            DispatchQueue.main.async {
+                Task {
+                    await callComposite.registerPushNotifications(credential: communicationTokenCredential)
+                }
+            }
+        }
+    }
+
+    private func createProviderConfig() -> CXProviderConfiguration {
+        let providerConfig = CXProviderConfiguration()
+        providerConfig.supportsVideo = true
+        providerConfig.maximumCallGroups = 1
+        providerConfig.maximumCallsPerCallGroup = 1
+        providerConfig.includesCallsInRecents = true
+        providerConfig.supportedHandleTypes = [.phoneNumber, .generic]
+        return providerConfig
+    }
+
+    func pushRegistry(_ registry: PKPushRegistry,
+                      didReceiveIncomingPushWith payload: PKPushPayload,
+                      for type: PKPushType, completion: @escaping () -> Void) {
+        let callNotification = PushNotificationInfo.fromDictionary(payload.dictionaryPayload)
+        let userDefaults: UserDefaults = .standard
+        let callKitOptions = CallKitOptions(with: createProviderConfig())
+        CallClient.reportIncomingCall(with: callNotification, callKitOptions: callKitOptions) { error in
+            if error == nil {
+                self.appPubs.pushPayload = payload
+            }
+        }
+    }
 
     static var orientationLock: UIInterfaceOrientationMask = .all
 
@@ -28,17 +69,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     func setupFirebaseNotifications(application: UIApplication) {
         UNUserNotificationCenter.current().delegate = self
-        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(
-          options: authOptions,
-          completionHandler: { _, _ in
-          }
-        )
-        application.registerForRemoteNotifications()
-        FirebaseApp.configure()
-        Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, _) in
+            if granted {
+                DispatchQueue.main.async {
+                    application.registerForRemoteNotifications()
+                }
+            }
+        }
     }
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        self.voipRegistration()
     }
 
     // MARK: UISceneSession Lifecycle
@@ -55,13 +95,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                      supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return AppDelegate.orientationLock
     }
+    // Register for VoIP notifications
+    func voipRegistration() {
+        let mainQueue = DispatchQueue.main
+
+        // Create a push registry object
+        let voipRegistry = PKPushRegistry(queue: mainQueue)
+        // Set the registry's delegate to self
+        voipRegistry.delegate = self
+        // Set the push type to VoIP
+        voipRegistry.desiredPushTypes = [PKPushType.voIP]
+    }
 }
 
-extension AppDelegate: MessagingDelegate {
-    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        if let token = fcmToken {
-            print("FCM Token " + token)
-        }
-        envConfigSubject.deviceToken = fcmToken ?? ""
+class AppPubs {
+    init() {
+        self.pushPayload = nil
+        self.pushToken = nil
     }
+
+    @Published var pushPayload: PKPushPayload?
+    @Published var pushToken: Data?
 }

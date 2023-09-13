@@ -56,13 +56,13 @@
 	<string>${expiredAcsToken}</string>
 	<key>groupCallId</key>
 	<string>${groupCallId}</string>
+	<key>mriInfo</key>
+	<string>$(mriInfo)</string>
 	<key>teamsMeetingLink</key>
 	<string>${teamsMeetingLink}</string>
 	<key>threadId</key>
 	<string>$(threadId)</string>
 	<key>userId</key>
 	<string>$(userId)</string>
-	<key>mriInfo</key>
-	<string>$(mriInfo)</string>
 </dict>
 </plist>

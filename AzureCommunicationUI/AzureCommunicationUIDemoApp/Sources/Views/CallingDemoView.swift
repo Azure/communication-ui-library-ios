@@ -232,7 +232,6 @@ extension CallingDemoView {
 
     func startCallComposite() async {
         let link = getMeetingLink()
-
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         if !envConfigSubject.localeIdentifier.isEmpty {

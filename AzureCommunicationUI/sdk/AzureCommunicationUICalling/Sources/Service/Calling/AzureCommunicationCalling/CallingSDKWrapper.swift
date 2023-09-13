@@ -136,8 +136,8 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         setupFeatures()
     }
 
-    func resgisterIncomingCallPushNotification(deviceToken: String) async throws {
-        try await callAgent?.registerPushNotifications(deviceToken: deviceToken.data(using: .utf8)!)
+    func resgisterIncomingCallPushNotification(deviceToken: Data?) async throws {
+        try await callAgent?.registerPushNotifications(deviceToken: deviceToken!)
     }
 
     func endCall() async throws {
@@ -316,6 +316,7 @@ extension CallingSDKWrapper {
             )
             self.logger.debug("Call agent successfully created.")
             self.callAgent = callAgent
+            try await resgisterIncomingCallPushNotification(deviceToken: CallComposite.deviceToken)
         } catch {
             logger.error("It was not possible to create a call agent.")
             throw error

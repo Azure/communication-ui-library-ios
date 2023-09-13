@@ -2,8 +2,10 @@
 //  Copyright (c) Microsoft Corporation. All rights reserved.
 //  Licensed under the MIT License.
 //
-
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
 import AzureCommunicationCommon
+import AzureCommunicationCalling
 
 import UIKit
 import SwiftUI
@@ -36,7 +38,7 @@ public class CallComposite {
     private let callingViewOrientationOptions: OrientationOptions?
     private let enableMultitasking: Bool
     private let enableSystemPiPWhenMultitasking: Bool
-    private let deviceToken: String
+    static var deviceToken: Data?
 
     // Internal dependencies
     private var logger: Logger = DefaultLogger(category: "Calling")
@@ -81,7 +83,7 @@ public class CallComposite {
     public init(withOptions options: CallCompositeOptions? = nil) {
         events = Events()
         themeOptions = options?.themeOptions
-        deviceToken = options?.deviceToken ?? ""
+        CallComposite.deviceToken = options?.deviceToken ?? nil
         localizationOptions = options?.localizationOptions
         localizationProvider = LocalizationProvider(logger: logger)
         setupViewOrientationOptions = options?.setupScreenOrientation
@@ -90,10 +92,39 @@ public class CallComposite {
         enableMultitasking = options?.enableMultitasking ?? false
         enableSystemPiPWhenMultitasking = options?.enableSystemPiPWhenMultitasking ?? false
     }
-
     /// Exit call composite
     public func exit() {
         exitManager?.exit()
+    }
+    // workaround for FHL
+    public func registerPushNotifications(credential: CommunicationTokenCredential) async {
+        let clientOptions = CallClientOptions()
+        let callClient = CallClient(options: clientOptions)
+        let options = CallAgentOptions()
+        options.callKitOptions = CallKitOptions(with: createProviderConfig())
+        do {
+            let callAgent = try await callClient.createCallAgent(
+                userCredential: credential,
+                options: options
+            )
+            try await callAgent.registerPushNotifications(deviceToken:
+                                                            CallComposite.deviceToken!)
+            self.logger.debug("Call agent successfully created.")
+            callAgent.dispose()
+            callClient.dispose()
+        } catch {
+            logger.error("It was not possible to create a call agent.")
+        }
+    }
+
+    private func createProviderConfig() -> CXProviderConfiguration {
+        let providerConfig = CXProviderConfiguration()
+        providerConfig.supportsVideo = true
+        providerConfig.maximumCallGroups = 1
+        providerConfig.maximumCallsPerCallGroup = 1
+        providerConfig.includesCallsInRecents = true
+        providerConfig.supportedHandleTypes = [.phoneNumber, .generic]
+        return providerConfig
     }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,

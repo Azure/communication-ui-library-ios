@@ -29,7 +29,7 @@ protocol CallingServiceProtocol {
 
     func holdCall() async throws
     func resumeCall() async throws
-    func registerIncomingCallPushNotification(deviceToken: String) async throws
+    func registerIncomingCallPushNotification(deviceToken: Data?) async throws
 }
 
 class CallingService: NSObject, CallingServiceProtocol {
@@ -105,7 +105,7 @@ class CallingService: NSObject, CallingServiceProtocol {
         try await callingSDKWrapper.resumeCall()
     }
 
-    func registerIncomingCallPushNotification(deviceToken: String) async throws {
+    func registerIncomingCallPushNotification(deviceToken: Data?) async throws {
         try await callingSDKWrapper.resgisterIncomingCallPushNotification(deviceToken: deviceToken)
     }
 }
