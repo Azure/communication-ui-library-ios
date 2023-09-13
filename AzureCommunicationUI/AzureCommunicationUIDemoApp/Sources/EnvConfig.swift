@@ -72,6 +72,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var tint20: Color = .blue
     @Published var tint30: Color = .blue
     @Published var colorSchemeOverride: UIUserInterfaceStyle = .unspecified
+    @Published var displayCallDiagnosticsOn: Bool = true
 
     func update(from dic: [String: String]) {
         if let token = dic["acstoken"],
