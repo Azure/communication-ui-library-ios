@@ -3,6 +3,7 @@
 //  Licensed under the MIT License.
 //
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 import AzureCommunicationCalling
 
 import Combine
@@ -38,6 +39,40 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
     func setupCall() async throws {
         try await setupCallClientAndDeviceManager()
+    }
+    func pushCall(callNotification: PushNotificationInfo) async throws {
+        if let callingEventsHandler = self.callingEventsHandler
+            as? CallingSDKEventsHandler {
+            callingEventsHandler.setupProperties()
+        }
+        logger.debug( "Starting call")
+        do {
+            try await setupCallAgent()
+            self.callAgent!.events.onCallsUpdated = { calls in
+                            let joinedCall = calls.addedCalls.first
+                            if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
+                                joinedCall?.delegate = callingEventsHandler
+                            }
+                            self.call = joinedCall
+                            self.setupFeatures()
+                        }
+            self.callAgent!.events.onIncomingCall = { _ in
+                // on this notification we can present UI with ringing state with accept and reject
+//                            let callOptions = AcceptCallOptions()
+//                            Task {
+//                                let joinedCall = try await incomingCall.accept(options: callOptions)
+//                                if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
+//                                    joinedCall.delegate = callingEventsHandler
+//                                }
+//                                self.call = joinedCall
+//                                self.setupFeatures()
+//                            }
+            }
+            // handle push is for giving onIncomingCall notification
+            try await self.callAgent!.handlePush(notification: callNotification) { (_) in }
+        } catch {
+            throw CallCompositeInternalError.callJoinFailed
+        }
     }
 
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
@@ -116,6 +151,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                 } else {
                     acceptIncomingCall = callConfiguration.acceptIncomingCall ?? false
                     try await callAgent?.handlePush(notification: callConfiguration.pushNotificationInfo!)
+                    return
                 }
             }
             logger.error("Invalid groupID / meeting link")
@@ -303,9 +339,7 @@ extension CallingSDKWrapper {
         }
 
         let options = CallAgentOptions()
-        if callConfiguration.enableCallKitInSDK {
-            options.callKitOptions = CallKitOptions(with: createProviderConfig())
-        }
+        options.callKitOptions = CallKitOptions(with: createProviderConfig())
         if let displayName = callConfiguration.displayName {
             options.displayName = displayName
         }
@@ -316,6 +350,26 @@ extension CallingSDKWrapper {
             )
             self.logger.debug("Call agent successfully created.")
             self.callAgent = callAgent
+//            self.callAgent!.events.onCallsUpdated = { calls in
+//                            let joinedCall = calls.addedCalls.first
+//                            if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
+//                                joinedCall?.delegate = callingEventsHandler
+//                            }
+//                            self.call = joinedCall
+//                            self.setupFeatures()
+//                        }
+            self.callAgent?.events.onIncomingCall = { incomingCall in
+                self.incomingCall = incomingCall
+                Task {
+                    let callOptions = AcceptCallOptions()
+                    let joinedCall = try await incomingCall.accept(options: callOptions)
+                    if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
+                        joinedCall.delegate = callingEventsHandler
+                    }
+                    self.call = joinedCall
+                    self.setupFeatures()
+                }
+            }
             try await resgisterIncomingCallPushNotification(deviceToken: CallComposite.deviceToken)
         } catch {
             logger.error("It was not possible to create a call agent.")
@@ -371,6 +425,7 @@ extension CallingSDKWrapper {
             callingEventsHandler.assign(transcriptionCallFeature)
             callingEventsHandler.assign(dominantSpeakersFeature)
         }
+        callingEventsHandler.addRemoteParticipants(call.remoteParticipants)
     }
     private func getLocalVideoStreamIdentifier() -> String? {
         guard localVideoStream != nil else {

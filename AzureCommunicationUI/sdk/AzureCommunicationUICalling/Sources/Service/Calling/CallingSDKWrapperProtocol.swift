@@ -5,6 +5,7 @@
 import AzureCommunicationCommon
 import Combine
 import Foundation
+import AzureCommunicationCalling
 
 enum CameraDevice {
     case front
@@ -70,7 +71,7 @@ protocol CallingSDKWrapperProtocol {
     func holdCall() async throws
     func resumeCall() async throws
     func resgisterIncomingCallPushNotification(deviceToken: Data?) async throws
-
+    func pushCall(callNotification: PushNotificationInfo) async throws
     var callingEventsHandler: CallingSDKEventsHandling { get }
 }
 
@@ -82,4 +83,7 @@ protocol CallingSDKEventsHandling {
     var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
     var callIdSubject: PassthroughSubject<String, Never> { get }
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
+    func addRemoteParticipants(
+        _ remoteParticipants: [AzureCommunicationCalling.RemoteParticipant]
+    )
 }

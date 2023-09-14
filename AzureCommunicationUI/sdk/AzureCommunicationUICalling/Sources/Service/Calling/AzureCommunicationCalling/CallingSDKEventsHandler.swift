@@ -104,7 +104,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         participantsInfoListSubject.send(remoteParticipantsInfoList)
     }
 
-    private func addRemoteParticipants(
+    func addRemoteParticipants(
         _ remoteParticipants: [AzureCommunicationCalling.RemoteParticipant]
     ) {
         for participant in remoteParticipants {

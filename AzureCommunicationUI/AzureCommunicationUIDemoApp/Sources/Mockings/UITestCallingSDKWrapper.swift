@@ -13,6 +13,9 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     func resgisterIncomingCallPushNotification(deviceToken: Data?) async throws {
         return
     }
+    func pushCall(callNotification: PushNotificationInfo) async throws {
+
+    }
     let callingEventsHandler: CallingSDKEventsHandling
 
     private let logger: Logger

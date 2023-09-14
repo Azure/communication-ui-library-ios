@@ -48,8 +48,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let callNotification = PushNotificationInfo.fromDictionary(payload.dictionaryPayload)
         let userDefaults: UserDefaults = .standard
         let callKitOptions = CallKitOptions(with: createProviderConfig())
+        let callCompositeOptions = CallCompositeOptions(deviceToken: envConfigSubject.deviceToken)
+        let callComposite = CallComposite(withOptions: callCompositeOptions)
+        let acsToken = envConfigSubject.useExpiredToken ?
+                       envConfigSubject.expiredAcsToken : envConfigSubject.acsToken
+
+        let localOptions = LocalOptions(skipSetupScreen: true)
+
+        callComposite.events.onCallStateChanged = { _ in
+            // callComposite.presentUI()
+        }
+
+        // when we call this callkit will show notification with accept or decline
         CallClient.reportIncomingCall(with: callNotification, callKitOptions: callKitOptions) { error in
             if error == nil {
+                if let communicationTokenCredential = try? CommunicationTokenCredential(token: acsToken) {
+                    Task {
+                        try await callComposite.launch(remoteOptions: RemoteOptions(for:
+                                .incomingCall(pushNotificationInfo: callNotification, acceptIncomingCall: true),
+                                                     credential: communicationTokenCredential,
+                                                     displayName: "IPS"),
+                        localOptions: localOptions,
+                        pushNotificationInfo: callNotification)
+                    }
+                }
                 self.appPubs.pushPayload = payload
             }
         }

@@ -56,6 +56,7 @@ public class CallComposite {
     private var remoteParticipantsManager: RemoteParticipantsManagerProtocol?
     private var avatarViewManager: AvatarViewManagerProtocol?
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
+    private var callingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
     private var pipManager: PipManagerProtocol?
     private var callHistoryService: CallHistoryService?
@@ -66,6 +67,7 @@ public class CallComposite {
     private var viewController: UIViewController?
     private var pipViewController: UIViewController?
     private var cancellables = Set<AnyCancellable>()
+    private var callConfiguration: CallConfiguration?
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -111,7 +113,7 @@ public class CallComposite {
                                                             CallComposite.deviceToken!)
             self.logger.debug("Call agent successfully created.")
             callAgent.dispose()
-            callClient.dispose()
+            // callClient.dispose()
         } catch {
             logger.error("It was not possible to create a call agent.")
         }
@@ -138,34 +140,45 @@ public class CallComposite {
     }
 
     private func launch(_ callConfiguration: CallConfiguration,
-                        localOptions: LocalOptions?) {
+                        localOptions: LocalOptions?) async throws {
         logger.debug("launch composite experience")
-        let viewFactory = constructViewFactoryAndDependencies(
-            for: callConfiguration,
-            localOptions: localOptions,
-            callCompositeEventsHandler: events,
-            withCallingSDKWrapper: self.customCallingSdkWrapper
-        )
-        self.viewFactory = viewFactory
-
+        // DispatchQueue.main.async {
+            let viewFactory = self.constructViewFactoryAndDependencies(
+                for: callConfiguration,
+                localOptions: localOptions,
+                callCompositeEventsHandler: self.events,
+                withCallingSDKWrapper: self.customCallingSdkWrapper
+            )
+            self.viewFactory = viewFactory
+        // }
         setupColorTheming()
         setupLocalization(with: localizationProvider)
 
         guard let store = self.store else {
             fatalError("Construction of dependencies failed")
         }
-
         store.$state
             .receive(on: DispatchQueue.main)
             .sink { [weak self] state in
                 self?.receive(state)
             }.store(in: &cancellables)
+        DispatchQueue.main.async {
+            let viewController = self.makeToolkitHostingController(router: NavigationRouter(store: self.store!,
+                                                                                       logger: self.logger),
+                                                              viewFactory: self.viewFactory!)
+            self.viewController = viewController
+        }
+        presentUI()
 
-        let viewController = makeToolkitHostingController(router: NavigationRouter(store: store, logger: logger),
-                                                          viewFactory: viewFactory)
-        self.viewController = viewController
-        present(viewController)
-        UIApplication.shared.isIdleTimerDisabled = true
+        // try await self.callingSdkWrapper?.setupCall()
+        // try await self.callingSdkWrapper?.pushCall(callNotification: callConfiguration.pushNotificationInfo!)
+    }
+
+    public func presentUI() {
+        DispatchQueue.main.async { [self] in
+            self.present(self.viewController!)
+            UIApplication.shared.isIdleTimerDisabled = true
+        }
     }
 
     /// Start Call Composite experience with joining a Teams meeting.
@@ -173,14 +186,15 @@ public class CallComposite {
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
     ///                            This is data is not sent up to ACS.
     public func launch(remoteOptions: RemoteOptions,
-                       localOptions: LocalOptions? = nil) {
-        let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
+                       localOptions: LocalOptions? = nil,
+                       pushNotificationInfo: PushNotificationInfo? = nil) async throws {
+        callConfiguration = CallConfiguration(locator: remoteOptions.locator,
                                                   credential: remoteOptions.credential,
                                                   displayName: remoteOptions.displayName,
-                                                  pushNotificationInfo: nil,
+                                                  pushNotificationInfo: pushNotificationInfo,
                                                   enableCallKitInSDK: remoteOptions.enableCallKitInSDK,
                                                   roomRole: localOptions?.roleHint)
-        launch(callConfiguration, localOptions: localOptions)
+        try await launch(callConfiguration!, localOptions: localOptions)
     }
 
     /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.
@@ -237,6 +251,7 @@ public class CallComposite {
             logger: logger,
             callingEventsHandler: CallingSDKEventsHandler(logger: logger),
             callConfiguration: callConfiguration)
+        self.callingSdkWrapper = callingSdkWrapper
 
         let store = Store.constructStore(
             logger: logger,

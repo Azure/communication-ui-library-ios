@@ -294,35 +294,6 @@ class CallingDemoViewController: UIViewController {
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen)
 
-        if let credential = try? await getTokenCredential() {
-            switch selectedMeetingType {
-            case .groupCall:
-                let uuid = UUID(uuidString: link) ?? UUID()
-                callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
-                                                                  credential: credential,
-                                                                  displayName: getDisplayName()),
-                                     localOptions: localOptions)
-            case .teamsMeeting:
-                callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
-                                                                  credential: credential,
-                                                                  displayName: getDisplayName()),
-                                     localOptions: localOptions)
-            case .roomCall:
-                callComposite.launch(remoteOptions:
-                                        RemoteOptions(for:
-                                                .roomCall(roomId: link),
-                                                      credential: credential, displayName: getDisplayName()),
-                                     localOptions: localOptions)
-            case .dialCall:
-                callComposite.launch(remoteOptions: RemoteOptions(for:
-                        .participantDial(participantMri: getMri()),
-                                                                  credential: credential,
-                                                                  displayName: getDisplayName()))
-            }
-        } else {
-            showError(for: DemoError.invalidToken.getErrorCode())
-            return
-        }
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {

@@ -329,23 +329,18 @@ extension CallingDemoView {
 
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
-        let localOptions = LocalOptions(participantViewData: participantViewData,
-                                        setupScreenViewData: setupScreenViewData,
-                                        roleHint: roomRoleData,
-                                        cameraOn: envConfigSubject.cameraOn,
-                                        microphoneOn: envConfigSubject.microphoneOn,
-                                        skipSetupScreen: envConfigSubject.skipSetupScreen)
+        let localOptions = LocalOptions(skipSetupScreen: true)
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
                 if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
+                    try? await callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
                                                                       credential: credential,
                                                                       enableCallKitInSDK: enableCallKitInSDK),
                                          localOptions: localOptions)
                 } else {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
+                    try? await callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
                                                                       credential: credential,
                                                                       displayName: envConfigSubject.displayName,
                                                                       enableCallKitInSDK: enableCallKitInSDK),
@@ -353,12 +348,12 @@ extension CallingDemoView {
                 }
             case .teamsMeeting:
                 if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                    try? await callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                     credential: credential,
                                                                       enableCallKitInSDK: enableCallKitInSDK),
                                          localOptions: localOptions)
                 } else {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                    try? await callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                       credential: credential,
                                                                       displayName: envConfigSubject.displayName,
                                                                       enableCallKitInSDK: enableCallKitInSDK),
@@ -366,12 +361,12 @@ extension CallingDemoView {
                 }
             case .roomCall:
                 if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(remoteOptions:
+                    try? await callComposite.launch(remoteOptions:
                                             RemoteOptions(for: .roomCall(roomId: link),
                                                           credential: credential),
                                          localOptions: localOptions)
                 } else {
-                    callComposite.launch(
+                    try? await callComposite.launch(
                         remoteOptions: RemoteOptions(for:
                                 .roomCall(roomId: link),
                                                      credential: credential,
@@ -380,12 +375,12 @@ extension CallingDemoView {
                 }
             case .dialCall:
                 if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(remoteOptions:
+                    try? await callComposite.launch(remoteOptions:
                                             RemoteOptions(for: .participantDial(participantMri: getMeetingLink()),
                                                           credential: credential),
                                          localOptions: localOptions)
                 } else {
-                    callComposite.launch(
+                    try? await callComposite.launch(
                         remoteOptions: RemoteOptions(for:
                                 .participantDial(participantMri: getMeetingLink()),
                                                      credential: credential,

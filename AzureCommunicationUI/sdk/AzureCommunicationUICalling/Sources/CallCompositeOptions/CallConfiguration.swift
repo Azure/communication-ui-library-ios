@@ -70,7 +70,7 @@ struct CallConfiguration {
             self.groupId = nil
             self.meetingLink = nil
             self.compositeCallType = .dialCall
-            self.pushNotificationInfo = nil
+            self.pushNotificationInfo = pushNotificationInfo
             self.acceptIncomingCall = false
             self.participantMri = participantMri
         }
