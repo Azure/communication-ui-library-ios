@@ -136,6 +136,52 @@ class InfoHeaderViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_infoHeaderViewModel_update_when_multipleParticipantInfoListCountChanged_then_shouldBePublishedWithoutInLobby() {
+        let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should publish infoLabel")
+        sut.$infoLabel
+            .dropFirst()
+            .sink(receiveValue: { infoLabel in
+                XCTAssertEqual(infoLabel, "Call with 1 person")
+                expectation.fulfill()
+            }).store(in: cancellable)
+
+        var participantList: [ParticipantInfoModel] = []
+        let firstParticipantInfoModel = ParticipantInfoModel(
+            displayName: "Participant 1",
+            isSpeaking: false,
+            isMuted: false,
+            isRemoteUser: true,
+            userIdentifier: "testUserIdentifier1",
+            status: .idle,
+            screenShareVideoStreamModel: nil,
+            cameraVideoStreamModel: nil)
+        participantList.append(firstParticipantInfoModel)
+
+        let secondParticipantInfoModel = ParticipantInfoModel(
+            displayName: "Participant 2",
+            isSpeaking: false,
+            isMuted: false,
+            isRemoteUser: true,
+            userIdentifier: "testUserIdentifier2",
+            status: .inLobby,
+            screenShareVideoStreamModel: nil,
+            cameraVideoStreamModel: nil)
+        participantList.append(secondParticipantInfoModel)
+
+        let remoteParticipantsState = RemoteParticipantsState(
+            participantInfoList: participantList, lastUpdateTimeStamp: Date())
+
+        XCTAssertEqual(sut.infoLabel, "Waiting for others to join")
+        sut.update(localUserState: storeFactory.store.state.localUserState,
+                   remoteParticipantsState: remoteParticipantsState,
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState(currentStatus: .visible))
+        XCTAssertEqual(sut.infoLabel, "Call with 1 person")
+
+        wait(for: [expectation], timeout: 1)
+    }
+
     func test_infoHeaderViewModel_update_when_statesUpdated_then_participantsListViewModelUpdated() {
         let expectation = XCTestExpectation(description: "Should update participantsListViewModel")
         let participantList = ParticipantInfoModelBuilder.getArray(count: 2)
