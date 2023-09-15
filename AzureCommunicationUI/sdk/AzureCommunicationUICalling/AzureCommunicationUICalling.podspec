@@ -1,11 +1,11 @@
 Pod::Spec.new do |spec|
   spec.name                 = "AzureCommunicationUICalling"
-  spec.version              = "1.5.0-alpha.6"
+  spec.version              = "1.5.0-alpha.9.1"
   spec.summary              = "UI Library to quickly integrate Azure Communication Calling Services experiences into your applications."
   spec.homepage             = "https://github.com/Azure/communication-ui-library-ios"
   spec.license              = { :type => 'MIT' }
   spec.author               = 'Microsoft'
-  spec.source               = { :git => 'https://github.com/Azure/communication-ui-library-ios.git', :tag => 'AzureCommunicationUICalling_1.5.0-alpha.6' }
+  spec.source               = { :git => 'https://github.com/Azure/communication-ui-library-ios.git', :tag => 'AzureCommunicationUICalling_1.5.0-alpha.9.1' }
   spec.module_name          = 'AzureCommunicationUICalling'
   spec.swift_version        = '5.8'
 
@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   spec.pod_target_xcconfig  = { "EXCLUDED_ARCHS[sdk=iphonesimulator*]": "arm64", "ENABLE_BITCODE": "NO"}
   spec.info_plist           = {'UILibrarySemVersion' => "#{spec.version}"}
 
-  spec.dependency             'AzureCommunicationCalling', '2.3.0-beta.1'
+  spec.dependency             'AzureCommunicationCalling', '2.6.0-beta.3.091523'
   spec.dependency             'AzureCore', '1.0.0-beta.15'
   spec.dependency             'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   spec.dependency             'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
