@@ -14,6 +14,7 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
         tableView.sectionHeaderHeight = 40
         tableView.sectionFooterHeight = 0
         tableView.delegate = self
+        tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.register(CompositeParticipantsListCell.self,
                            forCellReuseIdentifier: CompositeParticipantsListCell.identifier)
@@ -92,6 +93,7 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
 
         cell.setup(viewModel: participantViewModel,
                    avatarViewManager: avatarViewManager)
+        cell.bottomSeparatorType = .none
         return cell
     }
 
