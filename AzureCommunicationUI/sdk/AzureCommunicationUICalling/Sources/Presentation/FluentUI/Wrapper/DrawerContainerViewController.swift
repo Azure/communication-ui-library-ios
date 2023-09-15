@@ -15,7 +15,9 @@ class DrawerContainerViewController<T: Equatable>: UIViewController,
         ? StyleProvider.color.popoverColor
         : StyleProvider.color.drawerColor
     var items: [T] = []
+    let headerName: String?
     private let sourceView: UIView
+    private let showHeader: Bool
     private let isRightToLeft: Bool
     private weak var controller: DrawerController?
 
@@ -33,9 +35,12 @@ class DrawerContainerViewController<T: Equatable>: UIViewController,
         }
     }
     init(sourceView: UIView,
+         headerName: String? = nil,
          isRightToLeft: Bool = false
     ) {
         self.sourceView = sourceView
+        self.showHeader = headerName != nil && headerName?.isEmpty == false
+        self.headerName = headerName
         self.isRightToLeft = isRightToLeft
         super.init(nibName: nil, bundle: nil)
     }
@@ -104,7 +109,7 @@ class DrawerContainerViewController<T: Equatable>: UIViewController,
             presentationDirection: .up)
         controller.delegate = self.delegate
         controller.contentView = drawerTableView
-        controller.resizingBehavior = drawerTableView?.sectionHeaderHeight ?? 0 > 0 ? .none : .dismiss
+        controller.resizingBehavior = showHeader ? .none : .dismiss
         controller.backgroundColor = backgroundColor
 
         self.controller = controller
@@ -136,6 +141,7 @@ class DrawerContainerViewController<T: Equatable>: UIViewController,
             var drawerHeight = self.getDrawerHeight(
                 tableView: drawerTableView,
                 numberOfItems: self.items.count,
+                showHeader: self.showHeader,
                 isiPhoneLayout: isiPhoneLayout)
 
             if drawerHeight > Constants.halfScreenHeight {
@@ -150,12 +156,13 @@ class DrawerContainerViewController<T: Equatable>: UIViewController,
 
     private func getDrawerHeight(tableView: UITableView,
                                  numberOfItems: Int,
+                                 showHeader: Bool,
                                  isiPhoneLayout: Bool) -> CGFloat {
         let headerHeight = self.getHeaderHeight(tableView: tableView, isiPhoneLayout: isiPhoneLayout)
         let dividerOffsetHeight = CGFloat(numberOfItems * 3)
 
         var drawerHeight: CGFloat = getTotalCellsHeight(tableView: tableView, numberOfItems: numberOfItems)
-        drawerHeight += headerHeight
+        drawerHeight += showHeader ? headerHeight : Constants.resizeBarHeight
         drawerHeight += dividerOffsetHeight
 
         return drawerHeight
@@ -163,20 +170,23 @@ class DrawerContainerViewController<T: Equatable>: UIViewController,
 
     private func getHeaderHeight(tableView: UITableView,
                                  isiPhoneLayout: Bool) -> CGFloat {
-        guard tableView.sectionHeaderHeight != 0 else {
-            return Constants.resizeBarHeight
-        }
-
-        return (tableView.sectionHeaderHeight + Constants.drawerHeaderMargin) * CGFloat(tableView.numberOfSections)
+        return 0
     }
 
     private func getTotalCellsHeight(tableView: UITableView,
                                      numberOfItems: Int) -> CGFloat {
-        return (0..<tableView.numberOfSections).flatMap { section in
+
+        let sectionHeadersHight = (0..<tableView.numberOfSections).map { section in
+            tableView.rectForHeader(inSection: section).height
+        }.reduce(0, +)
+
+        let rowsHight = (0..<tableView.numberOfSections).flatMap { section in
             return (0..<tableView.numberOfRows(inSection: section)).map { row in
                 return IndexPath(row: row, section: section)
             }
         }.map { index in return tableView.rectForRow(at: index).height }.reduce(0, +)
+
+        return sectionHeadersHight + rowsHight
     }
 
     private func setInitialTableViewFrame(_ isiPhoneLayout: Bool) {

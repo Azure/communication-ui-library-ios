@@ -6,20 +6,6 @@
 import UIKit
 
 class LeaveCallConfirmationListViewController: DrawerContainerViewController<DrawerListItemViewModel> {
-    let headerName: String?
-
-    init(sourceView: UIView,
-         headerName: String,
-         isRightToLeft: Bool = false
-    ) {
-        self.headerName = headerName
-        super.init(sourceView: sourceView, isRightToLeft: isRightToLeft)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
     private enum SectionConstants {
         static let headerHeight: CGFloat = 36.0
     }
@@ -27,8 +13,8 @@ class LeaveCallConfirmationListViewController: DrawerContainerViewController<Dra
     private lazy var leaveCallConfirmationTableView: UITableView? = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = backgroundColor
-        tableView.sectionHeaderHeight = SectionConstants.headerHeight
-        tableView.sectionFooterHeight = 0
+//        tableView.sectionHeaderHeight = SectionConstants.headerHeight
+//        tableView.sectionFooterHeight = 0
         tableView.separatorStyle = .none
         tableView.allowsSelection = true
         tableView.delegate = self
