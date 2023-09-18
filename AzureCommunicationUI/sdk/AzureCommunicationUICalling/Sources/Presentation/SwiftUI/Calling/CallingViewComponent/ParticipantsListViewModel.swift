@@ -32,7 +32,7 @@ class ParticipantsListViewModel: ObservableObject {
             lastUpdateTimeStamp = remoteParticipantsState.lastUpdateTimeStamp
             participantsList = remoteParticipantsState.participantInfoList
                 .filter({ participant in
-                    participant.status != .inLobby
+                    participant.status != .inLobby && participant.status != .disconnected
                 })
                 .map {
                     compositeViewModelFactory.makeParticipantsListCellViewModel(participantInfoModel: $0)

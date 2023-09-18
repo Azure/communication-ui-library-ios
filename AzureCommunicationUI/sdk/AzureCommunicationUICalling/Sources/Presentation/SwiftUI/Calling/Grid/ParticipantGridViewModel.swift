@@ -60,7 +60,7 @@ class ParticipantGridViewModel: ObservableObject {
 
         let remoteParticipants = remoteParticipantsState.participantInfoList
             .filter { participanInfoModel in
-                participanInfoModel.status != .inLobby
+                participanInfoModel.status != .inLobby && participanInfoModel.status != .disconnected
             }
         let dominantSpeakers = remoteParticipantsState.dominantSpeakers
         var newDisplayedInfoModelArr = getDisplayedInfoViewModels(remoteParticipants, dominantSpeakers, visibilityState)
