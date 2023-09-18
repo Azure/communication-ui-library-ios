@@ -98,21 +98,35 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
     }
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 40))
+        let hStackView = UIStackView()
+        hStackView.axis = .horizontal
+        hStackView.distribution = .equalSpacing
+        hStackView.isLayoutMarginsRelativeArrangement = true
+        hStackView.directionalLayoutMargins = .init(top: 0, leading: 12, bottom: 0, trailing: 15)
+
+        let isLobbySection = lobbyParticipants.count != 0 && section == 0
 
         let label = UILabel()
-        label.text = lobbyParticipants.count != 0 && section == 0
+        label.text = isLobbySection
                         ? "Waiting in lobby (\(lobbyParticipants.count))"
                         : "In the call (\(inCallParticipants.count))"
 
-        label.frame = CGRect.init(x: 15, y: 5, width: headerView.frame.width - 10,
-                                  height: headerView.frame.height - 10)
         label.font = .systemFont(ofSize: 14)
         label.textColor = StyleProvider.color.onHoldLabel
 
-        headerView.addSubview(label)
+        hStackView.addArrangedSubview(label)
 
-        return headerView
+        if isLobbySection {
+            let admitAllButton = UIButton()
+            admitAllButton.setTitle("Admit all", for: .normal)
+            admitAllButton.titleLabel?.font = .systemFont(ofSize: 14)
+            admitAllButton.sizeToFit()
+            admitAllButton.translatesAutoresizingMaskIntoConstraints = false
+            admitAllButton.setTitleColor(.systemBlue, for: .normal)
+            hStackView.addArrangedSubview(admitAllButton)
+        }
+
+        return hStackView
     }
 
     private func participants(section: Int) -> [ParticipantsListCellViewModel] {
