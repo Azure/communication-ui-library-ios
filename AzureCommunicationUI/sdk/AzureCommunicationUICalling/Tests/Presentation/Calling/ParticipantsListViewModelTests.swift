@@ -261,7 +261,6 @@ class ParticipantsListViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-
     func test_participantsListViewModel_update_when_lastUpdateTimeStampNotChanged_then_shouldNotBePublished() {
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should not publish participantsList")
