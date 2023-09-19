@@ -20,10 +20,10 @@ struct CallingView: View {
     enum Constants {
         static let topAlertAreaViewTopPaddin: CGFloat = 10.0
     }
-    
-    enum DiagnosticInfoConstants {
-        static let controlBarHeight: CGFloat = 92
-        static let horizontalPadding: CGFloat = 8
+
+    enum DiagnosticToastInfoConstants {
+        static let controlBarHeight: CGFloat = 95
+        static let horizontalPadding: CGFloat = 36
     }
 
     @ObservedObject var viewModel: CallingViewModel
@@ -241,15 +241,18 @@ struct CallingView: View {
     var diagnosticsView: some View {
         return VStack {
             Spacer()
-            CallDiagnosticView(viewModel: viewModel.callDiagnosticsViewModel)
-                .padding(EdgeInsets(top: 0,
-                                    leading: DiagnosticInfoConstants.horizontalPadding,
-                                    bottom: DiagnosticInfoConstants.controlBarHeight,
-                                    trailing: DiagnosticInfoConstants.horizontalPadding)
-                )
-                .accessibilityElement(children: .contain)
-                .accessibilityAddTraits(.isModal)
+            ForEach(viewModel.callDiagnosticsViewModel.bottomToastDiagnostics) { viewModel in
+                BottomToastDiagnosticView(viewModel: viewModel)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isStaticText)
+            }
         }
+        .padding(
+            EdgeInsets(top: 0,
+                       leading: DiagnosticToastInfoConstants.horizontalPadding,
+                       bottom: DiagnosticToastInfoConstants.controlBarHeight,
+                       trailing: DiagnosticToastInfoConstants.horizontalPadding)
+        )
     }
 }
 
