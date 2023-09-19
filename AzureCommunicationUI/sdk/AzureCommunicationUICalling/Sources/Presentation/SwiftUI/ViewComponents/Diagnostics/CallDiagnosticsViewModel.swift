@@ -3,40 +3,20 @@
 //  Licensed under the MIT License.
 //
 
-import Foundation
 import Combine
+import Foundation
 
-class CallDiagnosticsViewModel: ObservableObject {
-    @Published private(set) var isDisplayed: Bool = false
-    @Published private(set) var title: String = ""
-    @Published private(set) var subtitle: String = ""
-
+final class CallDiagnosticsViewModel: ObservableObject {
+    private var bottomToastDimissTimer: Timer!
     private let localizationProvider: LocalizationProviderProtocol
-    private var presentingNetworkDiagnostic: NetworkCallDiagnostic?
-    private var presentingMediaDiagnostic: MediaCallDiagnostic?
+
+    @Published var bottomToastDiagnostics: [BottomToastDiagnosticViewModel] = []
 
     init(localizationProvider: LocalizationProviderProtocol) {
         self.localizationProvider = localizationProvider
-    }
-
-    var dismissContent: String {
-        localizationProvider.getLocalizedString(.snackBarDismiss)
-    }
-    var dismissAccessibilitylabel: String {
-        localizationProvider.getLocalizedString(.snackBarDismissAccessibilityLabel)
-    }
-    var dismissAccessibilityHint: String {
-        localizationProvider.getLocalizedString(.snackBarDismissAccessibilityHint)
-    }
-
-    func dismiss() {
-        isDisplayed = false
-        presentingNetworkDiagnostic = nil
-        presentingMediaDiagnostic = nil
-    }
-
-    func show() {
-        isDisplayed = true
+        self.bottomToastDimissTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
+            self?.dismissDiagnosticsIfExpired()
+        }
     }
 
     func update(diagnosticsState: CallDiagnosticsState) {
@@ -49,36 +29,53 @@ class CallDiagnosticsViewModel: ObservableObject {
         }
     }
 
-    private func update(diagnosticModel: NetworkDiagnosticModel) {
-        if diagnosticModel.value {
-            title = "Network"
-            subtitle = "\(diagnosticModel.diagnostic)"
-            presentingNetworkDiagnostic = diagnosticModel.diagnostic
-            show()
-        } else if presentingNetworkDiagnostic == diagnosticModel.diagnostic {
-            dismiss()
-        }
-    }
+    private func update(diagnosticModel: NetworkDiagnosticModel) {}
 
     private func update(diagnosticModel: NetworkQualityDiagnosticModel) {
-        if diagnosticModel.value == .bad || diagnosticModel.value == .poor {
-            title = "Network"
-            subtitle = "\(diagnosticModel.diagnostic) : \(diagnosticModel.value)"
-            presentingNetworkDiagnostic = diagnosticModel.diagnostic
-            show()
-        } else if presentingNetworkDiagnostic == diagnosticModel.diagnostic {
-            dismiss()
+        let isBadState = diagnosticModel.value == .bad || diagnosticModel.value == .poor
+
+        switch diagnosticModel.diagnostic {
+        case .networkReceiveQuality, .networkSendQuality:
+            updateBottomToastList(isBadState: isBadState,
+                                  viewModel: BottomToastDiagnosticViewModel(
+                                                localizationProvider: localizationProvider,
+                                                diagnosticsViewModel: self,
+                                                networkDiagnostic: diagnosticModel.diagnostic),
+                                  where: { $0.networkDiagnostic == diagnosticModel.diagnostic })
+        default:
+            break
         }
     }
 
     private func update(diagnosticModel: MediaDiagnosticModel) {
-        if diagnosticModel.value {
-            title = "Media"
-            subtitle = "\(diagnosticModel.diagnostic)"
-            presentingMediaDiagnostic = diagnosticModel.diagnostic
-            show()
-        } else if presentingMediaDiagnostic == diagnosticModel.diagnostic {
-            dismiss()
+        if diagnosticModel.diagnostic == .speakingWhileMicrophoneIsMuted {
+            updateBottomToastList(isBadState: diagnosticModel.value,
+                                  viewModel: BottomToastDiagnosticViewModel(
+                                                localizationProvider: localizationProvider,
+                                                diagnosticsViewModel: self,
+                                                mediaDiagnostic: diagnosticModel.diagnostic),
+                                  where: { $0.mediaDiagnostic == diagnosticModel.diagnostic })
+        }
+    }
+
+    private func updateBottomToastList(isBadState: Bool,
+                                       viewModel: @autoclosure () -> BottomToastDiagnosticViewModel,
+                                       where compare: (BottomToastDiagnosticViewModel) -> Bool) {
+        if isBadState {
+            var toastViewModel = bottomToastDiagnostics.first(where: compare)
+            if toastViewModel == nil {
+                toastViewModel = viewModel()
+                bottomToastDiagnostics.append(toastViewModel!)
+            }
+            toastViewModel?.show()
+        } else if let toastViewModel = bottomToastDiagnostics.first(where: compare) {
+            toastViewModel.dismiss()
+        }
+    }
+
+    private func dismissDiagnosticsIfExpired() {
+        for toastViewModel in bottomToastDiagnostics where toastViewModel.isExpired {
+            toastViewModel.dismiss()
         }
     }
 }
