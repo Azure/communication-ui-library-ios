@@ -240,6 +240,7 @@
 		A8ED23302649EA61008A26B2 /* NavigationRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */; };
 		B2120A5C2A97E35E00E29C05 /* UserFacingDiagnosticModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2120A5B2A97E35E00E29C05 /* UserFacingDiagnosticModel.swift */; };
 		B238378B2AA26EA7001F72B3 /* CallDiagnosticsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238378A2AA26EA7001F72B3 /* CallDiagnosticsReducer.swift */; };
+		B26F4B092ABA2F6B00753B6C /* BottomToastDiagnosticViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F4B082ABA2F6B00753B6C /* BottomToastDiagnosticViewModelTests.swift */; };
 		B2C2FFDD2AB8E566002F0763 /* BottomToastDiagnosticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C2FFDC2AB8E566002F0763 /* BottomToastDiagnosticView.swift */; };
 		B2C2FFDF2AB8E674002F0763 /* BottomToastDiagnosticViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C2FFDE2AB8E674002F0763 /* BottomToastDiagnosticViewModel.swift */; };
 		B2E5B17C2AA1326300D54A3A /* CallDiagnosticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E5B17B2AA1326300D54A3A /* CallDiagnosticsViewModel.swift */; };
@@ -572,6 +573,7 @@
 		A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationRouterTests.swift; sourceTree = "<group>"; };
 		B2120A5B2A97E35E00E29C05 /* UserFacingDiagnosticModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserFacingDiagnosticModel.swift; sourceTree = "<group>"; };
 		B238378A2AA26EA7001F72B3 /* CallDiagnosticsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallDiagnosticsReducer.swift; sourceTree = "<group>"; };
+		B26F4B082ABA2F6B00753B6C /* BottomToastDiagnosticViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToastDiagnosticViewModelTests.swift; sourceTree = "<group>"; };
 		B2C2FFDC2AB8E566002F0763 /* BottomToastDiagnosticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToastDiagnosticView.swift; sourceTree = "<group>"; };
 		B2C2FFDE2AB8E674002F0763 /* BottomToastDiagnosticViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToastDiagnosticViewModel.swift; sourceTree = "<group>"; };
 		B2E5B17B2AA1326300D54A3A /* CallDiagnosticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallDiagnosticsViewModel.swift; sourceTree = "<group>"; };
@@ -733,6 +735,7 @@
 				1F09A11026BA484000BACED7 /* ParticipantGridsViewModelTests.swift */,
 				50E2D6A826FA52A3006B0EF4 /* ParticipantsListViewModelTests.swift */,
 				1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */,
+				B26F4B082ABA2F6B00753B6C /* BottomToastDiagnosticViewModelTests.swift */,
 			);
 			path = Calling;
 			sourceTree = "<group>";
@@ -1697,6 +1700,7 @@
 				FAD845422819FC8E007DAFE1 /* RemoteParticipantsManagerTests.swift in Sources */,
 				A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */,
 				88BC24C12832D29D00818446 /* AvatarManagerTests.swift in Sources */,
+				B26F4B092ABA2F6B00753B6C /* BottomToastDiagnosticViewModelTests.swift in Sources */,
 				05317E2629A2E1FB00149F57 /* CallHistoryServiceTests.swift in Sources */,
 				FAC1FECF27C98FC200D95845 /* InfoHeaderViewModelMocking.swift in Sources */,
 				FAC1FECA27C98FC200D95845 /* ControlBarViewModelMocking.swift in Sources */,
