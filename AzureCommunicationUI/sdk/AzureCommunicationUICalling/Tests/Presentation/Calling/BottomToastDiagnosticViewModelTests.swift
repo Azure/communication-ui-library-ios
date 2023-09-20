@@ -56,37 +56,20 @@ class BottomToastDiagnosticViewModelTests: XCTestCase {
             XCTAssertEqual(sut.icon, nil)
         }
     }
-
-    func test_that_bottom_toast_presentation_is_expired_after_a_few_seconds() {
-        let sut = makeSUT(networkDiagnostic: .networkSendQuality, localizationProvider: localizationProvider)
-        XCTAssertFalse(sut.isExpired)
-
-        sut.show()
-        let expectation = expectation(description: "Wait for timed dismiss")
-        XCTWaiter().wait(for: [expectation], timeout: BottomToastDiagnosticViewModel.bottomToastBannerDismissInterval + 1.0)
-        XCTAssertTrue(sut.isExpired)
-
-        sut.dismiss()
-        XCTAssertFalse(sut.isExpired)
-    }
 }
 
 extension BottomToastDiagnosticViewModelTests {
     func makeSUT(mediaDiagnostic: MediaCallDiagnostic,
                  localizationProvider: LocalizationProviderMocking? = nil) -> BottomToastDiagnosticViewModel {
         let localizationProviderValue: LocalizationProviderProtocol = localizationProvider ?? LocalizationProvider(logger: LoggerMocking())
-        let callDiagnosticsViewModel = CallDiagnosticsViewModel(localizationProvider: localizationProviderValue)
         return BottomToastDiagnosticViewModel(localizationProvider: localizationProviderValue,
-                                              diagnosticsViewModel: callDiagnosticsViewModel,
                                               mediaDiagnostic: mediaDiagnostic)
     }
 
     func makeSUT(networkDiagnostic: NetworkCallDiagnostic,
                  localizationProvider: LocalizationProviderMocking? = nil) -> BottomToastDiagnosticViewModel {
         let localizationProviderValue: LocalizationProviderProtocol = localizationProvider ?? LocalizationProvider(logger: LoggerMocking())
-        let callDiagnosticsViewModel = CallDiagnosticsViewModel(localizationProvider: localizationProviderValue)
         return BottomToastDiagnosticViewModel(localizationProvider: localizationProviderValue,
-                                              diagnosticsViewModel: callDiagnosticsViewModel,
                                               networkDiagnostic: networkDiagnostic)
     }
 }

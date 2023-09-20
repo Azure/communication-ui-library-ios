@@ -204,18 +204,18 @@ struct CallingView: View {
     var diagnosticsView: some View {
         return VStack {
             Spacer()
-            ForEach(viewModel.callDiagnosticsViewModel.bottomToastDiagnostics) { viewModel in
-                BottomToastDiagnosticView(viewModel: viewModel)
+            if let currentBottomToastViewModel = viewModel.callDiagnosticsViewModel.currentBottomToastDiagnostic {
+                BottomToastDiagnosticView(viewModel: currentBottomToastViewModel)
+                    .padding(
+                        EdgeInsets(top: 0,
+                                   leading: DiagnosticToastInfoConstants.horizontalPadding,
+                                   bottom: DiagnosticToastInfoConstants.controlBarHeight,
+                                   trailing: DiagnosticToastInfoConstants.horizontalPadding)
+                    )
                     .accessibilityElement(children: .contain)
                     .accessibilityAddTraits(.isStaticText)
             }
         }
-        .padding(
-            EdgeInsets(top: 0,
-                       leading: DiagnosticToastInfoConstants.horizontalPadding,
-                       bottom: DiagnosticToastInfoConstants.controlBarHeight,
-                       trailing: DiagnosticToastInfoConstants.horizontalPadding)
-        )
     }
 }
 

@@ -9,33 +9,26 @@ import Foundation
 final class BottomToastDiagnosticViewModel: ObservableObject, Identifiable {
     // The time a bottom toast diagnostic should be presented for before
     // automatically beging dismissed.
-    static let bottomToastBannerDismissInterval: TimeInterval = 3.0
+    static let bottomToastBannerDismissInterval: TimeInterval = 4.0
 
     @Published private(set) var text: String = ""
-    @Published private(set) var isDisplayed: Bool = false
     @Published private(set) var icon: CompositeIcon?
 
     private let localizationProvider: LocalizationProviderProtocol
     private(set) var networkDiagnostic: NetworkCallDiagnostic?
     private(set) var mediaDiagnostic: MediaCallDiagnostic?
-    private weak var diagnosticsViewModel: CallDiagnosticsViewModel?
-    private var expirationTime: Date?
 
     init(localizationProvider: LocalizationProviderProtocol,
-         diagnosticsViewModel: CallDiagnosticsViewModel,
          mediaDiagnostic: MediaCallDiagnostic) {
         self.localizationProvider = localizationProvider
         self.mediaDiagnostic = mediaDiagnostic
-        self.diagnosticsViewModel = diagnosticsViewModel
         self.updateText()
     }
 
     init(localizationProvider: LocalizationProviderProtocol,
-         diagnosticsViewModel: CallDiagnosticsViewModel,
          networkDiagnostic: NetworkCallDiagnostic) {
         self.localizationProvider = localizationProvider
         self.networkDiagnostic = networkDiagnostic
-        self.diagnosticsViewModel = diagnosticsViewModel
         self.updateText()
     }
 
@@ -66,22 +59,5 @@ final class BottomToastDiagnosticViewModel: ObservableObject, Identifiable {
 
     var dismissAccessibilityHint: String {
         localizationProvider.getLocalizedString(.callDiagnosticsDismissAccessibilityHint)
-    }
-
-    func dismiss() {
-        isDisplayed = false
-        expirationTime = nil
-    }
-
-    func show() {
-        isDisplayed = true
-        expirationTime = Date(timeIntervalSinceNow: Self.bottomToastBannerDismissInterval)
-    }
-
-    var isExpired: Bool {
-        guard let expirationTime = expirationTime else {
-            return false
-        }
-        return expirationTime <= Date()
     }
 }
