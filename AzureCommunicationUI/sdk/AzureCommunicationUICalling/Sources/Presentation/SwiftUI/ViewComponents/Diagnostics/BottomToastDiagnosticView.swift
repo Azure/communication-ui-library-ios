@@ -12,24 +12,22 @@ struct BottomToastDiagnosticView: View {
     private let cornerRadius: CGFloat = 12
 
     var body: some View {
-        if viewModel.isDisplayed {
-            HStack(alignment: .center) {
-                if let icon = viewModel.icon {
-                    IconProvider().getImage(for: icon)
-                        .frame(width: 16, height: 16)
-                        .foregroundColor(Color(StyleProvider.color.onSurface))
-                        .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 0))
-                }
-                Text(viewModel.text)
-                    .font(Fonts.subhead.font)
-                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 16))
-                    .multilineTextAlignment(.center)
+        HStack(alignment: .center) {
+            if let icon = viewModel.icon {
+                IconProvider().getImage(for: icon)
+                    .frame(width: 16, height: 16)
                     .foregroundColor(Color(StyleProvider.color.onSurface))
-                    .accessibilitySortPriority(2)
+                    .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 0))
             }
-            .frame(height: 36)
-            .background(Color(StyleProvider.color.backgroundColor))
-            .cornerRadius(cornerRadius)
+            Text(viewModel.text)
+                .font(Fonts.subhead.font)
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 16))
+                .multilineTextAlignment(.center)
+                .foregroundColor(Color(StyleProvider.color.onSurface))
+                .accessibilitySortPriority(2)
         }
+        .frame(height: 36)
+        .background(Color(StyleProvider.color.backgroundColor))
+        .cornerRadius(cornerRadius)
     }
 }

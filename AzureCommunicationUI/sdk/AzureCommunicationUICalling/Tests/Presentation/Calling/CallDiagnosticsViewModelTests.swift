@@ -23,53 +23,74 @@ class CallDiagnosticsViewModelTests: XCTestCase {
     func
     test_receiving_skip_while_muted_diagnostic_update_should_be_added_to_bottom_toast_and_displayed_in_bad_state_and_not_displayed_in_good_state() {
         let sut = makeSUT()
+        XCTAssertNil(sut.currentBottomToastDiagnostic)
+
         let badState = MediaDiagnosticModel(diagnostic: .speakingWhileMicrophoneIsMuted, value: true)
         sut.update(diagnosticsState: CallDiagnosticsState(mediaDiagnostic: badState))
 
-        XCTAssertEqual(sut.bottomToastDiagnostics.count, 1)
-        XCTAssertEqual(sut.bottomToastDiagnostics.first?.mediaDiagnostic, .speakingWhileMicrophoneIsMuted)
-        XCTAssertEqual(sut.bottomToastDiagnostics.first?.isDisplayed, true)
+        XCTAssertEqual(sut.currentBottomToastDiagnostic?.mediaDiagnostic, .speakingWhileMicrophoneIsMuted)
 
         let goodState = MediaDiagnosticModel(diagnostic: .speakingWhileMicrophoneIsMuted, value: false)
         sut.update(diagnosticsState: CallDiagnosticsState(mediaDiagnostic: goodState))
 
-        XCTAssertEqual(sut.bottomToastDiagnostics.count, 1)
-        XCTAssertEqual(sut.bottomToastDiagnostics.first?.mediaDiagnostic, .speakingWhileMicrophoneIsMuted)
-        XCTAssertEqual(sut.bottomToastDiagnostics.first?.isDisplayed, false)
+        XCTAssertNil(sut.currentBottomToastDiagnostic)
     }
 
     func
-    test_receiving_network_quality_update_should_be_added_to_bottom_toast_and_displayed_in_bad_state_and_not_displayed_in_good_state() {
+    test_receiving_network_quality_update_should_update_bottom_toast_and_display_in_bad_state_and_not_display_in_good_state() {
         let sut = makeSUT()
 
-        let poorStateSend = NetworkQualityDiagnosticModel(diagnostic: .networkSendQuality, value: .poor)
+        XCTAssertNil(sut.currentBottomToastDiagnostic)
+
         let poorStateReceive = NetworkQualityDiagnosticModel(diagnostic: .networkReceiveQuality, value: .poor)
-
-        let badStateSend = NetworkQualityDiagnosticModel(diagnostic: .networkSendQuality, value: .bad)
         let badStateReceive = NetworkQualityDiagnosticModel(diagnostic: .networkReceiveQuality, value: .bad)
-
-        let goodStateSend = NetworkQualityDiagnosticModel(diagnostic: .networkSendQuality, value: .good)
         let goodStateReceive = NetworkQualityDiagnosticModel(diagnostic: .networkReceiveQuality, value: .good)
 
-        sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: poorStateSend))
         sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: poorStateReceive))
-
-        XCTAssertEqual(sut.bottomToastDiagnostics.count, 2)
-        XCTAssertEqual(sut.bottomToastDiagnostics.compactMap { $0.networkDiagnostic }, [.networkSendQuality, .networkReceiveQuality])
-        XCTAssertEqual(sut.bottomToastDiagnostics.compactMap { $0.isDisplayed }, [true, true])
+        XCTAssertEqual(sut.currentBottomToastDiagnostic?.networkDiagnostic, .networkReceiveQuality)
 
         sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: badStateReceive))
-
-        sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: goodStateSend))
-        sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: badStateReceive))
-
-        XCTAssertEqual(sut.bottomToastDiagnostics.count, 2)
-        XCTAssertEqual(sut.bottomToastDiagnostics.compactMap { $0.networkDiagnostic }, [.networkSendQuality, .networkReceiveQuality])
-        XCTAssertEqual(sut.bottomToastDiagnostics.compactMap { $0.isDisplayed }, [false, true])
+        XCTAssertEqual(sut.currentBottomToastDiagnostic?.networkDiagnostic, .networkReceiveQuality)
 
         sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: goodStateReceive))
+        XCTAssertNil(sut.currentBottomToastDiagnostic)
+    }
 
-        XCTAssertEqual(sut.bottomToastDiagnostics.compactMap { $0.isDisplayed }, [false, false])
+    func
+    test_receiving_network_send_quality_update_should_update_bottom_toast_and_display_in_bad_state_and_not_display_in_good_state() {
+        let sut = makeSUT()
+
+        XCTAssertNil(sut.currentBottomToastDiagnostic)
+
+        let poorStateSend = NetworkQualityDiagnosticModel(diagnostic: .networkSendQuality, value: .poor)
+        let badStateSend = NetworkQualityDiagnosticModel(diagnostic: .networkSendQuality, value: .bad)
+        let goodStateSend = NetworkQualityDiagnosticModel(diagnostic: .networkSendQuality, value: .good)
+
+        sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: poorStateSend))
+        XCTAssertEqual(sut.currentBottomToastDiagnostic?.networkDiagnostic, .networkSendQuality)
+
+        sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: badStateSend))
+        XCTAssertEqual(sut.currentBottomToastDiagnostic?.networkDiagnostic, .networkSendQuality)
+
+        sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: goodStateSend))
+        XCTAssertNil(sut.currentBottomToastDiagnostic)
+    }
+
+    func
+    test_receiving_new_event_bottom_toast_should_override_the_previous_presenting() {
+        let sut = makeSUT()
+
+        XCTAssertNil(sut.currentBottomToastDiagnostic)
+
+        let poorStateSend = NetworkQualityDiagnosticModel(diagnostic: .networkSendQuality, value: .poor)
+        let badStateSendReceive = NetworkQualityDiagnosticModel(diagnostic: .networkReceiveQuality, value: .bad)
+
+        sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: poorStateSend))
+        XCTAssertEqual(sut.currentBottomToastDiagnostic?.networkDiagnostic, .networkSendQuality)
+
+        sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: badStateSendReceive))
+        XCTAssertEqual(sut.currentBottomToastDiagnostic?.networkDiagnostic, .networkReceiveQuality)
+
     }
 
     func
@@ -78,16 +99,12 @@ class CallDiagnosticsViewModelTests: XCTestCase {
         let badState = MediaDiagnosticModel(diagnostic: .speakingWhileMicrophoneIsMuted, value: true)
         sut.update(diagnosticsState: CallDiagnosticsState(mediaDiagnostic: badState))
 
-        XCTAssertEqual(sut.bottomToastDiagnostics.count, 1)
-        XCTAssertEqual(sut.bottomToastDiagnostics.first?.mediaDiagnostic, .speakingWhileMicrophoneIsMuted)
-        XCTAssertEqual(sut.bottomToastDiagnostics.first?.isDisplayed, true)
+        XCTAssertEqual(sut.currentBottomToastDiagnostic?.mediaDiagnostic, .speakingWhileMicrophoneIsMuted)
 
         let expectation = expectation(description: "Wait for timed dismiss")
         XCTWaiter().wait(for: [expectation], timeout: BottomToastDiagnosticViewModel.bottomToastBannerDismissInterval + 1.0)
 
-        XCTAssertEqual(sut.bottomToastDiagnostics.count, 1)
-        XCTAssertEqual(sut.bottomToastDiagnostics.first?.mediaDiagnostic, .speakingWhileMicrophoneIsMuted)
-        XCTAssertEqual(sut.bottomToastDiagnostics.first?.isDisplayed, false)
+        XCTAssertNil(sut.currentBottomToastDiagnostic)
     }
 }
 
