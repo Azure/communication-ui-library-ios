@@ -10,13 +10,10 @@ final class CallDiagnosticsViewModel: ObservableObject {
     private var bottomToastDimissTimer: Timer!
     private let localizationProvider: LocalizationProviderProtocol
 
-    @Published var bottomToastDiagnostics: [BottomToastDiagnosticViewModel] = []
+    @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
 
     init(localizationProvider: LocalizationProviderProtocol) {
         self.localizationProvider = localizationProvider
-        self.bottomToastDimissTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] _ in
-            self?.dismissDiagnosticsIfExpired()
-        }
     }
 
     func update(diagnosticsState: CallDiagnosticsState) {
@@ -36,12 +33,11 @@ final class CallDiagnosticsViewModel: ObservableObject {
 
         switch diagnosticModel.diagnostic {
         case .networkReceiveQuality, .networkSendQuality:
-            updateBottomToastList(isBadState: isBadState,
-                                  viewModel: BottomToastDiagnosticViewModel(
-                                                localizationProvider: localizationProvider,
-                                                diagnosticsViewModel: self,
-                                                networkDiagnostic: diagnosticModel.diagnostic),
-                                  where: { $0.networkDiagnostic == diagnosticModel.diagnostic })
+            updateBottomToast(isBadState: isBadState,
+                              viewModel: BottomToastDiagnosticViewModel(
+                                            localizationProvider: localizationProvider,
+                                            networkDiagnostic: diagnosticModel.diagnostic),
+                              where: { $0.networkDiagnostic == diagnosticModel.diagnostic })
         default:
             break
         }
@@ -49,33 +45,40 @@ final class CallDiagnosticsViewModel: ObservableObject {
 
     private func update(diagnosticModel: MediaDiagnosticModel) {
         if diagnosticModel.diagnostic == .speakingWhileMicrophoneIsMuted {
-            updateBottomToastList(isBadState: diagnosticModel.value,
-                                  viewModel: BottomToastDiagnosticViewModel(
-                                                localizationProvider: localizationProvider,
-                                                diagnosticsViewModel: self,
-                                                mediaDiagnostic: diagnosticModel.diagnostic),
-                                  where: { $0.mediaDiagnostic == diagnosticModel.diagnostic })
+            updateBottomToast(isBadState: diagnosticModel.value,
+                              viewModel: BottomToastDiagnosticViewModel(
+                                            localizationProvider: localizationProvider,
+                                            mediaDiagnostic: diagnosticModel.diagnostic),
+                              where: { $0.mediaDiagnostic == diagnosticModel.diagnostic })
         }
     }
 
-    private func updateBottomToastList(isBadState: Bool,
-                                       viewModel: @autoclosure () -> BottomToastDiagnosticViewModel,
-                                       where compare: (BottomToastDiagnosticViewModel) -> Bool) {
+    private func updateBottomToast(isBadState: Bool,
+                                   viewModel: @autoclosure () -> BottomToastDiagnosticViewModel,
+                                   where compare: (BottomToastDiagnosticViewModel) -> Bool) {
         if isBadState {
-            var toastViewModel = bottomToastDiagnostics.first(where: compare)
-            if toastViewModel == nil {
-                toastViewModel = viewModel()
-                bottomToastDiagnostics.append(toastViewModel!)
-            }
-            toastViewModel?.show()
-        } else if let toastViewModel = bottomToastDiagnostics.first(where: compare) {
-            toastViewModel.dismiss()
+            // Override previous bottom toast if being presented.
+            dismissDiagnosticCurrentBottomToastDiagnostic()
+
+            currentBottomToastDiagnostic = viewModel()
+            bottomToastDimissTimer =
+                Timer.scheduledTimer(withTimeInterval:
+                                        BottomToastDiagnosticViewModel.bottomToastBannerDismissInterval,
+                                     repeats: true) { [weak self] _ in
+                    self?.dismissDiagnosticCurrentBottomToastDiagnostic()
+                }
+        } else if let bottomToast = currentBottomToastDiagnostic, compare(bottomToast) {
+            dismissDiagnosticCurrentBottomToastDiagnostic()
         }
     }
 
-    private func dismissDiagnosticsIfExpired() {
-        for toastViewModel in bottomToastDiagnostics where toastViewModel.isExpired {
-            toastViewModel.dismiss()
+    private func dismissDiagnosticCurrentBottomToastDiagnostic() {
+        guard currentBottomToastDiagnostic != nil else {
+            return
         }
+
+        currentBottomToastDiagnostic = nil
+        bottomToastDimissTimer.invalidate()
+        bottomToastDimissTimer = nil
     }
 }
