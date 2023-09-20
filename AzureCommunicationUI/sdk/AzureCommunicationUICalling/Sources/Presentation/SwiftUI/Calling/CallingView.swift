@@ -134,7 +134,18 @@ struct CallingView: View {
                         EmptyView()
                     }
                     infoHeaderView
-                        .frame(width: infoHeaderViewWidth, height: InfoHeaderViewConstants.height, alignment: .leading)
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
+                }
+                HStack {
+                    if isIpad {
+                        Spacer()
+                    } else {
+                        EmptyView()
+                    }
+                    lobbyWaitingHeaderView
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
                         .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
                     Spacer()
                 }
@@ -145,6 +156,11 @@ struct CallingView: View {
 
     var infoHeaderView: some View {
         InfoHeaderView(viewModel: viewModel.infoHeaderViewModel,
+                       avatarViewManager: avatarManager)
+    }
+
+    var lobbyWaitingHeaderView: some View {
+        LobbyWaitingHeaderView(viewModel: viewModel.lobbyWaitingHeaderViewModel,
                        avatarViewManager: avatarManager)
     }
 

@@ -27,6 +27,7 @@ protocol CompositeViewModelFactoryProtocol {
                                     buttonLabel: String,
                                     iconName: CompositeIcon?,
                                     isDisabled: Bool,
+                                    paddings: CompositeButton.Paddings?,
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
@@ -41,6 +42,7 @@ protocol CompositeViewModelFactoryProtocol {
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel
     func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel
+    func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState) -> LobbyWaitingHeaderViewModel
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel
@@ -65,6 +67,22 @@ protocol CompositeViewModelFactoryProtocol {
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                       localUserState: LocalUserState) -> SetupControlBarViewModel
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel
+}
+
+extension CompositeViewModelFactoryProtocol {
+    func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
+                                    buttonLabel: String,
+                                    iconName: CompositeIcon? = .none,
+                                    isDisabled: Bool = false,
+                                    paddings: CompositeButton.Paddings? = nil,
+                                    action: @escaping (() -> Void)) -> PrimaryButtonViewModel {
+        return makePrimaryButtonViewModel(buttonStyle: buttonStyle,
+                                   buttonLabel: buttonLabel,
+                                   iconName: iconName,
+                                   isDisabled: isDisabled,
+                                   paddings: paddings,
+                                   action: action)
+    }
 }
 
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
@@ -163,11 +181,13 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                     buttonLabel: String,
                                     iconName: CompositeIcon?,
                                     isDisabled: Bool = false,
+                                    paddings: CompositeButton.Paddings? = nil,
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel {
         PrimaryButtonViewModel(buttonStyle: buttonStyle,
                                buttonLabel: buttonLabel,
                                iconName: iconName,
                                isDisabled: isDisabled,
+                               paddings: paddings,
                                action: action)
     }
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
@@ -233,6 +253,14 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             localUserState: localUserState,
                             localizationProvider: localizationProvider,
                             accessibilityProvider: accessibilityProvider)
+    }
+
+    func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState) -> LobbyWaitingHeaderViewModel {
+        LobbyWaitingHeaderViewModel(compositeViewModelFactory: self,
+                                    logger: logger,
+                                    localUserState: localUserState,
+                                    localizationProvider: localizationProvider,
+                                    accessibilityProvider: accessibilityProvider)
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {

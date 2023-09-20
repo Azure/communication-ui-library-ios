@@ -32,6 +32,7 @@ class CallingViewModel: ObservableObject {
 
     var controlBarViewModel: ControlBarViewModel!
     var infoHeaderViewModel: InfoHeaderViewModel!
+    var lobbyWaitingHeaderViewModel: LobbyWaitingHeaderViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -56,6 +57,8 @@ class CallingViewModel: ObservableObject {
 
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
+        lobbyWaitingHeaderViewModel = compositeViewModelFactory
+            .makeLobbyWaitingHeaderViewModel(localUserState: store.state.localUserState)
         let isCallConnected = store.state.callingState.status == .connected
         let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
         isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants

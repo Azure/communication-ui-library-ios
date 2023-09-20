@@ -45,6 +45,10 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Call with %d people"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Participants";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="People are waiting to join.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ParticipantList.AccessibilityLabel" = "Participants";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ParticipantList.Dismiss" = "Dismiss";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Unnamed Participant";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (me)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Muted";
