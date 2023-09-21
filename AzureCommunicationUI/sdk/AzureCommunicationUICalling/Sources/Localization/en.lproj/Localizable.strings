@@ -111,3 +111,6 @@
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Dismiss Call Diagnostic";
 "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Dismisses this Call Diagnostic";
 "AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Network quality is low";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Network was lost";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Reconnecting...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotWorking"="Unable to start camera";
