@@ -128,6 +128,9 @@ class CallingViewModel: ObservableObject {
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState)
+        lobbyWaitingHeaderViewModel.update(localUserState: state.localUserState,
+                                   remoteParticipantsState: state.remoteParticipantsState,
+                                   callingState: state.callingState)
         localVideoViewModel.update(localUserState: state.localUserState)
         participantGridsViewModel.update(callingState: state.callingState,
                                          remoteParticipantsState: state.remoteParticipantsState)

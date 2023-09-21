@@ -8,14 +8,14 @@ import Foundation
 class LobbyWaitingHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String
     @Published var infoLabel: String
-    @Published var isDisplayed: Bool = true
+    @Published var isDisplayed: Bool = false
     @Published var isParticipantsListDisplayed: Bool = false
     @Published var isVoiceOverEnabled: Bool = false
 
     private let logger: Logger
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
-    private var callingStatus: CallingStatus = .none
+    private var lobbyParticipantCount: Int = 0
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: PrimaryButtonViewModel!
@@ -57,10 +57,6 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
                 }
                 self.isDisplayed = false
         }
-
-        self.accessibilityProvider.subscribeToVoiceOverStatusDidChangeNotification(self)
-        self.accessibilityProvider.subscribeToUIFocusDidUpdateNotification(self)
-        updateInfoHeaderAvailability()
     }
 
     func showParticipantListButtonTapped() {
@@ -71,37 +67,36 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
         self.isParticipantsListDisplayed = true
     }
 
-    func toggleDisplayInfoHeaderIfNeeded() {
-        guard !isVoiceOverEnabled else {
-            return
-        }
-        self.isDisplayed ? hideInfoHeader() : displayInfoHeader()
-    }
-
     func update(localUserState: LocalUserState,
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState) {
-        let updatedRemoteparticipantCount = remoteParticipantsState.participantInfoList
-            .filter({ participantInfoModel in
-                participantInfoModel.status != .inLobby
-            })
-            .count
-        isHoldingCall(callingState: callingState)
-        let shouldDisplayInfoHeaderValue = shouldDisplay(for: callingStatus)
-        let newDisplayInfoHeaderValue = shouldDisplay(for: callingState.status)
-        callingStatus = callingState.status
-        if isVoiceOverEnabled && newDisplayInfoHeaderValue != shouldDisplayInfoHeaderValue {
-            updateInfoHeaderAvailability()
+        let mayDisplayInfoHeaderValue = !isHoldingOrInLobby(callingState: callingState)
+
+        guard mayDisplayInfoHeaderValue else {
+            isDisplayed = false
+            return
         }
+
+        let newLobbyParticipantCount = lobbyUsersCount(remoteParticipantsState)
+        isDisplayed = isDisplayed || newLobbyParticipantCount > lobbyParticipantCount
+
+        self.lobbyParticipantCount = newLobbyParticipantCount
 
         participantsListViewModel.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
     }
 
-    private func isHoldingCall(callingState: CallingState) {
-        guard callingState.status == .localHold,
-              callingStatus != callingState.status else {
-            return
+    private func lobbyUsersCount(_ remoteParticipantsState: RemoteParticipantsState) -> Int {
+        return remoteParticipantsState.participantInfoList
+            .filter({ participantInfoModel in
+                participantInfoModel.status == .inLobby
+            })
+            .count
+    }
+
+    private func isHoldingOrInLobby(callingState: CallingState) -> Bool {
+        guard callingState.status == .inLobby || callingState.status == .localHold else {
+            return false
         }
         if isDisplayed {
             isDisplayed = false
@@ -109,42 +104,7 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
         if isParticipantsListDisplayed {
             isParticipantsListDisplayed = false
         }
-    }
 
-    private func displayInfoHeader() {
-        self.isDisplayed = true
-    }
-
-    @objc private func hideInfoHeader() {
-        self.isDisplayed = false
-    }
-
-    private func updateInfoHeaderAvailability() {
-        let shouldDisplay = shouldDisplay(for: callingStatus)
-        isVoiceOverEnabled = accessibilityProvider.isVoiceOverEnabled
-
-        if self.isVoiceOverEnabled {
-            isDisplayed = shouldDisplay
-        } else if shouldDisplay {
-            displayInfoHeader()
-        }
-    }
-
-    private func shouldDisplay(for callingStatus: CallingStatus) -> Bool {
-        return callingStatus != .inLobby && callingStatus != .localHold
-    }
-}
-
-extension LobbyWaitingHeaderViewModel: AccessibilityProviderNotificationsObserver {
-    func didUIFocusUpdateNotification(_ notification: NSNotification) {
-        updateInfoHeaderAvailability()
-    }
-
-    func didChangeVoiceOverStatus(_ notification: NSNotification) {
-        guard isVoiceOverEnabled != accessibilityProvider.isVoiceOverEnabled else {
-            return
-        }
-
-        updateInfoHeaderAvailability()
+        return true
     }
 }
