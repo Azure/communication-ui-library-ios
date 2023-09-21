@@ -26,25 +26,24 @@ final class CallDiagnosticsViewModel: ObservableObject {
         }
     }
 
-    private func update(diagnosticModel: NetworkDiagnosticModel) {}
+    private func update(diagnosticModel: NetworkDiagnosticModel) {
+        updateBottomToast(isBadState: diagnosticModel.value,
+                          viewModel: BottomToastDiagnosticViewModel(
+                                        localizationProvider: localizationProvider,
+                                        networkDiagnostic: diagnosticModel.diagnostic),
+                          where: { $0.networkDiagnostic == diagnosticModel.diagnostic })
+    }
 
     private func update(diagnosticModel: NetworkQualityDiagnosticModel) {
-        let isBadState = diagnosticModel.value == .bad || diagnosticModel.value == .poor
-
-        switch diagnosticModel.diagnostic {
-        case .networkReceiveQuality, .networkSendQuality:
-            updateBottomToast(isBadState: isBadState,
-                              viewModel: BottomToastDiagnosticViewModel(
-                                            localizationProvider: localizationProvider,
-                                            networkDiagnostic: diagnosticModel.diagnostic),
-                              where: { $0.networkDiagnostic == diagnosticModel.diagnostic })
-        default:
-            break
-        }
+        updateBottomToast(isBadState: diagnosticModel.value == .bad || diagnosticModel.value == .poor,
+                          viewModel: BottomToastDiagnosticViewModel(
+                                        localizationProvider: localizationProvider,
+                                        networkDiagnostic: diagnosticModel.diagnostic),
+                          where: { $0.networkDiagnostic == diagnosticModel.diagnostic })
     }
 
     private func update(diagnosticModel: MediaDiagnosticModel) {
-        if diagnosticModel.diagnostic == .speakingWhileMicrophoneIsMuted {
+        if BottomToastDiagnosticViewModel.handledMediaDiagnostics.contains(diagnosticModel.diagnostic) {
             updateBottomToast(isBadState: diagnosticModel.value,
                               viewModel: BottomToastDiagnosticViewModel(
                                             localizationProvider: localizationProvider,

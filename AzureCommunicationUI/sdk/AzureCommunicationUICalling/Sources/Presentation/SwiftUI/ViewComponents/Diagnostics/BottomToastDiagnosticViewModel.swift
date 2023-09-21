@@ -18,6 +18,12 @@ final class BottomToastDiagnosticViewModel: ObservableObject, Identifiable {
     private(set) var networkDiagnostic: NetworkCallDiagnostic?
     private(set) var mediaDiagnostic: MediaCallDiagnostic?
 
+    static let handledMediaDiagnostics: [MediaCallDiagnostic] = [
+        .speakingWhileMicrophoneIsMuted,
+        .cameraStartFailed,
+        .cameraStartTimedOut
+    ]
+
     init(localizationProvider: LocalizationProviderProtocol,
          mediaDiagnostic: MediaCallDiagnostic) {
         self.localizationProvider = localizationProvider
@@ -34,30 +40,35 @@ final class BottomToastDiagnosticViewModel: ObservableObject, Identifiable {
 
     private func updateText() {
         if let mediaDiagnostic = mediaDiagnostic {
-            switch mediaDiagnostic {
-            case .speakingWhileMicrophoneIsMuted:
-                text = localizationProvider.getLocalizedString(.callDiagnosticsUserMuted)
-                icon = CompositeIcon.micOff
-            default:
-                text = ""
-                icon = nil
-            }
+            updateTextAndIcon(for: mediaDiagnostic)
         } else if let networkDiagnostic = networkDiagnostic {
-            switch networkDiagnostic {
-            case .networkSendQuality, .networkReceiveQuality:
-                text = localizationProvider.getLocalizedString(.callDiagnosticsNetworkQualityLow)
-            default:
-                text = ""
-                icon = nil
-            }
+            updateTextAndIcon(for: networkDiagnostic)
         }
     }
 
-    var dismissAccessibilitylabel: String {
-        localizationProvider.getLocalizedString(.callDiagnosticsDismissAccessibilityLabel)
+    private func updateTextAndIcon(for mediaDiagnostics: MediaCallDiagnostic) {
+        switch mediaDiagnostic {
+        case .speakingWhileMicrophoneIsMuted:
+            text = localizationProvider.getLocalizedString(.callDiagnosticsUserMuted)
+            icon = CompositeIcon.micOff
+        case .cameraStartFailed, .cameraStartTimedOut:
+            text = localizationProvider.getLocalizedString(.callDiagnosticsCameraNotWorking)
+            icon = CompositeIcon.videoOff
+        default:
+            text = ""
+            icon = nil
+        }
     }
 
-    var dismissAccessibilityHint: String {
-        localizationProvider.getLocalizedString(.callDiagnosticsDismissAccessibilityHint)
+    private func updateTextAndIcon(for networkDiagnostic: NetworkCallDiagnostic) {
+        switch networkDiagnostic {
+        case .networkSendQuality, .networkReceiveQuality:
+            text = localizationProvider.getLocalizedString(.callDiagnosticsNetworkQualityLow)
+        case .networkUnavailable, .networkRelaysUnreachable:
+            text = localizationProvider.getLocalizedString(.callDiagnosticsNetworkLost)
+        case .networkReconnectionQuality:
+            text = localizationProvider.getLocalizedString(.callDiagnosticsNetworkReconnect)
+        }
+        icon = .wifiWarning
     }
 }

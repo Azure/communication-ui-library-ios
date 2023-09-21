@@ -130,6 +130,9 @@ enum LocalizationKey: String {
     /* Call Diagnostics */
     case callDiagnosticsUserMuted = "AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"
     case callDiagnosticsNetworkQualityLow = "AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"
+    case callDiagnosticsNetworkLost = "AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"
+    case callDiagnosticsNetworkReconnect = "AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"
+    case callDiagnosticsCameraNotWorking = "AzureCommunicationUICalling.Diagnostics.Text.CameraNotWorking"
     case callDiagnosticsDismissAccessibilityLabel =
             "AzureCommunicationUICalling.Diagnostics.Text.Dismiss.AccessibilityLabel"
     case callDiagnosticsDismissAccessibilityHint =
