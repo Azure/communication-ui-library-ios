@@ -5,7 +5,7 @@
 
 import AzureCommunicationCalling
 
-enum NetworkCallDiagnostic: String, CaseIterable {
+enum NetworkCallDiagnostic: String, CaseIterable, Equatable {
     case networkReconnectionQuality
     case networkReceiveQuality
     case networkSendQuality
@@ -13,7 +13,7 @@ enum NetworkCallDiagnostic: String, CaseIterable {
     case networkRelaysUnreachable
 }
 
-enum MediaCallDiagnostic: String, CaseIterable {
+enum MediaCallDiagnostic: String, CaseIterable, Equatable {
     case speakerNotFunctioning
     case speakerBusy
     case speakerMuted

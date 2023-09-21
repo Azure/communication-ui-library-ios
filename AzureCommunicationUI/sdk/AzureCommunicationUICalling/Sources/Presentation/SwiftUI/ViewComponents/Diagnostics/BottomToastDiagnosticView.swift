@@ -9,7 +9,7 @@ import FluentUI
 struct BottomToastDiagnosticView: View {
     @ObservedObject var viewModel: BottomToastDiagnosticViewModel
 
-    private let cornerRadius: CGFloat = 12
+    private let cornerRadius: CGFloat = 6
 
     var body: some View {
         HStack(alignment: .center) {

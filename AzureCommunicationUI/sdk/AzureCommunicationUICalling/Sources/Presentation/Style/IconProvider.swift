@@ -30,6 +30,7 @@ enum CompositeIcon: String {
     case checkmark = "ic_fluent_checkmark_24_regular"
     case share = "ic_fluent_share_ios_24_regular"
     case more = "ic_fluent_more_horizontal_24_filled"
+    case wifiWarning = "ic_fluent_wifi_warning_20_filled"
 }
 
 struct IconProvider {
