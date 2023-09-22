@@ -1,8 +1,8 @@
+platform :ios, '14.0'
+
 source 'git@github.com:iaulakh/calling_ui_library_private_drop.git'
 source 'git@github.com:iaulakh/calling_native_ios_private_drop.git'
 source 'https://github.com/CocoaPods/Specs.git'
-
-platform :ios, '14.0'
 
 workspace 'AzureCommunicationUI'
 
@@ -13,7 +13,7 @@ project 'AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj'
 target 'AzureCommunicationUICalling' do
   project 'sdk/AzureCommunicationUICalling/AzureCommunicationUICalling.xcodeproj'
   use_frameworks!
-  pod 'AzureCommunicationCalling', '2.6.0-beta.3.091523'
+  pod 'AzureCommunicationCalling', '2.6.0-beta.4.092123'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
   pod 'MicrosoftFluentUI/Button_ios', '0.10.0'
@@ -50,7 +50,7 @@ end
 target 'AzureCommunicationUIDemoApp' do
   project 'AzureCommunicationUIDemoApp/AzureCommunicationUIDemoApp.xcodeproj'
   use_frameworks!
-  pod 'AzureCommunicationCalling', '2.6.0-beta.3.091523'
+  pod 'AzureCommunicationCalling', '2.6.0-beta.4.092123'
   pod 'AzureCommunicationChat', '1.3.1'
   pod 'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   pod 'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
@@ -68,6 +68,19 @@ target 'AzureCommunicationUIDemoApp' do
 end
 
 post_install do |installer|
+  xcode_base_version = `xcodebuild -version | grep 'Xcode' | awk '{print $2}' | cut -d . -f 1`
+
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      # For xcode 15+ only
+      if config.base_configuration_reference && Integer(xcode_base_version) >= 15
+        xcconfig_path = config.base_configuration_reference.real_path
+        xcconfig = File.read(xcconfig_path)
+        xcconfig_mod = xcconfig.gsub(/DT_TOOLCHAIN_DIR/, "TOOLCHAIN_DIR")
+        File.open(xcconfig_path, "w") { |file| file << xcconfig_mod }
+      end
+    end
+  end
   installer.pods_project.targets.each do |target|
     if target.name == 'SwiftLint'
       target.build_configurations.each do |config|
@@ -93,7 +106,7 @@ post_install do |installer|
                config.build_settings['DEVELOPMENT_TEAM'] = dev_team
            end
        end
-end
+    end
     target.build_configurations.each do |config|
         config.build_settings['ENABLE_BITCODE'] = 'NO'
     end
