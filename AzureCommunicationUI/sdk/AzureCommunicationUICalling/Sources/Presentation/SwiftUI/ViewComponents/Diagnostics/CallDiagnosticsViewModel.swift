@@ -56,14 +56,14 @@ final class CallDiagnosticsViewModel: ObservableObject {
                                    viewModel: @autoclosure () -> BottomToastDiagnosticViewModel,
                                    where compare: (BottomToastDiagnosticViewModel) -> Bool) {
         if isBadState {
-            // Override previous bottom toast if being presented.
+            // Override previous bottom toast if is being presented.
             dismissDiagnosticCurrentBottomToastDiagnostic()
 
             currentBottomToastDiagnostic = viewModel()
             bottomToastDimissTimer =
                 Timer.scheduledTimer(withTimeInterval:
                                         BottomToastDiagnosticViewModel.bottomToastBannerDismissInterval,
-                                     repeats: true) { [weak self] _ in
+                                     repeats: false) { [weak self] _ in
                     self?.dismissDiagnosticCurrentBottomToastDiagnostic()
                 }
         } else if let bottomToast = currentBottomToastDiagnostic, compare(bottomToast) {
