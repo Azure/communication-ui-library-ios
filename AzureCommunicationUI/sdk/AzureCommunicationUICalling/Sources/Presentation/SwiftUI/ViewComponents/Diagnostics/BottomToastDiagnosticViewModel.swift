@@ -15,6 +15,7 @@ final class BottomToastDiagnosticViewModel: ObservableObject, Identifiable {
     @Published private(set) var icon: CompositeIcon?
 
     private let localizationProvider: LocalizationProviderProtocol
+
     private(set) var networkDiagnostic: NetworkCallDiagnostic?
     private(set) var mediaDiagnostic: MediaCallDiagnostic?
 
@@ -28,17 +29,17 @@ final class BottomToastDiagnosticViewModel: ObservableObject, Identifiable {
          mediaDiagnostic: MediaCallDiagnostic) {
         self.localizationProvider = localizationProvider
         self.mediaDiagnostic = mediaDiagnostic
-        self.updateText()
+        self.updateTextAndIcon()
     }
 
     init(localizationProvider: LocalizationProviderProtocol,
          networkDiagnostic: NetworkCallDiagnostic) {
         self.localizationProvider = localizationProvider
         self.networkDiagnostic = networkDiagnostic
-        self.updateText()
+        self.updateTextAndIcon()
     }
 
-    private func updateText() {
+    private func updateTextAndIcon() {
         if let mediaDiagnostic = mediaDiagnostic {
             updateTextAndIcon(for: mediaDiagnostic)
         } else if let networkDiagnostic = networkDiagnostic {
