@@ -28,13 +28,13 @@ class BottomToastDiagnosticViewModelTests: XCTestCase {
 
     func test_that_presenting_camera_start_failed_diagnostic_bottom_toast_shows_title_and_icon() {
         let sut = makeSUT(mediaDiagnostic: .cameraStartFailed, localizationProvider: localizationProvider)
-        XCTAssertEqual(sut.text, "AzureCommunicationUICalling.Diagnostics.Text.CameraNotWorking")
+        XCTAssertEqual(sut.text, "AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted")
         XCTAssertEqual(sut.icon, CompositeIcon.videoOff)
     }
 
     func test_that_presenting_camera_start_timed_out_diagnostic_bottom_toast_shows_title_and_icon() {
         let sut = makeSUT(mediaDiagnostic: .cameraStartTimedOut, localizationProvider: localizationProvider)
-        XCTAssertEqual(sut.text, "AzureCommunicationUICalling.Diagnostics.Text.CameraNotWorking")
+        XCTAssertEqual(sut.text, "AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted")
         XCTAssertEqual(sut.icon, CompositeIcon.videoOff)
     }
 
