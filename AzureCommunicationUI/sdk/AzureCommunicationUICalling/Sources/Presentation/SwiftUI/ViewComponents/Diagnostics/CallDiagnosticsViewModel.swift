@@ -11,6 +11,7 @@ final class CallDiagnosticsViewModel: ObservableObject {
     private let localizationProvider: LocalizationProviderProtocol
 
     @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
+    @Published var messageBarStack: [MessageBarDiagnosticViewModel] = []
 
     init(localizationProvider: LocalizationProviderProtocol) {
         self.localizationProvider = localizationProvider
@@ -49,6 +50,22 @@ final class CallDiagnosticsViewModel: ObservableObject {
                                             localizationProvider: localizationProvider,
                                             mediaDiagnostic: diagnosticModel.diagnostic),
                               where: { $0.mediaDiagnostic == diagnosticModel.diagnostic })
+        } else if MessageBarDiagnosticViewModel.handledMediaDiagnostics.contains(diagnosticModel.diagnostic) {
+            updateMessageBarList(diagnosticModel: diagnosticModel)
+        }
+    }
+
+    private func updateMessageBarList(diagnosticModel: MediaDiagnosticModel) {
+        if diagnosticModel.value {
+            let viewModel = MessageBarDiagnosticViewModel(
+                localizationProvider: localizationProvider,
+                callDiagnosticViewModel: self,
+                mediaDiagnostic: diagnosticModel.diagnostic
+            )
+            messageBarStack.append(viewModel)
+        } else if let idx = messageBarStack
+                .firstIndex(where: { $0.mediaDiagnostic == diagnosticModel.diagnostic }) {
+            messageBarStack.remove(at: idx)
         }
     }
 
@@ -79,5 +96,12 @@ final class CallDiagnosticsViewModel: ObservableObject {
         currentBottomToastDiagnostic = nil
         bottomToastDimissTimer.invalidate()
         bottomToastDimissTimer = nil
+    }
+
+    func dismiss(messageBar: MessageBarDiagnosticViewModel) {
+        guard let idx = messageBarStack.firstIndex(of: messageBar) else {
+            return
+        }
+        messageBarStack.remove(at: idx)
     }
 }
