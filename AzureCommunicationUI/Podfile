@@ -65,7 +65,7 @@ end
 
 post_install do |installer|
   xcode_base_version = `xcodebuild -version | grep 'Xcode' | awk '{print $2}' | cut -d . -f 1`
-    installer.pods_project.targets.each do |target|
+  installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
       # For xcode 15+ only
       if config.base_configuration_reference && Integer(xcode_base_version) >= 15
@@ -101,7 +101,7 @@ post_install do |installer|
                config.build_settings['DEVELOPMENT_TEAM'] = dev_team
            end
        end
-end
+    end
     target.build_configurations.each do |config|
         config.build_settings['ENABLE_BITCODE'] = 'NO'
     end
