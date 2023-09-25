@@ -17,8 +17,10 @@ enum EnvConfig: String {
     case displayName
     case groupCallId
     case teamsMeetingLink
+    case roomId
     case threadId
     case endpointUrl
+    case roomRole
 
     func value() -> String {
         guard let infoDict = Bundle.main.infoDictionary,
@@ -43,11 +45,13 @@ class EnvConfigSubject: ObservableObject {
     @Published var navigationSubtitle: String = ""
     @Published var groupCallId: String = EnvConfig.groupCallId.value()
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
+    @Published var roomId: String = EnvConfig.roomId.value()
     @Published var threadId: String = EnvConfig.threadId.value()
     @Published var endpointUrl: String = EnvConfig.endpointUrl.value()
 
     @Published var selectedAcsTokenType: ACSTokenType = .token
     @Published var selectedMeetingType: MeetingType = .groupCall
+    @Published var selectedRoomRoleType: RoomRoleType = .presenter
     @Published var selectedChatType: ChatType = .groupChat
     @Published var locale: Locale = SupportedLocale.en
     @Published var setupViewOrientation: OrientationOptions = .portrait

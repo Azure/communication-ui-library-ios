@@ -72,7 +72,7 @@ struct DraggableLocalVideoView: View {
 
     private func getContainerBounds(bounds: CGRect) -> CGRect {
         let pipSize = getPipSize(parentSize: bounds.size)
-        let padding = 12.0
+        let padding = viewModel.isInPip ? 0.0 : 12.0
         let containerBounds = bounds.inset(by: UIEdgeInsets(
             top: pipSize.height / 2.0 + padding,
             left: pipSize.width / 2.0 + padding,
@@ -126,6 +126,10 @@ struct DraggableLocalVideoView: View {
         let isPortraitMode = screenSize != .iphoneLandscapeScreenSize
         let isiPad = UIDevice.current.userInterfaceIdiom == .pad
 
+        func pipSize() -> CGSize {
+            return CGSize(width: 36, height: 52)
+        }
+
         func defaultPipSize() -> CGSize {
             let width = isPortraitMode ? 72 : 104
             let height = isPortraitMode ? 104 : 72
@@ -142,7 +146,7 @@ struct DraggableLocalVideoView: View {
             return CGSize(width: width, height: 115.0)
         }
 
-        return isiPad ? iPadPipSize() : defaultPipSize()
+        return viewModel.isInPip ? pipSize() : isiPad ? iPadPipSize() : defaultPipSize()
     }
 
     private func getLimitedValue(value: CGFloat, min: CGFloat, max: CGFloat) -> CGFloat {

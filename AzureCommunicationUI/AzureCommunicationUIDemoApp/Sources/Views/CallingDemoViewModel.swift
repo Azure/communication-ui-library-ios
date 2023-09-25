@@ -11,6 +11,8 @@ import AzureCommunicationUICalling
 #endif
 
 class CallingDemoViewModel: ObservableObject {
+    var callComposite: CallComposite?
+
     lazy var dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
