@@ -29,6 +29,8 @@ enum CompositeIcon: String {
     case share = "ic_fluent_share_ios_24_regular"
     case more = "ic_fluent_more_horizontal_24_filled"
     case wifiWarning = "ic_fluent_wifi_warning_20_filled"
+    case speakerMute = "ic_fluent_speaker_mute_24_filled"
+    case microphoneProhibited = "ic_fluent_mic_prohibited_24_filled"
 }
 
 struct IconProvider {
