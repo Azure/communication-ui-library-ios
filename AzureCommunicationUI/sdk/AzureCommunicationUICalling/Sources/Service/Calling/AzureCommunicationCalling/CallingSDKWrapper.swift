@@ -70,8 +70,8 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             joinCallOptions.videoOptions = videoOptions
         }
 
-        joinCallOptions.audioOptions = AudioOptions()
-        joinCallOptions.audioOptions?.muted = !isAudioPreferred
+        joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
+        joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
         joinCallOptions.incomingVideoOptions = incomingVideoOptions
 
         var joinLocator: JoinMeetingLocator
@@ -192,7 +192,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         guard let call = call else {
             return
         }
-        guard call.isOutgoingAudioMuted else {
+        guard !call.isOutgoingAudioMuted else {
             logger.warning("muteOutgoingAudio is skipped as outgoing audio already muted")
             return
         }
@@ -210,7 +210,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         guard let call = call else {
             return
         }
-        guard !call.isOutgoingAudioMuted else {
+        guard call.isOutgoingAudioMuted else {
             logger.warning("unmuteOutgoingAudio is skipped as outgoing audio already muted")
             return
         }
