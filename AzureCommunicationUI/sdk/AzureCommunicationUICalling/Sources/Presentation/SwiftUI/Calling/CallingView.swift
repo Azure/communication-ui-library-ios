@@ -26,6 +26,11 @@ struct CallingView: View {
         static let horizontalPadding: CGFloat = 36
     }
 
+    enum DiagnosticMessageBarConstants {
+        static let topPadding: CGFloat = 5
+        static let horizontalPadding: CGFloat = 8
+    }
+
     @ObservedObject var viewModel: CallingViewModel
     let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
@@ -48,7 +53,7 @@ struct CallingView: View {
                     landscapeCallingView
                 }
                 errorInfoView
-                diagnosticsView
+                bottomToastDiagnosticsView
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)
@@ -102,6 +107,9 @@ struct CallingView: View {
                         .accessibilityHidden(viewModel.lobbyOverlayViewModel.isDisplayed
                                              || viewModel.onHoldOverlayViewModel.isDisplayed
                                              || viewModel.loadingOverlayViewModel.isDisplayed)
+                    topMessageBarDiagnosticsView
+                        .accessibilityElement(children: .contain)
+                        .accessibilitySortPriority(1)
                 }
                 .contentShape(Rectangle())
                 .animation(.linear(duration: 0.167))
@@ -238,8 +246,8 @@ struct CallingView: View {
         }
     }
 
-    var diagnosticsView: some View {
-        return VStack {
+    var bottomToastDiagnosticsView: some View {
+        VStack {
             Spacer()
             if let currentBottomToastViewModel = viewModel.callDiagnosticsViewModel.currentBottomToastDiagnostic {
                 BottomToastDiagnosticView(viewModel: currentBottomToastViewModel)
@@ -252,6 +260,23 @@ struct CallingView: View {
                     .accessibilityElement(children: .contain)
                     .accessibilityAddTraits(.isStaticText)
             }
+        }
+    }
+
+    var topMessageBarDiagnosticsView: some View {
+        VStack {
+            ForEach(viewModel.callDiagnosticsViewModel.messageBarStack) { diagnosticMessageBarViewModel in
+                MessageBarDiagnosticView(viewModel: diagnosticMessageBarViewModel)
+                    .padding(
+                        EdgeInsets(top: DiagnosticMessageBarConstants.topPadding,
+                                   leading: DiagnosticMessageBarConstants.horizontalPadding,
+                                   bottom: 0,
+                                   trailing: DiagnosticMessageBarConstants.horizontalPadding)
+                    )
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isStaticText)
+            }
+            Spacer()
         }
     }
 }

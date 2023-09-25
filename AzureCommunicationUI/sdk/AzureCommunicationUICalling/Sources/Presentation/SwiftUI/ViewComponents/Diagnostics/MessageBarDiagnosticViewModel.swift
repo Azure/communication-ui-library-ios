@@ -7,7 +7,6 @@ import Combine
 import Foundation
 
 final class MessageBarDiagnosticViewModel: ObservableObject, Identifiable {
-
     @Published private(set) var text: String = ""
     @Published private(set) var icon: CompositeIcon?
 
@@ -64,7 +63,7 @@ final class MessageBarDiagnosticViewModel: ObservableObject, Identifiable {
     }
 
     func dismiss() {
-        callDiagnosticViewModel?.dismiss(messageBar: self)
+        callDiagnosticViewModel?.dismiss(diagnostic: mediaDiagnostic)
     }
 }
 
