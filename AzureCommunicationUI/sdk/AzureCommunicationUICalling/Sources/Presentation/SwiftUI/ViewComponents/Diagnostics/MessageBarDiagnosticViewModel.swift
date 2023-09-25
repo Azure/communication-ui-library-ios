@@ -44,19 +44,19 @@ final class MessageBarDiagnosticViewModel: ObservableObject, Identifiable {
         switch mediaDiagnostic {
         case .noSpeakerDevicesAvailable:
             text = localizationProvider.getLocalizedString(.callDiagnosticsUnableToLocateSpeaker)
-            icon = nil
+            icon = .speakerMute
         case .noMicrophoneDevicesAvailable:
             text = localizationProvider.getLocalizedString(.callDiagnosticsUnableToLocateMicrophone)
-            icon = nil
+            icon = .microphoneProhibited
         case .microphoneNotFunctioning:
             text = localizationProvider.getLocalizedString(.callDiagnosticsMicrophoneNotWorking)
-            icon = nil
+            icon = .microphoneProhibited
         case .speakerNotFunctioning:
             text = localizationProvider.getLocalizedString(.callDiagnosticsSpeakerNotWorking)
-            icon = nil
+            icon = .speakerMute
         case .speakerMuted:
             text = localizationProvider.getLocalizedString(.callDiagnosticsSpeakerMuted)
-            icon = nil
+            icon = .speakerMute
         default:
             text = ""
             icon = nil
@@ -64,7 +64,7 @@ final class MessageBarDiagnosticViewModel: ObservableObject, Identifiable {
     }
 
     func dismiss() {
-
+        callDiagnosticViewModel?.dismiss(messageBar: self)
     }
 }
 
