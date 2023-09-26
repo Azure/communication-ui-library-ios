@@ -53,7 +53,10 @@ struct CallingView: View {
                     landscapeCallingView
                 }
                 errorInfoView
-                bottomToastDiagnosticsView
+
+                if viewModel.isDisplayCallDiagnosticsOn {
+                    bottomToastDiagnosticsView
+                }
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)
@@ -107,9 +110,12 @@ struct CallingView: View {
                         .accessibilityHidden(viewModel.lobbyOverlayViewModel.isDisplayed
                                              || viewModel.onHoldOverlayViewModel.isDisplayed
                                              || viewModel.loadingOverlayViewModel.isDisplayed)
-                    topMessageBarDiagnosticsView
-                        .accessibilityElement(children: .contain)
-                        .accessibilitySortPriority(1)
+
+                    if viewModel.isDisplayCallDiagnosticsOn {
+                        topMessageBarDiagnosticsView
+                            .accessibilityElement(children: .contain)
+                            .accessibilitySortPriority(1)
+                    }
                 }
                 .contentShape(Rectangle())
                 .animation(.linear(duration: 0.167))

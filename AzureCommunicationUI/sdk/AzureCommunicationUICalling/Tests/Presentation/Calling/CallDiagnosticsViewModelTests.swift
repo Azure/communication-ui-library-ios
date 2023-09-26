@@ -117,7 +117,8 @@ class CallDiagnosticsViewModelTests: XCTestCase {
 extension CallDiagnosticsViewModelTests {
     func makeSUT(localizationProvider: LocalizationProviderMocking? = nil) -> CallDiagnosticsViewModel {
         return CallDiagnosticsViewModel(
-            localizationProvider: localizationProvider ?? LocalizationProvider(logger: LoggerMocking())
+            localizationProvider: localizationProvider ?? LocalizationProvider(logger: LoggerMocking()),
+            isDisplayCallDiagnosticsOn: true
         )
     }
 

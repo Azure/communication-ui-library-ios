@@ -33,7 +33,7 @@ protocol CompositeViewModelFactoryProtocol {
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
-    func makeCallDiagnosticsViewModel() -> CallDiagnosticsViewModel
+    func makeCallDiagnosticsViewModel(enabled: Bool) -> CallDiagnosticsViewModel
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel
@@ -153,7 +153,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              store: store,
                                              localizationProvider: localizationProvider,
                                              accessibilityProvider: accessibilityProvider,
-                                             isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad)
+                                             isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad,
+                                             isDisplayCallDiagnosticsOn:
+                                                localOptions?.displayCallDiagnosticsOn ?? false)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -230,8 +232,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                            subtitle: subtitle)
     }
 
-    func makeCallDiagnosticsViewModel() -> CallDiagnosticsViewModel {
-        CallDiagnosticsViewModel(localizationProvider: localizationProvider)
+    func makeCallDiagnosticsViewModel(enabled: Bool) -> CallDiagnosticsViewModel {
+        CallDiagnosticsViewModel(localizationProvider: localizationProvider,
+                                 isDisplayCallDiagnosticsOn: enabled)
     }
 
     // MARK: CallingViewModels

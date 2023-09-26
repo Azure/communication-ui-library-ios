@@ -76,7 +76,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                     store: store,
                                                     localizationProvider: localizationProvider,
                                                     accessibilityProvider: accessibilityProvider,
-                                                    isIpadInterface: false)
+                                                    isIpadInterface: false,
+                                                    isDisplayCallDiagnosticsOn: true)
     }
 
     func makeIconButtonViewModel(iconName: CompositeIcon,
@@ -153,8 +154,9 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                         subtitle: subtitle)
     }
 
-    func makeCallDiagnosticsViewModel() -> CallDiagnosticsViewModel {
-        return callDiagnosticsViewModel ?? CallDiagnosticsViewModel(localizationProvider: localizationProvider)
+    func makeCallDiagnosticsViewModel(enabled: Bool) -> CallDiagnosticsViewModel {
+        return callDiagnosticsViewModel ?? CallDiagnosticsViewModel(localizationProvider: localizationProvider,
+                                                                    isDisplayCallDiagnosticsOn: enabled)
     }
 
     func makeSelectableDrawerListItemViewModel(icon: CompositeIcon,

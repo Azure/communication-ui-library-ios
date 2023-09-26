@@ -43,13 +43,15 @@ class CallingViewModel: ObservableObject {
          store: Store<AppState, Action>,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
-         isIpadInterface: Bool) {
+         isIpadInterface: Bool,
+         isDisplayCallDiagnosticsOn: Bool) {
         self.logger = logger
         self.store = store
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.accessibilityProvider = accessibilityProvider
+        self.isDisplayCallDiagnosticsOn = isDisplayCallDiagnosticsOn
         let actionDispatch: ActionDispatch = store.dispatch
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
@@ -96,7 +98,8 @@ class CallingViewModel: ObservableObject {
         updateIsLocalCameraOn(with: store.state)
         errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel(title: "",
                                                                               subtitle: "")
-        callDiagnosticsViewModel = compositeViewModelFactory.makeCallDiagnosticsViewModel()
+        callDiagnosticsViewModel = compositeViewModelFactory
+            .makeCallDiagnosticsViewModel(enabled: isDisplayCallDiagnosticsOn)
     }
 
     func dismissConfirmLeaveDrawerList() {
