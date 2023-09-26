@@ -39,6 +39,12 @@ protocol CallingMiddlewareHandling {
     func requestMicrophoneUnmute(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
     @discardableResult
     func onCameraPermissionIsSet(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func admitAllLobbyParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never>
+    @discardableResult
+    func admitLobbyParticipant(state: AppState,
+                               dispatch: @escaping ActionDispatch,
+                               participantId: String) -> Task<Void, Never>
 }
 
 class CallingMiddlewareHandler: CallingMiddlewareHandling {
@@ -271,6 +277,44 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             }
 
             dispatch(.callingAction(.holdRequested))
+        }
+    }
+
+    func admitAllLobbyParticipants(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.status == .connected else {
+                return
+            }
+
+            let participantIds = state.remoteParticipantsState.participantInfoList.filter { participant in
+                participant.status == .inLobby
+            }.map { participant in
+                participant.userIdentifier
+            }
+
+            do {
+                try await callingService.admitLobbyParticipants(participantIds)
+//                dispatch(.localUserAction(.cameraPausedSucceeded))
+            } catch {
+//                dispatch(.localUserAction(.cameraPausedFailed(error: error)))
+            }
+        }
+    }
+
+    func admitLobbyParticipant(state: AppState,
+                               dispatch: @escaping ActionDispatch,
+                               participantId: String) -> Task<Void, Never> {
+        Task {
+            guard state.callingState.status == .connected else {
+                return
+            }
+
+            do {
+                try await callingService.admitLobbyParticipants([participantId])
+//                dispatch(.localUserAction(.cameraPausedSucceeded))
+            } catch {
+//                dispatch(.localUserAction(.cameraPausedFailed(error: error)))
+            }
         }
     }
 }

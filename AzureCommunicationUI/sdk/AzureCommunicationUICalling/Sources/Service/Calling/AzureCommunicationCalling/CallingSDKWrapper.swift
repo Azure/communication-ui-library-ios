@@ -242,6 +242,19 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             throw error
         }
     }
+
+    func admitLobbyParticipants(_ participantIds: [String]) async throws {
+        guard let call = call else {
+            return
+        }
+
+        do {
+//            try await call.resume()
+            logger.debug("Admit participants successful")
+        } catch {
+            logger.error("ERROR: It was not possible to admit lobby participants. \(error)")
+        }
+    }
 }
 
 extension CallingSDKWrapper {

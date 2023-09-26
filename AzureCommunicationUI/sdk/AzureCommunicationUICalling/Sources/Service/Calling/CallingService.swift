@@ -29,6 +29,8 @@ protocol CallingServiceProtocol {
 
     func holdCall() async throws
     func resumeCall() async throws
+
+    func admitLobbyParticipants(_ participantIds: [String]) async throws
 }
 
 class CallingService: NSObject, CallingServiceProtocol {
@@ -102,5 +104,9 @@ class CallingService: NSObject, CallingServiceProtocol {
 
     func resumeCall() async throws {
         try await callingSDKWrapper.resumeCall()
+    }
+
+    func admitLobbyParticipants(_ participantIds: [String]) async throws {
+        try await callingSDKWrapper.admitLobbyParticipants(participantIds)
     }
 }

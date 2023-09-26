@@ -41,11 +41,14 @@ protocol CompositeViewModelFactoryProtocol {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel
-    func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel
-    func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState) -> LobbyWaitingHeaderViewModel
+    func makeInfoHeaderViewModel(localUserState: LocalUserState,
+                                 dispatchAction: @escaping ActionDispatch) -> InfoHeaderViewModel
+    func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
+                                         dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
-    func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel
+    func makeParticipantsListViewModel(localUserState: LocalUserState,
+                                       dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel
     func makeBannerViewModel() -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
@@ -85,6 +88,7 @@ extension CompositeViewModelFactoryProtocol {
     }
 }
 
+// swiftlint:disable type_body_length
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let store: Store<AppState, Action>
@@ -247,20 +251,24 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             endCallConfirm: endCallConfirm,
                             localUserState: localUserState)
     }
-    func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel {
+    func makeInfoHeaderViewModel(localUserState: LocalUserState,
+                                 dispatchAction: @escaping ActionDispatch) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
                             localUserState: localUserState,
                             localizationProvider: localizationProvider,
-                            accessibilityProvider: accessibilityProvider)
+                            accessibilityProvider: accessibilityProvider,
+                            dispatchAction: dispatchAction)
     }
 
-    func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState) -> LobbyWaitingHeaderViewModel {
+    func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
+                                         dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel {
         LobbyWaitingHeaderViewModel(compositeViewModelFactory: self,
                                     logger: logger,
                                     localUserState: localUserState,
                                     localizationProvider: localizationProvider,
-                                    accessibilityProvider: accessibilityProvider)
+                                    accessibilityProvider: accessibilityProvider,
+                                    dispatchAction: dispatchAction)
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
@@ -275,9 +283,11 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                  isIpadInterface: isIpadInterface)
     }
 
-    func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
+    func makeParticipantsListViewModel(localUserState: LocalUserState,
+                                       dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel {
         ParticipantsListViewModel(compositeViewModelFactory: self,
-                                  localUserState: localUserState)
+                                  localUserState: localUserState,
+                                  dispatchAction: dispatchAction)
     }
     func makeBannerViewModel() -> BannerViewModel {
         BannerViewModel(compositeViewModelFactory: self)

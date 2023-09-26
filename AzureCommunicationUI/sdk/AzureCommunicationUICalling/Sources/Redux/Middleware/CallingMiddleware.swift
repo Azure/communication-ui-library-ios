@@ -27,6 +27,8 @@ extension Middleware {
 
                         case .audioSessionAction(let audioAction):
                             handleAudioSessionAction(audioAction, actionHandler, getState, dispatch)
+                        case .remoteParticipantsAction(let action):
+                            handleRemoteParticipantAction(action, actionHandler, getState, dispatch)
                         case .errorAction(_),
                                 .compositeExitAction,
                                 .callingViewLaunched:
@@ -144,6 +146,20 @@ private func handleAudioSessionAction(_ action: AudioSessionAction,
         actionHandler.audioSessionInterrupted(state: getState(), dispatch: dispatch)
     case .audioInterruptEnded,
             .audioEngaged:
+        break
+    }
+}
+
+private func handleRemoteParticipantAction(_ action: RemoteParticipantsAction,
+                                           _ actionHandler: CallingMiddlewareHandling,
+                                           _ getState: () -> AppState,
+                                           _ dispatch: @escaping ActionDispatch) {
+    switch action {
+    case .admitAllLobbyParticipants:
+        actionHandler.admitAllLobbyParticipants(state: getState(), dispatch: dispatch)
+    case .admitLobbyParticipant(participantId: let participantId):
+        actionHandler.admitLobbyParticipant(state: getState(), dispatch: dispatch, participantId: participantId)
+    default:
         break
     }
 }

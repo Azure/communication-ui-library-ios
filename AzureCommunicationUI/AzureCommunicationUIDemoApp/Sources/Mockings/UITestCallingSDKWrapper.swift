@@ -188,11 +188,19 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     }
 
     func addParticipant() async throws {
+        try await addParticipant(status: .connected)
+    }
+
+    func addInLobbyParticipant() async throws {
+        try await addParticipant(status: .inLobby)
+    }
+
+    func addParticipant(status: ParticipantStatus) async throws {
         guard callMocking != nil else {
             return
         }
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
-            handler.addParticipant()
+            handler.addParticipant(status: status)
         }
     }
 
@@ -220,6 +228,15 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
             handler.holdParticipant()
+        }
+    }
+
+    func admitLobbyParticipants(_ participantIds: [String]) async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.admitLobbyParticipants(participantIds)
         }
     }
 }

@@ -53,6 +53,9 @@ class FloatingUITestWindow: UIWindow {
         createButton(title: "Add Participant",
                      accessibilityID: "callAddParticipant-AID",
                      selector: #selector(addParticipantButtonTapped))
+        createButton(title: "Add InLobby Participant",
+                     accessibilityID: "callAddInLobbyParticipant-AID",
+                     selector: #selector(addInLobbyParticipantButtonTapped))
         createButton(title: "Remove Participant",
                      accessibilityID: "callRemoveParticipant-AID",
                      selector: #selector(removeParticipantButtonTapped))
@@ -129,6 +132,13 @@ class FloatingUITestWindow: UIWindow {
         debugPrint("UI Test:: AddParticipantButtonTapped")
         Task {
             try? await callingSDKWrapperMock?.addParticipant()
+        }
+    }
+
+    @objc func addInLobbyParticipantButtonTapped(sender: UIButton) {
+        debugPrint("UI Test:: AddParticipantButtonTapped")
+        Task {
+            try? await callingSDKWrapperMock?.addInLobbyParticipant()
         }
     }
 

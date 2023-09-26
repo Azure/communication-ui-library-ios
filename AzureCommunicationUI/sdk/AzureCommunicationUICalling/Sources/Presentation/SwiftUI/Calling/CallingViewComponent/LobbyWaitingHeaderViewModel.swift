@@ -27,7 +27,8 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
          logger: Logger,
          localUserState: LocalUserState,
          localizationProvider: LocalizationProviderProtocol,
-         accessibilityProvider: AccessibilityProviderProtocol) {
+         accessibilityProvider: AccessibilityProviderProtocol,
+         dispatchAction: @escaping ActionDispatch) {
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
@@ -35,7 +36,8 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
         self.infoLabel = title
         self.accessibilityLabel = title
         self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
-            localUserState: localUserState)
+            localUserState: localUserState,
+            dispatchAction: dispatchAction)
         self.participantListButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: "View lobby",
@@ -78,7 +80,7 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
         }
 
         let newLobbyParticipantCount = lobbyUsersCount(remoteParticipantsState)
-        isDisplayed = isDisplayed || newLobbyParticipantCount > lobbyParticipantCount
+        isDisplayed = newLobbyParticipantCount > 0 && (isDisplayed || newLobbyParticipantCount > lobbyParticipantCount)
 
         self.lobbyParticipantCount = newLobbyParticipantCount
 

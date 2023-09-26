@@ -30,6 +30,9 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
     private var inCallParticipants: [ParticipantsListCellViewModel] = []
     private var lobbyParticipants: [ParticipantsListCellViewModel] = []
 
+    private var admintAll: () -> Void
+    private var admitParticipant: (_ participantId: String) -> Void
+
     override var items: [ParticipantsListCellViewModel] {
         get {
             return allParticipants
@@ -49,9 +52,13 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
 
     init(sourceView: UIView,
          avatarViewManager: AvatarViewManager,
-         isRightToLeft: Bool
+         isRightToLeft: Bool,
+         admintAll: @escaping () -> Void,
+         admitParticipant: @escaping (_ participantId: String) -> Void
     ) {
         self.avatarViewManager = avatarViewManager
+        self.admintAll = admintAll
+        self.admitParticipant = admitParticipant
         super.init(sourceView: sourceView, isRightToLeft: isRightToLeft)
     }
 
@@ -81,17 +88,17 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let items = participants(section: indexPath.section)
+        let participantsListCellViewModels = participants(section: indexPath.section)
 
-        guard indexPath.row < items.count,
+        guard indexPath.row < participantsListCellViewModels.count,
               let cell = tableView.dequeueReusableCell(
                 withIdentifier: CompositeParticipantsListCell.identifier,
                 for: indexPath) as? CompositeParticipantsListCell else {
             return UITableViewCell()
         }
-        let participantViewModel = items[indexPath.row]
+        let participantCellViewModel = participantsListCellViewModels[indexPath.row]
 
-        cell.setup(viewModel: participantViewModel,
+        cell.setup(viewModel: participantCellViewModel,
                    avatarViewManager: avatarViewManager)
         cell.bottomSeparatorType = .none
         return cell
@@ -103,13 +110,14 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
         hStackView.distribution = .equalSpacing
         hStackView.isLayoutMarginsRelativeArrangement = true
         hStackView.directionalLayoutMargins = .init(top: 0, leading: 12, bottom: 0, trailing: 15)
+        hStackView.backgroundColor = StyleProvider.color.drawerColor
 
-        let isLobbySection = lobbyParticipants.count != 0 && section == 0
+        let isLobbySection = isLobbySection(section: section)
 
         let label = UILabel()
         label.text = isLobbySection
-                        ? "Waiting in lobby (\(lobbyParticipants.count))"
-                        : "In the call (\(inCallParticipants.count))"
+        ? "Waiting in lobby (\(lobbyParticipants.count))"
+        : "In the call (\(inCallParticipants.count))"
 
         label.font = .systemFont(ofSize: 14)
         label.textColor = StyleProvider.color.onHoldLabel
@@ -117,20 +125,70 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
         hStackView.addArrangedSubview(label)
 
         if isLobbySection {
-            let admitAllButton = UIButton()
+            let admitAllButton = Button(style: .borderless)
             admitAllButton.setTitle("Admit all", for: .normal)
             admitAllButton.titleLabel?.font = .systemFont(ofSize: 14)
             admitAllButton.sizeToFit()
             admitAllButton.translatesAutoresizingMaskIntoConstraints = false
             admitAllButton.setTitleColor(.systemBlue, for: .normal)
+            admitAllButton.addTarget(self, action: #selector(onAdmitAllTap), for: .touchUpInside)
+
             hStackView.addArrangedSubview(admitAllButton)
         }
 
         return hStackView
     }
 
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard isLobbySection(section: indexPath.section) else {
+            return
+        }
+
+        let participantsListCellViewModel = participants(section: indexPath.section)[indexPath.row]
+
+        guard let participantId = participantsListCellViewModel.participantId else {
+            return
+        }
+
+        let participantViewData = participantsListCellViewModel.getParticipantViewData(from: avatarViewManager)
+        let avatarParticipantName = participantsListCellViewModel.getParticipantName(with: participantViewData)
+
+        confirmAdmitting(title: "Admit \(avatarParticipantName)?") {
+            self.admitParticipant(participantId)
+        }
+    }
+
+    @objc func onAdmitAllTap() {
+        confirmAdmitting(title: "Admit all participants?") {
+            self.admintAll()
+        }
+    }
+
+    private func confirmAdmitting(title: String, onConfirmed: @escaping () -> Void) {
+        DispatchQueue.main.async {
+            guard let topViewController = UIWindow.keyWindow?.topViewController else {
+                return
+            }
+
+            let admitAlert = UIAlertController(title: title,
+                                               message: nil,
+                                               preferredStyle: .alert)
+            admitAlert.addAction(UIAlertAction(title: "Decline", style: .cancel, handler: nil))
+            admitAlert.addAction(UIAlertAction(title: "Admit", style: .default) { _ in
+                onConfirmed()
+            })
+            topViewController.present(admitAlert,
+                    animated: true,
+                    completion: nil)
+        }
+    }
+
+    private func isLobbySection(section: Int) -> Bool {
+        return lobbyParticipants.count != 0 && section == 0
+    }
+
     private func participants(section: Int) -> [ParticipantsListCellViewModel] {
-        if lobbyParticipants.count != 0 && section == 0 {
+        if isLobbySection(section: section) {
             return lobbyParticipants
         }
         return inCallParticipants

@@ -8,4 +8,6 @@ import Foundation
 enum RemoteParticipantsAction: Equatable {
     case dominantSpeakersUpdated(speakers: [String])
     case participantListUpdated(participants: [ParticipantInfoModel])
+    case admitAllLobbyParticipants
+    case admitLobbyParticipant(participantId: String)
 }

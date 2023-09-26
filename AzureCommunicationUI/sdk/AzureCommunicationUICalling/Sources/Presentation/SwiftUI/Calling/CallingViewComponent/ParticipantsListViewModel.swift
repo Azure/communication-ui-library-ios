@@ -12,12 +12,15 @@ class ParticipantsListViewModel: ObservableObject {
     var lastUpdateTimeStamp = Date()
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
+    private let dispatch: ActionDispatch
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
-         localUserState: LocalUserState) {
+         localUserState: LocalUserState,
+         dispatchAction: @escaping ActionDispatch) {
         self.compositeViewModelFactory = compositeViewModelFactory
         localParticipantsListCellViewModel =
         compositeViewModelFactory.makeLocalParticipantsListCellViewModel(localUserState: localUserState)
+        self.dispatch = dispatchAction
     }
 
     func update(localUserState: LocalUserState,
@@ -47,5 +50,13 @@ class ParticipantsListViewModel: ObservableObject {
             let nextName = $1.getCellDisplayName(with: $1.getParticipantViewData(from: avatarManager))
             return name.localizedCaseInsensitiveCompare(nextName) == .orderedAscending
         }
+    }
+
+    func admitAll() {
+        dispatch(.remoteParticipantsAction(.admitAllLobbyParticipants))
+    }
+
+    func admitParticipant(_ participantId: String) {
+        dispatch(.remoteParticipantsAction(.admitLobbyParticipant(participantId: participantId)))
     }
 }

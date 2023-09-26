@@ -56,12 +56,15 @@ class CallingViewModel: ObservableObject {
         loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()
 
         infoHeaderViewModel = compositeViewModelFactory
-            .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
+            .makeInfoHeaderViewModel(localUserState: store.state.localUserState,
+                                     dispatchAction: actionDispatch)
         lobbyWaitingHeaderViewModel = compositeViewModelFactory
-            .makeLobbyWaitingHeaderViewModel(localUserState: store.state.localUserState)
+            .makeLobbyWaitingHeaderViewModel(localUserState: store.state.localUserState,
+            dispatchAction: actionDispatch)
         let isCallConnected = store.state.callingState.status == .connected
-        let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
-        isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
+
+        isParticipantGridDisplayed = isCallConnected &&
+            CallingViewModel.hasRemoteParticipants(store.state.remoteParticipantsState.participantInfoList)
         controlBarViewModel = compositeViewModelFactory
             .makeControlBarViewModel(dispatchAction: actionDispatch, endCallConfirm: { [weak self] in
                 guard let self = self else {
@@ -140,8 +143,8 @@ class CallingViewModel: ObservableObject {
                                       audioSessionStatus: state.audioSessionState.status)
 
         let newIsCallConnected = state.callingState.status == .connected
-        let hasRemoteParticipants = state.remoteParticipantsState.participantInfoList.count > 0
-        let shouldParticipantGridDisplayed = newIsCallConnected && hasRemoteParticipants
+        let shouldParticipantGridDisplayed = newIsCallConnected &&
+            CallingViewModel.hasRemoteParticipants(state.remoteParticipantsState.participantInfoList)
         if shouldParticipantGridDisplayed != isParticipantGridDisplayed {
             isParticipantGridDisplayed = shouldParticipantGridDisplayed
         }
@@ -159,6 +162,12 @@ class CallingViewModel: ObservableObject {
 
         updateIsLocalCameraOn(with: state)
         errorInfoViewModel.update(errorState: state.errorState)
+    }
+
+    private static func hasRemoteParticipants(_ participants: [ParticipantInfoModel]) -> Bool {
+        return participants.filter({ participant in
+            participant.status != .inLobby && participant.status != .disconnected
+        }).count > 0
     }
 
     private func updateIsLocalCameraOn(with state: AppState) {

@@ -90,7 +90,7 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
         }
     }
 
-    func addParticipant() {
+    func addParticipant(status: ParticipantStatus = .connected) {
         Task { @MainActor [weak self] in
             guard let self else {
                 return
@@ -101,7 +101,7 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                                       isMuted: true,
                                                       isRemoteUser: true,
                                                       userIdentifier: participantNameIdentifier,
-                                                      status: .connected,
+                                                      status: status,
                                                       screenShareVideoStreamModel: nil,
                                                       cameraVideoStreamModel: nil)
             self.remoteParticipantsMocking.append(newParticipant)
@@ -156,6 +156,41 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
                                                    screenShareVideoStreamModel: last.screenShareVideoStreamModel,
                                                    cameraVideoStreamModel: last.cameraVideoStreamModel)
             self.remoteParticipantsMocking.append(lastUnmuted)
+            self.participantsInfoListSubject.send(self.remoteParticipantsMocking)
+        }
+    }
+
+    func admitLobbyParticipants(_ participantIds: [String]) {
+        Task { @MainActor [weak self] in
+            guard let self,
+                  !self.remoteParticipantsMocking.isEmpty else {
+                return
+            }
+
+            let inLobbyParticipants = self.remoteParticipantsMocking.filter { participantInfoModel in
+                participantIds.contains { id in
+                    participantInfoModel.userIdentifier == id
+                }
+            }
+
+            self.remoteParticipantsMocking.removeAll { participantInfoModel in
+                participantIds.contains { id in
+                    participantInfoModel.userIdentifier == id
+                }
+            }
+
+            let connectedParticipants = inLobbyParticipants.map { participantInfoModel in
+                ParticipantInfoModel(displayName: participantInfoModel.displayName,
+                                     isSpeaking: participantInfoModel.isSpeaking,
+                                     isMuted: participantInfoModel.isMuted,
+                                     isRemoteUser: participantInfoModel.isRemoteUser,
+                                     userIdentifier: participantInfoModel.userIdentifier,
+                                     status: .connected,
+                                     screenShareVideoStreamModel: participantInfoModel.screenShareVideoStreamModel,
+                                     cameraVideoStreamModel: participantInfoModel.cameraVideoStreamModel)
+            }
+
+            self.remoteParticipantsMocking.append(contentsOf: connectedParticipants)
             self.participantsInfoListSubject.send(self.remoteParticipantsMocking)
         }
     }
