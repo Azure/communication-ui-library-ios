@@ -47,10 +47,10 @@ final class MessageBarDiagnosticViewModel: ObservableObject, Identifiable {
             icon = .speakerMute
         case .noMicrophoneDevicesAvailable:
             text = localizationProvider.getLocalizedString(.callDiagnosticsUnableToLocateMicrophone)
-            icon = .microphoneProhibited
+            icon = .micProhibited
         case .microphoneNotFunctioning:
             text = localizationProvider.getLocalizedString(.callDiagnosticsMicrophoneNotWorking)
-            icon = .microphoneProhibited
+            icon = .micProhibited
         case .speakerNotFunctioning:
             text = localizationProvider.getLocalizedString(.callDiagnosticsSpeakerNotWorking)
             icon = .speakerMute
