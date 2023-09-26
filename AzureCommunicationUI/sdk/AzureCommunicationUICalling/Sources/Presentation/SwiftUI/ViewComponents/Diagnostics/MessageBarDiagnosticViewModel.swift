@@ -9,6 +9,7 @@ import Foundation
 final class MessageBarDiagnosticViewModel: ObservableObject, Identifiable {
     @Published private(set) var text: String = ""
     @Published private(set) var icon: CompositeIcon?
+    @Published private(set) var isDisplayed: Bool = false
 
     private let localizationProvider: LocalizationProviderProtocol
 
@@ -63,7 +64,11 @@ final class MessageBarDiagnosticViewModel: ObservableObject, Identifiable {
     }
 
     func dismiss() {
-        callDiagnosticViewModel?.dismiss(diagnostic: mediaDiagnostic)
+        isDisplayed = false
+    }
+
+    func show() {
+        isDisplayed = true
     }
 }
 
