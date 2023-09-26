@@ -71,22 +71,22 @@
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "שתף פרטי אבחון";
 
 /* ComplianceBanner title */
-"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="הקלטה ותעתוק התחילו.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="הקלטה ותמלול התחילו.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStarted"="ההקלטה התחילה.";
-"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="התעתוק הופסק.";
-"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStarted"="התעתוק התחיל.";
-"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStopped"="מתבצע תהליך שמירה של התעתוק.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="התמלול הופסק.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStarted"="התמלול התחיל.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStopped"="מתבצע תהליך שמירה של התמליל.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="ההקלטה הופסקה.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStopped"="ההקלטה נשמרת.";
-"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStopped"="ההקלטה והתעתוק בתהליך שמירה.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStopped"="ההקלטה והתמלול בתהליך שמירה.";
 
 /* ComplianceBanner body */
 "AzureCommunicationUICalling.CallingView.BannerBody.Consent"="על-ידי הצטרפות, אתה נותן הסכמה לתעתק פגישה זו.";
 "AzureCommunicationUICalling.CallingView.BannerBody.Recording"="אתה כעת רק מקליט את הפגישה.";
-"AzureCommunicationUICalling.CallingView.BannerBody.TranscriptionStopped"="התעתוק הופסק.";
+"AzureCommunicationUICalling.CallingView.BannerBody.TranscriptionStopped"="התמלול הופסק.";
 "AzureCommunicationUICalling.CallingView.BannerBody.OnlyTranscribing"="אתה רק מתעתק את הפגישה כעת.";
 "AzureCommunicationUICalling.CallingView.BannerBody.RecordingStopped"="ההקלטה הופסקה.";
-"AzureCommunicationUICalling.CallingView.BannerBody.RecordingAndTranscriptionStopped"="ההקלטה והתעתוק הופסקו.";
+"AzureCommunicationUICalling.CallingView.BannerBody.RecordingAndTranscriptionStopped"="ההקלטה והתמלול הופסקו.";
 
 /* ComplianceBanner display link */
 "AzureCommunicationUICalling.CallingView.BannerLink.PrivacyPolicy"="מדיניות פרטיות";
@@ -105,3 +105,22 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="הגישה שלך לשיחה נדחתה.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="שגיאה בהחלפת וידאו";
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="לא ניתן להצטרף לשיחה. בדוק את חיבור הרשת שלך.";
+
+/* Call Diagnostics */
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="You're muted";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Network quality is low";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Network was lost";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Reconnecting...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Unable to start camera";
+
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Unable to locate speaker.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Unable to locate microphone.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Microphone isn't working as expected.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Speaker isn't working as expected.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Speaker is muted.";
+
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ needs permission";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ is not allowed to use your camera. You can change this in settings later. If your change it now your call would be dropped.";
+
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Dismiss Call Diagnostic";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Dismisses this Call Diagnostic Banner";
