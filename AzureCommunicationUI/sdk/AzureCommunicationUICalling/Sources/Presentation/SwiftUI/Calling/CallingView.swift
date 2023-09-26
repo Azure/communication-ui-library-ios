@@ -274,7 +274,7 @@ struct CallingView: View {
             ForEach(viewModel.callDiagnosticsViewModel.messageBarStack) { diagnosticMessageBarViewModel in
                 MessageBarDiagnosticView(viewModel: diagnosticMessageBarViewModel)
                     .padding(
-                        EdgeInsets(top: DiagnosticMessageBarConstants.topPadding,
+                        EdgeInsets(top: 0,
                                    leading: DiagnosticMessageBarConstants.horizontalPadding,
                                    bottom: 0,
                                    trailing: DiagnosticMessageBarConstants.horizontalPadding)
@@ -284,6 +284,12 @@ struct CallingView: View {
             }
             Spacer()
         }
+        .padding(
+            EdgeInsets(top: DiagnosticMessageBarConstants.topPadding,
+                       leading: 0,
+                       bottom: 0,
+                       trailing: 0)
+        )
     }
 }
 

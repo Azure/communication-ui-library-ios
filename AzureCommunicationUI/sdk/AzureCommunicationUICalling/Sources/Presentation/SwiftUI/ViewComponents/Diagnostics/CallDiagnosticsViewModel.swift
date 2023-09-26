@@ -17,6 +17,19 @@ final class CallDiagnosticsViewModel: ObservableObject {
     init(localizationProvider: LocalizationProviderProtocol, isDisplayCallDiagnosticsOn: Bool) {
         self.localizationProvider = localizationProvider
         self.isDisplayCallDiagnosticsOn = isDisplayCallDiagnosticsOn
+        initializeMessageBarListModel()
+    }
+
+    func initializeMessageBarListModel() {
+        messageBarStack =
+            MessageBarDiagnosticViewModel.handledMediaDiagnostics
+                .map { diagnostic in
+                    return MessageBarDiagnosticViewModel(
+                        localizationProvider: localizationProvider,
+                        callDiagnosticViewModel: self,
+                        mediaDiagnostic: diagnostic
+                    )
+                }
     }
 
     func update(diagnosticsState: CallDiagnosticsState) {
@@ -58,16 +71,15 @@ final class CallDiagnosticsViewModel: ObservableObject {
     }
 
     private func updateMessageBarList(diagnosticModel: MediaDiagnosticModel) {
+        guard let messageDiagnosticViewModel = messageBarStack
+            .first(where: { $0.mediaDiagnostic == diagnosticModel.diagnostic }) else {
+            return
+        }
+
         if diagnosticModel.value {
-            let viewModel = MessageBarDiagnosticViewModel(
-                localizationProvider: localizationProvider,
-                callDiagnosticViewModel: self,
-                mediaDiagnostic: diagnosticModel.diagnostic
-            )
-            messageBarStack.append(viewModel)
-        } else if let idx = messageBarStack
-                .firstIndex(where: { $0.mediaDiagnostic == diagnosticModel.diagnostic }) {
-            messageBarStack.remove(at: idx)
+            messageDiagnosticViewModel.show()
+        } else {
+            messageDiagnosticViewModel.dismiss()
         }
     }
 
@@ -101,9 +113,10 @@ final class CallDiagnosticsViewModel: ObservableObject {
     }
 
     func dismiss(diagnostic: MediaCallDiagnostic) {
-        guard let idx = messageBarStack.firstIndex(where: { $0.mediaDiagnostic == diagnostic }) else {
+        guard let messageDiagnosticViewModel = messageBarStack
+            .first(where: { $0.mediaDiagnostic == diagnostic }) else {
             return
         }
-        messageBarStack.remove(at: idx)
+        messageDiagnosticViewModel.dismiss()
     }
 }
