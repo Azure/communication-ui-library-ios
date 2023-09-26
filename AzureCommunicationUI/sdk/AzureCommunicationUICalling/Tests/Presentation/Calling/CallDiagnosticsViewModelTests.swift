@@ -38,6 +38,32 @@ class CallDiagnosticsViewModelTests: XCTestCase {
         }
     }
 
+    func
+    test_receiving_media_diagnostic_update_should_be_showing_message_bar() {
+        for diagnostic in MessageBarDiagnosticViewModel.handledMediaDiagnostics {
+            let sut = makeSUT()
+
+            // Not handled by bottom toast view.
+            XCTAssertNil(sut.currentBottomToastDiagnostic)
+
+            for messageBar in sut.messageBarStack {
+                XCTAssertFalse(messageBar.isDisplayed)
+            }
+
+            let badState = MediaDiagnosticModel(diagnostic: diagnostic, value: true)
+            sut.update(diagnosticsState: CallDiagnosticsState(mediaDiagnostic: badState))
+
+            XCTAssertNil(sut.currentBottomToastDiagnostic)
+            XCTAssertTrue(sut.messageBarStack.first(where: { $0.mediaDiagnostic == diagnostic })?.isDisplayed ?? false)
+
+            let goodState = MediaDiagnosticModel(diagnostic: diagnostic, value: false)
+            sut.update(diagnosticsState: CallDiagnosticsState(mediaDiagnostic: goodState))
+
+            XCTAssertNil(sut.currentBottomToastDiagnostic)
+            XCTAssertFalse(sut.messageBarStack.first(where: { $0.mediaDiagnostic == diagnostic })?.isDisplayed ?? true)
+        }
+    }
+
     func test_receiving_media_unhandled_diagnostic_update_should_not_be_displayed() {
         let otherMediaDiagnostics = MediaCallDiagnostic.allCases.filter({ !BottomToastDiagnosticViewModel.handledMediaDiagnostics.contains($0) })
         for diagnostic in otherMediaDiagnostics {
