@@ -10,24 +10,25 @@ struct BottomToastDiagnosticView: View {
     @ObservedObject var viewModel: BottomToastDiagnosticViewModel
 
     private let cornerRadius: CGFloat = 6
+    private let foregroundColor: Color = .white
 
     var body: some View {
         HStack(alignment: .center) {
             if let icon = viewModel.icon {
                 IconProvider().getImage(for: icon)
                     .frame(width: 16, height: 16)
-                    .foregroundColor(Color(StyleProvider.color.onSurface))
+                    .foregroundColor(foregroundColor)
                     .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 0))
             }
             Text(viewModel.text)
                 .font(Fonts.subhead.font)
                 .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 16))
                 .multilineTextAlignment(.center)
-                .foregroundColor(Color(StyleProvider.color.onSurface))
+                .foregroundColor(foregroundColor)
                 .accessibilitySortPriority(2)
         }
         .frame(height: 36)
-        .background(Color(StyleProvider.color.backgroundColor))
+        .background(Color(StyleProvider.color.surfaceDarkColor))
         .cornerRadius(cornerRadius)
     }
 }
