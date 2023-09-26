@@ -20,52 +20,47 @@ class BottomToastDiagnosticViewModelTests: XCTestCase {
         localizationProvider = nil
     }
 
-    func test_that_presenting_speaking_while_muted_diagnostic_bottom_toast_shows_title_and_icon() {
-        let sut = makeSUT(mediaDiagnostic: .speakingWhileMicrophoneIsMuted, localizationProvider: localizationProvider)
-        XCTAssertEqual(sut.text, "AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted")
-        XCTAssertEqual(sut.icon, CompositeIcon.micOff)
+    func test_that_presenting_handled_media_diagnostics_shows_title_and_icon() {
+        let expectedTextAndIcon: [MediaCallDiagnostic: (String, CompositeIcon)] = [
+            .speakingWhileMicrophoneIsMuted: ("AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted",
+                                              CompositeIcon.micOff),
+            .cameraStartFailed: ("AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted",
+                                 CompositeIcon.videoOff),
+            .cameraStartTimedOut: ("AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted",
+                                   CompositeIcon.videoOff)
+        ]
+
+        for diagnostic in BottomToastDiagnosticViewModel.handledMediaDiagnostics {
+            let sut = makeSUT(mediaDiagnostic: diagnostic, localizationProvider: localizationProvider)
+
+            guard let (text, icon) = expectedTextAndIcon[diagnostic] else {
+                return XCTFail("Value not verified")
+            }
+
+            XCTAssertEqual(sut.text, text)
+            XCTAssertEqual(sut.icon, icon)
+        }
     }
 
-    func test_that_presenting_camera_start_failed_diagnostic_bottom_toast_shows_title_and_icon() {
-        let sut = makeSUT(mediaDiagnostic: .cameraStartFailed, localizationProvider: localizationProvider)
-        XCTAssertEqual(sut.text, "AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted")
-        XCTAssertEqual(sut.icon, CompositeIcon.videoOff)
-    }
+    func test_that_presenting_handled_network_diagnostics_shows_title_and_icon() {
+        let expectedTextAndIcon: [NetworkCallDiagnostic: String] = [
+            .networkReceiveQuality: "AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow",
+            .networkSendQuality: "AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow",
+            .networkUnavailable: "AzureCommunicationUICalling.Diagnostics.Text.NetworkLost",
+            .networkRelaysUnreachable: "AzureCommunicationUICalling.Diagnostics.Text.NetworkLost",
+            .networkReconnectionQuality: "AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"
+        ]
 
-    func test_that_presenting_camera_start_timed_out_diagnostic_bottom_toast_shows_title_and_icon() {
-        let sut = makeSUT(mediaDiagnostic: .cameraStartTimedOut, localizationProvider: localizationProvider)
-        XCTAssertEqual(sut.text, "AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted")
-        XCTAssertEqual(sut.icon, CompositeIcon.videoOff)
-    }
+        for diagnostic in NetworkCallDiagnostic.allCases {
+            let sut = makeSUT(networkDiagnostic: diagnostic, localizationProvider: localizationProvider)
 
-    func test_that_presenting_network_receive_quality_bottom_toast_shows_title_and_icon() {
-        let sut = makeSUT(networkDiagnostic: .networkReceiveQuality, localizationProvider: localizationProvider)
-        XCTAssertEqual(sut.text, "AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow")
-        XCTAssertEqual(sut.icon, CompositeIcon.wifiWarning)
-    }
+            guard let text = expectedTextAndIcon[diagnostic] else {
+                return XCTFail("Value not verified")
+            }
 
-    func test_that_presenting_network_send_quality_bottom_toast_shows_title_and_icon() {
-        let sut = makeSUT(networkDiagnostic: .networkSendQuality, localizationProvider: localizationProvider)
-        XCTAssertEqual(sut.text, "AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow")
-        XCTAssertEqual(sut.icon, CompositeIcon.wifiWarning)
-    }
-
-    func test_that_presenting_network_unavailable_bottom_toast_shows_title_and_icon() {
-        let sut = makeSUT(networkDiagnostic: .networkUnavailable, localizationProvider: localizationProvider)
-        XCTAssertEqual(sut.text, "AzureCommunicationUICalling.Diagnostics.Text.NetworkLost")
-        XCTAssertEqual(sut.icon, CompositeIcon.wifiWarning)
-    }
-
-    func test_that_presenting_network_relays_unrachable_bottom_toast_shows_title_and_icon() {
-        let sut = makeSUT(networkDiagnostic: .networkRelaysUnreachable, localizationProvider: localizationProvider)
-        XCTAssertEqual(sut.text, "AzureCommunicationUICalling.Diagnostics.Text.NetworkLost")
-        XCTAssertEqual(sut.icon, CompositeIcon.wifiWarning)
-    }
-
-    func test_that_presenting_network_reconnection_quality_bottom_toast_shows_title_and_icon() {
-        let sut = makeSUT(networkDiagnostic: .networkReconnectionQuality, localizationProvider: localizationProvider)
-        XCTAssertEqual(sut.text, "AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect")
-        XCTAssertEqual(sut.icon, CompositeIcon.wifiWarning)
+            XCTAssertEqual(sut.text, text)
+            XCTAssertEqual(sut.icon, .wifiWarning)
+        }
     }
 
     func test_that_unhadled_media_diagnostics_bottom_toast_dont_present_any_text() {
