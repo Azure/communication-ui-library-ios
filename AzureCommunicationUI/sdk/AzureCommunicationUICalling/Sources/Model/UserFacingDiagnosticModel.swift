@@ -43,20 +43,3 @@ typealias NetworkQualityDiagnosticModel =
 typealias NetworkDiagnosticModel = CallDiagnosticModel<NetworkCallDiagnostic, Bool>
 
 typealias MediaDiagnosticModel = CallDiagnosticModel<MediaCallDiagnostic, Bool>
-
-extension DiagnosticQuality: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .good:
-            return "good"
-        case .poor:
-            return "poor"
-        case .bad:
-            return "bad"
-        case .unknown:
-            fallthrough
-        @unknown default:
-            return "unknown"
-        }
-    }
-}
