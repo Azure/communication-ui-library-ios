@@ -111,11 +111,6 @@ struct CallingView: View {
                                              || viewModel.onHoldOverlayViewModel.isDisplayed
                                              || viewModel.loadingOverlayViewModel.isDisplayed)
 
-                    if viewModel.isDisplayCallDiagnosticsOn {
-                        topMessageBarDiagnosticsView
-                            .accessibilityElement(children: .contain)
-                            .accessibilitySortPriority(1)
-                    }
                 }
                 .contentShape(Rectangle())
                 .animation(.linear(duration: 0.167))
@@ -184,6 +179,19 @@ struct CallingView: View {
                         .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
                     Spacer()
                 }
+
+                HStack {
+                    if isIpad {
+                        Spacer()
+                    } else {
+                        EmptyView()
+                    }
+                    topMessageBarDiagnosticsView
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
+                }
+
                 Spacer()
             }
             .padding(.top, Constants.topAlertAreaViewTopPaddin)

@@ -12,6 +12,7 @@ class CallingViewModel: ObservableObject {
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
     @Published var appState: AppStatus = .foreground
     @Published var isInPip: Bool = false
+    @Published var isInfoHeaderDisplayed: Bool = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -88,6 +89,9 @@ class CallingViewModel: ObservableObject {
             }
             self.resumeOnHold()
         })
+
+        infoHeaderViewModel.$isInfoHeaderDisplayed
+            .assign(to: &$isInfoHeaderDisplayed)
 
         store.$state
             .receive(on: DispatchQueue.main)
