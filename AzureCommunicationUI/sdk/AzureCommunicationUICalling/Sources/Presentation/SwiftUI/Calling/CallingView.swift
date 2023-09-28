@@ -107,11 +107,6 @@ struct CallingView: View {
                                              || viewModel.onHoldOverlayViewModel.isDisplayed
                                              || viewModel.loadingOverlayViewModel.isDisplayed)
 
-                    if viewModel.isDisplayCallDiagnosticsOn {
-                        topMessageBarDiagnosticsView
-                            .accessibilityElement(children: .contain)
-                            .accessibilitySortPriority(1)
-                    }
                 }
                 .contentShape(Rectangle())
                 .animation(.linear(duration: 0.167))
@@ -147,16 +142,25 @@ struct CallingView: View {
                                                    InfoHeaderViewConstants.maxWidth) : widthWithoutHorizontalPadding
             VStack {
                 bannerView
-                HStack {
-                    if isIpad {
+                if viewModel.isInfoHeaderDisplayed {
+                    HStack {
+                        if isIpad {
+                            Spacer()
+                        } else {
+                            EmptyView()
+                        }
+                        infoHeaderView
+                            .frame(width: infoHeaderViewWidth,
+                                   height: InfoHeaderViewConstants.height, alignment: .leading)
+                            .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
                         Spacer()
-                    } else {
-                        EmptyView()
                     }
-                    infoHeaderView
-                        .frame(width: infoHeaderViewWidth, height: InfoHeaderViewConstants.height, alignment: .leading)
-                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
-                    Spacer()
+                }
+
+                if viewModel.isDisplayCallDiagnosticsOn {
+                    topMessageBarDiagnosticsView
+                        .accessibilityElement(children: .contain)
+                        .accessibilitySortPriority(1)
                 }
                 Spacer()
             }
