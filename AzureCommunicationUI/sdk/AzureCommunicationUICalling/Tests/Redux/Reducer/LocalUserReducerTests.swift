@@ -83,6 +83,24 @@ class LocalUserReducerTests: XCTestCase {
         XCTAssertEqual(resultState.audioState.operation, .off)
     }
 
+    func test_localUserReducer_reduce_when_localUserActionMicrophoneOnFailed_then_micStatusOff() {
+        let state = LocalUserState()
+        let action = LocalUserAction.microphoneOnFailed(error: ErrorMocking.mockError)
+        let sut = makeSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState.audioState.operation, .off)
+    }
+
+    func test_localUserReducer_reduce_when_localUserActionMicrophoneOffFailed_then_micStatusOn() {
+        let state = LocalUserState()
+        let action = LocalUserAction.microphoneOffFailed(error: ErrorMocking.mockError)
+        let sut = makeSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState.audioState.operation, .on)
+    }
+
     func test_localUserReducer_reduce_when_localUserActionCameraSwitchTriggered_then_cameraDeviceStatusIsSwitching() {
         let state = LocalUserState()
         let expectedCameraDeviceStatus = LocalUserState.CameraDeviceSelectionStatus.switching
@@ -103,14 +121,42 @@ class LocalUserReducerTests: XCTestCase {
         XCTAssertEqual(resultState.cameraState.device, expectedCameraDeviceStatus)
     }
 
-    func test_localUserReducer_reduce_when_localUserActionCameraSwitchFail_then_cameraDeviceStatusIsError() {
+    func test_localUserReducer_reduce_when_localUserActionCameraOnFail_then_cameraDeviceStatusIsOff() {
         let state = LocalUserState()
-        let expectedCameraDeviceStatus = LocalUserState.CameraDeviceSelectionStatus.error(ErrorMocking.mockError)
-        let action = LocalUserAction.cameraSwitchFailed(error: ErrorMocking.mockError)
+
+        let action = LocalUserAction.cameraOnFailed(error: ErrorMocking.mockError)
+
         let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
-        XCTAssertEqual(resultState.cameraState.device, expectedCameraDeviceStatus)
+        XCTAssertEqual(resultState.cameraState.operation, .off)
+        XCTAssertTrue(resultState.cameraState.error is ErrorMocking)
+    }
+
+    func test_localUserReducer_reduce_when_localUserActionCameraOffFail_then_cameraDeviceStatusIsOn() {
+        let state = LocalUserState()
+
+        let action = LocalUserAction.cameraOffFailed(error: ErrorMocking.mockError)
+
+        let sut = makeSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState.cameraState.operation, .on)
+        XCTAssertTrue(resultState.cameraState.error is ErrorMocking)
+    }
+
+    func test_localUserReducer_reduce_when_localUserActionCameraSwitchFail_then_cameraDeviceStatusIsError() {
+        let state = LocalUserState()
+
+        let previousCamera = LocalUserState.CameraDeviceSelectionStatus.back
+        let action = LocalUserAction.cameraSwitchFailed(
+            previousCamera: previousCamera,
+            error: ErrorMocking.mockError)
+        let sut = makeSUT()
+        let resultState = sut.reduce(state, action)
+
+        XCTAssertEqual(resultState.cameraState.device, previousCamera)
+        XCTAssertTrue(resultState.cameraState.error is ErrorMocking)
     }
 
     func test_localUserReducer_reduce_when_localUserActionAudioDeviceChangeRequested_then_audioDeviceStatusIsSpeakerRequested() {
@@ -151,12 +197,11 @@ class LocalUserReducerTests: XCTestCase {
 
     func test_localUserReducer_reduce_when_localUserActionAudioDeviceChangeFailed_then_audioDeviceStatusIsError() {
         let state = LocalUserState()
-        let expectedAudioDeviceStatus = LocalUserState.AudioDeviceSelectionStatus.error(ErrorMocking.mockError)
         let action = LocalUserAction.audioDeviceChangeFailed(error: ErrorMocking.mockError)
         let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 
-        XCTAssertEqual(resultState.audioState.device, expectedAudioDeviceStatus)
+        XCTAssertTrue(resultState.audioState.error is ErrorMocking)
     }
 
     func test_localUserReducer_reduce_when_localUserActionCameraPreviewOnTriggered_then_cameraTransmissionStatusIsLocal_cameraStatusIsPending() {

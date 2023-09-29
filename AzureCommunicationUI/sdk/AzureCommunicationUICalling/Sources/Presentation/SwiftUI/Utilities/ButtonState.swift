@@ -103,8 +103,6 @@ enum AudioButtonState: ButtonState {
         case .headphonesSelected,
                 .headphonesRequested:
             return .headphones
-        case .error:
-            return .speaker
         }
     }
 }

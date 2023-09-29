@@ -22,7 +22,7 @@ enum LocalUserAction: Equatable {
 
     case cameraSwitchTriggered
     case cameraSwitchSucceeded(cameraDevice: CameraDevice)
-    case cameraSwitchFailed(error: Error)
+    case cameraSwitchFailed(previousCamera: LocalUserState.CameraDeviceSelectionStatus, error: Error)
 
     case microphoneOnTriggered
     case microphoneOnFailed(error: Error)
@@ -45,7 +45,6 @@ enum LocalUserAction: Equatable {
         case let (.cameraOnFailed(lErr), .cameraOnFailed(rErr)),
             let (.cameraOffFailed(lErr), .cameraOffFailed(rErr)),
             let (.cameraPausedFailed(lErr), .cameraPausedFailed(rErr)),
-            let (.cameraSwitchFailed(lErr), .cameraSwitchFailed(rErr)),
             let (.microphoneOnFailed(lErr), .microphoneOnFailed(rErr)),
             let (.microphoneOffFailed(lErr), .microphoneOffFailed(rErr)),
             let (.audioDeviceChangeFailed(lErr), .audioDeviceChangeFailed(rErr)):
@@ -54,8 +53,8 @@ enum LocalUserAction: Equatable {
 
         case (.cameraPreviewOnTriggered, .cameraPreviewOnTriggered),
             (.cameraOnTriggered, .cameraOnTriggered),
-            ( .cameraOffTriggered, .cameraOffTriggered),
-            ( .cameraOffSucceeded, .cameraOffSucceeded),
+            (.cameraOffTriggered, .cameraOffTriggered),
+            (.cameraOffSucceeded, .cameraOffSucceeded),
             (.cameraPausedSucceeded, .cameraPausedSucceeded),
             (.cameraSwitchTriggered, .cameraSwitchTriggered),
             (.microphoneOnTriggered, .microphoneOnTriggered),
@@ -76,6 +75,9 @@ enum LocalUserAction: Equatable {
 
         case let (.cameraSwitchSucceeded(lDev), .cameraSwitchSucceeded(rDev)):
             return lDev == rDev
+
+        case let (.cameraSwitchFailed(lPreviousDevice, lErr), .cameraSwitchFailed(rPreviousDevice, rErr)):
+            return lPreviousDevice == rPreviousDevice && (lErr as NSError).code == (rErr as NSError).code
 
         default:
             return false
