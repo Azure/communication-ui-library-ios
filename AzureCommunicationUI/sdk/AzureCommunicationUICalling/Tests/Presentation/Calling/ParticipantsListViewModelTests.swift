@@ -197,7 +197,7 @@ class ParticipantsListViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_participantsListViewModel_update_when_remoteParticipantInLobby_then_lobbyParticipantShouldNotBeDispalyed() {
+    func test_participantsListViewModel_update_when_remoteParticipantInLobby_then_lobbyNorDisconnectedParticipantShouldNotBeDispalyed() {
         let avatarViewManager = AvatarViewManager(store: storeFactory.store,
                                                   localParticipantViewData: nil)
         let sut = makeSUT()
@@ -228,6 +228,14 @@ class ParticipantsListViewModelTests: XCTestCase {
                                  isRemoteUser: false,
                                  userIdentifier: "MockUUID2",
                                  status: .inLobby,
+                                 screenShareVideoStreamModel: nil,
+                                 cameraVideoStreamModel: nil),
+            ParticipantInfoModel(displayName: "User Name 3",
+                                 isSpeaking: false,
+                                 isMuted: false,
+                                 isRemoteUser: false,
+                                 userIdentifier: "MockUUID3",
+                                 status: .disconnected,
                                  screenShareVideoStreamModel: nil,
                                  cameraVideoStreamModel: nil)
         ]

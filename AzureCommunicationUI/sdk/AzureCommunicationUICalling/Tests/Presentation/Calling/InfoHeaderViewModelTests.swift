@@ -136,7 +136,7 @@ class InfoHeaderViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_infoHeaderViewModel_update_when_multipleParticipantInfoListCountChanged_then_shouldBePublishedWithoutInLobby() {
+    func test_infoHeaderViewModel_update_when_multipleParticipantInfoListCountChanged_then_shouldBePublishedWithoutInLobbyNorDisconnected() {
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should publish infoLabel")
         sut.$infoLabel
@@ -147,7 +147,7 @@ class InfoHeaderViewModelTests: XCTestCase {
             }).store(in: cancellable)
 
         var participantList: [ParticipantInfoModel] = []
-        let firstParticipantInfoModel = ParticipantInfoModel(
+        let participant1 = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,
             isMuted: false,
@@ -156,9 +156,9 @@ class InfoHeaderViewModelTests: XCTestCase {
             status: .idle,
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
-        participantList.append(firstParticipantInfoModel)
+        participantList.append(participant1)
 
-        let secondParticipantInfoModel = ParticipantInfoModel(
+        let participant2 = ParticipantInfoModel(
             displayName: "Participant 2",
             isSpeaking: false,
             isMuted: false,
@@ -167,7 +167,18 @@ class InfoHeaderViewModelTests: XCTestCase {
             status: .inLobby,
             screenShareVideoStreamModel: nil,
             cameraVideoStreamModel: nil)
-        participantList.append(secondParticipantInfoModel)
+        participantList.append(participant2)
+
+        let participant3 = ParticipantInfoModel(
+            displayName: "Participant 3",
+            isSpeaking: false,
+            isMuted: false,
+            isRemoteUser: true,
+            userIdentifier: "testUserIdentifier3",
+            status: .disconnected,
+            screenShareVideoStreamModel: nil,
+            cameraVideoStreamModel: nil)
+        participantList.append(participant3)
 
         let remoteParticipantsState = RemoteParticipantsState(
             participantInfoList: participantList, lastUpdateTimeStamp: Date())
