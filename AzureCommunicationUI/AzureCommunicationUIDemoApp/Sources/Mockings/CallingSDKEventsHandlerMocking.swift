@@ -160,7 +160,7 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
         }
     }
 
-    func admitLobbyParticipants(_ participantIds: [String]) {
+    func admitAllLobbyParticipants() {
         Task { @MainActor [weak self] in
             guard let self,
                   !self.remoteParticipantsMocking.isEmpty else {
@@ -168,15 +168,11 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
             }
 
             let inLobbyParticipants = self.remoteParticipantsMocking.filter { participantInfoModel in
-                participantIds.contains { id in
-                    participantInfoModel.userIdentifier == id
-                }
+                participantInfoModel.status == .inLobby
             }
 
             self.remoteParticipantsMocking.removeAll { participantInfoModel in
-                participantIds.contains { id in
-                    participantInfoModel.userIdentifier == id
-                }
+                participantInfoModel.status == .inLobby
             }
 
             let connectedParticipants = inLobbyParticipants.map { participantInfoModel in
@@ -191,6 +187,54 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
             }
 
             self.remoteParticipantsMocking.append(contentsOf: connectedParticipants)
+            self.participantsInfoListSubject.send(self.remoteParticipantsMocking)
+        }
+    }
+
+    func admitLobbyParticipant(_ participantId: String) {
+        Task { @MainActor [weak self] in
+            guard let self,
+                  !self.remoteParticipantsMocking.isEmpty else {
+                return
+            }
+
+            let participantInfoModel = self.remoteParticipantsMocking.first { participantInfoModel in
+                participantInfoModel.userIdentifier == participantId
+            }
+
+            guard let participantInfoModel = participantInfoModel else {
+                return
+            }
+
+            self.remoteParticipantsMocking.removeAll { participantInfoModel in
+                participantInfoModel.userIdentifier == participantId
+            }
+
+            let connectedParticipant =
+                ParticipantInfoModel(displayName: participantInfoModel.displayName,
+                                     isSpeaking: participantInfoModel.isSpeaking,
+                                     isMuted: participantInfoModel.isMuted,
+                                     isRemoteUser: participantInfoModel.isRemoteUser,
+                                     userIdentifier: participantInfoModel.userIdentifier,
+                                     status: .connected,
+                                     screenShareVideoStreamModel: participantInfoModel.screenShareVideoStreamModel,
+                                     cameraVideoStreamModel: participantInfoModel.cameraVideoStreamModel)
+
+            self.remoteParticipantsMocking.append(connectedParticipant)
+            self.participantsInfoListSubject.send(self.remoteParticipantsMocking)
+        }
+    }
+
+    func declineLobbyParticipant(_ participantId: String) {
+        Task { @MainActor [weak self] in
+            guard let self,
+                  !self.remoteParticipantsMocking.isEmpty else {
+                return
+            }
+
+            self.remoteParticipantsMocking.removeAll { participantInfoModel in
+                participantInfoModel.userIdentifier == participantId
+            }
             self.participantsInfoListSubject.send(self.remoteParticipantsMocking)
         }
     }

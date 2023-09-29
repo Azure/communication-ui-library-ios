@@ -23,7 +23,9 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
                                                         avatarViewManager: avatarViewManager,
                                                         isRightToLeft: layoutDirection == .rightToLeft,
                                                         admintAll: viewModel.admitAll,
-                                                        admitParticipant: viewModel.admitParticipant)
+                                                        declineAll: viewModel.declineAll,
+                                                        admitParticipant: viewModel.admitParticipant,
+                                                        declineParticipant: viewModel.declineParticipant)
         controller.delegate = context.coordinator
         return controller
     }

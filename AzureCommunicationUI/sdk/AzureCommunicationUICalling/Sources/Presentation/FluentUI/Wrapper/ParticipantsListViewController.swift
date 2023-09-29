@@ -31,7 +31,11 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
     private var lobbyParticipants: [ParticipantsListCellViewModel] = []
 
     private var admintAll: () -> Void
+    private var declineAll: () -> Void
     private var admitParticipant: (_ participantId: String) -> Void
+    private var declineParticipant: (_ participantId: String) -> Void
+
+    private var admitAlert: UIAlertController?
 
     override var items: [ParticipantsListCellViewModel] {
         get {
@@ -54,11 +58,15 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
          avatarViewManager: AvatarViewManager,
          isRightToLeft: Bool,
          admintAll: @escaping () -> Void,
-         admitParticipant: @escaping (_ participantId: String) -> Void
+         declineAll: @escaping () -> Void,
+         admitParticipant: @escaping (_ participantId: String) -> Void,
+         declineParticipant: @escaping (_ participantId: String) -> Void
     ) {
         self.avatarViewManager = avatarViewManager
         self.admintAll = admintAll
+        self.declineAll = declineAll
         self.admitParticipant = admitParticipant
+        self.declineParticipant = declineParticipant
         super.init(sourceView: sourceView, isRightToLeft: isRightToLeft)
     }
 
@@ -153,18 +161,24 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
         let participantViewData = participantsListCellViewModel.getParticipantViewData(from: avatarViewManager)
         let avatarParticipantName = participantsListCellViewModel.getParticipantName(with: participantViewData)
 
-        confirmAdmitting(title: "Admit \(avatarParticipantName)?") {
+        confirmAdmitting(title: "Admit \(avatarParticipantName)?",
+                         onConfirmed: {
             self.admitParticipant(participantId)
-        }
+        },
+                         onDeclined: {
+            self.declineParticipant(participantId)
+        })
     }
 
     @objc func onAdmitAllTap() {
-        confirmAdmitting(title: "Admit all participants?") {
-            self.admintAll()
-        }
+        confirmAdmitting(title: "Admit all participants?",
+                         onConfirmed: self.admintAll,
+                         onDeclined: self.declineAll)
     }
 
-    private func confirmAdmitting(title: String, onConfirmed: @escaping () -> Void) {
+    private func confirmAdmitting(title: String,
+                                  onConfirmed: @escaping () -> Void,
+                                  onDeclined: @escaping () -> Void) {
         DispatchQueue.main.async {
             guard let topViewController = UIWindow.keyWindow?.topViewController else {
                 return
@@ -173,14 +187,39 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
             let admitAlert = UIAlertController(title: title,
                                                message: nil,
                                                preferredStyle: .alert)
-            admitAlert.addAction(UIAlertAction(title: "Decline", style: .cancel, handler: nil))
+
+            admitAlert.addAction(UIAlertAction(title: "Decline", style: .cancel) { _ in
+                onDeclined()
+                self.admitAlert = nil
+            })
             admitAlert.addAction(UIAlertAction(title: "Admit", style: .default) { _ in
                 onConfirmed()
+                self.admitAlert = nil
             })
-            topViewController.present(admitAlert,
-                    animated: true,
-                    completion: nil)
+            topViewController.present(admitAlert, animated: true) { [weak self] in
+                guard let self = self else {
+                    return
+                }
+
+                self.addDismissControl(admitAlert.view)
+            }
+
+            self.admitAlert = admitAlert
         }
+    }
+
+    private func addDismissControl(_ toView: UIView) {
+        let dismissControl = UIControl()
+        dismissControl.addTarget(self, action: #selector(self.dismissAlertController), for: .touchDown)
+        dismissControl.isUserInteractionEnabled = true
+        let frame = toView.superview?.frame ?? CGRect.zero
+        dismissControl.frame = frame
+        toView.superview?.insertSubview(dismissControl, belowSubview: toView)
+    }
+
+    @objc private func dismissAlertController() {
+        admitAlert?.dismiss(animated: true)
+        self.admitAlert = nil
     }
 
     private func isLobbySection(section: Int) -> Bool {

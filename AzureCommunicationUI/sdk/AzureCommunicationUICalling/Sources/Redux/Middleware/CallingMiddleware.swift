@@ -155,10 +155,14 @@ private func handleRemoteParticipantAction(_ action: RemoteParticipantsAction,
                                            _ getState: () -> AppState,
                                            _ dispatch: @escaping ActionDispatch) {
     switch action {
-    case .admitAllLobbyParticipants:
+    case .admitAll:
         actionHandler.admitAllLobbyParticipants(state: getState(), dispatch: dispatch)
-    case .admitLobbyParticipant(participantId: let participantId):
+    case .declineAll:
+        actionHandler.declineAllLobbyParticipants(state: getState(), dispatch: dispatch)
+    case .admit(participantId: let participantId):
         actionHandler.admitLobbyParticipant(state: getState(), dispatch: dispatch, participantId: participantId)
+    case .decline(participantId: let participantId):
+        actionHandler.declineLobbyParticipant(state: getState(), dispatch: dispatch, participantId: participantId)
     default:
         break
     }

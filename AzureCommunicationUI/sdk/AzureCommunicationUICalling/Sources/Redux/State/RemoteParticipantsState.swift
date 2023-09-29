@@ -10,14 +10,21 @@ struct RemoteParticipantsState {
     let lastUpdateTimeStamp: Date
     let dominantSpeakers: [String]
     let dominantSpeakersModifiedTimestamp: Date
+    let lobbyError: LobbyErrorCode?
 
     init(participantInfoList: [ParticipantInfoModel] = [],
          lastUpdateTimeStamp: Date = Date(),
          dominantSpeakers: [String] = [],
-         dominantSpeakersModifiedTimestamp: Date = Date()) {
+         dominantSpeakersModifiedTimestamp: Date = Date(),
+         lobbyError: LobbyErrorCode? = nil) {
         self.participantInfoList = participantInfoList
         self.lastUpdateTimeStamp = lastUpdateTimeStamp
         self.dominantSpeakers = dominantSpeakers
         self.dominantSpeakersModifiedTimestamp = dominantSpeakersModifiedTimestamp
+        self.lobbyError = lobbyError
     }
+}
+
+enum LobbyErrorCode {
+    case unknown
 }

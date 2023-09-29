@@ -53,10 +53,18 @@ class ParticipantsListViewModel: ObservableObject {
     }
 
     func admitAll() {
-        dispatch(.remoteParticipantsAction(.admitAllLobbyParticipants))
+        dispatch(.remoteParticipantsAction(.admitAll))
+    }
+
+    func declineAll() {
+        dispatch(.remoteParticipantsAction(.declineAll))
     }
 
     func admitParticipant(_ participantId: String) {
-        dispatch(.remoteParticipantsAction(.admitLobbyParticipant(participantId: participantId)))
+        dispatch(.remoteParticipantsAction(.admit(participantId: participantId)))
+    }
+
+    func declineParticipant(_ participantId: String) {
+        dispatch(.remoteParticipantsAction(.decline(participantId: participantId)))
     }
 }

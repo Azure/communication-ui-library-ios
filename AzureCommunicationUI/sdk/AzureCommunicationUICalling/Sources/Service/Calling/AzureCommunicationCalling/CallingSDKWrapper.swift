@@ -8,6 +8,7 @@ import AzureCommunicationCalling
 import Combine
 import Foundation
 
+// swiftlint:disable file_length
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -243,16 +244,50 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
     }
 
-    func admitLobbyParticipants(_ participantIds: [String]) async throws {
+    func admitAllLobbyParticipants() async throws {
         guard let call = call else {
             return
         }
 
         do {
-//            try await call.resume()
+            try await call.lobby.admitAll(options: nil)
+            logger.debug("Admit All participants successful")
+        } catch {
+            logger.error("ERROR: It was not possible to admit all lobby participants. \(error)")
+        }
+    }
+
+    func admitLobbyParticipant(_ participantId: String) async throws {
+        guard let call = call else {
+            return
+        }
+
+        let identifier = createCommunicationIdentifier(fromRawId: participantId)
+
+        do {
+            let options = AdmitLobbyParticipantOptions()
+            let lobby = call.lobby
+            let identifiers = [identifier]
+
+            try await lobby.admit(identifiers: identifiers, options: options)
             logger.debug("Admit participants successful")
         } catch {
             logger.error("ERROR: It was not possible to admit lobby participants. \(error)")
+        }
+    }
+
+    func declineLobbyParticipant(_ participantId: String) async throws {
+        guard let call = call else {
+            return
+        }
+
+        let identifier = createCommunicationIdentifier(fromRawId: participantId)
+
+        do {
+            try await call.lobby.reject(identifier, options: nil)
+            logger.debug("Reject lobby participants successful")
+        } catch {
+            logger.error("ERROR: It was not possible to reject lobby participants. \(error)")
         }
     }
 }

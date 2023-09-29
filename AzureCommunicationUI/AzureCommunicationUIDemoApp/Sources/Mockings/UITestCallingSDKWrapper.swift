@@ -231,12 +231,30 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
     }
 
-    func admitLobbyParticipants(_ participantIds: [String]) async throws {
+    func admitAllLobbyParticipants() async throws {
         guard callMocking != nil else {
             return
         }
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
-            handler.admitLobbyParticipants(participantIds)
+            handler.admitAllLobbyParticipants()
+        }
+    }
+
+    func admitLobbyParticipant(_ participantId: String) async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.admitLobbyParticipant(participantId)
+        }
+    }
+
+    func declineLobbyParticipant(_ participantId: String) async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.declineLobbyParticipant(participantId)
         }
     }
 }
