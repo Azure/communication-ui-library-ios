@@ -12,11 +12,9 @@ final class CallDiagnosticsViewModel: ObservableObject {
 
     @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
     @Published var messageBarStack: [MessageBarDiagnosticViewModel] = []
-    @Published var isDisplayCallDiagnosticsOn: Bool
 
-    init(localizationProvider: LocalizationProviderProtocol, isDisplayCallDiagnosticsOn: Bool) {
+    init(localizationProvider: LocalizationProviderProtocol) {
         self.localizationProvider = localizationProvider
-        self.isDisplayCallDiagnosticsOn = isDisplayCallDiagnosticsOn
         initializeMessageBarListModel()
     }
 

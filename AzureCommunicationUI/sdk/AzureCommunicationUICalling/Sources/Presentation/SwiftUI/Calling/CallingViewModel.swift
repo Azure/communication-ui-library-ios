@@ -11,7 +11,6 @@ class CallingViewModel: ObservableObject {
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
     @Published var appState: AppStatus = .foreground
-    @Published var isDisplayCallDiagnosticsOn: Bool = false
     @Published var isInfoHeaderDisplayed: Bool = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
@@ -42,15 +41,13 @@ class CallingViewModel: ObservableObject {
          store: Store<AppState, Action>,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
-         isIpadInterface: Bool,
-         isDisplayCallDiagnosticsOn: Bool) {
+         isIpadInterface: Bool) {
         self.logger = logger
         self.store = store
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.accessibilityProvider = accessibilityProvider
-        self.isDisplayCallDiagnosticsOn = isDisplayCallDiagnosticsOn
         let actionDispatch: ActionDispatch = store.dispatch
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
@@ -92,7 +89,7 @@ class CallingViewModel: ObservableObject {
         errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel(title: "",
                                                                               subtitle: "")
         callDiagnosticsViewModel = compositeViewModelFactory
-            .makeCallDiagnosticsViewModel(enabled: isDisplayCallDiagnosticsOn)
+            .makeCallDiagnosticsViewModel()
     }
 
     func dismissConfirmLeaveDrawerList() {

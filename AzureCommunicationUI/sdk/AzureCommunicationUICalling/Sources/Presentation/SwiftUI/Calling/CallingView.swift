@@ -49,10 +49,7 @@ struct CallingView: View {
                     landscapeCallingView
                 }
                 errorInfoView
-
-                if viewModel.isDisplayCallDiagnosticsOn {
-                    bottomToastDiagnosticsView
-                }
+                bottomToastDiagnosticsView
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)
@@ -157,11 +154,9 @@ struct CallingView: View {
                     }
                 }
 
-                if viewModel.isDisplayCallDiagnosticsOn {
-                    topMessageBarDiagnosticsView
-                        .accessibilityElement(children: .contain)
-                        .accessibilitySortPriority(1)
-                }
+                topMessageBarDiagnosticsView
+                    .accessibilityElement(children: .contain)
+                    .accessibilitySortPriority(1)
                 Spacer()
             }
         }
