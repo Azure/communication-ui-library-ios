@@ -133,6 +133,62 @@ class InfoHeaderViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
+    func test_infoHeaderViewModel_update_when_multipleParticipantInfoListCountChanged_then_shouldBePublishedWithoutInLobbyNorDisconnected() {
+        let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should publish infoLabel")
+        sut.$infoLabel
+            .dropFirst()
+            .sink(receiveValue: { infoLabel in
+                XCTAssertEqual(infoLabel, "Call with 1 person")
+                expectation.fulfill()
+            }).store(in: cancellable)
+
+        var participantList: [ParticipantInfoModel] = []
+        let participant1 = ParticipantInfoModel(
+            displayName: "Participant 1",
+            isSpeaking: false,
+            isMuted: false,
+            isRemoteUser: true,
+            userIdentifier: "testUserIdentifier1",
+            status: .idle,
+            screenShareVideoStreamModel: nil,
+            cameraVideoStreamModel: nil)
+        participantList.append(participant1)
+
+        let participant2 = ParticipantInfoModel(
+            displayName: "Participant 2",
+            isSpeaking: false,
+            isMuted: false,
+            isRemoteUser: true,
+            userIdentifier: "testUserIdentifier2",
+            status: .inLobby,
+            screenShareVideoStreamModel: nil,
+            cameraVideoStreamModel: nil)
+        participantList.append(participant2)
+
+        let participant3 = ParticipantInfoModel(
+            displayName: "Participant 3",
+            isSpeaking: false,
+            isMuted: false,
+            isRemoteUser: true,
+            userIdentifier: "testUserIdentifier3",
+            status: .disconnected,
+            screenShareVideoStreamModel: nil,
+            cameraVideoStreamModel: nil)
+        participantList.append(participant3)
+
+        let remoteParticipantsState = RemoteParticipantsState(
+            participantInfoList: participantList, lastUpdateTimeStamp: Date())
+
+        XCTAssertEqual(sut.infoLabel, "Waiting for others to join")
+        sut.update(localUserState: storeFactory.store.state.localUserState,
+                   remoteParticipantsState: remoteParticipantsState,
+                   callingState: CallingState())
+        XCTAssertEqual(sut.infoLabel, "Call with 1 person")
+
+        wait(for: [expectation], timeout: 1)
+    }
+
     func test_infoHeaderViewModel_update_when_statesUpdated_then_participantsListViewModelUpdated() {
         let expectation = XCTestExpectation(description: "Should update participantsListViewModel")
         let participantList = ParticipantInfoModelBuilder.getArray(count: 2)
