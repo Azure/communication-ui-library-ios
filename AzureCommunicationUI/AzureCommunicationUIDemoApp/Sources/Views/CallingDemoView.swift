@@ -326,8 +326,7 @@ extension CallingDemoView {
                                         roleHint: roomRoleData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
-                                        skipSetupScreen: envConfigSubject.skipSetupScreen,
-                                        displayCallDiagnosticsOn: envConfigSubject.displayCallDiagnosticsOn)
+                                        skipSetupScreen: envConfigSubject.skipSetupScreen)
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:

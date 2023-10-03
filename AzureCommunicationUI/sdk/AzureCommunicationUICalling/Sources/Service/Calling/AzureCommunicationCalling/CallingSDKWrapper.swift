@@ -19,18 +19,15 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     private var call: Call?
     private var deviceManager: DeviceManager?
     private var localVideoStream: AzureCommunicationCalling.LocalVideoStream?
-    private var localOptions: LocalOptions?
 
     private var newVideoDeviceAddedHandler: ((VideoDeviceInfo) -> Void)?
 
     init(logger: Logger,
          callingEventsHandler: CallingSDKEventsHandling,
-         callConfiguration: CallConfiguration,
-         localOptions: LocalOptions?) {
+         callConfiguration: CallConfiguration) {
         self.logger = logger
         self.callingEventsHandler = callingEventsHandler
         self.callConfiguration = callConfiguration
-        self.localOptions = localOptions
         super.init()
     }
 
@@ -394,10 +391,7 @@ extension CallingSDKWrapper {
             callingEventsHandler.assign(recordingCallFeature)
             callingEventsHandler.assign(transcriptionCallFeature)
             callingEventsHandler.assign(dominantSpeakersFeature)
-
-            if localOptions?.displayCallDiagnosticsOn == true {
-                callingEventsHandler.assign(localUserDiagnosticsFeature)
-            }
+            callingEventsHandler.assign(localUserDiagnosticsFeature)
         }
     }
 

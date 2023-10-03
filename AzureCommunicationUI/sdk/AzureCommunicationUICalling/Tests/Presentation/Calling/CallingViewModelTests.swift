@@ -285,7 +285,6 @@ extension CallingViewModelTests {
                                 store: storeFactory.store,
                                 localizationProvider: LocalizationProvider(logger: logger),
                                 accessibilityProvider: accessibilityProvider,
-                                isIpadInterface: false,
-                                isDisplayCallDiagnosticsOn: true)
+                                isIpadInterface: false)
     }
 }

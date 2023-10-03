@@ -53,10 +53,7 @@ struct CallingView: View {
                     landscapeCallingView
                 }
                 errorInfoView
-
-                if viewModel.isDisplayCallDiagnosticsOn {
-                    bottomToastDiagnosticsView
-                }
+                bottomToastDiagnosticsView
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)

@@ -23,8 +23,6 @@ public struct LocalOptions {
     let microphoneOn: Bool?
     /// The SkipSetupScreen is used when we skip the setup screen
     let skipSetupScreen: Bool?
-    /// The CallDiagnosticsOn when we want to skip the presentation of diagnostics in the call experience.
-    let displayCallDiagnosticsOn: Bool?
 
     /// Create an instance of LocalOptions. All information in this object is only stored locally in the composite.
     /// - Parameters:
@@ -46,7 +44,6 @@ public struct LocalOptions {
         self.cameraOn = cameraOn
         self.microphoneOn = microphoneOn
         self.skipSetupScreen = skipSetupScreen
-        self.displayCallDiagnosticsOn = displayCallDiagnosticsOn
     }
 }
 /// Object to represent participants data
