@@ -193,7 +193,8 @@ class InfoHeaderViewModelTests: XCTestCase {
 
         let participantsListViewModel = ParticipantsListViewModelMocking(
                                                             compositeViewModelFactory: factoryMocking,
-                                                            localUserState: LocalUserState())
+                                                            localUserState: LocalUserState(),
+                                                            dispatchAction: storeFactory.store.dispatch)
         participantsListViewModel.updateStates = updateStates
         factoryMocking.participantsListViewModel = participantsListViewModel
 
@@ -370,7 +371,8 @@ extension InfoHeaderViewModelTests {
                                    logger: logger,
                                    localUserState: LocalUserState(),
                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
-                                   accessibilityProvider: accessibilityProvider)
+                                   accessibilityProvider: accessibilityProvider,
+                                   dispatchAction: storeFactory.store.dispatch)
     }
 
     func makeSUTLocalizationMocking() -> InfoHeaderViewModel {

@@ -13,13 +13,15 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
          logger: Logger,
          localUserState: LocalUserState,
          accessibilityProvider: AccessibilityProviderProtocol,
+         dispatchAction: @escaping ActionDispatch,
          updateState: ((LocalUserState, RemoteParticipantsState, CallingState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
                    localUserState: localUserState,
                    localizationProvider: LocalizationProviderMocking(),
-                   accessibilityProvider: accessibilityProvider)
+                   accessibilityProvider: accessibilityProvider,
+                   dispatchAction: dispatchAction)
     }
 
     override func update(localUserState: LocalUserState,

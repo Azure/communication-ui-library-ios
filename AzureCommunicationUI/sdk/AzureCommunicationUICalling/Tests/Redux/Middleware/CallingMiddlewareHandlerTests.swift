@@ -569,6 +569,63 @@ class CallingMiddlewareHandlerTests: XCTestCase {
                                                            internalError: .callJoinConnectionFailed),
                             dispatch: dispatch).value
     }
+
+    func test_callingMiddlewareHandler_admitAll_then_admitAllCalled() async {
+        let sut = makeSUT()
+        await sut.admitAllLobbyParticipants(
+            state: getState(callingState: .connected,
+                            cameraStatus: .off,
+                            cameraDeviceStatus: .front,
+                            cameraPermission: .granted,
+                            internalError: .callJoinConnectionFailed),
+            dispatch: getEmptyDispatch()
+        ).value
+
+        XCTAssertTrue(mockCallingService.admitAllLobbyParticipantsCalled)
+    }
+
+    func test_callingMiddlewareHandler_admit_then_admitCalled() async {
+        let sut = makeSUT()
+        await sut.admitLobbyParticipant(state: getState(callingState: .connected,
+                                                        cameraStatus: .off,
+                                                        cameraDeviceStatus: .front,
+                                                        cameraPermission: .granted,
+                                                        internalError: .callJoinConnectionFailed),
+                                        dispatch: getEmptyDispatch(),
+                                        participantId: "participantId").value
+
+        XCTAssertTrue(mockCallingService.admitLobbyParticipantCalled)
+    }
+
+    func test_callingMiddlewareHandlerAll_decline_then_declineCalled() async {
+        let sut = makeSUT()
+        await sut.declineLobbyParticipant(
+            state: getState(callingState: .connected,
+                            cameraStatus: .off,
+                            cameraDeviceStatus: .front,
+                            cameraPermission: .granted,
+                            internalError: .callJoinConnectionFailed),
+            dispatch: getEmptyDispatch(),
+            participantId: "participantId"
+        ).value
+
+        XCTAssertTrue(mockCallingService.declineLobbyParticipantCalled)
+    }
+
+    func test_callingMiddlewareHandler_decline_then_declineCalled() async {
+        let sut = makeSUT()
+        await sut.declineLobbyParticipant(
+            state: getState(callingState: .connected,
+                            cameraStatus: .off,
+                            cameraDeviceStatus: .front,
+                            cameraPermission: .granted,
+                            internalError: .callJoinConnectionFailed),
+            dispatch: getEmptyDispatch(),
+            participantId: "participantId"
+        ).value
+
+        XCTAssertTrue(mockCallingService.declineLobbyParticipantCalled)
+    }
 }
 
 extension CallingMiddlewareHandlerTests {

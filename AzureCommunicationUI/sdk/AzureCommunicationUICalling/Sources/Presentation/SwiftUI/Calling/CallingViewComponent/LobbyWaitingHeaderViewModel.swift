@@ -7,7 +7,7 @@ import Foundation
 
 class LobbyWaitingHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String
-    @Published var infoLabel: String
+    @Published var title: String
     @Published var isDisplayed: Bool = false
     @Published var isParticipantsListDisplayed: Bool = false
     @Published var isVoiceOverEnabled: Bool = false
@@ -33,7 +33,7 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         let title = localizationProvider.getLocalizedString(.lobbyWaitingToJoin)
-        self.infoLabel = title
+        self.title = title
         self.accessibilityLabel = title
         self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
             localUserState: localUserState,
@@ -41,6 +41,8 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
         self.participantListButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: "View lobby",
+            iconName: nil,
+            isDisabled: false,
             paddings: CompositeButton.Paddings(horizontal: 10, vertical: 6)) { [weak self] in
                 guard let self = self else {
                     return
@@ -80,7 +82,12 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
         }
 
         let newLobbyParticipantCount = lobbyUsersCount(remoteParticipantsState)
-        isDisplayed = newLobbyParticipantCount > 0 && (isDisplayed || newLobbyParticipantCount > lobbyParticipantCount)
+        let isDisplayed = newLobbyParticipantCount > 0
+            && (isDisplayed || newLobbyParticipantCount > lobbyParticipantCount)
+
+        if self.isDisplayed != isDisplayed {
+            self.isDisplayed = isDisplayed
+        }
 
         self.lobbyParticipantCount = newLobbyParticipantCount
 

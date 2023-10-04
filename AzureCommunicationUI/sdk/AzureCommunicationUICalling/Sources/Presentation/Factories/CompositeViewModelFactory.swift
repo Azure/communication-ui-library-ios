@@ -77,13 +77,12 @@ extension CompositeViewModelFactoryProtocol {
                                     buttonLabel: String,
                                     iconName: CompositeIcon? = .none,
                                     isDisabled: Bool = false,
-                                    paddings: CompositeButton.Paddings? = nil,
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel {
         return makePrimaryButtonViewModel(buttonStyle: buttonStyle,
                                    buttonLabel: buttonLabel,
                                    iconName: iconName,
                                    isDisabled: isDisabled,
-                                   paddings: paddings,
+                                   paddings: nil,
                                    action: action)
     }
 }

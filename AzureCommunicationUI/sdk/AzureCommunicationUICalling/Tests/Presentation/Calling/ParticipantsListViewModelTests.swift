@@ -197,62 +197,6 @@ class ParticipantsListViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1)
     }
 
-    func test_participantsListViewModel_update_when_remoteParticipantInLobby_then_lobbyParticipantShouldNotBeDispalyed() {
-        let avatarViewManager = AvatarViewManager(store: storeFactory.store,
-                                                  localParticipantViewData: nil)
-        let sut = makeSUT()
-        let expectation = XCTestExpectation(description: "Should publish localParticipantsListCellViewModel")
-        sut.$participantsList
-            .dropFirst()
-            .sink(receiveValue: { participantsList in
-                XCTAssertEqual(participantsList.count, 1)
-                expectation.fulfill()
-            }).store(in: cancellable)
-
-        let audioStateOff = LocalUserState.AudioState(operation: .off,
-                                                      device: .receiverSelected)
-        let timestamp = Date()
-        let localUserState = LocalUserState(audioState: audioStateOff)
-        let participantInfoModel: [ParticipantInfoModel] = [
-            ParticipantInfoModel(displayName: "User Name1",
-                                 isSpeaking: false,
-                                 isMuted: false,
-                                 isRemoteUser: false,
-                                 userIdentifier: "MockUUID1",
-                                 status: .idle,
-                                 screenShareVideoStreamModel: nil,
-                                 cameraVideoStreamModel: nil),
-            ParticipantInfoModel(displayName: "User Name 2",
-                                 isSpeaking: false,
-                                 isMuted: false,
-                                 isRemoteUser: false,
-                                 userIdentifier: "MockUUID2",
-                                 status: .inLobby,
-                                 screenShareVideoStreamModel: nil,
-                                 cameraVideoStreamModel: nil)
-        ]
-        let remoteParticipantsState = RemoteParticipantsState(
-            participantInfoList: participantInfoModel, lastUpdateTimeStamp: timestamp.addingTimeInterval(1))
-
-        let audioStateOn = LocalUserState.AudioState(operation: .on,
-                                                     device: .receiverSelected)
-        sut.lastUpdateTimeStamp = timestamp
-        let localParticipant = ParticipantsListCellViewModel(
-            localUserState: LocalUserState(audioState: audioStateOn),
-            localizationProvider: localizationProvider)
-        sut.localParticipantsListCellViewModel = localParticipant
-        XCTAssertEqual(sut.participantsList.count, 0)
-        sut.update(localUserState: localUserState,
-                                         remoteParticipantsState: remoteParticipantsState)
-        XCTAssertEqual(sut.participantsList.count, 1)
-        XCTAssertEqual(localParticipant.getParticipantName(with: nil), "")
-        XCTAssertEqual(localParticipant.isLocalParticipant, true)
-        let sortedParticipants = sut.sortedParticipants(with: avatarViewManager)
-        XCTAssertEqual(sortedParticipants.first?.getParticipantName(with: nil), localParticipant.getParticipantName(with: nil))
-        XCTAssertEqual(sortedParticipants.last?.getParticipantName(with: nil), remoteParticipantsState.participantInfoList.first!.displayName)
-        wait(for: [expectation], timeout: 1)
-    }
-
     func test_participantsListViewModel_update_when_lastUpdateTimeStampNotChanged_then_shouldNotBePublished() {
         let sut = makeSUT()
         let expectation = XCTestExpectation(description: "Should not publish participantsList")
@@ -334,6 +278,7 @@ class ParticipantsListViewModelTests: XCTestCase {
 extension ParticipantsListViewModelTests {
     func makeSUT() -> ParticipantsListViewModel {
         return ParticipantsListViewModel(compositeViewModelFactory: factoryMocking,
-                                         localUserState: LocalUserState())
+                                         localUserState: LocalUserState(),
+                                         dispatchAction: storeFactory.store.dispatch)
     }
 }

@@ -26,6 +26,10 @@ class CallingServiceMocking: CallingServiceProtocol {
     var muteLocalMicCalled: Bool = false
     var unmuteLocalMicCalled: Bool = false
 
+    var admitAllLobbyParticipantsCalled: Bool = false
+    var admitLobbyParticipantCalled: Bool = false
+    var declineLobbyParticipantCalled: Bool = false
+
     private func possibleErrorTask() throws -> Task<Void, Error> {
         Task<Void, Error> {
             if let error = self.error {
@@ -115,4 +119,20 @@ class CallingServiceMocking: CallingServiceProtocol {
         resumeCallCalled = true
         try await possibleErrorTask().value
     }
+
+    func admitAllLobbyParticipants() async throws {
+        admitAllLobbyParticipantsCalled = true
+        try await possibleErrorTask().value
+    }
+
+    func admitLobbyParticipant(_ participantId: String) async throws {
+        admitLobbyParticipantCalled = true
+        try await possibleErrorTask().value
+    }
+
+    func declineLobbyParticipant(_ participantId: String) async throws {
+        declineLobbyParticipantCalled = true
+        try await possibleErrorTask().value
+    }
+
 }

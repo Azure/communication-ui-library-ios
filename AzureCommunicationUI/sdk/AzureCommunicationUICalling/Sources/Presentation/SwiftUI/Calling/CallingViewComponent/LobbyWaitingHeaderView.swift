@@ -50,7 +50,7 @@ struct LobbyWaitingHeaderView: View {
     var lobbyHeader: some View {
         HStack(alignment: .center) {
             addParticipantIcon
-            Text(viewModel.infoLabel)
+            Text(viewModel.title)
                 .padding(EdgeInsets(top: Constants.infoLabelHorizontalPadding,
                                     leading: 0,
                                     bottom: Constants.infoLabelHorizontalPadding,
