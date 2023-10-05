@@ -37,8 +37,15 @@ struct CallDiagnosticModel<DiagnosticKind, Value>: Equatable
     var value: Value
 }
 
+enum CallDiagnosticQuality: Int {
+    case unknown
+    case good
+    case poor
+    case bad
+}
+
 typealias NetworkQualityDiagnosticModel =
-    CallDiagnosticModel<NetworkCallDiagnostic, DiagnosticQuality>
+    CallDiagnosticModel<NetworkCallDiagnostic, CallDiagnosticQuality>
 
 typealias NetworkDiagnosticModel = CallDiagnosticModel<NetworkCallDiagnostic, Bool>
 
