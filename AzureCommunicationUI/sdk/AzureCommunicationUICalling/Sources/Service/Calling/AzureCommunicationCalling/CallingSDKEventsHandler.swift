@@ -272,21 +272,30 @@ extension CallingSDKEventsHandler: CallDelegate,
     func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
                             didChangeNetworkSendQuality args: DiagnosticQualityChangedEventArgs) {
         self.logger.debug("[UFD] \(args.name): \(args.value)")
-        let model = NetworkQualityDiagnosticModel(diagnostic: .networkSendQuality, value: args.value)
+        let model = NetworkQualityDiagnosticModel(
+            diagnostic: .networkSendQuality,
+            value: args.value.toCallCompositeDiagnosticQuality()
+        )
         self.networkQualityDiagnosticsSubject.send(model)
     }
 
     func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
                             didChangeNetworkReconnectionQuality args: DiagnosticQualityChangedEventArgs) {
         self.logger.debug("[UFD] \(args.name): \(args.value)")
-        let model = NetworkQualityDiagnosticModel(diagnostic: .networkReconnectionQuality, value: args.value)
+        let model = NetworkQualityDiagnosticModel(
+            diagnostic: .networkReconnectionQuality,
+            value: args.value.toCallCompositeDiagnosticQuality()
+        )
         self.networkQualityDiagnosticsSubject.send(model)
     }
 
     func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
                             didChangeNetworkReceiveQuality args: DiagnosticQualityChangedEventArgs) {
         self.logger.debug("[UFD] \(args.name): \(args.value)")
-        let model = NetworkQualityDiagnosticModel(diagnostic: .networkReceiveQuality, value: args.value)
+        let model = NetworkQualityDiagnosticModel(
+            diagnostic: .networkReceiveQuality,
+            value: args.value.toCallCompositeDiagnosticQuality()
+        )
         self.networkQualityDiagnosticsSubject.send(model)
     }
 
