@@ -204,7 +204,7 @@ struct CallingDemoView: View {
 
 extension CallingDemoView {
     fileprivate func relaunchComposite() {
-        DispatchQueue.main.async() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             Task { @MainActor in
                 if getAudioPermissionStatus() == .denied && envConfigSubject.skipSetupScreen {
                     showError(for: CallCompositeErrorCode.microphonePermissionNotGranted)
