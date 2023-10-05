@@ -245,6 +245,7 @@
 		B2B1DB3F2ABE35DA003B00DB /* MessageBarDiagnosticViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B1DB3E2ABE35DA003B00DB /* MessageBarDiagnosticViewModel.swift */; };
 		B2C2FFDD2AB8E566002F0763 /* BottomToastDiagnosticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C2FFDC2AB8E566002F0763 /* BottomToastDiagnosticView.swift */; };
 		B2C2FFDF2AB8E674002F0763 /* BottomToastDiagnosticViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C2FFDE2AB8E674002F0763 /* BottomToastDiagnosticViewModel.swift */; };
+		B2D85FD82ACEF39500DE0D16 /* ACSDiagnosticQualityExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D85FD72ACEF39500DE0D16 /* ACSDiagnosticQualityExtension.swift */; };
 		B2DBBE582AC357EC000E8676 /* MessageBarDiagnosticViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DBBE572AC357EC000E8676 /* MessageBarDiagnosticViewModelTests.swift */; };
 		B2E5B17C2AA1326300D54A3A /* CallDiagnosticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E5B17B2AA1326300D54A3A /* CallDiagnosticsViewModel.swift */; };
 		B2E5B17E2AA1453B00D54A3A /* DiagnosticsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2E5B17D2AA1453B00D54A3A /* DiagnosticsAction.swift */; };
@@ -583,6 +584,7 @@
 		B2B1DB3E2ABE35DA003B00DB /* MessageBarDiagnosticViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBarDiagnosticViewModel.swift; sourceTree = "<group>"; };
 		B2C2FFDC2AB8E566002F0763 /* BottomToastDiagnosticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToastDiagnosticView.swift; sourceTree = "<group>"; };
 		B2C2FFDE2AB8E674002F0763 /* BottomToastDiagnosticViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomToastDiagnosticViewModel.swift; sourceTree = "<group>"; };
+		B2D85FD72ACEF39500DE0D16 /* ACSDiagnosticQualityExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ACSDiagnosticQualityExtension.swift; sourceTree = "<group>"; };
 		B2DBBE572AC357EC000E8676 /* MessageBarDiagnosticViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageBarDiagnosticViewModelTests.swift; sourceTree = "<group>"; };
 		B2E5B17B2AA1326300D54A3A /* CallDiagnosticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallDiagnosticsViewModel.swift; sourceTree = "<group>"; };
 		B2E5B17D2AA1453B00D54A3A /* DiagnosticsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsAction.swift; sourceTree = "<group>"; };
@@ -1129,6 +1131,7 @@
 				1F13D37226AB3F1200E31666 /* ACSCallingStateExtension.swift */,
 				5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */,
 				1FB0A1C028412A5000D57B0F /* ACSParticipantStateExtension.swift */,
+				B2D85FD72ACEF39500DE0D16 /* ACSDiagnosticQualityExtension.swift */,
 				1FD299652728B72B0084B9ED /* CallingSDKEventsHandler.swift */,
 				1FBCB6AB2649993500F57EEA /* CallingSDKWrapper.swift */,
 				75C1EE0E28E4BF2D00FF78B1 /* LocalVideoStreamExtension.swift */,
@@ -1954,6 +1957,7 @@
 				05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */,
 				50FA461026829B7A001844AC /* ControlBarViewModel.swift in Sources */,
 				1F2BED882631EB7900D98266 /* PermissionsManager.swift in Sources */,
+				B2D85FD82ACEF39500DE0D16 /* ACSDiagnosticQualityExtension.swift in Sources */,
 				1FA23F9E265DA21400B4A080 /* VideoStreamInfoModel.swift in Sources */,
 				756F59772966020800BAFBF7 /* AccessibilityProviderNotificationsObserver.swift in Sources */,
 				7529F5E229679513002F7CE1 /* LocalizationOptions.swift in Sources */,
