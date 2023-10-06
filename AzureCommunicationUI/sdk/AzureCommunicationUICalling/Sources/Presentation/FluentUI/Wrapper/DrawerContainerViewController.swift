@@ -20,6 +20,8 @@ class DrawerContainerViewController<T: Equatable>: UIViewController,
     private let showHeader: Bool
     private let isRightToLeft: Bool
     private weak var controller: DrawerController?
+    private let sectionHeightOffset: CGFloat = 20
+    private let rowHeightOffset: CGFloat = 4
 
     // MARK: Constants
     private enum Constants {
@@ -159,11 +161,9 @@ class DrawerContainerViewController<T: Equatable>: UIViewController,
                                  showHeader: Bool,
                                  isiPhoneLayout: Bool) -> CGFloat {
         let headerHeight = self.getHeaderHeight(tableView: tableView, isiPhoneLayout: isiPhoneLayout)
-        let dividerOffsetHeight = CGFloat(numberOfItems * 3)
 
         var drawerHeight: CGFloat = getTotalCellsHeight(tableView: tableView, numberOfItems: numberOfItems)
         drawerHeight += showHeader ? headerHeight : Constants.resizeBarHeight
-        drawerHeight += dividerOffsetHeight
 
         return drawerHeight
     }
@@ -175,16 +175,15 @@ class DrawerContainerViewController<T: Equatable>: UIViewController,
 
     private func getTotalCellsHeight(tableView: UITableView,
                                      numberOfItems: Int) -> CGFloat {
-
         let sectionHeadersHight = (0..<tableView.numberOfSections).map { section in
-            tableView.rectForHeader(inSection: section).height
+            tableView.rectForHeader(inSection: section).height + sectionHeightOffset
         }.reduce(0, +)
 
         let rowsHight = (0..<tableView.numberOfSections).flatMap { section in
             return (0..<tableView.numberOfRows(inSection: section)).map { row in
                 return IndexPath(row: row, section: section)
             }
-        }.map { index in return tableView.rectForRow(at: index).height }.reduce(0, +)
+        }.map { index in return tableView.rectForRow(at: index).height + rowHeightOffset }.reduce(0, +)
 
         return sectionHeadersHight + rowsHight
     }

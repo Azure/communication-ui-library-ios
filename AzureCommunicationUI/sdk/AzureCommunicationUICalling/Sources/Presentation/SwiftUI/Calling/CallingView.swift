@@ -138,31 +138,27 @@ struct CallingView: View {
                         .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
                     Spacer()
                 }
-                if viewModel.lobbyWaitingHeaderViewModel.isDisplayed {
-                    HStack {
-                        if isIpad {
-                            Spacer()
-                        } else {
-                            EmptyView()
-                        }
-                        lobbyWaitingHeaderView
-                            .frame(width: infoHeaderViewWidth, alignment: .leading)
-                            .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                HStack {
+                    if isIpad {
                         Spacer()
+                    } else {
+                        EmptyView()
                     }
+                    lobbyWaitingHeaderView
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
                 }
-                if viewModel.lobbyActionErrorViewModel.isDisplayed {
-                    HStack {
-                        if isIpad {
-                            Spacer()
-                        } else {
-                            EmptyView()
-                        }
-                        lobbyActionErrorView
-                            .frame(width: infoHeaderViewWidth, alignment: .leading)
-                            .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                HStack {
+                    if isIpad {
                         Spacer()
+                    } else {
+                        EmptyView()
                     }
+                    lobbyActionErrorView
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
                 }
                 Spacer()
             }
