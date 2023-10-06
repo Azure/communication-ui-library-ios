@@ -13,6 +13,8 @@
 		05317E2829A2E2B900149F57 /* CallHistoryRepositoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2729A2E2B900149F57 /* CallHistoryRepositoryMocking.swift */; };
 		05317E2A29A7DBC100149F57 /* CallHistoryRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */; };
 		05317E3729B7D6B500149F57 /* CallHistoryServiceMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E3629B7D6B500149F57 /* CallHistoryServiceMocking.swift */; };
+		0546D9512ACE8CAC005D528E /* LobbyActionErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546D9502ACE8CAC005D528E /* LobbyActionErrorView.swift */; };
+		0546D9532ACE8CD7005D528E /* LobbyActionErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546D9522ACE8CD7005D528E /* LobbyActionErrorViewModel.swift */; };
 		058D6A232AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058D6A222AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift */; };
 		05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */; };
 		05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C829297F516D006EDD0D /* CallHistoryService.swift */; };
@@ -299,7 +301,10 @@
 		05317E2729A2E2B900149F57 /* CallHistoryRepositoryMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRepositoryMocking.swift; sourceTree = "<group>"; };
 		05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRepositoryTests.swift; sourceTree = "<group>"; };
 		05317E3629B7D6B500149F57 /* CallHistoryServiceMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryServiceMocking.swift; sourceTree = "<group>"; };
+		0546D9502ACE8CAC005D528E /* LobbyActionErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyActionErrorView.swift; sourceTree = "<group>"; };
+		0546D9522ACE8CD7005D528E /* LobbyActionErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyActionErrorViewModel.swift; sourceTree = "<group>"; };
 		058D6A222AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyWaitingHeaderViewModelTest.swift; sourceTree = "<group>"; };
+		058D6A242ACE0AD4005CF1C8 /* AzureCommunicationCalling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AzureCommunicationCalling.framework; path = "../../../../../orient_workspace/SpoolCallingStack/native/staging.d/release/BETA/sdk/arm64-v8a/AzureCommunicationCalling.framework"; sourceTree = "<group>"; };
 		05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRecord.swift; sourceTree = "<group>"; };
 		05C1C829297F516D006EDD0D /* CallHistoryService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryService.swift; sourceTree = "<group>"; };
 		05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryRepository.swift; sourceTree = "<group>"; };
@@ -1026,6 +1031,8 @@
 				1BAD44BB283DAF2100C9E6A9 /* DraggableLocalVideoView.swift */,
 				051EE2282AB90FC300A94632 /* LobbyWaitingHeaderView.swift */,
 				051EE22A2AB9106200A94632 /* LobbyWaitingHeaderViewModel.swift */,
+				0546D9502ACE8CAC005D528E /* LobbyActionErrorView.swift */,
+				0546D9522ACE8CD7005D528E /* LobbyActionErrorViewModel.swift */,
 			);
 			path = CallingViewComponent;
 			sourceTree = "<group>";
@@ -1364,6 +1371,7 @@
 		D925FB8A0861AF0C1415C6C4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				058D6A242ACE0AD4005CF1C8 /* AzureCommunicationCalling.framework */,
 				1FBCB682264522F200F57EEA /* XCTest.framework */,
 				C580DBF67D8B5AEF7A801F90 /* Pods_AzureCommunicationUICalling.framework */,
 				EC5A1FE3C2622411DFF98147 /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework */,
@@ -1810,7 +1818,9 @@
 				FAD20A8B292834500063D8A9 /* DeviceExtension.swift in Sources */,
 				881D8F7427FCA6B3008EC897 /* AvatarViewManager.swift in Sources */,
 				1BAD44BC283DAF2100C9E6A9 /* DraggableLocalVideoView.swift in Sources */,
+				0546D9512ACE8CAC005D528E /* LobbyActionErrorView.swift in Sources */,
 				50E2D69726EBCD15006B0EF4 /* CompositeParticipantsListCell.swift in Sources */,
+				0546D9532ACE8CD7005D528E /* LobbyActionErrorViewModel.swift in Sources */,
 				A8373994261F9D7600D46787 /* CallCompositeOptions.swift in Sources */,
 				FAACEE3E28FA1190003F7D7C /* MoreCallOptionsListViewModel.swift in Sources */,
 				88A70180270E50D100F817B8 /* PopupModalView.swift in Sources */,
@@ -2008,6 +2018,15 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UBF8T346G9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AzureCommunicationCommon\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AzureCore\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MicrosoftFluentUI\"",
+					"\"${PODS_ROOT}/AzureCommunicationCalling\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AzureCommunicationCalling\"",
+					"\"/Users/pavelprystinka/Documents/orient_workspace/SpoolCallingStack/native/staging.d/release/BETA/sdk/arm64-v8a\"",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (

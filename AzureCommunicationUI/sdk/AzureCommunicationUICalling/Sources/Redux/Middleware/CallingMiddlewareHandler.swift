@@ -296,7 +296,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             do {
                 try await callingService.admitAllLobbyParticipants()
             } catch {
-                dispatch(.remoteParticipantsAction(.lobbyError(errorCode: .unknown)))
+                let errorCode = LobbyErrorCode.convertToLobbyErrorCode(error as NSError)
+                dispatch(.remoteParticipantsAction(.lobbyError(errorCode: errorCode)))
             }
         }
     }
@@ -316,7 +317,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                 do {
                     try await callingService.declineLobbyParticipant(participantId)
                 } catch {
-                    dispatch(.remoteParticipantsAction(.lobbyError(errorCode: .unknown)))
+                    let errorCode = LobbyErrorCode.convertToLobbyErrorCode(error as NSError)
+                    dispatch(.remoteParticipantsAction(.lobbyError(errorCode: errorCode)))
                 }
             }
         }
@@ -333,7 +335,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             do {
                 try await callingService.admitLobbyParticipant(participantId)
             } catch {
-                dispatch(.remoteParticipantsAction(.lobbyError(errorCode: .unknown)))
+                let errorCode = LobbyErrorCode.convertToLobbyErrorCode(error as NSError)
+                dispatch(.remoteParticipantsAction(.lobbyError(errorCode: errorCode)))
             }
         }
     }
@@ -349,7 +352,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
             do {
                 try await callingService.declineLobbyParticipant(participantId)
             } catch {
-                dispatch(.remoteParticipantsAction(.lobbyError(errorCode: .unknown)))
+                let errorCode = LobbyErrorCode.convertToLobbyErrorCode(error as NSError)
+                dispatch(.remoteParticipantsAction(.lobbyError(errorCode: errorCode)))
             }
         }
     }

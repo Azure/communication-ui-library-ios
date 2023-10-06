@@ -254,6 +254,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             logger.debug("Admit All participants successful")
         } catch {
             logger.error("ERROR: It was not possible to admit all lobby participants. \(error)")
+            throw error
         }
     }
 
@@ -273,6 +274,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             logger.debug("Admit participants successful")
         } catch {
             logger.error("ERROR: It was not possible to admit lobby participants. \(error)")
+            throw error
         }
     }
 
@@ -288,6 +290,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             logger.debug("Reject lobby participants successful")
         } catch {
             logger.error("ERROR: It was not possible to reject lobby participants. \(error)")
+            throw error
         }
     }
 }

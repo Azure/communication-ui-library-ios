@@ -56,6 +56,16 @@ enum LocalizationKey: String {
     case waitingInLobbyDismissAccessibilityLabel =
             "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ParticipantList.Dismiss"
 
+    case lobbyActionErrorConversationTypeNotSupported =
+            "AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"
+    case lobbyActionErrorLobbyDisabledByConfigurations =
+            "AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"
+    case lobbyActionErrorMeetingRoleNotAllowed =
+            "AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"
+    case lobbyActionErrorParticipantOperationFailure =
+            "AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"
+    case lobbyActionUnknownError = "AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"
+
     case unnamedParticipant = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"
     // %@ is local participant name
     case localeParticipantWithSuffix =

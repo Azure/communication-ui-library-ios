@@ -83,7 +83,7 @@ class LobbyWaitingHeaderViewModelTests: XCTestCase {
 
     func test_infoHeaderViewModel_update_when_lobbyParticipantIsRemoved_then_shouldNotBeDisplayed() {
         let sut = makeSUT()
-        let expectation = XCTestExpectation(description: "Should not display")
+        let expectation = XCTestExpectation(description: "Should display")
         sut.$isDisplayed
             .dropFirst()
             .sink(receiveValue: { _ in

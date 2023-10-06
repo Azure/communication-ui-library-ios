@@ -138,16 +138,31 @@ struct CallingView: View {
                         .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
                     Spacer()
                 }
-                HStack {
-                    if isIpad {
+                if viewModel.lobbyWaitingHeaderViewModel.isDisplayed {
+                    HStack {
+                        if isIpad {
+                            Spacer()
+                        } else {
+                            EmptyView()
+                        }
+                        lobbyWaitingHeaderView
+                            .frame(width: infoHeaderViewWidth, alignment: .leading)
+                            .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
                         Spacer()
-                    } else {
-                        EmptyView()
                     }
-                    lobbyWaitingHeaderView
-                        .frame(width: infoHeaderViewWidth, alignment: .leading)
-                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
-                    Spacer()
+                }
+                if viewModel.lobbyActionErrorViewModel.isDisplayed {
+                    HStack {
+                        if isIpad {
+                            Spacer()
+                        } else {
+                            EmptyView()
+                        }
+                        lobbyActionErrorView
+                            .frame(width: infoHeaderViewWidth, alignment: .leading)
+                            .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                        Spacer()
+                    }
                 }
                 Spacer()
             }
@@ -161,6 +176,11 @@ struct CallingView: View {
 
     var lobbyWaitingHeaderView: some View {
         LobbyWaitingHeaderView(viewModel: viewModel.lobbyWaitingHeaderViewModel,
+                       avatarViewManager: avatarManager)
+    }
+
+    var lobbyActionErrorView: some View {
+        LobbyActionErrorView(viewModel: viewModel.lobbyActionErrorViewModel,
                        avatarViewManager: avatarManager)
     }
 

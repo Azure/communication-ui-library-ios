@@ -12,5 +12,5 @@ enum RemoteParticipantsAction: Equatable {
     case declineAll
     case admit(participantId: String)
     case decline(participantId: String)
-    case lobbyError(errorCode: LobbyErrorCode)
+    case lobbyError(errorCode: LobbyErrorCode?)
 }

@@ -33,6 +33,7 @@ class CallingViewModel: ObservableObject {
     var controlBarViewModel: ControlBarViewModel!
     var infoHeaderViewModel: InfoHeaderViewModel!
     var lobbyWaitingHeaderViewModel: LobbyWaitingHeaderViewModel!
+    var lobbyActionErrorViewModel: LobbyActionErrorViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
@@ -61,6 +62,10 @@ class CallingViewModel: ObservableObject {
         lobbyWaitingHeaderViewModel = compositeViewModelFactory
             .makeLobbyWaitingHeaderViewModel(localUserState: store.state.localUserState,
             dispatchAction: actionDispatch)
+        lobbyActionErrorViewModel = compositeViewModelFactory
+            .makeLobbyActionErrorViewModel(localUserState: store.state.localUserState,
+            dispatchAction: actionDispatch)
+
         let isCallConnected = store.state.callingState.status == .connected
 
         isParticipantGridDisplayed = isCallConnected &&
@@ -132,8 +137,11 @@ class CallingViewModel: ObservableObject {
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState)
         lobbyWaitingHeaderViewModel.update(localUserState: state.localUserState,
-                                   remoteParticipantsState: state.remoteParticipantsState,
-                                   callingState: state.callingState)
+                                           remoteParticipantsState: state.remoteParticipantsState,
+                                           callingState: state.callingState)
+        lobbyActionErrorViewModel.update(localUserState: state.localUserState,
+                                         remoteParticipantsState: state.remoteParticipantsState,
+                                         callingState: state.callingState)
         localVideoViewModel.update(localUserState: state.localUserState)
         participantGridsViewModel.update(callingState: state.callingState,
                                          remoteParticipantsState: state.remoteParticipantsState)

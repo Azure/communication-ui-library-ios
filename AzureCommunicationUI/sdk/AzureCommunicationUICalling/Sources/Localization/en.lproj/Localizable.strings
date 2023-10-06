@@ -49,6 +49,12 @@
 "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ParticipantList.AccessibilityLabel" = "Participants";
 "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ParticipantList.Dismiss" = "Dismiss";
 
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Current conversation type does not support Lobby";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Lobby is disabled by configurations";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Current meeting role does not have permission to admit/reject user from Lobby";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Participant is not exist in the Lobby";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Failed to admit/decline participant.";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Unnamed Participant";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (me)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Muted";
