@@ -107,20 +107,20 @@
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Não é possível ingressar na chamada. Verifique sua conexão de rede.";
 
 /* Call Diagnostics */
-"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="You're muted";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Network quality is low";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Network was lost";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Reconnecting...";
-"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Unable to start camera";
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="Você está com o mudo ativado";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="A qualidade da rede é baixa";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="A rede foi perdida";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Reconectando...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Não foi possível iniciar a câmera";
 
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Unable to locate speaker.";
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Unable to locate microphone.";
-"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Microphone isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Speaker isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Speaker is muted.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Não foi possível localizar o alto-falante.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Não foi possível localizar o microfone.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="O microfone não está funcionando conforme o esperado.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="O alto-falante não está funcionando conforme o esperado.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="O alto-falante está silenciado.";
 
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ needs permission";
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ is not allowed to use your camera. You can change this in settings later. If your change it now your call would be dropped.";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ precisa de permissão";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ não tem permissão para usar a câmera. Você pode alterar isso nas configurações mais tarde. Se você a alterar agora, sua chamada será descartada.";
 
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Dismiss Call Diagnostic";
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Dismisses this Call Diagnostic Banner";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Ignorar Diagnóstico de Chamada";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Ignora esta Faixa de Diagnóstico de Chamadas";
