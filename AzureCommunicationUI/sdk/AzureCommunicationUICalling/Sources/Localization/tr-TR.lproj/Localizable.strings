@@ -107,20 +107,20 @@
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Aramaya katılınamıyor. Ağ bağlantınızı kontrol edin.";
 
 /* Call Diagnostics */
-"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="You're muted";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Network quality is low";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Network was lost";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Reconnecting...";
-"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Unable to start camera";
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="Sesiniz kapatıldı";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Ağ kalitesi düşük";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Ağ kaybedildi";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Yeniden bağlanıyor...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Kamera başlatılamıyor";
 
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Unable to locate speaker.";
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Unable to locate microphone.";
-"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Microphone isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Speaker isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Speaker is muted.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Hoparlör bulunamıyor.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Mikrofon bulunamıyor.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Mikrofon beklenen şekilde çalışmıyor.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Hoparlör beklenen şekilde çalışmıyor.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Hoparlör sessize alındı.";
 
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ needs permission";
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ is not allowed to use your camera. You can change this in settings later. If your change it now your call would be dropped.";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ için izin gerekiyor";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ kameranızı kullanmasına izin verilmiyor. Bunu daha sonra ayarlardan değiştirebilirsiniz. Değişikliğiniz şimdi yapılamadıysa aramanız bırakılır.";
 
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Dismiss Call Diagnostic";
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Dismisses this Call Diagnostic Banner";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Çağrı Tanılamayı Kapat";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Bu Çağrı Tanılamayı Kapatma Başlığı";
