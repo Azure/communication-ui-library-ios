@@ -107,20 +107,20 @@
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="無法加入通話。檢查您的網路連線。";
 
 /* Call Diagnostics */
-"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="You're muted";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Network quality is low";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Network was lost";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Reconnecting...";
-"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Unable to start camera";
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="您已設為靜音";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="您的網路品質不佳";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="網路已中斷";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="正在重新連線...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="無法啟動相機";
 
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Unable to locate speaker.";
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Unable to locate microphone.";
-"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Microphone isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Speaker isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Speaker is muted.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="找不到喇叭。";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="找不到麥克風。";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="麥克風無法如預期般運作。";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="喇叭無法如預期般運作。";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="喇叭已設為靜音。";
 
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ needs permission";
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ is not allowed to use your camera. You can change this in settings later. If your change it now your call would be dropped.";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ 需要權限";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="不允許 %@ 使用您的相機。您可以稍後在 [設定] 中變更此設定。如果您現在進行變更，您的通話將會中斷。";
 
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Dismiss Call Diagnostic";
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Dismisses this Call Diagnostic Banner";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="關閉通話診斷";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="關閉此通話診斷橫幅";
