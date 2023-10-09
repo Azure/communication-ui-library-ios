@@ -107,20 +107,20 @@
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="통화에 참가할 수 없습니다. 네트워크 연결을 확인하세요.";
 
 /* Call Diagnostics */
-"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="You're muted";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Network quality is low";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Network was lost";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Reconnecting...";
-"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Unable to start camera";
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="음소거되었습니다.";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="네트워크 품질이 낮습니다.";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="네트워크 연결이 끊겼습니다.";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="다시 연결하는 중...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="카메라를 시작할 수 없습니다.";
 
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Unable to locate speaker.";
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Unable to locate microphone.";
-"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Microphone isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Speaker isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Speaker is muted.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="스피커를 찾을 수 없습니다.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="마이크를 찾을 수 없습니다.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="마이크가 예상대로 작동하지 않습니다.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="스피커가 예상대로 작동하지 않습니다.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="스피커를 음소거했습니다.";
 
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ needs permission";
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ is not allowed to use your camera. You can change this in settings later. If your change it now your call would be dropped.";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@에 사용 권한이 필요합니다.";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ 카메라를 사용할 수 없습니다. 나중에 설정에서 변경할 수 있습니다. 지금 변경하면 통화가 끊깁니다.";
 
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Dismiss Call Diagnostic";
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Dismisses this Call Diagnostic Banner";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="통화 진단 해제";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="이 통화 진단 배너 해제";
