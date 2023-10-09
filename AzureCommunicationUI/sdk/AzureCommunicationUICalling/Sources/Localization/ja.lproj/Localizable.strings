@@ -107,20 +107,20 @@
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="通話に参加できません。ネットワーク接続を確認してください。";
 
 /* Call Diagnostics */
-"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="You're muted";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Network quality is low";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Network was lost";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Reconnecting...";
-"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Unable to start camera";
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="ミュートになっています";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="ネットワークの品質が低くなっています";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="ネットワークが失われました";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="再接続中...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="カメラを起動できません";
 
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Unable to locate speaker.";
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Unable to locate microphone.";
-"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Microphone isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Speaker isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Speaker is muted.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="スピーカーが見つかりません。";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="マイクが見つかりません。";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="マイクが期待どおりに動作していません。";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="スピーカーが期待どおりに動作していません。";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="スピーカーがミュートになっています。";
 
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ needs permission";
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ is not allowed to use your camera. You can change this in settings later. If your change it now your call would be dropped.";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ にはアクセス許可が必要です";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ カメラの使用は許可されていません。これは後で設定で変更できます。今すぐ変更すると、通話が切断されます。";
 
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Dismiss Call Diagnostic";
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Dismisses this Call Diagnostic Banner";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="通話診断を閉じる";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="この通話診断バナーを閉じます";

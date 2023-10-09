@@ -107,20 +107,20 @@
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Det går inte att ansluta till samtalet. Kontrollera nätverksanslutningen.";
 
 /* Call Diagnostics */
-"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="You're muted";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Network quality is low";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Network was lost";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Reconnecting...";
-"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Unable to start camera";
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="Din mikrofon har stängts av";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Nätverkskvaliteten är låg";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Nätverket bröts";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Ansluter igen...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Det går inte att starta kameran";
 
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Unable to locate speaker.";
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Unable to locate microphone.";
-"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Microphone isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Speaker isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Speaker is muted.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Det gick inte att hitta högtalaren.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Det gick inte att hitta mikrofonen.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Mikrofonen fungerar inte som förväntat.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Högtalaren fungerar inte som förväntat.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Högtalaren är avstängd.";
 
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ needs permission";
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ is not allowed to use your camera. You can change this in settings later. If your change it now your call would be dropped.";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ behöver behörighet";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ får inte använda kameran. Du kan ändra detta i inställningarna senare. Om du ändrar det nu kommer ditt samtal att avslutas.";
 
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Dismiss Call Diagnostic";
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Dismisses this Call Diagnostic Banner";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Stäng samtalsdiagnostik";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Stänger den här banderollen för samtalsdiagnostik";

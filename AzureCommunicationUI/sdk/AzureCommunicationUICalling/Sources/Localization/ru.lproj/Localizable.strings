@@ -107,20 +107,20 @@
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Не удалось присоединиться к звонку. Проверьте сетевое подключение.";
 
 /* Call Diagnostics */
-"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="You're muted";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Network quality is low";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Network was lost";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Reconnecting...";
-"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Unable to start camera";
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="Ваш звук отключен";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Низкое качество работы сети";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Сеть потеряна";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Повторное подключение…";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Не удалось запустить камеру";
 
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Unable to locate speaker.";
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Unable to locate microphone.";
-"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Microphone isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Speaker isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Speaker is muted.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Не удалось найти динамик.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Не удалось найти микрофон.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Микрофон работает не так, как ожидалось.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Динамик работает не так, как ожидалось.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Динамик отключен.";
 
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ needs permission";
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ is not allowed to use your camera. You can change this in settings later. If your change it now your call would be dropped.";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="Для %@ требуется разрешение";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ использовать камеру. Вы можете изменить это в параметрах позже. Если изменить это сейчас, звонок будет прерван.";
 
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Dismiss Call Diagnostic";
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Dismisses this Call Diagnostic Banner";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Закрыть диагностику звонка";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Закрытие этого баннера диагностики звонка";

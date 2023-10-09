@@ -107,20 +107,20 @@
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="לא ניתן להצטרף לשיחה. בדוק את חיבור הרשת שלך.";
 
 /* Call Diagnostics */
-"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="You're muted";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Network quality is low";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Network was lost";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Reconnecting...";
-"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Unable to start camera";
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="אתה מושתק";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="איכות הרשת נמוכה";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="הרשת אבדה";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="מתחבר מחדש...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="לא ניתן להפעיל את המצלמה";
 
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Unable to locate speaker.";
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Unable to locate microphone.";
-"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Microphone isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Speaker isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Speaker is muted.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="לא ניתן לאתר את הרמקול.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="לא ניתן לאתר את המיקרופון.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="המיקרופון אינו פועל כצפוי.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="הרמקול אינו פועל כצפוי.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="הרמקול מושתק.";
 
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ needs permission";
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ is not allowed to use your camera. You can change this in settings later. If your change it now your call would be dropped.";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ צריך הרשאה";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ מורשה להשתמש במצלמה שלך. תוכל לשנות זאת בהגדרות מאוחר יותר. אם תשנה זאת כעת השיחה שלך תנותק.";
 
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Dismiss Call Diagnostic";
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Dismisses this Call Diagnostic Banner";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="בטל אבחון שיחה";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="מבטל כרזת אבחון שיחה זו";

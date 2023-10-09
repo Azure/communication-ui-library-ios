@@ -107,20 +107,20 @@
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="تعذر الانضمام إلى المكالمة. تحقق من اتصال الشبكة.";
 
 /* Call Diagnostics */
-"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="You're muted";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Network quality is low";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Network was lost";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Reconnecting...";
-"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Unable to start camera";
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="تم كتم صوتك";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="جودة الشبكة منخفضة";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="تم فقدان الشبكة";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="يتم الآن إعادة الاتصال...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="تعذر بدء تشغيل الكاميرا";
 
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Unable to locate speaker.";
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Unable to locate microphone.";
-"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Microphone isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Speaker isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Speaker is muted.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="تعذر تحديد السماعات.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="تعذر تحديد الميكروفون.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="لا يعمل الميكروفون كما هو متوقع.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="لا تعمل السماعات كما هو متوقع.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="تم كتم صوت السماعات.";
 
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ needs permission";
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ is not allowed to use your camera. You can change this in settings later. If your change it now your call would be dropped.";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="يلزم على %@ الحصول على إذن";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="غير مسموح %@ باستخدام الكاميرا الخاصة بك. يمكنك تغيير هذا في الإعدادات لاحقا. إذا تم تغييره الآن، فسيتم إسقاط مكالمتك.";
 
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Dismiss Call Diagnostic";
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Dismisses this Call Diagnostic Banner";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="تجاهل تشخيص المكالمات";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="تجاهل لافتة تشخيص المكالمة هذه";

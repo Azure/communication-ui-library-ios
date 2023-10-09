@@ -107,20 +107,20 @@
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Kan ikke bli med i samtalen. Kontroller nettverkstilkoblingen.";
 
 /* Call Diagnostics */
-"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="You're muted";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Network quality is low";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Network was lost";
-"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Reconnecting...";
-"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Unable to start camera";
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="Du er dempet";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Nettverkskvaliteten er lav";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Nettverket ble brutt";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Kobler til på nytt …";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Kan ikke starte kamera";
 
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Unable to locate speaker.";
-"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Unable to locate microphone.";
-"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Microphone isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Speaker isn't working as expected.";
-"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Speaker is muted.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Finner ikke høyttaler.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Finner ikke mikrofonen.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Mikrofonen fungerer ikke som forventet.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Høyttaleren fungerer ikke som forventet.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Høyttaleren er dempet.";
 
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ needs permission";
-"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ is not allowed to use your camera. You can change this in settings later. If your change it now your call would be dropped.";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ trenger tillatelse";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ har ikke tillatelse til å bruke kameraet. Du kan endre dette i innstillingene senere. Hvis du endrer den nå, vil samtalen bli avbrutt.";
 
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Dismiss Call Diagnostic";
-"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Dismisses this Call Diagnostic Banner";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Lukk anropsdiagnose";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Lukker dette diagnosebanneret for anrop";
