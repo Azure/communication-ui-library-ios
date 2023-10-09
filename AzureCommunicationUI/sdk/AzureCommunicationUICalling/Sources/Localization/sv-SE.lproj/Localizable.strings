@@ -105,3 +105,22 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Du nekades åtkomst till samtalet.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Fel vid växling av video";
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Det går inte att ansluta till samtalet. Kontrollera nätverksanslutningen.";
+
+/* Call Diagnostics */
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="Din mikrofon har stängts av";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Nätverkskvaliteten är låg";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Nätverket bröts";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Ansluter igen...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Det går inte att starta kameran";
+
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Det gick inte att hitta högtalaren.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Det gick inte att hitta mikrofonen.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Mikrofonen fungerar inte som förväntat.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Högtalaren fungerar inte som förväntat.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Högtalaren är avstängd.";
+
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ behöver behörighet";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ får inte använda kameran. Du kan ändra detta i inställningarna senare. Om du ändrar det nu kommer ditt samtal att avslutas.";
+
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Stäng samtalsdiagnostik";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Stänger den här banderollen för samtalsdiagnostik";

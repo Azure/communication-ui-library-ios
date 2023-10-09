@@ -105,3 +105,22 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="הגישה שלך לשיחה נדחתה.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="שגיאה בהחלפת וידאו";
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="לא ניתן להצטרף לשיחה. בדוק את חיבור הרשת שלך.";
+
+/* Call Diagnostics */
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="אתה מושתק";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="איכות הרשת נמוכה";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="הרשת אבדה";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="מתחבר מחדש...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="לא ניתן להפעיל את המצלמה";
+
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="לא ניתן לאתר את הרמקול.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="לא ניתן לאתר את המיקרופון.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="המיקרופון אינו פועל כצפוי.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="הרמקול אינו פועל כצפוי.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="הרמקול מושתק.";
+
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ צריך הרשאה";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ מורשה להשתמש במצלמה שלך. תוכל לשנות זאת בהגדרות מאוחר יותר. אם תשנה זאת כעת השיחה שלך תנותק.";
+
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="בטל אבחון שיחה";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="מבטל כרזת אבחון שיחה זו";
