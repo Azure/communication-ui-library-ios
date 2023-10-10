@@ -266,11 +266,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         let identifier = createCommunicationIdentifier(fromRawId: participantId)
 
         do {
-            let options = AdmitLobbyParticipantOptions()
-            let lobby = call.lobby
-            let identifiers = [identifier]
-
-            try await lobby.admit(identifiers: identifiers, options: options)
+            try await call.lobby.admit(identifiers: [identifier], options: nil)
             logger.debug("Admit participants successful")
         } catch {
             logger.error("ERROR: It was not possible to admit lobby participants. \(error)")

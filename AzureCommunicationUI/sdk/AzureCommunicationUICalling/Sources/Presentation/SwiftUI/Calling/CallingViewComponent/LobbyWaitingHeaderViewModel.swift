@@ -89,10 +89,6 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
         if self.isDisplayed != isDisplayed {
             self.isDisplayed = isDisplayed
         }
-        if !self.isDisplayed,
-           self.isParticipantsListDisplayed {
-            self.isParticipantsListDisplayed = false
-        }
 
         self.lobbyParticipantCount = newLobbyParticipantCount
 

@@ -18,6 +18,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var controlBarViewModel: ControlBarViewModel?
     var infoHeaderViewModel: InfoHeaderViewModel?
     var lobbyWaitingHeaderViewModel: LobbyWaitingHeaderViewModel?
+    var lobbyActionErrorViewModel: LobbyActionErrorViewModel?
     var localVideoViewModel: LocalVideoViewModel?
     var participantGridViewModel: ParticipantGridViewModel?
     var participantsListViewModel: ParticipantsListViewModel?
@@ -292,6 +293,17 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel {
         return lobbyWaitingHeaderViewModel ?? LobbyWaitingHeaderViewModel(compositeViewModelFactory: self,
+                                                                          logger: logger,
+                                                                          localUserState: localUserState,
+                                                                          localizationProvider: localizationProvider,
+                                                                          accessibilityProvider: accessibilityProvider,
+                                                                          dispatchAction: dispatchAction)
+    }
+
+    func makeLobbyActionErrorViewModel(localUserState: AzureCommunicationUICalling.LocalUserState,
+                                       dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch)
+    -> LobbyActionErrorViewModel {
+        return lobbyActionErrorViewModel ?? LobbyActionErrorViewModel(compositeViewModelFactory: self,
                                                                           logger: logger,
                                                                           localUserState: localUserState,
                                                                           localizationProvider: localizationProvider,
