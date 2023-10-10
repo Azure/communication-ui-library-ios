@@ -333,8 +333,8 @@ extension CallingSDKEventsHandler: CallDelegate,
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsMicrophoneNotFunctioning args: DiagnosticFlagChangedEventArgs) {
         self.logger.debug("[UFD] \(args.name): \(args.value)")
-        let model = MediaDiagnosticModel(diagnostic: .microphoneNotFunctioning, value: args.value)
-        self.mediaDiagnosticsSubject.send(model)
+        // .microphoneNotFunctioning is unhandled for now because there is a false positive
+        // event from SDK that is fixed, but pending release.
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
