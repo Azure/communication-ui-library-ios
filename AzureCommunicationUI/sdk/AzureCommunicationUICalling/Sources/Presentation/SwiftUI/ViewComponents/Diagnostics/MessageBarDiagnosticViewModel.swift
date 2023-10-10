@@ -4,7 +4,6 @@
 //
 
 import Combine
-import Foundation
 
 final class MessageBarDiagnosticViewModel: ObservableObject, Identifiable {
     @Published private(set) var text: String = ""

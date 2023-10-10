@@ -30,7 +30,8 @@ struct MessageBarDiagnosticView: View {
 
                 Spacer()
                 Button(action: {
-                    viewModel.callDiagnosticViewModel?.dismiss(diagnostic: viewModel.mediaDiagnostic)
+                    viewModel.callDiagnosticViewModel?
+                        .dismissMessageBar(diagnostic: viewModel.mediaDiagnostic)
                 }, label: {
                     IconProvider().getImage(for: .dismiss)
                         .frame(width: 16, height: 16)
