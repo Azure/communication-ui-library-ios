@@ -103,7 +103,6 @@ struct CallingView: View {
                         .accessibilityHidden(viewModel.lobbyOverlayViewModel.isDisplayed
                                              || viewModel.onHoldOverlayViewModel.isDisplayed
                                              || viewModel.loadingOverlayViewModel.isDisplayed)
-
                 }
                 .contentShape(Rectangle())
                 .animation(.linear(duration: 0.167))
