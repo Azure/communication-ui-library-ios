@@ -3,8 +3,6 @@
 //  Licensed under the MIT License.
 //
 
-import Combine
-
 extension Reducer where State == CallDiagnosticsState,
                         Actions == Action {
     static var liveDiagnosticsReducer: Self = Reducer { state, action in

@@ -110,7 +110,7 @@ final class CallDiagnosticsViewModel: ObservableObject {
         bottomToastDimissTimer = nil
     }
 
-    func dismiss(diagnostic: MediaCallDiagnostic) {
+    func dismissMessageBar(diagnostic: MediaCallDiagnostic) {
         guard let messageDiagnosticViewModel = messageBarStack
             .first(where: { $0.mediaDiagnostic == diagnostic }) else {
             return

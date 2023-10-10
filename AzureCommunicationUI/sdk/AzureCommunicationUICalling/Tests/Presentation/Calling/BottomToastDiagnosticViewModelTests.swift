@@ -43,7 +43,7 @@ class BottomToastDiagnosticViewModelTests: XCTestCase {
     }
 
     func test_that_presenting_handled_network_diagnostics_shows_title_and_icon() {
-        let expectedTextAndIcon: [NetworkCallDiagnostic: String] = [
+        let expectedText: [NetworkCallDiagnostic: String] = [
             .networkReceiveQuality: "AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow",
             .networkSendQuality: "AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow",
             .networkUnavailable: "AzureCommunicationUICalling.Diagnostics.Text.NetworkLost",
@@ -54,7 +54,7 @@ class BottomToastDiagnosticViewModelTests: XCTestCase {
         for diagnostic in NetworkCallDiagnostic.allCases {
             let sut = makeSUT(networkDiagnostic: diagnostic, localizationProvider: localizationProvider)
 
-            guard let text = expectedTextAndIcon[diagnostic] else {
+            guard let text = expectedText[diagnostic] else {
                 return XCTFail("Value not verified")
             }
 

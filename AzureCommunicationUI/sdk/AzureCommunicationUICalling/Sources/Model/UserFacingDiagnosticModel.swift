@@ -3,8 +3,6 @@
 //  Licensed under the MIT License.
 //
 
-import AzureCommunicationCalling
-
 enum NetworkCallDiagnostic: String, CaseIterable, Equatable {
     case networkReconnectionQuality
     case networkReceiveQuality
