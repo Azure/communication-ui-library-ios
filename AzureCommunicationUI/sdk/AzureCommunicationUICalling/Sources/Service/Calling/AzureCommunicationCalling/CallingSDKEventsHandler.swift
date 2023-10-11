@@ -231,7 +231,6 @@ extension CallingSDKEventsHandler: CallDelegate,
     // MARK: NetworkDiagnosticsDelegate
     func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
                             didChangeNetworkSendQuality args: DiagnosticQualityChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = NetworkQualityDiagnosticModel(
             diagnostic: .networkSendQuality,
             value: args.value.toCallCompositeDiagnosticQuality()
@@ -241,7 +240,6 @@ extension CallingSDKEventsHandler: CallDelegate,
 
     func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
                             didChangeNetworkReconnectionQuality args: DiagnosticQualityChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = NetworkQualityDiagnosticModel(
             diagnostic: .networkReconnectionQuality,
             value: args.value.toCallCompositeDiagnosticQuality()
@@ -251,7 +249,6 @@ extension CallingSDKEventsHandler: CallDelegate,
 
     func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
                             didChangeNetworkReceiveQuality args: DiagnosticQualityChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = NetworkQualityDiagnosticModel(
             diagnostic: .networkReceiveQuality,
             value: args.value.toCallCompositeDiagnosticQuality()
@@ -261,14 +258,12 @@ extension CallingSDKEventsHandler: CallDelegate,
 
     func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
                             didChangeIsNetworkUnavailable args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = NetworkDiagnosticModel(diagnostic: .networkUnavailable, value: args.value)
         self.networkDiagnosticsSubject.send(model)
     }
 
     func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
                             didChangeIsNetworkRelaysUnreachable args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = NetworkDiagnosticModel(diagnostic: .networkRelaysUnreachable, value: args.value)
         self.networkDiagnosticsSubject.send(model)
     }
@@ -276,98 +271,84 @@ extension CallingSDKEventsHandler: CallDelegate,
     // MARK: MediaDiagnosticsDelegate
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsSpeakerBusy args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = MediaDiagnosticModel(diagnostic: .speakerBusy, value: args.value)
         self.mediaDiagnosticsSubject.send(model)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsCameraFrozen args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = MediaDiagnosticModel(diagnostic: .cameraFrozen, value: args.value)
         self.mediaDiagnosticsSubject.send(model)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsSpeakerMuted args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = MediaDiagnosticModel(diagnostic: .speakerMuted, value: args.value)
         self.mediaDiagnosticsSubject.send(model)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsMicrophoneBusy args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = MediaDiagnosticModel(diagnostic: .microphoneBusy, value: args.value)
         self.mediaDiagnosticsSubject.send(model)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsCameraStartFailed args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = MediaDiagnosticModel(diagnostic: .cameraStartFailed, value: args.value)
         self.mediaDiagnosticsSubject.send(model)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsSpeakerVolumeZero args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = MediaDiagnosticModel(diagnostic: .speakerVolumeZero, value: args.value)
         self.mediaDiagnosticsSubject.send(model)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsSpeakerNotFunctioning args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = MediaDiagnosticModel(diagnostic: .speakerNotFunctioning, value: args.value)
         self.mediaDiagnosticsSubject.send(model)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsCameraPermissionDenied args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = MediaDiagnosticModel(diagnostic: .cameraPermissionDenied, value: args.value)
         self.mediaDiagnosticsSubject.send(model)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsMicrophoneNotFunctioning args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         // .microphoneNotFunctioning is unhandled for now because there is a false positive
         // event from SDK that is fixed, but pending release.
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsCameraStartTimedOut args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = MediaDiagnosticModel(diagnostic: .cameraStartTimedOut, value: args.value)
         self.mediaDiagnosticsSubject.send(model)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsMicrophoneMutedUnexpectedly args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = MediaDiagnosticModel(diagnostic: .microphoneMutedUnexpectedly, value: args.value)
         self.mediaDiagnosticsSubject.send(model)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsNoSpeakerDevicesAvailable args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = MediaDiagnosticModel(diagnostic: .noSpeakerDevicesAvailable, value: args.value)
         self.mediaDiagnosticsSubject.send(model)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsNoMicrophoneDevicesAvailable args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = MediaDiagnosticModel(diagnostic: .noMicrophoneDevicesAvailable, value: args.value)
         self.mediaDiagnosticsSubject.send(model)
     }
 
     func mediaDiagnostics(_ mediaDiagnostics: MediaDiagnostics,
                           didChangeIsSpeakingWhileMicrophoneIsMuted args: DiagnosticFlagChangedEventArgs) {
-        self.logger.debug("[UFD] \(args.name): \(args.value)")
         let model = MediaDiagnosticModel(diagnostic: .speakingWhileMicrophoneIsMuted, value: args.value)
         self.mediaDiagnosticsSubject.send(model)
     }
