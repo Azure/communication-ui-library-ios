@@ -52,8 +52,8 @@ final class CallDiagnosticsViewModel: ObservableObject {
         updateBottomToast(isBadState: diagnosticModel.value == .bad || diagnosticModel.value == .poor,
                           viewModel: BottomToastDiagnosticViewModel(
                                         localizationProvider: localizationProvider,
-                                        networkDiagnostic: diagnosticModel.diagnostic),
-                          where: { $0.networkDiagnostic == diagnosticModel.diagnostic })
+                                        networkQualityDiagnostic: diagnosticModel.diagnostic),
+                          where: { $0.networkQualityDiagnostic == diagnosticModel.diagnostic })
     }
 
     private func update(diagnosticModel: MediaDiagnosticModel) {
