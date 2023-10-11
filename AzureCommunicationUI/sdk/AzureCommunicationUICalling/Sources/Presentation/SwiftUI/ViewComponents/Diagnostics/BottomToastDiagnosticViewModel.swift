@@ -17,6 +17,7 @@ final class BottomToastDiagnosticViewModel: ObservableObject, Identifiable {
     private let localizationProvider: LocalizationProviderProtocol
 
     private(set) var networkDiagnostic: NetworkCallDiagnostic?
+    private(set) var networkQualityDiagnostic: NetworkQualityCallDiagnostic?
     private(set) var mediaDiagnostic: MediaCallDiagnostic?
 
     static let handledMediaDiagnostics: [MediaCallDiagnostic] = [
@@ -39,11 +40,20 @@ final class BottomToastDiagnosticViewModel: ObservableObject, Identifiable {
         self.updateTextAndIcon()
     }
 
+    init(localizationProvider: LocalizationProviderProtocol,
+         networkQualityDiagnostic: NetworkQualityCallDiagnostic) {
+        self.localizationProvider = localizationProvider
+        self.networkQualityDiagnostic = networkQualityDiagnostic
+        self.updateTextAndIcon()
+    }
+
     private func updateTextAndIcon() {
         if let mediaDiagnostic = mediaDiagnostic {
             updateTextAndIcon(for: mediaDiagnostic)
         } else if let networkDiagnostic = networkDiagnostic {
             updateTextAndIcon(for: networkDiagnostic)
+        } else if let networkQualityDiagnostic = networkQualityDiagnostic {
+            updateTextAndIcon(for: networkQualityDiagnostic)
         }
     }
 
@@ -62,11 +72,14 @@ final class BottomToastDiagnosticViewModel: ObservableObject, Identifiable {
     }
 
     private func updateTextAndIcon(for networkDiagnostic: NetworkCallDiagnostic) {
+        text = localizationProvider.getLocalizedString(.callDiagnosticsNetworkLost)
+        icon = .wifiWarning
+    }
+
+    private func updateTextAndIcon(for networkDiagnostic: NetworkQualityCallDiagnostic) {
         switch networkDiagnostic {
         case .networkSendQuality, .networkReceiveQuality:
             text = localizationProvider.getLocalizedString(.callDiagnosticsNetworkQualityLow)
-        case .networkUnavailable, .networkRelaysUnreachable:
-            text = localizationProvider.getLocalizedString(.callDiagnosticsNetworkLost)
         case .networkReconnectionQuality:
             text = localizationProvider.getLocalizedString(.callDiagnosticsNetworkReconnect)
         }

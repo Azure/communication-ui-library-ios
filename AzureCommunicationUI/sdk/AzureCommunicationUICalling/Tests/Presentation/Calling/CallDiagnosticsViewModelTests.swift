@@ -84,7 +84,7 @@ class CallDiagnosticsViewModelTests: XCTestCase {
 
     func
     test_receiving_network_quality_update_should_update_bottom_toast_and_display_in_bad_state_and_not_display_in_good_state() {
-        let networkQualityList: [NetworkCallDiagnostic] = [
+        let networkQualityList: [NetworkQualityCallDiagnostic] = [
             .networkSendQuality,
             .networkReceiveQuality,
             .networkReconnectionQuality
@@ -100,10 +100,10 @@ class CallDiagnosticsViewModelTests: XCTestCase {
             let goodState = NetworkQualityDiagnosticModel(diagnostic: diagnostic, value: .good)
 
             sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: poorState))
-            XCTAssertEqual(sut.currentBottomToastDiagnostic?.networkDiagnostic, diagnostic)
+            XCTAssertEqual(sut.currentBottomToastDiagnostic?.networkQualityDiagnostic, diagnostic)
 
             sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: badState))
-            XCTAssertEqual(sut.currentBottomToastDiagnostic?.networkDiagnostic, diagnostic)
+            XCTAssertEqual(sut.currentBottomToastDiagnostic?.networkQualityDiagnostic, diagnostic)
 
             sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: goodState))
             XCTAssertNil(sut.currentBottomToastDiagnostic)
@@ -119,10 +119,10 @@ class CallDiagnosticsViewModelTests: XCTestCase {
         let badStateSendReceive = NetworkQualityDiagnosticModel(diagnostic: .networkReceiveQuality, value: .bad)
 
         sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: poorStateSend))
-        XCTAssertEqual(sut.currentBottomToastDiagnostic?.networkDiagnostic, .networkSendQuality)
+        XCTAssertEqual(sut.currentBottomToastDiagnostic?.networkQualityDiagnostic, .networkSendQuality)
 
         sut.update(diagnosticsState: CallDiagnosticsState(networkQualityDiagnostic: badStateSendReceive))
-        XCTAssertEqual(sut.currentBottomToastDiagnostic?.networkDiagnostic, .networkReceiveQuality)
+        XCTAssertEqual(sut.currentBottomToastDiagnostic?.networkQualityDiagnostic, .networkReceiveQuality)
 
     }
 
