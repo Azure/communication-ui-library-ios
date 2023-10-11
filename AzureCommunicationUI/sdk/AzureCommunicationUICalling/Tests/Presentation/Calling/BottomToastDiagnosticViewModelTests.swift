@@ -44,10 +44,13 @@ class BottomToastDiagnosticViewModelTests: XCTestCase {
 
     func test_that_presenting_handled_network_diagnostics_shows_title_and_icon() {
         let expectedText: [NetworkCallDiagnostic: String] = [
+            .networkUnavailable: "AzureCommunicationUICalling.Diagnostics.Text.NetworkLost",
+            .networkRelaysUnreachable: "AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"
+        ]
+
+        let expectedQualityText: [NetworkQualityCallDiagnostic: String] = [
             .networkReceiveQuality: "AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow",
             .networkSendQuality: "AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow",
-            .networkUnavailable: "AzureCommunicationUICalling.Diagnostics.Text.NetworkLost",
-            .networkRelaysUnreachable: "AzureCommunicationUICalling.Diagnostics.Text.NetworkLost",
             .networkReconnectionQuality: "AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"
         ]
 
@@ -55,6 +58,17 @@ class BottomToastDiagnosticViewModelTests: XCTestCase {
             let sut = makeSUT(networkDiagnostic: diagnostic, localizationProvider: localizationProvider)
 
             guard let text = expectedText[diagnostic] else {
+                return XCTFail("Value not verified")
+            }
+
+            XCTAssertEqual(sut.text, text)
+            XCTAssertEqual(sut.icon, .wifiWarning)
+        }
+
+        for diagnostic in NetworkQualityCallDiagnostic.allCases {
+            let sut = makeSUT(networkQualityDiagnostic: diagnostic, localizationProvider: localizationProvider)
+
+            guard let text = expectedQualityText[diagnostic] else {
                 return XCTFail("Value not verified")
             }
 
@@ -86,5 +100,12 @@ extension BottomToastDiagnosticViewModelTests {
         let localizationProviderValue: LocalizationProviderProtocol = localizationProvider ?? LocalizationProvider(logger: LoggerMocking())
         return BottomToastDiagnosticViewModel(localizationProvider: localizationProviderValue,
                                               networkDiagnostic: networkDiagnostic)
+    }
+
+    func makeSUT(networkQualityDiagnostic: NetworkQualityCallDiagnostic,
+                 localizationProvider: LocalizationProviderMocking? = nil) -> BottomToastDiagnosticViewModel {
+        let localizationProviderValue: LocalizationProviderProtocol = localizationProvider ?? LocalizationProvider(logger: LoggerMocking())
+        return BottomToastDiagnosticViewModel(localizationProvider: localizationProviderValue,
+                                              networkQualityDiagnostic: networkQualityDiagnostic)
     }
 }

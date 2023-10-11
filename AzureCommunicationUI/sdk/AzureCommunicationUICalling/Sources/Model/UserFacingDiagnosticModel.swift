@@ -4,11 +4,14 @@
 //
 
 enum NetworkCallDiagnostic: String, CaseIterable, Equatable {
+    case networkUnavailable
+    case networkRelaysUnreachable
+}
+
+enum NetworkQualityCallDiagnostic: String, CaseIterable, Equatable {
     case networkReconnectionQuality
     case networkReceiveQuality
     case networkSendQuality
-    case networkUnavailable
-    case networkRelaysUnreachable
 }
 
 enum MediaCallDiagnostic: String, CaseIterable, Equatable {
@@ -43,7 +46,7 @@ enum CallDiagnosticQuality: Int {
 }
 
 typealias NetworkQualityDiagnosticModel =
-    CallDiagnosticModel<NetworkCallDiagnostic, CallDiagnosticQuality>
+    CallDiagnosticModel<NetworkQualityCallDiagnostic, CallDiagnosticQuality>
 
 typealias NetworkDiagnosticModel = CallDiagnosticModel<NetworkCallDiagnostic, Bool>
 
