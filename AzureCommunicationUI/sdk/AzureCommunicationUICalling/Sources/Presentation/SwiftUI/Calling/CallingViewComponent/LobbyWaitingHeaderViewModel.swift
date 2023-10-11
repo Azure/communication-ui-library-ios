@@ -74,16 +74,11 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
     func update(localUserState: LocalUserState,
                 remoteParticipantsState: RemoteParticipantsState,
                 callingState: CallingState) {
-        let mayDisplay = !isHoldingOrInLobby(callingState: callingState)
-
-        guard mayDisplay else {
-            isDisplayed = false
-            isParticipantsListDisplayed = false
-            return
-        }
+        let canShow = canShowLobby(callingState: callingState, participantRole: localUserState.participantRole)
 
         let newLobbyParticipantCount = lobbyUsersCount(remoteParticipantsState)
-        let isDisplayed = newLobbyParticipantCount > 0
+        let isDisplayed = canShow
+            && newLobbyParticipantCount > 0
             && (isDisplayed || newLobbyParticipantCount > lobbyParticipantCount)
 
         if self.isDisplayed != isDisplayed {
@@ -104,17 +99,14 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
             .count
     }
 
-    private func isHoldingOrInLobby(callingState: CallingState) -> Bool {
-        guard callingState.status == .inLobby || callingState.status == .localHold else {
+    private func canShowLobby(callingState: CallingState, participantRole: ParticipantRole) -> Bool {
+        guard callingState.status != .inLobby,
+              callingState.status != .localHold else {
             return false
         }
-        if isDisplayed {
-            isDisplayed = false
-        }
-        if isParticipantsListDisplayed {
-            isParticipantsListDisplayed = false
-        }
 
-        return true
+        return participantRole == .organizer
+                || participantRole == .presenter
+                || participantRole == .coorganizer
     }
 }

@@ -83,7 +83,7 @@ class LobbyWaitingHeaderViewModelTests: XCTestCase {
 
     func test_infoHeaderViewModel_update_when_lobbyParticipantIsRemoved_then_shouldNotBeDisplayed() {
         let sut = makeSUT()
-        let expectation = XCTestExpectation(description: "Should display")
+        let expectation = XCTestExpectation(description: "Should not display")
         sut.$isDisplayed
             .dropFirst()
             .sink(receiveValue: { _ in
@@ -95,7 +95,9 @@ class LobbyWaitingHeaderViewModelTests: XCTestCase {
         let remoteParticipantsState = RemoteParticipantsState(
             participantInfoList: participantInfoModel, lastUpdateTimeStamp: Date())
 
-        sut.update(localUserState: storeFactory.store.state.localUserState,
+        let localUserState = LocalUserState(participantRole: .presenter)
+
+        sut.update(localUserState: localUserState,
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState())
 
@@ -127,12 +129,60 @@ class LobbyWaitingHeaderViewModelTests: XCTestCase {
         let remoteParticipantsState = RemoteParticipantsState(
             participantInfoList: participantInfoModel, lastUpdateTimeStamp: Date())
 
-        sut.update(localUserState: storeFactory.store.state.localUserState,
+        sut.update(localUserState: LocalUserState(participantRole: .presenter),
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState())
 
         XCTAssertTrue(sut.isDisplayed)
         wait(for: [expectation], timeout: 1)
+
+        sut.update(localUserState: LocalUserState(participantRole: .organizer),
+                   remoteParticipantsState: remoteParticipantsState,
+                   callingState: CallingState())
+
+        XCTAssertTrue(sut.isDisplayed)
+
+        sut.update(localUserState: LocalUserState(participantRole: .coorganizer),
+                   remoteParticipantsState: remoteParticipantsState,
+                   callingState: CallingState())
+
+        XCTAssertTrue(sut.isDisplayed)
+
+    }
+
+    func test_infoHeaderViewModel_update_when_participantInfoListHasLobbyParticipantsButHasNoPermissionToAdmit_then_shouldNotBeDisplayed() {
+        let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should not display")
+        expectation.isInverted = true
+        sut.$isDisplayed
+            .dropFirst()
+            .sink(receiveValue: { _ in
+                expectation.fulfill()
+            }).store(in: cancellable)
+
+        let participantInfoModel: [ParticipantInfoModel] = makeParticipants([.inLobby])
+        let remoteParticipantsState = RemoteParticipantsState(
+            participantInfoList: participantInfoModel, lastUpdateTimeStamp: Date())
+
+        let localUserState = LocalUserState(participantRole: .consumer)
+        sut.update(localUserState: localUserState,
+                   remoteParticipantsState: remoteParticipantsState,
+                   callingState: CallingState())
+
+        XCTAssertFalse(sut.isDisplayed)
+        wait(for: [expectation], timeout: 1)
+
+        sut.update(localUserState: LocalUserState(participantRole: .consumer),
+                   remoteParticipantsState: remoteParticipantsState,
+                   callingState: CallingState())
+
+        XCTAssertFalse(sut.isDisplayed)
+
+        sut.update(localUserState: LocalUserState(participantRole: .uninitialized),
+                   remoteParticipantsState: remoteParticipantsState,
+                   callingState: CallingState())
+
+        XCTAssertFalse(sut.isDisplayed)
     }
 }
 

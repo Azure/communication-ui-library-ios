@@ -97,7 +97,8 @@ private func handleLocalUserAction(_ action: LocalUserAction,
             .microphonePreviewOff,
             .audioDeviceChangeRequested(device: _),
             .audioDeviceChangeSucceeded(device: _),
-            .audioDeviceChangeFailed(error: _):
+            .audioDeviceChangeFailed(error: _),
+            .participantRoleChanged(participantRole: _):
         break
     }
 }

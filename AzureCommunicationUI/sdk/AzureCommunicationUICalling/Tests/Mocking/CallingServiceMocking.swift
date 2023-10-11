@@ -85,6 +85,8 @@ class CallingServiceMocking: CallingServiceProtocol {
 
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
 
+    var participantRoleSubject = PassthroughSubject<ParticipantRole, Never>()
+
     func setupCall() async throws {
         setupCallCalled = true
         try await possibleErrorTask().value

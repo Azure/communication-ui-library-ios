@@ -10,6 +10,7 @@ class ParticipantsListViewModel: ObservableObject {
     @Published var participantsList: [ParticipantsListCellViewModel] = []
     @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
     var lastUpdateTimeStamp = Date()
+    private var lastParticipantRole: ParticipantRole
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let dispatch: ActionDispatch
@@ -21,6 +22,7 @@ class ParticipantsListViewModel: ObservableObject {
         localParticipantsListCellViewModel =
         compositeViewModelFactory.makeLocalParticipantsListCellViewModel(localUserState: localUserState)
         self.dispatch = dispatchAction
+        self.lastParticipantRole = localUserState.participantRole
     }
 
     func update(localUserState: LocalUserState,
@@ -31,11 +33,16 @@ class ParticipantsListViewModel: ObservableObject {
             compositeViewModelFactory.makeLocalParticipantsListCellViewModel(localUserState: localUserState)
         }
 
-        if lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp {
+        if lastUpdateTimeStamp != remoteParticipantsState.lastUpdateTimeStamp
+           || self.lastParticipantRole != localUserState.participantRole {
             lastUpdateTimeStamp = remoteParticipantsState.lastUpdateTimeStamp
+            self.lastParticipantRole = localUserState.participantRole
+
+            let shouldilterOutLobbyUsers = shouldilterOutLobbyUsers(participantRole: localUserState.participantRole)
             participantsList = remoteParticipantsState.participantInfoList
                 .filter({ participant in
                     participant.status != .disconnected
+                    && (!shouldilterOutLobbyUsers || participant.status != .inLobby)
                 })
                 .map {
                     compositeViewModelFactory.makeParticipantsListCellViewModel(participantInfoModel: $0)
@@ -66,5 +73,11 @@ class ParticipantsListViewModel: ObservableObject {
 
     func declineParticipant(_ participantId: String) {
         dispatch(.remoteParticipantsAction(.decline(participantId: participantId)))
+    }
+
+    private func shouldilterOutLobbyUsers(participantRole: ParticipantRole) -> Bool {
+        return !(participantRole == .organizer
+                 || participantRole == .presenter
+                 || participantRole == .coorganizer)
     }
 }

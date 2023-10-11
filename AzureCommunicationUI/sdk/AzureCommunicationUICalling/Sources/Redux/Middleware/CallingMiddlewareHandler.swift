@@ -424,5 +424,11 @@ extension CallingMiddlewareHandler {
             .sink { speakers in
                 dispatch(.remoteParticipantsAction(.dominantSpeakersUpdated(speakers: speakers)))
             }.store(in: subscription)
+
+        callingService.participantRoleSubject
+            .removeDuplicates()
+            .sink { participantRole in
+                dispatch(.localUserAction(.participantRoleChanged(participantRole: participantRole)))
+            }.store(in: subscription)
     }
 }
