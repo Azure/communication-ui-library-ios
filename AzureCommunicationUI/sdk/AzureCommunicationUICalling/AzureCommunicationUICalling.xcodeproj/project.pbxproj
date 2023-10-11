@@ -250,6 +250,7 @@
 		A8ED23302649EA61008A26B2 /* NavigationRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */; };
 		B2120A5C2A97E35E00E29C05 /* UserFacingDiagnosticModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2120A5B2A97E35E00E29C05 /* UserFacingDiagnosticModel.swift */; };
 		B238378B2AA26EA7001F72B3 /* CallDiagnosticsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B238378A2AA26EA7001F72B3 /* CallDiagnosticsReducer.swift */; };
+		B253EA092AD754760022D104 /* ParticipantRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831DADE29AEC2A4005ADE30 /* ParticipantRole.swift */; };
 		B26F4B092ABA2F6B00753B6C /* BottomToastDiagnosticViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B26F4B082ABA2F6B00753B6C /* BottomToastDiagnosticViewModelTests.swift */; };
 		B2B1DB382ABA5339003B00DB /* CallDiagnosticsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B1DB372ABA5339003B00DB /* CallDiagnosticsViewModelTests.swift */; };
 		B2B1DB3D2ABE35B0003B00DB /* MessageBarDiagnosticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B1DB3C2ABE35B0003B00DB /* MessageBarDiagnosticView.swift */; };
@@ -419,6 +420,7 @@
 		1FE1BE7E26FE38C9000A8D18 /* CallCompositeInternalError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeInternalError.swift; sourceTree = "<group>"; };
 		1FF252D527B6F29A006A113E /* JoiningCallActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoiningCallActivityView.swift; sourceTree = "<group>"; };
 		1FFEA01326A68D0D00E90816 /* FontExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontExtension.swift; sourceTree = "<group>"; };
+		2831DADE29AEC2A4005ADE30 /* ParticipantRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantRole.swift; sourceTree = "<group>"; };
 		28FE266C29E804F5009CC19D /* RemoteParticipantsAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantsAction.swift; sourceTree = "<group>"; };
 		28FE267229EE168E009CC19D /* RemoteParticipantsReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantsReducer.swift; sourceTree = "<group>"; };
 		28FE267629EE9E5A009CC19D /* RemoteParticipantsReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteParticipantsReducerTests.swift; sourceTree = "<group>"; };
@@ -1447,7 +1449,6 @@
 		D925FB8A0861AF0C1415C6C4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				058D6A242ACE0AD4005CF1C8 /* AzureCommunicationCalling.framework */,
 				1FBCB682264522F200F57EEA /* XCTest.framework */,
 				C580DBF67D8B5AEF7A801F90 /* Pods_AzureCommunicationUICalling.framework */,
 				EC5A1FE3C2622411DFF98147 /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework */,
@@ -1852,7 +1853,6 @@
 				FAD20A8D292834500063D8A9 /* CancelBag.swift in Sources */,
 				50FA460C26829162001844AC /* IconWithLabelButton.swift in Sources */,
 				756F596E2965F8EA00BAFBF7 /* Store.swift in Sources */,
-				2831DADF29AEC2A4005ADE30 /* ParticipantRole.swift in Sources */,
 				B2B1DB3F2ABE35DA003B00DB /* MessageBarDiagnosticViewModel.swift in Sources */,
 				1B7ABF82278CFFC400D79DF7 /* ZoomableVideoRenderView.swift in Sources */,
 				05325C782A2A66CB00267629 /* VisibilityState.swift in Sources */,
@@ -1896,6 +1896,7 @@
 				1F94DAF326772B3C00691D1E /* UIWindowExtension.swift in Sources */,
 				054F2B532A2679160017985B /* CallPipVideoViewController.swift in Sources */,
 				FA538278292FE86200963FFC /* DebugInfo.swift in Sources */,
+				B253EA092AD754760022D104 /* ParticipantRole.swift in Sources */,
 				759BDEFD28FF0A81002B6853 /* SupportedLocale.swift in Sources */,
 				696AD14928DBAFCE0043F807 /* ButtonState.swift in Sources */,
 				885F3F9A291DCDF500B86C9B /* DrawerListItemViewModel.swift in Sources */,
