@@ -228,12 +228,13 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     func requestCameraSwitch(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
+            let currentCamera = state.localUserState.cameraState.device
             do {
                 let device = try await callingService.switchCamera()
                 try await Task.sleep(nanoseconds: NSEC_PER_SEC)
                 dispatch(.localUserAction(.cameraSwitchSucceeded(cameraDevice: device)))
             } catch {
-                dispatch(.localUserAction(.cameraSwitchFailed(error: error)) )
+                dispatch(.localUserAction(.cameraSwitchFailed(previousCamera: currentCamera, error: error)))
             }
         }
     }
@@ -387,7 +388,7 @@ extension CallingMiddlewareHandler {
                     }
                     // to fix the bug that resume call won't work without Internet
                     // we exit the UI library when we receive the wrong status .remoteHold
-                } else if callingStatus == .disconnected || callingStatus == .remoteHold {
+                } else if callingStatus == .disconnected {
                     self.logger.debug("Subscription cancel happy path")
                     dispatch(.compositeExitAction)
                     self.subscription.cancel()
