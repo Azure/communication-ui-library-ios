@@ -7,6 +7,7 @@ import Foundation
 import UIKit
 
 #if DEBUG
+@testable import AzureCommunicationUICalling
 class FloatingUITestWindow: UIWindow {
 
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
@@ -65,6 +66,12 @@ class FloatingUITestWindow: UIWindow {
         createButton(title: "Hold Participant",
                      accessibilityID: "callHoldParticipant-AID",
                      selector: #selector(holdParticipantButtonTapped))
+        createButton(title: "Change role to Presenter",
+                     accessibilityID: "ChangeRoleToPresenter-AID",
+                     selector: #selector(changeRoleToPresenterButtonTapped))
+        createButton(title: "Change role to Attendee",
+                     accessibilityID: "ChangeRoleToAttendee-AID",
+                     selector: #selector(changeRoleToAttendeeButtonTapped))
 
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
@@ -160,6 +167,20 @@ class FloatingUITestWindow: UIWindow {
         debugPrint("UI Test:: HoldParticipantButtonTapped")
         Task {
             try? await callingSDKWrapperMock?.holdParticipant()
+        }
+    }
+
+    @objc func changeRoleToPresenterButtonTapped(sender: UIButton) {
+        debugPrint("UI Test:: ChangeRoleToPresenterButtonTapped")
+        Task {
+            try? await callingSDKWrapperMock?.changeLocalParticipantRole(.presenter)
+        }
+    }
+
+    @objc func changeRoleToAttendeeButtonTapped(sender: UIButton) {
+        debugPrint("UI Test:: ChangeRoleToAttendeeButtonTapped")
+        Task {
+            try? await callingSDKWrapperMock?.changeLocalParticipantRole(.attendee)
         }
     }
 }

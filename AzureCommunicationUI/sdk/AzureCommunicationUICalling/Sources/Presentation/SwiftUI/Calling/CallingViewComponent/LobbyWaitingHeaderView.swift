@@ -16,6 +16,7 @@ struct LobbyWaitingHeaderView: View {
         static let shapeCornerRadius: CGFloat = 5
         static let infoLabelHorizontalPadding: CGFloat = 16.0
         static let hStackHorizontalPadding: CGFloat = 20.0
+        static let hStackBottomPadding: CGFloat = 10.0
         static let hSpace: CGFloat = 4
         static let foregroundColor: Color = .white
 
@@ -69,6 +70,7 @@ struct LobbyWaitingHeaderView: View {
                             trailing: Constants.hStackHorizontalPadding / 2.0))
         .background(Color(StyleProvider.color.surfaceDarkColor))
         .clipShape(RoundedRectangle(cornerRadius: Constants.shapeCornerRadius))
+        .padding(.bottom, Constants.hStackBottomPadding)
     }
 
     var addParticipantIcon: some View {
@@ -81,11 +83,13 @@ struct LobbyWaitingHeaderView: View {
         PrimaryButton(viewModel: viewModel.participantListButtonViewModel)
             .fixedSize()
             .background(SourceViewSpace(sourceView: participantsListButtonSourceView))
+            .accessibilityIdentifier(AccessibilityIdentifier.lobbyWaitingViewID.rawValue)
     }
 
     var dismissButton: some View {
         IconButton(viewModel: viewModel.dismissButtonViewModel)
             .background(SourceViewSpace(sourceView: participantsListButtonSourceView))
+            .accessibilityIdentifier(AccessibilityIdentifier.lobbyWaitingDismissID.rawValue)
     }
 
     var participantsListView: some View {

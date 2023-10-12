@@ -42,6 +42,8 @@ class LobbyActionErrorViewModel: ObservableObject {
                 }
                 dispatchAction(.remoteParticipantsAction(.lobbyError(errorCode: nil)))
         }
+        self.dismissButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
+            .lobbyActionErrorDismiss)
     }
 
     func update(localUserState: LocalUserState,

@@ -238,5 +238,11 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
             self.participantsInfoListSubject.send(self.remoteParticipantsMocking)
         }
     }
+
+    func setParticipantRole(_ role: ParticipantRole) {
+        Task { @MainActor [weak self] in
+            self?.participantRoleSubject.send(role)
+        }
+    }
 }
 #endif

@@ -17,6 +17,10 @@ struct CallingView: View {
         static let horizontalPadding: CGFloat = 8
     }
 
+    enum Constants {
+        static let topAlertAreaViewTopPaddin: CGFloat = 10.0
+    }
+
     @ObservedObject var viewModel: CallingViewModel
     let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
@@ -125,7 +129,7 @@ struct CallingView: View {
             let widthWithoutHorizontalPadding = geoWidth - 2 * InfoHeaderViewConstants.horizontalPadding
             let infoHeaderViewWidth = isIpad ? min(widthWithoutHorizontalPadding,
                                                    InfoHeaderViewConstants.maxWidth) : widthWithoutHorizontalPadding
-            VStack {
+            VStack(spacing: 0) {
                 bannerView
                 HStack {
                     if isIpad {
@@ -162,6 +166,7 @@ struct CallingView: View {
                 }
                 Spacer()
             }
+            .padding(.top, Constants.topAlertAreaViewTopPaddin)
         }
     }
 

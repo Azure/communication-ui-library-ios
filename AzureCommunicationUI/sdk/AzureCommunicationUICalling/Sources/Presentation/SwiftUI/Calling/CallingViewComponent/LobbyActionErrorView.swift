@@ -17,6 +17,7 @@ struct LobbyActionErrorView: View {
         static let shapeCornerRadius: CGFloat = 5
         static let labelHorizontalPadding: CGFloat = 16.0
         static let hStackHorizontalPadding: CGFloat = 20.0
+        static let hStackBottomPadding: CGFloat = 10.0
         static let hSpace: CGFloat = 4
         static let foregroundColor: Color = .white
 
@@ -64,6 +65,7 @@ struct LobbyActionErrorView: View {
                             trailing: Constants.hStackHorizontalPadding / 2.0))
         .background(Color(StyleProvider.color.surfaceDarkColor))
         .clipShape(RoundedRectangle(cornerRadius: Constants.shapeCornerRadius))
+        .padding(.bottom, Constants.hStackBottomPadding)
     }
 
     var errorIcon: some View {

@@ -40,7 +40,7 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
             dispatchAction: dispatchAction)
         self.participantListButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
-            buttonLabel: "View lobby",
+            buttonLabel: localizationProvider.getLocalizedString(.lobbyWaitingHeaderViewButton),
             iconName: nil,
             isDisabled: false,
             paddings: CompositeButton.Paddings(horizontal: 10, vertical: 6)) { [weak self] in
@@ -50,7 +50,7 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
                 self.showParticipantListButtonTapped()
         }
         self.participantListButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
-            .waitingInLobbyParticipantListAccessibilityLabel)
+            .lobbyWaitingHeaderViewButtonAccessibilityLabel)
 
         self.dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .dismiss,
@@ -61,6 +61,8 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
                 }
                 self.isDisplayed = false
         }
+        self.dismissButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
+            .lobbyWaitingHeaderDismissButtonAccessibilityLabel)
     }
 
     func showParticipantListButtonTapped() {

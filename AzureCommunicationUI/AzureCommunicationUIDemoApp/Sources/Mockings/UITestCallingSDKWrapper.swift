@@ -257,6 +257,15 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             handler.declineLobbyParticipant(participantId)
         }
     }
+
+    func changeLocalParticipantRole(_ role: ParticipantRole) async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.setParticipantRole(role)
+        }
+    }
 }
 
 extension UITestCallingSDKWrapper {

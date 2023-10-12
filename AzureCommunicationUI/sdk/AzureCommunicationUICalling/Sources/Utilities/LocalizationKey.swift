@@ -50,12 +50,16 @@ enum LocalizationKey: String {
     case participantListAccessibilityLabel =
             "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"
 
+    /* Lobby waiting */
     case lobbyWaitingToJoin = "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"
-    case waitingInLobbyParticipantListAccessibilityLabel =
-            "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ParticipantList.AccessibilityLabel"
-    case waitingInLobbyDismissAccessibilityLabel =
-            "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ParticipantList.Dismiss"
+    case lobbyWaitingHeaderViewButton =
+            "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"
+    case lobbyWaitingHeaderViewButtonAccessibilityLabel =
+            "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"
+    case lobbyWaitingHeaderDismissButtonAccessibilityLabel =
+            "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"
 
+    /* Lobby waiting error */
     case lobbyActionErrorConversationTypeNotSupported =
             "AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"
     case lobbyActionErrorLobbyDisabledByConfigurations =
@@ -66,6 +70,8 @@ enum LocalizationKey: String {
             "AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"
     case lobbyActionUnknownError = "AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"
 
+    case lobbyActionErrorDismiss = "AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel"
+
     case unnamedParticipant = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"
     // %@ is local participant name
     case localeParticipantWithSuffix =
@@ -74,6 +80,7 @@ enum LocalizationKey: String {
     case unmuted = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"
     case speaking = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"
     case onHold = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"
+    case participantListLobbyAction = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"
 
     case frontCamera = "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"
     case backCamera = "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"
