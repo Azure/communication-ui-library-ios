@@ -166,7 +166,8 @@ class CallingMiddlewareHandlerTests: XCTestCase {
         let sut = makeSUT()
         let error = getError()
         func dispatch(action: Action) {
-            XCTAssertTrue(action == Action.localUserAction(.cameraSwitchFailed(error: error)))
+            XCTAssertTrue(action == Action.localUserAction(
+                .cameraSwitchFailed(previousCamera: LocalUserState.CameraDeviceSelectionStatus.front, error: error)))
         }
         mockCallingService.error = error
         await sut.requestCameraSwitch(state: getEmptyState(), dispatch: dispatch).value

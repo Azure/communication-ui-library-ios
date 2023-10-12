@@ -62,11 +62,11 @@ class PreviewAreaViewModel: ObservableObject {
         return displayText
     }
 
-    func update(localUserState: LocalUserState, permissionState: PermissionState) {
+    func update(localUserState: LocalUserState, permissionState: PermissionState, visibilityState: VisibilityState) {
         self.cameraPermission = permissionState.cameraPermission
         self.audioPermission = permissionState.audioPermission
         updatePermissionsState()
-        localVideoViewModel.update(localUserState: localUserState)
+        localVideoViewModel.update(localUserState: localUserState, visibilityState: visibilityState)
     }
 
     private func updatePermissionsState() {

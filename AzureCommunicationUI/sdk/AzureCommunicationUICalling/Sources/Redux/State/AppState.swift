@@ -10,6 +10,7 @@ struct AppState {
     let permissionState: PermissionState
     let localUserState: LocalUserState
     let lifeCycleState: LifeCycleState
+    let visibilityState: VisibilityState
     let audioSessionState: AudioSessionState
     let remoteParticipantsState: RemoteParticipantsState
     let navigationState: NavigationState
@@ -24,7 +25,8 @@ struct AppState {
          navigationState: NavigationState = .init(),
          remoteParticipantsState: RemoteParticipantsState = .init(),
          errorState: ErrorState = .init(),
-         defaultUserState: DefaultUserState = .init()) {
+         defaultUserState: DefaultUserState = .init(),
+         pipState: VisibilityState = .init()) {
         self.callingState = callingState
         self.permissionState = permissionState
         self.localUserState = localUserState
@@ -34,5 +36,6 @@ struct AppState {
         self.remoteParticipantsState = remoteParticipantsState
         self.errorState = errorState
         self.defaultUserState = defaultUserState
+        self.visibilityState = pipState
     }
 }

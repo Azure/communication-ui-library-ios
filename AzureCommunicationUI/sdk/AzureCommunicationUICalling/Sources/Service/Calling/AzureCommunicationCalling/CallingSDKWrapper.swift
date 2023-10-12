@@ -71,16 +71,20 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             joinCallOptions.videoOptions = videoOptions
         }
 
-        joinCallOptions.audioOptions = AudioOptions()
-        joinCallOptions.audioOptions?.muted = !isAudioPreferred
+        joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
+        joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
         joinCallOptions.incomingVideoOptions = incomingVideoOptions
 
         var joinLocator: JoinMeetingLocator
         if callConfiguration.compositeCallType == .groupCall,
            let groupId = callConfiguration.groupId {
             joinLocator = GroupCallLocator(groupId: groupId)
-        } else if let meetingLink = callConfiguration.meetingLink {
+        } else if callConfiguration.compositeCallType == .teamsMeeting,
+                  let meetingLink = callConfiguration.meetingLink {
             joinLocator = TeamsMeetingLinkLocator(meetingLink: meetingLink)
+        } else if callConfiguration.compositeCallType == .roomsCall,
+                  let roomId = callConfiguration.roomId {
+            joinLocator = RoomCallLocator(roomId: roomId)
         } else {
             logger.error("Invalid groupID / meeting link")
             throw CallCompositeInternalError.callJoinFailed
@@ -193,9 +197,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         guard let call = call else {
             return
         }
+        guard !call.isOutgoingAudioMuted else {
+            logger.warning("muteOutgoingAudio is skipped as outgoing audio already muted")
+            return
+        }
 
         do {
-            try await call.mute()
+            try await call.muteOutgoingAudio()
         } catch {
             logger.error("ERROR: It was not possible to mute. \(error)")
             throw error
@@ -207,9 +215,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         guard let call = call else {
             return
         }
+        guard call.isOutgoingAudioMuted else {
+            logger.warning("unmuteOutgoingAudio is skipped as outgoing audio already muted")
+            return
+        }
 
         do {
-            try await call.unmute()
+            try await call.unmuteOutgoingAudio()
         } catch {
             logger.error("ERROR: It was not possible to unmute. \(error)")
             throw error

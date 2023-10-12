@@ -228,12 +228,13 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     func requestCameraSwitch(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
+            let currentCamera = state.localUserState.cameraState.device
             do {
                 let device = try await callingService.switchCamera()
                 try await Task.sleep(nanoseconds: NSEC_PER_SEC)
                 dispatch(.localUserAction(.cameraSwitchSucceeded(cameraDevice: device)))
             } catch {
-                dispatch(.localUserAction(.cameraSwitchFailed(error: error)) )
+                dispatch(.localUserAction(.cameraSwitchFailed(previousCamera: currentCamera, error: error)))
             }
         }
     }
