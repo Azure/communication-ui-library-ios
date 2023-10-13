@@ -15,8 +15,8 @@
 		05317E3729B7D6B500149F57 /* CallHistoryServiceMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E3629B7D6B500149F57 /* CallHistoryServiceMocking.swift */; };
 		0532548B2A27B1D100267629 /* PipManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0532548A2A27B1D100267629 /* PipManager.swift */; };
 		05325C782A2A66CB00267629 /* VisibilityState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05325C772A2A66CB00267629 /* VisibilityState.swift */; };
-		0546D9512ACE8CAC005D528E /* LobbyActionErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546D9502ACE8CAC005D528E /* LobbyActionErrorView.swift */; };
-		0546D9532ACE8CD7005D528E /* LobbyActionErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546D9522ACE8CD7005D528E /* LobbyActionErrorViewModel.swift */; };
+		0546D9512ACE8CAC005D528E /* LobbyErrorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546D9502ACE8CAC005D528E /* LobbyErrorHeaderView.swift */; };
+		0546D9532ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546D9522ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift */; };
 		054F2B532A2679160017985B /* CallPipVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054F2B522A2679160017985B /* CallPipVideoViewController.swift */; };
 		058D6A232AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058D6A222AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift */; };
 		05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */; };
@@ -309,8 +309,8 @@
 		05317E3629B7D6B500149F57 /* CallHistoryServiceMocking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryServiceMocking.swift; sourceTree = "<group>"; };
 		0532548A2A27B1D100267629 /* PipManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipManager.swift; sourceTree = "<group>"; };
 		05325C772A2A66CB00267629 /* VisibilityState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibilityState.swift; sourceTree = "<group>"; };
-		0546D9502ACE8CAC005D528E /* LobbyActionErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyActionErrorView.swift; sourceTree = "<group>"; };
-		0546D9522ACE8CD7005D528E /* LobbyActionErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyActionErrorViewModel.swift; sourceTree = "<group>"; };
+		0546D9502ACE8CAC005D528E /* LobbyErrorHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyErrorHeaderView.swift; sourceTree = "<group>"; };
+		0546D9522ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyErrorHeaderViewModel.swift; sourceTree = "<group>"; };
 		054F2B522A2679160017985B /* CallPipVideoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallPipVideoViewController.swift; sourceTree = "<group>"; };
 		058D6A222AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyWaitingHeaderViewModelTest.swift; sourceTree = "<group>"; };
 		058D6A242ACE0AD4005CF1C8 /* AzureCommunicationCalling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AzureCommunicationCalling.framework; path = "../../../../../orient_workspace/SpoolCallingStack/native/staging.d/release/BETA/sdk/arm64-v8a/AzureCommunicationCalling.framework"; sourceTree = "<group>"; };
@@ -1056,8 +1056,8 @@
 				1BAD44BB283DAF2100C9E6A9 /* DraggableLocalVideoView.swift */,
 				051EE2282AB90FC300A94632 /* LobbyWaitingHeaderView.swift */,
 				051EE22A2AB9106200A94632 /* LobbyWaitingHeaderViewModel.swift */,
-				0546D9502ACE8CAC005D528E /* LobbyActionErrorView.swift */,
-				0546D9522ACE8CD7005D528E /* LobbyActionErrorViewModel.swift */,
+				0546D9502ACE8CAC005D528E /* LobbyErrorHeaderView.swift */,
+				0546D9522ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift */,
 			);
 			path = CallingViewComponent;
 			sourceTree = "<group>";
@@ -1849,9 +1849,9 @@
 				FAD20A8B292834500063D8A9 /* DeviceExtension.swift in Sources */,
 				881D8F7427FCA6B3008EC897 /* AvatarViewManager.swift in Sources */,
 				1BAD44BC283DAF2100C9E6A9 /* DraggableLocalVideoView.swift in Sources */,
-				0546D9512ACE8CAC005D528E /* LobbyActionErrorView.swift in Sources */,
+				0546D9512ACE8CAC005D528E /* LobbyErrorHeaderView.swift in Sources */,
 				50E2D69726EBCD15006B0EF4 /* CompositeParticipantsListCell.swift in Sources */,
-				0546D9532ACE8CD7005D528E /* LobbyActionErrorViewModel.swift in Sources */,
+				0546D9532ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift in Sources */,
 				A8373994261F9D7600D46787 /* CallCompositeOptions.swift in Sources */,
 				FAACEE3E28FA1190003F7D7C /* MoreCallOptionsListViewModel.swift in Sources */,
 				88A70180270E50D100F817B8 /* PopupModalView.swift in Sources */,

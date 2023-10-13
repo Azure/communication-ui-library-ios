@@ -46,7 +46,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
     func makeLobbyActionErrorViewModel(localUserState: LocalUserState,
-                                       dispatchAction: @escaping ActionDispatch) -> LobbyActionErrorViewModel
+                                       dispatchAction: @escaping ActionDispatch) -> LobbyErrorHeaderViewModel
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel,
                                       lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
@@ -282,8 +282,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     func makeLobbyActionErrorViewModel(localUserState: LocalUserState,
-                                       dispatchAction: @escaping ActionDispatch) -> LobbyActionErrorViewModel {
-        LobbyActionErrorViewModel(compositeViewModelFactory: self,
+                                       dispatchAction: @escaping ActionDispatch) -> LobbyErrorHeaderViewModel {
+        LobbyErrorHeaderViewModel(compositeViewModelFactory: self,
                                   logger: logger,
                                   localUserState: localUserState,
                                   localizationProvider: localizationProvider,

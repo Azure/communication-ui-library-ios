@@ -5,7 +5,7 @@
 
 import Foundation
 
-class LobbyActionErrorViewModel: ObservableObject {
+class LobbyErrorHeaderViewModel: ObservableObject {
     @Published var accessibilityLabel: String
     @Published var title: String
     @Published var isDisplayed: Bool = false

@@ -6,8 +6,8 @@
 import SwiftUI
 import FluentUI
 
-struct LobbyActionErrorView: View {
-    @ObservedObject var viewModel: LobbyActionErrorViewModel
+struct LobbyErrorHeaderView: View {
+    @ObservedObject var viewModel: LobbyErrorHeaderViewModel
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @State var dismissButtonSourceView = UIView()
 

@@ -239,6 +239,41 @@ class LobbyWaitingHeaderViewModelTests: XCTestCase {
 
         XCTAssertFalse(sut.isDisplayed)
     }
+
+    func test_infoHeaderViewModel_update_when_participantInfoListHasLobbyParticipantsRoleWithNoPermissionToAdmitThenWith_then_shouldBeDisplayed() {
+        let sut = makeSUT()
+        let expectation = XCTestExpectation(description: "Should display")
+        sut.$isDisplayed
+            .dropFirst()
+            .sink(receiveValue: { _ in
+                expectation.fulfill()
+            }).store(in: cancellable)
+
+        let participantInfoModel: [ParticipantInfoModel] = makeParticipants([.inLobby])
+        let remoteParticipantsState = RemoteParticipantsState(
+            participantInfoList: participantInfoModel, lastUpdateTimeStamp: Date())
+
+        let localUserState = LocalUserState(participantRole: .consumer)
+
+        sut.update(localUserState: localUserState,
+                   remoteParticipantsState: remoteParticipantsState,
+                   callingState: CallingState())
+
+        XCTAssertFalse(sut.isDisplayed)
+
+        sut.update(localUserState: LocalUserState(participantRole: .presenter),
+                   remoteParticipantsState: remoteParticipantsState,
+                   callingState: CallingState())
+
+        XCTAssertTrue(sut.isDisplayed)
+        wait(for: [expectation], timeout: 1)
+
+        sut.update(localUserState: LocalUserState(participantRole: .uninitialized),
+                   remoteParticipantsState: remoteParticipantsState,
+                   callingState: CallingState())
+
+        XCTAssertFalse(sut.isDisplayed)
+    }
 }
 
 extension LobbyWaitingHeaderViewModelTests {
