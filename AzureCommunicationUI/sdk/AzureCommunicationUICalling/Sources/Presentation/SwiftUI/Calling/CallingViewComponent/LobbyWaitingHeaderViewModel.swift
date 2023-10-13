@@ -101,9 +101,10 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
             .count
     }
 
-    private func canShowLobby(callingState: CallingState, participantRole: ParticipantRole) -> Bool {
+    private func canShowLobby(callingState: CallingState, participantRole: ParticipantRole?) -> Bool {
         guard callingState.status != .inLobby,
-              callingState.status != .localHold else {
+              callingState.status != .localHold,
+              let participantRole = participantRole else {
             return false
         }
 

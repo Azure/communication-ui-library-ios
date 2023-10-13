@@ -10,7 +10,7 @@ class ParticipantsListViewModel: ObservableObject {
     @Published var participantsList: [ParticipantsListCellViewModel] = []
     @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
     var lastUpdateTimeStamp = Date()
-    private var lastParticipantRole: ParticipantRole
+    private var lastParticipantRole: ParticipantRole?
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let dispatch: ActionDispatch
@@ -38,7 +38,7 @@ class ParticipantsListViewModel: ObservableObject {
             lastUpdateTimeStamp = remoteParticipantsState.lastUpdateTimeStamp
             self.lastParticipantRole = localUserState.participantRole
 
-            let shouldilterOutLobbyUsers = shouldilterOutLobbyUsers(participantRole: localUserState.participantRole)
+            let shouldilterOutLobbyUsers = shouldFilterOutLobbyUsers(participantRole: localUserState.participantRole)
             participantsList = remoteParticipantsState.participantInfoList
                 .filter({ participant in
                     participant.status != .disconnected
@@ -75,9 +75,10 @@ class ParticipantsListViewModel: ObservableObject {
         dispatch(.remoteParticipantsAction(.decline(participantId: participantId)))
     }
 
-    private func shouldilterOutLobbyUsers(participantRole: ParticipantRole) -> Bool {
-        return !(participantRole == .organizer
-                 || participantRole == .presenter
-                 || participantRole == .coorganizer)
+    private func shouldFilterOutLobbyUsers(participantRole: ParticipantRole?) -> Bool {
+        return !(participantRole == nil
+            || participantRole == .organizer
+            || participantRole == .presenter
+            || participantRole == .coorganizer)
     }
 }
