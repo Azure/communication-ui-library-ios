@@ -76,9 +76,9 @@ class ParticipantsListViewModel: ObservableObject {
     }
 
     private func shouldFilterOutLobbyUsers(participantRole: ParticipantRole?) -> Bool {
-        return !(participantRole == nil
-            || participantRole == .organizer
-            || participantRole == .presenter
-            || participantRole == .coorganizer)
+        return participantRole == nil
+            || !(participantRole == .organizer
+                 || participantRole == .presenter
+                 || participantRole == .coorganizer)
     }
 }
