@@ -181,7 +181,7 @@ struct CallingView: View {
     }
 
     var lobbyActionErrorView: some View {
-        LobbyActionErrorView(viewModel: viewModel.lobbyActionErrorViewModel,
+        LobbyErrorHeaderView(viewModel: viewModel.lobbyActionErrorViewModel,
                        avatarViewManager: avatarManager)
     }
 

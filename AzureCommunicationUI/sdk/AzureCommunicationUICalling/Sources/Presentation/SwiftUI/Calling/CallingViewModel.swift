@@ -33,7 +33,7 @@ class CallingViewModel: ObservableObject {
     var controlBarViewModel: ControlBarViewModel!
     var infoHeaderViewModel: InfoHeaderViewModel!
     var lobbyWaitingHeaderViewModel: LobbyWaitingHeaderViewModel!
-    var lobbyActionErrorViewModel: LobbyActionErrorViewModel!
+    var lobbyActionErrorViewModel: LobbyErrorHeaderViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,

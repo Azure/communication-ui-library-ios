@@ -18,7 +18,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var controlBarViewModel: ControlBarViewModel?
     var infoHeaderViewModel: InfoHeaderViewModel?
     var lobbyWaitingHeaderViewModel: LobbyWaitingHeaderViewModel?
-    var lobbyActionErrorViewModel: LobbyActionErrorViewModel?
+    var lobbyErrorHeaderViewModel: LobbyErrorHeaderViewModel?
     var localVideoViewModel: LocalVideoViewModel?
     var participantGridViewModel: ParticipantGridViewModel?
     var participantsListViewModel: ParticipantsListViewModel?
@@ -302,8 +302,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     func makeLobbyActionErrorViewModel(localUserState: AzureCommunicationUICalling.LocalUserState,
                                        dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch)
-    -> LobbyActionErrorViewModel {
-        return lobbyActionErrorViewModel ?? LobbyActionErrorViewModel(compositeViewModelFactory: self,
+    -> LobbyErrorHeaderViewModel {
+        return lobbyErrorHeaderViewModel ?? LobbyErrorHeaderViewModel(compositeViewModelFactory: self,
                                                                           logger: logger,
                                                                           localUserState: localUserState,
                                                                           localizationProvider: localizationProvider,
