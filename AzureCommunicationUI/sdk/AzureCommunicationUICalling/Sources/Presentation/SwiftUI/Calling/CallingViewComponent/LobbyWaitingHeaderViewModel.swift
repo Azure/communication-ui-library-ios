@@ -87,7 +87,7 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
             self.isDisplayed = isDisplayed
         }
 
-        self.lobbyParticipantCount = newLobbyParticipantCount
+        self.lobbyParticipantCount = canShow ? newLobbyParticipantCount : 0
 
         participantsListViewModel.update(localUserState: localUserState,
                                          remoteParticipantsState: remoteParticipantsState)
