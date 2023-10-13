@@ -4,8 +4,10 @@
 //
 
 import SwiftUI
+import Foundation
 import AzureCommunicationCommon
 import AVFoundation
+import CallKit
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else
@@ -242,6 +244,7 @@ extension CallingDemoView {
             if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
                 relaunchComposite()
             }
+            print("Call State ::::onDismissedHandler ")
         }
         exitCompositeExecuted = false
         if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
@@ -268,29 +271,37 @@ extension CallingDemoView {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen)
+
+        let cxHandle = CXHandle(type: .generic, value: "111")
+        let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
+        let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider, isCallHoldSupported: true, remoteInfoDisplayName: "hello", remoteInfoCXHandle: cxHandle)
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
-                                                                      credential: credential),
+                                                                      credential: credential,
+                                                                      callKitOptions: callKitOptions),
                                          localOptions: localOptions)
                 } else {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
                                                                       credential: credential,
-                                                                      displayName: envConfigSubject.displayName),
+                                                                      displayName: envConfigSubject.displayName,
+                                                                      callKitOptions: callKitOptions),
                                          localOptions: localOptions)
                 }
             case .teamsMeeting:
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
-                                                                      credential: credential),
+                                                                      credential: credential,
+                                                                      callKitOptions: callKitOptions),
                                          localOptions: localOptions)
                 } else {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                       credential: credential,
-                                                                      displayName: envConfigSubject.displayName),
+                                                                      displayName: envConfigSubject.displayName,
+                                                                      callKitOptions: callKitOptions),
                                          localOptions: localOptions)
                 }
             }
@@ -362,7 +373,7 @@ extension CallingDemoView {
     }
 
     private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
-        print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
+        print("Call State ::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
         self.callState = callState.requestString
     }
 

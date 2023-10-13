@@ -60,7 +60,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
 
     private func setupAudioSession() {
         activateAudioSessionCategory()
-        NotificationCenter.default.addObserver(self,
+        /* NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleRouteChange),
                                                name: AVAudioSession.routeChangeNotification,
                                                object: nil)
@@ -68,7 +68,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(handleInterruption),
                                                name: AVAudioSession.interruptionNotification,
-                                               object: AVAudioSession.sharedInstance())
+                                               object: AVAudioSession.sharedInstance()) */
     }
 
     @objc func handleInterruption(notification: Notification) {
@@ -117,7 +117,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     func isAudioUsedByOther() -> Bool {
-        return !AVAudioSession.sharedInstance().isOtherAudioPlaying
+        return true// !AVAudioSession.sharedInstance().isOtherAudioPlaying
     }
 
     private func getCurrentAudioDevice() -> AudioDeviceType {

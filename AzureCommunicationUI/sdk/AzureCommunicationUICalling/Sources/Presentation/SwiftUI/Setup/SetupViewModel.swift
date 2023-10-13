@@ -121,14 +121,6 @@ class SetupViewModel: ObservableObject {
     }
 
     func joinCallButtonTapped() {
-        guard networkManager.isConnected else {
-            handleOffline()
-            return
-        }
-        guard audioSessionManager.isAudioUsedByOther() else {
-            handleMicUnavailableEvent()
-            return
-        }
         isJoinRequested = true
         store.dispatch(action: .callingAction(.callStartRequested))
     }

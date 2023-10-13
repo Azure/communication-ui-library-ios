@@ -101,7 +101,6 @@
 		28FE266D29E804F5009CC19D /* RemoteParticipantsAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FE266C29E804F5009CC19D /* RemoteParticipantsAction.swift */; };
 		28FE267329EE168E009CC19D /* RemoteParticipantsReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FE267229EE168E009CC19D /* RemoteParticipantsReducer.swift */; };
 		28FE267729EE9E5A009CC19D /* RemoteParticipantsReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28FE267629EE9E5A009CC19D /* RemoteParticipantsReducerTests.swift */; };
-		2831DADF29AEC2A4005ADE30 /* ParticipantRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2831DADE29AEC2A4005ADE30 /* ParticipantRole.swift */; };
 		337789566FB3398301666ADF /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EC5A1FE3C2622411DFF98147 /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework */; };
 		500C0F1F2847DE18000BA2DC /* RemoteOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500C0F1E2847DE18000BA2DC /* RemoteOptions.swift */; };
 		500C0F212847E30E000BA2DC /* RemoteOptionsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500C0F202847E30E000BA2DC /* RemoteOptionsTests.swift */; };
@@ -205,6 +204,7 @@
 		98B186A127C85F9800B837E6 /* AudioDevicesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B186A027C85F9800B837E6 /* AudioDevicesListViewModel.swift */; };
 		98E8564826FA609D00ECA304 /* AudioDevicesListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */; };
 		98FFD82826CC5FD900655398 /* PreferenceKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98FFD82726CC5FD900655398 /* PreferenceKey.swift */; };
+		A44B88322AD8C02E00E685CA /* CallCompositeCallKitOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = A44B88312AD8C02E00E685CA /* CallCompositeCallKitOption.swift */; };
 		A464810429F3353B001B80A3 /* CallCompositeCallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810329F3353B001B80A3 /* CallCompositeCallState.swift */; };
 		A464810629F33A43001B80A3 /* CallStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810529F33A43001B80A3 /* CallStateManager.swift */; };
 		A464810829F345E8001B80A3 /* CallCompositeDismissed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810729F345E8001B80A3 /* CallCompositeDismissed.swift */; };
@@ -528,6 +528,7 @@
 		98B186A027C85F9800B837E6 /* AudioDevicesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevicesListViewModel.swift; sourceTree = "<group>"; };
 		98E8564726FA609D00ECA304 /* AudioDevicesListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDevicesListViewModelTests.swift; sourceTree = "<group>"; };
 		98FFD82726CC5FD900655398 /* PreferenceKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceKey.swift; sourceTree = "<group>"; };
+		A44B88312AD8C02E00E685CA /* CallCompositeCallKitOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeCallKitOption.swift; sourceTree = "<group>"; };
 		A464810329F3353B001B80A3 /* CallCompositeCallState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeCallState.swift; sourceTree = "<group>"; };
 		A464810529F33A43001B80A3 /* CallStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStateManager.swift; sourceTree = "<group>"; };
 		A464810729F345E8001B80A3 /* CallCompositeDismissed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeDismissed.swift; sourceTree = "<group>"; };
@@ -1226,6 +1227,7 @@
 				05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */,
 				11159FFD2A1D3F4200C0E3B8 /* OrientationOptions.swift */,
 				A464810729F345E8001B80A3 /* CallCompositeDismissed.swift */,
+				A44B88312AD8C02E00E685CA /* CallCompositeCallKitOption.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1809,6 +1811,7 @@
 				A88CDFBC27505A410004E2F5 /* ErrorInfoViewModel.swift in Sources */,
 				98B1869F27C858F500B837E6 /* AudioDevicesListViewController.swift in Sources */,
 				A88CDFB9274FF9C10004E2F5 /* ErrorInfoView.swift in Sources */,
+				A44B88322AD8C02E00E685CA /* CallCompositeCallKitOption.swift in Sources */,
 				50E2D69526EACB74006B0EF4 /* ParticipantsListViewModel.swift in Sources */,
 				50FA45FC26813FB8001844AC /* ParticipantGridView.swift in Sources */,
 				1F2BEDD126329E7C00D98266 /* CallingAction.swift in Sources */,
