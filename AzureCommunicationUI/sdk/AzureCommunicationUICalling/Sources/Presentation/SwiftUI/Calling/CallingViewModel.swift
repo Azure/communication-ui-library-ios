@@ -11,7 +11,6 @@ class CallingViewModel: ObservableObject {
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
     @Published var appState: AppStatus = .foreground
-    @Published var isInfoHeaderDisplayed: Bool = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -75,9 +74,6 @@ class CallingViewModel: ObservableObject {
             }
             self.resumeOnHold()
         })
-
-        infoHeaderViewModel.$isInfoHeaderDisplayed
-            .assign(to: &$isInfoHeaderDisplayed)
 
         store.$state
             .receive(on: DispatchQueue.main)

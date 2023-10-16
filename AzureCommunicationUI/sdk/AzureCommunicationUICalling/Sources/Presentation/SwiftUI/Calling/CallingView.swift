@@ -24,7 +24,6 @@ struct CallingView: View {
 
     enum DiagnosticMessageBarConstants {
         static let topPadding: CGFloat = 5
-        static let horizontalPadding: CGFloat = 8
     }
 
     @ObservedObject var viewModel: CallingViewModel
@@ -138,25 +137,28 @@ struct CallingView: View {
                                                    InfoHeaderViewConstants.maxWidth) : widthWithoutHorizontalPadding
             VStack {
                 bannerView
-                if viewModel.isInfoHeaderDisplayed {
-                    HStack {
-                        if isIpad {
-                            Spacer()
-                        } else {
-                            EmptyView()
-                        }
-                        infoHeaderView
-                            .frame(width: infoHeaderViewWidth,
-                                   height: InfoHeaderViewConstants.height, alignment: .leading)
-                            .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                HStack {
+                    if isIpad {
                         Spacer()
+                    } else {
+                        EmptyView()
                     }
+                    infoHeaderView
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
                 }
-
-                topMessageBarDiagnosticsView
-                    .accessibilityElement(children: .contain)
-                    .accessibilitySortPriority(1)
-                Spacer()
+                HStack {
+                    if isIpad {
+                        Spacer()
+                    } else {
+                        EmptyView()
+                    }
+                    topMessageBarDiagnosticsView
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
+                }
             }
         }
     }
@@ -234,12 +236,6 @@ struct CallingView: View {
         VStack {
             ForEach(viewModel.callDiagnosticsViewModel.messageBarStack) { diagnosticMessageBarViewModel in
                 MessageBarDiagnosticView(viewModel: diagnosticMessageBarViewModel)
-                    .padding(
-                        EdgeInsets(top: 0,
-                                   leading: DiagnosticMessageBarConstants.horizontalPadding,
-                                   bottom: 0,
-                                   trailing: DiagnosticMessageBarConstants.horizontalPadding)
-                    )
                     .accessibilityElement(children: .contain)
                     .accessibilityAddTraits(.isStaticText)
             }
