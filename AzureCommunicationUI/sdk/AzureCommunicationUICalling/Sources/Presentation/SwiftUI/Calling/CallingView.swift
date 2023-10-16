@@ -218,7 +218,7 @@ struct CallingView: View {
     var bottomToastDiagnosticsView: some View {
         VStack {
             Spacer()
-            if let currentBottomToastViewModel = viewModel.callDiagnosticsViewModel.currentBottomToastDiagnostic {
+            if let currentBottomToastViewModel = viewModel.currentBottomToastDiagnostic {
                 BottomToastDiagnosticView(viewModel: currentBottomToastViewModel)
                     .padding(
                         EdgeInsets(top: 0,

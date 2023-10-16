@@ -11,6 +11,7 @@ class CallingViewModel: ObservableObject {
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
     @Published var appState: AppStatus = .foreground
+    @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -86,6 +87,9 @@ class CallingViewModel: ObservableObject {
                                                                               subtitle: "")
         callDiagnosticsViewModel = compositeViewModelFactory
             .makeCallDiagnosticsViewModel()
+
+        callDiagnosticsViewModel.$currentBottomToastDiagnostic
+                    .assign(to: &$currentBottomToastDiagnostic)
     }
 
     func dismissConfirmLeaveDrawerList() {
