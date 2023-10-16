@@ -147,6 +147,7 @@ class InfoHeaderViewModelTests: XCTestCase {
             }).store(in: cancellable)
 
         var participantList: [ParticipantInfoModel] = []
+
         let participant1 = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,
@@ -208,7 +209,8 @@ class InfoHeaderViewModelTests: XCTestCase {
 
         let participantsListViewModel = ParticipantsListViewModelMocking(
                                                             compositeViewModelFactory: factoryMocking,
-                                                            localUserState: LocalUserState())
+                                                            localUserState: LocalUserState(),
+                                                            dispatchAction: storeFactory.store.dispatch)
         participantsListViewModel.updateStates = updateStates
         factoryMocking.participantsListViewModel = participantsListViewModel
 
@@ -386,10 +388,10 @@ extension InfoHeaderViewModelTests {
                  localizationProvider: LocalizationProviderMocking? = nil) -> InfoHeaderViewModel {
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
-                                   dispatchAction: storeFactory.store.dispatch,
                                    localUserState: LocalUserState(),
                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                    accessibilityProvider: accessibilityProvider,
+                                   dispatchAction: storeFactory.store.dispatch,
                                    enableMultitasking: true,
                                    enableSystemPiPWhenMultitasking: true)
     }

@@ -52,7 +52,7 @@ class LocalVideoViewModel: ObservableObject {
         dispatch(.localUserAction(.cameraSwitchTriggered))
     }
 
-    func update(localUserState: LocalUserState, pipState: VisibilityState) {
+    func update(localUserState: LocalUserState, visibilityState: VisibilityState) {
         if localVideoStreamId != localUserState.localVideoStreamIdentifier {
             localVideoStreamId = localUserState.localVideoStreamIdentifier
         }
@@ -80,6 +80,6 @@ class LocalVideoViewModel: ObservableObject {
             isMuted = showMuted
         }
 
-        isInPip = pipState.currentStatus == .pipModeEntered
+        isInPip = visibilityState.currentStatus == .pipModeEntered
     }
 }

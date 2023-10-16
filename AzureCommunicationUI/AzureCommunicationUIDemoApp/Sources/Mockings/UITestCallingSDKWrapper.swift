@@ -188,11 +188,19 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     }
 
     func addParticipant() async throws {
+        try await addParticipant(status: .connected)
+    }
+
+    func addInLobbyParticipant() async throws {
+        try await addParticipant(status: .inLobby)
+    }
+
+    func addParticipant(status: ParticipantStatus) async throws {
         guard callMocking != nil else {
             return
         }
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
-            handler.addParticipant()
+            handler.addParticipant(status: status)
         }
     }
 
@@ -220,6 +228,42 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
         if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
             handler.holdParticipant()
+        }
+    }
+
+    func admitAllLobbyParticipants() async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.admitAllLobbyParticipants()
+        }
+    }
+
+    func admitLobbyParticipant(_ participantId: String) async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.admitLobbyParticipant(participantId)
+        }
+    }
+
+    func declineLobbyParticipant(_ participantId: String) async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.declineLobbyParticipant(participantId)
+        }
+    }
+
+    func changeLocalParticipantRole(_ role: ParticipantRole) async throws {
+        guard callMocking != nil else {
+            return
+        }
+        if let handler = self.callingEventsHandler as? CallingSDKEventsHandlerMocking {
+            handler.setParticipantRole(role)
         }
     }
 }

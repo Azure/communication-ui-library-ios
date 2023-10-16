@@ -17,6 +17,10 @@ struct CallingView: View {
         static let horizontalPadding: CGFloat = 8
     }
 
+    enum Constants {
+        static let topAlertAreaViewTopPaddin: CGFloat = 10.0
+    }
+
     @ObservedObject var viewModel: CallingViewModel
     let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
@@ -125,7 +129,7 @@ struct CallingView: View {
             let widthWithoutHorizontalPadding = geoWidth - 2 * InfoHeaderViewConstants.horizontalPadding
             let infoHeaderViewWidth = isIpad ? min(widthWithoutHorizontalPadding,
                                                    InfoHeaderViewConstants.maxWidth) : widthWithoutHorizontalPadding
-            VStack {
+            VStack(spacing: 0) {
                 bannerView
                 HStack {
                     if isIpad {
@@ -134,17 +138,50 @@ struct CallingView: View {
                         EmptyView()
                     }
                     infoHeaderView
-                        .frame(width: infoHeaderViewWidth, height: InfoHeaderViewConstants.height, alignment: .leading)
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
+                }
+                HStack {
+                    if isIpad {
+                        Spacer()
+                    } else {
+                        EmptyView()
+                    }
+                    lobbyWaitingHeaderView
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
+                }
+                HStack {
+                    if isIpad {
+                        Spacer()
+                    } else {
+                        EmptyView()
+                    }
+                    lobbyActionErrorView
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
                         .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
                     Spacer()
                 }
                 Spacer()
             }
+            .padding(.top, Constants.topAlertAreaViewTopPaddin)
         }
     }
 
     var infoHeaderView: some View {
         InfoHeaderView(viewModel: viewModel.infoHeaderViewModel,
+                       avatarViewManager: avatarManager)
+    }
+
+    var lobbyWaitingHeaderView: some View {
+        LobbyWaitingHeaderView(viewModel: viewModel.lobbyWaitingHeaderViewModel,
+                       avatarViewManager: avatarManager)
+    }
+
+    var lobbyActionErrorView: some View {
+        LobbyErrorHeaderView(viewModel: viewModel.lobbyActionErrorViewModel,
                        avatarViewManager: avatarManager)
     }
 

@@ -39,6 +39,8 @@ enum LocalUserAction: Equatable {
     case audioDeviceChangeSucceeded(device: AudioDeviceType)
     case audioDeviceChangeFailed(error: Error)
 
+    case participantRoleChanged(participantRole: ParticipantRole)
+
     static func == (lhs: LocalUserAction, rhs: LocalUserAction) -> Bool {
 
         switch (lhs, rhs) {

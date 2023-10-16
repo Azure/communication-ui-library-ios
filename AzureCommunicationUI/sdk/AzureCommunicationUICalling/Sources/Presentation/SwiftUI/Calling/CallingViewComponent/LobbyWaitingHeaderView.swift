@@ -6,8 +6,8 @@
 import SwiftUI
 import FluentUI
 
-struct InfoHeaderView: View {
-    @ObservedObject var viewModel: InfoHeaderViewModel
+struct LobbyWaitingHeaderView: View {
+    @ObservedObject var viewModel: LobbyWaitingHeaderViewModel
     @Environment(\.sizeCategory) var sizeCategory: ContentSizeCategory
     @State var participantsListButtonSourceView = UIView()
     let avatarViewManager: AvatarViewManagerProtocol
@@ -32,8 +32,8 @@ struct InfoHeaderView: View {
 
     var body: some View {
         ZStack {
-            if viewModel.isInfoHeaderDisplayed {
-                infoHeader
+            if viewModel.isDisplayed {
+                lobbyHeader
             } else {
                 EmptyView()
             }
@@ -48,31 +48,21 @@ struct InfoHeaderView: View {
         })
     }
 
-    var infoHeader: some View {
-        HStack {
-            // correct dismissButtonAccessibilityID
-            if viewModel.enableMultitasking {
-                IconButton(viewModel: viewModel.dismissButtonViewModel)
-                    .flipsForRightToLeftLayoutDirection(true)
-                    .accessibilityIdentifier(AccessibilityIdentifier.dismissButtonAccessibilityID.rawValue)
-            }
-
-            Text(viewModel.infoLabel)
+    var lobbyHeader: some View {
+        HStack(alignment: .center) {
+            addParticipantIcon
+            Text(viewModel.title)
                 .padding(EdgeInsets(top: Constants.infoLabelHorizontalPadding,
                                     leading: 0,
                                     bottom: Constants.infoLabelHorizontalPadding,
                                     trailing: 0))
                 .foregroundColor(Constants.foregroundColor)
-                .lineLimit(1)
                 .font(Fonts.caption1.font)
                 .accessibilityLabel(Text(viewModel.accessibilityLabel))
                 .accessibilitySortPriority(1)
-                .scaledToFill()
-                .minimumScaleFactor(sizeCategory.isAccessibilityCategory ?
-                                    Constants.accessibilityFontScale :
-                                        Constants.defaultFontScale)
             Spacer()
             participantListButton
+            dismissButton
         }
         .padding(EdgeInsets(top: 0,
                             leading: Constants.hStackHorizontalPadding / 2.0,
@@ -83,9 +73,23 @@ struct InfoHeaderView: View {
         .padding(.bottom, Constants.hStackBottomPadding)
     }
 
+    var addParticipantIcon: some View {
+        Icon(name: .addParticipant, size: 24)
+            .foregroundColor(.white)
+            .contentShape(Rectangle())
+    }
+
     var participantListButton: some View {
-        IconButton(viewModel: viewModel.participantListButtonViewModel)
+        PrimaryButton(viewModel: viewModel.participantListButtonViewModel)
+            .fixedSize()
             .background(SourceViewSpace(sourceView: participantsListButtonSourceView))
+            .accessibilityIdentifier(AccessibilityIdentifier.lobbyWaitingViewID.rawValue)
+    }
+
+    var dismissButton: some View {
+        IconButton(viewModel: viewModel.dismissButtonViewModel)
+            .background(SourceViewSpace(sourceView: participantsListButtonSourceView))
+            .accessibilityIdentifier(AccessibilityIdentifier.lobbyWaitingDismissID.rawValue)
     }
 
     var participantsListView: some View {

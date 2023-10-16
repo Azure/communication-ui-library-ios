@@ -27,6 +27,7 @@ protocol CompositeViewModelFactoryProtocol {
                                     buttonLabel: String,
                                     iconName: CompositeIcon?,
                                     isDisabled: Bool,
+                                    paddings: CompositeButton.Paddings?,
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
@@ -40,12 +41,17 @@ protocol CompositeViewModelFactoryProtocol {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel
-    func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
-                                 localUserState: LocalUserState) -> InfoHeaderViewModel
+    func makeInfoHeaderViewModel(localUserState: LocalUserState,
+                                 dispatchAction: @escaping ActionDispatch) -> InfoHeaderViewModel
+    func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
+                                         dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
+    func makeLobbyActionErrorViewModel(localUserState: LocalUserState,
+                                       dispatchAction: @escaping ActionDispatch) -> LobbyErrorHeaderViewModel
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel,
                                       lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
-    func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel
+    func makeParticipantsListViewModel(localUserState: LocalUserState,
+                                       dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel
     func makeBannerViewModel() -> BannerViewModel
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
@@ -67,6 +73,21 @@ protocol CompositeViewModelFactoryProtocol {
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                       localUserState: LocalUserState) -> SetupControlBarViewModel
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel
+}
+
+extension CompositeViewModelFactoryProtocol {
+    func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
+                                    buttonLabel: String,
+                                    iconName: CompositeIcon? = .none,
+                                    isDisabled: Bool = false,
+                                    action: @escaping (() -> Void)) -> PrimaryButtonViewModel {
+        return makePrimaryButtonViewModel(buttonStyle: buttonStyle,
+                                   buttonLabel: buttonLabel,
+                                   iconName: iconName,
+                                   isDisabled: isDisabled,
+                                   paddings: nil,
+                                   action: action)
+    }
 }
 
 // swiftlint:disable type_body_length
@@ -172,11 +193,13 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                     buttonLabel: String,
                                     iconName: CompositeIcon?,
                                     isDisabled: Bool = false,
+                                    paddings: CompositeButton.Paddings? = nil,
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel {
         PrimaryButtonViewModel(buttonStyle: buttonStyle,
                                buttonLabel: buttonLabel,
                                iconName: iconName,
                                isDisabled: isDisabled,
+                               paddings: paddings,
                                action: action)
     }
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
@@ -236,16 +259,36 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             endCallConfirm: endCallConfirm,
                             localUserState: localUserState)
     }
-    func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
-                                 localUserState: LocalUserState) -> InfoHeaderViewModel {
+    func makeInfoHeaderViewModel(localUserState: LocalUserState,
+                                 dispatchAction: @escaping ActionDispatch) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
-                            dispatchAction: dispatchAction,
                             localUserState: localUserState,
                             localizationProvider: localizationProvider,
                             accessibilityProvider: accessibilityProvider,
+                            dispatchAction: dispatchAction,
                             enableMultitasking: enableMultitasking,
                             enableSystemPiPWhenMultitasking: enableSystemPiPWhenMultitasking)
+    }
+
+    func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
+                                         dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel {
+        LobbyWaitingHeaderViewModel(compositeViewModelFactory: self,
+                                    logger: logger,
+                                    localUserState: localUserState,
+                                    localizationProvider: localizationProvider,
+                                    accessibilityProvider: accessibilityProvider,
+                                    dispatchAction: dispatchAction)
+    }
+
+    func makeLobbyActionErrorViewModel(localUserState: LocalUserState,
+                                       dispatchAction: @escaping ActionDispatch) -> LobbyErrorHeaderViewModel {
+        LobbyErrorHeaderViewModel(compositeViewModelFactory: self,
+                                  logger: logger,
+                                  localUserState: localUserState,
+                                  localizationProvider: localizationProvider,
+                                  accessibilityProvider: accessibilityProvider,
+                                  dispatchAction: dispatchAction)
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel,
@@ -262,9 +305,11 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                  isIpadInterface: isIpadInterface)
     }
 
-    func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
+    func makeParticipantsListViewModel(localUserState: LocalUserState,
+                                       dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel {
         ParticipantsListViewModel(compositeViewModelFactory: self,
-                                  localUserState: localUserState)
+                                  localUserState: localUserState,
+                                  dispatchAction: dispatchAction)
     }
     func makeBannerViewModel() -> BannerViewModel {
         BannerViewModel(compositeViewModelFactory: self)

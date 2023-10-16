@@ -7,6 +7,7 @@ import Foundation
 import UIKit
 
 #if DEBUG
+@testable import AzureCommunicationUICalling
 class FloatingUITestWindow: UIWindow {
 
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
@@ -53,6 +54,9 @@ class FloatingUITestWindow: UIWindow {
         createButton(title: "Add Participant",
                      accessibilityID: "callAddParticipant-AID",
                      selector: #selector(addParticipantButtonTapped))
+        createButton(title: "Add InLobby Participant",
+                     accessibilityID: "callAddInLobbyParticipant-AID",
+                     selector: #selector(addInLobbyParticipantButtonTapped))
         createButton(title: "Remove Participant",
                      accessibilityID: "callRemoveParticipant-AID",
                      selector: #selector(removeParticipantButtonTapped))
@@ -62,6 +66,12 @@ class FloatingUITestWindow: UIWindow {
         createButton(title: "Hold Participant",
                      accessibilityID: "callHoldParticipant-AID",
                      selector: #selector(holdParticipantButtonTapped))
+        createButton(title: "Change role to Presenter",
+                     accessibilityID: "ChangeRoleToPresenter-AID",
+                     selector: #selector(changeRoleToPresenterButtonTapped))
+        createButton(title: "Change role to Attendee",
+                     accessibilityID: "ChangeRoleToAttendee-AID",
+                     selector: #selector(changeRoleToAttendeeButtonTapped))
 
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
@@ -132,6 +142,13 @@ class FloatingUITestWindow: UIWindow {
         }
     }
 
+    @objc func addInLobbyParticipantButtonTapped(sender: UIButton) {
+        debugPrint("UI Test:: AddParticipantButtonTapped")
+        Task {
+            try? await callingSDKWrapperMock?.addInLobbyParticipant()
+        }
+    }
+
     @objc func removeParticipantButtonTapped(sender: UIButton) {
         debugPrint("UI Test:: RemoveParticipantButtonTapped")
         Task {
@@ -150,6 +167,20 @@ class FloatingUITestWindow: UIWindow {
         debugPrint("UI Test:: HoldParticipantButtonTapped")
         Task {
             try? await callingSDKWrapperMock?.holdParticipant()
+        }
+    }
+
+    @objc func changeRoleToPresenterButtonTapped(sender: UIButton) {
+        debugPrint("UI Test:: ChangeRoleToPresenterButtonTapped")
+        Task {
+            try? await callingSDKWrapperMock?.changeLocalParticipantRole(.presenter)
+        }
+    }
+
+    @objc func changeRoleToAttendeeButtonTapped(sender: UIButton) {
+        debugPrint("UI Test:: ChangeRoleToAttendeeButtonTapped")
+        Task {
+            try? await callingSDKWrapperMock?.changeLocalParticipantRole(.attendee)
         }
     }
 }

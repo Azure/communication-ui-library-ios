@@ -16,6 +16,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> = .init([])
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
     var callIdSubject = PassthroughSubject<String, Never>()
+    var participantRoleSubject = PassthroughSubject<ParticipantRole, Never>()
 
     private let logger: Logger
     private var remoteParticipantEventAdapter = RemoteParticipantsEventsAdapter()
@@ -208,4 +209,8 @@ extension CallingSDKEventsHandler: CallDelegate,
         isLocalUserMutedSubject.send(call.isMuted)
     }
 
+    func call(_ call: Call, didChangeRole args: PropertyChangedEventArgs) {
+        let role = call.callParticipantRole.toParticipantRole()
+        participantRoleSubject.send(role)
+    }
 }

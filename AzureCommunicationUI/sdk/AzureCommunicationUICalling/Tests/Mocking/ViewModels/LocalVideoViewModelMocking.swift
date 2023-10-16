@@ -21,7 +21,7 @@ class LocalVideoViewModelMocking: LocalVideoViewModel {
                    dispatchAction: dispatchAction)
     }
 
-    override func update(localUserState: LocalUserState, pipState: VisibilityState) {
-        updateState?(localUserState, pipState)
+    override func update(localUserState: LocalUserState, visibilityState: VisibilityState) {
+        updateState?(localUserState, visibilityState)
     }
 }
