@@ -13,7 +13,7 @@ public struct CallCompositeCallKitOption {
 
     public init(cxProvideConfig: CXProviderConfiguration,
                 isCallHoldSupported: Bool,
-                remoteInfoDisplayName: String,
+                remoteInfoDisplayName: String?,
                 remoteInfoCXHandle: CXHandle?) {
         self.cxProvideConfig = cxProvideConfig
         self.isCallHoldSupported = isCallHoldSupported

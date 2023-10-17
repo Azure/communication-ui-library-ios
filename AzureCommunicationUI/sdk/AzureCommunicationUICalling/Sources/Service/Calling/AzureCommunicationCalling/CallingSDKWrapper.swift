@@ -69,14 +69,15 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             let videoOptions = VideoOptions(localVideoStreams: localVideoStreamArray)
             joinCallOptions.videoOptions = videoOptions
         }
-        let callKitRemoteInfo = CallKitRemoteInfo()
-        callKitRemoteInfo.displayName = self.callConfiguration.callKitOptions?.remoteInfoDisplayName
-        callKitRemoteInfo.handle = self.callConfiguration.callKitOptions?.remoteInfoCXHandle
-        joinCallOptions.callKitRemoteInfo = callKitRemoteInfo
+        if let callKitOptions = self.callConfiguration.callKitOptions {
+            let callKitRemoteInfo = CallKitRemoteInfo()
+            callKitRemoteInfo.displayName = callKitOptions.remoteInfoDisplayName
+            callKitRemoteInfo.handle = callKitOptions.remoteInfoCXHandle
+            joinCallOptions.callKitRemoteInfo = callKitRemoteInfo
+        }
         joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
         joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
         joinCallOptions.incomingVideoOptions = incomingVideoOptions
-
         var joinLocator: JoinMeetingLocator
         if callConfiguration.compositeCallType == .groupCall,
            let groupId = callConfiguration.groupId {
@@ -273,13 +274,11 @@ extension CallingSDKWrapper {
             return
         }
         let options = CallAgentOptions()
-        
-        if self.callConfiguration.callKitOptions != nil {
-            let callKitOptions = CallKitOptions(with: self.callConfiguration.callKitOptions!.cxProvideConfig)
-            callKitOptions.isCallHoldSupported = self.callConfiguration.callKitOptions!.isCallHoldSupported
+        if let callKitConfig = self.callConfiguration.callKitOptions?.cxProvideConfig {
+            var callKitOptions = CallKitOptions(with: callKitConfig)
+            callKitOptions.isCallHoldSupported = self.callConfiguration.callKitOptions?.isCallHoldSupported ?? false
             options.callKitOptions = callKitOptions
         }
-        
         if let displayName = callConfiguration.displayName {
             options.displayName = displayName
         }

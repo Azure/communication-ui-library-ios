@@ -6,6 +6,7 @@
 import UIKit
 import AppCenter
 import AppCenterCrashes
+import CallKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,7 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
 
-    // MARK: UISceneSession Lifecycle
+    public func application(_ app: UIApplication,
+                            open url: URL,
+                            options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
+        return true
+    }
 
     func application(_ application: UIApplication,
                      configurationForConnecting connectingSceneSession: UISceneSession,
@@ -36,5 +41,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return AppDelegate.orientationLock
+    }
+    func provider(_ provider: CXProvider, didInvalidate providerConfiguration: CXProviderConfiguration) {
+        // Handle any invalidation or cleanup
+        print("App State ::::providerConfiguration ")
+    }
+
+    func provider(_ provider: CXProvider, perform action: CXStartCallAction) {
+        // Handle answering the call
+        print("App State ::::CXAnswerCallAction ")
     }
 }

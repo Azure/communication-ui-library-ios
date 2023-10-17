@@ -5,6 +5,7 @@
 
 import UIKit
 import SwiftUI
+import Intents
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
@@ -28,7 +29,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let queryDict = urlContexts.first?.url.toQueryDictionary() {
             appDelegate.envConfigSubject.update(from: queryDict)
         }
-
+        if let intent = userActivity?.interaction?.intent as? INStartCallIntent {
+            let callee = intent.contacts?.first?.personHandle?.value
+            let userDefaults: UserDefaults = .standard
+            userDefaults.set(callee, forKey: "calleeFromCallkit")
+        }
     }
 
     func scene(_ scene: UIScene,
@@ -37,5 +42,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
            let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             appDelegate.envConfigSubject.update(from: queryDict)
         }
+    }
+    func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
+            if let intent = userActivity.interaction?.intent as? INStartCallIntent {
+                let contact = intent.contacts?.first?.personHandle?.value
+                print("App State ::::userActivity ")
+            }
     }
 }

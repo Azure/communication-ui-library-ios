@@ -272,9 +272,12 @@ extension CallingDemoView {
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen)
 
-        let cxHandle = CXHandle(type: .generic, value: "111")
+        let cxHandle = CXHandle(type: .generic, value: link)
         let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
-        let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider, isCallHoldSupported: true, remoteInfoDisplayName: "hello", remoteInfoCXHandle: cxHandle)
+        let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
+                                                        isCallHoldSupported: true,
+                                                        remoteInfoDisplayName: "ACS UI Library",
+                                                        remoteInfoCXHandle: cxHandle)
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:

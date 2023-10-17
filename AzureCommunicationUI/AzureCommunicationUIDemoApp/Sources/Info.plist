@@ -10,13 +10,29 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>com.azure.ios.communication.ui.meetings.AzureCommunicationUIDemoApp</string>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).url-scheme.dial</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>acsui</string>
 			</array>
 		</dict>
 	</array>
+	<key>NSExtension</key>
+	<dict>
+		<key>NSExtensionAttributes</key>
+		<dict>
+			<key>IntentsSupported</key>
+			<array>
+				<string>INStartCallIntent</string>
+				<string>INStartAudioCallIntent</string>
+				<string>INStartVideoCallIntent</string>
+			</array>
+		</dict>
+		<key>NSExtensionPointIdentifier</key>
+		<string>com.apple.intents-service</string>
+		<key>NSExtensionPrincipalClass</key>
+		<string>$(PRODUCT_MODULE_NAME).IntentHandler</string>
+	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -37,6 +53,9 @@
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
+		<string>fetch</string>
+		<string>processing</string>
+		<string>remote-notification</string>
 		<string>voip</string>
 	</array>
 	<key>aadToken</key>
