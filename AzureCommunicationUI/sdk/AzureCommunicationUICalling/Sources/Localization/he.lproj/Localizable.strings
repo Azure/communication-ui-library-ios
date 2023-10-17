@@ -45,12 +45,26 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="שיחה עם %d אנשים"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="משתתפים";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="People are waiting to join.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="View lobby";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="View lobby";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Dismiss lobby notification";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Lobby actions not supported.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Lobby has been disabled.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Your role cannot act on the lobby.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Participant is not in lobby.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Lobby action error.";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Dismiss lobby error notification";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="משתתף ללא שם";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (אני)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="מושתק";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="לא מושתק";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="מדבר";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="בהמתנה";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tap to admit or decline";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="עבור למצלמה אחורית";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="עבור למצלמה קדמית";
@@ -71,22 +85,22 @@
 "AzureCommunicationUICalling.CallingView.MoreCallOptionsList.ShareDiagnosticsInfo" = "שתף פרטי אבחון";
 
 /* ComplianceBanner title */
-"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="הקלטה ותעתוק התחילו.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStarted"="הקלטה ותמלול התחילו.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStarted"="ההקלטה התחילה.";
-"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="התעתוק הופסק.";
-"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStarted"="התעתוק התחיל.";
-"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStopped"="מתבצע תהליך שמירה של התעתוק.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStoppedStillRecording"="התמלול הופסק.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStarted"="התמלול התחיל.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.TranscriptionStopped"="מתבצע תהליך שמירה של התמליל.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStoppedStillTranscribing"="ההקלטה הופסקה.";
 "AzureCommunicationUICalling.CallingView.BannerTitle.RecordingStopped"="ההקלטה נשמרת.";
-"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStopped"="ההקלטה והתעתוק בתהליך שמירה.";
+"AzureCommunicationUICalling.CallingView.BannerTitle.RecordingAndTranscribingStopped"="ההקלטה והתמלול בתהליך שמירה.";
 
 /* ComplianceBanner body */
 "AzureCommunicationUICalling.CallingView.BannerBody.Consent"="על-ידי הצטרפות, אתה נותן הסכמה לתעתק פגישה זו.";
 "AzureCommunicationUICalling.CallingView.BannerBody.Recording"="אתה כעת רק מקליט את הפגישה.";
-"AzureCommunicationUICalling.CallingView.BannerBody.TranscriptionStopped"="התעתוק הופסק.";
+"AzureCommunicationUICalling.CallingView.BannerBody.TranscriptionStopped"="התמלול הופסק.";
 "AzureCommunicationUICalling.CallingView.BannerBody.OnlyTranscribing"="אתה רק מתעתק את הפגישה כעת.";
 "AzureCommunicationUICalling.CallingView.BannerBody.RecordingStopped"="ההקלטה הופסקה.";
-"AzureCommunicationUICalling.CallingView.BannerBody.RecordingAndTranscriptionStopped"="ההקלטה והתעתוק הופסקו.";
+"AzureCommunicationUICalling.CallingView.BannerBody.RecordingAndTranscriptionStopped"="ההקלטה והתמלול הופסקו.";
 
 /* ComplianceBanner display link */
 "AzureCommunicationUICalling.CallingView.BannerLink.PrivacyPolicy"="מדיניות פרטיות";
