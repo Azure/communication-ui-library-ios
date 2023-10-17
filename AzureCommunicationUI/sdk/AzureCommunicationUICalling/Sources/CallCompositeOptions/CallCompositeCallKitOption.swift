@@ -8,9 +8,9 @@ import CallKit
 public struct CallCompositeCallKitOption {
     let cxProvideConfig: CXProviderConfiguration
     let isCallHoldSupported: Bool
-    let calleeDisplayName: String?
-    let calleeCXHandle: CXHandle?
-    
+    let remoteInfoDisplayName: String?
+    let remoteInfoCXHandle: CXHandle?
+
     public init(cxProvideConfig: CXProviderConfiguration,
                 isCallHoldSupported: Bool,
                 remoteInfoDisplayName: String?,

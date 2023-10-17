@@ -268,21 +268,6 @@ extension CallingSDKWrapper {
             throw CallCompositeInternalError.deviceManagerFailed(error)
         }
     }
-    func provideCallKitRemoteInfo(callerInfo: CallerInfo) -> CallKitRemoteInfo
-        {
-            let callKitRemoteInfo = CallKitRemoteInfo()
-            if callerInfo.identifier .isKind(of: CommunicationUserIdentifier.self) {
-                let communicationUser = callerInfo.identifier as! CommunicationUserIdentifier
-                print(communicationUser.identifier)
-                callKitRemoteInfo.displayName = "DUMMY CALLING"
-                callKitRemoteInfo.handle = CXHandle(type: .generic, value: communicationUser.identifier)
-            } else {
-                callKitRemoteInfo.displayName = "MEETING LINK"
-                callKitRemoteInfo.handle = CXHandle(type: .generic, value: "MEETING LINK_BY_APP")
-            }
-            
-            return callKitRemoteInfo;
-        }
     private func setupCallAgent() async throws {
         guard callAgent == nil else {
             logger.debug("Reusing call agent")
@@ -292,7 +277,6 @@ extension CallingSDKWrapper {
         if let callKitConfig = self.callConfiguration.callKitOptions?.cxProvideConfig {
             var callKitOptions = CallKitOptions(with: callKitConfig)
             callKitOptions.isCallHoldSupported = self.callConfiguration.callKitOptions?.isCallHoldSupported ?? false
-            callKitOptions.provideRemoteInfo = self.provideCallKitRemoteInfo
             options.callKitOptions = callKitOptions
         }
         if let displayName = callConfiguration.displayName {

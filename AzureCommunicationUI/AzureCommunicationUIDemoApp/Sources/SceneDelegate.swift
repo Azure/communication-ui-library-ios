@@ -10,6 +10,14 @@ import Intents
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
 
+    fileprivate func assignCallID(_ callID: String, _ appDelegate: AppDelegate) {
+        if callID.contains("http") {
+            appDelegate.envConfigSubject.teamsMeetingLink = callID
+        } else {
+            appDelegate.envConfigSubject.groupCallId = callID
+        }
+    }
+
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,
                options connectionOptions: UIScene.ConnectionOptions) {
@@ -19,6 +27,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         let entryViewController = EntryViewController(envConfigSubject: appDelegate.envConfigSubject)
         let rootNavController = UINavigationController(rootViewController: entryViewController)
+        let userActivity = connectionOptions.userActivities.first
+        if let intent = userActivity?.interaction?.intent as? INStartCallIntent,
+           let callID = intent.contacts?.first?.personHandle?.value {
+            assignCallID(callID, appDelegate)
+        }
         let window = UIWindow(windowScene: windowScene)
         window.rootViewController = rootNavController
         self.window = window
@@ -27,12 +40,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Handle deep link jump from re-launch
         let urlContexts = connectionOptions.urlContexts
         if let queryDict = urlContexts.first?.url.toQueryDictionary() {
-            appDelegate.envConfigSubject.update(from: queryDict)
-        }
-        if let intent = userActivity?.interaction?.intent as? INStartCallIntent {
-            let callee = intent.contacts?.first?.personHandle?.value
-            let userDefaults: UserDefaults = .standard
-            userDefaults.set(callee, forKey: "calleeFromCallkit")
+           appDelegate.envConfigSubject.update(from: queryDict)
         }
     }
 
@@ -43,10 +51,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             appDelegate.envConfigSubject.update(from: queryDict)
         }
     }
+
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
-            if let intent = userActivity.interaction?.intent as? INStartCallIntent {
-                let contact = intent.contacts?.first?.personHandle?.value
-                print("App State ::::userActivity ")
-            }
+        if let intent = userActivity.interaction?.intent as? INStartCallIntent,
+           let callID = intent.contacts?.first?.personHandle?.value,
+           let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            assignCallID(callID, appDelegate)
+        }
     }
 }
