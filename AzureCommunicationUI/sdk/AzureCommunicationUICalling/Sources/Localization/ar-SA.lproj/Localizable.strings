@@ -15,7 +15,7 @@
 "AzureCommunicationUICalling.SetupView.Title"="إعداد";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="رجوع";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="انضمام إلى مكالمة";
-"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="جارٍ الانضمام إلى مكالمة…";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="جاري الانضمام إلى المكالمة…";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="الفيديو قيد الإيقاف";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="تشغيل الكاميرا";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="الفيديو قيد التشغيل";
@@ -45,12 +45,26 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="المكالمة تضم %d من الأشخاص"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="المشاركون";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="People are waiting to join.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="View lobby";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="View lobby";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Dismiss lobby notification";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Lobby actions not supported.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Lobby has been disabled.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Your role cannot act on the lobby.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Participant is not in lobby.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Lobby action error.";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Dismiss lobby error notification";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="مشارك بدون اسم";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (أنا)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="صوته مكتوم";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="صوته غير مكتوم";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="يتحدث";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="قيد التعليق";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tap to admit or decline";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="تبديل إلى الكاميرا الخلفية";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="تبديل إلى الكاميرا الأمامية";

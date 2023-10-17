@@ -45,12 +45,26 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Bellen met %d personen"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Deelnemers";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="People are waiting to join.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="View lobby";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="View lobby";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Dismiss lobby notification";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Lobby actions not supported.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Lobby has been disabled.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Your role cannot act on the lobby.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Participant is not in lobby.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Lobby action error.";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Dismiss lobby error notification";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Naamloze deelnemer";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (ik)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Gedempt";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Niet gedempt";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Spreken";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="In de wacht";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tap to admit or decline";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Overschakelen naar de camera op de achterzijde";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Overschakelen naar de camera op de voorzijde";
