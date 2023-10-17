@@ -185,6 +185,18 @@ extension CallingDemoView {
             }
         }
     }
+    
+    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
+            let callNotification = PushNotificationInfo.fromDictionary(payload.dictionaryPayload)
+            let userDefaults: UserDefaults = .standard
+            let callKitOptions = CallKitOptions(with: CallKitHelper.createCXProvideConfiguration())
+            CallClient.reportIncomingCall(with: callNotification, callKitOptions: callKitOptions) { error in
+                if error == nil {
+                    self.appPubs.pushPayload = payload
+                }
+            }
+        }
+    
     func startCallComposite() async {
         let link = getMeetingLink()
 
@@ -278,6 +290,7 @@ extension CallingDemoView {
                                                         isCallHoldSupported: true,
                                                         remoteInfoDisplayName: "ACS UI Library",
                                                         remoteInfoCXHandle: cxHandle)
+
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:

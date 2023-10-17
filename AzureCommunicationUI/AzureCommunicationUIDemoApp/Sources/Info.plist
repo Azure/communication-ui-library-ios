@@ -17,22 +17,6 @@
 			</array>
 		</dict>
 	</array>
-	<key>NSExtension</key>
-	<dict>
-		<key>NSExtensionAttributes</key>
-		<dict>
-			<key>IntentsSupported</key>
-			<array>
-				<string>INStartCallIntent</string>
-				<string>INStartAudioCallIntent</string>
-				<string>INStartVideoCallIntent</string>
-			</array>
-		</dict>
-		<key>NSExtensionPointIdentifier</key>
-		<string>com.apple.intents-service</string>
-		<key>NSExtensionPrincipalClass</key>
-		<string>$(PRODUCT_MODULE_NAME).IntentHandler</string>
-	</dict>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
