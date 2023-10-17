@@ -50,11 +50,11 @@
 "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="View lobby";
 "AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Dismiss lobby notification";
 
-"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Current conversation type does not support Lobby";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Lobby is disabled by configurations";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Current meeting role does not have permission to admit/reject user from Lobby";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Participant is not exist in the Lobby";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Failed to admit/decline participant.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Lobby actions not supported.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Lobby has been disabled.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Your role cannot act on the lobby.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Participant is not in lobby.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Lobby action error.";
 
 "AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Dismiss lobby error notification";
 
