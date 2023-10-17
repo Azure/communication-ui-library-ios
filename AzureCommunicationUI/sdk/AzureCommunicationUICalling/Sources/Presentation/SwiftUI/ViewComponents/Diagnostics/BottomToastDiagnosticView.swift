@@ -30,5 +30,8 @@ struct BottomToastDiagnosticView: View {
         .frame(height: 36)
         .background(Color(StyleProvider.color.surfaceDarkColor))
         .cornerRadius(cornerRadius)
+        .accessibilityAddTraits(.isStaticText)
+        .accessibilityIdentifier(
+            AccessibilityIdentifier.callDiagnosticBottomToastAccessibilityID.rawValue)
     }
 }

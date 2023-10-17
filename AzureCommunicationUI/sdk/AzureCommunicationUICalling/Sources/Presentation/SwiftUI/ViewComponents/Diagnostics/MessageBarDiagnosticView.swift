@@ -38,6 +38,9 @@ struct MessageBarDiagnosticView: View {
                         .foregroundColor(foregroundColor)
                 })
                 .padding([.top, .bottom, .trailing])
+                .accessibilityIdentifier(
+                    AccessibilityIdentifier.callDiagnosticMessageBarAccessibilityID.rawValue)
+                .accessibilityAddTraits(.isButton)
                 .accessibilityLabel(Text(viewModel.dismissAccessibilitylabel))
                 .accessibilityHint(Text(viewModel.dismissAccessibilityHint))
                 .accessibilitySortPriority(0)
@@ -45,6 +48,9 @@ struct MessageBarDiagnosticView: View {
             .frame(height: 48)
             .background(Color(StyleProvider.color.surfaceDarkColor))
             .cornerRadius(cornerRadius)
+            .accessibilityAddTraits(.isStaticText)
+            .accessibilityIdentifier(
+                AccessibilityIdentifier.callDiagnosticMessageBarAccessibilityID.rawValue)
         }
     }
 }
