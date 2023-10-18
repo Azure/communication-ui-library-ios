@@ -45,18 +45,18 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Rozmowa z %d osobami"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Uczestnicy";
 
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="People are waiting to join.";
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="View lobby";
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="View lobby";
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Dismiss lobby notification";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="Osoby oczekują na dołączenie.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="Wyświetl poczekalnię";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="Wyświetl poczekalnię";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Odrzuć powiadomienie poczekalni";
 
-"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Lobby actions not supported.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Lobby has been disabled.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Your role cannot act on the lobby.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Participant is not in lobby.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Lobby action error.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Działania poczekalni nie są obsługiwane.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Poczekalnia została wyłączona.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Twoja rola nie działa w poczekalni.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Uczestnik nie znajduje się w poczekalni.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Błąd działania poczekalni.";
 
-"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Dismiss lobby error notification";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Odrzuć powiadomienie o błędzie poczekalni";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Uczestnik bez nazwy";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (ja)"; // %@ is local participant name
@@ -64,7 +64,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Wyłączono wyciszenie";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Mówi";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Zawieszony";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tap to admit or decline";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Naciśnij, aby wpuścić lub odrzucić";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Przełącz na kamerę tylną";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Przełącz na kamerę przednią";
