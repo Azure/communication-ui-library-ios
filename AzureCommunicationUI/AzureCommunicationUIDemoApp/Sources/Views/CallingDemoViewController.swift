@@ -275,7 +275,7 @@ class CallingDemoViewController: UIViewController {
         let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
         var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
         if remoteInfoDisplayName.isEmpty {
-            remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType.rawValue)"
+            remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"
         }
         let callKitRemoteInfo = CallCompositeCallKitRemoteInfo(displayName: remoteInfoDisplayName,
                                                                cxHandle: cxHandle)
