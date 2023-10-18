@@ -6,7 +6,6 @@
 - Hide lobby users in GridView and Participant List
 
 ## 1.4.0 (2023-08-30)
-
 ### Features
 - Use Dominant Speakers feature to determine which remove participants to display on the grid when number of participants more then 6.
 - Introducing call state changed event for `CallComposite.events.onCallStateChanged`.
@@ -27,6 +26,12 @@
 ### New Features
 - `LocalOptions(skipSetupScreen: Bool?)` to skip the setup screen and directly join the call. [642](https://github.com/Azure/communication-ui-library-ios/pull/642)
 - `LocalOptions(cameraOn: Bool?, microphoneOn: Bool?)` to setup the default behaviour. [642](https://github.com/Azure/communication-ui-library-ios/pull/642)
+  
+## 1.3.0-beta.1 (2023-04-05)
+### New Features
+- `LocalOptions(skipSetupScreen: Bool?)` to skip the setup screen and directly join the call. [642](https://github.com/Azure/communication-ui-library-ios/pull/642)
+- `LocalOptions(cameraOn: Bool?, microphoneOn: Bool?)` to setup the default behaviour. [642](https://github.com/Azure/communication-ui-library-ios/pull/642)
+- Join the room call [657](https://github.com/Azure/communication-ui-library-ios/pull/657)
 
 ## 1.2.0 (2023-03-09)
 ### New Features

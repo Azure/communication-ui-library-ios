@@ -75,8 +75,11 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
 
     func update(localUserState: LocalUserState,
                 remoteParticipantsState: RemoteParticipantsState,
-                callingState: CallingState) {
-        let canShow = canShowLobby(callingState: callingState, participantRole: localUserState.participantRole)
+                callingState: CallingState,
+                visibilityState: VisibilityState) {
+        let canShow = canShowLobby(callingState: callingState,
+                                   participantRole: localUserState.participantRole,
+                                   visibilityState: visibilityState)
 
         let newLobbyParticipantCount = lobbyUsersCount(remoteParticipantsState)
         let isDisplayed = canShow
@@ -101,9 +104,13 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
             .count
     }
 
-    private func canShowLobby(callingState: CallingState, participantRole: ParticipantRole?) -> Bool {
+    private func canShowLobby(callingState: CallingState,
+                              participantRole: ParticipantRole?,
+                              visibilityState: VisibilityState) -> Bool {
         guard callingState.status != .inLobby,
               callingState.status != .localHold,
+              visibilityState.currentStatus == .visible,
+
               let participantRole = participantRole else {
             return false
         }

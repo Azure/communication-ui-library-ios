@@ -48,10 +48,11 @@ class LobbyErrorHeaderViewModel: ObservableObject {
 
     func update(localUserState: LocalUserState,
                 remoteParticipantsState: RemoteParticipantsState,
-                callingState: CallingState) {
-        let mayDisplay = !isHoldingOrInLobby(callingState: callingState)
+                callingState: CallingState,
+                visibilityState: VisibilityState) {
+        let canShow = canShowLobbyError(callingState: callingState, visibilityState: visibilityState)
 
-        guard mayDisplay else {
+        guard canShow else {
             isDisplayed = false
             return
         }
@@ -95,12 +96,11 @@ class LobbyErrorHeaderViewModel: ObservableObject {
         return localizationProvider.getLocalizedString(localizationKey)
     }
 
-    private func isHoldingOrInLobby(callingState: CallingState) -> Bool {
-        guard callingState.status == .inLobby || callingState.status == .localHold else {
+    private func canShowLobbyError(callingState: CallingState, visibilityState: VisibilityState) -> Bool {
+        guard callingState.status != .inLobby,
+              callingState.status != .localHold,
+              visibilityState.currentStatus == .visible else {
             return false
-        }
-        if isDisplayed {
-            isDisplayed = false
         }
 
         return true

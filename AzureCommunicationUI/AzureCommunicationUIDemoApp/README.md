@@ -28,6 +28,8 @@ The sample app is a native iOS application developed using both SwiftUI and UIKi
       - `expiredAcsToken`: an expired Azure Communication Services token for UI testing
       - `groupCallId`: this a type of UUID used to start and join a meeting for Calling
       - `teamsMeetingLink`: the URL to a Teams meeting (You must use https:/$()/ in the format of URL) for Calling
+      - `roomCallId`: the generated ID to join a room call meeting
+      - `roomCallRole`: the type of role used to join a room call meeting
       - `aadToken`: the AAD token for Calling
    - for Chat:
       - `userId`: the ID of the local user for Chat

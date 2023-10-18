@@ -47,7 +47,8 @@ protocol CompositeViewModelFactoryProtocol {
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
     func makeLobbyActionErrorViewModel(localUserState: LocalUserState,
                                        dispatchAction: @escaping ActionDispatch) -> LobbyErrorHeaderViewModel
-    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel
+    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel,
+                                      lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
     func makeParticipantsListViewModel(localUserState: LocalUserState,
                                        dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel
@@ -99,6 +100,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
     private let localOptions: LocalOptions?
+    private let enableMultitasking: Bool
+    private let enableSystemPiPWhenMultitasking: Bool
 
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
@@ -110,7 +113,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          debugInfoManager: DebugInfoManagerProtocol,
-         localOptions: LocalOptions? = nil) {
+         localOptions: LocalOptions? = nil,
+         enableMultitasking: Bool,
+         enableSystemPiPWhenMultitasking: Bool) {
         self.logger = logger
         self.store = store
         self.networkManager = networkManager
@@ -119,6 +124,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.localizationProvider = localizationProvider
         self.debugInfoManager = debugInfoManager
         self.localOptions = localOptions
+        self.enableMultitasking = enableMultitasking
+        self.enableSystemPiPWhenMultitasking = enableSystemPiPWhenMultitasking
     }
 
     // MARK: CompositeViewModels
@@ -259,7 +266,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             localUserState: localUserState,
                             localizationProvider: localizationProvider,
                             accessibilityProvider: accessibilityProvider,
-                            dispatchAction: dispatchAction)
+                            dispatchAction: dispatchAction,
+                            enableMultitasking: enableMultitasking,
+                            enableSystemPiPWhenMultitasking: enableSystemPiPWhenMultitasking)
     }
 
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
@@ -282,10 +291,12 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                   dispatchAction: dispatchAction)
     }
 
-    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
+    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel,
+                                      lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel {
         ParticipantGridCellViewModel(localizationProvider: localizationProvider,
                                      accessibilityProvider: accessibilityProvider,
-                                     participantModel: participantModel)
+                                     participantModel: participantModel,
+                                     lifeCycleState: lifeCycleState)
     }
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {
         ParticipantGridViewModel(compositeViewModelFactory: self,

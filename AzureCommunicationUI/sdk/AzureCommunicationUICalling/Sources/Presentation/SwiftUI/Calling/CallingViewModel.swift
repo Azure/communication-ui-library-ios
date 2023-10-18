@@ -11,6 +11,7 @@ class CallingViewModel: ObservableObject {
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
     @Published var appState: AppStatus = .foreground
+    @Published var isInPip: Bool = false
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -119,7 +120,8 @@ class CallingViewModel: ObservableObject {
             appState = state.lifeCycleState.currentStatus
         }
 
-        guard state.lifeCycleState.currentStatus == .foreground else {
+        guard state.lifeCycleState.currentStatus == .foreground
+                || state.visibilityState.currentStatus != .visible else {
             return
         }
 
@@ -132,19 +134,26 @@ class CallingViewModel: ObservableObject {
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,
-                                   defaultUserState: state.defaultUserState)
+                                   defaultUserState: state.defaultUserState,
+                                   pipState: state.visibilityState)
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
-                                   callingState: state.callingState)
+                                   callingState: state.callingState,
+                                   visibilityState: state.visibilityState)
         lobbyWaitingHeaderViewModel.update(localUserState: state.localUserState,
                                            remoteParticipantsState: state.remoteParticipantsState,
-                                           callingState: state.callingState)
+                                           callingState: state.callingState,
+                                           visibilityState: state.visibilityState)
         lobbyActionErrorViewModel.update(localUserState: state.localUserState,
                                          remoteParticipantsState: state.remoteParticipantsState,
-                                         callingState: state.callingState)
-        localVideoViewModel.update(localUserState: state.localUserState)
+                                         callingState: state.callingState,
+                                         visibilityState: state.visibilityState)
+        localVideoViewModel.update(localUserState: state.localUserState,
+                                   visibilityState: state.visibilityState)
         participantGridsViewModel.update(callingState: state.callingState,
-                                         remoteParticipantsState: state.remoteParticipantsState)
+                                         remoteParticipantsState: state.remoteParticipantsState,
+                                         visibilityState: state.visibilityState,
+                                         lifeCycleState: state.lifeCycleState)
         bannerViewModel.update(callingState: state.callingState)
         lobbyOverlayViewModel.update(callingStatus: state.callingState.status)
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
@@ -170,6 +179,8 @@ class CallingViewModel: ObservableObject {
 
         updateIsLocalCameraOn(with: state)
         errorInfoViewModel.update(errorState: state.errorState)
+
+        isInPip = state.visibilityState.currentStatus == .pipModeEntered
     }
 
     private static func hasRemoteParticipants(_ participants: [ParticipantInfoModel]) -> Bool {

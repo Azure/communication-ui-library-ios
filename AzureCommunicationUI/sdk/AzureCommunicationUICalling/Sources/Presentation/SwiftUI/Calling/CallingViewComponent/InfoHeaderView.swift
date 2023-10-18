@@ -50,6 +50,13 @@ struct InfoHeaderView: View {
 
     var infoHeader: some View {
         HStack {
+            // correct dismissButtonAccessibilityID
+            if viewModel.enableMultitasking {
+                IconButton(viewModel: viewModel.dismissButtonViewModel)
+                    .flipsForRightToLeftLayoutDirection(true)
+                    .accessibilityIdentifier(AccessibilityIdentifier.dismissButtonAccessibilityID.rawValue)
+            }
+
             Text(viewModel.infoLabel)
                 .padding(EdgeInsets(top: Constants.infoLabelHorizontalPadding,
                                     leading: 0,
@@ -68,7 +75,7 @@ struct InfoHeaderView: View {
             participantListButton
         }
         .padding(EdgeInsets(top: 0,
-                            leading: Constants.hStackHorizontalPadding,
+                            leading: Constants.hStackHorizontalPadding / 2.0,
                             bottom: 0,
                             trailing: Constants.hStackHorizontalPadding / 2.0))
         .background(Color(StyleProvider.color.surfaceDarkColor))

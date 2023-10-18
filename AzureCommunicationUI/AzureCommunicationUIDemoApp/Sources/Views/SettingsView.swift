@@ -48,8 +48,9 @@ struct SettingsView: View {
                     navigationSettings
                     remoteParticipantsAvatarsSettings
                     themeSettings
+                    exitCompositeSettings
                 }
-                exitCompositeSettings
+
             }
             .accessibilityElement(children: .contain)
             .navigationTitle("UI Library - Settings")
