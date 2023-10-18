@@ -45,18 +45,18 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="與 %d 個人通話"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="參與者";
 
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="People are waiting to join.";
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="View lobby";
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="View lobby";
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Dismiss lobby notification";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="人員正在等候加入。";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="檢視大廳";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="檢視大廳";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="關閉大廳通知";
 
-"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Lobby actions not supported.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Lobby has been disabled.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Your role cannot act on the lobby.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Participant is not in lobby.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Lobby action error.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="不支援大廳動作。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="已停用大廳。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="您的角色無法在大廳上作用。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="參與者不在大廳中。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="大廳動作錯誤。";
 
-"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Dismiss lobby error notification";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "關閉大廳錯誤通知";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="未命名的參與者";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (我)"; // %@ is local participant name
@@ -64,7 +64,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="已取消靜音";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="說話";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tap to admit or decline";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="點選以准許或拒絕";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="切換到後相機";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="切換到前相機";

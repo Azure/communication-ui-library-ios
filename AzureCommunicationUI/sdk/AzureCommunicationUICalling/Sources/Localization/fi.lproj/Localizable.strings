@@ -45,18 +45,18 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Puhelu %d henkilön kanssa"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Osallistujat";
 
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="People are waiting to join.";
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="View lobby";
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="View lobby";
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Dismiss lobby notification";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="Ihmiset odottavat liittymistä.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="Näytä odotustila";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="Näytä odotustila";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Hylkää odotustilan ilmoitus";
 
-"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Lobby actions not supported.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Lobby has been disabled.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Your role cannot act on the lobby.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Participant is not in lobby.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Lobby action error.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Odotustilan toimintoja ei tueta.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Odotustila on poistettu käytöstä.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Roolisi ei voi toimia odotustilassa.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Osallistuja ei ole odotustilassa.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Odotustilan toimintovirhe.";
 
-"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Dismiss lobby error notification";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Hylkää odotustilan virheilmoitus";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Nimetön osallistuja";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (minä)"; // %@ is local participant name
@@ -64,7 +64,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Ei mykistetty";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Puhuu";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Pidossa";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tap to admit or decline";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Hyväksy tai hylkää napauttamalla";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Vaihda takakameraan";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Vaihda etukameraan";

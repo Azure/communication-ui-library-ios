@@ -45,18 +45,18 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="%d 人のユーザーと通話する"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="参加者";
 
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="People are waiting to join.";
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="View lobby";
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="View lobby";
-"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Dismiss lobby notification";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="ユーザーが参加待ちの状態です。";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="ロビーを表示";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="ロビーを表示";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Lobby 通知を閉じる";
 
-"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Lobby actions not supported.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Lobby has been disabled.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Your role cannot act on the lobby.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Participant is not in lobby.";
-"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Lobby action error.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="ロビー アクションはサポートされていません。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="ロビーが無効になりました。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="あなたのロールではロビーを操作できません。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="参加者はロビーにいません。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="ロビー アクション エラー。";
 
-"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Dismiss lobby error notification";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "ロビー エラー通知を閉じる";
 
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="名前のない参加者";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (自分)"; // %@ is local participant name
@@ -64,7 +64,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="ミュート解除";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="話し中";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留中";
-"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tap to admit or decline";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="タップして許可または拒否";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="バック カメラに切り替える";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="フロント カメラに切り替える";
