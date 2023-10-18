@@ -176,6 +176,7 @@ extension CallingSDKEventsHandler: CallDelegate,
             let subcode = call.callEndReason.subcode
             logger.error("Receive vaildate CallEndReason:\(code), subcode:\(subcode)")
         }
+
         let callInfoModel = CallInfoModel(status: currentStatus,
                                           internalError: internalError)
         callInfoSubject.send(callInfoModel)
