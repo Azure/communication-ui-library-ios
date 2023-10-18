@@ -10,13 +10,17 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>$(PRODUCT_BUNDLE_IDENTIFIER).url-scheme.dial</string>
+            <string>com.azure.ios.communication.ui.meetings.AzureCommunicationUIDemoAppTest</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>acsui</string>
 			</array>
 		</dict>
 	</array>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>This is required for calling.</string>
+    <key>NSCameraUsageDescription</key>
+    <string>This is required for calling.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -42,27 +46,27 @@
 		<string>remote-notification</string>
 		<string>voip</string>
 	</array>
-	<key>aadToken</key>
-	<string>${aadToken}</string>
-	<key>acsToken</key>
-	<string>${acsToken}</string>
-	<key>acsTokenUrl</key>
-	<string>${acsTokenUrl}</string>
-	<key>appCenterSecret</key>
-	<string>${appCenterSecret}</string>
-	<key>displayName</key>
-	<string>${displayName}</string>
-	<key>endpointUrl</key>
-	<string>$(endpointUrl)</string>
-	<key>expiredAcsToken</key>
-	<string>${expiredAcsToken}</string>
-	<key>groupCallId</key>
-	<string>${groupCallId}</string>
-	<key>teamsMeetingLink</key>
-	<string>${teamsMeetingLink}</string>
-	<key>threadId</key>
-	<string>$(threadId)</string>
-	<key>userId</key>
-	<string>$(userId)</string>
+    <key>appCenterSecret</key>
+    <string>${appCenterSecret}</string>
+    <key>acsToken</key>
+    <string>${acsToken}</string>
+    <key>expiredAcsToken</key>
+    <string>${expiredAcsToken}</string>
+    <key>acsTokenUrl</key>
+    <string>${acsTokenUrl}</string>
+    <key>displayName</key>
+    <string>${displayName}</string>
+    <key>groupCallId</key>
+    <string>${groupCallId}</string>
+    <key>teamsMeetingLink</key>
+    <string>${teamsMeetingLink}</string>
+    <key>aadToken</key>
+    <string>${aadToken}</string>
+    <key>userId</key>
+    <string>$(userId)</string>
+    <key>threadId</key>
+    <string>$(threadId)</string>
+    <key>endpointUrl</key>
+    <string>$(endpointUrl)</string>
 </dict>
 </plist>

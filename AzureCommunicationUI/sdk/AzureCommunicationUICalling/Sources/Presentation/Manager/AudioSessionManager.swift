@@ -122,7 +122,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     func isAudioUsedByOther() -> Bool {
-        return isCallKitEnabled ? false : !AVAudioSession.sharedInstance().isOtherAudioPlaying
+        return isCallKitEnabled ? true : !AVAudioSession.sharedInstance().isOtherAudioPlaying
     }
 
     private func getCurrentAudioDevice() -> AudioDeviceType {
