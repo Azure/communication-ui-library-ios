@@ -142,13 +142,13 @@ struct SettingsView: View {
     var callKitSettings: some View {
         Section(header: Text("Callkit Settings")) {
             enableCallKitToggle
-            disableRemoteHold
+            enableRemoteHold
             enableRemoteInfo
             TextField(
                 "Remote info, default is Group/Teams call",
                 text: $envConfigSubject.callkitRemoteInfo
             )
-            .keyboardType(.numberPad)
+            .keyboardType(.default)
             .disableAutocorrection(true)
             .autocapitalization(.none)
             .textFieldStyle(.roundedBorder)
@@ -161,10 +161,10 @@ struct SettingsView: View {
         .accessibilityIdentifier(AccessibilityId.useEnableCalkitToggleToggleAccessibilityID.rawValue)
     }
 
-    var disableRemoteHold: some View {
-        Toggle("Disable remote hold",
-               isOn: $envConfigSubject.disableRemoteHold)
-        .accessibilityIdentifier(AccessibilityId.useDisableRemoteHoldToggleToggleAccessibilityID.rawValue)
+    var enableRemoteHold: some View {
+        Toggle("Enable remote hold",
+               isOn: $envConfigSubject.enableRemoteHold)
+        .accessibilityIdentifier(AccessibilityId.useEnableRemoteHoldToggleToggleAccessibilityID.rawValue)
     }
 
     var enableRemoteInfo: some View {

@@ -62,9 +62,9 @@ class EnvConfigSubject: ObservableObject {
     @Published var useCustomRemoteParticipantViewData: Bool = false
     @Published var useMockCallingSDKHandler: Bool = false
     @Published var useRelaunchOnDismissedToggle: Bool = false
-    @Published var disableRemoteHold: Bool = false
-    @Published var enableCallKit: Bool = false
-    @Published var enableRemoteInfo: Bool = false
+    @Published var enableRemoteHold: Bool = true
+    @Published var enableCallKit: Bool = true
+    @Published var enableRemoteInfo: Bool = true
     @Published var callkitRemoteInfo: String = ""
     @Published var useExpiredToken: Bool = false
     @Published var primaryColor: Color = .blue

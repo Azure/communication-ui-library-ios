@@ -280,7 +280,7 @@ extension CallingDemoView {
         }
         let callKitRemoteInfo = CallCompositeCallKitRemoteInfo(displayName: remoteInfoDisplayName,
                                                                cxHandle: cxHandle)
-        let isCallHoldSupported = !$envConfigSubject.disableRemoteHold.wrappedValue
+        let isCallHoldSupported = !$envConfigSubject.enableRemoteHold.wrappedValue
         let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
                                                        isCallHoldSupported: isCallHoldSupported,
                                                        remoteInfo: $envConfigSubject.enableRemoteInfo.wrappedValue
