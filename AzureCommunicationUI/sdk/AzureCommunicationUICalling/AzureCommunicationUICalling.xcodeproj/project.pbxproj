@@ -991,7 +991,6 @@
 				1FBCB6AE2649DC7900F57EEA /* ParticipantInfoModel.swift */,
 				1FA23F9D265DA21400B4A080 /* VideoStreamInfoModel.swift */,
 				88B87C562755911B00290DD1 /* CallInfoModel.swift */,
-				05E28FF52AD60E5900FF7020 /* ParticipantRole.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
