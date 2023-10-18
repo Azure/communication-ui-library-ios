@@ -279,7 +279,7 @@ class CallingDemoViewController: UIViewController {
         }
         let callKitRemoteInfo = CallCompositeCallKitRemoteInfo(displayName: remoteInfoDisplayName,
                                                                cxHandle: cxHandle)
-        let isCallHoldSupported = !envConfigSubject.enableRemoteHold
+        let isCallHoldSupported = envConfigSubject.enableRemoteHold
         let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
                                                        isCallHoldSupported: isCallHoldSupported,
                                                        remoteInfo: envConfigSubject.enableRemoteInfo

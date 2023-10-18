@@ -276,11 +276,11 @@ extension CallingDemoView {
         let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
         var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
         if remoteInfoDisplayName.isEmpty {
-            remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType.rawValue)"
+            remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"
         }
         let callKitRemoteInfo = CallCompositeCallKitRemoteInfo(displayName: remoteInfoDisplayName,
                                                                cxHandle: cxHandle)
-        let isCallHoldSupported = !$envConfigSubject.enableRemoteHold.wrappedValue
+        let isCallHoldSupported = $envConfigSubject.enableRemoteHold.wrappedValue
         let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
                                                        isCallHoldSupported: isCallHoldSupported,
                                                        remoteInfo: $envConfigSubject.enableRemoteInfo.wrappedValue
