@@ -23,7 +23,6 @@ public struct RemoteOptions {
     public let credential: CommunicationTokenCredential
 
     /// The display name of the local participant when joining the call.
-    ///
     /// The limit for string length is 256.
     public let displayName: String?
 
