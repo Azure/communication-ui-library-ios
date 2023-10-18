@@ -206,7 +206,8 @@ class InfoHeaderViewModelTests: XCTestCase {
         let participantsListViewModel = ParticipantsListViewModelMocking(
                                                             compositeViewModelFactory: factoryMocking,
                                                             localUserState: LocalUserState(),
-                                                            dispatchAction: storeFactory.store.dispatch)
+                                                            dispatchAction: storeFactory.store.dispatch,
+                                                            localizationProvider: localizationProvider)
         participantsListViewModel.updateStates = updateStates
         factoryMocking.participantsListViewModel = participantsListViewModel
 

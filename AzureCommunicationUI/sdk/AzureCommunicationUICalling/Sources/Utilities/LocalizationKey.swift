@@ -81,6 +81,15 @@ enum LocalizationKey: String {
     case speaking = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"
     case onHold = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"
     case participantListLobbyAction = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"
+    case participantListWaitingInLobby = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"
+    case participantListInTheCall = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"
+    case participantListAdmitAll = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"
+    case participantListConfirmTitleAdmitAll =
+            "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"
+    case participantListConfirmTitleAdmitParticipant =
+            "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"
+    case participantListConfirmAdmit = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"
+    case participantListConfirmDecline = "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"
 
     case frontCamera = "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"
     case backCamera = "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"

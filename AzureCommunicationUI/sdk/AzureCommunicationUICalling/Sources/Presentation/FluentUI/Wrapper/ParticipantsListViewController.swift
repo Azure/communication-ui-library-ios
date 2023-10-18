@@ -34,6 +34,12 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
     private var declineAll: () -> Void
     private var admitParticipant: (_ participantId: String) -> Void
     private var declineParticipant: (_ participantId: String) -> Void
+    private let waitingInLobby: String
+    private let inTheCall: String
+    private let confirmTitleAdmitParticipant: String
+    private let confirmTitleAdmitAll: String
+    private let confirmAdmit: String
+    private let confirmDecline: String
 
     private var admitAlert: UIAlertController?
 
@@ -60,13 +66,25 @@ class ParticipantsListViewController: DrawerContainerViewController<Participants
          admintAll: @escaping () -> Void,
          declineAll: @escaping () -> Void,
          admitParticipant: @escaping (_ participantId: String) -> Void,
-         declineParticipant: @escaping (_ participantId: String) -> Void
+         declineParticipant: @escaping (_ participantId: String) -> Void,
+         waitingInLobby: String,
+         inTheCall: String,
+         confirmTitleAdmitParticipant: String,
+         confirmTitleAdmitAll: String,
+         confirmAdmit: String,
+         confirmDecline: String
     ) {
         self.avatarViewManager = avatarViewManager
         self.admintAll = admintAll
         self.declineAll = declineAll
         self.admitParticipant = admitParticipant
         self.declineParticipant = declineParticipant
+        self.waitingInLobby = waitingInLobby
+        self.inTheCall = inTheCall
+        self.confirmTitleAdmitParticipant = confirmTitleAdmitParticipant
+        self.confirmTitleAdmitAll = confirmTitleAdmitAll
+        self.confirmAdmit = confirmAdmit
+        self.confirmDecline = confirmDecline
         super.init(sourceView: sourceView, isRightToLeft: isRightToLeft)
     }
 
@@ -124,8 +142,8 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
 
         let label = UILabel()
         label.text = isLobbySection
-        ? "Waiting in lobby (\(lobbyParticipants.count))"
-        : "In the call (\(inCallParticipants.count))"
+        ? String(format: waitingInLobby, lobbyParticipants.count)
+        : String(format: inTheCall, inCallParticipants.count)
 
         label.font = .systemFont(ofSize: 14)
         label.textColor = StyleProvider.color.onHoldLabel
@@ -161,7 +179,8 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
         let participantViewData = participantsListCellViewModel.getParticipantViewData(from: avatarViewManager)
         let avatarParticipantName = participantsListCellViewModel.getParticipantName(with: participantViewData)
 
-        confirmAdmitting(title: "Admit \(avatarParticipantName)?",
+        let title = String(format: confirmTitleAdmitParticipant, avatarParticipantName)
+        confirmAdmitting(title: title,
                          onConfirmed: {
             self.admitParticipant(participantId)
         },
@@ -171,7 +190,7 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
     }
 
     @objc func onAdmitAllTap() {
-        confirmAdmitting(title: "Admit all participants?",
+        confirmAdmitting(title: confirmTitleAdmitAll,
                          onConfirmed: self.admintAll,
                          onDeclined: self.declineAll)
     }
@@ -187,12 +206,11 @@ extension ParticipantsListViewController: UITableViewDataSource, UITableViewDele
             let admitAlert = UIAlertController(title: title,
                                                message: nil,
                                                preferredStyle: .alert)
-
-            admitAlert.addAction(UIAlertAction(title: "Decline", style: .cancel) { _ in
+            admitAlert.addAction(UIAlertAction(title: self.confirmDecline, style: .cancel) { _ in
                 onDeclined()
                 self.admitAlert = nil
             })
-            admitAlert.addAction(UIAlertAction(title: "Admit", style: .default) { _ in
+            admitAlert.addAction(UIAlertAction(title: self.confirmAdmit, style: .default) { _ in
                 onConfirmed()
                 self.admitAlert = nil
             })
