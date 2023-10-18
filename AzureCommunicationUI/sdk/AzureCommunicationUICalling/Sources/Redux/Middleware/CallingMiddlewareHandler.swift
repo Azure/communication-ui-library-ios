@@ -295,7 +295,6 @@ extension CallingMiddlewareHandler {
 
                 self.handle(callingStatus: callingStatus, dispatch: dispatch)
                 self.logger.debug("Dispatch State Update: \(callingStatus)")
-                logger.debug("Call State middle:\(callingStatus)")
                 if let internalError = internalError {
                     self.handleCallInfo(internalError: internalError,
                                         dispatch: dispatch) {

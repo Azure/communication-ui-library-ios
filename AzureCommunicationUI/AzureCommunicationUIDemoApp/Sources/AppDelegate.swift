@@ -42,13 +42,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return AppDelegate.orientationLock
     }
-    func provider(_ provider: CXProvider, didInvalidate providerConfiguration: CXProviderConfiguration) {
-        // Handle any invalidation or cleanup
-        print("App State ::::providerConfiguration ")
-    }
-
-    func provider(_ provider: CXProvider, perform action: CXStartCallAction) {
-        // Handle answering the call
-        print("App State ::::CXAnswerCallAction ")
-    }
 }
