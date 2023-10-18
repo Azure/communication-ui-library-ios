@@ -377,7 +377,7 @@ extension CallingDemoView {
     }
 
     private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
-        print("Call State ::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
+        print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
         self.callState = callState.requestString
     }
 
