@@ -45,12 +45,26 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Звонок с несколькими (%d) людьми"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Участники";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="Люди ожидают присоединения к звонку.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="Посмотреть \"зал ожидания\"";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="Посмотреть \"зал ожидания\"";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Закрыть уведомление о \"зале ожидания\"";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Действия в \"зале ожидания\" не поддерживаются.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="\"Зал ожидания\" отключен.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Ваша роль не предполагает действий в \"зале ожидания\".";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Участника нет в \"зале ожидания\".";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Ошибка действия в \"зале ожидания\".";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Закрыть уведомление об ошибке \"зала ожидания\"";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Участник без имени";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (Я)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Звук отключен";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Звук включен";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Говорит";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="На удержании";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Коснитесь, чтобы допустить или не допустить участника";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Переключиться на заднюю камеру";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Переключиться на переднюю камеру";

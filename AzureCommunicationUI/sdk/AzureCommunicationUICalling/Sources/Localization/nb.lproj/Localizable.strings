@@ -45,12 +45,26 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Ring med %d personer"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Deltakere";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="Personer venter på å bli med.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="Vis lobbyen";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="Vis lobbyen";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Lukk lobbyvarsling";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Lobbyhandlinger støttes ikke.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Lobbyen er deaktivert.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Rollen din kan ikke utføre handlinger på lobbyen.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Deltakeren er ikke i lobbyen.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Feil ved lobbyhandling.";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Lukk varsel om lobbyfeil";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Deltaker uten navn";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (me)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Dempet";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Demping opphevet";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Snakker";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="På vent";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Trykk for å slippe inn eller avslå";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Bytt til kamera bak";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Bytt til kamera foran";

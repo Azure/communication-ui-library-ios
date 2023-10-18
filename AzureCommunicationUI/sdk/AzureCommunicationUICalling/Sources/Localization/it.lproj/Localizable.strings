@@ -45,12 +45,26 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="Chiamata con %d persone"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Partecipanti";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="Le persone stanno aspettando di partecipare.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="Visualizza la sala d'attesa";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="Visualizza la sala d'attesa";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Ignora notifica sala di attesa";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Azioni della sala di attesa non supportate.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="La sala di attesa è stata disabilitata.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Il tuo ruolo non può agire nella sala di attesa.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Il partecipante non è nella sala di attesa.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Errore azione sala di attesa.";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Ignora notifica di errore della sala di attesa";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Partecipante senza nome";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (me)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Audio disattivato";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Microfono riattivato";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Impegnato in una conversazione";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="In attesa";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tocca per ammettere o rifiutare";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Passa alla videocamera posteriore";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Passa alla videocamera anteriore";
