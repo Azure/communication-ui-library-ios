@@ -276,8 +276,8 @@ extension CallingSDKWrapper {
         }
         let options = CallAgentOptions()
         if let callKitConfig = self.callConfiguration.callKitOptions?.cxProvideConfig {
-            var callKitOptions = CallKitOptions(with: callKitConfig)
-            callKitOptions.isCallHoldSupported = self.callConfiguration.callKitOptions?.isCallHoldSupported ?? false
+            let callKitOptions = CallKitOptions(with: callKitConfig)
+            callKitOptions.isCallHoldSupported = self.callConfiguration.callKitOptions?.isCallHoldSupported ?? true
             options.callKitOptions = callKitOptions
         }
         if let displayName = callConfiguration.displayName {
