@@ -13,8 +13,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     fileprivate func assignCallID(_ callID: String, _ appDelegate: AppDelegate) {
         if callID.contains("http") {
             appDelegate.envConfigSubject.teamsMeetingLink = callID
+            appDelegate.envConfigSubject.selectedMeetingType = .teamsMeeting
         } else {
             appDelegate.envConfigSubject.groupCallId = callID
+            appDelegate.envConfigSubject.selectedMeetingType = .groupCall
         }
     }
 

@@ -274,15 +274,14 @@ extension CallingDemoView {
 
         let cxHandle = CXHandle(type: .generic, value: link)
         let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
-        let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
-                                                        isCallHoldSupported: true,
-                                                        remoteInfoDisplayName: "ACS UI Library",
-                                                        remoteInfoCXHandle: cxHandle)
-
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
+                let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
+                                                                isCallHoldSupported: true,
+                                                                remoteInfoDisplayName: "ACS UI Group Call",
+                                                                remoteInfoCXHandle: cxHandle)
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
                                                                       credential: credential,
@@ -296,6 +295,10 @@ extension CallingDemoView {
                                          localOptions: localOptions)
                 }
             case .teamsMeeting:
+                let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
+                                                                isCallHoldSupported: true,
+                                                                remoteInfoDisplayName: "ACS UI Teams Call",
+                                                                remoteInfoCXHandle: cxHandle)
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                                       credential: credential,
