@@ -50,6 +50,7 @@ struct SettingsView: View {
                     themeSettings
                 }
                 exitCompositeSettings
+                callKitSettings
             }
             .accessibilityElement(children: .contain)
             .navigationTitle("UI Library - Settings")
@@ -136,6 +137,40 @@ struct SettingsView: View {
             .autocapitalization(.none)
             .textFieldStyle(.roundedBorder)
         }
+    }
+
+    var callKitSettings: some View {
+        Section(header: Text("Callkit Settings")) {
+            enableCallKitToggle
+            disableRemoteHold
+            enableRemoteInfo
+            TextField(
+                "Remote info, default is Group/Teams call",
+                text: $envConfigSubject.callkitRemoteInfo
+            )
+            .keyboardType(.numberPad)
+            .disableAutocorrection(true)
+            .autocapitalization(.none)
+            .textFieldStyle(.roundedBorder)
+        }
+    }
+
+    var enableCallKitToggle: some View {
+        Toggle("Enable Callkit",
+               isOn: $envConfigSubject.enableCallKit)
+        .accessibilityIdentifier(AccessibilityId.useEnableCalkitToggleToggleAccessibilityID.rawValue)
+    }
+
+    var disableRemoteHold: some View {
+        Toggle("Disable remote hold",
+               isOn: $envConfigSubject.disableRemoteHold)
+        .accessibilityIdentifier(AccessibilityId.useDisableRemoteHoldToggleToggleAccessibilityID.rawValue)
+    }
+
+    var enableRemoteInfo: some View {
+        Toggle("Enable remote info",
+               isOn: $envConfigSubject.enableRemoteInfo)
+        .accessibilityIdentifier(AccessibilityId.useEnableRemoteInfoToggleToggleAccessibilityID.rawValue)
     }
 
     var localizationSettings: some View {

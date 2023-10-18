@@ -8,17 +8,27 @@ import CallKit
 public struct CallCompositeCallKitOption {
     let cxProvideConfig: CXProviderConfiguration
     let isCallHoldSupported: Bool
-    let remoteInfoDisplayName: String?
-    let remoteInfoCXHandle: CXHandle?
+    let remoteInfo: CallCompositeCallKitRemoteInfo?
 
     public init(cxProvideConfig: CXProviderConfiguration,
                 isCallHoldSupported: Bool,
-                remoteInfoDisplayName: String?,
-                remoteInfoCXHandle: CXHandle?) {
+                remoteInfo: CallCompositeCallKitRemoteInfo?) {
         self.cxProvideConfig = cxProvideConfig
         self.isCallHoldSupported = isCallHoldSupported
-        self.remoteInfoDisplayName = remoteInfoDisplayName
-        self.remoteInfoCXHandle = remoteInfoCXHandle
+        self.remoteInfo = remoteInfo
+    }
+
+    public init(cxProvideConfig: CXProviderConfiguration,
+                isCallHoldSupported: Bool) {
+        self.cxProvideConfig = cxProvideConfig
+        self.isCallHoldSupported = isCallHoldSupported
+        self.remoteInfo = nil
+    }
+
+    public init(cxProvideConfig: CXProviderConfiguration) {
+        self.cxProvideConfig = cxProvideConfig
+        self.isCallHoldSupported = true
+        self.remoteInfo = nil
     }
 
     public static func getDefaultCXProviderConfiguration() -> CXProviderConfiguration {

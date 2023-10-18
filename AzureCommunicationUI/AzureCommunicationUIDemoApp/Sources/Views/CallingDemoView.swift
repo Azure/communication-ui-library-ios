@@ -274,43 +274,40 @@ extension CallingDemoView {
 
         let cxHandle = CXHandle(type: .generic, value: link)
         let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
+        var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
+        if remoteInfoDisplayName.isEmpty {
+            remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType.rawValue)"
+        }
+        let callKitRemoteInfo = CallCompositeCallKitRemoteInfo(displayName: remoteInfoDisplayName,
+                                                               cxHandle: cxHandle)
+        let isCallHoldSupported = !$envConfigSubject.disableRemoteHold.wrappedValue
+        let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
+                                                       isCallHoldSupported: isCallHoldSupported,
+                                                       remoteInfo: $envConfigSubject.enableRemoteInfo.wrappedValue
+                                                        ? callKitRemoteInfo : nil)
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
-                let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
-                                                                isCallHoldSupported: true,
-                                                                remoteInfoDisplayName: "ACS UI Group Call",
-                                                                remoteInfoCXHandle: cxHandle)
-                if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
-                                                                      credential: credential,
-                                                                      callKitOptions: callKitOptions),
-                                         localOptions: localOptions)
-                } else {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
-                                                                      credential: credential,
-                                                                      displayName: envConfigSubject.displayName,
-                                                                      callKitOptions: callKitOptions),
-                                         localOptions: localOptions)
-                }
+                let displayName = envConfigSubject.displayName.isEmpty ? nil : envConfigSubject.displayName
+
+                let remoteOptions = RemoteOptions(for: .groupCall(groupId: uuid),
+                                                  credential: credential,
+                                                  displayName: displayName,
+                                                  callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
+                                                  ? callKitOptions : nil)
+
+                callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
+
             case .teamsMeeting:
-                let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
-                                                                isCallHoldSupported: true,
-                                                                remoteInfoDisplayName: "ACS UI Teams Call",
-                                                                remoteInfoCXHandle: cxHandle)
-                if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
-                                                                      credential: credential,
-                                                                      callKitOptions: callKitOptions),
-                                         localOptions: localOptions)
-                } else {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
-                                                                      credential: credential,
-                                                                      displayName: envConfigSubject.displayName,
-                                                                      callKitOptions: callKitOptions),
-                                         localOptions: localOptions)
-                }
+                let remoteOptions = RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                                                  credential: credential,
+                                                  displayName: envConfigSubject.displayName.isEmpty
+                                                  ? nil : envConfigSubject.displayName,
+                                                  callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
+                                                  ? callKitOptions : nil)
+
+                callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
