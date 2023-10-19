@@ -117,7 +117,17 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     func isAudioUsedByOther() -> Bool {
-        return !AVAudioSession.sharedInstance().isOtherAudioPlaying
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            // Try to activate the session
+            try audioSession.setActive(true)
+            // Deactivate the session
+            try audioSession.setActive(false)
+            return true  // Microphone can be used
+        } catch {
+            // Handle the error, maybe another app is using the microphone
+            return false  // Microphone is in use by another app
+        }
     }
 
     private func getCurrentAudioDevice() -> AudioDeviceType {
