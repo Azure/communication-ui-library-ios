@@ -116,6 +116,9 @@ struct SettingsView: View {
     var mockCallingSDKToggle: some View {
         Toggle("Use mock Calling SDK Wrapper Handler",
                isOn: $envConfigSubject.useMockCallingSDKHandler)
+        .onTapGesture {
+            envConfigSubject.useMockCallingSDKHandler = !envConfigSubject.useMockCallingSDKHandler
+        }
         .accessibilityIdentifier(AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue)
     }
 

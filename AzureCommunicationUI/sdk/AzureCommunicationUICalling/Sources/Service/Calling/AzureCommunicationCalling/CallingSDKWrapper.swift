@@ -66,8 +66,10 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         if isCameraPreferred,
            let localVideoStream = localVideoStream {
             let localVideoStreamArray = [localVideoStream]
-            let videoOptions = VideoOptions(localVideoStreams: localVideoStreamArray)
-            joinCallOptions.videoOptions = videoOptions
+
+            let videoOptions = OutgoingVideoOptions()
+            videoOptions.streams = localVideoStreamArray
+            joinCallOptions.outgoingVideoOptions = videoOptions
         }
         if let callKitOptions = self.callConfiguration.callKitOptions,
             let remoteInfo = callKitOptions.remoteInfo {
@@ -149,7 +151,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             return nil
         }
         return CompositeLocalVideoStream(
-            mediaStreamType: videoStream.mediaStreamType.asCompositeMediaStreamType,
+            mediaStreamType: videoStream.sourceType.asCompositeMediaStreamType,
             wrappedObject: castVideoStream
         )
     }
