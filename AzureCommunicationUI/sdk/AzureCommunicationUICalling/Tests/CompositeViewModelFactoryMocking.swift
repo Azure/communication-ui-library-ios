@@ -196,9 +196,9 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           localUserState: localUserState,
                                                           localizationProvider: localizationProvider,
                                                           accessibilityProvider: accessibilityProvider,
-                                                          dispatchAction: dispatchAction,
                                                           enableMultitasking: true,
-                                                          enableSystemPiPWhenMultitasking: true)
+                                                          enableSystemPiPWhenMultitasking: true,
+                                                          dispatchAction: dispatchAction)
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel, lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel {
@@ -220,7 +220,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                        dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> ParticipantsListViewModel {
         return participantsListViewModel ?? ParticipantsListViewModel(compositeViewModelFactory: self,
                                                                       localUserState: localUserState,
-                                                                      dispatchAction: dispatchAction)
+                                                                      dispatchAction: dispatchAction,
+                                                                      localizationProvider: localizationProvider)
     }
 
     func makeBannerViewModel() -> BannerViewModel {

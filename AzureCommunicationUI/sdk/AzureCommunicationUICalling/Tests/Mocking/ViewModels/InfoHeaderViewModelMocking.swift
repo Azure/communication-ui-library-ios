@@ -21,9 +21,9 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
                    localUserState: localUserState,
                    localizationProvider: LocalizationProviderMocking(),
                    accessibilityProvider: accessibilityProvider,
-                   dispatchAction: dispatchAction,
                    enableMultitasking: true,
-                   enableSystemPiPWhenMultitasking: true)
+                   enableSystemPiPWhenMultitasking: true,
+                   dispatchAction: dispatchAction)
     }
 
     override func update(localUserState: LocalUserState,

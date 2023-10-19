@@ -45,12 +45,26 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="%d kişi ile arama"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="Katılımcılar";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="Kişiler katılmak için bekliyor.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="Lobiyi görüntüle";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="Lobiyi görüntüle";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Lobi bildirimini kapat";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="Lobi eylemleri desteklenmiyor.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="Lobi devre dışı bırakıldı.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="Rolünüz lobide etkili olamaz.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="Katılımcı lobide değil.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="Lobi eylemi hatası.";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "Lobi hatası bildirimini kapat";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="Adsız Katılımcı";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (ben)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="Sessize alındı";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="Sesi açıldı";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Konuşma";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Beklemede";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Kabul etmek veya reddetmek için dokunun";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Arka kameraya geç";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Ön kameraya geç";

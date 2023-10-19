@@ -266,9 +266,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             localUserState: localUserState,
                             localizationProvider: localizationProvider,
                             accessibilityProvider: accessibilityProvider,
-                            dispatchAction: dispatchAction,
                             enableMultitasking: enableMultitasking,
-                            enableSystemPiPWhenMultitasking: enableSystemPiPWhenMultitasking)
+                            enableSystemPiPWhenMultitasking: enableSystemPiPWhenMultitasking,
+                            dispatchAction: dispatchAction)
     }
 
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
@@ -309,7 +309,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                        dispatchAction: @escaping ActionDispatch) -> ParticipantsListViewModel {
         ParticipantsListViewModel(compositeViewModelFactory: self,
                                   localUserState: localUserState,
-                                  dispatchAction: dispatchAction)
+                                  dispatchAction: dispatchAction,
+                                  localizationProvider: localizationProvider)
     }
     func makeBannerViewModel() -> BannerViewModel {
         BannerViewModel(compositeViewModelFactory: self)

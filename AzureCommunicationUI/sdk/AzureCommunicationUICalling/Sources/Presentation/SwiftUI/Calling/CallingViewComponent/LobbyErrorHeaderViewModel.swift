@@ -105,4 +105,5 @@ class LobbyErrorHeaderViewModel: ObservableObject {
 
         return true
     }
+
 }
