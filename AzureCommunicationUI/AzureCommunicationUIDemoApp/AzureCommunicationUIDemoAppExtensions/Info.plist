@@ -9,11 +9,11 @@
 			<key>IntentsRestrictedWhileLocked</key>
 			<array/>
 			<key>IntentsSupported</key>
-            <array>
-                <string>INStartCallIntent</string>
-                <string>INStartAudioCallIntent</string>
-                <string>INStartVideoCallIntent</string>
-            </array>
+			<array>
+				<string>INStartCallIntent</string>
+				<string>INStartAudioCallIntent</string>
+				<string>INStartVideoCallIntent</string>
+			</array>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.intents-service</string>

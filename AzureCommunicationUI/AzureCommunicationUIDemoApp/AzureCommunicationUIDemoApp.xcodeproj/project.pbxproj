@@ -809,7 +809,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.meetings.AzureCommunicationUIDemoAppTest.AzureCommunicationUIDemoAppExtensions;
+				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.AzureCommunicationUIDemoApp.AzureCommunicationUIDemoAppExtensions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -826,7 +826,7 @@
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4A674S8KZ8;
+				DEVELOPMENT_TEAM = UBF8T346G9;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -841,7 +841,7 @@
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.meetings.AzureCommunicationUIDemoAppTest.AzureCommunicationUIDemoAppExtensions;
+				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.AzureCommunicationUIDemoApp.AzureCommunicationUIDemoAppExtensions;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
