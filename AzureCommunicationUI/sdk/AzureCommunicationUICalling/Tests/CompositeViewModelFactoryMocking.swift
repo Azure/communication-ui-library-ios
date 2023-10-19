@@ -220,7 +220,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                        dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> ParticipantsListViewModel {
         return participantsListViewModel ?? ParticipantsListViewModel(compositeViewModelFactory: self,
                                                                       localUserState: localUserState,
-                                                                      dispatchAction: dispatchAction)
+                                                                      dispatchAction: dispatchAction,
+                                                                      localizationProvider: localizationProvider)
     }
 
     func makeBannerViewModel() -> BannerViewModel {
