@@ -11,6 +11,8 @@ struct BottomToastDiagnosticView: View {
 
     private let cornerRadius: CGFloat = 6
     private let foregroundColor: Color = .white
+    private let horizontalPadding: CGFloat = 10
+    private let height: CGFloat = 36
 
     var body: some View {
         HStack(alignment: .center) {
@@ -18,16 +20,20 @@ struct BottomToastDiagnosticView: View {
                 IconProvider().getImage(for: icon)
                     .frame(width: 16, height: 16)
                     .foregroundColor(foregroundColor)
-                    .padding(EdgeInsets(top: 0, leading: 8, bottom: 0, trailing: 0))
+                    .padding(
+                        EdgeInsets(
+                            top: 0, leading: horizontalPadding, bottom: 0, trailing: 0)
+                    )
             }
             Text(viewModel.text)
                 .font(Fonts.caption1.font)
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 8))
+                .padding(
+                    EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: horizontalPadding))
                 .multilineTextAlignment(.center)
                 .foregroundColor(foregroundColor)
                 .accessibilitySortPriority(2)
         }
-        .frame(height: 36)
+        .frame(height: height)
         .background(Color(StyleProvider.color.surfaceDarkColor))
         .cornerRadius(cornerRadius)
         .accessibilityAddTraits(.isStaticText)

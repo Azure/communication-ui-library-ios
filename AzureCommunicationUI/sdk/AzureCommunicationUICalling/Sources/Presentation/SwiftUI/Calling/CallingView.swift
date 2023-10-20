@@ -18,11 +18,8 @@ struct CallingView: View {
     }
 
     enum DiagnosticToastInfoConstants {
-        static let bottomPadding: CGFloat = 5
-    }
-
-    enum DiagnosticMessageBarConstants {
-        static let topPadding: CGFloat = 5
+        static let bottomPaddingPortrait: CGFloat = 5
+        static let bottomPaddingLandscape: CGFloat = 16
     }
 
     @ObservedObject var viewModel: CallingViewModel
@@ -225,7 +222,10 @@ struct CallingView: View {
                     .padding(
                         EdgeInsets(top: 0,
                                    leading: 0,
-                                   bottom: DiagnosticToastInfoConstants.bottomPadding,
+                                   bottom:
+                                     getSizeClass() == .iphoneLandscapeScreenSize
+                                        ? DiagnosticToastInfoConstants.bottomPaddingLandscape
+                                        : DiagnosticToastInfoConstants.bottomPaddingPortrait,
                                    trailing: 0)
                     )
                     .accessibilityElement(children: .contain)
@@ -243,12 +243,6 @@ struct CallingView: View {
             }
             Spacer()
         }
-        .padding(
-            EdgeInsets(top: DiagnosticMessageBarConstants.topPadding,
-                       leading: 0,
-                       bottom: 0,
-                       trailing: 0)
-        )
     }
 }
 

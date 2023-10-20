@@ -25,9 +25,9 @@ class BottomToastDiagnosticViewModelTests: XCTestCase {
             .speakingWhileMicrophoneIsMuted: ("AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted",
                                               CompositeIcon.micOff),
             .cameraStartFailed: ("AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted",
-                                 CompositeIcon.videoOff),
+                                 CompositeIcon.videoOffRegular),
             .cameraStartTimedOut: ("AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted",
-                                   CompositeIcon.videoOff)
+                                   CompositeIcon.videoOffRegular)
         ]
 
         for diagnostic in BottomToastDiagnosticViewModel.handledMediaDiagnostics {

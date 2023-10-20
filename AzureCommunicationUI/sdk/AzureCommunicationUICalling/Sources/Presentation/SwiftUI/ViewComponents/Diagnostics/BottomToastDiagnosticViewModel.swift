@@ -64,7 +64,7 @@ final class BottomToastDiagnosticViewModel: ObservableObject, Identifiable {
             icon = CompositeIcon.micOff
         case .cameraStartFailed, .cameraStartTimedOut:
             text = localizationProvider.getLocalizedString(.callDiagnosticsCameraNotWorking)
-            icon = CompositeIcon.videoOff
+            icon = CompositeIcon.videoOffRegular
         default:
             text = ""
             icon = nil

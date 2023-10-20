@@ -11,6 +11,8 @@ struct MessageBarDiagnosticView: View {
 
     private let cornerRadius: CGFloat = 6
     private let foregroundColor: Color = .white
+    private let horizontalPadding: CGFloat = 12
+    private let height: CGFloat = 48
 
     var body: some View {
         if viewModel.isDisplayed {
@@ -19,7 +21,10 @@ struct MessageBarDiagnosticView: View {
                     IconProvider().getImage(for: icon)
                         .frame(width: 24, height: 24)
                         .foregroundColor(foregroundColor)
-                        .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 0))
+                        .padding(
+                            EdgeInsets(
+                                top: 0, leading: horizontalPadding, bottom: 0, trailing: 0)
+                        )
                 }
                 Text(viewModel.text)
                     .font(Fonts.footnote.font)
@@ -37,7 +42,7 @@ struct MessageBarDiagnosticView: View {
                         .frame(width: 16, height: 16)
                         .foregroundColor(foregroundColor)
                 })
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 20))
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: horizontalPadding))
                 .accessibilityIdentifier(
                     AccessibilityIdentifier.callDiagnosticMessageBarAccessibilityID.rawValue)
                 .accessibilityAddTraits(.isButton)
@@ -45,7 +50,7 @@ struct MessageBarDiagnosticView: View {
                 .accessibilityHint(Text(viewModel.dismissAccessibilityHint))
                 .accessibilitySortPriority(0)
             }
-            .frame(height: 48)
+            .frame(height: height)
             .background(Color(StyleProvider.color.surfaceDarkColor))
             .cornerRadius(cornerRadius)
             .accessibilityAddTraits(.isStaticText)
