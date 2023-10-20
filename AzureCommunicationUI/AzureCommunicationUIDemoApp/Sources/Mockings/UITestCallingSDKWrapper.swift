@@ -281,7 +281,6 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
     }
 
-
     func emitMediaCallDiagnosticBadState() {
         guard callMocking != nil else {
             return

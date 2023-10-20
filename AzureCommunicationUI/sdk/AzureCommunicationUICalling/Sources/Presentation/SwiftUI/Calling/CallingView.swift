@@ -20,7 +20,7 @@ struct CallingView: View {
     enum Constants {
         static let topAlertAreaViewTopPaddin: CGFloat = 10.0
     }
-    
+
     enum DiagnosticToastInfoConstants {
         static let bottomPaddingPortrait: CGFloat = 5
         static let bottomPaddingLandscape: CGFloat = 16

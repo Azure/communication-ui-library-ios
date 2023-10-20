@@ -233,7 +233,7 @@ extension CallingSDKEventsHandler: CallDelegate,
         let role = call.callParticipantRole.toParticipantRole()
         participantRoleSubject.send(role)
     }
-    
+
     // MARK: NetworkDiagnosticsDelegate
     func networkDiagnostics(_ networkDiagnostics: NetworkDiagnostics,
                             didChangeNetworkSendQuality args: DiagnosticQualityChangedEventArgs) {

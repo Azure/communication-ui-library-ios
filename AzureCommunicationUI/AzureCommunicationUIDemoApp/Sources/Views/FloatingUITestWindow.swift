@@ -203,7 +203,7 @@ class FloatingUITestWindow: UIWindow {
             try? await callingSDKWrapperMock?.changeLocalParticipantRole(.attendee)
         }
     }
-    
+
     @objc func emitMediaCallDiagnosticBadState(sender: UIButton) {
         debugPrint("UI Test:: emitMediaCallDiagnosticBadState")
         callingSDKWrapperMock?.emitMediaCallDiagnosticBadState()
