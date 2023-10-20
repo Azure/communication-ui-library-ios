@@ -66,8 +66,9 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         if isCameraPreferred,
            let localVideoStream = localVideoStream {
             let localVideoStreamArray = [localVideoStream]
-            _ = [localVideoStream]
+
             let videoOptions = OutgoingVideoOptions()
+            videoOptions.streams = localVideoStreamArray
             joinCallOptions.outgoingVideoOptions = videoOptions
         }
 
