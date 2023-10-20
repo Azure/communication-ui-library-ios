@@ -96,6 +96,7 @@ struct CallingDemoView: View {
             Picker("Call Type", selection: $envConfigSubject.selectedMeetingType) {
                 Text("Group Call").tag(MeetingType.groupCall)
                 Text("Teams Meeting").tag(MeetingType.teamsMeeting)
+                Text("1:N Calling").tag(MeetingType.oneToNCalling)
             }.pickerStyle(.segmented)
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -109,6 +110,13 @@ struct CallingDemoView: View {
                 TextField(
                     "Team Meeting",
                     text: $envConfigSubject.teamsMeetingLink)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .textFieldStyle(.roundedBorder)
+            case .oneToNCalling:
+                TextField(
+                    "One To N Calling",
+                    text: $envConfigSubject.oneToNCallingId)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .textFieldStyle(.roundedBorder)
@@ -293,6 +301,16 @@ extension CallingDemoView {
                                                                       displayName: envConfigSubject.displayName),
                                          localOptions: localOptions)
                 }
+            case .oneToNCalling:
+                let localOptionsForOneToN = LocalOptions(participantViewData: participantViewData,
+                                                setupScreenViewData: setupScreenViewData,
+                                                cameraOn: envConfigSubject.cameraOn,
+                                                microphoneOn: envConfigSubject.microphoneOn,
+                                                skipSetupScreen: true)
+                let startCallOptions = CallCompositeStartCallOptions(partipants: [link])
+                let remoteOptions = RemoteOptions(for: startCallOptions, credential: credential)
+                callComposite.launch(remoteOptions: remoteOptions,
+                                     localOptions: localOptionsForOneToN)
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
@@ -332,6 +350,8 @@ extension CallingDemoView {
             return envConfigSubject.groupCallId
         case .teamsMeeting:
             return envConfigSubject.teamsMeetingLink
+        case .oneToNCalling:
+            return envConfigSubject.oneToNCallingId
         }
     }
 

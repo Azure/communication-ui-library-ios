@@ -8,6 +8,7 @@ import AzureCommunicationCalling
 import Combine
 import Foundation
 
+// swiftlint:disable file_length
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -56,6 +57,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     func joinCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
         logger.debug( "Joining call")
         let joinCallOptions = JoinCallOptions()
+        let startCallOptions = StartCallOptions()
 
         // to fix iOS 15 issue
         // by default on iOS 15 calling SDK incoming type is raw video
@@ -68,25 +70,51 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             let localVideoStreamArray = [localVideoStream]
             let videoOptions = VideoOptions(localVideoStreams: localVideoStreamArray)
             joinCallOptions.videoOptions = videoOptions
+            startCallOptions.videoOptions = videoOptions
         }
 
         joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
         joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
         joinCallOptions.incomingVideoOptions = incomingVideoOptions
+        startCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
+        startCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
+        startCallOptions.incomingVideoOptions = incomingVideoOptions
 
-        var joinLocator: JoinMeetingLocator
+        var joinLocator: JoinMeetingLocator?
+        var participants: [CommunicationIdentifier] = []
         if callConfiguration.compositeCallType == .groupCall,
            let groupId = callConfiguration.groupId {
             joinLocator = GroupCallLocator(groupId: groupId)
         } else if let meetingLink = callConfiguration.meetingLink {
             joinLocator = TeamsMeetingLinkLocator(meetingLink: meetingLink)
+        } else if callConfiguration.compositeCallType == .oneToNCalling,
+        let callParticipants = callConfiguration.participants {
+            participants = callParticipants
         } else {
             logger.error("Invalid groupID / meeting link")
             throw CallCompositeInternalError.callJoinFailed
         }
+        if let joinLocatorForGroupCall = joinLocator {
+            try await self.joinCallForGroupCall(joinLocator: joinLocatorForGroupCall, joinCallOptions: joinCallOptions)
+        } else if callConfiguration.compositeCallType == .oneToNCalling {
+            try await self.startCall(participants: participants, startCallOptions: startCallOptions)
+        }
+    }
+    private func startCall(participants: [CommunicationIdentifier], startCallOptions: StartCallOptions) async throws {
+        let joinedCall = try await callAgent?.startCall(participants: participants, options: startCallOptions)
+        guard let joinedCall = joinedCall else { logger.error( "Join call failed")
+            throw CallCompositeInternalError.callJoinFailed
+        }
 
+        if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
+            joinedCall.delegate = callingEventsHandler
+        }
+        self.call = joinedCall
+        self.setupFeatures()
+    }
+
+    private func joinCallForGroupCall(joinLocator: JoinMeetingLocator, joinCallOptions: JoinCallOptions) async throws {
         let joinedCall = try await callAgent?.join(with: joinLocator, joinCallOptions: joinCallOptions)
-
         guard let joinedCall = joinedCall else {
             logger.error( "Join call failed")
             throw CallCompositeInternalError.callJoinFailed

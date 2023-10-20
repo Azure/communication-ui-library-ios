@@ -123,11 +123,18 @@ public class CallComposite {
     ///                            This is data is not sent up to ACS.
     public func launch(remoteOptions: RemoteOptions,
                        localOptions: LocalOptions? = nil) {
-        let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
-                                                  credential: remoteOptions.credential,
-                                                  displayName: remoteOptions.displayName)
+        if let locator = remoteOptions.locator {
+            let callConfiguration = CallConfiguration(locator: locator,
+                                                      credential: remoteOptions.credential,
+                                                      displayName: remoteOptions.displayName)
 
-        launch(callConfiguration, localOptions: localOptions)
+            launch(callConfiguration, localOptions: localOptions)
+        } else if let startCall = remoteOptions.startCall {
+            let callConfiguration = CallConfiguration(startCall: startCall,
+                                                       credential: remoteOptions.credential,
+                                                       displayName: remoteOptions.displayName)
+            launch(callConfiguration, localOptions: localOptions)
+        }
     }
 
     /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.
