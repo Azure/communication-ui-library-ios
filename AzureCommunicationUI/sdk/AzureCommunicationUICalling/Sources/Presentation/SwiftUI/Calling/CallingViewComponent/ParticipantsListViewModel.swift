@@ -38,11 +38,11 @@ class ParticipantsListViewModel: ObservableObject {
             lastUpdateTimeStamp = remoteParticipantsState.lastUpdateTimeStamp
             self.lastParticipantRole = localUserState.participantRole
 
-            let shouldilterOutLobbyUsers = shouldFilterOutLobbyUsers(participantRole: localUserState.participantRole)
+            let shouldFilterOutLobbyUsers = shouldFilterOutLobbyUsers(participantRole: localUserState.participantRole)
             participantsList = remoteParticipantsState.participantInfoList
                 .filter({ participant in
                     participant.status != .disconnected
-                    && (!shouldilterOutLobbyUsers || participant.status != .inLobby)
+                    && (!shouldFilterOutLobbyUsers || participant.status != .inLobby)
                 })
                 .map {
                     compositeViewModelFactory.makeParticipantsListCellViewModel(participantInfoModel: $0)

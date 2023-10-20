@@ -73,6 +73,26 @@ class FloatingUITestWindow: UIWindow {
                      accessibilityID: "ChangeRoleToAttendee-AID",
                      selector: #selector(changeRoleToAttendeeButtonTapped))
 
+        createButton(title: "Media Diag Bad",
+                     accessibilityID: "emitMediaDiagnosticBad-AID",
+                     selector: #selector(emitMediaCallDiagnosticBadState))
+        createButton(title: "Media Diag Good",
+                     accessibilityID: "emitMediaDiagnosticGood-AID",
+                     selector: #selector(emitMediaCallDiagnosticGoodState))
+        createButton(title: "Media Diagnostic",
+                     accessibilityID: "changeMediaDiagnostic-AID",
+                     selector: #selector(changeCurrentMediaDiagnostic))
+
+        createButton(title: "Network Diag Bad",
+                     accessibilityID: "emitNetworkDiagnosticBad-AID",
+                     selector: #selector(emitNetworkCallDiagnosticBadState))
+        createButton(title: "Network Diag Good",
+                     accessibilityID: "emitNetworkDiagnosticGood-AID",
+                     selector: #selector(emitNetworkCallDiagnosticGoodState))
+        createButton(title: "Network Diagnostic",
+                     accessibilityID: "changeNetworkDiagnostic-AID",
+                     selector: #selector(changeCurrentNetworkDiagnostic))
+
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             stackView.widthAnchor.constraint(equalToConstant: 120.0),
@@ -182,6 +202,36 @@ class FloatingUITestWindow: UIWindow {
         Task {
             try? await callingSDKWrapperMock?.changeLocalParticipantRole(.attendee)
         }
+    }
+    
+    @objc func emitMediaCallDiagnosticBadState(sender: UIButton) {
+        debugPrint("UI Test:: emitMediaCallDiagnosticBadState")
+        callingSDKWrapperMock?.emitMediaCallDiagnosticBadState()
+    }
+
+    @objc func emitMediaCallDiagnosticGoodState(sender: UIButton) {
+        debugPrint("UI Test:: emitMediaCallDiagnosticGoodState")
+        callingSDKWrapperMock?.emitMediaCallDiagnosticGoodState()
+    }
+
+    @objc func changeCurrentMediaDiagnostic(sender: UIButton) {
+        debugPrint("UI Test:: changeCurrentMediaDiagnostic")
+        callingSDKWrapperMock?.changeCurrentMediaDiagnostic()
+    }
+
+    @objc func emitNetworkCallDiagnosticBadState(sender: UIButton) {
+        debugPrint("UI Test:: emitNetworkCallDiagnosticBadState")
+        callingSDKWrapperMock?.emitNetworkCallDiagnosticBadState()
+    }
+
+    @objc func emitNetworkCallDiagnosticGoodState(sender: UIButton) {
+        debugPrint("UI Test:: emitNetworkCallDiagnosticGoodState")
+        callingSDKWrapperMock?.emitNetworkCallDiagnosticGoodState()
+    }
+
+    @objc func changeCurrentNetworkDiagnostic(sender: UIButton) {
+        debugPrint("UI Test:: changeCurrentNetworkDiagnostic")
+        callingSDKWrapperMock?.changeCurrentNetworkDiagnostic()
     }
 }
 

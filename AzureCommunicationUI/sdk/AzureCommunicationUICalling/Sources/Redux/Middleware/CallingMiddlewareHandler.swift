@@ -431,5 +431,20 @@ extension CallingMiddlewareHandler {
             .sink { participantRole in
                 dispatch(.localUserAction(.participantRoleChanged(participantRole: participantRole)))
             }.store(in: subscription)
+
+        callingService.networkDiagnosticsSubject
+            .sink { networkDiagnostic in
+                dispatch(.callDiagnosticAction(.network(diagnostic: networkDiagnostic)))
+            }.store(in: subscription)
+
+        callingService.networkQualityDiagnosticsSubject
+            .sink { networkQualityDiagnostic in
+                dispatch(.callDiagnosticAction(.networkQuality(diagnostic: networkQualityDiagnostic)))
+            }.store(in: subscription)
+
+        callingService.mediaDiagnosticsSubject
+            .sink { mediaDiagnostic in
+                dispatch(.callDiagnosticAction(.media(diagnostic: mediaDiagnostic)))
+            }.store(in: subscription)
     }
 }
