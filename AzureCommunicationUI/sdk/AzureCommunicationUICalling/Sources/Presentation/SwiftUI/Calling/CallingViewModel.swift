@@ -86,7 +86,7 @@ class CallingViewModel: ObservableObject {
         errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel(title: "",
                                                                               subtitle: "")
         callDiagnosticsViewModel = compositeViewModelFactory
-            .makeCallDiagnosticsViewModel()
+            .makeCallDiagnosticsViewModel(dispatchAction: store.dispatch)
 
         callDiagnosticsViewModel.$currentBottomToastDiagnostic
                     .assign(to: &$currentBottomToastDiagnostic)

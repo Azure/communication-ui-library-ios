@@ -61,7 +61,7 @@ extension MessageBarDiagnosticViewModelTests {
     func makeSUT(mediaDiagnostic: MediaCallDiagnostic,
                  localizationProvider: LocalizationProviderMocking? = nil) -> MessageBarDiagnosticViewModel {
         let localizationProviderValue: LocalizationProviderProtocol = localizationProvider ?? LocalizationProvider(logger: LoggerMocking())
-        let callDiagnosticsViewModel = CallDiagnosticsViewModel(localizationProvider: localizationProviderValue)
+        let callDiagnosticsViewModel = CallDiagnosticsViewModel(localizationProvider: localizationProviderValue, dispatchAction: { _ in })
         return MessageBarDiagnosticViewModel(localizationProvider: localizationProviderValue,
                                              callDiagnosticViewModel: callDiagnosticsViewModel,
                                              mediaDiagnostic: mediaDiagnostic)

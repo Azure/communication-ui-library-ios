@@ -32,7 +32,7 @@ protocol CompositeViewModelFactoryProtocol {
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
-    func makeCallDiagnosticsViewModel() -> CallDiagnosticsViewModel
+    func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel
@@ -198,8 +198,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                            subtitle: subtitle)
     }
 
-    func makeCallDiagnosticsViewModel() -> CallDiagnosticsViewModel {
-        CallDiagnosticsViewModel(localizationProvider: localizationProvider)
+    func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel {
+        CallDiagnosticsViewModel(localizationProvider: localizationProvider,
+                                 dispatchAction: dispatchAction)
     }
 
     // MARK: CallingViewModels

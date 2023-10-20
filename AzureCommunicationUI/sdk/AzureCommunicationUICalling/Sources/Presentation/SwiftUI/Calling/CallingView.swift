@@ -18,8 +18,7 @@ struct CallingView: View {
     }
 
     enum DiagnosticToastInfoConstants {
-        static let controlBarHeight: CGFloat = 95
-        static let horizontalPadding: CGFloat = 36
+        static let bottomPadding: CGFloat = 5
     }
 
     enum DiagnosticMessageBarConstants {
@@ -48,7 +47,6 @@ struct CallingView: View {
                     landscapeCallingView
                 }
                 errorInfoView
-                bottomToastDiagnosticsView
             }
             .frame(width: geometry.size.width,
                    height: geometry.size.height)
@@ -96,12 +94,16 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityIdentifier(AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue)
                     }
+
                     topAlertAreaView
                         .accessibilityElement(children: .contain)
                         .accessibilitySortPriority(1)
                         .accessibilityHidden(viewModel.lobbyOverlayViewModel.isDisplayed
                                              || viewModel.onHoldOverlayViewModel.isDisplayed
                                              || viewModel.loadingOverlayViewModel.isDisplayed)
+
+                    bottomToastDiagnosticsView
+                        .accessibilityElement(children: .contain)
                 }
                 .contentShape(Rectangle())
                 .animation(.linear(duration: 0.167))
@@ -222,14 +224,14 @@ struct CallingView: View {
                 BottomToastDiagnosticView(viewModel: currentBottomToastViewModel)
                     .padding(
                         EdgeInsets(top: 0,
-                                   leading: DiagnosticToastInfoConstants.horizontalPadding,
-                                   bottom: DiagnosticToastInfoConstants.controlBarHeight,
-                                   trailing: DiagnosticToastInfoConstants.horizontalPadding)
+                                   leading: 0,
+                                   bottom: DiagnosticToastInfoConstants.bottomPadding,
+                                   trailing: 0)
                     )
                     .accessibilityElement(children: .contain)
                     .accessibilityAddTraits(.isStaticText)
             }
-        }
+        }.frame(maxWidth: .infinity, alignment: .center)
     }
 
     var topMessageBarDiagnosticsView: some View {

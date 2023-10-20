@@ -17,12 +17,12 @@ struct MessageBarDiagnosticView: View {
             HStack(alignment: .center) {
                 if let icon = viewModel.icon {
                     IconProvider().getImage(for: icon)
-                        .frame(width: 16, height: 16)
+                        .frame(width: 24, height: 24)
                         .foregroundColor(foregroundColor)
                         .padding(EdgeInsets(top: 0, leading: 16, bottom: 0, trailing: 0))
                 }
                 Text(viewModel.text)
-                    .font(Fonts.subhead.font)
+                    .font(Fonts.footnote.font)
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 16))
                     .multilineTextAlignment(.center)
                     .foregroundColor(foregroundColor)
@@ -37,7 +37,7 @@ struct MessageBarDiagnosticView: View {
                         .frame(width: 16, height: 16)
                         .foregroundColor(foregroundColor)
                 })
-                .padding([.top, .bottom, .trailing])
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 20))
                 .accessibilityIdentifier(
                     AccessibilityIdentifier.callDiagnosticMessageBarAccessibilityID.rawValue)
                 .accessibilityAddTraits(.isButton)
