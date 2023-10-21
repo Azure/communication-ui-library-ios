@@ -2,6 +2,9 @@
 
 ## Upcoming
 
+### Features
+- Introduce Call Diagnostic banners to show [user facing diagnostics](https://learn.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/user-facing-diagnostics?pivots=platform-ios) that could indicate due to some underlying issue a user might have a poor experience. 
+ 
 ### Bug Fixes
 - Hide lobby users in GridView and Participant List
 
