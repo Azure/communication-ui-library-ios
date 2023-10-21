@@ -33,9 +33,9 @@ class InfoHeaderViewModel: ObservableObject {
          localUserState: LocalUserState,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
-         dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
-         enableSystemPiPWhenMultitasking: Bool) {
+         enableSystemPiPWhenMultitasking: Bool,
+         dispatchAction: @escaping ActionDispatch) {
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider

@@ -9,6 +9,9 @@ import Combine
 class ParticipantsListViewModel: ObservableObject {
     @Published var participantsList: [ParticipantsListCellViewModel] = []
     @Published var localParticipantsListCellViewModel: ParticipantsListCellViewModel
+
+    private let localizationProvider: LocalizationProviderProtocol
+
     var lastUpdateTimeStamp = Date()
     private var lastParticipantRole: ParticipantRole?
 
@@ -17,12 +20,14 @@ class ParticipantsListViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localUserState: LocalUserState,
-         dispatchAction: @escaping ActionDispatch) {
+         dispatchAction: @escaping ActionDispatch,
+         localizationProvider: LocalizationProviderProtocol) {
         self.compositeViewModelFactory = compositeViewModelFactory
         localParticipantsListCellViewModel =
         compositeViewModelFactory.makeLocalParticipantsListCellViewModel(localUserState: localUserState)
         self.dispatch = dispatchAction
         self.lastParticipantRole = localUserState.participantRole
+        self.localizationProvider = localizationProvider
     }
 
     func update(localUserState: LocalUserState,
@@ -73,6 +78,30 @@ class ParticipantsListViewModel: ObservableObject {
 
     func declineParticipant(_ participantId: String) {
         dispatch(.remoteParticipantsAction(.decline(participantId: participantId)))
+    }
+
+    func getWaitingInLobby() -> String {
+        self.localizationProvider.getLocalizedString(.participantListWaitingInLobby)
+    }
+
+    func getInTheCall() -> String {
+        self.localizationProvider.getLocalizedString(.participantListInTheCall)
+    }
+
+    func getConfirmTitleAdmitParticipant() -> String {
+        self.localizationProvider.getLocalizedString(.participantListConfirmTitleAdmitParticipant)
+    }
+
+    func getConfirmTitleAdmitAll() -> String {
+        self.localizationProvider.getLocalizedString(.participantListConfirmTitleAdmitAll)
+    }
+
+    func getConfirmAdmit() -> String {
+        self.localizationProvider.getLocalizedString(.participantListConfirmAdmit)
+    }
+
+    func getConfirmDecline() -> String {
+        self.localizationProvider.getLocalizedString(.participantListConfirmDecline)
     }
 
     private func shouldFilterOutLobbyUsers(participantRole: ParticipantRole?) -> Bool {
