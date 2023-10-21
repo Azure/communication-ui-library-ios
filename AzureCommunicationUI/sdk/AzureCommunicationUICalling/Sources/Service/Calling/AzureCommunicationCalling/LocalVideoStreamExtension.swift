@@ -8,12 +8,12 @@ import Foundation
 
 extension CompositeLocalVideoStream {
     static func nativeAccMediaStreamType(type: CompositeMediaStreamType)
-    -> AzureCommunicationCalling.MediaStreamType {
+    -> AzureCommunicationCalling.VideoStreamSourceType {
         switch type {
         case .cameraVideo:
-            return AzureCommunicationCalling.MediaStreamType.video
+            return AzureCommunicationCalling.VideoStreamSourceType .video
         case .screenSharing:
-            return AzureCommunicationCalling.MediaStreamType.screenSharing
+            return AzureCommunicationCalling.VideoStreamSourceType .screenSharing
         }
     }
 }

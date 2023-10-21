@@ -25,7 +25,15 @@ struct CompositeParticipantsList: UIViewControllerRepresentable {
                                                         admintAll: viewModel.admitAll,
                                                         declineAll: viewModel.declineAll,
                                                         admitParticipant: viewModel.admitParticipant,
-                                                        declineParticipant: viewModel.declineParticipant)
+                                                        declineParticipant: viewModel.declineParticipant,
+                                                        waitingInLobby: viewModel.getWaitingInLobby(),
+                                                        inTheCall: viewModel.getInTheCall(),
+                                                        confirmTitleAdmitParticipant:
+                                                            viewModel.getConfirmTitleAdmitParticipant(),
+                                                        confirmTitleAdmitAll: viewModel.getConfirmTitleAdmitAll(),
+                                                        confirmAdmit: viewModel.getConfirmAdmit(),
+                                                        confirmDecline: viewModel.getConfirmDecline()
+        )
         controller.delegate = context.coordinator
         return controller
     }
