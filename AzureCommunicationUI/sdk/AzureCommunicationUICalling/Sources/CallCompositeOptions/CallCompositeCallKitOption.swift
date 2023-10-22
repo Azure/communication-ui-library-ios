@@ -13,19 +13,30 @@ public struct CallCompositeCallKitOption {
     /// Whether the call supports hold. Default is true.
     let isCallHoldSupported: Bool
 
-    /// CallKit remote participant info for the call to display in call history.
-    /// If nil, the history will display remote participant raw identifier.
+    /// CallKit remote participant info
     let remoteInfo: CallCompositeCallKitRemoteInfo?
+
+    /// Configure audio session will be called before placing or accepting 
+    /// incoming call and before resuming the call after it has been put on hold
+    let configureAudioSession: (() -> Error?)?
 
     public init(cxProvideConfig: CXProviderConfiguration,
                 isCallHoldSupported: Bool = true,
-                remoteInfo: CallCompositeCallKitRemoteInfo? = nil) {
+                remoteInfo: CallCompositeCallKitRemoteInfo? = nil,
+                configureAudioSession: (() -> Error?)? = nil) {
         self.cxProvideConfig = cxProvideConfig
         self.isCallHoldSupported = isCallHoldSupported
         self.remoteInfo = remoteInfo
+        self.configureAudioSession = configureAudioSession
     }
 
-    /// Get default CXProviderConfiguration for the call.
+    public init() {
+        self.cxProvideConfig = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
+        self.isCallHoldSupported = true
+        self.remoteInfo = nil
+        self.configureAudioSession = nil
+    }
+
     public static func getDefaultCXProviderConfiguration() -> CXProviderConfiguration {
         let providerConfig = CXProviderConfiguration()
         providerConfig.supportsVideo = true

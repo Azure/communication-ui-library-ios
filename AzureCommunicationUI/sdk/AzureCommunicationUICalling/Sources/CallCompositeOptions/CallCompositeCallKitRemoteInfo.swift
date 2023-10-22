@@ -5,12 +5,12 @@
 
 import CallKit
 
-/// CallKit remote participant info for the call to display in call history.
+/// CallKit info for caller(incoming)/callee(outgoing)
 public struct CallCompositeCallKitRemoteInfo {
     /// Display name of the remote participant
     let displayName: String
 
-    /// CXHandle of the remote participant
+    /// CXHandle of the remote participant, for call history
     let cxHandle: CXHandle
 
     public init(displayName: String,
