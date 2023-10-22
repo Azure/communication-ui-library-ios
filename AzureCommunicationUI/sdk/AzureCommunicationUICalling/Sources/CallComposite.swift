@@ -125,7 +125,8 @@ public class CallComposite {
                        localOptions: LocalOptions? = nil) {
         let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
                                                   credential: remoteOptions.credential,
-                                                  displayName: remoteOptions.displayName)
+                                                  displayName: remoteOptions.displayName,
+                                                  callKitOptions: remoteOptions.callKitOptions)
 
         launch(callConfiguration, localOptions: localOptions)
     }
@@ -182,7 +183,6 @@ public class CallComposite {
         self.exitManager = CompositeExitManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
         self.lifeCycleManager = UIKitAppLifeCycleManager(store: store, logger: logger)
         self.permissionManager = PermissionsManager(store: store)
-        self.audioSessionManager = AudioSessionManager(store: store, logger: logger)
         self.remoteParticipantsManager = RemoteParticipantsManager(
             store: store,
             callCompositeEventsHandler: callCompositeEventsHandler,
@@ -191,7 +191,9 @@ public class CallComposite {
         let debugInfoManager = createDebugInfoManager()
         self.debugInfoManager = debugInfoManager
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
-        let audioSessionManager = AudioSessionManager(store: store, logger: logger)
+        let audioSessionManager = AudioSessionManager(store: store,
+                                                      logger: logger,
+                                                      isCallKitEnabled: callConfiguration.callKitOptions != nil)
         self.audioSessionManager = audioSessionManager
         return CompositeViewFactory(
             logger: logger,
