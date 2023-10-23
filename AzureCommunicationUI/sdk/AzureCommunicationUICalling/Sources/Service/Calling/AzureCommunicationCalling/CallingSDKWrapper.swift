@@ -8,7 +8,7 @@ import AzureCommunicationCalling
 import Combine
 import Foundation
 
-// swiftlint:disable file_length
+// swiftlint:disable file_length 
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -87,16 +87,18 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             joinLocator = GroupCallLocator(groupId: groupId)
         } else if let meetingLink = callConfiguration.meetingLink {
             joinLocator = TeamsMeetingLinkLocator(meetingLink: meetingLink)
-        } else if callConfiguration.compositeCallType == .oneToNCalling,
+        } else if callConfiguration.compositeCallType == .oneToNCall,
         let callParticipants = callConfiguration.participants {
-            participants = callParticipants
+            participants = callParticipants.map { indentifier in
+                createCommunicationIdentifier(fromRawId: indentifier)
+            }
         } else {
             logger.error("Invalid groupID / meeting link")
             throw CallCompositeInternalError.callJoinFailed
         }
         if let joinLocatorForGroupCall = joinLocator {
             try await self.joinCallForGroupCall(joinLocator: joinLocatorForGroupCall, joinCallOptions: joinCallOptions)
-        } else if callConfiguration.compositeCallType == .oneToNCalling {
+        } else if callConfiguration.compositeCallType == .oneToNCall {
             try await self.startCall(participants: participants, startCallOptions: startCallOptions)
         }
     }

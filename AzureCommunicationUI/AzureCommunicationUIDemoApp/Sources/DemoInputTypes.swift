@@ -9,7 +9,7 @@ import AzureCommunicationUICalling
 enum MeetingType: Int {
     case groupCall
     case teamsMeeting
-    case oneToNCalling
+    case oneToNCall
 }
 
 enum ChatType: Int {

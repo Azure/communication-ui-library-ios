@@ -123,17 +123,18 @@ public class CallComposite {
     ///                            This is data is not sent up to ACS.
     public func launch(remoteOptions: RemoteOptions,
                        localOptions: LocalOptions? = nil) {
+        var callConfiguration: CallConfiguration?
         if let locator = remoteOptions.locator {
-            let callConfiguration = CallConfiguration(locator: locator,
+            callConfiguration = CallConfiguration(locator: locator,
                                                       credential: remoteOptions.credential,
                                                       displayName: remoteOptions.displayName)
-
-            launch(callConfiguration, localOptions: localOptions)
-        } else if let startCall = remoteOptions.startCall {
-            let callConfiguration = CallConfiguration(startCall: startCall,
+        } else if let startCallOptions = remoteOptions.startCallOptions {
+            callConfiguration = CallConfiguration(startCallOptions: startCallOptions,
                                                        credential: remoteOptions.credential,
                                                        displayName: remoteOptions.displayName)
-            launch(callConfiguration, localOptions: localOptions)
+        }
+        if let callConfig = callConfiguration {
+            launch(callConfig, localOptions: localOptions)
         }
     }
 

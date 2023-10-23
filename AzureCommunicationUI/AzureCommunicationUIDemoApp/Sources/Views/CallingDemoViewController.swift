@@ -284,9 +284,9 @@ class CallingDemoViewController: UIViewController {
                                                                   credential: credential,
                                                                   displayName: getDisplayName()),
                                      localOptions: localOptions)
-            case .oneToNCalling:
+            case .oneToNCall:
                 // ToDo: make required changes to enable 1:N for UIKit
-                let startCallOptions = CallCompositeStartCallOptions(partipants: [])
+                let startCallOptions = StartCallOptionsOneToNCall(partipants: [])
                 callComposite.launch(remoteOptions: RemoteOptions(for: startCallOptions,
                                                                   credential: credential,
                                                                   displayName: getDisplayName()),
@@ -332,7 +332,7 @@ class CallingDemoViewController: UIViewController {
             return groupCallTextField.text ?? ""
         case .teamsMeeting:
             return teamsMeetingTextField.text ?? ""
-        case .oneToNCalling:
+        case .oneToNCall:
             // ToDo: make required changes to enable 1:N for UIKit
             return ""
         }
@@ -463,7 +463,7 @@ class CallingDemoViewController: UIViewController {
         case .teamsMeeting:
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = false
-        case .oneToNCalling:
+        case .oneToNCall:
             // ToDo: make required changes to enable 1:N for UIKit
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = true

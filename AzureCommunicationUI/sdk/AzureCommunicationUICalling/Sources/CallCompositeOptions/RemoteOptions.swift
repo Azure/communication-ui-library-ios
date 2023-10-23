@@ -6,8 +6,9 @@
 import Foundation
 import AzureCommunicationCommon
 
-// CallComposite Start Call for 1:N Calling
-public struct CallCompositeStartCallOptions {
+// CallComposite Start Call for 1:N Call
+public struct StartCallOptionsOneToNCall {
+    /// IDs of the participants to be called.
     public var partipants: [String]
 }
 
@@ -22,9 +23,9 @@ public enum JoinLocator {
 /// Object for remote options for Call Composite
 public struct RemoteOptions {
     /// The unique identifier for the group conversation.
-    public var locator: JoinLocator?
-    /// 1:N Start Call Object
-    public var startCall: CallCompositeStartCallOptions?
+    public let locator: JoinLocator?
+    /// The 1:N start call options
+    public let startCallOptions: StartCallOptionsOneToNCall?
 
     /// The token credential used for communication service authentication.
     public let credential: CommunicationTokenCredential
@@ -45,12 +46,14 @@ public struct RemoteOptions {
         self.locator = locator
         self.credential = credential
         self.displayName = displayName
+        self.startCallOptions = nil
     }
-    public init(for startCall: CallCompositeStartCallOptions,
+    public init(for startCallOptions: StartCallOptionsOneToNCall,
                 credential: CommunicationTokenCredential,
                 displayName: String? = nil) {
-        self.startCall = startCall
+        self.startCallOptions = startCallOptions
         self.credential = credential
         self.displayName = displayName
+        self.locator = nil
     }
 }

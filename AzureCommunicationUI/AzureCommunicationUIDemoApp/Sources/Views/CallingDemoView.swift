@@ -96,7 +96,7 @@ struct CallingDemoView: View {
             Picker("Call Type", selection: $envConfigSubject.selectedMeetingType) {
                 Text("Group Call").tag(MeetingType.groupCall)
                 Text("Teams Meeting").tag(MeetingType.teamsMeeting)
-                Text("1:N Calling").tag(MeetingType.oneToNCalling)
+                Text("1:N Call").tag(MeetingType.oneToNCall)
             }.pickerStyle(.segmented)
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -113,10 +113,10 @@ struct CallingDemoView: View {
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .textFieldStyle(.roundedBorder)
-            case .oneToNCalling:
+            case .oneToNCall:
                 TextField(
                     "One To N Calling",
-                    text: $envConfigSubject.oneToNCallingId)
+                    text: $envConfigSubject.participantIds)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .textFieldStyle(.roundedBorder)
@@ -301,13 +301,16 @@ extension CallingDemoView {
                                                                       displayName: envConfigSubject.displayName),
                                          localOptions: localOptions)
                 }
-            case .oneToNCalling:
+            case .oneToNCall:
                 let localOptionsForOneToN = LocalOptions(participantViewData: participantViewData,
                                                 setupScreenViewData: setupScreenViewData,
                                                 cameraOn: envConfigSubject.cameraOn,
                                                 microphoneOn: envConfigSubject.microphoneOn,
                                                 skipSetupScreen: true)
-                let startCallOptions = CallCompositeStartCallOptions(partipants: [link])
+                let ids: [String] = link.split(separator: ",").map {
+                    String($0).trimmingCharacters(in: .whitespacesAndNewlines)
+                }
+                let startCallOptions = StartCallOptionsOneToNCall(partipants: ids)
                 let remoteOptions = RemoteOptions(for: startCallOptions, credential: credential)
                 callComposite.launch(remoteOptions: remoteOptions,
                                      localOptions: localOptionsForOneToN)
@@ -350,8 +353,8 @@ extension CallingDemoView {
             return envConfigSubject.groupCallId
         case .teamsMeeting:
             return envConfigSubject.teamsMeetingLink
-        case .oneToNCalling:
-            return envConfigSubject.oneToNCallingId
+        case .oneToNCall:
+            return envConfigSubject.participantIds
         }
     }
 

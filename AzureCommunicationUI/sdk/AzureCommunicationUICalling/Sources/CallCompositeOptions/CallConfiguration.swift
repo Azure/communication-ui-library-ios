@@ -13,7 +13,7 @@ struct CallConfiguration {
     let credential: CommunicationTokenCredential
     let displayName: String?
     let diagnosticConfig: DiagnosticConfig
-    let participants: [CommunicationIdentifier]?
+    let participants: [String]?
     init(locator: JoinLocator,
          credential: CommunicationTokenCredential,
          displayName: String?) {
@@ -32,15 +32,11 @@ struct CallConfiguration {
         self.participants = nil
         self.diagnosticConfig = DiagnosticConfig()
     }
-    init(startCall: CallCompositeStartCallOptions,
+    init(startCallOptions: StartCallOptionsOneToNCall,
          credential: CommunicationTokenCredential,
          displayName: String?) {
-        var participants: [CommunicationIdentifier] = []
-        startCall.partipants.forEach { indentifier in
-            participants.append(createCommunicationIdentifier(fromRawId: indentifier))
-        }
-        self.participants = participants
-        self.compositeCallType = .oneToNCalling
+        self.participants = startCallOptions.partipants
+        self.compositeCallType = .oneToNCall
         self.credential = credential
         self.displayName = displayName
         self.groupId = nil
@@ -52,5 +48,5 @@ struct CallConfiguration {
 enum CompositeCallType {
     case groupCall
     case teamsMeeting
-    case oneToNCalling
+    case oneToNCall
 }
