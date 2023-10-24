@@ -16,6 +16,10 @@ protocol CallingServiceProtocol {
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
     var participantRoleSubject: PassthroughSubject<ParticipantRole, Never> { get }
 
+    var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
+    var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
+    var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never> { get }
+
     func setupCall() async throws
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws
     func endCall() async throws
@@ -51,6 +55,10 @@ class CallingService: NSObject, CallingServiceProtocol {
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never>
     var participantRoleSubject: PassthroughSubject<ParticipantRole, Never>
 
+    var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
+    var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
+    var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()
+
     init(logger: Logger,
          callingSDKWrapper: CallingSDKWrapperProtocol ) {
         self.logger = logger
@@ -63,6 +71,9 @@ class CallingService: NSObject, CallingServiceProtocol {
         callIdSubject = callingSDKWrapper.callingEventsHandler.callIdSubject
         dominantSpeakersSubject = callingSDKWrapper.callingEventsHandler.dominantSpeakersSubject
         participantRoleSubject = callingSDKWrapper.callingEventsHandler.participantRoleSubject
+        networkQualityDiagnosticsSubject = callingSDKWrapper.callingEventsHandler.networkQualityDiagnosticsSubject
+        networkDiagnosticsSubject = callingSDKWrapper.callingEventsHandler.networkDiagnosticsSubject
+        mediaDiagnosticsSubject = callingSDKWrapper.callingEventsHandler.mediaDiagnosticsSubject
     }
 
     func setupCall() async throws {

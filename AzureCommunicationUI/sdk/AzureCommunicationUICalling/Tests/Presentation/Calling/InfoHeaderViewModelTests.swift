@@ -147,7 +147,6 @@ class InfoHeaderViewModelTests: XCTestCase {
             }).store(in: cancellable)
 
         var participantList: [ParticipantInfoModel] = []
-
         let participant1 = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,

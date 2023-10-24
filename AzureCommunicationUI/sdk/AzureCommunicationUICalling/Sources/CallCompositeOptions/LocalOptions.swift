@@ -17,12 +17,13 @@ public struct LocalOptions {
     /// Setup screen of the CallComposite.
     /// The true role of the user will be synced with ACS services when a Rooms call starts.
     let roleHint: ParticipantRole?
-    ///  The CameraOn is used when we skip the setup screen
+    /// The CameraOn is used when we skip the setup screen
     let cameraOn: Bool?
-    ///  The MicrophoneOnis used when we skip the setup screen
+    /// The MicrophoneOn is used when we skip the setup screen
     let microphoneOn: Bool?
-    ///  The SkipSetupScreen is used when we skip the setup screen
+    /// The SkipSetupScreen is used when we skip the setup screen
     let skipSetupScreen: Bool?
+
     /// Create an instance of LocalOptions. All information in this object is only stored locally in the composite.
     /// - Parameters:
     ///    - participantViewData: The ParticipantViewData to be displayed for local participants avatar

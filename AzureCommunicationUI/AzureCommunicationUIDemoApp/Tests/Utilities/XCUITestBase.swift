@@ -185,7 +185,6 @@ extension XCUITestBase {
 
     func enableMockCallingSDKWrapper() {
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
-
         // scrolling is needed for devices with smaller screens as the switch may not be tappable
         // because cells weren't loaded to memory
         if #unavailable(iOS 16) {

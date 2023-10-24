@@ -12,6 +12,7 @@ class CallingViewModel: ObservableObject {
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
     @Published var appState: AppStatus = .foreground
     @Published var isInPip: Bool = false
+    @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -36,6 +37,7 @@ class CallingViewModel: ObservableObject {
     var lobbyWaitingHeaderViewModel: LobbyWaitingHeaderViewModel!
     var lobbyActionErrorViewModel: LobbyErrorHeaderViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
+    var callDiagnosticsViewModel: CallDiagnosticsViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -95,6 +97,11 @@ class CallingViewModel: ObservableObject {
         updateIsLocalCameraOn(with: store.state)
         errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel(title: "",
                                                                               subtitle: "")
+        callDiagnosticsViewModel = compositeViewModelFactory
+            .makeCallDiagnosticsViewModel(dispatchAction: store.dispatch)
+
+        callDiagnosticsViewModel.$currentBottomToastDiagnostic
+                    .assign(to: &$currentBottomToastDiagnostic)
     }
 
     func dismissConfirmLeaveDrawerList() {
@@ -179,6 +186,7 @@ class CallingViewModel: ObservableObject {
 
         updateIsLocalCameraOn(with: state)
         errorInfoViewModel.update(errorState: state.errorState)
+        callDiagnosticsViewModel.update(diagnosticsState: state.diagnosticsState)
 
         isInPip = state.visibilityState.currentStatus == .pipModeEntered
     }
