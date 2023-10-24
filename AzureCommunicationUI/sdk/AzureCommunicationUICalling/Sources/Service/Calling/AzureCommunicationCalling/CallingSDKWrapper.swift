@@ -280,6 +280,7 @@ extension CallingSDKWrapper {
         if let callKitConfig = self.callConfiguration.callKitOptions?.cxProvideConfig {
             let callKitOptions = CallKitOptions(with: callKitConfig)
             callKitOptions.isCallHoldSupported = self.callConfiguration.callKitOptions?.isCallHoldSupported ?? true
+            callKitOptions.configureAudioSession = self.callConfiguration.callKitOptions?.configureAudioSession
             options.callKitOptions = callKitOptions
         }
         if let displayName = callConfiguration.displayName {

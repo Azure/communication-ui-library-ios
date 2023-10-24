@@ -284,7 +284,8 @@ extension CallingDemoView {
         let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
                                                        isCallHoldSupported: isCallHoldSupported,
                                                        remoteInfo: $envConfigSubject.enableRemoteInfo.wrappedValue
-                                                        ? callKitRemoteInfo : nil)
+                                                        ? callKitRemoteInfo : nil,
+        configureAudioSession: configureAudioSession)
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -313,6 +314,17 @@ extension CallingDemoView {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
         }
+    }
+
+    public func configureAudioSession() -> Error? {
+        let audioSession = AVAudioSession.sharedInstance()
+        var configError: Error?
+        do {
+            try audioSession.setCategory(.playAndRecord)
+        } catch {
+            configError = error
+        }
+        return configError
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {
