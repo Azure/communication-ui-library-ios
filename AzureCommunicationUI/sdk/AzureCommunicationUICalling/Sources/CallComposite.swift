@@ -127,17 +127,18 @@ public class CallComposite {
         if let locator = remoteOptions.locator {
             callConfiguration = CallConfiguration(locator: locator,
                                                       credential: remoteOptions.credential,
-                                                      displayName: remoteOptions.displayName)
+                                                      displayName: remoteOptions.displayName,
+                                                      callKitOptions: remoteOptions.callKitOptions)
         } else if let startCallOptions = remoteOptions.startCallOptions {
-            callConfiguration = CallConfiguration(startCallOptions: startCallOptions,
+            let callConfiguration = CallConfiguration(startCallOptions: startCallOptions,
                                                        credential: remoteOptions.credential,
-                                                       displayName: remoteOptions.displayName)
+                                                       displayName: remoteOptions.displayName,
+                                                      callKitOptions: remoteOptions.callKitOptions)
         }
-        if let callConfig = callConfiguration {
-            launch(callConfig, localOptions: localOptions)
+        if let callconfig = callConfiguration {
+            launch(callconfig, localOptions: localOptions)
         }
     }
-
     /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.
     /// - Parameters:
     ///   - remoteParticipantViewData: ParticipantViewData used to set the participant's information for the call.
@@ -190,7 +191,6 @@ public class CallComposite {
         self.exitManager = CompositeExitManager(store: store, callCompositeEventsHandler: callCompositeEventsHandler)
         self.lifeCycleManager = UIKitAppLifeCycleManager(store: store, logger: logger)
         self.permissionManager = PermissionsManager(store: store)
-        self.audioSessionManager = AudioSessionManager(store: store, logger: logger)
         self.remoteParticipantsManager = RemoteParticipantsManager(
             store: store,
             callCompositeEventsHandler: callCompositeEventsHandler,
@@ -199,7 +199,9 @@ public class CallComposite {
         let debugInfoManager = createDebugInfoManager()
         self.debugInfoManager = debugInfoManager
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
-        let audioSessionManager = AudioSessionManager(store: store, logger: logger)
+        let audioSessionManager = AudioSessionManager(store: store,
+                                                      logger: logger,
+                                                      isCallKitEnabled: callConfiguration.callKitOptions != nil)
         self.audioSessionManager = audioSessionManager
         return CompositeViewFactory(
             logger: logger,
