@@ -53,9 +53,11 @@ public struct RemoteOptions {
     }
     public init(for startCall: CallCompositeStartCallOptions,
                 credential: CommunicationTokenCredential,
-                displayName: String? = nil) {
+                displayName: String? = nil,
+                callKitOptions: CallCompositeCallKitOption? = nil) {
         self.startCall = startCall
         self.credential = credential
         self.displayName = displayName
+        self.callKitOptions = callKitOptions
     }
 }
