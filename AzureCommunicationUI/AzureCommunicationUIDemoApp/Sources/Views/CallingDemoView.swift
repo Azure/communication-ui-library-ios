@@ -98,6 +98,7 @@ struct CallingDemoView: View {
             Picker("Call Type", selection: $envConfigSubject.selectedMeetingType) {
                 Text("Group Call").tag(MeetingType.groupCall)
                 Text("Teams Meeting").tag(MeetingType.teamsMeeting)
+                Text("1:N Call").tag(MeetingType.oneToNCall)
             }.pickerStyle(.segmented)
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -111,6 +112,13 @@ struct CallingDemoView: View {
                 TextField(
                     "Team Meeting",
                     text: $envConfigSubject.teamsMeetingLink)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .textFieldStyle(.roundedBorder)
+            case .oneToNCall:
+                TextField(
+                    "One To N Calling",
+                    text: $envConfigSubject.participantIds)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .textFieldStyle(.roundedBorder)
@@ -308,6 +316,22 @@ extension CallingDemoView {
                                                   ? callKitOptions : nil)
 
                 callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
+            case .oneToNCall:
+                let localOptionsForOneToN = LocalOptions(participantViewData: participantViewData,
+                                                setupScreenViewData: setupScreenViewData,
+                                                cameraOn: envConfigSubject.cameraOn,
+                                                microphoneOn: envConfigSubject.microphoneOn,
+                                                skipSetupScreen: true)
+                let ids: [String] = link.split(separator: ",").map {
+                    String($0).trimmingCharacters(in: .whitespacesAndNewlines)
+                }
+                let startCallOptions = StartCallOptionsOneToNCall(partipants: ids)
+                let remoteOptions = RemoteOptions(for: startCallOptions,
+                                                  credential: credential,
+                                                  callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
+                                                  ? callKitOptions : nil)
+                callComposite.launch(remoteOptions: remoteOptions,
+                                     localOptions: localOptionsForOneToN)
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
@@ -347,6 +371,8 @@ extension CallingDemoView {
             return envConfigSubject.groupCallId
         case .teamsMeeting:
             return envConfigSubject.teamsMeetingLink
+        case .oneToNCall:
+            return envConfigSubject.participantIds
         }
     }
 

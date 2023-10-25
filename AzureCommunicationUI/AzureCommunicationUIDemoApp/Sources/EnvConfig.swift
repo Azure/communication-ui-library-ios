@@ -17,6 +17,7 @@ enum EnvConfig: String {
     case displayName
     case groupCallId
     case teamsMeetingLink
+    case participantIds
     case threadId
     case endpointUrl
 
@@ -42,6 +43,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var navigationTitle: String = ""
     @Published var navigationSubtitle: String = ""
     @Published var groupCallId: String = EnvConfig.groupCallId.value()
+    @Published var participantIds: String = EnvConfig.participantIds.value()
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
     @Published var threadId: String = EnvConfig.threadId.value()
     @Published var endpointUrl: String = EnvConfig.endpointUrl.value()
@@ -96,6 +98,11 @@ class EnvConfigSubject: ObservableObject {
             teamsMeetingLink = teamsLink
             selectedMeetingType = .teamsMeeting
             selectedChatType = .teamsChat
+        }
+        if let oneToNCId = dic["oneToNCallingId"],
+           !participantIds.isEmpty {
+            participantIds = oneToNCId
+            selectedMeetingType = .oneToNCall
         }
 
         if let communicationUserId = dic["userid"],
