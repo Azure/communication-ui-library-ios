@@ -73,7 +73,6 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             joinCallOptions.outgoingVideoOptions = videoOptions
             startCallOptions.outgoingVideoOptions = videoOptions
         }
-        
         if let callKitOptions = self.callConfiguration.callKitOptions,
             let remoteInfo = callKitOptions.remoteInfo {
                 let callKitRemoteInfo = CallKitRemoteInfo()
@@ -81,7 +80,6 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                 callKitRemoteInfo.handle = remoteInfo.cxHandle
                 joinCallOptions.callKitRemoteInfo = callKitRemoteInfo
         }
-            
         joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
         joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
         joinCallOptions.incomingVideoOptions = incomingVideoOptions
