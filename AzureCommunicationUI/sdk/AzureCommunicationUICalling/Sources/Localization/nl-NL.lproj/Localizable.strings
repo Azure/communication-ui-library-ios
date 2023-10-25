@@ -105,3 +105,22 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="U hebt geen toegang tot het gesprek.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Fout bij het in- of uitschakelen van video";
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Kan niet deelnemen aan gesprek. Controleer de netwerkverbinding.";
+
+/* Call Diagnostics */
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="Uw geluid is gedempt";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Netwerkkwaliteit is laag";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Netwerk is verloren gegaan";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Opnieuw verbinden...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Kan camera niet starten";
+
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Kan luidspreker niet vinden.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Kan microfoon niet vinden.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Microfoon werkt niet zoals verwacht.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Luidspreker werkt niet zoals verwacht.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Luidspreker is gedempt.";
+
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ heeft toestemming nodig";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ mag uw camera niet gebruiken. U kunt dit later wijzigen in de instellingen. Als uw wijziging nu wordt doorgevoerd, wordt uw oproep verwijderd.";
+
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Oproepdiagnose sluiten";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Hiermee wordt deze banner voor gespreksdiagnose gesloten";
