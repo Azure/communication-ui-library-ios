@@ -1025,7 +1025,7 @@
 				CODE_SIGN_ENTITLEMENTS = AzureCommunicationUIDemoAppRelease.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 4A674S8KZ8;
+				DEVELOPMENT_TEAM = UBF8T346G9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Sources/Info.plist;
 				INFOPLIST_KEY_NSCameraUsageDescription = "This is required for calling.";
@@ -1042,7 +1042,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.meetings.AzureCommunicationUIDemoAppTest;
+				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.AzureCommunicationUIDemoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
