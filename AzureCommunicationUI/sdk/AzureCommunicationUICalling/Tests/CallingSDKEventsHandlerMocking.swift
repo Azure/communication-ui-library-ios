@@ -17,4 +17,8 @@ class CallingSDKEventsHandlerMocking: NSObject, CallingSDKEventsHandling {
     var callIdSubject = PassthroughSubject<String, Never>()
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> = .init([])
     var dominantSpeakersModifiedTimestampSubject: PassthroughSubject<Date, Never> = .init()
+
+    var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
+    var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
+    var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()
 }

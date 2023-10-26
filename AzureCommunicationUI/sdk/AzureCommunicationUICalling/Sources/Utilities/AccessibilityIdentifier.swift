@@ -33,4 +33,8 @@ enum AccessibilityIdentifier: String {
     case activityViewControllerAccessibilityID = "ActivityListView"
     case callResumeAccessibilityID =
             "AzureCommunicationUICalling.CallingView.GridView.Resume.AccessibilityID"
+    case callDiagnosticBottomToastAccessibilityID =
+            "AzureCommunicationUICalling.CallingView.Diagnostics.BottomToast.AccessibilityID"
+    case callDiagnosticMessageBarAccessibilityID =
+            "AzureCommunicationUICalling.CallingView.Diagnostics.MessageBar.AccessibilityID"
 }
