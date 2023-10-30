@@ -76,25 +76,26 @@ extends:
                     export CUSTOM_MAPPING_FILE="$(System.DefaultWorkingDirectory)/tdbuildCultureMapping.json"
 
                     echo '{"cultures":{"ar-SA":"ar-SA.lproj","de-DE":"de-DE.lproj","en-GB":"en-GB.lproj","es-ES":"es-ES.lproj","fi-FI":"fi-FI.lproj","fr-FR":"fr-FR.lproj","he-IL":"he-IL.lproj","it-IT":"it-IT.lproj","ja-JP":"ja-JP.lproj","ko-KR":"ko-KR.lproj","nb-NO":"nb-NO.lproj","nl-NL":"nl-NL.lproj","pl-PL":"pl-PL.lproj","pt-BR":"pt-BR.lproj","ru-RU":"ru-RU.lproj","sv-SE":"sv-SE.lproj","tr-TR":"tr-TR.lproj","zh-CN":"zh-Hans-CN.lproj","zh-TW":"zh-Hant-TW.lproj"}}' > $CUSTOM_MAPPING_FILE
-
-              - task: MicrosoftTDBuild.tdbuild-task.tdbuild-task.TouchdownBuildTask@1
+              - task: TouchdownBuildTask@1
                 displayName: Call Touchdown build task for components
                 condition: ne(variables['commit'], 'true')
                 inputs:
-                  teamId: "44988"
-                  authId: fa441387-cab4-4f61-969d-fd23388fc7b4
-                  authKey: $(AUTH_KEY)
+                  environment: 'PRODEXT'
+                  teamId: '44988'
+                  authType: 'OAuth'
+                  authId: 'fa441387-cab4-4f61-969d-fd23388fc7b4'
+                  authKey: '$(AUTH_KEY)'
                   resourceFilePath: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization/en.lproj/Localizable.strings
                   outputDirectoryRoot: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization
                   cultureMappingType: FilePath
                   cultureMappingFilePath: $(System.DefaultWorkingDirectory)/tdbuildCultureMapping.json
-              - task: MicrosoftTDBuild.tdbuild-task.tdbuild-task.TouchdownBuildTask@1
+              - task: TouchdownBuildTask@1
                 displayName: Call Touchdown build task for composites and commit changes
                 condition: eq(variables['commit'], 'true')
                 inputs:
                   teamId: "44988"
-                  authId: fa441387-cab4-4f61-969d-fd23388fc7b4
-                  authKey: $(AUTH_KEY)
+                  authId: 'fa441387-cab4-4f61-969d-fd23388fc7b4'
+                  authKey: '$(AUTH_KEY)'
                   resourceFilePath: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization/en.lproj/Localizable.strings
                   outputDirectoryRoot: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization
                   cultureMappingType: FilePath
