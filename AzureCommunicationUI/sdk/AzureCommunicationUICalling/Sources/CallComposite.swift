@@ -130,7 +130,7 @@ public class CallComposite {
                                                       displayName: remoteOptions.displayName,
                                                       callKitOptions: remoteOptions.callKitOptions)
         } else if let startCallOptions = remoteOptions.startCallOptions {
-            let callConfiguration = CallConfiguration(startCallOptions: startCallOptions,
+            callConfiguration = CallConfiguration(startCallOptions: startCallOptions,
                                                        credential: remoteOptions.credential,
                                                        displayName: remoteOptions.displayName,
                                                       callKitOptions: remoteOptions.callKitOptions)
