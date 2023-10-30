@@ -1,9 +1,5 @@
 # This pipeline was generated from the classic pipeline "SCC-SPOOL-communication-ui-library-iOS-localization" on 2023-10-30 with https://aka.ms/1ESPTMigration (v1.0.0): https://dev.azure.com/skype/SCC/_build?definitionId=12523
 #
-# The following items require attention:
-# Variables were exported from the classic pipeline, confirm that `variables` values do not contain private information. If a variable contains private information, follow the guidance on handling secret variables: https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables
-# Secret variable 'AUTH_KEY' detected in `variables`, follow the guidance on handling secret variables: https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables
-# Secret variable 'P12password' detected in `variables`, follow the guidance on handling secret variables: https://learn.microsoft.com/en-us/azure/devops/pipelines/process/set-secret-variables
 # 'Allow scripts to access the OAuth token' was selected in pipeline.  Add the following YAML to any steps requiring access:
 #       env:
 #           MY_ACCESS_TOKEN: $(System.AccessToken)
@@ -12,14 +8,11 @@
 
 name: $(date:yyyyMMdd)$(rev:.r)
 variables:
-  - name: AUTH_KEY
-    value: null
+
   - name: Configuration
     value: Release
   - name: Ic3PipelineUsage
     value: production
-  - name: P12password
-    value: null
   - name: SDK
     value: iphoneos
   - name: system.debug
