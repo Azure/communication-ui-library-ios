@@ -66,6 +66,14 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Zawieszony";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Naciśnij, aby wpuścić lub odrzucić";
 
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Oczekujący w poczekalni (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="W trakcie rozmowy (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Wpuść wszystkich";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Wpuścić wszystkich uczestników?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Wpuścić %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Wpuść";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Odrzuć";
+
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Przełącz na kamerę tylną";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Przełącz na kamerę przednią";
 

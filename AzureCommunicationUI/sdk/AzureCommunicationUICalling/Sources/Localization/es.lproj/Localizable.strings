@@ -66,6 +66,14 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="En espera";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Pulsa para admitir o rechazar";
 
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Esperando en la sala de espera (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="En la llamada (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Admitir a todos";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="¿Admitir a todos los participantes?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="¿Admitir a %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Admitir";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Rechazar";
+
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Cambiar a cámara trasera";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Cambiar a cámara frontal";
 

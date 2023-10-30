@@ -66,6 +66,14 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Beklemede";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Kabul etmek veya reddetmek için dokunun";
 
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Lobide bekleniyor (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="Aramada (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Tümünü kabul et";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Tüm katılımcılar kabul edilsin mi?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@ kabul edilsin mi?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Kabul et";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Reddet";
+
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Arka kameraya geç";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Ön kameraya geç";
 
