@@ -73,7 +73,7 @@ extends:
                     git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
                     git config user.name "github-actions[bot]"
 
-                    export CUSTOM_MAPPING_FILE="${system.defaultWorkingDirectory}/tdbuildCultureMapping.json"
+                    export CUSTOM_MAPPING_FILE="$(System.DefaultWorkingDirectory)/tdbuildCultureMapping.json"
 
                     echo '{"cultures":{"ar-SA":"ar-SA.lproj","de-DE":"de-DE.lproj","en-GB":"en-GB.lproj","es-ES":"es-ES.lproj","fi-FI":"fi-FI.lproj","fr-FR":"fr-FR.lproj","he-IL":"he-IL.lproj","it-IT":"it-IT.lproj","ja-JP":"ja-JP.lproj","ko-KR":"ko-KR.lproj","nb-NO":"nb-NO.lproj","nl-NL":"nl-NL.lproj","pl-PL":"pl-PL.lproj","pt-BR":"pt-BR.lproj","ru-RU":"ru-RU.lproj","sv-SE":"sv-SE.lproj","tr-TR":"tr-TR.lproj","zh-CN":"zh-Hans-CN.lproj","zh-TW":"zh-Hant-TW.lproj"}}' > $CUSTOM_MAPPING_FILE
 
@@ -87,7 +87,7 @@ extends:
                   resourceFilePath: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization/en.lproj/Localizable.strings
                   outputDirectoryRoot: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization
                   cultureMappingType: FilePath
-                  cultureMappingFilePath: $(system.defaultWorkingDirectory)/tdbuildCultureMapping.json
+                  cultureMappingFilePath: $(System.DefaultWorkingDirectory)/tdbuildCultureMapping.json
               - task: MicrosoftTDBuild.tdbuild-task.tdbuild-task.TouchdownBuildTask@1
                 displayName: Call Touchdown build task for composites and commit changes
                 condition: eq(variables['commit'], 'true')
@@ -98,7 +98,7 @@ extends:
                   resourceFilePath: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization/en.lproj/Localizable.strings
                   outputDirectoryRoot: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization
                   cultureMappingType: FilePath
-                  cultureMappingFilePath: $(system.defaultWorkingDirectory)/tdbuildCultureMapping.json
+                  cultureMappingFilePath: $(System.DefaultWorkingDirectory)/tdbuildCultureMapping.json
               - task: Bash@3
                 displayName: Copy additional language mapping
                 condition: eq(variables['commit'], 'true')
