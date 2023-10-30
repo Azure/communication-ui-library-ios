@@ -84,7 +84,7 @@ extends:
                   teamId: '44988'
                   authType: 'OAuth'
                   authId: 'fa441387-cab4-4f61-969d-fd23388fc7b4'
-                  authKey: '$(AUTH_KEY)'
+                  authKey: '$(AUTHKEY)'
                   resourceFilePath: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization/en.lproj/Localizable.strings
                   outputDirectoryRoot: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization
                   cultureMappingType: FilePath
