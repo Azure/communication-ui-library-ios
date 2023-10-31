@@ -71,5 +71,13 @@
 		<key>9KBH5RKYEW.com.azure.ios.communication.ui.AzureCommunicationUIDemoApp</key>
 		<string>Azure Communication UI Demo App Dogfood Dev</string>
 	</dict>
+	<key>signingCertificate</key>
+    <string>Apple Development: Shauna Song (977VC6B64L)</string>
+    <key>signingStyle</key>
+    <string>manual</string>
+    <key>method</key>
+    <string>app-store</string>
+    <key>teamID</key>
+    <string>Unknown Name (9KBH5RKYEW)</string>    
 </dict>
 </plist>
