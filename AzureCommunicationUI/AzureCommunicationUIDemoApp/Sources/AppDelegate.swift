@@ -17,7 +17,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
 
     static var orientationLock: UIInterfaceOrientationMask = .all
 
-    let appPubs = AppPubs()
     let envConfigSubject = EnvConfigSubject()
 
     func application(_ application: UIApplication,
