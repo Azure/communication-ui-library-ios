@@ -64,5 +64,12 @@
 	<string>$(threadId)</string>
 	<key>userId</key>
 	<string>$(userId)</string>
+	<key>provisioningProfiles</key>
+	<dict>
+		<key>9KBH5RKYEW.com.azure.ios.communication.ui.AzureCommunicationUIDemoApp.CallingExtension</key>
+		<string>Azure Communication UI Demo App DF Calling Ext dev</string>
+		<key>9KBH5RKYEW.com.azure.ios.communication.ui.AzureCommunicationUIDemoApp</key>
+		<string>Azure Communication UI Demo App Dogfood Dev</string>
+	</dict>
 </dict>
 </plist>
