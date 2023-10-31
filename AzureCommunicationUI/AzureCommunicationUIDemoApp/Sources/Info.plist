@@ -64,20 +64,5 @@
 	<string>$(threadId)</string>
 	<key>userId</key>
 	<string>$(userId)</string>
-	<key>provisioningProfiles</key>
-	<dict>
-		<key>9KBH5RKYEW.com.azure.ios.communication.ui.AzureCommunicationUIDemoApp.CallingExtension</key>
-		<string>Azure Communication UI Demo App DF Calling Ext dev</string>
-		<key>9KBH5RKYEW.com.azure.ios.communication.ui.AzureCommunicationUIDemoApp</key>
-		<string>Azure Communication UI Demo App Dogfood Dev</string>
-	</dict>
-	<key>signingCertificate</key>
-    <string>Apple Development: Shauna Song (977VC6B64L)</string>
-    <key>signingStyle</key>
-    <string>manual</string>
-    <key>method</key>
-    <string>app-store</string>
-    <key>teamID</key>
-    <string>Unknown Name (9KBH5RKYEW)</string>    
 </dict>
 </plist>
