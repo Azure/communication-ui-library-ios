@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         // Override point for customization after application launch.
 
         AppCenter.start(withAppSecret: envConfigSubject.appCenterSecret, services: [Crashes.self])
-        self.setupFirebaseNotifications(application: application)
+        self.setupNotifications(application: application)
         return true
     }
 
@@ -48,11 +48,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         return AppDelegate.orientationLock
     }
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
-            appPubs.pushToken = registry.pushToken(for: .voIP) ?? nil
-            CallCompositeHandler.shared.setupCallComposite(deviceToken: appPubs.pushToken ?? nil)
+            CallCompositeHandler.shared.setupCallComposite(deviceToken: registry.pushToken(for: .voIP) ?? nil)
     }
 
-    func setupFirebaseNotifications(application: UIApplication) {
+    func setupNotifications(application: UIApplication) {
         UNUserNotificationCenter.current().delegate = self
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, _) in
             if granted {
@@ -76,14 +75,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         // Set the push type to VoIP
         voipRegistry.desiredPushTypes = [PKPushType.voIP]
     }
-}
-
-class AppPubs {
-    init() {
-        self.pushPayload = nil
-        self.pushToken = nil
-    }
-
-    @Published var pushPayload: PKPushPayload?
-    @Published var pushToken: Data?
 }

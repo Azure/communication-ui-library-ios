@@ -69,7 +69,6 @@ public class CallComposite {
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
-        print("Lovekesh: Normal options")
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
@@ -87,7 +86,6 @@ public class CallComposite {
     convenience init(withOptions options: CallCompositeOptions? = nil,
                      callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
         self.init(withOptions: options)
-        print("Lovekesh: wrapper options")
         self.customCallingSdkWrapper = callingSDKWrapperProtocol
     }
 
