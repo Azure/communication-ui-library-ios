@@ -4,11 +4,14 @@
 //
 
 import Foundation
+import AzureCommunicationCommon
 
 public struct PushNotificationOptions {
     public let deviceRegistrationToken: Data
-    // add credential here
-    public init(deviceToken: Data) {
+    public let credential: CommunicationTokenCredential
+    public init(deviceToken: Data,
+                credential: CommunicationTokenCredential) {
         self.deviceRegistrationToken = deviceToken
+        self.credential = credential
     }
 }

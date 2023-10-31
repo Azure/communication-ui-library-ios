@@ -19,7 +19,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
 
     let appPubs = AppPubs()
     let envConfigSubject = EnvConfigSubject()
-//    let callCompositeOptions = CallCompositeOptions(deviceToken: envConfigSubject.deviceToken)
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -49,21 +48,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         return AppDelegate.orientationLock
     }
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
-        appPubs.pushToken = registry.pushToken(for: .voIP) ?? nil
-        CallCompositeHandler.shared.setupCallComposite(deviceToken: appPubs.pushToken ?? nil)
-            DispatchQueue.main.async {
-                Task {
-                    guard let tokenData = self.appPubs.pushToken else {
-                        return
-                    }
-                    let notificationOptions = PushNotificationOptions(deviceToken: tokenData)
-                    CallCompositeHandler
-                    .shared
-                    .callComposite?
-                    .registerPushNotification(notificationOptions: notificationOptions)
-                }
-            }
-        }
+            appPubs.pushToken = registry.pushToken(for: .voIP) ?? nil
+            CallCompositeHandler.shared.setupCallComposite(deviceToken: appPubs.pushToken ?? nil)
+    }
 
     func setupFirebaseNotifications(application: UIApplication) {
         UNUserNotificationCenter.current().delegate = self

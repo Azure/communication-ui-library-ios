@@ -8,6 +8,8 @@ import Foundation
 import AzureCommunicationCommon
 import AVFoundation
 import CallKit
+
+// swiftlint:disable line_length
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else
@@ -132,8 +134,6 @@ struct CallingDemoView: View {
     var settingButton: some View {
         Button("Settings") {
             isSettingsDisplayed = true
-            // Add ACS token here
-            envConfigSubject.acsToken = ""
         }
         .buttonStyle(DemoButtonStyle())
         .accessibility(identifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
@@ -352,13 +352,29 @@ extension CallingDemoView {
         }
     }
     func registerForNotification() {
-        if let deviceToken = envConfigSubject.deviceToken,
-           let callComposite = CallCompositeHandler.shared.callComposite {
-            let notificationOptions = PushNotificationOptions(deviceToken: deviceToken)
-            callComposite.registerPushNotification(notificationOptions: notificationOptions)
+        guard let deviceToken = CallCompositeHandler.shared.deviceToken,
+              let callComposite = CallCompositeHandler.shared.callComposite else { return }
+        asyncBridgeForTokenCredential { (result) in
+            switch result {
+            case .success(let credential):
+                let notificationOptions = PushNotificationOptions(deviceToken: deviceToken, credential: credential)
+                callComposite.registerPushNotification(notificationOptions: notificationOptions)
+            case .failure(let error):
+                print("::::CallingDemoView::credentials::error \(error)")
+            }
         }
     }
 
+    func asyncBridgeForTokenCredential(completion: @escaping (Result<CommunicationTokenCredential, Error>) -> Void) {
+        Task {
+            do {
+                let credential = try await getTokenCredential()
+                completion(.success(credential))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+    }
     private func getTokenCredential() async throws -> CommunicationTokenCredential {
         switch envConfigSubject.selectedAcsTokenType {
         case .token:

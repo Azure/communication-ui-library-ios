@@ -8,6 +8,7 @@ import AzureCommunicationCommon
 import UIKit
 import SwiftUI
 import FluentUI
+import Foundation
 
 // swiftlint:disable type_body_length
 /// The main class representing the entry point for the Call Composite.
@@ -120,26 +121,27 @@ public class CallComposite {
         present(toolkitHostingController)
     }
     public func registerPushNotification(notificationOptions: PushNotificationOptions) {
-//        Task {
-//            let clientOptions = CallClientOptions()
-//            let callClient = CallClient(options: clientOptions)
-//            let options = CallAgentOptions()
-//            let credential = CommunicationTokenCredential(token: <#T##String#>)
-//            options.callKitOptions = CallKitOptions(with: createProviderConfig())
-//            do {
-//                let callAgent = try await callClient.createCallAgent(
-//                    userCredential: credential,
-//                    options: options
-//                )
-//                try await callAgent.registerPushNotifications(deviceToken:
-//                                                                CallComposite.deviceToken)
-//                self.logger.debug("Call agent successfully created.")
-//                callAgent.dispose()
-//                callClient.dispose()
-//            } catch {
-//                logger.error("It was not possible to create a call agent.")
-//            }
-//        }
+        Task {
+            let clientOptions = CallClientOptions()
+            let callClient = CallClient(options: clientOptions)
+            let options = CallAgentOptions()
+            options.callKitOptions = CallKitOptions(with: createProviderConfig())
+            do {
+                let callAgent = try await callClient.createCallAgent(
+                    userCredential: notificationOptions.credential,
+                    options: options
+                )
+                try await callAgent.registerPushNotifications(deviceToken:
+                                                                notificationOptions.deviceRegistrationToken)
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.logger.debug("Call agent successfully created.")
+                    callAgent.dispose()
+                    callClient.dispose()
+                }
+            } catch {
+                logger.error("It was not possible to create a call agent.")
+            }
+        }
     }
     private func createProviderConfig() -> CXProviderConfiguration {
         let providerConfig = CXProviderConfiguration()
