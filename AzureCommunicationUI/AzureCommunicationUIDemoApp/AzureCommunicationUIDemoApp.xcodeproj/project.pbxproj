@@ -825,7 +825,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.AzureCommunicationUIDemoApp.CallingExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Azure Communication UI Demo App DF Calling Ext dev";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Azure Communication UI Demo App DF CallingExt Dist";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -862,7 +862,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.AzureCommunicationUIDemoApp.CallingExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Azure Communication UI Demo App DF Calling Ext dev";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Azure Communication UI Demo App DF CallingExt Dist";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1024,7 +1024,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.AzureCommunicationUIDemoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Azure Communication UI Demo App Dogfood Dev";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Azure Communication UI Demo App Dogfood Dist";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1064,7 +1064,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.azure.ios.communication.ui.AzureCommunicationUIDemoApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Azure Communication UI Demo App Dogfood Dev";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "Azure Communication UI Demo App Dogfood Dist";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
