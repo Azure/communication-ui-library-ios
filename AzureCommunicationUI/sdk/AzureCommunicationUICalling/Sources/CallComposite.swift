@@ -3,12 +3,13 @@
 //  Licensed under the MIT License.
 //
 
+import AzureCommunicationCalling
 import AzureCommunicationCommon
-
 import UIKit
 import SwiftUI
 import FluentUI
 
+// swiftlint:disable type_body_length
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
 
@@ -67,6 +68,7 @@ public class CallComposite {
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
+        print("Lovekesh: Normal options")
         events = Events()
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
@@ -84,6 +86,7 @@ public class CallComposite {
     convenience init(withOptions options: CallCompositeOptions? = nil,
                      callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
         self.init(withOptions: options)
+        print("Lovekesh: wrapper options")
         self.customCallingSdkWrapper = callingSDKWrapperProtocol
     }
 
@@ -115,6 +118,37 @@ public class CallComposite {
         )
 
         present(toolkitHostingController)
+    }
+    public func registerPushNotification(notificationOptions: PushNotificationOptions) {
+//        Task {
+//            let clientOptions = CallClientOptions()
+//            let callClient = CallClient(options: clientOptions)
+//            let options = CallAgentOptions()
+//            let credential = CommunicationTokenCredential(token: <#T##String#>)
+//            options.callKitOptions = CallKitOptions(with: createProviderConfig())
+//            do {
+//                let callAgent = try await callClient.createCallAgent(
+//                    userCredential: credential,
+//                    options: options
+//                )
+//                try await callAgent.registerPushNotifications(deviceToken:
+//                                                                CallComposite.deviceToken)
+//                self.logger.debug("Call agent successfully created.")
+//                callAgent.dispose()
+//                callClient.dispose()
+//            } catch {
+//                logger.error("It was not possible to create a call agent.")
+//            }
+//        }
+    }
+    private func createProviderConfig() -> CXProviderConfiguration {
+        let providerConfig = CXProviderConfiguration()
+        providerConfig.supportsVideo = true
+        providerConfig.maximumCallGroups = 1
+        providerConfig.maximumCallsPerCallGroup = 1
+        providerConfig.includesCallsInRecents = true
+        providerConfig.supportedHandleTypes = [.phoneNumber, .generic]
+        return providerConfig
     }
 
     /// Start Call Composite experience with joining a Teams meeting.

@@ -37,6 +37,7 @@ struct CallingDemoView: View {
             displayNameTextField
             meetingSelector
             Group {
+                registerButton
                 settingButton
                 showCallHistoryButton
                 startExperienceButton
@@ -131,9 +132,19 @@ struct CallingDemoView: View {
     var settingButton: some View {
         Button("Settings") {
             isSettingsDisplayed = true
+            // Add ACS token here
+            envConfigSubject.acsToken = ""
         }
         .buttonStyle(DemoButtonStyle())
         .accessibility(identifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
+    }
+    var registerButton: some View {
+        Button("Register Voip Notification") {
+            self.registerForNotification()
+        }
+        .disabled(isStartExperienceDisabled)
+        .buttonStyle(DemoButtonStyle())
+        .accessibility(identifier: AccessibilityId.registerButtonAccessibilityID.rawValue)
     }
 
     var startExperienceButton: some View {
@@ -219,14 +230,16 @@ extension CallingDemoView {
             callingScreenOrientation: callingViewOrientation)
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
-        let callComposite = useMockCallingSDKHandler ?
-            CallComposite(withOptions: callCompositeOptions,
-                          callingSDKWrapperProtocol: callingSDKWrapperMock)
-            : CallComposite(withOptions: callCompositeOptions)
+        CallCompositeHandler.shared.callComposite = useMockCallingSDKHandler ?
+                CallComposite(withOptions: callCompositeOptions,
+                              callingSDKWrapperProtocol: callingSDKWrapperMock)
+                : CallComposite(withOptions: callCompositeOptions)
         #else
-        let callComposite = CallComposite(withOptions: callCompositeOptions)
+        CallCompositeHandler.shared.callComposite = CallComposite(withOptions: callCompositeOptions)
         #endif
-
+        guard let callComposite = CallCompositeHandler.shared.callComposite else {
+            return
+        }
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
@@ -325,7 +338,7 @@ extension CallingDemoView {
                 let ids: [String] = link.split(separator: ",").map {
                     String($0).trimmingCharacters(in: .whitespacesAndNewlines)
                 }
-                let startCallOptions = StartCallOptionsOneToNCall(partipants: ids)
+                let startCallOptions = StartCallOptionsOneToNCall(participants: ids)
                 let remoteOptions = RemoteOptions(for: startCallOptions,
                                                   credential: credential,
                                                   callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
@@ -336,6 +349,13 @@ extension CallingDemoView {
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
+        }
+    }
+    func registerForNotification() {
+        if let deviceToken = envConfigSubject.deviceToken,
+           let callComposite = CallCompositeHandler.shared.callComposite {
+            let notificationOptions = PushNotificationOptions(deviceToken: deviceToken)
+            callComposite.registerPushNotification(notificationOptions: notificationOptions)
         }
     }
 

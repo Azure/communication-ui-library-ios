@@ -46,6 +46,7 @@ class EnvConfigSubject: ObservableObject {
     @Published var participantIds: String = EnvConfig.participantIds.value()
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
     @Published var threadId: String = EnvConfig.threadId.value()
+    @Published var deviceToken: Data?
     @Published var endpointUrl: String = EnvConfig.endpointUrl.value()
 
     @Published var selectedAcsTokenType: ACSTokenType = .token

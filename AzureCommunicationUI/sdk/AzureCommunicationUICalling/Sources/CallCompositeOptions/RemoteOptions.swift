@@ -9,7 +9,10 @@ import AzureCommunicationCommon
 // CallComposite Start Call for 1:N Call
 public struct StartCallOptionsOneToNCall {
     /// IDs of the participants to be called.
-    public var partipants: [String]
+    public var participants: [String]
+    public init(participants: [String]) {
+        self.participants = participants
+    }
 }
 
 /// CallComposite Locator for locating call destination
