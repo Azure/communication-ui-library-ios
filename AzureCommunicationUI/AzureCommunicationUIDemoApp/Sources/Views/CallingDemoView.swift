@@ -9,7 +9,6 @@ import AzureCommunicationCommon
 import AVFoundation
 import CallKit
 
-// swiftlint:disable line_length
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else

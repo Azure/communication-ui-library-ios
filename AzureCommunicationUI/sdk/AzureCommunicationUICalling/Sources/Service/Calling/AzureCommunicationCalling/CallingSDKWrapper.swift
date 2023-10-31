@@ -123,6 +123,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         self.call = joinedCall
         self.setupFeatures()
     }
+
     func registerPushNotifications(notificationOptions: PushNotificationOptions) async throws {
         try await self.setupCallAgent()
         guard let callAgent: CallAgent = self.callAgent else {
