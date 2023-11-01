@@ -8,7 +8,7 @@ import AzureCommunicationCalling
 import Combine
 import Foundation
 
-// swiftlint:disable file_length type_body_length
+// swiftlint:disable file_length
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -122,20 +122,6 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
         self.call = joinedCall
         self.setupFeatures()
-    }
-
-    func registerPushNotifications(notificationOptions: PushNotificationOptions) async throws {
-        try await self.setupCallAgent()
-        guard let callAgent: CallAgent = self.callAgent else {
-            logger.error( "Call Agent initialization failed")
-            return
-        }
-        do {
-            try await callAgent.registerPushNotifications(deviceToken: notificationOptions.deviceRegistrationToken)
-        } catch {
-            logger.error( "Call Agent initialization failed")
-            throw error
-        }
     }
 
     private func joinCallForGroupCall(joinLocator: JoinMeetingLocator, joinCallOptions: JoinCallOptions) async throws {

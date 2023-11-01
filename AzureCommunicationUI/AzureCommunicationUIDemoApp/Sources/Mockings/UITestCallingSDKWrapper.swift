@@ -77,9 +77,6 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
         callMocking = joinedCall
     }
-    func registerPushNotifications(notificationOptions: PushNotificationOptions) async throws {
-        // Notification
-    }
 
     func endCall() async throws {
         guard callMocking != nil else {

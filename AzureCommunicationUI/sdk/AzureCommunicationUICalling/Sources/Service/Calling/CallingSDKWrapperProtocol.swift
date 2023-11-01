@@ -58,7 +58,6 @@ protocol CallingSDKWrapperProtocol {
     func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String)
     -> CompositeLocalVideoStream<LocalVideoStreamType>?
 
-    func registerPushNotifications(notificationOptions: PushNotificationOptions) async throws
     func startPreviewVideoStream() async throws -> String
     func setupCall() async throws
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws
