@@ -47,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         return AppDelegate.orientationLock
     }
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
-            CallCompositeHandler.shared.setupCallComposite(deviceToken: registry.pushToken(for: .voIP) ?? nil)
+        CallCompositeHandler.shared.setupCallComposite(deviceToken: pushCredentials.token)
     }
 
     func setupNotifications(application: UIApplication) {
