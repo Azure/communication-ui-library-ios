@@ -53,6 +53,18 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
         try await joinCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
     }
+    func handlePushNotification(remoteOptions: RemoteOptions) {
+        guard let callAgent = self.callAgent,
+        let notifications = remoteOptions.pushNotificationInfo else {
+            return
+        }
+        let pushInfo = PushNotificationInfo.fromDictionary(notifications.notificationInfo)
+        callAgent.handlePush(notification: pushInfo) { error in
+            if error == nil {
+                print("No error")
+            }
+        }
+    }
 
     func joinCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
         logger.debug( "Joining call")

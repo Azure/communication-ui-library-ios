@@ -39,6 +39,8 @@ public struct RemoteOptions {
 
     /// CallKit options
     public let callKitOptions: CallCompositeCallKitOption?
+    /// Push notification Info
+    public let pushNotificationInfo: PushNotificationInfoData?
 
     /// Create an instance of a RemoteOptions with options.
     /// - Parameters:
@@ -55,6 +57,7 @@ public struct RemoteOptions {
         self.displayName = displayName
         self.startCallOptions = nil
         self.callKitOptions = callKitOptions
+        self.pushNotificationInfo = nil
     }
     public init(for startCallOptions: StartCallOptionsOneToNCall,
                 credential: CommunicationTokenCredential,
@@ -65,5 +68,17 @@ public struct RemoteOptions {
         self.displayName = displayName
         self.callKitOptions = callKitOptions
         self.locator = nil
+        self.pushNotificationInfo = nil
+    }
+    public init(pushNotificationInfo: PushNotificationInfoData,
+                credential: CommunicationTokenCredential,
+                displayName: String? = nil,
+                callKitOptions: CallCompositeCallKitOption? = nil) {
+        self.startCallOptions = nil
+        self.credential = credential
+        self.displayName = displayName
+        self.callKitOptions = callKitOptions
+        self.locator = nil
+        self.pushNotificationInfo = pushNotificationInfo
     }
 }

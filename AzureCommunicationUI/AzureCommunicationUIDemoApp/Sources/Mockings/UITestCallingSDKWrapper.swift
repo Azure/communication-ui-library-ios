@@ -222,6 +222,8 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             handler.holdParticipant()
         }
     }
+    func handlePushNotification(remoteOptions: RemoteOptions) {
+    }
 }
 
 extension UITestCallingSDKWrapper {

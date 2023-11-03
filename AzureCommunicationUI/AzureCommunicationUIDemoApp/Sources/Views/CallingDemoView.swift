@@ -9,6 +9,7 @@ import AzureCommunicationCommon
 import AVFoundation
 import CallKit
 
+// swiftlint:disable line_length
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else
@@ -18,6 +19,7 @@ struct CallingDemoView: View {
     @State var isAlertDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
     @State var isStartExperienceLoading: Bool = false
+    @State var isPushNotificationAvailable: Bool = false
     @State var exitCompositeExecuted: Bool = false
     @State var alertTitle: String = ""
     @State var alertMessage: String = ""
@@ -133,12 +135,24 @@ struct CallingDemoView: View {
     var settingButton: some View {
         Button("Settings") {
             isSettingsDisplayed = true
+//            envConfigSubject.acsToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjVFODQ4MjE0Qzc3MDczQUU1QzJCREU1Q0NENTQ0ODlEREYyQzRDODQiLCJ4NXQiOiJYb1NDRk1kd2M2NWNLOTVjelZSSW5kOHNUSVEiLCJ0eXAiOiJKV1QifQ.eyJza3lwZWlkIjoiYWNzOmI2YWFkYTFmLTBiMWQtNDdhYy04NjZmLTkxYWFlMDBhMWQwMV8wMDAwMDAxYy0yYjkxLTYyZjItZTNjNy01OTNhMGQwMDRjODAiLCJzY3AiOjE3OTIsImNzaSI6IjE2OTg4NTU2MzIiLCJleHAiOjE2OTg5NDIwMzIsInJnbiI6ImFtZXIiLCJhY3NTY29wZSI6ImNoYXQsdm9pcCIsInJlc291cmNlSWQiOiJiNmFhZGExZi0wYjFkLTQ3YWMtODY2Zi05MWFhZTAwYTFkMDEiLCJyZXNvdXJjZUxvY2F0aW9uIjoidW5pdGVkc3RhdGVzIiwiaWF0IjoxNjk4ODU1NjMyfQ.ctUSdM9kZaYUca9DbYfs_f8Cj6vNHeZYxFJZtj1KIqfPquwEvVPFz7WGPgAqhR-BUn5BwFL2PKncLycuejapPal793eJlyZ6Zg9rsJb2bA1nKG8IYiVrWgwCzsprOPCbEpaeY05y9sivKhmB0QNAX0aXzldpgZBkX8FXDVcU_ATw4H4FW0Qu85SPktjHVdzbGkeUj3mIbaxbXptNA7I8RDqnS52HOxgbklaDMzjS9OFaQ5P3r6WxnvUXCzEHochfhC6VzCFRRtNl1qAXuPcztquLn236i922PEBFDYUnUX2sldCNBJHj4xf0irz6eeveqaRiBOqpahxdZp9WjzvD5w"
+//            envConfigSubject.participantIds = "8:acs:b6aada1f-0b1d-47ac-866f-91aae00a1d01_0000001c-2b91-b9f0-ec8d-084822004b56"
+            envConfigSubject.acsToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjVFODQ4MjE0Qzc3MDczQUU1QzJCREU1Q0NENTQ0ODlEREYyQzRDODQiLCJ4NXQiOiJYb1NDRk1kd2M2NWNLOTVjelZSSW5kOHNUSVEiLCJ0eXAiOiJKV1QifQ.eyJza3lwZWlkIjoiYWNzOmI2YWFkYTFmLTBiMWQtNDdhYy04NjZmLTkxYWFlMDBhMWQwMV8wMDAwMDAxYy0zNDNmLTM5ODgtMGQ4Yi0wODQ4MjIwMDVmODAiLCJzY3AiOjE3OTIsImNzaSI6IjE2OTkwMDEyNDMiLCJleHAiOjE2OTkwODc2NDMsInJnbiI6ImFtZXIiLCJhY3NTY29wZSI6InZvaXAiLCJyZXNvdXJjZUlkIjoiYjZhYWRhMWYtMGIxZC00N2FjLTg2NmYtOTFhYWUwMGExZDAxIiwicmVzb3VyY2VMb2NhdGlvbiI6InVuaXRlZHN0YXRlcyIsImlhdCI6MTY5OTAwMTI0M30.HaTBXTIzkgcBaj2J-IeZzlMTeMaSl72ffm63IR_ka_ZLeOU4YcrzhcQEN9Fbr9qG-Wd9OrOF-w0F3WnKbg-h1AcvgoxETUwa-4IpTpFdAVoasqIN9YRRrphLvyypAl1Uzl0ZdmmSvBa14q0vxLcGRF0AeuxSasIJ6bW-ncawhhAYH1pxKuGbULPaJuTqHcna1_v_XzB45NXgl01HOFSqW8iJDOfHwR1cPntHjFw43Xk2mzByXIya2RCvF8zQhWjYHumaXfQi4Mmvq6WuIpwI7qj9bATruyBy1o6MO86LtAIsszPfsf1_k43WVT6gYXI3ONWbBdVsuwWzn52uZg2LwA"
+            envConfigSubject.participantIds = "8:acs:b6aada1f-0b1d-47ac-866f-91aae00a1d01_0000001c-3431-178c-e3c7-593a0d0050e2"
         }
         .buttonStyle(DemoButtonStyle())
         .accessibility(identifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
     }
     var registerButton: some View {
         Button("Register Voip Notification") {
+            self.registerForNotification()
+        }
+        .disabled(isStartExperienceDisabled)
+        .buttonStyle(DemoButtonStyle())
+        .accessibility(identifier: AccessibilityId.registerButtonAccessibilityID.rawValue)
+    }
+    var handleNotificationButton: some View {
+        Button("Handler push notification") {
             self.registerForNotification()
         }
         .disabled(isStartExperienceDisabled)
@@ -362,6 +376,8 @@ extension CallingDemoView {
                 print("::::CallingDemoView::credentials::error \(error)")
             }
         }
+    }
+    func handlePushNotification() {
     }
 
     func asyncBridgeForTokenCredential(completion: @escaping (Result<CommunicationTokenCredential, Error>) -> Void) {

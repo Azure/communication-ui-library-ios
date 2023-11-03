@@ -11,7 +11,6 @@ import AzureCommunicationUICalling
 import AzureCommunicationCommon
 import PushKit
 import AzureCommunicationCalling
-
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, UNUserNotificationCenterDelegate {
 
@@ -47,7 +46,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         return AppDelegate.orientationLock
     }
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
-            CallCompositeHandler.shared.setupCallComposite(deviceToken: registry.pushToken(for: .voIP) ?? nil)
+//        if type == .voIP {
+//                let tokenString = self.tokenString(from: pushCredentials.token)
+//                print("VoIP Token: \(tokenString)")
+//            }
+        CallCompositeHandler.shared.setupCallComposite(deviceToken: pushCredentials.token)
+    }
+    func tokenString(from data: Data) -> String {
+        return data.map { String(format: "%02.2hhx", $0) }.joined()
+    }
+    func pushRegistry(_ registry: PKPushRegistry,
+                      didReceiveIncomingPushWith payload: PKPushPayload,
+                      for type: PKPushType,
+                      completion: @escaping () -> Void) {
+        let callNotification = PushNotificationInfo.fromDictionary(payload.dictionaryPayload)
+        let userDefaults: UserDefaults = .standard
+        guard let callComposite = CallCompositeHandler.shared.callComposite else {
+            return
+        }
+        let pushNotificationInfo = PushNotificationInfoData(notificationInfo: payload.dictionaryPayload)
+        let receiverToken: String = ""
+        do {
+            let credential = try CommunicationTokenCredential(token: receiverToken)
+            let remoteOptions = RemoteOptions(pushNotificationInfo: pushNotificationInfo, credential: credential)
+            callComposite.handlePushNotification(remoteOptions: remoteOptions)
+        } catch {
+            print(error)
+        }
     }
 
     func setupNotifications(application: UIApplication) {
