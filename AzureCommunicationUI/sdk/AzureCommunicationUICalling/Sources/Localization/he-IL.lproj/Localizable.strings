@@ -65,6 +65,13 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="מדבר";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="בהמתנה";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="הקש כדי להכניס או לדחות";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="ממתין בחדר הכניסה (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="בשיחה (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="הכנס את כולם";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="להכניס את כל המשתתפים?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="להכניס את %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="הכנס";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="דחה";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="עבור למצלמה אחורית";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="עבור למצלמה קדמית";

@@ -65,6 +65,13 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Говорит";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="На удержании";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Коснитесь, чтобы допустить или не допустить участника";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Заждался в \"зале ожидания\" (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="В вызове (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Допустить всех";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Допустить всех участников?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Допустить %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Допустить";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Отклонить";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Переключиться на заднюю камеру";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Переключиться на переднюю камеру";
