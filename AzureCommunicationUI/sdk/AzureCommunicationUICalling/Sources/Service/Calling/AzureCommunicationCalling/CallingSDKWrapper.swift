@@ -66,12 +66,14 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         if isCameraPreferred,
            let localVideoStream = localVideoStream {
             let localVideoStreamArray = [localVideoStream]
-            let videoOptions = VideoOptions(localVideoStreams: localVideoStreamArray)
-            joinCallOptions.videoOptions = videoOptions
+
+            let videoOptions = OutgoingVideoOptions()
+            videoOptions.streams = localVideoStreamArray
+            joinCallOptions.outgoingVideoOptions = videoOptions
         }
 
-        joinCallOptions.audioOptions = AudioOptions()
-        joinCallOptions.audioOptions?.muted = !isAudioPreferred
+        joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
+        joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
         joinCallOptions.incomingVideoOptions = incomingVideoOptions
 
         var joinLocator: JoinMeetingLocator
@@ -144,7 +146,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             return nil
         }
         return CompositeLocalVideoStream(
-            mediaStreamType: videoStream.mediaStreamType.asCompositeMediaStreamType,
+            mediaStreamType: videoStream.sourceType.asCompositeMediaStreamType,
             wrappedObject: castVideoStream
         )
     }
@@ -192,9 +194,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         guard let call = call else {
             return
         }
+        guard !call.isOutgoingAudioMuted else {
+            logger.warning("muteOutgoingAudio is skipped as outgoing audio already muted")
+            return
+        }
 
         do {
-            try await call.mute()
+            try await call.muteOutgoingAudio()
         } catch {
             logger.error("ERROR: It was not possible to mute. \(error)")
             throw error
@@ -206,9 +212,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         guard let call = call else {
             return
         }
+        guard call.isOutgoingAudioMuted else {
+            logger.warning("unmuteOutgoingAudio is skipped as outgoing audio already muted")
+            return
+        }
 
         do {
-            try await call.unmute()
+            try await call.unmuteOutgoingAudio()
         } catch {
             logger.error("ERROR: It was not possible to unmute. \(error)")
             throw error
@@ -327,10 +337,12 @@ extension CallingSDKWrapper {
         let recordingCallFeature = call.feature(Features.recording)
         let transcriptionCallFeature = call.feature(Features.transcription)
         let dominantSpeakersFeature = call.feature(Features.dominantSpeakers)
+        let localUserDiagnosticsFeature = call.feature(Features.localUserDiagnostics)
         if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
             callingEventsHandler.assign(recordingCallFeature)
             callingEventsHandler.assign(transcriptionCallFeature)
             callingEventsHandler.assign(dominantSpeakersFeature)
+            callingEventsHandler.assign(localUserDiagnosticsFeature)
         }
     }
 
