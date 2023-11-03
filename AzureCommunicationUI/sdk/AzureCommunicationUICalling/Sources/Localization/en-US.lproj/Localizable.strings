@@ -65,6 +65,13 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Speaking";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="On hold";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tap to admit or decline";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Waiting in lobby (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="In the call (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Admit all";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Admit all partidipants?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Admit %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Admit";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Decline";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Switch to back camera";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Switch to front camera";

@@ -112,6 +112,7 @@ class InfoHeaderViewModel: ObservableObject {
                 participantInfoModel.status != .inLobby && participantInfoModel.status != .disconnected
             })
             .count
+
         if participantsCount != updatedRemoteparticipantCount {
             participantsCount = updatedRemoteparticipantCount
             updateInfoLabel()

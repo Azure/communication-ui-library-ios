@@ -65,6 +65,13 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="正在讲话";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="点击以允许或拒绝";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="正在大厅中等待(%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="在呼叫中(%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="全部允许";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="允许所有分区?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="允许 %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="允许";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="拒绝";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="切换到后置摄像头";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="切换到前置摄像头";

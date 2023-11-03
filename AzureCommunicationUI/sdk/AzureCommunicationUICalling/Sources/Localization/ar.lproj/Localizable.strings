@@ -65,6 +65,13 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="يتحدث";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="قيد التعليق";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="اضغط للسماح بالدخول أو الرفض";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="الانتظار في ساحة الانتظار (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="في المكالمة (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="السماح للكل";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="السماح لجميع المشاركين؟";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="السماح لـ %@؟";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="سماح";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="رفض";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="تبديل إلى الكاميرا الخلفية";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="تبديل إلى الكاميرا الأمامية";

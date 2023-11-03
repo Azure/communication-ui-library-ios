@@ -65,6 +65,13 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Snakker";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="På vent";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Trykk for å slippe inn eller avslå";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Venter i lobbyen (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="I samtalen (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Gi alle tilgang";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Gi tilgang til alle deltakerne?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="Gi tilgang til %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Gi tilgang";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Avslå";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Bytt til kamera bak";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Bytt til kamera foran";

@@ -65,6 +65,13 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Spreken";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="In de wacht";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tik om toe te geven of af te wijzen";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Wachten in lobby (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="In de oproep (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Allen toelaten";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="Alle deelnemers toelaten?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@ toelaten?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="Toelaten";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="Weigeren";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="Overschakelen naar de camera op de achterzijde";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Overschakelen naar de camera op de voorzijde";
