@@ -22,6 +22,7 @@ public class CallComposite {
         public var onCallStateChanged: ((CallState) -> Void)?
         /// Closure to Call Composite dismissed.
         public var onDismissed: ((CallCompositeDismissed) -> Void)?
+        public var onUserReportedIssue: ((CallCompositeUserReportedIssue) -> Void)?
     }
 
     /// The events handler for Call Composite

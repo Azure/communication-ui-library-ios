@@ -231,6 +231,16 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
+    
+        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { [weak callComposite] callStateEvent in
+            guard let composite = callComposite else {
+                return
+            }
+            // Report error
+            //onCallStateChanged(callStateEvent,
+            //        callComposite: composite)
+        }
+        
         let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
             guard let composite = callComposite else {
                 return
@@ -254,6 +264,7 @@ extension CallingDemoView {
         }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
+        callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
         callComposite.events.onDismissed = onDismissedHandler
 
