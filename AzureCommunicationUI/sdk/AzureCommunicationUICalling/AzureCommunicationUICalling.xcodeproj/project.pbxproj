@@ -241,6 +241,8 @@
 		A8ED23302649EA61008A26B2 /* NavigationRouterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8ED232F2649EA61008A26B2 /* NavigationRouterTests.swift */; };
 		BD3CC699283D952E0052DE4A /* OverlayViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CC698283D952E0052DE4A /* OverlayViewModelProtocol.swift */; };
 		BD3CC69B283D953E0052DE4A /* OnHoldOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD3CC69A283D953E0052DE4A /* OnHoldOverlayViewModel.swift */; };
+		C3B63E062AF229B80023DF47 /* PushNotificationInfoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B63E052AF229B80023DF47 /* PushNotificationInfoData.swift */; };
+		C3CD4C4E2AEB8D9E00A625DD /* PushNotificationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3CD4C4D2AEB8D9E00A625DD /* PushNotificationOptions.swift */; };
 		FA03CC8127C8189900986D4E /* PreviewAreaViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC7627C8189900986D4E /* PreviewAreaViewModelMocking.swift */; };
 		FA03CC8327C8189900986D4E /* SetupControlBarViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC7827C8189900986D4E /* SetupControlBarViewModelMocking.swift */; };
 		FA03CC8527C8189900986D4E /* ErrorInfoViewModelMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = FA03CC7A27C8189900986D4E /* ErrorInfoViewModelMocking.swift */; };
@@ -569,6 +571,8 @@
 		B75F3B6936323E60658040C6 /* Pods-AzureCommunicationUICalling.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling/Pods-AzureCommunicationUICalling.debug.xcconfig"; sourceTree = "<group>"; };
 		BD3CC698283D952E0052DE4A /* OverlayViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayViewModelProtocol.swift; sourceTree = "<group>"; };
 		BD3CC69A283D953E0052DE4A /* OnHoldOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnHoldOverlayViewModel.swift; sourceTree = "<group>"; };
+		C3B63E052AF229B80023DF47 /* PushNotificationInfoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationInfoData.swift; sourceTree = "<group>"; };
+		C3CD4C4D2AEB8D9E00A625DD /* PushNotificationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationOptions.swift; sourceTree = "<group>"; };
 		C580DBF67D8B5AEF7A801F90 /* Pods_AzureCommunicationUICalling.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AzureCommunicationUICalling.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3504C0C167BEEE155CF30AD /* Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.debug.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests/Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E7792CEA9A8EE93D3F8391F4 /* Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.release.xcconfig"; path = "Target Support Files/Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests/Pods-AzureCommunicationUICalling-AzureCommunicationUICallingTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1231,6 +1235,8 @@
 				A464810729F345E8001B80A3 /* CallCompositeDismissed.swift */,
 				A44B88312AD8C02E00E685CA /* CallCompositeCallKitOption.swift */,
 				A4E25F5D2ADF856400402CA6 /* CallCompositeCallKitRemoteInfo.swift */,
+				C3CD4C4D2AEB8D9E00A625DD /* PushNotificationOptions.swift */,
+				C3B63E052AF229B80023DF47 /* PushNotificationInfoData.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1837,6 +1843,7 @@
 				503F4B672704EDC800C17DA6 /* BannerView.swift in Sources */,
 				50C6DECC270E48BE0085D04B /* BannerInfoType.swift in Sources */,
 				1F03D3D22638A6B70055C456 /* CallingViewModel.swift in Sources */,
+				C3CD4C4E2AEB8D9E00A625DD /* PushNotificationOptions.swift in Sources */,
 				FAD20A8C292834500063D8A9 /* Logger.swift in Sources */,
 				FA6B61A3290C9F55004B8188 /* DebugInfoSharingActivityViewModel.swift in Sources */,
 				50FA45FE26813FCE001844AC /* ParticipantGridViewModel.swift in Sources */,
@@ -1896,6 +1903,7 @@
 				28FE267329EE168E009CC19D /* RemoteParticipantsReducer.swift in Sources */,
 				1F3F0C65283E853800C66054 /* AudioSessionAction.swift in Sources */,
 				A865AF0927B7116B008347B4 /* IconAndLabelConversion.swift in Sources */,
+				C3B63E062AF229B80023DF47 /* PushNotificationInfoData.swift in Sources */,
 				500C0F1F2847DE18000BA2DC /* RemoteOptions.swift in Sources */,
 				759BDEFF28FF0B0B002B6853 /* LocalizationProvider.swift in Sources */,
 				1F13D36C26A8B83300E31666 /* RemoteParticipantsState.swift in Sources */,

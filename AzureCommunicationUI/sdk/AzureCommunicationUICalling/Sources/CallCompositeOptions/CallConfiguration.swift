@@ -40,7 +40,7 @@ struct CallConfiguration {
          credential: CommunicationTokenCredential,
          displayName: String?,
          callKitOptions: CallCompositeCallKitOption? = nil) {
-        self.participants = startCallOptions.partipants
+        self.participants = startCallOptions.participants
         self.compositeCallType = .oneToNCall
         self.credential = credential
         self.displayName = displayName

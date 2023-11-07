@@ -58,13 +58,13 @@
 	<string>${expiredAcsToken}</string>
 	<key>groupCallId</key>
 	<string>${groupCallId}</string>
+	<key>participantIds</key>
+	<string>$(participantIds)</string>
 	<key>teamsMeetingLink</key>
 	<string>${teamsMeetingLink}</string>
 	<key>threadId</key>
 	<string>$(threadId)</string>
 	<key>userId</key>
 	<string>$(userId)</string>
-	<key>participantIds</key>
-	<string>$(participantIds)</string>
 </dict>
 </plist>

@@ -3,12 +3,14 @@
 //  Licensed under the MIT License.
 //
 
+import AzureCommunicationCalling
 import AzureCommunicationCommon
-
 import UIKit
 import SwiftUI
 import FluentUI
+import Foundation
 
+// swiftlint:disable type_body_length line_length
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
 
@@ -115,6 +117,43 @@ public class CallComposite {
         )
 
         present(toolkitHostingController)
+    }
+    public func registerPushNotification(notificationOptions: PushNotificationOptions) {
+        Task {
+            let clientOptions = CallClientOptions()
+            let callClient = CallClient(options: clientOptions)
+            let options = CallAgentOptions()
+            options.callKitOptions = CallKitOptions(with: createProviderConfig())
+            do {
+                let callAgent = try await callClient.createCallAgent(
+                    userCredential: notificationOptions.credential,
+                    options: options
+                )
+                try await callAgent.registerPushNotifications(deviceToken: notificationOptions.deviceRegistrationToken, completionHandler: { error in
+                    print(error)
+                })
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.logger.debug("Call agent successfully created.")
+                    callAgent.dispose()
+                    callClient.dispose()
+                }
+            } catch {
+                logger.error("It was not possible to create a call agent.")
+            }
+        }
+    }
+    private func createProviderConfig() -> CXProviderConfiguration {
+        let providerConfig = CXProviderConfiguration()
+        providerConfig.supportsVideo = true
+        providerConfig.maximumCallGroups = 1
+        providerConfig.maximumCallsPerCallGroup = 1
+        providerConfig.includesCallsInRecents = true
+        providerConfig.supportedHandleTypes = [.phoneNumber, .generic]
+        return providerConfig
+    }
+    public func handlePushNotification(remoteOptions: RemoteOptions) {
+        // call agent
+        // handle push notification
     }
 
     /// Start Call Composite experience with joining a Teams meeting.

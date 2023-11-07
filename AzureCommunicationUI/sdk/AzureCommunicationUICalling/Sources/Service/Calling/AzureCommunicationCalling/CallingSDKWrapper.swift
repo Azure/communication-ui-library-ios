@@ -8,7 +8,7 @@ import AzureCommunicationCalling
 import Combine
 import Foundation
 
-// swiftlint:disable file_length 
+// swiftlint:disable file_length
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -52,6 +52,18 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             throw CallCompositeInternalError.callJoinFailed
         }
         try await joinCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
+    }
+    func handlePushNotification(remoteOptions: RemoteOptions) {
+        guard let callAgent = self.callAgent,
+        let notifications = remoteOptions.pushNotificationInfo else {
+            return
+        }
+        let pushInfo = PushNotificationInfo.fromDictionary(notifications.notificationInfo)
+        callAgent.handlePush(notification: pushInfo) { error in
+            if error == nil {
+                print("No error")
+            }
+        }
     }
 
     func joinCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
