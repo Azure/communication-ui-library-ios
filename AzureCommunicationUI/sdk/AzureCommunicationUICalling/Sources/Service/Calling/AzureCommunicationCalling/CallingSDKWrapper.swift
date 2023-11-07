@@ -9,6 +9,7 @@ import Combine
 import Foundation
 
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -102,6 +103,17 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
         var joinLocator: JoinMeetingLocator?
         var participants: [CommunicationIdentifier] = []
+
+        if let callKitOptions = self.callConfiguration.callKitOptions,
+            let remoteInfo = callKitOptions.remoteInfo {
+                let callKitRemoteInfo = CallKitRemoteInfo()
+                callKitRemoteInfo.displayName = remoteInfo.displayName
+                callKitRemoteInfo.handle = remoteInfo.cxHandle
+                joinCallOptions.callKitRemoteInfo = callKitRemoteInfo
+        }
+        joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
+        joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
+        joinCallOptions.incomingVideoOptions = incomingVideoOptions
 
         if callConfiguration.compositeCallType == .groupCall,
            let groupId = callConfiguration.groupId {
