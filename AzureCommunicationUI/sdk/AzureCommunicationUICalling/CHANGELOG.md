@@ -1,7 +1,9 @@
 # Azure Communication UI Calling Release History
 
 ## Upcoming
-
+### Features
+- CallKit integration for outgoing call
+  
 ### Bug Fixes
 - Hide lobby users in GridView and Participant List
 

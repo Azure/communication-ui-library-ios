@@ -71,11 +71,16 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             videoOptions.streams = localVideoStreamArray
             joinCallOptions.outgoingVideoOptions = videoOptions
         }
-
+        if let callKitOptions = self.callConfiguration.callKitOptions,
+            let remoteInfo = callKitOptions.remoteInfo {
+                let callKitRemoteInfo = CallKitRemoteInfo()
+                callKitRemoteInfo.displayName = remoteInfo.displayName
+                callKitRemoteInfo.handle = remoteInfo.cxHandle
+                joinCallOptions.callKitRemoteInfo = callKitRemoteInfo
+        }
         joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
         joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
         joinCallOptions.incomingVideoOptions = incomingVideoOptions
-
         var joinLocator: JoinMeetingLocator
         if callConfiguration.compositeCallType == .groupCall,
            let groupId = callConfiguration.groupId {
@@ -266,14 +271,18 @@ extension CallingSDKWrapper {
             throw CallCompositeInternalError.deviceManagerFailed(error)
         }
     }
-
     private func setupCallAgent() async throws {
         guard callAgent == nil else {
             logger.debug("Reusing call agent")
             return
         }
-
         let options = CallAgentOptions()
+        if let callKitConfig = self.callConfiguration.callKitOptions?.cxProvideConfig {
+            let callKitOptions = CallKitOptions(with: callKitConfig)
+            callKitOptions.isCallHoldSupported = self.callConfiguration.callKitOptions?.isCallHoldSupported ?? true
+            callKitOptions.configureAudioSession = self.callConfiguration.callKitOptions?.configureAudioSession
+            options.callKitOptions = callKitOptions
+        }
         if let displayName = callConfiguration.displayName {
             options.displayName = displayName
         }

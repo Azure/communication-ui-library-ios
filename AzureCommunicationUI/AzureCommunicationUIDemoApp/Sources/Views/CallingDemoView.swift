@@ -4,8 +4,10 @@
 //
 
 import SwiftUI
+import Foundation
 import AzureCommunicationCommon
 import AVFoundation
+import CallKit
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else
@@ -242,6 +244,7 @@ extension CallingDemoView {
             if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
                 relaunchComposite()
             }
+            print("Call State ::::onDismissedHandler ")
         }
         exitCompositeExecuted = false
         if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
@@ -268,36 +271,60 @@ extension CallingDemoView {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen)
+
+        let cxHandle = CXHandle(type: .generic, value: link)
+        let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
+        var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
+        if remoteInfoDisplayName.isEmpty {
+            remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"
+        }
+        let callKitRemoteInfo = CallCompositeCallKitRemoteInfo(displayName: remoteInfoDisplayName,
+                                                               cxHandle: cxHandle)
+        let isCallHoldSupported = $envConfigSubject.enableRemoteHold.wrappedValue
+        let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
+                                                       isCallHoldSupported: isCallHoldSupported,
+                                                       remoteInfo: $envConfigSubject.enableRemoteInfo.wrappedValue
+                                                        ? callKitRemoteInfo : nil,
+        configureAudioSession: configureAudioSession)
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
-                if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
-                                                                      credential: credential),
-                                         localOptions: localOptions)
-                } else {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
-                                                                      credential: credential,
-                                                                      displayName: envConfigSubject.displayName),
-                                         localOptions: localOptions)
-                }
+                let displayName = envConfigSubject.displayName.isEmpty ? nil : envConfigSubject.displayName
+
+                let remoteOptions = RemoteOptions(for: .groupCall(groupId: uuid),
+                                                  credential: credential,
+                                                  displayName: displayName,
+                                                  callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
+                                                  ? callKitOptions : nil)
+
+                callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
+
             case .teamsMeeting:
-                if envConfigSubject.displayName.isEmpty {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
-                                                                      credential: credential),
-                                         localOptions: localOptions)
-                } else {
-                    callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
-                                                                      credential: credential,
-                                                                      displayName: envConfigSubject.displayName),
-                                         localOptions: localOptions)
-                }
+                let remoteOptions = RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                                                  credential: credential,
+                                                  displayName: envConfigSubject.displayName.isEmpty
+                                                  ? nil : envConfigSubject.displayName,
+                                                  callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
+                                                  ? callKitOptions : nil)
+
+                callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
         }
+    }
+
+    public func configureAudioSession() -> Error? {
+        let audioSession = AVAudioSession.sharedInstance()
+        var configError: Error?
+        do {
+            try audioSession.setCategory(.playAndRecord)
+        } catch {
+            configError = error
+        }
+        return configError
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {
