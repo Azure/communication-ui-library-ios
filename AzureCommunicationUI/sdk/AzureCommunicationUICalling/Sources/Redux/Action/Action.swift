@@ -16,6 +16,7 @@ enum Action: Equatable {
     case localUserAction(LocalUserAction)
     case permissionAction(PermissionAction)
     case remoteParticipantsAction(RemoteParticipantsAction)
+    case callDiagnosticAction(DiagnosticsAction)
     case compositeExitAction
     case callingViewLaunched
 }

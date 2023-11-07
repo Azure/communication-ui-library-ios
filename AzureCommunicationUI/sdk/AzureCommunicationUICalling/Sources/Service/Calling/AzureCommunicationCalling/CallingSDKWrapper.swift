@@ -8,7 +8,7 @@ import AzureCommunicationCalling
 import Combine
 import Foundation
 
-// swiftlint:disable file_length 
+// swiftlint:disable file_length
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -52,6 +52,18 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             throw CallCompositeInternalError.callJoinFailed
         }
         try await joinCall(isCameraPreferred: isCameraPreferred, isAudioPreferred: isAudioPreferred)
+    }
+    func handlePushNotification(remoteOptions: RemoteOptions) {
+        guard let callAgent = self.callAgent,
+        let notifications = remoteOptions.pushNotificationInfo else {
+            return
+        }
+        let pushInfo = PushNotificationInfo.fromDictionary(notifications.notificationInfo)
+        callAgent.handlePush(notification: pushInfo) { error in
+            if error == nil {
+                print("No error")
+            }
+        }
     }
 
     func joinCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
@@ -312,6 +324,7 @@ extension CallingSDKWrapper {
         if let callKitConfig = self.callConfiguration.callKitOptions?.cxProvideConfig {
             let callKitOptions = CallKitOptions(with: callKitConfig)
             callKitOptions.isCallHoldSupported = self.callConfiguration.callKitOptions?.isCallHoldSupported ?? true
+            callKitOptions.configureAudioSession = self.callConfiguration.callKitOptions?.configureAudioSession
             options.callKitOptions = callKitOptions
         }
         if let displayName = callConfiguration.displayName {
@@ -377,10 +390,12 @@ extension CallingSDKWrapper {
         let recordingCallFeature = call.feature(Features.recording)
         let transcriptionCallFeature = call.feature(Features.transcription)
         let dominantSpeakersFeature = call.feature(Features.dominantSpeakers)
+        let localUserDiagnosticsFeature = call.feature(Features.localUserDiagnostics)
         if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
             callingEventsHandler.assign(recordingCallFeature)
             callingEventsHandler.assign(transcriptionCallFeature)
             callingEventsHandler.assign(dominantSpeakersFeature)
+            callingEventsHandler.assign(localUserDiagnosticsFeature)
         }
     }
 

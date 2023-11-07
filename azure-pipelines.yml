@@ -1,0 +1,130 @@
+# This pipeline was generated from the classic pipeline "SCC-SPOOL-communication-ui-library-iOS-localization" on 2023-10-30 with https://aka.ms/1ESPTMigration (v1.0.0): https://dev.azure.com/skype/SCC/_build?definitionId=12523
+#
+# 'Allow scripts to access the OAuth token' was selected in pipeline.  Add the following YAML to any steps requiring access:
+#       env:
+#           MY_ACCESS_TOKEN: $(System.AccessToken)
+# No trigger found, defaulting to 'none'. Update the trigger as needed.
+# The pipeline uses service connection "ServiceTree Gateway", you will need to grant the new pipeline access: https://dev.azure.com/skype/SCC/_settings/adminservices?resourceId=c29e963a-8ea3-4e6a-b28f-a035eaff83ab
+
+name: $(date:yyyyMMdd)$(rev:.r)
+variables:
+
+  - name: Configuration
+    value: Release
+  - name: Ic3PipelineUsage
+    value: production
+  - name: SDK
+    value: iphoneos
+  - name: system.debug
+    value: false
+  - name: TestConfiguration
+    value: Debug
+  - name: TestSDK
+    value: iphonesimulator
+  - group: ServiceTreeLinkGroup
+  - group: InfoSec-SecurityResults
+resources:
+  repositories:
+    - repository: self
+      type: git
+      ref: refs/heads/main
+    - repository: 1esPipelines
+      type: git
+      name: 1ESPipelineTemplates/1ESPipelineTemplates
+      ref: refs/tags/release
+trigger: none
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
+  parameters:
+    pool:
+      os: windows
+      image: windows-2022
+      name: Azure-Pipelines-1ESPT-ExDShared
+    customBuildTags:
+      - MigrationTooling-skype-SCC-12523-Tool
+    stages:
+      - stage: Stage
+        jobs:
+          - job: Job_1
+            displayName: Agent job 1
+            steps:
+              - checkout: self
+                clean: true
+                fetchTags: false
+                persistCredentials: true
+              - task: skvso.servicetree-build-tasks.servicetree-link-build-task.servicetree-link-build-task@1
+                displayName: "ServiceTree: [$(BuildOutputUsage)] "
+                condition: always()
+                inputs:
+                  ServiceTreeGateway: ServiceTree Gateway
+                  Service: 5b23174b-8c6d-467d-862d-a3f24958fb74
+              - task: Bash@3
+                displayName: Create touchdown custom mapping
+                inputs:
+                  targetType: inline
+                  script: |
+                    git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                    git config user.name "github-actions[bot]"
+
+                    export CUSTOM_MAPPING_FILE="$(System.DefaultWorkingDirectory)/tdbuildCultureMapping.json"
+
+                    echo '{"cultures":{"ar-SA":"ar-SA.lproj","de-DE":"de-DE.lproj","en-GB":"en-GB.lproj","es-ES":"es-ES.lproj","fi-FI":"fi-FI.lproj","fr-FR":"fr-FR.lproj","he-IL":"he-IL.lproj","it-IT":"it-IT.lproj","ja-JP":"ja-JP.lproj","ko-KR":"ko-KR.lproj","nb-NO":"nb-NO.lproj","nl-NL":"nl-NL.lproj","pl-PL":"pl-PL.lproj","pt-BR":"pt-BR.lproj","ru-RU":"ru-RU.lproj","sv-SE":"sv-SE.lproj","tr-TR":"tr-TR.lproj","zh-CN":"zh-Hans-CN.lproj","zh-TW":"zh-Hant-TW.lproj"}}' > $CUSTOM_MAPPING_FILE
+              - task: TouchdownBuildTask@1
+                displayName: Call Touchdown build task for components
+                condition: ne(variables['commit'], 'true')
+                inputs:
+                  environment: 'PRODEXT'
+                  teamId: '44988'
+                  authType: 'OAuth'
+                  authId: 'fa441387-cab4-4f61-969d-fd23388fc7b4'
+                  authKey: '$(AUTHKEY)'
+                  resourceFilePath: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization/en.lproj/Localizable.strings
+                  outputDirectoryRoot: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization
+                  cultureMappingType: FilePath
+                  cultureMappingFilePath: $(System.DefaultWorkingDirectory)/tdbuildCultureMapping.json
+              - task: TouchdownBuildTask@1
+                displayName: Call Touchdown build task for composites and commit changes
+                condition: eq(variables['commit'], 'true')
+                inputs:
+                  teamId: "44988"
+                  authId: 'fa441387-cab4-4f61-969d-fd23388fc7b4'
+                  authKey: '$(AUTH_KEY)'
+                  resourceFilePath: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization/en.lproj/Localizable.strings
+                  outputDirectoryRoot: AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization
+                  cultureMappingType: FilePath
+                  cultureMappingFilePath: $(System.DefaultWorkingDirectory)/tdbuildCultureMapping.json
+              - task: Bash@3
+                displayName: Copy additional language mapping
+                condition: eq(variables['commit'], 'true')
+                inputs:
+                  targetType: inline
+                  script: |
+                    git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+                    git config user.name "github-actions[bot]"
+
+                    echo "git status"
+                    git status
+
+                    echo "target:source"
+                    ARRAY=("ar:ar-SA" "de:de-DE" "en-US:en" "es:es-ES" "fi:fi-FI" "fr:fr-FR" "he:he-IL" "it:it-IT" "ja:ja-JP" "ko:ko-KR" "nb:nb-NO" "nl:nl-NL" "pl:pl-PL" "pt:pt-BR" "ru:ru-RU" "sv:sv-SE" "tr:tr-TR" "zh:zh-Hans-CN" "zh-Hans:zh-Hans-CN" "zh-Hant:zh-Hant-TW")
+                    LOCALIZATION_PATH="AzureCommunicationUI/sdk/AzureCommunicationUICalling/Sources/Localization"
+                    for mapping in "${ARRAY[@]}" ; do
+                        KEY=${mapping%%:*}
+                        VALUE=${mapping#*:}
+                        cp -R $LOCALIZATION_PATH/$VALUE.lproj/ $LOCALIZATION_PATH/$KEY.lproj/
+                    done
+
+                    echo "git status"
+                    git status
+
+                    echo "git add"
+                    git add $(system.defaultWorkingDirectory)/$LOCALIZATION_PATH/*
+
+                    echo "git status"
+                    git status
+
+                    echo "git commit -m 'add language mapping $(Build.BuildNumber)'"
+                    git commit -m "add language mapping $(Build.BuildNumber)"
+
+                    echo "git push -u origin HEAD:$(Build.SourceBranch)"
+                    git push -u origin HEAD:$(Build.SourceBranch)

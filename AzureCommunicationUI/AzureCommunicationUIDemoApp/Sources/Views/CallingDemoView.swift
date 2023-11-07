@@ -8,6 +8,7 @@ import Foundation
 import AzureCommunicationCommon
 import AVFoundation
 import CallKit
+
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else
@@ -17,6 +18,7 @@ struct CallingDemoView: View {
     @State var isAlertDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
     @State var isStartExperienceLoading: Bool = false
+    @State var isPushNotificationAvailable: Bool = false
     @State var exitCompositeExecuted: Bool = false
     @State var alertTitle: String = ""
     @State var alertMessage: String = ""
@@ -37,6 +39,7 @@ struct CallingDemoView: View {
             displayNameTextField
             meetingSelector
             Group {
+                registerButton
                 settingButton
                 showCallHistoryButton
                 startExperienceButton
@@ -135,6 +138,22 @@ struct CallingDemoView: View {
         .buttonStyle(DemoButtonStyle())
         .accessibility(identifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
     }
+    var registerButton: some View {
+        Button("Register Voip Notification") {
+            self.registerForNotification()
+        }
+        .disabled(isStartExperienceDisabled)
+        .buttonStyle(DemoButtonStyle())
+        .accessibility(identifier: AccessibilityId.registerButtonAccessibilityID.rawValue)
+    }
+    var handleNotificationButton: some View {
+        Button("Handler push notification") {
+            self.registerForNotification()
+        }
+        .disabled(isStartExperienceDisabled)
+        .buttonStyle(DemoButtonStyle())
+        .accessibility(identifier: AccessibilityId.registerButtonAccessibilityID.rawValue)
+    }
 
     var startExperienceButton: some View {
         Button("Start Experience") {
@@ -219,14 +238,16 @@ extension CallingDemoView {
             callingScreenOrientation: callingViewOrientation)
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
-        let callComposite = useMockCallingSDKHandler ?
-            CallComposite(withOptions: callCompositeOptions,
-                          callingSDKWrapperProtocol: callingSDKWrapperMock)
-            : CallComposite(withOptions: callCompositeOptions)
+        CallCompositeHandler.shared.callComposite = useMockCallingSDKHandler ?
+                CallComposite(withOptions: callCompositeOptions,
+                              callingSDKWrapperProtocol: callingSDKWrapperMock)
+                : CallComposite(withOptions: callCompositeOptions)
         #else
-        let callComposite = CallComposite(withOptions: callCompositeOptions)
+        CallCompositeHandler.shared.callComposite = CallComposite(withOptions: callCompositeOptions)
         #endif
-
+        guard let callComposite = CallCompositeHandler.shared.callComposite else {
+            return
+        }
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
@@ -292,7 +313,8 @@ extension CallingDemoView {
         let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
                                                        isCallHoldSupported: isCallHoldSupported,
                                                        remoteInfo: $envConfigSubject.enableRemoteInfo.wrappedValue
-                                                        ? callKitRemoteInfo : nil)
+                                                        ? callKitRemoteInfo : nil,
+        configureAudioSession: configureAudioSession)
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -325,7 +347,7 @@ extension CallingDemoView {
                 let ids: [String] = link.split(separator: ",").map {
                     String($0).trimmingCharacters(in: .whitespacesAndNewlines)
                 }
-                let startCallOptions = StartCallOptionsOneToNCall(partipants: ids)
+                let startCallOptions = StartCallOptionsOneToNCall(participants: ids)
                 let remoteOptions = RemoteOptions(for: startCallOptions,
                                                   credential: credential,
                                                   callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
@@ -337,6 +359,42 @@ extension CallingDemoView {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
         }
+    }
+    func registerForNotification() {
+        guard let deviceToken = CallCompositeHandler.shared.deviceToken,
+              let callComposite = CallCompositeHandler.shared.callComposite else { return }
+        asyncBridgeForTokenCredential { (result) in
+            switch result {
+            case .success(let credential):
+                let notificationOptions = PushNotificationOptions(deviceToken: deviceToken, credential: credential)
+                callComposite.registerPushNotification(notificationOptions: notificationOptions)
+            case .failure(let error):
+                print("::::CallingDemoView::credentials::error \(error)")
+            }
+        }
+    }
+    func handlePushNotification() {
+    }
+
+    func asyncBridgeForTokenCredential(completion: @escaping (Result<CommunicationTokenCredential, Error>) -> Void) {
+        Task {
+            do {
+                let credential = try await getTokenCredential()
+                completion(.success(credential))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+    }
+    public func configureAudioSession() -> Error? {
+        let audioSession = AVAudioSession.sharedInstance()
+        var configError: Error?
+        do {
+            try audioSession.setCategory(.playAndRecord)
+        } catch {
+            configError = error
+        }
+        return configError
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {

@@ -12,6 +12,7 @@ public struct CallCompositeOptions {
     private(set) var localizationOptions: LocalizationOptions?
     private(set) var setupScreenOrientation: OrientationOptions?
     private(set) var callingScreenOrientation: OrientationOptions?
+    private(set) var deviceToken: Data?
 
     /// Creates an instance of CallCompositeOptions with related options.
     /// - Parameter theme: ThemeOptions for changing color pattern.
@@ -30,5 +31,13 @@ public struct CallCompositeOptions {
         self.localizationOptions = localization
         self.setupScreenOrientation = setupScreenOrientation
         self.callingScreenOrientation = callingScreenOrientation
+        self.deviceToken = nil
+    }
+    public init(deviceToken: Data) {
+        self.deviceToken = deviceToken
+        self.themeOptions = nil
+        self.localizationOptions = nil
+        self.setupScreenOrientation = nil
+        self.callingScreenOrientation = nil
     }
 }

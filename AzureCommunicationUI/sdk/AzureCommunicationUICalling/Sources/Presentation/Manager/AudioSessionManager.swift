@@ -62,18 +62,18 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     private func setupAudioSession() {
+        activateAudioSessionCategory()
         if !isCallKitEnabled {
-            activateAudioSessionCategory()
-            NotificationCenter.default.addObserver(self,
-                                                   selector: #selector(handleRouteChange),
-                                                   name: AVAudioSession.routeChangeNotification,
-                                                   object: nil)
-
             NotificationCenter.default.addObserver(self,
                                                    selector: #selector(handleInterruption),
                                                    name: AVAudioSession.interruptionNotification,
                                                    object: AVAudioSession.sharedInstance())
         }
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(handleRouteChange),
+                                               name: AVAudioSession.routeChangeNotification,
+                                               object: nil)
+
     }
 
     @objc func handleInterruption(notification: Notification) {

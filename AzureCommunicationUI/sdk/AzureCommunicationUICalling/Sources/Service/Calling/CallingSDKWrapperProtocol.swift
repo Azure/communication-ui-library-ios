@@ -57,6 +57,7 @@ protocol CallingSDKWrapperProtocol {
     -> CompositeRemoteParticipant<ParticipantType, StreamType>?
     func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String)
     -> CompositeLocalVideoStream<LocalVideoStreamType>?
+    func handlePushNotification(remoteOptions: RemoteOptions)
 
     func startPreviewVideoStream() async throws -> String
     func setupCall() async throws
@@ -81,4 +82,8 @@ protocol CallingSDKEventsHandling {
     var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
     var callIdSubject: PassthroughSubject<String, Never> { get }
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
+
+    var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
+    var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
+    var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never> { get }
 }
