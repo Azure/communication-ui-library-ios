@@ -21,6 +21,7 @@ struct CallingDemoView: View {
     @State var alertTitle: String = ""
     @State var alertMessage: String = ""
     @State var callState: String = ""
+    @State var isPushNotificationAvailable: Bool = false
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
 
@@ -37,6 +38,7 @@ struct CallingDemoView: View {
             displayNameTextField
             meetingSelector
             Group {
+                registerButton
                 settingButton
                 showCallHistoryButton
                 startExperienceButton
@@ -98,6 +100,7 @@ struct CallingDemoView: View {
             Picker("Call Type", selection: $envConfigSubject.selectedMeetingType) {
                 Text("Group Call").tag(MeetingType.groupCall)
                 Text("Teams Meeting").tag(MeetingType.teamsMeeting)
+                Text("1:N Call").tag(MeetingType.oneToNCall)
             }.pickerStyle(.segmented)
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -114,6 +117,13 @@ struct CallingDemoView: View {
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .textFieldStyle(.roundedBorder)
+            case .oneToNCall:
+                TextField(
+                    "One To N Calling",
+                    text: $envConfigSubject.participantIds)
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                    .textFieldStyle(.roundedBorder)
             }
         }
         .padding(.vertical, verticalPadding)
@@ -126,6 +136,24 @@ struct CallingDemoView: View {
         }
         .buttonStyle(DemoButtonStyle())
         .accessibility(identifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
+    }
+
+    var registerButton: some View {
+        Button("Register Voip Notification") {
+            self.registerForNotification()
+        }
+        .disabled(isStartExperienceDisabled)
+        .buttonStyle(DemoButtonStyle())
+        .accessibility(identifier: AccessibilityId.registerButtonAccessibilityID.rawValue)
+    }
+
+    var handleNotificationButton: some View {
+        Button("Handler push notification") {
+            self.registerForNotification()
+        }
+        .disabled(isStartExperienceDisabled)
+        .buttonStyle(DemoButtonStyle())
+        .accessibility(identifier: AccessibilityId.registerButtonAccessibilityID.rawValue)
     }
 
     var startExperienceButton: some View {
@@ -309,11 +337,33 @@ extension CallingDemoView {
                                                   ? callKitOptions : nil)
 
                 callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
+            case .oneToNCall:
+                let localOptionsForOneToN = LocalOptions(participantViewData: participantViewData,
+                                                setupScreenViewData: setupScreenViewData,
+                                                cameraOn: envConfigSubject.cameraOn,
+                                                microphoneOn: envConfigSubject.microphoneOn,
+                                                skipSetupScreen: true)
+                let ids: [String] = link.split(separator: ",").map {
+                    String($0).trimmingCharacters(in: .whitespacesAndNewlines)
+                }
+                let startCallOptions = StartCallOptionsOneToNCall(participants: ids)
+                let remoteOptions = RemoteOptions(for: startCallOptions,
+                                                  credential: credential,
+                                                  callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
+                                                  ? callKitOptions : nil)
+                callComposite.launch(remoteOptions: remoteOptions,
+                                     localOptions: localOptionsForOneToN)
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
         }
+    }
+
+    func registerForNotification() {
+    }
+
+    func handlePushNotification() {
     }
 
     public func configureAudioSession() -> Error? {
@@ -359,6 +409,8 @@ extension CallingDemoView {
             return envConfigSubject.groupCallId
         case .teamsMeeting:
             return envConfigSubject.teamsMeetingLink
+        case .oneToNCall:
+            return envConfigSubject.participantIds
         }
     }
 

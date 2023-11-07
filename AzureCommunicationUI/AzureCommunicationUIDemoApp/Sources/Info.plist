@@ -64,5 +64,7 @@
 	<string>$(threadId)</string>
 	<key>userId</key>
 	<string>$(userId)</string>
+    <key>participantIds</key>
+    <string>$(participantIds)</string>
 </dict>
 </plist>

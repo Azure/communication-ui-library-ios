@@ -307,6 +307,9 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             currentNetworkDiagnostic += 1
         }
     }
+
+    func handlePushNotification(remoteOptions: RemoteOptions) {
+    }
 }
 
 extension UITestCallingSDKWrapper {

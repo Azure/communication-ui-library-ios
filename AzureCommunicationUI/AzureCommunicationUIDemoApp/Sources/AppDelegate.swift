@@ -7,9 +7,11 @@ import UIKit
 import AppCenter
 import AppCenterCrashes
 import CallKit
+import AzureCommunicationUICalling
+import PushKit
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, UNUserNotificationCenterDelegate {
 
     static var orientationLock: UIInterfaceOrientationMask = .all
 
@@ -18,9 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-
         AppCenter.start(withAppSecret: envConfigSubject.appCenterSecret, services: [Crashes.self])
-
+        self.setupNotifications(application: application)
         return true
     }
 
@@ -41,5 +42,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication,
                      supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return AppDelegate.orientationLock
+    }
+
+    func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
+        if type == .voIP {
+            let tokenString = self.tokenString(from: pushCredentials.token)
+            print("VoIP Token: \(tokenString)")
+        }
+    }
+
+    func tokenString(from data: Data) -> String {
+        return data.map { String(format: "%02.2hhx", $0) }.joined()
+    }
+
+    func pushRegistry(_ registry: PKPushRegistry,
+                      didReceiveIncomingPushWith payload: PKPushPayload,
+                      for type: PKPushType,
+                      completion: @escaping () -> Void) {
+        print("Received notification")
+    }
+
+    func setupNotifications(application: UIApplication) {
+        UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, _) in
+            if granted {
+                DispatchQueue.main.async {
+                    application.registerForRemoteNotifications()
+                }
+            }
+        }
+    }
+
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        self.voipRegistration()
+    }
+
+    // Register for VoIP notifications
+    func voipRegistration() {
+        let mainQueue = DispatchQueue.main
+
+        // Create a push registry object
+        let voipRegistry = PKPushRegistry(queue: mainQueue)
+        // Set the registry's delegate to self
+        voipRegistry.delegate = self
+        // Set the push type to VoIP
+        voipRegistry.desiredPushTypes = [PKPushType.voIP]
     }
 }

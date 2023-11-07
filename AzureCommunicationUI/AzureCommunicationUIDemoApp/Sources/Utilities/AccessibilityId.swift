@@ -21,6 +21,9 @@ enum AccessibilityId: String {
     case stopChatAccessibilityID =
             "AzureCommunicationUIhat.DemoView.StopChat.AccessibilityID"
 
+    case registerButtonAccessibilityID =
+            "AzureCommunicationUICalling.DemoView.RegisterVoipNotification.AccessibilityID"
+
     /* SettingsView */
     case expiredAcsTokenToggleAccessibilityID =
             "AzureCommunicationUICalling.SettingsView.expiredAcstokenToggle.AccessibilityID"

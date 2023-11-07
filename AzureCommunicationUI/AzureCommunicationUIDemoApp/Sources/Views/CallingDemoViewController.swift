@@ -306,6 +306,15 @@ class CallingDemoViewController: UIViewController {
                                                   ? callKitOptions : nil)
 
                 callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
+            case .oneToNCall:
+                // ToDo: make required changes to enable 1:N for UIKit
+                let startCallOptions = StartCallOptionsOneToNCall(participants: [])
+                callComposite.launch(remoteOptions: RemoteOptions(for: startCallOptions,
+                                                                  credential: credential,
+                                                                  displayName: getDisplayName(),
+                                                                  callKitOptions: envConfigSubject.enableCallKit
+                                                                  ? callKitOptions : nil),
+                                     localOptions: localOptions)
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
@@ -347,6 +356,9 @@ class CallingDemoViewController: UIViewController {
             return groupCallTextField.text ?? ""
         case .teamsMeeting:
             return teamsMeetingTextField.text ?? ""
+        case .oneToNCall:
+            // ToDo: make required changes to enable 1:N for UIKit
+            return ""
         }
     }
 
@@ -475,6 +487,10 @@ class CallingDemoViewController: UIViewController {
         case .teamsMeeting:
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = false
+        case .oneToNCall:
+            // ToDo: make required changes to enable 1:N for UIKit
+            groupCallTextField.isHidden = true
+            teamsMeetingTextField.isHidden = true
         }
     }
 

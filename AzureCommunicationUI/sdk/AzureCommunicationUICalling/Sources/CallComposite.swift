@@ -3,12 +3,14 @@
 //  Licensed under the MIT License.
 //
 
+import AzureCommunicationCalling
 import AzureCommunicationCommon
 
 import UIKit
 import SwiftUI
 import FluentUI
 
+// swiftlint:disable type_body_length line_length
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
 
@@ -80,6 +82,39 @@ public class CallComposite {
     public func dismiss() {
         exitManager?.dismiss()
     }
+    public func registerPushNotification(notificationOptions: PushNotificationOptions) {
+        Task {
+            let clientOptions = CallClientOptions()
+            let callClient = CallClient(options: clientOptions)
+            let options = CallAgentOptions()
+            options.callKitOptions = CallKitOptions(with: createProviderConfig())
+            do {
+                let callAgent = try await callClient.createCallAgent(
+                    userCredential: notificationOptions.credential,
+                    options: options
+                )
+                try await callAgent.registerPushNotifications(deviceToken: notificationOptions.deviceRegistrationToken, completionHandler: { error in
+                    print(error)
+                })
+                DispatchQueue.global(qos: .userInitiated).async {
+                    self.logger.debug("Call agent successfully created.")
+                    callAgent.dispose()
+                    callClient.dispose()
+                }
+            } catch {
+                logger.error("It was not possible to create a call agent.")
+            }
+        }
+    }
+    private func createProviderConfig() -> CXProviderConfiguration {
+        let providerConfig = CXProviderConfiguration()
+        providerConfig.supportsVideo = true
+        providerConfig.maximumCallGroups = 1
+        providerConfig.maximumCallsPerCallGroup = 1
+        providerConfig.includesCallsInRecents = true
+        providerConfig.supportedHandleTypes = [.phoneNumber, .generic]
+        return providerConfig
+    }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
                      callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
@@ -123,12 +158,21 @@ public class CallComposite {
     ///                            This is data is not sent up to ACS.
     public func launch(remoteOptions: RemoteOptions,
                        localOptions: LocalOptions? = nil) {
-        let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
-                                                  credential: remoteOptions.credential,
-                                                  displayName: remoteOptions.displayName,
-                                                  callKitOptions: remoteOptions.callKitOptions)
-
-        launch(callConfiguration, localOptions: localOptions)
+        var callConfiguration: CallConfiguration?
+        if let locator = remoteOptions.locator {
+            callConfiguration = CallConfiguration(locator: locator,
+                                                      credential: remoteOptions.credential,
+                                                      displayName: remoteOptions.displayName,
+                                                      callKitOptions: remoteOptions.callKitOptions)
+        } else if let startCallOptions = remoteOptions.startCallOptions {
+            callConfiguration = CallConfiguration(startCallOptions: startCallOptions,
+                                                       credential: remoteOptions.credential,
+                                                       displayName: remoteOptions.displayName,
+                                                      callKitOptions: remoteOptions.callKitOptions)
+        }
+        if let callconfig = callConfiguration {
+            launch(callconfig, localOptions: localOptions)
+        }
     }
 
     /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.
