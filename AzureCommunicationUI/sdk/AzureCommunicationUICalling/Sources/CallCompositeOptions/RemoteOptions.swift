@@ -80,6 +80,5 @@ public struct RemoteOptions {
         self.callKitOptions = callKitOptions
         self.locator = nil
         self.pushNotificationInfo = pushNotificationInfo
-        self.callKitOptions = callKitOptions
     }
 }

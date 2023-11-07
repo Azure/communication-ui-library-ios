@@ -237,6 +237,7 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
     }
     func handlePushNotification(remoteOptions: RemoteOptions) {
+    }
 
     func emitMediaCallDiagnosticBadState() {
         guard callMocking != nil else {
