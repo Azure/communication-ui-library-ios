@@ -324,6 +324,7 @@ extension CallingSDKWrapper {
         if let callKitConfig = self.callConfiguration.callKitOptions?.cxProvideConfig {
             let callKitOptions = CallKitOptions(with: callKitConfig)
             callKitOptions.isCallHoldSupported = self.callConfiguration.callKitOptions?.isCallHoldSupported ?? true
+            callKitOptions.configureAudioSession = self.callConfiguration.callKitOptions?.configureAudioSession
             options.callKitOptions = callKitOptions
         }
         if let displayName = callConfiguration.displayName {
@@ -389,10 +390,12 @@ extension CallingSDKWrapper {
         let recordingCallFeature = call.feature(Features.recording)
         let transcriptionCallFeature = call.feature(Features.transcription)
         let dominantSpeakersFeature = call.feature(Features.dominantSpeakers)
+        let localUserDiagnosticsFeature = call.feature(Features.localUserDiagnostics)
         if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
             callingEventsHandler.assign(recordingCallFeature)
             callingEventsHandler.assign(transcriptionCallFeature)
             callingEventsHandler.assign(dominantSpeakersFeature)
+            callingEventsHandler.assign(localUserDiagnosticsFeature)
         }
     }
 

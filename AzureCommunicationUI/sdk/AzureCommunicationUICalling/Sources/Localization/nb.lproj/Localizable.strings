@@ -105,3 +105,22 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Du ble nektet tilgang til samtalen.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Feil under veksle av video";
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Kan ikke bli med i samtalen. Kontroller nettverkstilkoblingen.";
+
+/* Call Diagnostics */
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="Du er dempet";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Nettverkskvaliteten er lav";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Nettverket ble brutt";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Kobler til på nytt …";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Kan ikke starte kamera";
+
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Finner ikke høyttaler.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Finner ikke mikrofonen.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Mikrofonen fungerer ikke som forventet.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Høyttaleren fungerer ikke som forventet.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Høyttaleren er dempet.";
+
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ trenger tillatelse";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ har ikke tillatelse til å bruke kameraet. Du kan endre dette i innstillingene senere. Hvis du endrer den nå, vil samtalen bli avbrutt.";
+
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Lukk anropsdiagnose";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Lukker dette diagnosebanneret for anrop";

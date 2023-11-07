@@ -177,6 +177,7 @@ public class CallComposite {
         if let callconfig = callConfiguration {
             launch(callconfig, localOptions: localOptions)
         }
+        launch(callConfiguration, localOptions: localOptions)
     }
     /// Set ParticipantViewData to be displayed for the remote participant. This is data is not sent up to ACS.
     /// - Parameters:

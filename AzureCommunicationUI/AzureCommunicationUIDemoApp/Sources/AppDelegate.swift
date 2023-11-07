@@ -11,6 +11,7 @@ import AzureCommunicationUICalling
 import AzureCommunicationCommon
 import PushKit
 import AzureCommunicationCalling
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, UNUserNotificationCenterDelegate {
 

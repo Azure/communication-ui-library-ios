@@ -105,3 +105,22 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Ihnen wurde der Zugriff auf den Anruf verweigert.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Fehler beim Umschalten des Videos";
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Teilnahme am Anruf nicht möglich. Überprüfen Sie Ihre Netzwerkverbindung.";
+
+/* Call Diagnostics */
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="Sie sind stummgeschaltet";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Die Netzwerkqualität ist niedrig";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Die Netzwerkverbindung wurde unterbrochen";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Verbindung wird wiederhergestellt...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Kamera kann nicht gestartet werden";
+
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Lautsprecher kann nicht gefunden werden.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Das Mikrofon wurde nicht gefunden.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Mikrofon funktioniert nicht wie erwartet.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Lautsprecher funktioniert nicht wie erwartet.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Lautsprecher ist stummgeschaltet.";
+
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ benötigt eine Berechtigung";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ darf Ihre Kamera nicht verwenden. Sie können dies später in den Einstellungen ändern. Wenn Sie die Änderung jetzt vornehmen, wird Ihr Anruf abgebrochen.";
+
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Anrufdiagnose schließen";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Schließt dieses Anrufdiagnosebanner.";
