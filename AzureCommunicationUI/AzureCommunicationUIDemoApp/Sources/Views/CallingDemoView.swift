@@ -27,6 +27,7 @@ struct CallingDemoView: View {
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
+
 #if DEBUG
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
 #endif
@@ -140,7 +141,9 @@ struct CallingDemoView: View {
 
     var registerButton: some View {
         Button("Register Voip Notification") {
-            self.registerForNotification()
+            Task {
+                await self.registerForNotification()
+            }
         }
         .disabled(isStartExperienceDisabled)
         .buttonStyle(DemoButtonStyle())
@@ -149,7 +152,6 @@ struct CallingDemoView: View {
 
     var handleNotificationButton: some View {
         Button("Handler push notification") {
-            self.registerForNotification()
         }
         .disabled(isStartExperienceDisabled)
         .buttonStyle(DemoButtonStyle())
@@ -213,9 +215,12 @@ extension CallingDemoView {
             }
         }
     }
-    func startCallComposite() async {
-        let link = getMeetingLink()
 
+    mutating func onPushNotificationReceived(dictionaryPayload: [AnyHashable: Any]) {
+        print("hello, hello")
+    }
+
+    func createCallComposite() -> CallComposite {
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         if !envConfigSubject.localeIdentifier.isEmpty {
@@ -239,14 +244,18 @@ extension CallingDemoView {
             callingScreenOrientation: callingViewOrientation)
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
-        let callComposite = useMockCallingSDKHandler ?
+        return useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
                           callingSDKWrapperProtocol: callingSDKWrapperMock)
             : CallComposite(withOptions: callCompositeOptions)
         #else
-        let callComposite = CallComposite(withOptions: callCompositeOptions)
+        return CallComposite(withOptions: callCompositeOptions)
         #endif
+    }
 
+    func startCallComposite() async {
+        let callComposite = createCallComposite()
+        let link = getMeetingLink()
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
@@ -287,7 +296,6 @@ extension CallingDemoView {
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
         callComposite.events.onDismissed = onDismissedHandler
-
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
@@ -299,7 +307,6 @@ extension CallingDemoView {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen)
-
         let cxHandle = CXHandle(type: .generic, value: link)
         let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
         var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
@@ -327,7 +334,6 @@ extension CallingDemoView {
                                                   ? callKitOptions : nil)
 
                 callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
-
             case .teamsMeeting:
                 let remoteOptions = RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                   credential: credential,
@@ -360,7 +366,13 @@ extension CallingDemoView {
         }
     }
 
-    func registerForNotification() {
+    func registerForNotification() async {
+        if let credential = try? await getTokenCredential() {
+            let notificationOptions = PushNotificationOptions(deviceToken: $envConfigSubject.deviceToken.wrappedValue!,
+                                                              credential: credential)
+            print("CallingDemoView, registerPushNotification")
+            createCallComposite().registerPushNotification(notificationOptions: notificationOptions)
+        }
     }
 
     func handlePushNotification() {

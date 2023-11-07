@@ -45,31 +45,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
     }
 
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
-        if type == .voIP {
-            let tokenString = self.tokenString(from: pushCredentials.token)
-            print("VoIP Token: \(tokenString)")
+        guard type == .voIP else {
+            return
         }
-    }
 
-    func tokenString(from data: Data) -> String {
-        return data.map { String(format: "%02.2hhx", $0) }.joined()
+        let tokenString = self.tokenString(from: pushCredentials.token)
+        print("VoIP Token: \(tokenString)")
+
+        if let entryViewController = findEntryViewController() {
+            entryViewController.registerDeviceToken(deviceCode: pushCredentials.token)
+        }
     }
 
     func pushRegistry(_ registry: PKPushRegistry,
                       didReceiveIncomingPushWith payload: PKPushPayload,
                       for type: PKPushType,
                       completion: @escaping () -> Void) {
-        print("Received notification")
-    }
+        print("pushRegistry payload: \(payload.dictionaryPayload)")
 
-    func setupNotifications(application: UIApplication) {
-        UNUserNotificationCenter.current().delegate = self
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, _) in
-            if granted {
-                DispatchQueue.main.async {
-                    application.registerForRemoteNotifications()
-                }
-            }
+        if let entryViewController = findEntryViewController() {
+            entryViewController.onPushNotificationReceived(dictionaryPayload: payload.dictionaryPayload)
         }
     }
 
@@ -77,8 +72,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         self.voipRegistration()
     }
 
+    private func tokenString(from data: Data) -> String {
+        return data.map { String(format: "%02.2hhx", $0) }.joined()
+    }
+
     // Register for VoIP notifications
-    func voipRegistration() {
+    private func voipRegistration() {
         let mainQueue = DispatchQueue.main
 
         // Create a push registry object
@@ -87,5 +86,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
         voipRegistry.delegate = self
         // Set the push type to VoIP
         voipRegistry.desiredPushTypes = [PKPushType.voIP]
+    }
+
+    private func findEntryViewController() -> EntryViewController? {
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = scene.windows.first,
+              let rootViewController = window.rootViewController as? UINavigationController,
+              let entryViewController = rootViewController.viewControllers.first as? EntryViewController else {
+            return nil
+        }
+        return entryViewController
+    }
+
+    private func setupNotifications(application: UIApplication) {
+        UNUserNotificationCenter.current().delegate = self
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { (granted, _) in
+            if granted {
+                DispatchQueue.main.async {
+                    application.registerForRemoteNotifications()
+                }
+            }
+        }
     }
 }

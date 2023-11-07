@@ -71,6 +71,9 @@ class CallingDemoViewController: UIViewController {
         return view
     }()
 
+    func onPushNotificationReceived(dictionaryPayload: [AnyHashable: Any]) {
+    }
+
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
         updateUIBasedOnUserInterfaceStyle()
