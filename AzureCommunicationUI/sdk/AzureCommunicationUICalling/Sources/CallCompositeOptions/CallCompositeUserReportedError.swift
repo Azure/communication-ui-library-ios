@@ -1,3 +1,8 @@
+//
+//  Copyright (c) Microsoft Corporation. All rights reserved.
+//  Licensed under the MIT License.
+//
+
 import UIKit
 
 /// Represents an event where a user reports an issue within the call composite.
