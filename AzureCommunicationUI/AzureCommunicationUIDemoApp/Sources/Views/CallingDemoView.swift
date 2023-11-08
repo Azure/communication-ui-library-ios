@@ -307,20 +307,7 @@ extension CallingDemoView {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen)
-        let cxHandle = CXHandle(type: .generic, value: link)
-        let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
-        var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
-        if remoteInfoDisplayName.isEmpty {
-            remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"
-        }
-        let callKitRemoteInfo = CallCompositeCallKitRemoteInfo(displayName: remoteInfoDisplayName,
-                                                               cxHandle: cxHandle)
-        let isCallHoldSupported = $envConfigSubject.enableRemoteHold.wrappedValue
-        let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
-                                                       isCallHoldSupported: isCallHoldSupported,
-                                                       remoteInfo: $envConfigSubject.enableRemoteInfo.wrappedValue
-                                                        ? callKitRemoteInfo : nil,
-        configureAudioSession: configureAudioSession)
+        let callKitOptions = getCallKitOPtions()
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -368,26 +355,12 @@ extension CallingDemoView {
 
     func registerForNotification() async {
         if let credential = try? await getTokenCredential() {
-            let cxHandle = CXHandle(type: .generic, value: getMeetingLink())
-            let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
-            var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
-            if remoteInfoDisplayName.isEmpty {
-                remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"
-            }
-            let callKitRemoteInfo = CallCompositeCallKitRemoteInfo(displayName: remoteInfoDisplayName,
-                                                                   cxHandle: cxHandle)
-            let isCallHoldSupported = $envConfigSubject.enableRemoteHold.wrappedValue
-            let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
-                                                           isCallHoldSupported: isCallHoldSupported,
-                                                           remoteInfo: $envConfigSubject.enableRemoteInfo.wrappedValue
-                                                            ? callKitRemoteInfo : nil,
-            configureAudioSession: configureAudioSession)
             let displayName = envConfigSubject.displayName.isEmpty ? nil : envConfigSubject.displayName
 
             let notificationOptions = PushNotificationOptions(deviceToken: $envConfigSubject.deviceToken.wrappedValue!,
                                                               credential: credential,
                                                               displayName: displayName,
-                                                              callKitOptions: callKitOptions)
+                                                              callKitOptions: getCallKitOPtions())
             print("CallingDemoView, registerPushNotification")
             createCallComposite().registerPushNotification(notificationOptions: notificationOptions)
         }
@@ -405,6 +378,24 @@ extension CallingDemoView {
             configError = error
         }
         return configError
+    }
+
+    private func getCallKitOPtions() -> CallCompositeCallKitOption {
+        let cxHandle = CXHandle(type: .generic, value: getMeetingLink())
+        let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
+        var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
+        if remoteInfoDisplayName.isEmpty {
+            remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"
+        }
+        let callKitRemoteInfo = CallCompositeCallKitRemoteInfo(displayName: remoteInfoDisplayName,
+                                                               cxHandle: cxHandle)
+        let isCallHoldSupported = $envConfigSubject.enableRemoteHold.wrappedValue
+        let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
+                                                       isCallHoldSupported: isCallHoldSupported,
+                                                       remoteInfo: $envConfigSubject.enableRemoteInfo.wrappedValue
+                                                        ? callKitRemoteInfo : nil,
+         configureAudioSession: configureAudioSession)
+        return callKitOptions
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {
