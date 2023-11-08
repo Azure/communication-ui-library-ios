@@ -19,7 +19,8 @@ struct CallConfiguration {
     init(locator: JoinLocator,
          credential: CommunicationTokenCredential,
          displayName: String?,
-         callKitOptions: CallCompositeCallKitOption? = nil) {
+         callKitOptions: CallCompositeCallKitOption? = nil,
+         diagnosticConfig: DiagnosticConfig) {
         switch locator {
         case let .groupCall(groupId: groupId):
             self.groupId = groupId
@@ -33,22 +34,23 @@ struct CallConfiguration {
         self.credential = credential
         self.displayName = displayName
         self.participants = nil
-        self.diagnosticConfig = DiagnosticConfig()
+        self.diagnosticConfig = diagnosticConfig
         self.callKitOptions = callKitOptions
     }
 
     init(startCallOptions: StartCallOptionsOneToNCall,
          credential: CommunicationTokenCredential,
          displayName: String?,
-         callKitOptions: CallCompositeCallKitOption? = nil) {
+         callKitOptions: CallCompositeCallKitOption? = nil,
+         diagnosticConfig: DiagnosticConfig) {
         self.participants = startCallOptions.participants
         self.compositeCallType = .oneToNCall
         self.credential = credential
         self.displayName = displayName
         self.groupId = nil
         self.meetingLink = nil
-        self.diagnosticConfig = DiagnosticConfig()
         self.callKitOptions = callKitOptions
+        self.diagnosticConfig = diagnosticConfig
     }
 }
 

@@ -28,31 +28,49 @@ internal class CallingSDKInitialization {
         CallingSDKInitialization.callClient = client
     }
 
-    func setupCallAgent(callConfiguration: CallConfiguration) async throws {
+    func setupCallAgent(tags: [String],
+                        credential: CommunicationTokenCredential,
+                        callKitOptions: CallCompositeCallKitOption?,
+                        displayName: String? = nil) async throws {
         guard CallingSDKInitialization.callAgent == nil else {
             logger.debug("Reusing call agent")
             return
         }
-        setupCallClient(tags: callConfiguration.diagnosticConfig.tags)
+        setupCallClient(tags: tags)
         let options = CallAgentOptions()
-        if let callKitConfig = callConfiguration.callKitOptions?.cxProvideConfig {
+        if let callKitConfig = callKitOptions?.cxProvideConfig {
             let callKitOptions = CallKitOptions(with: callKitConfig)
-            callKitOptions.isCallHoldSupported = callConfiguration.callKitOptions?.isCallHoldSupported ?? true
-            callKitOptions.configureAudioSession = callConfiguration.callKitOptions?.configureAudioSession
+            callKitOptions.isCallHoldSupported = callKitOptions.isCallHoldSupported
+            callKitOptions.configureAudioSession = callKitOptions.configureAudioSession
             options.callKitOptions = callKitOptions
         }
-        if let displayName = callConfiguration.displayName {
+        if let displayName = displayName {
             options.displayName = displayName
         }
         do {
             let callAgent = try await CallingSDKInitialization.callClient?.createCallAgent(
-                userCredential: callConfiguration.credential,
+                userCredential: credential,
                 options: options
             )
             self.logger.debug("Call agent successfully created.")
             CallingSDKInitialization.callAgent = callAgent
         } catch {
             logger.error("It was not possible to create a call agent.")
+            throw error
+        }
+    }
+
+    func registerPushNotification(notificationOptions: PushNotificationOptions,
+                                  tags: [String]) async throws {
+        do {
+            try await setupCallAgent(tags: tags,
+                                     credential: notificationOptions.credential,
+                                     callKitOptions: notificationOptions.callKitOptions,
+                                     displayName: notificationOptions.displayName)
+            try await CallingSDKInitialization.callAgent?.registerPushNotifications(
+                deviceToken: notificationOptions.deviceRegistrationToken)
+        } catch {
+            logger.error("Failed to registerPushNotification")
             throw error
         }
     }

@@ -10,7 +10,7 @@ import UIKit
 import SwiftUI
 import FluentUI
 
-// swiftlint:disable type_body_length line_length
+// swiftlint:disable type_body_length
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
 
@@ -52,8 +52,10 @@ public class CallComposite {
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
     private var callHistoryService: CallHistoryService?
+    private var callingSDKInitialization: CallingSDKInitialization?
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
+    private let diagnosticConfig = DiagnosticConfig()
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -82,38 +84,13 @@ public class CallComposite {
     public func dismiss() {
         exitManager?.dismiss()
     }
+
     public func registerPushNotification(notificationOptions: PushNotificationOptions) {
         Task {
-            let clientOptions = CallClientOptions()
-            let callClient = CallClient(options: clientOptions)
-            let options = CallAgentOptions()
-            options.callKitOptions = CallKitOptions(with: createProviderConfig())
-            do {
-                let callAgent = try await callClient.createCallAgent(
-                    userCredential: notificationOptions.credential,
-                    options: options
-                )
-                try await callAgent.registerPushNotifications(deviceToken: notificationOptions.deviceRegistrationToken, completionHandler: { error in
-                    print(error)
-                })
-                DispatchQueue.global(qos: .userInitiated).async {
-                    self.logger.debug("Call agent successfully created.")
-                    callAgent.dispose()
-                    callClient.dispose()
-                }
-            } catch {
-                logger.error("It was not possible to create a call agent.")
-            }
+            try await constructCallingSDKInitialization(
+                logger: logger).registerPushNotification(notificationOptions: notificationOptions,
+                                                         tags: diagnosticConfig.tags)
         }
-    }
-    private func createProviderConfig() -> CXProviderConfiguration {
-        let providerConfig = CXProviderConfiguration()
-        providerConfig.supportsVideo = true
-        providerConfig.maximumCallGroups = 1
-        providerConfig.maximumCallsPerCallGroup = 1
-        providerConfig.includesCallsInRecents = true
-        providerConfig.supportedHandleTypes = [.phoneNumber, .generic]
-        return providerConfig
     }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
@@ -161,14 +138,16 @@ public class CallComposite {
         var callConfiguration: CallConfiguration?
         if let locator = remoteOptions.locator {
             callConfiguration = CallConfiguration(locator: locator,
-                                                      credential: remoteOptions.credential,
-                                                      displayName: remoteOptions.displayName,
-                                                      callKitOptions: remoteOptions.callKitOptions)
+                                                  credential: remoteOptions.credential,
+                                                  displayName: remoteOptions.displayName,
+                                                  callKitOptions: remoteOptions.callKitOptions,
+                                                  diagnosticConfig: diagnosticConfig)
         } else if let startCallOptions = remoteOptions.startCallOptions {
             callConfiguration = CallConfiguration(startCallOptions: startCallOptions,
-                                                       credential: remoteOptions.credential,
-                                                       displayName: remoteOptions.displayName,
-                                                      callKitOptions: remoteOptions.callKitOptions)
+                                                  credential: remoteOptions.credential,
+                                                  displayName: remoteOptions.displayName,
+                                                  callKitOptions: remoteOptions.callKitOptions,
+                                                  diagnosticConfig: diagnosticConfig)
         }
         if let callconfig = callConfiguration {
             launch(callconfig, localOptions: localOptions)
@@ -194,7 +173,11 @@ public class CallComposite {
     }
 
     private func constructCallingSDKInitialization(logger: Logger) -> CallingSDKInitialization {
-        return CallingSDKInitialization(logger: logger)
+        if let callingSDKInitialization = self.callingSDKInitialization {
+            return callingSDKInitialization
+        }
+        callingSDKInitialization = CallingSDKInitialization(logger: logger)
+        return callingSDKInitialization!
     }
 
     private func constructViewFactoryAndDependencies(

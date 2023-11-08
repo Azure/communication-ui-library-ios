@@ -9,6 +9,7 @@ import Combine
 import Foundation
 
 // swiftlint:disable file_length
+// swiftlint:disable type_body_length
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -52,7 +53,11 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
         logger.debug( "Starting call")
         do {
-            try await callingSDKInitialization?.setupCallAgent( callConfiguration: callConfiguration)
+            try await callingSDKInitialization?.setupCallAgent(
+                tags: self.callConfiguration.diagnosticConfig.tags,
+                credential: self.callConfiguration.credential,
+                callKitOptions: self.callConfiguration.callKitOptions,
+                displayName: self.callConfiguration.displayName)
             callAgent = CallingSDKInitialization.callAgent
         } catch {
             throw CallCompositeInternalError.callJoinFailed
@@ -90,14 +95,11 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
         joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
         joinCallOptions.incomingVideoOptions = incomingVideoOptions
-
         startCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
         startCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
         startCallOptions.incomingVideoOptions = incomingVideoOptions
-
         var joinLocator: JoinMeetingLocator?
         var participants: [CommunicationIdentifier] = []
-
         if callConfiguration.compositeCallType == .groupCall,
            let groupId = callConfiguration.groupId {
             joinLocator = GroupCallLocator(groupId: groupId)
