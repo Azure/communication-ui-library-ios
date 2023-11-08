@@ -19,15 +19,18 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     private var call: Call?
     private var deviceManager: DeviceManager?
     private var localVideoStream: AzureCommunicationCalling.LocalVideoStream?
+    private var callingSDKInitialization: CallingSDKInitialization?
 
     private var newVideoDeviceAddedHandler: ((VideoDeviceInfo) -> Void)?
 
     init(logger: Logger,
          callingEventsHandler: CallingSDKEventsHandling,
-         callConfiguration: CallConfiguration) {
+         callConfiguration: CallConfiguration,
+         callingSDKInitialization: CallingSDKInitialization) {
         self.logger = logger
         self.callingEventsHandler = callingEventsHandler
         self.callConfiguration = callConfiguration
+        self.callingSDKInitialization = callingSDKInitialization
         super.init()
     }
 
@@ -36,7 +39,9 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     }
 
     func setupCall() async throws {
-        try await setupCallClientAndDeviceManager()
+        callingSDKInitialization?.setupCallClient(tags: self.callConfiguration.diagnosticConfig.tags)
+        callClient = CallingSDKInitialization.callClient
+        try await setupDeviceManager()
     }
 
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
@@ -47,7 +52,8 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
         logger.debug( "Starting call")
         do {
-            try await setupCallAgent()
+            try await callingSDKInitialization?.setupCallAgent( callConfiguration: callConfiguration)
+            callAgent = CallingSDKInitialization.callAgent
         } catch {
             throw CallCompositeInternalError.callJoinFailed
         }
@@ -294,52 +300,14 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 }
 
 extension CallingSDKWrapper {
-    private func setupCallClientAndDeviceManager() async throws {
+    private func setupDeviceManager() async throws {
         do {
-            let client = makeCallClient()
-            callClient = client
-            let deviceManager = try await client.getDeviceManager()
-            deviceManager.delegate = self
+            let deviceManager = try await CallingSDKInitialization.callClient?.getDeviceManager()
+            deviceManager?.delegate = self
             self.deviceManager = deviceManager
         } catch {
             throw CallCompositeInternalError.deviceManagerFailed(error)
         }
-    }
-    private func setupCallAgent() async throws {
-        guard callAgent == nil else {
-            logger.debug("Reusing call agent")
-            return
-        }
-        let options = CallAgentOptions()
-        if let callKitConfig = self.callConfiguration.callKitOptions?.cxProvideConfig {
-            let callKitOptions = CallKitOptions(with: callKitConfig)
-            callKitOptions.isCallHoldSupported = self.callConfiguration.callKitOptions?.isCallHoldSupported ?? true
-            callKitOptions.configureAudioSession = self.callConfiguration.callKitOptions?.configureAudioSession
-            options.callKitOptions = callKitOptions
-        }
-        if let displayName = callConfiguration.displayName {
-            options.displayName = displayName
-        }
-        do {
-            let callAgent = try await callClient?.createCallAgent(
-                userCredential: callConfiguration.credential,
-                options: options
-            )
-            self.logger.debug("Call agent successfully created.")
-            self.callAgent = callAgent
-        } catch {
-            logger.error("It was not possible to create a call agent.")
-            throw error
-        }
-    }
-
-    private func makeCallClient() -> CallClient {
-        let clientOptions = CallClientOptions()
-        let appendingTag = self.callConfiguration.diagnosticConfig.tags
-        let diagnostics = clientOptions.diagnostics ?? CallDiagnosticsOptions()
-        diagnostics.tags.append(contentsOf: appendingTag)
-        clientOptions.diagnostics = diagnostics
-        return CallClient(options: clientOptions)
     }
 
     private func startCallVideoStream(

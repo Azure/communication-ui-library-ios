@@ -193,6 +193,10 @@ public class CallComposite {
                           completionHandler: completionHandler)
     }
 
+    private func constructCallingSDKInitialization(logger: Logger) -> CallingSDKInitialization {
+        return CallingSDKInitialization(logger: logger)
+    }
+
     private func constructViewFactoryAndDependencies(
         for callConfiguration: CallConfiguration,
         localOptions: LocalOptions?,
@@ -202,7 +206,8 @@ public class CallComposite {
         let callingSdkWrapper = wrapper ?? CallingSDKWrapper(
             logger: logger,
             callingEventsHandler: CallingSDKEventsHandler(logger: logger),
-            callConfiguration: callConfiguration
+            callConfiguration: callConfiguration,
+            callingSDKInitialization: constructCallingSDKInitialization(logger: logger)
         )
 
         let store = Store.constructStore(

@@ -46,7 +46,7 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     }
 
     func setupCall() async throws {
-        try await setupCallClientAndDeviceManager()
+        try await setupDeviceManager()
     }
 
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
@@ -313,7 +313,7 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 }
 
 extension UITestCallingSDKWrapper {
-    private func setupCallClientAndDeviceManager() async throws {
+    private func setupDeviceManager() async throws {
         let client = makeCallClientMocking()
         callClientMocking = client
     }
