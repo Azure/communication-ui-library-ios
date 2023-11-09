@@ -24,6 +24,8 @@ public class CallComposite {
         public var onCallStateChanged: ((CallState) -> Void)?
         /// Closure to Call Composite dismissed.
         public var onDismissed: ((CallCompositeDismissed) -> Void)?
+        public var onIncomingCall: ((CallCompositeIncomingCallInfo) -> Void)?
+        public var onIncomingCallEnded: ((CallCompositeIncomingCallEndedInfo) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -85,7 +87,20 @@ public class CallComposite {
         exitManager?.dismiss()
     }
 
-    public func registerPushNotification(notificationOptions: PushNotificationOptions) {
+    public func dispose() {
+        dismiss()
+    }
+
+    public func answer() {
+    }
+
+    public func reject() {
+    }
+
+    public func handleIncomingCall() {
+    }
+
+    public func registerPushNotification(notificationOptions: CallCompositePushNotificationOptions) {
         Task {
             try await constructCallingSDKInitialization(
                 logger: logger).registerPushNotification(notificationOptions: notificationOptions,

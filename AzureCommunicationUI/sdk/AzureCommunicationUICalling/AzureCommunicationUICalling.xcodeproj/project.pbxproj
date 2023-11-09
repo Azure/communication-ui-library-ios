@@ -209,10 +209,13 @@
 		A464810629F33A43001B80A3 /* CallStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810529F33A43001B80A3 /* CallStateManager.swift */; };
 		A464810829F345E8001B80A3 /* CallCompositeDismissed.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810729F345E8001B80A3 /* CallCompositeDismissed.swift */; };
 		A464810A29F34A06001B80A3 /* CompositeExitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A464810929F34A06001B80A3 /* CompositeExitManager.swift */; };
-		A47F63452AF9FDF8006C9DD7 /* PushNotificationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47F63442AF9FDF8006C9DD7 /* PushNotificationOptions.swift */; };
+		A47F63452AF9FDF8006C9DD7 /* CallCompositePushNotificationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A47F63442AF9FDF8006C9DD7 /* CallCompositePushNotificationOptions.swift */; };
 		A48BE78F29FAF902009B2A46 /* CompositeExitManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE78E29FAF902009B2A46 /* CompositeExitManagerTests.swift */; };
 		A48BE79129FB424F009B2A46 /* CallStateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A48BE79029FB424F009B2A46 /* CallStateManagerTests.swift */; };
 		A4DC6FB62AFB0CC700E196EC /* CallingSDKInitialization.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC6FB52AFB0CC700E196EC /* CallingSDKInitialization.swift */; };
+		A4DC6FBA2AFBF80D00E196EC /* CallCompositePushNotificationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC6FB92AFBF80D00E196EC /* CallCompositePushNotificationInfo.swift */; };
+		A4DC6FBC2AFC56AE00E196EC /* CallCompositeIncomingCallInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC6FBB2AFC56AE00E196EC /* CallCompositeIncomingCallInfo.swift */; };
+		A4DC6FBE2AFC56D400E196EC /* CallCompositeIncomingCallEndedInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC6FBD2AFC56D400E196EC /* CallCompositeIncomingCallEndedInfo.swift */; };
 		A4E25F5E2ADF856400402CA6 /* CallCompositeCallKitRemoteInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E25F5D2ADF856400402CA6 /* CallCompositeCallKitRemoteInfo.swift */; };
 		A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A810038A26A0C1740015C26E /* CallConfiguration.swift */; };
 		A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C305264C3B6400766E3D /* AppStateReducerTests.swift */; };
@@ -550,10 +553,13 @@
 		A464810529F33A43001B80A3 /* CallStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStateManager.swift; sourceTree = "<group>"; };
 		A464810729F345E8001B80A3 /* CallCompositeDismissed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeDismissed.swift; sourceTree = "<group>"; };
 		A464810929F34A06001B80A3 /* CompositeExitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeExitManager.swift; sourceTree = "<group>"; };
-		A47F63442AF9FDF8006C9DD7 /* PushNotificationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PushNotificationOptions.swift; sourceTree = "<group>"; };
+		A47F63442AF9FDF8006C9DD7 /* CallCompositePushNotificationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositePushNotificationOptions.swift; sourceTree = "<group>"; };
 		A48BE78E29FAF902009B2A46 /* CompositeExitManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeExitManagerTests.swift; sourceTree = "<group>"; };
 		A48BE79029FB424F009B2A46 /* CallStateManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallStateManagerTests.swift; sourceTree = "<group>"; };
 		A4DC6FB52AFB0CC700E196EC /* CallingSDKInitialization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallingSDKInitialization.swift; sourceTree = "<group>"; };
+		A4DC6FB92AFBF80D00E196EC /* CallCompositePushNotificationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositePushNotificationInfo.swift; sourceTree = "<group>"; };
+		A4DC6FBB2AFC56AE00E196EC /* CallCompositeIncomingCallInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeIncomingCallInfo.swift; sourceTree = "<group>"; };
+		A4DC6FBD2AFC56D400E196EC /* CallCompositeIncomingCallEndedInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeIncomingCallEndedInfo.swift; sourceTree = "<group>"; };
 		A4E25F5D2ADF856400402CA6 /* CallCompositeCallKitRemoteInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeCallKitRemoteInfo.swift; sourceTree = "<group>"; };
 		A810038A26A0C1740015C26E /* CallConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfiguration.swift; sourceTree = "<group>"; };
 		A830C305264C3B6400766E3D /* AppStateReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateReducerTests.swift; sourceTree = "<group>"; };
@@ -1274,7 +1280,10 @@
 				A464810729F345E8001B80A3 /* CallCompositeDismissed.swift */,
 				A44B88312AD8C02E00E685CA /* CallCompositeCallKitOption.swift */,
 				A4E25F5D2ADF856400402CA6 /* CallCompositeCallKitRemoteInfo.swift */,
-				A47F63442AF9FDF8006C9DD7 /* PushNotificationOptions.swift */,
+				A47F63442AF9FDF8006C9DD7 /* CallCompositePushNotificationOptions.swift */,
+				A4DC6FB92AFBF80D00E196EC /* CallCompositePushNotificationInfo.swift */,
+				A4DC6FBB2AFC56AE00E196EC /* CallCompositeIncomingCallInfo.swift */,
+				A4DC6FBD2AFC56D400E196EC /* CallCompositeIncomingCallEndedInfo.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1813,6 +1822,7 @@
 				1FBCB6B6264BA8A200F57EEA /* ParticipantGridCellViewModel.swift in Sources */,
 				1F03D3CE2638A6AE0055C456 /* CallingView.swift in Sources */,
 				1FF252D627B6F29A006A113E /* JoiningCallActivityView.swift in Sources */,
+				A4DC6FBC2AFC56AE00E196EC /* CallCompositeIncomingCallInfo.swift in Sources */,
 				1B79BD50273F2D87002D5A36 /* UIViewControllerExtension.swift in Sources */,
 				503F4B692704EDD100C17DA6 /* BannerViewModel.swift in Sources */,
 				982C2835267D15AF00427246 /* CompositeAvatar.swift in Sources */,
@@ -1840,7 +1850,7 @@
 				98546EB626D9B9990069B246 /* AudioSessionManager.swift in Sources */,
 				529C34E328A4B25400ACD918 /* NetworkManager.swift in Sources */,
 				A874EDCA266167E5003C7D92 /* LifeCycleReducer.swift in Sources */,
-				A47F63452AF9FDF8006C9DD7 /* PushNotificationOptions.swift in Sources */,
+				A47F63452AF9FDF8006C9DD7 /* CallCompositePushNotificationOptions.swift in Sources */,
 				1FBCB6D72654765D00F57EEA /* LocalUserState.swift in Sources */,
 				B2B1DB3D2ABE35B0003B00DB /* MessageBarDiagnosticView.swift in Sources */,
 				FA6DF038290339430088A945 /* SharingActivityView.swift in Sources */,
@@ -1850,6 +1860,7 @@
 				FAD20A89292834500063D8A9 /* ArrayExtension.swift in Sources */,
 				1F2BED68262F86F400D98266 /* SetupViewModel.swift in Sources */,
 				98B1869D27C858D500B837E6 /* CompositeAudioDevicesListCell.swift in Sources */,
+				A4DC6FBA2AFBF80D00E196EC /* CallCompositePushNotificationInfo.swift in Sources */,
 				9885BA0726A2116200CC514B /* SetupControlBarViewModel.swift in Sources */,
 				1B5F169D27FBB56100C35126 /* CompositeLeaveCallConfirmationList.swift in Sources */,
 				1FD299662728B72B0084B9ED /* CallingSDKEventsHandler.swift in Sources */,
@@ -1858,6 +1869,7 @@
 				1115A0002A1D50EC00C0E3B8 /* OrientationProvider.swift in Sources */,
 				50FA460E26829345001844AC /* InfoHeaderViewModel.swift in Sources */,
 				503F4B6D2705065700C17DA6 /* BannerTextView.swift in Sources */,
+				A4DC6FBE2AFC56D400E196EC /* CallCompositeIncomingCallEndedInfo.swift in Sources */,
 				1F94DAF326772B3C00691D1E /* UIWindowExtension.swift in Sources */,
 				FA538278292FE86200963FFC /* DebugInfo.swift in Sources */,
 				759BDEFD28FF0A81002B6853 /* SupportedLocale.swift in Sources */,

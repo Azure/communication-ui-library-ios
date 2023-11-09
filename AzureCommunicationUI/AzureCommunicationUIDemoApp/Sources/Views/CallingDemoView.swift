@@ -217,6 +217,7 @@ extension CallingDemoView {
     }
 
     mutating func onPushNotificationReceived(dictionaryPayload: [AnyHashable: Any]) {
+        let callNotification = CallCompositePushNotificationInfo(pushNotificationInfo: dictionaryPayload)
         print("hello, hello")
     }
 
@@ -356,11 +357,11 @@ extension CallingDemoView {
     func registerForNotification() async {
         if let credential = try? await getTokenCredential() {
             let displayName = envConfigSubject.displayName.isEmpty ? nil : envConfigSubject.displayName
-
-            let notificationOptions = PushNotificationOptions(deviceToken: $envConfigSubject.deviceToken.wrappedValue!,
-                                                              credential: credential,
-                                                              displayName: displayName,
-                                                              callKitOptions: getCallKitOPtions())
+            let notificationOptions = CallCompositePushNotificationOptions(
+                deviceToken: $envConfigSubject.deviceToken.wrappedValue!,
+                credential: credential,
+                displayName: displayName,
+                callKitOptions: getCallKitOPtions())
             print("CallingDemoView, registerPushNotification")
             createCallComposite().registerPushNotification(notificationOptions: notificationOptions)
         }

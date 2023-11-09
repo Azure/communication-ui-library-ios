@@ -5,7 +5,7 @@
 import Foundation
 import AzureCommunicationCommon
 
-public struct PushNotificationOptions {
+public struct CallCompositePushNotificationOptions {
     public let deviceRegistrationToken: Data
     public let credential: CommunicationTokenCredential
 

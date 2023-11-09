@@ -60,7 +60,7 @@ internal class CallingSDKInitialization {
         }
     }
 
-    func registerPushNotification(notificationOptions: PushNotificationOptions,
+    func registerPushNotification(notificationOptions: CallCompositePushNotificationOptions,
                                   tags: [String]) async throws {
         do {
             try await setupCallAgent(tags: tags,
