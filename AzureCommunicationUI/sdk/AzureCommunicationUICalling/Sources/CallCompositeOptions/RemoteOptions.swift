@@ -41,6 +41,8 @@ public struct RemoteOptions {
     /// CallKit options
     public let callKitOptions: CallCompositeCallKitOption?
 
+    public let pushNotificationInfo: CallCompositePushNotificationInfo?
+
     /// Create an instance of a RemoteOptions with options.
     /// - Parameters:
     ///   - locator: The JoinLocator type with unique identifier for joining a specific call.
@@ -56,6 +58,7 @@ public struct RemoteOptions {
         self.displayName = displayName
         self.startCallOptions = nil
         self.callKitOptions = callKitOptions
+        self.pushNotificationInfo = nil
     }
 
     public init(for startCallOptions: StartCallOptionsOneToNCall,
@@ -67,5 +70,18 @@ public struct RemoteOptions {
         self.displayName = displayName
         self.callKitOptions = callKitOptions
         self.locator = nil
+        self.pushNotificationInfo = nil
+    }
+
+    public init(for pushNotificationInfo: CallCompositePushNotificationInfo,
+                credential: CommunicationTokenCredential,
+                displayName: String? = nil,
+                callKitOptions: CallCompositeCallKitOption? = nil) {
+        self.startCallOptions = nil
+        self.credential = credential
+        self.displayName = displayName
+        self.callKitOptions = callKitOptions
+        self.locator = nil
+        self.pushNotificationInfo = pushNotificationInfo
     }
 }

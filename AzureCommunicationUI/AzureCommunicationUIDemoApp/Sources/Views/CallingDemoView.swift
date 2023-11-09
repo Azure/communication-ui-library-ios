@@ -43,6 +43,7 @@ struct CallingDemoView: View {
                 settingButton
                 showCallHistoryButton
                 startExperienceButton
+                disposeButton
                 Text(callState)
             }
             Spacer()
@@ -137,6 +138,14 @@ struct CallingDemoView: View {
         }
         .buttonStyle(DemoButtonStyle())
         .accessibility(identifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
+    }
+
+    var disposeButton: some View {
+        Button("Dispose") {
+            self.disposeComposite()
+        }
+        .buttonStyle(DemoButtonStyle())
+        .accessibility(identifier: AccessibilityId.disposeButtonAccessibilityID.rawValue)
     }
 
     var registerButton: some View {
@@ -243,20 +252,21 @@ extension CallingDemoView {
             localization: localizationConfig,
             setupScreenOrientation: setupViewOrientation,
             callingScreenOrientation: callingViewOrientation)
+        var callComposite: CallComposite
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
-        return useMockCallingSDKHandler ?
+        callComposite = useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
                           callingSDKWrapperProtocol: callingSDKWrapperMock)
             : CallComposite(withOptions: callCompositeOptions)
         #else
-        return CallComposite(withOptions: callCompositeOptions)
+        callComposite = CallComposite(withOptions: callCompositeOptions)
         #endif
+        subscribeToEvents(callComposite: callComposite)
+        return callComposite
     }
 
-    func startCallComposite() async {
-        let callComposite = createCallComposite()
-        let link = getMeetingLink()
+    func subscribeToEvents(callComposite: CallComposite) {
         let onRemoteParticipantJoinedHandler: ([CommunicationIdentifier]) -> Void = { [weak callComposite] ids in
             guard let composite = callComposite else {
                 return
@@ -284,6 +294,15 @@ extension CallingDemoView {
             }
             print("Call State ::::onDismissedHandler ")
         }
+        callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
+        callComposite.events.onError = onErrorHandler
+        callComposite.events.onCallStateChanged = onCallStateChangedHandler
+        callComposite.events.onDismissed = onDismissedHandler
+    }
+
+    func startCallComposite() async {
+        let callComposite = createCallComposite()
+        let link = getMeetingLink()
         exitCompositeExecuted = false
         if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
             DispatchQueue.main.asyncAfter(deadline: .now() +
@@ -293,10 +312,6 @@ extension CallingDemoView {
                 callComposite?.dismiss()
             }
         }
-        callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
-        callComposite.events.onError = onErrorHandler
-        callComposite.events.onCallStateChanged = onCallStateChangedHandler
-        callComposite.events.onDismissed = onDismissedHandler
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
@@ -352,6 +367,10 @@ extension CallingDemoView {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
         }
+    }
+
+    func disposeComposite() {
+        createCallComposite().dispose()
     }
 
     func registerForNotification() async {

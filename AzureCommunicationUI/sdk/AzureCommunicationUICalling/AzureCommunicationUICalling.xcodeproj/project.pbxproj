@@ -216,6 +216,8 @@
 		A4DC6FBA2AFBF80D00E196EC /* CallCompositePushNotificationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC6FB92AFBF80D00E196EC /* CallCompositePushNotificationInfo.swift */; };
 		A4DC6FBC2AFC56AE00E196EC /* CallCompositeIncomingCallInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC6FBB2AFC56AE00E196EC /* CallCompositeIncomingCallInfo.swift */; };
 		A4DC6FBE2AFC56D400E196EC /* CallCompositeIncomingCallEndedInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC6FBD2AFC56D400E196EC /* CallCompositeIncomingCallEndedInfo.swift */; };
+		A4DC6FC02AFC8F6F00E196EC /* CallsUpdatedProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC6FBF2AFC8F6F00E196EC /* CallsUpdatedProtocol.swift */; };
+		A4DC6FC22AFC982A00E196EC /* IncomingCallWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4DC6FC12AFC982A00E196EC /* IncomingCallWrapper.swift */; };
 		A4E25F5E2ADF856400402CA6 /* CallCompositeCallKitRemoteInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4E25F5D2ADF856400402CA6 /* CallCompositeCallKitRemoteInfo.swift */; };
 		A810038B26A0C1740015C26E /* CallConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A810038A26A0C1740015C26E /* CallConfiguration.swift */; };
 		A830C306264C3B6400766E3D /* AppStateReducerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A830C305264C3B6400766E3D /* AppStateReducerTests.swift */; };
@@ -560,6 +562,8 @@
 		A4DC6FB92AFBF80D00E196EC /* CallCompositePushNotificationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositePushNotificationInfo.swift; sourceTree = "<group>"; };
 		A4DC6FBB2AFC56AE00E196EC /* CallCompositeIncomingCallInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeIncomingCallInfo.swift; sourceTree = "<group>"; };
 		A4DC6FBD2AFC56D400E196EC /* CallCompositeIncomingCallEndedInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeIncomingCallEndedInfo.swift; sourceTree = "<group>"; };
+		A4DC6FBF2AFC8F6F00E196EC /* CallsUpdatedProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallsUpdatedProtocol.swift; sourceTree = "<group>"; };
+		A4DC6FC12AFC982A00E196EC /* IncomingCallWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncomingCallWrapper.swift; sourceTree = "<group>"; };
 		A4E25F5D2ADF856400402CA6 /* CallCompositeCallKitRemoteInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeCallKitRemoteInfo.swift; sourceTree = "<group>"; };
 		A810038A26A0C1740015C26E /* CallConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallConfiguration.swift; sourceTree = "<group>"; };
 		A830C305264C3B6400766E3D /* AppStateReducerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateReducerTests.swift; sourceTree = "<group>"; };
@@ -1152,6 +1156,8 @@
 				1FBCB6B02649EB1200F57EEA /* RemoteParticipantExtension.swift */,
 				1F4B0F0426A6469F00E87014 /* RemoteParticipantsEventsAdapter.swift */,
 				A4DC6FB52AFB0CC700E196EC /* CallingSDKInitialization.swift */,
+				A4DC6FBF2AFC8F6F00E196EC /* CallsUpdatedProtocol.swift */,
+				A4DC6FC12AFC982A00E196EC /* IncomingCallWrapper.swift */,
 			);
 			path = AzureCommunicationCalling;
 			sourceTree = "<group>";
@@ -1918,6 +1924,7 @@
 				50C6DECC270E48BE0085D04B /* BannerInfoType.swift in Sources */,
 				1F03D3D22638A6B70055C456 /* CallingViewModel.swift in Sources */,
 				FAD20A8C292834500063D8A9 /* Logger.swift in Sources */,
+				A4DC6FC02AFC8F6F00E196EC /* CallsUpdatedProtocol.swift in Sources */,
 				FA6B61A3290C9F55004B8188 /* DebugInfoSharingActivityViewModel.swift in Sources */,
 				50FA45FE26813FCE001844AC /* ParticipantGridViewModel.swift in Sources */,
 				113738FF29D638BB00D48EAB /* DefaultUserState.swift in Sources */,
@@ -1983,6 +1990,7 @@
 				1FBCB666264519DA00F57EEA /* VideoViewManager.swift in Sources */,
 				A4E25F5E2ADF856400402CA6 /* CallCompositeCallKitRemoteInfo.swift in Sources */,
 				05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */,
+				A4DC6FC22AFC982A00E196EC /* IncomingCallWrapper.swift in Sources */,
 				50FA461026829B7A001844AC /* ControlBarViewModel.swift in Sources */,
 				1F2BED882631EB7900D98266 /* PermissionsManager.swift in Sources */,
 				B2D85FD82ACEF39500DE0D16 /* ACSDiagnosticQualityExtension.swift in Sources */,

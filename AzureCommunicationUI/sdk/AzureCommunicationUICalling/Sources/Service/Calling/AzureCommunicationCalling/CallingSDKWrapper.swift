@@ -41,7 +41,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 
     func setupCall() async throws {
         callingSDKInitialization?.setupCallClient(tags: self.callConfiguration.diagnosticConfig.tags)
-        callClient = CallingSDKInitialization.callClient
+        callClient = callingSDKInitialization?.callClient!
         try await setupDeviceManager()
     }
 
@@ -58,7 +58,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                 credential: self.callConfiguration.credential,
                 callKitOptions: self.callConfiguration.callKitOptions,
                 displayName: self.callConfiguration.displayName)
-            callAgent = CallingSDKInitialization.callAgent
+            callAgent = callingSDKInitialization?.callAgent
         } catch {
             throw CallCompositeInternalError.callJoinFailed
         }
@@ -304,7 +304,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 extension CallingSDKWrapper {
     private func setupDeviceManager() async throws {
         do {
-            let deviceManager = try await CallingSDKInitialization.callClient?.getDeviceManager()
+            let deviceManager = try await callingSDKInitialization?.callClient?.getDeviceManager()
             deviceManager?.delegate = self
             self.deviceManager = deviceManager
         } catch {

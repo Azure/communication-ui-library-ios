@@ -35,6 +35,7 @@ public class CallComposite {
     private let localizationOptions: LocalizationOptions?
     private let setupViewOrientationOptions: OrientationOptions?
     private let callingViewOrientationOptions: OrientationOptions?
+    private let incomingCallWrapper: IncomingCallWrapper
 
     // Internal dependencies
     private var logger: Logger = DefaultLogger(category: "Calling")
@@ -54,7 +55,7 @@ public class CallComposite {
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
     private var callHistoryService: CallHistoryService?
-    private var callingSDKInitialization: CallingSDKInitialization?
+    private static var callingSDKInitialization: CallingSDKInitialization?
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
     private let diagnosticConfig = DiagnosticConfig()
@@ -74,6 +75,7 @@ public class CallComposite {
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
         events = Events()
+        incomingCallWrapper = IncomingCallWrapper(logger: logger, events: events)
         themeOptions = options?.themeOptions
         localizationOptions = options?.localizationOptions
         localizationProvider = LocalizationProvider(logger: logger)
@@ -89,15 +91,20 @@ public class CallComposite {
 
     public func dispose() {
         dismiss()
+        CallComposite.callingSDKInitialization?.dispose()
+        CallComposite.callingSDKInitialization = nil
     }
 
-    public func answer() {
+    public func answer(localOptions: LocalOptions? = nil) {
+        incomingCallWrapper.answer()
     }
 
     public func reject() {
+        incomingCallWrapper.reject()
     }
 
-    public func handleIncomingCall() {
+    public func handlePushNotification(remoteOptions: RemoteOptions) {
+        incomingCallWrapper.handlePushNotification()
     }
 
     public func registerPushNotification(notificationOptions: CallCompositePushNotificationOptions) {
@@ -188,11 +195,11 @@ public class CallComposite {
     }
 
     private func constructCallingSDKInitialization(logger: Logger) -> CallingSDKInitialization {
-        if let callingSDKInitialization = self.callingSDKInitialization {
+        if let callingSDKInitialization = CallComposite.callingSDKInitialization {
             return callingSDKInitialization
         }
-        callingSDKInitialization = CallingSDKInitialization(logger: logger)
-        return callingSDKInitialization!
+        CallComposite.callingSDKInitialization = CallingSDKInitialization(logger: logger)
+        return CallComposite.callingSDKInitialization!
     }
 
     private func constructViewFactoryAndDependencies(
