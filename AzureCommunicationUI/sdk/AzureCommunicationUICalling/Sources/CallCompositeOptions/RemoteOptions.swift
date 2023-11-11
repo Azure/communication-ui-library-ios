@@ -8,8 +8,12 @@ import AzureCommunicationCommon
 
 // CallComposite Start Call for 1:N Call
 public struct StartCallOptionsOneToNCall {
-    /// IDs of the participants to be called.
+    /// Raw identifiers of the participants to be called.
     public var participants: [String]
+
+    /// Create an instance of a StartCallOptionsOneToNCall with participants.
+    /// - Parameters:
+    ///   - participants: The raw identifiers of participants.
     public init(participants: [String]) {
         self.participants = participants
     }
@@ -41,6 +45,7 @@ public struct RemoteOptions {
     /// CallKit options
     public let callKitOptions: CallCompositeCallKitOption?
 
+    /// Push notification info
     public let pushNotificationInfo: CallCompositePushNotificationInfo?
 
     /// Create an instance of a RemoteOptions with options.
@@ -61,6 +66,12 @@ public struct RemoteOptions {
         self.pushNotificationInfo = nil
     }
 
+    /// Create an instance of a RemoteOptions with options.
+    /// - Parameters:
+    ///   - startCallOptions: The participant identifiers
+    ///   - credential: The credential used for Azure Communication Service authentication.
+    ///   - displayName: The display name of the local participant for the call. The limit for string length is 256.
+    ///   - callKitOptions: CallKit options.
     public init(for startCallOptions: StartCallOptionsOneToNCall,
                 credential: CommunicationTokenCredential,
                 displayName: String? = nil,
@@ -73,10 +84,16 @@ public struct RemoteOptions {
         self.pushNotificationInfo = nil
     }
 
+    /// Create an instance of a RemoteOptions with options.
+    /// - Parameters:
+    ///   - pushNotificationInfo: The push notification info.
+    ///   - credential: The credential used for Azure Communication Service authentication.
+    ///   - displayName: The display name of the local participant for the call. The limit for string length is 256.
+    ///   - callKitOptions: CallKit options.
     public init(for pushNotificationInfo: CallCompositePushNotificationInfo,
                 credential: CommunicationTokenCredential,
                 displayName: String? = nil,
-                callKitOptions: CallCompositeCallKitOption? = nil) {
+                callKitOptions: CallCompositeCallKitOption) {
         self.startCallOptions = nil
         self.credential = credential
         self.displayName = displayName

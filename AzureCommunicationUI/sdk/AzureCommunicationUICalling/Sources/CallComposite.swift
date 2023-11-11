@@ -24,9 +24,15 @@ public class CallComposite {
         public var onCallStateChanged: ((CallState) -> Void)?
         /// Closure to Call Composite dismissed.
         public var onDismissed: ((CallCompositeDismissed) -> Void)?
+        /// Closure to incoming call received.
         public var onIncomingCall: ((CallCompositeIncomingCallInfo) -> Void)?
+        /// Closure to incoming call ended.
         public var onIncomingCallEnded: ((CallCompositeIncomingCallEndedInfo) -> Void)?
     }
+
+    /// Following native calling SDK, need static to manage call agent as destroying immediate on register push and join
+    /// cause call agent initialization issue
+    private static var callingSDKInitialization: CallingSDKInitialization?
 
     /// The events handler for Call Composite
     public let events: Events
@@ -55,7 +61,6 @@ public class CallComposite {
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
     private var callHistoryService: CallHistoryService?
-    private static var callingSDKInitialization: CallingSDKInitialization?
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
     private let diagnosticConfig = DiagnosticConfig()
@@ -89,30 +94,53 @@ public class CallComposite {
         exitManager?.dismiss()
     }
 
+    /// Dismiss composite and cleanup call agent
     public func dispose() {
         dismiss()
+        incomingCallWrapper.dispose()
         CallComposite.callingSDKInitialization?.dispose()
         CallComposite.callingSDKInitialization = nil
     }
 
-    public func answer(localOptions: LocalOptions? = nil) {
-        incomingCallWrapper.answer()
+    /// Handle push notification to receive incoming call
+    public func handlePushNotification(remoteOptions: RemoteOptions) async throws {
+        let pushNotificationInfo = remoteOptions.pushNotificationInfo!.pushNotificationInfo
+        try await constructCallingSDKInitialization(
+            logger: logger).handlePushNotification(
+                tags: diagnosticConfig.tags,
+                credential: remoteOptions.credential,
+                callKitOptions: remoteOptions.callKitOptions,
+                displayName: remoteOptions.displayName,
+                callNotification: pushNotificationInfo)
     }
 
-    public func reject() {
-        incomingCallWrapper.reject()
-    }
+    /// Report incoming call to notify CallKit
+    /// On success you can wake up application.
+    public static func reportIncomingCall(callKitOptions: CallCompositeCallKitOption,
+                                          callNotification: CallCompositePushNotificationInfo,
+                                          completion: @escaping (Result<Void, Error>) -> Void) {
+        let callKitOptionsInternal = CallKitOptions(with: callKitOptions.cxProvideConfig)
+        callKitOptionsInternal.isCallHoldSupported = callKitOptions.isCallHoldSupported
+        callKitOptionsInternal.configureAudioSession = callKitOptions.configureAudioSession
 
-    public func handlePushNotification(remoteOptions: RemoteOptions) {
-        incomingCallWrapper.handlePushNotification()
-    }
-
-    public func registerPushNotification(notificationOptions: CallCompositePushNotificationOptions) {
-        Task {
-            try await constructCallingSDKInitialization(
-                logger: logger).registerPushNotification(notificationOptions: notificationOptions,
-                                                         tags: diagnosticConfig.tags)
+        CallClient.reportIncomingCall(
+            with: callNotification.pushNotificationInfo,
+            callKitOptions: callKitOptionsInternal
+        ) { (error) in
+            if error == nil {
+                completion(.success(()))
+            } else {
+                completion(.failure(error!))
+            }
         }
+    }
+
+    /// Register device token to receive push notifications
+    /// Currently, push notificatiosn are only supported with CallKit
+    public func registerPushNotification(notificationOptions: CallCompositePushNotificationOptions) async throws {
+        try await constructCallingSDKInitialization(
+            logger: logger).registerPushNotification(notificationOptions: notificationOptions,
+                                                     tags: diagnosticConfig.tags)
     }
 
     convenience init(withOptions options: CallCompositeOptions? = nil,
@@ -123,32 +151,6 @@ public class CallComposite {
 
     deinit {
         logger.debug("Call Composite deallocated")
-    }
-
-    private func launch(_ callConfiguration: CallConfiguration,
-                        localOptions: LocalOptions?) {
-        logger.debug("launch composite experience")
-        let viewFactory = constructViewFactoryAndDependencies(
-            for: callConfiguration,
-            localOptions: localOptions,
-            callCompositeEventsHandler: events,
-            withCallingSDKWrapper: self.customCallingSdkWrapper
-        )
-
-        setupColorTheming()
-        setupLocalization(with: localizationProvider)
-
-        guard let store = self.store else {
-            fatalError("Construction of dependencies failed")
-        }
-        let toolkitHostingController = makeToolkitHostingController(
-            router: NavigationRouter(store: store, logger: logger),
-            logger: logger,
-            viewFactory: viewFactory,
-            isRightToLeft: localizationProvider.isRightToLeft
-        )
-
-        present(toolkitHostingController)
     }
 
     /// Start Call Composite experience with joining a Teams meeting.
@@ -194,11 +196,52 @@ public class CallComposite {
                           completionHandler: completionHandler)
     }
 
+    private func launch(_ callConfiguration: CallConfiguration,
+                        localOptions: LocalOptions?) {
+        logger.debug("launch composite experience")
+        let viewFactory = constructViewFactoryAndDependencies(
+            for: callConfiguration,
+            localOptions: localOptions,
+            callCompositeEventsHandler: events,
+            withCallingSDKWrapper: self.customCallingSdkWrapper
+        )
+
+        setupColorTheming()
+        setupLocalization(with: localizationProvider)
+
+        guard let store = self.store else {
+            fatalError("Construction of dependencies failed")
+        }
+        let toolkitHostingController = makeToolkitHostingController(
+            router: NavigationRouter(store: store, logger: logger),
+            logger: logger,
+            viewFactory: viewFactory,
+            isRightToLeft: localizationProvider.isRightToLeft
+        )
+
+        present(toolkitHostingController)
+    }
+
+    private func onCallsAdded(callId: String) {
+        if store?.state.callingState.callId != callId {
+            let callKitOptions = CallComposite.callingSDKInitialization!.callCompositeCallKitOptions!
+            let callConfiguration = CallConfiguration(callType: .oneToNCallIncoming,
+                                                      diagnosticConfig: diagnosticConfig,
+                                                      displayName: CallComposite.callingSDKInitialization!.displayName,
+                                                      callKitOptions: callKitOptions)
+            let localOptions = LocalOptions(skipSetupScreen: true)
+            self.launch(callConfiguration, localOptions: localOptions)
+        }
+    }
+
     private func constructCallingSDKInitialization(logger: Logger) -> CallingSDKInitialization {
         if let callingSDKInitialization = CallComposite.callingSDKInitialization {
+            callingSDKInitialization.callsUpdatedProtocol = incomingCallWrapper
             return callingSDKInitialization
         }
         CallComposite.callingSDKInitialization = CallingSDKInitialization(logger: logger)
+        CallComposite.callingSDKInitialization?.callsUpdatedProtocol = incomingCallWrapper
+        CallComposite.callingSDKInitialization?.onCallAdded = onCallsAdded
         return CallComposite.callingSDKInitialization!
     }
 
@@ -303,9 +346,9 @@ public class CallComposite {
                                                                         isRightToLeft: isRightToLeft)
         containerUIHostingController.modalPresentationStyle = .fullScreen
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
-            containerUIHostingController?.dismissSelf()
-            self?.exitManager?.onDismissed()
-            self?.cleanUpManagers()
+             containerUIHostingController?.dismissSelf()
+             self?.exitManager?.onDismissed()
+             self?.cleanUpManagers()
         }
 
         return containerUIHostingController

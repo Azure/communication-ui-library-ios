@@ -9,6 +9,7 @@ import AppCenterCrashes
 import CallKit
 import AzureCommunicationUICalling
 import PushKit
+import OSLog
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, UNUserNotificationCenterDelegate {
@@ -63,8 +64,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate, PKPushRegistryDelegate, U
                       completion: @escaping () -> Void) {
         print("pushRegistry payload: \(payload.dictionaryPayload)")
 
-        if let entryViewController = findEntryViewController() {
-            entryViewController.onPushNotificationReceived(dictionaryPayload: payload.dictionaryPayload)
+        if isAppInForeground() {
+            os_log("calling demo app: app is in foreground")
+            if let entryViewController = findEntryViewController() {
+                os_log("calling demo app: onPushNotificationReceived")
+                entryViewController.onPushNotificationReceived(dictionaryPayload: payload.dictionaryPayload)
+            }
+        } else {
+            os_log("calling demo app: app is not in foreground")
+            let pushInfo = CallCompositePushNotificationInfo(pushNotificationInfo: payload.dictionaryPayload)
+            let cxHandle = CXHandle(type: .generic, value: "\(pushInfo.pushNotificationInfo.callId)")
+            let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
+            let remoteInfo = CallCompositeCallKitRemoteInfo(displayName: pushInfo.pushNotificationInfo.fromDisplayName,
+                                                            cxHandle: cxHandle)
+            let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
+                                                            isCallHoldSupported: true,
+                                                            remoteInfo: remoteInfo)
+            CallComposite.reportIncomingCall(callKitOptions: callKitOptions,
+                                             callNotification: pushInfo) { result in
+                if case .success() = result {
+                    DispatchQueue.global().async {
+                        if let entryViewController = self.findEntryViewController() {
+                            os_log("calling demo app: onPushNotificationReceivedBackgroundMode")
+                            entryViewController.onPushNotificationReceivedBackgroundMode(
+                                dictionaryPayload: payload.dictionaryPayload)
+                        }
+                    }
+                } else {
+                    os_log("calling demo app: failed on reportIncomingCall")
+                }
+            }
+        }
+    }
+
+    private func isAppInForeground() -> Bool {
+        let appState = UIApplication.shared.applicationState
+
+        switch appState {
+        case .active:
+            return true
+        default:
+            return false
         }
     }
 

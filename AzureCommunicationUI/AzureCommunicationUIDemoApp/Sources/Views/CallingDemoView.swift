@@ -24,6 +24,7 @@ struct CallingDemoView: View {
     @State var isPushNotificationAvailable: Bool = false
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
+    @State static var callComposite: CallComposite?
 
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
@@ -225,9 +226,23 @@ extension CallingDemoView {
         }
     }
 
-    mutating func onPushNotificationReceived(dictionaryPayload: [AnyHashable: Any]) {
-        let callNotification = CallCompositePushNotificationInfo(pushNotificationInfo: dictionaryPayload)
-        print("hello, hello")
+    func onPushNotificationReceived(dictionaryPayload: [AnyHashable: Any]) {
+        let pushNotificationInfo = CallCompositePushNotificationInfo(pushNotificationInfo: dictionaryPayload)
+        if let communicationTokenCredential = try? CommunicationTokenCredential(token: envConfigSubject.acsToken) {
+            Task {
+                let displayName = envConfigSubject.displayName.isEmpty ? nil : envConfigSubject.displayName
+                let remoteOptions = RemoteOptions(for: pushNotificationInfo,
+                                                  credential: communicationTokenCredential,
+                                                  displayName: displayName,
+                                                  callKitOptions: getCallKitOptions())
+                do {
+                    try await createCallComposite().handlePushNotification(remoteOptions: remoteOptions)
+                } catch {
+                    // Handle the error
+                    print("Error: \(error)")
+                }
+            }
+        }
     }
 
     func createCallComposite() -> CallComposite {
@@ -263,6 +278,7 @@ extension CallingDemoView {
         callComposite = CallComposite(withOptions: callCompositeOptions)
         #endif
         subscribeToEvents(callComposite: callComposite)
+        CallingDemoView.callComposite = callComposite
         return callComposite
     }
 
@@ -292,12 +308,20 @@ extension CallingDemoView {
             if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
                 relaunchComposite()
             }
-            print("Call State ::::onDismissedHandler ")
+            print("::::CallingDemoView ::::onDismissedHandler ")
+        }
+        let onInomingCall: (CallCompositeIncomingCallInfo) -> Void = { [] event in
+            print("::::CallingDemoView: Incoming Call ::::CallInfo " + event.callId)
+        }
+        let onInomingCallEnded: (CallCompositeIncomingCallEndedInfo) -> Void = { [] event in
+            print("::::CallingDemoView: Incoming Call ::::CallEndedInfo \(event.code)")
         }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
         callComposite.events.onDismissed = onDismissedHandler
+        callComposite.events.onIncomingCall = onInomingCall
+        callComposite.events.onIncomingCallEnded = onInomingCallEnded
     }
 
     func startCallComposite() async {
@@ -323,7 +347,7 @@ extension CallingDemoView {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen)
-        let callKitOptions = getCallKitOPtions()
+        let callKitOptions = getCallKitOptions()
         if let credential = try? await getTokenCredential() {
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -380,13 +404,16 @@ extension CallingDemoView {
                 deviceToken: $envConfigSubject.deviceToken.wrappedValue!,
                 credential: credential,
                 displayName: displayName,
-                callKitOptions: getCallKitOPtions())
+                callKitOptions: getCallKitOptions())
             print("CallingDemoView, registerPushNotification")
-            createCallComposite().registerPushNotification(notificationOptions: notificationOptions)
+            Task {
+                do {
+                    try await createCallComposite().registerPushNotification(notificationOptions: notificationOptions)
+                } catch {
+                    print("Error: \(error)")
+                }
+            }
         }
-    }
-
-    func handlePushNotification() {
     }
 
     public func configureAudioSession() -> Error? {
@@ -400,7 +427,7 @@ extension CallingDemoView {
         return configError
     }
 
-    private func getCallKitOPtions() -> CallCompositeCallKitOption {
+    private func getCallKitOptions() -> CallCompositeCallKitOption {
         let cxHandle = CXHandle(type: .generic, value: getMeetingLink())
         let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
         var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo

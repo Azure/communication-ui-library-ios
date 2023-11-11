@@ -198,6 +198,9 @@ extension CallingSDKEventsHandler: CallDelegate,
         let callInfoModel = CallInfoModel(status: currentStatus,
                                           internalError: internalError)
         callInfoSubject.send(callInfoModel)
+        if currentStatus == .connected {
+            addRemoteParticipants(call.remoteParticipants)
+        }
         self.previousCallingStatus = currentStatus
     }
 

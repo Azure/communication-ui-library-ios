@@ -53,11 +53,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
         logger.debug( "Starting call")
         do {
-            try await callingSDKInitialization?.setupCallAgent(
-                tags: self.callConfiguration.diagnosticConfig.tags,
-                credential: self.callConfiguration.credential,
-                callKitOptions: self.callConfiguration.callKitOptions,
-                displayName: self.callConfiguration.displayName)
+            if self.callConfiguration.credential != nil {
+                try await callingSDKInitialization?.setupCallAgent(
+                    tags: self.callConfiguration.diagnosticConfig.tags,
+                    credential: self.callConfiguration.credential!,
+                    callKitOptions: self.callConfiguration.callKitOptions,
+                    displayName: self.callConfiguration.displayName)
+            }
             callAgent = callingSDKInitialization?.callAgent
         } catch {
             throw CallCompositeInternalError.callJoinFailed
@@ -100,24 +102,38 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         startCallOptions.incomingVideoOptions = incomingVideoOptions
         var joinLocator: JoinMeetingLocator?
         var participants: [CommunicationIdentifier] = []
+        var call: Call?
         if callConfiguration.compositeCallType == .groupCall,
            let groupId = callConfiguration.groupId {
             joinLocator = GroupCallLocator(groupId: groupId)
         } else if let meetingLink = callConfiguration.meetingLink {
             joinLocator = TeamsMeetingLinkLocator(meetingLink: meetingLink)
-        } else if callConfiguration.compositeCallType == .oneToNCall,
+        } else if callConfiguration.compositeCallType == .oneToNCallOutgoing,
         let callParticipants = callConfiguration.participants {
             participants = callParticipants.map { indentifier in
                 createCommunicationIdentifier(fromRawId: indentifier)
             }
+        } else if callConfiguration.compositeCallType == .oneToNCallIncoming {
+            call = callAgent?.calls.first
         } else {
-            logger.error("Invalid groupID / meeting link")
-            throw CallCompositeInternalError.callJoinFailed
+           logger.error("Invalid call")
+           throw CallCompositeInternalError.callJoinFailed
         }
         if let joinLocatorForGroupCall = joinLocator {
             try await self.joinCallForGroupCall(joinLocator: joinLocatorForGroupCall, joinCallOptions: joinCallOptions)
-        } else if callConfiguration.compositeCallType == .oneToNCall {
+        } else if callConfiguration.compositeCallType == .oneToNCallOutgoing {
             try await self.startCall(participants: participants, startCallOptions: startCallOptions)
+        } else if callConfiguration.compositeCallType == .oneToNCallIncoming {
+            let joinedCall = call
+            guard let joinedCall = joinedCall else {
+                logger.error( "incoming Join call failed")
+                throw CallCompositeInternalError.callJoinFailed
+            }
+            if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
+                joinedCall.delegate = callingEventsHandler
+            }
+            self.call = joinedCall
+            setupFeatures()
         }
     }
 

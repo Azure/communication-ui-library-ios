@@ -10,7 +10,7 @@ struct CallConfiguration {
     let groupId: UUID?
     let meetingLink: String?
     let compositeCallType: CompositeCallType
-    let credential: CommunicationTokenCredential
+    let credential: CommunicationTokenCredential?
     let displayName: String?
     let diagnosticConfig: DiagnosticConfig
     let callKitOptions: CallCompositeCallKitOption?
@@ -44,8 +44,22 @@ struct CallConfiguration {
          callKitOptions: CallCompositeCallKitOption? = nil,
          diagnosticConfig: DiagnosticConfig) {
         self.participants = startCallOptions.participants
-        self.compositeCallType = .oneToNCall
+        self.compositeCallType = .oneToNCallOutgoing
         self.credential = credential
+        self.displayName = displayName
+        self.groupId = nil
+        self.meetingLink = nil
+        self.callKitOptions = callKitOptions
+        self.diagnosticConfig = diagnosticConfig
+    }
+
+    init(callType: CompositeCallType,
+         diagnosticConfig: DiagnosticConfig,
+         displayName: String?,
+         callKitOptions: CallCompositeCallKitOption) {
+        self.participants = nil
+        self.compositeCallType = callType
+        self.credential = nil
         self.displayName = displayName
         self.groupId = nil
         self.meetingLink = nil
@@ -57,5 +71,6 @@ struct CallConfiguration {
 enum CompositeCallType {
     case groupCall
     case teamsMeeting
-    case oneToNCall
+    case oneToNCallOutgoing
+    case oneToNCallIncoming
 }

@@ -57,6 +57,15 @@ class EntryViewController: UIViewController {
         swiftUIDemoView?.onPushNotificationReceived(dictionaryPayload: dictionaryPayload)
     }
 
+    // launch calling composite when user launch callkit on app background state
+    func onPushNotificationReceivedBackgroundMode(dictionaryPayload: [AnyHashable: Any]) {
+        uiKitDemoViewController?.onPushNotificationReceived(dictionaryPayload: dictionaryPayload)
+        swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject,
+                                              callingViewModel: callingViewModel,
+                                              callingSDKWrapperMock: callingSDKWrapperMock)
+        swiftUIDemoView?.onPushNotificationReceived(dictionaryPayload: dictionaryPayload)
+    }
+
     func registerDeviceToken(deviceCode: Data) {
         envConfigSubject.deviceToken = deviceCode
     }

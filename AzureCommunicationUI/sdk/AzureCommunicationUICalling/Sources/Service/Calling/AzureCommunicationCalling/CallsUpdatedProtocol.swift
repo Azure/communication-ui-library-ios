@@ -8,5 +8,4 @@ import AzureCommunicationCalling
 
 protocol CallsUpdatedProtocol {
     func onIncomingCall(incomingCall: IncomingCall)
-    func onCallsUpdated()
 }

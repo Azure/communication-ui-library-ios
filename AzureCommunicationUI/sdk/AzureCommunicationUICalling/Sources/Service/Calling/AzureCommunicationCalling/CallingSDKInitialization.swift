@@ -4,16 +4,19 @@
 //
 
 import AzureCommunicationCalling
-
 import Foundation
 
-internal class CallingSDKInitialization {
+internal class CallingSDKInitialization: NSObject {
     // native calling SDK keeps single reference of call agent
     // this is to ensure that we don't create multiple call agents
     // destroying call agent is time consuming and we don't want to do it
     var callClient: CallClient?
     var callAgent: CallAgent?
     var callsUpdatedProtocol: CallsUpdatedProtocol?
+    var onCallAdded: ((String) -> Void)?
+    var displayName: String?
+    var callCompositeCallKitOptions: CallCompositeCallKitOption?
+
     private let logger: Logger
 
     init(logger: Logger) {
@@ -39,6 +42,7 @@ internal class CallingSDKInitialization {
         }
         setupCallClient(tags: tags)
         let options = CallAgentOptions()
+        self.callCompositeCallKitOptions = callKitOptions
         if let callKitConfig = callKitOptions?.cxProvideConfig {
             let callKitOptions = CallKitOptions(with: callKitConfig)
             callKitOptions.isCallHoldSupported = callKitOptions.isCallHoldSupported
@@ -48,22 +52,15 @@ internal class CallingSDKInitialization {
         if let displayName = displayName {
             options.displayName = displayName
         }
+        self.displayName = displayName
         do {
             let callAgent = try await self.callClient?.createCallAgent(
                 userCredential: credential,
                 options: options
             )
-            self.logger.debug("Call agent successfully created.")
+            self.logger.debug("LogTestTest: Call agent successfully created.")
             self.callAgent = callAgent
-            self.callAgent!.events.onIncomingCall = { [weak self] incomingCall in
-                self?.logger.debug("Incoming call received." + incomingCall.id)
-                self?.callsUpdatedProtocol?.onIncomingCall(incomingCall: incomingCall)
-            }
-            self.callAgent!.events.onCallsUpdated = { [weak self] calls in
-                self?.logger.debug("Added call count \(calls.addedCalls.count).")
-                self?.logger.debug("Removed call count \(calls.removedCalls.count).")
-                self?.callsUpdatedProtocol?.onCallsUpdated()
-            }
+            self.callAgent?.delegate = self
         } catch {
             logger.error("It was not possible to create a call agent.")
             throw error
@@ -79,6 +76,7 @@ internal class CallingSDKInitialization {
                                      displayName: notificationOptions.displayName)
             try await self.callAgent?.registerPushNotifications(
                 deviceToken: notificationOptions.deviceRegistrationToken)
+            logger.debug("LogTestTest: registerPushNotifications success")
         } catch {
             logger.error("Failed to registerPushNotification")
             throw error
@@ -91,18 +89,32 @@ internal class CallingSDKInitialization {
                                 displayName: String? = nil,
                                 callNotification: PushNotificationInfo) async throws {
         do {
+            let callKitOptionsInternal = CallKitOptions(with: callKitOptions!.cxProvideConfig)
+            callKitOptionsInternal.isCallHoldSupported = callKitOptions!.isCallHoldSupported
+            callKitOptionsInternal.configureAudioSession = callKitOptions!.configureAudioSession
+            try await CallClient.reportIncomingCall(
+                with: callNotification,
+                callKitOptions: callKitOptionsInternal
+            )
+        } catch {}
+        do {
+            self.logger.debug("LogTestTest: setupCallAgent handlePushNotification")
+
             try await setupCallAgent(tags: tags,
                                      credential: credential,
                                      callKitOptions: callKitOptions,
                                      displayName: displayName)
             try await self.callAgent?.handlePush(notification: callNotification)
+            self.logger.debug("LogTestTest: handlePush success")
         } catch {
-            logger.error("Failed to handlePush")
+            logger.error("LogTestTest: Failed to handlePush")
             throw error
         }
     }
 
     func dispose() {
+        self.callAgent?.delegate = nil
+        self.logger.debug("LogTestTest: Call agent dispose.")
         self.callsUpdatedProtocol = nil
         self.callAgent?.dispose()
         self.callAgent = nil
@@ -117,5 +129,18 @@ internal class CallingSDKInitialization {
         diagnostics.tags.append(contentsOf: appendingTag)
         clientOptions.diagnostics = diagnostics
         return CallClient(options: clientOptions)
+    }
+}
+
+extension CallingSDKInitialization: CallAgentDelegate {
+    public func callAgent(_ callAgent: CallAgent, didUpdateCalls args: CallsUpdatedEventArgs) {
+        if !args.addedCalls.isEmpty {
+            let call = args.addedCalls.first
+            self.onCallAdded?("\(String(describing: call?.id))")
+        }
+    }
+
+    public func callAgent(_ callAgent: CallAgent, didRecieveIncomingCall incomingCall: IncomingCall) {
+        self.callsUpdatedProtocol?.onIncomingCall(incomingCall: incomingCall)
     }
 }
