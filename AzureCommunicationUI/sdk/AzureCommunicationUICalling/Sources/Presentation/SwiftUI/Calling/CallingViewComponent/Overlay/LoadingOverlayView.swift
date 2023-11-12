@@ -13,7 +13,7 @@ struct LoadingOverlayView: View {
     private let verticalButtonPaddingSize: CGFloat = 32
     private let horizontalPaddingSize: CGFloat = 16
 
-    let viewModel: LoadingOverlayViewModel
+    @ObservedObject var viewModel: LoadingOverlayViewModel
 
     var body: some View {
         Color(StyleProvider.color.surface)

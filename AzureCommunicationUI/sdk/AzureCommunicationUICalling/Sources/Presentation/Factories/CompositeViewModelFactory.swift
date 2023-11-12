@@ -218,7 +218,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                 accessibilityProvider: accessibilityProvider,
                                 networkManager: networkManager,
                                 audioSessionManager: audioSessionManager,
-                                store: store)
+                                store: store,
+                                compositeCallType: compositeCallType)
     }
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
         OnHoldOverlayViewModel(localizationProvider: localizationProvider,
