@@ -34,6 +34,13 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         self.callingSDKInitialization = callingSDKInitialization
         super.init()
     }
+    func cleanup() {
+        localVideoStream = nil
+        deviceManager = nil
+        call = nil
+        callAgent = nil
+        callClient = nil
+    }
 
     deinit {
         logger.debug("CallingSDKWrapper deallocated")

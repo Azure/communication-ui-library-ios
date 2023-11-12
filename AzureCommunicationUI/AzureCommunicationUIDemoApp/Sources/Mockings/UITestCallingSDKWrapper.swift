@@ -45,6 +45,9 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         logger.debug("CallingSDKWrapper deallocated")
     }
 
+    func cleanup() {
+    }
+
     func setupCall() async throws {
         try await setupDeviceManager()
     }

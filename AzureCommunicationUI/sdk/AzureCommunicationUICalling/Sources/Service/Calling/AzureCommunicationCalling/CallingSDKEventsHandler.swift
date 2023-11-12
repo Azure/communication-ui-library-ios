@@ -38,6 +38,9 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         super.init()
         setupRemoteParticipantEventsAdapter()
     }
+    func cleanup() {
+        setupProperties()
+    }
 
     func assign(_ recordingCallFeature: RecordingCallFeature) {
         self.recordingCallFeature = recordingCallFeature

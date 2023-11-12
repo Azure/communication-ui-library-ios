@@ -13,7 +13,6 @@ import FluentUI
 // swiftlint:disable type_body_length
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
-
     /// The class to configure events closures for Call Composite.
     public class Events {
         /// Closure to execute when error event occurs inside Call Composite.
@@ -61,6 +60,8 @@ public class CallComposite {
     private var customCallingSdkWrapper: CallingSDKWrapperProtocol?
     private var debugInfoManager: DebugInfoManagerProtocol?
     private var callHistoryService: CallHistoryService?
+    private var callingSDKWrapper: CallingSDKWrapperProtocol?
+    private var callingSDKEventsHandler: CallingSDKEventsHandler?
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
     private let diagnosticConfig = DiagnosticConfig()
@@ -205,10 +206,8 @@ public class CallComposite {
             callCompositeEventsHandler: events,
             withCallingSDKWrapper: self.customCallingSdkWrapper
         )
-
         setupColorTheming()
         setupLocalization(with: localizationProvider)
-
         guard let store = self.store else {
             fatalError("Construction of dependencies failed")
         }
@@ -218,7 +217,6 @@ public class CallComposite {
             viewFactory: viewFactory,
             isRightToLeft: localizationProvider.isRightToLeft
         )
-
         present(toolkitHostingController)
     }
 
@@ -230,7 +228,9 @@ public class CallComposite {
                                                       displayName: CallComposite.callingSDKInitialization!.displayName,
                                                       callKitOptions: callKitOptions)
             let localOptions = LocalOptions(skipSetupScreen: true)
-            self.launch(callConfiguration, localOptions: localOptions)
+            DispatchQueue.main.async {
+                self.launch(callConfiguration, localOptions: localOptions)
+            }
         }
     }
 
@@ -251,12 +251,14 @@ public class CallComposite {
         callCompositeEventsHandler: CallComposite.Events,
         withCallingSDKWrapper wrapper: CallingSDKWrapperProtocol? = nil
     ) -> CompositeViewFactoryProtocol {
+        let callingSDKEventsHandler = CallingSDKEventsHandler(logger: logger)
         let callingSdkWrapper = wrapper ?? CallingSDKWrapper(
             logger: logger,
-            callingEventsHandler: CallingSDKEventsHandler(logger: logger),
+            callingEventsHandler: callingSDKEventsHandler,
             callConfiguration: callConfiguration,
             callingSDKInitialization: constructCallingSDKInitialization(logger: logger)
         )
+        self.callingSDKWrapper = callingSdkWrapper
 
         let store = Store.constructStore(
             logger: logger,
@@ -309,12 +311,13 @@ public class CallComposite {
             )
         )
     }
-
     private func createDebugInfoManager() -> DebugInfoManagerProtocol {
         return DebugInfoManager(callHistoryRepository: self.callHistoryRepository)
     }
-
     private func cleanUpManagers() {
+        self.callingSDKEventsHandler?.cleanup()
+        self.callingSDKWrapper?.cleanup()
+        self.callingSDKWrapper = nil
         self.errorManager = nil
         self.callStateManager = nil
         self.lifeCycleManager = nil
@@ -375,13 +378,11 @@ public class CallComposite {
             }
         }
     }
-
     private func setupLocalization(with provider: LocalizationProviderProtocol) {
         if let localizationOptions = localizationOptions {
             provider.apply(localeConfig: localizationOptions)
         }
     }
-
     private func isCompositePresentable() -> Bool {
         guard let keyWindow = UIWindow.keyWindow else {
             return false

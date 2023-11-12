@@ -69,6 +69,7 @@ protocol CallingSDKWrapperProtocol {
     func unmuteLocalMic() async throws
     func holdCall() async throws
     func resumeCall() async throws
+    func cleanup()
 
     var callingEventsHandler: CallingSDKEventsHandling { get }
 }
