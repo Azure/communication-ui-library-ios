@@ -304,7 +304,8 @@ public class CallComposite {
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
-                localOptions: localOptions
+                localOptions: localOptions,
+                compositeCallType: callConfiguration.compositeCallType
             )
         )
     }

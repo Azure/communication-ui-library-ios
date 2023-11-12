@@ -32,6 +32,7 @@ struct CallingDemoView: View {
 #if DEBUG
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
 #endif
+
     var body: some View {
         VStack {
             Text("UI Library - SwiftUI Sample")
@@ -375,13 +376,15 @@ extension CallingDemoView {
                                                 setupScreenViewData: setupScreenViewData,
                                                 cameraOn: envConfigSubject.cameraOn,
                                                 microphoneOn: envConfigSubject.microphoneOn,
-                                                skipSetupScreen: true)
+                                                skipSetupScreen: envConfigSubject.skipSetupScreen)
                 let ids: [String] = link.split(separator: ",").map {
                     String($0).trimmingCharacters(in: .whitespacesAndNewlines)
                 }
                 let startCallOptions = StartCallOptionsOneToNCall(participants: ids)
                 let remoteOptions = RemoteOptions(for: startCallOptions,
                                                   credential: credential,
+                                                  displayName: envConfigSubject.displayName.isEmpty
+                                                  ? nil : envConfigSubject.displayName,
                                                   callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
                                                   ? callKitOptions : nil)
                 callComposite.launch(remoteOptions: remoteOptions,

@@ -7,7 +7,7 @@ import SwiftUI
 import FluentUI
 
 struct JoiningCallActivityView: View {
-    let viewModel: JoiningCallActivityViewModel
+    @ObservedObject var viewModel: JoiningCallActivityViewModel
     let containerHeight: CGFloat = 52
 
     var body: some View {
