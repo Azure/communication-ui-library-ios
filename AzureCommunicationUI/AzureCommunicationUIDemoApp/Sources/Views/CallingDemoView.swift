@@ -8,6 +8,7 @@ import Foundation
 import AzureCommunicationCommon
 import AVFoundation
 import CallKit
+import OSLog
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else
@@ -25,7 +26,9 @@ struct CallingDemoView: View {
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
     @State static var callComposite: CallComposite?
-
+    // swiftlint:disable explicit_type_interface
+    let userDefault = UserDefaults.standard
+    // swiftlint:enable explicit_type_interface
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
 
@@ -227,10 +230,27 @@ extension CallingDemoView {
         }
     }
 
+    private func readStringData(key: String) -> String {
+        if userDefault.object(forKey: key) == nil {
+            return ""
+        } else {
+            return userDefault.string(forKey: key)!
+        }
+    }
+
     func onPushNotificationReceived(dictionaryPayload: [AnyHashable: Any]) {
         let pushNotificationInfo = CallCompositePushNotificationInfo(pushNotificationInfo: dictionaryPayload)
+        os_log("calling demo app: onPushNotificationReceived CallingDemoView")
+        if envConfigSubject.acsToken.isEmpty {
+            os_log("calling demo app: envConfigSubject acs token is empty")
+            var data = [String: String]()
+            data["name"] = readStringData(key: "DISPLAY_NAME")
+            data["acstoken"] = readStringData(key: "ACS_TOKEN")
+            self.envConfigSubject.update(from: data)
+        }
         if let communicationTokenCredential = try? CommunicationTokenCredential(token: envConfigSubject.acsToken) {
             Task {
+                os_log("calling demo app: calling handlePushNotification")
                 let displayName = envConfigSubject.displayName.isEmpty ? nil : envConfigSubject.displayName
                 let remoteOptions = RemoteOptions(for: pushNotificationInfo,
                                                   credential: communicationTokenCredential,
@@ -408,6 +428,7 @@ extension CallingDemoView {
                 credential: credential,
                 displayName: displayName,
                 callKitOptions: getCallKitOptions())
+            writeAnyData(key: "DISPLAY_NAME", value: displayName)
             print("CallingDemoView, registerPushNotification")
             Task {
                 do {
@@ -417,6 +438,11 @@ extension CallingDemoView {
                 }
             }
         }
+    }
+
+    private func writeAnyData(key: String, value: Any) {
+        userDefault.set(value, forKey: key)
+        userDefault.synchronize()
     }
 
     public func configureAudioSession() -> Error? {
@@ -453,6 +479,10 @@ extension CallingDemoView {
         case .token:
             let acsToken = envConfigSubject.useExpiredToken ?
                            envConfigSubject.expiredAcsToken : envConfigSubject.acsToken
+            // We need to make a service call to get token for user in case application is not running
+            // Storing token in shared preferences for demo purpose as this app is not public
+            // In production, token should be fetched from server (storing token in pref can be a security issue)
+            writeAnyData(key: "ACS_TOKEN", value: acsToken)
             if let communicationTokenCredential = try? CommunicationTokenCredential(token: acsToken) {
                 return communicationTokenCredential
             } else {
