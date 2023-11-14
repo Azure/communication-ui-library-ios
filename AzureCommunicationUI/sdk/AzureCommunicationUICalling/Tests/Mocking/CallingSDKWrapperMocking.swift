@@ -10,6 +10,8 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
+    func cleanup() {
+    }
     var error: NSError?
     var callingEventsHandler: CallingSDKEventsHandling = CallingSDKEventsHandler(logger: LoggerMocking())
 

@@ -18,6 +18,7 @@ class JoiningCallActivityViewModelTests: XCTestCase {
 extension JoiningCallActivityViewModelTests {
     func makeSUT() -> JoiningCallActivityViewModel {
         let localizationProvider = LocalizationProviderMocking()
-        return JoiningCallActivityViewModel(localizationProvider: localizationProvider)
+        return JoiningCallActivityViewModel(compositeCallType: .groupCall,
+                                            localizationProvider: localizationProvider)
     }
 }
