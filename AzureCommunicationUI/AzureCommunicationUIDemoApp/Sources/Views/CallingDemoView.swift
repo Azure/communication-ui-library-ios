@@ -311,11 +311,11 @@ extension CallingDemoView {
             }
             print("::::CallingDemoView ::::onDismissedHandler ")
         }
-        let onInomingCall: (CallCompositeIncomingCallInfo) -> Void = { [] event in
-            print("::::CallingDemoView: Incoming Call ::::CallInfo " + event.callId)
+        let onInomingCall: (CallCompositeIncomingCallInfo) -> Void = { [] _ in
+            print("::::CallingDemoView: Incoming Call ::::CallInfo ")
         }
-        let onInomingCallEnded: (CallCompositeIncomingCallEndedInfo) -> Void = { [] event in
-            print("::::CallingDemoView: Incoming Call ::::CallEndedInfo \(event.code)")
+        let onInomingCallEnded: (CallCompositeIncomingCallEndedInfo) -> Void = { [] _ in
+            print("::::CallingDemoView: Incoming Call ::::CallEndedInfo")
         }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
