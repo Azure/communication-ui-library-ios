@@ -61,8 +61,7 @@ class EntryViewController: UIViewController {
     func onPushNotificationReceivedBackgroundMode(dictionaryPayload: [AnyHashable: Any]) {
         uiKitDemoViewController?.onPushNotificationReceived(dictionaryPayload: dictionaryPayload)
         swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject,
-                                              callingViewModel: callingViewModel,
-                                              callingSDKWrapperMock: callingSDKWrapperMock)
+                                          callingViewModel: callingViewModel)
         swiftUIDemoView?.onPushNotificationReceived(dictionaryPayload: dictionaryPayload)
     }
 
