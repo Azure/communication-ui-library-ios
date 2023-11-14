@@ -62,7 +62,8 @@ class LoadingOverlayViewModel: ObservableObject, OverlayViewModelProtocol {
         }
 
         let shouldDisplay = operationStatus == .skipSetupRequested && callingStatus != .connected &&
-        callingState.status != .inLobby
+        callingState.status != .inLobby && callingState.status != .remoteHold
+        && callingState.status != .localHold
         if shouldDisplay != isDisplayed {
             isDisplayed = shouldDisplay
             accessibilityProvider.moveFocusToFirstElement()

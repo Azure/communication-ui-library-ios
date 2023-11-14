@@ -61,7 +61,8 @@ class CallingViewModel: ObservableObject {
 
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
-        let isCallConnected = store.state.callingState.status == .connected
+        let isCallConnected = store.state.callingState.status == .connected ||
+        store.state.callingState.status == .remoteHold
         let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
         isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
         controlBarViewModel = compositeViewModelFactory
@@ -143,7 +144,8 @@ class CallingViewModel: ObservableObject {
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
                                       audioSessionStatus: state.audioSessionState.status)
 
-        let newIsCallConnected = state.callingState.status == .connected
+        let newIsCallConnected = state.callingState.status == .connected ||
+        state.callingState.status == .remoteHold
         let hasRemoteParticipants = state.remoteParticipantsState.participantInfoList.count > 0
         let shouldParticipantGridDisplayed = newIsCallConnected && hasRemoteParticipants
         if shouldParticipantGridDisplayed != isParticipantGridDisplayed {
