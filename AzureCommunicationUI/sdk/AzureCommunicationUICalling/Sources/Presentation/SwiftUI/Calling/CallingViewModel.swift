@@ -72,7 +72,8 @@ class CallingViewModel: ObservableObject {
             .makeLobbyActionErrorViewModel(localUserState: store.state.localUserState,
             dispatchAction: actionDispatch)
 
-        let isCallConnected = store.state.callingState.status == .connected
+        let isCallConnected = store.state.callingState.status == .connected ||
+        store.state.callingState.status == .remoteHold
 
         isParticipantGridDisplayed = isCallConnected &&
             CallingViewModel.hasRemoteParticipants(store.state.remoteParticipantsState.participantInfoList)
@@ -169,7 +170,9 @@ class CallingViewModel: ObservableObject {
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
                                       audioSessionStatus: state.audioSessionState.status)
 
-        let newIsCallConnected = state.callingState.status == .connected
+        let newIsCallConnected = state.callingState.status == .connected ||
+        store.state.callingState.status == .remoteHold
+
         let shouldParticipantGridDisplayed = newIsCallConnected &&
             CallingViewModel.hasRemoteParticipants(state.remoteParticipantsState.participantInfoList)
         if shouldParticipantGridDisplayed != isParticipantGridDisplayed {
