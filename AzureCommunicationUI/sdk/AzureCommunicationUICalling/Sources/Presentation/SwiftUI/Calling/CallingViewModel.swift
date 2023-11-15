@@ -60,8 +60,8 @@ class CallingViewModel: ObservableObject {
         loadingOverlayViewModel = compositeViewModelFactory.makeLoadingOverlayViewModel()
 
         infoHeaderViewModel = compositeViewModelFactory
-            .makeInfoHeaderViewModel(localUserState: store.state.localUserState,
-                                     dispatchAction: actionDispatch)
+            .makeInfoHeaderViewModel(dispatchAction: actionDispatch,
+                                     localUserState: store.state.localUserState)
         lobbyWaitingHeaderViewModel = compositeViewModelFactory
             .makeLobbyWaitingHeaderViewModel(localUserState: store.state.localUserState,
             dispatchAction: actionDispatch)

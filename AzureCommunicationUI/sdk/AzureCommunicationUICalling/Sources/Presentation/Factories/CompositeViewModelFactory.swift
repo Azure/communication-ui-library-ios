@@ -42,8 +42,8 @@ protocol CompositeViewModelFactoryProtocol {
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel
-    func makeInfoHeaderViewModel(localUserState: LocalUserState,
-                                 dispatchAction: @escaping ActionDispatch) -> InfoHeaderViewModel
+    func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
+                                 localUserState: LocalUserState) -> InfoHeaderViewModel
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
                                          dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel
     func makeLobbyActionErrorViewModel(localUserState: LocalUserState,
@@ -91,7 +91,6 @@ extension CompositeViewModelFactoryProtocol {
     }
 }
 
-// swiftlint:disable type_body_length
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let store: Store<AppState, Action>
@@ -234,7 +233,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         CallDiagnosticsViewModel(localizationProvider: localizationProvider,
                                  dispatchAction: dispatchAction)
     }
+}
 
+extension CompositeViewModelFactory {
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel {
         LobbyOverlayViewModel(localizationProvider: localizationProvider,
@@ -265,16 +266,16 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             endCallConfirm: endCallConfirm,
                             localUserState: localUserState)
     }
-    func makeInfoHeaderViewModel(localUserState: LocalUserState,
-                                 dispatchAction: @escaping ActionDispatch) -> InfoHeaderViewModel {
+    func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
+                                 localUserState: LocalUserState) -> InfoHeaderViewModel {
         InfoHeaderViewModel(compositeViewModelFactory: self,
                             logger: logger,
+                            dispatchAction: dispatchAction,
                             localUserState: localUserState,
                             localizationProvider: localizationProvider,
                             accessibilityProvider: accessibilityProvider,
                             enableMultitasking: enableMultitasking,
-                            enableSystemPiPWhenMultitasking: enableSystemPiPWhenMultitasking,
-                            dispatchAction: dispatchAction)
+                            enableSystemPiPWhenMultitasking: enableSystemPiPWhenMultitasking)
     }
 
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,

@@ -194,16 +194,16 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           localUserState: localUserState)
     }
 
-    func makeInfoHeaderViewModel(localUserState: LocalUserState,
-                                 dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> InfoHeaderViewModel {
+    func makeInfoHeaderViewModel(dispatchAction: @escaping ActionDispatch,
+                                 localUserState: LocalUserState) -> InfoHeaderViewModel {
         return infoHeaderViewModel ?? InfoHeaderViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
+                                                          dispatchAction: dispatchAction,
                                                           localUserState: localUserState,
                                                           localizationProvider: localizationProvider,
                                                           accessibilityProvider: accessibilityProvider,
                                                           enableMultitasking: true,
-                                                          enableSystemPiPWhenMultitasking: true,
-                                                          dispatchAction: dispatchAction)
+                                                          enableSystemPiPWhenMultitasking: true)
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel, lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel {
