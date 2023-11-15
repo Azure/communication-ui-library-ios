@@ -156,7 +156,6 @@ class CallingViewModelTests: XCTestCase {
                                                                         dispatchAction: storeFactory.store.dispatch,
                                                                         localUserState: storeFactory.store.state.localUserState,
                                                                         accessibilityProvider: accessibilityProvider,
-                                                                        dispatchAction: storeFactory.store.dispatch,
                                                                         updateState: updateInfoHeaderViewModel)
 
         let sut = makeSUT()

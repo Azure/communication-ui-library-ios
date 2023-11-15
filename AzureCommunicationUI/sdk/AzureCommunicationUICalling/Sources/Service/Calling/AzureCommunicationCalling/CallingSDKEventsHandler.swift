@@ -23,11 +23,6 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
     var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()
 
-    // User Facing Diagnostics Subjects
-    var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
-    var networkDiagnosticsSubject = PassthroughSubject<NetworkDiagnosticModel, Never>()
-    var mediaDiagnosticsSubject = PassthroughSubject<MediaDiagnosticModel, Never>()
-
     private let logger: Logger
     private var remoteParticipantEventAdapter = RemoteParticipantsEventsAdapter()
 

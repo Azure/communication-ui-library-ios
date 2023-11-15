@@ -265,9 +265,6 @@ extension CallingDemoView {
         callingViewModel.callComposite?.displayCallCompositeIfWasHidden()
     }
 
-    func startCallComposite() async {
-        let link = getMeetingLink()
-
     private func readStringData(key: String) -> String {
         if userDefault.object(forKey: key) == nil {
             return ""
@@ -325,11 +322,10 @@ extension CallingDemoView {
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig,
             setupScreenOrientation: setupViewOrientation,
-            callingScreenOrientation: callingViewOrientation)
-        var callComposite: CallComposite
             callingScreenOrientation: callingViewOrientation,
             enableMultitasking: true,
             enableSystemPiPWhenMultitasking: true)
+        var callComposite: CallComposite
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         callComposite = useMockCallingSDKHandler ?
@@ -351,6 +347,9 @@ extension CallingDemoView {
             }
             self.onRemoteParticipantJoined(to: composite,
                                            identifiers: ids)
+        }
+        let onPipChangedHandler: (Bool) -> Void = { isInPictureInPicture in
+            print("::::CallingDemoView:onPipChangedHandler: ", isInPictureInPicture)
         }
         let onErrorHandler: (CallCompositeError) -> Void = { [weak callComposite] error in
             guard let composite = callComposite else {
@@ -386,6 +385,7 @@ extension CallingDemoView {
         callComposite.events.onDismissed = onDismissedHandler
         callComposite.events.onIncomingCall = onInomingCall
         callComposite.events.onIncomingCallEnded = onInomingCallEnded
+        callComposite.events.onPictureInPictureChanged = onPipChangedHandler
     }
 
     func startCallComposite() async {
@@ -400,15 +400,6 @@ extension CallingDemoView {
                 callComposite?.dismiss()
             }
         }
-        let onPipChangedHandler: (Bool) -> Void = { isInPictureInPicture in
-            print("::::CallingDemoView:onPipChangedHandler: ", isInPictureInPicture)
-        }
-
-        callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
-        callComposite.events.onError = onErrorHandler
-        callComposite.events.onCallStateChanged = onCallStateChangedHandler
-        callComposite.events.onDismissed = onDismissedHandler
-        callComposite.events.onPictureInPictureChanged = onPipChangedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
@@ -477,14 +468,18 @@ extension CallingDemoView {
                 if envConfigSubject.displayName.isEmpty {
                     callComposite.launch(remoteOptions:
                                             RemoteOptions(for: .roomCall(roomId: link),
-                                                          credential: credential),
+                                                          credential: credential,
+                                                          callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
+                                                          ? callKitOptions : nil),
                                          localOptions: localOptions)
                 } else {
                     callComposite.launch(
                         remoteOptions: RemoteOptions(for:
                                 .roomCall(roomId: link),
                                                      credential: credential,
-                                                     displayName: envConfigSubject.displayName),
+                                                     displayName: envConfigSubject.displayName,
+                                                     callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
+                                                     ? callKitOptions : nil),
                         localOptions: localOptions)
                 }
             }

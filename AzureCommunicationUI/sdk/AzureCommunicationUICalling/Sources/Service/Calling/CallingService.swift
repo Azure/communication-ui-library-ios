@@ -20,10 +20,6 @@ protocol CallingServiceProtocol {
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
     var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never> { get }
 
-    var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
-    var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
-    var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never> { get }
-
     func setupCall() async throws
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws
     func endCall() async throws

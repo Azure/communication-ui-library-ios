@@ -22,7 +22,7 @@ struct CallConfiguration {
          credential: CommunicationTokenCredential,
          displayName: String?,
          callKitOptions: CallCompositeCallKitOption? = nil,
-         diagnosticConfig: DiagnosticConfig) {
+         diagnosticConfig: DiagnosticConfig,
          roomRole: ParticipantRole?) {
         switch locator {
         case let .groupCall(groupId: groupId):
@@ -64,6 +64,8 @@ struct CallConfiguration {
         self.meetingLink = nil
         self.callKitOptions = callKitOptions
         self.diagnosticConfig = diagnosticConfig
+        self.roomId = nil
+        self.roomRoleHint = nil
     }
 
     init(callType: CompositeCallType,
@@ -78,6 +80,8 @@ struct CallConfiguration {
         self.meetingLink = nil
         self.callKitOptions = callKitOptions
         self.diagnosticConfig = diagnosticConfig
+        self.roomId = nil
+        self.roomRoleHint = nil
     }
 }
 

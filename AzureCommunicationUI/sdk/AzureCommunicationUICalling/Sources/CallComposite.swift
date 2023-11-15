@@ -13,6 +13,7 @@ import AVKit
 import Combine
 
 // swiftlint:disable type_body_length
+// swiftlint:disable file_length
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
     /// The class to configure events closures for Call Composite.
@@ -180,7 +181,8 @@ public class CallComposite {
                                                   credential: remoteOptions.credential,
                                                   displayName: remoteOptions.displayName,
                                                   callKitOptions: remoteOptions.callKitOptions,
-                                                  diagnosticConfig: diagnosticConfig)
+                                                  diagnosticConfig: diagnosticConfig,
+                                                  roomRole: localOptions?.roleHint)
         } else if let startCallOptions = remoteOptions.startCallOptions {
             callConfiguration = CallConfiguration(startCallOptions: startCallOptions,
                                                   credential: remoteOptions.credential,
@@ -227,13 +229,18 @@ public class CallComposite {
         guard let store = self.store else {
             fatalError("Construction of dependencies failed")
         }
-        let toolkitHostingController = makeToolkitHostingController(
-            router: NavigationRouter(store: store, logger: logger),
-            logger: logger,
-            viewFactory: viewFactory,
-            isRightToLeft: localizationProvider.isRightToLeft
-        )
-        present(toolkitHostingController)
+
+        store.$state
+                    .receive(on: DispatchQueue.main)
+                    .sink { [weak self] state in
+                        self?.receive(state)
+                    }.store(in: &cancellables)
+        let viewController = makeToolkitHostingController(router: NavigationRouter(store: store, logger: logger),
+                                                                  viewFactory: viewFactory)
+
+        self.viewController = viewController
+        present(viewController)
+        UIApplication.shared.isIdleTimerDisabled = true
     }
 
     private func onCallsAdded(callId: String) {
@@ -248,31 +255,6 @@ public class CallComposite {
                 self.launch(callConfiguration, localOptions: localOptions)
             }
         }
-
-        store.$state
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] state in
-                self?.receive(state)
-            }.store(in: &cancellables)
-
-        let viewController = makeToolkitHostingController(router: NavigationRouter(store: store, logger: logger),
-                                                          viewFactory: viewFactory)
-        self.viewController = viewController
-        present(viewController)
-        UIApplication.shared.isIdleTimerDisabled = true
-    }
-
-    /// Start Call Composite experience with joining a Teams meeting.
-    /// - Parameter remoteOptions: RemoteOptions used to send to ACS to locate the call.
-    /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
-    ///                            This is data is not sent up to ACS.
-    public func launch(remoteOptions: RemoteOptions,
-                       localOptions: LocalOptions? = nil) {
-        let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
-                                                  credential: remoteOptions.credential,
-                                                  displayName: remoteOptions.displayName,
-                                                  roomRole: localOptions?.roleHint)
-        launch(callConfiguration, localOptions: localOptions)
     }
 
     private func constructCallingSDKInitialization(logger: Logger) -> CallingSDKInitialization {
@@ -330,8 +312,6 @@ public class CallComposite {
             callingSDKInitialization: constructCallingSDKInitialization(logger: logger)
         )
         self.callingSDKWrapper = callingSdkWrapper
-            callingEventsHandler: CallingSDKEventsHandler(logger: logger),
-            callConfiguration: callConfiguration)
 
         let store = Store.constructStore(
             logger: logger,
@@ -385,7 +365,7 @@ public class CallComposite {
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
                 localOptions: localOptions,
-                compositeCallType: callConfiguration.compositeCallType
+                compositeCallType: callConfiguration.compositeCallType,
                 enableMultitasking: enableMultitasking,
                 enableSystemPiPWhenMultitasking: enableSystemPiPWhenMultitasking
             )

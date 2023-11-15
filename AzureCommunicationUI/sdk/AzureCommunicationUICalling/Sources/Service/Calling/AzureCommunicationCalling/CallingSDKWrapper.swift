@@ -365,7 +365,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         let identifier = createCommunicationIdentifier(fromRawId: participantId)
 
         do {
-            try await call.lobby.reject(identifier, options: nil)
+            try await call.lobby.reject(identifier: identifier, options: nil)
             logger.debug("Reject lobby participants successful")
         } catch {
             logger.error("ERROR: It was not possible to reject lobby participants. \(error)")

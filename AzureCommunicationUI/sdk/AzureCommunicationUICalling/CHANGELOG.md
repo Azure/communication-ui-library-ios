@@ -1,16 +1,11 @@
 # Azure Communication UI Calling Release History
 
-## Upcoming
+## 1.6.0-beta.0 (2023-*)
 ### Features
 - CallKit integration for outgoing call
-  
-### Bug Fixes
-- Hide lobby users in GridView and Participant List
-
-
-### Features
 - Introduce Call Diagnostic banners to show [user facing diagnostics](https://learn.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/user-facing-diagnostics?pivots=platform-ios) that could indicate due to some underlying issue a user might have a poor experience. 
- 
+- ACS 1 to N Calling Support
+  
 ### Bug Fixes
 - Hide lobby users in GridView and Participant List
 

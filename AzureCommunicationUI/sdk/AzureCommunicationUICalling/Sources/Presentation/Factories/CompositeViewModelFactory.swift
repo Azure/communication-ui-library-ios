@@ -115,7 +115,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          accessibilityProvider: AccessibilityProviderProtocol,
          debugInfoManager: DebugInfoManagerProtocol,
          localOptions: LocalOptions? = nil,
-         compositeCallType: CompositeCallType) {
+         compositeCallType: CompositeCallType,
          enableMultitasking: Bool,
          enableSystemPiPWhenMultitasking: Bool) {
         self.logger = logger

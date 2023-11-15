@@ -79,6 +79,8 @@ class RemoteOptionsTests: XCTestCase {
             XCTFail("Should not be a teams meeting with teamsLink \(locatorTeamsLink)")
         case let .roomCall(roomId: locatorRoomId):
             XCTAssertEqual(roomID, locatorRoomId)
+        case .none:
+            XCTFail("Should not be a other call")
         }
     }
 }
