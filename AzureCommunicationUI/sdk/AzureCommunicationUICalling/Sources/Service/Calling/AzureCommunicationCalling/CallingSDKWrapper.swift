@@ -8,6 +8,8 @@ import AzureCommunicationCalling
 import Combine
 import Foundation
 
+// swiftlint:disable file_length
+// swiftlint:disable type_body_length
 class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
@@ -18,16 +20,26 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     private var call: Call?
     private var deviceManager: DeviceManager?
     private var localVideoStream: AzureCommunicationCalling.LocalVideoStream?
+    private var callingSDKInitialization: CallingSDKInitialization?
 
     private var newVideoDeviceAddedHandler: ((VideoDeviceInfo) -> Void)?
 
     init(logger: Logger,
          callingEventsHandler: CallingSDKEventsHandling,
-         callConfiguration: CallConfiguration) {
+         callConfiguration: CallConfiguration,
+         callingSDKInitialization: CallingSDKInitialization) {
         self.logger = logger
         self.callingEventsHandler = callingEventsHandler
         self.callConfiguration = callConfiguration
+        self.callingSDKInitialization = callingSDKInitialization
         super.init()
+    }
+    func cleanup() {
+        localVideoStream = nil
+        deviceManager = nil
+        call = nil
+        callAgent = nil
+        callClient = nil
     }
 
     deinit {
@@ -35,7 +47,9 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     }
 
     func setupCall() async throws {
-        try await setupCallClientAndDeviceManager()
+        callingSDKInitialization?.setupCallClient(tags: self.callConfiguration.diagnosticConfig.tags)
+        callClient = callingSDKInitialization?.callClient!
+        try await setupDeviceManager()
     }
 
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
@@ -46,7 +60,14 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
         logger.debug( "Starting call")
         do {
-            try await setupCallAgent()
+            if self.callConfiguration.credential != nil {
+                try await callingSDKInitialization?.setupCallAgent(
+                    tags: self.callConfiguration.diagnosticConfig.tags,
+                    credential: self.callConfiguration.credential!,
+                    callKitOptions: self.callConfiguration.callKitOptions,
+                    displayName: self.callConfiguration.displayName)
+            }
+            callAgent = callingSDKInitialization?.callAgent
         } catch {
             throw CallCompositeInternalError.callJoinFailed
         }
@@ -56,6 +77,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     func joinCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
         logger.debug( "Joining call")
         let joinCallOptions = JoinCallOptions()
+        let startCallOptions = StartCallOptions()
 
         // to fix iOS 15 issue
         // by default on iOS 15 calling SDK incoming type is raw video
@@ -70,25 +92,73 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             let videoOptions = OutgoingVideoOptions()
             videoOptions.streams = localVideoStreamArray
             joinCallOptions.outgoingVideoOptions = videoOptions
+            startCallOptions.outgoingVideoOptions = videoOptions
         }
-
+        if let callKitOptions = self.callConfiguration.callKitOptions,
+            let remoteInfo = callKitOptions.remoteInfo {
+                let callKitRemoteInfo = CallKitRemoteInfo()
+                callKitRemoteInfo.displayName = remoteInfo.displayName
+                callKitRemoteInfo.handle = remoteInfo.cxHandle
+                joinCallOptions.callKitRemoteInfo = callKitRemoteInfo
+        }
         joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
         joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
         joinCallOptions.incomingVideoOptions = incomingVideoOptions
-
-        var joinLocator: JoinMeetingLocator
+        startCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
+        startCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
+        startCallOptions.incomingVideoOptions = incomingVideoOptions
+        var joinLocator: JoinMeetingLocator?
+        var participants: [CommunicationIdentifier] = []
+        var call: Call?
         if callConfiguration.compositeCallType == .groupCall,
            let groupId = callConfiguration.groupId {
             joinLocator = GroupCallLocator(groupId: groupId)
         } else if let meetingLink = callConfiguration.meetingLink {
             joinLocator = TeamsMeetingLinkLocator(meetingLink: meetingLink)
+        } else if callConfiguration.compositeCallType == .oneToNCallOutgoing,
+        let callParticipants = callConfiguration.participants {
+            participants = callParticipants.map { indentifier in
+                createCommunicationIdentifier(fromRawId: indentifier)
+            }
+        } else if callConfiguration.compositeCallType == .oneToNCallIncoming {
+            call = callAgent?.calls.first
         } else {
-            logger.error("Invalid groupID / meeting link")
+           logger.error("Invalid call")
+           throw CallCompositeInternalError.callJoinFailed
+        }
+        if let joinLocatorForGroupCall = joinLocator {
+            try await self.joinCallForGroupCall(joinLocator: joinLocatorForGroupCall, joinCallOptions: joinCallOptions)
+        } else if callConfiguration.compositeCallType == .oneToNCallOutgoing {
+            try await self.startCall(participants: participants, startCallOptions: startCallOptions)
+        } else if callConfiguration.compositeCallType == .oneToNCallIncoming {
+            let joinedCall = call
+            guard let joinedCall = joinedCall else {
+                logger.error( "incoming Join call failed")
+                throw CallCompositeInternalError.callJoinFailed
+            }
+            if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
+                joinedCall.delegate = callingEventsHandler
+            }
+            self.call = joinedCall
+            setupFeatures()
+        }
+    }
+
+    private func startCall(participants: [CommunicationIdentifier], startCallOptions: StartCallOptions) async throws {
+        let joinedCall = try await callAgent?.startCall(participants: participants, options: startCallOptions)
+        guard let joinedCall = joinedCall else { logger.error( "Join call failed")
             throw CallCompositeInternalError.callJoinFailed
         }
 
-        let joinedCall = try await callAgent?.join(with: joinLocator, joinCallOptions: joinCallOptions)
+        if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
+            joinedCall.delegate = callingEventsHandler
+        }
+        self.call = joinedCall
+        self.setupFeatures()
+    }
 
+    private func joinCallForGroupCall(joinLocator: JoinMeetingLocator, joinCallOptions: JoinCallOptions) async throws {
+        let joinedCall = try await callAgent?.join(with: joinLocator, joinCallOptions: joinCallOptions)
         guard let joinedCall = joinedCall else {
             logger.error( "Join call failed")
             throw CallCompositeInternalError.callJoinFailed
@@ -255,48 +325,14 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 }
 
 extension CallingSDKWrapper {
-    private func setupCallClientAndDeviceManager() async throws {
+    private func setupDeviceManager() async throws {
         do {
-            let client = makeCallClient()
-            callClient = client
-            let deviceManager = try await client.getDeviceManager()
-            deviceManager.delegate = self
+            let deviceManager = try await callingSDKInitialization?.callClient?.getDeviceManager()
+            deviceManager?.delegate = self
             self.deviceManager = deviceManager
         } catch {
             throw CallCompositeInternalError.deviceManagerFailed(error)
         }
-    }
-
-    private func setupCallAgent() async throws {
-        guard callAgent == nil else {
-            logger.debug("Reusing call agent")
-            return
-        }
-
-        let options = CallAgentOptions()
-        if let displayName = callConfiguration.displayName {
-            options.displayName = displayName
-        }
-        do {
-            let callAgent = try await callClient?.createCallAgent(
-                userCredential: callConfiguration.credential,
-                options: options
-            )
-            self.logger.debug("Call agent successfully created.")
-            self.callAgent = callAgent
-        } catch {
-            logger.error("It was not possible to create a call agent.")
-            throw error
-        }
-    }
-
-    private func makeCallClient() -> CallClient {
-        let clientOptions = CallClientOptions()
-        let appendingTag = self.callConfiguration.diagnosticConfig.tags
-        let diagnostics = clientOptions.diagnostics ?? CallDiagnosticsOptions()
-        diagnostics.tags.append(contentsOf: appendingTag)
-        clientOptions.diagnostics = diagnostics
-        return CallClient(options: clientOptions)
     }
 
     private func startCallVideoStream(

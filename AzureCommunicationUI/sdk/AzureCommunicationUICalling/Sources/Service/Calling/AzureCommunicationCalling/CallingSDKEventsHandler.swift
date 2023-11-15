@@ -38,6 +38,9 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         super.init()
         setupRemoteParticipantEventsAdapter()
     }
+    func cleanup() {
+        setupProperties()
+    }
 
     func assign(_ recordingCallFeature: RecordingCallFeature) {
         self.recordingCallFeature = recordingCallFeature
@@ -188,6 +191,7 @@ extension CallingSDKEventsHandler: CallDelegate,
         callIdSubject.send(call.id)
 
         let currentStatus = call.state.toCallingStatus()
+
         let internalError = call.callEndReason.toCompositeInternalError(wasCallConnected())
         if internalError != nil {
             let code = call.callEndReason.code
@@ -198,6 +202,9 @@ extension CallingSDKEventsHandler: CallDelegate,
         let callInfoModel = CallInfoModel(status: currentStatus,
                                           internalError: internalError)
         callInfoSubject.send(callInfoModel)
+        if currentStatus == .connected {
+            addRemoteParticipants(call.remoteParticipants)
+        }
         self.previousCallingStatus = currentStatus
     }
 

@@ -6,7 +6,7 @@
 import Combine
 import Foundation
 
-class LoadingOverlayViewModel: OverlayViewModelProtocol {
+class LoadingOverlayViewModel: ObservableObject, OverlayViewModelProtocol {
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let store: Store<AppState, Action>
@@ -16,12 +16,14 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
     var cancellables = Set<AnyCancellable>()
     var networkManager: NetworkManager
     var audioSessionManager: AudioSessionManagerProtocol
+    @Published var title: String = ""
 
     init(localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          networkManager: NetworkManager,
          audioSessionManager: AudioSessionManagerProtocol,
-         store: Store<AppState, Action>
+         store: Store<AppState, Action>,
+         compositeCallType: CompositeCallType
     ) {
         self.localizationProvider = localizationProvider
         self.accessibilityProvider = accessibilityProvider
@@ -35,14 +37,14 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
             .sink { [weak self] state in
                 self?.receive(state)
             }.store(in: &cancellables)
+        title = localizationProvider.getLocalizedString(.joiningCall)
+        if compositeCallType == CompositeCallType.oneToNCallOutgoing {
+            title = localizationProvider.getLocalizedString(.startingCall)
+        }
     }
 
     deinit {
         networkManager.stopMonitor()
-    }
-
-    var title: String {
-        return localizationProvider.getLocalizedString(.joiningCall)
     }
 
     var subtitle: String = ""
@@ -54,9 +56,14 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
         let callingState = state.callingState
         callingStatus = callingState.status
         operationStatus = callingState.operationStatus
-        let shouldDisplay = operationStatus == .skipSetupRequested && callingStatus != .connected &&
-        callingState.status != .inLobby
 
+        if callingStatus == CallingStatus.ringing {
+            title = localizationProvider.getLocalizedString(.ringingCall)
+        }
+
+        let shouldDisplay = operationStatus == .skipSetupRequested && callingStatus != .connected &&
+        callingState.status != .inLobby && callingState.status != .remoteHold
+        && callingState.status != .localHold
         if shouldDisplay != isDisplayed {
             isDisplayed = shouldDisplay
             accessibilityProvider.moveFocusToFirstElement()

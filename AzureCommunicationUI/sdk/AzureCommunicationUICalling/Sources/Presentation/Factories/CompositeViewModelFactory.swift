@@ -77,6 +77,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
     private let localOptions: LocalOptions?
+    private let compositeCallType: CompositeCallType
 
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
@@ -88,7 +89,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          debugInfoManager: DebugInfoManagerProtocol,
-         localOptions: LocalOptions? = nil) {
+         localOptions: LocalOptions? = nil,
+         compositeCallType: CompositeCallType) {
         self.logger = logger
         self.store = store
         self.networkManager = networkManager
@@ -97,6 +99,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.localizationProvider = localizationProvider
         self.debugInfoManager = debugInfoManager
         self.localOptions = localOptions
+        self.compositeCallType = compositeCallType
     }
 
     // MARK: CompositeViewModels
@@ -108,7 +111,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                            networkManager: networkManager,
                                            audioSessionManager: audioSessionManager,
                                            localizationProvider: localizationProvider,
-                                           setupScreenViewData: localOptions?.setupScreenViewData)
+                                           setupScreenViewData: localOptions?.setupScreenViewData,
+                                           compositeCallType: compositeCallType)
             self.setupViewModel = viewModel
             self.callingViewModel = nil
             return viewModel
@@ -123,7 +127,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              store: store,
                                              localizationProvider: localizationProvider,
                                              accessibilityProvider: accessibilityProvider,
-                                             isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad)
+                                             isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad,
+                                             compositeCallType: compositeCallType)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -213,7 +218,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                 accessibilityProvider: accessibilityProvider,
                                 networkManager: networkManager,
                                 audioSessionManager: audioSessionManager,
-                                store: store)
+                                store: store,
+                                compositeCallType: compositeCallType)
     }
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
         OnHoldOverlayViewModel(localizationProvider: localizationProvider,
@@ -314,6 +320,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
-        JoiningCallActivityViewModel(localizationProvider: localizationProvider)
+        JoiningCallActivityViewModel(compositeCallType: compositeCallType,
+                                     localizationProvider: localizationProvider)
     }
 }

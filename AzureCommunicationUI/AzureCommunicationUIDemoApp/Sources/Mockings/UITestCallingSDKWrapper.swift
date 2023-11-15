@@ -45,8 +45,11 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         logger.debug("CallingSDKWrapper deallocated")
     }
 
+    func cleanup() {
+    }
+
     func setupCall() async throws {
-        try await setupCallClientAndDeviceManager()
+        try await setupDeviceManager()
     }
 
     func startCall(isCameraPreferred: Bool, isAudioPreferred: Bool) async throws {
@@ -307,10 +310,13 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             currentNetworkDiagnostic += 1
         }
     }
+
+    func handlePushNotification(remoteOptions: RemoteOptions) {
+    }
 }
 
 extension UITestCallingSDKWrapper {
-    private func setupCallClientAndDeviceManager() async throws {
+    private func setupDeviceManager() async throws {
         let client = makeCallClientMocking()
         callClientMocking = client
     }

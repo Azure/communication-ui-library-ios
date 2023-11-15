@@ -10,7 +10,7 @@ class SetupViewModel: ObservableObject {
     private let logger: Logger
     private let store: Store<AppState, Action>
     private let localizationProvider: LocalizationProviderProtocol
-
+    private let compositeCallType: CompositeCallType
     private var callingStatus: CallingStatus = .none
 
     let isRightToLeft: Bool
@@ -35,7 +35,8 @@ class SetupViewModel: ObservableObject {
          networkManager: NetworkManager,
          audioSessionManager: AudioSessionManagerProtocol,
          localizationProvider: LocalizationProviderProtocol,
-         setupScreenViewData: SetupScreenViewData? = nil) {
+         setupScreenViewData: SetupScreenViewData? = nil,
+         compositeCallType: CompositeCallType) {
         self.store = store
         self.networkManager = networkManager
         self.networkManager.startMonitor()
@@ -43,7 +44,7 @@ class SetupViewModel: ObservableObject {
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.logger = logger
-
+        self.compositeCallType = compositeCallType
         if let title = setupScreenViewData?.title, !title.isEmpty {
             // if title is not nil/empty, use given title and optional subtitle
             self.title = title
@@ -60,11 +61,14 @@ class SetupViewModel: ObservableObject {
 
         errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel(title: "",
                                                                               subtitle: "")
-
+        var callTypeLocalization = LocalizationKey.joinCall
+        if self.compositeCallType == .oneToNCallOutgoing {
+            callTypeLocalization = LocalizationKey.startCall
+        }
         joinCallButtonViewModel = compositeViewModelFactory.makePrimaryButtonViewModel(
             buttonStyle: .primaryFilled,
             buttonLabel: self.localizationProvider
-                .getLocalizedString(.joinCall),
+                .getLocalizedString(callTypeLocalization),
             iconName: .meetNow,
             isDisabled: false) { [weak self] in
                 guard let self = self else {
@@ -72,7 +76,9 @@ class SetupViewModel: ObservableObject {
                 }
                 self.joinCallButtonTapped()
         }
-        joinCallButtonViewModel.update(accessibilityLabel: self.localizationProvider.getLocalizedString(.joinCall))
+        joinCallButtonViewModel.update(
+            accessibilityLabel: self.localizationProvider.getLocalizedString(
+            callTypeLocalization))
 
         dismissButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .leftArrow,
@@ -159,6 +165,7 @@ class SetupViewModel: ObservableObject {
                                         defaultUserState: defaultUserState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
         errorInfoViewModel.update(errorState: state.errorState)
+        joiningCallActivityViewModel.update(callingstatus: callingState.status)
     }
 
     func shouldShowSetupControlBarView() -> Bool {

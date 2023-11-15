@@ -18,6 +18,7 @@ class CallingViewModel: ObservableObject {
     private let store: Store<AppState, Action>
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
+    private let compositeCallType: CompositeCallType
 
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected: Bool = false
@@ -41,13 +42,15 @@ class CallingViewModel: ObservableObject {
          store: Store<AppState, Action>,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
-         isIpadInterface: Bool) {
+         isIpadInterface: Bool,
+         compositeCallType: CompositeCallType) {
         self.logger = logger
         self.store = store
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.accessibilityProvider = accessibilityProvider
+        self.compositeCallType = compositeCallType
         let actionDispatch: ActionDispatch = store.dispatch
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
@@ -58,7 +61,8 @@ class CallingViewModel: ObservableObject {
 
         infoHeaderViewModel = compositeViewModelFactory
             .makeInfoHeaderViewModel(localUserState: store.state.localUserState)
-        let isCallConnected = store.state.callingState.status == .connected
+        let isCallConnected = store.state.callingState.status == .connected ||
+        store.state.callingState.status == .remoteHold
         let hasRemoteParticipants = store.state.remoteParticipantsState.participantInfoList.count > 0
         isParticipantGridDisplayed = isCallConnected && hasRemoteParticipants
         controlBarViewModel = compositeViewModelFactory
@@ -140,7 +144,8 @@ class CallingViewModel: ObservableObject {
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
                                       audioSessionStatus: state.audioSessionState.status)
 
-        let newIsCallConnected = state.callingState.status == .connected
+        let newIsCallConnected = state.callingState.status == .connected ||
+        state.callingState.status == .remoteHold
         let hasRemoteParticipants = state.remoteParticipantsState.participantInfoList.count > 0
         let shouldParticipantGridDisplayed = newIsCallConnected && hasRemoteParticipants
         if shouldParticipantGridDisplayed != isParticipantGridDisplayed {

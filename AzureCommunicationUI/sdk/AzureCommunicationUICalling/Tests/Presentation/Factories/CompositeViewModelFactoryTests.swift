@@ -43,7 +43,8 @@ extension CompositeViewModelFactoryTests {
                                          audioSessionManager: AudioSessionManager(store: mockStoreFactory.store, logger: logger),
                                          localizationProvider: LocalizationProviderMocking(),
                                          accessibilityProvider: AccessibilityProviderMocking(),
-                                         debugInfoManager: DebugInfoManagerMocking())
+                                         debugInfoManager: DebugInfoManagerMocking(),
+                                         compositeCallType: .groupCall)
     }
 }
 

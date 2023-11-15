@@ -27,6 +27,8 @@ class RemoteOptionsTests: XCTestCase {
             XCTAssertEqual(locatorGroupId.uuidString, groupId.uuidString)
         case let .teamsMeeting(teamsLink: locatorTeamsLink):
             XCTFail("Should not be a teams meeting with teamsLink \(locatorTeamsLink)")
+        case .none:
+            XCTFail("Should not be a none")
         }
     }
 
@@ -48,6 +50,8 @@ class RemoteOptionsTests: XCTestCase {
             XCTFail("Should not be a group call with groupId \(locatorGroupId)")
         case let .teamsMeeting(teamsLink: locatorTeamsLink):
             XCTAssertEqual(locatorTeamsLink, meetingLink)
+        case .none:
+            XCTFail("Should not be a none")
         }
     }
 }

@@ -19,6 +19,7 @@ enum EnvConfig: String {
     case teamsMeetingLink
     case threadId
     case endpointUrl
+    case participantIds
 
     func value() -> String {
         guard let infoDict = Bundle.main.infoDictionary,
@@ -45,6 +46,8 @@ class EnvConfigSubject: ObservableObject {
     @Published var teamsMeetingLink: String = EnvConfig.teamsMeetingLink.value()
     @Published var threadId: String = EnvConfig.threadId.value()
     @Published var endpointUrl: String = EnvConfig.endpointUrl.value()
+    @Published var participantIds: String = EnvConfig.participantIds.value()
+    @Published var deviceToken: Data?
 
     @Published var selectedAcsTokenType: ACSTokenType = .token
     @Published var selectedMeetingType: MeetingType = .groupCall
@@ -62,6 +65,10 @@ class EnvConfigSubject: ObservableObject {
     @Published var useCustomRemoteParticipantViewData: Bool = false
     @Published var useMockCallingSDKHandler: Bool = false
     @Published var useRelaunchOnDismissedToggle: Bool = false
+    @Published var enableRemoteHold: Bool = true
+    @Published var enableCallKit: Bool = true
+    @Published var enableRemoteInfo: Bool = true
+    @Published var callkitRemoteInfo: String = ""
     @Published var useExpiredToken: Bool = false
     @Published var primaryColor: Color = .blue
     @Published var tint10: Color = .blue
@@ -108,6 +115,12 @@ class EnvConfigSubject: ObservableObject {
         if let acsEndpointUrl = dic["endpointurl"],
            !acsEndpointUrl.isEmpty {
             endpointUrl = acsEndpointUrl
+        }
+
+        if let oneToNCId = dic["oneToNCallingId"],
+           !participantIds.isEmpty {
+            participantIds = oneToNCId
+            selectedMeetingType = .oneToNCall
         }
     }
 }

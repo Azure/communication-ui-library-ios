@@ -37,4 +37,6 @@ enum AccessibilityIdentifier: String {
             "AzureCommunicationUICalling.CallingView.Diagnostics.BottomToast.AccessibilityID"
     case callDiagnosticMessageBarAccessibilityID =
             "AzureCommunicationUICalling.CallingView.Diagnostics.MessageBar.AccessibilityID"
+    case registerButtonAccessibilityID =
+            "AzureCommunicationUICalling.DemoView.RegisterVoipNotification.AccessibilityID"
 }
