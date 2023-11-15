@@ -7,8 +7,23 @@
 ### Bug Fixes
 - Hide lobby users in GridView and Participant List
 
+
+### Features
+- Introduce Call Diagnostic banners to show [user facing diagnostics](https://learn.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/user-facing-diagnostics?pivots=platform-ios) that could indicate due to some underlying issue a user might have a poor experience. 
+ 
+### Bug Fixes
+- Hide lobby users in GridView and Participant List
+
+## 1.5.0-beta.1 (2023-09-08)
+### New Features
+- Introducing Picture in Picture which allows video call to continue when navigating away from calling screen.
+
 ## 1.4.0 (2023-08-30)
 
+### Bug Fixes
+- Hide lobby users in GridView and Participant List
+
+## 1.4.0 (2023-08-30)
 ### Features
 - Use Dominant Speakers feature to determine which remove participants to display on the grid when number of participants more then 6.
 - Introducing call state changed event for `CallComposite.events.onCallStateChanged`.
@@ -29,6 +44,12 @@
 ### New Features
 - `LocalOptions(skipSetupScreen: Bool?)` to skip the setup screen and directly join the call. [642](https://github.com/Azure/communication-ui-library-ios/pull/642)
 - `LocalOptions(cameraOn: Bool?, microphoneOn: Bool?)` to setup the default behaviour. [642](https://github.com/Azure/communication-ui-library-ios/pull/642)
+  
+## 1.3.0-beta.1 (2023-04-05)
+### New Features
+- `LocalOptions(skipSetupScreen: Bool?)` to skip the setup screen and directly join the call. [642](https://github.com/Azure/communication-ui-library-ios/pull/642)
+- `LocalOptions(cameraOn: Bool?, microphoneOn: Bool?)` to setup the default behaviour. [642](https://github.com/Azure/communication-ui-library-ios/pull/642)
+- Join the room call [657](https://github.com/Azure/communication-ui-library-ios/pull/657)
 
 ## 1.2.0 (2023-03-09)
 ### New Features

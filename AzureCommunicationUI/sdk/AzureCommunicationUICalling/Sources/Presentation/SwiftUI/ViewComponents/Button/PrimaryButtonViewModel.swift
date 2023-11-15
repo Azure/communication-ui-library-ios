@@ -13,18 +13,21 @@ class PrimaryButtonViewModel: ObservableObject {
     let buttonStyle: FluentUI.ButtonStyle
     let buttonLabel: String
     let iconName: CompositeIcon?
+    let paddings: CompositeButton.Paddings?
     var action: (() -> Void)
 
     init(buttonStyle: FluentUI.ButtonStyle,
          buttonLabel: String,
          iconName: CompositeIcon? = nil,
          isDisabled: Bool = false,
+         paddings: CompositeButton.Paddings? = nil,
          action: @escaping (() -> Void) = {}) {
         self.buttonStyle = buttonStyle
         self.buttonLabel = buttonLabel
         self.iconName = iconName
         self.isDisabled = isDisabled
         self.action = action
+        self.paddings = paddings
     }
 
     func update(isDisabled: Bool) {

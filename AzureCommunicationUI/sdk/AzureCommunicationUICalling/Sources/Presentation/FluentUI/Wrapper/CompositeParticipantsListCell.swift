@@ -34,12 +34,19 @@ class CompositeParticipantsListCell: TableViewCell {
         setTitleLabelTextColor(color: isNameEmpty ?
                                StyleProvider.color.drawerIconDark :
                                StyleProvider.color.onSurface)
-        let customAccessoryView = getCustomAccessoryView(isHold: viewModel.isHold,
-                                                         onHoldString: viewModel.getOnHoldString(),
-                                                         isMuted: viewModel.isMuted)
-        setup(title: viewModel.getCellDisplayName(with: participantViewData),
-              customView: avatar,
-              customAccessoryView: customAccessoryView)
+
+        if viewModel.isInLobby {
+            setup(title: viewModel.getCellDisplayName(with: participantViewData),
+                  customView: avatar)
+        } else {
+            let customAccessoryView = getCustomAccessoryView(isHold: viewModel.isHold,
+                                                             onHoldString: viewModel.getOnHoldString(),
+                                                             isMuted: viewModel.isMuted)
+            setup(title: viewModel.getCellDisplayName(with: participantViewData),
+                  customView: avatar,
+                  customAccessoryView: customAccessoryView)
+        }
+
         self.titleNumberOfLines = 2
     }
 

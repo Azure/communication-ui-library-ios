@@ -149,4 +149,13 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
         return switchCameraCallCount > 0
     }
 
+    func admitAllLobbyParticipants() async throws {
+    }
+
+    func admitLobbyParticipant(_ participantId: String) async throws {
+    }
+
+    func declineLobbyParticipant(_ participantId: String) async throws {
+    }
+
 }

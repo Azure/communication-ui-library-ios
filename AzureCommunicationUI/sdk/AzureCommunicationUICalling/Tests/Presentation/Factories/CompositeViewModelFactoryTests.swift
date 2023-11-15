@@ -44,7 +44,8 @@ extension CompositeViewModelFactoryTests {
                                          localizationProvider: LocalizationProviderMocking(),
                                          accessibilityProvider: AccessibilityProviderMocking(),
                                          debugInfoManager: DebugInfoManagerMocking(),
-                                         compositeCallType: .groupCall)
+                                         enableMultitasking: true,
+                                         enableSystemPiPWhenMultitasking: true)
     }
 }
 

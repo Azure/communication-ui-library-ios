@@ -32,6 +32,8 @@ struct CallingDemoView: View {
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
 
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    let roomRoleChoices: [String] = ["Presenter", "Attendee"]
 #if DEBUG
     var callingSDKWrapperMock: UITestCallingSDKWrapper?
 #endif
@@ -43,12 +45,18 @@ struct CallingDemoView: View {
             acsTokenSelector
             displayNameTextField
             meetingSelector
+            if envConfigSubject.selectedMeetingType == .roomCall {
+                roomRoleSelector
+            } else {
+                roomRoleSelector.hidden()
+            }
             Group {
                 registerButton
                 settingButton
                 showCallHistoryButton
                 startExperienceButton
                 disposeButton
+                showExperienceButton
                 Text(callState)
             }
             Spacer()
@@ -108,6 +116,7 @@ struct CallingDemoView: View {
                 Text("Group Call").tag(MeetingType.groupCall)
                 Text("Teams Meeting").tag(MeetingType.teamsMeeting)
                 Text("1:N Call").tag(MeetingType.oneToNCall)
+                Text("Room Call").tag(MeetingType.roomCall)
             }.pickerStyle(.segmented)
             switch envConfigSubject.selectedMeetingType {
             case .groupCall:
@@ -128,6 +137,10 @@ struct CallingDemoView: View {
                 TextField(
                     "One To N Calling",
                     text: $envConfigSubject.participantIds)
+            case .roomCall:
+                TextField(
+                    "Room Id",
+                    text: $envConfigSubject.roomId)
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
                     .textFieldStyle(.roundedBorder)
@@ -135,6 +148,15 @@ struct CallingDemoView: View {
         }
         .padding(.vertical, verticalPadding)
         .padding(.horizontal, horizontalPadding)
+    }
+    var roomRoleSelector: some View {
+
+        Section {
+            Picker("Room Role Type", selection: $envConfigSubject.selectedRoomRoleType) {
+                Text("Presenter").tag(RoomRoleType.presenter)
+                Text("Attendee").tag(RoomRoleType.attendee)
+            }.pickerStyle(.segmented)
+        }
     }
 
     var settingButton: some View {
@@ -190,6 +212,14 @@ struct CallingDemoView: View {
         .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
     }
 
+    var showExperienceButton: some View {
+        Button("Show") {
+            showCallComposite()
+        }
+        .buttonStyle(DemoButtonStyle())
+        .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+    }
+
     var showCallHistoryButton: some View {
         Button("Show call history") {
             alertTitle = callingViewModel.callHistoryTitle
@@ -224,11 +254,19 @@ extension CallingDemoView {
                     isStartExperienceLoading = false
                     return
                 }
+                print("onExitedHandler: starting composite")
                 await startCallComposite()
                 isStartExperienceLoading = false
             }
         }
     }
+
+    func showCallComposite() {
+        callingViewModel.callComposite?.displayCallCompositeIfWasHidden()
+    }
+
+    func startCallComposite() async {
+        let link = getMeetingLink()
 
     private func readStringData(key: String) -> String {
         if userDefault.object(forKey: key) == nil {
@@ -289,6 +327,9 @@ extension CallingDemoView {
             setupScreenOrientation: setupViewOrientation,
             callingScreenOrientation: callingViewOrientation)
         var callComposite: CallComposite
+            callingScreenOrientation: callingViewOrientation,
+            enableMultitasking: true,
+            enableSystemPiPWhenMultitasking: true)
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         callComposite = useMockCallingSDKHandler ?
@@ -318,6 +359,7 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
+
         let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
             guard let composite = callComposite else {
                 return
@@ -325,6 +367,7 @@ extension CallingDemoView {
             onCallStateChanged(callStateEvent,
                     callComposite: composite)
         }
+
         let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
             if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
                 relaunchComposite()
@@ -357,14 +400,35 @@ extension CallingDemoView {
                 callComposite?.dismiss()
             }
         }
+        let onPipChangedHandler: (Bool) -> Void = { isInPictureInPicture in
+            print("::::CallingDemoView:onPipChangedHandler: ", isInPictureInPicture)
+        }
+
+        callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
+        callComposite.events.onError = onErrorHandler
+        callComposite.events.onCallStateChanged = onCallStateChangedHandler
+        callComposite.events.onDismissed = onDismissedHandler
+        callComposite.events.onPictureInPictureChanged = onPipChangedHandler
+
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
         let participantViewData = ParticipantViewData(avatar: UIImage(named: envConfigSubject.avatarImageName),
                                                       displayName: renderDisplayName)
+        let roomRole = envConfigSubject.selectedRoomRoleType
+        var roomRoleData: ParticipantRole?
+        if envConfigSubject.selectedMeetingType == .roomCall {
+            if roomRole == .presenter {
+                roomRoleData = ParticipantRole.presenter
+            } else if roomRole == .attendee {
+                roomRoleData = ParticipantRole.attendee
+            }
+        }
+
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
                                                           subtitle: envConfigSubject.navigationSubtitle)
         let localOptions = LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
+                                        roleHint: roomRoleData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen)
@@ -409,11 +473,26 @@ extension CallingDemoView {
                                                   ? callKitOptions : nil)
                 callComposite.launch(remoteOptions: remoteOptions,
                                      localOptions: localOptionsForOneToN)
+            case .roomCall:
+                if envConfigSubject.displayName.isEmpty {
+                    callComposite.launch(remoteOptions:
+                                            RemoteOptions(for: .roomCall(roomId: link),
+                                                          credential: credential),
+                                         localOptions: localOptions)
+                } else {
+                    callComposite.launch(
+                        remoteOptions: RemoteOptions(for:
+                                .roomCall(roomId: link),
+                                                     credential: credential,
+                                                     displayName: envConfigSubject.displayName),
+                        localOptions: localOptions)
+                }
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
         }
+        callingViewModel.callComposite = callComposite
     }
 
     func disposeComposite() {
@@ -512,6 +591,8 @@ extension CallingDemoView {
             return envConfigSubject.teamsMeetingLink
         case .oneToNCall:
             return envConfigSubject.participantIds
+        case .roomCall:
+            return envConfigSubject.roomId
         }
     }
 

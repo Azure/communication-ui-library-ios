@@ -13,8 +13,6 @@ class LeaveCallConfirmationListViewController: DrawerContainerViewController<Dra
     private lazy var leaveCallConfirmationTableView: UITableView? = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.backgroundColor = backgroundColor
-        tableView.sectionHeaderHeight = SectionConstants.headerHeight
-        tableView.sectionFooterHeight = 0
         tableView.separatorStyle = .none
         tableView.allowsSelection = true
         tableView.delegate = self

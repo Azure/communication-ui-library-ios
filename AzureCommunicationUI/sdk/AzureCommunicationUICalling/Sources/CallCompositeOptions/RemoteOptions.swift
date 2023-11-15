@@ -20,14 +20,18 @@ public struct StartCallOptionsOneToNCall {
 }
 
 /// CallComposite Locator for locating call destination
+/// CallComposite Locator for locating call destination.
 public enum JoinLocator {
-    /// Group Call with UUID groupId
+    /// Group Call with UUID groupId.
     case groupCall(groupId: UUID)
-    /// Teams Meeting with string teamsLink URI
+    /// Teams Meeting with string teamsLink URI.
     case teamsMeeting(teamsLink: String)
+    /// Rooms Call with room ID. You need to use LocalOptions parameter for
+    /// CallComposite.launch() method with roleHint provided.
+    case roomCall(roomId: String)
 }
 
-/// Object for remote options for Call Composite
+/// Object for remote options for Call Composite.
 public struct RemoteOptions {
     /// The unique identifier for the group conversation.
     public let locator: JoinLocator?

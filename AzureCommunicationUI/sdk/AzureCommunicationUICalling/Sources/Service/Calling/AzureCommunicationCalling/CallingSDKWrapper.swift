@@ -113,15 +113,19 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         if callConfiguration.compositeCallType == .groupCall,
            let groupId = callConfiguration.groupId {
             joinLocator = GroupCallLocator(groupId: groupId)
-        } else if let meetingLink = callConfiguration.meetingLink {
+        } else if callConfiguration.compositeCallType == .teamsMeeting,
+                  let meetingLink = callConfiguration.meetingLink {
             joinLocator = TeamsMeetingLinkLocator(meetingLink: meetingLink)
         } else if callConfiguration.compositeCallType == .oneToNCallOutgoing,
         let callParticipants = callConfiguration.participants {
-            participants = callParticipants.map { indentifier in
-                createCommunicationIdentifier(fromRawId: indentifier)
+            participants = callParticipants.map { identifier in
+                createCommunicationIdentifier(fromRawId: identifier)
             }
         } else if callConfiguration.compositeCallType == .oneToNCallIncoming {
             call = callAgent?.calls.first
+        } else if callConfiguration.compositeCallType == .roomsCall,
+                  let roomId = callConfiguration.roomId {
+            joinLocator = RoomCallLocator(roomId: roomId)
         } else {
            logger.error("Invalid call")
            throw CallCompositeInternalError.callJoinFailed
@@ -319,6 +323,52 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             logger.debug("Resume Call successful")
         } catch {
             logger.error( "ERROR: It was not possible to resume call. \(error)")
+            throw error
+        }
+    }
+
+    func admitAllLobbyParticipants() async throws {
+        guard let call = call else {
+            return
+        }
+
+        do {
+            try await call.lobby.admitAll(options: nil)
+            logger.debug("Admit All participants successful")
+        } catch {
+            logger.error("ERROR: It was not possible to admit all lobby participants. \(error)")
+            throw error
+        }
+    }
+
+    func admitLobbyParticipant(_ participantId: String) async throws {
+        guard let call = call else {
+            return
+        }
+
+        let identifier = createCommunicationIdentifier(fromRawId: participantId)
+
+        do {
+            try await call.lobby.admit(identifiers: [identifier], options: nil)
+            logger.debug("Admit participants successful")
+        } catch {
+            logger.error("ERROR: It was not possible to admit lobby participants. \(error)")
+            throw error
+        }
+    }
+
+    func declineLobbyParticipant(_ participantId: String) async throws {
+        guard let call = call else {
+            return
+        }
+
+        let identifier = createCommunicationIdentifier(fromRawId: participantId)
+
+        do {
+            try await call.lobby.reject(identifier, options: nil)
+            logger.debug("Reject lobby participants successful")
+        } catch {
+            logger.error("ERROR: It was not possible to reject lobby participants. \(error)")
             throw error
         }
     }

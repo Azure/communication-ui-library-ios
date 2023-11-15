@@ -51,7 +51,8 @@ class InfoHeaderViewModelTests: XCTestCase {
 
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState(currentStatus: .visible))
 
         XCTAssertEqual(sut.infoLabel, "Waiting for others to join")
         wait(for: [expectation], timeout: 1)
@@ -82,7 +83,8 @@ class InfoHeaderViewModelTests: XCTestCase {
         XCTAssertEqual(sut.infoLabel, "Waiting for others to join")
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.infoLabel, "Call with 1 person")
 
         wait(for: [expectation], timeout: 1)
@@ -127,7 +129,8 @@ class InfoHeaderViewModelTests: XCTestCase {
         XCTAssertEqual(sut.infoLabel, "Waiting for others to join")
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.infoLabel, "Call with 2 people")
 
         wait(for: [expectation], timeout: 1)
@@ -144,6 +147,7 @@ class InfoHeaderViewModelTests: XCTestCase {
             }).store(in: cancellable)
 
         var participantList: [ParticipantInfoModel] = []
+
         let participant1 = ParticipantInfoModel(
             displayName: "Participant 1",
             isSpeaking: false,
@@ -183,7 +187,8 @@ class InfoHeaderViewModelTests: XCTestCase {
         XCTAssertEqual(sut.infoLabel, "Waiting for others to join")
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.infoLabel, "Call with 1 person")
 
         wait(for: [expectation], timeout: 1)
@@ -204,14 +209,17 @@ class InfoHeaderViewModelTests: XCTestCase {
 
         let participantsListViewModel = ParticipantsListViewModelMocking(
                                                             compositeViewModelFactory: factoryMocking,
-                                                            localUserState: LocalUserState())
+                                                            localUserState: LocalUserState(),
+                                                            dispatchAction: storeFactory.store.dispatch,
+                                                            localizationProvider: localizationProvider)
         participantsListViewModel.updateStates = updateStates
         factoryMocking.participantsListViewModel = participantsListViewModel
 
         let sut = makeSUT()
         sut.update(localUserState: localUserStateValue,
                    remoteParticipantsState: remoteParticipantsStateValue,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState(currentStatus: .visible))
         wait(for: [expectation], timeout: 1)
     }
 
@@ -315,7 +323,8 @@ class InfoHeaderViewModelTests: XCTestCase {
 
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState(currentStatus: .visible))
         let expectedInfoHeaderlabel0ParticipantKey = "AzureCommunicationUICalling.CallingView.InfoHeader.WaitingForOthersToJoin"
         XCTAssertEqual(sut.infoLabel, expectedInfoHeaderlabel0ParticipantKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
@@ -365,7 +374,8 @@ class InfoHeaderViewModelTests: XCTestCase {
         XCTAssertTrue(localizationProvider.isGetLocalizedStringCalled)
         sut.update(localUserState: storeFactory.store.state.localUserState,
                    remoteParticipantsState: remoteParticipantsState,
-                   callingState: CallingState())
+                   callingState: CallingState(),
+                   visibilityState: VisibilityState(currentStatus: .visible))
         XCTAssertEqual(sut.infoLabel, expectedInfoHeaderlabelNParticipantKey)
         XCTAssertTrue(localizationProvider.isGetLocalizedStringWithArgsCalled)
 
@@ -379,9 +389,12 @@ extension InfoHeaderViewModelTests {
                  localizationProvider: LocalizationProviderMocking? = nil) -> InfoHeaderViewModel {
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
+                                   dispatchAction: storeFactory.store.dispatch,
                                    localUserState: LocalUserState(),
                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
-                                   accessibilityProvider: accessibilityProvider)
+                                   accessibilityProvider: accessibilityProvider,
+                                   enableMultitasking: true,
+                                   enableSystemPiPWhenMultitasking: true)
     }
 
     func makeSUTLocalizationMocking() -> InfoHeaderViewModel {

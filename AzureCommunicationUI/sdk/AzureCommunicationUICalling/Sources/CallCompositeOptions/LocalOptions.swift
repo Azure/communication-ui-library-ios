@@ -12,6 +12,11 @@ public struct LocalOptions {
     let participantViewData: ParticipantViewData?
     /// The SetupScreenViewData is used for call setup screen
     let setupScreenViewData: SetupScreenViewData?
+    /// Hint the role of the user when the role is not available before a Rooms call is started.
+    /// This value should be obtained using the Rooms API. This role will determine permissions in the
+    /// Setup screen of the CallComposite.
+    /// The true role of the user will be synced with ACS services when a Rooms call starts.
+    let roleHint: ParticipantRole?
     /// The CameraOn is used when we skip the setup screen
     let cameraOn: Bool?
     /// The MicrophoneOn is used when we skip the setup screen
@@ -23,14 +28,19 @@ public struct LocalOptions {
     /// - Parameters:
     ///    - participantViewData: The ParticipantViewData to be displayed for local participants avatar
     ///    - setupScreenViewData: The SetupScreenViewData to be used to set up views on setup screen
+    /// Use this to hint the role of the user when the role is not available before a Rooms call is started.
+    /// This value should be obtained using the Rooms API. This role will determine permissions in the
+    /// Setup screen of the CallComposite.
+    /// The true role of the user will be synced with ACS services when a Rooms call starts.
     public init(participantViewData: ParticipantViewData? = nil,
                 setupScreenViewData: SetupScreenViewData? = nil,
+                roleHint: ParticipantRole? = nil,
                 cameraOn: Bool? = false,
                 microphoneOn: Bool? = false,
-                skipSetupScreen: Bool? = false
-    ) {
+                skipSetupScreen: Bool? = false) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
+        self.roleHint = roleHint
         self.cameraOn = cameraOn
         self.microphoneOn = microphoneOn
         self.skipSetupScreen = skipSetupScreen
