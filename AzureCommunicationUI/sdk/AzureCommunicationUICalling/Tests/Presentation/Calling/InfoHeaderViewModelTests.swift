@@ -389,12 +389,12 @@ extension InfoHeaderViewModelTests {
                  localizationProvider: LocalizationProviderMocking? = nil) -> InfoHeaderViewModel {
         return InfoHeaderViewModel(compositeViewModelFactory: factoryMocking,
                                    logger: logger,
+                                   dispatchAction: storeFactory.store.dispatch,
                                    localUserState: LocalUserState(),
                                    localizationProvider: localizationProvider ?? LocalizationProvider(logger: logger),
                                    accessibilityProvider: accessibilityProvider,
                                    enableMultitasking: true,
-                                   enableSystemPiPWhenMultitasking: true,
-                                   dispatchAction: storeFactory.store.dispatch)
+                                   enableSystemPiPWhenMultitasking: true)
     }
 
     func makeSUTLocalizationMocking() -> InfoHeaderViewModel {

@@ -11,19 +11,19 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
+         dispatchAction: @escaping ActionDispatch,
          localUserState: LocalUserState,
          accessibilityProvider: AccessibilityProviderProtocol,
-         dispatchAction: @escaping ActionDispatch,
          updateState: ((LocalUserState, RemoteParticipantsState, CallingState, VisibilityState) -> Void)? = nil) {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
+                   dispatchAction: dispatchAction,
                    localUserState: localUserState,
                    localizationProvider: LocalizationProviderMocking(),
                    accessibilityProvider: accessibilityProvider,
                    enableMultitasking: true,
-                   enableSystemPiPWhenMultitasking: true,
-                   dispatchAction: dispatchAction)
+                   enableSystemPiPWhenMultitasking: true)
     }
 
     override func update(localUserState: LocalUserState,

@@ -30,12 +30,12 @@ class InfoHeaderViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
+         dispatchAction: @escaping ActionDispatch,
          localUserState: LocalUserState,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          enableMultitasking: Bool,
-         enableSystemPiPWhenMultitasking: Bool,
-         dispatchAction: @escaping ActionDispatch) {
+         enableSystemPiPWhenMultitasking: Bool) {
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider

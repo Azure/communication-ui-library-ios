@@ -8,8 +8,8 @@ import AzureCommunicationUICalling
 import AzureCommunicationCommon
 
 struct SettingsView: View {
-    @State private var setupSelectedOrientation: String = OrientationOptions.portrait.requestString
-    @State private var callingSelectedOrientation: String = OrientationOptions.portrait.requestString
+    @State private var setupSelectedOrientation: String = "nil"
+    @State private var callingSelectedOrientation: String = "nil"
     private enum ThemeMode: String, CaseIterable, Identifiable {
         case osApp = "OS / App"
         case light = "Light Mode"
@@ -160,17 +160,19 @@ struct SettingsView: View {
     var callingViewOrientationSettings: some View {
         Section(header: Text("Calling View Orientation")) {
             Picker("Orientation", selection: $callingSelectedOrientation) {
-                ForEach([OrientationOptions.portrait.requestString, OrientationOptions.landscape.requestString,
-                         OrientationOptions.landscapeLeft.requestString,
-                         OrientationOptions.landscapeRight.requestString,
-                         OrientationOptions.allButUpsideDown.requestString], id: \.requestString) { orientationOption in
+                ForEach(["nil",
+                        OrientationOptions.portrait.requestString,
+                        OrientationOptions.landscape.requestString,
+                        OrientationOptions.landscapeLeft.requestString,
+                        OrientationOptions.landscapeRight.requestString,
+                        OrientationOptions.allButUpsideDown.requestString
+                        ], id: \.requestString) { orientationOption in
                     Text(orientationOption.requestString.capitalized).tag(orientationOption.requestString)
                 }
             }
             .pickerStyle(MenuPickerStyle())
             .onAppear {
-                callingSelectedOrientation =
-                envConfigSubject.callingViewOrientation.requestString
+                callingSelectedOrientation = envConfigSubject.callingViewOrientation?.requestString ?? "nil"
             }
             .onChange(of: callingSelectedOrientation) { newValue in
                 switch newValue {
@@ -183,7 +185,7 @@ struct SettingsView: View {
                 case OrientationOptions.landscapeLeft.requestString:
                     envConfigSubject.callingViewOrientation = .landscapeLeft
                 default:
-                    envConfigSubject.callingViewOrientation = .allButUpsideDown
+                    envConfigSubject.callingViewOrientation = nil
                 }
             }
         }
@@ -192,8 +194,10 @@ struct SettingsView: View {
     var setupViewOrientationSettings: some View {
         Section(header: Text("Setup View Orientation")) {
             Picker("Orientation", selection: $setupSelectedOrientation) {
-                ForEach([OrientationOptions.allButUpsideDown.requestString,
-                         OrientationOptions.portrait.requestString, OrientationOptions.landscape.requestString,
+                ForEach(["nil",
+                         OrientationOptions.allButUpsideDown.requestString,
+                         OrientationOptions.portrait.requestString,
+                         OrientationOptions.landscape.requestString,
                          OrientationOptions.landscapeLeft.requestString,
                          OrientationOptions.landscapeRight.requestString], id: \.requestString) { orientationOption in
                     Text(orientationOption.requestString.capitalized).tag(orientationOption.requestString)
@@ -201,7 +205,7 @@ struct SettingsView: View {
             }
             .pickerStyle(MenuPickerStyle())
             .onAppear {
-                setupSelectedOrientation = envConfigSubject.setupViewOrientation.requestString
+                setupSelectedOrientation = envConfigSubject.setupViewOrientation?.requestString ?? "nil"
             }
             .onChange(of: setupSelectedOrientation) { newValue in
                 switch newValue {

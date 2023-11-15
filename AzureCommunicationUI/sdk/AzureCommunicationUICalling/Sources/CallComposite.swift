@@ -11,7 +11,6 @@ import FluentUI
 import AVKit
 import Combine
 
-// swiftlint:disable file_length
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
     /// The class to configure events closures for Call Composite.
@@ -130,9 +129,7 @@ public class CallComposite {
             }.store(in: &cancellables)
 
         let viewController = makeToolkitHostingController(router: NavigationRouter(store: store, logger: logger),
-                                                          logger: logger,
-                                                          viewFactory: viewFactory,
-                                                          isRightToLeft: localizationProvider.isRightToLeft)
+                                                          viewFactory: viewFactory)
         self.viewController = viewController
         present(viewController)
         UIApplication.shared.isIdleTimerDisabled = true
@@ -184,9 +181,7 @@ public class CallComposite {
 
         let viewController = makeToolkitHostingController(
             router: NavigationRouter(store: store, logger: logger),
-            logger: logger,
-            viewFactory: viewFactory,
-            isRightToLeft: localizationProvider.isRightToLeft)
+            viewFactory: viewFactory)
         self.viewController = viewController
         present(viewController)
 
@@ -290,10 +285,9 @@ public class CallComposite {
 
 extension CallComposite {
     private func makeToolkitHostingController(router: NavigationRouter,
-                                              logger: Logger,
-                                              viewFactory: CompositeViewFactoryProtocol,
-                                              isRightToLeft: Bool)
+                                              viewFactory: CompositeViewFactoryProtocol)
     -> ContainerUIHostingController {
+        let isRightToLeft = localizationProvider.isRightToLeft
         let setupViewOrientationMask = orientationProvider.orientationMask(for:
                                                                             setupViewOrientationOptions)
         let callingViewOrientationMask = orientationProvider.orientationMask(for:
@@ -315,6 +309,7 @@ extension CallComposite {
             self?.viewFactory = nil
             self?.exitManager?.onDismissed()
             self?.cleanUpManagers()
+            UIApplication.shared.isIdleTimerDisabled = false
         }
 
         return containerUIHostingController
@@ -353,7 +348,6 @@ extension CallComposite {
             return false
         }
         let hasCallComposite = keyWindow.hasViewController(ofKind: ContainerUIHostingController.self)
-
         return !hasCallComposite
     }
 
@@ -373,7 +367,6 @@ extension CallComposite {
     }
 
     private func createPipManager(_ store: Store<AppState, Action>) -> PipManager? {
-
         return PipManager(store: store, logger: logger,
                           onRequirePipContentView: {
             guard let store = self.store, let viewFactory = self.viewFactory else {
@@ -382,9 +375,7 @@ extension CallComposite {
 
             let viewController = self.makeToolkitHostingController(
             router: NavigationRouter(store: store, logger: self.logger),
-            logger: self.logger,
-            viewFactory: viewFactory,
-            isRightToLeft: self.localizationProvider.isRightToLeft)
+            viewFactory: viewFactory)
             self.pipViewController = viewController
             return viewController.view
         },

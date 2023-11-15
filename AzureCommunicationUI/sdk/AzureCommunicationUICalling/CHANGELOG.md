@@ -8,6 +8,10 @@
 ### Bug Fixes
 - Hide lobby users in GridView and Participant List
 
+## 1.5.0-beta.1 (2023-09-08)
+### New Features
+- Introducing Picture in Picture which allows video call to continue when navigating away from calling screen.
+
 ## 1.4.0 (2023-08-30)
 
 ### Bug Fixes
