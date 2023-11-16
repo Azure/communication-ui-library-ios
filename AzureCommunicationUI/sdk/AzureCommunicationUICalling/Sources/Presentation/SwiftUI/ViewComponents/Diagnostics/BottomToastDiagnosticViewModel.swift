@@ -8,13 +8,14 @@ import Foundation
 
 final class BottomToastDiagnosticViewModel: ObservableObject, Identifiable {
     // The time a bottom toast diagnostic should be presented for before
-    // automatically beging dismissed.
+    // automatically being dismissed.
     static let bottomToastBannerDismissInterval: TimeInterval = 4.0
 
     @Published private(set) var text: String = ""
     @Published private(set) var icon: CompositeIcon?
 
     private let localizationProvider: LocalizationProviderProtocol
+    private let accessibilityProvider: AccessibilityProviderProtocol
 
     private(set) var networkDiagnostic: NetworkCallDiagnostic?
     private(set) var networkQualityDiagnostic: NetworkQualityCallDiagnostic?
@@ -27,22 +28,28 @@ final class BottomToastDiagnosticViewModel: ObservableObject, Identifiable {
     ]
 
     init(localizationProvider: LocalizationProviderProtocol,
+         accessibilityProvider: AccessibilityProviderProtocol,
          mediaDiagnostic: MediaCallDiagnostic) {
         self.localizationProvider = localizationProvider
+        self.accessibilityProvider = accessibilityProvider
         self.mediaDiagnostic = mediaDiagnostic
         self.updateTextAndIcon()
     }
 
     init(localizationProvider: LocalizationProviderProtocol,
+         accessibilityProvider: AccessibilityProviderProtocol,
          networkDiagnostic: NetworkCallDiagnostic) {
         self.localizationProvider = localizationProvider
+        self.accessibilityProvider = accessibilityProvider
         self.networkDiagnostic = networkDiagnostic
         self.updateTextAndIcon()
     }
 
     init(localizationProvider: LocalizationProviderProtocol,
+         accessibilityProvider: AccessibilityProviderProtocol,
          networkQualityDiagnostic: NetworkQualityCallDiagnostic) {
         self.localizationProvider = localizationProvider
+        self.accessibilityProvider = accessibilityProvider
         self.networkQualityDiagnostic = networkQualityDiagnostic
         self.updateTextAndIcon()
     }
@@ -55,6 +62,9 @@ final class BottomToastDiagnosticViewModel: ObservableObject, Identifiable {
         } else if let networkQualityDiagnostic = networkQualityDiagnostic {
             updateTextAndIcon(for: networkQualityDiagnostic)
         }
+
+        // Announce accessibility text when toast appear.
+        accessibilityProvider.postQueuedAnnouncement(text)
     }
 
     private func updateTextAndIcon(for mediaDiagnostics: MediaCallDiagnostic) {
