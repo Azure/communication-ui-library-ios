@@ -11,6 +11,8 @@ import FluentUI
 import AVKit
 import Combine
 
+// swiftlint:disable file_length
+
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
     /// The class to configure events closures for Call Composite.
@@ -132,6 +134,12 @@ public class CallComposite {
                                                           viewFactory: viewFactory)
         self.viewController = viewController
         present(viewController)
+
+        if store.state.permissionState.audioPermission == .notAsked {
+            store.dispatch(action: .permissionAction(.audioPermissionRequested))
+        }
+        store.dispatch(action: .callingAction(.setupCall))
+
         UIApplication.shared.isIdleTimerDisabled = true
     }
 

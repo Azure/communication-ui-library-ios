@@ -113,9 +113,6 @@ class SetupViewModel: ObservableObject {
             store.dispatch(action: .callingAction(.dismissSetup))
         }
     }
-    func setupCall() {
-        store.dispatch(action: .callingAction(.setupCall))
-    }
 
     func joinCallButtonTapped() {
         guard networkManager.isOnline() else {
