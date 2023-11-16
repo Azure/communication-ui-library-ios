@@ -7,16 +7,19 @@ import Combine
 import Foundation
 
 final class CallDiagnosticsViewModel: ObservableObject {
-    private var bottomToastDimissTimer: Timer!
+    private var bottomToastDismissTimer: Timer!
     private let localizationProvider: LocalizationProviderProtocol
+    private let accessibilityProvider: AccessibilityProviderProtocol
     private let dispatch: ActionDispatch
 
     @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
     @Published var messageBarStack: [MessageBarDiagnosticViewModel] = []
 
     init(localizationProvider: LocalizationProviderProtocol,
+         accessibilityProvider: AccessibilityProviderProtocol,
          dispatchAction: @escaping ActionDispatch) {
         self.localizationProvider = localizationProvider
+        self.accessibilityProvider = accessibilityProvider
         self.dispatch = dispatchAction
         initializeMessageBarListModel()
     }
@@ -27,6 +30,7 @@ final class CallDiagnosticsViewModel: ObservableObject {
                 .map { diagnostic in
                     return MessageBarDiagnosticViewModel(
                         localizationProvider: localizationProvider,
+                        accessibilityProvider: accessibilityProvider,
                         callDiagnosticViewModel: self,
                         mediaDiagnostic: diagnostic
                     )
@@ -47,6 +51,7 @@ final class CallDiagnosticsViewModel: ObservableObject {
         updateBottomToast(isBadState: diagnosticModel.value,
                           viewModel: BottomToastDiagnosticViewModel(
                                         localizationProvider: localizationProvider,
+                                        accessibilityProvider: accessibilityProvider,
                                         networkDiagnostic: diagnosticModel.diagnostic),
                           dismissAfterInterval: true,
                           where: { $0.networkDiagnostic == diagnosticModel.diagnostic })
@@ -59,6 +64,7 @@ final class CallDiagnosticsViewModel: ObservableObject {
         updateBottomToast(isBadState: diagnosticModel.value == .bad || diagnosticModel.value == .poor,
                           viewModel: BottomToastDiagnosticViewModel(
                                         localizationProvider: localizationProvider,
+                                        accessibilityProvider: accessibilityProvider,
                                         networkQualityDiagnostic: diagnosticModel.diagnostic),
                           dismissAfterInterval: dismissAfterInterval,
                           where: { $0.networkQualityDiagnostic == diagnosticModel.diagnostic })
@@ -69,6 +75,7 @@ final class CallDiagnosticsViewModel: ObservableObject {
             updateBottomToast(isBadState: diagnosticModel.value,
                               viewModel: BottomToastDiagnosticViewModel(
                                             localizationProvider: localizationProvider,
+                                            accessibilityProvider: accessibilityProvider,
                                             mediaDiagnostic: diagnosticModel.diagnostic),
                               dismissAfterInterval: true,
                               where: { $0.mediaDiagnostic == diagnosticModel.diagnostic })
@@ -109,7 +116,7 @@ final class CallDiagnosticsViewModel: ObservableObject {
 
             // Restart timer for interval dismiss.
             if dismissAfterInterval {
-                bottomToastDimissTimer =
+                bottomToastDismissTimer =
                     Timer.scheduledTimer(withTimeInterval:
                                             BottomToastDiagnosticViewModel.bottomToastBannerDismissInterval,
                                          repeats: false) { [weak self] _ in
@@ -135,8 +142,8 @@ final class CallDiagnosticsViewModel: ObservableObject {
     }
 
     private func invalidateTimer() {
-        bottomToastDimissTimer?.invalidate()
-        bottomToastDimissTimer = nil
+        bottomToastDismissTimer?.invalidate()
+        bottomToastDismissTimer = nil
     }
 
     private func dispatchBottomToastDismissAction() {

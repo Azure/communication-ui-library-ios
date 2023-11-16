@@ -212,8 +212,9 @@ class CallDiagnosticsViewModelTests: XCTestCase {
 
 extension CallDiagnosticsViewModelTests {
     func makeSUT(dispatchAction: @escaping ActionDispatch, localizationProvider: LocalizationProviderMocking? = nil) -> CallDiagnosticsViewModel {
+        let accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking()
         return CallDiagnosticsViewModel(
-            localizationProvider: localizationProvider ?? LocalizationProvider(logger: LoggerMocking()), dispatchAction: dispatchAction
+            localizationProvider: localizationProvider ?? LocalizationProvider(logger: LoggerMocking()), accessibilityProvider: accessibilityProvider, dispatchAction: dispatchAction
         )
     }
 
