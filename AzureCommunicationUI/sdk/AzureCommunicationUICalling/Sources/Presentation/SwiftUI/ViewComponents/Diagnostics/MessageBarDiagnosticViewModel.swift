@@ -11,6 +11,7 @@ final class MessageBarDiagnosticViewModel: ObservableObject, Identifiable {
     @Published private(set) var isDisplayed: Bool = false
 
     private let localizationProvider: LocalizationProviderProtocol
+    private let accessibilityProvider: AccessibilityProviderProtocol
 
     private(set) var mediaDiagnostic: MediaCallDiagnostic
     private(set) weak var callDiagnosticViewModel: CallDiagnosticsViewModel?
@@ -31,9 +32,11 @@ final class MessageBarDiagnosticViewModel: ObservableObject, Identifiable {
     ]
 
     init(localizationProvider: LocalizationProviderProtocol,
+         accessibilityProvider: AccessibilityProviderProtocol,
          callDiagnosticViewModel: CallDiagnosticsViewModel,
          mediaDiagnostic: MediaCallDiagnostic) {
         self.localizationProvider = localizationProvider
+        self.accessibilityProvider = accessibilityProvider
         self.callDiagnosticViewModel = callDiagnosticViewModel
         self.mediaDiagnostic = mediaDiagnostic
         self.updateTextAndIcon(for: mediaDiagnostic)
@@ -68,6 +71,9 @@ final class MessageBarDiagnosticViewModel: ObservableObject, Identifiable {
 
     func show() {
         isDisplayed = true
+
+        // Announce accessibility text when displayed.
+        accessibilityProvider.postQueuedAnnouncement(text)
     }
 }
 

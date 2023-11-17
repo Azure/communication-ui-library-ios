@@ -151,7 +151,9 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel {
-        return callDiagnosticsViewModel ?? CallDiagnosticsViewModel(localizationProvider: localizationProvider, dispatchAction: dispatchAction)
+        return callDiagnosticsViewModel ?? CallDiagnosticsViewModel(localizationProvider: localizationProvider,
+                                                                    accessibilityProvider: accessibilityProvider,
+                                                                    dispatchAction: dispatchAction)
     }
 
     func makeSelectableDrawerListItemViewModel(icon: CompositeIcon,

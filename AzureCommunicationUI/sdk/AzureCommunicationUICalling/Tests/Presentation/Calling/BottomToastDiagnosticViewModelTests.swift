@@ -91,21 +91,27 @@ extension BottomToastDiagnosticViewModelTests {
     func makeSUT(mediaDiagnostic: MediaCallDiagnostic,
                  localizationProvider: LocalizationProviderMocking? = nil) -> BottomToastDiagnosticViewModel {
         let localizationProviderValue: LocalizationProviderProtocol = localizationProvider ?? LocalizationProvider(logger: LoggerMocking())
+        let accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking()
         return BottomToastDiagnosticViewModel(localizationProvider: localizationProviderValue,
+                                              accessibilityProvider: accessibilityProvider,
                                               mediaDiagnostic: mediaDiagnostic)
     }
 
     func makeSUT(networkDiagnostic: NetworkCallDiagnostic,
                  localizationProvider: LocalizationProviderMocking? = nil) -> BottomToastDiagnosticViewModel {
         let localizationProviderValue: LocalizationProviderProtocol = localizationProvider ?? LocalizationProvider(logger: LoggerMocking())
+        let accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking()
         return BottomToastDiagnosticViewModel(localizationProvider: localizationProviderValue,
+                                              accessibilityProvider: accessibilityProvider,
                                               networkDiagnostic: networkDiagnostic)
     }
 
     func makeSUT(networkQualityDiagnostic: NetworkQualityCallDiagnostic,
                  localizationProvider: LocalizationProviderMocking? = nil) -> BottomToastDiagnosticViewModel {
         let localizationProviderValue: LocalizationProviderProtocol = localizationProvider ?? LocalizationProvider(logger: LoggerMocking())
+        let accessibilityProvider: AccessibilityProviderProtocol = AccessibilityProviderMocking()
         return BottomToastDiagnosticViewModel(localizationProvider: localizationProviderValue,
+                                              accessibilityProvider: accessibilityProvider,
                                               networkQualityDiagnostic: networkQualityDiagnostic)
     }
 }

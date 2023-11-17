@@ -24,6 +24,7 @@ struct BottomToastDiagnosticView: View {
                         EdgeInsets(
                             top: 0, leading: horizontalPadding, bottom: 0, trailing: 0)
                     )
+                    .accessibilityHidden(true)
             }
             Text(viewModel.text)
                 .font(Fonts.caption1.font)
