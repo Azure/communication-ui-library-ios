@@ -140,14 +140,12 @@ class SetupViewModel: ObservableObject {
         let localUserState = state.localUserState
         let permissionState = state.permissionState
         let callingState = state.callingState
-        let defaultUserState = state.defaultUserState
         previewAreaViewModel.update(localUserState: localUserState,
                                     permissionState: permissionState,
                                     pipState: state.visibilityState)
         setupControlBarViewModel.update(localUserState: localUserState,
                                         permissionState: permissionState,
-                                        callingState: callingState,
-                                        defaultUserState: defaultUserState)
+                                        callingState: callingState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
         errorInfoViewModel.update(errorState: state.errorState)
     }

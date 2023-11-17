@@ -138,6 +138,9 @@ public class CallComposite {
         if store.state.permissionState.audioPermission == .notAsked {
             store.dispatch(action: .permissionAction(.audioPermissionRequested))
         }
+        if store.state.defaultUserState.audioState == .on {
+            store.dispatch(action: .localUserAction(.microphonePreviewOn))
+        }
         store.dispatch(action: .callingAction(.setupCall))
 
         UIApplication.shared.isIdleTimerDisabled = true
