@@ -115,6 +115,16 @@ public class CallComposite {
         )
 
         present(toolkitHostingController)
+
+        if store.state.permissionState.audioPermission == .notAsked {
+            store.dispatch(action: .permissionAction(.audioPermissionRequested))
+        }
+        if store.state.defaultUserState.audioState == .on {
+            store.dispatch(action: .localUserAction(.microphonePreviewOn))
+        }
+
+        store.dispatch(action: .callingAction(.setupCall))
+
     }
 
     /// Start Call Composite experience with joining a Teams meeting.
