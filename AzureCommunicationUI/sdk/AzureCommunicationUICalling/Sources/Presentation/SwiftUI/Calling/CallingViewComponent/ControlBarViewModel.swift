@@ -217,21 +217,11 @@ class ControlBarViewModel: ObservableObject {
                                                   listItemViewModel: leaveCallConfirmationVm)
     }
 
-    func setupDefaultUserState(state: DefaultUserState) {
-        if state.audioState == .on && !isDefaultUserStateMapped &&
-            operationStatus == .skipSetupRequested {
-            dispatch(.localUserAction(.microphonePreviewOn))
-            isDefaultUserStateMapped = true
-        }
-    }
-
     func update(localUserState: LocalUserState,
                 permissionState: PermissionState,
-                callingState: CallingState,
-                defaultUserState: DefaultUserState) {
+                callingState: CallingState) {
         callingStatus = callingState.status
         operationStatus = callingState.operationStatus
-        setupDefaultUserState(state: defaultUserState)
         if cameraPermission != permissionState.cameraPermission {
             cameraPermission = permissionState.cameraPermission
         }
