@@ -231,16 +231,14 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
-    
-        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { [weak callComposite] callStateEvent in
+        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { [weak callComposite] _ in
             guard let composite = callComposite else {
                 return
             }
             // Report error
-            //onCallStateChanged(callStateEvent,
+            // onCallStateChanged(callStateEvent,
             //        callComposite: composite)
         }
-        
         let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
             guard let composite = callComposite else {
                 return

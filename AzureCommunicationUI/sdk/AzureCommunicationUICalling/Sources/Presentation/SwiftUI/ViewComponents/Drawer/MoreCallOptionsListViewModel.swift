@@ -23,6 +23,10 @@ class MoreCallOptionsListViewModel: ObservableObject {
             title: localizationProvider.getLocalizedString(.shareDiagnosticsInfo),
             accessibilityIdentifier: AccessibilityIdentifier.shareDiagnosticsAccessibilityID.rawValue,
             action: showSharingViewAction)
-        items = [shareDebugInfoModel]
+        let reportErrorInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
+            icon: .share,
+            title: "Report an error",
+            accessibilityIdentifier: "Report an error", action: showSharingViewAction)
+        items = [shareDebugInfoModel, reportErrorInfoModel]
     }
 }
