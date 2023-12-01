@@ -50,7 +50,7 @@ struct ControlBarView: View {
         })
         .modifier(PopupModalView(isPresented: !viewModel.isMoreCallOptionsListDisplayed
                                  && viewModel.isSupportFormDisplayed) {
-            Text("ADAM HELLO")
+            SupportFormView()
         })
     }
 
