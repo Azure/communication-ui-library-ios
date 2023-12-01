@@ -49,8 +49,8 @@ struct ControlBarView: View {
                     .accessibilityAddTraits(.isModal)
         })
         .modifier(PopupModalView(isPresented: !viewModel.isMoreCallOptionsListDisplayed
-                                 && viewModel.isSupportFormDisplayed) {
-            SupportFormView()
+                                 && viewModel.isSupportFormDisplayed, alignment: .center) {
+            SupportFormView(showingForm: $viewModel.isSupportFormDisplayed)
         })
     }
 
