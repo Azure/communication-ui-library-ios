@@ -14,7 +14,9 @@ class MoreCallOptionsListViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          localizationProvider: LocalizationProviderProtocol,
-         showSharingViewAction: @escaping () -> Void) {
+         showSharingViewAction: @escaping () -> Void,
+         showSupportFormAction: @escaping () -> Void
+    ) {
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
 
@@ -26,7 +28,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
         let reportErrorInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
             icon: .share,
             title: "Report an error",
-            accessibilityIdentifier: "Report an error", action: showSharingViewAction)
+            accessibilityIdentifier: "Report an error", action: showSupportFormAction)
         items = [shareDebugInfoModel, reportErrorInfoModel]
     }
 }

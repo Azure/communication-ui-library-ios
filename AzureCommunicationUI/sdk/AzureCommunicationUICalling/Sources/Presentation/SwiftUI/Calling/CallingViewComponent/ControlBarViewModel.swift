@@ -19,7 +19,7 @@ class ControlBarViewModel: ObservableObject {
     @Published var isConfirmLeaveListDisplayed: Bool = false
     @Published var isMoreCallOptionsListDisplayed: Bool = false
     @Published var isShareActivityDisplayed: Bool = false
-
+    @Published var isSupportFormDisplayed: Bool = false
     let audioDevicesListViewModel: AudioDevicesListViewModel
     var micButtonViewModel: IconButtonViewModel!
     var audioDeviceButtonViewModel: IconButtonViewModel!
@@ -120,7 +120,15 @@ class ControlBarViewModel: ObservableObject {
                     return
                 }
                 self.isShareActivityDisplayed = true
-            })
+            },
+            showSupportFormAction: { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                // I'm going to need to wire a dialog
+                self.isSupportFormDisplayed = true
+            }
+        )
         debugInfoSharingActivityViewModel = compositeViewModelFactory.makeDebugInfoSharingActivityViewModel()
     }
 

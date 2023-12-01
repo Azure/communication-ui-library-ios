@@ -48,6 +48,10 @@ struct ControlBarView: View {
                     .accessibilityElement(children: .contain)
                     .accessibilityAddTraits(.isModal)
         })
+        .modifier(PopupModalView(isPresented: !viewModel.isMoreCallOptionsListDisplayed
+                                 && viewModel.isSupportFormDisplayed) {
+            Text("ADAM HELLO")
+        })
     }
 
     /// A stack view that has items centered aligned horizontally in its stack view
