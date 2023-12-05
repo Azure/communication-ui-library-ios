@@ -205,6 +205,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
 
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel {
         CallDiagnosticsViewModel(localizationProvider: localizationProvider,
+                                 accessibilityProvider: accessibilityProvider,
                                  dispatchAction: dispatchAction)
     }
 

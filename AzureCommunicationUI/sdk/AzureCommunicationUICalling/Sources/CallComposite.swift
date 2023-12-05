@@ -154,6 +154,42 @@ public class CallComposite {
         logger.debug("Call Composite deallocated")
     }
 
+    private func launch(_ callConfiguration: CallConfiguration,
+                        localOptions: LocalOptions?) {
+        logger.debug("launch composite experience")
+        let viewFactory = constructViewFactoryAndDependencies(
+            for: callConfiguration,
+            localOptions: localOptions,
+            callCompositeEventsHandler: events,
+            withCallingSDKWrapper: self.customCallingSdkWrapper
+        )
+
+        setupColorTheming()
+        setupLocalization(with: localizationProvider)
+
+        guard let store = self.store else {
+            fatalError("Construction of dependencies failed")
+        }
+        let toolkitHostingController = makeToolkitHostingController(
+            router: NavigationRouter(store: store, logger: logger),
+            logger: logger,
+            viewFactory: viewFactory,
+            isRightToLeft: localizationProvider.isRightToLeft
+        )
+
+        present(toolkitHostingController)
+
+        if store.state.permissionState.audioPermission == .notAsked {
+            store.dispatch(action: .permissionAction(.audioPermissionRequested))
+        }
+        if store.state.defaultUserState.audioState == .on {
+            store.dispatch(action: .localUserAction(.microphonePreviewOn))
+        }
+
+        store.dispatch(action: .callingAction(.setupCall))
+
+    }
+
     /// Start Call Composite experience with joining a Teams meeting.
     /// - Parameter remoteOptions: RemoteOptions used to send to ACS to locate the call.
     /// - Parameter localOptions: LocalOptions used to set the user participants information for the call.
@@ -195,29 +231,6 @@ public class CallComposite {
         avatarManager.set(remoteParticipantViewData: remoteParticipantViewData,
                           for: identifier,
                           completionHandler: completionHandler)
-    }
-
-    private func launch(_ callConfiguration: CallConfiguration,
-                        localOptions: LocalOptions?) {
-        logger.debug("launch composite experience")
-        let viewFactory = constructViewFactoryAndDependencies(
-            for: callConfiguration,
-            localOptions: localOptions,
-            callCompositeEventsHandler: events,
-            withCallingSDKWrapper: self.customCallingSdkWrapper
-        )
-        setupColorTheming()
-        setupLocalization(with: localizationProvider)
-        guard let store = self.store else {
-            fatalError("Construction of dependencies failed")
-        }
-        let toolkitHostingController = makeToolkitHostingController(
-            router: NavigationRouter(store: store, logger: logger),
-            logger: logger,
-            viewFactory: viewFactory,
-            isRightToLeft: localizationProvider.isRightToLeft
-        )
-        present(toolkitHostingController)
     }
 
     private func onCallsAdded(callId: String) {
