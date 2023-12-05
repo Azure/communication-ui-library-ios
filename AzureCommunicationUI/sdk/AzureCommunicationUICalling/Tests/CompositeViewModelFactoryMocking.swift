@@ -25,6 +25,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var previewAreaViewModel: PreviewAreaViewModel?
     var setupControlBarViewModel: SetupControlBarViewModel?
     var errorInfoViewModel: ErrorInfoViewModel?
+    var callDiagnosticsViewModel: CallDiagnosticsViewModel?
     var lobbyOverlayViewModel: LobbyOverlayViewModel?
     var loadingOverlayViewModel: LoadingOverlayViewModel?
     var audioDevicesListViewModel: AudioDevicesListViewModel?
@@ -147,6 +148,12 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         return errorInfoViewModel ?? ErrorInfoViewModel(localizationProvider: localizationProvider,
                                                         title: title,
                                                         subtitle: subtitle)
+    }
+
+    func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel {
+        return callDiagnosticsViewModel ?? CallDiagnosticsViewModel(localizationProvider: localizationProvider,
+                                                                    accessibilityProvider: accessibilityProvider,
+                                                                    dispatchAction: dispatchAction)
     }
 
     func makeSelectableDrawerListItemViewModel(icon: CompositeIcon,

@@ -117,7 +117,17 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     func isAudioUsedByOther() -> Bool {
-        return !AVAudioSession.sharedInstance().isOtherAudioPlaying
+        let audioSession = AVAudioSession.sharedInstance()
+        do {
+            // Try to activate the session
+            try audioSession.setActive(true)
+            // Deactivate the session
+            try audioSession.setActive(false)
+            return true  // Microphone can be used
+        } catch {
+            // Handle the error, maybe another app is using the microphone
+            return false  // Microphone is in use by another app
+        }
     }
 
     private func getCurrentAudioDevice() -> AudioDeviceType {
@@ -154,7 +164,7 @@ class AudioSessionManager: AudioSessionManagerProtocol {
             try audioSession.overrideOutputAudioPort(audioPort)
             store.dispatch(action: .localUserAction(.audioDeviceChangeSucceeded(device: selectedAudioDevice)))
         } catch let error {
-            logger.error("Failed to select audio device, reason:\(error.localizedDescription)")
+            logger.error("Failed to select audio device, reason: \(error.localizedDescription)")
             store.dispatch(action: .localUserAction(.audioDeviceChangeFailed(error: error)))
         }
     }

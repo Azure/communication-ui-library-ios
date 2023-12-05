@@ -11,6 +11,7 @@ class CallingViewModel: ObservableObject {
     @Published var isParticipantGridDisplayed: Bool
     @Published var isVideoGridViewAccessibilityAvailable: Bool = false
     @Published var appState: AppStatus = .foreground
+    @Published var currentBottomToastDiagnostic: BottomToastDiagnosticViewModel?
 
     private let compositeViewModelFactory: CompositeViewModelFactoryProtocol
     private let logger: Logger
@@ -33,6 +34,7 @@ class CallingViewModel: ObservableObject {
     var controlBarViewModel: ControlBarViewModel!
     var infoHeaderViewModel: InfoHeaderViewModel!
     var errorInfoViewModel: ErrorInfoViewModel!
+    var callDiagnosticsViewModel: CallDiagnosticsViewModel!
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
@@ -83,15 +85,15 @@ class CallingViewModel: ObservableObject {
         updateIsLocalCameraOn(with: store.state)
         errorInfoViewModel = compositeViewModelFactory.makeErrorInfoViewModel(title: "",
                                                                               subtitle: "")
+        callDiagnosticsViewModel = compositeViewModelFactory
+            .makeCallDiagnosticsViewModel(dispatchAction: store.dispatch)
+
+        callDiagnosticsViewModel.$currentBottomToastDiagnostic
+                    .assign(to: &$currentBottomToastDiagnostic)
     }
 
     func dismissConfirmLeaveDrawerList() {
         self.isConfirmLeaveListDisplayed = false
-    }
-
-    func requestCallClient() {
-        store.dispatch(action: .callingAction(.setupCall))
-        callClientRequested = true
     }
 
     func endCall() {
@@ -112,16 +114,9 @@ class CallingViewModel: ObservableObject {
             return
         }
 
-        if state.callingState.operationStatus == .skipSetupRequested
-            && state.permissionState.audioPermission == .granted
-            && callClientRequested == false {
-            requestCallClient()
-        }
-
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
-                                   callingState: state.callingState,
-                                   defaultUserState: state.defaultUserState)
+                                   callingState: state.callingState)
         infoHeaderViewModel.update(localUserState: state.localUserState,
                                    remoteParticipantsState: state.remoteParticipantsState,
                                    callingState: state.callingState)
@@ -153,6 +148,7 @@ class CallingViewModel: ObservableObject {
 
         updateIsLocalCameraOn(with: state)
         errorInfoViewModel.update(errorState: state.errorState)
+        callDiagnosticsViewModel.update(diagnosticsState: state.diagnosticsState)
     }
 
     private func updateIsLocalCameraOn(with state: AppState) {

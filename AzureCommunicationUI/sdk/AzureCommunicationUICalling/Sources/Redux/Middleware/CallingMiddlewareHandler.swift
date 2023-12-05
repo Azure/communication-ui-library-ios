@@ -215,12 +215,13 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
     func requestCameraSwitch(state: AppState, dispatch: @escaping ActionDispatch) -> Task<Void, Never> {
         Task {
+            let currentCamera = state.localUserState.cameraState.device
             do {
                 let device = try await callingService.switchCamera()
                 try await Task.sleep(nanoseconds: NSEC_PER_SEC)
                 dispatch(.localUserAction(.cameraSwitchSucceeded(cameraDevice: device)))
             } catch {
-                dispatch(.localUserAction(.cameraSwitchFailed(error: error)) )
+                dispatch(.localUserAction(.cameraSwitchFailed(previousCamera: currentCamera, error: error)))
             }
         }
     }
@@ -253,7 +254,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
             switch state.localUserState.cameraState.transmission {
             case .local:
-                if state.callingState.operationStatus == .skipSetupRequested {
+                if state.navigationState.status == .inCall {
                     dispatch(.localUserAction(.cameraOnTriggered))
                 } else {
                     dispatch(.localUserAction(.cameraPreviewOnTriggered))
@@ -303,7 +304,7 @@ extension CallingMiddlewareHandler {
                     }
                     // to fix the bug that resume call won't work without Internet
                     // we exit the UI library when we receive the wrong status .remoteHold
-                } else if callingStatus == .disconnected || callingStatus == .remoteHold {
+                } else if callingStatus == .disconnected {
                     self.logger.debug("Subscription cancel happy path")
                     dispatch(.compositeExitAction)
                     self.subscription.cancel()
@@ -339,6 +340,21 @@ extension CallingMiddlewareHandler {
             .throttle(for: 0.5, scheduler: DispatchQueue.main, latest: true)
             .sink { speakers in
                 dispatch(.remoteParticipantsAction(.dominantSpeakersUpdated(speakers: speakers)))
+            }.store(in: subscription)
+
+        callingService.networkDiagnosticsSubject
+            .sink { networkDiagnostic in
+                dispatch(.callDiagnosticAction(.network(diagnostic: networkDiagnostic)))
+            }.store(in: subscription)
+
+        callingService.networkQualityDiagnosticsSubject
+            .sink { networkQualityDiagnostic in
+                dispatch(.callDiagnosticAction(.networkQuality(diagnostic: networkQualityDiagnostic)))
+            }.store(in: subscription)
+
+        callingService.mediaDiagnosticsSubject
+            .sink { mediaDiagnostic in
+                dispatch(.callDiagnosticAction(.media(diagnostic: mediaDiagnostic)))
             }.store(in: subscription)
     }
 }

@@ -15,7 +15,7 @@
 "AzureCommunicationUICalling.SetupView.Title"="إعداد";
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="رجوع";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="انضمام إلى مكالمة";
-"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="جارٍ الانضمام إلى مكالمة…";
+"AzureCommunicationUICalling.SetupView.Button.JoiningCall"="جاري الانضمام إلى المكالمة…";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="الفيديو قيد الإيقاف";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="تشغيل الكاميرا";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="الفيديو قيد التشغيل";
@@ -105,3 +105,22 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="تم رفض وصولك إلى المكالمة.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="حدث خطأ أثناء تبديل الفيديو";
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="تعذر الانضمام إلى المكالمة. تحقق من اتصال الشبكة.";
+
+/* Call Diagnostics */
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="تم كتم صوتك";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="جودة الشبكة منخفضة";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="تم فقدان الشبكة";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="يتم الآن إعادة الاتصال...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="تعذر بدء تشغيل الكاميرا";
+
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="تعذر تحديد السماعات.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="تعذر تحديد الميكروفون.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="لا يعمل الميكروفون كما هو متوقع.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="لا تعمل السماعات كما هو متوقع.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="تم كتم صوت السماعات.";
+
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="يلزم على %@ الحصول على إذن";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="غير مسموح %@ باستخدام الكاميرا الخاصة بك. يمكنك تغيير هذا في الإعدادات لاحقا. إذا تم تغييره الآن، فسيتم إسقاط مكالمتك.";
+
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="تجاهل تشخيص المكالمات";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="تجاهل لافتة تشخيص المكالمة هذه";

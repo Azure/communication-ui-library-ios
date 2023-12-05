@@ -185,7 +185,6 @@ extension XCUITestBase {
 
     func enableMockCallingSDKWrapper() {
         tapButton(accessibilityIdentifier: AccessibilityId.settingsButtonAccessibilityID.rawValue)
-        wait(for: app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue])
         // scrolling is needed for devices with smaller screens as the switch may not be tappable
         // because cells weren't loaded to memory
         if #unavailable(iOS 16) {
@@ -197,7 +196,9 @@ extension XCUITestBase {
         }
 
         let toggle = app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue]
-        app.switches[AccessibilityId.useMockCallingSDKHandlerToggleAccessibilityID.rawValue].tap()
+        wait(for: toggle)
+
+        toggle.tap()
         XCTAssertEqual(toggle.isOn, true)
 
         closeDemoAppSettingsPage()
