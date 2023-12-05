@@ -68,6 +68,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel
 }
 
+// swiftlint:disable type_body_length
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let store: Store<AppState, Action>
