@@ -91,6 +91,7 @@ extension CompositeViewModelFactoryProtocol {
     }
 }
 
+// swiftlint:disable type_body_length
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let store: Store<AppState, Action>
@@ -236,6 +237,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
 
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel {
         CallDiagnosticsViewModel(localizationProvider: localizationProvider,
+                                 accessibilityProvider: accessibilityProvider,
                                  dispatchAction: dispatchAction)
     }
 

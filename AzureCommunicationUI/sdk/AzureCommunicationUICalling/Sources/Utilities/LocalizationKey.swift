@@ -176,7 +176,7 @@ enum LocalizationKey: String {
     case callDiagnosticsSpeakerMuted = "AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"
 
     case callDiagnosticsDismissAccessibilityLabel =
-            "AzureCommunicationUICalling.Diagnostics.Text.Dismiss.AccessibilityLabel"
+            "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"
     case callDiagnosticsDismissAccessibilityHint =
-            "AzureCommunicationUICalling.Diagnostics.Text.Dismiss.AccessibilityHint"
+            "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"
 }

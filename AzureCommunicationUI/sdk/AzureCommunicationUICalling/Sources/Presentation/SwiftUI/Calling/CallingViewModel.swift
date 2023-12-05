@@ -112,11 +112,6 @@ class CallingViewModel: ObservableObject {
         self.isConfirmLeaveListDisplayed = false
     }
 
-    func requestCallClient() {
-        store.dispatch(action: .callingAction(.setupCall))
-        callClientRequested = true
-    }
-
     func endCall() {
         store.dispatch(action: .callingAction(.callEndRequested))
         dismissConfirmLeaveDrawerList()
@@ -134,12 +129,6 @@ class CallingViewModel: ObservableObject {
         guard state.lifeCycleState.currentStatus == .foreground
                 || state.visibilityState.currentStatus != .visible else {
             return
-        }
-
-        if state.callingState.operationStatus == .skipSetupRequested
-            && state.permissionState.audioPermission == .granted
-            && callClientRequested == false {
-            requestCallClient()
         }
 
         controlBarViewModel.update(localUserState: state.localUserState,

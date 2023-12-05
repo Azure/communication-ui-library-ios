@@ -267,7 +267,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
             switch state.localUserState.cameraState.transmission {
             case .local:
-                if state.callingState.operationStatus == .skipSetupRequested {
+                if state.navigationState.status == .inCall {
                     dispatch(.localUserAction(.cameraOnTriggered))
                 } else {
                     dispatch(.localUserAction(.cameraPreviewOnTriggered))

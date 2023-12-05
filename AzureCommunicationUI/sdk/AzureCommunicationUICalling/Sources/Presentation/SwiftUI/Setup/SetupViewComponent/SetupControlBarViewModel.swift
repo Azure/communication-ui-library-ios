@@ -95,13 +95,6 @@ class SetupControlBarViewModel: ObservableObject {
         }
     }
 
-    func setupDefaultUserState(state: DefaultUserState) {
-        if state.audioState == .on && !isDefaultUserStateMapped {
-            dispatch(.localUserAction(.microphonePreviewOn))
-            isDefaultUserStateMapped = true
-        }
-    }
-
     func microphoneButtonTapped() {
         let isPreview = callingStatus == .none
         let isMicOn = micStatus == .on
@@ -135,8 +128,7 @@ class SetupControlBarViewModel: ObservableObject {
 
     func update(localUserState: LocalUserState,
                 permissionState: PermissionState,
-                callingState: CallingState,
-                defaultUserState: DefaultUserState) {
+                callingState: CallingState) {
         if cameraPermission != permissionState.cameraPermission {
             cameraPermission = permissionState.cameraPermission
         }
@@ -147,7 +139,6 @@ class SetupControlBarViewModel: ObservableObject {
         cameraStatus = localUserState.cameraState.operation
         micStatus = localUserState.audioState.operation
         updateButtonViewModel(localUserState: localUserState)
-        setupDefaultUserState(state: defaultUserState)
         if localVideoStreamId != localUserState.localVideoStreamIdentifier {
             localVideoStreamId = localUserState.localVideoStreamIdentifier
             updateButtonTypeColor(isLocalVideoOff: localVideoStreamId == nil)
