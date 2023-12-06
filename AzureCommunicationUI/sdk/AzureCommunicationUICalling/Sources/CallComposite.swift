@@ -70,7 +70,6 @@ public class CallComposite {
     private var callHistoryService: CallHistoryService?
     private var callingSDKWrapper: CallingSDKWrapperProtocol?
     private var callingSDKEventsHandler: CallingSDKEventsHandler?
-    private var callConfiguration: CallConfiguration?
     private lazy var callHistoryRepository = CallHistoryRepository(logger: logger,
         userDefaults: UserDefaults.standard)
     private let diagnosticConfig = DiagnosticConfig()
@@ -113,7 +112,6 @@ public class CallComposite {
 
     /// Dismiss composite and cleanup call agent
     public func dispose() {
-        callConfiguration = nil
         dismiss()
         incomingCallWrapper.dispose()
         CallComposite.callingSDKInitialization?.dispose()
@@ -122,7 +120,6 @@ public class CallComposite {
 
     /// Handle push notification to receive incoming call
     public func handlePushNotification(remoteOptions: RemoteOptions) async throws {
-        self.callConfiguration = nil
         let pushNotificationInfo = remoteOptions.pushNotificationInfo!.pushNotificationInfo
         try await constructCallingSDKInitialization(
             logger: logger).handlePushNotification(
@@ -193,7 +190,6 @@ public class CallComposite {
                                                   callKitOptions: remoteOptions.callKitOptions,
                                                   diagnosticConfig: diagnosticConfig)
         }
-        self.callConfiguration = callConfiguration
         if let callconfig = callConfiguration {
             launch(callconfig, localOptions: localOptions)
         }
@@ -219,7 +215,7 @@ public class CallComposite {
 
     private func launch(_ callConfiguration: CallConfiguration,
                         localOptions: LocalOptions?) {
-        logger.debug("launch composite experience")
+        logger.debug("Inderpal: launch composite experience")
         let viewFactory = constructViewFactoryAndDependencies(
             for: callConfiguration,
             localOptions: localOptions,
@@ -257,7 +253,10 @@ public class CallComposite {
     }
 
     private func onCallsAdded(callId: String) {
-        if store?.state.callingState.callId != callId && self.callConfiguration == nil {
+        logger.debug("onCallsAdded \(callId)")
+        /// For incoming call to present the UI should not be active
+        if isCompositePresentable() {
+            /// callkit initialization is must for 1 to 1 calling
             guard let callingSDKInitialization = CallComposite.callingSDKInitialization,
                   let callKitOptions = callingSDKInitialization.callCompositeCallKitOptions else {
                 return
@@ -267,6 +266,7 @@ public class CallComposite {
                                                       displayName: callingSDKInitialization.displayName,
                                                       callKitOptions: callKitOptions)
             let localOptions = LocalOptions(skipSetupScreen: true)
+            logger.debug("launch for 1 to N call")
             DispatchQueue.main.async {
                 self.launch(callConfiguration, localOptions: localOptions)
             }

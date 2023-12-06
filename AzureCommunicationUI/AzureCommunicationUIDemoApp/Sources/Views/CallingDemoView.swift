@@ -181,7 +181,7 @@ struct CallingDemoView: View {
                 await self.registerForNotification()
             }
         }
-        .disabled(isStartExperienceDisabled)
+        .disabled(isRegisterPushDisabled)
         .buttonStyle(DemoButtonStyle())
         .accessibility(identifier: AccessibilityId.registerButtonAccessibilityID.rawValue)
     }
@@ -241,6 +241,15 @@ struct CallingDemoView: View {
             return true
         }
 
+        return false
+    }
+
+    var isRegisterPushDisabled: Bool {
+        let acsToken = envConfigSubject.acsToken
+        if (envConfigSubject.selectedAcsTokenType == .token && acsToken.isEmpty)
+            || envConfigSubject.selectedAcsTokenType == .tokenUrl && envConfigSubject.acsTokenUrl.isEmpty {
+            return true
+        }
         return false
     }
 }
@@ -368,6 +377,10 @@ extension CallingDemoView {
         }
 
         let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
+            // Known issue: every time on exit register for push to receive again
+            Task {
+                await self.registerForNotification()
+            }
             if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
                 relaunchComposite()
             }
@@ -507,7 +520,9 @@ extension CallingDemoView {
             Task {
                 do {
                     try await createCallComposite().registerPushNotification(notificationOptions: notificationOptions)
+                    showAlert(for: "Register Voip Success")
                 } catch {
+                    showAlert(for: "Register Voip Failed")
                     print("Error: \(error)")
                 }
             }
@@ -603,6 +618,12 @@ extension CallingDemoView {
             alertMessage = "Unknown error"
         }
         alertTitle = "Error"
+        isAlertDisplayed = true
+    }
+
+    private func showAlert(for message: String) {
+        alertMessage = message
+        alertTitle = "Alert"
         isAlertDisplayed = true
     }
 

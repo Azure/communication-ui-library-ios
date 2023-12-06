@@ -58,7 +58,7 @@ internal class CallingSDKInitialization: NSObject {
                 userCredential: credential,
                 options: options
             )
-            self.logger.debug("LogTestTest: Call agent successfully created.")
+            self.logger.debug("Call agent successfully created.")
             self.callAgent = callAgent
             self.callAgent?.delegate = self
         } catch {
@@ -76,7 +76,7 @@ internal class CallingSDKInitialization: NSObject {
                                      displayName: notificationOptions.displayName)
             try await self.callAgent?.registerPushNotifications(
                 deviceToken: notificationOptions.deviceRegistrationToken)
-            logger.debug("LogTestTest: registerPushNotifications success")
+            logger.debug("registerPushNotifications success")
         } catch {
             logger.error("Failed to registerPushNotification")
             throw error
@@ -98,23 +98,22 @@ internal class CallingSDKInitialization: NSObject {
             )
         } catch {}
         do {
-            self.logger.debug("LogTestTest: setupCallAgent handlePushNotification")
-
+            self.logger.debug("setupCallAgent handlePushNotification")
             try await setupCallAgent(tags: tags,
                                      credential: credential,
                                      callKitOptions: callKitOptions,
                                      displayName: displayName)
             try await self.callAgent?.handlePush(notification: callNotification)
-            self.logger.debug("LogTestTest: handlePush success")
+            self.logger.debug("handlePush success")
         } catch {
-            logger.error("LogTestTest: Failed to handlePush")
+            logger.error("Failed to handlePush")
             throw error
         }
     }
 
     func dispose() {
         self.callAgent?.delegate = nil
-        self.logger.debug("LogTestTest: Call agent dispose.")
+        self.logger.debug("Call agent disposed")
         self.callsUpdatedProtocol = nil
         self.callAgent?.dispose()
         self.callAgent = nil
@@ -134,8 +133,10 @@ internal class CallingSDKInitialization: NSObject {
 
 extension CallingSDKInitialization: CallAgentDelegate {
     public func callAgent(_ callAgent: CallAgent, didUpdateCalls args: CallsUpdatedEventArgs) {
+        self.logger.debug("didUpdateCalls")
         if !args.addedCalls.isEmpty {
             let call = args.addedCalls.first
+            self.logger.debug("notifying onCallAdded \(String(describing: call?.id))")
             self.onCallAdded?("\(String(describing: call?.id))")
         }
     }

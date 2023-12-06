@@ -90,7 +90,7 @@ extension AzureCommunicationCalling.CallParticipantRole {
             return .presenter
         case .organizer:
             return .organizer
-        case .coorganizer:
+        case .coOrganizer:
             return .coorganizer
         }
     }

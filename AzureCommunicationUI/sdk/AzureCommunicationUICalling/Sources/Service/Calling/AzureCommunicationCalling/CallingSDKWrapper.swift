@@ -333,7 +333,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         }
 
         do {
-            try await call.lobby.admitAll(options: nil)
+            try await call.callLobby.admitAll()
             logger.debug("Admit All participants successful")
         } catch {
             logger.error("ERROR: It was not possible to admit all lobby participants. \(error)")
@@ -349,7 +349,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         let identifier = createCommunicationIdentifier(fromRawId: participantId)
 
         do {
-            try await call.lobby.admit(identifiers: [identifier], options: nil)
+            try await call.callLobby.admit(identifiers: [identifier])
             logger.debug("Admit participants successful")
         } catch {
             logger.error("ERROR: It was not possible to admit lobby participants. \(error)")
@@ -365,7 +365,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         let identifier = createCommunicationIdentifier(fromRawId: participantId)
 
         do {
-            try await call.lobby.reject(identifier: identifier, options: nil)
+            try await call.callLobby.reject(identifier: identifier)
             logger.debug("Reject lobby participants successful")
         } catch {
             logger.error("ERROR: It was not possible to reject lobby participants. \(error)")

@@ -91,7 +91,6 @@ extension CompositeViewModelFactoryProtocol {
     }
 }
 
-// swiftlint:disable type_body_length
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let store: Store<AppState, Action>
