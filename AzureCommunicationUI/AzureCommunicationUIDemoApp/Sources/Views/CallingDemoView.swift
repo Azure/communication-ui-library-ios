@@ -614,6 +614,10 @@ extension CallingDemoView {
             alertMessage = "Microphone Permission is denied"
         case CallCompositeErrorCode.networkConnectionNotAvailable:
             alertMessage = "Internet error"
+        case CallCompositeErrorCode.callDeclined:
+            alertMessage = "Call Declined"
+        case CallCompositeErrorCode.canNotMakeCall:
+            alertMessage = "Not subscribed to receive push"
         default:
             alertMessage = "Unknown error"
         }
@@ -621,10 +625,14 @@ extension CallingDemoView {
         isAlertDisplayed = true
     }
 
+    /// not important to display
+    /// if other error is displayed then skip
     private func showAlert(for message: String) {
-        alertMessage = message
-        alertTitle = "Alert"
-        isAlertDisplayed = true
+        if !isAlertDisplayed {
+            alertMessage = message
+            alertTitle = "Alert"
+            isAlertDisplayed = true
+        }
     }
 
     private func getAudioPermissionStatus() -> AVAudioSession.RecordPermission {

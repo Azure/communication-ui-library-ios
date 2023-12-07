@@ -9,12 +9,14 @@ enum CallCompositeInternalError: Error, Equatable {
     case deviceManagerFailed(Error?)
     case callJoinConnectionFailed
     case callTokenFailed
+    case canNotMakeCall
     case callJoinFailed
     case callEndFailed
     case callHoldFailed
     case callResumeFailed
     case callEvicted
     case callDenied
+    case callDeclined
     case callJoinFailedByMicPermission
     case cameraSwitchFailed
     case cameraOnFailed
@@ -31,6 +33,10 @@ enum CallCompositeInternalError: Error, Equatable {
             return CallCompositeErrorCode.callJoin
         case .callEndFailed:
             return CallCompositeErrorCode.callEnd
+        case .canNotMakeCall:
+            return CallCompositeErrorCode.canNotMakeCall
+        case .callDeclined:
+            return CallCompositeErrorCode.callDeclined
         case .cameraOnFailed:
             return CallCompositeErrorCode.cameraFailure
         case .callJoinFailedByMicPermission:
@@ -55,7 +61,9 @@ enum CallCompositeInternalError: Error, Equatable {
                 .callJoinFailed,
                 .callJoinFailedByMicPermission,
                 .networkConnectionNotAvailable,
-                .callEndFailed:
+                .callEndFailed,
+                .callDeclined,
+                .canNotMakeCall:
             return true
         case .callHoldFailed,
                 .callResumeFailed,
@@ -76,6 +84,8 @@ extension CallCompositeInternalError {
         case (.deviceManagerFailed, .deviceManagerFailed),
             (.callJoinConnectionFailed, .callJoinConnectionFailed),
             (.callTokenFailed, .callTokenFailed),
+            (.callDeclined, .callDeclined),
+            (.canNotMakeCall, .canNotMakeCall),
             (.callJoinFailed, .callJoinFailed),
             (.callEndFailed, .callEndFailed),
             (.callHoldFailed, .callHoldFailed),

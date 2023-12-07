@@ -28,7 +28,8 @@ extension CallingMiddlewareHandler {
                         dispatch: @escaping ActionDispatch,
                         completion: (() -> Void)? = nil ) {
         let action: ErrorAction
-        if internalError == .callTokenFailed {
+        if internalError == .callTokenFailed || internalError == .callDeclined
+            || internalError == .canNotMakeCall {
             action = .fatalErrorUpdated(internalError: internalError,
                                         error: nil)
         } else {
