@@ -184,9 +184,6 @@ extension CallingSDKEventsHandler: CallDelegate,
         callIdSubject.send(call.id)
 
         let currentStatus = call.state.toCallingStatus()
-
-        logger.debug("InderpalTest: currentStatus \(currentStatus)")
-
         let internalError = call.callEndReason.toCompositeInternalError(wasCallConnected())
         if internalError != nil {
             let code = call.callEndReason.code
@@ -199,6 +196,9 @@ extension CallingSDKEventsHandler: CallDelegate,
         callInfoSubject.send(callInfoModel)
         if currentStatus == .connected {
             addRemoteParticipants(call.remoteParticipants)
+        }
+        if currentStatus == .disconnected {
+            call.delegate = nil
         }
         self.previousCallingStatus = currentStatus
     }

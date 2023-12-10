@@ -215,7 +215,6 @@ public class CallComposite {
 
     private func launch(_ callConfiguration: CallConfiguration,
                         localOptions: LocalOptions?) {
-        logger.debug("Inderpal: launch composite experience")
         let viewFactory = constructViewFactoryAndDependencies(
             for: callConfiguration,
             localOptions: localOptions,
