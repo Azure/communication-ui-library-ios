@@ -39,6 +39,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
         super.init()
         setupRemoteParticipantEventsAdapter()
     }
+
     func cleanup() {
         setupProperties()
     }
@@ -127,24 +128,15 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     private func addRemoteParticipants(
         _ remoteParticipants: [AzureCommunicationCalling.RemoteParticipant]
     ) {
+        var remoteParticipantsInfoList = participantsInfoListSubject.value
         for participant in remoteParticipants {
             let userIdentifier = participant.identifier.rawId
-            participant.delegate = remoteParticipantEventAdapter
-            self.remoteParticipants.append(forKey: userIdentifier, value: participant)
-        }
-        addRemoteParticipantsInfoModel(remoteParticipants)
-    }
-
-    private func addRemoteParticipantsInfoModel(
-        _ remoteParticipants: [AzureCommunicationCalling.RemoteParticipant]
-    ) {
-        guard !remoteParticipants.isEmpty
-        else { return }
-
-        var remoteParticipantsInfoList = participantsInfoListSubject.value
-        remoteParticipants.forEach {
-            let infoModel = $0.toParticipantInfoModel()
-            remoteParticipantsInfoList.append(infoModel)
+            if self.remoteParticipants.value(forKey: userIdentifier) == nil {
+                participant.delegate = remoteParticipantEventAdapter
+                self.remoteParticipants.append(forKey: userIdentifier, value: participant)
+                let infoModel = participant.toParticipantInfoModel()
+                remoteParticipantsInfoList.append(infoModel)
+            }
         }
         participantsInfoListSubject.send(remoteParticipantsInfoList)
     }
@@ -192,6 +184,8 @@ extension CallingSDKEventsHandler: CallDelegate,
         callIdSubject.send(call.id)
 
         let currentStatus = call.state.toCallingStatus()
+
+        logger.debug("InderpalTest: currentStatus \(currentStatus)")
 
         let internalError = call.callEndReason.toCompositeInternalError(wasCallConnected())
         if internalError != nil {
