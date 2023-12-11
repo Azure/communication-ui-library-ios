@@ -49,8 +49,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
-    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
-                                          showSupportFormAction: (() -> Void)?) -> MoreCallOptionsListViewModel
+    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
@@ -71,6 +70,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel
 }
 
+// swiftlint:disable type_body_length
 class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let logger: Logger
     private let store: Store<AppState, Action>
@@ -79,7 +79,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
-    private let eventsHandler: CallComposite.Events
+    private let events: CallComposite.Events
     private let localOptions: LocalOptions?
 
     private weak var setupViewModel: SetupViewModel?
@@ -102,7 +102,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         self.debugInfoManager = debugInfoManager
-        self.eventsHandler = eventsHandler
+        self.events = eventsHandler
         self.localOptions = localOptions
     }
 
@@ -287,9 +287,18 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                       localizationProvider: localizationProvider)
     }
 
-    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
-                                          showSupportFormAction: (() -> Void)?) -> MoreCallOptionsListViewModel {
-        MoreCallOptionsListViewModel(compositeViewModelFactory: self,
+    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
+        let showSupportFormAction: (() -> Void)?
+        if let onUserReportedIssue = events.onUserReportedIssue {
+            showSupportFormAction = {
+                print("should goto callback")
+                // onUserReportedIssue
+            }
+        } else {
+            showSupportFormAction = nil
+        }
+        // events.onUserReportedIssue
+        return MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                      localizationProvider: localizationProvider,
                                      showSharingViewAction: showSharingViewAction,
                                      showSupportFormAction: showSupportFormAction)

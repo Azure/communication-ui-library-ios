@@ -124,14 +124,6 @@ class ControlBarViewModel: ObservableObject {
                     return
                 }
                 self.isShareActivityDisplayed = true
-            },
-            // Can show/hide, need to bind through to the user callback
-            showSupportFormAction: { [weak self] in
-                guard let self = self else {
-                    return
-                }
-                // I'm going to need to wire a dialog
-                self.isSupportFormDisplayed = true
             }
         )
         debugInfoSharingActivityViewModel = compositeViewModelFactory.makeDebugInfoSharingActivityViewModel()
