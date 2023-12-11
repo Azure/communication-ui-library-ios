@@ -206,6 +206,7 @@ public class CallComposite {
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
+                eventsHandler: events,
                 localOptions: localOptions
             )
         )

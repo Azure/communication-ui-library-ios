@@ -79,6 +79,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let accessibilityProvider: AccessibilityProviderProtocol
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
+    private let eventsHandler: CallComposite.Events
     private let localOptions: LocalOptions?
 
     private weak var setupViewModel: SetupViewModel?
@@ -91,7 +92,9 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
          debugInfoManager: DebugInfoManagerProtocol,
-         localOptions: LocalOptions? = nil) {
+         eventsHandler: CallComposite.Events,
+         localOptions: LocalOptions? = nil
+         ) {
         self.logger = logger
         self.store = store
         self.networkManager = networkManager
@@ -99,6 +102,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
         self.debugInfoManager = debugInfoManager
+        self.eventsHandler = eventsHandler
         self.localOptions = localOptions
     }
 
