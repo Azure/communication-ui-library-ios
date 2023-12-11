@@ -48,7 +48,7 @@ struct ControlBarView: View {
                     .accessibilityElement(children: .contain)
                     .accessibilityAddTraits(.isModal)
         })
-        .modifier(PopupModalView( // Do I need to move this?
+        .modifier(PopupModalView(
             isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isSupportFormDisplayed,
             alignment: .bottom) {
                 reportErrorView

@@ -20,6 +20,8 @@ class ControlBarViewModel: ObservableObject {
     @Published var isMoreCallOptionsListDisplayed: Bool = false
     @Published var isShareActivityDisplayed: Bool = false
     @Published var isSupportFormDisplayed: Bool = false
+    @Published var isSupportFormOptionDisplayed: Bool = false
+
     let audioDevicesListViewModel: AudioDevicesListViewModel
     var micButtonViewModel: IconButtonViewModel!
     var audioDeviceButtonViewModel: IconButtonViewModel!
@@ -121,6 +123,7 @@ class ControlBarViewModel: ObservableObject {
                 }
                 self.isShareActivityDisplayed = true
             },
+            // Can show/hide, need to bind through to the user callback
             showSupportFormAction: { [weak self] in
                 guard let self = self else {
                     return

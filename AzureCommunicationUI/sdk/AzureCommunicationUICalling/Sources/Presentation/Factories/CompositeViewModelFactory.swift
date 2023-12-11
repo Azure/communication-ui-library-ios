@@ -50,7 +50,7 @@ protocol CompositeViewModelFactoryProtocol {
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
     func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
-                                          showSupportFormAction: @escaping() -> Void) -> MoreCallOptionsListViewModel
+                                          showSupportFormAction: (() -> Void)?) -> MoreCallOptionsListViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
@@ -278,7 +278,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
-                                          showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
+                                          showSupportFormAction: (() -> Void)?) -> MoreCallOptionsListViewModel {
         MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                      localizationProvider: localizationProvider,
                                      showSharingViewAction: showSharingViewAction,
