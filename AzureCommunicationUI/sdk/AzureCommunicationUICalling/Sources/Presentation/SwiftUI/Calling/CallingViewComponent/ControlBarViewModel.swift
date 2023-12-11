@@ -23,6 +23,7 @@ class ControlBarViewModel: ObservableObject {
     @Published var isSupportFormOptionDisplayed: Bool = false
 
     let audioDevicesListViewModel: AudioDevicesListViewModel
+    var supportFormViewModel: SupportFormViewModel!
     var micButtonViewModel: IconButtonViewModel!
     var audioDeviceButtonViewModel: IconButtonViewModel!
     var hangUpButtonViewModel: IconButtonViewModel!
@@ -49,6 +50,7 @@ class ControlBarViewModel: ObservableObject {
         self.dispatch = dispatchAction
         self.displayEndCallConfirm = endCallConfirm
 
+        supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
         audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
             localUserState: localUserState)

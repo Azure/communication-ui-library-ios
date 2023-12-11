@@ -180,7 +180,8 @@ struct ControlBarView: View {
     }
     var reportErrorView: some View {
         return Group {
-            SupportFormView(showingForm: $viewModel.isSupportFormDisplayed)
+            SupportFormView(showingForm: $viewModel.isSupportFormDisplayed,
+                            viewModel: viewModel.supportFormViewModel)
                 .frame(height: 400)
                 .edgesIgnoringSafeArea(.all)
                 .modifier(LockPhoneOrientation())

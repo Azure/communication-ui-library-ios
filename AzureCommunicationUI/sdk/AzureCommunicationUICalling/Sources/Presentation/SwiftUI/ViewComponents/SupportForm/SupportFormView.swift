@@ -8,23 +8,28 @@ import SwiftUI
 
 struct SupportFormView: View {
     @Binding var showingForm: Bool
-    @State private var messageText: String = "Please describe your issue..."
-    @State private var includeScreenshot: Bool = true
+    @ObservedObject var viewModel: SupportFormViewModel
+
+    init(showingForm: Binding<Bool>, viewModel: SupportFormViewModel) {
+        self._showingForm = showingForm
+        self.viewModel = viewModel
+    }
+
     var body: some View {
         NavigationView {
             Form {
                 Section(footer: Text("We'll automatically attach logs.")) {
-                    TextEditor(text: $messageText)
+                    TextEditor(text: $viewModel.messageText)
                         .frame(height: 150)
-                        .foregroundColor(messageText == "Please describe your issue..." ? .gray : .primary)
+                        .foregroundColor(viewModel.messageText == "Please describe your issue..." ? .gray : .primary)
                         .onTapGesture {
-                            if messageText == "Please describe your issue..." {
-                                messageText = ""
+                            if viewModel.messageText == "Please describe your issue..." {
+                                viewModel.messageText = ""
                             }
                         }
                 }
                 Section {
-                    Toggle(isOn: $includeScreenshot) {
+                    Toggle(isOn: $viewModel.includeScreenshot) {
                         Text("Attach screenshot")
                     }
                 }
@@ -35,7 +40,7 @@ struct SupportFormView: View {
                     showingForm = false
                 },
                 trailing: Button("Send") {
-                    // Handle send action
+                    viewModel.sendReport()
                     showingForm = false
                 }
             )

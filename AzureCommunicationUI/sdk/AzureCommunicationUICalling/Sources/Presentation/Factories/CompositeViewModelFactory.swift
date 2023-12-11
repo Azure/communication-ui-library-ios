@@ -62,6 +62,8 @@ protocol CompositeViewModelFactoryProtocol {
         isSelected: Bool,
         onSelectedAction: @escaping (() -> Void)) -> SelectableDrawerListItemViewModel
 
+    func makeSupportFormViewModel() -> SupportFormViewModel
+
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
@@ -98,6 +100,10 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.localizationProvider = localizationProvider
         self.debugInfoManager = debugInfoManager
         self.localOptions = localOptions
+    }
+
+    func makeSupportFormViewModel() -> SupportFormViewModel {
+        return SupportFormViewModel()
     }
 
     // MARK: CompositeViewModels
