@@ -10,8 +10,8 @@ struct SupportFormView: View {
     @Binding var showingForm: Bool
     @ObservedObject var viewModel: SupportFormViewModel
 
-    init(showingForm: Binding<Bool>, viewModel: SupportFormViewModel) {
-        self._showingForm = showingForm
+    init(isPresented: Binding<Bool>, viewModel: SupportFormViewModel) {
+        self._showingForm = isPresented
         self.viewModel = viewModel
     }
 

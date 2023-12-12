@@ -49,7 +49,8 @@ protocol CompositeViewModelFactoryProtocol {
     func makeBannerTextViewModel() -> BannerTextViewModel
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
-    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
+                                          showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
@@ -287,16 +288,10 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                       localizationProvider: localizationProvider)
     }
 
-    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
-        let showSupportFormAction: (() -> Void)?
-        if let onUserReportedIssue = events.onUserReportedIssue {
-            showSupportFormAction = {
-                print("should goto callback")
-                // onUserReportedIssue
-            }
-        } else {
-            showSupportFormAction = nil
-        }
+    func makeMoreCallOptionsListViewModel(
+        showSharingViewAction: @escaping () -> Void,
+        showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
+
         // events.onUserReportedIssue
         return MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                      localizationProvider: localizationProvider,
