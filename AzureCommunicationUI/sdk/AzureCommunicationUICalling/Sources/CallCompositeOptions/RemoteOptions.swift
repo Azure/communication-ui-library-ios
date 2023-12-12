@@ -19,7 +19,6 @@ public struct StartCallOptionsOneToNCall {
     }
 }
 
-/// CallComposite Locator for locating call destination
 /// CallComposite Locator for locating call destination.
 public enum JoinLocator {
     /// Group Call with UUID groupId.

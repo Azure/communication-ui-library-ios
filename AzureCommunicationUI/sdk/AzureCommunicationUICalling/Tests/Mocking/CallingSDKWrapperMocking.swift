@@ -10,14 +10,15 @@ import Foundation
 @testable import AzureCommunicationUICalling
 
 class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
-    func cleanup() {
-    }
     var error: NSError?
     var callingEventsHandler: CallingSDKEventsHandling = CallingSDKEventsHandler(logger: LoggerMocking())
 
     func getLocalVideoStream<LocalVideoStreamType>(_ identifier: String) ->
     CompositeLocalVideoStream<LocalVideoStreamType>? {
         return nil
+    }
+
+    func cleanup() {
     }
 
     func startCallLocalVideoStream() async throws -> String {

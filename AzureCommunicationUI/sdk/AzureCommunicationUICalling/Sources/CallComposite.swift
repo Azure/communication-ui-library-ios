@@ -460,11 +460,13 @@ extension CallComposite {
             }
         }
     }
+
     private func setupLocalization(with provider: LocalizationProviderProtocol) {
         if let localizationOptions = localizationOptions {
             provider.apply(localeConfig: localizationOptions)
         }
     }
+
     private func isCompositePresentable() -> Bool {
         guard let keyWindow = UIWindow.keyWindow else {
             return false
