@@ -260,6 +260,7 @@ extension CallingDemoView {
         }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
+        // I want to configure this on/off for testing
         callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
         callComposite.events.onDismissed = onDismissedHandler

@@ -321,7 +321,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                      localizationProvider: localizationProvider,
                                      showSharingViewAction: showSharingViewAction,
                                      showSupportFormAction: showSupportFormAction,
-                                            isSupportFormAvailable: events.onError != nil)
+                                            isSupportFormAvailable: events.onUserReportedIssue != nil)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
