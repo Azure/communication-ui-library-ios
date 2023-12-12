@@ -257,7 +257,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
 extension CallingSDKWrapper {
     private func setupCallClientAndDeviceManager() async throws {
         do {
-            let client = makeCallClient()
+            let client = makeCallClient()            
             callClient = client
             let deviceManager = try await client.getDeviceManager()
             deviceManager.delegate = self
