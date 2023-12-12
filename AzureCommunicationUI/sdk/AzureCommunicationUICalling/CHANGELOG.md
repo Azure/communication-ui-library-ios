@@ -14,6 +14,10 @@
 - Introducing Picture in Picture which allows video call to continue when navigating away from calling screen.
 
 ## 1.4.0 (2023-08-30)
+## 1.5.0 (2023-12-04)
+
+### Features
+- User facing diagnostics
 
 ### Bug Fixes
 - Hide lobby users in GridView and Participant List
