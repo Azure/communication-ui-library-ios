@@ -245,6 +245,12 @@ class CallingDemoViewController: UIViewController {
                             }
                         }
         }
+        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { [weak callComposite] userIssue in
+            guard let composite = callComposite else {
+                return
+            }
+            print("User issue received in callback " + userIssue.userMessage)
+        }
         exitCompositeExecuted = false
         if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
             DispatchQueue.main.asyncAfter(deadline: .now() +
@@ -258,6 +264,7 @@ class CallingDemoViewController: UIViewController {
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
         callComposite.events.onDismissed = onDismissedHandler
+        callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
