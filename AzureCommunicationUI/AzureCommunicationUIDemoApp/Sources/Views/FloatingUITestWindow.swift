@@ -93,26 +93,6 @@ class FloatingUITestWindow: UIWindow {
                      accessibilityID: "changeNetworkDiagnostic-AID",
                      selector: #selector(changeCurrentNetworkDiagnostic))
 
-        createButton(title: "Media Diag Bad",
-                     accessibilityID: "emitMediaDiagnosticBad-AID",
-                     selector: #selector(emitMediaCallDiagnosticBadState))
-        createButton(title: "Media Diag Good",
-                     accessibilityID: "emitMediaDiagnosticGood-AID",
-                     selector: #selector(emitMediaCallDiagnosticGoodState))
-        createButton(title: "Media Diagnostic",
-                     accessibilityID: "changeMediaDiagnostic-AID",
-                     selector: #selector(changeCurrentMediaDiagnostic))
-
-        createButton(title: "Network Diag Bad",
-                     accessibilityID: "emitNetworkDiagnosticBad-AID",
-                     selector: #selector(emitNetworkCallDiagnosticBadState))
-        createButton(title: "Network Diag Good",
-                     accessibilityID: "emitNetworkDiagnosticGood-AID",
-                     selector: #selector(emitNetworkCallDiagnosticGoodState))
-        createButton(title: "Network Diagnostic",
-                     accessibilityID: "changeNetworkDiagnostic-AID",
-                     selector: #selector(changeCurrentNetworkDiagnostic))
-
         NSLayoutConstraint.activate([
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             stackView.widthAnchor.constraint(equalToConstant: 120.0),

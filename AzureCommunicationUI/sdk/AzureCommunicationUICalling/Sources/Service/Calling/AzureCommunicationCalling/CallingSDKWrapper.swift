@@ -34,6 +34,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         self.callingSDKInitialization = callingSDKInitialization
         super.init()
     }
+
     func cleanup() {
         localVideoStream = nil
         deviceManager = nil

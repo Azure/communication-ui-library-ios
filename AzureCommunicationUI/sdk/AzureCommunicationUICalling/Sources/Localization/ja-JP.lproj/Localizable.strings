@@ -16,6 +16,9 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="戻る";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="通話に参加";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="通話に参加しています...";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call";
+"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Ringing call…";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="ビデオ オフ";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="カメラを有効にします";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="ビデオ オン";

@@ -90,7 +90,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                     isCameraPreferred: state.localUserState.cameraState.operation == .on,
                     isAudioPreferred: state.localUserState.audioState.operation == .on
                 )
-                subscription(dispatch: dispatch)
+                subscription(dispatch: dispatch,
+                             isSkipRequested: state.callingState.operationStatus == .skipSetupRequested)
             } catch {
                 handle(error: error, errorType: .callJoinFailed, dispatch: dispatch)
             }
@@ -361,7 +362,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 }
 
 extension CallingMiddlewareHandler {
-    private func subscription(dispatch: @escaping ActionDispatch) {
+    private func subscription(dispatch: @escaping ActionDispatch,
+                              isSkipRequested: Bool = false) {
         logger.debug("Subscribe to calling service subjects")
         callingService.participantsInfoListSubject
             .throttle(for: 1.25, scheduler: DispatchQueue.main, latest: true)
@@ -384,6 +386,10 @@ extension CallingMiddlewareHandler {
                     self.handleCallInfo(internalError: internalError,
                                         dispatch: dispatch) {
                         self.logger.debug("Subscription cancelled with Error Code: \(internalError)")
+                        // on error if skip setup is on exit composite
+                        if isSkipRequested {
+                            dispatch(.compositeExitAction)
+                        }
                         self.subscription.cancel()
                     }
                     // to fix the bug that resume call won't work without Internet

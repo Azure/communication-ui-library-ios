@@ -80,22 +80,91 @@ class EnvConfigSubject: ObservableObject {
     @Published var tint30: Color = .blue
     @Published var colorSchemeOverride: UIUserInterfaceStyle = .unspecified
 
+    let acstokenKey: String = "ACS_TOKEN"
+    let displayNameKey: String = "DISPLAY_NAME"
+    let groupIdKey: String = "GROUP_ID"
+    let teamsUrlKey: String = "TEAMS_URL"
+    let oneToNCallKey: String = "ONE_N_CALL_IDS"
+
+    // swiftlint:disable explicit_type_interface
+    let userDefault = UserDefaults.standard
+    // swiftlint:enable explicit_type_interface
+
+    private func readStringData(key: String) -> String {
+        if userDefault.object(forKey: key) == nil {
+            return ""
+        } else {
+            return userDefault.string(forKey: key)!
+        }
+    }
+
+    private func writeAnyData(key: String, value: Any) {
+        userDefault.set(value, forKey: key)
+        userDefault.synchronize()
+    }
+
+    func saveFromState() {
+        if !acsToken.isEmpty {
+            // We need to make a service call to get token for user in case application is not running
+            // Storing token in shared preferences for demo purpose as this app is not public
+            // In production, token should be fetched from server (storing token in pref can be a security issue)
+            writeAnyData(key: acstokenKey, value: acsToken)
+        }
+        if !displayName.isEmpty {
+            writeAnyData(key: displayNameKey, value: displayName)
+        }
+        if !groupCallId.isEmpty {
+            writeAnyData(key: groupIdKey, value: groupCallId)
+        }
+        if !teamsMeetingLink.isEmpty {
+            writeAnyData(key: teamsUrlKey, value: teamsMeetingLink)
+        }
+        if !participantIds.isEmpty {
+            writeAnyData(key: oneToNCallKey, value: participantIds)
+        }
+    }
+
+    func load() {
+        if !readStringData(key: acstokenKey).isEmpty {
+            acsToken = readStringData(key: acstokenKey)
+            selectedAcsTokenType = .token
+        }
+        if !readStringData(key: displayNameKey).isEmpty {
+            displayName = readStringData(key: displayNameKey)
+        }
+        if !readStringData(key: groupIdKey).isEmpty {
+            groupCallId = readStringData(key: groupIdKey)
+        }
+        if !readStringData(key: teamsUrlKey).isEmpty {
+            teamsMeetingLink = readStringData(key: teamsUrlKey)
+        }
+        if !readStringData(key: oneToNCallKey).isEmpty {
+            participantIds = readStringData(key: oneToNCallKey)
+        }
+    }
+
     func update(from dic: [String: String]) {
         if let token = dic["acstoken"],
            !token.isEmpty {
             acsToken = token
             selectedAcsTokenType = .token
+            // We need to make a service call to get token for user in case application is not running
+            // Storing token in shared preferences for demo purpose as this app is not public
+            // In production, token should be fetched from server (storing token in pref can be a security issue)
+            writeAnyData(key: acstokenKey, value: token)
         }
 
         if let name = dic["name"],
            !name.isEmpty {
             displayName = name
+            writeAnyData(key: displayNameKey, value: name)
         }
 
         if let groupId = dic["groupid"],
            !groupId.isEmpty {
             groupCallId = groupId
             selectedMeetingType = .groupCall
+            writeAnyData(key: groupIdKey, value: groupId)
         }
 
         if let teamsLink = dic["teamsurl"],
@@ -103,6 +172,7 @@ class EnvConfigSubject: ObservableObject {
             teamsMeetingLink = teamsLink
             selectedMeetingType = .teamsMeeting
             selectedChatType = .teamsChat
+            writeAnyData(key: teamsUrlKey, value: teamsLink)
         }
 
         if let communicationUserId = dic["userid"],
@@ -125,6 +195,7 @@ class EnvConfigSubject: ObservableObject {
            !participantIds.isEmpty {
             participantIds = oneToNCId
             selectedMeetingType = .oneToNCall
+            writeAnyData(key: oneToNCallKey, value: oneToNCId)
         }
     }
 }

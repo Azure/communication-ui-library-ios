@@ -16,6 +16,9 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Wstecz";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Dołącz do rozmowy";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Trwa dołączanie do rozmowy…";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call";
+"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Ringing call…";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Wideo wyłączone";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Włącz kamerę";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Wideo włączone";

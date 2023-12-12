@@ -16,6 +16,9 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="הקודם";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="הצטרף לשיחה";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="מצטרף לשיחה…";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call";
+"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Ringing call…";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="וידאו כבוי";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="הפעל מצלמה";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="וידאו מופעל";

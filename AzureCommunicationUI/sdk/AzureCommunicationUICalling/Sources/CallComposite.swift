@@ -110,9 +110,8 @@ public class CallComposite {
         exitManager?.dismiss()
     }
 
-    /// Dismiss composite and cleanup call agent
+    /// Remove calling layer reference
     public func dispose() {
-        dismiss()
         incomingCallWrapper.dispose()
         CallComposite.callingSDKInitialization?.dispose()
         CallComposite.callingSDKInitialization = nil

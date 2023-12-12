@@ -43,6 +43,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let urlContexts = connectionOptions.urlContexts
         if let queryDict = urlContexts.first?.url.toQueryDictionary() {
            appDelegate.envConfigSubject.update(from: queryDict)
+        } else {
+            appDelegate.envConfigSubject.load()
         }
     }
 
@@ -51,6 +53,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if let queryDict = URLContexts.first?.url.toQueryDictionary(),
            let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             appDelegate.envConfigSubject.update(from: queryDict)
+        } else {
+            if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+                appDelegate.envConfigSubject.load()
+            }
         }
     }
 

@@ -113,11 +113,9 @@ internal class CallingSDKInitialization: NSObject {
 
     func dispose() {
         self.callAgent?.delegate = nil
-        self.logger.debug("Call agent disposed")
-        self.callsUpdatedProtocol = nil
         self.callAgent?.dispose()
+        self.callsUpdatedProtocol = nil
         self.callAgent = nil
-        self.callClient?.dispose()
         self.callClient = nil
     }
 

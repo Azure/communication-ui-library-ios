@@ -26,9 +26,6 @@ struct CallingDemoView: View {
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
     @State static var callComposite: CallComposite?
-    // swiftlint:disable explicit_type_interface
-    let userDefault = UserDefaults.standard
-    // swiftlint:enable explicit_type_interface
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
 
@@ -217,7 +214,7 @@ struct CallingDemoView: View {
             showCallComposite()
         }
         .buttonStyle(DemoButtonStyle())
-        .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+        .accessibility(identifier: AccessibilityId.showAccessibilityID.rawValue)
     }
 
     var showCallHistoryButton: some View {
@@ -274,23 +271,12 @@ extension CallingDemoView {
         callingViewModel.callComposite?.displayCallCompositeIfWasHidden()
     }
 
-    private func readStringData(key: String) -> String {
-        if userDefault.object(forKey: key) == nil {
-            return ""
-        } else {
-            return userDefault.string(forKey: key)!
-        }
-    }
-
     func onPushNotificationReceived(dictionaryPayload: [AnyHashable: Any]) {
         let pushNotificationInfo = CallCompositePushNotificationInfo(pushNotificationInfo: dictionaryPayload)
         os_log("calling demo app: onPushNotificationReceived CallingDemoView")
         if envConfigSubject.acsToken.isEmpty {
             os_log("calling demo app: envConfigSubject acs token is empty")
-            var data = [String: String]()
-            data["name"] = readStringData(key: "DISPLAY_NAME")
-            data["acstoken"] = readStringData(key: "ACS_TOKEN")
-            self.envConfigSubject.update(from: data)
+            self.envConfigSubject.load()
         }
         if let communicationTokenCredential = try? CommunicationTokenCredential(token: envConfigSubject.acsToken) {
             Task {
@@ -346,6 +332,7 @@ extension CallingDemoView {
         #endif
         subscribeToEvents(callComposite: callComposite)
         CallingDemoView.callComposite = callComposite
+        self.envConfigSubject.saveFromState()
         return callComposite
     }
 
@@ -384,13 +371,13 @@ extension CallingDemoView {
             if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
                 relaunchComposite()
             }
-            print("::::CallingDemoView ::::onDismissedHandler ")
+            print("::::CallingDemoView ::::onDismissedHandler")
         }
         let onInomingCall: (CallCompositeIncomingCallInfo) -> Void = { [] _ in
-            print("::::CallingDemoView: Incoming Call ::::CallInfo ")
+            print("::::CallingDemoView::getEventsHandler Incoming Call ::::CallInfo")
         }
         let onInomingCallEnded: (CallCompositeIncomingCallEndedInfo) -> Void = { [] _ in
-            print("::::CallingDemoView: Incoming Call ::::CallEndedInfo")
+            print("::::CallingDemoView::getEventsHandler Incoming Call ::::CallEndedInfo")
         }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
@@ -403,6 +390,7 @@ extension CallingDemoView {
 
     func startCallComposite() async {
         let callComposite = createCallComposite()
+        callingViewModel.callComposite = callComposite
         let link = getMeetingLink()
         exitCompositeExecuted = false
         if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
@@ -500,7 +488,6 @@ extension CallingDemoView {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
         }
-        callingViewModel.callComposite = callComposite
     }
 
     func disposeComposite() {
@@ -515,7 +502,6 @@ extension CallingDemoView {
                 credential: credential,
                 displayName: displayName,
                 callKitOptions: getCallKitOptions())
-            writeAnyData(key: "DISPLAY_NAME", value: displayName)
             print("CallingDemoView, registerPushNotification")
             Task {
                 do {
@@ -527,11 +513,6 @@ extension CallingDemoView {
                 }
             }
         }
-    }
-
-    private func writeAnyData(key: String, value: Any) {
-        userDefault.set(value, forKey: key)
-        userDefault.synchronize()
     }
 
     public func configureAudioSession() -> Error? {
@@ -568,10 +549,6 @@ extension CallingDemoView {
         case .token:
             let acsToken = envConfigSubject.useExpiredToken ?
                            envConfigSubject.expiredAcsToken : envConfigSubject.acsToken
-            // We need to make a service call to get token for user in case application is not running
-            // Storing token in shared preferences for demo purpose as this app is not public
-            // In production, token should be fetched from server (storing token in pref can be a security issue)
-            writeAnyData(key: "ACS_TOKEN", value: acsToken)
             if let communicationTokenCredential = try? CommunicationTokenCredential(token: acsToken) {
                 return communicationTokenCredential
             } else {
@@ -644,9 +621,9 @@ extension CallingDemoView {
 
     private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged "
-              + "\(callState.requestString)" +
-              "\(String(describing: callState.callEndReasonCodeInt))"
-              + "\(String(describing: callState.callEndReasonSubCodeInt))")
+              + "\(callState.requestString) " +
+              "\(String(describing: callState.callEndReasonCodeInt)) "
+              + "\(String(describing: callState.callEndReasonSubCodeInt)) ")
         self.callState = callState.requestString
     }
 
