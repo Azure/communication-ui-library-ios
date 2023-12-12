@@ -614,10 +614,6 @@ extension CallingDemoView {
             alertMessage = "Microphone Permission is denied"
         case CallCompositeErrorCode.networkConnectionNotAvailable:
             alertMessage = "Internet error"
-        case CallCompositeErrorCode.callDeclined:
-            alertMessage = "Call Declined"
-        case CallCompositeErrorCode.canNotMakeCall:
-            alertMessage = "Not subscribed to receive push"
         default:
             alertMessage = "Unknown error"
         }
@@ -647,7 +643,10 @@ extension CallingDemoView {
     }
 
     private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
-        print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
+        print("::::CallingDemoView::getEventsHandler::onCallStateChanged "
+              + "\(callState.requestString)" +
+              "\(String(describing: callState.callEndReasonCodeInt))"
+              + "\(String(describing: callState.callEndReasonSubCodeInt))")
         self.callState = callState.requestString
     }
 

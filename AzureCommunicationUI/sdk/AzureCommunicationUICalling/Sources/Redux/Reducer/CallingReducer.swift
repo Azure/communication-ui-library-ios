@@ -16,10 +16,14 @@ extension Reducer where State == CallingState,
         var isRecordingActive = callingState.isRecordingActive
         var isTranscriptionActive = callingState.isTranscriptionActive
         var callStartDate = callingState.callStartDate
+        var callEndReasonCode: Int?
+        var callEndReasonSubCode: Int?
 
         switch action {
-        case .callingAction(.stateUpdated(let status)):
+        case .callingAction(.stateUpdated(let status, let code, let subCode)):
             callingStatus = status
+            callEndReasonCode = code
+            callEndReasonSubCode = subCode
         case .callingAction(.callIdUpdated(let callId)):
             callIdValue = callId
         case .callingAction(.recordingStateUpdated(let newValue)):
@@ -61,6 +65,8 @@ extension Reducer where State == CallingState,
                             callId: callIdValue,
                             isRecordingActive: isRecordingActive,
                             isTranscriptionActive: isTranscriptionActive,
-                            callStartDate: callStartDate)
+                            callStartDate: callStartDate,
+                            callEndReasonCode: callEndReasonCode,
+                            callEndReasonSubCode: callEndReasonSubCode)
     }
 }

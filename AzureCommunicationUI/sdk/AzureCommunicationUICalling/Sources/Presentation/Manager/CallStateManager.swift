@@ -33,13 +33,15 @@ class CallStateManager: CallStateManagerProtocol {
             return
         }
         previousCallingStatus = callingStatus
-        updateEventHandler(state.callingState.status)
+        updateEventHandler(state.callingState)
     }
 
-    private func updateEventHandler(_ callingStatus: CallingStatus) {
+    private func updateEventHandler(_ callingState: CallingState) {
         guard let onCallStateChanged = eventsHandler.onCallStateChanged else {
             return
         }
-        onCallStateChanged(callingStatus.toCallCompositeCallState())
+        onCallStateChanged(CallState(rawValue: callingState.status.toCallCompositeCallState().requestString,
+                                     callEndReasonCode: callingState.callEndReasonCode,
+                                     callEndReasonSubCode: callingState.callEndReasonSubCode))
     }
 }

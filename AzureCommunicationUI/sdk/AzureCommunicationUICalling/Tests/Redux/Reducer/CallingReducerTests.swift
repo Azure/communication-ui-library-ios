@@ -11,7 +11,9 @@ class CallingReducerTests: XCTestCase {
     func test_callingReducer_reduce_when_callingActionStateUpdated_then_stateUpdated() {
         let expectedState = CallingStatus.connected
         let state = CallingState(status: .disconnected)
-        let action = Action.callingAction(.stateUpdated(status: expectedState))
+        let action = Action.callingAction(.stateUpdated(status: expectedState,
+                                                        callEndReasonCode: nil,
+                                                        callEndReasonSubCode: nil))
         let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 

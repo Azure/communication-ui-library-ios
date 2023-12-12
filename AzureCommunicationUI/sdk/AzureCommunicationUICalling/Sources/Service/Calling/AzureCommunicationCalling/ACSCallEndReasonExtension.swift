@@ -22,10 +22,6 @@ extension CallEndReason {
             }
         case 401:
             internalError = CallCompositeInternalError.callTokenFailed
-        case 408:
-            internalError = CallCompositeInternalError.canNotMakeCall
-        case 603:
-            internalError = CallCompositeInternalError.callDeclined
         case 487:
             // Call cancelled by user as a happy path
             break

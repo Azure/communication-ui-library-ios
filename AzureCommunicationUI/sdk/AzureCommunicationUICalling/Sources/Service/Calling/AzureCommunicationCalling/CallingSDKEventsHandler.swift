@@ -185,14 +185,20 @@ extension CallingSDKEventsHandler: CallDelegate,
 
         let currentStatus = call.state.toCallingStatus()
         let internalError = call.callEndReason.toCompositeInternalError(wasCallConnected())
+        var callEndReasonCode: Int?
+        var callEndReasonSubCode: Int?
         if internalError != nil {
             let code = call.callEndReason.code
+            callEndReasonCode = Int(code)
             let subcode = call.callEndReason.subcode
+            callEndReasonSubCode = Int(subcode)
             logger.error("Receive vaildate CallEndReason:\(code), subcode:\(subcode)")
         }
 
         let callInfoModel = CallInfoModel(status: currentStatus,
-                                          internalError: internalError)
+                                          internalError: internalError,
+                                          callEndReasonCode: callEndReasonCode,
+                                          callEndReasonSubCode: callEndReasonSubCode)
         callInfoSubject.send(callInfoModel)
         if currentStatus == .connected {
             addRemoteParticipants(call.remoteParticipants)

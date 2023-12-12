@@ -25,12 +25,6 @@ public struct CallCompositeErrorCode {
     /// Error when internet is unavailable and call join fails
     public static let networkConnectionNotAvailable: String = "networkConnectionNotAvailable"
 
-    /// Error when call is declined
-    public static let callDeclined: String = "callDeclined"
-
-    /// Error when call can not be connected
-    public static let canNotMakeCall: String = "canNotMakeCall"
-
     /// Error when a participant is evicted from the call by another participant
     static let callEvicted: String = "callEvicted"
 

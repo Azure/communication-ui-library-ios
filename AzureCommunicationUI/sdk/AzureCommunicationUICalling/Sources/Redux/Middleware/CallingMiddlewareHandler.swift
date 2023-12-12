@@ -377,7 +377,7 @@ extension CallingMiddlewareHandler {
                 let internalError = callInfoModel.internalError
                 let callingStatus = callInfoModel.status
 
-                self.handle(callingStatus: callingStatus, dispatch: dispatch)
+                self.handle(callInfoModel: callInfoModel, dispatch: dispatch)
                 self.logger.debug("Dispatch State Update: \(callingStatus)")
 
                 if let internalError = internalError {
