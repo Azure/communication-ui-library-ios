@@ -9,6 +9,7 @@ import Foundation
 protocol CompositeViewModelFactoryProtocol {
     // MARK: CompositeViewModels
     func getSetupViewModel() -> SetupViewModel
+
     func getCallingViewModel() -> CallingViewModel
 
     // MARK: ComponentViewModels
@@ -16,46 +17,67 @@ protocol CompositeViewModelFactoryProtocol {
                                  buttonType: IconButtonViewModel.ButtonType,
                                  isDisabled: Bool,
                                  action: @escaping (() -> Void)) -> IconButtonViewModel
+
     func makeIconWithLabelButtonViewModel<ButtonStateType>(
         selectedButtonState: ButtonStateType,
         localizationProvider: LocalizationProviderProtocol,
         buttonTypeColor: IconWithLabelButtonViewModel<ButtonStateType>.ButtonTypeColor,
         isDisabled: Bool,
         action: @escaping (() -> Void)) -> IconWithLabelButtonViewModel<ButtonStateType>
+
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel
+
     func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
                                     buttonLabel: String,
                                     iconName: CompositeIcon?,
                                     isDisabled: Bool,
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel
+
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel
+
     func makeErrorInfoViewModel(title: String,
                                 subtitle: String) -> ErrorInfoViewModel
+
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel
 
     // MARK: CallingViewModels
     func makeLobbyOverlayViewModel() -> LobbyOverlayViewModel
+
     func makeLoadingOverlayViewModel() -> LoadingOverlayViewModel
+
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel
+
     func makeControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                  endCallConfirm: @escaping (() -> Void),
                                  localUserState: LocalUserState) -> ControlBarViewModel
+
     func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel
+
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel
+
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel
+
     func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel
+
     func makeBannerViewModel() -> BannerViewModel
+
     func makeBannerTextViewModel() -> BannerTextViewModel
+
     func makeLocalParticipantsListCellViewModel(localUserState: LocalUserState) -> ParticipantsListCellViewModel
+
     func makeParticipantsListCellViewModel(participantInfoModel: ParticipantInfoModel) -> ParticipantsListCellViewModel
+
     func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void,
                                           showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel
+
     func makeDebugInfoSharingActivityViewModel() -> DebugInfoSharingActivityViewModel
+
     func makeDrawerListItemViewModel(icon: CompositeIcon,
                                      title: String,
                                      accessibilityIdentifier: String,
                                      action: @escaping (() -> Void)) -> DrawerListItemViewModel
+
     func makeSelectableDrawerListItemViewModel(
         icon: CompositeIcon,
         title: String,
@@ -66,8 +88,10 @@ protocol CompositeViewModelFactoryProtocol {
 
     // MARK: SetupViewModels
     func makePreviewAreaViewModel(dispatchAction: @escaping ActionDispatch) -> PreviewAreaViewModel
+
     func makeSetupControlBarViewModel(dispatchAction: @escaping ActionDispatch,
                                       localUserState: LocalUserState) -> SetupControlBarViewModel
+
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel
 }
 
@@ -108,7 +132,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     func makeSupportFormViewModel() -> SupportFormViewModel {
-        return SupportFormViewModel()
+        return SupportFormViewModel(events: events)
     }
 
     // MARK: CompositeViewModels
@@ -296,7 +320,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         return MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                      localizationProvider: localizationProvider,
                                      showSharingViewAction: showSharingViewAction,
-                                     showSupportFormAction: showSupportFormAction)
+                                     showSupportFormAction: showSupportFormAction,
+                                            isSupportFormAvailable: events.onError != nil)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
