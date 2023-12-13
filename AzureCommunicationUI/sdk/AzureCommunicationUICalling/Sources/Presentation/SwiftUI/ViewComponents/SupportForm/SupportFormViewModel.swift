@@ -10,10 +10,12 @@ class SupportFormViewModel: ObservableObject {
     @Published var messageText: String = "Please describe your issue..."
     @Published var includeScreenshot: Bool = true
     let events: CallComposite.Events
+    let getLogFiles: () -> [URL]
     // Any additional properties your ViewModel needs
 
-    init(events: CallComposite.Events) {
+    init(events: CallComposite.Events, getLogFiles: @escaping () -> [URL]) {
         self.events = events
+        self.getLogFiles = getLogFiles
     }
 
     // Function to handle the send action
@@ -22,7 +24,7 @@ class SupportFormViewModel: ObservableObject {
         guard let callback = events.onUserReportedIssue else {
             return
         }
-        callback(CallCompositeUserReportedIssue(userMessage: messageText, logFiles: [], callIds: []))
+        callback(CallCompositeUserReportedIssue(userMessage: messageText, logFiles: getLogFiles(), callIds: []))
     }
 
     // Any additional methods your ViewModel needs

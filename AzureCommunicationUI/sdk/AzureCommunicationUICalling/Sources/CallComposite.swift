@@ -207,7 +207,8 @@ public class CallComposite {
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
                 eventsHandler: events,
-                localOptions: localOptions
+                localOptions: localOptions,
+                retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
         )
     }

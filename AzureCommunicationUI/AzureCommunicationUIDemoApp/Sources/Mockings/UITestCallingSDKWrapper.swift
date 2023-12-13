@@ -125,6 +125,10 @@ class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         return .front
     }
 
+    func getLogFiles() -> [URL] {
+        return []
+    }
+
     func startPreviewVideoStream() async throws -> String {
         return ""
     }

@@ -106,7 +106,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let debugInfoManager: DebugInfoManagerProtocol
     private let events: CallComposite.Events
     private let localOptions: LocalOptions?
-
+    private let retrieveLogFiles: () -> [URL]
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
 
@@ -118,7 +118,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          accessibilityProvider: AccessibilityProviderProtocol,
          debugInfoManager: DebugInfoManagerProtocol,
          eventsHandler: CallComposite.Events,
-         localOptions: LocalOptions? = nil
+         localOptions: LocalOptions? = nil,
+         retrieveLogFiles: @escaping () -> [URL]
          ) {
         self.logger = logger
         self.store = store
@@ -129,10 +130,11 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.debugInfoManager = debugInfoManager
         self.events = eventsHandler
         self.localOptions = localOptions
+        self.retrieveLogFiles = retrieveLogFiles
     }
 
     func makeSupportFormViewModel() -> SupportFormViewModel {
-        return SupportFormViewModel(events: events)
+        return SupportFormViewModel(events: events, getLogFiles: retrieveLogFiles)
     }
 
     // MARK: CompositeViewModels
@@ -177,6 +179,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                             isDisabled: isDisabled,
                             action: action)
     }
+
     func makeIconWithLabelButtonViewModel<T: ButtonState>(
         selectedButtonState: T,
         localizationProvider: LocalizationProviderProtocol,
@@ -189,13 +192,15 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                 buttonTypeColor: buttonTypeColor,
                 isDisabled: isDisabled,
                 action: action)
-        }
+    }
+
     func makeLocalVideoViewModel(dispatchAction: @escaping ActionDispatch) -> LocalVideoViewModel {
         LocalVideoViewModel(compositeViewModelFactory: self,
                             logger: logger,
                             localizationProvider: localizationProvider,
                             dispatchAction: dispatchAction)
     }
+
     func makePrimaryButtonViewModel(buttonStyle: FluentUI.ButtonStyle,
                                     buttonLabel: String,
                                     iconName: CompositeIcon?,
@@ -207,6 +212,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                isDisabled: isDisabled,
                                action: action)
     }
+
     func makeAudioDevicesListViewModel(dispatchAction: @escaping ActionDispatch,
                                        localUserState: LocalUserState) -> AudioDevicesListViewModel {
         AudioDevicesListViewModel(compositeViewModelFactory: self,

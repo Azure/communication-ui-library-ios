@@ -224,6 +224,7 @@ extension CallingDemoView {
             self.onRemoteParticipantJoined(to: composite,
                                            identifiers: ids)
         }
+
         let onErrorHandler: (CallCompositeError) -> Void = { [weak callComposite] error in
             guard let composite = callComposite else {
                 return
@@ -231,12 +232,11 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
-        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { [weak callComposite] issue in
-            guard let composite = callComposite else {
-                return
-            }
+
+        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { issue in
             print("received in app: " + issue.userMessage)
         }
+
         let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
             guard let composite = callComposite else {
                 return

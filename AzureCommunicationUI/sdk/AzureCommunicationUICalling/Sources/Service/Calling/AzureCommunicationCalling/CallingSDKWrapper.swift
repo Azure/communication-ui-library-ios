@@ -252,12 +252,19 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             throw error
         }
     }
+
+    func getLogFiles() -> [URL] {
+        guard let callClient = callClient else {
+            return []
+        }
+        return callClient.debugInfo.supportFiles
+    }
 }
 
 extension CallingSDKWrapper {
     private func setupCallClientAndDeviceManager() async throws {
         do {
-            let client = makeCallClient()            
+            let client = makeCallClient()
             callClient = client
             let deviceManager = try await client.getDeviceManager()
             deviceManager.delegate = self
