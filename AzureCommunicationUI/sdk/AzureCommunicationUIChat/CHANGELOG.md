@@ -1,10 +1,5 @@
 # Release History
 
-## 1.0.0-beta.4 (2023-12-21)
-
-### Other Changes
-- Update the dependency `AzureCommunicationChat` to `1.3.3` for the EUDB compliance.
-
 ## 1.0.0-beta.3 (2023-03-30)
 
 ### Other Changes
