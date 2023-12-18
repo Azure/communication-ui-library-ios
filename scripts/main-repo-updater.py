@@ -82,14 +82,14 @@ def main(argv):
 		telemetry_pattern % oldVersion, 
 		telemetry_pattern % new_Version)
 	print("telemetry - done, 1 of 4")
-	
-	# Readme in main repo, should skip this for beta releases, does not support '-beta.1' syntax
+
+	# readme update, supports '-beta.1' syntax
 	main_repo = calling_main_readme if selectedComposite == Composite.CALLING else chat_main_readme
-	pod_pattern = calling_pattern_pod if selectedComposite == Composite.CALLING else chat_pattern_pod
 	update(acs_UI_library_Path + main_repo, 
 		oldVersion, 
 		new_Version)
 	print("readme - done, 2 of 4")
+	
 	# xcodeproj update, does not support '-beta.1' syntax
 	# need to remove '-beta.1'
 	release_tag_pattern = '-beta'
