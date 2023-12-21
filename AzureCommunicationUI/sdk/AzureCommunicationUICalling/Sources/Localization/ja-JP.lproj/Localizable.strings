@@ -16,9 +16,9 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="戻る";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="通話に参加";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="通話に参加しています...";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call";
-"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Ringing call…";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="通話を開始";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="通話の開始";
+"AzureCommunicationUICalling.SetupView.Button.RingingCall"="呼び出しています...";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="ビデオ オフ";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="カメラを有効にします";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="ビデオ オン";
@@ -68,6 +68,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="話し中";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留中";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="タップして許可または拒否";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="ロビーで待機中 (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="通話中 (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="すべて参加許可";

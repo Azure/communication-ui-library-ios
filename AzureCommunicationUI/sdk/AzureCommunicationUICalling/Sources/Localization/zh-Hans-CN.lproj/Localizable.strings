@@ -16,9 +16,9 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="返回";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="加入通话";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="正在加入通话...";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call";
-"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Ringing call…";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="开始呼叫";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="正在开始呼叫";
+"AzureCommunicationUICalling.SetupView.Button.RingingCall"="正在进行响铃呼叫…";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="视频关闭";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="打开照相机";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="视频开启";
@@ -68,6 +68,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="正在讲话";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="点击以允许或拒绝";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="正在大厅中等待(%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="在呼叫中(%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="全部允许";

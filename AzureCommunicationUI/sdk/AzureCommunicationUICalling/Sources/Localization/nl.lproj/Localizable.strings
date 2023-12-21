@@ -16,9 +16,9 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Terug";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Deelnemen aan gesprek";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Deelnemen aan gesprek…";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call";
-"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Ringing call…";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Gesprek starten";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Oproep starten";
+"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Oproep bellen…";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video uit";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Camera inschakelen";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video aan";
@@ -68,6 +68,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Spreken";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="In de wacht";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tik om toe te geven of af te wijzen";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Wachten in lobby (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="In de oproep (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Allen toelaten";

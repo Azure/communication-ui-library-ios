@@ -16,9 +16,9 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="הקודם";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="הצטרף לשיחה";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="מצטרף לשיחה…";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call";
-"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Ringing call…";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="התחל שיחה";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="מתחיל שיחה";
+"AzureCommunicationUICalling.SetupView.Button.RingingCall"="מצלצל לשיחה...";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="וידאו כבוי";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="הפעל מצלמה";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="וידאו מופעל";
@@ -68,6 +68,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="מדבר";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="בהמתנה";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="הקש כדי להכניס או לדחות";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="ממתין בחדר הכניסה (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="בשיחה (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="הכנס את כולם";

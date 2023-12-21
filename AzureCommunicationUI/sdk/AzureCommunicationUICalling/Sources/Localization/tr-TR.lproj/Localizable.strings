@@ -16,9 +16,9 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Geri";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Aramaya katıl";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Aramaya katılıyorsunuz…";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call";
-"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Ringing call…";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Aramayı başlat";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Arama başlatılıyor";
+"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Çalan arama...";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Görüntü kapalı";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Kamerayı Aç";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Görüntü açık";
@@ -68,6 +68,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Konuşma";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Beklemede";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Kabul etmek veya reddetmek için dokunun";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Lobide bekleniyor (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="Aramada (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Tümünü kabul et";

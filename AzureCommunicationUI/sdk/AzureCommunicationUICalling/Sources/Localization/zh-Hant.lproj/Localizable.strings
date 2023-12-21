@@ -16,9 +16,9 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="上一步";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="加入通話";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="正在加入通話…";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call";
-"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Ringing call…";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="開始通話";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="開始通話";
+"AzureCommunicationUICalling.SetupView.Button.RingingCall"="撥打電話中...";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="視訊關閉";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="開啟相機";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="視訊開啟";
@@ -68,6 +68,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="說話";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="點選以准許或拒絕";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="正在大廳等候 (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="通話中 (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="全部准許";

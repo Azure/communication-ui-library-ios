@@ -16,9 +16,9 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Zurück";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="An Anruf teilnehmen";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Anruf wird beigetreten…";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call";
-"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Ringing call…";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Anruf starten";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Anruf wird gestartet";
+"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Anruf wird angerufen...";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video aus";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Kamera einschalten";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video ein";
@@ -68,6 +68,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Sprechen";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Gehalten";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tippen, um zuzulassen oder abzulehnen";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Warten im Wartebereich (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="Im Anruf (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Alle zulassen";
@@ -80,9 +81,9 @@
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="Zur Frontkamera wechseln";
 
 "AzureCommunicationUICalling.CallingView.OnePersonJoined"="%@ nimmt an der Besprechung teil";
-"AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d Teilnehmer*innen nehmen an der Besprechung teil";
+"AzureCommunicationUICalling.CallingView.MutiplePeopleJoined"="%d Teilnehmende nehmen an der Besprechung teil";
 "AzureCommunicationUICalling.CallingView.OnePersonLeft"="%@ hat die Besprechung verlassen";
-"AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d Teilnehmer*innen haben die Besprechung verlassen";
+"AzureCommunicationUICalling.CallingView.MutiplePeopleLeft"="%d Teilnehmende haben die Besprechung verlassen";
 "AzureCommunicationUICalling.CallingView.JoinedCall.AccessibilityLabel"="Sie sind dem Anruf beigetreten.";
 "AzureCommunicationUICalling.CallingView.ScreenShareStart.AccessibilityLabel"="Inhalte werden geteilt";
 "AzureCommunicationUICalling.CallingView.ScreenShareEnd.AccessibilityLabel"="Inhaltsfreigabe wurde beendet";

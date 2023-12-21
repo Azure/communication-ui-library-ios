@@ -16,9 +16,9 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Tillbaka";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Anslut till samtal";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Ansluter till ett samtal…";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call";
-"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Ringing call…";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Starta samtal";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Startar samtal";
+"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Ringer samtal...";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video av";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Starta kameran";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video på";
@@ -68,6 +68,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Talar";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="Parkerat";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tryck för att godkänna eller avböja";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Väntar i lobbyn (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="I samtalet (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Tillåt alla";

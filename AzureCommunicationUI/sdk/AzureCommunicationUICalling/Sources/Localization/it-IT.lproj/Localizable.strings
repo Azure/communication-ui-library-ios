@@ -16,9 +16,9 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Indietro";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Partecipa alla chiamata";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Partecipazione alla chiamata…";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call";
-"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Ringing call…";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Avvia chiamata";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Avvio chiamata in corso";
+"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Chiamata in corso...";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Video disattivato";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Attiva la fotocamera";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Video attivato";
@@ -68,6 +68,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Impegnato in una conversazione";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="In attesa";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Tocca per ammettere o rifiutare";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Aspettando nella sala d’attesa (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="Nella chiamata (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Ammetti tutti";

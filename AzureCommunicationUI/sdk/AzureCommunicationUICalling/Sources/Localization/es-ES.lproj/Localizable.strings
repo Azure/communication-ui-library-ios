@@ -16,9 +16,9 @@
 "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"="Volver";
 "AzureCommunicationUICalling.SetupView.Button.JoinCall"="Unirse a la llamada";
 "AzureCommunicationUICalling.SetupView.Button.JoiningCall"="Uniéndose a la llamada…";
-"AzureCommunicationUICalling.SetupView.Button.StartCall"="Start call";
-"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Starting call";
-"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Ringing call…";
+"AzureCommunicationUICalling.SetupView.Button.StartCall"="Iniciar llamada";
+"AzureCommunicationUICalling.SetupView.Button.StartingCall"="Iniciando llamada";
+"AzureCommunicationUICalling.SetupView.Button.RingingCall"="Llamando...";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff"="Vídeo desactivado";
 "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"="Activar cámara";
 "AzureCommunicationUICalling.SetupView.Button.VideoOn"="Vídeo activado";
@@ -68,6 +68,7 @@
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="Hablando";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="En espera";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="Pulsa para admitir o rechazar";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="Esperando en la sala de espera (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="En la llamada (%d)";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="Admitir a todos";
