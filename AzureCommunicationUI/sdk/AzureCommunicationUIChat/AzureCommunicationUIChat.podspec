@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   spec.pod_target_xcconfig  = { "ENABLE_BITCODE": "NO"}
   spec.info_plist           = {'UILibrarySemVersion' => "#{spec.version}"}
 
-  spec.dependency             'AzureCommunicationChat', '1.3.1'
+  spec.dependency             'AzureCommunicationChat', '1.3.3'
   spec.dependency             'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   spec.dependency             'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
   spec.dependency             'MicrosoftFluentUI/Button_ios', '0.10.0'
