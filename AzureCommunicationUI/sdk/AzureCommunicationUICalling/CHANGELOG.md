@@ -1,19 +1,11 @@
 # Azure Communication UI Calling Release History
 
-## 1.6.0-beta.0 (2023-*)
+## 1.6.0-beta.1 (2023-12-21)
 ### Features
-- CallKit integration for outgoing call
-- Introduce Call Diagnostic banners to show [user facing diagnostics](https://learn.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/user-facing-diagnostics?pivots=platform-ios) that could indicate due to some underlying issue a user might have a poor experience. 
-- ACS 1 to N Calling Support
-  
-### Bug Fixes
-- Hide lobby users in GridView and Participant List
+- CallKit integration 
+- Teams meeting lobby admit
+- ACS 1 to 1 Calling Support with push notification support
 
-## 1.5.0-beta.1 (2023-09-08)
-### New Features
-- Introducing Picture in Picture which allows video call to continue when navigating away from calling screen.
-
-## 1.4.0 (2023-08-30)
 ## 1.5.0 (2023-12-04)
 
 ### Features
@@ -21,6 +13,10 @@
 
 ### Bug Fixes
 - Hide lobby users in GridView and Participant List
+
+## 1.5.0-beta.1 (2023-09-08)
+### New Features
+- Introducing Picture in Picture which allows video call to continue when navigating away from calling screen.
 
 ## 1.4.0 (2023-08-30)
 ### Features
