@@ -19,6 +19,7 @@ class CallingViewModel: ObservableObject {
     private let store: Store<AppState, Action>
     private let localizationProvider: LocalizationProviderProtocol
     private let accessibilityProvider: AccessibilityProviderProtocol
+    private let compositeCallType: CompositeCallType
 
     private var cancellables = Set<AnyCancellable>()
     private var callHasConnected: Bool = false
@@ -44,13 +45,15 @@ class CallingViewModel: ObservableObject {
          store: Store<AppState, Action>,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
-         isIpadInterface: Bool) {
+         isIpadInterface: Bool,
+         compositeCallType: CompositeCallType) {
         self.logger = logger
         self.store = store
         self.compositeViewModelFactory = compositeViewModelFactory
         self.localizationProvider = localizationProvider
         self.isRightToLeft = localizationProvider.isRightToLeft
         self.accessibilityProvider = accessibilityProvider
+        self.compositeCallType = compositeCallType
         let actionDispatch: ActionDispatch = store.dispatch
         localVideoViewModel = compositeViewModelFactory.makeLocalVideoViewModel(dispatchAction: actionDispatch)
         participantGridsViewModel = compositeViewModelFactory.makeParticipantGridsViewModel(isIpadInterface:
@@ -69,7 +72,8 @@ class CallingViewModel: ObservableObject {
             .makeLobbyActionErrorViewModel(localUserState: store.state.localUserState,
             dispatchAction: actionDispatch)
 
-        let isCallConnected = store.state.callingState.status == .connected
+        let isCallConnected = store.state.callingState.status == .connected ||
+        store.state.callingState.status == .remoteHold
 
         isParticipantGridDisplayed = isCallConnected &&
             CallingViewModel.hasRemoteParticipants(store.state.remoteParticipantsState.participantInfoList)
@@ -108,11 +112,6 @@ class CallingViewModel: ObservableObject {
         self.isConfirmLeaveListDisplayed = false
     }
 
-    func requestCallClient() {
-        store.dispatch(action: .callingAction(.setupCall))
-        callClientRequested = true
-    }
-
     func endCall() {
         store.dispatch(action: .callingAction(.callEndRequested))
         dismissConfirmLeaveDrawerList()
@@ -130,12 +129,6 @@ class CallingViewModel: ObservableObject {
         guard state.lifeCycleState.currentStatus == .foreground
                 || state.visibilityState.currentStatus != .visible else {
             return
-        }
-
-        if state.callingState.operationStatus == .skipSetupRequested
-            && state.permissionState.audioPermission == .granted
-            && callClientRequested == false {
-            requestCallClient()
         }
 
         controlBarViewModel.update(localUserState: state.localUserState,
@@ -166,7 +159,9 @@ class CallingViewModel: ObservableObject {
         onHoldOverlayViewModel.update(callingStatus: state.callingState.status,
                                       audioSessionStatus: state.audioSessionState.status)
 
-        let newIsCallConnected = state.callingState.status == .connected
+        let newIsCallConnected = state.callingState.status == .connected ||
+        store.state.callingState.status == .remoteHold
+
         let shouldParticipantGridDisplayed = newIsCallConnected &&
             CallingViewModel.hasRemoteParticipants(state.remoteParticipantsState.participantInfoList)
         if shouldParticipantGridDisplayed != isParticipantGridDisplayed {

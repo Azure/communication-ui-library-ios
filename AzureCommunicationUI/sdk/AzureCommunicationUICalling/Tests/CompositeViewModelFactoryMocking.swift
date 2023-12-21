@@ -67,7 +67,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                 store: store,
                                                 networkManager: NetworkManager(),
                                                 audioSessionManager: AudioSessionManager(store: store, logger: logger),
-                                                localizationProvider: localizationProvider)
+                                                localizationProvider: localizationProvider,
+                                                compositeCallType: .groupCall)
     }
 
     func getCallingViewModel() -> CallingViewModel {
@@ -76,7 +77,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                     store: store,
                                                     localizationProvider: localizationProvider,
                                                     accessibilityProvider: accessibilityProvider,
-                                                    isIpadInterface: false)
+                                                    isIpadInterface: false,
+                                                    compositeCallType: .groupCall)
     }
 
     func makeIconButtonViewModel(iconName: CompositeIcon,
@@ -154,7 +156,9 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel {
-        return callDiagnosticsViewModel ?? CallDiagnosticsViewModel(localizationProvider: localizationProvider, dispatchAction: dispatchAction)
+        return callDiagnosticsViewModel ?? CallDiagnosticsViewModel(localizationProvider: localizationProvider,
+                                                                    accessibilityProvider: accessibilityProvider,
+                                                                    dispatchAction: dispatchAction)
     }
 
     func makeSelectableDrawerListItemViewModel(icon: CompositeIcon,
@@ -179,7 +183,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                               accessibilityProvider: accessibilityProvider,
                                                                   networkManager: NetworkManager(),
                                                                   audioSessionManager: AudioSessionManager(store: store, logger: logger),
-                                                                  store: store
+                                                                  store: store,
+                                                                  compositeCallType: .groupCall
         )
     }
 
@@ -287,7 +292,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     }
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
-        JoiningCallActivityViewModel(localizationProvider: localizationProvider)
+        JoiningCallActivityViewModel(compositeCallType: .groupCall,
+                                     localizationProvider: localizationProvider)
     }
 
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {

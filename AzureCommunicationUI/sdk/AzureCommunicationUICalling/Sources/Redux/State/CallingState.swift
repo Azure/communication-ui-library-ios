@@ -32,19 +32,25 @@ struct CallingState: Equatable {
     let isRecordingActive: Bool
     let isTranscriptionActive: Bool
     let callStartDate: Date?
+    let callEndReasonCode: Int?
+    let callEndReasonSubCode: Int?
 
     init(status: CallingStatus = .none,
          operationStatus: OperationStatus = .none,
          callId: String? = nil,
          isRecordingActive: Bool = false,
          isTranscriptionActive: Bool = false,
-         callStartDate: Date? = nil) {
+         callStartDate: Date? = nil,
+         callEndReasonCode: Int? = nil,
+         callEndReasonSubCode: Int? = nil) {
         self.status = status
         self.operationStatus = operationStatus
         self.callId = callId
         self.isRecordingActive = isRecordingActive
         self.isTranscriptionActive = isTranscriptionActive
         self.callStartDate = callStartDate
+        self.callEndReasonCode = callEndReasonCode
+        self.callEndReasonSubCode = callEndReasonSubCode
     }
 
     static func == (lhs: CallingState, rhs: CallingState) -> Bool {

@@ -69,6 +69,7 @@ protocol CallingSDKWrapperProtocol {
     func unmuteLocalMic() async throws
     func holdCall() async throws
     func resumeCall() async throws
+    func cleanup()
     func admitAllLobbyParticipants() async throws
     func admitLobbyParticipant(_ participantId: String) async throws
     func declineLobbyParticipant(_ participantId: String) async throws

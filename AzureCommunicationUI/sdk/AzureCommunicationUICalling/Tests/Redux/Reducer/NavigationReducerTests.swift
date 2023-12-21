@@ -12,7 +12,9 @@ class NavigationReducerTests: XCTestCase {
     func test_navigationReducer_reduce_when_callingActionStateUpdatedNotDisconnected_then_stateNotUpdated() {
         let expectedState = NavigationState(status: .setup)
         let state = NavigationState(status: .setup)
-        let action = Action.callingAction(.stateUpdated(status: .connected))
+        let action = Action.callingAction(.stateUpdated(status: .connected,
+                                                        callEndReasonCode: nil,
+                                                        callEndReasonSubCode: nil))
         let sut = makeSUT()
         let resultState = sut.reduce(state, action)
 

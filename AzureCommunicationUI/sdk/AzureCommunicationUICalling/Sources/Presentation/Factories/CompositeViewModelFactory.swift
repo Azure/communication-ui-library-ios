@@ -100,6 +100,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let localizationProvider: LocalizationProviderProtocol
     private let debugInfoManager: DebugInfoManagerProtocol
     private let localOptions: LocalOptions?
+    private let compositeCallType: CompositeCallType
     private let enableMultitasking: Bool
     private let enableSystemPiPWhenMultitasking: Bool
 
@@ -114,6 +115,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          accessibilityProvider: AccessibilityProviderProtocol,
          debugInfoManager: DebugInfoManagerProtocol,
          localOptions: LocalOptions? = nil,
+         compositeCallType: CompositeCallType,
          enableMultitasking: Bool,
          enableSystemPiPWhenMultitasking: Bool) {
         self.logger = logger
@@ -124,6 +126,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.localizationProvider = localizationProvider
         self.debugInfoManager = debugInfoManager
         self.localOptions = localOptions
+        self.compositeCallType = compositeCallType
         self.enableMultitasking = enableMultitasking
         self.enableSystemPiPWhenMultitasking = enableSystemPiPWhenMultitasking
     }
@@ -137,7 +140,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                            networkManager: networkManager,
                                            audioSessionManager: audioSessionManager,
                                            localizationProvider: localizationProvider,
-                                           setupScreenViewData: localOptions?.setupScreenViewData)
+                                           setupScreenViewData: localOptions?.setupScreenViewData,
+                                           compositeCallType: compositeCallType)
             self.setupViewModel = viewModel
             self.callingViewModel = nil
             return viewModel
@@ -152,7 +156,8 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
                                              store: store,
                                              localizationProvider: localizationProvider,
                                              accessibilityProvider: accessibilityProvider,
-                                             isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad)
+                                             isIpadInterface: UIDevice.current.userInterfaceIdiom == .pad,
+                                             compositeCallType: compositeCallType)
             self.setupViewModel = nil
             self.callingViewModel = viewModel
             return viewModel
@@ -231,8 +236,10 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
 
     func makeCallDiagnosticsViewModel(dispatchAction: @escaping ActionDispatch) -> CallDiagnosticsViewModel {
         CallDiagnosticsViewModel(localizationProvider: localizationProvider,
+                                 accessibilityProvider: accessibilityProvider,
                                  dispatchAction: dispatchAction)
     }
+
 }
 
 extension CompositeViewModelFactory {
@@ -246,7 +253,8 @@ extension CompositeViewModelFactory {
                                 accessibilityProvider: accessibilityProvider,
                                 networkManager: networkManager,
                                 audioSessionManager: audioSessionManager,
-                                store: store)
+                                store: store,
+                                compositeCallType: compositeCallType)
     }
     func makeOnHoldOverlayViewModel(resumeAction: @escaping (() -> Void)) -> OnHoldOverlayViewModel {
         OnHoldOverlayViewModel(localizationProvider: localizationProvider,
@@ -376,6 +384,7 @@ extension CompositeViewModelFactory {
     }
 
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
-        JoiningCallActivityViewModel(localizationProvider: localizationProvider)
+        JoiningCallActivityViewModel(compositeCallType: compositeCallType,
+                                     localizationProvider: localizationProvider)
     }
 }

@@ -55,11 +55,6 @@ struct SetupView: View {
                 }
             }
         }
-        .onAppear {
-            viewModel.setupAudioPermissions()
-            viewModel.setupCall()
-            viewModel.dismissSetupScreen()
-        }
     }
 
     var joinCallView: some View {

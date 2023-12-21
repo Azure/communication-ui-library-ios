@@ -9,7 +9,9 @@ enum CallingAction: Equatable {
     case callStartRequested
     case callEndRequested
     case callEnded
-    case stateUpdated(status: CallingStatus)
+    case stateUpdated(status: CallingStatus,
+                      callEndReasonCode: Int?,
+                      callEndReasonSubCode: Int?)
 
     case callIdUpdated(callId: String)
 

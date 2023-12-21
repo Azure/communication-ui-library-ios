@@ -9,17 +9,23 @@ enum AccessibilityId: String {
     /* DemoView */
     case startExperienceAccessibilityID =
             "AzureCommunicationUICalling.DemoView.StartExperience.AccessibilityID"
+    case showAccessibilityID =
+            "AzureCommunicationUICalling.DemoView.Show.AccessibilityID"
     case clearTokenTextFieldAccessibilityID =
             "AzureCommunicationUICalling.DemoView.ClearTokenTextField.AccessibilityID"
     case settingsButtonAccessibilityID =
             "AzureCommunicationUICalling.DemoView.Settings.AccessibilityID"
-
+    case disposeButtonAccessibilityID =
+            "AzureCommunicationUICalling.DemoView.Dispose.AccessibilityID"
     case startHeadlessAccessibilityID =
             "AzureCommunicationUIChat.DemoView.StartHeadless.AccessibilityID"
     case showChatUIAccessibilityID =
             "AzureCommunicationUIChat.DemoView.ShowChatUI.AccessibilityID"
     case stopChatAccessibilityID =
             "AzureCommunicationUIhat.DemoView.StopChat.AccessibilityID"
+
+    case registerButtonAccessibilityID =
+            "AzureCommunicationUICalling.DemoView.RegisterVoipNotification.AccessibilityID"
 
     /* SettingsView */
     case expiredAcsTokenToggleAccessibilityID =
@@ -30,5 +36,10 @@ enum AccessibilityId: String {
             "AzureCommunicationUICalling.SettingsView.CloseButton.AccessibilityID"
     case useRelaunchOnDismissedToggleToggleAccessibilityID =
             "AzureCommunicationUICalling.SettingsView.useRelaunchOnDismissed.AccessibilityID"
-
+    case useEnableCalkitToggleToggleAccessibilityID =
+            "AzureCommunicationUICalling.SettingsView.enableCalkitToggle.AccessibilityID"
+    case useEnableRemoteHoldToggleToggleAccessibilityID =
+            "AzureCommunicationUICalling.SettingsView.enableRemoteHoldToggle.AccessibilityID"
+    case useEnableRemoteInfoToggleToggleAccessibilityID =
+            "AzureCommunicationUICalling.SettingsView.enableRemoteInfoToggle.AccessibilityID"
 }

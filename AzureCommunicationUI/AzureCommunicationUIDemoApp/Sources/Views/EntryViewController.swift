@@ -17,6 +17,8 @@ class EntryViewController: UIViewController {
 #endif
     private var cancellables = Set<AnyCancellable>()
     private let callingViewModel = CallingDemoViewModel()
+    private var uiKitDemoViewController: CallingDemoViewController?
+    private var swiftUIDemoView: CallingDemoView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +50,23 @@ class EntryViewController: UIViewController {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func onPushNotificationReceived(dictionaryPayload: [AnyHashable: Any]) {
+        uiKitDemoViewController?.onPushNotificationReceived(dictionaryPayload: dictionaryPayload)
+        swiftUIDemoView?.onPushNotificationReceived(dictionaryPayload: dictionaryPayload)
+    }
+
+    // launch calling composite when user launch callkit on app background state
+    func onPushNotificationReceivedBackgroundMode(dictionaryPayload: [AnyHashable: Any]) {
+        uiKitDemoViewController?.onPushNotificationReceived(dictionaryPayload: dictionaryPayload)
+        swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject,
+                                          callingViewModel: callingViewModel)
+        swiftUIDemoView?.onPushNotificationReceived(dictionaryPayload: dictionaryPayload)
+    }
+
+    func registerDeviceToken(deviceCode: Data) {
+        envConfigSubject.deviceToken = deviceCode
     }
 
     private func setupUI() {
@@ -151,11 +170,11 @@ class EntryViewController: UIViewController {
 
     @objc func onCallingSwiftUIPressed() {
 #if DEBUG
-        let swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject,
+        swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject,
                                               callingViewModel: callingViewModel,
                                               callingSDKWrapperMock: callingSDKWrapperMock)
 #else
-        let swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject, callingViewModel: callingViewModel)
+        swiftUIDemoView = CallingDemoView(envConfigSubject: envConfigSubject, callingViewModel: callingViewModel)
 #endif
         let swiftUIDemoViewHostingController = UIHostingController(rootView: swiftUIDemoView)
         swiftUIDemoViewHostingController.modalPresentationStyle = .fullScreen
@@ -164,15 +183,15 @@ class EntryViewController: UIViewController {
 
     @objc func onCallingUIKitPressed() {
 #if DEBUG
-        let uiKitDemoViewController = CallingDemoViewController(envConfigSubject: envConfigSubject,
+        uiKitDemoViewController = CallingDemoViewController(envConfigSubject: envConfigSubject,
                                                                 callingViewModel: callingViewModel,
                                                                 callingSDKHandlerMock: callingSDKWrapperMock)
 #else
-        let uiKitDemoViewController = CallingDemoViewController(envConfigSubject: envConfigSubject,
+        uiKitDemoViewController = CallingDemoViewController(envConfigSubject: envConfigSubject,
                                                                 callingViewModel: callingViewModel)
 #endif
-        uiKitDemoViewController.modalPresentationStyle = .fullScreen
-        present(uiKitDemoViewController, animated: true, completion: nil)
+        uiKitDemoViewController?.modalPresentationStyle = .fullScreen
+        present(uiKitDemoViewController!, animated: true, completion: nil)
     }
 
     @objc func onChatSwiftUIPressed() {

@@ -90,7 +90,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
                     isCameraPreferred: state.localUserState.cameraState.operation == .on,
                     isAudioPreferred: state.localUserState.audioState.operation == .on
                 )
-                subscription(dispatch: dispatch)
+                subscription(dispatch: dispatch,
+                             isSkipRequested: state.callingState.operationStatus == .skipSetupRequested)
             } catch {
                 handle(error: error, errorType: .callJoinFailed, dispatch: dispatch)
             }
@@ -267,7 +268,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
             switch state.localUserState.cameraState.transmission {
             case .local:
-                if state.callingState.operationStatus == .skipSetupRequested {
+                if state.navigationState.status == .inCall {
                     dispatch(.localUserAction(.cameraOnTriggered))
                 } else {
                     dispatch(.localUserAction(.cameraPreviewOnTriggered))
@@ -361,7 +362,8 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 }
 
 extension CallingMiddlewareHandler {
-    private func subscription(dispatch: @escaping ActionDispatch) {
+    private func subscription(dispatch: @escaping ActionDispatch,
+                              isSkipRequested: Bool = false) {
         logger.debug("Subscribe to calling service subjects")
         callingService.participantsInfoListSubject
             .throttle(for: 1.25, scheduler: DispatchQueue.main, latest: true)
@@ -377,13 +379,17 @@ extension CallingMiddlewareHandler {
                 let internalError = callInfoModel.internalError
                 let callingStatus = callInfoModel.status
 
-                self.handle(callingStatus: callingStatus, dispatch: dispatch)
+                self.handle(callInfoModel: callInfoModel, dispatch: dispatch)
                 self.logger.debug("Dispatch State Update: \(callingStatus)")
 
                 if let internalError = internalError {
                     self.handleCallInfo(internalError: internalError,
                                         dispatch: dispatch) {
                         self.logger.debug("Subscription cancelled with Error Code: \(internalError)")
+                        // on error if skip setup is on exit composite
+                        if isSkipRequested {
+                            dispatch(.compositeExitAction)
+                        }
                         self.subscription.cancel()
                     }
                     // to fix the bug that resume call won't work without Internet

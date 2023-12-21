@@ -36,14 +36,12 @@ class RemoteParticipantsManager: RemoteParticipantsManagerProtocol {
         guard participantsLastUpdateTimeStamp != state.remoteParticipantsState.lastUpdateTimeStamp else {
             return
         }
-
         participantsLastUpdateTimeStamp = state.remoteParticipantsState.lastUpdateTimeStamp
         let updatedParticipantsIds = Set(state.remoteParticipantsState.participantInfoList.map { $0.userIdentifier })
 
         let joinedParticipantsIds = updatedParticipantsIds.subtracting(participantsIds)
         let removedParticipantsIds = participantsIds.subtracting(updatedParticipantsIds)
         participantsIds = updatedParticipantsIds
-
         postRemoteParticipantsJoinedEvent(joinedParticipantsIds)
         postRemoteParticipantsRemovedEvent(removedParticipantsIds)
     }

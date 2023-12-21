@@ -5,10 +5,23 @@
 
 import Foundation
 
-struct JoiningCallActivityViewModel {
+class JoiningCallActivityViewModel: ObservableObject {
     let localizationProvider: LocalizationProviderProtocol
+    @Published var title: String = ""
 
-    var title: String {
-        return localizationProvider.getLocalizedString(.joiningCall)
+    init(compositeCallType: CompositeCallType,
+         localizationProvider: LocalizationProviderProtocol) {
+        self.localizationProvider = localizationProvider
+        if compositeCallType == CompositeCallType.oneToNCallOutgoing {
+            title = localizationProvider.getLocalizedString(.startingCall)
+        } else {
+            title = localizationProvider.getLocalizedString(.joiningCall)
+        }
+    }
+
+    func update(callingstatus: CallingStatus) {
+        if callingstatus == CallingStatus.ringing {
+            title = localizationProvider.getLocalizedString(.ringingCall)
+        }
     }
 }

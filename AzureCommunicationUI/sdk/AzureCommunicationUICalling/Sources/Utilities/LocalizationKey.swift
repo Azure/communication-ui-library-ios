@@ -18,7 +18,10 @@ enum LocalizationKey: String {
     case setupTitle = "AzureCommunicationUICalling.SetupView.Title"
     case dismissAccessibilityLabel = "AzureCommunicationUICalling.SetupView.Button.Dismiss.AccessibilityLabel"
     case joinCall = "AzureCommunicationUICalling.SetupView.Button.JoinCall"
+    case startCall = "AzureCommunicationUICalling.SetupView.Button.StartCall"
     case joiningCall = "AzureCommunicationUICalling.SetupView.Button.JoiningCall"
+    case startingCall = "AzureCommunicationUICalling.SetupView.Button.StartingCall"
+    case ringingCall = "AzureCommunicationUICalling.SetupView.Button.RingingCall"
     case videoOff = "AzureCommunicationUICalling.SetupView.Button.VideoOff"
     case videoOffAccessibilityLabel = "AzureCommunicationUICalling.SetupView.Button.VideoOff.AccessibilityLabel"
     case videoOn = "AzureCommunicationUICalling.SetupView.Button.VideoOn"
@@ -173,7 +176,7 @@ enum LocalizationKey: String {
     case callDiagnosticsSpeakerMuted = "AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"
 
     case callDiagnosticsDismissAccessibilityLabel =
-            "AzureCommunicationUICalling.Diagnostics.Text.Dismiss.AccessibilityLabel"
+            "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"
     case callDiagnosticsDismissAccessibilityHint =
-            "AzureCommunicationUICalling.Diagnostics.Text.Dismiss.AccessibilityHint"
+            "AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"
 }

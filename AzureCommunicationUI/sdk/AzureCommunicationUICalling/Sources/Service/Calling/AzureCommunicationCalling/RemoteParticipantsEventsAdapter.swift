@@ -33,4 +33,10 @@ class RemoteParticipantsEventsAdapter: NSObject, RemoteParticipantDelegate {
 
         onStateChanged(remoteParticipant)
     }
+
+    func remoteParticipant(_ remoteParticipant: AzureCommunicationCalling.RemoteParticipant,
+                           didChangeDisplayName args: PropertyChangedEventArgs) {
+
+        onStateChanged(remoteParticipant)
+    }
 }

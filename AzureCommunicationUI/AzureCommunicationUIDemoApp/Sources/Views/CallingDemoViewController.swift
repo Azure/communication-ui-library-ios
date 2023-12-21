@@ -9,6 +9,7 @@ import SwiftUI
 import AzureCommunicationCommon
 import AppCenterCrashes
 import AVFoundation
+import CallKit
 #if DEBUG
 @testable import AzureCommunicationUICalling
 #else
@@ -72,6 +73,9 @@ class CallingDemoViewController: UIViewController {
         view.showsHorizontalScrollIndicator = false
         return view
     }()
+
+    func onPushNotificationReceived(dictionaryPayload: [AnyHashable: Any]) {
+    }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         super.traitCollectionDidChange(previousTraitCollection)
@@ -293,19 +297,49 @@ class CallingDemoViewController: UIViewController {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen)
-
+        let cxHandle = CXHandle(type: .generic, value: link)
+        let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
+        var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
+        if remoteInfoDisplayName.isEmpty {
+            remoteInfoDisplayName = "ACS \(envConfigSubject.selectedMeetingType)"
+        }
+        let callKitRemoteInfo = CallCompositeCallKitRemoteInfo(displayName: remoteInfoDisplayName,
+                                                               cxHandle: cxHandle)
+        let isCallHoldSupported = envConfigSubject.enableRemoteHold
+        let callKitOptions = CallCompositeCallKitOption(cxProvideConfig: cxProvider,
+                                                       isCallHoldSupported: isCallHoldSupported,
+                                                       remoteInfo: envConfigSubject.enableRemoteInfo
+                                                        ? callKitRemoteInfo : nil)
         if let credential = try? await getTokenCredential() {
             switch selectedMeetingType {
             case .groupCall:
                 let uuid = UUID(uuidString: link) ?? UUID()
-                callComposite.launch(remoteOptions: RemoteOptions(for: .groupCall(groupId: uuid),
-                                                                  credential: credential,
-                                                                  displayName: getDisplayName()),
-                                     localOptions: localOptions)
+                let displayName = envConfigSubject.displayName.isEmpty ? nil : envConfigSubject.displayName
+
+                let remoteOptions = RemoteOptions(for: .groupCall(groupId: uuid),
+                                                  credential: credential,
+                                                  displayName: displayName,
+                                                  callKitOptions: envConfigSubject.enableCallKit
+                                                  ? callKitOptions : nil)
+
+                callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
             case .teamsMeeting:
-                callComposite.launch(remoteOptions: RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                let remoteOptions = RemoteOptions(for: .teamsMeeting(teamsLink: link),
+                                                  credential: credential,
+                                                  displayName: envConfigSubject.displayName.isEmpty
+                                                  ? nil : envConfigSubject.displayName,
+                                                  callKitOptions: envConfigSubject.enableCallKit
+                                                  ? callKitOptions : nil)
+
+                callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
+            case .oneToNCall:
+                // ToDo: make required changes to enable 1:N for UIKit
+                let startCallOptions = CallCompositeStartCallOptions(participants: [])
+                callComposite.launch(remoteOptions: RemoteOptions(for: startCallOptions,
                                                                   credential: credential,
-                                                                  displayName: getDisplayName()),
+                                                                  displayName: getDisplayName(),
+                                                                  callKitOptions: envConfigSubject.enableCallKit
+                                                                  ? callKitOptions : nil),
                                      localOptions: localOptions)
             case .roomCall:
                 callComposite.launch(remoteOptions:
@@ -354,6 +388,9 @@ class CallingDemoViewController: UIViewController {
             return groupCallTextField.text ?? ""
         case .teamsMeeting:
             return teamsMeetingTextField.text ?? ""
+        case .oneToNCall:
+            // ToDo: make required changes to enable 1:N for UIKit
+            return ""
         case .roomCall:
             return roomCallTextField.text ?? ""
         }
@@ -489,6 +526,10 @@ class CallingDemoViewController: UIViewController {
         case .teamsMeeting:
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = false
+        case .oneToNCall:
+            // ToDo: make required changes to enable 1:N for UIKit
+            groupCallTextField.isHidden = true
+            teamsMeetingTextField.isHidden = true
             roomCallTextField.isHidden = true
             roomRoleTypeSegmentedControl.isHidden = true
         case .roomCall:

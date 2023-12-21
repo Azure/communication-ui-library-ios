@@ -156,7 +156,6 @@ class CallingViewModelTests: XCTestCase {
                                                                         dispatchAction: storeFactory.store.dispatch,
                                                                         localUserState: storeFactory.store.state.localUserState,
                                                                         accessibilityProvider: accessibilityProvider,
-                                                                        dispatchAction: storeFactory.store.dispatch,
                                                                         updateState: updateInfoHeaderViewModel)
 
         let sut = makeSUT()
@@ -286,6 +285,7 @@ extension CallingViewModelTests {
                                 store: storeFactory.store,
                                 localizationProvider: LocalizationProvider(logger: logger),
                                 accessibilityProvider: accessibilityProvider,
-                                isIpadInterface: false)
+                                isIpadInterface: false,
+                                compositeCallType: .groupCall)
     }
 }
