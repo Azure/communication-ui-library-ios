@@ -334,7 +334,7 @@ class CallingDemoViewController: UIViewController {
                 callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
             case .oneToNCall:
                 // ToDo: make required changes to enable 1:N for UIKit
-                let startCallOptions = StartCallOptionsOneToNCall(participants: [])
+                let startCallOptions = CallCompositeStartCallOptions(participants: [])
                 callComposite.launch(remoteOptions: RemoteOptions(for: startCallOptions,
                                                                   credential: credential,
                                                                   displayName: getDisplayName(),

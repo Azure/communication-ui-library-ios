@@ -456,7 +456,7 @@ extension CallingDemoView {
                 let ids: [String] = link.split(separator: ",").map {
                     String($0).trimmingCharacters(in: .whitespacesAndNewlines)
                 }
-                let startCallOptions = StartCallOptionsOneToNCall(participants: ids)
+                let startCallOptions = CallCompositeStartCallOptions(participants: ids)
                 let remoteOptions = RemoteOptions(for: startCallOptions,
                                                   credential: credential,
                                                   displayName: envConfigSubject.displayName.isEmpty

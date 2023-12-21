@@ -51,7 +51,7 @@ struct CallConfiguration {
         self.callKitOptions = callKitOptions
     }
 
-    init(startCallOptions: StartCallOptionsOneToNCall,
+    init(startCallOptions: CallCompositeStartCallOptions,
          credential: CommunicationTokenCredential,
          displayName: String?,
          callKitOptions: CallCompositeCallKitOption? = nil,
