@@ -1,11 +1,11 @@
 Pod::Spec.new do |spec|
   spec.name                 = "AzureCommunicationUIChat"
-  spec.version              = "1.0.0-beta.3"
+  spec.version              = "1.0.0-beta.4"
   spec.summary              = "UI Library to quickly integrate Azure Communication Chat Services experiences into your applications."
   spec.homepage             = "https://github.com/Azure/communication-ui-library-ios"
   spec.license              = { :type => 'MIT' }
   spec.author               = 'Microsoft'
-  spec.source               = { :git => 'https://github.com/Azure/communication-ui-library-ios.git', :tag => 'AzureCommunicationUIChat_1.0.0-beta.3' }
+  spec.source               = { :git => 'https://github.com/Azure/communication-ui-library-ios.git', :tag => 'AzureCommunicationUIChat_1.0.0-beta.4' }
   spec.module_name          = 'AzureCommunicationUIChat'
   spec.swift_version        = '5.6'
 
@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   spec.pod_target_xcconfig  = { "ENABLE_BITCODE": "NO"}
   spec.info_plist           = {'UILibrarySemVersion' => "#{spec.version}"}
 
-  spec.dependency             'AzureCommunicationChat', '1.3.1'
+  spec.dependency             'AzureCommunicationChat', '1.3.3'
   spec.dependency             'MicrosoftFluentUI/Avatar_ios', '0.10.0'
   spec.dependency             'MicrosoftFluentUI/BottomSheet_ios', '0.10.0'
   spec.dependency             'MicrosoftFluentUI/Button_ios', '0.10.0'
