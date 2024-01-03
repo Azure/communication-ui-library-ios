@@ -7,15 +7,16 @@ import Foundation
 
 class SupportFormViewModel: ObservableObject {
     // Published properties that the view can observe
-    @Published var messageText: String = "Please describe your issue..."
+    @Published var messageText: String = ""
     @Published var includeScreenshot: Bool = true
     let events: CallComposite.Events
     let getLogFiles: () -> [URL]
-    // Any additional properties your ViewModel needs
+    let getDebugInfo: () -> DebugInfo
 
-    init(events: CallComposite.Events, getLogFiles: @escaping () -> [URL]) {
+    init(events: CallComposite.Events, getLogFiles: @escaping () -> [URL], getDebugInfo: @escaping () -> DebugInfo) {
         self.events = events
         self.getLogFiles = getLogFiles
+        self.getDebugInfo = getDebugInfo
     }
 
     // Function to handle the send action
@@ -24,7 +25,21 @@ class SupportFormViewModel: ObservableObject {
         guard let callback = events.onUserReportedIssue else {
             return
         }
-        callback(CallCompositeUserReportedIssue(userMessage: messageText, logFiles: getLogFiles(), callIds: []))
+        let version = Bundle(for: CallComposite.self).infoDictionary?["UILibrarySemVersion"]
+        let versionStr = version as? String ?? "unknown"
+        var screenshotURL: URL?
+        if includeScreenshot {
+            if let screenshot = captureScreenshot() {
+                screenshotURL = saveScreenshot(screenshot)
+            }
+        }
+
+        callback(CallCompositeUserReportedIssue(userMessage: messageText,
+                                                logFiles: getLogFiles(),
+                                                debugInfo: getDebugInfo(),
+                                                screenshot: screenshotURL,
+                                                callingUIVersion: versionStr,
+                                                callingSdkVersion: ""))
     }
 
     // Any additional methods your ViewModel needs

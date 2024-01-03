@@ -19,14 +19,17 @@ struct SupportFormView: View {
         NavigationView {
             Form {
                 Section(footer: Text("We'll automatically attach logs.")) {
-                    TextEditor(text: $viewModel.messageText)
-                        .frame(height: 150)
-                        .foregroundColor(viewModel.messageText == "Please describe your issue..." ? .gray : .primary)
-                        .onTapGesture {
-                            if viewModel.messageText == "Please describe your issue..." {
-                                viewModel.messageText = ""
-                            }
+                    ZStack(alignment: .topLeading) {
+                        if viewModel.messageText.isEmpty {
+                            Text("Please describe your issue...")
+                                .foregroundColor(.gray)
+                                .padding(.top, 8)
+                                .padding(.leading, 4)
                         }
+                        TextEditor(text: $viewModel.messageText)
+                            .frame(height: 150)
+                            .opacity(viewModel.messageText.isEmpty ? 0.25 : 1)
+                    }
                 }
                 Section {
                     Toggle(isOn: $viewModel.includeScreenshot) {
@@ -40,8 +43,12 @@ struct SupportFormView: View {
                     showingForm = false
                 },
                 trailing: Button("Send") {
-                    viewModel.sendReport()
                     showingForm = false
+                    // We are going to wait ~ 16ms, 1 frame @ 60fps, before dispatching this
+                    // The reason being that the screenshot shouldn't show the form
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1 / 60) {
+                        viewModel.sendReport()
+                    }
                 }
             )
         }
