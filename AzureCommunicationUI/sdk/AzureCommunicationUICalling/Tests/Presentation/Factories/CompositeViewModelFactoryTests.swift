@@ -47,6 +47,7 @@ extension CompositeViewModelFactoryTests {
                                          compositeCallType: .groupCall,
                                          enableMultitasking: true,
                                          enableSystemPiPWhenMultitasking: true)
+                                         eventsHandler: CallComposite.Events())
     }
 }
 

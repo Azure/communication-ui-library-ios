@@ -327,6 +327,12 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             throw error
         }
     }
+    func getLogFiles() -> [URL] {
+        guard let callClient = callClient else {
+            return []
+        }
+        return callClient.debugInfo.supportFiles
+    }
 
     func admitAllLobbyParticipants() async throws {
         guard let call = call else {
