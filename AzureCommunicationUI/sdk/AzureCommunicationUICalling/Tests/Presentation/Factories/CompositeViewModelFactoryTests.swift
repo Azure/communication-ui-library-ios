@@ -46,8 +46,8 @@ extension CompositeViewModelFactoryTests {
                                          debugInfoManager: DebugInfoManagerMocking(),
                                          compositeCallType: .groupCall,
                                          enableMultitasking: true,
-                                         enableSystemPiPWhenMultitasking: true)
-                                         eventsHandler: CallComposite.Events())
+                                         enableSystemPiPWhenMultitasking: true,
+                                         eventsHandler: CallComposite.Events()) { [] }
     }
 }
 
