@@ -125,20 +125,20 @@ class EnvConfigSubject: ObservableObject {
     }
 
     func load() {
-        if !readStringData(key: acstokenKey).isEmpty {
+        if !readStringData(key: acstokenKey).isEmpty && acsToken.isEmpty {
             acsToken = readStringData(key: acstokenKey)
             selectedAcsTokenType = .token
         }
-        if !readStringData(key: displayNameKey).isEmpty {
+        if !readStringData(key: displayNameKey).isEmpty && displayName.isEmpty {
             displayName = readStringData(key: displayNameKey)
         }
-        if !readStringData(key: groupIdKey).isEmpty {
+        if !readStringData(key: groupIdKey).isEmpty && groupCallId.isEmpty {
             groupCallId = readStringData(key: groupIdKey)
         }
-        if !readStringData(key: teamsUrlKey).isEmpty {
+        if !readStringData(key: teamsUrlKey).isEmpty && teamsMeetingLink.isEmpty {
             teamsMeetingLink = readStringData(key: teamsUrlKey)
         }
-        if !readStringData(key: oneToNCallKey).isEmpty {
+        if !readStringData(key: oneToNCallKey).isEmpty && participantIds.isEmpty {
             participantIds = readStringData(key: oneToNCallKey)
         }
     }
