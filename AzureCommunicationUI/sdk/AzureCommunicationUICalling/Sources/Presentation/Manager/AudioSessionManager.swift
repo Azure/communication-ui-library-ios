@@ -62,8 +62,8 @@ class AudioSessionManager: AudioSessionManagerProtocol {
     }
 
     private func setupAudioSession() {
-        activateAudioSessionCategory()
         if !isCallKitEnabled {
+            activateAudioSessionCategory()
             NotificationCenter.default.addObserver(self,
                                                    selector: #selector(handleInterruption),
                                                    name: AVAudioSession.interruptionNotification,
