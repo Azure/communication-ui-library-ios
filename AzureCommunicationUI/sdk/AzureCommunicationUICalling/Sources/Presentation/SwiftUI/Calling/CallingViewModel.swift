@@ -148,8 +148,9 @@ class CallingViewModel: ObservableObject {
                                          remoteParticipantsState: state.remoteParticipantsState,
                                          callingState: state.callingState,
                                          visibilityState: state.visibilityState)
-        localVideoViewModel.update(localUserState: state.localUserState,
-                                   visibilityState: state.visibilityState)
+        localVideoViewModel.updateWithCallState(localUserState: state.localUserState,
+                                   visibilityState: state.visibilityState,
+                                                callingState: state.callingState.status)
         participantGridsViewModel.update(callingState: state.callingState,
                                          remoteParticipantsState: state.remoteParticipantsState,
                                          visibilityState: state.visibilityState,

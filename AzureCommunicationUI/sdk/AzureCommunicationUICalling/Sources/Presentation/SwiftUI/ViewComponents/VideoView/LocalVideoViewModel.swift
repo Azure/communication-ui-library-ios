@@ -16,6 +16,7 @@ class LocalVideoViewModel: ObservableObject {
     @Published var isMuted: Bool = false
     @Published var cameraOperationalStatus: LocalUserState.CameraOperationalStatus = .off
     @Published var isInPip: Bool = false
+    @Published var isDisplayed: Bool = false
 
     var cameraSwitchButtonPipViewModel: IconButtonViewModel!
     var cameraSwitchButtonFullViewModel: IconButtonViewModel!
@@ -52,7 +53,18 @@ class LocalVideoViewModel: ObservableObject {
         dispatch(.localUserAction(.cameraSwitchTriggered))
     }
 
+    // this view is used by both calling and setup screens
+    // for calling screen show only when call state is connected
+    func updateWithCallState(localUserState: LocalUserState,
+                             visibilityState: VisibilityState,
+                             callingState: CallingStatus) {
+        update(localUserState: localUserState, visibilityState: visibilityState)
+        isDisplayed = callingState == .connected
+    }
+
+    // for setup screen show independed of call state
     func update(localUserState: LocalUserState, visibilityState: VisibilityState) {
+        isDisplayed = true
         if localVideoStreamId != localUserState.localVideoStreamIdentifier {
             localVideoStreamId = localUserState.localVideoStreamIdentifier
         }

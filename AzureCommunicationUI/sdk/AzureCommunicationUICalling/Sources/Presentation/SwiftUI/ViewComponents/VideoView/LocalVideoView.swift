@@ -66,47 +66,49 @@ struct LocalVideoView: View {
 
     var body: some View {
         Group {
-            GeometryReader { geometry in
-                if viewModel.cameraOperationalStatus == .on,
-                   let streamId = localVideoStreamId,
-                   let rendererView = viewManager.getLocalVideoRendererView(streamId) {
-
-                    ZStack(alignment: viewType.cameraSwitchButtonAlignment) {
-                        VideoRendererView(rendererView: rendererView)
-                            .frame(width: geometry.size.width,
-                                   height: geometry.size.height)
-                        if viewType.hasGradient {
-                            GradientView()
+            if viewModel.isDisplayed {
+                GeometryReader { geometry in
+                    if viewModel.cameraOperationalStatus == .on,
+                       let streamId = localVideoStreamId,
+                       let rendererView = viewManager.getLocalVideoRendererView(streamId) {
+                        ZStack(alignment: viewType.cameraSwitchButtonAlignment) {
+                            VideoRendererView(rendererView: rendererView)
+                                .frame(width: geometry.size.width,
+                                       height: geometry.size.height)
+                            if viewType.hasGradient {
+                                GradientView()
+                            }
+                            if !viewModel.isInPip {
+                                cameraSwitchButton
+                            }
                         }
-                        if !viewModel.isInPip {
-                            cameraSwitchButton
+                    } else {
+                        VStack(alignment: .center, spacing: 5) {
+                            CompositeAvatar(displayName: $viewModel.displayName,
+                                            avatarImage: Binding.constant(avatarManager
+                                                .localParticipantViewData?
+                                                .avatarImage),
+                                            isSpeaking: false,
+                                            avatarSize: viewType.avatarSize)
+                            if viewType.showDisplayNameTitleView {
+                                Spacer().frame(height: 10)
+                                ParticipantTitleView(displayName: $viewModel.displayName,
+                                                     isMuted: $viewModel.isMuted,
+                                                     isHold: .constant(false),
+                                                     titleFont: Fonts.caption1.font,
+                                                     mutedIconSize: 16)
+                            } else if screenSizeClass == .iphonePortraitScreenSize {
+                                Spacer()
+                                    .frame(height: 20)
+                            }
                         }
+                        .frame(width: geometry.size.width,
+                               height: geometry.size.height)
+                        .accessibilityElement(children: .combine)
                     }
-                } else {
-                    VStack(alignment: .center, spacing: 5) {
-                        CompositeAvatar(displayName: $viewModel.displayName,
-                                        avatarImage: Binding.constant(avatarManager
-                                            .localParticipantViewData?
-                                            .avatarImage),
-                                        isSpeaking: false,
-                                        avatarSize: viewType.avatarSize)
-
-                        if viewType.showDisplayNameTitleView {
-                            Spacer().frame(height: 10)
-                            ParticipantTitleView(displayName: $viewModel.displayName,
-                                                 isMuted: $viewModel.isMuted,
-                                                 isHold: .constant(false),
-                                                 titleFont: Fonts.caption1.font,
-                                                 mutedIconSize: 16)
-                        } else if screenSizeClass == .iphonePortraitScreenSize {
-                            Spacer()
-                                .frame(height: 20)
-                        }
-                    }
-                    .frame(width: geometry.size.width,
-                           height: geometry.size.height)
-                    .accessibilityElement(children: .combine)
                 }
+            } else {
+                EmptyView()
             }
         }.onReceive(viewModel.$localVideoStreamId) {
             viewManager.updateDisplayedLocalVideoStream($0)
