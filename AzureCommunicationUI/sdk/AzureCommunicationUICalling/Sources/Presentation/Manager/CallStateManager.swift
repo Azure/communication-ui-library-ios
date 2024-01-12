@@ -40,10 +40,8 @@ class CallStateManager: CallStateManagerProtocol {
         guard let onCallStateChanged = eventsHandler.onCallStateChanged else {
             return
         }
-        DispatchQueue.main.async {
-            onCallStateChanged(CallState(rawValue: callingState.status.toCallCompositeCallState().requestString,
-                                         callEndReasonCode: callingState.callEndReasonCode,
-                                         callEndReasonSubCode: callingState.callEndReasonSubCode))
-        }
+        onCallStateChanged(CallState(rawValue: callingState.status.toCallCompositeCallState().requestString,
+                                     callEndReasonCode: callingState.callEndReasonCode,
+                                     callEndReasonSubCode: callingState.callEndReasonSubCode))
     }
 }

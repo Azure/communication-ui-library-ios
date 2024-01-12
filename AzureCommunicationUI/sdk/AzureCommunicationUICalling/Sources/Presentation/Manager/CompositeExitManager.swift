@@ -45,9 +45,7 @@ class CompositeExitManager: ExitManagerProtocol {
             onDismissed(CallCompositeDismissed(errorCode: nil, error: nil))
             return
         }
-        DispatchQueue.main.async {
-            onDismissed(CallCompositeDismissed(errorCode: compositeError.code, error: compositeError.error))
-        }
+        onDismissed(CallCompositeDismissed(errorCode: compositeError.code, error: compositeError.error))
    }
 
     private func getCallCompositeError(errorState: ErrorState) -> CallCompositeError? {
