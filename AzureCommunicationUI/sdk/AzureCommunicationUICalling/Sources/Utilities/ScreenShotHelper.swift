@@ -6,7 +6,7 @@
 import Foundation
 import UIKit
 
-func captureScreenshot() -> UIImage? {
+internal func captureScreenshot() -> UIImage? {
     guard let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow })
     else { return nil }
     UIGraphicsBeginImageContext(window.frame.size)
@@ -16,10 +16,16 @@ func captureScreenshot() -> UIImage? {
     return image
 }
 
-func saveScreenshot(_ image: UIImage) -> URL? {
+internal func saveScreenshot(_ image: UIImage) -> URL? {
     guard let imageData = image.pngData()
     else { return nil }
-    let tempFileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("screenshot.png")
+    // Format the current date and time for the filename
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyyMMdd_HHmmss"
+    let timestamp = formatter.string(from: Date())
+    // Define the file where the screenshot will be saved
+    let screenshotFilename = "acs_calling_ui_\(timestamp).png"
+    let tempFileURL = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(screenshotFilename)
     do {
         try imageData.write(to: tempFileURL)
         return tempFileURL

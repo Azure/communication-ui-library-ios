@@ -11,7 +11,12 @@ public struct DebugInfo {
     public let callHistoryRecords: [CallHistoryRecord]
     public let callingUIVersion: String
     public let logFiles: [URL]
-
+    // Take a screenshot
+    func takeScreenshot() -> URL? {
+        guard let screenshotImage = captureScreenshot()
+        else { return nil }
+        return saveScreenshot(screenshotImage)
+    }
     /// Call history.
     init(callHistoryRecords: [CallHistoryRecord],
          callingUIVersion: String,
