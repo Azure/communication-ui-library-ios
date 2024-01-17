@@ -23,6 +23,8 @@ public struct LocalOptions {
     let microphoneOn: Bool?
     /// The SkipSetupScreen is used when we skip the setup screen
     let skipSetupScreen: Bool?
+    /// The avMode selects the scope of audio/video locally for the call
+    let avMode: CallCompositeAvMode = .normal
 
     /// Create an instance of LocalOptions. All information in this object is only stored locally in the composite.
     /// - Parameters:
@@ -37,7 +39,8 @@ public struct LocalOptions {
                 roleHint: ParticipantRole? = nil,
                 cameraOn: Bool? = false,
                 microphoneOn: Bool? = false,
-                skipSetupScreen: Bool? = false) {
+                skipSetupScreen: Bool? = false,
+                avMode: CallCompositeAvMode = .normal) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
         self.roleHint = roleHint
