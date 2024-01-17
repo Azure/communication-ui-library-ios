@@ -19,7 +19,6 @@ class SupportFormViewModel: ObservableObject {
 
     // Function to handle the send action
     func sendReport() {
-        print("SEND TEST" + messageText)
         guard let callback = events.onUserReportedIssue else {
             return
         }
@@ -36,6 +35,4 @@ class SupportFormViewModel: ObservableObject {
                                                 debugInfo: getDebugInfo(),
                                                 screenshot: screenshotURL))
     }
-
-    // Any additional methods your ViewModel needs
 }
