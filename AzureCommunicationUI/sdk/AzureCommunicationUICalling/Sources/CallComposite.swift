@@ -390,7 +390,8 @@ public class CallComposite {
         )
     }
     private func createDebugInfoManager() -> DebugInfoManagerProtocol {
-        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository)
+        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository,
+                                getLogFiles: { return self.callingSDKWrapper?.getLogFiles() ?? [] })
     }
     private func cleanUpManagers() {
         self.callingSDKEventsHandler?.cleanup()

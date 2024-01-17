@@ -162,7 +162,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     }
 
     func makeSupportFormViewModel() -> SupportFormViewModel {
-        return SupportFormViewModel(events: events, getLogFiles: retrieveLogFiles,
+        return SupportFormViewModel(events: events,
                                     getDebugInfo: { [self] in self.debugInfoManager.getDebugInfo() })
     }
 

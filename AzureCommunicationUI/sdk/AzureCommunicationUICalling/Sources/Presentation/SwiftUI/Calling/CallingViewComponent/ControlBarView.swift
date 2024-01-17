@@ -57,24 +57,6 @@ struct ControlBarView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
             })
-            .modifier(PopupModalView(isPresented: viewModel.isConfirmLeaveListDisplayed) {
-                exitConfirmationDrawer
-                    .accessibility(hidden: !viewModel.isConfirmLeaveListDisplayed)
-                    .accessibilityElement(children: .contain)
-                    .accessibility(addTraits: .isModal)
-            })
-            .modifier(PopupModalView(isPresented: viewModel.isMoreCallOptionsListDisplayed) {
-                moreCallOptionsList
-                    .accessibilityElement(children: .contain)
-                    .accessibilityAddTraits(.isModal)
-            })
-            .modifier(PopupModalView(
-            isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isShareActivityDisplayed) {
-                shareActivityView
-                    .accessibilityElement(children: .contain)
-                    .accessibilityAddTraits(.isModal)
-            })
-
     }
 
     /// A stack view that has items centered aligned horizontally in its stack view

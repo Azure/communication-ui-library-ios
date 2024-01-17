@@ -10,12 +10,10 @@ class SupportFormViewModel: ObservableObject {
     @Published var messageText: String = ""
     @Published var includeScreenshot: Bool = true
     let events: CallComposite.Events
-    let getLogFiles: () -> [URL]
     let getDebugInfo: () -> DebugInfo
 
-    init(events: CallComposite.Events, getLogFiles: @escaping () -> [URL], getDebugInfo: @escaping () -> DebugInfo) {
+    init(events: CallComposite.Events, getDebugInfo: @escaping () -> DebugInfo) {
         self.events = events
-        self.getLogFiles = getLogFiles
         self.getDebugInfo = getDebugInfo
     }
 
@@ -35,11 +33,8 @@ class SupportFormViewModel: ObservableObject {
         }
 
         callback(CallCompositeUserReportedIssue(userMessage: messageText,
-                                                logFiles: getLogFiles(),
                                                 debugInfo: getDebugInfo(),
-                                                screenshot: screenshotURL,
-                                                callingUIVersion: versionStr,
-                                                callingSdkVersion: ""))
+                                                screenshot: screenshotURL))
     }
 
     // Any additional methods your ViewModel needs
