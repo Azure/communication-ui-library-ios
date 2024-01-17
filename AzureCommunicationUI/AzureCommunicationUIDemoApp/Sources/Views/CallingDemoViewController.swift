@@ -269,8 +269,8 @@ class CallingDemoViewController: UIViewController {
                                         setupScreenViewData: setupScreenViewData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
-                                        skipSetupScreen: envConfigSubject.skipSetupScreen)
-
+                                        skipSetupScreen: envConfigSubject.skipSetupScreen,
+                                        avMode: .normal)
         if let credential = try? await getTokenCredential() {
             switch selectedMeetingType {
             case .groupCall:
