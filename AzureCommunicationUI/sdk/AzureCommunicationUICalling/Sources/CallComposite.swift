@@ -11,7 +11,6 @@ import FluentUI
 
 /// The main class representing the entry point for the Call Composite.
 public class CallComposite {
-
     /// The class to configure events closures for Call Composite.
     public class Events {
         /// Closure to execute when error event occurs inside Call Composite.
@@ -22,6 +21,8 @@ public class CallComposite {
         public var onCallStateChanged: ((CallState) -> Void)?
         /// Closure to Call Composite dismissed.
         public var onDismissed: ((CallCompositeDismissed) -> Void)?
+        /// Closure to execute when the User reports an issue from within the call composite
+        public var onUserReportedIssue: ((CallCompositeUserReportedIssue) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -136,7 +137,6 @@ public class CallComposite {
         let callConfiguration = CallConfiguration(locator: remoteOptions.locator,
                                                   credential: remoteOptions.credential,
                                                   displayName: remoteOptions.displayName)
-
         launch(callConfiguration, localOptions: localOptions)
     }
 
@@ -198,7 +198,7 @@ public class CallComposite {
             callCompositeEventsHandler: callCompositeEventsHandler,
             avatarViewManager: avatarViewManager
         )
-        let debugInfoManager = createDebugInfoManager()
+        let debugInfoManager = createDebugInfoManager(callingSDKWrapper: callingSdkWrapper)
         self.debugInfoManager = debugInfoManager
         self.callHistoryService = CallHistoryService(store: store, callHistoryRepository: self.callHistoryRepository)
         let audioSessionManager = AudioSessionManager(store: store, logger: logger)
@@ -215,13 +215,21 @@ public class CallComposite {
                 localizationProvider: localizationProvider,
                 accessibilityProvider: accessibilityProvider,
                 debugInfoManager: debugInfoManager,
-                localOptions: localOptions
+                localOptions: localOptions,
+                eventsHandler: events,
+                retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
         )
     }
 
+    private func createDebugInfoManager(callingSDKWrapper: CallingSDKWrapperProtocol) -> DebugInfoManagerProtocol {
+        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository,
+                                getLogFiles: { return callingSDKWrapper.getLogFiles() })
+    }
+
     private func createDebugInfoManager() -> DebugInfoManagerProtocol {
-        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository)
+        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository,
+                                getLogFiles: { return [] })
     }
 
     private func cleanUpManagers() {
@@ -297,7 +305,6 @@ public class CallComposite {
             return false
         }
         let hasCallComposite = keyWindow.hasViewController(ofKind: ContainerUIHostingController.self)
-
         return !hasCallComposite
     }
 }
