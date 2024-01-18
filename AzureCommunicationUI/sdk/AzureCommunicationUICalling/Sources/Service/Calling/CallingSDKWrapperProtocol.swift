@@ -74,20 +74,30 @@ protocol CallingSDKWrapperProtocol {
     func admitLobbyParticipant(_ participantId: String) async throws
     func declineLobbyParticipant(_ participantId: String) async throws
 
+    func getLogFiles() -> [URL]
+
     var callingEventsHandler: CallingSDKEventsHandling { get }
 }
 
 protocol CallingSDKEventsHandling {
     var participantsInfoListSubject: CurrentValueSubject<[ParticipantInfoModel], Never> { get }
+
     var callInfoSubject: PassthroughSubject<CallInfoModel, Never> { get }
+
     var isRecordingActiveSubject: PassthroughSubject<Bool, Never> { get }
+
     var isTranscriptionActiveSubject: PassthroughSubject<Bool, Never> { get }
+
     var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
+
     var callIdSubject: PassthroughSubject<String, Never> { get }
+
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
     var participantRoleSubject: PassthroughSubject<ParticipantRole, Never> { get }
 
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
+
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
+
     var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never> { get }
 }

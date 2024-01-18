@@ -32,6 +32,8 @@ public class CallComposite {
         public var onIncomingCallEnded: ((CallCompositeIncomingCallEndedInfo) -> Void)?
         /// Closure to execure when CallComposite is displayed in Picture-In-Picture.
         public var onPictureInPictureChanged: ((_ isInPictureInPicture: Bool) -> Void)?
+        /// Closure to execute when the User reports an issue from within the call composite
+        public var onUserReportedIssue: ((CallCompositeUserReportedIssue) -> Void)?
     }
 
     /// Following native calling SDK, need static to manage call agent as destroying immediate on register push and join
@@ -381,12 +383,15 @@ public class CallComposite {
                 localOptions: localOptions,
                 compositeCallType: callConfiguration.compositeCallType,
                 enableMultitasking: enableMultitasking,
-                enableSystemPiPWhenMultitasking: enableSystemPiPWhenMultitasking
+                enableSystemPiPWhenMultitasking: enableSystemPiPWhenMultitasking,
+                eventsHandler: events,
+                retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
         )
     }
     private func createDebugInfoManager() -> DebugInfoManagerProtocol {
-        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository)
+        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository,
+                                getLogFiles: { return self.callingSDKWrapper?.getLogFiles() ?? [] })
     }
     private func cleanUpManagers() {
         self.callingSDKEventsHandler?.cleanup()

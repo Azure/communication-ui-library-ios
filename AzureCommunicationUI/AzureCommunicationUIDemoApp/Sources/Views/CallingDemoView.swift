@@ -354,7 +354,9 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
-
+        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { issue in
+            print("received in app: " + issue.userMessage)
+        }
         let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
             guard let composite = callComposite else {
                 return
@@ -362,7 +364,6 @@ extension CallingDemoView {
             onCallStateChanged(callStateEvent,
                     callComposite: composite)
         }
-
         let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
             // Known issue: every time on exit register for push to receive again
             Task {
@@ -386,6 +387,7 @@ extension CallingDemoView {
         callComposite.events.onIncomingCall = onInomingCall
         callComposite.events.onIncomingCallEnded = onInomingCallEnded
         callComposite.events.onPictureInPictureChanged = onPipChangedHandler
+        callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
     }
 
     func startCallComposite() async {

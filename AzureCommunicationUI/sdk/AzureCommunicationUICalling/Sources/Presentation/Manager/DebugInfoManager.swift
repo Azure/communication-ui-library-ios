@@ -12,14 +12,19 @@ protocol DebugInfoManagerProtocol {
 
 class DebugInfoManager: DebugInfoManagerProtocol {
     private let callHistoryRepository: CallHistoryRepository
-
-    init(callHistoryRepository: CallHistoryRepository) {
+    private let getLogFiles: () -> [URL]
+    init(callHistoryRepository: CallHistoryRepository, getLogFiles: @escaping () -> [URL]) {
         self.callHistoryRepository = callHistoryRepository
+        self.getLogFiles = getLogFiles
     }
 
     /// The history of calls up to 30 days. Ordered ascending by call started date.
     func getDebugInfo() -> DebugInfo {
-        return DebugInfo(callHistoryRecords: getCallHistory())
+        let version = Bundle(for: CallComposite.self).infoDictionary?["UILibrarySemVersion"]
+        let versionStr = version as? String ?? "unknown"
+        return DebugInfo(callHistoryRecords: getCallHistory(),
+                         callingUIVersion: versionStr,
+                         logFiles: self.getLogFiles())
     }
 
     private func getCallHistory() -> [CallHistoryRecord] {

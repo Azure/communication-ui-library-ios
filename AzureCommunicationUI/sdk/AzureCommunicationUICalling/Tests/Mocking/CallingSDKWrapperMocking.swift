@@ -21,6 +21,9 @@ class CallingSDKWrapperMocking: CallingSDKWrapperProtocol {
     func cleanup() {
     }
 
+    func getLogFiles() -> [URL] {
+        []
+    }
     func startCallLocalVideoStream() async throws -> String {
         return try await Task<String, Error> {
             ""
