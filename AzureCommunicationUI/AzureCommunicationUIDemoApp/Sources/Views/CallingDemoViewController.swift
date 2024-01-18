@@ -303,7 +303,8 @@ class CallingDemoViewController: UIViewController {
                                         roleHint: roomRoleData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
-                                        skipSetupScreen: envConfigSubject.skipSetupScreen)
+                                        skipSetupScreen: envConfigSubject.skipSetupScreen,
+                                        avMode: .normal)
         let cxHandle = CXHandle(type: .generic, value: link)
         let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
         var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
