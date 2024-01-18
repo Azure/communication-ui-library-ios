@@ -1353,11 +1353,8 @@
 				A4DC6FB92AFBF80D00E196EC /* CallCompositePushNotificationInfo.swift */,
 				A4DC6FBB2AFC56AE00E196EC /* CallCompositeIncomingCallInfo.swift */,
 				A4DC6FBD2AFC56D400E196EC /* CallCompositeIncomingCallEndedInfo.swift */,
-<<<<<<< HEAD
 				532DF40A2AF9948F00E63301 /* CallCompositeUserReportedError.swift */,
-=======
 				534B2CF32B575CFB00D52D02 /* CallCompositeAvMode.swift */,
->>>>>>> release/calling-1.6.0-beta.2
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -2044,11 +2041,8 @@
 				1FB0A1C128412A5100D57B0F /* ACSParticipantStateExtension.swift in Sources */,
 				051EE2292AB90FC300A94632 /* LobbyWaitingHeaderView.swift in Sources */,
 				756F596A2965E25A00BAFBF7 /* Middleware.swift in Sources */,
-<<<<<<< HEAD
 				533D7B002B27BEAE0021767F /* SupportFormViewModel.swift in Sources */,
-=======
 				534B2CF42B575CFB00D52D02 /* CallCompositeAvMode.swift in Sources */,
->>>>>>> release/calling-1.6.0-beta.2
 				981ACABC2685459400CD6A40 /* IconProvider.swift in Sources */,
 				1F2BEDCD26329E5600D98266 /* PermissionAction.swift in Sources */,
 				98B186A127C85F9800B837E6 /* AudioDevicesListViewModel.swift in Sources */,

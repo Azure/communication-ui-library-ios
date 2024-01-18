@@ -44,13 +44,15 @@ struct SupportFormView: View {
                 },
                 trailing: Button("Send") {
                     showingForm = false
-                    // We are going to wait ~ 16ms, 1 frame @ 60fps, before dispatching this
-                    // The reason being that the screenshot shouldn't show the form
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1 / 60) {
-                        viewModel.sendReport()
-                    }
+                    viewModel.prepareToSend()
                 }
             )
+        }.onDisappear {
+            if viewModel.submitOnDismiss {
+                DispatchQueue.main.async {
+                    viewModel.sendReport()
+                }
+            }
         }
     }
 }
