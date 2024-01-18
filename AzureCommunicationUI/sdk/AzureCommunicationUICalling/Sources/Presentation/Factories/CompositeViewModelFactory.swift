@@ -6,9 +6,7 @@
 import FluentUI
 import Foundation
 
-class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
-
-    
+class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {    
     private let logger: Logger
     private let store: Store<AppState, Action>
     private let networkManager: NetworkManager
@@ -306,5 +304,4 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     func makeJoiningCallActivityViewModel() -> JoiningCallActivityViewModel {
         JoiningCallActivityViewModel(localizationProvider: localizationProvider)
     }
-    
 }

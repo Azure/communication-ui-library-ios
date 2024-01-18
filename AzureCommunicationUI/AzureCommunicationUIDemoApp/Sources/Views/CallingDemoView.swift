@@ -231,12 +231,9 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
-<<<<<<< HEAD
-=======
         let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { issue in
             print("received in app: " + issue.userMessage)
         }
->>>>>>> 8581160a (Enhanced support feature for 1.6.0 (#785))
         let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
             guard let composite = callComposite else {
                 return
@@ -249,29 +246,7 @@ extension CallingDemoView {
                 relaunchComposite()
             }
         }
-<<<<<<< HEAD
-=======
-        let onInomingCall: (CallCompositeIncomingCallInfo) -> Void = { [] _ in
-            print("::::CallingDemoView::getEventsHandler Incoming Call ::::CallInfo")
-        }
-        let onInomingCallEnded: (CallCompositeIncomingCallEndedInfo) -> Void = { [] _ in
-            print("::::CallingDemoView::getEventsHandler Incoming Call ::::CallEndedInfo")
-        }
-        callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
-        callComposite.events.onError = onErrorHandler
-        callComposite.events.onCallStateChanged = onCallStateChangedHandler
-        callComposite.events.onDismissed = onDismissedHandler
-        callComposite.events.onIncomingCall = onInomingCall
-        callComposite.events.onIncomingCallEnded = onInomingCallEnded
-        callComposite.events.onPictureInPictureChanged = onPipChangedHandler
-        callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
-    }
 
-    func startCallComposite() async {
-        let callComposite = createCallComposite()
-        callingViewModel.callComposite = callComposite
-        let link = getMeetingLink()
->>>>>>> 8581160a (Enhanced support feature for 1.6.0 (#785))
         exitCompositeExecuted = false
         if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
             DispatchQueue.main.asyncAfter(deadline: .now() +
