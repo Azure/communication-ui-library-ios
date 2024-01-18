@@ -280,7 +280,6 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
 
     func makeSupportFormViewModel() -> AzureCommunicationUICalling.SupportFormViewModel {
         return supportFormViewModel ?? SupportFormViewModel(events: CallComposite.Events(),
-                                                            getLogFiles: { [] },
                                                             getDebugInfo: { [self] in self.debugInfoManager.getDebugInfo() })
     }
 
