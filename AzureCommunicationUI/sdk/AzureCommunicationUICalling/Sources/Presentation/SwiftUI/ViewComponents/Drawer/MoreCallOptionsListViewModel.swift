@@ -31,7 +31,7 @@ class MoreCallOptionsListViewModel: ObservableObject {
 
         if isSupportFormAvailable {
             let reportErrorInfoModel = compositeViewModelFactory.makeDrawerListItemViewModel(
-                icon: .share,
+                icon: .personFeedback,
                 title: "Report an error",
                 accessibilityIdentifier: "Report an error",
                 action: showSupportFormAction)
