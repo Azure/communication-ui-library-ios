@@ -6,7 +6,7 @@
 import CallKit
 
 /// CallKit options for the call.
-public struct CallCompositeCallKitOption {
+internal struct CallCompositeCallKitOption {
     /// CXProviderConfiguration for the call.
     let cxProvideConfig: CXProviderConfiguration
 

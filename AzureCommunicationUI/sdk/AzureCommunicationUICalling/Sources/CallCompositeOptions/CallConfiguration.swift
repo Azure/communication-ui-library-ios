@@ -37,12 +37,12 @@ struct CallConfiguration {
             self.roomId = nil
             self.roomRoleHint = nil
             self.compositeCallType = .teamsMeeting
-        case let .roomCall(roomId: roomId):
-            self.roomId = roomId
-            self.roomRoleHint = roomRole
-            self.groupId = nil
-            self.meetingLink = nil
-            self.compositeCallType = .roomsCall
+//        case let .roomCall(roomId: roomId):
+//            self.roomId = roomId
+//            self.roomRoleHint = roomRole
+//            self.groupId = nil
+//            self.meetingLink = nil
+//            self.compositeCallType = .roomsCall
         }
         self.credential = credential
         self.displayName = displayName
@@ -51,22 +51,22 @@ struct CallConfiguration {
         self.callKitOptions = callKitOptions
     }
 
-    init(startCallOptions: CallCompositeStartCallOptions,
-         credential: CommunicationTokenCredential,
-         displayName: String?,
-         callKitOptions: CallCompositeCallKitOption? = nil,
-         diagnosticConfig: DiagnosticConfig) {
-        self.participants = startCallOptions.participants
-        self.compositeCallType = .oneToNCallOutgoing
-        self.credential = credential
-        self.displayName = displayName
-        self.groupId = nil
-        self.meetingLink = nil
-        self.callKitOptions = callKitOptions
-        self.diagnosticConfig = diagnosticConfig
-        self.roomId = nil
-        self.roomRoleHint = nil
-    }
+//    init(startCallOptions: CallCompositeStartCallOptions,
+//         credential: CommunicationTokenCredential,
+//         displayName: String?,
+//         callKitOptions: CallCompositeCallKitOption? = nil,
+//         diagnosticConfig: DiagnosticConfig) {
+//        self.participants = startCallOptions.participants
+//        self.compositeCallType = .oneToNCallOutgoing
+//        self.credential = credential
+//        self.displayName = displayName
+//        self.groupId = nil
+//        self.meetingLink = nil
+//        self.callKitOptions = callKitOptions
+//        self.diagnosticConfig = diagnosticConfig
+//        self.roomId = nil
+//        self.roomRoleHint = nil
+//    }
 
     init(callType: CompositeCallType,
          diagnosticConfig: DiagnosticConfig,

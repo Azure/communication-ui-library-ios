@@ -6,7 +6,7 @@ import Foundation
 import AzureCommunicationCommon
 
 /// Info required to subscribe for incoming call notifications
-public struct CallCompositePushNotificationOptions {
+internal struct CallCompositePushNotificationOptions {
     /// Device VoIP token
     public let deviceRegistrationToken: Data
 

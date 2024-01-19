@@ -28,10 +28,10 @@ internal class IncomingCallWrapper: NSObject, CallsUpdatedProtocol {
     }
 
     private func updateIncomingCallEventHandler(incomingCallInfo: CallCompositeIncomingCallInfo) {
-        guard let onIncomingCallEventHandler = events.onIncomingCall else {
-            return
-        }
-        onIncomingCallEventHandler(incomingCallInfo)
+//        guard let onIncomingCallEventHandler = events.onIncomingCall else {
+//            return
+//        }
+//        onIncomingCallEventHandler(incomingCallInfo)
    }
 
     func dispose() {
@@ -42,14 +42,14 @@ internal class IncomingCallWrapper: NSObject, CallsUpdatedProtocol {
 
 extension IncomingCallWrapper: IncomingCallDelegate {
     func incomingCall(_ incomingCall: IncomingCall, didEnd args: PropertyChangedEventArgs) {
-        guard let onIncomingCallEnded = events.onIncomingCallEnded,
-              let callEndReason = incomingCall.callEndReason else {
-            return
-        }
-        let callEndInfo = CallCompositeIncomingCallEndedInfo(
-            code: Int(callEndReason.code),
-            subCode: Int(callEndReason.subcode)
-        )
-        onIncomingCallEnded(callEndInfo)
+//        guard let onIncomingCallEnded = events.onIncomingCallEnded,
+//              let callEndReason = incomingCall.callEndReason else {
+//            return
+//        }
+//        let callEndInfo = CallCompositeIncomingCallEndedInfo(
+//            code: Int(callEndReason.code),
+//            subCode: Int(callEndReason.subcode)
+//        )
+//        onIncomingCallEnded(callEndInfo)
     }
 }

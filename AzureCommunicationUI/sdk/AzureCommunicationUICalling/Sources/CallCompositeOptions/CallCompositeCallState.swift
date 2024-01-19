@@ -84,13 +84,13 @@ public struct CallState: Equatable, RequestStringConvertible {
         return value.rawValue
     }
 
-    public var callEndReasonCodeInt: Int? {
-        return callEndReasonCode
-    }
-
-    public var callEndReasonSubCodeInt: Int? {
-        return callEndReasonSubCode
-    }
+//    public var callEndReasonCodeInt: Int? {
+//        return callEndReasonCode
+//    }
+//
+//    public var callEndReasonSubCodeInt: Int? {
+//        return callEndReasonSubCode
+//    }
 
     private init(rawValue: String) {
         self.value = CallStateKV(rawValue: rawValue)
@@ -98,13 +98,13 @@ public struct CallState: Equatable, RequestStringConvertible {
         self.callEndReasonSubCode = 0
     }
 
-    public init(rawValue: String,
-                callEndReasonCode: Int?,
-                callEndReasonSubCode: Int?) {
-        self.value = CallStateKV(rawValue: rawValue)
-        self.callEndReasonCode = callEndReasonCode
-        self.callEndReasonSubCode = callEndReasonSubCode
-    }
+//    public init(rawValue: String,
+//                callEndReasonCode: Int?,
+//                callEndReasonSubCode: Int?) {
+//        self.value = CallStateKV(rawValue: rawValue)
+//        self.callEndReasonCode = callEndReasonCode
+//        self.callEndReasonSubCode = callEndReasonSubCode
+//    }
 
     public static func == (lhs: CallState, rhs: CallState) -> Bool {
         return lhs.requestString == rhs.requestString

@@ -7,7 +7,7 @@ import Foundation
 import AzureCommunicationCalling
 
 /// CallCompositePushNotificationInfo with PushNotificationInfo containing call information
-public struct CallCompositePushNotificationInfo {
+internal struct CallCompositePushNotificationInfo {
     /// push notification info
     public let pushNotificationInfo: PushNotificationInfo
 

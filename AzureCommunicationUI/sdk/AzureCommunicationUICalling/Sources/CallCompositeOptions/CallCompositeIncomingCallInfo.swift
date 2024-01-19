@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct CallCompositeIncomingCallInfo {
+internal struct CallCompositeIncomingCallInfo {
     /// Call id.
     let callId: String
 

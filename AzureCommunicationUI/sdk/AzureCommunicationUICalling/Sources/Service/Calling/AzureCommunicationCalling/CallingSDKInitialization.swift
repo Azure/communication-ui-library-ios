@@ -67,21 +67,21 @@ internal class CallingSDKInitialization: NSObject {
         }
     }
 
-    func registerPushNotification(notificationOptions: CallCompositePushNotificationOptions,
-                                  tags: [String]) async throws {
-        do {
-            try await setupCallAgent(tags: tags,
-                                     credential: notificationOptions.credential,
-                                     callKitOptions: notificationOptions.callKitOptions,
-                                     displayName: notificationOptions.displayName)
-            try await self.callAgent?.registerPushNotifications(
-                deviceToken: notificationOptions.deviceRegistrationToken)
-            logger.debug("registerPushNotifications success")
-        } catch {
-            logger.error("Failed to registerPushNotification")
-            throw error
-        }
-    }
+//    func registerPushNotification(notificationOptions: CallCompositePushNotificationOptions,
+//                                  tags: [String]) async throws {
+//        do {
+//            try await setupCallAgent(tags: tags,
+//                                     credential: notificationOptions.credential,
+//                                     callKitOptions: notificationOptions.callKitOptions,
+//                                     displayName: notificationOptions.displayName)
+//            try await self.callAgent?.registerPushNotifications(
+//                deviceToken: notificationOptions.deviceRegistrationToken)
+//            logger.debug("registerPushNotifications success")
+//        } catch {
+//            logger.error("Failed to registerPushNotification")
+//            throw error
+//        }
+//    }
 
     func handlePushNotification(tags: [String],
                                 credential: CommunicationTokenCredential,
