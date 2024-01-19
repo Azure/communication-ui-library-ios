@@ -44,10 +44,16 @@ internal class CallingSDKInitialization: NSObject {
         let options = CallAgentOptions()
         self.callCompositeCallKitOptions = callKitOptions
         if let callKitConfig = callKitOptions?.cxProvideConfig {
-            let callKitOptions = CallKitOptions(with: callKitConfig)
-            callKitOptions.isCallHoldSupported = callKitOptions.isCallHoldSupported
-            callKitOptions.configureAudioSession = callKitOptions.configureAudioSession
-            options.callKitOptions = callKitOptions
+            let sdkCallKitOptions = CallKitOptions(with: callKitConfig)
+            sdkCallKitOptions.isCallHoldSupported = callKitOptions!.isCallHoldSupported
+            sdkCallKitOptions.configureAudioSession = callKitOptions!.configureAudioSession
+            sdkCallKitOptions.provideRemoteInfo = { (_: CallerInfo) -> CallKitRemoteInfo in
+                let callKitRemoteInfo = CallKitRemoteInfo()
+                callKitRemoteInfo.displayName = callKitOptions!.remoteInfo!.displayName
+                callKitRemoteInfo.handle = callKitOptions!.remoteInfo!.cxHandle
+                return callKitRemoteInfo
+            }
+            options.callKitOptions = sdkCallKitOptions
         }
         if let displayName = displayName {
             options.displayName = displayName
@@ -92,6 +98,12 @@ internal class CallingSDKInitialization: NSObject {
             let callKitOptionsInternal = CallKitOptions(with: callKitOptions!.cxProvideConfig)
             callKitOptionsInternal.isCallHoldSupported = callKitOptions!.isCallHoldSupported
             callKitOptionsInternal.configureAudioSession = callKitOptions!.configureAudioSession
+            callKitOptionsInternal.provideRemoteInfo = { (_: CallerInfo) -> CallKitRemoteInfo in
+                let callKitRemoteInfo = CallKitRemoteInfo()
+                callKitRemoteInfo.displayName = callKitOptions!.remoteInfo!.displayName
+                callKitRemoteInfo.handle = callKitOptions!.remoteInfo!.cxHandle
+                return callKitRemoteInfo
+            }
             try await CallClient.reportIncomingCall(
                 with: callNotification,
                 callKitOptions: callKitOptionsInternal

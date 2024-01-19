@@ -101,6 +101,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                 callKitRemoteInfo.displayName = remoteInfo.displayName
                 callKitRemoteInfo.handle = remoteInfo.cxHandle
                 joinCallOptions.callKitRemoteInfo = callKitRemoteInfo
+                startCallOptions.callKitRemoteInfo = callKitRemoteInfo
         }
         joinCallOptions.outgoingAudioOptions = OutgoingAudioOptions()
         joinCallOptions.outgoingAudioOptions?.muted = !isAudioPreferred
