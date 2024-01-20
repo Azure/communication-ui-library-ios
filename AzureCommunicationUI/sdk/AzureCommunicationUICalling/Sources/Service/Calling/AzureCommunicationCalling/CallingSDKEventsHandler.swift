@@ -188,11 +188,14 @@ extension CallingSDKEventsHandler: CallDelegate,
         if internalError != nil {
             let code = call.callEndReason.code
             let subcode = call.callEndReason.subcode
-            logger.error("Receive vaildate CallEndReason:\(code), subcode:\(subcode)")
+            logger.error("InderpalTesting :) Receive vaildate \(call.id) CallEndReason:\(code), subcode:\(subcode)")
         }
-
+        // native sdk have issue when disconnected using callkit
+        // current active call returns 500 in connected status
+        // remove when sdk issue fixed
+        let error = currentStatus == .disconnected ? internalError : nil
         let callInfoModel = CallInfoModel(status: currentStatus,
-                                          internalError: internalError,
+                                          internalError: error,
                                           callEndReasonCode: Int(call.callEndReason.code),
                                           callEndReasonSubCode: Int(call.callEndReason.subcode))
         callInfoSubject.send(callInfoModel)

@@ -20,14 +20,21 @@ public struct CallCompositeCallKitOption {
     /// incoming call and before resuming the call after it has been put on hold
     let configureAudioSession: (() -> Error?)?
 
+    /// CallKit remote participant info callback for incoming call
+    let configureIncomingCallRemoteInfo: ((CallCompositeCallerInfo)
+                                          -> CallCompositeCallKitRemoteInfo)?
+
     public init(cxProvideConfig: CXProviderConfiguration,
                 isCallHoldSupported: Bool = true,
                 remoteInfo: CallCompositeCallKitRemoteInfo? = nil,
+                configureIncomingCallRemoteInfo: ((CallCompositeCallerInfo)
+                                                  -> CallCompositeCallKitRemoteInfo)? = nil,
                 configureAudioSession: (() -> Error?)? = nil) {
         self.cxProvideConfig = cxProvideConfig
         self.isCallHoldSupported = isCallHoldSupported
         self.remoteInfo = remoteInfo
         self.configureAudioSession = configureAudioSession
+        self.configureIncomingCallRemoteInfo = configureIncomingCallRemoteInfo
     }
 
     public init() {
@@ -35,6 +42,7 @@ public struct CallCompositeCallKitOption {
         self.isCallHoldSupported = true
         self.remoteInfo = nil
         self.configureAudioSession = nil
+        self.configureIncomingCallRemoteInfo = nil
     }
 
     public static func getDefaultCXProviderConfiguration() -> CXProviderConfiguration {

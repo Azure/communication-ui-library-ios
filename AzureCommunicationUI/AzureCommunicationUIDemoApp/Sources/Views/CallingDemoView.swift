@@ -461,8 +461,7 @@ extension CallingDemoView {
                                                   credential: credential,
                                                   displayName: envConfigSubject.displayName.isEmpty
                                                   ? nil : envConfigSubject.displayName,
-                                                  callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
-                                                  ? callKitOptions : nil)
+                                                  callKitOptions: callKitOptions)
                 callComposite.launch(remoteOptions: remoteOptions,
                                      localOptions: localOptionsForOneToN)
             case .roomCall:
@@ -526,8 +525,19 @@ extension CallingDemoView {
         return configError
     }
 
+    public func incomingCallRemoteInfo(info: CallCompositeCallerInfo) -> CallCompositeCallKitRemoteInfo {
+        let cxHandle = CXHandle(type: .generic, value: "Incoming call")
+        var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
+        if remoteInfoDisplayName.isEmpty {
+            remoteInfoDisplayName = info.callerDisplayName
+        }
+        let callKitRemoteInfo = CallCompositeCallKitRemoteInfo(displayName: remoteInfoDisplayName,
+                                                               cxHandle: cxHandle)
+        return callKitRemoteInfo
+    }
+
     private func getCallKitOptions() -> CallCompositeCallKitOption {
-        let cxHandle = CXHandle(type: .generic, value: getMeetingLink())
+        let cxHandle = CXHandle(type: .generic, value: getCXHandleName())
         let cxProvider = CallCompositeCallKitOption.getDefaultCXProviderConfiguration()
         var remoteInfoDisplayName = envConfigSubject.callkitRemoteInfo
         if remoteInfoDisplayName.isEmpty {
@@ -540,7 +550,8 @@ extension CallingDemoView {
                                                        isCallHoldSupported: isCallHoldSupported,
                                                        remoteInfo: $envConfigSubject.enableRemoteInfo.wrappedValue
                                                         ? callKitRemoteInfo : nil,
-         configureAudioSession: configureAudioSession)
+                                                        configureIncomingCallRemoteInfo: incomingCallRemoteInfo,
+                                                        configureAudioSession: configureAudioSession)
         return callKitOptions
     }
 
@@ -580,6 +591,19 @@ extension CallingDemoView {
             return envConfigSubject.participantIds
         case .roomCall:
             return envConfigSubject.roomId
+        }
+    }
+
+    private func getCXHandleName() -> String {
+        switch envConfigSubject.selectedMeetingType {
+        case .groupCall:
+            return "Group call"
+        case .teamsMeeting:
+            return "Teams Metting"
+        case .oneToNCall:
+            return "1 to 1 calling"
+        case .roomCall:
+            return "Rooms call"
         }
     }
 
