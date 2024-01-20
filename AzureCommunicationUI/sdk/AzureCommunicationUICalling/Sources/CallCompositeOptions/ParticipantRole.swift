@@ -7,7 +7,7 @@ import AzureCore
 import Foundation
 import AzureCommunicationCalling
 
-public struct ParticipantRole: Equatable, RequestStringConvertible {
+internal struct ParticipantRole: Equatable, RequestStringConvertible {
     internal enum ParticipantRoleKV {
         case presenter
         case attendee
