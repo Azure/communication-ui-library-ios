@@ -9,8 +9,8 @@ import AzureCommunicationUICalling
 enum MeetingType: Int {
     case groupCall
     case teamsMeeting
-    case oneToNCall
-    case roomCall
+    //    case oneToNCall
+    //    case roomCall
 }
 
 enum ChatType: Int {
