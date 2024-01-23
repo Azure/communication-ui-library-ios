@@ -33,7 +33,7 @@ public enum JoinLocator {
 /// Object for remote options for Call Composite.
 public struct RemoteOptions {
     /// The unique identifier for the group conversation.
-    public let locator: JoinLocator?
+    public let locator: JoinLocator
 
 //    /// The start call options
 //    public let startCallOptions: CallCompositeStartCallOptions?
