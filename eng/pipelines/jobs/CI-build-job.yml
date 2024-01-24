@@ -46,7 +46,7 @@ jobs:
           checkCoverage: true
           coverageThreshold: 51
           coverageFailOption: fixed
-          coverageType: lines
+          coverageType: blocks
           
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: 'Component Detection'
