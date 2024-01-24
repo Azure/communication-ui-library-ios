@@ -112,54 +112,6 @@ public class CallComposite {
         exitManager?.dismiss()
     }
 
-    /// Remove calling layer reference
-//    public func dispose() {
-//        incomingCallWrapper.dispose()
-//        CallComposite.callingSDKInitialization?.dispose()
-//        CallComposite.callingSDKInitialization = nil
-//    }
-
-    /// Handle push notification to receive incoming call
-//    public func handlePushNotification(remoteOptions: RemoteOptions) async throws {
-//        let pushNotificationInfo = remoteOptions.pushNotificationInfo!.pushNotificationInfo
-//        try await constructCallingSDKInitialization(
-//            logger: logger).handlePushNotification(
-//                tags: diagnosticConfig.tags,
-//                credential: remoteOptions.credential,
-//                callKitOptions: remoteOptions.callKitOptions,
-//                displayName: remoteOptions.displayName,
-//                callNotification: pushNotificationInfo)
-//    }
-
-    /// Report incoming call to notify CallKit
-    /// On success you can wake up application.
-//    public static func reportIncomingCall(callKitOptions: CallCompositeCallKitOption,
-//                                          callNotification: CallCompositePushNotificationInfo,
-//                                          completion: @escaping (Result<Void, Error>) -> Void) {
-//        let callKitOptionsInternal = CallKitOptions(with: callKitOptions.cxProvideConfig)
-//        callKitOptionsInternal.isCallHoldSupported = callKitOptions.isCallHoldSupported
-//        callKitOptionsInternal.configureAudioSession = callKitOptions.configureAudioSession
-//
-//        CallClient.reportIncomingCall(
-//            with: callNotification.pushNotificationInfo,
-//            callKitOptions: callKitOptionsInternal
-//        ) { (error) in
-//            if error == nil {
-//                completion(.success(()))
-//            } else {
-//                completion(.failure(error!))
-//            }
-//        }
-//    }
-
-    /// Register device token to receive push notifications
-    /// Currently, push notificatiosn are only supported with CallKit
-//    public func registerPushNotification(notificationOptions: CallCompositePushNotificationOptions) async throws {
-//        try await constructCallingSDKInitialization(
-//            logger: logger).registerPushNotification(notificationOptions: notificationOptions,
-//                                                     tags: diagnosticConfig.tags)
-//    }
-
     convenience init(withOptions options: CallCompositeOptions? = nil,
                      callingSDKWrapperProtocol: CallingSDKWrapperProtocol? = nil) {
         self.init(withOptions: options)
@@ -177,20 +129,6 @@ public class CallComposite {
     public func launch(remoteOptions: RemoteOptions,
                        localOptions: LocalOptions? = nil) {
         var callConfiguration: CallConfiguration?
-//        if let locator = remoteOptions.locator {
-//            callConfiguration = CallConfiguration(locator: locator,
-//                                                  credential: remoteOptions.credential,
-//                                                  displayName: remoteOptions.displayName,
-//                                                  callKitOptions: remoteOptions.callKitOptions,
-//                                                  diagnosticConfig: diagnosticConfig,
-//                                                  roomRole: localOptions?.roleHint)
-//        } else if let startCallOptions = remoteOptions.startCallOptions {
-//            callConfiguration = CallConfiguration(startCallOptions: startCallOptions,
-//                                                  credential: remoteOptions.credential,
-//                                                  displayName: remoteOptions.displayName,
-//                                                  callKitOptions: remoteOptions.callKitOptions,
-//                                                  diagnosticConfig: diagnosticConfig)
-//        }
         if let callconfig = callConfiguration {
             launch(callconfig, localOptions: localOptions)
         }
