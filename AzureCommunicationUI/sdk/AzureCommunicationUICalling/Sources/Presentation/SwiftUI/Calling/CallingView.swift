@@ -72,7 +72,7 @@ struct CallingView: View {
                 ZStack(alignment: .bottomTrailing) {
                     videoGridView
                         .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
-                    if viewModel.isParticipantGridDisplayed {
+                    if viewModel.isParticipantGridDisplayed && !viewModel.isInPip {
                         Group {
                             DraggableLocalVideoView(containerBounds:
                                                         geometry.frame(in: .local),
