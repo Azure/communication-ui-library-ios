@@ -326,7 +326,6 @@ class CallingDemoViewController: UIViewController {
                 let remoteOptions = RemoteOptions(for: .groupCall(groupId: uuid),
                                                   credential: credential,
                                                   displayName: displayName)
-
                 callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
             case .teamsMeeting:
                 let remoteOptions = RemoteOptions(for: .teamsMeeting(teamsLink: link),
