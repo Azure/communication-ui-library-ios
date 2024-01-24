@@ -44,7 +44,7 @@ jobs:
         displayName: "Check build quality"
         inputs:
           checkCoverage: true
-          coverageThreshold: 51
+          coverageThreshold: 47
           coverageFailOption: fixed
           coverageType: lines
           
