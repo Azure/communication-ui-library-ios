@@ -40,13 +40,13 @@ jobs:
           codeCoverageTool: "Cobertura"
           summaryFileLocation: $(Pipeline.Workspace)/coveragereport/Cobertura.xml
 
-      - task: BuildQualityChecks@8
+      - task: BuildQualityChecks@9
         displayName: "Check build quality"
         inputs:
           checkCoverage: true
           coverageThreshold: 51
           coverageFailOption: fixed
-          coverageType: blocks
+          coverageType: lines
           
       - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
         displayName: 'Component Detection'
