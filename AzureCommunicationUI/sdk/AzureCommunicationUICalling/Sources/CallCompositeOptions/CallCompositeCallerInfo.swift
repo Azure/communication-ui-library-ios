@@ -8,10 +8,10 @@ import Foundation
 public struct CallCompositeCallerInfo {
 
     /// Caller disply name.
-    let callerDisplayName: String
+    public let callerDisplayName: String
 
     /// Caller raw id
-    let callerIdentifierRawId: String
+    public let callerIdentifierRawId: String
 
     /// Create an instance of a CallCompositePushNotificationInfo with push notification payload.
     /// - Parameters:

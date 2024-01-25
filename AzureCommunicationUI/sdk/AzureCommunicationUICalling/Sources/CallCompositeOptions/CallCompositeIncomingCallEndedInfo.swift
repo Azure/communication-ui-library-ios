@@ -8,10 +8,10 @@ import Foundation
 /// Incoming call end info.
 public struct CallCompositeIncomingCallEndedInfo {
     /// call end code
-    let code: Int
+    public let code: Int
 
     /// call end sub code
-    let subCode: Int
+    public let subCode: Int
 
     /// Create an instance of a CallCompositeIncomingCallEndedInfo with incoming call ended info.
     /// - Parameters:

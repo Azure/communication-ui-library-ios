@@ -8,10 +8,10 @@ import CallKit
 /// CallKit info for caller(incoming)/callee(outgoing)
 public struct CallCompositeCallKitRemoteInfo {
     /// Display name of the remote participant
-    let displayName: String
+    public let displayName: String
 
     /// CXHandle of the remote participant, for call history
-    let cxHandle: CXHandle
+    public let cxHandle: CXHandle
 
     public init(displayName: String,
                 cxHandle: CXHandle) {
