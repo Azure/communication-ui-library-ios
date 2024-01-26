@@ -6,7 +6,7 @@
 import Foundation
 
 /// Incoming call end info.
-public struct CallCompositeIncomingCallEndedInfo {
+internal struct CallCompositeIncomingCallEndedInfo {
     /// call end code
     let code: Int
 

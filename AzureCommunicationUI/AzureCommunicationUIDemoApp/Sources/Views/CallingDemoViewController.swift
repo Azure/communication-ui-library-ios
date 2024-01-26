@@ -285,13 +285,13 @@ class CallingDemoViewController: UIViewController {
 
         let roomRole = envConfigSubject.selectedRoomRoleType
         var roomRoleData: ParticipantRole?
-        if envConfigSubject.selectedMeetingType == .roomCall {
-            if roomRole == .presenter {
-                roomRoleData = ParticipantRole.presenter
-            } else if roomRole == .attendee {
-                roomRoleData = ParticipantRole.attendee
-            }
-        }
+//        if envConfigSubject.selectedMeetingType == .roomCall {
+//            if roomRole == .presenter {
+//                roomRoleData = ParticipantRole.presenter
+//            } else if roomRole == .attendee {
+//                roomRoleData = ParticipantRole.attendee
+//            }
+//        }
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
         let setupScreenViewData = SetupScreenViewData(title: envConfigSubject.navigationTitle,
@@ -300,7 +300,6 @@ class CallingDemoViewController: UIViewController {
                                                       displayName: renderDisplayName)
         let localOptions = LocalOptions(participantViewData: participantViewData,
                                         setupScreenViewData: setupScreenViewData,
-                                        roleHint: roomRoleData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen,
@@ -326,35 +325,15 @@ class CallingDemoViewController: UIViewController {
 
                 let remoteOptions = RemoteOptions(for: .groupCall(groupId: uuid),
                                                   credential: credential,
-                                                  displayName: displayName,
-                                                  callKitOptions: envConfigSubject.enableCallKit
-                                                  ? callKitOptions : nil)
-
+                                                  displayName: displayName)
                 callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
             case .teamsMeeting:
                 let remoteOptions = RemoteOptions(for: .teamsMeeting(teamsLink: link),
                                                   credential: credential,
                                                   displayName: envConfigSubject.displayName.isEmpty
-                                                  ? nil : envConfigSubject.displayName,
-                                                  callKitOptions: envConfigSubject.enableCallKit
-                                                  ? callKitOptions : nil)
+                                                  ? nil : envConfigSubject.displayName)
 
                 callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
-            case .oneToNCall:
-                // ToDo: make required changes to enable 1:N for UIKit
-                let startCallOptions = CallCompositeStartCallOptions(participants: [])
-                callComposite.launch(remoteOptions: RemoteOptions(for: startCallOptions,
-                                                                  credential: credential,
-                                                                  displayName: getDisplayName(),
-                                                                  callKitOptions: envConfigSubject.enableCallKit
-                                                                  ? callKitOptions : nil),
-                                     localOptions: localOptions)
-            case .roomCall:
-                callComposite.launch(remoteOptions:
-                                        RemoteOptions(for:
-                                                .roomCall(roomId: link),
-                                                      credential: credential, displayName: getDisplayName()),
-                                     localOptions: localOptions)
             }
         } else {
             showError(for: DemoError.invalidToken.getErrorCode())
@@ -396,11 +375,11 @@ class CallingDemoViewController: UIViewController {
             return groupCallTextField.text ?? ""
         case .teamsMeeting:
             return teamsMeetingTextField.text ?? ""
-        case .oneToNCall:
-            // ToDo: make required changes to enable 1:N for UIKit
-            return ""
-        case .roomCall:
-            return roomCallTextField.text ?? ""
+//        case .oneToNCall:
+//            // ToDo: make required changes to enable 1:N for UIKit
+//            return ""
+//        case .roomCall:
+//            return roomCallTextField.text ?? ""
         }
     }
 
@@ -534,17 +513,17 @@ class CallingDemoViewController: UIViewController {
         case .teamsMeeting:
             groupCallTextField.isHidden = true
             teamsMeetingTextField.isHidden = false
-        case .oneToNCall:
-            // ToDo: make required changes to enable 1:N for UIKit
-            groupCallTextField.isHidden = true
-            teamsMeetingTextField.isHidden = true
-            roomCallTextField.isHidden = true
-            roomRoleTypeSegmentedControl.isHidden = true
-        case .roomCall:
-            groupCallTextField.isHidden = true
-            teamsMeetingTextField.isHidden = true
-            roomCallTextField.isHidden = false
-            roomRoleTypeSegmentedControl.isHidden = false
+//        case .oneToNCall:
+//            // ToDo: make required changes to enable 1:N for UIKit
+//            groupCallTextField.isHidden = true
+//            teamsMeetingTextField.isHidden = true
+//            roomCallTextField.isHidden = true
+//            roomRoleTypeSegmentedControl.isHidden = true
+//        case .roomCall:
+//            groupCallTextField.isHidden = true
+//            teamsMeetingTextField.isHidden = true
+//            roomCallTextField.isHidden = false
+//            roomRoleTypeSegmentedControl.isHidden = false
         }
     }
 
@@ -560,8 +539,8 @@ class CallingDemoViewController: UIViewController {
         if (selectedAcsTokenType == .token && acsTokenTextField.text!.isEmpty)
             || (selectedAcsTokenType == .tokenUrl && acsTokenUrlTextField.text!.isEmpty)
             || (selectedMeetingType == .groupCall && groupCallTextField.text!.isEmpty)
-            || (selectedMeetingType == .teamsMeeting && teamsMeetingTextField.text!.isEmpty)
-            || (selectedMeetingType == .roomCall && roomCallTextField.text!.isEmpty) {
+            || (selectedMeetingType == .teamsMeeting && teamsMeetingTextField.text!.isEmpty) {
+//            || (selectedMeetingType == .roomCall && roomCallTextField.text!.isEmpty) {
             return true
         }
 

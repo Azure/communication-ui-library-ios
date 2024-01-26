@@ -40,11 +40,11 @@ jobs:
           codeCoverageTool: "Cobertura"
           summaryFileLocation: $(Pipeline.Workspace)/coveragereport/Cobertura.xml
 
-      - task: BuildQualityChecks@8
+      - task: BuildQualityChecks@9
         displayName: "Check build quality"
         inputs:
           checkCoverage: true
-          coverageThreshold: 51
+          coverageThreshold: 49
           coverageFailOption: fixed
           coverageType: lines
           

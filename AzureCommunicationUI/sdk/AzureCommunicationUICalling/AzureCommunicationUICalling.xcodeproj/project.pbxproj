@@ -157,6 +157,8 @@
 		534B2CF42B575CFB00D52D02 /* CallCompositeAvMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B2CF32B575CFB00D52D02 /* CallCompositeAvMode.swift */; };
 		538270B22B45FFD90006AF9E /* ScreenShotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538270B12B45FFD90006AF9E /* ScreenShotHelper.swift */; };
 		53B6C33C2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B6C33B2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift */; };
+		53B6C33E2B61C575000EFE19 /* AvModeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B6C33D2B61C575000EFE19 /* AvModeTests.swift */; };
+		53B6C3422B61C712000EFE19 /* DebugInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B6C3412B61C712000EFE19 /* DebugInfoTests.swift */; };
 		5A314059D7E61D1083A8C473 /* LocalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314A985811198B09DA2688 /* LocalVideoView.swift */; };
 		5A3140EA80ACDCB14140A060 /* CompositeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3145FC912A71B20D5ECBF6 /* CompositeViewFactory.swift */; };
 		5A3142646DD55C66CF290F7A /* LocalVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314317E4A1B700E6BE5E2E /* LocalVideoViewModel.swift */; };
@@ -521,6 +523,8 @@
 		534B2CF32B575CFB00D52D02 /* CallCompositeAvMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeAvMode.swift; sourceTree = "<group>"; };
 		538270B12B45FFD90006AF9E /* ScreenShotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenShotHelper.swift; sourceTree = "<group>"; };
 		53B6C33B2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeViewModelFactoryProtocols.swift; sourceTree = "<group>"; };
+		53B6C33D2B61C575000EFE19 /* AvModeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvModeTests.swift; sourceTree = "<group>"; };
+		53B6C3412B61C712000EFE19 /* DebugInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugInfoTests.swift; sourceTree = "<group>"; };
 		5A3141390FEFB58AD2A2E22F /* LocalVideoViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoViewModelTests.swift; sourceTree = "<group>"; };
 		5A314317E4A1B700E6BE5E2E /* LocalVideoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoViewModel.swift; sourceTree = "<group>"; };
 		5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACSCameraFacingExtension.swift; sourceTree = "<group>"; };
@@ -1158,6 +1162,8 @@
 			children = (
 				1F48B40227496E2800B6E5F9 /* DiagnosticConfigTests.swift */,
 				500C0F202847E30E000BA2DC /* RemoteOptionsTests.swift */,
+				53B6C33D2B61C575000EFE19 /* AvModeTests.swift */,
+				53B6C3412B61C712000EFE19 /* DebugInfoTests.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1841,6 +1847,7 @@
 				1F09A11426BA484000BACED7 /* CallingViewModelTests.swift in Sources */,
 				05317E3729B7D6B500149F57 /* CallHistoryServiceMocking.swift in Sources */,
 				FA62233727DAD9AF008B5466 /* AccessibilityProviderMocking.swift in Sources */,
+				53B6C3422B61C712000EFE19 /* DebugInfoTests.swift in Sources */,
 				1B9668AF2852A114002F5783 /* OnHoldOverlayViewModelMocking.swift in Sources */,
 				FAC1FECC27C98FC200D95845 /* BannerViewModelMocking.swift in Sources */,
 				50E2D6A926FA52A3006B0EF4 /* ParticipantsListViewModelTests.swift in Sources */,
@@ -1851,6 +1858,7 @@
 				50FA4616268D13E9001844AC /* LocalUserReducerTests.swift in Sources */,
 				1B3A8EED285129CC002ED55A /* AudioSessionReducerTests.swift in Sources */,
 				1F4A24BC26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift in Sources */,
+				53B6C33E2B61C575000EFE19 /* AvModeTests.swift in Sources */,
 				503300FE27079FC900289BB5 /* BannerTextViewModelTests.swift in Sources */,
 				058D6A232AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift in Sources */,
 				1F8E0B74268697B700DDD18E /* CallingMiddlewareHandlerMocking.swift in Sources */,
