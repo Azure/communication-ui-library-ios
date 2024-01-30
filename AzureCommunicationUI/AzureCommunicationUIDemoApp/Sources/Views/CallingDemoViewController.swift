@@ -26,6 +26,8 @@ class CallingDemoViewController: UIViewController {
     }
     var callingViewModel: CallingDemoViewModel
 
+    private var callComposite: CallComposite?
+
     private var selectedAcsTokenType: ACSTokenType = .token
     private var acsTokenUrlTextField: UITextField!
     private var acsTokenTextField: UITextField!
@@ -36,6 +38,7 @@ class CallingDemoViewController: UIViewController {
     private var settingsButton: UIButton!
     private var showCallHistoryButton: UIButton!
     private var startExperienceButton: UIButton!
+    private var showExperienceButton: UIButton!
     private var acsTokenTypeSegmentedControl: UISegmentedControl!
     private var meetingTypeSegmentedControl: UISegmentedControl!
     private var stackView: UIStackView!
@@ -207,7 +210,9 @@ class CallingDemoViewController: UIViewController {
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig,
             setupScreenOrientation: setupViewOrientation,
-            callingScreenOrientation: callingViewOrientation)
+            callingScreenOrientation: callingViewOrientation,
+            enableMultitasking: envConfigSubject.enableMultitasking,
+            enableSystemPiPWhenMultitasking: envConfigSubject.enablePipWhenMultitasking)
         #if DEBUG
         let callComposite = envConfigSubject.useMockCallingSDKHandler ?
             CallComposite(withOptions: callCompositeOptions,
@@ -270,6 +275,8 @@ class CallingDemoViewController: UIViewController {
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
                                         skipSetupScreen: envConfigSubject.skipSetupScreen)
+
+        self.callComposite = callComposite
 
         if let credential = try? await getTokenCredential() {
             switch selectedMeetingType {
@@ -434,6 +441,10 @@ class CallingDemoViewController: UIViewController {
         }
     }
 
+    @objc func onShowExperienceBtnPressed() {
+        self.callComposite?.displayCallCompositeIfWasHidden()
+    }
+
     private func updateAcsTokenTypeFields() {
         switch selectedAcsTokenType {
         case .tokenUrl:
@@ -592,6 +603,22 @@ class CallingDemoViewController: UIViewController {
 
         startExperienceButton.accessibilityLabel = AccessibilityId.startExperienceAccessibilityID.rawValue
 
+        showExperienceButton = UIButton()
+        showExperienceButton.backgroundColor = .systemBlue
+        showExperienceButton.setTitleColor(UIColor.white, for: .normal)
+        showExperienceButton.setTitleColor(UIColor.systemGray6, for: .disabled)
+        showExperienceButton.contentEdgeInsets = UIEdgeInsets.init(top: LayoutConstants.buttonVerticalInset,
+                                                                   left: LayoutConstants.buttonHorizontalInset,
+                                                                   bottom: LayoutConstants.buttonVerticalInset,
+                                                                   right: LayoutConstants.buttonHorizontalInset)
+        showExperienceButton.layer.cornerRadius = 8
+        showExperienceButton.setTitle("Show", for: .normal)
+        showExperienceButton.sizeToFit()
+        showExperienceButton.translatesAutoresizingMaskIntoConstraints = false
+        showExperienceButton.addTarget(self, action: #selector(onShowExperienceBtnPressed), for: .touchUpInside)
+
+        showExperienceButton.accessibilityLabel = AccessibilityId.startExperienceAccessibilityID.rawValue
+
         callStateLabel = UILabel()
         callStateLabel.text = "State"
         callStateLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -651,6 +678,22 @@ class CallingDemoViewController: UIViewController {
         startButtonHStack.distribution = .fill
         startButtonHStack.translatesAutoresizingMaskIntoConstraints = false
 
+        let showButtonHSpacer1 = UIView()
+        showButtonHSpacer1.translatesAutoresizingMaskIntoConstraints = false
+        showButtonHSpacer1.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let showButtonHSpacer2 = UIView()
+        showButtonHSpacer2.translatesAutoresizingMaskIntoConstraints = false
+        showButtonHSpacer2.setContentHuggingPriority(.defaultLow, for: .horizontal)
+
+        let showButtonHStack = UIStackView(arrangedSubviews: [showButtonHSpacer1,
+                                                               showExperienceButton,
+                                                               showButtonHSpacer2])
+        showButtonHStack.axis = .horizontal
+        showButtonHStack.alignment = .fill
+        showButtonHStack.distribution = .fill
+        showButtonHStack.translatesAutoresizingMaskIntoConstraints = false
+
         let spaceView1 = UIView()
         spaceView1.translatesAutoresizingMaskIntoConstraints = false
         spaceView1.heightAnchor.constraint(equalToConstant: 0).isActive = true
@@ -664,7 +707,8 @@ class CallingDemoViewController: UIViewController {
                                                    teamsMeetingTextField,
                                                    settingsButtonHStack,
                                                    showHistoryButtonHStack,
-                                                   startButtonHStack])
+                                                   startButtonHStack,
+                                                   showButtonHStack])
         stackView.spacing = LayoutConstants.stackViewSpacingPortrait
         stackView.axis = .vertical
         stackView.alignment = .fill
@@ -697,6 +741,7 @@ class CallingDemoViewController: UIViewController {
         settingButtonHSpacer2.widthAnchor.constraint(equalTo: settingButtonHSpacer1.widthAnchor).isActive = true
         showHistoryButtonHSpacer2.widthAnchor.constraint(equalTo: showHistoryButtonHSpacer1.widthAnchor).isActive = true
         startButtonHSpacer2.widthAnchor.constraint(equalTo: startButtonHSpacer1.widthAnchor).isActive = true
+        showButtonHSpacer2.widthAnchor.constraint(equalTo: showButtonHSpacer1.widthAnchor).isActive = true
 
         updateAcsTokenTypeFields()
         updateMeetingTypeFields()

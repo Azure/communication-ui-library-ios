@@ -62,6 +62,8 @@ class EnvConfigSubject: ObservableObject {
     @Published var useCustomRemoteParticipantViewData: Bool = false
     @Published var useMockCallingSDKHandler: Bool = false
     @Published var useRelaunchOnDismissedToggle: Bool = false
+    @Published var enableMultitasking: Bool = false
+    @Published var enablePipWhenMultitasking: Bool = false
     @Published var useExpiredToken: Bool = false
     @Published var primaryColor: Color = .blue
     @Published var tint10: Color = .blue

@@ -221,8 +221,8 @@ extension CallingDemoView {
             localization: localizationConfig,
             setupScreenOrientation: setupViewOrientation,
             callingScreenOrientation: callingViewOrientation,
-            enableMultitasking: true,
-            enableSystemPiPWhenMultitasking: true)
+            enableMultitasking: envConfigSubject.enableMultitasking,
+            enableSystemPiPWhenMultitasking: envConfigSubject.enablePipWhenMultitasking)
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         let callComposite = useMockCallingSDKHandler ?

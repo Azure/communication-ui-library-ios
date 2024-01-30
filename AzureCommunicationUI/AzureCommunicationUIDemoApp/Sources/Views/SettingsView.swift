@@ -48,6 +48,7 @@ struct SettingsView: View {
                     navigationSettings
                     remoteParticipantsAvatarsSettings
                     themeSettings
+                    multitaskingSettings
                 }
                 exitCompositeSettings
             }
@@ -279,6 +280,13 @@ struct SettingsView: View {
                     Text(themeMode.rawValue)
                 }
             }.pickerStyle(.segmented)
+        }
+    }
+
+    var multitaskingSettings: some View {
+        Section(header: Text("Multitasking")) {
+            Toggle("Enable multitasking", isOn: $envConfigSubject.enableMultitasking)
+            Toggle("Enable Pip", isOn: $envConfigSubject.enablePipWhenMultitasking)
         }
     }
 }
