@@ -363,6 +363,10 @@ extension CallingDemoView {
                     callComposite: composite)
         }
 
+        let onCallAdded: (String) -> Void = { [] callId in
+            print("::::CallingDemoView ::::onCallAdded \(callId)")
+        }
+
         let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
             // Known issue: every time on exit register for push to receive again
             Task {
@@ -381,6 +385,7 @@ extension CallingDemoView {
         }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
+        callComposite.events.onCallAdded = onCallAdded
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
         callComposite.events.onDismissed = onDismissedHandler
         callComposite.events.onIncomingCall = onInomingCall
@@ -647,7 +652,8 @@ extension CallingDemoView {
         print("::::CallingDemoView::getEventsHandler::onCallStateChanged "
               + "\(callState.requestString) " +
               "\(String(describing: callState.callEndReasonCodeInt)) "
-              + "\(String(describing: callState.callEndReasonSubCodeInt)) ")
+              + "\(String(describing: callState.callEndReasonSubCodeInt)) "
+              + "\(callState.callId)")
         self.callState = callState.requestString
     }
 

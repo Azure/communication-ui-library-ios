@@ -42,6 +42,7 @@ class CallStateManager: CallStateManagerProtocol {
         }
         onCallStateChanged(CallState(rawValue: callingState.status.toCallCompositeCallState().requestString,
                                      callEndReasonCode: callingState.callEndReasonCode,
-                                     callEndReasonSubCode: callingState.callEndReasonSubCode))
+                                     callEndReasonSubCode: callingState.callEndReasonSubCode,
+                                     callId: callingState.callId ?? ""))
     }
 }

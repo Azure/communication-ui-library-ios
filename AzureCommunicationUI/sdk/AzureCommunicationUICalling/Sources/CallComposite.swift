@@ -30,6 +30,8 @@ public class CallComposite {
         public var onIncomingCall: ((CallCompositeIncomingCallInfo) -> Void)?
         /// Closure to incoming call ended.
         public var onIncomingCallEnded: ((CallCompositeIncomingCallEndedInfo) -> Void)?
+        /// Closure to call added.
+        public var onCallAdded: ((String) -> Void)?
         /// Closure to execure when CallComposite is displayed in Picture-In-Picture.
         public var onPictureInPictureChanged: ((_ isInPictureInPicture: Bool) -> Void)?
     }
@@ -250,8 +252,17 @@ public class CallComposite {
         store.dispatch(action: .callingAction(.setupCall))
     }
 
+    private func notifyCallAddedEvent(callId: String) {
+        logger.debug("notifyCallAddedEvent \(callId)")
+        guard let onCallAddedEvent = events.onCallAdded else {
+            return
+        }
+        onCallAddedEvent(callId)
+    }
+
     private func onCallsAdded(callId: String) {
         logger.debug("onCallsAdded \(callId)")
+        notifyCallAddedEvent(callId: callId)
         /// For incoming call to present the UI should not be active
         if isCompositePresentable() {
             /// callkit initialization is must for 1 to 1 calling
