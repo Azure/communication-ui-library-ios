@@ -76,7 +76,7 @@ struct InfoHeaderView: View {
         .padding(EdgeInsets(top: 0,
                             leading: Constants.hStackHorizontalPadding / 2.0,
                             bottom: 0,
-                            trailing: Constants.hStackHorizontalPadding / 2.0))
+                            trailing: 0))
         .background(Color(StyleProvider.color.surfaceDarkColor))
         .clipShape(RoundedRectangle(cornerRadius: Constants.shapeCornerRadius))
     }

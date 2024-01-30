@@ -28,8 +28,7 @@ class ControlBarViewModelMocking: ControlBarViewModel {
     override func update(localUserState: LocalUserState,
                          permissionState: PermissionState,
                          callingState: CallingState,
-                         defaultUserState: DefaultUserState,
-                         pipState: VisibilityState) {
-        updateState?(localUserState, permissionState, pipState)
+                         visibilityState: VisibilityState) {
+        updateState?(localUserState, permissionState, visibilityState)
     }
 }

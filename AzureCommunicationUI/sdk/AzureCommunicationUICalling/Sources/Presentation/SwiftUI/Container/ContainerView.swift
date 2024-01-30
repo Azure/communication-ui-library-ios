@@ -11,24 +11,37 @@ struct ContainerView: View {
 
     let logger: Logger
     let viewFactory: CompositeViewFactoryProtocol
-    let setupViewOrientationMask: UIInterfaceOrientationMask =
-        UIDevice.current.userInterfaceIdiom == .phone ? .portrait : .allButUpsideDown
+    let setupViewDefaultOrientation: UIInterfaceOrientationMask =
+    UIDevice.current.userInterfaceIdiom == .phone ? .portrait : .allButUpsideDown
+    let setupViewOrientationMask: UIInterfaceOrientationMask?
+    let callingViewOrientationMask: UIInterfaceOrientationMask?
     let isRightToLeft: Bool
+    var isCallingScreenLocked: Bool {
+        return !(callingViewOrientationMask  == .allButUpsideDown || callingViewOrientationMask == nil)
+    }
 
     var body: some View {
         Group {
-            switch router.currentView {
-            case .setupView:
-                setupView.supportedOrientations(setupViewOrientationMask)
-                    .accessibilityElement(children: .contain)
-                    .accessibilityAddTraits(.isModal)
-            case .callingView:
+            contentView
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityAddTraits(.isModal)
+        .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
+    }
+
+    @ViewBuilder
+    private var contentView: some View {
+        switch router.currentView {
+        case .setupView:
+            setupView.supportedOrientations(setupViewOrientationMask ?? setupViewDefaultOrientation)
+        case .callingView:
+            if isCallingScreenLocked {
                 callingView.proximitySensorEnabled(true)
-                    .accessibilityElement(children: .contain)
-                    .accessibilityAddTraits(.isModal)
+                    .supportedOrientations(callingViewOrientationMask ?? .portrait)
+            } else {
+            callingView.proximitySensorEnabled(true)
             }
         }
-        .environment(\.layoutDirection, isRightToLeft ? .rightToLeft : .leftToRight)
     }
 
     var setupView: SetupView {

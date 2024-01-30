@@ -18,6 +18,7 @@ enum CompositeIcon: String {
     case speakerBluetooth = "ic_fluent_speaker_bluetooth_24_regular"
     case videoOn = "ic_fluent_video_24_filled"
     case videoOff = "ic_fluent_video_off_24_filled"
+    case videoOffRegular = "ic_fluent_video_off_24_regular"
     case warning = "ic_fluent_warning_24_filled"
     case endCall = "ic_fluent_call_end_24_filled"
     case endCallRegular = "ic_fluent_call_end_24_regular"
@@ -28,6 +29,9 @@ enum CompositeIcon: String {
     case checkmark = "ic_fluent_checkmark_24_regular"
     case share = "ic_fluent_share_ios_24_regular"
     case more = "ic_fluent_more_horizontal_24_filled"
+    case wifiWarning = "ic_fluent_wifi_warning_24_filled"
+    case speakerMute = "ic_fluent_speaker_mute_24_regular"
+    case micProhibited = "ic_fluent_mic_prohibited_24_regular"
 }
 
 struct IconProvider {

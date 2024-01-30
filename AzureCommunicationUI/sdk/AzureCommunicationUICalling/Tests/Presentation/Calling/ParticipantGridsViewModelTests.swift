@@ -149,6 +149,24 @@ class ParticipantGridViewModelTests: XCTestCase {
         XCTAssertEqual(sut.displayedParticipantInfoModelArr.first!.screenShareVideoStreamModel?.videoStreamIdentifier, expectedVideoStreamId)
     }
 
+    func test_participantGridsViewModel_updateParticipantsState_when_someParticipantsInLobby_then_lobbyNotDisconnecteParticipantsNotDisplaydInGrid() {
+        let uuid1 = UUID().uuidString
+        let uuid2 = UUID().uuidString
+        let uuid3 = UUID().uuidString
+
+        let infoModel1 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid1, screenShareStreamId: nil)
+        let infoModel2 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid2, screenShareStreamId: nil, status: .inLobby)
+        let infoModel3 = ParticipantInfoModelBuilder.get(participantIdentifier: uuid3, screenShareStreamId: nil, status: .disconnected)
+
+        let state = RemoteParticipantsState(participantInfoList: [infoModel1, infoModel2, infoModel3],
+                                            lastUpdateTimeStamp: Date())
+        let sut = makeSUT()
+        sut.update(callingState: CallingState(),
+                   remoteParticipantsState: state)
+        XCTAssertEqual(sut.displayedParticipantInfoModelArr.count, 1)
+        XCTAssertEqual(sut.displayedParticipantInfoModelArr.first!.userIdentifier, uuid1)
+    }
+
     // MARK: Updating participants list
     func test_participantGridsViewModel_updateParticipantsState_when_participantViewModelStateChanges_then_participantViewModelUpdated() {
         let date = Calendar.current.date(

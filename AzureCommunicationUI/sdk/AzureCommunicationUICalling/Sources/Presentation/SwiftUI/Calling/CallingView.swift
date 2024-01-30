@@ -17,10 +17,14 @@ struct CallingView: View {
         static let horizontalPadding: CGFloat = 8
     }
 
+    enum DiagnosticToastInfoConstants {
+        static let bottomPaddingPortrait: CGFloat = 5
+        static let bottomPaddingLandscape: CGFloat = 16
+    }
+
     @ObservedObject var viewModel: CallingViewModel
     let avatarManager: AvatarViewManagerProtocol
     let viewManager: VideoViewManager
-    let leaveCallConfirmationListSourceView = UIView()
 
     @Environment(\.horizontalSizeClass) var widthSizeClass: UserInterfaceSizeClass?
     @Environment(\.verticalSizeClass) var heightSizeClass: UserInterfaceSizeClass?
@@ -49,6 +53,8 @@ struct CallingView: View {
         .edgesIgnoringSafeArea(safeAreaIgnoreArea)
         .onRotate { newOrientation in
             updateChildViewIfNeededWith(newOrientation: newOrientation)
+        }.onAppear {
+            resetOrientation()
         }
     }
 
@@ -85,12 +91,16 @@ struct CallingView: View {
                         .accessibilityElement(children: .contain)
                         .accessibilityIdentifier(AccessibilityIdentifier.draggablePipViewAccessibilityID.rawValue)
                     }
+
                     topAlertAreaView
                         .accessibilityElement(children: .contain)
                         .accessibilitySortPriority(1)
                         .accessibilityHidden(viewModel.lobbyOverlayViewModel.isDisplayed
                                              || viewModel.onHoldOverlayViewModel.isDisplayed
                                              || viewModel.loadingOverlayViewModel.isDisplayed)
+
+                    bottomToastDiagnosticsView
+                        .accessibilityElement(children: .contain)
                 }
                 .contentShape(Rectangle())
                 .animation(.linear(duration: 0.167))
@@ -133,11 +143,21 @@ struct CallingView: View {
                         EmptyView()
                     }
                     infoHeaderView
-                        .frame(width: infoHeaderViewWidth, height: InfoHeaderViewConstants.height, alignment: .leading)
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
                         .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
                     Spacer()
                 }
-                Spacer()
+                HStack {
+                    if isIpad {
+                        Spacer()
+                    } else {
+                        EmptyView()
+                    }
+                    topMessageBarDiagnosticsView
+                        .frame(width: infoHeaderViewWidth, alignment: .leading)
+                        .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
+                }
             }
         }
     }
@@ -193,6 +213,37 @@ struct CallingView: View {
                 .accessibilityAddTraits(.isModal)
         }
     }
+
+    var bottomToastDiagnosticsView: some View {
+        VStack {
+            Spacer()
+            if let currentBottomToastViewModel = viewModel.currentBottomToastDiagnostic {
+                BottomToastDiagnosticView(viewModel: currentBottomToastViewModel)
+                    .padding(
+                        EdgeInsets(top: 0,
+                                   leading: 0,
+                                   bottom:
+                                     getSizeClass() == .iphoneLandscapeScreenSize
+                                        ? DiagnosticToastInfoConstants.bottomPaddingLandscape
+                                        : DiagnosticToastInfoConstants.bottomPaddingPortrait,
+                                   trailing: 0)
+                    )
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isStaticText)
+            }
+        }.frame(maxWidth: .infinity, alignment: .center)
+    }
+
+    var topMessageBarDiagnosticsView: some View {
+        VStack {
+            ForEach(viewModel.callDiagnosticsViewModel.messageBarStack) { diagnosticMessageBarViewModel in
+                MessageBarDiagnosticView(viewModel: diagnosticMessageBarViewModel)
+                    .accessibilityElement(children: .contain)
+                    .accessibilityAddTraits(.isStaticText)
+            }
+            Spacer()
+        }
+    }
 }
 
 extension CallingView {
@@ -228,5 +279,10 @@ extension CallingView {
                 UIViewController.attemptRotationToDeviceOrientation()
             }
         }
+    }
+
+    private func resetOrientation() {
+        UIDevice.current.setValue(UIDevice.current.orientation.rawValue, forKey: "orientation")
+        UIViewController.attemptRotationToDeviceOrientation()
     }
 }

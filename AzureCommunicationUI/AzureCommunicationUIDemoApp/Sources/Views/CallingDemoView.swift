@@ -15,8 +15,10 @@ struct CallingDemoView: View {
     @State var isAlertDisplayed: Bool = false
     @State var isSettingsDisplayed: Bool = false
     @State var isStartExperienceLoading: Bool = false
+    @State var exitCompositeExecuted: Bool = false
     @State var alertTitle: String = ""
     @State var alertMessage: String = ""
+    @State var callState: String = ""
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
 
@@ -32,10 +34,13 @@ struct CallingDemoView: View {
             acsTokenSelector
             displayNameTextField
             meetingSelector
-            settingButton
-            showCallHistoryButton
-            startExperienceButton
-            showExperienceButton
+            Group {
+                settingButton
+                showCallHistoryButton
+                startExperienceButton
+                showExperienceButton
+                Text(callState)
+            }
             Spacer()
         }
         .padding()
@@ -178,6 +183,20 @@ extension CallingDemoView {
         callingViewModel.callComposite?.displayCallCompositeIfWasHidden()
     }
 
+    fileprivate func relaunchComposite() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            Task { @MainActor in
+                if getAudioPermissionStatus() == .denied && envConfigSubject.skipSetupScreen {
+                    showError(for: CallCompositeErrorCode.microphonePermissionNotGranted)
+                    isStartExperienceLoading = false
+                    return
+                }
+                await startCallComposite()
+                isStartExperienceLoading = false
+            }
+        }
+    }
+
     func startCallComposite() async {
         let link = getMeetingLink()
 
@@ -193,11 +212,15 @@ extension CallingDemoView {
                 layoutDirection: layoutDirection)
         }
 
+        let setupViewOrientation = envConfigSubject.setupViewOrientation
+        let callingViewOrientation = envConfigSubject.callingViewOrientation
         let callCompositeOptions = CallCompositeOptions(
             theme: envConfigSubject.useCustomColors
             ? CustomColorTheming(envConfigSubject: envConfigSubject)
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig,
+            setupScreenOrientation: setupViewOrientation,
+            callingScreenOrientation: callingViewOrientation,
             enableMultitasking: true,
             enableSystemPiPWhenMultitasking: true)
         #if DEBUG
@@ -224,12 +247,36 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
+
         let onPipChangedHandler: (Bool) -> Void = { isInPictureInPicture in
             print("::::CallingDemoView:onPipChangedHandler: ", isInPictureInPicture)
         }
 
+        let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
+            guard let composite = callComposite else {
+                return
+            }
+            onCallStateChanged(callStateEvent,
+                    callComposite: composite)
+        }
+        let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
+            if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
+                relaunchComposite()
+            }
+        }
+        exitCompositeExecuted = false
+        if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
+            DispatchQueue.main.asyncAfter(deadline: .now() +
+                                          Float64(envConfigSubject.exitCompositeAfterDuration)!
+            ) { [weak callComposite] in
+                exitCompositeExecuted = true
+                callComposite?.dismiss()
+            }
+        }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
+        callComposite.events.onCallStateChanged = onCallStateChangedHandler
+        callComposite.events.onDismissed = onDismissedHandler
         callComposite.events.onPictureInPictureChanged = onPipChangedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
@@ -335,6 +382,11 @@ extension CallingDemoView {
         print("::::CallingDemoView error.code \(error.code)")
         callingViewModel.callHistory.last?.callIds.forEach { print("::::CallingDemoView call id \($0)") }
         showError(for: error.code)
+    }
+
+    private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
+        print("::::CallingDemoView::getEventsHandler::onCallStateChanged \(callState.requestString)")
+        self.callState = callState.requestString
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {

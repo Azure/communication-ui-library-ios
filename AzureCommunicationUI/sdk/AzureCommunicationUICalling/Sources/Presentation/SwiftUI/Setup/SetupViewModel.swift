@@ -105,19 +105,10 @@ class SetupViewModel: ObservableObject {
         networkManager.stopMonitor()
     }
 
-    func setupAudioPermissions() {
-        if store.state.permissionState.audioPermission == .notAsked {
-            store.dispatch(action: .permissionAction(.audioPermissionRequested))
-        }
-    }
-
     func dismissSetupScreen() {
         if store.state.callingState.operationStatus == .skipSetupRequested {
             store.dispatch(action: .callingAction(.dismissSetup))
         }
-    }
-    func setupCall() {
-        store.dispatch(action: .callingAction(.setupCall))
     }
 
     func joinCallButtonTapped() {
@@ -150,14 +141,12 @@ class SetupViewModel: ObservableObject {
         let localUserState = state.localUserState
         let permissionState = state.permissionState
         let callingState = state.callingState
-        let defaultUserState = state.defaultUserState
         previewAreaViewModel.update(localUserState: localUserState,
                                     permissionState: permissionState,
                                     pipState: state.visibilityState)
         setupControlBarViewModel.update(localUserState: localUserState,
                                         permissionState: permissionState,
-                                        callingState: callingState,
-                                        defaultUserState: defaultUserState)
+                                        callingState: callingState)
         joinCallButtonViewModel.update(isDisabled: permissionState.audioPermission == .denied)
         errorInfoViewModel.update(errorState: state.errorState)
     }
@@ -168,7 +157,7 @@ class SetupViewModel: ObservableObject {
     }
 
     private func handleOffline() {
-        store.dispatch(action: .errorAction(.statusErrorAndCallReset(internalError: .connectionFailed,
+        store.dispatch(action: .errorAction(.statusErrorAndCallReset(internalError: .callJoinConnectionFailed,
                                                                      error: nil)))
         // only show banner again when user taps on button explicitly
         // banner would not reappear when other events^1 send identical error state again

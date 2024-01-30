@@ -106,8 +106,14 @@ class InfoHeaderViewModel: ObservableObject {
         if isVoiceOverEnabled && newDisplayInfoHeaderValue != shouldDisplayInfoHeaderValue {
             updateInfoHeaderAvailability()
         }
-        if participantsCount != remoteParticipantsState.participantInfoList.count {
-            participantsCount = remoteParticipantsState.participantInfoList.count
+
+        let updatedRemoteparticipantCount = remoteParticipantsState.participantInfoList
+            .filter({ participantInfoModel in
+                participantInfoModel.status != .inLobby && participantInfoModel.status != .disconnected
+            })
+            .count
+        if participantsCount != updatedRemoteparticipantCount {
+            participantsCount = updatedRemoteparticipantCount
             updateInfoLabel()
         }
         participantsListViewModel.update(localUserState: localUserState,

@@ -50,6 +50,7 @@ extension Reducer where State == CallingState,
                 .localUserAction(_),
                 .permissionAction(_),
                 .remoteParticipantsAction(_),
+                .callDiagnosticAction(_),
                 .compositeExitAction,
                 .callingViewLaunched,
                 .visibilityAction(_):
