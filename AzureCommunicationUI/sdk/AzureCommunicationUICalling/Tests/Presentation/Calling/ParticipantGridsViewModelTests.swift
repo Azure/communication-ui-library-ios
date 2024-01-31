@@ -162,7 +162,9 @@ class ParticipantGridViewModelTests: XCTestCase {
                                             lastUpdateTimeStamp: Date())
         let sut = makeSUT()
         sut.update(callingState: CallingState(),
-                   remoteParticipantsState: state)
+                   remoteParticipantsState: state,
+                   visibilityState: VisibilityState(currentStatus: .visible),
+                   lifeCycleState: LifeCycleState())
         XCTAssertEqual(sut.displayedParticipantInfoModelArr.count, 1)
         XCTAssertEqual(sut.displayedParticipantInfoModelArr.first!.userIdentifier, uuid1)
     }

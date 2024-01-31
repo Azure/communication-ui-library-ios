@@ -442,7 +442,7 @@ class CallingDemoViewController: UIViewController {
     }
 
     @objc func onShowExperienceBtnPressed() {
-        self.callComposite?.displayCallCompositeIfWasHidden()
+        self.callComposite?.isHidden = false
     }
 
     private func updateAcsTokenTypeFields() {

@@ -180,7 +180,7 @@ struct CallingDemoView: View {
 
 extension CallingDemoView {
     func showCallComposite() {
-        callingViewModel.callComposite?.displayCallCompositeIfWasHidden()
+        callingViewModel.callComposite?.isHidden = false
     }
 
     fileprivate func relaunchComposite() {

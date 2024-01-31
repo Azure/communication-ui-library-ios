@@ -177,7 +177,7 @@ public class CallComposite {
     }
 
     /// Display Call Composite if it was hidden by user going Back in navigation while on the call.
-    public func displayCallCompositeIfWasHidden() {
+    private func displayCallCompositeIfWasHidden() {
         guard let store = self.store, let viewFactory = self.viewFactory else {
             logger.error("CallComposite was not launched yet. launch() method has to be called first.")
             return
@@ -197,7 +197,25 @@ public class CallComposite {
         self.pipManager?.reset()
     }
 
-    public func hide() {
+    /// Controls if CallComposite UI is hidder. If CallComosite is created with enableSystemPiPWhenMultitasking
+    /// set to true, then setting isHidden to true will start syspem Picture-in-Picture view.
+    public var isHidden: Bool {
+        get {
+            guard let store = self.store else {
+                return true
+            }
+            return store.state.visibilityState.currentStatus != .visible
+        }
+        set(isHidden) {
+            if isHidden {
+                hide()
+            } else {
+                displayCallCompositeIfWasHidden()
+            }
+        }
+    }
+
+    private func hide() {
         self.viewController?.dismissSelf()
         self.viewController = nil
         if self.enableSystemPiPWhenMultitasking && store?.state.navigationState.status == .inCall {
