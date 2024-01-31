@@ -110,6 +110,6 @@ class LobbyWaitingHeaderViewModel: ObservableObject {
 
         return participantRole == .organizer
                 || participantRole == .presenter
-                || participantRole == .coorganizer
+                || participantRole == .coOrganizer
     }
 }

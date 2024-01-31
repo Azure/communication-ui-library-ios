@@ -142,7 +142,7 @@ class LobbyWaitingHeaderViewModelTests: XCTestCase {
 
         XCTAssertTrue(sut.isDisplayed)
 
-        sut.update(localUserState: LocalUserState(participantRole: .coorganizer),
+        sut.update(localUserState: LocalUserState(participantRole: .coOrganizer),
                    remoteParticipantsState: remoteParticipantsState,
                    callingState: CallingState())
 

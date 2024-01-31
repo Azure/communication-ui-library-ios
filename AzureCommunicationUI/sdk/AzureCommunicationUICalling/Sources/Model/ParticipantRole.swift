@@ -12,7 +12,7 @@ enum ParticipantRole: Int {
     case consumer
     case presenter
     case organizer
-    case coorganizer
+    case coOrganizer
 }
 
 extension AzureCommunicationCalling.CallParticipantRole {
@@ -28,8 +28,8 @@ extension AzureCommunicationCalling.CallParticipantRole {
             return .presenter
         case .organizer:
             return .organizer
-        case .coorganizer:
-            return .coorganizer
+        case .coOrganizer:
+            return .coOrganizer
         }
     }
 }

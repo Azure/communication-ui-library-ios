@@ -108,6 +108,6 @@ class ParticipantsListViewModel: ObservableObject {
         return participantRole == nil
             || !(participantRole == .organizer
                  || participantRole == .presenter
-                 || participantRole == .coorganizer)
+                 || participantRole == .coOrganizer)
     }
 }
