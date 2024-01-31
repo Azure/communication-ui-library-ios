@@ -127,3 +127,22 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="通話へのアクセスが拒否されました。";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="ビデオの切り替え中にエラーが発生しました";
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="通話に参加できません。ネットワーク接続を確認してください。";
+
+/* Call Diagnostics */
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="ミュートになっています";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="ネットワークの品質が低くなっています";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="ネットワークが失われました";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="再接続中...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="カメラを起動できません";
+
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="スピーカーが見つかりません。";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="マイクが見つかりません。";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="マイクが期待どおりに動作していません。";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="スピーカーが期待どおりに動作していません。";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="スピーカーがミュートになっています。";
+
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ にはアクセス許可が必要です";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ カメラの使用は許可されていません。これは後で設定で変更できます。今すぐ変更すると、通話が切断されます。";
+
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="通話診断を閉じる";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="この通話診断バナーを閉じます";

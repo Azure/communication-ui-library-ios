@@ -384,10 +384,12 @@ extension CallingSDKWrapper {
         let recordingCallFeature = call.feature(Features.recording)
         let transcriptionCallFeature = call.feature(Features.transcription)
         let dominantSpeakersFeature = call.feature(Features.dominantSpeakers)
+        let localUserDiagnosticsFeature = call.feature(Features.localUserDiagnostics)
         if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
             callingEventsHandler.assign(recordingCallFeature)
             callingEventsHandler.assign(transcriptionCallFeature)
             callingEventsHandler.assign(dominantSpeakersFeature)
+            callingEventsHandler.assign(localUserDiagnosticsFeature)
         }
     }
 

@@ -127,3 +127,22 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Se le denegó el acceso a la llamada.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Error al alternar el vídeo";
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="No se puede unir a la llamada. Comprueba la conexión de red.";
+
+/* Call Diagnostics */
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="Tu voz está silenciada";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="La calidad de la red es baja";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Se perdió la red";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Reconectando...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="No se puede iniciar la cámara";
+
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="No se puede encontrar el altavoz.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="No se puede encontrar el micrófono.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="El micrófono no funciona según lo esperado.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="El altavoz no funciona según lo esperado.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="El altavoz está silenciado.";
+
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ necesita permiso";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ no puede usar la cámara. Puede cambiar esto en la configuración más tarde. Si lo cambias ahora, se anulará la llamada.";
+
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Descartar diagnóstico de llamadas";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Descarta este banner de diagnóstico de llamadas";

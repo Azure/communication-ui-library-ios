@@ -127,3 +127,22 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="Sinulta evättiin pääsy puheluun.";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="Virhe videon käyttöönotossa";
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="Puheluun liittyminen ei onnistu. Tarkista verkkoyhteys.";
+
+/* Call Diagnostics */
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="Mikrofonisi on mykistetty";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="Verkkoyhteyden laatu on heikko.";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="Verkkoyhteys katkesi";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="Yhdistetään uudelleen...";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="Kameraa ei voi käynnistää";
+
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="Kaiutinta ei löydy.";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="Mikrofonia ei löydy.";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="Mikrofoni ei toimi odotetulla tavalla.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="Kaiutin ei toimi odotetulla tavalla.";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="Kaiutin on mykistetty.";
+
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ tarvitsee käyttöoikeuden";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="%@ ei saa käyttää kameraa. Voit muuttaa tämän asetuksissa myöhemmin. Jos muutat sitä nyt, puhelusi katkeaisi.";
+
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="Hylkää puheludiagnostiikka";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="Hylkää tämän puhelun diagnostiikkapalkin";

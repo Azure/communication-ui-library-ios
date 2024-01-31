@@ -67,11 +67,6 @@ class LoadingOverlayViewModel: OverlayViewModelProtocol {
                 internalError: .callJoinFailedByMicPermission, error: nil)))
         }
     }
-    func setupAudioPermissions() {
-        if audioPermission == .notAsked {
-            store.dispatch(action: .permissionAction(.audioPermissionRequested))
-        }
-    }
     func handleOffline() {
         guard networkManager.isConnected else {
             if operationStatus == .skipSetupRequested {

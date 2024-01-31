@@ -127,3 +127,22 @@
 "AzureCommunicationUICalling.SnackBar.Text.ErrorCallDenied"="你被拒绝接听电话。";
 "AzureCommunicationUICalling.SnackBar.Text.CameraOnFailed"="切换视频时出错";
 "AzureCommunicationUICalling.SnackBar.Text.ConnectionError"="无法加入呼叫。请检查网络连接。";
+
+/* Call Diagnostics */
+"AzureCommunicationUICalling.Diagnostics.Text.YouAreMuted"="你已静音";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkQualityLow"="网络质量低";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkLost"="网络已丢失";
+"AzureCommunicationUICalling.Diagnostics.Text.NetworkReconnect"="正在重新连接…";
+"AzureCommunicationUICalling.Diagnostics.Text.CameraNotStarted"="无法启动摄像头";
+
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateSpeaker"="找不到扬声器。";
+"AzureCommunicationUICalling.Diagnostics.Text.UnableToLocateMicrophone"="找不到麦克风。";
+"AzureCommunicationUICalling.Diagnostics.Text.MicrophoneNotWorking"="麦克风未按预期工作。";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerNotWorking"="扬声器未按预期工作。";
+"AzureCommunicationUICalling.Diagnostics.Text.SpeakerMuted"="扬声器已静音。";
+
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionTitle"="%@ 需要权限";
+"AzureCommunicationUICalling.Diagnostics.Alert.NeedsPermissionText"="不允许 %@ 使用相机。稍后可在设置中更改此设置。如果你现在进行更改，你的通话将会被放弃。";
+
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityLabel"="消除呼叫诊断";
+"AzureCommunicationUICalling.Diagnostics.Button.Dismiss.AccessibilityHint"="关闭此通话诊断横幅";

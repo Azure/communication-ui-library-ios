@@ -244,5 +244,41 @@ class CallingSDKEventsHandlerMocking: CallingSDKEventsHandler {
             self?.participantRoleSubject.send(role)
         }
     }
+
+    func emitMediaDiagnostic(_ diagnostic: MediaCallDiagnostic, value: Bool) {
+        Task { @MainActor [weak self] in
+            guard let self else {
+                return
+            }
+
+            self.mediaDiagnosticsSubject.send(
+                MediaDiagnosticModel(diagnostic: diagnostic, value: value)
+            )
+        }
+    }
+
+    func emitNetworkQualityDiagnostic(_ diagnostic: NetworkQualityCallDiagnostic, value: CallDiagnosticQuality) {
+        Task { @MainActor [weak self] in
+            guard let self else {
+                return
+            }
+
+            self.networkQualityDiagnosticsSubject.send(
+                NetworkQualityDiagnosticModel(diagnostic: diagnostic, value: value)
+            )
+        }
+    }
+
+    func emitNetworkDiagnostic(_ diagnostic: NetworkCallDiagnostic, value: Bool) {
+        Task { @MainActor [weak self] in
+            guard let self else {
+                return
+            }
+
+            self.networkDiagnosticsSubject.send(
+                NetworkDiagnosticModel(diagnostic: diagnostic, value: value)
+            )
+        }
+    }
 }
 #endif

@@ -267,7 +267,7 @@ class CallingMiddlewareHandler: CallingMiddlewareHandling {
 
             switch state.localUserState.cameraState.transmission {
             case .local:
-                if state.callingState.operationStatus == .skipSetupRequested {
+                if state.navigationState.status == .inCall {
                     dispatch(.localUserAction(.cameraOnTriggered))
                 } else {
                     dispatch(.localUserAction(.cameraPreviewOnTriggered))
@@ -430,6 +430,24 @@ extension CallingMiddlewareHandler {
             .removeDuplicates()
             .sink { participantRole in
                 dispatch(.localUserAction(.participantRoleChanged(participantRole: participantRole)))
+            }.store(in: subscription)
+
+        callingService.networkDiagnosticsSubject
+            .removeDuplicates()
+            .sink { networkDiagnostic in
+                dispatch(.callDiagnosticAction(.network(diagnostic: networkDiagnostic)))
+            }.store(in: subscription)
+
+        callingService.networkQualityDiagnosticsSubject
+            .removeDuplicates()
+            .sink { networkQualityDiagnostic in
+                dispatch(.callDiagnosticAction(.networkQuality(diagnostic: networkQualityDiagnostic)))
+            }.store(in: subscription)
+
+        callingService.mediaDiagnosticsSubject
+            .removeDuplicates()
+            .sink { mediaDiagnostic in
+                dispatch(.callDiagnosticAction(.media(diagnostic: mediaDiagnostic)))
             }.store(in: subscription)
     }
 }
