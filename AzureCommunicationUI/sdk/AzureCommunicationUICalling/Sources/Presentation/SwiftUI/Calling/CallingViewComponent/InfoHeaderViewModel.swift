@@ -28,7 +28,8 @@ class InfoHeaderViewModel: ObservableObject {
          logger: Logger,
          localUserState: LocalUserState,
          localizationProvider: LocalizationProviderProtocol,
-         accessibilityProvider: AccessibilityProviderProtocol) {
+         accessibilityProvider: AccessibilityProviderProtocol,
+         dispatchAction: @escaping ActionDispatch) {
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
         self.localizationProvider = localizationProvider
@@ -36,7 +37,7 @@ class InfoHeaderViewModel: ObservableObject {
         self.infoLabel = title
         self.accessibilityLabel = title
         self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
-            localUserState: localUserState)
+            localUserState: localUserState, dispatchAction: dispatchAction)
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,
             buttonType: .infoButton,
@@ -89,6 +90,7 @@ class InfoHeaderViewModel: ObservableObject {
                 participantInfoModel.status != .inLobby && participantInfoModel.status != .disconnected
             })
             .count
+
         if participantsCount != updatedRemoteparticipantCount {
             participantsCount = updatedRemoteparticipantCount
             updateInfoLabel()

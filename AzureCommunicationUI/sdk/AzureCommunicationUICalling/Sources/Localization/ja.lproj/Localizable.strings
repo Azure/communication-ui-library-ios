@@ -45,12 +45,34 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="%d 人のユーザーと通話する"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="参加者";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="ユーザーが参加待ちの状態です。";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="ロビーを表示";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="ロビーを表示";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="Lobby 通知を閉じる";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="ロビー アクションはサポートされていません。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="ロビーが無効になりました。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="あなたのロールではロビーを操作できません。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="参加者はロビーにいません。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="ロビー アクション エラー。";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "ロビー エラー通知を閉じる";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="名前のない参加者";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (自分)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="ミュート状態";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="ミュート解除";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="話し中";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留中";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="タップして許可または拒否";
+
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="ロビーで待機中 (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="通話中 (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="すべて参加許可";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="すべての参加者を許可しますか?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@ を許可しますか?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="参加許可";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="拒否";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="バック カメラに切り替える";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="フロント カメラに切り替える";

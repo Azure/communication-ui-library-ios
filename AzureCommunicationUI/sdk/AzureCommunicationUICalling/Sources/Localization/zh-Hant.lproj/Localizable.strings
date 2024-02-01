@@ -45,12 +45,34 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="與 %d 個人通話"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="參與者";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="人員正在等候加入。";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="檢視大廳";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="檢視大廳";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="關閉大廳通知";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="不支援大廳動作。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="已停用大廳。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="您的角色無法在大廳上作用。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="參與者不在大廳中。";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="大廳動作錯誤。";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "關閉大廳錯誤通知";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="未命名的參與者";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@ (我)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="已靜音";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="已取消靜音";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="說話";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="保留";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="點選以准許或拒絕";
+
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="正在大廳等候 (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="通話中 (%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="全部准許";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="准許所有參與者嗎?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="准許 %@?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="准許";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="拒絕";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="切換到後相機";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="切換到前相機";

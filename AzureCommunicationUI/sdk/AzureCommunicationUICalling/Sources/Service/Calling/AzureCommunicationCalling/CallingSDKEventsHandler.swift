@@ -16,6 +16,7 @@ class CallingSDKEventsHandler: NSObject, CallingSDKEventsHandling {
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> = .init([])
     var isLocalUserMutedSubject = PassthroughSubject<Bool, Never>()
     var callIdSubject = PassthroughSubject<String, Never>()
+    var participantRoleSubject = PassthroughSubject<ParticipantRole, Never>()
 
     // User Facing Diagnostics Subjects
     var networkQualityDiagnosticsSubject = PassthroughSubject<NetworkQualityDiagnosticModel, Never>()
@@ -226,6 +227,11 @@ extension CallingSDKEventsHandler: CallDelegate,
 
     func call(_ call: Call, didChangeMuteState args: PropertyChangedEventArgs) {
         isLocalUserMutedSubject.send(call.isMuted)
+    }
+
+    func call(_ call: Call, didChangeRole args: PropertyChangedEventArgs) {
+        let role = call.callParticipantRole.toParticipantRole()
+        participantRoleSubject.send(role)
     }
 
     // MARK: NetworkDiagnosticsDelegate

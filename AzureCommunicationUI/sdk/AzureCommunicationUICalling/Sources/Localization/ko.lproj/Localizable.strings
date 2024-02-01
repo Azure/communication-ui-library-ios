@@ -45,12 +45,34 @@
 "AzureCommunicationUICalling.CallingView.InfoHeader.CallWithNPeople"="%d명의 사용자와 통화"; // %d is for number of people in call
 "AzureCommunicationUICalling.CallingView.InfoHeader.ParticipantList.AccessibilityLabel"="참가자";
 
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.LobbyWaitingToJoin"="사람들이 참가하려고 기다리는 중입니다.";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton"="대기실 보기";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.ViewButton.AccessibilityLabel"="대기실 보기";
+"AzureCommunicationUICalling.CallingView.LobbyWaitingHeader.DismissButton.AccessibilityLabel"="대기실 알림 해제";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ConversationTypeNotSupported"="대기실 작업은 지원되지 않습니다.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.DisabledByConfigurations"="대기실이 비활성화되었습니다.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.RoleNotAllowed"="대기실에서 작동할 수 없는 역할입니다.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.ParticipantOperationFailure"="참가자가 대기실에 없습니다.";
+"AzureCommunicationUICalling.CallingView.LobbyActionError.UnknownError"="대기실 작업 오류입니다.";
+
+"AzureCommunicationUICalling.CallingView.LobbyActionError.Dismiss.AccessibilityLabel" = "대기실 오류 알림 해제";
+
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.Unnamed"="명명되지 않은 참가자";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.LocalParticipant"="%@(나)"; // %@ is local participant name
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsMuted"="음소거";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsUnmuted"="음소거 해제됨";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.IsSpeaking"="말하기";
 "AzureCommunicationUICalling.CallingView.ParticipantDrawer.OnHold"="대기 중";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.LobbyAction"="탭하여 입장 또는 거절";
+
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.WaitingInLobby"="대기실에서 대기 중(%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.InTheCall"="통화 중(%d)";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.AdmitAll"="모두 허용";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitAll"="모든 참가자를 허용하시겠어요?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Title.AdmitParticipant"="%@을(를) 허용하시겠어요?";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Admit"="허용";
+"AzureCommunicationUICalling.CallingView.ParticipantDrawer.Confirm.Decline"="거절";
 
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Front"="후면 카메라로 전환";
 "AzureCommunicationUICalling.CallingView.SwitchCamera.Back"="전면 카메라로 전환";

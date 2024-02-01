@@ -132,6 +132,7 @@ struct LocalUserState {
     let audioState: AudioState
     let displayName: String?
     let localVideoStreamIdentifier: String?
+    let participantRole: ParticipantRole?
 
     init(cameraState: CameraState = CameraState(operation: .off,
                                                 device: .front,
@@ -139,10 +140,12 @@ struct LocalUserState {
          audioState: AudioState = AudioState(operation: .off,
                                              device: .receiverSelected),
          displayName: String? = nil,
-         localVideoStreamIdentifier: String? = nil) {
+         localVideoStreamIdentifier: String? = nil,
+         participantRole: ParticipantRole? = nil) {
         self.cameraState = cameraState
         self.audioState = audioState
         self.displayName = displayName
         self.localVideoStreamIdentifier = localVideoStreamIdentifier
+        self.participantRole = participantRole
     }
 }

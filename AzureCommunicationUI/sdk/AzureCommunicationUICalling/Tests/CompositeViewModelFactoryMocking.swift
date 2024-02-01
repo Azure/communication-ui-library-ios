@@ -17,6 +17,8 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var bannerTextViewModel: BannerTextViewModel?
     var controlBarViewModel: ControlBarViewModel?
     var infoHeaderViewModel: InfoHeaderViewModel?
+    var lobbyWaitingHeaderViewModel: LobbyWaitingHeaderViewModel?
+    var lobbyErrorHeaderViewModel: LobbyErrorHeaderViewModel?
     var localVideoViewModel: LocalVideoViewModel?
     var participantGridViewModel: ParticipantGridViewModel?
     var participantsListViewModel: ParticipantsListViewModel?
@@ -127,6 +129,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                     buttonLabel: String,
                                     iconName: CompositeIcon?,
                                     isDisabled: Bool,
+                                    paddings: CompositeButton.Paddings?,
                                     action: @escaping (() -> Void)) -> PrimaryButtonViewModel {
         return primaryButtonViewModel ?? PrimaryButtonViewModel(buttonStyle: buttonStyle,
                                                                 buttonLabel: buttonLabel,
@@ -193,12 +196,14 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           localUserState: localUserState)
     }
 
-    func makeInfoHeaderViewModel(localUserState: LocalUserState) -> InfoHeaderViewModel {
+    func makeInfoHeaderViewModel(localUserState: LocalUserState,
+                                 dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> InfoHeaderViewModel {
         return infoHeaderViewModel ?? InfoHeaderViewModel(compositeViewModelFactory: self,
                                                           logger: logger,
                                                           localUserState: localUserState,
                                                           localizationProvider: localizationProvider,
-                                                          accessibilityProvider: accessibilityProvider)
+                                                          accessibilityProvider: accessibilityProvider,
+                                                          dispatchAction: dispatchAction)
     }
 
     func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
@@ -215,9 +220,12 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                     isIpadInterface: isIpadInterface)
     }
 
-    func makeParticipantsListViewModel(localUserState: LocalUserState) -> ParticipantsListViewModel {
+    func makeParticipantsListViewModel(localUserState: LocalUserState,
+                                       dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch) -> ParticipantsListViewModel {
         return participantsListViewModel ?? ParticipantsListViewModel(compositeViewModelFactory: self,
-                                                                      localUserState: localUserState)
+                                                                      localUserState: localUserState,
+                                                                      dispatchAction: dispatchAction,
+                                                                      localizationProvider: localizationProvider)
     }
 
     func makeBannerViewModel() -> BannerViewModel {
@@ -289,4 +297,26 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                       audioSessionManager: AudioSessionManager(store: store, logger: logger),
                                       resumeAction: {})
     }
+
+    func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
+                                         dispatchAction: @escaping ActionDispatch) -> LobbyWaitingHeaderViewModel {
+        return lobbyWaitingHeaderViewModel ?? LobbyWaitingHeaderViewModel(compositeViewModelFactory: self,
+                                                                          logger: logger,
+                                                                          localUserState: localUserState,
+                                                                          localizationProvider: localizationProvider,
+                                                                          accessibilityProvider: accessibilityProvider,
+                                                                          dispatchAction: dispatchAction)
+    }
+
+    func makeLobbyActionErrorViewModel(localUserState: AzureCommunicationUICalling.LocalUserState,
+                                       dispatchAction: @escaping AzureCommunicationUICalling.ActionDispatch)
+    -> LobbyErrorHeaderViewModel {
+        return lobbyErrorHeaderViewModel ?? LobbyErrorHeaderViewModel(compositeViewModelFactory: self,
+                                                                          logger: logger,
+                                                                          localUserState: localUserState,
+                                                                          localizationProvider: localizationProvider,
+                                                                          accessibilityProvider: accessibilityProvider,
+                                                                          dispatchAction: dispatchAction)
+    }
+
 }
