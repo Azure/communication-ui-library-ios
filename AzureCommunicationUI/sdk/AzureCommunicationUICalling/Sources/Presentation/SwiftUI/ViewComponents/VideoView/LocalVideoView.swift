@@ -78,7 +78,9 @@ struct LocalVideoView: View {
                         if viewType.hasGradient {
                             GradientView()
                         }
-                        cameraSwitchButton
+                        if !viewModel.isInPip {
+                            cameraSwitchButton
+                        }
                     }
                 } else {
                     VStack(alignment: .center, spacing: 5) {

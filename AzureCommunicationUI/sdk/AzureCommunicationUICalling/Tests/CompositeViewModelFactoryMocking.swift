@@ -203,14 +203,17 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                           localUserState: localUserState,
                                                           localizationProvider: localizationProvider,
                                                           accessibilityProvider: accessibilityProvider,
-                                                          dispatchAction: dispatchAction)
+                                                          dispatchAction: dispatchAction,
+                                                          enableMultitasking: true,
+                                                          enableSystemPiPWhenMultitasking: true)
     }
 
-    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel) -> ParticipantGridCellViewModel {
+    func makeParticipantCellViewModel(participantModel: ParticipantInfoModel, lifeCycleState: LifeCycleState) -> ParticipantGridCellViewModel {
         return createMockParticipantGridCellViewModel?(participantModel) ?? ParticipantGridCellViewModel(
             localizationProvider: localizationProvider,
             accessibilityProvider: accessibilityProvider,
-            participantModel: participantModel)
+            participantModel: participantModel,
+            lifeCycleState: lifeCycleState)
     }
 
     func makeParticipantGridsViewModel(isIpadInterface: Bool) -> ParticipantGridViewModel {

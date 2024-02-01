@@ -19,6 +19,7 @@ class ControlBarViewModel: ObservableObject {
     @Published var isConfirmLeaveListDisplayed: Bool = false
     @Published var isMoreCallOptionsListDisplayed: Bool = false
     @Published var isShareActivityDisplayed: Bool = false
+    @Published var isDisplayed: Bool = true
 
     let audioDevicesListViewModel: AudioDevicesListViewModel
     var micButtonViewModel: IconButtonViewModel!
@@ -219,7 +220,8 @@ class ControlBarViewModel: ObservableObject {
 
     func update(localUserState: LocalUserState,
                 permissionState: PermissionState,
-                callingState: CallingState) {
+                callingState: CallingState,
+                visibilityState: VisibilityState) {
         callingStatus = callingState.status
         operationStatus = callingState.operationStatus
         if cameraPermission != permissionState.cameraPermission {
@@ -253,5 +255,7 @@ class ControlBarViewModel: ObservableObject {
         audioDevicesListViewModel.update(audioDeviceStatus: audioDeviceState)
 
         moreButtonViewModel.update(isDisabled: isMoreButtonDisabled())
+
+        isDisplayed = visibilityState.currentStatus != .pipModeEntered
     }
 }

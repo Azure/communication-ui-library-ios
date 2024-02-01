@@ -82,7 +82,7 @@ struct CallingView: View {
                 ZStack(alignment: .bottomTrailing) {
                     videoGridView
                         .accessibilityHidden(!viewModel.isVideoGridViewAccessibilityAvailable)
-                    if viewModel.isParticipantGridDisplayed {
+                    if viewModel.isParticipantGridDisplayed && !viewModel.isInPip {
                         Group {
                             DraggableLocalVideoView(containerBounds:
                                                         geometry.frame(in: .local),
@@ -171,6 +171,14 @@ struct CallingView: View {
                     lobbyActionErrorView
                         .frame(width: infoHeaderViewWidth, alignment: .leading)
                         .padding(.leading, InfoHeaderViewConstants.horizontalPadding)
+                    Spacer()
+                }
+                HStack {
+                    if isIpad {
+                        Spacer()
+                    } else {
+                        EmptyView()
+                    }
                     topMessageBarDiagnosticsView
                         .frame(width: infoHeaderViewWidth, alignment: .leading)
                         .padding(.leading, InfoHeaderViewConstants.horizontalPadding)

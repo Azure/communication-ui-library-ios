@@ -38,6 +38,7 @@ struct CallingDemoView: View {
                 settingButton
                 showCallHistoryButton
                 startExperienceButton
+                showExperienceButton
                 Text(callState)
             }
             Spacer()
@@ -144,6 +145,14 @@ struct CallingDemoView: View {
         .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
     }
 
+    var showExperienceButton: some View {
+        Button("Show") {
+            showCallComposite()
+        }
+        .buttonStyle(DemoButtonStyle())
+        .accessibility(identifier: AccessibilityId.startExperienceAccessibilityID.rawValue)
+    }
+
     var showCallHistoryButton: some View {
         Button("Show call history") {
             alertTitle = callingViewModel.callHistoryTitle
@@ -170,6 +179,10 @@ struct CallingDemoView: View {
 }
 
 extension CallingDemoView {
+    func showCallComposite() {
+        callingViewModel.callComposite?.isHidden = false
+    }
+
     fileprivate func relaunchComposite() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             Task { @MainActor in
@@ -183,6 +196,7 @@ extension CallingDemoView {
             }
         }
     }
+
     func startCallComposite() async {
         let link = getMeetingLink()
 
@@ -206,7 +220,9 @@ extension CallingDemoView {
             : Theming(envConfigSubject: envConfigSubject),
             localization: localizationConfig,
             setupScreenOrientation: setupViewOrientation,
-            callingScreenOrientation: callingViewOrientation)
+            callingScreenOrientation: callingViewOrientation,
+            enableMultitasking: envConfigSubject.enableMultitasking,
+            enableSystemPiPWhenMultitasking: envConfigSubject.enablePipWhenMultitasking)
         #if DEBUG
         let useMockCallingSDKHandler = envConfigSubject.useMockCallingSDKHandler
         let callComposite = useMockCallingSDKHandler ?
@@ -231,6 +247,11 @@ extension CallingDemoView {
             onError(error,
                     callComposite: composite)
         }
+
+        let onPipChangedHandler: (Bool) -> Void = { isInPictureInPicture in
+            print("::::CallingDemoView:onPipChangedHandler: ", isInPictureInPicture)
+        }
+
         let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
             guard let composite = callComposite else {
                 return
@@ -256,6 +277,7 @@ extension CallingDemoView {
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
         callComposite.events.onDismissed = onDismissedHandler
+        callComposite.events.onPictureInPictureChanged = onPipChangedHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil:envConfigSubject.renderedDisplayName
@@ -298,6 +320,7 @@ extension CallingDemoView {
             showError(for: DemoError.invalidToken.getErrorCode())
             return
         }
+        callingViewModel.callComposite = callComposite
     }
 
     private func getTokenCredential() async throws -> CommunicationTokenCredential {

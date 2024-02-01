@@ -51,7 +51,8 @@ class CallDiagnosticsViewModelTests: XCTestCase {
                  .permissionAction(_),
                  .remoteParticipantsAction(_),
                  .compositeExitAction,
-                 .callingViewLaunched:
+                 .callingViewLaunched,
+                 .visibilityAction(_):
                 break
             }
         }

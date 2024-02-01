@@ -38,7 +38,8 @@ extension Reducer where State == CallDiagnosticsState,
              .remoteParticipantsAction(_),
              .errorAction(_),
              .compositeExitAction,
-             .callingViewLaunched:
+             .callingViewLaunched,
+             .visibilityAction(_):
             return state
         }
 
