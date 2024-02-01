@@ -153,7 +153,6 @@ class CallingViewModelTests: XCTestCase {
         factoryMocking.infoHeaderViewModel = InfoHeaderViewModelMocking(
                                                                         compositeViewModelFactory: factoryMocking,
                                                                         logger: logger,
-                                                                        dispatchAction: storeFactory.store.dispatch,
                                                                         localUserState: storeFactory.store.state.localUserState,
                                                                         accessibilityProvider: accessibilityProvider,
                                                                         dispatchAction: storeFactory.store.dispatch,
