@@ -84,7 +84,7 @@ class ParticipantGridViewModel: ObservableObject {
 
     private func getDisplayedInfoViewModels(_ infoModels: [ParticipantInfoModel],
                                             _ dominantSpeakers: [String],
-                                            _ pipState: VisibilityState) -> [ParticipantInfoModel] {
+                                            _ visibilityState: VisibilityState) -> [ParticipantInfoModel] {
         if let presentingParticipant = infoModels.first(where: { $0.screenShareVideoStreamModel != nil }) {
             return [presentingParticipant]
         }

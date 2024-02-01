@@ -16,6 +16,7 @@ struct InfoHeaderView: View {
         static let shapeCornerRadius: CGFloat = 5
         static let infoLabelHorizontalPadding: CGFloat = 16.0
         static let hStackHorizontalPadding: CGFloat = 20.0
+        static let hStackBottomPadding: CGFloat = 10.0
         static let hSpace: CGFloat = 4
         static let foregroundColor: Color = .white
 
@@ -79,6 +80,7 @@ struct InfoHeaderView: View {
                             trailing: 0))
         .background(Color(StyleProvider.color.surfaceDarkColor))
         .clipShape(RoundedRectangle(cornerRadius: Constants.shapeCornerRadius))
+        .padding(.bottom, Constants.hStackBottomPadding)
     }
 
     var participantListButton: some View {
@@ -90,8 +92,6 @@ struct InfoHeaderView: View {
         return Group {
             if let avatarManager = avatarViewManager as? AvatarViewManager {
                 CompositeParticipantsList(isPresented: $viewModel.isParticipantsListDisplayed,
-                                          isInfoHeaderDisplayed: $viewModel.isInfoHeaderDisplayed,
-                                          isVoiceOverEnabled: $viewModel.isVoiceOverEnabled,
                                           viewModel: viewModel.participantsListViewModel,
                                           avatarViewManager: avatarManager,
                                           sourceView: participantsListButtonSourceView)

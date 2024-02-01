@@ -20,7 +20,7 @@ class PreviewAreaViewModelMocking: PreviewAreaViewModel {
 
     override func update(localUserState: LocalUserState,
                          permissionState: PermissionState,
-                         pipState: VisibilityState) {
-        updateState?(localUserState, permissionState, pipState)
+                         visibilityState: VisibilityState) {
+        updateState?(localUserState, permissionState, visibilityState)
     }
 }

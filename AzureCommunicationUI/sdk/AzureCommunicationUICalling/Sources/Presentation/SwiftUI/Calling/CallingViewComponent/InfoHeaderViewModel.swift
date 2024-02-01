@@ -30,10 +30,10 @@ class InfoHeaderViewModel: ObservableObject {
 
     init(compositeViewModelFactory: CompositeViewModelFactoryProtocol,
          logger: Logger,
-         dispatchAction: @escaping ActionDispatch,
          localUserState: LocalUserState,
          localizationProvider: LocalizationProviderProtocol,
          accessibilityProvider: AccessibilityProviderProtocol,
+         dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
          enableSystemPiPWhenMultitasking: Bool) {
         self.dispatch = dispatchAction
@@ -46,7 +46,7 @@ class InfoHeaderViewModel: ObservableObject {
         self.enableMultitasking = enableMultitasking
         self.enableSystemPiPWhenMultitasking = enableSystemPiPWhenMultitasking
         self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
-            localUserState: localUserState)
+            localUserState: localUserState, dispatchAction: dispatchAction)
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .showParticipant,
             buttonType: .infoButton,
@@ -112,6 +112,7 @@ class InfoHeaderViewModel: ObservableObject {
                 participantInfoModel.status != .inLobby && participantInfoModel.status != .disconnected
             })
             .count
+
         if participantsCount != updatedRemoteparticipantCount {
             participantsCount = updatedRemoteparticipantCount
             updateInfoLabel()

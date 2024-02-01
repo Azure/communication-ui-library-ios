@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		051EE2292AB90FC300A94632 /* LobbyWaitingHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051EE2282AB90FC300A94632 /* LobbyWaitingHeaderView.swift */; };
+		051EE22B2AB9106200A94632 /* LobbyWaitingHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051EE22A2AB9106200A94632 /* LobbyWaitingHeaderViewModel.swift */; };
 		05317E2629A2E1FB00149F57 /* CallHistoryServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2529A2E1FB00149F57 /* CallHistoryServiceTests.swift */; };
 		05317E2829A2E2B900149F57 /* CallHistoryRepositoryMocking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2729A2E2B900149F57 /* CallHistoryRepositoryMocking.swift */; };
 		05317E2A29A7DBC100149F57 /* CallHistoryRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */; };
@@ -19,6 +21,10 @@
 		05C1C831297F5680006EDD0D /* CallHistoryRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */; };
 		05F80DEE2A2E6F6700B20C87 /* PipReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F80DED2A2E6F6700B20C87 /* PipReducer.swift */; };
 		05F80DF02A2E713D00B20C87 /* VisibilityAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05F80DEF2A2E713D00B20C87 /* VisibilityAction.swift */; };
+		0546D9512ACE8CAC005D528E /* LobbyErrorHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546D9502ACE8CAC005D528E /* LobbyErrorHeaderView.swift */; };
+		0546D9532ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0546D9522ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift */; };
+		058D6A232AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 058D6A222AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift */; };
+		05E28FF62AD60E5900FF7020 /* ParticipantRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05E28FF52AD60E5900FF7020 /* ParticipantRole.swift */; };
 		1105E8FC29B9352400FC8628 /* LoadingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */; };
 		11159FFE2A1D3F4200C0E3B8 /* OrientationOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11159FFD2A1D3F4200C0E3B8 /* OrientationOptions.swift */; };
 		1115A0002A1D50EC00C0E3B8 /* OrientationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11159FFF2A1D50EC00C0E3B8 /* OrientationProvider.swift */; };
@@ -309,6 +315,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		051EE2282AB90FC300A94632 /* LobbyWaitingHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyWaitingHeaderView.swift; sourceTree = "<group>"; };
+		051EE22A2AB9106200A94632 /* LobbyWaitingHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyWaitingHeaderViewModel.swift; sourceTree = "<group>"; };
 		05317E2529A2E1FB00149F57 /* CallHistoryServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryServiceTests.swift; sourceTree = "<group>"; };
 		05317E2729A2E2B900149F57 /* CallHistoryRepositoryMocking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRepositoryMocking.swift; sourceTree = "<group>"; };
 		05317E2929A7DBC100149F57 /* CallHistoryRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallHistoryRepositoryTests.swift; sourceTree = "<group>"; };
@@ -321,6 +329,10 @@
 		05C1C830297F5680006EDD0D /* CallHistoryRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CallHistoryRepository.swift; sourceTree = "<group>"; };
 		05F80DED2A2E6F6700B20C87 /* PipReducer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PipReducer.swift; sourceTree = "<group>"; };
 		05F80DEF2A2E713D00B20C87 /* VisibilityAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisibilityAction.swift; sourceTree = "<group>"; };
+		0546D9502ACE8CAC005D528E /* LobbyErrorHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyErrorHeaderView.swift; sourceTree = "<group>"; };
+		0546D9522ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyErrorHeaderViewModel.swift; sourceTree = "<group>"; };
+		058D6A222AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LobbyWaitingHeaderViewModelTest.swift; sourceTree = "<group>"; };
+		05E28FF52AD60E5900FF7020 /* ParticipantRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantRole.swift; sourceTree = "<group>"; };
 		1105E8FB29B9352400FC8628 /* LoadingOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		11159FFD2A1D3F4200C0E3B8 /* OrientationOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationOptions.swift; sourceTree = "<group>"; };
 		11159FFF2A1D50EC00C0E3B8 /* OrientationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationProvider.swift; sourceTree = "<group>"; };
@@ -759,6 +771,7 @@
 				1F09A10C26BA484000BACED7 /* ControlBarViewModelTests.swift */,
 				50E2D68826D9495B006B0EF4 /* InfoHeaderViewModelTests.swift */,
 				8815B6E327DA9B350065A184 /* LobbyOverlayViewModelTests.swift */,
+				058D6A222AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift */,
 				1B315122284EA8620043231B /* OnHoldOverlayViewModelTests.swift */,
 				1F09A10E26BA484000BACED7 /* ParticipantCellViewModelTests.swift */,
 				1F09A11026BA484000BACED7 /* ParticipantGridsViewModelTests.swift */,
@@ -1011,6 +1024,7 @@
 				1FBCB6AE2649DC7900F57EEA /* ParticipantInfoModel.swift */,
 				1FA23F9D265DA21400B4A080 /* VideoStreamInfoModel.swift */,
 				88B87C562755911B00290DD1 /* CallInfoModel.swift */,
+				05E28FF52AD60E5900FF7020 /* ParticipantRole.swift */,
 				B2120A5B2A97E35E00E29C05 /* UserFacingDiagnosticModel.swift */,
 			);
 			path = Model;
@@ -1075,6 +1089,10 @@
 				50E2D69426EACB74006B0EF4 /* ParticipantsListViewModel.swift */,
 				50E2D69826F4FA05006B0EF4 /* ParticipantsListCellViewModel.swift */,
 				1BAD44BB283DAF2100C9E6A9 /* DraggableLocalVideoView.swift */,
+				051EE2282AB90FC300A94632 /* LobbyWaitingHeaderView.swift */,
+				051EE22A2AB9106200A94632 /* LobbyWaitingHeaderViewModel.swift */,
+				0546D9502ACE8CAC005D528E /* LobbyErrorHeaderView.swift */,
+				0546D9522ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift */,
 			);
 			path = CallingViewComponent;
 			sourceTree = "<group>";
@@ -1428,7 +1446,7 @@
 		D925FB8A0861AF0C1415C6C4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				05286F422A300ACA00FA09B5 /* AzureCommunicationCalling.framework */,
+				058D6A242ACE0AD4005CF1C8 /* AzureCommunicationCalling.framework */,
 				1FBCB682264522F200F57EEA /* XCTest.framework */,
 				C580DBF67D8B5AEF7A801F90 /* Pods_AzureCommunicationUICalling.framework */,
 				EC5A1FE3C2622411DFF98147 /* Pods_AzureCommunicationUICalling_AzureCommunicationUICallingTests.framework */,
@@ -1780,6 +1798,7 @@
 				1B3A8EED285129CC002ED55A /* AudioSessionReducerTests.swift in Sources */,
 				1F4A24BC26D6F5E600C11083 /* CompositeViewModelFactoryMocking.swift in Sources */,
 				503300FE27079FC900289BB5 /* BannerTextViewModelTests.swift in Sources */,
+				058D6A232AC6B0B4005CF1C8 /* LobbyWaitingHeaderViewModelTest.swift in Sources */,
 				1F8E0B74268697B700DDD18E /* CallingMiddlewareHandlerMocking.swift in Sources */,
 				A869A63A26546A2E003CC4F2 /* MiddlewareMocking.swift in Sources */,
 				FAC1FECB27C98FC200D95845 /* LocalVideoViewModelMocking.swift in Sources */,
@@ -1854,6 +1873,7 @@
 				A874EDCA266167E5003C7D92 /* LifeCycleReducer.swift in Sources */,
 				1FBCB6D72654765D00F57EEA /* LocalUserState.swift in Sources */,
 				05F80DF02A2E713D00B20C87 /* VisibilityAction.swift in Sources */,
+				05E28FF62AD60E5900FF7020 /* ParticipantRole.swift in Sources */,
 				B2B1DB3D2ABE35B0003B00DB /* MessageBarDiagnosticView.swift in Sources */,
 				FA6DF038290339430088A945 /* SharingActivityView.swift in Sources */,
 				1F94DAE82676885700691D1E /* AppStateReducer.swift in Sources */,
@@ -1885,7 +1905,9 @@
 				FAD20A8B292834500063D8A9 /* DeviceExtension.swift in Sources */,
 				881D8F7427FCA6B3008EC897 /* AvatarViewManager.swift in Sources */,
 				1BAD44BC283DAF2100C9E6A9 /* DraggableLocalVideoView.swift in Sources */,
+				0546D9512ACE8CAC005D528E /* LobbyErrorHeaderView.swift in Sources */,
 				50E2D69726EBCD15006B0EF4 /* CompositeParticipantsListCell.swift in Sources */,
+				0546D9532ACE8CD7005D528E /* LobbyErrorHeaderViewModel.swift in Sources */,
 				A8373994261F9D7600D46787 /* CallCompositeOptions.swift in Sources */,
 				FAACEE3E28FA1190003F7D7C /* MoreCallOptionsListViewModel.swift in Sources */,
 				88A70180270E50D100F817B8 /* PopupModalView.swift in Sources */,
@@ -1956,6 +1978,7 @@
 				A8810CDD263CC75200C88545 /* ContainerView.swift in Sources */,
 				BD3CC69B283D953E0052DE4A /* OnHoldOverlayViewModel.swift in Sources */,
 				1FB0A1C128412A5100D57B0F /* ACSParticipantStateExtension.swift in Sources */,
+				051EE2292AB90FC300A94632 /* LobbyWaitingHeaderView.swift in Sources */,
 				756F596A2965E25A00BAFBF7 /* Middleware.swift in Sources */,
 				981ACABC2685459400CD6A40 /* IconProvider.swift in Sources */,
 				1F2BEDCD26329E5600D98266 /* PermissionAction.swift in Sources */,
@@ -1983,6 +2006,7 @@
 				1F13D36C26A8B83300E31666 /* RemoteParticipantsState.swift in Sources */,
 				1FFEA01426A68D0D00E90816 /* FontExtension.swift in Sources */,
 				1FBCB666264519DA00F57EEA /* VideoViewManager.swift in Sources */,
+				051EE22B2AB9106200A94632 /* LobbyWaitingHeaderViewModel.swift in Sources */,
 				05C1C82A297F516D006EDD0D /* CallHistoryService.swift in Sources */,
 				50FA461026829B7A001844AC /* ControlBarViewModel.swift in Sources */,
 				1F2BED882631EB7900D98266 /* PermissionsManager.swift in Sources */,
@@ -2089,6 +2113,15 @@
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = UBF8T346G9;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AzureCommunicationCommon\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/AzureCore\"",
+					"\"${PODS_CONFIGURATION_BUILD_DIR}/MicrosoftFluentUI\"",
+					"\"${PODS_ROOT}/AzureCommunicationCalling\"",
+					"\"${PODS_XCFRAMEWORKS_BUILD_DIR}/AzureCommunicationCalling\"",
+					"\"/Users/pavelprystinka/Documents/orient_workspace/SpoolCallingStack/native/staging.d/release/BETA/sdk/arm64-v8a\"",
+				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
 				LD_RUNPATH_SEARCH_PATHS = (

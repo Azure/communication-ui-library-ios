@@ -143,7 +143,7 @@ class SetupViewModel: ObservableObject {
         let callingState = state.callingState
         previewAreaViewModel.update(localUserState: localUserState,
                                     permissionState: permissionState,
-                                    pipState: state.visibilityState)
+                                    visibilityState: state.visibilityState)
         setupControlBarViewModel.update(localUserState: localUserState,
                                         permissionState: permissionState,
                                         callingState: callingState)

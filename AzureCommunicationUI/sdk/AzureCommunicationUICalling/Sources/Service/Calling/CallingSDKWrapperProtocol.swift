@@ -69,6 +69,9 @@ protocol CallingSDKWrapperProtocol {
     func unmuteLocalMic() async throws
     func holdCall() async throws
     func resumeCall() async throws
+    func admitAllLobbyParticipants() async throws
+    func admitLobbyParticipant(_ participantId: String) async throws
+    func declineLobbyParticipant(_ participantId: String) async throws
 
     var callingEventsHandler: CallingSDKEventsHandling { get }
 }
@@ -81,7 +84,7 @@ protocol CallingSDKEventsHandling {
     var isLocalUserMutedSubject: PassthroughSubject<Bool, Never> { get }
     var callIdSubject: PassthroughSubject<String, Never> { get }
     var dominantSpeakersSubject: CurrentValueSubject<[String], Never> { get }
-
+    var participantRoleSubject: PassthroughSubject<ParticipantRole, Never> { get }
     var networkQualityDiagnosticsSubject: PassthroughSubject<NetworkQualityDiagnosticModel, Never> { get }
     var networkDiagnosticsSubject: PassthroughSubject<NetworkDiagnosticModel, Never> { get }
     var mediaDiagnosticsSubject: PassthroughSubject<MediaDiagnosticModel, Never> { get }

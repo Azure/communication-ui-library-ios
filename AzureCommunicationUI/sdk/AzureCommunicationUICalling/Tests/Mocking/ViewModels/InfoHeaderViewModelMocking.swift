@@ -18,10 +18,10 @@ class InfoHeaderViewModelMocking: InfoHeaderViewModel {
         self.updateState = updateState
         super.init(compositeViewModelFactory: compositeViewModelFactory,
                    logger: logger,
-                   dispatchAction: dispatchAction,
                    localUserState: localUserState,
                    localizationProvider: LocalizationProviderMocking(),
                    accessibilityProvider: accessibilityProvider,
+                   dispatchAction: dispatchAction,
                    enableMultitasking: true,
                    enableSystemPiPWhenMultitasking: true)
     }
