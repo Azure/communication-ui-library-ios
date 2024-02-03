@@ -25,7 +25,6 @@ struct CallingDemoView: View {
     @State var isPushNotificationAvailable: Bool = false
     @ObservedObject var envConfigSubject: EnvConfigSubject
     @ObservedObject var callingViewModel: CallingDemoViewModel
-    @State static var callComposite: CallComposite?
     let verticalPadding: CGFloat = 5
     let horizontalPadding: CGFloat = 10
 
@@ -297,6 +296,12 @@ extension CallingDemoView {
     }
 
     func createCallComposite() -> CallComposite {
+        print("CallingDemoView:::: createCallComposite requesting")
+        if GlobalCompositeManager.callComposite != nil {
+            print("CallingDemoView:::: createCallComposite exist")
+            return GlobalCompositeManager.callComposite!
+        }
+        print("CallingDemoView:::: createCallComposite creating")
         var localizationConfig: LocalizationOptions?
         let layoutDirection: LayoutDirection = envConfigSubject.isRightToLeft ? .rightToLeft : .leftToRight
         if !envConfigSubject.localeIdentifier.isEmpty {
@@ -331,7 +336,7 @@ extension CallingDemoView {
         callComposite = CallComposite(withOptions: callCompositeOptions)
         #endif
         subscribeToEvents(callComposite: callComposite)
-        CallingDemoView.callComposite = callComposite
+        GlobalCompositeManager.callComposite = callComposite
         self.envConfigSubject.saveFromState()
         return callComposite
     }
@@ -495,6 +500,7 @@ extension CallingDemoView {
     }
 
     func disposeComposite() {
+        GlobalCompositeManager.callComposite = nil
         createCallComposite().dispose()
     }
 

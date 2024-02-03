@@ -10,16 +10,24 @@ internal class IncomingCallWrapper: NSObject, CallsUpdatedProtocol {
     private let logger: Logger
     private let events: CallComposite.Events
     private var incomingCall: IncomingCall?
+    private var lastIncomingCallID: String
 
     init(logger: Logger,
          events: CallComposite.Events) {
+        logger.debug("IncomingCallWrapper init")
         self.logger = logger
         self.events = events
+        self.lastIncomingCallID = ""
+    }
+
+    func getLastIncomingCallId() -> String {
+        return lastIncomingCallID
     }
 
     func onIncomingCall(incomingCall: IncomingCall) {
-        logger.debug("LogTestTest: onIncomingCall success -- calls received")
         self.incomingCall = incomingCall
+        lastIncomingCallID = incomingCall.id
+        logger.debug("onIncomingCall call id \(self.lastIncomingCallID)")
         self.incomingCall?.delegate = self
         updateIncomingCallEventHandler(incomingCallInfo: CallCompositeIncomingCallInfo(
             callId: incomingCall.id,
@@ -35,8 +43,10 @@ internal class IncomingCallWrapper: NSObject, CallsUpdatedProtocol {
    }
 
     func dispose() {
-        self.incomingCall?.delegate = nil
-        self.incomingCall = nil
+        logger.debug("incoming call dispose")
+        incomingCall?.delegate = nil
+        incomingCall = nil
+        lastIncomingCallID = ""
     }
 }
 
@@ -50,6 +60,7 @@ extension IncomingCallWrapper: IncomingCallDelegate {
             code: Int(callEndReason.code),
             subCode: Int(callEndReason.subcode)
         )
+        dispose()
         onIncomingCallEnded(callEndInfo)
     }
 }

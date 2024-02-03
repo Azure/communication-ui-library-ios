@@ -154,11 +154,12 @@ internal class CallingSDKInitialization: NSObject {
 
 extension CallingSDKInitialization: CallAgentDelegate {
     public func callAgent(_ callAgent: CallAgent, didUpdateCalls args: CallsUpdatedEventArgs) {
-        self.logger.debug("didUpdateCalls")
+        self.logger.debug("on calls update received")
         if !args.addedCalls.isEmpty {
             let call = args.addedCalls.first
-            self.logger.debug("notifying onCallAdded \(String(describing: call?.id))")
-            self.onCallAdded?("\(String(describing: call?.id))")
+            let callId = (call?.id ?? "") as String
+            self.logger.debug("on calls update received, notifying for \(callId)")
+            self.onCallAdded?(callId)
         }
     }
 

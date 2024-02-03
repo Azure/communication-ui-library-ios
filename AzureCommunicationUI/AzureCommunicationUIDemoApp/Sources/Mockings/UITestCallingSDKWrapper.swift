@@ -10,6 +10,9 @@ import AzureCommunicationCalling
 @testable import AzureCommunicationUICalling
 
 class UITestCallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
+    func updateConfigurations(callConfiguration: AzureCommunicationUICalling.CallConfiguration) {
+    }
+
     let callingEventsHandler: CallingSDKEventsHandling
 
     private let logger: Logger

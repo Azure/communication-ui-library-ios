@@ -14,7 +14,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     let callingEventsHandler: CallingSDKEventsHandling
 
     private let logger: Logger
-    private let callConfiguration: CallConfiguration
+    private var callConfiguration: CallConfiguration
     private var callClient: CallClient?
     private var callAgent: CallAgent?
     private var call: Call?
@@ -33,6 +33,10 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         self.callConfiguration = callConfiguration
         self.callingSDKInitialization = callingSDKInitialization
         super.init()
+    }
+
+    func updateConfigurations(callConfiguration: CallConfiguration) {
+        self.callConfiguration = callConfiguration
     }
 
     func cleanup() {

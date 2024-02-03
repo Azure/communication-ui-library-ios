@@ -184,6 +184,8 @@ extension CallingSDKEventsHandler: CallDelegate,
         callIdSubject.send(call.id)
 
         let currentStatus = call.state.toCallingStatus()
+        logger.debug("call state received \(currentStatus) \(call.id)")
+
         let internalError = call.callEndReason.toCompositeInternalError(wasCallConnected())
         if internalError != nil {
             let code = call.callEndReason.code

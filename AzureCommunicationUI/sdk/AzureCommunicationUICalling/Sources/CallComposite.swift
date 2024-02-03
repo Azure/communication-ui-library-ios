@@ -95,6 +95,7 @@ public class CallComposite {
     /// Create an instance of CallComposite with options.
     /// - Parameter options: The CallCompositeOptions used to configure the experience.
     public init(withOptions options: CallCompositeOptions? = nil) {
+        logger.debug("init call composite")
         events = Events()
         incomingCallWrapper = IncomingCallWrapper(logger: logger, events: events)
         themeOptions = options?.themeOptions
@@ -114,9 +115,13 @@ public class CallComposite {
 
     /// Remove calling layer reference
     public func dispose() {
+        logger.debug("dispose call composite")
+        callingSDKEventsHandler?.cleanup()
+        callingSDKWrapper?.cleanup()
         incomingCallWrapper.dispose()
         CallComposite.callingSDKInitialization?.dispose()
         CallComposite.callingSDKInitialization = nil
+        callingSDKWrapper = nil
     }
 
     /// Handle push notification to receive incoming call
@@ -261,11 +266,27 @@ public class CallComposite {
     }
 
     private func onCallsAdded(callId: String) {
-        logger.debug("onCallsAdded \(callId)")
+        logger.debug("call composite onCallsAdded \(callId)")
         notifyCallAddedEvent(callId: callId)
-        /// For incoming call to present the UI should not be active
-        if isCompositePresentable() {
-            /// callkit initialization is must for 1 to 1 calling
+        var incomingCallId = incomingCallWrapper.getLastIncomingCallId()
+        logger.debug("call composite incoming call id in call added \(incomingCallId)")
+        if incomingCallId == callId {
+            /// will launch UI if no active call is in progress
+            /// notification accepted from incoming call
+            launchUIForIncomingCallAccepted()
+        }
+    }
+
+    /// For incoming call to present the UI
+    /// It is possible that composite is in exsiting call, then on previous all disconnect launch UI
+    private func launchUIForIncomingCallAccepted() {
+        /// when disconnected for sdk will be received
+        let callStatus = store?.state.callingState.status
+        let noActiveCall = callStatus == .disconnected || callStatus == .none
+        logger.debug("call composite launchUIForIncomingCallAccepted \(callStatus)")
+        if isCompositePresentable() && noActiveCall {
+            logger.debug("launcing UI for incoming call")
+            incomingCallWrapper.dispose()
             guard let callingSDKInitialization = CallComposite.callingSDKInitialization,
                   let callKitOptions = callingSDKInitialization.callCompositeCallKitOptions else {
                 return
@@ -275,7 +296,6 @@ public class CallComposite {
                                                       displayName: callingSDKInitialization.displayName,
                                                       callKitOptions: callKitOptions)
             let localOptions = LocalOptions(skipSetupScreen: true)
-            logger.debug("launch for 1 to N call")
             DispatchQueue.main.async {
                 self.launch(callConfiguration, localOptions: localOptions)
             }
@@ -329,18 +349,24 @@ public class CallComposite {
         callCompositeEventsHandler: CallComposite.Events,
         withCallingSDKWrapper wrapper: CallingSDKWrapperProtocol? = nil
     ) -> CompositeViewFactoryProtocol {
-        let callingSDKEventsHandler = CallingSDKEventsHandler(logger: logger)
-        let callingSdkWrapper = wrapper ?? CallingSDKWrapper(
-            logger: logger,
-            callingEventsHandler: callingSDKEventsHandler,
-            callConfiguration: callConfiguration,
-            callingSDKInitialization: constructCallingSDKInitialization(logger: logger)
-        )
-        self.callingSDKWrapper = callingSdkWrapper
+        if self.callingSDKWrapper == nil {
+            logger.debug("callingSDKWrapper init in call composite")
+            let callingSDKEventsHandler = CallingSDKEventsHandler(logger: logger)
+            let callingSdkWrapper = wrapper ?? CallingSDKWrapper(
+                logger: logger,
+                callingEventsHandler: callingSDKEventsHandler,
+                callConfiguration: callConfiguration,
+                callingSDKInitialization: constructCallingSDKInitialization(logger: logger)
+            )
+            self.callingSDKWrapper = callingSdkWrapper
+        } else {
+            logger.debug("callingSDKWrapper updating config in call composite")
+            self.callingSDKWrapper?.updateConfigurations(callConfiguration: callConfiguration)
+        }
 
         let store = Store.constructStore(
             logger: logger,
-            callingService: CallingService(logger: logger, callingSDKWrapper: callingSdkWrapper),
+            callingService: CallingService(logger: logger, callingSDKWrapper: self.callingSDKWrapper!),
             displayName: localOptions?.participantViewData?.displayName ?? callConfiguration.displayName,
             startWithCameraOn: localOptions?.cameraOn,
             startWithMicrophoneOn: localOptions?.microphoneOn,
@@ -367,7 +393,7 @@ public class CallComposite {
         )
         let debugInfoManager = createDebugInfoManager()
         self.debugInfoManager = debugInfoManager
-        let videoViewManager = VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger)
+        let videoViewManager = VideoViewManager(callingSDKWrapper: self.callingSDKWrapper!, logger: logger)
         if enableSystemPiPWhenMultitasking {
             self.pipManager = createPipManager(store)
         }
@@ -400,9 +426,6 @@ public class CallComposite {
         return DebugInfoManager(callHistoryRepository: self.callHistoryRepository)
     }
     private func cleanUpManagers() {
-        self.callingSDKEventsHandler?.cleanup()
-        self.callingSDKWrapper?.cleanup()
-        self.callingSDKWrapper = nil
         self.errorManager = nil
         self.callStateManager = nil
         self.lifeCycleManager = nil
@@ -437,13 +460,25 @@ extension CallComposite {
                                                                         isRightToLeft: isRightToLeft)
         containerUIHostingController.modalPresentationStyle = .fullScreen
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
-            containerUIHostingController?.dismissSelf()
+            var incomingCallId = self?.incomingCallWrapper.getLastIncomingCallId()
+            self?.logger.debug("incoming call id in setDismissComposite \(incomingCallId)")
             self?.viewController = nil
             self?.pipViewController = nil
             self?.viewFactory = nil
-            self?.exitManager?.onDismissed()
+            /// if not empty mean UI for incoming call accepted is not launched yet
+            if incomingCallId == "" {
+                self?.exitManager?.onDismissed()
+                UIApplication.shared.isIdleTimerDisabled = false
+            }
             self?.cleanUpManagers()
-            UIApplication.shared.isIdleTimerDisabled = false
+            containerUIHostingController?.dismissSelf()
+            /// if not empty mean UI for incoming call accepted is not launched yet
+            if incomingCallId != "" {
+                DispatchQueue.main.async {
+                    self?.logger.debug("setDismissComposite containerUIHostingController launch")
+                    self?.launchUIForIncomingCallAccepted()
+                }
+            }
         }
 
         return containerUIHostingController

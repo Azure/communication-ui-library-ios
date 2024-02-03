@@ -73,6 +73,7 @@ protocol CallingSDKWrapperProtocol {
     func admitAllLobbyParticipants() async throws
     func admitLobbyParticipant(_ participantId: String) async throws
     func declineLobbyParticipant(_ participantId: String) async throws
+    func updateConfigurations(callConfiguration: CallConfiguration)
 
     var callingEventsHandler: CallingSDKEventsHandling { get }
 }
