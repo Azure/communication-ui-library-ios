@@ -48,7 +48,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
     }
 
     deinit {
-        logger.debug("CallingSDKWrapper deallocated")
+        logger.debug("CallingSDKWrapper CallingSDKWrapper deallocated")
     }
 
     func setupCall() async throws {
@@ -129,6 +129,7 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
             }
         } else if callConfiguration.compositeCallType == .oneToNCallIncoming {
             call = callAgent?.calls.first
+            logger.debug("CallComposite: callAgent?.calls.first \(call?.id)")
         } else if callConfiguration.compositeCallType == .roomsCall,
                   let roomId = callConfiguration.roomId {
             joinLocator = RoomCallLocator(roomId: roomId)
@@ -141,14 +142,17 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
         } else if callConfiguration.compositeCallType == .oneToNCallOutgoing {
             try await self.startCall(participants: participants, startCallOptions: startCallOptions)
         } else if callConfiguration.compositeCallType == .oneToNCallIncoming {
-            let joinedCall = call
-            guard let joinedCall = joinedCall else {
-                logger.error( "incoming Join call failed")
+            logger.debug("CallComposite: attach call")
+            guard let joinedCall = call else {
+                logger.error( "CallComposite: incoming Join call failed")
                 throw CallCompositeInternalError.callJoinFailed
             }
             if let callingEventsHandler = self.callingEventsHandler as? CallingSDKEventsHandler {
                 joinedCall.delegate = callingEventsHandler
+                logger.debug("CallComposite: CallingSDKWrapper notifyCallingStatus")
+                callingEventsHandler.updateCallInfo(call: joinedCall)
             }
+
             self.call = joinedCall
             setupFeatures()
         }

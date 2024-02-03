@@ -131,6 +131,7 @@ class CallingViewModel: ObservableObject {
             return
         }
 
+        print("CallComposite calling view model calling state \(state.callingState.status)")
         controlBarViewModel.update(localUserState: state.localUserState,
                                    permissionState: state.permissionState,
                                    callingState: state.callingState,

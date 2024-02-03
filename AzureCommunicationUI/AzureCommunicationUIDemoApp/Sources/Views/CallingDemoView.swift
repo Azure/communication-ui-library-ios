@@ -350,7 +350,7 @@ extension CallingDemoView {
                                            identifiers: ids)
         }
         let onPipChangedHandler: (Bool) -> Void = { isInPictureInPicture in
-            print("::::CallingDemoView:onPipChangedHandler: ", isInPictureInPicture)
+            print("::::CallingDemoView:CallComposite onPipChangedHandler: ", isInPictureInPicture)
         }
         let onErrorHandler: (CallCompositeError) -> Void = { [weak callComposite] error in
             guard let composite = callComposite else {
@@ -369,7 +369,7 @@ extension CallingDemoView {
         }
 
         let onCallAdded: (String) -> Void = { [] callId in
-            print("::::CallingDemoView ::::onCallAdded \(callId)")
+            print("::::CallingDemoView CallComposite ::::onCallAdded \(callId)")
         }
 
         let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
@@ -380,13 +380,13 @@ extension CallingDemoView {
             if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
                 relaunchComposite()
             }
-            print("::::CallingDemoView ::::onDismissedHandler")
+            print("::::CallingDemoView CallComposite ::::onDismissedHandler")
         }
         let onInomingCall: (CallCompositeIncomingCallInfo) -> Void = { [] _ in
-            print("::::CallingDemoView::getEventsHandler Incoming Call ::::CallInfo")
+            print("::::CallingDemoView::CallComposite getEventsHandler Incoming Call ::::CallInfo")
         }
         let onInomingCallEnded: (CallCompositeIncomingCallEndedInfo) -> Void = { [] _ in
-            print("::::CallingDemoView::getEventsHandler Incoming Call ::::CallEndedInfo")
+            print("::::CallingDemoView::CallComposite getEventsHandler Incoming Call ::::CallEndedInfo")
         }
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
@@ -648,14 +648,14 @@ extension CallingDemoView {
     }
 
     private func onError(_ error: CallCompositeError, callComposite: CallComposite) {
-        print("::::CallingDemoView::getEventsHandler::onError \(error)")
+        print("::::CallingDemoView::CallComposite getEventsHandler::onError \(error)")
         print("::::CallingDemoView error.code \(error.code)")
         callingViewModel.callHistory.last?.callIds.forEach { print("::::CallingDemoView call id \($0)") }
         showError(for: error.code)
     }
 
     private func onCallStateChanged(_ callState: CallState, callComposite: CallComposite) {
-        print("::::CallingDemoView::getEventsHandler::onCallStateChanged "
+        print("::::CallingDemoView::CallComposite getEventsHandler::onCallStateChanged "
               + "\(callState.requestString) " +
               "\(String(describing: callState.callEndReasonCodeInt)) "
               + "\(String(describing: callState.callEndReasonSubCodeInt)) "
@@ -664,7 +664,7 @@ extension CallingDemoView {
     }
 
     private func onRemoteParticipantJoined(to callComposite: CallComposite, identifiers: [CommunicationIdentifier]) {
-        print("::::CallingDemoView::getEventsHandler::onRemoteParticipantJoined \(identifiers)")
+        print("::::CallingDemoView::CallComposite getEventsHandler::onRemoteParticipantJoined \(identifiers)")
         guard envConfigSubject.useCustomRemoteParticipantViewData else {
             return
         }

@@ -58,6 +58,7 @@ public class CallComposite {
     private var orientationProvider: OrientationProvider
 
     private var store: Store<AppState, Action>?
+    private var navigationRouter: NavigationRouter?
     private var errorManager: ErrorManagerProtocol?
     private var exitManager: ExitManagerProtocol?
     private var callStateManager: CallStateManagerProtocol?
@@ -80,6 +81,8 @@ public class CallComposite {
     private var viewController: UIViewController?
     private var pipViewController: UIViewController?
     private var cancellables = Set<AnyCancellable>()
+    private var compositeUILaunched: Bool = false
+    private var onIncomingCallAdded: Bool = false
 
     /// Get debug information for the Call Composite.
     public var debugInfo: DebugInfo {
@@ -111,17 +114,16 @@ public class CallComposite {
     /// Dismiss call composite. If call is in progress, user will leave a call.
     public func dismiss() {
         exitManager?.dismiss()
+        compositeUILaunched = false
     }
 
     /// Remove calling layer reference
     public func dispose() {
         logger.debug("dispose call composite")
-        callingSDKEventsHandler?.cleanup()
-        callingSDKWrapper?.cleanup()
         incomingCallWrapper.dispose()
         CallComposite.callingSDKInitialization?.dispose()
         CallComposite.callingSDKInitialization = nil
-        callingSDKWrapper = nil
+        compositeUILaunched = false
     }
 
     /// Handle push notification to receive incoming call
@@ -240,14 +242,18 @@ public class CallComposite {
                     .sink { [weak self] state in
                         self?.receive(state)
                     }.store(in: &cancellables)
-        let viewController = makeToolkitHostingController(router: NavigationRouter(store: store, logger: logger),
+
+        let navigationRouter = NavigationRouter(store: store, logger: logger)
+        self.navigationRouter = navigationRouter
+        let viewController = makeToolkitHostingController(router: navigationRouter,
                                                                   viewFactory: viewFactory)
 
         self.viewController = viewController
         present(viewController)
+        logger.debug("CallComposite: view presented")
         UIApplication.shared.isIdleTimerDisabled = true
 
-         if store.state.permissionState.audioPermission == .notAsked {
+        if store.state.permissionState.audioPermission == .notAsked {
             store.dispatch(action: .permissionAction(.audioPermissionRequested))
         }
         if store.state.defaultUserState.audioState == .on {
@@ -255,10 +261,11 @@ public class CallComposite {
         }
 
         store.dispatch(action: .callingAction(.setupCall))
+        compositeUILaunched = true
     }
 
     private func notifyCallAddedEvent(callId: String) {
-        logger.debug("notifyCallAddedEvent \(callId)")
+        logger.debug("CallComposite: notifyCallAddedEvent \(callId)")
         guard let onCallAddedEvent = events.onCallAdded else {
             return
         }
@@ -266,13 +273,14 @@ public class CallComposite {
     }
 
     private func onCallsAdded(callId: String) {
-        logger.debug("call composite onCallsAdded \(callId)")
+        logger.debug("CallComposite: call composite onCallsAdded \(callId)")
         notifyCallAddedEvent(callId: callId)
         var incomingCallId = incomingCallWrapper.getLastIncomingCallId()
-        logger.debug("call composite incoming call id in call added \(incomingCallId)")
+        logger.debug("CallComposite: call composite incoming call id in call added \(incomingCallId)")
         if incomingCallId == callId {
             /// will launch UI if no active call is in progress
             /// notification accepted from incoming call
+            onIncomingCallAdded = true
             launchUIForIncomingCallAccepted()
         }
     }
@@ -281,12 +289,10 @@ public class CallComposite {
     /// It is possible that composite is in exsiting call, then on previous all disconnect launch UI
     private func launchUIForIncomingCallAccepted() {
         /// when disconnected for sdk will be received
-        let callStatus = store?.state.callingState.status
-        let noActiveCall = callStatus == .disconnected || callStatus == .none
-        logger.debug("call composite launchUIForIncomingCallAccepted \(callStatus)")
-        if isCompositePresentable() && noActiveCall {
-            logger.debug("launcing UI for incoming call")
+        if !compositeUILaunched && onIncomingCallAdded {
+            logger.debug("CallComposite: launcing UI for incoming call")
             incomingCallWrapper.dispose()
+            onIncomingCallAdded = false
             guard let callingSDKInitialization = CallComposite.callingSDKInitialization,
                   let callKitOptions = callingSDKInitialization.callCompositeCallKitOptions else {
                 return
@@ -304,7 +310,6 @@ public class CallComposite {
 
     private func constructCallingSDKInitialization(logger: Logger) -> CallingSDKInitialization {
         if let callingSDKInitialization = CallComposite.callingSDKInitialization {
-            callingSDKInitialization.callsUpdatedProtocol = incomingCallWrapper
             return callingSDKInitialization
         }
         CallComposite.callingSDKInitialization = CallingSDKInitialization(logger: logger)
@@ -325,9 +330,9 @@ public class CallComposite {
         }
         self.pipViewController?.dismissSelf()
         self.viewController?.dismissSelf()
-
+        let navigationRouter = self.navigationRouter ?? NavigationRouter(store: store, logger: logger)
         let viewController = makeToolkitHostingController(
-            router: NavigationRouter(store: store, logger: logger),
+            router: navigationRouter,
             viewFactory: viewFactory)
         self.viewController = viewController
         present(viewController)
@@ -349,20 +354,15 @@ public class CallComposite {
         callCompositeEventsHandler: CallComposite.Events,
         withCallingSDKWrapper wrapper: CallingSDKWrapperProtocol? = nil
     ) -> CompositeViewFactoryProtocol {
-        if self.callingSDKWrapper == nil {
-            logger.debug("callingSDKWrapper init in call composite")
-            let callingSDKEventsHandler = CallingSDKEventsHandler(logger: logger)
-            let callingSdkWrapper = wrapper ?? CallingSDKWrapper(
-                logger: logger,
-                callingEventsHandler: callingSDKEventsHandler,
-                callConfiguration: callConfiguration,
-                callingSDKInitialization: constructCallingSDKInitialization(logger: logger)
-            )
-            self.callingSDKWrapper = callingSdkWrapper
-        } else {
-            logger.debug("callingSDKWrapper updating config in call composite")
-            self.callingSDKWrapper?.updateConfigurations(callConfiguration: callConfiguration)
-        }
+        let callingSDKEventsHandler = CallingSDKEventsHandler(logger: logger)
+        let callingSdkWrapper = wrapper ?? CallingSDKWrapper(
+            logger: logger,
+            callingEventsHandler: callingSDKEventsHandler,
+            callConfiguration: callConfiguration,
+            callingSDKInitialization: constructCallingSDKInitialization(logger: logger)
+        )
+        self.callingSDKEventsHandler = callingSDKEventsHandler
+        self.callingSDKWrapper = callingSdkWrapper
 
         let store = Store.constructStore(
             logger: logger,
@@ -426,6 +426,11 @@ public class CallComposite {
         return DebugInfoManager(callHistoryRepository: self.callHistoryRepository)
     }
     private func cleanUpManagers() {
+        callingSDKEventsHandler?.cleanup()
+        callingSDKEventsHandler = nil
+        callingSDKWrapper?.cleanup()
+        callingSDKWrapper = nil
+        self.navigationRouter = nil
         self.errorManager = nil
         self.callStateManager = nil
         self.lifeCycleManager = nil
@@ -461,21 +466,24 @@ extension CallComposite {
         containerUIHostingController.modalPresentationStyle = .fullScreen
         router.setDismissComposite { [weak containerUIHostingController, weak self] in
             var incomingCallId = self?.incomingCallWrapper.getLastIncomingCallId()
-            self?.logger.debug("incoming call id in setDismissComposite \(incomingCallId)")
+            self?.logger.debug("CallComposite: incoming call id in setDismissComposite \(incomingCallId)")
+            self?.pipViewController?.dismiss(animated: false)
+            self?.viewController?.dismiss(animated: false)
+            containerUIHostingController?.dismissSelf()
             self?.viewController = nil
             self?.pipViewController = nil
             self?.viewFactory = nil
+            self?.cleanUpManagers()
             /// if not empty mean UI for incoming call accepted is not launched yet
             if incomingCallId == "" {
                 self?.exitManager?.onDismissed()
-                UIApplication.shared.isIdleTimerDisabled = false
             }
-            self?.cleanUpManagers()
-            containerUIHostingController?.dismissSelf()
+            self?.compositeUILaunched = false
+            UIApplication.shared.isIdleTimerDisabled = false
             /// if not empty mean UI for incoming call accepted is not launched yet
             if incomingCallId != "" {
                 DispatchQueue.main.async {
-                    self?.logger.debug("setDismissComposite containerUIHostingController launch")
+                    self?.logger.debug("CallComposite: setDismissComposite containerUIHostingController launch")
                     self?.launchUIForIncomingCallAccepted()
                 }
             }
@@ -541,9 +549,9 @@ extension CallComposite {
             guard let store = self.store, let viewFactory = self.viewFactory else {
                 return nil
             }
-
+            let navigationRouter = self.navigationRouter ?? NavigationRouter(store: store, logger: self.logger)
             let viewController = self.makeToolkitHostingController(
-            router: NavigationRouter(store: store, logger: self.logger),
+            router: navigationRouter,
             viewFactory: viewFactory)
             self.pipViewController = viewController
             return viewController.view

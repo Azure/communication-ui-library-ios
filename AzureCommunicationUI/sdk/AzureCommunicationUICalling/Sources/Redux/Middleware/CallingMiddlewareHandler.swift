@@ -395,7 +395,7 @@ extension CallingMiddlewareHandler {
                     // to fix the bug that resume call won't work without Internet
                     // we exit the UI library when we receive the wrong status .remoteHold
                 } else if callingStatus == .disconnected {
-                    self.logger.debug("Subscription cancel happy path")
+                    self.logger.debug("CallComposite: Subscription cancel happy path")
                     dispatch(.compositeExitAction)
                     self.subscription.cancel()
                 }

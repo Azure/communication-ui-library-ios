@@ -181,16 +181,20 @@ extension CallingSDKEventsHandler: CallDelegate,
     }
 
     func call(_ call: Call, didChangeState args: PropertyChangedEventArgs) {
+        updateCallInfo(call: call)
+    }
+
+    func updateCallInfo(call: Call) {
         callIdSubject.send(call.id)
 
         let currentStatus = call.state.toCallingStatus()
-        logger.debug("call state received \(currentStatus) \(call.id)")
+        logger.debug("CallComposite: call state received \(currentStatus) \(call.id)")
 
         let internalError = call.callEndReason.toCompositeInternalError(wasCallConnected())
         if internalError != nil {
             let code = call.callEndReason.code
             let subcode = call.callEndReason.subcode
-            logger.error("Receive vaildate \(call.id) CallEndReason:\(code), subcode:\(subcode)")
+            logger.error("CallComposite: Receive vaildate \(call.id) CallEndReason:\(code), subcode:\(subcode)")
         }
         // native sdk have issue when disconnected using callkit
         // current active call returns 500 in connected status
