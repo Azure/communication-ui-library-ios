@@ -11,7 +11,7 @@ public struct CallCompositeOptions {
     private(set) var themeOptions: ThemeOptions?
     private(set) var localizationOptions: LocalizationOptions?
     private(set) var enableMultitasking: Bool = false
-    private(set) var enableSystemPiPWhenMultitasking: Bool = false
+    private(set) var enableSystemPipWhenMultitasking: Bool = false
     private(set) var setupScreenOrientation: OrientationOptions?
     private(set) var callingScreenOrientation: OrientationOptions?
 
@@ -26,19 +26,19 @@ public struct CallCompositeOptions {
     ///  callingScreenOrientation customization. Default value is `nil`.
     /// - Parameter enableMultitasking: enables user to navigate in the application
     ///  while on the call. Default value is `false`.
-    /// - Parameter enableSystemPiPWhenMultitasking: enables syspem PiP while
+    /// - Parameter enableSystemPipWhenMultitasking: enables syspem PiP while
     ///  enableMultitasking is on and user navigates away from call view. Default value is `false`.
     public init(theme: ThemeOptions? = nil,
                 localization: LocalizationOptions? = nil,
                 setupScreenOrientation: OrientationOptions? = nil,
                 callingScreenOrientation: OrientationOptions? = nil,
                 enableMultitasking: Bool = false,
-                enableSystemPiPWhenMultitasking: Bool = false) {
+                enableSystemPipWhenMultitasking: Bool = false) {
         self.themeOptions = theme
         self.localizationOptions = localization
         self.setupScreenOrientation = setupScreenOrientation
         self.callingScreenOrientation = callingScreenOrientation
         self.enableMultitasking = enableMultitasking
-        self.enableSystemPiPWhenMultitasking = enableSystemPiPWhenMultitasking
+        self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
     }
 }

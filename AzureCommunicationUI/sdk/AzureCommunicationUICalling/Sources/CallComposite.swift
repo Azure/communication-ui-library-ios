@@ -35,7 +35,7 @@ public class CallComposite {
     private let themeOptions: ThemeOptions?
     private let localizationOptions: LocalizationOptions?
     private let enableMultitasking: Bool
-    private let enableSystemPiPWhenMultitasking: Bool
+    private let enableSystemPipWhenMultitasking: Bool
     private let setupViewOrientationOptions: OrientationOptions?
     private let callingViewOrientationOptions: OrientationOptions?
 
@@ -85,7 +85,7 @@ public class CallComposite {
         localizationOptions = options?.localizationOptions
         localizationProvider = LocalizationProvider(logger: logger)
         enableMultitasking = options?.enableMultitasking ?? false
-        enableSystemPiPWhenMultitasking = options?.enableSystemPiPWhenMultitasking ?? false
+        enableSystemPipWhenMultitasking = options?.enableSystemPipWhenMultitasking ?? false
         setupViewOrientationOptions = options?.setupScreenOrientation
         callingViewOrientationOptions = options?.callingScreenOrientation
         orientationProvider = OrientationProvider()
@@ -197,7 +197,7 @@ public class CallComposite {
         self.pipManager?.reset()
     }
 
-    /// Controls if CallComposite UI is hidder. If CallComosite is created with enableSystemPiPWhenMultitasking
+    /// Controls if CallComposite UI is hidder. If CallComosite is created with enableSystemPipWhenMultitasking
     /// set to true, then setting isHidden to true will start syspem Picture-in-Picture view.
     public var isHidden: Bool {
         get {
@@ -218,7 +218,7 @@ public class CallComposite {
     private func hide() {
         self.viewController?.dismissSelf()
         self.viewController = nil
-        if self.enableSystemPiPWhenMultitasking && store?.state.navigationState.status == .inCall {
+        if self.enableSystemPipWhenMultitasking && store?.state.navigationState.status == .inCall {
             store?.dispatch(action: .visibilityAction(.pipModeRequested))
         }
     }
@@ -266,7 +266,7 @@ public class CallComposite {
         self.debugInfoManager = debugInfoManager
         let videoViewManager = VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger)
 
-        if enableSystemPiPWhenMultitasking {
+        if enableSystemPipWhenMultitasking {
             self.pipManager = createPipManager(store)
         }
 
@@ -287,7 +287,7 @@ public class CallComposite {
                 debugInfoManager: debugInfoManager,
                 localOptions: localOptions,
                 enableMultitasking: enableMultitasking,
-                enableSystemPiPWhenMultitasking: enableSystemPiPWhenMultitasking
+                enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking
             )
         )
     }

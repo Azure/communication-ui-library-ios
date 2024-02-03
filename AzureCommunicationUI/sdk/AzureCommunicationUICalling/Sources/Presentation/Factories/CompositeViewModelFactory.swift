@@ -101,7 +101,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
     private let debugInfoManager: DebugInfoManagerProtocol
     private let localOptions: LocalOptions?
     private let enableMultitasking: Bool
-    private let enableSystemPiPWhenMultitasking: Bool
+    private let enableSystemPipWhenMultitasking: Bool
 
     private weak var setupViewModel: SetupViewModel?
     private weak var callingViewModel: CallingViewModel?
@@ -115,7 +115,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
          debugInfoManager: DebugInfoManagerProtocol,
          localOptions: LocalOptions? = nil,
          enableMultitasking: Bool,
-         enableSystemPiPWhenMultitasking: Bool) {
+         enableSystemPipWhenMultitasking: Bool) {
         self.logger = logger
         self.store = store
         self.networkManager = networkManager
@@ -125,7 +125,7 @@ class CompositeViewModelFactory: CompositeViewModelFactoryProtocol {
         self.debugInfoManager = debugInfoManager
         self.localOptions = localOptions
         self.enableMultitasking = enableMultitasking
-        self.enableSystemPiPWhenMultitasking = enableSystemPiPWhenMultitasking
+        self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
     }
 
     // MARK: CompositeViewModels
@@ -277,7 +277,7 @@ extension CompositeViewModelFactory {
                             accessibilityProvider: accessibilityProvider,
                             dispatchAction: dispatchAction,
                             enableMultitasking: enableMultitasking,
-                            enableSystemPiPWhenMultitasking: enableSystemPiPWhenMultitasking)
+                            enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking)
     }
 
     func makeLobbyWaitingHeaderViewModel(localUserState: LocalUserState,
