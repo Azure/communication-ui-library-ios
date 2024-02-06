@@ -20,7 +20,7 @@ class InfoHeaderViewModel: ObservableObject {
     private var participantsCount: Int = 0
     private var callingStatus: CallingStatus = .none
     let enableMultitasking: Bool
-    private let enableSystemPiPWhenMultitasking: Bool
+    private let enableSystemPipWhenMultitasking: Bool
 
     let participantsListViewModel: ParticipantsListViewModel
     var participantListButtonViewModel: IconButtonViewModel!
@@ -35,7 +35,7 @@ class InfoHeaderViewModel: ObservableObject {
          accessibilityProvider: AccessibilityProviderProtocol,
          dispatchAction: @escaping ActionDispatch,
          enableMultitasking: Bool,
-         enableSystemPiPWhenMultitasking: Bool) {
+         enableSystemPipWhenMultitasking: Bool) {
         self.dispatch = dispatchAction
         self.logger = logger
         self.accessibilityProvider = accessibilityProvider
@@ -44,7 +44,7 @@ class InfoHeaderViewModel: ObservableObject {
         self.infoLabel = title
         self.accessibilityLabel = title
         self.enableMultitasking = enableMultitasking
-        self.enableSystemPiPWhenMultitasking = enableSystemPiPWhenMultitasking
+        self.enableSystemPipWhenMultitasking = enableSystemPipWhenMultitasking
         self.participantsListViewModel = compositeViewModelFactory.makeParticipantsListViewModel(
             localUserState: localUserState, dispatchAction: dispatchAction)
         self.participantListButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
@@ -190,7 +190,7 @@ class InfoHeaderViewModel: ObservableObject {
     }
 
     private func dismissButtonTapped() {
-        if self.enableSystemPiPWhenMultitasking {
+        if self.enableSystemPipWhenMultitasking {
             dispatch(.visibilityAction(.pipModeRequested))
         } else {
             dispatch(.visibilityAction(.hideRequested))
