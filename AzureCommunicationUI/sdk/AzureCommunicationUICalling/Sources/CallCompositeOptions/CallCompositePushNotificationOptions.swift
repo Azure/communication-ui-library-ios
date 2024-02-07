@@ -20,6 +20,9 @@ public struct CallCompositePushNotificationOptions {
     /// CallKit options
     public let callKitOptions: CallCompositeCallKitOption?
 
+    /// Disable incoming call from trouter
+    public let disableInternalPushForIncomingCall: Bool
+
     /// Create an instance of a RemoteOptions with options.
     /// - Parameters:
     ///   - deviceToken: Device VoIP token..
@@ -29,10 +32,12 @@ public struct CallCompositePushNotificationOptions {
     public init(deviceToken: Data,
                 credential: CommunicationTokenCredential,
                 displayName: String? = nil,
-                callKitOptions: CallCompositeCallKitOption) {
+                callKitOptions: CallCompositeCallKitOption,
+                disableInternalPushForIncomingCall: Bool = false) {
         self.deviceRegistrationToken = deviceToken
         self.credential = credential
         self.displayName = displayName
         self.callKitOptions = callKitOptions
+        self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
     }
 }

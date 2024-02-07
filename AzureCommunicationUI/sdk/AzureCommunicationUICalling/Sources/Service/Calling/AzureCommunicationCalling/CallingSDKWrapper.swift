@@ -70,7 +70,8 @@ class CallingSDKWrapper: NSObject, CallingSDKWrapperProtocol {
                     tags: self.callConfiguration.diagnosticConfig.tags,
                     credential: self.callConfiguration.credential!,
                     callKitOptions: self.callConfiguration.callKitOptions,
-                    displayName: self.callConfiguration.displayName)
+                    displayName: self.callConfiguration.displayName,
+                    disableInternalPushForIncomingCall: self.callConfiguration.disableInternalPushForIncomingCall)
             }
             callAgent = callingSDKInitialization?.callAgent
         } catch {

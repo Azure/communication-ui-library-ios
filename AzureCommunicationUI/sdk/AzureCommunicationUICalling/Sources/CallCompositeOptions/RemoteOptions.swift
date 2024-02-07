@@ -51,6 +51,9 @@ public struct RemoteOptions {
     /// Push notification info
     public let pushNotificationInfo: CallCompositePushNotificationInfo?
 
+    /// Disable incoming call from trouter
+    public let disableInternalPushForIncomingCall: Bool
+
     /// Create an instance of a RemoteOptions with options.
     /// - Parameters:
     ///   - locator: The JoinLocator type with unique identifier for joining a specific call.
@@ -60,13 +63,15 @@ public struct RemoteOptions {
     public init(for locator: JoinLocator,
                 credential: CommunicationTokenCredential,
                 displayName: String? = nil,
-                callKitOptions: CallCompositeCallKitOption? = nil) {
+                callKitOptions: CallCompositeCallKitOption? = nil,
+                disableInternalPushForIncomingCall: Bool = false) {
         self.locator = locator
         self.credential = credential
         self.displayName = displayName
         self.startCallOptions = nil
         self.callKitOptions = callKitOptions
         self.pushNotificationInfo = nil
+        self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
     }
 
     /// Create an instance of a RemoteOptions with options.
@@ -78,13 +83,15 @@ public struct RemoteOptions {
     public init(for startCallOptions: CallCompositeStartCallOptions,
                 credential: CommunicationTokenCredential,
                 displayName: String? = nil,
-                callKitOptions: CallCompositeCallKitOption? = nil) {
+                callKitOptions: CallCompositeCallKitOption? = nil,
+                disableInternalPushForIncomingCall: Bool = false) {
         self.startCallOptions = startCallOptions
         self.credential = credential
         self.displayName = displayName
         self.callKitOptions = callKitOptions
         self.locator = nil
         self.pushNotificationInfo = nil
+        self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
     }
 
     /// Create an instance of a RemoteOptions with options.
@@ -96,12 +103,14 @@ public struct RemoteOptions {
     public init(for pushNotificationInfo: CallCompositePushNotificationInfo,
                 credential: CommunicationTokenCredential,
                 displayName: String? = nil,
-                callKitOptions: CallCompositeCallKitOption) {
+                callKitOptions: CallCompositeCallKitOption,
+                disableInternalPushForIncomingCall: Bool = false) {
         self.startCallOptions = nil
         self.credential = credential
         self.displayName = displayName
         self.callKitOptions = callKitOptions
         self.locator = nil
         self.pushNotificationInfo = pushNotificationInfo
+        self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
     }
 }

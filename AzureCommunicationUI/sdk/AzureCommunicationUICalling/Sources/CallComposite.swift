@@ -135,7 +135,8 @@ public class CallComposite {
                 credential: remoteOptions.credential,
                 callKitOptions: remoteOptions.callKitOptions,
                 displayName: remoteOptions.displayName,
-                callNotification: pushNotificationInfo)
+                callNotification: pushNotificationInfo,
+                disableInternalPushForIncomingCall: remoteOptions.disableInternalPushForIncomingCall)
     }
 
     /// Report incoming call to notify CallKit
@@ -190,13 +191,17 @@ public class CallComposite {
                                                   displayName: remoteOptions.displayName,
                                                   callKitOptions: remoteOptions.callKitOptions,
                                                   diagnosticConfig: diagnosticConfig,
-                                                  roomRole: localOptions?.roleHint)
+                                                  roomRole: localOptions?.roleHint,
+                                                  disableInternalPushForIncomingCall:
+                                                    remoteOptions.disableInternalPushForIncomingCall)
         } else if let startCallOptions = remoteOptions.startCallOptions {
             callConfiguration = CallConfiguration(startCallOptions: startCallOptions,
                                                   credential: remoteOptions.credential,
                                                   displayName: remoteOptions.displayName,
                                                   callKitOptions: remoteOptions.callKitOptions,
-                                                  diagnosticConfig: diagnosticConfig)
+                                                  diagnosticConfig: diagnosticConfig,
+                                                  disableInternalPushForIncomingCall:
+                                                    remoteOptions.disableInternalPushForIncomingCall)
         }
         if let callconfig = callConfiguration {
             launch(callconfig, localOptions: localOptions)
@@ -300,7 +305,9 @@ public class CallComposite {
             let callConfiguration = CallConfiguration(callType: .oneToNCallIncoming,
                                                       diagnosticConfig: diagnosticConfig,
                                                       displayName: callingSDKInitialization.displayName,
-                                                      callKitOptions: callKitOptions)
+                                                      callKitOptions: callKitOptions,
+                                                      disableInternalPushForIncomingCall:
+                                                        callingSDKInitialization.disableInternalPush)
             let localOptions = LocalOptions(skipSetupScreen: true)
             DispatchQueue.main.async {
                 self.launch(callConfiguration, localOptions: localOptions)

@@ -16,6 +16,7 @@ internal class CallingSDKInitialization: NSObject {
     var onCallAdded: ((String) -> Void)?
     var displayName: String?
     var callCompositeCallKitOptions: CallCompositeCallKitOption?
+    var disableInternalPush: Bool = false
 
     private let logger: Logger
 
@@ -35,13 +36,16 @@ internal class CallingSDKInitialization: NSObject {
     func setupCallAgent(tags: [String],
                         credential: CommunicationTokenCredential,
                         callKitOptions: CallCompositeCallKitOption?,
-                        displayName: String? = nil) async throws {
+                        displayName: String? = nil,
+                        disableInternalPushForIncomingCall: Bool) async throws {
         guard self.callAgent == nil else {
             logger.debug("Reusing call agent")
             return
         }
         setupCallClient(tags: tags)
         let options = CallAgentOptions()
+        options.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
+        self.disableInternalPush = disableInternalPushForIncomingCall
         self.callCompositeCallKitOptions = callKitOptions
         if let callKitConfig = callKitOptions?.cxProvideConfig {
             let sdkCallKitOptions = CallKitOptions(with: callKitConfig)
@@ -85,7 +89,9 @@ internal class CallingSDKInitialization: NSObject {
             try await setupCallAgent(tags: tags,
                                      credential: notificationOptions.credential,
                                      callKitOptions: notificationOptions.callKitOptions,
-                                     displayName: notificationOptions.displayName)
+                                     displayName: notificationOptions.displayName,
+                                     disableInternalPushForIncomingCall:
+                                        notificationOptions.disableInternalPushForIncomingCall)
             try await self.callAgent?.registerPushNotifications(
                 deviceToken: notificationOptions.deviceRegistrationToken)
             logger.debug("registerPushNotifications success")
@@ -99,7 +105,8 @@ internal class CallingSDKInitialization: NSObject {
                                 credential: CommunicationTokenCredential,
                                 callKitOptions: CallCompositeCallKitOption?,
                                 displayName: String? = nil,
-                                callNotification: PushNotificationInfo) async throws {
+                                callNotification: PushNotificationInfo,
+                                disableInternalPushForIncomingCall: Bool) async throws {
         do {
             let callKitOptionsInternal = CallKitOptions(with: callKitOptions!.cxProvideConfig)
             callKitOptionsInternal.isCallHoldSupported = callKitOptions!.isCallHoldSupported
@@ -125,7 +132,8 @@ internal class CallingSDKInitialization: NSObject {
             try await setupCallAgent(tags: tags,
                                      credential: credential,
                                      callKitOptions: callKitOptions,
-                                     displayName: displayName)
+                                     displayName: displayName,
+                                     disableInternalPushForIncomingCall: disableInternalPushForIncomingCall)
             try await self.callAgent?.handlePush(notification: callNotification)
             self.logger.debug("handlePush success")
         } catch {

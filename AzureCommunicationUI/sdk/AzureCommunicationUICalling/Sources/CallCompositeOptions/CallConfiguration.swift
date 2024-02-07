@@ -17,13 +17,15 @@ struct CallConfiguration {
     let participants: [String]?
     let roomId: String?
     let roomRoleHint: ParticipantRole?
+    let disableInternalPushForIncomingCall: Bool
 
     init(locator: JoinLocator,
          credential: CommunicationTokenCredential,
          displayName: String?,
          callKitOptions: CallCompositeCallKitOption? = nil,
          diagnosticConfig: DiagnosticConfig,
-         roomRole: ParticipantRole?) {
+         roomRole: ParticipantRole?,
+         disableInternalPushForIncomingCall: Bool) {
         switch locator {
         case let .groupCall(groupId: groupId):
             self.groupId = groupId
@@ -49,13 +51,15 @@ struct CallConfiguration {
         self.participants = nil
         self.diagnosticConfig = diagnosticConfig
         self.callKitOptions = callKitOptions
+        self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
     }
 
     init(startCallOptions: CallCompositeStartCallOptions,
          credential: CommunicationTokenCredential,
          displayName: String?,
          callKitOptions: CallCompositeCallKitOption? = nil,
-         diagnosticConfig: DiagnosticConfig) {
+         diagnosticConfig: DiagnosticConfig,
+         disableInternalPushForIncomingCall: Bool) {
         self.participants = startCallOptions.participants
         self.compositeCallType = .oneToNCallOutgoing
         self.credential = credential
@@ -66,12 +70,14 @@ struct CallConfiguration {
         self.diagnosticConfig = diagnosticConfig
         self.roomId = nil
         self.roomRoleHint = nil
+        self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
     }
 
     init(callType: CompositeCallType,
          diagnosticConfig: DiagnosticConfig,
          displayName: String?,
-         callKitOptions: CallCompositeCallKitOption) {
+         callKitOptions: CallCompositeCallKitOption,
+         disableInternalPushForIncomingCall: Bool) {
         self.participants = nil
         self.compositeCallType = callType
         self.credential = nil
@@ -82,6 +88,7 @@ struct CallConfiguration {
         self.diagnosticConfig = diagnosticConfig
         self.roomId = nil
         self.roomRoleHint = nil
+        self.disableInternalPushForIncomingCall = disableInternalPushForIncomingCall
     }
 }
 

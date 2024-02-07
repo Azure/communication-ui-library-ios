@@ -279,17 +279,18 @@ extension CallingDemoView {
         }
         if let communicationTokenCredential = try? CommunicationTokenCredential(token: envConfigSubject.acsToken) {
             Task {
-                os_log("calling demo app: calling handlePushNotification")
+                os_log("CallingDemoView: calling demo app: calling handlePushNotification")
                 let displayName = envConfigSubject.displayName.isEmpty ? nil : envConfigSubject.displayName
                 let remoteOptions = RemoteOptions(for: pushNotificationInfo,
                                                   credential: communicationTokenCredential,
                                                   displayName: displayName,
-                                                  callKitOptions: getCallKitOptions())
+                                                  callKitOptions: getCallKitOptions(),
+                                                  disableInternalPushForIncomingCall: true)
                 do {
                     try await createCallComposite().handlePushNotification(remoteOptions: remoteOptions)
                 } catch {
                     // Handle the error
-                    print("Error: \(error)")
+                    print("CallingDemoView Error: \(error)")
                 }
             }
         }
@@ -374,9 +375,9 @@ extension CallingDemoView {
 
         let onDismissedHandler: (CallCompositeDismissed) -> Void = { [] _ in
             // Known issue: every time on exit register for push to receive again
-            Task {
-                await self.registerForNotification()
-            }
+//            Task {
+//                await self.registerForNotification()
+//            }
             if envConfigSubject.useRelaunchOnDismissedToggle && exitCompositeExecuted {
                 relaunchComposite()
             }
@@ -445,7 +446,8 @@ extension CallingDemoView {
                                                   credential: credential,
                                                   displayName: displayName,
                                                   callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
-                                                  ? callKitOptions : nil)
+                                                  ? callKitOptions : nil,
+                                                  disableInternalPushForIncomingCall: true)
 
                 callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
             case .teamsMeeting:
@@ -454,7 +456,8 @@ extension CallingDemoView {
                                                   displayName: envConfigSubject.displayName.isEmpty
                                                   ? nil : envConfigSubject.displayName,
                                                   callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
-                                                  ? callKitOptions : nil)
+                                                  ? callKitOptions : nil,
+                                                  disableInternalPushForIncomingCall: true)
 
                 callComposite.launch(remoteOptions: remoteOptions, localOptions: localOptions)
             case .oneToNCall:
@@ -471,7 +474,8 @@ extension CallingDemoView {
                                                   credential: credential,
                                                   displayName: envConfigSubject.displayName.isEmpty
                                                   ? nil : envConfigSubject.displayName,
-                                                  callKitOptions: callKitOptions)
+                                                  callKitOptions: callKitOptions,
+                                                  disableInternalPushForIncomingCall: true)
                 callComposite.launch(remoteOptions: remoteOptions,
                                      localOptions: localOptionsForOneToN)
             case .roomCall:
@@ -480,7 +484,8 @@ extension CallingDemoView {
                                             RemoteOptions(for: .roomCall(roomId: link),
                                                           credential: credential,
                                                           callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
-                                                          ? callKitOptions : nil),
+                                                          ? callKitOptions : nil,
+                                                          disableInternalPushForIncomingCall: true),
                                          localOptions: localOptions)
                 } else {
                     callComposite.launch(
@@ -489,7 +494,8 @@ extension CallingDemoView {
                                                      credential: credential,
                                                      displayName: envConfigSubject.displayName,
                                                      callKitOptions: $envConfigSubject.enableCallKit.wrappedValue
-                                                     ? callKitOptions : nil),
+                                                     ? callKitOptions : nil,
+                                                     disableInternalPushForIncomingCall: true),
                         localOptions: localOptions)
                 }
             }
@@ -511,7 +517,8 @@ extension CallingDemoView {
                 deviceToken: $envConfigSubject.deviceToken.wrappedValue!,
                 credential: credential,
                 displayName: displayName,
-                callKitOptions: getCallKitOptions())
+                callKitOptions: getCallKitOptions(),
+                disableInternalPushForIncomingCall: true)
             print("CallingDemoView, registerPushNotification")
             Task {
                 do {
