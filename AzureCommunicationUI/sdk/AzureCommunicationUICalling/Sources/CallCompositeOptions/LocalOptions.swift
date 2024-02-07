@@ -12,14 +12,15 @@ public struct LocalOptions {
     let participantViewData: ParticipantViewData?
     /// The SetupScreenViewData is used for call setup screen
     let setupScreenViewData: SetupScreenViewData?
-    /// The CameraOn is used when we skip the setup screen
-    let cameraOn: Bool?
     /// The MicrophoneOn is used when we skip the setup screen
     let microphoneOn: Bool?
     /// The SkipSetupScreen is used when we skip the setup screen
     let skipSetupScreen: Bool?
     /// The avMode selects the scope of audio/video locally for the call
     let avMode: CallCompositeAvMode
+
+    /// The CameraOn is used when we skip the setup screen
+    private let cameraOnInternal: Bool?
 
     /// Create an instance of LocalOptions. All information in this object is only stored locally in the composite.
     /// - Parameters:
@@ -33,10 +34,19 @@ public struct LocalOptions {
                 avMode: CallCompositeAvMode = .normal) {
         self.participantViewData = participantViewData
         self.setupScreenViewData = setupScreenViewData
-        self.cameraOn = cameraOn
+        self.cameraOnInternal = cameraOn
         self.microphoneOn = microphoneOn
         self.skipSetupScreen = skipSetupScreen
         self.avMode = avMode
+    }
+
+    /// A computed property to determine if the camera is on.
+    /// Returns `false` if `avMode` is `.audio_only`, regardless of the `cameraOn` value.
+    var cameraOn: Bool {
+        guard avMode != .audioOnly else {
+            return false
+        }
+        return cameraOnInternal ?? false
     }
 }
 /// Object to represent participants data

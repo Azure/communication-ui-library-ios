@@ -22,6 +22,7 @@ class ControlBarViewModel: ObservableObject {
     @Published var isSupportFormDisplayed: Bool = false
     @Published var isSupportFormOptionDisplayed: Bool = false
     @Published var isDisplayed: Bool = false
+    @Published var isCameraDisplayed: Bool = true
 
     let audioDevicesListViewModel: AudioDevicesListViewModel
     var supportFormViewModel: SupportFormViewModel!

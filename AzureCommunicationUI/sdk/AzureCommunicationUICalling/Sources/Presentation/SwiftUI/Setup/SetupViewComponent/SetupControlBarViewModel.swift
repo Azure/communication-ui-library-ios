@@ -10,6 +10,7 @@ class SetupControlBarViewModel: ObservableObject {
     @Published var cameraPermission: AppPermission.Status = .unknown
     @Published var audioPermission: AppPermission.Status = .unknown
     @Published var isAudioDeviceSelectionDisplayed: Bool = false
+    @Published var isCameraDisplayed: Bool = true
 
     private let logger: Logger
     private let dispatch: ActionDispatch

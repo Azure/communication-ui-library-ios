@@ -121,6 +121,7 @@ struct ControlBarView: View {
     var videoButton: some View {
         IconButton(viewModel: viewModel.cameraButtonViewModel)
             .accessibility(identifier: AccessibilityIdentifier.videoAccessibilityID.rawValue)
+            .hidden(!viewModel.isCameraDisplayed)
     }
 
     var micButton: some View {

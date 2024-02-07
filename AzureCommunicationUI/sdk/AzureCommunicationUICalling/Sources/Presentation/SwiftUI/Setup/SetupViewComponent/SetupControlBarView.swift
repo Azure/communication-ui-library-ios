@@ -42,6 +42,7 @@ struct SetupControlBarView: View {
     var cameraButton: some View {
         IconWithLabelButton(viewModel: viewModel.cameraButtonViewModel)
             .accessibility(identifier: AccessibilityIdentifier.toggleVideoAccessibilityID.rawValue)
+            .hidden(!viewModel.isCameraDisplayed)
     }
 
     var micButton: some View {
