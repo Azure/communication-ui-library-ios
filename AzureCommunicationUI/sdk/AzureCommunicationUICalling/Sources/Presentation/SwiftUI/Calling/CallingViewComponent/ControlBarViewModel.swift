@@ -19,9 +19,12 @@ class ControlBarViewModel: ObservableObject {
     @Published var isConfirmLeaveListDisplayed: Bool = false
     @Published var isMoreCallOptionsListDisplayed: Bool = false
     @Published var isShareActivityDisplayed: Bool = false
-    @Published var isDisplayed: Bool = true
+    @Published var isSupportFormDisplayed: Bool = false
+    @Published var isSupportFormOptionDisplayed: Bool = false
+    @Published var isDisplayed: Bool = false
 
     let audioDevicesListViewModel: AudioDevicesListViewModel
+    var supportFormViewModel: SupportFormViewModel!
     var micButtonViewModel: IconButtonViewModel!
     var audioDeviceButtonViewModel: IconButtonViewModel!
     var hangUpButtonViewModel: IconButtonViewModel!
@@ -43,14 +46,18 @@ class ControlBarViewModel: ObservableObject {
          dispatchAction: @escaping ActionDispatch,
          endCallConfirm: @escaping (() -> Void),
          localUserState: LocalUserState) {
+
         self.logger = logger
         self.localizationProvider = localizationProvider
         self.dispatch = dispatchAction
         self.displayEndCallConfirm = endCallConfirm
 
+        supportFormViewModel = compositeViewModelFactory.makeSupportFormViewModel()
+
         audioDevicesListViewModel = compositeViewModelFactory.makeAudioDevicesListViewModel(
             dispatchAction: dispatch,
             localUserState: localUserState)
+
         cameraButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .videoOff,
             buttonType: .controlButton,
@@ -61,6 +68,7 @@ class ControlBarViewModel: ObservableObject {
                 self.logger.debug("Toggle camera button tapped")
                 self.cameraButtonTapped()
         }
+
         cameraButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .videoOffAccessibilityLabel)
 
@@ -74,6 +82,7 @@ class ControlBarViewModel: ObservableObject {
                 self.logger.debug("Toggle microphone button tapped")
                 self.microphoneButtonTapped()
         }
+
         micButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .micOffAccessibilityLabel)
 
@@ -87,6 +96,7 @@ class ControlBarViewModel: ObservableObject {
                 self.logger.debug("Select audio device button tapped")
                 self.selectAudioDeviceButtonTapped()
         }
+
         audioDeviceButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .deviceAccesibiiltyLabel)
 
@@ -100,8 +110,10 @@ class ControlBarViewModel: ObservableObject {
                 self.logger.debug("Hangup button tapped")
                 self.endCallButtonTapped()
         }
+
         hangUpButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .leaveCall)
+
         moreButtonViewModel = compositeViewModelFactory.makeIconButtonViewModel(
             iconName: .more,
             buttonType: .controlButton,
@@ -112,6 +124,7 @@ class ControlBarViewModel: ObservableObject {
                 }
                 self.moreButtonTapped()
         }
+
         moreButtonViewModel.accessibilityLabel = self.localizationProvider.getLocalizedString(
             .moreAccessibilityLabel)
 
@@ -121,7 +134,15 @@ class ControlBarViewModel: ObservableObject {
                     return
                 }
                 self.isShareActivityDisplayed = true
-            })
+            },
+            showSupportFormAction: { [weak self] in
+                guard let self = self else {
+                    return
+                }
+                self.isSupportFormDisplayed = true
+            }
+        )
+
         debugInfoSharingActivityViewModel = compositeViewModelFactory.makeDebugInfoSharingActivityViewModel()
     }
 

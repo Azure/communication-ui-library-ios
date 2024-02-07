@@ -25,6 +25,7 @@ struct ControlBarView: View {
                     nonCenteredStack
                 }
             }
+
             .padding()
             .background(Color(StyleProvider.color.backgroundColor))
             .modifier(PopupModalView(isPresented: viewModel.isAudioDeviceSelectionDisplayed) {
@@ -45,7 +46,14 @@ struct ControlBarView: View {
             })
             .modifier(PopupModalView(
                 isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isShareActivityDisplayed) {
-                    activityView
+                    shareActivityView
+                        .accessibilityElement(children: .contain)
+                        .accessibilityAddTraits(.isModal)
+            })
+            .modifier(PopupModalView(
+                isPresented: !viewModel.isMoreCallOptionsListDisplayed && viewModel.isSupportFormDisplayed,
+                alignment: .bottom) {
+                    reportErrorView
                         .accessibilityElement(children: .contain)
                         .accessibilityAddTraits(.isModal)
             })
@@ -163,8 +171,7 @@ struct ControlBarView: View {
             .modifier(LockPhoneOrientation())
         }
     }
-
-    var activityView: some View {
+    var shareActivityView: some View {
         return Group {
             SharingActivityView(viewModel: viewModel.debugInfoSharingActivityViewModel,
                                 applicationActivities: nil,
@@ -172,6 +179,15 @@ struct ControlBarView: View {
                                 isPresented: $viewModel.isShareActivityDisplayed)
             .edgesIgnoringSafeArea(.all)
             .modifier(LockPhoneOrientation())
+        }
+    }
+    var reportErrorView: some View {
+        return Group {
+            SupportFormView(isPresented: $viewModel.isSupportFormDisplayed,
+                            viewModel: viewModel.supportFormViewModel)
+                .frame(height: 400)
+                .edgesIgnoringSafeArea(.all)
+                .modifier(LockPhoneOrientation())
         }
     }
 }

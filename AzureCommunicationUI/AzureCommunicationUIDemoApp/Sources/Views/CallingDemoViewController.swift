@@ -250,6 +250,14 @@ class CallingDemoViewController: UIViewController {
                             }
                         }
         }
+
+        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { [weak callComposite] userIssue in
+            guard let composite = callComposite else {
+                return
+            }
+            print("User issue received in callback " + userIssue.userMessage)
+        }
+
         exitCompositeExecuted = false
         if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
             DispatchQueue.main.asyncAfter(deadline: .now() +
@@ -259,10 +267,12 @@ class CallingDemoViewController: UIViewController {
                 callComposite?.dismiss()
             }
         }
+
         callComposite.events.onRemoteParticipantJoined = onRemoteParticipantJoinedHandler
         callComposite.events.onError = onErrorHandler
         callComposite.events.onCallStateChanged = onCallStateChangedHandler
         callComposite.events.onDismissed = onDismissedHandler
+        callComposite.events.onUserReportedIssue = onUserReportedIssueHandler
 
         let renderDisplayName = envConfigSubject.renderedDisplayName.isEmpty ?
                                 nil : envConfigSubject.renderedDisplayName
@@ -274,8 +284,8 @@ class CallingDemoViewController: UIViewController {
                                         setupScreenViewData: setupScreenViewData,
                                         cameraOn: envConfigSubject.cameraOn,
                                         microphoneOn: envConfigSubject.microphoneOn,
-                                        skipSetupScreen: envConfigSubject.skipSetupScreen)
-
+                                        skipSetupScreen: envConfigSubject.skipSetupScreen,
+                                        avMode: .normal)
         self.callComposite = callComposite
 
         if let credential = try? await getTokenCredential() {

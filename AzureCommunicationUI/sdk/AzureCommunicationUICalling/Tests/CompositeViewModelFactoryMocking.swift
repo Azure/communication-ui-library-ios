@@ -39,6 +39,7 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
     var audioDevicesListCellViewModel: SelectableDrawerListItemViewModel?
     var moreCallOptionsListViewModel: MoreCallOptionsListViewModel?
     var debugInfoSharingActivityViewModel: DebugInfoSharingActivityViewModel?
+    var supportFormViewModel: SupportFormViewModel?
     var moreCallOptionsListCellViewModel: DrawerListItemViewModel?
 
     var createMockParticipantGridCellViewModel: ((ParticipantInfoModel) -> ParticipantGridCellViewModel?)?
@@ -250,10 +251,12 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
                                                                                                     localizationProvider: localizationProvider)
     }
 
-    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
+    func makeMoreCallOptionsListViewModel(showSharingViewAction: @escaping () -> Void, showSupportFormAction: @escaping () -> Void) -> MoreCallOptionsListViewModel {
         moreCallOptionsListViewModel ?? MoreCallOptionsListViewModel(compositeViewModelFactory: self,
                                                                      localizationProvider: localizationProvider,
-                                                                     showSharingViewAction: showSharingViewAction)
+                                                                     showSharingViewAction: showSharingViewAction,
+                                                                     showSupportFormAction: showSupportFormAction,
+                                                                     isSupportFormAvailable: false)
     }
 
     func makeDrawerListItemViewModel(icon: CompositeIcon,
@@ -270,6 +273,11 @@ struct CompositeViewModelFactoryMocking: CompositeViewModelFactoryProtocol {
         debugInfoSharingActivityViewModel ??
         DebugInfoSharingActivityViewModel(accessibilityProvider: accessibilityProvider,
                                           debugInfoManager: debugInfoManager)
+    }
+
+    func makeSupportFormViewModel() -> AzureCommunicationUICalling.SupportFormViewModel {
+        return supportFormViewModel ?? SupportFormViewModel(events: CallComposite.Events(),
+                                                            getDebugInfo: { [self] in self.debugInfoManager.getDebugInfo() })
     }
 
     // MARK: SetupViewModels

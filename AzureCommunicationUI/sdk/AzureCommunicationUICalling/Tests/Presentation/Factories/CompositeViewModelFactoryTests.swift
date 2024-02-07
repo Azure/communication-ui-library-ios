@@ -45,7 +45,8 @@ extension CompositeViewModelFactoryTests {
                                          accessibilityProvider: AccessibilityProviderMocking(),
                                          debugInfoManager: DebugInfoManagerMocking(),
                                          enableMultitasking: true,
-                                         enableSystemPipWhenMultitasking: true)
+                                         enableSystemPipWhenMultitasking: true,
+                                         eventsHandler: CallComposite.Events()) { [] }        
     }
 }
 

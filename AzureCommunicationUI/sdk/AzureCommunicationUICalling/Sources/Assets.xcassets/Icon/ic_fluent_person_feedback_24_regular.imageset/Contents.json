@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "Size=24, Theme=Regular.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

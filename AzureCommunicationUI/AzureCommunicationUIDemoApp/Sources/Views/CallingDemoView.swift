@@ -252,6 +252,10 @@ extension CallingDemoView {
             print("::::CallingDemoView:onPipChangedHandler: ", isInPictureInPicture)
         }
 
+        let onUserReportedIssueHandler: (CallCompositeUserReportedIssue) -> Void = { issue in
+            print("received in app: " + issue.userMessage)
+        }
+
         let onCallStateChangedHandler: (CallState) -> Void = { [weak callComposite] callStateEvent in
             guard let composite = callComposite else {
                 return
@@ -264,6 +268,7 @@ extension CallingDemoView {
                 relaunchComposite()
             }
         }
+
         exitCompositeExecuted = false
         if !envConfigSubject.exitCompositeAfterDuration.isEmpty {
             DispatchQueue.main.asyncAfter(deadline: .now() +

@@ -27,6 +27,8 @@ public class CallComposite {
         public var onCallStateChanged: ((CallState) -> Void)?
         /// Closure to Call Composite dismissed.
         public var onDismissed: ((CallCompositeDismissed) -> Void)?
+        /// Closure to execute when the User reports an issue from within the call composite
+        public var onUserReportedIssue: ((CallCompositeUserReportedIssue) -> Void)?
     }
 
     /// The events handler for Call Composite
@@ -262,7 +264,7 @@ public class CallComposite {
             callCompositeEventsHandler: callCompositeEventsHandler,
             avatarViewManager: avatarViewManager
         )
-        let debugInfoManager = createDebugInfoManager()
+        let debugInfoManager = createDebugInfoManager(callingSDKWrapper: callingSdkWrapper)
         self.debugInfoManager = debugInfoManager
         let videoViewManager = VideoViewManager(callingSDKWrapper: callingSdkWrapper, logger: logger)
 
@@ -287,13 +289,21 @@ public class CallComposite {
                 debugInfoManager: debugInfoManager,
                 localOptions: localOptions,
                 enableMultitasking: enableMultitasking,
-                enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking
+                enableSystemPipWhenMultitasking: enableSystemPipWhenMultitasking,
+                eventsHandler: events,
+                retrieveLogFiles: callingSdkWrapper.getLogFiles
             )
         )
     }
 
+    private func createDebugInfoManager(callingSDKWrapper: CallingSDKWrapperProtocol) -> DebugInfoManagerProtocol {
+        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository,
+                                getLogFiles: { return callingSDKWrapper.getLogFiles() })
+    }
+
     private func createDebugInfoManager() -> DebugInfoManagerProtocol {
-        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository)
+        return DebugInfoManager(callHistoryRepository: self.callHistoryRepository,
+                                getLogFiles: { return [] })
     }
 
     private func cleanUpManagers() {
@@ -343,7 +353,6 @@ public class CallComposite {
             return false
         }
         let hasCallComposite = keyWindow.hasViewController(ofKind: ContainerUIHostingController.self)
-
         return !hasCallComposite
     }
 }

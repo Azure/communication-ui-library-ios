@@ -151,6 +151,12 @@
 		50FA46212698EA7A001844AC /* IconWithLabelButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FA46202698EA7A001844AC /* IconWithLabelButtonViewModel.swift */; };
 		50FA4623269CA1D4001844AC /* IconButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FA4622269CA1D3001844AC /* IconButtonViewModel.swift */; };
 		529C34E328A4B25400ACD918 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529C34E228A4B25400ACD918 /* NetworkManager.swift */; };
+		532DF40B2AF9948F00E63301 /* CallCompositeUserReportedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 532DF40A2AF9948F00E63301 /* CallCompositeUserReportedError.swift */; };
+		533D7AFC2B1965BC0021767F /* SupportFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533D7AFB2B1965BC0021767F /* SupportFormView.swift */; };
+		533D7B002B27BEAE0021767F /* SupportFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 533D7AFF2B27BEAE0021767F /* SupportFormViewModel.swift */; };
+		534B2CF42B575CFB00D52D02 /* CallCompositeAvMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 534B2CF32B575CFB00D52D02 /* CallCompositeAvMode.swift */; };
+		538270B22B45FFD90006AF9E /* ScreenShotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 538270B12B45FFD90006AF9E /* ScreenShotHelper.swift */; };
+		53B6C33C2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53B6C33B2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift */; };
 		5A314059D7E61D1083A8C473 /* LocalVideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314A985811198B09DA2688 /* LocalVideoView.swift */; };
 		5A3140EA80ACDCB14140A060 /* CompositeViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3145FC912A71B20D5ECBF6 /* CompositeViewFactory.swift */; };
 		5A3142646DD55C66CF290F7A /* LocalVideoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A314317E4A1B700E6BE5E2E /* LocalVideoViewModel.swift */; };
@@ -499,6 +505,12 @@
 		50FA46202698EA7A001844AC /* IconWithLabelButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconWithLabelButtonViewModel.swift; sourceTree = "<group>"; };
 		50FA4622269CA1D3001844AC /* IconButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtonViewModel.swift; sourceTree = "<group>"; };
 		529C34E228A4B25400ACD918 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		532DF40A2AF9948F00E63301 /* CallCompositeUserReportedError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeUserReportedError.swift; sourceTree = "<group>"; };
+		533D7AFB2B1965BC0021767F /* SupportFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFormView.swift; sourceTree = "<group>"; };
+		533D7AFF2B27BEAE0021767F /* SupportFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportFormViewModel.swift; sourceTree = "<group>"; };
+		534B2CF32B575CFB00D52D02 /* CallCompositeAvMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CallCompositeAvMode.swift; sourceTree = "<group>"; };
+		538270B12B45FFD90006AF9E /* ScreenShotHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenShotHelper.swift; sourceTree = "<group>"; };
+		53B6C33B2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompositeViewModelFactoryProtocols.swift; sourceTree = "<group>"; };
 		5A3141390FEFB58AD2A2E22F /* LocalVideoViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoViewModelTests.swift; sourceTree = "<group>"; };
 		5A314317E4A1B700E6BE5E2E /* LocalVideoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalVideoViewModel.swift; sourceTree = "<group>"; };
 		5A31447C18BC49B691800C9D /* ACSCameraFacingExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ACSCameraFacingExtension.swift; sourceTree = "<group>"; };
@@ -947,6 +959,7 @@
 				1FE1BE7E26FE38C9000A8D18 /* CallCompositeInternalError.swift */,
 				1FC30845266949E8007EC537 /* ColorExtension.swift */,
 				50B390D227D834FE0010A2ED /* LocalizationKey.swift */,
+				538270B12B45FFD90006AF9E /* ScreenShotHelper.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1100,6 +1113,7 @@
 		50FA46192698BC01001844AC /* ViewComponents */ = {
 			isa = PBXGroup;
 			children = (
+				533D7AFA2B1965910021767F /* SupportForm */,
 				B2E5B1782AA1320800D54A3A /* Diagnostics */,
 				FA3F59902909B9F3008E359D /* SharingActivity */,
 				988799922746CDEC00AA3759 /* LockPhoneOrientation.swift */,
@@ -1110,6 +1124,15 @@
 				1F04A64F273491620028AAC8 /* VideoView */,
 			);
 			path = ViewComponents;
+			sourceTree = "<group>";
+		};
+		533D7AFA2B1965910021767F /* SupportForm */ = {
+			isa = PBXGroup;
+			children = (
+				533D7AFB2B1965BC0021767F /* SupportFormView.swift */,
+				533D7AFF2B27BEAE0021767F /* SupportFormViewModel.swift */,
+			);
+			path = SupportForm;
 			sourceTree = "<group>";
 		};
 		5A314192C1EC6B1FB3D9A707 /* CallCompositeOptions */ = {
@@ -1304,6 +1327,8 @@
 				05C1C827297F4830006EDD0D /* CallHistoryRecord.swift */,
 				11159FFD2A1D3F4200C0E3B8 /* OrientationOptions.swift */,
 				A464810729F345E8001B80A3 /* CallCompositeDismissed.swift */,
+				532DF40A2AF9948F00E63301 /* CallCompositeUserReportedError.swift */,
+				534B2CF32B575CFB00D52D02 /* CallCompositeAvMode.swift */,
 			);
 			path = CallCompositeOptions;
 			sourceTree = "<group>";
@@ -1393,6 +1418,7 @@
 			children = (
 				5A3145FC912A71B20D5ECBF6 /* CompositeViewFactory.swift */,
 				5A3148FC4DC06C7515E1E8D9 /* CompositeViewModelFactory.swift */,
+				53B6C33B2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -1858,6 +1884,7 @@
 				7589CE1A297765E30092AE38 /* ViewExtension.swift in Sources */,
 				1F8E0B722684EBC100DDD18E /* CallingMiddlewareHandler.swift in Sources */,
 				9823AB4B26A13F4B0006266D /* PreviewAreaViewModel.swift in Sources */,
+				532DF40B2AF9948F00E63301 /* CallCompositeUserReportedError.swift in Sources */,
 				1F6470A92639DCFA0008B9E9 /* CallingService.swift in Sources */,
 				BD3CC699283D952E0052DE4A /* OverlayViewModelProtocol.swift in Sources */,
 				1F83813F26803ADF0096A454 /* CallingReducer.swift in Sources */,
@@ -1942,11 +1969,13 @@
 				50C6DECC270E48BE0085D04B /* BannerInfoType.swift in Sources */,
 				1F03D3D22638A6B70055C456 /* CallingViewModel.swift in Sources */,
 				FAD20A8C292834500063D8A9 /* Logger.swift in Sources */,
+				533D7AFC2B1965BC0021767F /* SupportFormView.swift in Sources */,
 				FA6B61A3290C9F55004B8188 /* DebugInfoSharingActivityViewModel.swift in Sources */,
 				50FA45FE26813FCE001844AC /* ParticipantGridViewModel.swift in Sources */,
 				113738FF29D638BB00D48EAB /* DefaultUserState.swift in Sources */,
 				1F94DAE626740D4400691D1E /* AppState.swift in Sources */,
 				8815B6E227DA707B0065A184 /* LobbyOverlayViewModel.swift in Sources */,
+				53B6C33C2B58BA03000EFE19 /* CompositeViewModelFactoryProtocols.swift in Sources */,
 				1F3F0C69283E860600C66054 /* AudioSessionReducer.swift in Sources */,
 				11F792E229AFCFB100EAABB8 /* LoadingOverlayView.swift in Sources */,
 				50137D0626A7479C00AB843E /* EnvironmentValuesExtension.swift in Sources */,
@@ -1962,6 +1991,7 @@
 				1F2BEDBB26328EBA00D98266 /* PermissionReducer.swift in Sources */,
 				1FBCB6B9264BA90000F57EEA /* ParticipantGridCellVideoView.swift in Sources */,
 				1F48B401274879F000B6E5F9 /* DiagnosticConfig.swift in Sources */,
+				538270B22B45FFD90006AF9E /* ScreenShotHelper.swift in Sources */,
 				05C1C828297F4830006EDD0D /* CallHistoryRecord.swift in Sources */,
 				9823AB4926A13F220006266D /* PreviewAreaView.swift in Sources */,
 				50FA46212698EA7A001844AC /* IconWithLabelButtonViewModel.swift in Sources */,
@@ -1980,6 +2010,8 @@
 				1FB0A1C128412A5100D57B0F /* ACSParticipantStateExtension.swift in Sources */,
 				051EE2292AB90FC300A94632 /* LobbyWaitingHeaderView.swift in Sources */,
 				756F596A2965E25A00BAFBF7 /* Middleware.swift in Sources */,
+				533D7B002B27BEAE0021767F /* SupportFormViewModel.swift in Sources */,
+				534B2CF42B575CFB00D52D02 /* CallCompositeAvMode.swift in Sources */,
 				981ACABC2685459400CD6A40 /* IconProvider.swift in Sources */,
 				1F2BEDCD26329E5600D98266 /* PermissionAction.swift in Sources */,
 				98B186A127C85F9800B837E6 /* AudioDevicesListViewModel.swift in Sources */,
